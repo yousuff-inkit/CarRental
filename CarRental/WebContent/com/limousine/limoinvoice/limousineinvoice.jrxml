@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2025-02-11T13:59:32 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="limousineinvoicenew" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e58a177f-57bb-4854-9b5f-872a8c560ba4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (11)"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#EDEDED"/>
+			<bottomPen lineWidth="0.5" lineColor="#EDEDED"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#EDEDED"/>
+			<bottomPen lineWidth="0.5" lineColor="#EDEDED"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#EDEDED"/>
+			<bottomPen lineWidth="0.5" lineColor="#EDEDED"/>
+		</box>
+	</style>
+	<subDataset name="grid" uuid="d3f45be8-91cf-4174-9b59-638be622b349">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sayaralimo_08072019"/>
+		<parameter name="docno" class="java.lang.String"/>
+		<parameter name="vatcheck" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select ROUND(@i:=@i+1 ,0) srno,c.* from( select 
+			'TRIP' units,CASE WHEN guest.guest IS NULL OR TRIM(guest.guest) = '' then 
+ CONCAT('TRIP DETAIL',' FROM ',UPPER(pickup.location),' ',UPPER(tran.pickupadress) ,' TO ',UPPER(dropoff.LOCATION),' ',UPPER(tran.dropoffaddress) ,' ON ',coalesce(DATE_FORMAT(an.enddate,'%d.%m.%Y'),''), ' AT ',coalesce(an.endtime,''),' HRS ',if(calc.remarks is not null,concat('(TS NO ',calc.remarks,')'),'')) else
+CONCAT('WITH MR ',UPPER(guest.guest),' FROM ',UPPER(pickup.location),' ',UPPER(tran.pickupadress),' TO ',UPPER(dropoff.LOCATION),' ',UPPER(tran.dropoffaddress) ,' ON ',coalesce(DATE_FORMAT(an.enddate,'%d.%m.%Y'),''), ' AT ',coalesce(an.endtime,''),' HRS ',if(calc.remarks is not null,concat('(TS NO ',calc.remarks,')'),''))
+end as DESCRIPTION,
+ROUND(invd.tarif,2) rate,ROUND(INVD.VATPERCENT,2) vatper,ROUND(INVD.tarif/100*ROUND(INVD.VATPERCENT,2),2) vatval,ROUND(coalesce(INVD.TARIF,0)+COALESCE(INVD.tarif/100*ROUND(INVD.VATPERCENT,2),0),2) amount 
+From gl_limoinvm inv
+ left join gl_limoinvd invd on invd.rdocno=inv.doc_no
+ left join gl_limoguest guest on invd.guestno=guest.doc_no  LEFT JOIN gl_limobookm book ON invd.bookdocno=book.doc_no
+ LEFT JOIN gl_limobooktransfer tran on (invd.jobtype='Transfer' and invd.jobdocno=tran.doc_no and invd.bookdocno=tran.bookdocno) 
+ left join gl_limojobclosecalc calc on (book.doc_no=calc.bookdocno and tran.doc_no=calc.jobdocno and calc.jobtype='Transfer')
+ left join gl_limomanagement mgmt on (tran.bookdocno=mgmt.docno and tran.docname=mgmt.job)
+ left join gl_limobookhours hours on (invd.jobtype='Transfer' and invd.jobdocno=hours.doc_no and invd.bookdocno=hours.bookdocno) 
+ left join gl_cordinates pickup on(if(invd.jobtype='Transfer',tran.pickuplocid=pickup.doc_no,hours.pickuplocid))
+ left join gl_cordinates dropoff on  (if(invd.jobtype='Transfer',tran.dropfflocid=dropoff.doc_no,0=dropoff.doc_no))
+ left join gl_vehbrand brd on (if(invd.jobtype='Transfer', tran.brandid=brd.doc_no,hours.brandid=brd.doc_no)) 
+ left join gl_vehmodel model on (if(invd.jobtype='Transfer',tran.modelid=model.doc_no, hours.modelid=model.doc_no)) 
+ LEFT JOIN gl_multivehassign gvm ON mgmt.docno=gvm.bookingno AND mgmt.job=gvm.jobname AND gvm.drvid=1
+ left join gl_vehmaster v on (gvm.fleetno=v.fleet_no and statu=3)
+ left join gl_vmove m on v.fleet_no=m.fleet_no 
+ LEFT JOIN an_starttripdet an ON  CONCAT(book.doc_no,'-',tran.docname)=an.jobno 
+  where inv.doc_no=$P{docno} group by invd.srno
+  
+  union all
+  Select '' units,CONCAT('ADDITIONAL CHARGES FOR WAITING HRS AT ', coalesce(pickup.LOCATION,''),' (Booking No:',invd.bookdocno,') ') DESCRIPTION,ROUND(invd.exhrchg,2) RATE,ROUND(INVD.VATPERCENT,2) VATPER, ROUND(INVD.exhrchg/100*ROUND(INVD.VATPERCENT,2),2) VATVAL, ROUND(coalesce(INVD.exhrchg,0)+COALESCE(INVD.exhrchg/100*ROUND(INVD.VATPERCENT,2),0),2) AMOUNT
+ From gl_limoinvm inv
+ left join gl_limoinvd invd on invd.rdocno=inv.doc_no
+ left join gl_limoguest guest on invd.guestno=guest.doc_no  LEFT JOIN gl_limobookm book ON invd.bookdocno=book.doc_no
+ LEFT JOIN gl_limobooktransfer tran on (invd.jobtype='Transfer' and invd.jobdocno=tran.doc_no and invd.bookdocno=tran.bookdocno) 
+ left join gl_limomanagement mgmt on (tran.bookdocno=mgmt.docno and tran.docname=mgmt.job)
+ left join gl_limobookhours hours on (invd.jobtype='Transfer' and invd.jobdocno=hours.doc_no and invd.bookdocno=hours.bookdocno) 
+ left join gl_cordinates pickup on(if(invd.jobtype='Transfer',tran.pickuplocid=pickup.doc_no,hours.pickuplocid))
+ left join gl_cordinates dropoff on  (if(invd.jobtype='Transfer',tran.dropfflocid=dropoff.doc_no,0=dropoff.doc_no))
+ left join gl_vehbrand brd on (if(invd.jobtype='Transfer', tran.brandid=brd.doc_no,hours.brandid=brd.doc_no)) 
+ left join gl_vehmodel model on (if(invd.jobtype='Transfer',tran.modelid=model.doc_no, hours.modelid=model.doc_no)) 
+ LEFT JOIN gl_multivehassign gvm ON mgmt.docno=gvm.bookingno AND mgmt.job=gvm.jobname AND gvm.drvid=1
+ left join gl_vehmaster v on (gvm.fleetno=v.fleet_no and statu=3)
+  left join gl_vmove m on v.fleet_no=m.fleet_no 
+  LEFT JOIN an_starttripdet an ON  CONCAT(book.doc_no,'-',tran.docname)=an.jobno 
+
+  where inv.doc_no=$P{docno} and invd.exhrchg!=0  group by invd.srno
+  
+  union all 
+  select  '' units,'PARKING CHARGES ' DESCRIPTION,ROUND(invd.parkingchg,2) RATE,0 VATPER, 0  VATVAL, ROUND(coalesce(INVD.parkingchg,0),2) AMOUNT from gl_limoinvm inv
+ left join gl_limoinvd invd on invd.rdocno=inv.doc_no
+ left join gl_limoguest guest on invd.guestno=guest.doc_no  LEFT JOIN gl_limobookm book ON invd.bookdocno=book.doc_no
+ LEFT JOIN gl_limobooktransfer tran on (invd.jobtype='Transfer' and invd.jobdocno=tran.doc_no and invd.bookdocno=tran.bookdocno) 
+ left join gl_limomanagement mgmt on (tran.bookdocno=mgmt.docno and tran.docname=mgmt.job)
+ left join gl_limobookhours hours on (invd.jobtype='Transfer' and invd.jobdocno=hours.doc_no and invd.bookdocno=hours.bookdocno) 
+ left join gl_cordinates pickup on(if(invd.jobtype='Transfer',tran.pickuplocid=pickup.doc_no,hours.pickuplocid))
+ left join gl_cordinates dropoff on  (if(invd.jobtype='Transfer',tran.dropfflocid=dropoff.doc_no,0=dropoff.doc_no))
+ left join gl_vehbrand brd on (if(invd.jobtype='Transfer', tran.brandid=brd.doc_no,hours.brandid=brd.doc_no)) 
+ left join gl_vehmodel model on (if(invd.jobtype='Transfer',tran.modelid=model.doc_no, hours.modelid=model.doc_no)) 
+ LEFT JOIN gl_multivehassign gvm ON mgmt.docno=gvm.bookingno AND mgmt.job=gvm.jobname AND gvm.drvid=1
+ left join gl_vehmaster v on (gvm.fleetno=v.fleet_no and statu=3)
+  left join gl_vmove m on v.fleet_no=m.fleet_no 
+  LEFT JOIN an_starttripdet an ON  CONCAT(book.doc_no,'-',tran.docname)=an.jobno 
+
+ where inv.doc_no=$P{docno} AND INVD.parkingchg!=0 group by invd.srno
+	
+	
+	
+	union all 
+  select  '' units,'FOOD BILL ' DESCRIPTION,ROUND(invd.fuelchg,2) RATE,0 VATPER, 0  VATVAL, ROUND(coalesce(INVD.fuelchg,0),2) AMOUNT from gl_limoinvm inv
+ left join gl_limoinvd invd on invd.rdocno=inv.doc_no
+ left join gl_limoguest guest on invd.guestno=guest.doc_no  LEFT JOIN gl_limobookm book ON invd.bookdocno=book.doc_no
+ LEFT JOIN gl_limobooktransfer tran on (invd.jobtype='Transfer' and invd.jobdocno=tran.doc_no and invd.bookdocno=tran.bookdocno) 
+ left join gl_limomanagement mgmt on (tran.bookdocno=mgmt.docno and tran.docname=mgmt.job)
+ left join gl_limobookhours hours on (invd.jobtype='Transfer' and invd.jobdocno=hours.doc_no and invd.bookdocno=hours.bookdocno) 
+ left join gl_cordinates pickup on(if(invd.jobtype='Transfer',tran.pickuplocid=pickup.doc_no,hours.pickuplocid))
+ left join gl_cordinates dropoff on  (if(invd.jobtype='Transfer',tran.dropfflocid=dropoff.doc_no,0=dropoff.doc_no))
+ left join gl_vehbrand brd on (if(invd.jobtype='Transfer', tran.brandid=brd.doc_no,hours.brandid=brd.doc_no)) 
+ left join gl_vehmodel model on (if(invd.jobtype='Transfer',tran.modelid=model.doc_no, hours.modelid=model.doc_no)) 
+ LEFT JOIN gl_multivehassign gvm ON mgmt.docno=gvm.bookingno AND mgmt.job=gvm.jobname AND gvm.drvid=1
+ left join gl_vehmaster v on (gvm.fleetno=v.fleet_no and statu=3)
+  left join gl_vmove m on v.fleet_no=m.fleet_no 
+  LEFT JOIN an_starttripdet an ON  CONCAT(book.doc_no,'-',tran.docname)=an.jobno 
+
+ where inv.doc_no=$P{docno} AND INVD.fuelchg!=0 group by invd.srno
+	
+	
+	
+	union all 
+  select  '' units,'KFN PORT PASS CHARGES ' DESCRIPTION,ROUND(invd.otherchg,2) RATE,0 VATPER, 0  VATVAL, ROUND(coalesce(INVD.otherchg,0),2) AMOUNT from gl_limoinvm inv
+ left join gl_limoinvd invd on invd.rdocno=inv.doc_no
+ left join gl_limoguest guest on invd.guestno=guest.doc_no  LEFT JOIN gl_limobookm book ON invd.bookdocno=book.doc_no
+ LEFT JOIN gl_limobooktransfer tran on (invd.jobtype='Transfer' and invd.jobdocno=tran.doc_no and invd.bookdocno=tran.bookdocno) 
+ left join gl_limomanagement mgmt on (tran.bookdocno=mgmt.docno and tran.docname=mgmt.job)
+ left join gl_limobookhours hours on (invd.jobtype='Transfer' and invd.jobdocno=hours.doc_no and invd.bookdocno=hours.bookdocno) 
+ left join gl_cordinates pickup on(if(invd.jobtype='Transfer',tran.pickuplocid=pickup.doc_no,hours.pickuplocid))
+ left join gl_cordinates dropoff on  (if(invd.jobtype='Transfer',tran.dropfflocid=dropoff.doc_no,0=dropoff.doc_no))
+ left join gl_vehbrand brd on (if(invd.jobtype='Transfer', tran.brandid=brd.doc_no,hours.brandid=brd.doc_no)) 
+ left join gl_vehmodel model on (if(invd.jobtype='Transfer',tran.modelid=model.doc_no, hours.modelid=model.doc_no)) 
+ LEFT JOIN gl_multivehassign gvm ON mgmt.docno=gvm.bookingno AND mgmt.job=gvm.jobname AND gvm.drvid=1
+ left join gl_vehmaster v on (gvm.fleetno=v.fleet_no and statu=3)
+  left join gl_vmove m on v.fleet_no=m.fleet_no 
+  LEFT JOIN an_starttripdet an ON  CONCAT(book.doc_no,'-',tran.docname)=an.jobno 
+
+ where inv.doc_no=$P{docno} AND INVD.otherchg!=0 group by invd.srno
+	
+	)c,(select @i:=0)b WHERE c.RATE IS NOT NULL AND c.VATVAL IS NOT NULL AND c.AMOUNT IS NOT NULL]]>
+		</queryString>
+		<field name="srno" class="java.lang.String"/>
+		<field name="description" class="java.lang.String"/>
+		<field name="rate" class="java.math.BigDecimal"/>
+		<field name="vatper" class="java.math.BigDecimal"/>
+		<field name="vatval" class="java.math.BigDecimal"/>
+		<field name="amount" class="java.math.BigDecimal"/>
+		<field name="units" class="java.lang.String"/>
+		<variable name="rate" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[$F{rate}]]></variableExpression>
+		</variable>
+		<variable name="vatval" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[$F{vatval}]]></variableExpression>
+		</variable>
+		<variable name="amount" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="grid1" uuid="d3f45be8-91cf-4174-9b59-638be622b349">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sayaralimo_08072019"/>
+		<parameter name="docno" class="java.lang.String"/>
+		<parameter name="vatcheck" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select IF(sum(a.vatval) = 0, 'Exempt', CONCAT('Standard Rate ', '(', IF (sum(a.vatval) != 0,'5',ROUND(a.VATPER, 0)), '%)')) taxdesc,ROUND(@i:=@i+1 ,0) srno,concat(a.code,' ',sum(a.rate)) taxrate,concat(a.code,' ',sum(a.vatval)) taxvatval,concat(a.code,' ',sum(a.AMOUNT)) taxamount,a.* from(
+		select  c.code,ROUND(invd.tarif,2) RATE,ROUND(INVD.VATPERCENT,2) VATPER,ROUND(INVD.tarif/100*ROUND(INVD.VATPERCENT,2),2) VATVAL,ROUND(coalesce(INVD.TARIF,0)+COALESCE(INVD.tarif/100*ROUND(INVD.VATPERCENT,2),0),2) AMOUNT From gl_limoinvm inv left join gl_limoinvd invd on invd.rdocno=inv.doc_no left join my_curr c on c.doc_no=inv.curid  where inv.DOC_NO=$P{docno} 
+		UNION ALL select c.code,SUM(ROUND(invd.exhrchg,2)) RATE,ROUND(INVD.VATPERCENT,2) VATPER, SUM(ROUND(INVD.exhrchg/100*ROUND(INVD.VATPERCENT,2),2)) VATVAL, SUM(ROUND(coalesce(INVD.exhrchg,0)+COALESCE(INVD.exhrchg/100*ROUND(INVD.VATPERCENT,2),0),2)) AMOUNT From gl_limoinvm inv left join gl_limoinvd invd on invd.rdocno=inv.doc_no  left join my_curr c on c.doc_no=inv.curid where inv.DOC_NO=$P{docno}  AND INVD.exhrchg!=0 
+		UNION ALL select   c.code,SUM(ROUND(invd.parkingchg,2)) RATE,0 VATPER, 0 VATVAL, SUM(ROUND(coalesce(INVD.parkingchg,0),2)) AMOUNT From gl_limoinvm inv left join gl_limoinvd invd on invd.rdocno=inv.doc_no left join my_curr c on c.doc_no=inv.curid where inv.DOC_NO=$P{docno} AND INVD.parkingchg!=0
+		UNION ALL select   c.code,SUM(ROUND(invd.fuelchg,2)) RATE,0 VATPER, 0 VATVAL, SUM(ROUND(coalesce(INVD.fuelchg,0),2)) AMOUNT From gl_limoinvm inv left join gl_limoinvd invd on invd.rdocno=inv.doc_no left join my_curr c on c.doc_no=inv.curid where inv.DOC_NO=$P{docno} AND INVD.fuelchg!=0
+		UNION ALL select   c.code,SUM(ROUND(invd.otherchg,2)) RATE,0 VATPER, 0 VATVAL, SUM(ROUND(coalesce(INVD.otherchg,0),2)) AMOUNT From gl_limoinvm inv left join gl_limoinvd invd on invd.rdocno=inv.doc_no left join my_curr c on c.doc_no=inv.curid where inv.DOC_NO=$P{docno} AND INVD.otherchg!=0
+		)a,(select @i:=0)b]]>
+		</queryString>
+		<field name="taxdesc" class="java.lang.String"/>
+		<field name="taxrate" class="java.lang.String"/>
+		<field name="taxvatval" class="java.lang.String"/>
+		<field name="taxamount" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="imghedderpath" class="java.lang.String"/>
+	<parameter name="imgfooterpath" class="java.lang.String"/>
+	<parameter name="compname" class="java.lang.String"/>
+	<parameter name="compbrname" class="java.lang.String"/>
+	<parameter name="compaddress" class="java.lang.String"/>
+	<parameter name="compfax" class="java.lang.String"/>
+	<parameter name="comptel" class="java.lang.String"/>
+	<parameter name="compemail" class="java.lang.String"/>
+	<parameter name="comptrnno" class="java.lang.String"/>
+	<parameter name="docno" class="java.lang.String"/>
+	<parameter name="vatcheck" class="java.lang.String"/>
+	<parameter name="totamtwrds" class="java.lang.String"/>
+	<parameter name="lblbankdetails" class="java.lang.String"/>
+	<parameter name="lblcompbranchaddress" class="java.lang.String"/>
+	<parameter name="lblbankbeneficiary" class="java.lang.String"/>
+	<parameter name="lblbankaccountno" class="java.lang.String"/>
+	<parameter name="lblbankibanno" class="java.lang.String"/>
+	<parameter name="lblbeneficiarybank" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  a.refno lpono,a.cnamecountry,a.vatval,coalesce(UPPER(GROUP_CONCAT(DISTINCT CASE WHEN a.groupname IS NOT NULL AND a.groupname != '' THEN a.groupname END SEPARATOR ', ')) ,'') AS groupname,coalesce(UPPER(GROUP_CONCAT(DISTINCT CASE WHEN a.vesselname IS NOT NULL AND a.vesselname != '' THEN a.vesselname END SEPARATOR ', ')),'') AS vesselname,sum(tot) tot,a.code,a.invdate,a.invvocno,a.invclname,a.invbrch,a.invaddr,a.invfax,a.invmbl,a.invmail,a.invtinno 
+       from(select book.refno,coalesce(gp.GNAME)groupname,INVD.VATPERCENT vatval,concat(c.country,' ',c.c_name,' ') cnamecountry,(ROUND((INVD.TARIF+INVD.PARKINGCHG+INVD.EXHRCHG+INVD.fuelchg+INVD.otherchg)+(INVD.TARIF/100*ROUND(INVD.VATPERCENT,2)+INVD.EXHRCHG/100*ROUND(INVD.VATPERCENT,2)),2))tot,c.code,coalesce(book.vesselname,'')vesselname,DATE_FORMAT(inv.date,'%d.%m.%Y') invdate,inv.voc_no invvocno,ac.refname invclname,br.branchname invbrch,ac.address invaddr,ac.fax1 invfax,ac.per_mob invmbl,ac.mail1 invmail,ac.trnnumber invtinno From gl_limoinvm inv left join gl_limoinvd invd on invd.rdocno=inv.doc_no left join my_acbook ac on ac.cldocno=inv.cldocno left join my_brch br on inv.brhid=br.doc_no LEFT JOIN gl_limobookm book ON invd.bookdocno=book.doc_no left join my_curr c on c.doc_no=inv.curid left join gl_limobooktransfer tran on (invd.jobtype='Transfer' and invd.jobdocno=tran.doc_no and invd.bookdocno=tran.bookdocno) left join gl_limomanagement mgmt on (tran.bookdocno=mgmt.docno and tran.docname=mgmt.job)
+       left join gl_vehgroup gp on gp.doc_no=tran.gid where inv.doc_no=$P{docno} )a]]>
+	</queryString>
+	<field name="invdate" class="java.lang.String"/>
+	<field name="invvocno" class="java.lang.String"/>
+	<field name="invclname" class="java.lang.String"/>
+	<field name="invaddr" class="java.lang.String"/>
+	<field name="invfax" class="java.lang.String"/>
+	<field name="invmbl" class="java.lang.String"/>
+	<field name="invmail" class="java.lang.String"/>
+	<field name="invtinno" class="java.lang.String"/>
+	<field name="vesselname" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="tot" class="java.lang.String"/>
+	<field name="cnamecountry" class="java.lang.String"/>
+	<field name="groupname" class="java.lang.String"/>
+	<field name="lpono" class="java.lang.String"/>
+	<field name="vatval" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="287" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement key="" x="-30" y="-20" width="620" height="87" uuid="cd7283e7-d185-458b-9709-47b8e6e5f4c2"/>
+				<imageExpression><![CDATA[$P{imghedderpath}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement positionType="Float" x="369" y="83" width="156" height="28" uuid="019e22c6-1ca7-4e7e-87c2-7ee40beb097f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TAX INVOICE"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="17" y="84" width="351" height="11" isRemoveLineWhenBlank="true" uuid="a8fc8708-ced9-4ae4-9462-26923b422cc0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{compname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="17" y="95" width="284" height="11" isRemoveLineWhenBlank="true" uuid="ade80bbc-45af-4609-bca3-0d95e90ff8d7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{compbrname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="17" y="106" width="324" height="11" isRemoveLineWhenBlank="true" uuid="8e4353f3-0313-402f-ae44-c83c66fdb141">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{compaddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="17" y="117" width="284" height="11" isRemoveLineWhenBlank="true" uuid="1d4131fe-cf5d-4544-97b1-66f6cdcfb276"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TEL : "+$P{comptel}+ ($P{compfax} != null && !$P{compfax}.trim().isEmpty() ? " , " + $P{compfax} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="17" y="128" width="284" height="11" isRemoveLineWhenBlank="true" uuid="ed912601-92e3-4db6-95fe-22597973ce9b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{compemail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="392" y="106" width="68" height="21" uuid="086539e3-1c7a-424a-b15a-7a0e35882f94">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Invoice No # "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="459" y="106" width="64" height="21" uuid="7045b3da-8c29-4fc0-b363-111e3dec023b">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invvocno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="17" y="138" width="284" height="11" isRemoveLineWhenBlank="true" uuid="ac1bd677-e565-4b11-819f-00c77bcc8d6e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TRN :  "+$P{comptrnno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="174" width="284" height="11" isRemoveLineWhenBlank="true" uuid="4dbf1dcd-c0fe-4a09-827f-0cff0954d106">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invclname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="185" width="284" height="11" isRemoveLineWhenBlank="true" uuid="68e4ddc5-7806-4c37-99f5-0949f7a96e5f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invaddr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="196" width="284" height="11" isRemoveLineWhenBlank="true" uuid="14c17aec-eea8-4043-8e24-40e8f588fc94"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TEL : "+$F{invmbl}+ ($F{invfax} != null && !$F{invfax}.trim().isEmpty() ? " , " + $F{invfax} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="207" width="284" height="11" isRemoveLineWhenBlank="true" uuid="3448e265-5154-4e89-bd20-9c5e90109b7a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invmail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="16" y="217" width="284" height="11" isRemoveLineWhenBlank="true" uuid="790a42db-02fd-44a9-bc4b-8986dd6ce3ae">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TRN : "+$F{invtinno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="16" y="252" width="514" height="13" uuid="f7202f88-43de-435c-822d-6b408a13dbb4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{vesselname} != null && !$F{vesselname}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["VESSEL - " +$F{vesselname}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="316" y="152" width="85" height="15" uuid="442dc77c-2425-4122-9053-dba4742d1e95">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Invoice Date "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="401" y="153" width="148" height="15" uuid="bd062734-81f7-4b13-84b0-51582756a745">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" : "+$F{invdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="15" y="161" width="286" height="13" uuid="6517534c-f2af-44e7-8b8b-d9feaeed94a3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Customer Details"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="316" y="166" width="85" height="15" isRemoveLineWhenBlank="true" uuid="c8de1c2e-8e1b-4439-a663-58fc38d4580e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{lpono} != null && !$F{lpono}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LPO No "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="401" y="167" width="148" height="15" isRemoveLineWhenBlank="true" uuid="e19f6fc2-52f0-4adc-9427-baae46e67b03">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{lpono} != null && !$F{lpono}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" : "+$F{lpono}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="316" y="181" width="85" height="15" isRemoveLineWhenBlank="true" uuid="5d175a45-cd32-4a9b-9505-2c756f77505c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{groupname} != null && !$F{groupname}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Vehicle Type "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="401" y="181" width="148" height="15" isRemoveLineWhenBlank="true" uuid="64e54c39-acb9-43bb-8cdd-c870d3665baa">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{groupname} != null && !$F{groupname}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" : "+$F{groupname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="330" splitType="Stretch">
+			<componentElement>
+				<reportElement positionType="Float" x="9" y="10" width="545" height="90" forecolor="#FFFFFF" uuid="d96ffc62-b941-4fb6-b9e4-fbe62ef27250">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="grid" uuid="7b50068a-8932-4ec9-a2f6-0a34f45054d2">
+						<datasetParameter name="docno">
+							<datasetParameterExpression><![CDATA[$P{docno}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="vatcheck">
+							<datasetParameterExpression><![CDATA[$P{vatcheck}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="25" uuid="2f873a04-829d-4bb7-9e08-7ae442e5b6b2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="25" height="30" backcolor="#FAFAFA" uuid="dc66bb3a-9f1d-432a-b4d9-acab9df3193c"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Sr No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="25" height="30" uuid="19231a97-c1c0-4493-87b3-3f3ffe3bdc0b"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="25" height="30" isRemoveLineWhenBlank="true" uuid="375e4d5c-9e66-4cf3-b8f5-fc8fbc0398d5"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{srno}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="262" uuid="6462a079-e943-402e-ac23-4bbbc3f8e248">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<printWhenExpression><![CDATA[$P{vatcheck}.compareTo("0")>0]]></printWhenExpression>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="262" height="30" backcolor="#FAFAFA" uuid="de6353d6-9e17-4511-8ab7-ddd066c147c9"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Description]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="262" height="30" uuid="5ab30f65-3432-4458-8a4a-1a27da822b70"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="262" height="30" isRemoveLineWhenBlank="true" uuid="b5eaf379-4974-48ae-bf35-aa32f63480a4"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="308" uuid="6462a079-e943-402e-ac23-4bbbc3f8e248">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<printWhenExpression><![CDATA[$P{vatcheck}.compareTo("0")== 0]]></printWhenExpression>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="308" height="30" backcolor="#FAFAFA" uuid="de6353d6-9e17-4511-8ab7-ddd066c147c9"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Description]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="308" height="30" uuid="02ca6e76-8a54-4a00-8c20-eec90562cde6"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="308" height="30" isRemoveLineWhenBlank="true" uuid="b5eaf379-4974-48ae-bf35-aa32f63480a4"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="26" uuid="3d66de3a-ebe6-4d4f-b370-e7559ed4474c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="26" height="30" backcolor="#FAFAFA" uuid="28de441e-3bd5-4f94-bcc3-14cacc6ec06b"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Qty]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="26" height="30" uuid="0638e407-19b4-4240-ac74-772dbc38b179"/>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="26" height="30" uuid="3353587d-8a1c-4559-8a31-048061ad6302"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["1"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="45" uuid="74e198a5-0172-46a8-b788-14fa17b229ab">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="45" height="30" backcolor="#FAFAFA" uuid="941b745c-c7da-41c8-9921-ba1149388cac"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Rate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="45" height="30" uuid="7854474f-6de3-4eab-a2b7-25244e818a09"/>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="45" height="30" isRemoveLineWhenBlank="true" uuid="bd424803-4680-4cf9-8de1-4c2a6c3bed63"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="48" uuid="a1dc8c2b-7d3e-451e-a079-6b8cb2b478cb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="48" height="30" backcolor="#FAFAFA" uuid="d2c67d41-9c22-4f0e-be3e-5edacc55d1ea"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Units]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="48" height="30" uuid="29a34e29-ff3d-4b95-9ce7-d1d377e413a1"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Sub Total"]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="48" height="30" uuid="96b19538-ab1e-421a-a91a-208d7b4e7f7f"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{units}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="45" uuid="578bbe03-deef-46d7-aa9b-06ef32bf8efd">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="45" height="30" backcolor="#FAFAFA" uuid="1c24ed34-a834-4b5b-875a-8d2c84e4e375"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Taxable Amount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="45" height="30" uuid="6efe1bca-0af5-4bae-8a36-e6b63d4f014d"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{rate}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="45" height="30" isRemoveLineWhenBlank="true" uuid="c3f624c3-a62e-4cef-9cd9-fb321ebd6b25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="46" uuid="6b3ace08-6035-4912-964e-aafedc5888de">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<printWhenExpression><![CDATA[$P{vatcheck}.compareTo("0")>0]]></printWhenExpression>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="46" height="30" backcolor="#FAFAFA" uuid="773e2007-95c2-4ede-8094-710290fc4c48">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Tax]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="46" height="30" uuid="e85a48e6-b0fe-435b-964e-531aa99bd9bc"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{vatval}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="46" height="30" isRemoveLineWhenBlank="true" uuid="bc1d5303-cfee-457c-92f7-59ac282ee562"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{vatval}.toString() + "\n" + $F{vatper}.toString() + "%"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="53" uuid="494fe97f-755f-454e-9d5e-ed9cbd29def2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="53" height="30" backcolor="#FAFAFA" uuid="c9ac6b12-2332-4a6d-b588-bc6f960509e7">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="53" height="30" uuid="e8508b0a-daa7-4a37-8505-ee38ce9d2081"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{amount}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement positionType="Float" x="0" y="0" width="53" height="30" isRemoveLineWhenBlank="true" uuid="a1d5ae93-6cca-4d26-a5fe-587fcc45ffd0"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph lineSpacingSize="3.0" leftIndent="5" rightIndent="5" spacingBefore="3" spacingAfter="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement positionType="Float" x="387" y="101" width="69" height="21" uuid="e18edfb3-b34e-4269-b231-3f4c4d547872"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="456" y="101" width="98" height="21" uuid="f20c0ceb-8a00-464d-bf77-ac22c65fb7ac"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}+" "+$F{tot}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="190" y="127" width="360" height="30" uuid="b841eca9-8cc7-4d57-b9cb-246a9b580a19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total In Words : "+$F{cnamecountry} + " "+$P{totamtwrds}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="1" y="147" width="181" height="17" uuid="bcd3b187-cda4-43e3-9fc3-4128d1a04820"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tax Summary"]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement positionType="Float" x="3" y="165" width="545" height="61" uuid="2459a17c-d74c-4471-808f-4b5a1b251fef">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="grid1" uuid="5bbb91d1-6ae6-4677-907f-a5f5224e5dbc">
+						<datasetParameter name="docno">
+							<datasetParameterExpression><![CDATA[$P{docno}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="180" uuid="93dbc1dd-4360-47ac-9594-506e8892376d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="180" height="20" backcolor="#FAFAFA" uuid="adf76f10-ba4b-474b-9fc0-738d766fdac4"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Tax Details]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="180" height="20" uuid="9609d0cb-cad5-48fc-b049-1414744d25a9"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="180" height="20" uuid="9b520f69-9382-4394-a4f6-2c6e389b66d1"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxdesc}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="782abe62-6d71-4c7a-9d86-a98c68bc655b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="140" height="20" backcolor="#FAFAFA" uuid="97d732db-3b47-4d80-80ad-126b4fcdbedd"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Taxable Amount (AED)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="140" height="20" uuid="a28351a1-b7c5-4e48-bfab-26a66b701a4e"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxrate}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="140" height="20" uuid="37e7c1da-3dd0-499a-bf13-30acc6ad59cf"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxrate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="e8d392a8-f9dc-46ed-8544-a411bb6a6811">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="110" height="20" backcolor="#FAFAFA" uuid="0f77ea65-c225-49e2-ba2e-2532940b388a"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Tax Amount (AED)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="110" height="20" uuid="485ddc72-a02d-42e2-bfce-1e134df4bffb"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxvatval}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="110" height="20" uuid="a553eb2a-02d8-44ff-86a9-2cbb8dae0bd8"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxvatval}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="115" uuid="115470f4-4b54-4746-a9bf-96dcfa8b708e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="115" height="20" backcolor="#FAFAFA" uuid="abcdef12-32ae-44c0-8261-52b4cbac8a6a"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Total Amount (AED)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="20" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="115" height="20" uuid="7a6039b5-7721-4103-9cc4-eeb124dc7628"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxamount}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="115" height="20" uuid="e0fd55aa-1315-45b6-a4e0-221698ca77a8"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{taxamount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement positionType="Float" x="7" y="236" width="260" height="13" uuid="f40c3f99-23c3-4d1d-93db-92a88ad6f821">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Bank Details"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="7" y="249" width="260" height="13" uuid="c5a38ee7-2286-4120-8ce3-93834b6a6bcc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Bank Name : "+$P{lblbankdetails}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="7" y="262" width="260" height="13" uuid="e29a3a43-507d-4956-9e21-a72b8210fe37">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Bank Address : "+$P{lblcompbranchaddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="7" y="274" width="260" height="13" uuid="fdc28be4-d211-4941-b66c-c68af76781a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Account Name : "+$P{lblbankbeneficiary}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="6" y="286" width="260" height="13" uuid="2e831c48-1b37-4e3d-8c65-86509cce5a08">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Account Number : "+$P{lblbankaccountno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="7" y="299" width="260" height="13" uuid="46b9c7a9-91f2-433e-891f-49df4f7b0996">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IBAN : "+$P{lblbankibanno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="7" y="312" width="260" height="13" uuid="c5e8baab-cf58-4a47-b51e-f85ffaadce5d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Swift Code : "+$P{lblbeneficiarybank}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="71" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="-19" y="2" width="595" height="69" uuid="bd317c35-5db0-4789-8f15-f75aa14e836a"/>
+				<imageExpression><![CDATA[$P{imgfooterpath}]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

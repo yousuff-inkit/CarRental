@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2022-10-15T08:42:25 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MaintenanceWorkOrderSkips" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="3" bottomMargin="3" uuid="3a14ce9f-2a0d-4a31-a324-fa95b978aaf5">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (22)"/>
+	<queryString>
+		<![CDATA[select 'contact name']]>
+	</queryString>
+	<field name="contact name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="114" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="497" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="8" y="171" width="154" height="15" isRemoveLineWhenBlank="true" uuid="18ed5d67-6dab-41b7-927b-6fdf0c3a849d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isUnderline="true"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IMPORTANT NOTE TO SUPPLIERS :"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="187" width="560" height="22" uuid="35aa0cde-771a-4181-b01d-3315886fd69d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="8" isBold="false"/>
+					<paragraph lineSpacingSize="2.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PLEASE QUOTE THE PURCHASE ORDER NO. ON ALL INVOICES AND CORRESPONDENCES.\nFOR GENERAL INQUIRY, PLEASE EMAIL QUERIES TO purchase@mrskips.net\nORDER SUBJECT TO MR SKIPS STANDARD AND SPECIAL TERMS AND CONDITIONS"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="9" y="211" width="154" height="15" isRemoveLineWhenBlank="true" uuid="77051a52-f44f-402b-9f34-7f6750ca05dd">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isUnderline="true"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TERMS & CONDITIONS:"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="9" y="230" width="562" height="90" uuid="396defe3-160f-469f-bc0f-f3e6f5470a1c">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="8" isBold="false"/>
+					<paragraph lineSpacingSize="2.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1.) Alterations and amendments are not valid binding unless initiated by authorized signatory\n2.) Invoice will not be accepted for payment if an authorized MR SKIPS employee’s signed receipt is not attached\n3.) The supplier expressly warrants that all supplies will fully conform to all specifications and samples made or given by the supplier or stipulated by the\n purchaser. The delivery material shall be rejected if such materials do not conform to the quality required by the Purchaser or are not in accordance with the\n standards stipulated in the LPO and/or supplier’s Quotation or not compliant with the specifications and the regulations of government, then the supplier shall\n take back such rejected materials at its own cost within 24hrs from the date of the Purchaser’s notice. No payment will be made to the Supplier for such\n rejected materials.\n4.) Invoice shall be sent to accounts department with reference to this Purchase Order number. The Supplier is responsible to provide the listed documents:\n *Tax Invoice:1 original & 1 copy; *Delivery note: 1 original & 1 Copy; *Warranty: 1 original; *Certification of Quality: 1 original. All copies shall be originally\n  signed and stamped.\n5.) Supplier to acknowledge the receipt and confirm the delivery dates.\n6.) The Supplier shall confirm the detailed time of delivery.\n7.) The Purchaser may terminate/cancel this LPO with immediate effect without the need for a court order\n a) If the supplier breaches any terms and conditions of this LPO\n b) If the Supplier fails to deliver the materials within specific Delivery time(s) herein or any other agreed time(s)\n c) without cause at any time.\n8.) The following documents to be provided at the time of delivery."]]></textFieldExpression>
+			</textField>
+			<rectangle radius="0">
+				<reportElement positionType="Float" x="9" y="322" width="31" height="12" uuid="a3a13841-110c-4e47-aa2a-f9f93aecb879">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#787373"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement positionType="Float" x="132" y="322" width="22" height="12" uuid="e1a95728-329e-44e6-89b7-378a1a5be6f8"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#787373"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement positionType="Float" x="334" y="322" width="27" height="12" uuid="71ba618f-0868-4828-bca6-53645f105412"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#787373"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement positionType="Float" x="487" y="322" width="27" height="12" uuid="58d3e341-7625-4f94-ae9d-ad0cf823faf9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#787373"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement positionType="Float" x="230" y="322" width="22" height="12" uuid="e6117f13-0e61-4066-93f0-d705f8704324">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#787373"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="41" y="322" width="90" height="15" uuid="bcf9e466-dd70-4d50-a00c-d7aabc29b841">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Delivery Notes/Tickets"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="154" y="322" width="76" height="15" uuid="d61b3305-f503-4251-848a-2275a64512fd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Warrant Certificate"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="252" y="322" width="81" height="15" uuid="d0ce5df6-9b11-4672-864c-3dcc658afc76">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Certificate of Origin"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="362" y="322" width="125" height="15" uuid="02e2ea05-cf3c-4a64-8b03-7e20dbe157f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Operation & Maintenance Manual"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="514" y="322" width="60" height="15" uuid="ca3f40a0-b7ce-4a1f-a768-7b9778bf05ff">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Other(specify)"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="8" y="337" width="154" height="15" isRemoveLineWhenBlank="true" uuid="9ff2e0a2-95e1-436d-95ef-c528cb6fa4e2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isUnderline="true"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROCUREMENT POLICY: "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="8" y="353" width="562" height="58" uuid="0db9953a-df4f-4e81-a66b-e3abe69fdb36">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="8" isBold="false"/>
+					<paragraph lineSpacingSize="2.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" None of any director, officer, agent, employee, representative or affiliate of the Supplier shall offer or attempt to offer to make any\n payment, transfer of value, gift, donation or undue pecuniary or other advantage(including rebates) whether directly or indirectly to any director, officer, agent,\n employee, representative or affiliate of the Purchaser which had the object, effect or intention of commercial bribery 9or could reasonably have been expected\n to have such object, effect or intention) in order to influence any act or decision of the Purchaser that would assist the Supplier in obtaining, securing or\n retaining any business, payment or improper advantage.\n\n Anyone who suspects, with reasonable grounds, or has witnessed misconduct (i.e., bribery) or has been induced or coerced to make bribery to the Purchaser\n in Procurement procedure is obliged to report the same to members of Investigation team as below:\n\nMs. Snehal S (snehal@mrskips.net).\n\nYours Faithfully,\nFor and on behalf\nMR SKIPS WASTE SERVICES\n\n\nProcurement Manager\nMrs. Asma Mansoor."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="147" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

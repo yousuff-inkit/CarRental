@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2025-07-04T18:17:08 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="limoinvoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d9634213-9d40-414c-ab03-70739fceacb2">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sayaralimo_08072019"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="grid" uuid="d3f45be8-91cf-4174-9b59-638be622b349">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sayaralimo_08072019"/>
+		<parameter name="docno" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select invd.clientid,invd.jobdocno,invd.limoguest,invd.limorouteinfo,format(invd.total,2)total,invd.datentime,format(invd.vatvalue,2)mastervat,format((invd.vatvalue)+(invd.total),2) nettotal from gl_limoinvm inv left join gl_limoinvd invd on inv.doc_no=invd.rdocno
+ where  invd.rdocno=$P{docno}  and inv.status=3]]>
+		</queryString>
+		<field name="jobdocno" class="java.lang.Integer"/>
+		<field name="limoguest" class="java.lang.String"/>
+		<field name="limorouteinfo" class="java.lang.String"/>
+		<field name="total" class="java.lang.String"/>
+		<field name="mastervat" class="java.lang.String"/>
+		<field name="nettotal" class="java.lang.String"/>
+		<field name="datentime" class="java.lang.String"/>
+		<field name="clientid" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="docno" class="java.lang.String"/>
+	<parameter name="invno" class="java.lang.String"/>
+	<parameter name="clientname" class="java.lang.String"/>
+	<parameter name="clienttrn" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="taxamt" class="java.lang.String"/>
+	<parameter name="invoicenote" class="java.lang.String"/>
+	<parameter name="clientaddress" class="java.lang.String"/>
+	<parameter name="tel" class="java.lang.String"/>
+	<parameter name="grandtotal" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="p0" class="java.lang.String"/>
+	<parameter name="p1" class="java.lang.String"/>
+	<parameter name="p2" class="java.lang.String"/>
+	<parameter name="p3" class="java.lang.String"/>
+	<parameter name="p4" class="java.lang.String"/>
+	<parameter name="p5" class="java.lang.String"/>
+	<parameter name="p6" class="java.lang.String"/>
+	<parameter name="p7" class="java.lang.String"/>
+	<parameter name="p8" class="java.lang.String"/>
+	<parameter name="p9" class="java.lang.String"/>
+	<parameter name="p10" class="java.lang.String"/>
+	<parameter name="p11" class="java.lang.String"/>
+	<parameter name="p12" class="java.lang.String"/>
+	<parameter name="p13" class="java.lang.String"/>
+	<parameter name="p14" class="java.lang.String"/>
+	<parameter name="p15" class="java.lang.String"/>
+	<parameter name="p16" class="java.lang.String"/>
+	<parameter name="p17" class="java.lang.String"/>
+	<parameter name="p18" class="java.lang.String"/>
+	<parameter name="p19" class="java.lang.String"/>
+	<parameter name="p20" class="java.lang.String"/>
+	<parameter name="p21" class="java.lang.String"/>
+	<parameter name="p22" class="java.lang.String"/>
+	<parameter name="p23" class="java.lang.String"/>
+	<parameter name="p24" class="java.lang.String"/>
+	<parameter name="p25" class="java.lang.String"/>
+	<parameter name="p26" class="java.lang.String"/>
+	<parameter name="p27" class="java.lang.String"/>
+	<parameter name="p28" class="java.lang.String"/>
+	<parameter name="p29" class="java.lang.String"/>
+	<parameter name="p30" class="java.lang.String"/>
+	<parameter name="p31" class="java.lang.String"/>
+	<parameter name="p32" class="java.lang.String"/>
+	<parameter name="p33" class="java.lang.String"/>
+	<parameter name="p34" class="java.lang.String"/>
+	<parameter name="p35" class="java.lang.String"/>
+	<parameter name="p36" class="java.lang.String"/>
+	<parameter name="p37" class="java.lang.String"/>
+	<parameter name="p38" class="java.lang.String"/>
+	<parameter name="p39" class="java.lang.String"/>
+	<parameter name="p40" class="java.lang.String"/>
+	<parameter name="p41" class="java.lang.String"/>
+	<parameter name="p42" class="java.lang.String"/>
+	<parameter name="p43" class="java.lang.String"/>
+	<parameter name="p44" class="java.lang.String"/>
+	<parameter name="p45" class="java.lang.String"/>
+	<parameter name="p46" class="java.lang.String"/>
+	<parameter name="p47" class="java.lang.String"/>
+	<parameter name="p48" class="java.lang.String"/>
+	<parameter name="p49" class="java.lang.String"/>
+	<parameter name="p50" class="java.lang.String"/>
+	<parameter name="p51" class="java.lang.String"/>
+	<parameter name="p52" class="java.lang.String"/>
+	<parameter name="p53" class="java.lang.String"/>
+	<parameter name="p54" class="java.lang.String"/>
+	<parameter name="p55" class="java.lang.String"/>
+	<parameter name="p56" class="java.lang.String"/>
+	<parameter name="p57" class="java.lang.String"/>
+	<parameter name="p58" class="java.lang.String"/>
+	<parameter name="p59" class="java.lang.String"/>
+	<parameter name="p60" class="java.lang.String"/>
+	<parameter name="p61" class="java.lang.String"/>
+	<parameter name="p62" class="java.lang.String"/>
+	<parameter name="p63" class="java.lang.String"/>
+	<parameter name="p64" class="java.lang.String"/>
+	<parameter name="p65" class="java.lang.String"/>
+	<parameter name="p66" class="java.lang.String"/>
+	<parameter name="p67" class="java.lang.String"/>
+	<parameter name="p68" class="java.lang.String"/>
+	<parameter name="p69" class="java.lang.String"/>
+	<parameter name="p70" class="java.lang.String"/>
+	<parameter name="p71" class="java.lang.String"/>
+	<parameter name="p72" class="java.lang.String"/>
+	<parameter name="p73" class="java.lang.String"/>
+	<parameter name="p74" class="java.lang.String"/>
+	<parameter name="p75" class="java.lang.String"/>
+	<parameter name="p76" class="java.lang.String"/>
+	<parameter name="p77" class="java.lang.String"/>
+	<parameter name="p78" class="java.lang.String"/>
+	<parameter name="p79" class="java.lang.String"/>
+	<parameter name="p80" class="java.lang.String"/>
+	<parameter name="p81" class="java.lang.String"/>
+	<parameter name="p82" class="java.lang.String"/>
+	<parameter name="p83" class="java.lang.String"/>
+	<parameter name="p84" class="java.lang.String"/>
+	<parameter name="p85" class="java.lang.String"/>
+	<parameter name="p86" class="java.lang.String"/>
+	<parameter name="p87" class="java.lang.String"/>
+	<parameter name="p88" class="java.lang.String"/>
+	<parameter name="p89" class="java.lang.String"/>
+	<parameter name="p90" class="java.lang.String"/>
+	<parameter name="p91" class="java.lang.String"/>
+	<parameter name="p92" class="java.lang.String"/>
+	<parameter name="p93" class="java.lang.String"/>
+	<parameter name="p94" class="java.lang.String"/>
+	<parameter name="p95" class="java.lang.String"/>
+	<parameter name="p96" class="java.lang.String"/>
+	<parameter name="p97" class="java.lang.String"/>
+	<parameter name="p98" class="java.lang.String"/>
+	<parameter name="p99" class="java.lang.String"/>
+	<parameter name="p100" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select if(inv.date<'2020-11-01','100349855500003','100621673100003') tinno ,inv.doc_no,format(sum(invd.mastertotal),2)total,if(ac.tax=1,format(invd.mastervat,2),0.0) vatamt,if(ac.tax=1,format(invd.masternettotal,2),format(invd.mastertotal,2)) grandtotal,
+			     coalesce(ac.trnnumber,'')trnno,coalesce(inv.invoicenote,'')invnote,coalesce(inv.limolpono,'') lpono,coalesce(inv.limoevent,'') eventno,cur.code currencycode,DATE_FORMAT(CURDATE(),'%d/%m/%Y') finaldate,u.user_name,coalesce(ac.address,'') address,coalesce(ac.per_mob,'') 
+			     mobileno,coalesce(ac.mail1) mail,concat('Address :',coalesce(ac.address,''),', Mobile :',coalesce(ac.per_mob,''),', Mail :',
+			     coalesce(ac.mail1)) clientdetails,comp.company,comp.address ,comp.tel,comp.fax,br.branchname,inv.voc_no vocno,inv.cldocno ,
+			     date_format(inv.date,'%d-%m-%Y') date,date_format(inv.fromdate,'%d-%m-%Y') fromdate,date_format(inv.todate,'%d-%m-%Y') todate,
+			     ac.refname from gl_limoinvm inv left join (select sum(total) mastertotal,sum(vatvalue) mastervat, sum(total) +sum(vatvalue) masternettotal,rdocno from gl_limoinvd invd  group by  invd.rdocno ) invd on inv.doc_no=invd.rdocno left join my_acbook ac on (inv.cldocno=ac.cldocno and ac.dtype='CRM') left join my_brch br on 
+			     inv.brhid=br.doc_no left join my_comp comp on br.cmpid=comp.doc_no left join my_curr cur on inv.curid=cur.doc_no left join my_user u on u.doc_no=inv.userid where inv.doc_no in ($P{p0},$P{p1},$P{p2},$P{p3},$P{p4},$P{p5},$P{p6},$P{p7},$P{p8},$P{p9},$P{p10},$P{p11},$P{p12},$P{p13},$P{p14},$P{p15},$P{p16},$P{p17},$P{p18},$P{p19},$P{p20},$P{p21},$P{p22},$P{p23},$P{p24},$P{p25},$P{p26},$P{p27},$P{p28},$P{p29},$P{p30},$P{p31},$P{p32},$P{p33},$P{p34},$P{p35},$P{p36},$P{p37},$P{p38},$P{p39},$P{p40},$P{p41},$P{p42},$P{p43},$P{p44},$P{p45},$P{p46},$P{p47},$P{p48},$P{p49},$P{p50},$P{p51},$P{p52},$P{p53},$P{p54},$P{p55},$P{p56},$P{p57},$P{p58},$P{p59},$P{p60},$P{p61},$P{p62},$P{p63},$P{p64},$P{p65},$P{p66},$P{p67},$P{p68},$P{p69},$P{p70},$P{p71},$P{p72},$P{p73},$P{p74},$P{p75},$P{p76},$P{p77},$P{p78},$P{p79},$P{p80},$P{p81},$P{p82},$P{p83},$P{p84},$P{p85},$P{p86},$P{p87},$P{p88},$P{p89},$P{p90},$P{p91},$P{p92},$P{p93},$P{p94},$P{p95},$P{p96},$P{p97},$P{p98},$P{p99},$P{p100}) GROUP BY inv.DOC_NO;]]>
+	</queryString>
+	<field name="doc_no" class="java.lang.Integer"/>
+	<field name="vocno" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="refname" class="java.lang.String"/>
+	<field name="clientdetails" class="java.lang.String"/>
+	<field name="trnno" class="java.lang.String"/>
+	<field name="mobileno" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="vatamt" class="java.lang.String"/>
+	<field name="grandtotal" class="java.lang.String"/>
+	<field name="tinno" class="java.lang.String"/>
+	<group name="doc_no">
+		<groupExpression><![CDATA[$F{doc_no}]]></groupExpression>
+	</group>
+	<group name="group1" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{doc_no}]]></groupExpression>
+		<groupHeader>
+			<band height="252">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="5" y="12" width="225" height="18" uuid="66d48843-110e-4f97-9bb8-dfa0405d60e4"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Al Sayara Limousine Passengers Transport LLC "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="5" y="31" width="195" height="37" uuid="dbc81cbe-f3dc-4ae1-9562-e93a5e6e50be"/>
+					<textElement verticalAlignment="Top">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tower 400 and 6th Floor, Ibrahim Mohammed Al Madfaa Street(Al Mina Road), Al Soor, Sharjah, United Arab Emirates, 3393 "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="5" y="67" width="25" height="18" uuid="98e78a07-c35e-4602-9acb-d517a101b636"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Ph:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="30" y="67" width="140" height="18" uuid="6217c5fb-ba1a-4414-b384-2cbe32517d0d"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["600522200"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="5" y="83" width="35" height="18" uuid="a9118477-64af-4934-8c43-95ec462be1f5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Email:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="40" y="83" width="130" height="18" uuid="d9a6cbc0-9cf5-47ea-b88b-e1d2f4fdcd4a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isUnderline="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" info@sayararental.com "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="51" y="101" width="129" height="18" uuid="e1f4e651-04b2-46c0-bb39-355ae1ab4f96"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tinno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="5" y="101" width="45" height="18" uuid="c7aa7220-740f-40f2-9ad4-4c6538846eed"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TRN #"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="221" y="60" width="120" height="18" uuid="8d1b71db-e0ae-4bb6-9527-09ed8ed6ab0f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TAX INVOICE"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="390" y="5" width="69" height="18" uuid="ada7cc2f-2a97-4938-9498-24530dcc7828"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Invoice"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="460" y="5" width="90" height="18" uuid="c7a7a9e4-7895-4691-a3d8-885976519c99"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vocno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="390" y="25" width="69" height="18" uuid="72d4f385-e155-434c-b0b4-5e622922860c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Invoice Date"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="460" y="25" width="90" height="18" uuid="4e86e0b3-c7fb-4721-9579-f588279548cf"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="6" y="133" width="74" height="15" uuid="ebe4e7f3-610a-49e1-b43b-1bfcebb70469"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Bill To:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="6" y="149" width="274" height="17" uuid="b821dfd4-935e-491c-ad2e-e7b1a63bef56"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{refname}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="6" y="167" width="274" height="39" uuid="a2275c5e-6591-4608-b179-8318780885fb"/>
+					<textElement verticalAlignment="Top">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{clientdetails}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="6" y="208" width="45" height="15" uuid="f5c2ec76-e7ee-4ea8-bb7f-e8401efa0a17"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TRN #"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="50" y="208" width="140" height="15" uuid="d758d048-3ed2-4b84-96cb-76741b06d3d2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{trnno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="7" y="224" width="152" height="15" uuid="26d7b5e4-8d31-4397-a5ea-8f9cb93ebe7e"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mobileno}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="69">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="373" y="8" width="67" height="14" uuid="7e73d1bc-ce0b-4594-b074-8567c916a7d3"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Subtotal"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="440" y="8" width="91" height="14" uuid="8696c9f3-dabc-4e9d-a94b-bd68af52067a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph rightIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="374" y="24" width="67" height="14" uuid="af36cb9f-f162-43e6-9ffe-3922b351013f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["VAT (5%)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="441" y="24" width="90" height="14" uuid="3a0e5fb0-a879-47a9-8aaa-510327b2086e"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph rightIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{vatamt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="374" y="40" width="67" height="14" uuid="6b07873c-aa87-446f-8819-1a7415a819b3"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Grand Total"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="441" y="40" width="90" height="14" uuid="8757565a-b8b3-4b0d-b936-e8661c35c265"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph rightIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{grandtotal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="79" splitType="Stretch">
+			<componentElement>
+				<reportElement x="5" y="24" width="545" height="40" uuid="61d26653-1c06-459f-bae8-a9b19bbe13ea">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="grid" uuid="7bd06254-2687-416b-9951-c441ed7131ba">
+						<datasetParameter name="docno">
+							<datasetParameterExpression><![CDATA[$F{doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="35" uuid="9f92c2a3-3863-44ad-9b53-88ef24918347">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="35" height="20" uuid="ff175836-dc0e-4c47-83ad-070333cc49df"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Conf#]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="35" height="20" uuid="73ba0e0c-cfa1-438f-bb64-c1a5eb93c083"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{jobdocno}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="2309e4b4-59b7-4338-b2af-ba4010705997">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="20" uuid="3aa9a6bc-fd1e-450a-a8f1-803cb586f60a"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Date & Times]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="20" uuid="69b4e761-2f2c-4b60-916e-8192844720bb"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{datentime}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="5fe09c0f-5b95-40ee-a98d-65cf60b1db59">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="85" height="20" uuid="33c66851-a072-4cc0-a73c-4111c7bd98ad"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Passenger]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="85" height="20" uuid="ea04fba1-83cc-42a7-adcd-12c85c68da73"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{limoguest}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="6b5ea931-9ef3-4637-bc30-3cf26c7c10a3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="20" uuid="a00b0336-647e-4fc2-b7c4-94b5049dc065"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Client #]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="40" height="20" uuid="32dca2c1-cfa6-4446-a9ab-e3adba1c4b39"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{clientid}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="150" uuid="77f13880-7c8b-417c-a260-845bacc9ca2c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="150" height="20" uuid="025b10ed-da60-4bba-a8ff-4168c33378fb"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<text><![CDATA[Routing Information]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="150" height="20" uuid="e58255f6-ff7f-402d-aae8-0232af307d48"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{limorouteinfo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="65" uuid="6a93ce30-f1c0-4283-9c1c-d0a57fe19188">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="65" height="20" uuid="038f239f-54e5-41e7-a88e-9f327a5aee5d"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+									<paragraph rightIndent="3"/>
+								</textElement>
+								<text><![CDATA[Trip Amt]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="65" height="20" uuid="aa61bb0c-5b05-4476-9909-b05d59199a8b"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="45" uuid="951094e9-a3a7-4b78-a79e-07805c61e248">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="45" height="20" uuid="392360b3-8ef8-4819-98ac-62c088e9b33a"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+									<paragraph rightIndent="3"/>
+								</textElement>
+								<text><![CDATA[VAT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="45" height="20" uuid="7d98bebc-e707-4ae6-91da-dcef71af9283"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{mastervat}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="7d8065e4-35b2-47bb-a00e-6371d56b1d9e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:columnHeader style="Table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="20" uuid="c2cb0702-9534-47bc-9dba-9e4d462678cd"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+									<paragraph rightIndent="3"/>
+								</textElement>
+								<text><![CDATA[Total Due]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="55" height="20" uuid="e85cf3b0-64b8-4514-b288-0cd15b70cfb8"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nettotal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<line>
+				<reportElement positionType="Float" x="5" y="6" width="545" height="1" uuid="9a10fea3-dd25-4cdd-858b-5b280dc09b1b"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="5" y="73" width="545" height="1" uuid="92fbdeeb-ab6a-4e10-afb9-a6cf9e9b881a"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

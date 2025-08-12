@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	
+
+	<package name="timesheetentry" extends="struts-default">
+			<action name="saveTimeSheetEntry" class="com.dashboard.humanresource.timesheetentry.ClsTimeSheetEntryAction" method="saveAction">
+				<interceptor-ref name="params"/>
+				<result name="success">timesheetentry.jsp</result>
+				<result name="fail">timesheetentry.jsp</result>
+				
+			</action>
+
+		</package>	
+</struts>

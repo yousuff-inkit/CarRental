@@ -1,0 +1,428 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html>
+<html>
+<% String contextPath=request.getContextPath();%>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GatewayERP(i)</title>
+<jsp:include page="../../../../includes.jsp"></jsp:include>
+<script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script> 
+
+<script type="text/javascript">
+      $(document).ready(function () {
+    	  /* Date */
+    	  $("#deductionScheduleDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+    	  $("#startDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+    	  $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+    	  //$("#empDateOfBirth").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+    	  
+    	  /* Searching Window */
+    	 $('#employeeDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Employees Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+ 		 $('#employeeDetailsWindow').jqxWindow('close');
+ 		 
+ 		 $('#accountDetailsFromWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#accountDetailsFromWindow').jqxWindow('close');
+		 
+ 		 $('#txtemployeedetails').dblclick(function(){
+ 			employeeSearchContent("employeeDetailsSearch.jsp");
+		  });
+ 		 
+ 		 $('#allowinstamt').change(function() {
+             if (!$(this).prop('checked')) {
+                 $('#txtinstcustomamt').val(''); // Clear the text field
+             }
+         });
+ 		 
+ 		$('#txtfromaccid').dblclick(function(){
+ 			var date = $('#deductionScheduleDate').jqxDateTimeInput('getDate');
+			  $("#maindate").jqxDateTimeInput('val', date);
+      	  accountFromSearchContent("accountsDetailsSearch.jsp?date="+date);
+		});
+ 		 
+      }); 
+      
+      function employeeSearchContent(url) {
+		 	$('#employeeDetailsWindow').jqxWindow('open');
+			$.get(url).done(function (data) {
+			$('#employeeDetailsWindow').jqxWindow('setContent', data);
+			$('#employeeDetailsWindow').jqxWindow('bringToFront');
+		}); 
+		}
+      
+      function accountFromSearchContent(url) {
+		    $('#accountDetailsFromWindow').jqxWindow('open');
+			$.get(url).done(function (data) {
+			$('#accountDetailsFromWindow').jqxWindow('setContent', data);
+			$('#accountDetailsFromWindow').jqxWindow('bringToFront');
+		}); 
+		}
+      
+      function getEmployeeDetails(event){
+          var x= event.keyCode;
+          if(x==114){
+        	  employeeSearchContent("employeeDetailsSearch.jsp");
+          }
+          else{}
+          }
+      
+      function funInstAmount(){
+    	  
+    	  var amount=$('#txtamount').val();
+  		 var instantcustomamount=$('#txtinstcustomamt').val();
+  		 var instno=$('#txtinstnos').val();
+  		if(amount==""){ 
+ 			document.getElementById("errormsg").innerText="Amount is Mandatory.";
+ 	         return 0;  
+        }
+  		 
+  		if(instno=="0"){ 
+ 			document.getElementById("errormsg").innerText="Installment number is Invalid.";
+ 	         return 0;  
+        }
+  		document.getElementById("errormsg").innerText="";
+  		
+  		if($('#allowinstamt').is(":checked")){
+  			if(instantcustomamount==""){ 
+ 				document.getElementById("errormsg").innerText="Installment Amount is Mandatory.";
+ 		         return 0;  
+ 	     	}
+  			if(!isNaN(amount)){
+  	 			var result = Math.ceil(amount / instantcustomamount);
+  	 			 $('#txtinstnos').val(result);
+  	 			 }
+  	 		else if(isNaN(amount)){
+  	 			$('#txtinstnos').val(0.0);
+  	 		}
+  		} else {
+  			if(instno==""){ 
+ 				document.getElementById("errormsg").innerText="Installment number is Mandatory.";
+ 		         return 0;  
+ 	     }
+  			
+  			 if(!isNaN(amount)){
+  	 		     var result = amount / instno;
+  	 			 $('#txtinstamt').val(result);
+  	 			 }
+  	 			 else if(isNaN(amount)){
+  	 			 	 $('#txtinstamt').val(0.0);
+  	 			 }
+  		}
+ 		 
+ 		
+ 	 }
+      
+      function deductionGridLoading(){
+		  var startdate = $('#startDate').jqxDateTimeInput('getText');
+		  var chngdate=startdate;
+		  var saldate = document.getElementById("hidsaldate").value;
+		  var amount = document.getElementById("txtamount").value;
+		  var instno = document.getElementById("txtinstnos").value;
+		  var instamt = $('#allowinstamt').is(":checked")?$('#txtinstcustomamt').val():document.getElementById("txtinstamt").value;
+		   var fromdate = chngdate.split('.');
+        chngdate = new Date();
+       // chngdate.setFullYear(fromdate[2],fromdate[1]-1,fromdate[0]);
+        var caldateyear=fromdate[2];
+        var caldatemonth=fromdate[1];
+        var caldateday=fromdate[0];
+        var todate = saldate.split('.');
+        saldate = new Date();
+        //saldate.setFullYear(todate[2],todate[1]-1,todate[0]);
+        var caltodateyear=todate[2];
+        var caltodatemonth=todate[1];
+        var caltodateday=todate[0];
+        //alert(caldate+"===="+caltodate);
+        if(caldateyear==caltodateyear && caldatemonth==caltodatemonth && caldateday==caltodateday){
+        	$.messager.alert('Warning','Salary Processed,Please Choose Another Date ');
+       	 return false;
+        }
+        else if(caldateyear<caltodateyear && caldatemonth==caltodatemonth && caldateday==caltodateday){
+        	$.messager.alert('Warning','Salary Processed,Please Choose Another Date ');
+        	 return false;
+        }
+        else if(caldateyear==caltodateyear && caldatemonth<caltodatemonth && caldateday==caltodateday){
+        	$.messager.alert('Warning','Salary Processed,Please Choose Another Date ');
+        	 return false;
+        }
+        else if(caldateyear==caltodateyear && caldatemonth==caltodatemonth && caldateday<caltodateday){
+        	$.messager.alert('Warning','Salary Processed,Please Choose Another Date ');
+        	 return false;
+        }
+		  $("#deductionScheduleDiv").load('employeeadvancesgrid.jsp?startdate='+startdate+'&amount='+amount+'&instno='+instno+'&instamt='+instamt);
+	  }
+      
+      $(function(){
+	        $('#frmDeductionSchedule').validate({
+	                rules: {
+	                	txtemployeedetails:"required",
+	                	 txtfromaccid:"required",
+	                 },
+	                 messages: {
+	                	 txtemployeedetails:" *",
+	                	 txtfromaccid:" *",
+	                 }
+	        });});
+ 	 
+	 function funReadOnly(){
+		 	$('#txtinstcustomamt').attr('disabled',true);
+			$('#frmDeductionSchedule input').attr('readonly', true );
+			$('#frmDeductionSchedule select').attr('disabled', true);
+			$('#deductionScheduleDate').jqxDateTimeInput({disabled: true});
+			$('#startDate').jqxDateTimeInput({disabled: true});
+			$('#btnDistributionSubmit').attr('disabled', true);
+			
+			$("#deductionScheduleGridID").jqxGrid({ disabled: true});
+	 }
+	 
+	 function funRemoveReadOnly(){
+			$('#frmDeductionSchedule input').attr('readonly', false );
+			$('#frmDeductionSchedule select').attr('disabled', false);
+			$('#deductionScheduleDate').jqxDateTimeInput({disabled: false});
+			$('#txtfromaccid').attr('readonly', true );
+			$('#txtfromaccname').attr('readonly', true );
+			$('#startDate').jqxDateTimeInput({disabled: false});
+			$('#txtemployeedetails').attr('readonly', true );
+			$('#docno').attr('readonly', true);
+			$('#btnDistributionSubmit').attr('disabled', false);
+			
+			$("#deductionScheduleGridID").jqxGrid({ disabled: false});
+			
+			if ($("#mode").val() == "A") {
+					 $('#deductionScheduleDate').val(new Date());
+					 
+					 $("#deductionScheduleGridID").jqxGrid('clear'); 
+				     $("#deductionScheduleGridID").jqxGrid('addrow', null, {});
+			}
+			disableEdit();
+	 }
+	 
+	 function disableEdit(){
+		 	var rows = $("#deductionScheduleGridID").jqxGrid('getrows');
+			var isDisable=false;  
+		        for (var i = 0; i < rows.length; i++) {
+		            if (rows[i].posted == 1) {
+		            	isDisable=true;
+		            }
+		        }
+		        if(isDisable){
+		        	$('#txtinstcustomamt').attr('disabled',true);
+	    			$('#frmDeductionSchedule input').attr('readonly', true );
+	    			$('#frmDeductionSchedule select').attr('disabled', true);
+	    			$('#deductionScheduleDate').jqxDateTimeInput({disabled: true});
+	    			$('#startDate').jqxDateTimeInput({disabled: true});
+	    			$('#btnDistributionSubmit').attr('disabled', true);
+	    			$("#allowinstamt").attr("disabled", true);
+		        }
+	}
+	 
+	 function funNotify(){	
+		 /* Validation */
+		 
+		if($('#txtvalidation').val()==1) return;
+		 
+		cash=document.getElementById("txtfromaccid").value;
+		if(cash==""){
+			document.getElementById("errormsg").innerText="Enter Cash.";
+			return 0;
+		}
+				 
+		 /* Validation Ends*/
+		 
+		 $('#startDate').jqxDateTimeInput({disabled: false});  // while saving the date goes as null for disabled jqxdateandtime
+		 $('#deductionScheduleDate').jqxDateTimeInput({disabled: false});  // while saving the date goes as null for disabled jqxdateandtime
+		 
+		 /* Deduction Schedule Grid  Saving*/
+		  var rows = $("#deductionScheduleGridID").jqxGrid('getrows');
+		  var length=0;
+			 for(var i=0 ; i < rows.length ; i++){
+				var chk=rows[i].amount;
+				if(typeof(chk) != "undefined" && typeof(chk) != "NaN" && chk != ""){
+					length=length+1;
+						newTextBox = $(document.createElement("input"))
+					    .attr("type", "dil")
+					    .attr("id", "test"+i)
+					    .attr("name", "test"+i)
+						.attr("hidden", "true");
+					
+					newTextBox.val(rows[i].sr_no+"::"+rows[i].date+"::"+rows[i].amount+"::"+rows[i].posted+"::"+rows[i].rowno+"::"+rows[i].postedtrno);
+					newTextBox.appendTo('form');
+					}
+				}
+		 		 $('#gridlength').val(length);
+				/*Deduction Schedule Grid  Saving Ends*/	 
+ 		 
+			return 1;	    	
+		} 
+	 
+	 function funSearchLoad(){
+			 changeContent('dscMainSearch.jsp'); 
+		 }
+	 
+	 function funFocus(){
+	    	$('#deductionScheduleDate').jqxDateTimeInput('focus'); 	    		
+	    }
+	 
+	 function setValues(){
+		 
+			 if($('#hiddeductionScheduleDate').val()){
+				 $("#deductionScheduleDate").jqxDateTimeInput('val', $('#hiddeductionScheduleDate').val());
+			  }
+			 
+			 if($('#hidstartDate').val()){
+				 $("#startDate").jqxDateTimeInput('val', $('#hidstartDate').val());
+			  }
+			 
+			 if($('#msg').val()!=""){
+				   $.messager.alert('Message',$('#msg').val());
+				  }
+			 
+			 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+			 funSetlabel();
+            
+			 var indexVal = document.getElementById("docno").value;
+			 if(indexVal>0){
+				 $("#deductionScheduleDiv").load("employeeadvancesgrid.jsp?docno="+indexVal);
+			 }
+		}
+	 
+	 function funChkButton() {
+			/* funReset(); */
+		}
+		
+	 function getAcc(event){
+		 var x= event.keyCode;
+         if(x==114){
+       	  var date = $('#deductionScheduleDate').jqxDateTimeInput('getDate');
+       	  $("#maindate").jqxDateTimeInput('val', date);
+       	  accountFromSearchContent("accountsDetailsSearch.jsp?date="+date);
+         }
+         else{
+          }
+         }
+		
+	function funPrintBtn() {
+			
+	    }
+	 
+</script>
+
+<style>
+.hidden-scrollbar {
+  overflow: auto;
+  height: 530px;
+}
+</style>
+
+</head>
+<body onload="setValues();">
+<div id="mainBG" class="homeContent" data-type="background">
+<form id="frmDeductionSchedule" action="saveEmployeeAdvances" method="post" autocomplete="off">
+<jsp:include page="../../../../header.jsp"></jsp:include><br/>   
+
+<div class='hidden-scrollbar'>
+<fieldset>
+<table width="99%">
+  <tr>
+    <td width="5%" align="right">Date</td>
+    <td width="20%"><div id="deductionScheduleDate" name="deductionScheduleDate" value='<s:property value="deductionScheduleDate"/>'></div>
+    <input type="hidden" id="hiddeductionScheduleDate" name="hiddeductionScheduleDate" value='<s:property value="hiddeductionScheduleDate"/>'/></td>
+    <td width="19%" align="right">Ref. No.</td>
+    <td width="20%"><input type="text" id="txtemployeerefno" name="txtemployeerefno" placeholder="Ref. No." style="width:50%;" value='<s:property value="txtemployeerefno"/>'/></td>
+    <td width="17%" align="right">Doc No </td>
+    <td width="19%"><input type="text" id="docno" name="txtdeductionscheduledocno" style="width:70%;" tabindex="-1" value='<s:property value="txtdeductionscheduledocno"/>'/></td>
+  </tr>
+</table>
+</fieldset><br/>
+<fieldset>
+<table width="99%">
+  <tr>
+    <td width="5%" align="right">Employee</td>
+    <td width="95%"><input type="text" id="txtemployeedetails" name="txtemployeedetails" placeholder="Press F3 to Search" style="width:94%;" onkeydown="getEmployeeDetails(event);" value='<s:property value="txtemployeedetails"/>'/>
+    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
+  </tr>
+</table>
+</fieldset><br/>
+
+<fieldset>
+<table width="99%">
+<tr><td  width="50%">
+<fieldset style="background-color: #EBDEF0;">
+<table width="99%">
+  <tr>
+    <td width="6%" align="right">Cash</td>
+    <td style="display:flex;justify-content:center;align-items:center;"><input type="text" id="txtfromaccid" name="txtfromaccid" style="width:50%;" placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>'  onkeydown="getAcc(event);"/>
+    &nbsp;&nbsp;<input type="text" id="txtfromaccname" name="txtfromaccname" style="width:54%;" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
+    <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/></td>
+  </tr>
+    <tr style="display:none;">
+    <td align="right">Currency</td>
+    <td width="22%"><select id="cmbfromcurrency" name="cmbfromcurrency" style="width:71%;" value='<s:property value="cmbfromcurrency"/>' onload="getRate(this.value,$('#jqxCashPaymentDate').val());" onchange="getRate(this.value,$('#jqxCashPaymentDate').val());">
+      <option></option></select>
+      <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>
+      <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/></td>
+    <td width="23%" align="right">Rate</td>
+    <td width="60%"><input type="text" id="txtfromrate" name="txtfromrate" style="width:32%;text-align: right;" value='<s:property value="txtfromrate"/>' onchange="funvalid()" onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" tabindex="-1"/>
+    <span id="validrate"></span>
+    </td>
+  </tr>
+  <tr>
+    <td width="10%" align="right">Amount</td>
+    <td width="90%"><input type="text" id="txtamount" name="txtamount" placeholder="Amount" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funInstAmount();" value='<s:property value="txtamount"/>'/></td>
+  </tr>
+  <tr>
+    <td align="right">Inst. Nos</td>
+    <td><input type="text" id="txtinstnos" name="txtinstnos" placeholder="Inst. Nos" style="width:10%;" onblur="funInstAmount();" value='<s:property value="txtinstnos"/>'/>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<input type="checkbox" id="allowinstamt" name="allowinstamt"  onblur="funInstAmount();" onchange="this.checked?$('#txtinstcustomamt').prop('disabled',false): $('#txtinstcustomamt').prop('disabled',true);">
+    	<span>Inst. Amount</span>
+    	<input type="text" id="txtinstcustomamt" name="txtinstcustomamt" placeholder="Inst. Amount" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funInstAmount();" value='<s:property value="txtinstcustomamt"/>'/>
+    <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/>
+    <input type="hidden" id="txtinstamttotal" name="txtinstamttotal" value='<s:property value="txtinstamttotal"/>'/></td>
+  </tr>
+  <tr>
+    <td align="right">Start Date</td>
+    <td><div id="startDate" name="startDate" value='<s:property value="startDate"/>'></div>
+    <input type="hidden" id="hidstartDate" name="hidstartDate" value='<s:property value="hidstartDate"/>'/></td>
+  </tr>
+  <tr>
+    <td align="right">Description</td>
+    <td><input type="text" id="txtdescription" name="txtdescription" placeholder="Description" style="width:85%;" value='<s:property value="txtdescription"/>'/></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><button class="myButton" type="button" id="btnDistributionSubmit" name="btnDistributionSubmit" onclick="deductionGridLoading();">Submit</button></td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+</table>
+</fieldset>
+</td>
+<td  width=50%">
+<div id="deductionScheduleDiv"><jsp:include page="employeeadvancesgrid.jsp"></jsp:include></div>
+</td></tr></table>
+</fieldset>
+<input type="hidden" id="mode" name="mode"/>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<input type="hidden" name="txtforsearch" id="txtforsearch" value="0"/>
+<input type="hidden" name="txtforsearch" id="txtforsearch" value="0"/>
+<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+<input type="hidden" id="gridlength" name="gridlength"/>
+<input type="hidden" id="hidsaldate" name="hidsaldate"/>
+</div>
+</form>
+<div id="employeeDetailsWindow">
+   <div></div>
+</div>
+<div id="accountDetailsFromWindow">
+	<div></div><div></div>
+</div> 
+
+</div>
+</body>
+</html>

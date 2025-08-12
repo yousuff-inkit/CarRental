@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2023-02-24T11:19:40 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="budjetnew" pageWidth="1000" pageHeight="595" orientation="Landscape" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1355476-8706-40b2-9ac7-53b3d8754a01">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sealadvisory "/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="incomedataset" uuid="275b3b59-beb1-4456-8cf0-9ab78b27c206">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sealadvisory"/>
+		<parameter name="doc_no" class="java.lang.String"/>
+		<parameter name="incomemonth1" class="java.lang.String"/>
+		<parameter name="incomemonth2" class="java.lang.String"/>
+		<parameter name="incomemonth3" class="java.lang.String"/>
+		<parameter name="incomemonth4" class="java.lang.String"/>
+		<parameter name="incomemonth5" class="java.lang.String"/>
+		<parameter name="incomemonth6" class="java.lang.String"/>
+		<parameter name="incomemonth7" class="java.lang.String"/>
+		<parameter name="incomemonth8" class="java.lang.String"/>
+		<parameter name="incomemonth9" class="java.lang.String"/>
+		<parameter name="incomemonth10" class="java.lang.String"/>
+		<parameter name="incomemonth11" class="java.lang.String"/>
+		<parameter name="incomemonth12" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT b.* FROM(SELECT h.account acno,h.description account,COALESCE(month1,'') month1, COALESCE(month2,'') month2, COALESCE(month3,'') month3,COALESCE(month4,'') month4, COALESCE(month5,'') month5,  COALESCE(month6,'') month6, COALESCE(month7,'') month7, COALESCE(month8,'') month8, COALESCE(month9,'') month9, COALESCE(month10,'') month10, COALESCE(month11,'') month11, COALESCE(month12,'') month12,ROUND(COALESCE(month1,0)+COALESCE(month2,0)+COALESCE(month3,0)+COALESCE(month4,0)+COALESCE(month5,0)+COALESCE(month6,0)+COALESCE(month7,0)+COALESCE(month8,0)+COALESCE(month9,0)+COALESCE(month10,0)+COALESCE(month11,0)+COALESCE(month12,0),2) netincome1 FROM MY_HEAD H LEFT JOIN (select ACNO,tot_income netincome,SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 0 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 0 MONTH))=d.year,amount,0)) month1, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 1 MONTH))=d.month and  YEAR(DATE_ADD(m.year, INTERVAL 1 MONTH))=d.year,amount,0)) month2, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 2 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 2 MONTH))=d.year,amount,0)) month3, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 3 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 3 MONTH))=d.year,amount,0)) month4, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 4 MONTH))=d.month and  YEAR(DATE_ADD(m.year, INTERVAL 4 MONTH))=d.year,amount,0)) month5, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 5 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 5 MONTH))=d.year,amount,0)) month6, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 6 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 6 MONTH))=d.year,amount,0)) month7, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 7 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 7 MONTH))=d.year,amount,0)) month8, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 8 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 8 MONTH))=d.year,amount,0)) month9, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 9 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 9 MONTH))=d.year,amount,0)) month10, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 10 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 10 MONTH))=d.year,amount,0)) month11, SUM(IF(MONTH(DATE_ADD(m.year, INTERVAL 11 MONTH))=d.month and YEAR(DATE_ADD(m.year, INTERVAL 11 MONTH))=d.year,amount,0)) month12  FROM  my_budgetdetail d INNER JOIN  my_budgetm m ON m.doc_no =d.rdocno AND m.doc_no=$P{doc_no} GROUP BY d.acno) a ON a.acno=h.doc_no WHERE h.gr_type='5')b where b.netincome1!=0;]]>
+		</queryString>
+		<field name="acno" class="java.lang.String"/>
+		<field name="account" class="java.lang.String"/>
+		<field name="month1" class="java.lang.Double"/>
+		<field name="month2" class="java.lang.Double"/>
+		<field name="month3" class="java.lang.Double"/>
+		<field name="month4" class="java.lang.Double"/>
+		<field name="month5" class="java.lang.Double"/>
+		<field name="month6" class="java.lang.Double"/>
+		<field name="month7" class="java.lang.Double"/>
+		<field name="month8" class="java.lang.Double"/>
+		<field name="month9" class="java.lang.Double"/>
+		<field name="month10" class="java.lang.Double"/>
+		<field name="month11" class="java.lang.Double"/>
+		<field name="month12" class="java.lang.Double"/>
+		<field name="netincome1" class="java.lang.Double"/>
+	</subDataset>
+	<subDataset name="expensedataset" uuid="c6a03d13-dd4a-4cf7-be92-c398b405696d">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sealadvisory"/>
+		<parameter name="doc_no" class="java.lang.String"/>
+		<parameter name="expendituremonth1" class="java.lang.String"/>
+		<parameter name="expendituremonth2" class="java.lang.String"/>
+		<parameter name="expendituremonth3" class="java.lang.String"/>
+		<parameter name="expendituremonth4" class="java.lang.String"/>
+		<parameter name="expendituremonth5" class="java.lang.String"/>
+		<parameter name="expendituremonth6" class="java.lang.String"/>
+		<parameter name="expendituremonth7" class="java.lang.String"/>
+		<parameter name="expendituremonth8" class="java.lang.String"/>
+		<parameter name="expendituremonth9" class="java.lang.String"/>
+		<parameter name="expendituremonth10" class="java.lang.String"/>
+		<parameter name="expendituremonth11" class="java.lang.String"/>
+		<parameter name="expendituremonth12" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT b.* FROM(SELECT h.account acno,h.description account,H.GR_TYPE grtype,coalesce(netexpense,'') netexpense,coalesce(month1,'') month1, coalesce(month2,'') month2, coalesce(month3,'') month3,coalesce(month4,'') month4, coalesce(month5,'') month5,  coalesce(month6,'') month6, coalesce(month7,'') month7, coalesce(month8,'') month8, coalesce(month9,'') month9, coalesce(month10,'') month10, coalesce(month11,'') month11, coalesce(month12,'') month12,ROUND(COALESCE(month1,0)+COALESCE(month2,0)+COALESCE(month3,0)+COALESCE(month4,0)+COALESCE(month5,0)+COALESCE(month6,0)+COALESCE(month7,0)+COALESCE(month8,0)+COALESCE(month9,0)+COALESCE(month10,0)+COALESCE(month11,0)+COALESCE(month12,0),2) netexpense1 FROM MY_HEAD H LEFT JOIN (select ACNO,tot_income    netexpense,sum(if(month(date_add(m.year, interval 0 month))=d.month and year(date_add(m.year, interval 0 month))=d.year,amount,0)) month1, sum(if(month(date_add(m.year, interval 1 month))=d.month and  year(date_add(m.year, interval 1 month))=d.year,amount,0)) month2, sum(if(month(date_add(m.year, interval 2 month))=d.month and year(date_add(m.year, interval 2 month))=d.year,amount,0)) month3, sum(if(month(date_add(m.year, interval 3 month))=d.month and year(date_add(m.year, interval 3 month))=d.year,amount,0)) month4, sum(if(month(date_add(m.year, interval 4 month))=d.month and  year(date_add(m.year, interval 4 month))=d.year,amount,0)) month5, sum(if(month(date_add(m.year, interval 5 month))=d.month and year(date_add(m.year, interval 5 month))=d.year,amount,0)) month6, sum(if(month(date_add(m.year, interval 6 month))=d.month and year(date_add(m.year, interval 6 month))=d.year,amount,0)) month7, sum(if(month(date_add(m.year, interval 7 month))=d.month and year(date_add(m.year, interval 7 month))=d.year,amount,0)) month8, sum(if(month(date_add(m.year, interval 8 month))=d.month and year(date_add(m.year, interval 8 month))=d.year,amount,0)) month9, sum(if(month(date_add(m.year, interval 9 month))=d.month and year(date_add(m.year, interval 9 month))=d.year,amount,0)) month10, sum(if(month(date_add(m.year, interval 10 month))=d.month and year(date_add(m.year, interval 10 month))=d.year,amount,0)) month11, sum(if(month(date_add(m.year, interval 11 month))=d.month and year(date_add(m.year, interval 11 month))=d.year,amount,0)) month12  from  my_budgetdetail d INNER join  my_budgetm m on m.doc_no =d.rdocno  AND m.doc_no=$P{doc_no} group by D.ACNO) A   on A.acno=h.doc_no WHERE H.gr_type='4')b where b.netexpense1!=0;]]>
+		</queryString>
+		<field name="acno" class="java.lang.String"/>
+		<field name="account" class="java.lang.String"/>
+		<field name="month1" class="java.lang.Double"/>
+		<field name="month2" class="java.lang.Double"/>
+		<field name="month3" class="java.lang.Double"/>
+		<field name="month4" class="java.lang.Double"/>
+		<field name="month5" class="java.lang.Double"/>
+		<field name="month6" class="java.lang.Double"/>
+		<field name="month7" class="java.lang.Double"/>
+		<field name="month8" class="java.lang.Double"/>
+		<field name="month9" class="java.lang.Double"/>
+		<field name="month10" class="java.lang.Double"/>
+		<field name="month11" class="java.lang.Double"/>
+		<field name="month12" class="java.lang.Double"/>
+		<field name="netexpense1" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="header" class="java.lang.String"/>
+	<parameter name="footer" class="java.lang.String"/>
+	<parameter name="doc_no" class="java.lang.String"/>
+	<parameter name="incomemonth1" class="java.lang.String"/>
+	<parameter name="incomemonth2" class="java.lang.String"/>
+	<parameter name="incomemonth3" class="java.lang.String"/>
+	<parameter name="incomemonth4" class="java.lang.String"/>
+	<parameter name="incomemonth5" class="java.lang.String"/>
+	<parameter name="incomemonth6" class="java.lang.String"/>
+	<parameter name="incomemonth7" class="java.lang.String"/>
+	<parameter name="incomemonth8" class="java.lang.String"/>
+	<parameter name="incomemonth9" class="java.lang.String"/>
+	<parameter name="incomemonth10" class="java.lang.String"/>
+	<parameter name="incomemonth11" class="java.lang.String"/>
+	<parameter name="incomemonth12" class="java.lang.String"/>
+	<parameter name="expendituremonth1" class="java.lang.String"/>
+	<parameter name="expendituremonth2" class="java.lang.String"/>
+	<parameter name="expendituremonth3" class="java.lang.String"/>
+	<parameter name="expendituremonth4" class="java.lang.String"/>
+	<parameter name="expendituremonth5" class="java.lang.String"/>
+	<parameter name="expendituremonth6" class="java.lang.String"/>
+	<parameter name="expendituremonth7" class="java.lang.String"/>
+	<parameter name="expendituremonth8" class="java.lang.String"/>
+	<parameter name="expendituremonth9" class="java.lang.String"/>
+	<parameter name="expendituremonth10" class="java.lang.String"/>
+	<parameter name="expendituremonth11" class="java.lang.String"/>
+	<parameter name="expendituremonth12" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select tot_income income,tot_expenditure expenditure,doc_no voucherno,DATE_FORMAT(date, '%d.%m.%Y')date,DATE_FORMAT(year, '%d.%m.%Y') assessmentyear,if(description is null,' ',description) description from my_budgetm where status<>7 and doc_no=$P{doc_no}]]>
+	</queryString>
+	<field name="assessmentyear" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="income" class="java.lang.String"/>
+	<field name="voucherno" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="expenditure" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="93" splitType="Stretch">
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="2" y="3" width="958" height="80" uuid="efc7955b-38b4-4cfc-bc54-f3ca4fdbf0e4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{header}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="212" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" x="382" y="2" width="180" height="18" uuid="6c7c79dc-6668-4c2e-bb42-a9513157e752">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Budget"]]></textFieldExpression>
+			</textField>
+			<rectangle radius="9">
+				<reportElement positionType="Float" x="1" y="24" width="959" height="56" uuid="27ab4598-6ab1-4c27-8c6a-2a3251df3e01"/>
+			</rectangle>
+			<textField>
+				<reportElement x="6" y="29" width="78" height="16" uuid="0227e398-6d0d-456f-847e-c909346136ca">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Assessment Year "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="45" width="78" height="16" uuid="a6df3260-6ebc-4783-9004-8d90268648a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="61" width="78" height="16" uuid="49716f93-addd-4cee-82f6-11877ba6e960"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Income "]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="84" y="29" width="100" height="16" uuid="b124d4e3-8d17-4de0-abea-9721c0e558cd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$F{assessmentyear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="45" width="100" height="16" uuid="7d4a2fb0-7702-4f58-8589-8e627866b5f0">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="61" width="100" height="16" uuid="5d648b17-eac1-4327-9ead-0f08a2e7eb14">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$F{income}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="811" y="29" width="72" height="16" uuid="cc1683af-25b1-4bfc-9b67-e11bbbba59bd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Voucher No"]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM d, yyyy">
+				<reportElement x="811" y="45" width="72" height="16" uuid="82a7536d-7e36-4754-b92a-396ca28f493e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="811" y="61" width="72" height="16" uuid="5b1837c8-686d-4f29-8c9f-3e94779e8f88">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Expenditure"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="883" y="29" width="74" height="16" uuid="39390d0a-b6b3-40da-a000-1c902d3d6ee1">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$F{voucherno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="883" y="45" width="74" height="16" uuid="31865d4c-8667-4f53-8fb7-0f45db1bedfe">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="883" y="61" width="74" height="16" uuid="e99a9afb-73b5-4931-950e-ee56c3d39d8c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": "+$F{expenditure}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement positionType="Float" x="1" y="85" width="959" height="60" uuid="56aea23c-35a1-4d15-856c-660016c18599">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="incomedataset" uuid="12e9f457-c89c-4ca5-9377-95af3e861ea1">
+						<datasetParameter name="doc_no">
+							<datasetParameterExpression><![CDATA[$P{doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth1">
+							<datasetParameterExpression><![CDATA[$P{incomemonth1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth2">
+							<datasetParameterExpression><![CDATA[$P{incomemonth2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth3">
+							<datasetParameterExpression><![CDATA[$P{incomemonth3}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth4">
+							<datasetParameterExpression><![CDATA[$P{incomemonth4}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth5">
+							<datasetParameterExpression><![CDATA[$P{incomemonth5}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth6">
+							<datasetParameterExpression><![CDATA[$P{incomemonth6}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth7">
+							<datasetParameterExpression><![CDATA[$P{incomemonth7}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth8">
+							<datasetParameterExpression><![CDATA[$P{incomemonth8}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth9">
+							<datasetParameterExpression><![CDATA[$P{incomemonth9}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth10">
+							<datasetParameterExpression><![CDATA[$P{incomemonth10}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth11">
+							<datasetParameterExpression><![CDATA[$P{incomemonth11}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="incomemonth12">
+							<datasetParameterExpression><![CDATA[$P{incomemonth12}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="45" uuid="32767fcc-3da7-4ac2-a953-4440c35823f1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="45" height="30" uuid="ab3c61e3-3372-4b8a-a4c6-36c01f8c0e68"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Account"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="45" height="30" uuid="f20b59ee-8b27-4e26-8191-de669d147c3a"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{acno}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="135" uuid="d12bd3c0-f234-4d20-bed7-4730d046eb5d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="135" height="30" uuid="ff64196c-f216-4219-8780-3c5b5eef98c3"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Account Name"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="135" height="30" uuid="8a9fc253-44de-444d-806b-4fe3fceeadd6"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{account}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="b6581490-6329-4c2f-ae04-3982665ea583">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="db6b5d4e-d4e9-4edc-9daf-97ae0017296b"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth1}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,###.###;(#,###.###-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="7078677a-5e47-4e32-9ea6-b24c51bdea6c"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="da3c48cf-d9bc-40bf-bbd1-eb873ab04ed2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="c4cdb3fb-04f5-415a-bad2-df1ba589dff0"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth2}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="6fb4555d-46ed-4490-947f-e6e4aa0df4fb"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="3deeebe5-2932-4ac4-9d64-d20b8fb7b56d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="0bf8e473-256e-4cd4-8bb1-4b0635c6b526"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth3}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="320eb468-47f2-4a57-8b3e-7e60713077d1"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month3}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="99b2ce15-d8e5-4e3d-b6b4-a72d1f0159d9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="76d83229-b1a4-470d-8d86-d32e0d43124b"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth4}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="b1ac7523-39b0-46af-8a07-d79b1be2b1ae"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month4}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="dc0da1ee-eaaf-4c15-b19c-ef3eb45e7e5b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="f4aa2abf-a712-4f09-b4b3-92092b9a9e6c"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth5}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="6b8c525a-dd7b-4cdd-90c4-3e943cffeef5"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month5}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="609856d5-bb45-4b12-b1db-30f665590f7a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="0736dc98-9217-4aef-bc63-eeb9abb3113c"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth6}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="52c2a44e-aa71-4a96-94b3-c470898a2ba7"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month6}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="9a93cd2d-8b07-4d22-ab4f-f6c544a13afe">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="0c76bafc-c14e-4484-8b96-497c4f8e2d44"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth7}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="2074384d-cd0c-4365-a589-a9556f5712be"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month7}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="f7d82db9-8561-4d4c-9bf3-e3a2dd443e28">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="1a1a593d-35fb-4f01-b968-25b6412b4487"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth8}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="2a2eb82f-de28-4ad7-b2c6-f04fe06a08b1"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month8}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="b7b2fecd-b764-4d70-b374-d7cccb2c0289">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="b1f82401-386f-4a94-8ea1-847efb649e8a"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth9}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="4d815376-7cf0-47e5-a097-97ca71a8d1dc"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month9}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="202fbbfb-4104-4000-b5e4-8bfec5805bd3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="20aed90b-1219-4d96-82c9-d3c719a6cadb"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth10}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="837e1f07-65a5-4695-8256-64e3d81badae"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month10}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="ffe9a2e7-f971-48c3-bbed-dab395a88e62">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column13"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="a585b78d-6938-4fda-9b1b-9b9786c0f78d"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth11}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="8e32d6e7-0b3c-415b-8f50-39397cbccc00"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month11}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="a7de7190-a053-4b9e-9b54-ba51f845ea3d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column14"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="6a591d02-d9c7-4c82-8644-6aa638e62c4c"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3" spacingBefore="2" spacingAfter="2"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{incomemonth12}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="2f8ede78-687d-4792-82cd-82760b5ed47c"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month12}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="b6f01379-ae35-4c5d-a8df-bd9e51abe126">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column15"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="e5952a05-c3ed-496a-990f-2be3f32a5ec5"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField pattern="#,##0.00#;(#,##0.00#-)">
+								<reportElement x="0" y="0" width="60" height="30" uuid="3be0adac-9c1e-4f98-9299-67e1d9d0745f"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{netincome1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="1" y="151" width="959" height="60" uuid="0ef78745-1a45-4822-b475-a38190c1ca49">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="expensedataset" uuid="9b7f2a8f-569c-49f9-a2b8-6bca769b9cb8">
+						<datasetParameter name="doc_no">
+							<datasetParameterExpression><![CDATA[$P{doc_no}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth1">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth1}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth2">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth3">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth3}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth4">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth4}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth5">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth5}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth6">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth6}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth7">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth7}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth8">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth8}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth9">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth9}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth10">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth10}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth11">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth11}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expendituremonth12">
+							<datasetParameterExpression><![CDATA[$P{expendituremonth12}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="45" uuid="a92369b5-0825-4df3-bb94-a53d50b121a2">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="45" height="30" uuid="d00ea2d7-26ca-4f76-97a7-6c00459de7fa"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Account"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="45" height="30" uuid="2aef4d79-f92c-47da-bdc9-e86e466e742e"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{acno}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="135" uuid="c146e8c3-fa84-4e43-84bc-17906089457d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="135" height="30" uuid="7feae9ca-f246-4f07-9b21-1f7714a14fff"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Account Name"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="135" height="30" uuid="5c23c195-01b6-4377-b9b1-34667186f454"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{account}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="0d5e60da-eeec-444c-b567-a54cfc925f11">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="a82bd3de-1518-41af-985e-78b812c95923"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth1}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="486cb8fc-1f86-440d-b937-2d3bd531f01e"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="52b4024d-f85e-41e7-a02c-5fa7f9b0b6dd">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="2427eba8-1b8e-428b-a5e6-76926b431c50"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth2}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="6c443bb8-e8b2-47c0-b02d-0b57b468c633"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="7707eaa9-17c7-404e-9d7a-910c61370d3c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="a861cafe-1c8c-4927-95f6-e393145a224d"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth3}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="676c114f-57c7-4ed0-a00f-c22b23505477"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month3}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="aba30684-a631-4e7f-9df5-358679ddbc54">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="f014fa81-5239-4413-aba2-8eb89f4cddff"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth4}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="3ee4affb-8788-4325-bea0-d7241af633f8"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month4}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="f37a8e2d-0733-4ba3-98ff-79e78080eecc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="2d99efb1-392f-4460-b221-ea1474c908d5"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth5}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="227baf3b-c7ef-45cd-b854-9dcfd8e7910f"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month5}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="ec03003d-0919-4f4a-8a1d-d651b4fc1502">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="614cd21c-7a27-4cb9-91bf-939bc5cc04e6"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth6}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="d0cb17e6-efa2-425e-8aa1-291c29c36896"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month6}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="11a511d2-0103-4d92-af4b-08983aa0b16b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="7c6f8982-8e64-458c-92be-261cbaaa0102"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth7}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="2c4e2feb-82d5-4310-bcad-9fe41321dd35"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month7}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="b165183f-d9a6-4bf8-b42b-b95a30a8a494">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="77be006a-e676-4726-a34a-fba522883c89"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth8}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="457d6973-848a-4b6e-ba91-dd7afa6623db"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month8}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="f386007a-4bf7-4b5e-be15-15231b51d8cc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="84df61dc-c37f-4c6b-82aa-96e9f3e47d7f"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth9}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="81a63b08-0ac0-445d-991d-0b9def4b4588"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month9}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="407175fd-de3c-47cb-b44d-eb999fa8429a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="8609e27f-0555-42fd-a864-f392be0d06ba"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth10}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="bd904a43-6840-48b6-ab1b-c77a160338a0"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month10}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="ab3868d3-42bb-4b72-87df-51813d55c82f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column13"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="16cd1d65-80c9-4070-82f7-09906cd01a4a"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth11}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="6d8e32d5-7996-49a8-8700-7744cf8754f7"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month11}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="81076266-fb2a-4a81-ad2e-fbc629dcb876">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column14"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="faba77a1-63ff-4596-b462-09f3f976dbdb"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3" spacingBefore="2" spacingAfter="2"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{expendituremonth12}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="06a0afc2-6bc7-435e-af1e-3658163833f8"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{month12}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="6874a380-6ce7-432e-b537-278dd0437425">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column15"/>
+						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="7c6ff5dd-513f-4746-aa5f-b3c232d7ebfa"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="Table 1_TD" height="30">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" uuid="ebb96c28-317c-43ab-9706-788719d4dd6e"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{netexpense1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="85" splitType="Stretch">
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="2" y="5" width="958" height="80" uuid="d839ada9-c7ba-47c5-9a8d-f9dc637f654d"/>
+				<imageExpression><![CDATA[$P{footer}]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

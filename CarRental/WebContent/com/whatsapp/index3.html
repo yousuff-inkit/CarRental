@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>WhatsApp ChatBox</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+	.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder-image {
+  filter: blur(10px); /* Adjust blur amount as needed */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Place it above the actual image */
+}
+
+.actual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio */
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; /* Initially hidden */
+}
+</style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        window.alert = function(){};
+        var defaultCSS = document.getElementById('bootstrap-css');
+        function changeCSS(css){
+            if(css) $('head > link').filter(':first').replaceWith('<link rel="stylesheet" href="'+ css +'" type="text/css" />'); 
+            else $('head > link').filter(':first').replaceWith(defaultCSS); 
+        }
+        $( document ).ready(function() {
+          var iframe_height = parseInt($('html').height()); 
+          window.parent.postMessage( iframe_height, 'http://localhost:8088');
+        });
+    </script>
+</head>
+<body>
+    <!DOCTYPE html>
+<html>
+    
+<head>
+	<title>WhatsApp ChatBox</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+<div class="image-container">
+  <img class="placeholder-image" src="placeholder.jpg" alt="Placeholder Image">
+  <img class="actual-image" src="" data-src="full-resolution-image.jpg" alt="Actual Image">
+</div>
+</body>
+</html>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+  const images = document.querySelectorAll(".actual-image");
+
+  images.forEach(function(img) {
+    img.onload = function() {
+      img.style.opacity = 1; // Show the loaded image
+    };
+
+    const src = img.getAttribute("data-src");
+    if (src) {
+      img.src = src; // Start loading the image
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const images = document.querySelectorAll(".actual-image");
+
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        const src = img.getAttribute("data-src");
+        if (src) {
+          img.src = src;
+          observer.unobserve(img);
+        }
+      }
+    });
+  }, options);
+
+  images.forEach(function(img) {
+    observer.observe(img);
+  });
+});
+
+		</script>
+</body>
+</html>
