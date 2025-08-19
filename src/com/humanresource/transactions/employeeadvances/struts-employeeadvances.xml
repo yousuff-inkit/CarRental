@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	
+
+	<package name="EmployeeAdvances" extends="struts-default">
+			<action name="saveEmployeeAdvances" class="com.humanresource.transactions.employeeadvances.ClsEmployeeAdvancesAction" method="saveAction">
+				<interceptor-ref name="params"/>
+				<result name="success">employeeadvances.jsp</result>
+				<result name="fail">employeeadvances.jsp</result>
+			</action>
+	<action name="printEmployeeAdvances" class="com.humanresource.transactions.employeeadvances.ClsEmployeeAdvancesAction" method="printAction">
+				<interceptor-ref name="params"/>
+				<result name="print">${url}</result>
+			</action>
+		</package>	
+</struts>
+

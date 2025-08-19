@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2022-02-15T19:29:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="readyToRentPrintFLS" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="46a1b6c4-d994-47d5-8520-b91beedfd80b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="readytorentfls"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#757575"/>
+			<topPen lineWidth="0.5" lineColor="#757575"/>
+			<leftPen lineWidth="0.5" lineColor="#757575"/>
+			<bottomPen lineWidth="0.5" lineColor="#757575"/>
+			<rightPen lineWidth="0.5" lineColor="#757575"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#757575"/>
+			<topPen lineWidth="0.5" lineColor="#757575"/>
+			<leftPen lineWidth="0.5" lineColor="#757575"/>
+			<bottomPen lineWidth="0.5" lineColor="#757575"/>
+			<rightPen lineWidth="0.5" lineColor="#757575"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#757575"/>
+			<topPen lineWidth="0.5" lineColor="#757575"/>
+			<leftPen lineWidth="0.5" lineColor="#757575"/>
+			<bottomPen lineWidth="0.5" lineColor="#757575"/>
+			<rightPen lineWidth="0.5" lineColor="#757575"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="5bfd2771-cd58-4973-8394-be0488ed7d26">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="readytorentfls"/>
+		<queryString>
+			<![CDATA[select fleet_no,flname, concat(reg_no,'-',a.authid,'-',p.code_no)vehdet,eng_no,ch_no from gl_vehmaster v left join gl_vehplate p on p.doc_no=v.pltid left join gl_vehauth a on a.doc_no=v.authid where tran_code='fs' and fstatus='l']]>
+		</queryString>
+		<field name="fleet_no" class="java.lang.String"/>
+		<field name="flname" class="java.lang.String"/>
+		<field name="vehdet" class="java.lang.String"/>
+		<field name="eng_no" class="java.lang.String"/>
+		<field name="ch_no" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="company" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 'name' as name]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="110" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="370" height="30" uuid="1431b431-b579-4d17-820b-fefccc13f3a0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="35" y="34" width="474" height="76" backcolor="#EDEDED" uuid="d8e28515-0654-443a-a22f-13c91122870a"/>
+			</rectangle>
+			<textField>
+				<reportElement x="84" y="40" width="370" height="30" uuid="0ca7cc3a-f89d-4a9c-98e8-9407554cac3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["For Sales Vehicle Report"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="74" width="370" height="30" uuid="35023016-dc06-4fa4-bcc6-445a017b2281"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date  :"+DATEFORMAT(new java.util.Date(),"dd-MM-YYYY")]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<componentElement>
+				<reportElement positionType="Float" x="35" y="5" width="474" height="40" uuid="9c8cf392-9cf4-4b6f-923c-a4a32d65509a">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="b46437d4-234c-402f-b7c1-b7832442e235">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="50" uuid="c5e1393d-9f3e-416f-b013-6c4970f8cea4">
+						<jr:columnHeader style="Table_CH" height="20">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="20" uuid="3fdf444b-b1bb-4a95-bc6b-83ed9eedaf8d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Fleet No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="50" height="20" uuid="ff4d0407-43ef-48d6-b661-95749f5c671e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fleet_no}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="180" uuid="2044613f-045a-41ac-94dc-95839e6947b9">
+						<jr:columnHeader style="Table_CH" height="20">
+							<staticText>
+								<reportElement x="0" y="0" width="180" height="20" uuid="3b8cc6c0-3494-454d-bade-402059cc04ef"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Fleet Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="180" height="20" uuid="e1c9d0b3-3c9e-4f34-82ec-b850ccda49b6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{flname}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="199d523c-f523-4864-a670-ebd5be2f260e">
+						<jr:columnHeader style="Table_CH" height="20">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="20" uuid="c2b07556-6654-41f1-ba98-4f496dd4037c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Vehicle Details]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="70" height="20" uuid="9fadc13f-25ba-4efb-9eb6-2cca6acbcdf6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{vehdet}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="127c66c5-4f38-47b6-a4cc-d95cf3c7ce45">
+						<jr:columnHeader style="Table_CH" height="20">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="20" uuid="5d444d66-fdef-4b24-85da-e12ef036c465"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Engine No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="20" uuid="33c1e814-4182-4678-98e4-d1ac1211e0c7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{eng_no}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="94" uuid="aebb3d32-e85b-437e-a2cf-3526c5a442c5">
+						<jr:columnHeader style="Table_CH" height="20">
+							<staticText>
+								<reportElement x="0" y="0" width="94" height="20" uuid="0ca08345-0ce3-44e1-b31f-40d8e4b77407"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Chassis No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="20">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="94" height="20" uuid="cf4ed7c6-7d2f-4fa5-9664-2f8a0cd74923"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ch_no}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
