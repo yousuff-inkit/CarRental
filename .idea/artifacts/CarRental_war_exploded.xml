@@ -1,0 +1,101 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="CarRental:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/CarRental_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="CarRental" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="aspose-ocr-1.0.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="asprise_scan.jar" module-name="CarRental" />
+          <element id="library" level="module" name="asprise_scan-legacy.jar" module-name="CarRental" />
+          <element id="library" level="module" name="barbecue-1.5-beta1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="com.fasterxml.jackson.annotations.jar" module-name="CarRental" />
+          <element id="library" level="module" name="com.fasterxml.jackson.core.jar" module-name="CarRental" />
+          <element id="library" level="module" name="com.fasterxml.jackson.databind.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-beanutils-1.8.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-beanutils-1.9.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-codec-1.5.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-collections-3.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-collections-3.2.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-digester-2.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-exec-1.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-fileupload-1.2.2.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-fileupload-1.3.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-io-2.2.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-io-2.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-javaflow-20060411.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-lang-2.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-lang3-3.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-logging-1.1.3.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-logging-1.2.jar" module-name="CarRental" />
+          <element id="library" level="module" name="commons-logging-api-1.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="dbgrid-1.0.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="ditchnet-tabs-taglib.jar" module-name="CarRental" />
+          <element id="library" level="module" name="dynamicreports-core-3.1.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="ezmorph-1.0.6.jar" module-name="CarRental" />
+          <element id="library" level="module" name="flying-saucer-core-9.0.7.jar" module-name="CarRental" />
+          <element id="library" level="module" name="flying-saucer-pdf-9.0.7.jar" module-name="CarRental" />
+          <element id="library" level="module" name="freemarker-2.3.19.jar" module-name="CarRental" />
+          <element id="library" level="module" name="ghost4j-0.5.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="gson-2.3.jar" module-name="CarRental" />
+          <element id="library" level="module" name="guava-18.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="hsqldb.jar" module-name="CarRental" />
+          <element id="library" level="module" name="httpclient-4.3.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="httpcore-4.3.2.jar" module-name="CarRental" />
+          <element id="library" level="module" name="httpmime-4.3.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="itext-2.1.7.jar" module-name="CarRental" />
+          <element id="library" level="module" name="itextpdf-5.5.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="itext-pdfa-5.4.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jackcess-2.1.11.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jai_imageio.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jai_imageio-1.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jasper-compiler-jdt.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jasperreports-6.0.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jasperreports-fonts-6.1.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jasperreports-functions-6.3.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jasperreports-javaflow-6.0.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="javassist-3.11.0.GA.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jna.jar" module-name="CarRental" />
+          <element id="library" level="module" name="joda-time-2.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="json-lib-2.3-jdk15.jar" module-name="CarRental" />
+          <element id="library" level="module" name="json-lib-2.4-jdk15.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jsoup-1.8.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jsr305-1.3.9.jar" module-name="CarRental" />
+          <element id="library" level="module" name="jstl-1.2.jar" module-name="CarRental" />
+          <element id="library" level="module" name="junit-4.10.jar" module-name="CarRental" />
+          <element id="library" level="module" name="log4j-1.2.17.jar" module-name="CarRental" />
+          <element id="library" level="module" name="mail.jar" module-name="CarRental" />
+          <element id="library" level="module" name="mysql-connector-java-5.1.9.jar" module-name="CarRental" />
+          <element id="library" level="module" name="ognl-3.0.6.jar" module-name="CarRental" />
+          <element id="library" level="module" name="pdfbox-app-1.8.10.jar" module-name="CarRental" />
+          <element id="library" level="module" name="poi-3.13-20150929.jar" module-name="CarRental" />
+          <element id="library" level="module" name="poi-examples-3.13-20150929.jar" module-name="CarRental" />
+          <element id="library" level="module" name="poi-excelant-3.13-20150929.jar" module-name="CarRental" />
+          <element id="library" level="module" name="poi-ooxml-3.13-20150929.jar" module-name="CarRental" />
+          <element id="library" level="module" name="poi-ooxml-schemas-3.13-20150929.jar" module-name="CarRental" />
+          <element id="library" level="module" name="poi-scratchpad-3.13-20150929.jar" module-name="CarRental" />
+          <element id="library" level="module" name="selenium-java-2.44.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="slf4j.jar" module-name="CarRental" />
+          <element id="library" level="module" name="sqljdbc41.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-bootstrap-plugin-1.7.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-core-2.3.16.3.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-dojo-plugin-2.3.16.3.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-jquery-plugin-3.7.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-json-plugin-2.3.16.3.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-pdfstream-plugin-1.3.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-pdfstream-tiles3-1.3.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="struts2-tiles3-plugin-2.3.20.jar" module-name="CarRental" />
+          <element id="library" level="module" name="tiles-request-api-1.0.1.jar" module-name="CarRental" />
+          <element id="library" level="module" name="ucanaccess-4.0.4.jar" module-name="CarRental" />
+          <element id="library" level="module" name="xml-apis-1.4.01.jar" module-name="CarRental" />
+          <element id="library" level="module" name="xmlbeans-2.6.0.jar" module-name="CarRental" />
+          <element id="library" level="module" name="xmlgraphics-commons-1.5.jar" module-name="CarRental" />
+          <element id="library" level="module" name="xwork-core-2.3.16.3.jar" module-name="CarRental" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="CarRental/web/Web" />
+    </root>
+  </artifact>
+</component>
