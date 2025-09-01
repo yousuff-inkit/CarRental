@@ -28,3 +28,16 @@ ALTER TABLE my_powr
 ADD COLUMN `view` SMALLINT(1) UNSIGNED DEFAULT 0;
 
 ```
+
+Added new table datalog
+```
+CREATE TABLE datalog (
+    doc_no   VARCHAR(50),         -- document number, assuming alphanumeric
+    brhId    INT,                 -- branch ID, assuming numeric
+    dtype    VARCHAR(20),         -- document/form type code
+    edate    DATETIME,            -- entry date/time
+    userId   INT,                 -- user ID, assuming numeric
+    ENTRY    VARCHAR(10)          -- mode of entry (e.g., 'add', 'edit'), can adjust size
+);
+
+```

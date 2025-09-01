@@ -6,8 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="notification.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
+    <link href="https://fonts.googleapis.com/css?family=Segoe+UI:400,500,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
 <style>
+
+    body {
+        font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+        background: #f6f8fa;
+        margin: 0;
+        color: #253858;
+    }
 
 .HeadIcons {
     font: 12px Tahoma;
@@ -83,6 +92,96 @@ label.currency{
   }
 }
 button.icon:disabled { opacity: 0.5; };
+.icon-text {
+    color: #007bff;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 18px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1rem;
+    display: inline-block;
+}
+.icon-text:hover {
+    background: #eaf4ff;
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.HeadIcons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 18px 32px;
+    width: 95%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 1rem;
+}
+
+.HeadIcons label.branch,
+.HeadIcons label.currency {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+    min-width: 80px;
+    text-align: right;
+}
+
+.HeadIcons select,
+.HeadIcons input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    background: #ffffff;
+    transition: border-color 0.2s;
+    min-width: 120px;
+    height: auto;
+    font-size: 10px;
+}
+
+.HeadIcons select:focus,
+.HeadIcons input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#savemsg {
+    color: #22c55e;
+    font-weight: bold;
+    margin-left: 16px;
+}
+
+#errormsg {
+    color: #e11d48;
+    font-weight: bold;
+    margin-left: 16px;
+}
+
+    .action-bar {
+        display: flex;
+        gap: 14px;
+        padding: 0.5% 2%;
+    }
+    .action-btn {
+        background: #e4e7ed;
+        border: none;
+        color: #253858;
+        padding: 4px 25px;
+        border-radius: 23px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .action-btn:hover {
+        background: #cdd9e5;
+    }
+
 </style>
 <script type="text/javascript">
 var APP_PATH='<%=contextPath%>';
@@ -1547,72 +1646,31 @@ function setapprbrch(branchval){
 <body onload="funChkButton();"  onclick="getformbranch();">
 <div id="mainBG" class="homeContent" data-type="background">
 <div class="HeadIcons" id="full">
-	<font size=3px><label id="formdet" name="formdet" ></label></font> 
-						
-				<button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >
-							<img alt="statusDocument" src="<%=contextPath%>/icons/approve_new.png">
-</button>
-				    <button type="button" class="icon" id="btnClose" title="Close Form" onclick="funCloseBtn()">
-							<img alt="closeForm" src="<%=contextPath%>/icons/close_new.png">
-						</button>
-				    <button type="button" class="icon" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">
-							<img alt="newDocument" src="<%=contextPath%>/icons/add_new.png">
-						</button>
-					<button type="button" class="icon" id="btnEdit" title="Change current Document" onclick="funEditBtn()" >
-							<img alt="editDocument" src="<%=contextPath%>/icons/edit_new.png">
-						</button>
-					<button type="button" class="icon" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">  
-							<img alt="printDocument" src="<%=contextPath%>/icons/print_new.png">
-						</button>
-					<button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">
-							<img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">
-						</button>
-					<button class="icon" id="btnDelete" title="Delete current Document" >
-							<img alt="deleteDocument" src="<%=contextPath%>/icons/delete_new.png">
-						</button>
-						
-		 			<button class="icon" id="btnSave" title="Save Changes" hidden="true">
-							<img alt="saveChanges" src="<%=contextPath%>/icons/save_new.png">
-						</button>
-						
-					<button type="button" class="icon" id="btnCancel" title="Cancel Changes"  onclick="funCancelBtn()" hidden="true">
-							<img alt="cancelChanges" src="<%=contextPath%>/icons/cancel_new.png">
-						</button>
-						
-					<button type="button" class="icon" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">
-							<img alt="searchDocument" src="<%=contextPath%>/icons/search_new.png">
-						</button>
-						
-					<button type="button" class="icon" type="button" id="btnAttach" title="Attachment" onclick="funAttachBtn()">
-							<img alt="Attachment" src="<%=contextPath%>/icons/attachment_new.png">
-						</button>
-					
-					<button type="button" class="icon" type="button" id="btnCosting" title="Costing" onclick="funCostingBtn()">
-							<img alt="Costing" src="<%=contextPath%>/icons/costtype.png">
-					</button>	
-					
-					<button type="button" class="icon" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">
-							<img alt="Guideline" src="<%=contextPath%>/icons/guideline.png">
-					</button>
+	<font size=5px style="width: 100%"><label id="formdet" name="formdet" ></label></font>
 
-					<button type="button" class="icon" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">
-							<img alt="Sendmail" src="<%=contextPath%>/icons/mail_new.png">
-					</button>
-					
-					<button type="button" class="icon" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">
-							<img alt="Terms" src="<%=contextPath%>/icons/tndc.png">
-					</button>
-						
-			<label class="branch">Branch&nbsp;&nbsp;</label>
-			<select name="brchName" id="brchName" onChange="getCurr(this.value)">
-			</select>
-			<input type="text" name="brchNames" id="brchNames" readonly="readonly" value='<s:property value="brchNames"/>' />	
-       <label class="currency">Currency&nbsp;&nbsp;</label><select name="currency" id="currency" onchange="getCurrencyType(this.value);" >
-					</select>
-					<input type="text" name="currencys" id="currencys" readonly="readonly" value='<s:property value="currencys"/>' />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label id="savemsg" name="savemsg" style="color:green;font-weight:bold;"></label>
-					<label id="errormsg" name="errormsg" style="color:red;font-weight:bold;"><s:property value="errormsg"/></label>
+    <div class="HeadIcons" id="full">
+        <label class="branch">Branch</label>
+        <select name="brchName" id="brchName" onChange="getCurr(this.value)"></select>
+        <input type="text" name="brchNames" id="brchNames" readonly="readonly" />
+
+        <label class="currency">Currency</label>
+        <select name="currency" id="currency" onchange="getCurrencyType(this.value);"></select>
+        <input type="text" name="currencys" id="currencys" readonly="readonly" />
+
+        <label id="savemsg"></label>
+        <label id="errormsg"></label>
+        <!-- hidden fields as needed -->
+    </div>
+<%--			<label class="branch">Branch&nbsp;&nbsp;</label>--%>
+<%--			<select name="brchName" id="brchName" onChange="getCurr(this.value)">--%>
+<%--			</select>--%>
+<%--			<input type="text" name="brchNames" id="brchNames" readonly="readonly" value='<s:property value="brchNames"/>' />	--%>
+<%--       <label class="currency">Currency&nbsp;&nbsp;</label><select name="currency" id="currency" onchange="getCurrencyType(this.value);" >--%>
+<%--					</select>--%>
+<%--					<input type="text" name="currencys" id="currencys" readonly="readonly" value='<s:property value="currencys"/>' />--%>
+<%--					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
+<%--					<label id="savemsg" name="savemsg" style="color:green;font-weight:bold;"></label>--%>
+<%--					<label id="errormsg" name="errormsg" style="color:red;font-weight:bold;"><s:property value="errormsg"/></label>--%>
 		<input type="hidden" id="status" />
 		<input type="hidden" id="apprstatus" />
 		<input type="hidden" id="isfirstappr" />
@@ -1623,6 +1681,81 @@ function setapprbrch(branchval){
 <input type="hidden" id="termstatus" />
 	<!-- 	If Add=1,Edit=2 -->
 		</div>
+
+
+    <div class="action-bar">
+        <button class="action-btn" id="btnApproval" title="Document Status" onclick="funApproveBtn()">Approval</button>
+        <button class="action-btn" id="btnClose" title="Close Form" onclick="funCloseBtn()">Close</button>
+        <button class="action-btn" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">Create</button>
+        <button class="action-btn" id="btnEdit" title="Change current Document" onclick="funEditBtn()">Edit</button>
+<%--        <button class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>--%>
+<%--        <button class="action-btn" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">Excel</button>--%>
+        <button class="action-btn" id="btnDelete" title="Delete current Document" onclick="funDeleteBtn()">Delete</button>
+        <button class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden="true">Save</button>
+        <button class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden="true">Cancel</button>
+        <button class="action-btn" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">Search</button>
+        <button class="action-btn" id="btnAttach" title="Attachment" onclick="funAttachBtn()">Attach</button>
+<%--        <button class="action-btn" id="btnCosting" title="Costing" onclick="funCostingBtn()">Costing</button>--%>
+<%--        <button class="action-btn" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">Guideline</button>--%>
+<%--        <button class="action-btn" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">Send Mail</button>--%>
+<%--        <button class="action-btn" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">Terms</button>--%>
+    </div>
+<%--    <div>--%>
+<%--        <button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >--%>
+<%--            <img alt="statusDocument" src="<%=contextPath%>/icons/approve_new.png">--%>
+<%--        </button>--%>
+<%--        <button type="button" class="icon" id="btnClose" title="Close Form" onclick="funCloseBtn()">--%>
+<%--            <img alt="closeForm" src="<%=contextPath%>/icons/close_new.png">--%>
+<%--        </button>--%>
+<%--        <button type="button" class="icon" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">--%>
+<%--            <img alt="newDocument" src="<%=contextPath%>/icons/add_new.png">--%>
+<%--        </button>--%>
+<%--        <button type="button" class="icon" id="btnEdit" title="Change current Document" onclick="funEditBtn()" >--%>
+<%--            <img alt="editDocument" src="<%=contextPath%>/icons/edit_new.png">--%>
+<%--        </button>--%>
+<%--        <button type="button" class="icon" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">--%>
+<%--            <img alt="printDocument" src="<%=contextPath%>/icons/print_new.png">--%>
+<%--        </button>--%>
+<%--        <button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">--%>
+<%--            <img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">--%>
+<%--        </button>--%>
+<%--        <button class="icon" id="btnDelete" title="Delete current Document" >--%>
+<%--            <img alt="deleteDocument" src="<%=contextPath%>/icons/delete_new.png">--%>
+<%--        </button>--%>
+
+<%--        <button class="icon" id="btnSave" title="Save Changes" hidden="true">--%>
+<%--            <img alt="saveChanges" src="<%=contextPath%>/icons/save_new.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" id="btnCancel" title="Cancel Changes"  onclick="funCancelBtn()" hidden="true">--%>
+<%--            <img alt="cancelChanges" src="<%=contextPath%>/icons/cancel_new.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">--%>
+<%--            <img alt="searchDocument" src="<%=contextPath%>/icons/search_new.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" type="button" id="btnAttach" title="Attachment" onclick="funAttachBtn()">--%>
+<%--            <img alt="Attachment" src="<%=contextPath%>/icons/attachment_new.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" type="button" id="btnCosting" title="Costing" onclick="funCostingBtn()">--%>
+<%--            <img alt="Costing" src="<%=contextPath%>/icons/costtype.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">--%>
+<%--            <img alt="Guideline" src="<%=contextPath%>/icons/guideline.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">--%>
+<%--            <img alt="Sendmail" src="<%=contextPath%>/icons/mail_new.png">--%>
+<%--        </button>--%>
+
+<%--        <button type="button" class="icon" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">--%>
+<%--            <img alt="Terms" src="<%=contextPath%>/icons/tndc.png">--%>
+<%--        </button>--%>
+
+<%--    </div>--%>
 </div>	
 	
 

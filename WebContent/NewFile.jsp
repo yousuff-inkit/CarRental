@@ -1322,14 +1322,7 @@ function setapprbrch(branchval){
 <body onload="funChkButton();"  onclick="getformbranch();">
 <div id="mainBG" class="homeContent" data-type="background">
 <div class="HeadIcons" id="full">
-	<font size=3px><label id="formdet" name="formdet" ></label></font> 
-						
-				<button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >
-							<img alt="statusDocument" src="<%=contextPath%>/icons/approve_new.png">
-</button>
-				    <button type="button" class="icon" id="btnClose" title="Close Form" onclick="funCloseBtn()">
-							<img alt="closeForm" src="<%=contextPath%>/icons/close_new.png">
-						</button>
+	<font size=3px><label id="formdet" name="formdet" ></label></font>
 				    <button type="button" class="icon" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">
 							<img alt="newDocument" src="<%=contextPath%>/icons/add_new.png">
 						</button>
@@ -1338,9 +1331,6 @@ function setapprbrch(branchval){
 						</button>
 					<button type="button" class="icon" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">  
 							<img alt="printDocument" src="<%=contextPath%>/icons/print_new.png">
-						</button>
-					<button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">
-							<img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">
 						</button>
 					<button class="icon" id="btnDelete" title="Delete current Document" >
 							<img alt="deleteDocument" src="<%=contextPath%>/icons/delete_new.png">
@@ -1366,13 +1356,7 @@ function setapprbrch(branchval){
 							<img alt="Costing" src="<%=contextPath%>/icons/costtype.png">
 					</button>	
 					
-					<button type="button" class="icon" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">
-							<img alt="Guideline" src="<%=contextPath%>/icons/guideline.png">
-					</button>
 
-					<button type="button" class="icon" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">
-							<img alt="Sendmail" src="<%=contextPath%>/icons/mail_new.png">
-					</button>
 					
 					<button type="button" class="icon" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">
 							<img alt="Terms" src="<%=contextPath%>/icons/tndc.png">
