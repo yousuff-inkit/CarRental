@@ -13,6 +13,157 @@ color:red;
   font-weight:bold;
 
 }
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
+}
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+}
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
 </style>
 
 <script type="text/javascript">
@@ -404,9 +555,11 @@ function getCurrencyIds(){
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmNipurchaseOrder" action="saveActionNipurOrder" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" />    
-	<br/> 
-	<fieldset>
-<table width="100%"  >
+	<br/>
+
+    <div class='hidden-scrollbar receipt-header'>
+
+<table class="cr-table" width="100%"  >
 
   <tr>
     <td width="4.8%" align="right">Date</td> 
@@ -421,7 +574,9 @@ function getCurrencyIds(){
   
   </tr>
   </table>
- <table width="100%" >
+
+
+ <table class="cr-table" width="100%" >
   <tr>
        <td width="1%" align="right">Vendor</td>
     <td colspan="5" width="14%" align="left"> 
@@ -446,7 +601,8 @@ function getCurrencyIds(){
     
   </tr>
   </table>
-  <table width="100%"   >
+
+  <table class="cr-table" width="100%"   >
   <tr>
  
     <td align="right" width="4.3%" >Del Date</td>
@@ -468,7 +624,7 @@ function getCurrencyIds(){
     
   </tr></table>
                               
-    <table width="100%"  >
+    <table class="cr-table" width="100%"  >
   <tr>
   <td align="right"  width="4.7%">Pay Terms</td>
     <td colspan="6"  width="94%" align="left"><input type="text" name="payterms" id="payterms" value='<s:property value="payterms"/>' style="width:73%;"></td>
@@ -478,14 +634,13 @@ function getCurrencyIds(){
     <td colspan="6"  width="94%" align="left"><input type="text" name="purdesc" id="purdesc" value='<s:property value="purdesc"/>' style="width:73%;"></td></tr>
 </table>
 
- </fieldset>
+
  <br>
- <fieldset>
+
  
-    <div id="descdetail" ><jsp:include page="descgridDetails.jsp"></jsp:include></div>
+    <div class="cr-table" id="descdetail" ><jsp:include page="descgridDetails.jsp"></jsp:include></div>
      
 
-</fieldset>
 <input type="hidden" id="masterdoc_no" name="masterdoc_no"  value='<s:property value="masterdoc_no"/>'/>
            <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
              <input type="hidden" id="mode" name="mode"  value='<s:property value="mode"/>'/>   
@@ -505,7 +660,7 @@ function getCurrencyIds(){
                      <input type="hidden" id="hideproducttype" name="hideproducttype"  value='<s:property value="hideproducttype"/>'/>
             
             
-          
+    </div>
 </form>
   <div id="accountSearchwindow">
 	   <div ></div>

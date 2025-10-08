@@ -633,14 +633,22 @@
 		        $("#docno").prop("disabled", false);  
 		     
 		        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
+                    let win;
 					if (r){
-						 var win= window.open(reurl[0]+"printCashReceipt?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					     win.focus();
+						 win= window.open(reurl[0]+"printCashReceipt?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 					 }
 					else{
-						var win= window.open(reurl[0]+"printCashReceipt?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					    win.focus();
+                        win= window.open(reurl[0]+"printCashReceipt?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 					}
+                    if (win) {
+                        setTimeout(function() {
+                            win.focus();
+                            win.print();
+                        });//todo : might need to adjust timeout based on content in prod
+                    }else {
+                        console.error("Win object not loaded");
+                    }
+
 		        });
 		     }
 		    else {

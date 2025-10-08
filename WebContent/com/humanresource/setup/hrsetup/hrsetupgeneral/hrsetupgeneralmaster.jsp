@@ -480,7 +480,155 @@ form label.error {
     height: 530px;
     overflow-x: hidden;
     
-} 
+}
+
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
+}
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+}
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
 </style>  
 
 </head>
@@ -489,11 +637,11 @@ form label.error {
 <form id="frmhrsetups" action="saveHrsetup" autocomplete="OFF" >
 
 <jsp:include page="../../../../../header.jsp"></jsp:include><br/>
-<div class='hidden-scrollbar'>
-<fieldset>
-<legend>For Days in Year</legend>   
-<fieldset>       
-<table width="99%"  > 
+<div class='hidden-scrollbar receipt-header'>
+
+<h3>For Days in Year</h3>
+<div class="table-section">
+<table class="cr-table" width="99%"  >
   <tr>
     <td width="13%" align="right">Date</td>  
     <td width="12%"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
@@ -540,43 +688,45 @@ form label.error {
     <td colspan="5"><input type="text" id="forworkingdays" name="forworkingdays"  onkeypress="javascript:return isNumber (event)"  value='<s:property value="forworkingdays"/>' ></td>
   </tr>
 </table>
- </fieldset>
- <table width="100%">
+</div>
+ <table class="cr-table" width="100%">
  <tr>
  <td height="234" width="55%">
-   <fieldset class="hideterm" id="fs1"><legend>Terminal Benefits</legend>
-   <table width="100%">
+  <h3>Terminal Benefits</h3>
+   <table class="hideterm cr-table" id="fs1" width="100%">
    <tr>
    <td width="65%">
-   	<div id="termibeni"> <jsp:include page="terminationbenefitcondtiongrid.jsp"></jsp:include></div>
+   	<div class="cr-table" id="termibeni"> <jsp:include page="terminationbenefitcondtiongrid.jsp"></jsp:include></div>
  </td>
  <td width="35%">
-    <fieldset><legend>Termination Details</legend>
-   <div id="trimi"> <jsp:include page="terminationdetailsgrid.jsp"></jsp:include></div>
-   </fieldset>
-   <fieldset><legend>Resignation Details</legend> 
-   <div id="resig"> <jsp:include page="resignationdetailsgrid.jsp"></jsp:include></div>
-   </fieldset>
+    <h3>Termination Details</h3>
+   <div class="cr-table" id="trimi"> <jsp:include page="terminationdetailsgrid.jsp"></jsp:include></div>
+
+ <h3>Resignation Details</h3>
+   <div class="cr-table" id="resig"> <jsp:include page="resignationdetailsgrid.jsp"></jsp:include></div>
+
   </td>
  </tr>
  </table>
-   </fieldset>  
+
+
+
        <td  width="45%">
-    <fieldset id="fs2" >
-	<legend>Salary Calculation Formula (Hrs)</legend>    
-    <table width="100%">
+    <div id="fs2" >
+	<h3>Salary Calculation Formula (Hrs)</h3>
+    <table class="cr-table" width="100%">
     	<tr><td width="37%" align="right">Conversion Formula Month To Day</td><td align="left"><input type="text" id="convformula" readonly="readonly"   placeholder="Press F3 To Search" name="convformula" Style="width:99%;" value='<s:property value="convformula"/>' onkeydown="getconfor(event);"></td> </tr>
     	<tr><td  width="37%" align="right">Rate per Hour</td><td align="left" ><input type="text" id="normalrate" name="normalrate" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="normalrate"/>' onkeydown="getnr(event);" > </td> </tr>
     	<tr><td  width="37%" align="right"> OT</td><td  align="left"><input type="text" id="ot" name="ot" Style="width:99%;" readonly="readonly"   placeholder="Press F3 To Search" value='<s:property value="ot"/>'  onkeydown="getot(event);" > </td> </tr>
     	<tr><td width="37%" align="right">Holiday OT</td><td  align="left"><input type="text" id="holidayot" name="holidayot" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="holidayot"/>'  onkeydown="getholyot(event);"> </td> </tr>
-    </table></fieldset>
-    <fieldset id="fs3"><legend>Account Setup</legend>  
-      	<div id="accset"> <jsp:include page="accountsetupgrid.jsp"></jsp:include></div>
-    </fieldset>
+    </table></div>
+    <div id="fs3"><h3>Account Setup</h3>
+      	<div class="cr-table" id="accset"> <jsp:include page="accountsetupgrid.jsp"></jsp:include></div>
+    </div>
    </td>
    </tr>
   </table>
-  </fieldset>   
+
  </div>
  
 <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />

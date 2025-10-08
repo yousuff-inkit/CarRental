@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="notification.jsp"></jsp:include>
-    <link href="https://fonts.googleapis.com/css?family=Segoe+UI:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,500,700" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
 <style>
@@ -946,25 +946,35 @@ document.getElementById("termstatus").value=0;
 			
 			function funAttachBtn(){
 				if (($("#mode").val() == "view") && $("#docno").val()!="") {
-					var x = new XMLHttpRequest();
-		  			x.onreadystatechange = function() {
-		  				if (x.readyState == 4 && x.status == 200) {
-		  				var items = x.responseText;
-		  				if(parseInt(items)==1){
-		  					 var  myWindow= window.open("<%=contextPath%>/com/common/checklistmaster.jsp?formCode="+document.getElementById("formdetailcode").value
-									 +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
-									  myWindow.focus();
-		  					} else {
-		  					 		var  myWindow= window.open("<%=contextPath%>/com/common/Attachmaster.jsp?formCode="+document.getElementById("formdetailcode").value
-									 +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
-									  myWindow.focus();
-		  					} 
-		  				}
-				  	}
-			  		x.open("GET", <%=contextPath + "/"%>+"getattachorchecklist.jsp?dtype="+$("#formdetailcode").val(), true);
-			  		x.send();
-				
-				}else {         
+                    var url;
+                    if (parseInt(items) == 1) {
+                        url = "<%=contextPath%>/com/common/checklistmaster.jsp?formCode=" + document.getElementById("formdetailcode").value
+                            + "&docno=" + document.getElementById("docno").value
+                            + "&brchid=" + document.getElementById("brchName").value
+                            + "&frmname=" + document.getElementById("formdetail").value;
+                    } else {
+                        url = "<%=contextPath%>/com/common/Attachmaster.jsp?formCode=" + document.getElementById("formdetailcode").value
+                            + "&docno=" + document.getElementById("docno").value
+                            + "&brchid=" + document.getElementById("brchName").value
+                            + "&frmname=" + document.getElementById("formdetail").value;
+                    }
+
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        success: function (data) {
+                            // Append or replace the content in the container
+                            $("#attachment-container").html(data);
+                            // Optionally, scroll to the container
+                            $('html, body').animate({
+                                scrollTop: $("#attachment-container").offset().top
+                            }, 500);
+                        },
+                        error: function () {
+                            alert("Failed to load attachment content.");
+                        }
+                    });
+				}else {
 					$.messager.alert('Message','Select a Document....!','warning');
 					return;
 				}
@@ -1684,22 +1694,24 @@ function setapprbrch(branchval){
 
 
     <div class="action-bar">
-        <button class="action-btn" id="btnApproval" title="Document Status" onclick="funApproveBtn()">Approval</button>
-        <button class="action-btn" id="btnClose" title="Close Form" onclick="funCloseBtn()">Close</button>
-        <button class="action-btn" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">Create</button>
-        <button class="action-btn" id="btnEdit" title="Change current Document" onclick="funEditBtn()">Edit</button>
+        <button type="button" class="action-btn" id="btnApproval" title="Document Status" onclick="funApproveBtn()">Approval</button>
+        <button type="button" class="action-btn" id="btnClose" title="Close Form" onclick="funCloseBtn()">Close</button>
+        <button type="button" class="action-btn" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">Create</button>
+        <button type="button" class="action-btn" id="btnEdit" title="Change current Document" onclick="funEditBtn()">Edit</button>
+        <button type="button" class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>
 <%--        <button class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>--%>
 <%--        <button class="action-btn" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">Excel</button>--%>
-        <button class="action-btn" id="btnDelete" title="Delete current Document" onclick="funDeleteBtn()">Delete</button>
-        <button class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden="true">Save</button>
-        <button class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden="true">Cancel</button>
-        <button class="action-btn" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">Search</button>
-        <button class="action-btn" id="btnAttach" title="Attachment" onclick="funAttachBtn()">Attach</button>
+        <button type="button" class="action-btn" id="btnDelete" title="Delete current Document" onclick="funDeleteBtn()">Delete</button>
+        <button type="button" class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden="true">Save</button>
+        <button type="button" class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden="true">Cancel</button>
+        <button  type="button" class="action-btn" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">Search</button>
+        <button type="button" class="action-btn" id="btnAttach" title="Attachment" onclick="funAttachBtn()">Attach</button>
 <%--        <button class="action-btn" id="btnCosting" title="Costing" onclick="funCostingBtn()">Costing</button>--%>
 <%--        <button class="action-btn" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">Guideline</button>--%>
 <%--        <button class="action-btn" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">Send Mail</button>--%>
 <%--        <button class="action-btn" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">Terms</button>--%>
     </div>
+    <div id="attachment-container"></div>
 <%--    <div>--%>
 <%--        <button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >--%>
 <%--            <img alt="statusDocument" src="<%=contextPath%>/icons/approve_new.png">--%>

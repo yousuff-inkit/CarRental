@@ -728,6 +728,158 @@ function compSearchContent(url) {
   overflow: auto;
   height: 530px;
 }
+
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
+}
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+    padding-inline: 1.04em;
+    padding-block: 1.04em;
+    border-radius: 8px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+
+}
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+}
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
 </style>
 
 </head>
@@ -736,9 +888,10 @@ function compSearchContent(url) {
 <form id="frmEmployeeMaster" action="saveEmployeeMaster" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>   
 
-<div class='hidden-scrollbar'>
-<fieldset>
-<table width="99%">
+<div class='hidden-scrollbar receipt-header'>
+
+    <div class="table-section">
+<table class="cr-table" width="99%">
   <tr>
     <td width="5%" align="right">Date</td>
     <td width="20%"><div id="employeeDate" name="employeeDate" value='<s:property value="employeeDate"/>'></div>
@@ -750,10 +903,10 @@ function compSearchContent(url) {
     <td width="19%"><input type="text" id="docno" name="txtempmasterdocno" style="width:70%;" tabindex="-1" value='<s:property value="txtempmasterdocno"/>'/></td>
   </tr>
 </table>
-</fieldset><br/>
 
-<fieldset>
-<table width="99%">
+
+
+<table class="cr-table" width="99%">
     <tr>
     <td width="7%" align="right">Name</td>
     <td><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:95%;" value='<s:property value="txtemployeename"/>'/></td>
@@ -810,11 +963,11 @@ function compSearchContent(url) {
  
   </tr>
 </table>
-</fieldset>
+    </div>
 
-<fieldset style="background: #E8DEF7;">
-<legend><b><i>Personal Details</i></b></legend>
-<table width="99.5%" style="background: #E8DEF7;">
+<div class="table-section" style="background: #E8DEF7;">
+<h3><b><i>Personal Details</i></b></h3>
+<table class="cr-table" width="99.5%" style="background: #E8DEF7;">
    <tr style="background: #E8DEF7;">
     <td align="right">Permanent Address</td>
     <td colspan="5" align="left"><input type="text" id="txtpermanentaddress" name="txtpermanentaddress" placeholder="Permanent Address" style="width:100%;" value='<s:property value="txtpermanentaddress"/>'/></td>
@@ -878,11 +1031,11 @@ function compSearchContent(url) {
     <td colspan="5"><input type="text" id="txtempotherdetails" name="txtempotherdetails" placeholder="Other Details" style="width:100%;" value='<s:property value="txtempotherdetails"/>'/></td>
   </tr>
 </table>
-</fieldset>
+</div>
 
-<fieldset style="background: #DEF3F7;">
-<legend><b><i>Bank Details</i></b></legend>
-<table width="99%">
+<div class="table-section" style="background: #DEF3F7;">
+<h3><b><i>Bank Details</i></b></h3>
+<table class="cr-table" width="99%">
   <tr>
     <td width="6%" align="right">Agent ID</td>
     <td width="10%"><select id="cmbempagentid" name="cmbempagentid" style="width:100%;" value='<s:property value="cmbempagentid"/>'>
@@ -898,17 +1051,17 @@ function compSearchContent(url) {
   <td width="10%"><input type="text" id="txtbankifsccode" name="txtbankifsccode" placeholder="Press F3 to Search" style="width:90%;" value='<s:property value="txtbankifsccode"/>'/></td>
   </tr>
 </table>
-</fieldset>
+</div>
 
-<fieldset style="background: #ECF8E0;">
-<legend><b><i>Monthly Salary</i></b></legend>
-<div id="compensationDiv"><jsp:include page="compensationGrid.jsp"></jsp:include></div><br/>
-</fieldset>
+<div class="table-section" style="background: #ECF8E0; width:100%; ">
+<h3><b><i>Monthly Salary</i></b></h3>
+<div class="cr-table" id="compensationDiv"><jsp:include page="compensationGrid.jsp"></jsp:include></div><br/>
+</div>
 
-<fieldset style="background: #F8E0F7;">
-<legend><b><i>Documents</i></b></legend>
-<div id="documentsDiv"><jsp:include page="documentsGrid.jsp"></jsp:include></div><br/>
-</fieldset>
+<div class="table-section" style="background: #F8E0F7; width:100%; ">
+<h3><b><i>Documents</i></b></h3>
+<div class="cr-table" id="documentsDiv"><jsp:include page="documentsGrid.jsp"></jsp:include></div><br/>
+</div>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>

@@ -33,9 +33,9 @@ padding:0px;
    line-height:30px;
     background-color: #E0ECF8; 
     height:50%;
-    width:15%;
-    float:left;
-    position:absolute;
+    width:100%;
+    /*float:left;*/
+    /*position:absolute;*/
     
  /*    background-color:	#ffc0cb; */
     
@@ -44,8 +44,8 @@ padding:0px;
 
 #comiframe
 {
-float:right;
-width:93%;
+/*float:center;*/
+width:100%;
 height:95%;
 color:#eeeeee;
 
@@ -176,7 +176,7 @@ background-color:	#ffc0cb;
 <body onload="getConfig()";>
 <div id="mainBG" class="homeContent" data-type="background">
  
-<br> 
+
 
 <div id="nav"> 
 <br>

@@ -1,4 +1,4 @@
-<%@page import="com.fixedassets.assets.assetssalesinvoice.ClsAssetSalesInvDAO" %>
+    <%@page import="com.fixedassets.assets.assetssalesinvoice.ClsAssetSalesInvDAO" %>
 <%ClsAssetSalesInvDAO asi=new ClsAssetSalesInvDAO(); %>
 
 <%-- <jsp:include page="../../../../includes.jsp"></jsp:include> --%>
