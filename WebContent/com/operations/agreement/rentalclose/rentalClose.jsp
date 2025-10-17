@@ -11,10 +11,159 @@
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
-.hidden-scrollbar {
-    overflow: auto;
-    height: 600px;
-}
+    .hidden-scrollbar {
+        overflow: auto;
+        height: 530px;
+    }
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+        padding: 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .receipt-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 16px;
+        border-radius: 12px;
+        padding: 0px 24px;
+        font-size: 2vh;
+    }
+    .receipt-header label {
+        font-weight: 500;
+        color: #333;
+        margin-right: 8px;
+    }
+    .receipt-header input[type="text"] {
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 1rem;
+        width: 120px;
+        background: #fff;
+        transition: border-color 0.2s;
+    }
+    .receipt-header input[type="text"]:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .receipt-header button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .receipt-header button:hover {
+        background: #0056b3;
+    }
+    #txtStatus {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #e67e22;
+        margin-left: 12px;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 24px;
+    }
+    .section-block {
+        flex: 1;
+        background: #f6f8fa;
+        border-radius: 10px;
+        padding: 20px 18px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    }
+
+    .section-block h2 {
+        font-size: 1.09em;
+        font-weight: 500;
+        margin: 0 0 16px 0;
+        color: #253858;
+    }
+
+    .section-block .form-group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+    }
+
+    .section-block label {
+        min-width: 110px;
+        text-align: right;
+        font-weight: 500;
+        color: #253858;
+    }
+
+    .section-block input[type="text"],
+    .section-block select {
+        flex: 1;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+    }
+
+    .section-block input[type="text"]:focus,
+    .section-block select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+
+    .table-section {
+        margin-bottom: 18px;
+        padding-inline: 1.04em;
+        padding-block: 1.04em;
+        border-radius: 8px;
+    }
+    .table-section h3 {
+        color: #253858;
+        font-size: 1.04em;
+        font-weight: 600;
+    }
+    .cr-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f9fafb;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px #eef0f6;
+    }
+    .cr-table th, .cr-table td {
+        padding: 9px 10px;
+        border-bottom: 1px solid #e4e7ec;
+        text-align: left;
+        font-size: 1em;
+    }
+    .cr-table th {
+        background: #eef0f6;
+        color: #354B6A;
+        font-weight: 600;
+    }
+    .cr-table tr:last-child td {
+        border-bottom: none;
+    }
 </style>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -1391,190 +1540,169 @@ if(document.getElementById("rentalagent").value==""){
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
-<div class='hidden-scrollbar'>
-<table width="100%">
-  <tr>
-    <td colspan="2"><fieldset>
-      <table width="100%">
+<div class='hidden-scrollbar receipt-header'>
+<div class="table-section" style="width: 100%;">
+    <table class="cr-table" width="100%">
         <tr>
-          <td width="4%" align="right">Branch</td>
-          <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
-          
-          <td width="6%" align="right">Agmt No</td>
-          <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
-          <td width="5%" align="right">Vehicle</td>
-          <td width="47%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
-          <td width="6%" align="right">Doc No</td>
-          <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
-          <td width="8%" rowspan="2" align="left"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-        <ul>
-         <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-            <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-            <li><a href="#history" onclick="account();">Account Statement</a></li>   
-             <li><a href="#close" onclick="closing();">Closing Summary</a></li>                  
-        </ul>
-     </div></td>
+            <td width="4%" align="right">Branch</td>
+            <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
+
+            <td width="6%" align="right">Agmt No</td>
+            <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
+            <td width="5%" align="right">Vehicle</td>
+            <td width="47%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
+            <td width="6%" align="right">Doc No</td>
+            <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
+            <td width="8%" rowspan="2" align="left"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
+                <ul>
+                    <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+                    <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+                    <li><a href="#history" onclick="account();">Account Statement</a></li>
+                    <li><a href="#close" onclick="closing();">Closing Summary</a></li>
+                </ul>
+            </div></td>
         </tr>
         <tr>
-          <td align="right">Client</td>
-          <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
-          <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:99%;"></td>
-          <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-          <td align="right">Date</td>
-          <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
-          <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
+            <td align="right">Client</td>
+            <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
+            <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:99%;"></td>
+            <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
+            <td align="right">Date</td>
+            <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
+            <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
         </tr>
         <tr>
-          <td align="right">Description</td>
-          <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;">Org Reg Card Collected</label>&nbsp;
-          <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
-          </td>
-<input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
-<input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
-          <td align="right">Location</td>
-          <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
-            <option value="">--Select--</option>
-          </select></td>
-          <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
-          <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
-          <td align="left">&nbsp;</td>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td colspan="2"><fieldset>
-      <legend>In Info</legend>
-      <table width="100%">
-        <tr>
-          <td width="11%" rowspan="2">Collection
-            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
-            &nbsp;
-            <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search"><br>
-            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
+            <td align="right">Description</td>
+            <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;">Org Reg Card Collected</label>&nbsp;
+                <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
             </td>
-          <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-          <td width="8%" align="right">Collection Details</td>
-          <td width="1%" align="right">KM</td>
-          <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
-          <td width="2%" align="right">Fuel</td>
-          <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-          <td width="7%" align="left">
-          <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td width="2%" align="right">Date</td>
-          <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
-          <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-          <td width="2%" align="right">Time</td>
-          <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
-          <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-          <td width="5%" align="right">Rental Agent</td>
-          <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
-            <option value="">--Select--</option>
-          </select> --%>
-          <td width="6%" align="left">
-          <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
-          </td>
-          <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
-          <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-          <td width="7%" align="right">Days Used</td>
-          <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
-          <td width="5%" align="right">Hours Used</td>
-          <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
-          <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
-							<img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
+            <input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
+            <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
+            <td align="right">Location</td>
+            <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
+                <option value="">--Select--</option>
+            </select></td>
+            <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
+            <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
+            <td align="left">&nbsp;</td>
         </tr>
-        <tr>
-          <td align="right">In Details</td>
-          <td align="right">KM</td>
-          <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          <td align="right">Fuel</td>
-          <td align="left"><!--<input type="text" name="infuel" id="infuel" value='<s:property value="infuel"/>'>-->
-          <select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td align="right">Date</td>
-          <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
-          <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
-          <td align="right">Time</td>
-          <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
-          <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
-          <td align="right">Check In</td>
-          <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
-            <option value="">--Select--</option>
-          </select> --%>
-          <td align="left">
-          <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
-          </td>
-          <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
-          <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
-         <div border="1">
-          <td align="right">Total KM</td>
-          <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
-          <td align="right">Excess KM</td>
-          <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
-          <td width="0%" align="left">&nbsp;</td>
-         </div>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td width="66%"><fieldset>
-      
-      <table width="100%">
-        <tr>
-          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
-        </tr>
-      </table>
-    </fieldset></td>
-    
-    
-    
-    <td width="34%" rowspan="3">
-    <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
-    <center>
-    	<input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
-    	<input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
-    </center>
-    <fieldset><legend>Calculation Info
-      </legend>
-      <table width="100%">
-        <tr>
-          <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
-          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-          </tr>
+    </table>
+</div>
+
+   <div class="table-section" style="width: 100%;">
+        <h3>In Info</h3>
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="11%" rowspan="2">Collection
+                    <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
+                    &nbsp;
+                    <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search"><br>
+                    <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
+                </td>
+                <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
+                <td width="8%" align="right">Collection Details</td>
+                <td width="1%" align="right">KM</td>
+                <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
+                <td width="2%" align="right">Fuel</td>
+                <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
+                <td width="7%" align="left">
+                    <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
+                <td width="2%" align="right">Date</td>
+                <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
+                <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
+                <td width="2%" align="right">Time</td>
+                <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
+                <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
+                <td width="5%" align="right">Rental Agent</td>
+                <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
+                  <option value="">--Select--</option>
+                </select> --%>
+                <td width="6%" align="left">
+                    <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
+                </td>
+                <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
+                <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
+                <td width="7%" align="right">Days Used</td>
+                <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
+                <td width="5%" align="right">Hours Used</td>
+                <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
+                <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
+                    <img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
+            </tr>
+            <tr>
+                <td align="right">In Details</td>
+                <td align="right">KM</td>
+                <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+                <td align="right">Fuel</td>
+                <td align="left"><!--<input type="text" name="infuel" id="infuel" value='<s:property value="infuel"/>'>-->
+                    <select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
+                <td align="right">Date</td>
+                <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
+                <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
+                <td align="right">Time</td>
+                <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
+                <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
+                <td align="right">Check In</td>
+                <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
+                  <option value="">--Select--</option>
+                </select> --%>
+                <td align="left">
+                    <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
+                </td>
+                <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
+                <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
+                <div border="1">
+                    <td align="right">Total KM</td>
+                    <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
+                    <td align="right">Excess KM</td>
+                    <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
+                    <td width="0%" align="left">&nbsp;</td>
+                </div>
+            </tr>
         </table>
-      </fieldset>
-    </td>
-  </tr>
-  <tr id="referencefield">
-    <td>
-    <fieldset>
-      
-      <table width="100%">
+    </div>
+    <table class="cr-table" width="100%">
         <tr>
-          <td><div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></td>
-          </tr>
-       </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
+            <td width="65%">
+    <table width="100%">
+        <tr>
+            <td><div class="cr-table" id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
         </tr>
-      </table>
-    </fieldset></td>
-    </tr>
-  <tr>
-    <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
+        <tr id="referencefield">
+            <td><div class="cr-table" id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></td>
         </tr>
-      </table>
-    </fieldset></td>
-    </tr>
-</table>
+        <tr>
+            <td><div class="cr-table" id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
+        </tr>
+        <tr>
+            <td><div class="cr-table" id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
+        </tr>
+    </table>
+            </td>
+
+
+            <td width="34%" rowspan="3">
+                <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
+                <center>
+                    <input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
+                    <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
+                </center>
+                <div><h3>Calculation Info
+                </h3>
+                    <table width="100%">
+                        <tr>
+                            <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
+                            <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
 <br><br><br><br><br><br>
 <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
 <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>

@@ -943,42 +943,32 @@ document.getElementById("termstatus").value=0;
 			  	var res1=(res=='NaN'?"0":res);
 			 	document.getElementById(id).value=res1;  
 			}
-			
-			function funAttachBtn(){
-				if (($("#mode").val() == "view") && $("#docno").val()!="") {
-                    var url;
-                    if (parseInt(items) == 1) {
-                        url = "<%=contextPath%>/com/common/checklistmaster.jsp?formCode=" + document.getElementById("formdetailcode").value
-                            + "&docno=" + document.getElementById("docno").value
-                            + "&brchid=" + document.getElementById("brchName").value
-                            + "&frmname=" + document.getElementById("formdetail").value;
-                    } else {
-                        url = "<%=contextPath%>/com/common/Attachmaster.jsp?formCode=" + document.getElementById("formdetailcode").value
-                            + "&docno=" + document.getElementById("docno").value
-                            + "&brchid=" + document.getElementById("brchName").value
-                            + "&frmname=" + document.getElementById("formdetail").value;
-                    }
 
-                    $.ajax({
-                        url: url,
-                        type: "GET",
-                        success: function (data) {
-                            // Append or replace the content in the container
-                            $("#attachment-container").html(data);
-                            // Optionally, scroll to the container
-                            $('html, body').animate({
-                                scrollTop: $("#attachment-container").offset().top
-                            }, 500);
-                        },
-                        error: function () {
-                            alert("Failed to load attachment content.");
+            function funAttachBtn(){
+                if (($("#mode").val() == "view") && $("#docno").val()!="") {
+                    var x = new XMLHttpRequest();
+                    x.onreadystatechange = function() {
+                        if (x.readyState == 4 && x.status == 200) {
+                            var items = x.responseText;
+                            if(parseInt(items)==1){
+                                var  myWindow= window.open("<%=contextPath%>/com/common/checklistmaster.jsp?formCode="+document.getElementById("formdetailcode").value
+                                    +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
+                                myWindow.focus();
+                            } else {
+                                var  myWindow= window.open("<%=contextPath%>/com/common/Attachmaster.jsp?formCode="+document.getElementById("formdetailcode").value
+                                +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
+                                myWindow.focus();
+                            }
                         }
-                    });
-				}else {
-					$.messager.alert('Message','Select a Document....!','warning');
-					return;
-				}
-			}
+                    }
+                    x.open("GET", <%=contextPath + "/"%>+"getattachorchecklist.jsp?dtype="+$("#formdetailcode").val(), true);
+                    x.send();
+
+                }else {
+                    $.messager.alert('Message','Select a Document....!','warning');
+                    return;
+                }
+            }
 			
 			function funCostingBtn(){
 				if (($("#mode").val() == "view") && $("#docno").val()!="") {					

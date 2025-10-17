@@ -420,63 +420,73 @@
 		} 
 	  
 	  function setValues(){
-		  $('#jqxCashReceiptDate').jqxDateTimeInput({disabled: false});
-		  var date = $('#jqxCashReceiptDate').val();
-		  getCurrencyId(date);
-		  $('#jqxCashReceiptDate').jqxDateTimeInput({disabled: true});
-		  
-		  document.getElementById("cmbtotype").value=document.getElementById("hidcmbtotype").value;
-		  
-		  if($('#hidjqxCashReceiptDate').val()){
-				 $("#jqxCashReceiptDate").jqxDateTimeInput('val', $('#hidjqxCashReceiptDate').val());
-			  }
-		  
-		  if($('#hidmaindate').val()){
-				 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
-			  }
-		  
-		  if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
-		  
-		  	document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-		  	funSetlabel();
-			
-			 var indexVal = document.getElementById("docno").value;
-			 if(indexVal>0){
-				 var check=1;
-	         	 $("#jqxCashReceiptGrid").load("cashReceiptGrid.jsp?txtcashpaydocno2="+indexVal+"&check="+check);
-			 }
-	         var indexVal1 = document.getElementById("txttodocno").value;
-	         var indexVal2 = document.getElementById("txttotrno").value;
-	         if(indexVal1>0){
-	        	 var check=1;
-	        	 $("#jqxApplyInvoicing1").load("applyCashReceiptInvoicingGrid.jsp?txttoaccid1="+indexVal1+"&txttotrno1="+indexVal2+"&check="+check); 
-	         }
-	         
-	        if(parseFloat($("#hidstatus").val())<3){
-					$("#txtStatus").html("DRAFT");
-			}else if(parseFloat($("#hidstatus").val())==4){
-					$("#txtStatus").html("REJECTED");
-			}else{
-					$("#txtStatus").html("");
-			}
-	        getBankReconciled($("#docno").val(), "CRV"); 
-	        
-	        funRoundRate($('#txtfromrate').val(),"txtfromrate");
-	        funRoundRate($('#txttorate').val(),"txttorate");
-	        funRoundAmt($('#txtfromamount').val(),"txtfromamount");
-	        funRoundAmt($('#txttoamount').val(),"txttoamount");
-	        funRoundAmt($('#txtfrombaseamount').val(),"txtfrombaseamount");
-	        funRoundAmt($('#txttobaseamount').val(),"txttobaseamount");
-	        funRoundAmt($('#txtapplyinvoiceamt').val(),"txtapplyinvoiceamt");
-	        funRoundAmt($('#txtapplyinvoiceapply').val(),"txtapplyinvoiceapply");
-			funRoundAmt($('#txtapplyinvoicebalance').val(),"txtapplyinvoicebalance");
-			funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
-			funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
-		}
-	 
-	
+    $('#jqxCashReceiptDate').jqxDateTimeInput({disabled: false});
+    var date = $('#jqxCashReceiptDate').val();
+    getCurrencyId(date);
+    $('#jqxCashReceiptDate').jqxDateTimeInput({disabled: true});
+
+    document.getElementById("cmbtotype").value=document.getElementById("hidcmbtotype").value;
+
+    if($('#hidjqxCashReceiptDate').val()){
+        $("#jqxCashReceiptDate").jqxDateTimeInput('val', $('#hidjqxCashReceiptDate').val());
+    }
+
+    if($('#hidmaindate').val()){
+        $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
+    }
+
+    if($('#msg').val()!=""){
+        $.messager.alert('Message',$('#msg').val());
+    }
+
+    document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+    funSetlabel();
+
+    var indexVal = document.getElementById("docno").value;
+    if(indexVal>0){
+        var check=1;
+        // Load cash receipt grid and handle completion
+        $("#jqxCashReceiptGrid").load("cashReceiptGrid.jsp?txtcashpaydocno2="+indexVal+"&check="+check, function() {
+            // Grid loading complete, now load apply invoicing grid if needed
+            var indexVal1 = document.getElementById("txttodocno").value;
+            var indexVal2 = document.getElementById("txttotrno").value;
+            if(indexVal1>0){
+                var check=1;
+                $("#jqxApplyInvoicing1").load("applyCashReceiptInvoicingGrid.jsp?txttoaccid1="+indexVal1+"&txttotrno1="+indexVal2+"&check="+check, function() {
+                    // After all grids are loaded, load approvals
+                    loadApprovals();
+                });
+            } else {
+                // If no apply invoicing grid, still load approvals
+                loadApprovals();
+            }
+        });
+    }
+
+    if(parseFloat($("#hidstatus").val())<3){
+        $("#txtStatus").html("DRAFT");
+    }else if(parseFloat($("#hidstatus").val())==4){
+        $("#txtStatus").html("REJECTED");
+    }else{
+        $("#txtStatus").html("");
+    }
+
+    getBankReconciled($("#docno").val(), "CRV");
+
+    // Round all amounts
+    funRoundRate($('#txtfromrate').val(),"txtfromrate");
+    funRoundRate($('#txttorate').val(),"txttorate");
+    funRoundAmt($('#txtfromamount').val(),"txtfromamount");
+    funRoundAmt($('#txttoamount').val(),"txttoamount");
+    funRoundAmt($('#txtfrombaseamount').val(),"txtfrombaseamount");
+    funRoundAmt($('#txttobaseamount').val(),"txttobaseamount");
+    funRoundAmt($('#txtapplyinvoiceamt').val(),"txtapplyinvoiceamt");
+    funRoundAmt($('#txtapplyinvoiceapply').val(),"txtapplyinvoiceapply");
+    funRoundAmt($('#txtapplyinvoicebalance').val(),"txtapplyinvoicebalance");
+    funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
+    funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
+}
+
 	  function funvalid(){
 		  rate=document.getElementById("txtfromrate").value;
 			 if(rate=="" || rate=="0" || rate=="0.00"){
@@ -644,7 +654,7 @@
                         setTimeout(function() {
                             win.focus();
                             win.print();
-                        });//todo : might need to adjust timeout based on content in prod
+                        });
                     }else {
                         console.error("Win object not loaded");
                     }
@@ -1084,8 +1094,66 @@
     <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
   </tr>
 </table>
+    <div class="table-section" id="approval-section">
+        <h3>Approvals</h3>
+        <table class="cr-table" id="approval-table">
+            <thead>
+                <tr>
+                    <th>Approved By</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Approval rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+    function loadApprovals() {
+        var docno = document.getElementById('docno').value;
+        var dtype = document.getElementById('formdetailcode').value;
+        var brch = document.getElementById('brchName').value;
+        var usrid = '';
+        if (window.parent && window.parent.document.getElementById('formdetailcode')) {
+            usrid = window.parent.document.getElementById('formdetailcode').value;
+        }
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim();
+                // Expecting items as CSV: approvedBy,date,remarks\n...
+                var rows = items.split('\n');
+                var tbody = document.querySelector('#approval-table tbody');
+                tbody.innerHTML = '';
+                if (rows.length > 0 && rows[0] !== '') {
+                    rows.forEach(function(row) {
+                        var cols = row.split(',');
+                        var tr = document.createElement('tr');
+                        for (var i = 0; i < 3; i++) {
+                            var td = document.createElement('td');
+                            td.textContent = cols[i] ? cols[i] : '';
+                            tr.appendChild(td);
+                        }
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td colspan="3" style="text-align:center;color:#888;">No approvals found</td>';
+                    tbody.appendChild(tr);
+                }
+            }
+        };
+        x.open("GET", '<%=contextPath%>/com/finance/transactions/cashreceipt/getApprovals.jsp?docno=' + docno + '&dtype=' + dtype + '&brch=' + brch, true);
+        x.send();
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        loadApprovals();
+    });
+    </script>
 
-<input type="hidden" id="mode" name="mode"/>
+
+    <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
 <input type="hidden" name="txtforsearch" id="txtforsearch" value="0"/>

@@ -304,4 +304,4 @@
     <div id="jqxCashReceipt"></div>
     
  <input type="hidden" id="rowindex"/>
- <input type="hidden" id="type"/>  
+ <input type="hidden" id="type"/>
