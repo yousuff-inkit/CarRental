@@ -118,7 +118,27 @@
 				{ text: 'ApprlLevel', datafield: 'apprlevel', hidden:true , width: '10%',cellclassname: cellclassname },
 							
           ]
-          });	
+          });
+          /* Update approval table under cash receipt.jsp */
+
+        $("#approval-table").jqxGrid(
+            {
+                width: '100%',
+                height: 250,
+                source: dataAdapter,
+                columnsresize: true,
+                editable: false,
+                rowsheight:40,
+                selectionmode: 'singlerow',
+                columns: [
+                    { text: '', datafield: 'apprtype',  width: '10%',cellclassname: cellclassname },
+                    { text: 'User', datafield: 'user_name', width: '15%',cellclassname: cellclassname },
+                    { text: 'Submit Time', datafield: 'apprdatetime', width: '12%',cellclassname: cellclassname },
+                    { text: 'Remarks' , datafield: 'remarks', width: '63%',cellclassname: cellclassname },
+                    { text: 'ApprlLevel', datafield: 'apprlevel', hidden:true , width: '10%',cellclassname: cellclassname },
+
+                ]
+            });
 		 $('#jqxApprovalGrid').on('rowdoubleclick', function (event) 
               { 
                var rowindexes=event.args.rowindex;
