@@ -743,169 +743,233 @@
 	  
 	
 </script>
-
 <style>
-	.hidden-scrollbar {
-	  overflow: auto;
-	  height: 530px;
-	}
-	#validrate{
- color:red;
- }
- #validrate1{
- color:red;
- }
+/* =========================================
+   Elegant Gold & Cream UI Theme (Premium)
+   ========================================= */
 
+.hidden-scrollbar {
+  overflow: auto;
+  height: 530px;
+}
 
+#validrate,
+#validrate1 {
+  color: #D4AF37; /* Metallic Gold for error/warning text */
+}
 
+/* ===== Global Background and Typography ===== */
+body {
+  background: linear-gradient(135deg, #FDF5E6 0%, #FAEBD7 100%);
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  color: #36454F;
+  margin: 0;
+  padding: 32px 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-        padding: 10px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+/* ===== Main Container ===== */
+#mainBG {
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+#mainBG:hover {
+  box-shadow: 0 8px 28px rgba(212, 175, 55, 0.25);
+}
 
-    .receipt-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        padding: 0px 24px;
-        font-size: 2vh;
-    }
-    .receipt-header label {
-        font-weight: 500;
-        color: #333;
-        margin-right: 8px;
-    }
-    .receipt-header input[type="text"] {
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 1rem;
-        width: 120px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
-    .receipt-header input[type="text"]:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    .receipt-header button {
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .receipt-header button:hover {
-        background: #0056b3;
-    }
-    #txtStatus {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #e67e22;
-        margin-left: 12px;
-    }
+/* ===== Header Section ===== */
+.receipt-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: #FFF8DC; /* Light cream background */
+  border: 1px solid #F0E68C; /* Light gold border */
+  padding: 10px 24px;
+  font-size: 2vh;
+  box-shadow: 0 1px 8px rgba(212, 175, 55, 0.1);
+}
 
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 24px;
-    }
-    .section-block {
-        flex: 1;
-        background: #f6f8fa;
-        border-radius: 10px;
-        padding: 20px 18px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-    }
+.receipt-header label {
+  font-weight: 600;
+  color: #36454F;
+  margin-right: 8px;
+}
 
-    .section-block h2 {
-        font-size: 1.09em;
-        font-weight: 500;
-        margin: 0 0 16px 0;
-        color: #253858;
-    }
+.receipt-header input[type="text"] {
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 1rem;
+  width: 120px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+  border-color: #D4AF37;
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+  outline: none;
+}
 
-    .section-block .form-group {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 12px;
-    }
+/* Header Button */
+.receipt-header button {
+  background: #D4AF37;
+  color: #36454F;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.2);
+}
+.receipt-header button:hover {
+  background: #B8860B;
+  color: #fff;
+}
+.receipt-header button:active {
+  transform: scale(0.97);
+}
 
-    .section-block label {
-        min-width: 110px;
-        text-align: right;
-        font-weight: 500;
-        color: #253858;
-    }
+/* Status Label */
+#txtStatus {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #D4AF37;
+  margin-left: 12px;
+  background: #FFF8DC;
+  padding: 4px 8px;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
 
-    .section-block input[type="text"],
-    .section-block select {
-        flex: 1;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
+/* ===== Section Layouts ===== */
+.section-row {
+  display: flex;
+  gap: 26px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
 
-    .section-block input[type="text"]:focus,
-    .section-block select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+.section-block {
+  flex: 1;
+  background: #FFFACD;
+  border-radius: 10px;
+  padding: 20px 18px;
+  border: 1px solid #F0E68C;
+  box-shadow: 0 1px 8px rgba(212, 175, 55, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.section-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
 
+/* Section Titles */
+.section-block h2 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #36454F;
+  border-bottom: 1px solid #D4AF37;
+  padding-bottom: 8px;
+}
 
-    .table-section {
-        margin-bottom: 18px;
-    }
-    .table-section h3 {
-        color: #253858;
-        font-size: 1.04em;
-        font-weight: 600;
-    }
-    .cr-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #f9fafb;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 0 1px #eef0f6;
-    }
-    .cr-table th, .cr-table td {
-        padding: 9px 10px;
-        border-bottom: 1px solid #e4e7ec;
-        text-align: left;
-        font-size: 1em;
-    }
-    .cr-table th {
-        background: #eef0f6;
-        color: #354B6A;
-        font-weight: 600;
-    }
-    .cr-table tr:last-child td {
-        border-bottom: none;
-    }
+/* Section Form Controls */
+.section-block .form-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.section-block label {
+  min-width: 110px;
+  text-align: right;
+  font-weight: 500;
+  color: #36454F;
+}
+
+.section-block input[type="text"],
+.section-block select {
+  flex: 1;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #333;
+}
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+  border-color: #D4AF37;
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+  outline: none;
+}
+
+input[readonly],
+select:disabled {
+  background-color: #FAF7E8 !important;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* ===== Table Section ===== */
+.table-section {
+  margin-bottom: 18px;
+}
+.table-section h3 {
+  color: #36454F;
+  font-size: 1.04em;
+  font-weight: 600;
+  border-bottom: 1px dashed #D4AF37;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+/* Data Table */
+.cr-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FDF5E6;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #F0E68C;
+}
+.cr-table th,
+.cr-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #F0E68C;
+  text-align: left;
+  font-size: 1em;
+}
+.cr-table th {
+  background: #D4AF37;
+  color: #36454F;
+  font-weight: 700;
+}
+.cr-table tr:last-child td {
+  border-bottom: none;
+}
+.cr-table tr:hover td {
+  background-color: #FFF8DC;
+  transition: 0.3s ease;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
+
 
 </head>
 <body onload="setValues();">

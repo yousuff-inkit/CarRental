@@ -692,164 +692,205 @@
 </script>
 
 <style>
-	.hidden-scrollbar {
-	  overflow: auto;
-	  height: 530px;
-	}
-	#validrate{
- color:red;
- }
- #validrate1{
- color:red;
- }
+/* ===== Scrollbar ===== */
+.hidden-scrollbar {
+  overflow-y: auto;
+  height: 530px;
+  scrollbar-width: thin;
+  scrollbar-color: #f7b733 #fff2d6;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #f7b733;
+  border-radius: 8px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #fc4a1a;
+}
 
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-        padding: 10px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+/* ===== Global Warm Background ===== */
+body {
+  background: linear-gradient(135deg, #fffaf3 0%, #f8e3c3 100%);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #2a2a2a;
+  margin: 0;
+  padding: 40px 0;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease-in-out;
+}
 
-    .receipt-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        padding: 0px 24px;
-        font-size: 2vh;
-    }
-    .receipt-header label {
-        font-weight: 500;
-        color: #333;
-        margin-right: 8px;
-    }
-    .receipt-header input[type="text"] {
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 1rem;
-        width: 120px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
-    .receipt-header input[type="text"]:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    .receipt-header button {
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .receipt-header button:hover {
-        background: #0056b3;
-    }
-    #txtStatus {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #e67e22;
-        margin-left: 12px;
-    }
+/* ===== Main Container ===== */
+#mainBG {
+  background: #fffaf3;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  padding: 25px 30px;
+  max-width: 1250px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+#mainBG:hover {
+  box-shadow: 0 10px 30px rgba(255, 183, 77, 0.3);
+}
 
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 24px;
-    }
-    .section-block {
-        flex: 1;
-        background: #f6f8fa;
-        border-radius: 10px;
-        padding: 20px 18px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-    }
+/* ===== Page Heading ===== */
+.page-heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #b35b00;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255, 172, 28, 0.4);
+}
 
-    .section-block h2 {
-        font-size: 1.09em;
-        font-weight: 500;
-        margin: 0 0 16px 0;
-        color: #253858;
-    }
+/* ===== Header Section ===== */
+.receipt-header {
+  background: #fff7ec;
+  border: 1px solid #f0d9b5;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 6px rgba(255, 191, 73, 0.25);
+}
 
-    .section-block .form-group {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 12px;
-    }
+/* ===== Labels & Inputs ===== */
+label {
+  font-weight: 500;
+  color: #3d3a35;
+}
+input[type="text"], select {
+  border: 1px solid #d1bfa5;
+  border-radius: 6px;
+  padding: 7px 10px;
+  background: #fffdf8;
+  transition: 0.25s ease;
+  font-size: 0.95rem;
+}
+input[type="text"]:focus, select:focus {
+  border-color: #f7b733;
+  box-shadow: 0 0 6px rgba(247, 183, 51, 0.4);
+  outline: none;
+}
 
-    .section-block label {
-        min-width: 110px;
-        text-align: right;
-        font-weight: 500;
-        color: #253858;
-    }
+/* ===== Section Layouts ===== */
+.section-row {
+  display: flex;
+  gap: 26px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.section-block {
+  flex: 1;
+  background: #fffef9;
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 8px rgba(247, 183, 51, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.section-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(247, 183, 51, 0.25);
+}
+.section-block h2 {
+  font-size: 1.15em;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #b35b00;
+  border-left: 4px solid #f7b733;
+  padding-left: 8px;
+}
+.section-block .form-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
 
-    .section-block input[type="text"],
-    .section-block select {
-        flex: 1;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
+/* ===== Buttons ===== */
+button, .myButton {
+  background: linear-gradient(90deg, #f7b733, #fc4a1a);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(252, 74, 26, 0.25);
+}
+button:hover, .myButton:hover {
+  background: linear-gradient(90deg, #ff8c00, #e85d04);
+  box-shadow: 0 4px 12px rgba(252, 74, 26, 0.4);
+  transform: translateY(-2px);
+}
+button:active {
+  transform: scale(0.98);
+}
 
-    .section-block input[type="text"]:focus,
-    .section-block select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+/* ===== Tables ===== */
+.cr-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(255, 190, 90, 0.15);
+  margin-top: 8px;
+}
+.cr-table th, .cr-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0e1cc;
+  text-align: left;
+  font-size: 0.95rem;
+}
+.cr-table th {
+  background-color: #ffe6b7;
+  color: #4a3c24;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.cr-table tr:hover td {
+  background-color: #fff3d9;
+  transition: 0.3s;
+}
 
+/* ===== Error / Validation ===== */
+#validrate, #errormsg {
+  color: #d62828;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
 
-    .table-section {
-        margin-bottom: 18px;
-    }
-    .table-section h3 {
-        color: #253858;
-        font-size: 1.04em;
-        font-weight: 600;
-    }
-    .cr-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #f9fafb;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 0 1px #eef0f6;
-    }
-    .cr-table th, .cr-table td {
-        padding: 9px 10px;
-        border-bottom: 1px solid #e4e7ec;
-        text-align: left;
-        font-size: 1em;
-    }
-    .cr-table th {
-        background: #eef0f6;
-        color: #354B6A;
-        font-weight: 600;
-    }
-    .cr-table tr:last-child td {
-        border-bottom: none;
-    }
+/* ===== Readonly ===== */
+input[readonly], select:disabled {
+  background-color: #f9f3ea !important;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* ===== Status Tag ===== */
+#txtStatus {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e67e22;
+  background: #fff3cd;
+  padding: 4px 10px;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
+
 
 </head>
 <body onload="setValues();">

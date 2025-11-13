@@ -729,16 +729,188 @@
 </script>
 
 <style>
+<style>
 .hidden-scrollbar {
-   overflow: auto;
-   height: 530px;
+  overflow: auto;
+  height: 530px;
 }
-#validrate{
- color:red;
- }
- #validrate1{
- color:red;
- }
+
+/* Validation messages in warm gold */
+#validrate, 
+#validrate1 {
+  color: #D4AF37;
+  font-weight: 500;
+}
+
+/* ================================
+   GOLD & CREAM PREMIUM THEME
+   ================================ */
+body {
+  background: linear-gradient(135deg, #FDF5E6 0%, #FAEBD7 100%);
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  color: #36454F;
+  margin: 0;
+  padding: 32px 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+#mainBG {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1px solid #F0E68C;
+}
+
+/* Header Section */
+.receipt-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  padding: 0px 24px;
+  font-size: 2vh;
+}
+
+.receipt-header label {
+  font-weight: 600;
+  color: #36454F;
+  margin-right: 8px;
+}
+
+.receipt-header input[type="text"] {
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 1rem;
+  width: 120px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.receipt-header input[type="text"]:focus {
+  border-color: #D4AF37;
+  outline: none;
+}
+
+.receipt-header button {
+  background: #D4AF37;
+  color: #36454F;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(212,175,55,0.3);
+}
+
+.receipt-header button:hover {
+  background: #B8860B;
+  color: #fff;
+}
+
+#txtStatus {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #D4AF37;
+  margin-left: 12px;
+}
+
+/* Section Blocks */
+fieldset {
+  border: 1px solid #F0E68C;
+  border-radius: 10px;
+  background: #FFFACD;
+  box-shadow: 0 2px 6px rgba(212,175,55,0.1);
+  padding: 10px 14px;
+}
+
+legend {
+  font-weight: 600;
+  color: #36454F;
+  padding: 0 8px;
+  background: #FAF3DD;
+  border-radius: 4px;
+  border: 1px solid #F0E68C;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 8px;
+  font-size: 0.95rem;
+  color: #36454F;
+}
+
+input[type="text"], select {
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #D4AF37;
+  outline: none;
+}
+
+button.myButton {
+  background: #D4AF37;
+  color: #36454F;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(212,175,55,0.3);
+}
+
+button.myButton:hover {
+  background: #B8860B;
+  color: #fff;
+}
+
+/* Tables inside Apply Invoices / Receipts */
+.cr-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FDF5E6;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #F0E68C;
+}
+
+.cr-table th, 
+.cr-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #F0E68C;
+  text-align: left;
+  font-size: 1em;
+}
+
+.cr-table th {
+  background: #D4AF37;
+  color: #36454F;
+  font-weight: 700;
+}
+
+.cr-table tr:last-child td {
+  border-bottom: none;
+}
+</style>
+
 </style>
 
 </head>
