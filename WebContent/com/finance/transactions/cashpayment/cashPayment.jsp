@@ -906,6 +906,25 @@ fieldset {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+button, .myButton {
+  background: linear-gradient(90deg, #f7b733, #fc4a1a);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(252, 74, 26, 0.25);
+}
+button:hover, .myButton:hover {
+  background: linear-gradient(90deg, #ff8c00, #e85d04);
+  box-shadow: 0 4px 12px rgba(252, 74, 26, 0.4);
+  transform: translateY(-2px);
+}
+button:active {
+  transform: scale(0.98);
+}
 
 </style>
 

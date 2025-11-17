@@ -274,35 +274,31 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 }
 
 /*applied to the Grid's element.*/
-.jqx-grid {
-    overflow: hidden;
-    border-style: solid;
-    border-width: 1px;
+.jqx-grid,
+.jqx-grid .jqx-adaptive-table {
+    border: solid !important;
 }
 
-    .jqx-grid .jqx-adaptive-table {
-        border-collapse: collapse;
-        border: none;
-        width: 100%;
-    }
+   .jqx-grid .jqx-adaptive-table th {
+    background-color: #D4AF37; /* Deeper warm gold for header */
+    color: #ff0000;
+    text-align:left;
+}
 
-        .jqx-grid .jqx-adaptive-table td, .jqx-grid .jqx-adaptive-table th {
-            border-bottom: 1px solid #ddd;
-            padding: 8px;
-            overflow: auto;
-        }
+        .jqx-grid .jqx-adaptive-table td,
+.jqx-grid .jqx-adaptive-table th {
+    border: none !important; /* Removes all cell borders */
+    padding: 8px;
+    color: #BF9B30; /* Warm gold text color */
+    background-color: #FFF8DC; /* Light gold background for warmth */
+     text-align:left;
+}
 
         .jqx-grid .jqx-adaptive-table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+    background-color: #FAF3E3 !important; /* Optional: subtle alternate row */
+}
 
-        .jqx-grid .jqx-adaptive-table th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #4CAF50;
-            color: white;
-        }
+      
 
     .jqx-grid .jqx-adaptive-view a {
         padding: 10px;
@@ -347,6 +343,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
     border-color: transparent;
     margin: 0px;
     padding: 0px;
+  
 }
 /*applied to the columns.*/
 .jqx-grid-column-header, .jqx-grid-columngroup-header {
@@ -613,6 +610,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
     text-align: left;
     margin-right: 2px;
     margin-left: 4px;
+    background-color:#ff0000;
 }
 
 .jqx-grid-cell-middle-align {
@@ -805,11 +803,11 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
     outline: none;
     zoom: 1 !important;
     empty-cells: show;
-    border-right: 1px solid #aaa;
+    border-right: 1px solid #ff0000;
     line-height: 1.231;
     width: auto;
     border: none;
-}
+
 
 .jqx-grid-table-rtl {
     border-left-width: 1px;
@@ -865,7 +863,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 .jqx-grid-cell-edit.jqx-fill-state-focus .jqx-action-button,
 .jqx-grid-cell-edit .jqx-numberinput-focus,
 .jqx-grid-cell-edit .jqx-combobox-content-focus {
-    border-color: #DDDDDD !important;
+    border-color: #ff0000 !important;
 }
 
 .jqx-cell-rtl {
@@ -885,7 +883,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
     border: none;
     border-right-width: 1px;
     border-right-style: solid;
-    border-right-color: #aaa;
+    border-right-color: #ff0000 !important;
 }
 
 .jqx-grid-table .jqx-grid-cell:first-child {
@@ -905,7 +903,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 /*applied to a grid cell when the grid is empty.*/
 .jqx-grid-empty-cell {
     overflow: visible;
-    border-bottom: none;
+    border-bottom: solid;
 }
 
 /*applied to the Grid when its loading the data.*/
@@ -2650,10 +2648,10 @@ of the horizontal scrollbar.*/
     overflow: hidden;
     border: 1px solid transparent;
 }
-/*applied to the jqxWindow when it’s disabled*/
+/*applied to the jqxWindow when itï¿½s disabled*/
 .jqx-window-disabled {
 }
-/*applied to the window’s header*/
+/*applied to the windowï¿½s header*/
 .jqx-window-header {
     outline: none;
     border-width: 0px;
@@ -2664,10 +2662,10 @@ of the horizontal scrollbar.*/
     white-space: nowrap;
     overflow: hidden;
 }
-/*applied to the window’s header when the window is disabled*/
+/*applied to the windowï¿½s header when the window is disabled*/
 .jqx-window-header-disabled {
 }
-/*applied to the window’s content*/
+/*applied to the windowï¿½s content*/
 .jqx-window-content {
     outline: none;
     overflow: auto;
@@ -2677,14 +2675,14 @@ of the horizontal scrollbar.*/
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
-/*applied to the window’s content when the window is disabled*/
+/*applied to the windowï¿½s content when the window is disabled*/
 .jqx-window-content-disabled {
     outline: none;
     overflow: auto;
     text-align: left;
     padding: 5px;
 }
-/*applied to the window’s close button*/
+/*applied to the windowï¿½s close button*/
 .jqx-window-close-button {
     cursor: pointer;
     background-image: url(images/close.png);
@@ -2703,7 +2701,7 @@ of the horizontal scrollbar.*/
     cursor: pointer;
     background-image: url(images/icon-down.png);
 }
-/*setting styles of the modal window’s background*/
+/*setting styles of the modal windowï¿½s background*/
 .jqx-window-modal {
     background-color: Black;
 }
@@ -3504,7 +3502,7 @@ of the horizontal scrollbar.*/
 }
 
 .jqx-scheduler .jqx-grid-column-header, .jqx-scheduler.jqx-widget .jqx-grid-column-header {
-    border-bottom: 1px solid #c5c5c5;
+    border-bottom: 1px solid #ff0000;
 }
 
 .jqx-grid-column-header[sort] > div > div {
@@ -3990,8 +3988,8 @@ of the horizontal scrollbar.*/
 .jqx-fill-state-pressed {
     -moz-box-sizing: content-box;
     box-sizing: content-box;
-    border-color: #999;
-    background: #d1d1d1;
+    border-color: #ff0000;
+    background: #ff0000;
 }
 
 .jqx-fill-state-focus {
@@ -4000,9 +3998,9 @@ of the horizontal scrollbar.*/
 
 .jqx-fill-state-disabled {
     cursor: default;
-    color: #000;
-    opacity: .55;
-    filter: Alpha(Opacity=45);
+    color:#ff0000 !important;
+   
+    filter:rgb(255, 128, 128)ha(Opacity=45);
 }
 .jqx-grid.jqx-fill-state-disabled {
     pointer-events: none;
@@ -7778,4 +7776,97 @@ jqx-knob {
 }
 .jqx-menu-item-top{
 	margin-top: -2px;
+}
+.jqx-grid {
+  border: 1px solid #c6ddf5 !important;
+  border-radius: 10px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(0, 92, 184, 0.15) !important;
+  font-family: "Segoe UI", Roboto, sans-serif !important;
+  font-size: 12px !important;
+  color: #234 !important;
+  width: 98% !important;
+  margin: 0 auto !important; /* full center */
+}
+
+/* Header & table fix */
+.jqx-grid-header,
+.jqx-grid-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  position: relative !important;
+  left: 0 !important;
+  transform: none !important;
+  overflow-x: hidden !important;
+}
+
+/* Table layout */
+.jqx-grid-table {
+  table-layout: fixed !important;
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+/* Column headers */
+.jqx-grid-column-header {
+  background: linear-gradient(to bottom, #4da3ff, #0077cc) !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  height: 28px !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 6px !important;
+  border-color: #c6ddf5 !important;
+}
+
+/* Header text */
+.jqx-grid-column-header span {
+  font-size: 12px !important;
+  color: #fff !important;
+}
+
+/* Body cells */
+.jqx-grid-cell,
+.jqx-grid-cell-alt {
+  background-color: #f7faff !important;
+  border-color: #e0e8f5 !important;
+  padding: 6px !important;
+  font-size: 12px !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  color: #234 !important;
+}
+
+/* Alternate row color */
+.jqx-grid-cell-alt {
+  background-color: #eef5ff !important;
+}
+
+/* Hover */
+.jqx-grid-cell:hover {
+  background-color: #d8eaff !important;
+  cursor: pointer !important;
+}
+
+/* Selected row */
+.jqx-grid-cell-selected {
+  background-color: #b5d6ff !important;
+  font-weight: bold !important;
+  color: #000 !important;
+}
+
+/* Prevent tiny shift */
+.jqx-grid-header-table,
+.jqx-grid-content-table {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/* Force consistent alignment for all content */
+.jqx-grid-column-header div,
+.jqx-grid-cell div {
+  text-align: left !important; /* or center / right */
+  padding-left: 6px !important;
+  padding-right: 6px !important;
 }
