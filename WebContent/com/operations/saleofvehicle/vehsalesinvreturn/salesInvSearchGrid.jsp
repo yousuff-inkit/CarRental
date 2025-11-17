@@ -99,6 +99,7 @@ else{
               	document.getElementById("clientacno").value=$('#salesInvSearchGrid').jqxGrid('getcellvalue', rowindex1, "acno");
               	document.getElementById("salesinvtrno").value=$('#salesInvSearchGrid').jqxGrid('getcellvalue', rowindex1, "salesinvtrno");
                $('#salesinvwindow').jqxWindow('close');
+                
             }); 
         });
     </script>

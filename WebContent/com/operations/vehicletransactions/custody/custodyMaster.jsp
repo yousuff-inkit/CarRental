@@ -13,157 +13,6 @@
   overflow: auto;
   height: 530px;
 }
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
 </style> 
 </head>
 <script type="text/javascript">
@@ -1636,9 +1485,9 @@ win.focus();
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
 	<br/>
-<div class='hidden-scrollbar receipt-header'>
-<div class="table-section" style="width: 100%;">
-      <h3>Vehicle  Custody</h3>
+<div class='hidden-scrollbar'>
+<fieldset>
+      <legend>Vehicle  Custody</legend>
       <%-- <table width="100%" >
         <tr>
           <td align="right">Date</td> 
@@ -1701,7 +1550,7 @@ win.focus();
         </tr>
       </table> --%>
         
-    <table class="cr-table" width="100%" >
+    <table width="100%" >
         <tr>
           <td align="right">Date</td> 
           <td width="6%"><div id="date" name="date" value='<s:property value="date"/>'></div>
@@ -1777,199 +1626,190 @@ win.focus();
           <td align="left">&nbsp;</td>
         </tr>
       </table>
-    </div>
+    </fieldset>
     <br/>
+      <fieldset style="background-color:#ffe4e1;"><legend><input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();"><b>Collection Details</b></legend>
+    <table width="100%" id="collection"  >
+  <tr>
+   <td width="10%" align="right">Driver</td> 
+    <td width="18%" align="left"><input type="text" name="collectiondriver" id="collectiondriver" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);"></td>
+    
+      <td align="right" width="9%">&nbsp;</td>
+    <td align="left" width="12%">&nbsp;</td> 
+    
+    <td align="right" width="10%">&nbsp;</td> 
+    <td align="left" width="18%">&nbsp;</td>
+   
+    <td align="right" width="5%">&nbsp;</td>
+    <td align="left" width="10%">&nbsp;</td>
+    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
+    <td align="right" width="10%">Date</td>
+    <td align="left" width="18%"><div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div></td>
+    
+    <td align="right" width="9%">Time</td>
+    <td align="left" width="12%"><div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div></td>
+   
+    <td align="right" width="10%">KM</td>
+    <td align="left" width="18%"><input type="text" name="colletedkm"  style="width:60%;" id="colletedkm" value='<s:property value="colletedkm"/>'onkeypress="javascript:return isNumber (event)"></td>
+    <td align="right" width="5%">Fuel</td>
+    <td align="left" width="10%"><select name="collectedfuel" id="collectedfuel" value='<s:property value="collectedfuel"/>'>
+    <option value="">--Select--</option>
+    <option value=0.000>Level 0/8</option>
+    <option value=0.125>Level 1/8</option>
+    <option value=0.250>Level 2/8</option>
+    <option value=0.375>Level 3/8</option>
+    <option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option>
+    <option value=0.750>Level 6/8</option>
+    <option value=0.875>Level 7/8</option>
+    <option value=1.000>Level 8/8</option></select>
 
-    <div class="table-section" style="background-color:#ffe4e1; width: 100%;">
-        <legend><input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();"><b>Collection Details</b></legend>
-        <table width="100%" class="cr-table" id="collection"  >
-            <tr>
-                <td width="10%" align="right">Driver</td>
-                <td width="18%" align="left"><input type="text" name="collectiondriver" id="collectiondriver" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);"></td>
+    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+     <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+</table>
+</fieldset>
+    <fieldset style="background-color:#FFFAFA;" id="collectfield"><legend><label><b>Branch In</b></label></legend>
+    <table width="100%" >
+  <tr>
+ 
+ 
+<td width="10%" align="right">Branch</td>
+    <td width="18%" align="left"><select name="inbranch" id="inbranch" value='<s:property value="inbranch"/>' style="width:60%;" onchange="getLoc(this.value);"><option value="">--Select--</option></select></td>
+   
+    <td width="9%" align="right">Location</td>
+    <td width="12%" align="left"><select name="inlocation" id="inlocation" value='<s:property value="inlocation"/>' style="width:99%;"><option value="">--Select--</option></select></td>
 
-                <td align="right" width="9%">&nbsp;</td>
-                <td align="left" width="12%">&nbsp;</td>
+    
+    <td align="right" width="10%">&nbsp;</td>
+    <td align="left" width="18%">&nbsp;</td>  
+   
+ <td align="right" width="5%">&nbsp;</td>
+    <td align="left" width="10%">&nbsp;</td>
+    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  
+ </tr>
+ <tr>
 
-                <td align="right" width="10%">&nbsp;</td>
-                <td align="left" width="18%">&nbsp;</td>
+ 
+    <td align="right" width="10%">Date</td>
+    <td align="left" width="18%"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
+   
+    <td align="right" width="9%">Time</td>
+    <td align="left" width="12%"><div id="intime" name="intime" value='<s:property value="intime"/>' ></div></td>
+    
+    <td align="right" width="10%">KM</td>
+    <td align="left" width="18%"><input type="text" name="binkm" style="width:60%;"  id="binkm" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)"></td>
+    <td align="right" width="5%">Fuel</td>
+    <td align="left" width="10%"><select name="binfuel" id="binfuel" value='<s:property value="binfuel"/>'>
+      <option value="">--Select--</option>
+    <option value=0.000>Level 0/8</option>
+    <option value=0.125>Level 1/8</option>
+    <option value=0.250>Level 2/8</option>
+    <option value=0.375>Level 3/8</option>
+    <option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option>
+    <option value=0.750>Level 6/8</option>
+    <option value=0.875>Level 7/8</option>
+    <option value=1.000>Level 8/8</option></select>
+    </td>
 
-                <td align="right" width="5%">&nbsp;</td>
-                <td align="left" width="10%">&nbsp;</td>
-                <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            <tr>
-                <td align="right" width="10%">Date</td>
-                <td align="left" width="18%"><div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div></td>
-
-                <td align="right" width="9%">Time</td>
-                <td align="left" width="12%"><div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div></td>
-
-                <td align="right" width="10%">KM</td>
-                <td align="left" width="18%"><input type="text" name="colletedkm"  style="width:60%;" id="colletedkm" value='<s:property value="colletedkm"/>'onkeypress="javascript:return isNumber (event)"></td>
-                <td align="right" width="5%">Fuel</td>
-                <td align="left" width="10%"><select name="collectedfuel" id="collectedfuel" value='<s:property value="collectedfuel"/>'>
-                    <option value="">--Select--</option>
-                    <option value=0.000>Level 0/8</option>
-                    <option value=0.125>Level 1/8</option>
-                    <option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option>
-                    <option value=0.500>Level 4/8</option>
-                    <option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option>
-                    <option value=0.875>Level 7/8</option>
-                    <option value=1.000>Level 8/8</option></select>
-
-                <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-        </table>
-    </div>
-
-    <div id="collectfield" class="table-section" style="background-color:#FFFAFA; width: 100%;">
-        <legend><label><b>Branch In</b></label></legend>
-
-        <table class="cr-table" width="100%" >
-            <tr>
-
-
-                <td width="10%" align="right">Branch</td>
-                <td width="18%" align="left"><select name="inbranch" id="inbranch" value='<s:property value="inbranch"/>' style="width:60%;" onchange="getLoc(this.value);"><option value="">--Select--</option></select></td>
-
-                <td width="9%" align="right">Location</td>
-                <td width="12%" align="left"><select name="inlocation" id="inlocation" value='<s:property value="inlocation"/>' style="width:99%;"><option value="">--Select--</option></select></td>
-
-
-                <td align="right" width="10%">&nbsp;</td>
-                <td align="left" width="18%">&nbsp;</td>
-
-                <td align="right" width="5%">&nbsp;</td>
-                <td align="left" width="10%">&nbsp;</td>
-                <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            <tr>
-
-
-                <td align="right" width="10%">Date</td>
-                <td align="left" width="18%"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
-
-                <td align="right" width="9%">Time</td>
-                <td align="left" width="12%"><div id="intime" name="intime" value='<s:property value="intime"/>' ></div></td>
-
-                <td align="right" width="10%">KM</td>
-                <td align="left" width="18%"><input type="text" name="binkm" style="width:60%;"  id="binkm" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)"></td>
-                <td align="right" width="5%">Fuel</td>
-                <td align="left" width="10%"><select name="binfuel" id="binfuel" value='<s:property value="binfuel"/>'>
-                    <option value="">--Select--</option>
-                    <option value=0.000>Level 0/8</option>
-                    <option value=0.125>Level 1/8</option>
-                    <option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option>
-                    <option value=0.500>Level 4/8</option>
-                    <option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option>
-                    <option value=0.875>Level 7/8</option>
-                    <option value=1.000>Level 8/8</option></select>
-                </td>
-
-                <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="table-section" style="background-color:#ECF8E0; width: 100%;">
-
-        <legend><b>Branch Out</b></legend>
-        <table class="cr-table" width="100%" id="branchout" >
-            <tr>
+    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+     </tr>
+  </table>
+</fieldset>
+<fieldset style="background-color:#ECF8E0"><legend><b>Branch Out</b></legend>
+    <table width="100%" id="branchout" >
+  <tr>
 
 
-                <td align="right" width="85">Date</td>
-                <td align="left" width="118"><div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div></td>
+    <td align="right" width="85">Date</td>
+    <td align="left" width="118"><div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div></td> 
 
-                <td align="right" width="21">Time</td>
-                <td align="left" width="98"><div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div></td>
+    <td align="right" width="21">Time</td>
+    <td align="left" width="98"><div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div></td> 
 
-                <td align="right" width="88">KM</td>
-                <td align="left" width="151"><input type="text" name="boutkm" style="width:61%;"  id="boutkm" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)"></td>
-                <td align="right" width="46">Fuel</td>
-                <td align="left" width="98"><select name="boutfuel" id="boutfuel" value='<s:property value="boutfuel"/>'>
-                    <option value="">--Select--</option>
-                    <option value=0.000>Level 0/8</option>
-                    <option value=0.125>Level 1/8</option>
-                    <option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option>
-                    <option value=0.500>Level 4/8</option>
-                    <option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option>
-                    <option value=0.875>Level 7/8</option>
-                    <option value=1.000>Level 8/8</option></select>
-                </td>
-                <td width="308" colspan="2">Delivery&nbsp;<select name="delyesorno" id="delyesorno" value='<s:property value="delyesorno"/>'>
-                    <option value="">--Select--</option>
-                    <option value=1>YES</option>
-                    <option value=0>NO</option>
-                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()"></td>
-
-            </tr>
-            <tr>
-                <td align="right">Description</td>
-                <td colspan="9" align="left"><input type="text" name="outdesc" id="outdesc" value='<s:property value="outdesc"/>' style="width:95%;"></td>
-            </tr>
-        </table>
-    </div>
-
-<div class="table-section" style="background-color:#e6e6fa; width: 100%;"  id="deliveryfield">
-    <legend><input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();"><label for="chkdelivery"><b>Delivery</b></label></legend>
-    <table class="cr-table" width="100%" id="delivery" >
-        <tr>
-            <td align="right" width="11%">Driver</td>
-            <td align="left" width="16%"><input type="text" name="deldriver" id="deldriver" readonly value='<s:property value="deldriver"/>' placeholder="Press F3 to Search" onkeydown="getDriver(event,2);"></td>
-
-            <td align="right" width="13%">Deliver To</td>
-            <td align="left" width="15%"><input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'></td>
-
-
-            <td align="right" width="6%">&nbsp;</td>
-            <td align="left" width="18%">&nbsp;</td>
-
-            <td align="right" width="5%">&nbsp;</td>
-            <td align="left" width="10%">&nbsp;</td>
-            <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        </tr>
-        <tr>
-            <td align="right" width="10%">Date</td>
-            <td align="left" width="16%"><div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div></td>
-            <td align="right" width="11%">Time</td>
-            <td align="left" width="15%"><div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div></td>
-
-            <td align="right" width="6%">KM</td>
-            <td align="left" width="18%"><input type="text" name="delkm" style="width:65%;"  id="delkm" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)"></td>
-            <td align="right" width="7%">Fuel</td>
-            <td align="left" width="10%"><select name="delfuel" id="delfuel" value='<s:property value="delfuel"/>'>
-                <option value="">--Select--</option>
-                <option value=0.000>Level 0/8</option>
-                <option value=0.125>Level 1/8</option>
-                <option value=0.250>Level 2/8</option>
-                <option value=0.375>Level 3/8</option>
-                <option value=0.500>Level 4/8</option>
-                <option value=0.625>Level 5/8</option>
-                <option value=0.750>Level 6/8</option>
-                <option value=0.875>Level 7/8</option>
-                <option value=1.000>Level 8/8</option>
-            </select>
-            </td>
-            <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td align="left" width="20%">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()"></td>
-
-        </tr>
+    <td align="right" width="88">KM</td>
+    <td align="left" width="151"><input type="text" name="boutkm" style="width:61%;"  id="boutkm" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)"></td>
+    <td align="right" width="46">Fuel</td>
+    <td align="left" width="98"><select name="boutfuel" id="boutfuel" value='<s:property value="boutfuel"/>'>
+      <option value="">--Select--</option>
+      <option value=0.000>Level 0/8</option>
+      <option value=0.125>Level 1/8</option>
+      <option value=0.250>Level 2/8</option>
+      <option value=0.375>Level 3/8</option>
+      <option value=0.500>Level 4/8</option>
+      <option value=0.625>Level 5/8</option>
+      <option value=0.750>Level 6/8</option>
+      <option value=0.875>Level 7/8</option>
+      <option value=1.000>Level 8/8</option></select>
+    </td>
+   <td width="308" colspan="2">Delivery&nbsp;<select name="delyesorno" id="delyesorno" value='<s:property value="delyesorno"/>'> 
+      <option value="">--Select--</option>
+           <option value=1>YES</option>
+                <option value=0>NO</option>
+      </select>&nbsp;&nbsp;&nbsp;&nbsp;
+   <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()"></td>
+  
+</tr>
+  <tr>
+    <td align="right">Description</td>
+    <td colspan="9" align="left"><input type="text" name="outdesc" id="outdesc" value='<s:property value="outdesc"/>' style="width:95%;"></td>
+    </tr>
     </table>
-</div >
+<br/>
+</fieldset>
+    <fieldset style="background-color:#e6e6fa;" id="deliveryfield"><legend><input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();"><label for="chkdelivery"><b>Delivery</b></label></legend>
+<table width="100%" id="delivery" >
+<tr>
+  <td align="right" width="11%">Driver</td> 
+    <td align="left" width="16%"><input type="text" name="deldriver" id="deldriver" readonly value='<s:property value="deldriver"/>' placeholder="Press F3 to Search" onkeydown="getDriver(event,2);"></td>
+ 
+    <td align="right" width="13%">Deliver To</td>
+    <td align="left" width="15%"><input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'></td>
+   
+    
+    <td align="right" width="6%">&nbsp;</td>
+    <td align="left" width="18%">&nbsp;</td>
+   
+   <td align="right" width="5%">&nbsp;</td>
+    <td align="left" width="10%">&nbsp;</td>
+    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+     <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <tr>
+    <td align="right" width="10%">Date</td>
+    <td align="left" width="16%"><div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div></td>
+    <td align="right" width="11%">Time</td>
+    <td align="left" width="15%"><div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div></td>
+   
+    <td align="right" width="6%">KM</td>
+    <td align="left" width="18%"><input type="text" name="delkm" style="width:65%;"  id="delkm" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)"></td>
+    <td align="right" width="7%">Fuel</td>
+    <td align="left" width="10%"><select name="delfuel" id="delfuel" value='<s:property value="delfuel"/>'>
+    <option value="">--Select--</option>
+    <option value=0.000>Level 0/8</option>
+    <option value=0.125>Level 1/8</option>
+    <option value=0.250>Level 2/8</option>
+    <option value=0.375>Level 3/8</option>
+    <option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option>
+    <option value=0.750>Level 6/8</option>
+    <option value=0.875>Level 7/8</option>
+    <option value=1.000>Level 8/8</option>
+    </select>
+    </td>
+     <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   <td align="left" width="20%">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()"></td>
+    
+  </tr>
+</table>
 
+</fieldset>
 </div>
 
 <input type="hidden" name="masterrefno" id="masterrefno" value='<s:property value="masterrefno"/>'>

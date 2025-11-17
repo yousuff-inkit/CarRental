@@ -25,15 +25,11 @@ html,body {
 }
 
 #nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 	line-height: 30px;
-	height: 5.5%;
-	width: 100%;
-	/*float: top;*/
-	position: relative;
+	height: 90.5%;
+	width: 9%;
+	float: left;
+	position: absolute;
 }
 
 #comiframe {
@@ -58,13 +54,11 @@ html,body {
 	<h3>Maintenance Master</h3>
 </div>
 <div id="nav">
-<table  >
-<tr  ><td><input type="button" name="btngarage" class="myButton" value="Garage" style="width:90px;outline:none;" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/garage.jsp";'></td>
-    <td><input type="button" name="btndamage" class="myButton" value="Damage" style="width:90px;" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/damage.jsp";'></td>
-    <td><input type="button" name="btnmain" class="myButton" value="Maintenance" style="width:90px" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/maintenance.jsp";'></td>
-    <td><input type="button" name="btncomplaint" class="myButton" value="Complaint" style="width:90px" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/complaintmaster.jsp";'></td>
-</tr>
-
+<table >
+<tr><td><input type="button" name="btngarage" class="myButton" value="Garage" style="width:90px;outline:none;" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/garage.jsp";'></td></tr>
+<tr><td><input type="button" name="btndamage" class="myButton" value="Damage" style="width:90px;" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/damage.jsp";'></td></tr>
+<tr><td><input type="button" name="btnmain" class="myButton" value="Maintenance" style="width:90px" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/maintenance.jsp";'></td></tr>
+<tr><td><input type="button" name="btncomplaint" class="myButton" value="Complaint" style="width:90px" onclick='document.getElementById("iframe3").src="<%=contextPath%>/com/controlcentre/masters/maintenancemaster/complaintmaster.jsp";'></td></tr>
 </table>
 
 <input type="hidden" id="formName" name="formName"  value='000'/>
