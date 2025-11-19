@@ -745,228 +745,270 @@
 </script>
 <style>
 /* =========================================
-   Elegant Gold & Cream UI Theme (Premium)
-   ========================================= */
+    Professional Rich Blue UI Theme
+    ========================================= */
+
+/* --- Color Palette --- */
+/* Primary Blue: #007bff (Standard Blue) */
+/* Darker Blue: #0056b3 (For Hover/Active) */
+/* Light Blue/Background Accent: #e6f0ff (Light Tint) */
+/* Background Base: #FFFFFF */
+/* Text/Elements: #343a40 (Dark Grey/Black) */
 
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow: auto;
+    height: 530px;
 }
 
 #validrate,
 #validrate1 {
-  color: #D4AF37; /* Metallic Gold for error/warning text */
+    color: #dc3545; /* Standard Red for error/warning text (professional contrast) */
 }
 
 /* ===== Global Background and Typography ===== */
 body {
-  background: linear-gradient(135deg, #FDF5E6 0%, #FAEBD7 100%);
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-  color: #36454F;
-  margin: 0;
-  padding: 32px 0;
-  min-height: 100vh;
-  box-sizing: border-box;
+    background: #f8f9fa; /* Very light grey background */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #343a40; /* Dark text */
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 /* ===== Main Container ===== */
 #mainBG {
-  background: #fff;
-  border-radius: 16px;
-  padding: 10px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.3s ease;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 #mainBG:hover {
-  box-shadow: 0 8px 28px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2);
 }
 
 /* ===== Header Section ===== */
 .receipt-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 16px;
-  border-radius: 12px;
-  background: #FFF8DC; /* Light cream background */
-  border: 1px solid #F0E68C; /* Light gold border */
-  padding: 10px 24px;
-  font-size: 2vh;
-  box-shadow: 0 1px 8px rgba(212, 175, 55, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #e6f0ff; /* Light blue accent background */
+    border: 1px solid #cce5ff; /* Light border */
+    padding: 10px 20px;
+    font-size: 2vh;
+    box-shadow: 0 1px 6px rgba(0, 123, 255, 0.1);
 }
 
 .receipt-header label {
-  font-weight: 600;
-  color: #36454F;
-  margin-right: 8px;
+    font-weight: 600;
+    color: #343a40;
+    margin-right: 8px;
 }
 
 .receipt-header input[type="text"] {
-  border: 1px solid #E0E0E0;
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 1rem;
-  width: 120px;
-  background: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 .receipt-header input[type="text"]:focus {
-  border-color: #D4AF37;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
-  outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+    outline: none;
 }
 
 /* Header Button */
-.receipt-header button {
-  background: #D4AF37;
-  color: #36454F;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.2);
+.receipt-header button,
+/* General button style (assuming myButton class) */
+.myButton {
+    background: #007bff; /* Primary Blue */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
+    /* Added for consistency with other buttons */
+    margin-left: 5px; 
 }
-.receipt-header button:hover {
-  background: #B8860B;
-  color: #fff;
+.receipt-header button:hover,
+.myButton:hover {
+    background: #0056b3; /* Darker Blue on hover */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
-.receipt-header button:active {
-  transform: scale(0.97);
+.receipt-header button:active,
+.myButton:active {
+    transform: scale(0.98);
 }
 
 /* Status Label */
 #txtStatus {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #D4AF37;
-  margin-left: 12px;
-  background: #FFF8DC;
-  padding: 4px 8px;
-  border-radius: 6px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #007bff;
+    margin-left: 12px;
+    background: #e6f0ff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 /* ===== Section Layouts ===== */
 .section-row {
-  display: flex;
-  gap: 26px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
 }
 
 .section-block {
-  flex: 1;
-  background: #FFFACD;
-  border-radius: 10px;
-  padding: 20px 18px;
-  border: 1px solid #F0E68C;
-  box-shadow: 0 1px 8px rgba(212, 175, 55, 0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+    flex: 1;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 18px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .section-block:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.15);
 }
 
 /* Section Titles */
 .section-block h2 {
-  font-size: 1.1em;
-  font-weight: 600;
-  margin: 0 0 16px 0;
-  color: #36454F;
-  border-bottom: 1px solid #D4AF37;
-  padding-bottom: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0 0 14px 0;
+    color: #343a40;
+    border-bottom: 2px solid #007bff; /* Blue accent line */
+    padding-bottom: 6px;
 }
 
 /* Section Form Controls */
 .section-block .form-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
 }
 
 .section-block label {
-  min-width: 110px;
-  text-align: right;
-  font-weight: 500;
-  color: #36454F;
+    min-width: 100px;
+    text-align: right;
+    font-weight: 500;
+    color: #495057;
 }
 
 .section-block input[type="text"],
 .section-block select {
-  flex: 1;
-  border: 1px solid #E0E0E0;
-  border-radius: 6px;
-  padding: 6px 10px;
-  background: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  color: #333;
+    flex: 1;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    color: #333;
 }
 .section-block input[type="text"]:focus,
 .section-block select:focus {
-  border-color: #D4AF37;
-  box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
-  outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
 }
 
 input[readonly],
 select:disabled {
-  background-color: #FAF7E8 !important;
-  color: #777;
-  cursor: not-allowed;
+    background-color: #f1f1f1 !important; /* Lighter grey for disabled */
+    color: #6c757d;
+    cursor: not-allowed;
 }
 
-/* ===== Table Section ===== */
+/* jQWidgets Date Input Styling (Customized for theme) */
+.jqx-datetimeinput,
+.jqx-dropdownlist {
+    border-color: #ced4da !important;
+    border-radius: 4px !important;
+    background-color: #ffffff !important;
+}
+.jqx-datetimeinput:hover,
+.jqx-dropdownlist:hover {
+    border-color: #007bff !important;
+}
+
+/* Checkbox (PDC) */
+.section-block input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+
+/* ===== Table Section (Grids) ===== */
 .table-section {
-  margin-bottom: 18px;
+    margin-bottom: 18px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #ffffff;
 }
 .table-section h3 {
-  color: #36454F;
-  font-size: 1.04em;
-  font-weight: 600;
-  border-bottom: 1px dashed #D4AF37;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+    color: #343a40;
+    font-size: 1.04em;
+    font-weight: 600;
+    border-bottom: 1px dashed #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-/* Data Table */
+/* Summary Table (cr-table) */
 .cr-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #FDF5E6;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px #F0E68C;
+    width: 100%;
+    border-collapse: collapse;
+    background: #f8f9fa; /* Light background for table */
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #dee2e6;
 }
 .cr-table th,
 .cr-table td {
-  padding: 9px 10px;
-  border-bottom: 1px solid #F0E68C;
-  text-align: left;
-  font-size: 1em;
+    padding: 8px 10px;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
+    font-size: 0.95em;
 }
 .cr-table th {
-  background: #D4AF37;
-  color: #36454F;
-  font-weight: 700;
+    background: #007bff; /* Blue header */
+    color: #ffffff;
+    font-weight: 700;
 }
 .cr-table tr:last-child td {
-  border-bottom: none;
+    border-bottom: none;
 }
 .cr-table tr:hover td {
-  background-color: #FFF8DC;
-  transition: 0.3s ease;
+    background-color: #e6f0ff; /* Light blue row hover */
+    transition: 0.2s ease;
 }
+
+/* ===== JqxGrid Styling (To blend with theme) ===== */
+/* Assuming the jqxGrid itself is included and needs minimal custom styling here */
+/* jqxGrid content often needs to be styled via jQWidgets theme options */
+/* If styling here, target jqx-grid-cell, jqx-grid-header, etc. */
+
 
 /* ===== Animations ===== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 </style>
 

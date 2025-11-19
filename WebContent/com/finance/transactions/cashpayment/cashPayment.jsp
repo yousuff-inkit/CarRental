@@ -658,274 +658,257 @@
 
 <style>
 /* =========================================
-   Elegant Gold & Cream UI Theme
+   Professional Blue UI Theme (Enlarged Fields with Blue Box-Shadows)
    ========================================= */
 
 /* Scrollable container */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow: auto;
+    height: 530px;
 }
 
 /* Validation messages */
 #validrate,
 #validrate1 {
-  color: #D4AF37; /* Warm Metallic Gold for emphasis */
+    color: #e74c3c; /* Professional red for error visibility */
+    font-size: 1em; /* Slightly larger text */
+    margin-left: 5px;
+    font-weight: 600;
 }
 
 /* ===== Global Page Styling ===== */
 body {
-  background: linear-gradient(135deg, #FDF5E6 0%, #FAEBD7 100%); /* Soft gold gradient */
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-  color: #36454F; /* Charcoal for good contrast */
-  margin: 0;
-  padding: 32px 0;
-  min-height: 100vh;
-  box-sizing: border-box;
-  animation: fadeIn 0.6s ease-in-out;
+    /* Subtle blue gradient background */
+    background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #2c3e50;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
-/* ===== Main Container ===== */
+/* ===== Main Container (mainBG) ===== */
 #mainBG {
-  background: #fff; /* Clean white container */
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  padding: 25px 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  transition: all 0.3s ease;
-}
-#mainBG:hover {
-  box-shadow: 0 8px 28px rgba(212, 175, 55, 0.25);
+    background: #ffffff;
+    border-radius: 12px;
+    /* Added blue box-shadow */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(52, 152, 219, 0.2); /* Stronger overall shadow with blue tint */
+    padding: 24px;
+    max-width: 1250px;
+    margin: 0 auto;
 }
 
-/* ===== Header Section ===== */
+/* ===== Header Section (Date, Doc No) ===== */
 .receipt-header {
-  background: #FDF5E6;
-  border: 1px solid #F0E68C;
-  border-radius: 12px;
-  padding: 14px 18px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 6px rgba(212, 175, 55, 0.2);
-  display: block;
-  font-size: 1rem;
+    display: block;
+    margin-bottom: 24px;
+    padding: 10px 0;
+    border-bottom: 2px solid #3498db;
 }
 
 .receipt-header table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 .receipt-header td {
-  padding: 5px 0;
+    padding: 8px 0;
+    font-size: 1em;
+    color: #2c3e50;
+    font-weight: 500;
 }
-
-/* Header Labels */
-.receipt-header label {
-  font-weight: 600;
-  color: #36454F;
-  margin-right: 8px;
+/* Ensure jqxDateTimeInput integrates visually */
+.receipt-header div.jqx-datetimeinput {
+    border: 1px solid #bdc3c7 !important;
+    border-radius: 6px !important;
+    background: #fdfdfd !important;
+    height: 28px !important;
+    box-shadow: 0 1px 3px rgba(52, 152, 219, 0.1); /* Subtle blue shadow */
 }
 
 /* Header Inputs */
 .receipt-header input[type="text"] {
-  border: 1px solid #E0E0E0;
-  border-radius: 6px;
-  padding: 6px 10px;
-  background: #fff;
-  transition: border-color 0.2s;
-  font-size: 0.95rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fdfdfd;
+    transition: border-color 0.2s, box-shadow 0.2s; /* Added box-shadow to transition */
+    font-size: 1em;
+    box-shadow: 0 1px 3px rgba(52, 152, 219, 0.1); /* Subtle blue shadow */
 }
 .receipt-header input[type="text"]:focus {
-  border-color: #D4AF37;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
-  outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); /* More prominent blue shadow on focus */
+    outline: none;
 }
 
-/* Header Button */
-.receipt-header button, .myButton {
-  background: #D4AF37;
-  color: #36454F;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.25s ease, transform 0.2s;
-  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.2);
+/* Header Button (Value Change) */
+.myButton {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s, box-shadow 0.2s; /* Added box-shadow to transition */
+    box-shadow: 0 3px 8px rgba(52, 152, 219, 0.25); /* Blue shadow for button */
 }
-.receipt-header button:hover, .myButton:hover {
-  background: #B8860B;
-  transform: translateY(-1px);
+.myButton:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(52, 152, 219, 0.4); /* More prominent blue shadow on hover */
 }
-.receipt-header button:active {
-  transform: scale(0.98);
+.myButton:active {
+    transform: translateY(0);
 }
 
 /* Status Tag */
 #txtStatus {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #D4AF37;
-  background: #FFF8DC;
-  padding: 4px 10px;
-  border-radius: 6px;
-  display: inline-block;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e67e22;
+    background: #fef9e7;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    box-shadow: 0 1px 4px rgba(52, 152, 219, 0.15); /* Subtle blue shadow for status tag */
 }
 
-/* ===== Section Layouts ===== */
+/* ===== Main Form Section Layouts (Cash and Payment From) ===== */
 .section-row {
-  display: flex;
-  gap: 26px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
 }
 .section-block {
-  flex: 1;
-  background: #FFFACD; /* Soft Cream block background */
-  border-radius: 10px;
-  padding: 20px 22px;
-  box-shadow: 0 1px 8px rgba(212, 175, 55, 0.15);
-  border: 1px solid #F0E68C;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex: 1;
+    background: #f8faff;
+    border-radius: 10px;
+    padding: 25px 28px;
+    /* Added blue box-shadow */
+    box-shadow: 0 1px 8px rgba(52, 152, 219, 0.1), 0 0 0 1px rgba(52, 152, 219, 0.08); /* Subtle blue border-like shadow */
+    border: 1px solid #d1d5db; /* Keep the subtle border */
+    transition: box-shadow 0.3s ease;
 }
 .section-block:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.2), 0 0 0 2px rgba(52, 152, 219, 0.15); /* More prominent blue shadow on hover */
 }
 
 /* Section Headings */
 .section-block h2 {
-  font-size: 1.12em;
-  font-weight: 600;
-  margin: 0 0 16px 0;
-  color: #36454F;
-  border-bottom: 1px solid #D4AF37;
-  padding-bottom: 8px;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: #3498db;
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 8px;
 }
 
-/* Form Rows */
-.section-block .form-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 10px;
+/* Form Groups (input rows) */
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
 }
 
 /* Labels */
 .section-block label {
-  min-width: 110px;
-  text-align: right;
-  font-weight: 500;
-  color: #36454F;
+    font-weight: 500;
+    color: #2c3e50;
+    white-space: nowrap;
 }
 
-/* Inputs & Selects */
+/* Inputs & Selects within sections */
 .section-block input[type="text"],
 .section-block select {
-  flex: 1;
-  border: 1px solid #E0E0E0;
-  border-radius: 6px;
-  padding: 7px 10px;
-  background: #fff;
-  color: #333;
-  transition: border-color 0.25s ease;
+    flex: 1;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    background: #fff;
+    color: #333;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease; /* Added box-shadow to transition */
+    font-size: 1em;
+    box-sizing: border-box;
+    width: auto !important;
+    box-shadow: 0 1px 3px rgba(52, 152, 219, 0.1); /* Subtle blue shadow */
 }
+
 .section-block input[type="text"]:focus,
 .section-block select:focus {
-  border-color: #D4AF37;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
-  outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); /* More prominent blue shadow on focus */
+    outline: none;
 }
 
 /* Readonly & Disabled */
 input[readonly],
 select:disabled {
-  background-color: #FAF7E8 !important;
-  color: #777;
-  cursor: not-allowed;
+    background-color: #ecf0f1 !important;
+    color: #777;
+    cursor: not-allowed;
+    box-shadow: none !important; /* Remove shadow for disabled elements */
 }
 
-/* ===== Apply Invoices Table ===== */
+/* ===== Apply Invoices / Footer ===== */
 fieldset {
-  border: 1px solid #F0E68C;
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 24px;
-  background: #FDF5E6;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+    background: #ffffff;
+    box-shadow: 0 1px 8px rgba(52, 152, 219, 0.1); /* Subtle blue shadow for fieldset */
+    transition: box-shadow 0.3s ease;
+}
+fieldset:hover {
+    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.2); /* More prominent blue shadow on hover */
 }
 
-.table-section {
-  margin-bottom: 18px;
+legend {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #3498db;
+    padding: 0 10px;
 }
 .table-section h3 {
-  color: #36454F;
-  font-size: 1.04em;
-  font-weight: 600;
-  border-bottom: 1px dashed #D4AF37;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+    color: #3498db;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-bottom: 1px dashed #d1d5db;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
 }
 
-/* Invoices Table */
-.cr-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #FDF5E6;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px #F0E68C;
-}
+/* Invoices Table Cells/Rows - Applying the same visual standard */
 .cr-table th, .cr-table td {
-  padding: 9px 10px;
-  border-bottom: 1px solid #F0E68C;
-  text-align: left;
-  font-size: 0.95rem;
+    padding: 12px 14px;
+    font-size: 0.95em;
+    border-bottom: 1px solid #e0e6ec; /* Lighter border for table rows */
 }
 .cr-table th {
-  background: #D4AF37;
-  color: #36454F;
-  font-weight: 700;
-  text-transform: uppercase;
+    background: #eaf3f8; /* Light blue background for table headers */
+    color: #2c3e50;
+    box-shadow: 0 1px 3px rgba(52, 152, 219, 0.08); /* Subtle blue shadow for table header */
 }
-.cr-table tr:hover td {
-  background-color: #FFF8DC;
-  transition: 0.3s;
+.cr-table td input[type="text"] {
+    box-shadow: none; /* Remove individual shadow from inputs within table for cleaner look */
 }
+
 
 /* Totals Row */
-.total-row input[type="text"] {
-  background-color: #FFF8DC;
-  font-weight: 600;
-  color: #B8860B;
-  border: 1px solid #F0E68C;
+#txtdrtotal, #txtcrtotal {
+    font-weight: 700;
+    background-color: #eaf3f8;
+    border: 1px solid #3498db;
+    color: #2c3e50;
+    padding: 10px 14px;
+    font-size: 1.05em;
+    width: 20% !important;
+    box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2); /* Stronger blue shadow for totals */
 }
-
-/* ===== Animations ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-button, .myButton {
-  background: linear-gradient(90deg, #f7b733, #fc4a1a);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 3px 8px rgba(252, 74, 26, 0.25);
-}
-button:hover, .myButton:hover {
-  background: linear-gradient(90deg, #ff8c00, #e85d04);
-  box-shadow: 0 4px 12px rgba(252, 74, 26, 0.4);
-  transform: translateY(-2px);
-}
-button:active {
-  transform: scale(0.98);
-}
-
 </style>
 
 </head>

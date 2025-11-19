@@ -11,177 +11,129 @@
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
 <style>
 
-    body {
-        font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-        background: #f6f8fa;
-        margin: 0;
-        color: #253858;
-    }
-
-.HeadIcons {
-    font: 12px Tahoma;
-    margin-top: 0px;
-	line-height: 30px;
-	background-color: #E0ECF8;
-	height: 27px;
-	width: 100%;
-}
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}
-label.branch{
-   font-size: 12px;
-   font-family: Tahoma;
-   font-style: normal; 
-   padding-left: 1%;
-}
-label.currency{
-   font-size: 12px;
-   font-family: Tahoma;
-   font-style: normal;
-   padding-left: 1%;
+/* --- General Body and Container Styles --- */
+body {
+    /* Subtle blue gradient background, matching the prior professional style */
+    background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #2c3e50; /* Dark, professional text color */
+    margin: 0;
 }
 
-#errormsg {
-  -moz-animation-duration: 1s;
-  -moz-animation-name: blink;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-direction: alternate;
-  
-  -webkit-animation-duration: 2s;
-  -webkit-animation-name: blink;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-  
-  animation-duration: 1s;
-  animation-name: blink;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-@-moz-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
-
-@-webkit-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
-button.icon:disabled { opacity: 0.5; };
-.icon-text {
-    color: #007bff;
-    font-weight: 500;
-    cursor: pointer;
-    margin-right: 18px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
-    font-size: 1rem;
-    display: inline-block;
-}
-.icon-text:hover {
-    background: #eaf4ff;
-    color: #0056b3;
-    text-decoration: underline;
-}
-
+/* --- Header Icons/Info Bar (HeadIcons) Styles --- */
 .HeadIcons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start; /* Aligned left for a clean look */
     align-items: center;
-    gap: 24px;
-    background: #FFFFFF;
-    border-radius: 12px;
-    padding: 18px 32px;
-    width: 95%;
+    gap: 20px;
+    background: #ffffff; /* White background for the bar */
+    border-radius: 8px; /* Slightly rounded corners */
+    padding: 12px 20px;
+    width: 95%; /* Adjust width to fit container */
+    margin: 15px auto 10px auto; /* Centered with top/bottom margin */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
+}
+
+.HeadIcons font {
+    /* Styling for the main form title */
+    color: #3498db; /* Primary blue for the title */
+    font-weight: 700;
+    font-size: 1.2em;
+    flex-grow: 1; /* Allows title to take up space */
+    min-width: 250px;
 }
 
 .HeadIcons label.branch,
 .HeadIcons label.currency {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-    min-width: 80px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 5px;
+    min-width: 60px;
     text-align: right;
+    font-size: 0.95rem; /* Consistent font size */
+    padding-left: 0; /* Override inline style */
 }
 
 .HeadIcons select,
 .HeadIcons input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
     padding: 6px 10px;
-    font-size: 1rem;
-    background: #ffffff;
-    transition: border-color 0.2s;
-    min-width: 120px;
+    font-size: 0.9rem;
+    background: #fdfdfd;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-width: 100px;
     height: auto;
-    font-size: 10px;
+    box-sizing: border-box;
 }
 
 .HeadIcons select:focus,
 .HeadIcons input[type="text"]:focus {
-    border-color: #007bff;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
     outline: none;
 }
 
 #savemsg {
-    color: #22c55e;
-    font-weight: bold;
+    color: #27ae60; /* Professional green for success */
+    font-weight: 700;
     margin-left: 16px;
 }
 
 #errormsg {
-    color: #e11d48;
-    font-weight: bold;
+    color: #e74c3c; /* Professional red for errors */
+    font-weight: 700;
     margin-left: 16px;
+    /* Blink animation unchanged */
 }
 
-    .action-bar {
-        display: flex;
-        gap: 14px;
-        padding: 0.5% 2%;
-    }
-    .action-btn {
-        background: #e4e7ed;
-        border: none;
-        color: #253858;
-        padding: 4px 25px;
-        border-radius: 23px;
-        font-size: 15px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background .2s;
-    }
-    .action-btn:hover {
-        background: #cdd9e5;
-    }
+@-moz-keyframes blink { from { opacity: 1; } to { opacity: 0; } }
+@-webkit-keyframes blink { from { opacity: 1; } to { opacity: 0; } }
+@keyframes blink { from { opacity: 1; } to { opacity: 0; } }
 
+
+/* --- Action Bar (Buttons) Styles --- */
+.action-bar {
+    display: flex;
+    gap: 10px; /* Reduced gap */
+    padding: 10px 2.5%;
+    background: #ecf0f1; /* Light grey background for the bar */
+    border-radius: 8px;
+    width: 95%;
+    margin: 0 auto 15px auto;
+    box-sizing: border-box;
+}
+
+.action-btn {
+    background: #3498db; /* Primary Blue Button Color */
+    border: none;
+    color: #ffffff;
+    padding: 8px 18px; /* Increased padding */
+    border-radius: 4px; /* Squared off corners for professional look */
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Prevents wrapping */
+}
+.action-btn:hover {
+    background: #2980b9; /* Darker blue on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.action-btn:active {
+    transform: translateY(0);
+    background: #21618c;
+}
+.action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
 </style>
 <script type="text/javascript">
 var APP_PATH='<%=contextPath%>';

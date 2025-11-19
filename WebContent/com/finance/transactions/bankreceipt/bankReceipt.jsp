@@ -730,165 +730,202 @@
 
 
 
-    <style>
-        .hidden-scrollbar {
-            overflow: auto;
-            height: 530px;
-        }
-        #validrate{
-            color:red;
-        }
-        #validrate1{
-            color:red;
-        }
+   <style>
+/* --- General Styles --- */
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+#validrate, #validrate1 {
+    color: #e74c3c; /* A professional red for errors */
+    font-size: 0.9em;
+    margin-left: 5px;
+}
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            color: #222;
-            margin: 0;
-            padding: 32px 0;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        #mainBG {
-            background: #fff;
-            border-radius: 16px;
-            /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-            padding: 10px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+body {
+    /* Subtle blue gradient background */
+    background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for professional look */
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        .receipt-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 16px;
-            border-radius: 12px;
-            padding: 0px 24px;
-            font-size: 2vh;
-        }
-        .receipt-header label {
-            font-weight: 500;
-            color: #333;
-            margin-right: 8px;
-        }
-        .receipt-header input[type="text"] {
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 1rem;
-            width: 120px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
-        .receipt-header input[type="text"]:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .receipt-header button {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .receipt-header button:hover {
-            background: #0056b3;
-        }
-        #txtStatus {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #e67e22;
-            margin-left: 12px;
-        }
+/* --- Header/Top Section Styles --- */
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 2px solid #3498db; /* Blue separator */
+    font-size: 1.1em;
+}
+.receipt-header label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 10px;
+}
+.receipt-header input[type="text"],
+.receipt-header select {
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    background: #fdfdfd;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.receipt-header input[type="text"]:focus,
+.receipt-header select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
 
-        .section-row {
-            display: flex;
-            gap: 26px;
-            margin-bottom: 24px;
-        }
-        .section-block {
-            flex: 1;
-            background: #f6f8fa;
-            border-radius: 10px;
-            padding: 20px 18px;
-            box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-        }
+/* Base button style (applies to jsp:include buttons like Save/Edit) */
+.myButton,
+.receipt-header button {
+    background: #3498db; /* Primary blue */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s; /* Added transform for hover */
+    margin-left: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.myButton:hover,
+.receipt-header button:hover {
+    background: #2980b9; /* Darker blue on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.myButton:active,
+.receipt-header button:active {
+    transform: translateY(0);
+}
 
-        .section-block h2 {
-            font-size: 1.09em;
-            font-weight: 500;
-            margin: 0 0 16px 0;
-            color: #253858;
-        }
+#txtStatus {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e67e22; /* Retaining orange for status visibility */
+    margin-left: 12px;
+    padding: 5px 10px;
+    background: #fef9e7;
+    border-radius: 4px;
+}
 
-        .section-block .form-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
+/* --- Fieldset/Section Block Styles --- */
+fieldset {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #f8faff; /* Very light blue/off-white for sections */
+}
 
-        .section-block label {
-            min-width: 110px;
-            text-align: right;
-            font-weight: 500;
-            color: #253858;
-        }
+legend {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #2c3e50;
+    padding: 0 10px;
+    margin-left: 10px;
+}
 
-        .section-block input[type="text"],
-        .section-block select {
-            flex: 1;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 6px 10px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
+/* Standard table layout within fieldsets (adjusting to modern flex/grid standards is ideal, but using table structure as requested) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table td {
+    padding: 4px 8px; /* Adjusted padding for better fit */
+}
 
-        .section-block input[type="text"]:focus,
-        .section-block select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+/* Input/Select/Label within fieldsets */
+.section-block .form-group {
+    /* This section is defined in the original HTML but not strictly used
+       in the new table-based layout. Keeping for reference, but mainly
+       relying on the table structure below. */
+}
 
+input[type="text"],
+select {
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    padding: 7px 10px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 0.95em;
+    box-sizing: border-box; /* Ensures padding is inside the element width */
+}
 
-        .table-section {
-            margin-bottom: 18px;
-        }
-        .table-section h3 {
-            color: #253858;
-            font-size: 1.04em;
-            font-weight: 600;
-        }
-        .cr-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #f9fafb;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 0 1px #eef0f6;
-        }
-        .cr-table th, .cr-table td {
-            padding: 9px 10px;
-            border-bottom: 1px solid #e4e7ec;
-            text-align: left;
-            font-size: 1em;
-        }
-        .cr-table th {
-            background: #eef0f6;
-            color: #354B6A;
-            font-weight: 600;
-        }
-        .cr-table tr:last-child td {
-            border-bottom: none;
-        }
-    </style>
+input[type="text"]:focus,
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* JQX components styling (assuming they inherit some of these, but often require theme overrides) */
+.jqx-datetimeinput {
+    border-color: #bdc3c7 !important;
+    border-radius: 4px !important;
+}
+
+/* Specific styling for the Description/Total section at the bottom */
+#txtdrtotal, #txtcrtotal {
+    font-weight: bold;
+    background-color: #eaf3f8; /* Light blue background for totals */
+    border: 1px solid #3498db;
+}
+
+/* Apply Invoices Grid Styles */
+.table-section h3 {
+    color: #2c3e50;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+/* This is likely where jqxGrid renders. Standard table styles are provided below
+   but jqxGrid requires its own theme/CSS for full customization. */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e4e7ec;
+    margin-top: 10px;
+}
+.cr-table th, .cr-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 0.95em;
+}
+.cr-table th {
+    background: #ecf0f1; /* Light grey/blue background for header */
+    color: #2c3e50;
+    font-weight: 600;
+}
+.cr-table tr:hover {
+    background-color: #f5faff; /* Subtle row hover */
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+</style>
 
 
 </head>
