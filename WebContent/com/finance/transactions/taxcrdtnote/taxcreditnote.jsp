@@ -426,164 +426,173 @@
 			 	  }
 
 </script>
-
 <style>
+/* -----------------------------------
+     SKY BLUE ERP THEME (FULL REPLACE)
+------------------------------------ */
+
+/* Scrollbar */
 .hidden-scrollbar {
-  overflow: auto;
+  overflow-y: auto;
   height: 530px;
+  scrollbar-width: thin;
+  scrollbar-color: #4da3ff #eaf3ff;
 }
-#validrate{
- color:red;
- }
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4da3ff;
+  border-radius: 8px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #1a73e8;
+}
 
-
-
+/* Body Background */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
+  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #1f2f46;
+  margin: 0;
+  padding: 40px 0;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease-in-out;
 }
+
+/* Main Container */
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+  background: #f4f8ff;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15);
+  padding: 25px 30px;
+  max-width: 1250px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+#mainBG:hover {
+  box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25);
 }
 
+/* Page Title */
+.page-heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3ea3;
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(100, 150, 255, 0.3);
+  animation: fadeIn 1s ease;
+}
+
+/* Form Header / Section Blocks */
 .receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+  background: #edf4ff;
+  border: 1px solid #c9dafc;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 26px;
+  box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2);
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+/* Labels */
+label {
+  font-weight: 500;
+  color: #2b4a7a;
 }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
+/* Inputs / Dropdowns */
+input[type="text"], select {
+  border: 1px solid #b9ccf2;
+  border-radius: 8px;
+  padding: 7px 12px;
+  background: #ffffff;
+  transition: 0.25s ease;
+  font-size: 0.95rem;
+  color: #1f2f46;
+  height: 34px;
+}
+input[type="text"]:focus, select:focus {
+  border-color: #4da3ff;
+  box-shadow: 0 0 6px rgba(77, 163, 255, 0.55);
+  outline: none;
 }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+/* Dropdown Arrow */
+select {
+  appearance: none;
+  background: #ffffff url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12'/></svg>") no-repeat right 10px center;
+  background-size: 14px;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
+/* Disabled Inputs */
+input[readonly], select:disabled {
+  background-color: #eef3ff !important;
+  color: #6a7ba1 !important;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+/* Buttons */
+button, .myButton {
+  background: linear-gradient(90deg, #3b82f6, #1a73e8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25);
+}
+button:hover, .myButton:hover {
+  background: linear-gradient(90deg, #1a73e8, #155cc6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(30, 100, 255, 0.45);
+}
+button:active {
+  transform: scale(0.96);
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
+/* Table Styling */
 .cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15);
 }
 .cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+  padding: 10px 12px;
+  border-bottom: 1px solid #d6e1ff;
+  text-align: left;
+  font-size: 0.95rem;
 }
 .cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+  background-color: #dcebff;
+  color: #1b3f73;
+  font-weight: 600;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+.cr-table tr:hover td {
+  background-color: #eef5ff;
+  transition: 0.25s;
 }
+
+/* Error & Validation Text */
+#validrate, #errormsg {
+  color: #d62828;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
 </style>
 
 </head>

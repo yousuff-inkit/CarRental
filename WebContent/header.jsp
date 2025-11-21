@@ -42,8 +42,6 @@ body, html, .homeContent, #mainBG {
     box-shadow: 0 4px 20px rgba(102, 132, 255, 0.15) !important;
 }
 
-
-
 body {
   font-family: "Poppins", "Segoe UI", sans-serif;
   margin: 0;
@@ -80,7 +78,7 @@ body {
   color: #2e3f78;
 }
 
-/* INPUT + SELECT (MATCH TDN LAYOUT) */
+/* INPUT + SELECT */
 .HeadIcons select,
 .HeadIcons input[type="text"] {
   appearance: none;
@@ -110,27 +108,19 @@ body {
   background-position: right 10px center;
 }
 
-/* SUCCESS / ERROR MESSAGES */
-#savemsg { 
-  color: #2e8f45; 
-  font-weight: 600; 
-}
-
-#errormsg { 
-  color: #d21d39; 
-  font-weight: 600; 
-}
+/* SUCCESS / ERROR */
+#savemsg { color: #2e8f45; font-weight: 600; }
+#errormsg { color: #d21d39; font-weight: 600; }
 
 /* -----------------------------------------
-   BUTTONS – PRIMARY + SECONDARY
-   Extra Rounded (16px)
+   BUTTONS – UPDATED TO PREMIUM BLUE
 ------------------------------------------*/
 
 /* COMMON BUTTON FORMAT */
 .primary-btn,
 .secondary-btn {
   border: none;
-  border-radius: 16px;      /* EXTRA ROUNDED */
+  border-radius: 16px;
   padding: 9px 24px;
   min-width: 120px;
   height: 40px;
@@ -141,31 +131,19 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-}
-
-/* PRIMARY = ORANGE (LIKE TDN) */
-.primary-btn {
-  background: linear-gradient(90deg, #ffb347, #ff7b31);
   color: white;
-  box-shadow: 0 3px 10px rgba(255, 123, 49, 0.35);
+  background: linear-gradient(90deg, #6fb1fc, #1a73e8);   /* 🔵 NEW BLUE FOR ALL */
+  box-shadow: 0 3px 10px rgba(26,115,232,0.35);
 }
 
-/* SECONDARY = CORPORATE BLUE */
-.secondary-btn {
-  background: linear-gradient(90deg, #6fb1fc, #1a73e8);
-  color: white;
-  box-shadow: 0 3px 10px rgba(26, 115, 232, 0.35);
-}
-
-/* HOVER EFFECT FOR ALL BUTTONS */
+/* HOVER EFFECT */
 .primary-btn:hover,
 .secondary-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.20);
+  box-shadow: 0 6px 16px rgba(26,115,232,0.45);
 }
 
-/* SVG inside button */
+/* ICON COLOR */
 .primary-btn svg,
 .secondary-btn svg {
   width: 17px;
@@ -173,7 +151,7 @@ body {
   fill: white;
 }
 
-/* Hide Save/Cancel when in view mode */
+/* Hide Save/Cancel when view mode */
 button[hidden] { display: none !important; }
 
 /* ACTION BAR */
@@ -184,6 +162,8 @@ button[hidden] { display: none !important; }
   margin-bottom: 15px;
   margin-top: -5px;
 }
+
+/* POPUP, SEARCH, GRID STYLES — unchanged */
 .search-popup {
     background: #ffffff;
     border-radius: 16px;
@@ -213,7 +193,7 @@ button[hidden] { display: none !important; }
     color: #2e3f78;
 }
 
-/* INPUT FIELDS */
+/* INPUTS */
 .search-popup input[type="text"],
 .search-popup input[type="date"],
 .search-popup select {
@@ -235,7 +215,7 @@ button[hidden] { display: none !important; }
     outline: none;
 }
 
-/* BUTTON (BLUE) */
+/* SEARCH POPUP BUTTON */
 .search-popup-btn {
     background: linear-gradient(90deg, #6fb1fc, #1a73e8);
     color: #fff;
@@ -264,7 +244,6 @@ button[hidden] { display: none !important; }
     border: 1px solid #e3e8ff;
 }
 
-/* TABLE */
 .search-popup table {
     width: 100%;
     border-collapse: collapse;
@@ -285,27 +264,25 @@ button[hidden] { display: none !important; }
     border-bottom: 1px solid #edf0ff;
 }
 
-/* HOVER EFFECT */
 .search-popup table tr:hover {
     background: #eef4ff;
     cursor: pointer;
 }
 
-/* CENTER “No data to display” */
 .no-data-text {
     text-align: center;
     color: #6f7bb8;
     padding: 15px 0;
 }
 
-/* === Premium popup styling for search popups === */
+/* SEARCH POPUP WRAPPER */
 .search-popup-wrap {
   background: linear-gradient(180deg,#ffffff,#f7fbff);
   border: 1px solid #d9e4ff;
   border-radius: 14px;
   box-shadow: 0 12px 40px rgba(72,103,255,0.14);
   padding: 12px;
-  width: 980px;            /* safe default, overrideable by parent */
+  width: 980px;
   max-width: 96%;
   margin: 12px auto;
   font-family: 'Poppins', sans-serif;
@@ -325,18 +302,15 @@ button[hidden] { display: none !important; }
   margin-bottom: 12px;
 }
 
-/* Title + subtitle area */
 .search-popup-title {
   font-size:1.05rem;
   font-weight:600;
-  letter-spacing:0.2px;
 }
 .search-popup-sub {
   font-size:0.8rem;
   opacity:0.9;
 }
 
-/* Header controls (close, export) */
 .search-popup-controls {
   display:flex;
   gap:8px;
@@ -358,7 +332,6 @@ button[hidden] { display: none !important; }
 }
 .search-popup-close:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
 
-/* Filter row container above grid */
 .search-popup-filters {
   display:flex;
   gap:10px;
@@ -367,7 +340,6 @@ button[hidden] { display: none !important; }
   margin-bottom:10px;
 }
 
-/* inputs inside popup */
 .search-popup-filters input[type="text"],
 .search-popup-filters select {
   padding:7px 10px;
@@ -378,7 +350,6 @@ button[hidden] { display: none !important; }
   box-shadow: 0 3px 10px rgba(100,130,255,0.05);
 }
 
-/* search button */
 .search-popup-filters .search-btn {
   background: linear-gradient(90deg,#6fb1fc,#1a73e8);
   color: #fff;
@@ -391,7 +362,6 @@ button[hidden] { display: none !important; }
   box-shadow: 0 6px 14px rgba(26,115,232,0.18);
 }
 
-/* Grid wrapper */
 .search-popup-grid {
   background: #fff;
   border-radius: 10px;
@@ -399,13 +369,11 @@ button[hidden] { display: none !important; }
   border: 1px solid #eef4ff;
 }
 
-/* jqxGrid tweaks (target default class names) */
 #docsearch, #docsearchs, #docsearchs_wrapper, .jqx-grid {
   border-radius: 8px !important;
   overflow: hidden;
 }
 
-/* table headers */
 .jqx-grid-column-header {
   background: linear-gradient(90deg,#f1f6ff,#e6edff) !important;
   color: #233e90 !important;
@@ -413,20 +381,18 @@ button[hidden] { display: none !important; }
   border-bottom:1px solid #eaf0ff !important;
 }
 
-/* hover row effect */
 .jqx-grid-cell:hover {
   background: rgba(77,141,255,0.04) !important;
 }
 
-/* no-data */
 .search-popup-no-data {
   text-align:center;
   padding:18px;
   color:#6f7bb8;
 }
 
-
 </style>
+
 <script type="text/javascript">
 var APP_PATH='<%=contextPath%>';
 var exefolio='<%=request.getParameter("exefolio")%>';

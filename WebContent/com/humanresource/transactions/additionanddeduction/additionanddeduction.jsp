@@ -10,167 +10,157 @@
 
 <script type="text/javascript" src="../../../../js/ajaxfileupload.js"></script> 
 <style>
+/* Global Scroll Fix */
+html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+}
+
+/* Remove scroll blocking */
+.homeContent {
+    overflow: visible !important;
+    min-height: auto !important;
+}
+
+/* Error Label */
 form label.error {
-color:red;
-  font-weight:bold;
-
+    color:red;
+    font-weight:bold;
 }
 
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
+/* Background */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
     color: #222;
     margin: 0;
     padding: 32px 0;
     min-height: 100vh;
-    box-sizing: border-box;
 }
+
+/* Main Container */
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 22px;
+    max-width: 1250px;
     margin: 0 auto;
+    box-shadow: 0 8px 28px rgba(120,140,200,0.18);
+    overflow: visible !important;
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+/* HEADER INPUT BOX */
+.top-box {
+    background: #f0f4ff;
+    border: 1px solid #d7e3ff;
+    padding: 20px 24px;
+    margin-bottom: 26px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(80,120,255,0.12);
 }
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
+
+.top-box table td {
+    padding: 10px 8px;
+    font-size: 14px;
     font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    color: #2f3f86;
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
+.top-box input[type="text"] {
+    width: 90%;
+    height: 34px;
     border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border: 1px solid #c4d3ff;
     padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+    font-size: 14px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(140,160,250,0.18);
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
+/* EFFECT IN SECTION */
+.effect-section {
+    background: #f8faff;
+    border: 1px solid #d2ddff;
+    border-radius: 16px;
+    padding: 26px 24px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 20px rgba(80,120,255,0.18);
 }
 
-
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+.effect-section h3 {
+    margin: 0 0 16px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1d2f6f;
+    border-left: 5px solid #6f9bff;
+    padding-left: 12px;
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
+
+/* Inputs & Selects */
+.effect-section table td {
+    padding: 12px 10px !important;
+    font-size: 14px;
     font-weight: 600;
+    color: #2f3f86;
 }
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+
+.effect-section select,
+.effect-section input[type="text"],
+.effect-section input[type="file"] {
+    width: 95% !important;
+    height: 38px !important;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #c4d3ff;
+    background: #ffffff;
+    font-size: 14px;
+    color: #001a4d;
+    box-shadow: 0 2px 7px rgba(120,140,250,0.20);
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.myButton {
+    background: linear-gradient(90deg,#4a90ff,#0059e8);
+    border: none;
+    color: white;
+    padding: 9px 22px;
+    font-size: 14px;
+    border-radius: 10px;
+    cursor: pointer;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+
+/* GRID WRAPPER */
+.grid-wrapper {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    box-shadow: 0 4px 16px rgba(90,120,200,0.15);
+    border: 1px solid #e6ebff;
+}
+
+/* Grid header */
+.grid-wrapper h3 {
+    font-size: 15px;
     font-weight: 600;
+    color: #334488;
+    margin: 0 0 10px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dce3ff;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+/* jqxGrid container */
+#desdet {
+    border-radius: 12px !important;
+    background: #ffffff;
+    border: 1px solid #dce3ff;
+    height: 450px !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
 }
 </style>
+
+
 <script type="text/javascript">
 
  $(document).ready(function () {
@@ -526,82 +516,123 @@ x.send();
 </script>
 </head>
 <body onload="setValues();getYear();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmalw" action="saveAddDeduct" autocomplete="OFF" >
+
+<form id="frmalw" action="saveAddDeduct" autocomplete="OFF">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-    <div class="hidden-scrollbar receipt-header">
 
-        <div class="table-section">
+<!-- TOP BOX -->
+<div class="top-box">
+<table width="100%">
+<tr>
+ <td width="10%" align="right">Date</td>
+ <td width="20%">
+     <div id='masterdate'></div>
+     <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/>
+ </td>
+
+ <td width="10%" align="right">Ref No</td>
+ <td width="20%">
+     <input type="text" id="refno" name="refno" value='<s:property value="refno"/>'/>
+ </td>
+
+ <td width="10%"></td>
+
+ <td width="10%" align="right">Doc No</td>
+ <td width="20%">
+     <input type="text" id="docno" name="docno" value='<s:property value="docno"/>'/>
+ </td>
+</tr>
+</table>
+</div>
+
+
+<!-- EFFECT SECTION -->
+<div class="effect-section">
+<h3><b><i>Effect In</i></b></h3>
 
 <table class="cr-table" width="100%">
 <tr>
- <td width="10%" align="right">Date</td>
- <td width="20%" align="left"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
-                     <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/></td>
- <td width="10%" align="right">Ref No</td>
- <td width="10%" align="left"> <input type="text" id="refno" name="refno" placeholder="Ref No" value='<s:property value="refno"/>'/></td>
- <td width="20%">&nbsp;</td>          
- <td width="10%" align="right">Doc No</td>
- <td width="20%" align="left"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>                                          
-</tr>
-</table></div>
-
-<div class="table-section" style="background-color: #EBDEF0; width: 100%;">
-<h3><b><i>Effect In</i></b></h3>
-<table class="cr-table" width="100%" >
-<tr>
- <td width="9%" align="right">Year</td>
- <td width="21%" align="left"><select id="cmbyear" name="cmbyear" style="width:50%;" value='<s:property value="cmbyear"/>' onchange="clearmsg();">
- <option value="">--Select--</option></select>
- <input type="hidden"  id="hidcmbyear" name="hidcmbyear"  value='<s:property value="hidcmbyear"/>'></td>
- <td width="10%" align="right">Month</td>
- <td width="10%" align="left"><select id="cmbmonth" name="cmbmonth" style="width:98%;"  value='<s:property value="cmbmonth"/>' onchange="clearmsg();">
-      <option value="">--Select--</option><option value="1">January</option><option value="2">February</option><option value="3">March</option>
-      <option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option>
-      <option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option>
-      <option value="12">December</option></select>
-      <input type="hidden" id="hidcmbmonth" name="hidcmbmonth"  value='<s:property value="hidcmbmonth"/>'/></td>
- <td width="20%"><input type="file" id="fileexcelimport" name="file" style="width:75%;" >      
-         </td>          
- <td width="10%" align="right"><button class="myButton" type="button" id="btnimport" name="btnimport" onclick="excelimport();">Excel Import</button></td>
- <td width="20%" align="left">&nbsp;</td>                     
-</tr>
-<tr>
- <td width="9%" align="right">Description</td>
- <td align="left" colspan="4">
-      <input type="text" id="desc" name="desc" placeholder="Description" style="width:90%;" value='<s:property value="desc"/>'/>
+ <td align="right">Year</td>
+ <td>
+     <select id="cmbyear" name="cmbyear">
+         <option value="">--Select--</option>
+     </select>
+     <input type="hidden" id="hidcmbyear" name="hidcmbyear" />
  </td>
- <td width="10%" align="right">&nbsp;</td>
- <td width="20%" align="left">&nbsp;</td> 
+
+ <td align="right">Month</td>
+ <td>
+     <select id="cmbmonth" name="cmbmonth">
+         <option value="">--Select--</option>
+         <option value="1">January</option>
+         <option value="2">February</option>
+         <option value="3">March</option>
+         <option value="4">April</option>
+         <option value="5">May</option>
+         <option value="6">June</option>
+         <option value="7">July</option>
+         <option value="8">August</option>
+         <option value="9">September</option>
+         <option value="10">October</option>
+         <option value="11">November</option>
+         <option value="12">December</option>
+     </select>
+     <input type="hidden" id="hidcmbmonth" name="hidcmbmonth" />
+ </td>
+
+ <td>
+     <input type="file" id="fileexcelimport" name="file">
+ </td>
+
+ <td align="right">
+     <button class="myButton" type="button" onclick="excelimport();">Excel Import</button>
+ </td>
+
+ <td></td>
 </tr>
+
+<tr>
+ <td align="right">Description</td>
+ <td colspan="4">
+      <input type="text" id="desc" name="desc" style="width:90%;" value='<s:property value="desc"/>'/>
+ </td>
+ <td></td>
+ <td></td>
+</tr>
+
 </table>
-</div><br>
+</div>
 
-<div class="cr-table" id="desdet" ><jsp:include page="empdetails.jsp"></jsp:include></div>
 
- 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' /> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="descdetailsGridlenght" name="descdetailsGridlenght"  value='<s:property value="descdetailsGridlenght"/>'/>
+<!-- GRID AREA -->
+<div class="grid-wrapper">
+    <h3>Employee Details</h3>
 
+    <div id="desdet">
+        <jsp:include page="empdetails.jsp"></jsp:include>
     </div>
+</div>
+
+
+<input type="hidden" id="mode" name="mode"/>
+<input type="hidden" id="deleted" name="deleted"/>
+<input type="hidden" id="msg" name="msg"/>
+<input type="hidden" id="descdetailsGridlenght" name="descdetailsGridlenght"/>
+
 </form>
 
-<div id="empsearchwndow">
-   <div></div>
-</div>
-<div id="accountDetailsWindow">
-   <div></div>
-</div>
-<div id="costTypeSearchGridWindow">
-	<div></div>
-</div> 
-<div id="costCodeSearchWindow">
-	<div></div>
-</div> 
+<!-- Windows -->
+<div id="empsearchwndow"><div></div></div>
+<div id="accountDetailsWindow"><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div></div>
+<div id="costCodeSearchWindow"><div></div></div>
 
 </div>
 </body>
+
+
+
 </html>
