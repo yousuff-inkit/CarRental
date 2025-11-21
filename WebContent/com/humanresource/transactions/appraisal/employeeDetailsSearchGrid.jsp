@@ -7,6 +7,78 @@
    String contactno = request.getParameter("contactno")==null?"0":request.getParameter("contactno");
    String employeebranchchk = request.getParameter("employeebranchchk")==null?"0":request.getParameter("employeebranchchk"); 
    String branch = request.getParameter("branchid")==null?"0":request.getParameter("branchid");%>
+   
+   <style>
+
+/* Wrapper around the grid */
+#employeeDetailsSearch {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 20px rgba(80,120,255,0.18);
+    background: #ffffff;
+    border: 1px solid #d9e4ff !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Grid header */
+.jqx-grid-column-header {
+    background: linear-gradient(90deg,#e8f0ff,#d8e4ff) !important;
+    border-bottom: 1px solid #c9d7f5 !important;
+    color: #233e90 !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    height: 36px !important;
+    padding-left: 8px !important;
+}
+
+/* Header text alignment */
+.jqx-grid-column-header > div {
+    margin-top: 8px !important;
+}
+
+/* Regular grid rows */
+.jqx-grid-cell {
+    background-color: #ffffff !important;
+    border-color: #eef2ff !important;
+    font-size: 0.88rem !important;
+    color: #2a2f4c !important;
+    padding-left: 10px !important;
+}
+
+/* Row Hover */
+.jqx-grid-cell:hover {
+    background: #f0f6ff !important;
+    cursor: pointer !important;
+}
+
+/* Alternate Row Color */
+.jqx-grid-cell-alt {
+    background-color: #f9fbff !important;
+}
+
+/* Selected Row */
+.jqx-fill-state-pressed,
+.jqx-fill-state-hover,
+.jqx-grid-cell-selected {
+    background: #d9e8ff !important;
+    border-color: #b2c7ff !important;
+    color: #1a3fa8 !important;
+}
+
+/* Grid bottom border / pager area */
+.jqx-grid-pager {
+    background: #f4f7ff !important;
+    border-top: 1px solid #dbe4ff !important;
+}
+
+/* Removes ugly black focus outline */
+.jqx-grid-content,
+.jqx-widget-content {
+    outline: none !important;
+}
+
+</style>
+   
 <script type="text/javascript"> 
  
         var data1= '<%=DAO.employeeDetailsSearch(empid, employeename, contactno, employeebranchchk, branch)%>';     

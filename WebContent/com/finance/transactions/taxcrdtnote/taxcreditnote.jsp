@@ -426,8 +426,179 @@
 			 	  }
 
 </script>
+<<<<<<< HEAD
 
 
+=======
+<style>
+/* -----------------------------------
+     SKY BLUE ERP THEME (FULL REPLACE)
+------------------------------------ */
+
+/* Scrollbar */
+.hidden-scrollbar {
+  overflow-y: auto;
+  height: 530px;
+  scrollbar-width: thin;
+  scrollbar-color: #4da3ff #eaf3ff;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4da3ff;
+  border-radius: 8px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #1a73e8;
+}
+
+/* Body Background */
+body {
+  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #1f2f46;
+  margin: 0;
+  padding: 40px 0;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Main Container */
+#mainBG {
+  background: #f4f8ff;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15);
+  padding: 25px 30px;
+  max-width: 1250px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+#mainBG:hover {
+  box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25);
+}
+
+/* Page Title */
+.page-heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3ea3;
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(100, 150, 255, 0.3);
+  animation: fadeIn 1s ease;
+}
+
+/* Form Header / Section Blocks */
+.receipt-header {
+  background: #edf4ff;
+  border: 1px solid #c9dafc;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 26px;
+  box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2);
+}
+
+/* Labels */
+label {
+  font-weight: 500;
+  color: #2b4a7a;
+}
+
+/* Inputs / Dropdowns */
+input[type="text"], select {
+  border: 1px solid #b9ccf2;
+  border-radius: 8px;
+  padding: 7px 12px;
+  background: #ffffff;
+  transition: 0.25s ease;
+  font-size: 0.95rem;
+  color: #1f2f46;
+  height: 34px;
+}
+input[type="text"]:focus, select:focus {
+  border-color: #4da3ff;
+  box-shadow: 0 0 6px rgba(77, 163, 255, 0.55);
+  outline: none;
+}
+
+/* Dropdown Arrow */
+select {
+  appearance: none;
+  background: #ffffff url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12'/></svg>") no-repeat right 10px center;
+  background-size: 14px;
+}
+
+/* Disabled Inputs */
+input[readonly], select:disabled {
+  background-color: #eef3ff !important;
+  color: #6a7ba1 !important;
+}
+
+/* Buttons */
+button, .myButton {
+  background: linear-gradient(90deg, #3b82f6, #1a73e8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25);
+}
+button:hover, .myButton:hover {
+  background: linear-gradient(90deg, #1a73e8, #155cc6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(30, 100, 255, 0.45);
+}
+button:active {
+  transform: scale(0.96);
+}
+
+/* Table Styling */
+.cr-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15);
+}
+.cr-table th, .cr-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #d6e1ff;
+  text-align: left;
+  font-size: 0.95rem;
+}
+.cr-table th {
+  background-color: #dcebff;
+  color: #1b3f73;
+  font-weight: 600;
+}
+.cr-table tr:hover td {
+  background-color: #eef5ff;
+  transition: 0.25s;
+}
+
+/* Error & Validation Text */
+#validrate, #errormsg {
+  color: #d62828;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+</style>
+>>>>>>> 832a63515cd1006a52378239e3fca5ba392e8dbe
 
 </head>
 <body onload="setValues();">
