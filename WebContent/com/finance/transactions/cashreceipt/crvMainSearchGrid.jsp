@@ -68,9 +68,62 @@
                 document.getElementById("frmCashReceipt").submit();
                 $('#frmCashReceipt select').attr('disabled', true);
                 $('#jqxCashReceiptDate').jqxDateTimeInput({disabled: true});
-                
+
+
+                  changeContent('cashReceipt.jsp?docno=' + encodeURIComponent(docNo));
+                  console.log('Loading cashReceipt.jsp for docno:', docNo);
+                  var checker = setInterval(function () {
+                      if ($('#approval-table').length) {
+                          clearInterval(checker);
+                          // ensure docno input is set (if cashReceipt expects it)
+                          if ($('#docno').length) {
+                              $('#docno').val(docno);
+                          }
+                          // fetch and insert approvals
+                          fetchApprovalsAndInsert(docno);
+                      }
+                  }, 200);
                $('#window').jqxWindow('close');
-            });   
+            });
+
+                     // helper to fetch approvals and render into approval table
+                     function fetchApprovalsAndInsert(docno) {
+
+                         var dtype = ($('#formdetailcode').length ? $('#formdetailcode').val() : '');
+                         var brch = ($('#brchName').length ? $('#brchName').val() : '');
+                         var url = '<%=request.getContextPath()%>/com/common/ApprovalForm.jsp';
+console.log('Fetching approvals from URL:', url, 'with docno:', docno, 'dtype:', dtype, 'brch:', brch);
+                         $.get(url, { docno: docno, dtype: dtype, brch: brch, userid: userid, }, function (data) {
+                             var items = (data || '').trim();
+                             var rows = items === '' ? [] : items.split('\n');
+                             var $tbody = $('#approval-table tbody');
+
+                             if ($tbody.length === 0) {
+                                 // nothing to insert into
+                                 return;
+                             }
+
+                             $tbody.empty();
+
+                             if (rows.length > 0 && rows[0] !== '') {
+                                 rows.forEach(function (row) {
+                                     var cols = row.split(',');
+                                     var $tr = $('<tr></tr>');
+                                     $tr.append($('<td></td>').text(cols[0] || ''));
+                                     $tr.append($('<td></td>').text(cols[1] || ''));
+                                     $tr.append($('<td></td>').text(cols[2] || ''));
+                                     $tbody.append($tr);
+                                 });
+                             } else {
+                                 $tbody.append('<tr><td colspan="3" style="text-align:center;color:#888;">No approvals found</td></tr>');
+                             }
+                         }).fail(function () {
+                             var $tbody = $('#approval-table tbody');
+                             if ($tbody.length) {
+                                 $tbody.empty().append('<tr><td colspan="3" style="text-align:center;color:#c00;">Error loading approvals</td></tr>');
+                             }
+                         });
+                     }
 				           
 }); 
 				       

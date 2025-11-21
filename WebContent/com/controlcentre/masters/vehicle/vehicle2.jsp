@@ -24,6 +24,164 @@ color:red;
     
     text-align:
     }
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+#validrate{
+    color:red;
+}
+#validrate1{
+    color:red;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
+}
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+}
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
 </style>
 <script type="text/javascript">
 	
@@ -1150,8 +1308,9 @@ function funGetConfigs(){
 	<div id="mainBG" class="homeContent" data-type="background"> 
 		<form id="frmVehicle" action="saveVehicle" method="post" autocomplete="off">
 		<jsp:include page="../../../../header.jsp" />
-				<fieldset><legend>Vehicle Details</legend>
-				<table width="100%" cellspacing="0">
+            <div class='hidden-scrollbar receipt-header'>
+				<div class="table-section" style="width: 100%;"><h3>Vehicle Details</h3>
+				<table class="cr-table" width="100%" cellspacing="0">
 					<tr>
 						<td width="68" height="24" id="f" style="text-align: right"><div
 								align="right">Fleet No</div></td>
@@ -1266,11 +1425,11 @@ function funGetConfigs(){
 				<!-- <iframe  width=1100px height=400px align='center' id='page' ></iframe> -->
 				<div id="content">
 					<div id="tab1">
-						<table width="100%">
+						<table  width="100%">
 							<tr>
 									<td width="25%">
-                                    <fieldset><legend>Info</legend>
-									  <table width="100%" >
+                                    <div style="width: 100%;"><h3>Info</h3>
+									  <table class="cr-table" width="100%" >
 									    <tr>
 									      <td align="right">&nbsp;Registered Date</td>
 									      <td align="left"><div id='jqxFinRegDate'
@@ -1327,12 +1486,12 @@ function funGetConfigs(){
 										
 										
 										
-                                      </fieldset>
+                                      </div>
 								</td>
 								<td width="25%"> 
-									<fieldset>
-									  <legend>Other Info</legend>
-										<table width="99%">
+									<div style="width: 100%;">
+									  <h3>Other Info</h3>
+										<table class="cr-table" width="99%">
 											<tr>
 											  <td align="right">Dealer</td>
 											  <td align="left"><input type="text" name="dealer" id="dealer" value='<s:property value="dealer"/>' onDblClick="funSearchdblclick();" onKeyDown="getDealer(event);" placeholder="Press F3 to Search"></td>
@@ -1403,7 +1562,7 @@ function funGetConfigs(){
                                         
                                         
                                         
-									</fieldset>
+									</div>
 								</td>
 <input type="hidden" name="hidinsurance_comp" id="hidinsurance_comp" 
 													 value='<s:property value="hidinsurance_comp"/>'>
@@ -1418,8 +1577,8 @@ function funGetConfigs(){
 													type="hidden" id="hidjqxOtherInsExp" name="hidjqxOtherInsExp"
 													value='<s:property value="hidjqxOtherInsExp"/>' />
 								<td width="25%">
-                                <fieldset id="releaseid"><legend>Fleet Release Info</legend>
-								  <table width="100%">
+                                <div style="width: 100%;" id="releaseid"><h3>Fleet Release Info</h3>
+								  <table class="cr-table" width="100%">
 								    <tr>
 								      <td colspan="3" align="center"><input type="button" name="releasesave" id="releasesave" class="myButton" value="Save" onClick="funRelease();"><input type="button" name="btnrelease" id="btnrelease" class="myButton"  value="Release" onClick="funEnable();"></td>
 							        </tr>
@@ -1490,7 +1649,7 @@ function funGetConfigs(){
                                   <br /><br /><br /><br />
 										
 										
-                                </fieldset>
+                                </div>
                                 </td>
 							</tr>
 						</table>
@@ -1499,10 +1658,10 @@ function funGetConfigs(){
 					<div id="tab2">
 						<table width="100%">
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Vehicle Info</legend>
-										<table width="100%">
+								<td colspan="8" style="text-align: left">
+									<div class="table-section"  style="width: 100%;">
+										<h3>Vehicle Info</h3>
+										<table class="cr-table" width="100%">
 											<tr>
 												<td width="7%" height="28" align="right">Engine No</td>
 												<td width="10%" align="left"><input type="text"
@@ -1530,15 +1689,15 @@ function funGetConfigs(){
 												<input type="hidden" name="hidcmbveh_color" id="hidcmbveh_color" value='<s:property value="hidcmbveh_color"/>'>
 											</tr>
 										</table>
-									</fieldset>
+									</div>
 								</td>
 							</tr>
 
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Warranty Info</legend>
-										<table width="100%">
+								<td colspan="8" style="text-align: left">
+									<div class="table-section" style="width: 100%;">
+										<h3>Warranty Info</h3>
+										<table class="cr-table" width="100%">
 											<tr>
 												<td width="9%" height="28" align="right">Warranty
 													Period</td>
@@ -1563,7 +1722,7 @@ function funGetConfigs(){
 													name="warranty_km" id="warranty_km"  value='<s:property value="warranty_km"/>' style="text-align:right;"/></td>
 											</tr>
 										</table>
-									</fieldset>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -1571,10 +1730,10 @@ function funGetConfigs(){
 							</tr>
 
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Service Info</legend>
-										<table width="100%">
+								<td colspan="8" style="text-align: left">
+									<div class="table-section" style="width: 100%;">
+										<h3>Service Info</h3>
+										<table class="cr-table" width="100%">
 											<tr>
 												<td width="106" height="28" align="right">Service Duration (KM)</td>
 												<td width="116" align="left"><input type="text"
@@ -1593,15 +1752,15 @@ function funGetConfigs(){
 												<td width="185" align="left">&nbsp;</td>
 											</tr>
 										</table>
-									</fieldset>
+									</div>
 								</td>
 							</tr>
 
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-									  <legend>Release Info</legend>
-										<table width="100%">
+								<td colspan="8" style="text-align: left">
+									<div class="table-section" style="width: 100%;">
+									  <h3>Release Info</h3>
+										<table class="cr-table" width="100%">
 											<tr>
 												<td width="107" height="30" align="right">Current KM</td>
 												<td width="149" align="left"><input type="text"
@@ -1639,7 +1798,7 @@ function funGetConfigs(){
 													value='<s:property value="hidcmbrent_type"/>' /></td> --%>
 											</tr>
 										</table>
-									</fieldset>
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -1650,7 +1809,7 @@ function funGetConfigs(){
   <tr><input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
   <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
   
-    <td><div id="specdiv"><center><jsp:include page="specificationGrid.jsp"></jsp:include></center></div></td>
+    <td><div class="cr-table" id="specdiv"><center><jsp:include page="specificationGrid.jsp"></jsp:include></center></div></td>
     </tr>
 </table>
 
@@ -1659,10 +1818,10 @@ function funGetConfigs(){
 					</div>
 
 				</div>
-			</fieldset>
+			</div>
 			<input type="hidden" name="defaultdeprconfig" id="defaultdeprconfig">
 			<input type="hidden" name="defaultdeprpercent" id="defaultdeprpercent">
-		  
+            </div>
 		</form>
 <br/>
 <div id="dealerWindow">

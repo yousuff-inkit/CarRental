@@ -1573,6 +1573,164 @@
   overflow: auto;
   height: 530px;
 }
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+#validrate{
+    color:red;
+}
+#validrate1{
+    color:red;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
+}
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+}
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
 </style>
 
 </head>
@@ -1581,9 +1739,9 @@
 <form id="frmClientMaster" action="saveClientMaster" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>   
 
-<div class='hidden-scrollbar'>
-<fieldset>
-<table width="100%">
+<div class='hidden-scrollbar receipt-header'>
+<div class="table-section" style="width: 100%;">
+<table class="cr-table" width="100%">
   <tr>
     <td width="6%" align="right">Date</td>
     <td width="11%"><div id="jqxClientDate" name="jqxClientDate" onchange="getContractDate();" value='<s:property value="jqxClientDate"/>'></div>
@@ -1637,11 +1795,11 @@
     <td colspan="10"><input type="text" id="txtregisteredtrnno" name="txtregisteredtrnno" style="width:22%;" value='<s:property value="txtregisteredtrnno"/>'/></td>
   </tr>
 </table>
-</fieldset>
+</div>
 <table width="100%" border="0">
 <tr><td width="40%">
-<fieldset><legend>Account Info</legend>
-<table width="100%">
+<div class="table-section" style="width: 100%;"><legend>Account Info</legend>
+<table class="cr-table" width="100%">
   <tr>
     <td width="15%" align="right">Account Group</td>
     <td width="16%"  colspan="3"><select id="cmbgroup1" name="cmbgroup1" style="width:80%;" value='<s:property value="cmbgroup1"/>'>
@@ -1659,13 +1817,13 @@
     <td><input type="text" id="txtcredit_limit" name="txtcredit_limit" style="width:50%;text-align: right;" value='<s:property value="txtcredit_limit"/>'/></td>
   </tr>
 </table>
-</fieldset></td>
+</div></td>
 <td width="60%" style="vertical-align:top;">
 
-<div id="singleServiceChargeDiv">
-<fieldset>
+<div class="table-section" style="width: 100%;" id="singleServiceChargeDiv">
+
 <legend>Service Charge</legend>
-<table width="100%" border="0">
+<table class="cr-table" width="100%" border="0">
 	<tr>
   		<td>
   			<input type="checkbox" id="chckdefault" name="chckdefault" value="" onchange="defaultcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Default
@@ -1709,7 +1867,7 @@
   	<input type="hidden" id="hidchkparkingpercent" name="hidchkparkingpercent" value='<s:property value="hidchkparkingpercent"/>'/>
   	
 </table>
-</fieldset>
+
 </div>
 
 <div id="separateServiceChargeDiv" hidden="true">
@@ -1732,15 +1890,15 @@
     <li><a href="#" name="tab4">Others</a></li>
     </ul>
     
-<div id="content">
-<div id="tab1">
+<div style="width:100%;" id="content">
+<div style="width:100%;" id="tab1">
 <div style="width:100%;">
- <div id="jqxDriver1"> <jsp:include page="driver.jsp"></jsp:include></div><br/>
+ <div class="cr-table" id="jqxDriver1"> <jsp:include page="driver.jsp"></jsp:include></div><br/>
 
 </div>
 </div>
 
-<div id="tab2">
+<div style="width:100%;" id="tab2">
 <div style="width:100%;">
 <%-- <table width="100%">
   <tr>
@@ -1824,14 +1982,14 @@
 </div>
 </div>
 
-<div id="tab3">
-	<fieldset>
-	<legend>Credit Card Details</legend>
-	<div id="creditCardDetailsDiv"> <jsp:include page="creditCardDetailsGrid.jsp"></jsp:include></div><br />
-	</fieldset>
+<div style="width:100%;" id="tab3">
+	<div class="table-section" style="width:100%;">
+	<h3>Credit Card Details</h3>
+	<div class="cr-table" id="creditCardDetailsDiv"> <jsp:include page="creditCardDetailsGrid.jsp"></jsp:include></div><br />
+	</div>
 </div>
 
-<div id="tab4">
+<div  style="width:100%;" id="tab4">
 <%-- <table width="100%">
 <tr><td width="70%">
 <fieldset>
@@ -1855,17 +2013,17 @@
 </table> --%>
 <table width="100%">
 <tr><td width="50%">
-<fieldset>
- <legend id="refid"></legend>
- <div id="jqxReferenceDetails1"><jsp:include page="referenceDetails.jsp"></jsp:include></div><br/>
+<div class="table-section"  style="width:100%;">
+ <h3 id="refid"></h3>
+ <div class="cr-table" id="jqxReferenceDetails1"><jsp:include page="referenceDetails.jsp"></jsp:include></div><br/>
  
- <div id="jqxReferenceDetails2"><jsp:include page="referenceDetailsnew.jsp"></jsp:include></div><br/>
-</fieldset>
+ <div class="cr-table" id="jqxReferenceDetails2"><jsp:include page="referenceDetailsnew.jsp"></jsp:include></div><br/>
+</div>
 </td>
 <td width="50%">
-<fieldset>
+<div>
 <legend>Sponsor/Company Details</legend>
-<table width="100%">
+<table class="cr-table" width="100%">
   <tr>
     <td width="11%" align="right">Name</td>
     <td colspan="5"><input type="text" id="txtname" name="txtname" style="width:95%;" value='<s:property value="txtname"/>'/></td>
@@ -1901,11 +2059,11 @@
     <td colspan="5"><input type="text" id="txtbankname" name="txtbankname" style="width:95%;" value='<s:property value="txtbankname"/>'/></td>
   </tr>
 </table>
-</fieldset>
+</div>
 <div id="sponsorDiv"><br/><br/><br/><br/><br/><br/><br/><br/></div>
 <div id="contractDiv" hidden="true">
-<fieldset><legend>Trade Licence Details</legend>
-<table width="100%">
+<div><legend>Trade Licence Details</legend>
+<table class="cr-table" width="100%">
   <tr>
     <td width="14%" align="right">Trade Licence No.</td>
     <td width="33%"><input type="text" id="txtcontractno" name="txtcontractno" style="width:90%;" value='<s:property value="txtcontractno"/>'/></td>
@@ -1918,7 +2076,7 @@
     <td colspan="3"><input type="text" id="txtcontractremarks" name="txtcontractremarks" style="width:83%;" value='<s:property value="txtcontractremarks"/>'/></td>
   </tr>
 </table>
-</fieldset>
+</div>
 </div>
 </td>
 </tr>
