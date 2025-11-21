@@ -11,176 +11,420 @@
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
 <style>
 
-    body {
-        font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-        background: #f6f8fa;
-        margin: 0;
-        color: #253858;
-    }
+/* --------------------
+   MATCH TAX DEBIT THEME
+----------------------- */
 
+/* ---------------------------------------
+   PREMIUM ERP UI – BLUE THEME (FINAL)
+   With SVG Icons, Extra Rounded Buttons
+----------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* OUTER PAGE BACKGROUND (GLOBAL CORPORATE BLUE THEME) */
+body, html, .homeContent, #mainBG {
+    background: linear-gradient(180deg, #eef4ff 0%, #e4edff 100%) !important;
+    min-height: 100vh;
+}
+
+/* INNER FORM CARD (replace old gold card) */
+.inner-card,
+.form-container,
+#full + div,          /* most common structure in your JSPs */
+.panel-default,
+.contentPanel,
+.boxContent {
+    background: #f7faff !important;
+    border: 1px solid #d9e4ff !important;
+    border-radius: 16px !important;
+    padding: 18px !important;
+    box-shadow: 0 4px 20px rgba(102, 132, 255, 0.15) !important;
+}
+
+
+
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  margin: 0;
+  background: #f5f8ff;
+  color: #2a2a2a;
+}
+
+/* HEADER WRAPPER */
 .HeadIcons {
-    font: 12px Tahoma;
-    margin-top: 0px;
-	line-height: 30px;
-	background-color: #E0ECF8;
-	height: 27px;
-	width: 100%;
-}
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}
-label.branch{
-   font-size: 12px;
-   font-family: Tahoma;
-   font-style: normal; 
-   padding-left: 1%;
-}
-label.currency{
-   font-size: 12px;
-   font-family: Tahoma;
-   font-style: normal;
-   padding-left: 1%;
+  background: linear-gradient(90deg, #dfe9ff, #bcd3ff);
+  border: 1px solid #c9d7f5;
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(112, 144, 224, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-#errormsg {
-  -moz-animation-duration: 1s;
-  -moz-animation-name: blink;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-direction: alternate;
-  
-  -webkit-animation-duration: 2s;
-  -webkit-animation-name: blink;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-  
-  animation-duration: 1s;
-  animation-name: blink;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+/* FORM TITLE */
+#formdet {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #274ba0;
+  text-shadow: 0 0 8px rgba(60, 100, 200, 0.25);
 }
 
-@-moz-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
-
-@-webkit-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
-button.icon:disabled { opacity: 0.5; };
-.icon-text {
-    color: #007bff;
-    font-weight: 500;
-    cursor: pointer;
-    margin-right: 18px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
-    font-size: 1rem;
-    display: inline-block;
-}
-.icon-text:hover {
-    background: #eaf4ff;
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-.HeadIcons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 24px;
-    background: #FFFFFF;
-    border-radius: 12px;
-    padding: 18px 32px;
-    width: 95%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 1rem;
-}
-
+/* LABELS */
 .HeadIcons label.branch,
 .HeadIcons label.currency {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-    min-width: 80px;
-    text-align: right;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #2e3f78;
 }
 
+/* INPUT + SELECT (MATCH TDN LAYOUT) */
 .HeadIcons select,
 .HeadIcons input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    background: #ffffff;
-    transition: border-color 0.2s;
-    min-width: 120px;
-    height: auto;
-    font-size: 10px;
+  appearance: none;
+  border: 1px solid #b8c8f2;
+  border-radius: 10px;
+  padding: 8px 14px;
+  background: #ffffff;
+  font-size: 0.92rem;
+  min-width: 170px;
+  height: 35px;
+  box-shadow: 0 2px 6px rgba(180, 200, 255, 0.25);
+  transition: 0.25s ease;
 }
 
-.HeadIcons select:focus,
-.HeadIcons input[type="text"]:focus {
-    border-color: #007bff;
+.HeadIcons select:focus {
+  border-color: #6e9bff;
+  box-shadow: 0 0 10px rgba(105, 147, 255, 0.45);
+  outline: none;
+}
+
+/* Select Arrow */
+.HeadIcons select {
+  background-image: url("data:image/svg+xml;utf8,\
+  <svg fill='%233c5ecb' height='20' width='20' viewBox='0 0 20 20'>\
+  <polygon points='5,7 15,7 10,12'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* SUCCESS / ERROR MESSAGES */
+#savemsg { 
+  color: #2e8f45; 
+  font-weight: 600; 
+}
+
+#errormsg { 
+  color: #d21d39; 
+  font-weight: 600; 
+}
+
+/* -----------------------------------------
+   BUTTONS – PRIMARY + SECONDARY
+   Extra Rounded (16px)
+------------------------------------------*/
+
+/* COMMON BUTTON FORMAT */
+.primary-btn,
+.secondary-btn {
+  border: none;
+  border-radius: 16px;      /* EXTRA ROUNDED */
+  padding: 9px 24px;
+  min-width: 120px;
+  height: 40px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* PRIMARY = ORANGE (LIKE TDN) */
+.primary-btn {
+  background: linear-gradient(90deg, #ffb347, #ff7b31);
+  color: white;
+  box-shadow: 0 3px 10px rgba(255, 123, 49, 0.35);
+}
+
+/* SECONDARY = CORPORATE BLUE */
+.secondary-btn {
+  background: linear-gradient(90deg, #6fb1fc, #1a73e8);
+  color: white;
+  box-shadow: 0 3px 10px rgba(26, 115, 232, 0.35);
+}
+
+/* HOVER EFFECT FOR ALL BUTTONS */
+.primary-btn:hover,
+.secondary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.20);
+}
+
+/* SVG inside button */
+.primary-btn svg,
+.secondary-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: white;
+}
+
+/* Hide Save/Cancel when in view mode */
+button[hidden] { display: none !important; }
+
+/* ACTION BAR */
+.action-bar {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  margin-top: -5px;
+}
+.search-popup {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 18px 22px;
+    box-shadow: 0 8px 30px rgba(80,120,255,0.25);
+    width: 90%;
+    margin: auto;
+    border: 1px solid #d9e4ff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* POPUP TITLE BAR */
+.search-popup-header {
+    background: linear-gradient(90deg, #7abaff, #4d8dff);
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 12px;
+    margin-bottom: 18px;
+}
+
+/* LABELS */
+.search-popup label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #2e3f78;
+}
+
+/* INPUT FIELDS */
+.search-popup input[type="text"],
+.search-popup input[type="date"],
+.search-popup select {
+    width: 100%;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid #cbd8ff;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(180,200,255,0.25);
+    transition: 0.2s;
+}
+
+.search-popup input:focus,
+.search-popup select:focus {
+    border-color: #6e9bff;
+    box-shadow: 0 0 8px rgba(105,147,255,0.45);
     outline: none;
 }
 
-#savemsg {
-    color: #22c55e;
-    font-weight: bold;
-    margin-left: 16px;
+/* BUTTON (BLUE) */
+.search-popup-btn {
+    background: linear-gradient(90deg, #6fb1fc, #1a73e8);
+    color: #fff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    box-shadow: 0 3px 12px rgba(26,115,232,0.35);
+    transition: 0.25s;
 }
 
-#errormsg {
-    color: #e11d48;
-    font-weight: bold;
-    margin-left: 16px;
+.search-popup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(26,115,232,0.45);
 }
 
-    .action-bar {
-        display: flex;
-        gap: 14px;
-        padding: 0.5% 2%;
-    }
-    .action-btn {
-        background: #e4e7ed;
-        border: none;
-        color: #253858;
-        padding: 4px 25px;
-        border-radius: 23px;
-        font-size: 15px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background .2s;
-    }
-    .action-btn:hover {
-        background: #cdd9e5;
-    }
+/* TABLE AREA BACKGROUND */
+.search-popup-table-wrapper {
+    background: #f6f8ff;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 10px;
+    border: 1px solid #e3e8ff;
+}
+
+/* TABLE */
+.search-popup table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.search-popup table th {
+    background: #e6edff;
+    padding: 8px;
+    font-weight: 600;
+    color: #354a92;
+    border-bottom: 1px solid #d4ddff;
+    text-align: left;
+}
+
+.search-popup table td {
+    padding: 7px;
+    border-bottom: 1px solid #edf0ff;
+}
+
+/* HOVER EFFECT */
+.search-popup table tr:hover {
+    background: #eef4ff;
+    cursor: pointer;
+}
+
+/* CENTER “No data to display” */
+.no-data-text {
+    text-align: center;
+    color: #6f7bb8;
+    padding: 15px 0;
+}
+
+/* === Premium popup styling for search popups === */
+.search-popup-wrap {
+  background: linear-gradient(180deg,#ffffff,#f7fbff);
+  border: 1px solid #d9e4ff;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(72,103,255,0.14);
+  padding: 12px;
+  width: 980px;            /* safe default, overrideable by parent */
+  max-width: 96%;
+  margin: 12px auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Header bar */
+.search-popup-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background: linear-gradient(90deg,#4d8dff,#7abaff);
+  color:white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(77,141,255,0.12);
+  margin-bottom: 12px;
+}
+
+/* Title + subtitle area */
+.search-popup-title {
+  font-size:1.05rem;
+  font-weight:600;
+  letter-spacing:0.2px;
+}
+.search-popup-sub {
+  font-size:0.8rem;
+  opacity:0.9;
+}
+
+/* Header controls (close, export) */
+.search-popup-controls {
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.search-popup-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight:700;
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition: transform .12s ease, background .12s;
+}
+.search-popup-close:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+
+/* Filter row container above grid */
+.search-popup-filters {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+/* inputs inside popup */
+.search-popup-filters input[type="text"],
+.search-popup-filters select {
+  padding:7px 10px;
+  border-radius:10px;
+  border:1px solid #d0dbff;
+  height:36px;
+  min-width:160px;
+  box-shadow: 0 3px 10px rgba(100,130,255,0.05);
+}
+
+/* search button */
+.search-popup-filters .search-btn {
+  background: linear-gradient(90deg,#6fb1fc,#1a73e8);
+  color: #fff;
+  border: none;
+  padding:8px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  height:36px;
+  box-shadow: 0 6px 14px rgba(26,115,232,0.18);
+}
+
+/* Grid wrapper */
+.search-popup-grid {
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px;
+  border: 1px solid #eef4ff;
+}
+
+/* jqxGrid tweaks (target default class names) */
+#docsearch, #docsearchs, #docsearchs_wrapper, .jqx-grid {
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+/* table headers */
+.jqx-grid-column-header {
+  background: linear-gradient(90deg,#f1f6ff,#e6edff) !important;
+  color: #233e90 !important;
+  font-weight:600;
+  border-bottom:1px solid #eaf0ff !important;
+}
+
+/* hover row effect */
+.jqx-grid-cell:hover {
+  background: rgba(77,141,255,0.04) !important;
+}
+
+/* no-data */
+.search-popup-no-data {
+  text-align:center;
+  padding:18px;
+  color:#6f7bb8;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -1643,12 +1887,18 @@ function setapprbrch(branchval){
 
 </head>
 <!-- commented by nitin on 03-04-2018 due to problem in carfare getMessengerCount(); -->
-<body onload="funChkButton();"  onclick="getformbranch();">
-<div id="mainBG" class="homeContent" data-type="background">
+<body onload="funChkButtonchk();"  onclick="getformbranch();">
+<!-- HEADER PANEL -->
 <div class="HeadIcons" id="full">
-	<font size=5px style="width: 100%"><label id="formdet" name="formdet" ></label></font>
 
-    <div class="HeadIcons" id="full">
+    <!-- FORM NAME -->
+    <font size="5px" style="width: 100%">
+        <label id="formdet" name="formdet"></label>
+    </font>
+
+    <!-- BRANCH + CURRENCY SECTION -->
+    <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+
         <label class="branch">Branch</label>
         <select name="brchName" id="brchName" onChange="getCurr(this.value)"></select>
         <input type="text" name="brchNames" id="brchNames" readonly="readonly" />
@@ -1659,107 +1909,78 @@ function setapprbrch(branchval){
 
         <label id="savemsg"></label>
         <label id="errormsg"></label>
-        <!-- hidden fields as needed -->
     </div>
-<%--			<label class="branch">Branch&nbsp;&nbsp;</label>--%>
-<%--			<select name="brchName" id="brchName" onChange="getCurr(this.value)">--%>
-<%--			</select>--%>
-<%--			<input type="text" name="brchNames" id="brchNames" readonly="readonly" value='<s:property value="brchNames"/>' />	--%>
-<%--       <label class="currency">Currency&nbsp;&nbsp;</label><select name="currency" id="currency" onchange="getCurrencyType(this.value);" >--%>
-<%--					</select>--%>
-<%--					<input type="text" name="currencys" id="currencys" readonly="readonly" value='<s:property value="currencys"/>' />--%>
-<%--					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
-<%--					<label id="savemsg" name="savemsg" style="color:green;font-weight:bold;"></label>--%>
-<%--					<label id="errormsg" name="errormsg" style="color:red;font-weight:bold;"><s:property value="errormsg"/></label>--%>
-		<input type="hidden" id="status" />
-		<input type="hidden" id="apprstatus" />
-		<input type="hidden" id="isfirstappr" />
-		<input type="hidden" name="formdetail" id="formdetail" value='<s:property value="formdetail"/>' />
-		<input type="hidden" name="formdetailcode" id="formdetailcode" value='<s:property value="formdetailcode"/>' />
-		<input type="hidden" name="chkstatus" id="chkstatus" value='<s:property value="chkstatus"/>' />
-		<input type="hidden" name="txtheadercardnumbervalidrestrict" id="txtheadercardnumbervalidrestrict" value='<s:property value="txtheadercardnumbervalidrestrict"/>' />
-<input type="hidden" id="termstatus" />
-	<!-- 	If Add=1,Edit=2 -->
-		</div>
 
+    <!-- HIDDEN FIELDS -->
+    <input type="hidden" id="status" />
+    <input type="hidden" id="apprstatus" />
+    <input type="hidden" id="isfirstappr" />
+    <input type="hidden" name="formdetail" id="formdetail" value='<s:property value="formdetail"/>' />
+    <input type="hidden" name="formdetailcode" id="formdetailcode" value='<s:property value="formdetailcode"/>' />
+    <input type="hidden" name="chkstatus" id="chkstatus" value='<s:property value="chkstatus"/>' />
+    <input type="hidden" name="txtheadercardnumbervalidrestrict" id="txtheadercardnumbervalidrestrict" value='<s:property value="txtheadercardnumbervalidrestrict"/>' />
+    <input type="hidden" id="termstatus" />
 
-    <div class="action-bar">
-        <button type="button" class="action-btn" id="btnApproval" title="Document Status" onclick="funApproveBtn()">Approval</button>
-        <button type="button" class="action-btn" id="btnClose" title="Close Form" onclick="funCloseBtn()">Close</button>
-        <button type="button" class="action-btn" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">Create</button>
-        <button type="button" class="action-btn" id="btnEdit" title="Change current Document" onclick="funEditBtn()">Edit</button>
-        <button type="button" class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>
-<%--        <button class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>--%>
-<%--        <button class="action-btn" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">Excel</button>--%>
-        <button type="button" class="action-btn" id="btnDelete" title="Delete current Document" onclick="funDeleteBtn()">Delete</button>
-        <button type="button" class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden="true">Save</button>
-        <button type="button" class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden="true">Cancel</button>
-        <button  type="button" class="action-btn" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">Search</button>
-        <button type="button" class="action-btn" id="btnAttach" title="Attachment" onclick="funAttachBtn()">Attach</button>
-<%--        <button class="action-btn" id="btnCosting" title="Costing" onclick="funCostingBtn()">Costing</button>--%>
-<%--        <button class="action-btn" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">Guideline</button>--%>
-<%--        <button class="action-btn" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">Send Mail</button>--%>
-<%--        <button class="action-btn" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">Terms</button>--%>
-    </div>
-    <div id="attachment-container"></div>
-<%--    <div>--%>
-<%--        <button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >--%>
-<%--            <img alt="statusDocument" src="<%=contextPath%>/icons/approve_new.png">--%>
-<%--        </button>--%>
-<%--        <button type="button" class="icon" id="btnClose" title="Close Form" onclick="funCloseBtn()">--%>
-<%--            <img alt="closeForm" src="<%=contextPath%>/icons/close_new.png">--%>
-<%--        </button>--%>
-<%--        <button type="button" class="icon" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">--%>
-<%--            <img alt="newDocument" src="<%=contextPath%>/icons/add_new.png">--%>
-<%--        </button>--%>
-<%--        <button type="button" class="icon" id="btnEdit" title="Change current Document" onclick="funEditBtn()" >--%>
-<%--            <img alt="editDocument" src="<%=contextPath%>/icons/edit_new.png">--%>
-<%--        </button>--%>
-<%--        <button type="button" class="icon" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">--%>
-<%--            <img alt="printDocument" src="<%=contextPath%>/icons/print_new.png">--%>
-<%--        </button>--%>
-<%--        <button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">--%>
-<%--            <img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">--%>
-<%--        </button>--%>
-<%--        <button class="icon" id="btnDelete" title="Delete current Document" >--%>
-<%--            <img alt="deleteDocument" src="<%=contextPath%>/icons/delete_new.png">--%>
-<%--        </button>--%>
+</div>
 
-<%--        <button class="icon" id="btnSave" title="Save Changes" hidden="true">--%>
-<%--            <img alt="saveChanges" src="<%=contextPath%>/icons/save_new.png">--%>
-<%--        </button>--%>
+<!-- ACTION BUTTON BAR -->
+<div class="action-bar">
 
-<%--        <button type="button" class="icon" id="btnCancel" title="Cancel Changes"  onclick="funCancelBtn()" hidden="true">--%>
-<%--            <img alt="cancelChanges" src="<%=contextPath%>/icons/cancel_new.png">--%>
-<%--        </button>--%>
+    <!-- SECONDARY BUTTONS (BLUE) -->
+    <button type="button" class="secondary-btn" id="btnApproval" onclick="funApproveBtn()">
+        <svg viewBox="0 0 20 20"><path d="M7.629 15.314l-4.71-4.71 1.414-1.415 3.296 3.296 8.042-8.042 1.414 1.414z"/></svg>
+        Approval
+    </button>
 
-<%--        <button type="button" class="icon" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">--%>
-<%--            <img alt="searchDocument" src="<%=contextPath%>/icons/search_new.png">--%>
-<%--        </button>--%>
+    <button type="button" class="secondary-btn" id="btnClose" onclick="funCloseBtn()">
+        <svg viewBox="0 0 20 20"><path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/></svg>
+        Close
+    </button>
 
-<%--        <button type="button" class="icon" type="button" id="btnAttach" title="Attachment" onclick="funAttachBtn()">--%>
-<%--            <img alt="Attachment" src="<%=contextPath%>/icons/attachment_new.png">--%>
-<%--        </button>--%>
+    <!-- PRIMARY BUTTONS (ORANGE) -->
+    <button type="button" class="primary-btn" id="btnCreate" onclick="funCreateBtn()">
+        <svg viewBox="0 0 20 20"><path d="M9 3h2v14H9zM3 9h14v2H3z"/></svg>
+        Create
+    </button>
 
-<%--        <button type="button" class="icon" type="button" id="btnCosting" title="Costing" onclick="funCostingBtn()">--%>
-<%--            <img alt="Costing" src="<%=contextPath%>/icons/costtype.png">--%>
-<%--        </button>--%>
+    <button type="button" class="primary-btn" id="btnEdit" onclick="funEditBtn()">
+        <svg viewBox="0 0 20 20"><path d="M3 14.25V17h2.75l8.06-8.06-2.75-2.75L3 14.25zm12.71-7.04a1 1 0 0 0 0-1.41l-1.5-1.5a1 1 0 0 0-1.41 0l-1.29 1.29 2.75 2.75 1.45-1.13z"/></svg>
+        Edit
+    </button>
 
-<%--        <button type="button" class="icon" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">--%>
-<%--            <img alt="Guideline" src="<%=contextPath%>/icons/guideline.png">--%>
-<%--        </button>--%>
+    <button type="button" class="secondary-btn" id="btnPrint" onclick="funPrintBtn()">
+        <svg viewBox="0 0 20 20"><path d="M6 2h8v4H6V2zm10 5H4c-1.1 0-2 .9-2 2v5h4v4h8v-4h4v-5c0-1.1-.9-2-2-2z"/></svg>
+        Print
+    </button>
 
-<%--        <button type="button" class="icon" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">--%>
-<%--            <img alt="Sendmail" src="<%=contextPath%>/icons/mail_new.png">--%>
-<%--        </button>--%>
+    <button type="button" class="primary-btn" id="btnDelete" onclick="funDeleteBtn()">
+        <svg viewBox="0 0 20 20"><path d="M6 8h1v9H6V8zm3 0h1v9H9V8zm3 0h1v9h-1V8zm2-5h-3l-1-1h-4L8 3H5v2h10V3z"/></svg>
+        Delete
+    </button>
 
-<%--        <button type="button" class="icon" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">--%>
-<%--            <img alt="Terms" src="<%=contextPath%>/icons/tndc.png">--%>
-<%--        </button>--%>
+    <button type="button" class="primary-btn" id="btnSave" hidden="true" onclick="funSaveBtn()">
+        <svg viewBox="0 0 20 20"><path d="M17 3v14H3V3h14zm-5 12V9H8v6h4zm2-10H6v2h8V5z"/></svg>
+        Save
+    </button>
 
-<%--    </div>--%>
-</div>	
-	
+    <button type="button" class="secondary-btn" id="btnCancel" hidden="true" onclick="funCancelBtn()">
+        <svg viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm3.54 12.46l-1.41 1.41L10 12.41l-2.12 2.46-1.41-1.41L8.59 11 6.46 8.88l1.41-1.41L10 9.59l2.12-2.12 1.41 1.41L11.41 11l2.13 2.46z"/></svg>
+        Cancel
+    </button>
+
+    <button type="button" class="primary-btn" id="btnSearch" onclick="funSearchBtn()">
+        <svg viewBox="0 0 20 20"><path d="M12.9 14.32a7 7 0 1 1 1.41-1.41l4.39 4.39-1.41 1.41-4.39-4.39zM9 14A5 5 0 1 0 9 4a5 5 0 0 0 0 10z"/></svg>
+        Search
+    </button>
+
+    <button type="button" class="secondary-btn" id="btnAttach" onclick="funAttachBtn()">
+        <svg viewBox="0 0 20 20"><path d="M7 13.5V6a3 3 0 1 1 6 0v7.5a4.5 4.5 0 1 1-9 0V7h2v6.5a2.5 2.5 0 1 0 5 0V6a1 1 0 1 0-2 0v7.5"/></svg>
+        Attach
+    </button>
+
+</div>
+
+<div id="attachment-container"></div>
 
 </body>
 </html>
