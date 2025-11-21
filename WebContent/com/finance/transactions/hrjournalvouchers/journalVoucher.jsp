@@ -563,12 +563,6 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 	 
 </script>
 
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-</style>
 
 </head>
 <body onload="setValues();">

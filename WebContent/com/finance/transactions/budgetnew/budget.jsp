@@ -284,12 +284,7 @@
 	  
 </script>
 
-<style>
-	.hidden-scrollbar {
-	  overflow: auto;
-	  height: 530px;
-	}
-</style>
+
 
 </head>
 <body onload="setValues();">

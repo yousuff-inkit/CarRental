@@ -764,15 +764,7 @@
 	  
 </script>
 
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-#validrate{
- color:red;
- }
-</style>
+
 
 </head>
 <body onload="setValues();">

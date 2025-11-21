@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	
+
+	<package name="terminationsetup" extends="struts-default">
+			<action name="saveTerminationsetup" class="com.humanresource.setup.hrsetup.terminationsetup.ClsTerminationSetupAction" method="saveAction">
+				<interceptor-ref name="params"/>
+				<result name="success" >terminationsetupmaster.jsp</result>
+				<result name="fail">terminationsetupmaster.jsp</result>
+			</action>
+			
+		</package>	
+</struts>

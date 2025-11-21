@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	
+
+	<package name="workdetails" extends="struts-default">
+			<action name="saveWorkDetails" class="com.dashboard.humanresource.workdetails.ClsWorkDetailsAction" method="saveAction">
+				<interceptor-ref name="params"/>
+				<result name="success">workdetails.jsp</result>
+				<result name="fail">workdetails.jsp</result>
+				
+			</action>
+
+		</package>	
+</struts>
