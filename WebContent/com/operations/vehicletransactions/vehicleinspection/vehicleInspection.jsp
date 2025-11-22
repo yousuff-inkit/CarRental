@@ -11,6 +11,8 @@
 <script type="text/javascript" src="../../../../js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
  <style>
 .hidden-scrollbar {
   overflow: auto;

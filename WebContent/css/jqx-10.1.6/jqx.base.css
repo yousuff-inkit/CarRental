@@ -2667,16 +2667,23 @@ of the horizontal scrollbar.*/
 /*applied to the window�s header when the window is disabled*/
 .jqx-window-header-disabled {
 }
-/*applied to the window�s content*/
-.jqx-window-content {
-    outline: none;
-    overflow: auto;
-    text-align: left;
-    background-color: transparent;
-    padding: 5px;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
+
+
+
+/*applied to the window�s content*/ .jqx-window-content { outline: none; overflow: auto; text-align: left; background-color: transparent; padding: 5px; -webkit-background-clip: padding-box; background-clip: padding-box; }
+
+.jqx-window-header {
+    background: linear-gradient(90deg,#6fb1fc,#1a73e8) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    padding: 12px 20px !important;
+    border-radius: 14px 14px 0 0 !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(26,115,232,0.35) !important;
 }
+
+
+
 /*applied to the window�s content when the window is disabled*/
 .jqx-window-content-disabled {
     outline: none;
@@ -4007,48 +4014,84 @@ of the horizontal scrollbar.*/
 .jqx-grid.jqx-fill-state-disabled {
     pointer-events: none;
 }
-    .jqx-fill-state-normal td, .jqx-fill-state-hover td, .jqx-fill-state-pressed td, .jqx-fill-state-disabled td, .jqx-fill-state-focus td, .jqx-widget td, .jqx-widget-content td, .jqx-widget-header td {
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
 
-.jqx-widget .jqx-grid-cell, .jqx-widget .jqx-grid-column-header, .jqx-widget .jqx-grid-group-cell {
-    border-color: #aaa;
+
+
+
+
+/* COMMON GRID CELL BOX MODEL FIX */
+.jqx-fill-state-normal td,
+.jqx-fill-state-hover td,
+.jqx-fill-state-pressed td,
+.jqx-fill-state-disabled td,
+.jqx-fill-state-focus td,
+.jqx-widget td,
+.jqx-widget-content td,
+.jqx-widget-header td {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
-.jqx-widget .jqx-grid-column-menubutton, .jqx-widget .jqx-grid-column-sortascbutton, .jqx-widget .jqx-grid-column-sortdescbutton, .jqx-widget .jqx-grid-column-filterbutton {
-    background-color: transparent;
-    border-color: #aaa;
+/* GRID BORDER + BASE COLOR FIX */
+.jqx-widget .jqx-grid-cell,
+.jqx-widget .jqx-grid-column-header,
+.jqx-widget .jqx-grid-group-cell {
+    border-color: #d6e2ff !important;
 }
 
-.jqx-grid-column-header a:link, .jqx-grid-column-header a:visited {
+/* MENU / SORT / FILTER BUTTONS */
+.jqx-widget .jqx-grid-column-menubutton,
+.jqx-widget .jqx-grid-column-sortascbutton,
+.jqx-widget .jqx-grid-column-sortdescbutton,
+.jqx-widget .jqx-grid-column-filterbutton {
+    background-color: transparent !important;
+    border-color: #bcd0ff !important;
 }
 
-.jqx-grid-bottomright, .jqx-panel-bottomright, .jqx-listbox-bottomright {
-    background-color: #e5e5e5;
+/* COLUMN HEADER LINK COLOR */
+.jqx-grid-column-header a:link,
+.jqx-grid-column-header a:visited {
+    color: #2a3f85 !important;
+    font-weight: 600 !important;
 }
 
+/* SCROLL BOTTOM RIGHT PATCH */
+.jqx-grid-bottomright,
+.jqx-panel-bottomright,
+.jqx-listbox-bottomright {
+    background-color: #f0f4ff !important;
+}
+
+/* SELECTED TAB (TOP) */
 .jqx-tabs-title-selected-top {
-    border-color: #aaa;
-    border-bottom: 1px solid #fff;
-    background-color: #fff;
+    border-color: #a8c4ff !important;
+    border-bottom: 1px solid #fff !important;
+    background: #ffffff !important;
 }
-/*applied to the tab's title when the tab is selected and the jqxTab's position property is set to 'bottom' .*/
+
+/* SELECTED TAB (BOTTOM) */
 .jqx-tabs-title-selected-bottom {
-    border-color: #aaa;
-    border-top: 1px solid #fff;
-    background-color: #fff;
+    border-color: #a8c4ff !important;
+    border-top: 1px solid #fff !important;
+    background: #ffffff !important;
 }
-/*applied to the tab's selection tracker when the jqxTab's position property is set to 'top'.*/
+
+/* SELECTION TRACKER (TOP) */
 .jqx-tabs-selection-tracker-top {
-    border-color: #aaa;
-    border-bottom: 1px solid #fff;
+    border-color: #bcd0ff !important;
+    border-bottom: 1px solid #fff !important;
 }
-/*applied to the tab's selection tracker when the jqxTab's position property is set to 'bottom'.*/
+
+/* SELECTION TRACKER (BOTTOM) */
 .jqx-tabs-selection-tracker-bottom {
-    border-color: #aaa;
-    border-top: 1px solid #fff;
+    border-color: #bcd0ff !important;
+    border-top: 1px solid #fff !important;
+
 }
+
+
+
+
 /*jqxMaskedInput and jqxNumberInput Styles*/
 .jqx-input {
     -webkit-appearance: none;
@@ -7824,7 +7867,7 @@ jqx-knob {
 
 .jqx-grid-column-header span {
   font-size: 12px !important;
-  color: #fff !important;
+  color: #263b75 !important;
 }
 
 .jqx-grid-cell,

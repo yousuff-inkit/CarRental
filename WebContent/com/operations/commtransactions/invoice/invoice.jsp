@@ -9,6 +9,8 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <% String contextPath=request.getContextPath();%>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
      $(document).ready(function () { 
