@@ -86,15 +86,16 @@ $(document).ready(function (){
     $("#jqxVendorSearch").jqxGrid({
         width: '100%',
         height: 300,
+        rowsheight: 36,
         source: dataAdapter,
         selectionmode: 'singlerow',
         editable: false,
         columnsresize: true,
         columns: [
-            { text: 'Name', datafield: 'refname', width: '40%' },
+            { text: 'Name', datafield: 'refname', width: '30%' },
             { text: 'Account No.', datafield: 'acno', width: '20%' },
-            { text: 'Mobile No.', datafield: 'per_mob', width: '20%' },
-            { text: 'Telephone No.', datafield: 'per_tel', width: '20%' },
+            { text: 'Mobile No.', datafield: 'per_mob', width: '25%' },
+            { text: 'Telephone No.', datafield: 'per_tel', width: '25%' },
             { text: 'Doc No', hidden: true, datafield: 'doc_no', width: '5%' }
         ]
     });

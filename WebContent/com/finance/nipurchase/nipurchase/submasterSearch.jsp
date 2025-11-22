@@ -19,6 +19,60 @@ String accountss = request.getParameter("accountss")==null?"NA":request.getParam
  String reftypess = request.getParameter("reftypess")==null?"NA":request.getParameter("reftypess"); 
  String aa = request.getParameter("aa")==null?"NA":request.getParameter("aa"); 
  %>
+ 
+ <style>
+/* GRID WRAPPER CARD */
+.grid-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid #dbe4ff;
+    box-shadow: 0 4px 16px rgba(90,120,255,0.18);
+}
+
+/* GRID HEADER */
+.jqx-widget-header, .jqx-grid-column-header {
+    background: linear-gradient(90deg,#eff4ff,#dfe9ff) !important;
+    color: #2a3f85 !important;
+    font-weight: 600 !important;
+    border-color: #dce6ff !important;
+    font-size: 0.85rem !important;
+}
+
+/* GRID CELLS */
+.jqx-grid-cell {
+    font-size: 0.85rem !important;
+    padding: 6px !important;
+    border-color: #eef3ff !important;
+}
+
+/* HOVER EFFECT */
+.jqx-grid-cell-hover {
+    background: rgba(70,120,255,0.08) !important;
+}
+
+/* SELECTED ROW */
+.jqx-grid-cell-selected {
+    background: #6e96ff !important;
+    color: #ffffff !important;
+}
+
+/* ZERO DATA MESSAGE */
+.no-data-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #6b7cb9;
+}
+/* Better grid borders */
+.jqx-grid-cell,
+.jqx-grid-column-header,
+.jqx-widget-content {
+    border-color: #c2d1ff !important;
+}
+</style>
+
 <script type="text/javascript">
 
 
@@ -70,6 +124,7 @@ var nipurmain= '<%=viewDAO.mainsearch(session,docnoss,accountss,accnamess,datess
             {
                 width: '100%',
                 height: 280,
+                rowsheight: 36,
                 source: dataAdapter,
        /*          showfilterrow: true, 
                 filterable: true,  */
@@ -85,7 +140,7 @@ var nipurmain= '<%=viewDAO.mainsearch(session,docnoss,accountss,accnamess,datess
 							{ text: 'Account', datafield: 'account', width: '8%' },
 								{ text: 'Account Name', datafield: 'description', width: '25%' },
 								 { text: 'Ref Type', datafield: 'reftype', width: '7%'},
-								{ text: 'Amount', datafield: 'netamount', width: '14%' ,cellsformat: 'd2', cellsalign: 'right', align:'right'},
+								{ text: 'Amount', datafield: 'netamount', width: '14%' ,cellsformat: 'd2'},
 								 { text: 'type', datafield: 'type', width: '5%',hidden:true },
 								 { text: 'refno', datafield: 'refno', width: '5%',hidden:true },
 									{ text: 'rate', datafield: 'rate', width: '2%' ,hidden:true},

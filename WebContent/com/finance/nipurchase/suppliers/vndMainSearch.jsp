@@ -132,7 +132,21 @@
         width: 100%;
     }
 }
+/* Increase input text size for cleaner modern look */
+.search-input {
+    font-size: 0.94rem !important;
+}
 
+/* Increase jqx date input text size */
+.jqx-input-content {
+    font-size: 0.94rem !important;
+}
+
+/* Increase text inside the outer jqx container */
+#debitdate,
+#creditdate {
+    font-size: 0.94rem !important;
+}
 </style>
 
 <script type="text/javascript">

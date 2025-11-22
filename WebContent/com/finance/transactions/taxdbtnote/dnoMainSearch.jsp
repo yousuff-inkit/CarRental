@@ -12,125 +12,149 @@
 
 <style>
 
-/* RESET inside popup */
+/* RESET */
 .search-container * {
     box-sizing: border-box;
-    font-family: Poppins, Arial, sans-serif;
+    font-family: Poppins, sans-serif !important;
 }
 
 /* OUTER CARD */
 .search-container {
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #dce6ff;
-    box-shadow: 0px 10px 35px rgba(93,125,255,0.20);
-    overflow: hidden;
-    padding: 0;
-    width: 100%;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    border: 1px solid #dce6ff !important;
+    box-shadow: 0px 10px 35px rgba(93,125,255,0.20) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
 }
 
 /* HEADER */
 .search-header {
-    background: linear-gradient(90deg, #478dff, #67a8ff);
-    padding: 20px 28px;
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background: linear-gradient(90deg,#478dff,#67a8ff) !important;
+    padding: 14px 20px !important;
+    color: white !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .3px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
 }
+
 .search-header small {
-    font-size: 0.85rem;
-    opacity: 0.95;
+    font-size: 0.78rem !important;
+    font-weight: 300 !important;
+    opacity: 0.95 !important;
 }
 
 /* BODY */
 .search-body {
-    background: #fbfcff;
-    padding: 24px 28px;
-}
-
-/* FLEX ROW (master UI spacing) */
-.search-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-
-/* FLEX COLUMN */
-.search-col {
-    flex: 1;
-    min-width: 0;
-}
-.search-col-btn {
-    display: flex;
-    align-items: flex-end;
-}
-
-/* LABELS */
-.search-label {
-    font-size: 0.90rem;
-    font-weight: 600;
-    color: #263b75;
-    margin-bottom: 8px;
-}
-
-/* MASTER UI INPUTS */
-.search-input {
-    width: 100%;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid #c8d9ff;
-    background: #ffffff;
-    padding: 0px 14px;
-    font-size: 1rem;
-    color: #052a6b;
-    box-shadow: 0px 3px 6px rgba(180,200,255,0.35);
-}
-
-/* DATE BOX */
-#debitdate {
-    width: 100%;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid #c8d9ff;
-    box-shadow: 0px 3px 6px rgba(180,200,255,0.35);
-}
-
-/* SEARCH BUTTON (keep your myButton class as-is) */
-.search-container input.myButton {
-    background: linear-gradient(90deg, #6fb1fc, #1a73e8);
-    color: #ffffff;
-    border: none;
-    height: 46px;
-    padding: 0px 38px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0px 6px 18px rgba(26,115,232,0.30);
-}
-.search-container input.myButton:hover {
-    transform: translateY(-2px);
+    padding: 18px 22px 10px !important;
+    background: #fbfcff !important;
 }
 
 /* GRID AREA */
 .search-grid-area {
-    padding: 24px 28px 30px;
-    background: #f4f7ff;
-    border-top: 1px solid #e3eaff;
+    padding: 15px 22px 20px !important;
+    background: #f4f7ff !important;
+    border-top: 1px solid #e3eaff !important;
 }
 
-/* Mobile fallback */
-@media (max-width: 900px) {
-    .search-row {
-        flex-direction: column;
-        gap: 18px;
-    }
-    .search-col-btn input {
-        width: 100%;
-    }
+/* LABEL */
+.search-label {
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #263b75 !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+}
+
+/* INPUT */
+.search-input {
+    width: 100% !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    border: 1px solid #c4d3ff !important;
+    padding: 5px 10px !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(150,175,255,0.20) !important;
+}
+
+/* FOCUS FIX */
+.search-input:focus,
+.search-input:-webkit-autofill {
+    background-color: #ffffff !important;
+    border-color: #6a96ff !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+}
+
+/* DATE INPUT HEIGHT FIX */
+#debitdate {
+    width: 100% !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    border: 1px solid #c4d3ff !important;
+}
+
+/* BUTTON */
+.search-btn {
+    background: linear-gradient(90deg,#6fb1fc,#1a73e8) !important;
+    height: 34px !important;
+    color: white !important;
+    border: none !important;
+    padding: 0px 26px !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(26,115,232,0.30) !important;
+    transition: 0.2s !important;
+}
+.search-btn:hover {
+    transform: translateY(-2px) !important;
+}
+
+/* FLEX */
+.row {
+    display: flex !important;
+    gap: 18px !important;
+    margin-bottom: 14px !important;
+}
+.col {
+    flex: 1 !important;
+}
+
+/* Remove pink autofill inside jqx date input */
+.jqx-input-content,
+.jqx-fill-state-normal,
+.jqx-fill-state-focus,
+.jqx-fill-state-hover {
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Remove inner input pink (Chrome autofill) */
+input.jqx-input-content:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    box-shadow: 0 0 0 1000px #ffffff inset !important;
+    background-color: #ffffff !important;
+}
+
+/* Increase input text size for cleaner modern look */
+.search-input {
+    font-size: 0.94rem !important;
+}
+
+/* Increase jqx date input text size */
+.jqx-input-content {
+    font-size: 0.94rem !important;
+}
+
+/* Increase text inside the outer jqx container */
+#debitdate,
+#creditdate {
+    font-size: 0.94rem !important;
 }
 </style>
 
@@ -138,7 +162,7 @@
 $(document).ready(function () {
     $("#debitdate").jqxDateTimeInput({
         width: "100%",
-        height: "42px",
+        height: "30px",
         formatString: "dd.MM.yyyy",
         value: null
     });
@@ -146,7 +170,7 @@ $(document).ready(function () {
 
 function loadSearch() {
     var docNo = document.getElementById("txtdocumentno").value;
-    var date  = document.getElementById("debitdate").value;
+    var date = document.getElementById("debitdate").value;
     var accId = document.getElementById("txtaccountid").value;
     var accName = document.getElementById("txtaccountname").value;
     var amounts = document.getElementById("txtamounts").value;
@@ -182,52 +206,51 @@ function loadSearch() {
     <div class="search-body">
 
         <!-- ROW 1 -->
-        <div class="search-row">
+        <div class="row">
 
-            <div class="search-col">
+            <div class="col">
                 <label class="search-label">Doc No</label>
                 <input type="text" id="txtdocumentno" class="search-input"
-                       value='<s:property value="txtdocumentno"/>' />
+                value='<s:property value="txtdocumentno"/>' />
             </div>
 
-            <div class="search-col">
+            <div class="col">
                 <label class="search-label">Date</label>
                 <div id="debitdate"></div>
                 <input type="hidden" id="hiddebitdate" />
             </div>
 
-            <div class="search-col">
+            <div class="col">
                 <label class="search-label">A/C No.</label>
                 <input type="text" id="txtaccountid" class="search-input"
-                       value='<s:property value="txtaccountid"/>' />
+                value='<s:property value="txtaccountid"/>' />
             </div>
 
-            <div class="search-col search-col-btn">
-                <input type="button" id="btnsearch" class="myButton"
-                       value="Search" onclick="loadSearch();">
+            <div class="col" style="display:flex; align-items:flex-end;">
+                <button class="search-btn" onclick="loadSearch()">Search</button>
             </div>
 
         </div>
 
         <!-- ROW 2 -->
-        <div class="search-row">
+        <div class="row">
 
-            <div class="search-col">
+            <div class="col">
                 <label class="search-label">A/C Name</label>
                 <input type="text" id="txtaccountname" class="search-input"
-                       value='<s:property value="txtaccountname"/>' />
+                value='<s:property value="txtaccountname"/>' />
             </div>
 
-            <div class="search-col">
+            <div class="col">
                 <label class="search-label">Amount</label>
                 <input type="text" id="txtamounts" class="search-input"
-                       value='<s:property value="txtamounts"/>' />
+                value='<s:property value="txtamounts"/>' />
             </div>
 
-            <div class="search-col">
+            <div class="col">
                 <label class="search-label">Description</label>
                 <input type="text" id="txtdescriptions" class="search-input"
-                       value='<s:property value="txtdescriptions"/>' />
+                value='<s:property value="txtdescriptions"/>' />
             </div>
 
         </div>
