@@ -125,37 +125,7 @@
 .col {
     flex: 1 !important;
 }
-/* Remove pink autofill inside jqx date input */
-.jqx-input-content,
-.jqx-fill-state-normal,
-.jqx-fill-state-focus,
-.jqx-fill-state-hover {
-    background-color: #ffffff !important;
-    box-shadow: none !important;
-}
 
-/* Remove inner input pink (Chrome autofill) */
-input.jqx-input-content:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    box-shadow: 0 0 0 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-}
-
-/* Increase input text size for cleaner modern look */
-.search-input {
-    font-size: 0.94rem !important;
-}
-
-/* Increase jqx date input text size */
-.jqx-input-content {
-    font-size: 0.94rem !important;
-}
-
-/* Increase text inside the outer jqx container */
-#debitdate,
-#creditdate {
-    font-size: 0.94rem !important;
-}
 </style>
 
 <script type="text/javascript">

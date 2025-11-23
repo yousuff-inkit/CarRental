@@ -78,7 +78,6 @@ $(document).ready(function () {
     $("#jqxbankreconcilesearch").jqxGrid({
         width: '99%',
         height: 300,
-        rowsheight: 36,
         source: dataAdapter,
         selectionmode: 'singlerow',
         columns: [

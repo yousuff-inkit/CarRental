@@ -86,7 +86,6 @@ $(document).ready(function () {
     $("#jqxCreditNoteMainSearch").jqxGrid({
         width: '100%',
         height: 320,
-        rowsheight: 36,
         source: dataAdapter,
         selectionmode: 'singlerow',
         editable: false,
