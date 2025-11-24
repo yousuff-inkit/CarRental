@@ -1,2 +1,4 @@
 /classes
 /build
+.settings/
+WebContent/META-INF/context.xml
