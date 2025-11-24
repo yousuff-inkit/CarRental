@@ -167,6 +167,410 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+
+
+/* =============== PREMIUM BLUE SECTION STYLE =============== */
+
+/* Outer section box (the big white one inside your page) */
+.section-block, 
+.cr-table, 
+#main, #sub, #trans, #main1, #sub1, #trans1 {
+    background: #ffffff !important;
+    border-radius: 14px !important;
+    padding: 20px 22px !important;
+    box-shadow: 0 4px 14px rgba(120,160,255,0.15) !important;
+    border: 1px solid #dfe6ff !important;
+}
+
+/* Section headings (Main Account / Sub Account / Transaction) */
+.section-block h2,
+#main1 label, #sub1 label, #trans1 label {
+    background: linear-gradient(90deg,#6faaff,#4b8cff) !important;
+    padding: 12px 18px !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 18px !important;
+    box-shadow: 0 3px 10px rgba(90,130,255,0.25) !important;
+}
+
+/* Labels */
+.section-block label,
+#main label, #sub label, #trans label {
+    font-size: .90rem !important;
+    font-weight: 600 !important;
+    color: #2b3f72 !important;
+}
+
+/* Input Fields */
+.section-block input[type="text"],
+.section-block select,
+#main input, #sub input, #trans input,
+#main select, #sub select, #trans select {
+    height: 34px !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #c9d7ff !important;
+    padding: 6px 12px !important;
+    font-size: .88rem !important;
+    font-family: 'Poppins', sans-serif !important;
+    box-shadow: 0 2px 6px rgba(160,180,255,0.18) !important;
+    transition: 0.2s ease-in-out !important;
+}
+
+/* Input Focus Effect – Black border + glow */
+.section-block input[type="text"]:focus,
+.section-block select:focus,
+#main input:focus, #sub input:focus, #trans input:focus,
+#main select:focus, #sub select:focus, #trans select:focus {
+    border-color: #000 !important;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.20) !important;
+    outline: none !important;
+}
+
+/* The tiny radio button label background fix */
+#main1, #sub1, #trans1 {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Radio label alignment */
+#main1 td label,
+#sub1 td label,
+#trans1 td label {
+    background: none !important;
+    color: #2b3f72 !important;
+    padding-left: 4px !important;
+}
+
+/* Fix tables inside sections */
+.cr-table th {
+    background: #eff4ff !important;
+    font-weight: 600 !important;
+    color: #2b3f72 !important;
+}
+
+/* ---------------- SECTION LAYOUT FIX ---------------- */
+
+.section-block {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    padding: 28px 28px !important;
+    margin-bottom: 28px !important;
+    box-shadow: 0 4px 22px rgba(95,135,255,0.10) !important;
+    border: 1px solid #e7ecff !important;
+    transition: transform .25s ease, box-shadow .25s ease !important;
+}
+
+/* Lift on hover */
+.section-block:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 28px rgba(95,135,255,0.15) !important;
+}
+
+/* Section title */
+.section-block h2 {
+    margin-bottom: 22px !important;
+    color: #27408a !important;
+    font-weight: 600 !important;
+}
+
+/* Group rows */
+.section-block .form-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+    margin-bottom: 20px !important;
+}
+
+/* Label fix */
+.section-block label {
+    min-width: 150px !important;
+    text-align: right !important;
+    font-weight: 600 !important;
+    color: #263b75 !important;
+}
+
+/* Input spacing fix */
+.section-block input[type="text"],
+.section-block select {
+    width: 100% !important;
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+    border: 1px solid #ccd9ff !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 7px rgba(90,120,255,0.18) !important;
+    transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+
+/* Focus border highlight */
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border: 2px solid #3e78ff !important;
+    box-shadow: 0 0 0 3px rgba(62,120,255,0.20) !important;
+    outline: none !important;
+}
+
+/* Fix the specific issue: RATE & ACCOUNT NAME collision */
+#transaccname, #ratess, #currs {
+    margin-right: 12px !important;
+}
+
+/* For rate field so it never touches right edge */
+#ratess {
+    margin-left: 12px !important;
+}
+
+/* Add breathing room for inline inputs */
+.inline-field-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+
+
+
+.gl-input {
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid #c4d3ff;
+    padding: 6px 12px;
+    background: #ffffff;
+    font-size: 0.95rem;
+    box-shadow: 0 3px 8px rgba(180,200,255,0.25);
+    transition: 0.2s ease;
+}
+
+.gl-input:focus {
+    border-color: #478dff;
+    box-shadow: 0 0 0 2px rgba(71,141,255,0.25);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+
+
+/*--------------------------------------
+  FIX FOR MERGED FIELDS & ALIGNMENT
+---------------------------------------*/
+
+/* Convert table rows to flex rows */
+#main tr,
+#sub tr,
+#trans tr {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    margin-bottom: 18px !important;
+}
+
+/* Make each cell behave like a block */
+#main td,
+#sub td,
+#trans td {
+    display: block !important;
+    width: auto !important;
+}
+
+/* Labels aligned right */
+#main label,
+#sub label,
+#trans label {
+    min-width: 140px !important;
+    font-weight: 600;
+    color: #253858;
+}
+
+/* Inputs fixed clean width */
+#main input[type="text"],
+#sub input[type="text"],
+#trans input[type="text"],
+#main select,
+#sub select,
+#trans select {
+    width: 220px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #c4d3ff !important;
+    padding: 6px 12px !important;
+    box-shadow: 0 2px 6px rgba(150,175,255,0.15) !important;
+    transition: 0.2s;
+}
+
+/* Focus highlight */
+#main input:focus,
+#sub input:focus,
+#trans input:focus,
+#main select:focus,
+#sub select:focus,
+#trans select:focus {
+    border-color: #1a73e8 !important;
+    box-shadow: 0 0 0 3px rgba(26,115,232,0.25) !important;
+    outline: none !important;
+}
+
+/* Section box styling */
+.section-block {
+    padding: 25px !important;
+    background: #fbfcff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 6px 20px rgba(100,120,255,0.08) !important;
+    border: 1px solid #e4ecff !important;
+}
+
+/* Lift effect (just like the search button) */
+.section-block:hover {
+    transform: translateY(-3px);
+    transition: 0.2s ease;
+    box-shadow: 0 10px 26px rgba(100,120,255,0.12) !important;
+}
+
+
+
+/* FIX ALIGNMENT FOR ALL ACCOUNT SECTION FIELDS */
+#mainBG table,
+#mainBG td {
+    border-collapse: collapse !important;
+}
+
+/* Row container */
+.account-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 18px;
+    width: 100%;
+}
+
+/* Label styling */
+.account-row label {
+    min-width: 140px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2a2a55;
+}
+
+/* Input + Select uniform design */
+.account-row input[type="text"],
+.account-row select {
+    height: 38px;
+    padding: 6px 12px;
+    border: 1px solid #c4d3ff;
+    border-radius: 10px;
+    background: #ffffff;
+    font-size: 0.9rem;
+    width: 230px !important;
+    transition: all .15s ease-in-out;
+}
+
+/* Focus effect */
+.account-row input[type="text"]:focus,
+.account-row select:focus {
+    border-color: #478dff;
+    box-shadow: 0 0 0 3px rgba(71,141,255,0.18);
+    outline: none;
+}
+
+/* Small inputs (Currency, Rate) */
+.small-input {
+    width: 160px !important;
+}
+
+/* Card spacing fix */
+.section-block {
+    padding: 28px 28px !important;
+}
+
+
+.gl-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 20px;
+    width: 95%;
+}
+
+.gl-row label {
+    min-width: 170px;
+    font-weight: 600;
+    color: #1d2d60;
+}
+
+.gl-input,
+.gl-row select {
+    height: 38px;
+    padding: 6px 12px;
+    border: 1px solid #c8d6ff;
+    border-radius: 10px;
+    background: white;
+    width: 260px;
+}
+
+.gl-small {
+    width: 150px;
+    height: 38px;
+    padding: 6px 12px;
+    border: 1px solid #c8d6ff;
+    border-radius: 10px;
+}
+
+.gl-input:focus,
+.gl-row select:focus,
+.gl-small:focus {
+    border-color: black !important;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+
+
+
+/* ===========================
+   TRANSACTION SECTION FIX
+   =========================== */
+
+#trans {
+    width: 100%;
+}
+
+#trans td {
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+/* Bigger input boxes */
+#trans input[type="text"],
+#trans select {
+    width: 230px !important;
+    height: 38px !important;
+    font-size: 0.95rem !important;
+    border-radius: 12px !important;
+    padding: 6px 12px !important;
+}
+
+/* Account Name + Currency + Rate layout */
+.trans-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 22px;
+    width: 100%;
+}
+
+/* The two small fields */
+.trans-small {
+    display: flex;
+    flex-direction: column;
+}
+
+.trans-small input {
+    width: 150px !important;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -1024,6 +1428,8 @@ function getConfig() {
     <div class="hidden-scrollbar receipt-header">
 
 <table class="cr-table" width="100%" >
+
+
 <tr>
 <td>
  <table class="cr-table" width="100%" >
@@ -1097,57 +1503,64 @@ function getConfig() {
      <fieldset>
      <table id="trans1"> <tr align="center"><td><input type="radio" id="category3" name="category" value="transaction" onchange="fundisable();"><label>Transaction</label></td></tr></table>
 
+
+
+
+
+
  <table width="100%"  id="trans"   >
-    <tr>  <td width="28.5%" align="right"><div>Main account Group</div></td>
-   <td ><select id="tansaccgroup" name="tansaccgroup" style="width:35.5%;"  onChange="getAcgroup(this.value,2);" value='<s:property value="tansaccgroup"/>'  onfocus="funclear3();" >
+    <div class="gl-row">
+    <label>Main Account Group</label>
+
+    <select id="tansaccgroup" name="tansaccgroup"
+            onChange="getAcgroup(this.value,2);" onfocus="funclear3();">
         <option value="-1">--Select--</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" name="transcaccgpname" id="transcaccgpname" style="width:44%;"  value='<s:property value="transcaccgpname"/>' >
-        </td>   </tr>
-  <tr>
-     <td align="right"><div>Account Code</div></td>
-    <td ><input type="text" name="transacccode" id="transacccode" style="width:35%;"  value='<s:property value="transacccode"/>' onblur="trancheck(this.value)" onkeypress="javascript:return isNumber (event);"></td>
-  </tr>
-  <tr>
-     <td align="right"><div>Account Name</div></td>
-    <td ><input type="text" name="transaccname" id="transaccname" style="width:35%;"  value='<s:property value="transaccname"/>' onblur="dismassge()" >
+    </select>
+
+    <input type="text" name="transcaccgpname" id="transcaccgpname" class="gl-small">
+</div>
+
+<div class="gl-row">
+    <label>Account Code</label>
+    <input type="text" name="transacccode" id="transacccode"
+           onblur="trancheck(this.value)" onkeypress="javascript:return isNumber(event);">
+</div>
+
+<div class="gl-row">
+    <label>Account Name</label>
+
+    <input type="text" name="transaccname" id="transaccname" class="gl-input">
+
+    <input type="text" name="currs" id="currs" class="gl-small" placeholder="Currency"
+           onkeydown="getaccountdetails(event);">
+
+    <input type="text" name="ratess" id="ratess" class="gl-small" placeholder="Rate"
+           onblur="funRoundRate(this.value,this.id);" onkeypress="javascript:return isNumber(event);" >
+</div>
+
+<div class="gl-row">
+    <label></label>
+    <input type="checkbox" id="interbranch" name="interbranch" onchange="funhidden();" value="1">
+    <span>Inter branch Account</span>
+</div>
+
+<div class="gl-row" id="branch" hidden="true">
+    <label>Branch</label>
+
+    <select name="branchone" id="branchone" required="required"
+            onClick="getSecbranch(this.value)">
+        <option value="0">--Select--</option>
+    </select>
+
+    <select name="branchtwo" id="branchtwo" required="required">
+        <option value="0">--Select--</option>
+    </select>
+</div>
     
-    <input type="hidden" name="tran_account" id="tran_account"  value='<s:property value="tran_account"/>' />
     
-    &nbsp; 
-    Currency   <input type="text" name="currs" id="currs"  value='<s:property value="currs"/>' onkeydown="getaccountdetails(event);" />
-   Rate  <input type="text" name="ratess" id="ratess"  value='<s:property value="ratess"/>' onblur="funRoundRate(this.value,this.id);" onkeypress="javascript:return isNumber (event);"  style="text-align: right;"> 
     
-    </td>
-  </tr>  <tr>  <td>  </td>  <td> 
- <%--  <div>
-  <input type="checkbox" name="localcurrency"  id="localcurrency" value='<s:property value="localcurrency"/>' checked >local Currency
-  <input type="checkbox" name="ageingdetails" id="ageingdetails" value='<s:property value="ageingdetails"/>' checked>Ageing Details
-    </div> --%>
-    </td>
-         </tr>
-  
-  <tr>
-  <td>
-  <div width="100%">
-    <div align="center">
     
-        <input type="checkbox" id="interbranch" name="interbranch"  onchange="funhidden();"   value="1"/>Inter branch Account 
     
-    </div>
-  
-    </td>     </tr>  <tr> <td></td>
-  <td>
-  <div  hidden="true" id="branch" >
-    
-        Branch <select name="branchone" id="branchone" required="required"style="width:40%;" value='<s:property value="branchone"/>' onClick="getSecbranch(this.value)">
-       <option value="0">--Select--</option> 
-        </select> -- 
-        <select name="branchtwo" id="branchtwo" required="required"style="width:40%;" value='<s:property value="branchtwo"/>'>
-       <option value="0">--Select--</option> 
-        </select>  
-        
-    </div> </td>  </tr>
     </table>
   </fieldset>
   

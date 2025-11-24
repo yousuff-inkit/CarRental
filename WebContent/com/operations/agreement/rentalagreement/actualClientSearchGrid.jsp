@@ -12,6 +12,11 @@
  	String id = request.getParameter("id")==null?"0":request.getParameter("id");
  	String catdocno = request.getParameter("catdocno")==null?"0":request.getParameter("catdocno");
 %> 
+<link rel="stylesheet" type="text/css" 
+href="<%=request.getContextPath()%>/css/premiumSearchOverride.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/searchTheme.css?v=9" />
+
+
 
 <script type="text/javascript">
 	var actualclienturl='getActualClientUrl.jsp?clname=<%=clname%>&mob=<%=mob%>&lcno=<%=lcno%>&passno=<%=passno%>&nation=<%=nation%>&dob=<%=dob%>&id=<%=id%>&catdocno=<%=catdocno%>';
@@ -145,7 +150,73 @@
                   }); 
 				 
     </script>
-    <div id="actualClientSearchGrid"></div>
+    <div class="search-container">
+
+    <!-- HEADER -->
+    <div class="search-header">
+        Client Search
+        <small>Search by Name, Mobile, Reg No, Fleet No, LPO etc.</small>
+    </div>
+
+    <!-- BODY -->
+    <div class="search-body">
+
+        <div class="row">
+            <div class="col">
+                <label class="search-label">Name</label>
+                <input type="text" id="clname" class="search-input"
+                       value="<%=clname%>">
+            </div>
+
+            <div class="col">
+                <label class="search-label">MOB</label>
+                <input type="text" id="mob" class="search-input"
+                       value="<%=mob%>">
+            </div>
+
+            <div class="col">
+                <label class="search-label">MRA</label>
+                <input type="text" id="lcno" class="search-input"
+                       value="<%=lcno%>">
+            </div>
+
+            <div class="col" style="display:flex; align-items:flex-end;">
+                <button class="search-btn" onclick="loadActualClientSearch()">Search</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="search-label">Doc No</label>
+                <input type="text" id="catdocno" class="search-input"
+                       value="<%=catdocno%>">
+            </div>
+
+            <div class="col">
+                <label class="search-label">Fleet No</label>
+                <input type="text" id="fleet" class="search-input">
+            </div>
+
+            <div class="col">
+                <label class="search-label">Reg No</label>
+                <input type="text" id="reg" class="search-input">
+            </div>
+
+            <div class="col">
+                <label class="search-label">LPO#</label>
+                <input type="text" id="lpo" class="search-input">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- GRID AREA -->
+    <div class="search-grid-area">
+        <div id="actualClientSearchGrid"></div>
+    </div>
+
+</div>
+
 
     </body>
 </html>

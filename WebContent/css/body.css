@@ -30,10 +30,10 @@ legend {
   font: 13px  Tahoma;
   
   }
-  input[type="text"] {
-  	width:'40%';
-    height:15px;
-    font-size:10px;
+input[type="text"] {
+    width: '40%';
+    height: 15px;
+    font-size: 10px;
 }
   input[type="date"] {
     width:'40%';

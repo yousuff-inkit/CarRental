@@ -12,6 +12,8 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
