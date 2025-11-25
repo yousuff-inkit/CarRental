@@ -267,7 +267,7 @@ function hidedata(){
 <table style="width:100%;">
 		<tr>
 		<br><br><br><br><br><br><br><br><br>
-		<jsp:include page="../../../common/printFooterfireitscredit.jsp"></jsp:include> 
+		<jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include> 
 		</tr>
 	</table> 
 
