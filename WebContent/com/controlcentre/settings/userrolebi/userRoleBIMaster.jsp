@@ -295,34 +295,81 @@
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmUserRoleBIMaster" action="saveUserRoleBIMaster" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+
+<form id="frmUserRoleBIMaster" action="saveUserRoleBIMaster" autocomplete="off">
+<jsp:include page="../../../../header.jsp"></jsp:include>
+<br/>
+
+<!-- ⭐ Premium Blue Layout -->
 <div class="hidden-scrollbar receipt-header">
-<div class="table-section" style="width: 100%;"><h3>User Role Info</h3>
-<table class="cr-table" width="100%">
+
+<div class="table-section" style="width:100%;">
+<h3 style="font-size:18px;font-weight:600;color:#1B4F9A;">User Role Info</h3>
+
+<table class="cr-table" width="100%" style="background:#ffffff;border-radius:12px;">
+
   <tr>
-    <td width="9%" align="right">Role</td>
-    <td width="47%"><input type="text" id="txtrolename" name="txtrolename" placeholder="Press F3 to Search" style="width:60%;" ondblclick="funSearchdblclick();" onkeydown="getRole(event);" value='<s:property value="txtrolename"/>'/>
-    <input type="hidden" id="txtroleid" name="txtroleid" value='<s:property value="txtroleid"/>'/></td>
-    <td ><button class="myButton" type="button" id="btnclone" name="btnclone"  onclick="funClone();">Clone</button></td>
-    <td width="6%" align="right">Doc No.</td>
-    <td width="38%"><input type="text" id="docno" name="txtuserrolebidocno" style="width:35%;" value='<s:property value="txtuserrolebidocno"/>' tabindex="-1"/></td>
+    <!-- Role -->
+    <td width="12%" align="right" style="font-weight:600;color:#1A3E7A;">Role</td>
+    <td width="45%">
+      <input type="text" id="txtrolename" name="txtrolename"
+             placeholder="Press F3 to Search"
+             ondblclick="funSearchdblclick();" 
+             onkeydown="getRole(event);"
+             value='<s:property value="txtrolename"/>'
+             style="width:70%;padding:8px;border-radius:8px;
+                    border:1px solid #cfe0ff;background:#f0f5ff;">
+      <input type="hidden" id="txtroleid" name="txtroleid"
+             value='<s:property value="txtroleid"/>'>
+    </td>
+
+    <!-- Clone BTN -->
+    <td width="10%" align="center">
+      <button class="myButton" type="button"
+              id="btnclone" name="btnclone"
+              style="padding:7px 18px;border-radius:8px;background:linear-gradient(90deg,#1E88E5,#1565C0);
+                     color:white;font-weight:600;box-shadow:0 3px 8px rgba(21,101,192,0.25);cursor:pointer;"
+              onclick="funClone();">
+        Clone
+      </button>
+    </td>
+
+    <!-- Doc No -->
+    <td width="8%" align="right" style="font-weight:600;color:#1A3E7A;">Doc No.</td>
+    <td width="25%">
+      <input type="text" id="docno" name="txtuserrolebidocno"
+             value='<s:property value="txtuserrolebidocno"/>'
+             readonly tabindex="-1"
+             style="width:60%;padding:8px;border-radius:8px;
+                    border:1px solid #cfe0ff;background:#f9fbff;">
+    </td>
   </tr>
-</table></div><br/>
 
-<div class="cr-table" id="userRoleBIDiv"><jsp:include page="userRoleBIGrid.jsp"></jsp:include></div>
+</table>
+</div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
+<br/>
+
+<!-- GRID -->
+<div class="cr-table" id="userRoleBIDiv" style="border-radius:12px;overflow:hidden;">
+  <jsp:include page="userRoleBIGrid.jsp"></jsp:include>
+</div>
+
+<!-- Hidden Fields -->
+<input type="hidden" id="mode" name="mode">
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="hidden" id="gridlength" name="gridlength">
+
 </div>
 </form>
 
+<!-- Popup window -->
 <div id="userRoleDetailsWindow">
-	<div></div>
-</div> 
+  <div></div>
+</div>
 
 </div>
 </body>
+
 </html>
