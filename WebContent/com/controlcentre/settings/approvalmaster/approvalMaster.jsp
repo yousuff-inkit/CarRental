@@ -18,169 +18,192 @@ String contextPath=request.getContextPath();
 <jsp:include page="tab.jsp" /> --%>
 
 <style>
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}	
-#level1{  background: #E0ECF8; width: 100%; height: 100%;}
-#level2{  background: #E0ECF8;  width: 100%; height: 100%;}
-#level3{  background: #E0ECF8;  width: 100%; height: 100%;}
+/* ===========================
+   🌟 PREMIUM BLUE THEME
+   =========================== */
 
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
+/* ICON BUTTONS / LEVEL BOXES */
+.icon {
+    width: 2.5em;
+    height: 2em;
+    border: none;
+    background-color: #eaf2ff;
+    border-radius: 6px;
 }
+#level1, #level2, #level3 {
+    background: #eaf2ff;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+/* PAGE BACKGROUND */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    background: linear-gradient(135deg, #eaf1ff 0%, #c7d8ff 100%);
+    font-family: "Segoe UI","Roboto","Poppins",sans-serif;
+    color: #1f2d45;
     margin: 0;
     padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
+/* MAIN CARD */
+#mainBG {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 6px 24px rgba(45, 77, 140, 0.12);
+}
+
+/* SECTION WRAPPER */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: 530px;
+}
+
+/* FORM HEADER */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 16px;
+    background: #f5f9ff;
+    border: 1px solid #d4e1f7;
+    padding: 14px 20px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(90,125,190,0.10);
 }
+
 .receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
+    font-weight: 600;
+    color: #203a67;
 }
+
 .receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
+    border: 1px solid #b9cff5;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
+    background: #ffffff;
+    font-size: 14px;
+    transition: 0.25s;
 }
 .receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
+    border-color: #2a6be8;
+    box-shadow: 0 0 6px rgba(42,107,232,0.3);
 }
+
 .receipt-header button {
-    background: #007bff;
+    background: linear-gradient(90deg, #2f7df6, #1c5cd8);
     color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
     border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: 0.25s;
 }
 .receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    background: linear-gradient(90deg, #4c91ff, #2f7df6);
+    box-shadow: 0 4px 12px rgba(47,125,246,0.35);
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
+/* SECTION BLOCKS */
 .section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    background: #f7faff;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(50,80,150,0.08);
 }
-
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    color: #1b3f7a;
+    font-weight: 600;
     margin-bottom: 12px;
 }
 
 .section-block label {
-    min-width: 110px;
-    text-align: right;
     font-weight: 500;
-    color: #253858;
+    color: #2a3f6b;
 }
 
 .section-block input[type="text"],
 .section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
+    border: 1px solid #b9cff5;
     border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+    padding: 8px 10px;
+    background: #ffffff;
+    transition: 0.25s;
 }
-
 .section-block input[type="text"]:focus,
 .section-block select:focus {
-    border-color: #007bff;
-    outline: none;
+    border-color: #2a6be8;
+    box-shadow: 0 0 6px rgba(42,107,232,0.3);
 }
 
-
+/* TABLE SECTION */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    padding: 12px 20px;
+    background: #f5f9ff;
+    border-radius: 12px;
+    box-shadow: 0 1px 10px rgba(45,77,140,0.08);
+    margin-bottom: 20px;
 }
 .table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
+    font-size: 17px;
     font-weight: 600;
+    color: #203a67;
 }
+
+/* TABLE */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    box-shadow: 0 0 0 1px #d4e1f7;
+    background: white;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
+
 .cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+    background: #e8f0ff;
+    color: #1f3f7a;
+    padding: 10px;
+    border-bottom: 1px solid #d4e1f7;
     font-weight: 600;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+.cr-table td {
+    padding: 10px;
+    border-bottom: 1px solid #edf2ff;
+    font-size: 15px;
 }
+
+.cr-table tr:hover td {
+    background: #f0f6ff;
+}
+
+/* GRID PREMIUM BLUE */
+.jqx-grid-column-header {
+    background: linear-gradient(180deg,#eaf1ff,#d7e6ff) !important;
+    color: #143b87 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+.jqx-grid-cell {
+    background: #fff !important;
+    border-color: #e2e9fb !important;
+    font-size: 13px !important;
+}
+.jqx-grid-cell-hover {
+    background: #e8f1ff !important;
+}
+.jqx-grid-cell-selected {
+    background: #c9d8ff !important;
+    color: #0c2f75 !important;
+    font-weight: 600 !important;
+}
+
 </style>
 <script type="text/javascript">
 $(document).ready(function () {

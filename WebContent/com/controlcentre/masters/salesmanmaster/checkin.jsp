@@ -348,52 +348,111 @@
 </head>
 <body onLoad="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmCheckin" action="saveActionCheckin"  autocomplete="off" >
-<jsp:include page="../../../../header.jsp" /><br/> 
+<form id="frmCheckin" action="saveActionCheckin" autocomplete="off">
+<jsp:include page="../../../../header.jsp" /><br/>
+
 <div class="hidden-scrollbar receipt-header">
-<div class="table-section" style="width: 100%;">
-<h3>Check In Details</h3>
-<table class="cr-table" width="100%">
+
+<div class="table-section" style="width:100%;">
+<h3 style="font-size:18px;font-weight:600;color:#1B4F9A;margin-bottom:12px;">
+    Check-In Details
+</h3>
+
+<table class="cr-table" width="100%" style="background:#ffffff;border-radius:12px;">
+
+  <!-- ⭐ ROW 1 -->
   <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="16%"><div id="checkindate" name="checkindate" value='<s:property value="checkindate"/>'></div></td>
-    <td colspan="3" align="right">Doc No.</td>
-    <td width="30%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
+    <td width="10%" align="right" style="font-weight:600;color:#1A3E7A;">Date</td>
+    <td width="20%">
+        <div id="checkindate" name="checkindate"></div>
+    </td>
+
+    <td width="10%" align="right" style="font-weight:600;color:#1A3E7A;">Doc No.</td>
+    <td width="20%">
+        <input type="text" id="docno" name="docno"
+               value='<s:property value="docno"/>'
+               readonly tabindex="-1"
+               style="width:90%;padding:8px;border:1px solid #cfe0ff;
+               border-radius:8px;background:#f9fbff;">
+    </td>
+
+    <td width="10%"></td>
+    <td width="30%"></td>
   </tr>
+
+  <!-- ⭐ ROW 2 -->
   <tr>
-    <td align="right">Code</td>
-    <td><input type="text" id="code" name="code" placeholder="Code" value='<s:property value="code"/>' ></td>
-    <td width="11%" align="right">Name</td>
-    <td width="33%"><input type="text" name="name" id="name" placeholder="Code Name" value='<s:property value="name"/>' style="width:59%;" ></td>
-    <td width="5%" align="right">Email</td>
-    <td><input type="email" name="mail" id="mail" style="width:80%;" placeholder="someone@example.com" value='<s:property value="mail"/>'></td>
+    <td align="right" style="font-weight:600;color:#1A3E7A;">Code</td>
+    <td>
+        <input type="text" id="code" name="code"
+               value='<s:property value="code"/>'
+               style="width:90%;padding:8px;border-radius:8px;
+               border:1px solid #cfe0ff;background:#f9fbff;">
+    </td>
+
+    <td align="right" style="font-weight:600;color:#1A3E7A;">Name</td>
+    <td>
+        <input type="text" id="name" name="name"
+               value='<s:property value="name"/>'
+               style="width:90%;padding:8px;border-radius:8px;
+               border:1px solid #cfe0ff;background:#f9fbff;">
+    </td>
+
+    <td align="right" style="font-weight:600;color:#1A3E7A;">Email</td>
+    <td>
+        <input type="email" id="mail" name="mail"
+               value='<s:property value="mail"/>'
+               style="width:90%;padding:8px;border-radius:8px;
+               border:1px solid #cfe0ff;background:#f9fbff;">
+    </td>
   </tr>
+
+  <!-- ⭐ ROW 3 -->
   <tr>
-    <td align="right">Account</td>
-    <td><input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search"></td>
-    <td colspan="2"><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>'  style="width:70%;" readonly></td>
-    <td align="right">Mobile</td>
-    <td><input type="text" name="mobile" id="mobile" value='<s:property value="mobile"/>'></td>
+    <td align="right" style="font-weight:600;color:#1A3E7A;">Account</td>
+    <td>
+        <input type="text" id="txtaccno" name="txtaccno"
+               readonly placeholder="Press F3 to Search"
+               value='<s:property value="txtaccno"/>'
+               onkeydown="getAcc(event);"
+               style="width:90%;padding:8px;border-radius:8px;
+               border:1px solid #cfe0ff;background:#f0f5ff;">
+    </td>
+
+    <td align="right" style="font-weight:600;color:#1A3E7A;">A/c Name</td>
+    <td>
+        <input type="text" id="txtaccname" name="txtaccname"
+               readonly
+               value='<s:property value="txtaccname"/>'
+               style="width:90%;padding:8px;border-radius:8px;
+               border:1px solid #cfe0ff;background:#f9fbff;">
+    </td>
+
+    <td align="right" style="font-weight:600;color:#1A3E7A;">Mobile</td>
+    <td>
+        <input type="text" id="mobile" name="mobile"
+               value='<s:property value="mobile"/>'
+               style="width:90%;padding:8px;border-radius:8px;
+               border:1px solid #cfe0ff;background:#f9fbff;">
+    </td>
   </tr>
+
 </table>
 </div>
 
-<input type="hidden" name="hidcheckindate" id="hidcheckindate" value='<s:property value="hidcheckindate"/>'>
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" name="hidacno" id="hidacno" value='<s:property value="hidacno"/>'/>
-    <div id="accountWindow">
-        <div >
-        </div>
-    </div>
-    <div id="jqxCheckinSearch1"></div>
-</div>
+<input type="hidden" id="hidcheckindate" name="hidcheckindate" value='<s:property value="hidcheckindate"/>'>
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="hidden" id="hidacno" name="hidacno" value='<s:property value="hidacno"/>'>
 
+<div id="accountWindow"><div></div></div>
+<div id="jqxCheckinSearch1"></div>
+
+</div>
 </form>
-
 </div>
-
 </body>
+
 </html>
 

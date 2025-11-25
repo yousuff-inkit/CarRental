@@ -10,159 +10,139 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
  <style>
-     .hidden-scrollbar {
-         overflow: auto;
-         height: 530px;
-     }
-     body {
-         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-         color: #222;
-         margin: 0;
-         padding: 32px 0;
-         min-height: 100vh;
-         box-sizing: border-box;
-     }
-     #mainBG {
-         background: #fff;
-         border-radius: 16px;
-         /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-         padding: 10px;
-         max-width: 1200px;
-         margin: 0 auto;
-     }
+     /* ============================
+   ⭐ PREMIUM BLUE UI THEME ⭐
+   ============================*/
 
-     .receipt-header {
-         display: flex;
-         flex-wrap: wrap;
-         align-items: center;
-         margin-bottom: 16px;
-         border-radius: 12px;
-         padding: 0px 24px;
-         font-size: 2vh;
-     }
-     .receipt-header label {
-         font-weight: 500;
-         color: #333;
-         margin-right: 8px;
-     }
-     .receipt-header input[type="text"] {
-         border: 1px solid #d1d5db;
-         border-radius: 6px;
-         padding: 6px 10px;
-         font-size: 1rem;
-         width: 120px;
-         background: #fff;
-         transition: border-color 0.2s;
-     }
-     .receipt-header input[type="text"]:focus {
-         border-color: #007bff;
-         outline: none;
-     }
-     .receipt-header button {
-         background: #007bff;
-         color: #fff;
-         border: none;
-         border-radius: 6px;
-         padding: 6px 16px;
-         font-weight: 500;
-         cursor: pointer;
-         transition: background 0.2s;
-     }
-     .receipt-header button:hover {
-         background: #0056b3;
-     }
-     #txtStatus {
-         font-size: 1rem;
-         font-weight: 600;
-         color: #e67e22;
-         margin-left: 12px;
-     }
+/* Scroll */
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
 
-     .section-row {
-         display: flex;
-         gap: 26px;
-         margin-bottom: 24px;
-     }
-     .section-block {
-         flex: 1;
-         background: #f6f8fa;
-         border-radius: 10px;
-         padding: 20px 18px;
-         box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-     }
+/* Background */
+body {
+    background: linear-gradient(135deg, #edf3ff 0%, #c7d7f9 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    margin: 0;
+    padding: 32px 0;
+    color: #1d2a4d;
+}
 
-     .section-block h2 {
-         font-size: 1.09em;
-         font-weight: 500;
-         margin: 0 0 16px 0;
-         color: #253858;
-     }
+/* Main container */
+#mainBG {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 6px 28px rgba(58, 97, 171, 0.18);
+}
 
-     .section-block .form-group {
-         display: flex;
-         align-items: center;
-         gap: 16px;
-         margin-bottom: 12px;
-     }
+/* Section blocks */
+.section-block {
+    background: #f2f6ff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(75, 125, 226, 0.10);
+}
 
-     .section-block label {
-         min-width: 110px;
-         text-align: right;
-         font-weight: 500;
-         color: #253858;
-     }
+/* Section headings */
+.section-block h2,
+.table-section h3 {
+    color: #1b4f9a;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
 
-     .section-block input[type="text"],
-     .section-block select {
-         flex: 1;
-         border: 1px solid #d1d5db;
-         border-radius: 6px;
-         padding: 6px 10px;
-         background: #fff;
-         transition: border-color 0.2s;
-     }
+/* Form labels */
+.section-block label {
+    font-weight: 500;
+    color: #1d2a4d;
+    min-width: 110px;
+    text-align: right;
+}
 
-     .section-block input[type="text"]:focus,
-     .section-block select:focus {
-         border-color: #007bff;
-         outline: none;
-     }
+/* Inputs */
+.section-block input[type="text"],
+.section-block input[type="email"],
+.section-block select {
+    border: 1px solid #b9c9e8;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: #fff;
+    transition: 0.25s ease;
+    font-size: 14px;
+}
 
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #3a78e0;
+    box-shadow: 0 0 6px rgba(58, 120, 224, 0.35);
+    outline: none;
+}
 
-     .table-section {
-         margin-bottom: 18px;
-         padding-inline: 1.04em;
-         padding-block: 1.04em;
-         border-radius: 8px;
-     }
-     .table-section h3 {
-         color: #253858;
-         font-size: 1.04em;
-         font-weight: 600;
-     }
-     .cr-table {
-         width: 100%;
-         border-collapse: collapse;
-         background: #f9fafb;
-         border-radius: 8px;
-         overflow: hidden;
-         box-shadow: 0 0 0 1px #eef0f6;
-     }
-     .cr-table th, .cr-table td {
-         padding: 9px 10px;
-         border-bottom: 1px solid #e4e7ec;
-         text-align: left;
-         font-size: 1em;
-     }
-     .cr-table th {
-         background: #eef0f6;
-         color: #354B6A;
-         font-weight: 600;
-     }
-     .cr-table tr:last-child td {
-         border-bottom: none;
-     }
+/* Buttons */
+.receipt-header button {
+    background: linear-gradient(90deg, #1f6feb, #174dbf);
+    color: #fff;
+    padding: 7px 18px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    transition: 0.25s;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(37, 91, 179, 0.25);
+}
+
+.receipt-header button:hover {
+    background: linear-gradient(90deg, #4687f1, #1f6feb);
+    transform: translateY(-2px);
+}
+
+/* Table container */
+.table-section {
+    padding: 14px;
+    background: #f4f8ff;
+    border-radius: 10px;
+}
+
+/* Table UI */
+.cr-table {
+    width: 100%;
+    background: #ffffff;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #d5e1f7;
+}
+
+.cr-table th {
+    background: #e6efff;
+    color: #1a3e7d;
+    font-weight: 600;
+    padding: 10px;
+    border-bottom: 1px solid #d3def4;
+}
+
+.cr-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e3e9f5;
+    font-size: 14px;
+}
+
+.cr-table tr:hover td {
+    background: #f1f6ff;
+}
+
+/* Header row */
+.receipt-header {
+    background: #f0f5ff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(107, 143, 219, 0.15);
+}
+
  </style>
 <script type="text/javascript">
 
@@ -337,6 +317,34 @@ $(document).ready(function () {
 	   }
  
 </script>
+<style>
+.lbl {
+    width: 12%;
+    font-weight: 600;
+    color: #1A3E7A;
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 6px;
+}
+.inp {
+    width: 38%;
+}
+.txtbox {
+    width: 95%;
+    padding: 8px 10px;
+    border: 1px solid #cfe0ff;
+    background: #f9fbff;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+.txtbox:focus {
+    border-color: #1E88E5;
+    box-shadow: 0 0 6px rgba(30,136,229,0.35);
+    outline: none;
+}
+</style>
+
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
@@ -345,29 +353,80 @@ $(document).ready(function () {
 	<br/>
     <div class="hidden-scrollbar receipt-header">
 <div class="table-section" style="width: 100%"><h3>Salesman Details</h3>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="16%"><div id="salesmandate" name="salesmandate" value='<s:property value="salesmandate"/>'></div></td>
-    <td colspan="3" align="right">Doc No.</td>
-    <td width="30%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td align="right">Code</td>
-    <td><input type="text" name="salesmanid" id="salesmanid" placeholder="Code" value='<s:property value="salesmanid"/>' ></td>
-    <td width="11%" align="right">Name</td>
-    <td width="33%"><input type="text" name="salesmanname" id="salesmanname" placeholder="Code Name" value='<s:property value="salesmanname"/>' style="width:59%;"></td>
-    <td width="5%" align="right">Email</td>
-    <td><input type="email" name="salesmanmail" id="salesmanmail" style="width:80%;" placeholder="someone@example.com" value='<s:property value="salesmanmail"/>' ></td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td><input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search"></td>
-    <td colspan="2"><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>'  style="width:70%;" readonly></td>
-    <td align="right">Mobile</td>
-    <td><input type="text" name="telephone" id="telephone" value='<s:property value="telephone"/>'></td>
-  </tr>
+<table class="cr-table" width="100%" style="border-collapse:separate; border-spacing:0 10px;">
+
+ <!-- Row 1 -->
+<tr>
+    <td class="lbl">Date</td>
+    <td class="inp">
+        <div id="salesmandate" name="salesmandate"></div>
+    </td>
+
+    <td class="lbl">Doc No.</td>
+    <td class="inp">
+        <input type="text" id="docno" name="docno"
+               value='<s:property value="docno"/>'
+               readonly tabindex="-1"
+               class="txtbox">
+    </td>
+</tr>
+
+<!-- Row 2 -->
+<tr>
+    <td class="lbl">Code</td>
+    <td class="inp">
+        <input type="text" id="salesmanid" name="salesmanid"
+               value='<s:property value="salesmanid"/>'
+               class="txtbox">
+    </td>
+
+    <td class="lbl">Name</td>
+    <td class="inp">
+        <input type="text" id="salesmanname" name="salesmanname"
+               value='<s:property value="salesmanname"/>'
+               class="txtbox">
+    </td>
+</tr>
+
+<!-- Row 3 -->
+<tr>
+    <td class="lbl">Email</td>
+    <td class="inp">
+        <input type="email" id="salesmanmail" name="salesmanmail"
+               value='<s:property value="salesmanmail"/>'
+               class="txtbox">
+    </td>
+
+    <td class="lbl">Mobile</td>
+    <td class="inp">
+        <input type="text" id="telephone" name="telephone"
+               value='<s:property value="telephone"/>'
+               class="txtbox">
+    </td>
+</tr>
+
+<!-- Row 4 -->
+<tr>
+    <td class="lbl">Account</td>
+    <td class="inp">
+        <input type="text" id="txtaccno" name="txtaccno"
+               value='<s:property value="txtaccno"/>'
+               readonly placeholder="Press F3 to Search"
+               onkeydown="getAcc(event);"
+               class="txtbox">
+    </td>
+
+    <td class="lbl">Account Name</td>
+    <td class="inp">
+        <input type="text" id="txtaccname" name="txtaccname"
+               value='<s:property value="txtaccname"/>'
+               readonly class="txtbox">
+    </td>
+</tr>
+ 
+
 </table>
+
 </div>
 
 <input type="hidden" name="hidsalesmandate" id="hidsalesmandate" value='<s:property value="hidsalesmandate"/>'/>
