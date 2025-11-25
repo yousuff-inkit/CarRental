@@ -1151,6 +1151,75 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+/* --- Modern Top Filter Bar (Matches PDC Receipts UI) --- */
+
+.top-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 22px;
+    background: #edf4ff;
+    border: 1px solid #c9dafc;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(132, 168, 255, 0.08);
+}
+
+.top-filter-bar .filter-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 170px;
+}
+
+.top-filter-bar label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #274b8f;
+    margin-bottom: 4px;
+}
+
+/* Inputs & Dropdowns match PDC Receipts */
+.top-filter-bar input[type="text"],
+.top-filter-bar select {
+    height: 38px !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background-color: #fff !important;
+    font-size: 15px !important;
+    color: #1f2f46 !important;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+.top-filter-bar .btn-primary {
+    background: linear-gradient(90deg, #6fb1fc, #1a73e8);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 18px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(26,115,232,0.18);
+    margin-top: 22px;
+}
+
+.top-filter-bar .btn-primary:hover {
+    background: #1a63d1;
+}
+
+/* Date input container fix for jqxDateTimeInput */
+#jqxFromDate, #jqxToDate {
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Remove pink autofill */
+input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0 50px white !important;
+    -webkit-text-fill-color: #111 !important;
+}
+
 </style>
 
 </head>

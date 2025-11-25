@@ -3,184 +3,579 @@
 <html>
 <% String contextPath=request.getContextPath();%>
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 <title>GatewayERP(i)</title>
-
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<script type="text/javascript">
+     
+	$(document).ready(function () {
+	  	 /* Date */
+	 	 $("#jqxVendorDate").jqxDateTimeInput({ width: '80%', height: '15px', formatString:"dd.MM.yyyy"});
+	  
+		 getCurrencyIds();getCategory();getGroup();getTypeAllowed();getType();
+	});  
+	
+	function getGroup() {
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText;
+  				items = items.split('####');
+  				var groupItems = items[0].split(",");
+  				var groupIdItems = items[1].split(",");
+  				var optionsgroup = '<option value="">--Select--</option>';
+  				for (var i = 0; i < groupItems.length; i++) {
+  					optionsgroup += '<option value="' + groupIdItems[i] + '">'
+  							+ groupItems[i] + '</option>';
+  				}
+  				$("select#cmbaccgroup").html(optionsgroup);
+  				if ($('#hidcmbaccgroup').val() != null) {
+  					$('#cmbaccgroup').val($('#hidcmbaccgroup').val());
+  				}
+  			} else {
+  			}
+  		}
+  		x.open("GET", "getGroup.jsp", true);
+  		x.send();
+  	} 
+	
+	function getCategory() {
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText;
+  				items = items.split('####');
+  				var categoryItems = items[0].split(",");
+  				var categoryIdItems = items[1].split(",");
+  				var optionscategory = '<option value="">--Select--</option>';
+  				for (var i = 0; i < categoryItems.length; i++) {
+  					optionscategory += '<option value="' + categoryIdItems[i] + '">'
+  							+ categoryItems[i] + '</option>';
+  				}
+  				$("select#cmbcategory").html(optionscategory);
+  				if ($('#hidcmbcategory').val() != null) {
+					$('#cmbcategory').val($('#hidcmbcategory').val());
+				}
+  			} else {
+  			}
+  			
+  		}
+  		x.open("GET", "getCategory.jsp", true);
+  		x.send();
+  	}
+	
+	function getType() {
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText;
+  				items = items.split('####');
+  				var typeItems = items[0].split(",");
+  				var typeIdItems = items[1].split(",");
+  				var optionstype ;
+  				for (var i = 0; i < typeItems.length; i++) {
+  					optionstype += '<option value="' + typeIdItems[i] + '">'
+  							+ typeItems[i] + '</option>';
+  				}
+  				$("select#cmbtype").html(optionstype);
+  				if ($('#hidcmbtype').val() != null) {
+  					$('#cmbtype').val($('#hidcmbtype').val());
+  				}
+  			} else {
+  			}
+  		}
+  		x.open("GET", "getType.jsp", true);
+  		x.send();
+  	}
+	
+	function getTypeAllowed(){
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText.trim();
+  			    if(parseInt(items)==1) {
+  			    	$('#typeallowed').val(1);
+  			    	document.getElementById("lbltypeentity").style.display = 'inline-block';
+  			    	document.getElementById("lbltrnnoentity").style.display = 'inline-block';
+  			    	$('#cmbtype').attr('hidden', false);
+  			    	$('#txtregisteredtrnno').attr('hidden', false);
+  			    } else {
+  			    	$('#typeallowed').val(0);
+  			    	document.getElementById("lbltypeentity").style.display = 'none';
+  			    	document.getElementById("lbltrnnoentity").style.display = 'none';
+  			    	$('#cmbtype').attr('hidden', true);
+  			    	$('#txtregisteredtrnno').attr('hidden', true);
+  			    }
+  			    
+  		}
+  		}
+  		x.open("GET", "getTypeAllowed.jsp", true);
+  		x.send();
+ }
+	
+	function getCategoryAccountGroup(a) {
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText.trim();
+  			    $('#hidcmbaccgroup').val(items);
+  				
+  				if ($('#hidcmbaccgroup').val() != null || $('#hidcmbaccgroup').val() != "") {
+  					$('#cmbaccgroup').val($('#hidcmbaccgroup').val());
+  				}
+  			} else {
+  			}
+  		}
+  		x.open("GET", "getCategoryAccountGroup.jsp?category="+a, true);
+  		x.send();
+  	} 
+      
+	function getCurrencyIds(){
+		var x=new XMLHttpRequest();
+		x.onreadystatechange=function(){
+		if (x.readyState==4 && x.status==200)
+			{
+			 	items= x.responseText;
+			 	items=items.split('####');
+		        var curidItems=items[0];
+		        var curcodeItems=items[1];
+		        var multiItems=items[2];
+		        var optionscurr = '';
+		        
+		     if(curcodeItems.indexOf(",")>=0){
+		        	var currencyid=curidItems.split(",");
+		        	var currencycode=curcodeItems.split(",");
+		        	multiItems.split(",");
+		       
+		       for ( var i = 0; i < currencycode.length; i++) {
+		    	   optionscurr += '<option value="' + currencyid[i] + '">' + currencycode[i] + '</option>';
+		        }
+		      
+		         $("select#cmbcurrency").html(optionscurr);
+		         if ($('#hidcmbcurrency').val() != null && $('#hidcmbcurrency').val() != "") {
+		       		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
+		         } 
+				     
+			   }
+		
+		       else{
+		    	   optionscurr += '<option value="' + curidItems + '"selected>' + curcodeItems + '</option>';
+		    	   
+			    	 $("select#cmbcurrency").html(optionscurr);
+			       
+			         if ($('#hidcmbcurrency').val() != null && $('#hidcmbcurrency').val() != "") {
+			       		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
+			         }
+			      }
+			}
+	     }
+	      x.open("GET", "getCurrencyId.jsp",true);
+	     x.send();
+	    
+	   }
+	   
+	   function getVendorAlreadyExists(vendorname,docno,mode){
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText.trim();
+
+  				if(parseInt(items)==1){
+  					 document.getElementById("errormsg").innerText="Vendor Already Exists.";
+  					 return 0;
+  				 }else{
+  					$('#cmbaccgroup').attr('disabled', false);
+  					$("#frmVendorDetails").submit();
+  				 }
+  			   
+  		}
+	}
+	x.open("GET", "getVendorAlreadyExists.jsp?vendorname="+vendorname+"&docno="+docno+"&mode="+mode, true);
+	x.send();
+    }
+	
+	function getMobileNoAlreadyExists(mobileno,docno,mode){
+  		var x = new XMLHttpRequest();
+  		x.onreadystatechange = function() {
+  			if (x.readyState == 4 && x.status == 200) {
+  				var items = x.responseText.trim();
+
+  				if(parseInt(items)==1){
+  					 $.messager.alert('Message','Mobile No. Already Exists.','warning');
+  					 return 0;
+  				 }
+  		}
+	}
+	x.open("GET", "getMobileNoAlreadyExists.jsp?mobileno="+mobileno+"&docno="+docno+"&mode="+mode, true);
+	x.send();
+	}
+      
+	 function funReadOnly(){
+			$('#frmVendorDetails input').attr('readonly', true );
+		    $('#frmVendorDetails select').attr('disabled', true); 
+			$('#jqxVendorDate').jqxDateTimeInput({disabled: true});
+	 }
+	 
+	 function funRemoveReadOnly(){
+		    getCurrencyIds();getTypeAllowed();
+		    
+			$('#frmVendorDetails input').attr('readonly', false );
+			$('#frmVendorDetails select').attr('disabled', false); 
+			$('#jqxVendorDate').jqxDateTimeInput({disabled: false});
+			$('#txtaccount').attr('readonly', true);
+			$('#txtcode').attr('readonly', true);
+			$('#cmbaccgroup').attr('disabled', true);
+			$('#docno').attr('readonly', true);
+			$('#cmbtype').val("1");		$('#hidcmbtype').val("1");		
+
+			if ($("#mode").val() == "A") {
+				$('#jqxVendorDate').val(new Date());
+			}
+	 }
+	 function funNotify(){	
+		 
+		 if(parseInt($('#typeallowed').val())==1) {
+			 var taxtype=document.getElementById("cmbtype").value;
+			 if(taxtype.trim()==''){
+				 document.getElementById("errormsg").innerText="Type is Mandatory.";
+				 return 0;
+			 }
+			 
+			 if($('#cmbtype').find('option:selected').text()=='Registered'){
+				 var registeredtrnno=document.getElementById("txtregisteredtrnno").value;
+				 if(registeredtrnno.trim()==''){
+					 document.getElementById("errormsg").innerText="TRN No. is Mandatory for Registered.";
+					 return 0;
+				 } 
+			 }
+		 }
+		 var account=document.getElementById("cmbaccgroup").value;
+		 if(account=="")
+			{
+			document.getElementById("errormsg").innerText=" Enter Account Group";
+			document.getElementById("cmbaccgroup").focus();  
+			return 0;
+			}
+		 
+		 vendorname=document.getElementById("txtvendorname").value;
+		 docno=document.getElementById("docno").value;
+		 mode=document.getElementById("mode").value;
+		 getVendorAlreadyExists(vendorname,docno,mode);
+		} 
+	 
+	 function funSearchLoad(){
+			changeContent('vndMainSearch.jsp'); 
+		 }
+	 
+	 function funFocus()
+	    {
+	    	$('#jqxVendorDate').jqxDateTimeInput('focus'); 	    		
+	    }
+	 
+	 function setValues(){
+		 getCurrencyIds();
+		 
+		 if($('#hidjqxVendorDate').val()){
+			 $("#jqxVendorDate").jqxDateTimeInput('val', $('#hidjqxVendorDate').val());
+		  }
+		 
+		 if($('#msg').val()!=""){
+			   $.messager.alert('Message',$('#msg').val());
+			  }
+		 
+		 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+		 funSetlabel();
+		 
+		}
+	 
+	 function funChkButton() {
+			/* funReset(); */
+		}
+	 
+	 /* Validations */
+	 $(function(){
+	        $('#frmVendorDetails').validate({
+	                rules: {
+	                txtvendorname:"required",
+	                cmbcurrency:"required",
+	                cmbcategory:"required",
+	                cmbaccgroup:"required",
+	                //txtmob: {"required":true,digits:true,maxlength:12,minlength:12},
+	                 
+	                 },
+	                 messages: {
+	                 txtvendorname:" *",
+	                 cmbcurrency:" *",
+	                 cmbcategory:" *",
+	                 cmbaccgroup:" *",
+	                 //txtmob: {required:" *",digits:" Invalid Mobile Number",maxlength:" Maximum 12 Digits",minlength:" Please Enter 12 Digits"},
+	                 }
+	        });});
+	 
+	 function funExcelBtn(){
+		    var url=document.URL;
+		    var reurl=url.split("suppliers");
+		    top.addTab("VendorList",reurl[0]+"suppliers/vendorList.jsp");
+		}
+	 
+</script>
+
 <style>
+.hidden-scrollbar {
+  overflow: auto;
+  height: 530px;
+}
+
 
 body {
-    background: #f2f6ff;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    padding: 30px 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
-
 #mainBG {
-    width: 95%;
-    background: #ffffff;
-    margin: auto;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.page-heading {
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    color: #1d3f80;
-    margin-bottom: 20px;
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
 }
-
-.section-title {
-    font-size: 16px;
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
     font-weight: 600;
-    color: #1d3f80;
-    margin-top: 20px;
-    margin-bottom: 6px;
+    color: #e67e22;
+    margin-left: 12px;
 }
 
-.section-line {
-    width: 100%;
-    height: 2px;
-    background: #1d84e9;
-    margin-bottom: 15px;
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+}
 .cr-table {
     width: 100%;
     border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
 }
-
-.cr-table td {
-    padding: 8px 10px;
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
 }
-
-input[type="text"],
-input[type="email"],
-input[type="date"],
-select {
-    width: 85%;
-    padding: 6px 10px;
-    border: 1px solid #c5d7f2;
-    border-radius: 6px;
-    background: #fff;
-    font-size: 14px;
-    height: 32px;
-}
-
-.action-btn,
-.myButton,
-button[type="button"] {
-    background: #e6e9f2;
-    border: none;
-    padding: 6px 18px;
-    border-radius: 15px;
-    font-size: 13px;
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
     font-weight: 600;
-    cursor: pointer;
-    color: #2a2a2a;
 }
-
-.action-btn:hover {
-    background: #d7d9e0;
+.cr-table tr:last-child td {
+    border-bottom: none;
 }
-
-.btn-small {
-    background: #1e6ed8;
-    color: #fff;
-    border: none;
-    padding: 6px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.btn-small:hover {
-    background: #155db5;
-}
-
 </style>
 
 </head>
-
 <body onload="setValues();">
+<div id="mainBG" class="homeContent" data-type="background">
+<form id="frmVendorDetails" action="saveVendorDetails" method="post" autocomplete="off">
+<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+   
+<div class='hidden-scrollbar receipt-header'>
 
-<h1 class="page-heading">Vendor Details</h1>
-
-<div id="mainBG">
-
-<form id="frmVendorDetails" method="post" action="saveVendorDetails">
-
-<jsp:include page="../../../../header.jsp"></jsp:include>
-
-<h3 class="section-title">Account Details</h3>
-<div class="section-line"></div>
-
-<table class="cr-table">
-<tr>
-    <td align="right">Date</td>
-    <td><input type="date" id="txtVendorDate" name="txtVendorDate"></td>
-
-    <td align="right">Code</td>
-    <td><input type="text" id="txtcode" name="txtcode"
-        value='<s:property value="txtcode"/>'></td>
-
-    <td align="right">Name</td>
-    <td><input type="text" id="txtvendorname" name="txtvendorname"
-        value='<s:property value="txtvendorname"/>'></td>
-</tr>
-
-<tr>
+    <div class="table-section">
+<table class="cr-table" width="100%">
+  <tr>
+    <td width="5%" align="right">Date</td>
+    <td width="15%"><div id="jqxVendorDate" name="jqxVendorDate" value='<s:property value="jqxVendorDate"/>'></div>
+    <input type="hidden" id="hidjqxVendorDate" name="hidjqxVendorDate" value='<s:property value="hidjqxVendorDate"/>'/></td>
+    <td width="7%" align="right">Code</td>
+    <td width="20%"><input type="text" id="txtcode" name="txtcode" style="width:60%;" tabindex="-1" value='<s:property value="txtcode"/>'/></td>
+    <td width="5%" align="right">Name</td>
+    <td width="25%"><input type="text" id="txtvendorname" name="txtvendorname" style="width:100%;" value='<s:property value="txtvendorname"/>'/></td>
+    <td width="6%" align="right">Doc No</td>
+    <td width="17%"><input type="text" id="docno" name="txtvendordocno" style="width:75%;" tabindex="-1" value='<s:property value="txtvendordocno"/>'/></td>
+  </tr>
+  <tr>
     <td align="right">Currency</td>
-    <td><select id="cmbcurrency" name="cmbcurrency"></select></td>
-
+    <td><select id="cmbcurrency" name="cmbcurrency" style="width:60%;" value='<s:property value="cmbcurrency"/>'>
+      <option value="">--Select--</option></select>
+      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/></td>
     <td align="right">Category</td>
-    <td><select id="cmbcategory" name="cmbcategory"
-    onchange="getCategoryAccountGroup(this.value);"></select></td>
-
-    <td align="right">Type</td>
-    <td><select id="cmbtype" name="cmbtype"></select></td>
-</tr>
+    <td><select id="cmbcategory" name="cmbcategory" style="width:100%;" onchange="getCategoryAccountGroup(this.value);" value='<s:property value="cmbcategory"/>'>
+      <option value="">--Select--</option></select>
+      <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/></td>
+    <td align="right"><label id="lbltypeentity">Type</label></td>
+    <td><select id="cmbtype" name="cmbtype" style="width:70%;" value='<s:property value="cmbtype"/>'>
+      </select>
+      <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
+    <td align="right"><label id="lbltrnnoentity">TRN No.</label></td>
+    <td><input type="text" id="txtregisteredtrnno" name="txtregisteredtrnno" style="width:75%;" value='<s:property value="txtregisteredtrnno"/>'/></td>
+  </tr>
 </table>
+    </div>
+        <br/>
 
-<h3 class="section-title">Contact Details</h3>
-<div class="section-line"></div>
+    <div class="table-section">
+<table class="cr-table" width="100%">
+  <tr>
+    <td width="6%" align="right">Account Group</td>
+    <td width="26%"><select id="cmbaccgroup" name="cmbaccgroup"  style="width:80%;" value='<s:property value="cmbaccgroup"/>'>
+      <option value="">--Select--</option></select>
+       <input type="hidden" id="hidcmbaccgroup" name="hidcmbaccgroup" value='<s:property value="hidcmbaccgroup"/>'/></td>
+    <td width="5%" align="right">Account</td>
+    <td width="14%"><input type="text" id="txtaccount" name="txtaccount" style="width:70%;" value='<s:property value="txtaccount"/>' tabindex="-1"/></td>
+    <td width="10%" align="right">Credit Period-Min(Days)</td>
+    <td width="10%"><input type="text" id="txtcredit_period_min" name="txtcredit_period_min" style="width:50%;text-align: right;" value='<s:property value="txtcredit_period_min"/>'/></td>
+    <td width="7%" align="right">Max(Days)</td>
+    <td width="8%"><input type="text" id="txtcredit_period_max" name="txtcredit_period_max" style="width:50%;text-align: right;" value='<s:property value="txtcredit_period_max"/>'/></td>
+    <td width="6%" align="right">Credit Limit</td>
+    <td width="10%"><input type="text" id="txtcredit_limit" name="txtcredit_limit" style="width:50%;text-align: right;" value='<s:property value="txtcredit_limit"/>'/></td>
+  </tr>
+</table>
+    </div>
+        <br/>
 
-<table class="cr-table">
-<tr>
-    <td align="right">Address</td>
-    <td><input type="text" id="txtaddress" name="txtaddress"
-        value='<s:property value="txtaddress"/>'></td>
-
+    <div class="table-section">
+<table class="cr-table" width="100%">
+  <tr>
+    <td width="9%" align="right">Address</td>
+    <td width="27%"><input type="text" id="txtaddress" name="txtaddress" style="width:90%;" value='<s:property value="txtaddress"/>'/></td>
+    <td width="6%" align="right">Address 2</td>
+    <td colspan="3"><input type="text" id="txtaddress1" name="txtaddress1" style="width:40%;" value='<s:property value="txtaddress1"/>'/></td>
+  </tr>
+  <tr>
+    <td align="right">Tel</td>
+    <td><input type="text" id="txttel" name="txttel" style="width:40%;" value='<s:property value="txttel"/>'/></td>
+    <td align="right">Mob</td>
+    <td width="28%"><input type="text" id="txtmob" name="txtmob" style="width:40%;" onblur="getMobileNoAlreadyExists(this.value,$('#docno').val(),$('#mode').val());" value='<s:property value="txtmob"/>'/></td>
+    <td width="4%" align="right">Office No.</td>
+    <td width="26%"><input type="text" id="txtoffice" name="txtoffice" style="width:40%;" value='<s:property value="txtoffice"/>'/></td>
+  </tr>
+  <tr>
+    <td align="right">Fax</td>
+    <td><input type="text" id="txtfax" name="txtfax" style="width:40%;" value='<s:property value="txtfax"/>'/></td>
     <td align="right">Email</td>
-    <td><input type="email" id="txtemail" name="txtemail"
-        value='<s:property value="txtemail"/>'></td>
-</tr>
-
-<tr>
-    <td align="right">Mobile</td>
-    <td><input type="text" id="txtmob" name="txtmob"
-        value='<s:property value="txtmob"/>' 
-        onblur="getMobileNoAlreadyExists(this.value,$('#docno').val(),$('#mode').val());"></td>
-
+    <td colspan="3"><input type="email" id="txtemail" name="txtemail" style="width:40%;" placeholder="someone@example.com" value='<s:property value="txtemail"/>'/></td>
+  </tr>
+  <tr>
     <td align="right">Contact Person</td>
-    <td><input type="text" id="txtcontact" name="txtcontact"
-        value='<s:property value="txtcontact"/>'></td>
-</tr>
+    <td><input type="text" id="txtcontact" name="txtcontact" style="width:60%;" value='<s:property value="txtcontact"/>'/></td>
+    <td align="right">Extn. No.</td>
+    <td colspan="3"><input type="text" id="txtextno" name="txtextno" style="width:20%;" value='<s:property value="txtextno"/>'/></td>
+  </tr>
 </table>
-
-<div style="text-align:center; margin-top:20px;">
-    <button class="btn-small" type="submit">Save</button>
-    <button class="btn-small" type="button" onclick="funSearchLoad()">Search</button>
-    <button class="btn-small" type="reset">Clear</button>
+    </div>
+<input type="hidden" id="mode" name="mode"/>
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<input type="hidden" id="txtmobilevalidation" name="txtmobilevalidation" value='<s:property value="txtmobilevalidation"/>'/>
+<input type="hidden" id="typeallowed" name="typeallowed" value='<s:property value="typeallowed"/>'/>
 </div>
-
 </form>
-
 </div>
 </body>
 </html>
