@@ -1,32 +1,30 @@
+/* -------- MAIN CONTAINER -------- */
 #mainBG {
-    background: #f0f4ff;
+    background: #ffffff;
     border-radius: 16px;
-    padding: 20px;
+    padding: 10px;
     max-width: 1200px;
     margin: 0 auto;
-    box-shadow: 0 6px 20px rgba(30, 64, 175, 0.08);
-    height: auto;
-    min-height: 100px;
+    box-shadow: 0 8px 24px rgba(30, 64, 175, 0.12);
 }
 
+/* Scroll styling */
 #mainBG::-webkit-scrollbar {
     width: 10px;
 }
-
 #mainBG::-webkit-scrollbar-track {
     background: #d0e4ff;
     border-radius: 8px;
 }
-
 #mainBG::-webkit-scrollbar-thumb {
-    background: #1e40af;
+    background: #376bff;
     border-radius: 8px;
 }
-
 #mainBG::-webkit-scrollbar-thumb:hover {
-    background: #1e3a8a;
+    background: #274dcc;
 }
 
+/* -------- FORM SECTIONS -------- */
 .section-row {
     display: flex;
     flex-direction: column;
@@ -34,128 +32,105 @@
     width: 100%;
 }
 
+/* Blue section block */
 .section-block {
     width: 100%;
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 22px 20px;
-    border: 1px solid #c8daf7;
+    background: #f0f4ff;
+    border-radius: 12px;
+    padding: 20px 18px;
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.08);
+    border: none;
 }
 
 .section-block h2 {
-    font-size: 1.15em;
+    font-size: 1.09em;
     font-weight: 600;
     margin-bottom: 16px;
-    color: #1e3a8a;
+    color: #1e2a44;
 }
 
 .section-block .form-group {
     display: flex;
-    flex-direction: column;
-    gap: 3px;
-    margin-bottom: 10px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
 }
 
 .section-block label {
-    text-align: left;
-    font-weight: 600;
-    color: #1e3a8a;
-    margin-bottom: 2px;
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #1e2a44;
 }
 
 .section-block input[type="text"],
 .section-block select {
-    width: 100%;
-    border: 1px solid #b9ccf0;
-    border-radius: 10px;
-    padding: 8px 12px;
-    background: #f8fbff;
-    font-size: 0.93rem;
-    box-shadow: inset 0 1px 2px rgba(0, 42, 109, 0.04);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    flex: 1;
+    border: 1px solid #b4c6ff;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    font-size: 0.96rem;
+    transition: border-color 0.2s ease;
 }
 
 .section-block input[type="text"]:focus,
 .section-block select:focus {
-    border-color: #1e40af;
-    box-shadow: 0 0 6px rgba(30, 64, 175, 0.25);
+    border-color: #376bff;
     outline: none;
 }
 
+/* -------- TABLE SECTION -------- */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f3f7ff;
-    border-radius: 10px;
+    background: #f0f4ff;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #d6e4ff;
+    box-shadow: 0 0 0 1px #c8d3ff;
 }
 
 .cr-table th {
-    background: #d7e6ff;
-    color: #1e3a8a;
+    background: #dce6ff;
+    color: #1e2a44;
     font-size: 1em;
-    font-weight: 700;
+    font-weight: 600;
     padding: 10px;
-    border-bottom: 1px solid #bcd1fa;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    border-bottom: 1px solid #d6e0ff;
 }
 
 .cr-table td {
     padding: 10px;
     font-size: 0.98em;
-    color: #1f2d50;
-    border-bottom: 1px solid #dbe6ff;
+    color: #1e2a44;
+    border-bottom: 1px solid #d6e0ff;
 }
 
-.cr-table tr {
-    background: #f3f7ff;
+.cr-table tr:last-child td {
+    border-bottom: none;
 }
 
-.purchase-section .section-block:empty {
-    display: none;
-}
-
+/* Hidden scrollbar wrapper (scroll allowed) */
 .hidden-scrollbar {
     max-height: 80vh;
     overflow-y: auto;
     padding-right: 10px;
-}
-
-.hidden-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: #1e40af #d0e4ff;
+    scrollbar-color: #376bff #d0e4ff;
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
     width: 8px;
 }
-
 .hidden-scrollbar::-webkit-scrollbar-track {
     background: #d0e4ff;
     border-radius: 4px;
 }
-
 .hidden-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #1e40af;
+    background-color: #376bff;
     border-radius: 4px;
     border: 2px solid #d0e4ff;
 }
-
 .hidden-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #3b63d1;
-}
-
-.section-block .form-group:nth-of-type(2) {
-    margin-bottom: 8px !important;
-    gap: 2px !important;
-}
-
-.section-block .form-group:nth-of-type(2) label {
-    margin-bottom: 1px !important;
-}
-
-.section-block .form-group:nth-of-type(2) input {
-    padding: 7px 10px !important;
+    background-color: #274dcc;
 }
