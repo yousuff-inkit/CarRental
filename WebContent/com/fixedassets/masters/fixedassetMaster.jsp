@@ -11,42 +11,9 @@
 <link href="<%=contextPath%>/css/myButton.css" rel="stylesheet" type="text/css"/>
 
 <jsp:include page="../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
-<style>
-#whole
-{
-width:100%;
-}
-#header
-{
-background-color: #E0ECF8;
-color:black;
-text-align:left;
-height:7%;
-width:3%
-padding:0px;
-}
-#nav
-{
-   line-height:30px;
-    background-color: #E0ECF8;
-    height:90.5%;
-    width:5%;
-    float:left;
-    position:absolute;
-    
-    
-}
-
-#comiframe
-{
-float:right;
-width:98.5%;
-height:98%;
-color:#eeeeee;
-
-}
-</style>
 <script type="text/javascript">
 	
 	$(document).ready(function() {

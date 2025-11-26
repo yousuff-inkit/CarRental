@@ -331,6 +331,51 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+.opn-input {
+    width: 140px;
+    height: 32px;
+    padding: 6px 10px;
+    border: 1px solid #c5d7f2;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.opn-input-full {
+    width: 95%;
+    height: 32px;
+    padding: 6px 10px;
+    border: 1px solid #c5d7f2;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 14px;
+}
+
+.opn-select {
+    width: 160px;
+    height: 32px;
+    padding: 6px 10px;
+    border: 1px solid #c5d7f2;
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.opn-input:hover, .opn-select:hover,
+.opn-input-full:hover {
+    border-color: #1e88e5;
+    box-shadow: 0 0 6px rgba(30,136,229,.25);
+}
+
+.opn-input:focus, .opn-input-full:focus,
+.opn-select:focus {
+    border-color: #1e88e5;
+    outline: none;
+    box-shadow: 0 0 6px rgba(30,136,229,.35);
+}
+
 </style>
 
 </head>
@@ -342,21 +387,59 @@ body {
 <div  class='hidden-scrollbar receipt-header'>
 <div class="table-section" style="width: 100%;">
 <table class="cr-table" width="100%">
-  <tr>
-    <td align="right">Account</td>
-    <td><select id="cmbacctype" name="cmbacctype" style="width:50%;" onchange="clearAccountInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="BANK">Bank</option><option value="GL">GL</option><option value="AR">AR</option><option value="AP">AP</option><option value="HR">HR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td colspan="6"><input type="text" id="txtaccname" name="txtaccname" style="width:75%;" tabindex="-1" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="6%" align="right">Currency</td>
-    <td width="9%"><input type="text" id="txtaccountcurrency" name="txtaccountcurrency" readonly="readonly" style="width:60%;" value='<s:property value="txtaccountcurrency"/>' tabindex="-1"/>
-    <input type="hidden" id="txtaccountcurrencyid" name="txtaccountcurrencyid" value='<s:property value="txtaccountcurrencyid"/>'/>
-    <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/></td>
-    <td width="5%" align="right">Rate</td>
-    <td width="16%"><input type="text" id="txtrate" name="txtrate" style="width:40%;text-align: right;" value='<s:property value="txtrate"/>'/></td>
-  </tr>
+  <tr style="height:60px">
+
+    <!-- Account Type -->
+    <td align="right"><b>Account</b></td>
+    <td>
+        <select id="cmbacctype" name="cmbacctype"
+            onchange="clearAccountInfo();"
+            class="opn-select">
+            <option value="BANK">Bank</option>
+            <option value="GL">GL</option>
+            <option value="AR">AR</option>
+            <option value="AP">AP</option>
+            <option value="HR">HR</option>
+        </select>
+        <input type="hidden" id="hidcmbacctype" name="hidcmbacctype">
+    </td>
+
+    <!-- Press F3 → Account ID -->
+    <td>
+        <input type="text" id="txtaccid" name="txtaccid"
+            class="opn-input"
+            placeholder="Press F3 to Search"
+            onkeydown="getAcc(event);">
+    </td>
+
+    <!-- Account Name -->
+    <td colspan="4">
+        <input type="text" id="txtaccname" name="txtaccname"
+            class="opn-input-full"
+            placeholder="Account Name"
+            tabindex="-1">
+        <input type="hidden" id="txtdocno" name="txtdocno">
+    </td>
+
+    <!-- Currency -->
+    <td align="right"><b>Currency</b></td>
+    <td>
+        <input type="text" id="txtaccountcurrency"
+            name="txtaccountcurrency"
+            class="opn-input"
+            readonly tabindex="-1">
+        <input type="hidden" id="txtaccountcurrencyid" name="txtaccountcurrencyid">
+        <input type="hidden" id="hidcurrencytype" name="hidcurrencytype">
+    </td>
+
+    <!-- Rate -->
+    <td align="right"><b>Rate</b></td>
+    <td>
+        <input type="text" id="txtrate" name="txtrate"
+            class="opn-input"
+            style="text-align:right;">
+    </td>
+</tr>
 </table></div>
 <div class="table-section" style="width: 100%;"><h3>Opening Invoice/Cheque/Other Details</h3>
 <div class="cr-table" id="jqxAppliedAccountsGrid"><jsp:include page="accountsInvoiceGrid.jsp"></jsp:include></div>

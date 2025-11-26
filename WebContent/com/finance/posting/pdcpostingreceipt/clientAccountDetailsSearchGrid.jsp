@@ -10,6 +10,62 @@
  String currency = request.getParameter("currency")==null?"0":request.getParameter("currency");
  String check = request.getParameter("check")==null?"0":request.getParameter("check");
 %> 
+<style>
+
+/* CARD AROUND GRID */
+.grid-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #dce6ff;
+    box-shadow: 0 6px 20px rgba(93,125,255,0.18);
+    padding: 12px;
+    margin-top: 10px;
+}
+
+/* GRID HEADER */
+.jqx-grid-column-header,
+.jqx-widget-header {
+    background: linear-gradient(90deg,#eef3ff,#dbe7ff) !important;
+    color: #2a3f85 !important;
+    font-weight: 600 !important;
+    border-color: #c2d1ff !important;
+    font-size: 0.88rem !important;
+    font-family: Poppins, Arial, sans-serif !important;
+}
+
+/* GRID BORDER COLOR */
+.jqx-widget-content {
+    border-color: #c2d1ff !important;
+}
+
+/* GRID CELLS */
+.jqx-grid-cell {
+    font-size: 0.90rem !important;
+    font-family: Poppins, Arial, sans-serif !important;
+    border-color: #c2d1ff !important;
+    padding: 6px !important;
+    height: 36px !important;
+    line-height: 36px !important; /* perfect vertical alignment */
+}
+
+/* ROW HOVER */
+.jqx-grid-cell-hover {
+    background: rgba(70,120,255,0.10) !important;
+}
+
+/* SELECTED ROW */
+.jqx-grid-cell-selected {
+    background: #6e96ff !important;
+    color: #ffffff !important;
+}
+
+/* REMOVE BOX-BORDER CLIPPING */
+#jqxAccountsTypeSearch .jqx-grid-content,
+#jqxAccountsTypeSearch .jqx-grid-header {
+    border-radius: 10px !important;
+}
+
+</style>
 
  <script type="text/javascript">
  
@@ -44,7 +100,10 @@
          );
          $("#jqxAccountsTypeSearch").jqxGrid(
          {
-             width: '100%',
+        	 rowsheight: 36,
+        	 columnsresize: true,
+        	 enabletooltips: true,
+        	 width: '100%',
              height: 303,
              source: dataAdapter,
              selectionmode: 'singlerow',
