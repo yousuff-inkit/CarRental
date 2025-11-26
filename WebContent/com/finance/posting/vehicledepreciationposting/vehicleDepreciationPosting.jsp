@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
@@ -317,19 +318,6 @@
 	  
 </script>
 
-<style>
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}
-
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-</style>
 
 </head>
 <body onload="setValues();">
@@ -337,9 +325,9 @@
 <form id="frmVehicleDepreciationPosting" action="vehicledepreciationposting" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar'>
-<fieldset>
-<table width="100%">
+<div  class='hidden-scrollbar receipt-header'>
+<div class="table-section" style="width: 100%;">
+<table class="cr-table" width="100%">
   <tr>
     <td width="3%" align="right">Date</td>
     <td width="24%"><div id="jqxVehDepreciationPostingDate" name="jqxVehDepreciationPostingDate"  onchange="datechange();" value='<s:property value="jqxVehDepreciationPostingDate"/>'></div>
@@ -357,20 +345,20 @@
     <td width="24%"><input type="text" id="docno" name="txtjvno" value='<s:property value="txtjvno"/>' tabindex="-1"/></td>
   </tr>
 </table>
-</fieldset>
-<fieldset><legend>Details</legend>
-<div id="vehiclesDetailsDiv"><jsp:include page="vehiclesDetailsGrid.jsp"></jsp:include></div>
-</fieldset>
-<table width="100%">
+</div>
+<div class="table-section" style="width: 100%;"><h3>Details</h3>
+<div class="cr-table" id="vehiclesDetailsDiv"><jsp:include page="vehiclesDetailsGrid.jsp"></jsp:include></div>
+</div>
+<table class="cr-table" width="100%">
   <tr>
     <td width="83%" align="right">Depr. Total</td>
     <td width="17%"><input type="text" id="txtdeprtotal" name="txtdeprtotal" style="width:50%;text-align: right;" value='<s:property value="txtdeprtotal"/>' tabindex="-1"/></td>
   </tr>
 </table>
-<fieldset><legend>Accounts</legend>
-<div id="accountsDetailsDiv"><jsp:include page="accountsDetailsGrid.jsp"></jsp:include></div>
-</fieldset>
-<table width="100%">
+<div class="table-section" style="width: 100%;"><h3>Accounts</h3>
+<div class="cr-table" id="accountsDetailsDiv"><jsp:include page="accountsDetailsGrid.jsp"></jsp:include></div>
+</div>
+<table class="cr-table" width="100%">
   <tr>
     <td width="7%" align="right">Dr. Total</td>
     <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>

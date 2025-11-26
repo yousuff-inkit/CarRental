@@ -11,15 +11,8 @@
 <link href="../../../../css/body.css" media="screen" rel="stylesheet" type="text/css" />
  -->
  <jsp:include page="../../../../includes.jsp"></jsp:include>
- <style>
-
-
-form label.error {
-color:red;
-  font-weight:bold;
-
-}
-</style>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 <script type="text/javascript">
 
 $(document).ready(function () {     
@@ -629,12 +622,12 @@ function nextserdueValidate()
 <form id="frmmaint" action="saveMaint" name="maintUpdate" method="post" autocomplete="OFF">
 <!-- <div class='hidden-scrollbar'>   -->
 <jsp:include page="../../../../header.jsp" /><br/>
+    <div class='hidden-scrollbar receipt-header'>
 
 
-
-<fieldset>
-<legend>Maintenance Update</legend> 
-<table width="100%" >
+<div class="table-section" style="width: 100%;">
+<h3>Maintenance Update</h3>
+<table class="cr-table" width="100%" >
 <tr>
 <td width="5%" align="right">Date</td> 
 <td width="5%" align="left"><div id="maintainceDate" name="maintainceDate"  value='<s:property value="date_accountmaster"/>'></div>
@@ -652,7 +645,7 @@ function nextserdueValidate()
 
 </tr>
 </table>
-<table width="100%" >
+<table class="cr-table" width="100%" >
 
 <tr>
 <td align="right" width="3.4%">Type</td>
@@ -675,16 +668,16 @@ function nextserdueValidate()
                         
 
 </table>
-</fieldset>
+</div>
 
-<fieldset>
-<div id="maingrid">
+<div class="table-section" style="width: 100%;">
+<div class="cr-table" id="maingrid">
 <jsp:include page="maintGrid.jsp"></jsp:include></div>
-</fieldset>
-<fieldset>
-<div id="servgrid">
+</div>
+<div class="table-section" style="width: 100%;">
+<div class="cr-table" id="servgrid">
 <jsp:include page="servicemaingrid.jsp"></jsp:include></div>
-</fieldset>
+</div>
 <input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>'>
 <input type="hidden" id="garrageid" name="garrageid" value='<s:property value="garrageid"/>'>
 <input type="hidden" id="mtypename" name="mtypename" value='<s:property value="mtypename"/>'> <!--  mtypesearch from serviece grid -->
@@ -708,7 +701,7 @@ function nextserdueValidate()
 <input type="hidden" id="maingridlength" name="maingridlength" value='<s:property value="maingridlength"/>'>
 
 <input type="hidden" id="servicegridlenght" name="servicegridlenght" value='<s:property value="servicegridlenght"/>'>
- <!--  </div>   -->
+   </div>
 
 
 </form>

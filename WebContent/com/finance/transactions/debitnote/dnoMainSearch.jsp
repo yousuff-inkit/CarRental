@@ -1,62 +1,231 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<% String contextPath=request.getContextPath();%>
+<% String contextPath = request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+
+<link href="<%=contextPath%>/css/body.css" rel="stylesheet" />
+
 <title>GatewayERP(i)</title>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	 $("#debitdate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	}); 
+<style>
 
- 	function loadSearch() {
+/* RESET */
+.search-container * {
+    box-sizing: border-box;
+    font-family: Poppins, Arial, sans-serif;
+}
 
- 		var docNo=document.getElementById("txtdocumentno").value;
- 		var date=document.getElementById("debitdate").value;
- 		var accId=document.getElementById("txtaccountid").value;
- 		var accName=document.getElementById("txtaccountname").value;
- 		var amounts=document.getElementById("txtamounts").value;
- 		var amount=(amounts*-1);
- 		var description=document.getElementById("txtdescriptions").value;
-	    var check = 1 ;
-	    
-		getdata(docNo,date,accId,accName,amount,description,check);
-	}
-	function getdata(docNo,date,accId,accName,amount,description,check){
-		 $("#refreshdiv").load('dnoMainSearchGrid.jsp?docNo='+docNo+'&date='+date+'&accId='+accId+'&accName='+accName.replace(/ /g, "%20")+'&amount='+amount+'&description='+description.replace(/ /g, "%20")+'&check='+check);
-		}
+/* OUTER CARD */
+.search-container {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #dce6ff;
+    box-shadow: 0px 10px 35px rgba(93, 125, 255, 0.20);
+    overflow: hidden;
+    padding: 0;
+}
 
-	</script>
+/* HEADER */
+.search-header {
+    background: linear-gradient(90deg, #478dff, #67a8ff);
+    padding: 16px 22px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search-header small {
+    font-size: 0.80rem;
+    font-weight: 300;
+    opacity: 0.95;
+}
+
+/* BODY */
+.search-body {
+    padding: 20px 24px 14px;
+    background: #fbfcff;
+}
+
+/* GRID AREA */
+.search-grid-area {
+    padding: 18px 24px 22px;
+    background: #f4f7ff;
+    border-top: 1px solid #e3eaff;
+}
+
+/* LABEL */
+.search-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #263b75;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* INPUT */
+.search-input {
+    width: 100%;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid #c4d3ff;
+    background: #ffffff;
+    padding: 6px 12px;
+    box-shadow: 0 2px 6px rgba(150,175,255,0.20);
+}
+.search-input:focus {
+    border-color: #6a96ff;
+}
+
+/* DATE FIX */
+#debitdate {
+    width: 100% !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    border: 1px solid #c4d3ff !important;
+}
+
+/* BUTTON (PIXEL PERFECT) */
+.search-btn {
+    background: linear-gradient(90deg, #6fb1fc, #1a73e8);
+    height: 46px;
+    color: #ffffff;
+    border: none;
+    padding: 0 38px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(26,115,232,0.32);
+    transition: 0.2s;
+}
+.search-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ROW COL */
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+.col {
+    flex: 1;
+}
+.btn-col {
+    display: flex;
+    align-items: flex-end;
+}
+
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+     $("#debitdate").jqxDateTimeInput({
+         width: "100%",
+         height: "38px",
+         formatString: "dd.MM.yyyy",
+         value: null
+     });
+});
+
+function loadSearch() {
+    var docNo = document.getElementById("txtdocumentno").value;
+    var date = document.getElementById("debitdate").value;
+    var accId = document.getElementById("txtaccountid").value;
+    var accName = document.getElementById("txtaccountname").value;
+    var amounts = document.getElementById("txtamounts").value;
+    var amount = (amounts * -1);
+    var description = document.getElementById("txtdescriptions").value;
+    var check = 1;
+
+    getdata(docNo, date, accId, accName, amount, description, check);
+}
+
+function getdata(docNo, date, accId, accName, amount, description, check) {
+    $("#refreshdiv").load(
+        "dnoMainSearchGrid.jsp?docNo=" + docNo +
+        "&date=" + date +
+        "&accId=" + accId +
+        "&accName=" + accName.replace(/ /g, "%20") +
+        "&amount=" + amount +
+        "&description=" + description.replace(/ /g, "%20") +
+        "&check=" + check
+    );
+}
+</script>
+
+</head>
+
 <body>
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="9%" align="right">Doc No</td>
-    <td width="23%"><input type="text" name="txtdocumentno" id="txtdocumentno" value='<s:property value="txtdocumentno"/>'></td>
-    <td width="6%" align="right">Date</td>
-    <td width="21%"><div id="debitdate" name="debitdate"  value='<s:property value="debitdate"/>'></div>
-        <input type="hidden" name="hiddebitdate" id="hiddebitdate" value='<s:property value="hiddebitdate"/>'></td>
-    <td width="7%" align="right">A/C No.</td>
-    <td width="23%"><input type="text" name="txtaccountid" id="txtaccountid" style="width:80%" value='<s:property value="txtaccountid"/>'></td>
-    <td width="11%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  <tr>
-    <td align="right">A/C Name</td>
-    <td><input type="text" name="txtaccountname" id="txtaccountname" style="width:80%" value='<s:property value="txtaccountname"/>'></td>
-    <td align="right">Amount</td>
-    <td><input type="text" name="txtamounts" id="txtamounts" value='<s:property value="txtamounts"/>'></td>
-    <td align="right">Description</td>
-    <td colspan="2"><input type="text" name="txtdescriptions" id="txtdescriptions" style="width:80%" value='<s:property value="txtdescriptions"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="7"><div id="refreshdiv"><jsp:include  page="dnoMainSearchGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-  </div>
+
+<div class="search-container">
+
+    <div class="search-header">
+        Debit Note Search
+        <small>Search by Date, Doc No, A/C No, Name and Amount</small>
+    </div>
+
+    <div class="search-body">
+
+        <div class="row">
+            <div class="col">
+                <label class="search-label">Doc No</label>
+                <input type="text" id="txtdocumentno" class="search-input"
+                value='<s:property value="txtdocumentno"/>'>
+            </div>
+
+            <div class="col">
+                <label class="search-label">Date</label>
+                <div id="debitdate"></div>
+                <input type="hidden" id="hiddebitdate">
+            </div>
+
+            <div class="col">
+                <label class="search-label">A/C No.</label>
+                <input type="text" id="txtaccountid" class="search-input"
+                value='<s:property value="txtaccountid"/>'>
+            </div>
+
+            <div class="col btn-col">
+                <button class="search-btn" onclick="loadSearch()">Search</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="search-label">A/C Name</label>
+                <input type="text" id="txtaccountname" class="search-input"
+                value='<s:property value="txtaccountname"/>'>
+            </div>
+
+            <div class="col">
+                <label class="search-label">Amount</label>
+                <input type="text" id="txtamounts" class="search-input"
+                value='<s:property value="txtamounts"/>'>
+            </div>
+
+            <div class="col">
+                <label class="search-label">Description</label>
+                <input type="text" id="txtdescriptions" class="search-input"
+                value='<s:property value="txtdescriptions"/>'>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="search-grid-area">
+        <div id="refreshdiv">
+            <jsp:include page="dnoMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>

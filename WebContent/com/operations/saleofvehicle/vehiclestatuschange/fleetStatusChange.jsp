@@ -10,7 +10,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <jsp:include page="../../../../includes.jsp"></jsp:include>
-<!-- <link rel="stylesheet" type="text/css" href="../css/body.css"> -->
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#fleetstatusdate").jqxDateTimeInput({
@@ -224,9 +225,10 @@ function setValues()
 			window.parent.formCode.value="VSC";
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
-<fieldset><legend>Fleet Status Change Info</legend>
-<table width="100%">
+	<br/>
+    <div class="hidden-scrollbar receipt-header">
+<div class="table-section" style="width: 100%;"><h3>Fleet Status Change Info</h3>
+<table class="cr-table" width="100%">
   <tr>
     <td width="8%" align="right">Date</td>
     <td width="8%" align="left"><div id="fleetstatusdate" name="fleetstatusdate" value='<s:property value="fleetstatusdate"/>'></div></td>
@@ -277,7 +279,8 @@ function setValues()
     <td colspan="2" align="left">&nbsp;</td>
   </tr>
 </table>
-</fieldset>
+</div>
+    </div>
 </form>
 <div id="fleetwindow">
    <div ></div>

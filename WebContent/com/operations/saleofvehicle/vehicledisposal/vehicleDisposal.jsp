@@ -13,13 +13,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <jsp:include page="../../../../includes.jsp"></jsp:include>
-
-<style>
-.hidden-scrollbar {
-    overflow: auto;
-    height: 520px;
-}
-</style>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 <script type="text/javascript">
 var configs={};
 $(document).ready(function() {
@@ -406,9 +401,9 @@ function funPrintBtn() {
 
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
-<div class="hidden-scrollbar">
-<fieldset>
-<table width="100%" >
+<div class="hidden-scrollbar receipt-header">
+<div class="table-section" style="width: 100%;">
+<table class="cr-table" width="100%" >
   <tr>
     <td width="6%" align="right">Date</td>
     <td width="11%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
@@ -496,16 +491,18 @@ function funPrintBtn() {
     <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1"  readonly>
     <input type="hidden" name="mdoc" id="mdoc" value='<s:property value="mdoc"/>' tabindex="-1"  readonly><!-- Temperory jv docno -->
   </div>
+    <div id=clientwindow>
+        <div ></div>
+    </div>
+    <div id="fleetwindow">
+        <div ></div>
+    </div>
+    <div id="detailwindow">
+        <div ></div>
+    </div>
+</div>
 </form>
-<div id=clientwindow>
-   <div ></div>
-</div>
-<div id="fleetwindow">
-   <div ></div>
-</div>
-<div id="detailwindow">
-   <div ></div>
-</div>
+
 </div>
 </body>
 </html>

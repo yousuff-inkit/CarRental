@@ -347,66 +347,111 @@
 </head>
 <body onLoad="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmDriver" action="saveActionDriver" autocomplete="off" >
+<form id="frmDriver" action="saveActionDriver" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/>
-    <div class="hidden-scrollbar receipt-header" >
+
+<div class="hidden-scrollbar receipt-header">
 <div class="table-section" style="width: 100%;">
-<h3>Driver Details</h3>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="16%"><div id="driverdate" name="driverdate" value='<s:property value="driverdate"/>'></div></td>
-    <td colspan="3" align="right">Doc No.</td>
-    <td width="27%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td align="right">Code</td>
-    <td><input type="text" id="code" name="code" placeholder="Code" value='<s:property value="code"/>'/></td>
-    <td width="15%" align="right">Name</td>
-    <td width="33%"><input type="text" name="name" id="name" placeholder="Name" value='<s:property value="name"/>' style="width:81%;" ></td>
-    <td width="4%" align="right">Email</td>
-    <td><input type="email" name="mail" id="mail" style="width:80%;" placeholder="someone@example.com" value='<s:property value="mail"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td><input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search"></td>
-    <td colspan="2"><input type="text" name="txtaccname" style="width:53%;" id="txtaccname" value='<s:property value="txtaccname"/>' readonly></td>
- 
- <td align="right">External</td>
-   <td><input type="checkbox" name="external" id="external"   onclick="$(this).attr('value', this.checked ? 1 : 0)"  >
-   <input type="hidden"  name="chkext" id="chkext" value='<s:property value="external"/> '/>   
-   </td> 
-	
+<h3 style="font-size:18px;font-weight:600;color:#1B4F9A;margin-bottom:12px;">
+    Driver Details
+</h3>
 
+<table class="cr-table" width="100%" style="background:#ffffff;border-radius:12px;">
 
+    <!-- ⭐ Row 1 -->
+    <tr>
+        <td width="10%" align="right" style="font-weight:600;color:#1A3E7A;">Date</td>
+        <td width="20%">
+            <div id="driverdate"></div>
+        </td>
 
- </tr>
+        <td width="10%" align="right" style="font-weight:600;color:#1A3E7A;">Doc No.</td>
+        <td width="20%">
+            <input type="text" id="docno" name="docno"
+                value='<s:property value="docno"/>'
+                readonly tabindex="-1"
+                style="width:90%;padding:8px;border:1px solid #cfe0ff;border-radius:8px;background:#f9fbff;">
+        </td>
+
+        <td width="10%"></td>
+        <td width="30%"></td>
+    </tr>
+
+    <!-- ⭐ Row 2 -->
+    <tr>
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Code</td>
+        <td>
+            <input type="text" id="code" name="code"
+                value='<s:property value="code"/>'
+                style="width:90%;padding:8px;border-radius:8px;border:1px solid #cfe0ff;background:#f9fbff;">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Name</td>
+        <td>
+            <input type="text" id="name" name="name"
+                value='<s:property value="name"/>'
+                style="width:90%;padding:8px;border-radius:8px;border:1px solid #cfe0ff;background:#f9fbff;">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Email</td>
+        <td>
+            <input type="email" id="mail" name="mail"
+                value='<s:property value="mail"/>'
+                style="width:90%;padding:8px;border-radius:8px;border:1px solid #cfe0ff;background:#f9fbff;">
+        </td>
+    </tr>
+
+    <!-- ⭐ Row 3 -->
+    <tr>
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Account</td>
+        <td>
+            <input type="text" id="txtaccno" name="txtaccno"
+                readonly placeholder="Press F3 to Search"
+                value='<s:property value="txtaccno"/>'
+                onkeydown="getAcc(event);"
+                style="width:90%;padding:8px;border-radius:8px;border:1px solid #cfe0ff;background:#f0f5ff;">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">A/c Name</td>
+        <td>
+            <input type="text" id="txtaccname" name="txtaccname"
+                readonly value='<s:property value="txtaccname"/>'
+                style="width:90%;padding:8px;border-radius:8px;border:1px solid #cfe0ff;background:#f9fbff;">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">External</td>
+        <td>
+            <input type="checkbox" id="external" name="external"
+                onclick="$(this).attr('value', this.checked ? 1 : 0)" 
+                style="transform:scale(1.3);cursor:pointer;">
+            <input type="hidden" id="chkext" name="chkext"
+                value='<s:property value="external"/>' />
+        </td>
+    </tr>
+
 </table>
-</div><br/>
+</div>
+
+<br/>
+
 <div id="driverdiv"><jsp:include page="driver2.jsp"></jsp:include></div>
 
-<input type="hidden" name="hiddriverdate" id="hiddriverdate" value='<s:property value="hiddriverdate"/>'>
-<input type="hidden" name="hidlicenseexpiry" id="hidlicenseexpiry" value='<s:property value="hidlicenseexpiry"/>'>
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-<input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-<input type="hidden" name="hidacno" id="hidacno" value='<s:property value="hidacno"/>'/>
-        <div id="accountWindow">
-            <div ></div>
-        </div>
-        <div id="nationalityWindow">
-            <div></div>
-        </div>
-        <div id="stateWindow">
-            <div></div>
-        </div>
+<input type="hidden" id="hiddriverdate" name="hiddriverdate" value='<s:property value="hiddriverdate"/>'>
+<input type="hidden" id="hidlicenseexpiry" name="hidlicenseexpiry" value='<s:property value="hidlicenseexpiry"/>'>
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+<input type="hidden" id="gridlength" name="gridlength" value='<s:property value="gridlength"/>'>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="hidden" id="hidacno" name="hidacno" value='<s:property value="hidacno"/>' />
 
-    </div>
-</form>
-
+<div id="accountWindow"><div></div></div>
+<div id="nationalityWindow"><div></div></div>
+<div id="stateWindow"><div></div></div>
 
 </div>
+</form>
+</div>
 </body>
+
 </html>
 

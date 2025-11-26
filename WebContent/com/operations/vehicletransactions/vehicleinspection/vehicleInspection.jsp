@@ -11,6 +11,8 @@
 <script type="text/javascript" src="../../../../js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
  <style>
 .hidden-scrollbar {
   overflow: auto;
@@ -21,6 +23,156 @@
  height: 2em;
  border: none;
  background-color: #E0ECF8;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
+}
+.receipt-header label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+}
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-header button:hover {
+    background: #0056b3;
+}
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
+}
+.section-block {
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+
+.section-block h2 {
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+    padding-inline: 1.04em;
+    padding-block: 1.04em;
+    border-radius: 8px;
+}
+.table-section h3 {
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+}
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+.cr-table tr:last-child td {
+    border-bottom: none;
 }
 </style> 
 <script type="text/javascript">
@@ -812,146 +964,147 @@
 			window.parent.formName.value="Vehicle Inspection";
 			window.parent.formCode.value="VIP";
 	</script>
-<div class='hidden-scrollbar'>
+<div class='hidden-scrollbar receipt-header'>
 
-<table width="100%">
-  <tr>
-    <td width="100%"><table width="100%">
-      <tr>
-        <td width="5%" align="right">Date</td>
-        <td width="11%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-        <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-        <td width="8%" align="right">Time</td>
-        <td width="8%" align="left"><div id="time" name="time"  value='<s:property value="date"/>'></div></td>
-        <input type="hidden" name="hidtime" id="hidtime" value='<s:property value="hidtime"/>'>
-        <td width="7%" align="right">Type</td>
-        <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
-        <td width="8%" align="left"><select name="cmbtype" id="cmbtype" style="width:100%;">
-          <option value="">--Select--</option><option value="IN">IN</option><option value="OUT">OUT</option>
-        </select></td>
-        <td width="8%" align="right">Ref type</td>
-        <td width="11%" align="left"><select name="cmbreftype" id="cmbreftype" onchange="funResetValues();">
-          <option value="">--Select--</option>
-          <option value="RAG">Rental</option>
-          <option value="LAG">Lease</option>
-          <option value="RPL">Replacement</option>
-          <option value="NRM">Non Revenue  Movement</option>
-        </select></td>
-        <input type="hidden" name="hidcmbreftype" id="hidcmbreftype" value='<s:property value="hidcmbreftype"/>'>
-        <td width="5%" align="right">Branch</td>
-        <td width="9%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" onChange="funResetValues();" value='<s:property value="cmbagmtbranch"/>' style="width:100%;">
-          <option value="">--Select--</option>
-        </select></td>
-        <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
-        <td width="8%" align="right">Doc No</td>
-        <td width="12%" align="left"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-      </tr>
-      <tr>
-        <td align="right">Ref Doc No</td>
-        <td align="left"><input type="text" name="refvoucherno" id="refvoucherno" value='<s:property value="refvoucherno"/>' readonly placeholder="Press F3 to Search" onKeyDown="getDoc(event);"></td>
-        <td align="right">Ref Fleet No</td>
-        <td align="left"><input type="text" name="rfleet" id="rfleet" value='<s:property value="rfleet"/>' readonly></td>
-        <td align="right">Reg No</td>
-        <td align="left"><input type="text" name="regno" id="regno" value='<s:property value="regno"/>' readonly></td>
-        <td align="right">Client</td>
-        <td colspan="3" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' readonly style="width:99.5%;"></td>
-        <td align="left">&nbsp;</td>
-        <td align="left">&nbsp;</td>
-        </tr>
-    </table></td>
-  </tr>
-  <tr>
-    <td  width="100%">
-<table width="100%" >
-  <tr>
-    <td height="104"><fieldset>
-      <legend>Existing</legend>
-      <div id="existingdiv">
-        <jsp:include page="existingGrid.jsp"></jsp:include> 
-        </div>
-    </fieldset></td>
-    <td width="25%" rowspan="4"><fieldset style="height=100%;width=100%;">
-  <table width="100%">
-    <tr>
-      <td width="42%"><center><a id="download" href=""><button id="icons" title="Save Image"  type="button"> <img alt="Download File" src="<%=contextPath%>/icons/isave.png"></button></a></center></td>
-      <td width="58%"><center><button id="icons" title="SnapShot"  type="button" onclick="opensnapshotWindow()">
-        <img alt="SnapShot" src="<%=contextPath%>/icons/snapshot.png"> 
-        </button></center></td>
-      </tr>
-    <tr>
-      <td colspan="2"><div id="canvasdiv"><p><canvas id="canvas"  height="240" width="320"></canvas></p><ul id="cams"></ul></div>
-  <div id="imagediv"><img id="prevImage" src="<%=contextPath%>/icons/gatewaybg.png" alt="Image" height="100%" width="100%"/></div></td>
-      <input type="hidden" name="canvasdet" id="canvasdet"  value='<s:property value="canvasdet"/>'>
-      <input type="hidden" name="filedet" id="filedet"  value='<s:property value="filedet"/>'>
-      </tr>
-  </table>
-</fieldset></td>  </tr>
-  <tr>
-    <td height="104"><fieldset>
-      <legend>New</legend>
-      <div id="newdiv">
-        <jsp:include page="newgrid.jsp"></jsp:include>
-        </div>
-    </fieldset></td>
-    </tr>
-  <tr>
-    <td height="17" align="right">Damage Charges to be collected (No Police Report) 
-          <input type="text" name="amount" id="amount" value='<s:property value="amount"/>' style="text-align:right;" onkeypress="javascript:return isNumber (event,id)" onblur="funRoundAmt(value,id);">
-        </td>
-  </tr>
- 
-  <tr>
-    <td height="25"><fieldset>
-      <legend><input type="checkbox" name="chkaccidents" id="chkaccidents" value='<s:property value="chkaccidents"/>' onchange="enableAccData();">&nbsp;Accidents<span style="font-weight:100;"> (Considered only with Police Report)</span></legend>
-      
-      <table width="100%">
+    <div class="table-section" style="width: 100%;">
+    <table class="cr-table" width="100%">
         <tr>
-        
-          <td width="2%" height="26" align="right">Date</td>
-          <td width="6%" align="left"><div id="accdate" name="accdate"  value='<s:property value="accdate"/>'></div></td>
-          <input type="hidden" name="hidaccdate" id="hidaccdate"  value='<s:property value="hidaccdate"/>'>
-          <td width="6%" align="right">Police Report</td>
-          <td width="8%" align="left"><input type="text" name="prcs" id="prcs"  value='<s:property value="prcs"/>'></td>
-          <td width="6%" align="right">Collection Date</td>
-          <td width="7%" align="left"><div id="collectdate" name="collectdate"  value='<s:property value="collectdate"/>'></div></td>
-          <input type="hidden" name="hidcollectdate" id="hidcollectdate"  value='<s:property value="hidcollectdate"/>'>
-          <td width="3%" align="right">Place</td>
-          <td width="9%" align="left"><input type="text" name="accplace" id="accplace"  value='<s:property value="accplace"/>'></td>
-          <td width="3%" align="right">Claim</td>
-          <td width="10%" align="left"><select name="cmbclaim" id="cmbclaim" onchange="checkClaim(this.value);">
-            <option value="">--Select--</option>
-            <option value=1>Own</option>
-            <option value=0>Third Party</option>
-          </select></td>
-          <td width="3%" align="right">Ins Excess</td>
-          <td width="8%"><input type="text" name="accfines" id="accfines"  value='<s:property value="accfines"/>' style="text-align:right;" onKeyPress="javascript:return isNumber (event,id)" onBlur="funRoundAmt(value,id);"></td>
-          <td width="4%" align="right">Remarks</td>
-          <td width="25%" align="left"><input type="text" name="accremarks" id="accremarks" value='<s:property value="accremarks"/>' style="width:100%;" ></td>
-          <input type="hidden" name="hidcmbclaim" id="hidcmbclaim"  value='<s:property value="hidcmbclaim"/>'>
-          </tr> 
+            <td width="5%" align="right">Date</td>
+            <td width="11%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
+            <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
+            <td width="8%" align="right">Time</td>
+            <td width="8%" align="left"><div id="time" name="time"  value='<s:property value="date"/>'></div></td>
+            <input type="hidden" name="hidtime" id="hidtime" value='<s:property value="hidtime"/>'>
+            <td width="7%" align="right">Type</td>
+            <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+            <td width="8%" align="left"><select name="cmbtype" id="cmbtype" style="width:100%;">
+                <option value="">--Select--</option><option value="IN">IN</option><option value="OUT">OUT</option>
+            </select></td>
+            <td width="8%" align="right">Ref type</td>
+            <td width="11%" align="left"><select name="cmbreftype" id="cmbreftype" onchange="funResetValues();">
+                <option value="">--Select--</option>
+                <option value="RAG">Rental</option>
+                <option value="LAG">Lease</option>
+                <option value="RPL">Replacement</option>
+                <option value="NRM">Non Revenue  Movement</option>
+            </select></td>
+            <input type="hidden" name="hidcmbreftype" id="hidcmbreftype" value='<s:property value="hidcmbreftype"/>'>
+            <td width="5%" align="right">Branch</td>
+            <td width="9%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" onChange="funResetValues();" value='<s:property value="cmbagmtbranch"/>' style="width:100%;">
+                <option value="">--Select--</option>
+            </select></td>
+            <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
+            <td width="8%" align="right">Doc No</td>
+            <td width="12%" align="left"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
+        </tr>
+        <tr>
+            <td align="right">Ref Doc No</td>
+            <td align="left"><input type="text" name="refvoucherno" id="refvoucherno" value='<s:property value="refvoucherno"/>' readonly placeholder="Press F3 to Search" onKeyDown="getDoc(event);"></td>
+            <td align="right">Ref Fleet No</td>
+            <td align="left"><input type="text" name="rfleet" id="rfleet" value='<s:property value="rfleet"/>' readonly></td>
+            <td align="right">Reg No</td>
+            <td align="left"><input type="text" name="regno" id="regno" value='<s:property value="regno"/>' readonly></td>
+            <td align="right">Client</td>
+            <td colspan="3" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' readonly style="width:99.5%;"></td>
+            <td align="left">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+        </tr>
+    </table>
+    </div>
+
+    <div class="table-section" style="width: 100%;">
+        <h3>Existing</h3>
+
+        <table>
+            <tr>
+                <td width="80%">
+        <div class="cr-table" id="existingdiv">
+            <jsp:include page="existingGrid.jsp"></jsp:include>
+
+        </div>
+                </td>
+
+                <td width="20%">
+                    <table width="100%">
+                        <tr>
+                            <td width="42%"><center><a id="download" href=""><button id="icons" title="Save Image"  type="button"> <img alt="Download File" src="<%=contextPath%>/icons/isave.png"></button></a></center></td>
+                            <td width="58%"><center><button id="icons" title="SnapShot"  type="button" onclick="opensnapshotWindow()">
+                                <img alt="SnapShot" src="<%=contextPath%>/icons/snapshot.png">
+                            </button></center></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><div id="canvasdiv"><p><canvas id="canvas"  height="240" width="320"></canvas></p><ul id="cams"></ul></div>
+                                <div id="imagediv"><img id="prevImage" src="<%=contextPath%>/icons/gatewaybg.png" alt="Image" height="100%" width="100%"/></div></td>
+                            <input type="hidden" name="canvasdet" id="canvasdet"  value='<s:property value="canvasdet"/>'>
+                            <input type="hidden" name="filedet" id="filedet"  value='<s:property value="filedet"/>'>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td height="17" align="right">Damage Charges to be collected (No Police Report)
+                    <input type="text" name="amount" id="amount" value='<s:property value="amount"/>' style="text-align:right;" onkeypress="javascript:return isNumber (event,id)" onblur="funRoundAmt(value,id);">
+                </td>
+            </tr>
         </table>
-      </fieldset></td>
-  </tr>
-</table></td>
-  </tr>
-  
-  <tr>
-    <td>
-      <table width="100%">
-        <tr>
-          <td><fieldset>
-      <legend>Existing Complaints</legend><div id="existmaintenancediv">
-            <jsp:include page="existmaintenanceGrid.jsp"></jsp:include>
-          </div></fieldset></td>
-          <td><fieldset>
-      <legend>New Complaints</legend><div id="newmaintenancediv">
-            <jsp:include page="newmaintenanceGrid.jsp"></jsp:include>
-          </div></fieldset></td>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-</table>
+
+    </div>
+
+    <div class="table-section" style="width: 100%;">
+        <h3>New</h3>
+        <div class="cr-table" id="newdiv">
+            <jsp:include page="newgrid.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <div class="table-section" style="width: 100%;">
+        <h3><input type="checkbox" name="chkaccidents" id="chkaccidents" value='<s:property value="chkaccidents"/>' onchange="enableAccData();">&nbsp;Accidents<span style="font-weight:100;"> (Considered only with Police Report)</span></h3>
+        <table class="cr-table" width="100%">
+            <tr>
+
+                <td width="2%" height="26" align="right">Date</td>
+                <td width="6%" align="left"><div id="accdate" name="accdate"  value='<s:property value="accdate"/>'></div></td>
+                <input type="hidden" name="hidaccdate" id="hidaccdate"  value='<s:property value="hidaccdate"/>'>
+                <td width="6%" align="right">Police Report</td>
+                <td width="8%" align="left"><input type="text" name="prcs" id="prcs"  value='<s:property value="prcs"/>'></td>
+                <td width="6%" align="right">Collection Date</td>
+                <td width="7%" align="left"><div id="collectdate" name="collectdate"  value='<s:property value="collectdate"/>'></div></td>
+                <input type="hidden" name="hidcollectdate" id="hidcollectdate"  value='<s:property value="hidcollectdate"/>'>
+                <td width="3%" align="right">Place</td>
+                <td width="9%" align="left"><input type="text" name="accplace" id="accplace"  value='<s:property value="accplace"/>'></td>
+                <td width="3%" align="right">Claim</td>
+                <td width="10%" align="left"><select name="cmbclaim" id="cmbclaim" onchange="checkClaim(this.value);">
+                    <option value="">--Select--</option>
+                    <option value=1>Own</option>
+                    <option value=0>Third Party</option>
+                </select></td>
+                <td width="3%" align="right">Ins Excess</td>
+                <td width="8%"><input type="text" name="accfines" id="accfines"  value='<s:property value="accfines"/>' style="text-align:right;" onKeyPress="javascript:return isNumber (event,id)" onBlur="funRoundAmt(value,id);"></td>
+                <td width="4%" align="right">Remarks</td>
+                <td width="25%" align="left"><input type="text" name="accremarks" id="accremarks" value='<s:property value="accremarks"/>' style="width:100%;" ></td>
+                <input type="hidden" name="hidcmbclaim" id="hidcmbclaim"  value='<s:property value="hidcmbclaim"/>'>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-section" style="width: 100%;">
+
+
+        <h3>Existing Complaints</h3><div class="cr-table" id="existmaintenancediv">
+        <jsp:include page="existmaintenanceGrid.jsp"></jsp:include>
+    </div>
+    </div>
+
+
+    <div class="table-section" style="width: 100%;">
+
+        <h3>New Complaints</h3><div class="cr-table" id="newmaintenancediv">
+        <jsp:include page="newmaintenanceGrid.jsp"></jsp:include>
+    </div>
+    </div>
+    </div>
+
 </fieldset>
 
 </div>

@@ -28,24 +28,75 @@
 
 	</script>
 <body>
-<div id=search>
-<table width="100%">
+<div id="search" 
+     style="padding:18px; background:#ffffff; border-radius:14px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08); font-family:'Poppins',sans-serif;">
+
+<table width="100%" style="border-collapse:separate; border-spacing:0 12px;">
+
+  <!-- Row 1 -->
   <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%"><div id="roledate" name="roledate"  value='<s:property value="roledate"/>'></div>
-        <input type="hidden" name="hidroledate" id="hidroledate" value='<s:property value="hidroledate"/>'></td>
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="12%" align="right" 
+        style="font-weight:600; font-size:15px; color:#1A3E7A;">
+        Date
+    </td>
+
+    <td width="20%">
+      <div id="roledate" name="roledate"></div>
+      <input type="hidden" id="hidroledate" name="hidroledate"
+             value='<s:property value="hidroledate"/>'>
+    </td>
+
+    <td width="15%" align="right" 
+        style="font-weight:600; font-size:15px; color:#1A3E7A;">
+        Doc No
+    </td>
+
+    <td width="30%">
+      <input type="text" id="txtdocno" name="txtdocno"
+             value='<s:property value="txtdocno"/>'
+             style="width:85%; padding:8px 10px; border-radius:8px;
+                    border:1px solid #cfe0ff; background:#f9fbff; font-size:14px;">
+    </td>
+
+    <td width="23%" align="center">
+      <button id="btnsearch" onclick="loadSearch()"
+              style="padding:8px 22px; background:linear-gradient(90deg,#1E88E5,#1565C0);
+              color:white; border:none; border-radius:25px; font-weight:600;
+              cursor:pointer; box-shadow:0 3px 8px rgba(21,101,192,0.25);
+              transition:0.3s;">
+        Search
+      </button>
+    </td>
   </tr>
+
+  <!-- Row 2 -->
   <tr>
-    <td align="right">Name</td>
-    <td colspan="4"><input type="text" name="txtuserrolename" id="txtuserrolename" style="width:100%" value='<s:property value="txtuserrolename"/>'></td>
+    <td align="right" style="font-weight:600; font-size:15px; color:#1A3E7A;">
+        Name
+    </td>
+
+    <td colspan="4">
+      <input type="text" id="txtuserrolename" name="txtuserrolename"
+             value='<s:property value="txtuserrolename"/>'
+             style="width:98%; padding:8px 10px; border-radius:8px;
+                    border:1px solid #cfe0ff; background:#f9fbff; font-size:14px;">
+    </td>
   </tr>
+
+  <!-- Grid -->
   <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="ubiMainSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="5">
+      <div id="refreshdiv"
+           style="background:white; padding:12px; border-radius:10px;
+           box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+        <jsp:include page="ubiMainSearchGrid.jsp"></jsp:include>
+      </div>
+    </td>
   </tr>
+
 </table>
-  </div>
+</div>
 </body>
+
 </html>

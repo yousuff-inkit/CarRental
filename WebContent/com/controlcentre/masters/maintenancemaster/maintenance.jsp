@@ -13,13 +13,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<style>
-form label.error {
-color:red;
-  font-weight:bold;
-
-}
-</style>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#miandate").jqxDateTimeInput({
@@ -157,9 +152,11 @@ function setValues()
 </head>
 <body onload="setValues();"><div id="mainBG" class="homeContent" data-type="background">
 <form id="frmmaint" action="saveMain" autocomplete="off" method="post">
-<jsp:include page="../../../../header.jsp" /><br/> 
-<fieldset><legend>Maintenance Details</legend>
-<table width="100%" >
+<jsp:include page="../../../../header.jsp" /><br/>
+
+    <div class='hidden-scrollbar receipt-header'>
+<div class="table-section" style="width: 100%;"><legend>Maintenance Details</legend>
+<table class="cr-table" width="100%" >
   <tr>
     <td width="12%"><div align="right">Date</div></td> 
     <td colspan="3"><div id="miandate" name="miandate" value='<s:property value="miandate"/>'></div></td>
@@ -183,9 +180,9 @@ function setValues()
           <input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
           	 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
           
-</fieldset>
+</div>
 
-			    <table width="100%">
+			    <table class="cr-table" width="100%">
                   <tr>
                     <td width="10%">&nbsp;</td>
                      
@@ -193,7 +190,8 @@ function setValues()
 </td>
             <td width="10%">&nbsp;</td>
           </tr>
-        </table>  
+        </table>
+    </div>
 </form>
 
 

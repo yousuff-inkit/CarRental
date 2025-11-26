@@ -1,5 +1,13 @@
 ﻿.jqx-widget-content-energyblue{border-color: #a4bed4;}
-.jqx-fill-state-normal-energyblue, .jqx-widget-header-energyblue{border-color:#a4bed4; background-color:#e0e9f5}
+/* PREMIUM BLUE THEME – replaces old energyblue */
+.jqx-fill-state-normal-energyblue,
+.jqx-widget-header-energyblue {
+    background: linear-gradient(90deg, #6fb1fc 0%, #1a73e8 100%) !important;
+    border-color: #1a73e8 !important;
+    color: #ffffff !important; 
+    font-weight: 600 !important;
+    box-shadow: 0 3px 10px rgba(26, 115, 232, 0.25) !important;
+}
 .jqx-fill-state-hover-energyblue{border-color:#a4bed4;  background-color:#cfdde9}
 .jqx-fill-state-pressed-energyblue{border-color:#5e8cb3; background-color:#cfdde9}
 .jqx-fill-state-focus-energyblue { border-color: #477396; }
