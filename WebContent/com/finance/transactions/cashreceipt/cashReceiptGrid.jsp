@@ -123,13 +123,13 @@
 							{ text: 'Account Name', datafield: 'accountname1', editable: false, width: '20%' },	
 							{ text: 'Currency', datafield: 'currency', editable: false, width: '4%' },
 							{ text: 'Currency Id', hidden: true, datafield: 'currencyid', editable: false, width: '4%' },
-							{ text: 'Rate', datafield: 'rate', editable: true, cellsformat: 'd'+curdec, width: '4%', cellsalign: 'right', align: 'right' },
+							{ text: 'Rate', datafield: 'rate', editable: true, cellsformat: 'd'+curdec, width: '4%', cellsalign: 'right', align: 'center' },
 							{ text: 'Cost Type', datafield: 'costgroup', width: '7%',editable: false },
 							{ text: 'Cost Id', datafield: 'costtype', width: '8%',hidden: true ,editable: true},
 							{ text: 'Cost Code', datafield: 'costcode', width: '5%',editable: false },
 							{ text: 'Cr', datafield: 'dr', columntype: 'checkbox', editable: true, checked: true, width: '3%',cellsalign: 'center', align: 'center' },
 							{ text: 'Amount', datafield: 'amount1', cellsformat: 'd'+amtdec, width: '8%', cellsalign: 'right', align: 'right' },
-							{ text: 'Base Amount', datafield: 'baseamount1', editable: false,  cellsformat: 'd'+amtdec, width: '8%', cellsalign: 'right', align: 'right' },
+							{ text: 'Base Amount', datafield: 'baseamount1', editable: false,  cellsformat: 'd'+amtdec, width: '8%', cellsalign: 'right', align: 'left' },
 							{ text: 'Description', datafield: 'description', width: '22%' },
 							{ text: 'Group Type', datafield: 'grtype', hidden: true, editable: false, width: '10%' },
 							{ text: 'Curr Type', hidden: true, datafield: 'currencytype', editable: false, width: '4%' },
@@ -301,7 +301,7 @@
           
         });
     </script>
-    <div id="jqxCashReceipt"></div>
+    <div id="jqxCashReceipt" ></div>
     
  <input type="hidden" id="rowindex"/>
  <input type="hidden" id="type"/>

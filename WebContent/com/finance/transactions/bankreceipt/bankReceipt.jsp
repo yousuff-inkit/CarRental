@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<link href="<%=contextPath%>/css/css_global.css" rel="stylesheet" type="text/css" />
+
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -890,7 +893,7 @@
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class=" hidden-scrollbar homeContent" data-type="background">
 <form id="frmBankReceipt" action="saveBankReceipt" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
