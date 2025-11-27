@@ -607,67 +607,109 @@ function funClickChk(){
             <div class="hidden-scrollbar receipt-header">
 			<div class="table-section" style="width: 100%;">
 				<h3>User Master Info</h3>
-				<table class="cr-table" width="100%">
-				<tr>
-				<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td colspan="5"></td><td align="right">Doc No <input type="text" id="docno" name="docno" 
-							tabindex="-1;" value='<s:property value="docno"/>'>
-						</td></tr>
-					<tr>
-						<td style="margin-right: 10px;padding: 0px;width:60px;">User Name</td>
-						<td colspan="3"> <input type="text" id="txtuser" name="username"
-							 placeholder="Enter User Name" value='<s:property value="username"/>'
-							onblur="checkUserid()">
-						</td>
+			<table class="cr-table" width="100%" style="border-collapse:separate; border-spacing:0 10px;">
 
-						<td style="margin-right: 10px;padding: 0px;width:60px;">Password</td><td colspan="3"><input type="password" id="txtusername"
-							name="password" placeholder="Enter Password" 
-							value='<s:property value="password"/>'>
-						</td>
-						<td style="margin-right: 10px;padding: 0px;width:60px;">Site</td><td colspan="3"><select
-							id="site" name="site" style="width: 45%;"  value='<s:property value="site"/>'>
-								<option value="">--Select--</option>
-								<option value="DXB">DXB</option>
-								<option value="AUH">AUH</option>
-						</select> <input type="hidden" id="hidsite" name="hidsite"  value='<s:property value="hidsite"/>'>
-						</td>
-						
-						
-					</tr>
-					<tr>
-						<td >TC no</td><td colspan="3"> <input type="text" id="tcno" name="tcno" style="width: 43%;"
-							placeholder="TC number" value='<s:property value="tcno"/>'>
-						</td>
+    <!-- Row : Doc No -->
+    <tr>
+        <td colspan="10" align="right" 
+            style="font-weight:600; color:#1A3E7A; padding-right:15px;">
+            Doc No
+            <input type="text" id="docno" name="docno"
+                   value='<s:property value="docno"/>'
+                   readonly tabindex="-1"
+                   style="width:160px; padding:6px 10px;
+                          border:1px solid #b9c9e8; border-radius:6px;
+                          background:#fff;">
+        </td>
+    </tr>
 
+    <!-- Row: Username / Password / Site -->
+    <tr>
+        <td width="10%" align="right" style="font-weight:600;">User Name</td>
+        <td colspan="3">
+            <input type="text" id="txtuser" name="username"
+                   placeholder="Enter User Name"
+                   value='<s:property value="username"/>'
+                   onblur="checkUserid()"
+                   style="width:90%; padding:6px 10px; border:1px solid #b9c9e8; border-radius:6px;">
+        </td>
 
-						<td >Time Period</td><td colspan="3"> <input type="text" id="txtperiod" name="timeperiod"
-							style="width: 43%;" placeholder="Time Period" value='<s:property value="timeperiod"/>'>
-						</td>
-						<td>Remarks</td><td colspan="3"><select
-							id="remarks" name="remarks" style="width: 45%;" value='<s:property value="remarks"/>'>
-								<option value="">--Select--</option>
-								<option value="Traffic Fines">Traffic Fines</option>
-								<option value="Salik">Salik</option>
-						</select> <input type="hidden" id="hidremrk" name="hidremrk" value='<s:property value="hidremrk"/>'>
+        <td width="10%" align="right" style="font-weight:600;">Password</td>
+        <td colspan="3">
+            <input type="password" id="txtusername" name="password"
+                   placeholder="Enter Password"
+                   value='<s:property value="password"/>'
+                   style="width:90%; padding:6px 10px; border:1px solid #b9c9e8; border-radius:6px;">
+        </td>
 
-						</td>
-					</tr>
-					<tr>
-						<td>IsCaptch</td>
-						<td colspan="3"><input type="checkbox" id="captch"
-							placeholder="" name="captch" onclick="funClickChk()"> <input
-							type="hidden" id="hidCaptcha" name="hidCaptcha" value='<s:property value="hidCaptcha"/>'>RTA<input
-							type="checkbox" id="rta" placeholder="RTA type" name="rta"
-							onclick="fucntionRtaChk()"><input type="hidden"
-							id="hidRta" name="hidRta" value='<s:property value="hidRta"/>'></td>
-						<td>Sq Number</td>
-						<td colspan="3"><input type="text" id="sqno"
-							placeholder="Sequence number" name="sqno" style="width: 43%;"
-							value='<s:property value="sqno"/>'>
-						</td>
-						
-					</tr>
+        <td width="10%" align="right" style="font-weight:600;">Site</td>
+        <td colspan="3">
+            <select id="site" name="site"
+                    style="width:140px; padding:6px; border-radius:6px; border:1px solid #b9c9e8;">
+                <option value="">--Select--</option>
+                <option value="DXB">DXB</option>
+                <option value="AUH">AUH</option>
+            </select>
+            <input type="hidden" id="hidsite" name="hidsite"
+                   value='<s:property value="hidsite"/>'>
+        </td>
+    </tr>
 
-				</table>
+    <!-- Row: TC No / Time Period / Remarks -->
+    <tr>
+        <td align="right" style="font-weight:600;">TC No</td>
+        <td colspan="3">
+            <input type="text" id="tcno" name="tcno"
+                   placeholder="TC Number"
+                   value='<s:property value="tcno"/>'
+                   style="width:60%; padding:6px 10px; border-radius:6px; border:1px solid #b9c9e8;">
+        </td>
+
+        <td align="right" style="font-weight:600;">Time Period</td>
+        <td colspan="3">
+            <input type="text" id="txtperiod" name="timeperiod"
+                   placeholder="Time Period"
+                   value='<s:property value="timeperiod"/>'
+                   style="width:60%; padding:6px 10px; border-radius:6px; border:1px solid #b9c9e8;">
+        </td>
+
+        <td align="right" style="font-weight:600;">Remarks</td>
+        <td colspan="3">
+            <select id="remarks" name="remarks"
+                    style="width:160px; padding:6px; border-radius:6px; border:1px solid #b9c9e8;">
+                <option value="">--Select--</option>
+                <option value="Traffic Fines">Traffic Fines</option>
+                <option value="Salik">Salik</option>
+            </select>
+            <input type="hidden" id="hidremrk" name="hidremrk"
+                   value='<s:property value="hidremrk"/>'>
+        </td>
+    </tr>
+
+    <!-- Row: Checkbox + SQ No -->
+    <tr>
+        <td align="right" style="font-weight:600;">Captcha</td>
+        <td colspan="3" style="padding-left:10px;">
+            <input type="checkbox" id="captch" name="captch" onclick="funClickChk()">
+            <input type="hidden" id="hidCaptcha" name="hidCaptcha"
+                   value='<s:property value="hidCaptcha"/>'>
+
+            &nbsp;&nbsp;RTA
+            <input type="checkbox" id="rta" name="rta" onclick="fucntionRtaChk()">
+            <input type="hidden" id="hidRta" name="hidRta"
+                   value='<s:property value="hidRta"/>'>
+        </td>
+
+        <td align="right" style="font-weight:600;">Sq Number</td>
+        <td colspan="3">
+            <input type="text" id="sqno" name="sqno"
+                   placeholder="Sequence Number"
+                   value='<s:property value="sqno"/>'
+                   style="width:60%; padding:6px 10px; border-radius:6px; border:1px solid #b9c9e8;">
+        </td>
+    </tr>
+
+</table>
 				<br />
 			</div>
 			<br />

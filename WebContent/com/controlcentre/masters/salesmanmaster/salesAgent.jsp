@@ -341,6 +341,40 @@
 	   	 $("#jqxSalesagentSearch1").jqxGrid('exportdata', 'xls', 'Sales Agents');
 	   }
 </script>
+<style>
+/* Label Styling */
+.lbl {
+    width: 12%;
+    font-weight: 600;
+    color: #1A3E7A;
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 6px;
+}
+
+/* Input container */
+.inp {
+    width: 38%;
+}
+
+/* Input box */
+.txtbox {
+    width: 95%;
+    padding: 8px 10px;
+    border: 1px solid #cfe0ff;
+    background: #f9fbff;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.txtbox:focus {
+    border-color: #1E88E5;
+    box-shadow: 0 0 6px rgba(30,136,229,0.35);
+    outline: none;
+}
+</style>
+
 </head>
 <body onLoad="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
@@ -349,28 +383,79 @@
 <div class="hidden-scrollbar receipt-header">
 <div class="table-section" style="width: 100%;">
 <h3>Sales Agent Details</h3>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="16%"><div id="salesagentdate" name="salesagentdate" value='<s:property value="salesagentdate"/>'></div></td>
-    <td colspan="3" align="right">Doc No.</td>
-    <td width="30%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td align="right">Code</td>
-    <td><input type="text" id="code" name="code" placeholder="Code" value='<s:property value="code"/>' ></td>
-    <td width="11%" align="right">Name</td>
-    <td width="33%"><input type="text" name="name" id="name" placeholder="Code Name" value='<s:property value="name"/>' style="width:59%;" ></td>
-    <td width="5%" align="right">Email</td>
-    <td><input type="email" name="mail" id="mail" style="width:80%;" placeholder="someone@example.com" value='<s:property value="mail"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td><input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search"></td>
-    <td colspan="2"><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>'  style="width:70%;" readonly></td>
-    <td align="right">Mobile</td>
-    <td><input type="text" name="mobile" id="mobile" value='<s:property value="mobile"/>'></td>
-  </tr>
+<table class="cr-table" width="100%" style="background:#ffffff;border-radius:12px;">
+
+ <!-- Row 1 -->
+<tr>
+    <td class="lbl">Date</td>
+    <td class="inp">
+        <div id="salesagentdate" name="salesagentdate"></div>
+    </td>
+
+    <td class="lbl">Doc No.</td>
+    <td class="inp">
+        <input type="text" id="docno" name="docno"
+               value='<s:property value="docno"/>'
+               readonly tabindex="-1"
+               class="txtbox">
+    </td>
+</tr>
+
+<!-- Row 2 -->
+<tr>
+    <td class="lbl">Code</td>
+    <td class="inp">
+        <input type="text" id="code" name="code"
+               value='<s:property value="code"/>'
+               class="txtbox">
+    </td>
+
+    <td class="lbl">Name</td>
+    <td class="inp">
+        <input type="text" id="name" name="name"
+               value='<s:property value="name"/>'
+               class="txtbox">
+    </td>
+</tr>
+
+<!-- Row 3 -->
+<tr>
+    <td class="lbl">Email</td>
+    <td class="inp">
+        <input type="email" id="mail" name="mail"
+               value='<s:property value="mail"/>'
+               class="txtbox">
+    </td>
+
+    <td class="lbl">Mobile</td>
+    <td class="inp">
+        <input type="text" id="mobile" name="mobile"
+               value='<s:property value="mobile"/>'
+               class="txtbox">
+    </td>
+</tr>
+
+<!-- Row 4 -->
+<tr>
+    <td class="lbl">Account</td>
+    <td class="inp">
+        <input type="text" id="txtaccno" name="txtaccno"
+               value='<s:property value="txtaccno"/>'
+               onkeydown="getAcc(event);"
+               readonly placeholder="Press F3 to Search"
+               class="txtbox">
+    </td>
+
+    <td class="lbl">Account Name</td>
+    <td class="inp">
+        <input type="text" id="txtaccname" name="txtaccname"
+               value='<s:property value="txtaccname"/>'
+               readonly class="txtbox">
+    </td>
+</tr>
+ 
+</table>
+
 </table>
 </div>
 
