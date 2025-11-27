@@ -451,6 +451,68 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+<div class="receipt-header">
+    <div class="cr-row" style="flex-wrap:nowrap; align-items:center; gap:18px;">
+
+        <!-- Account ID -->
+        <label>Account</label>
+        <input type="text"
+               id="txtaccid"
+               name="txtaccid"
+               placeholder="Press F3 to Search"
+               style="width:180px;"
+               value='<s:property value="txtaccid"/>'
+               onkeydown="getAcc(event);" />
+
+        <!-- Account Name -->
+        <input type="text"
+               id="txtaccname"
+               name="txtaccname"
+               style="width:260px;"
+               value='<s:property value="txtaccname"/>' />
+        <input type="hidden" id="txtdocno" name="txtdocno"
+               value='<s:property value="txtdocno"/>' />
+
+        <!-- From -->
+        <label for="jqxFromDate" style="margin-left:20px;">From</label>
+        <div id="jqxFromDate" style="width:140px;"></div>
+        <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate"
+               value='<s:property value="hidjqxFromDate"/>' />
+
+        <!-- To -->
+        <label for="jqxToDate">To</label>
+        <div id="jqxToDate" style="width:140px;"></div>
+        <input type="hidden" id="hidjqxToDate" name="hidjqxToDate"
+               value='<s:property value="hidjqxToDate"/>' />
+
+        <!-- Type -->
+        <label for="cmbtype" style="margin-left:20px;">Type</label>
+        <select id="cmbtype"
+                name="cmbtype"
+                style="width:160px;"
+                onchange="funPostingGrid();"
+                value='<s:property value="cmbtype"/>'>
+            <option value="0">--Select--</option>
+            <option value="1">For Distribution</option>
+            <option value="2">Summary</option>
+            <option value="3">To be Posted</option>
+        </select>
+        <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+               value='<s:property value="hidcmbtype"/>' />
+
+        <!-- Submit -->
+        <button class="myButton"
+                type="button"
+                id="btnSubmit"
+                name="btnSubmit"
+                style="margin-left:20px;"
+                onclick="funloadgrid();">
+            Submit
+        </button>
+
+    </div>
+</div>
+
 </style>
 
 </head>

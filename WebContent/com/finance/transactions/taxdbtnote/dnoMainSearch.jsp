@@ -9,131 +9,37 @@
 <link href="<%=contextPath%>/css/body.css" rel="stylesheet" />
 
 <title>GatewayERP(i)</title>
+<link href="<%=contextPath%>/css/search-globalcss.css" rel="stylesheet" />
 
 <style>
-
-/* RESET inside popup */
-.search-container * {
-    box-sizing: border-box;
-    font-family: Poppins, Arial, sans-serif;
-}
-
-/* OUTER CARD */
-.search-container {
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #dce6ff;
-    box-shadow: 0px 10px 35px rgba(93,125,255,0.20);
-    overflow: hidden;
-    padding: 0;
-    width: 100%;
-}
-
-/* HEADER */
-.search-header {
-    background: linear-gradient(90deg, #478dff, #67a8ff);
-    padding: 20px 28px;
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.search-header small {
-    font-size: 0.85rem;
-    opacity: 0.95;
-}
-
-/* BODY */
-.search-body {
-    background: #fbfcff;
-    padding: 24px 28px;
-}
-
-/* FLEX ROW (master UI spacing) */
-.search-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-
-/* FLEX COLUMN */
-.search-col {
-    flex: 1;
-    min-width: 0;
-}
-.search-col-btn {
-    display: flex;
-    align-items: flex-end;
-}
-
-/* LABELS */
-.search-label {
-    font-size: 0.90rem;
-    font-weight: 600;
-    color: #263b75;
-    margin-bottom: 8px;
-}
-
-/* MASTER UI INPUTS */
-.search-input {
-    width: 100%;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid #c8d9ff;
-    background: #ffffff;
-    padding: 0px 14px;
-    font-size: 1rem;
-    color: #052a6b;
-    box-shadow: 0px 3px 6px rgba(180,200,255,0.35);
-}
-
-/* DATE BOX */
+/* Increase size only for THIS popup's date control */
 #debitdate {
-    width: 100%;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid #c8d9ff;
-    box-shadow: 0px 3px 6px rgba(180,200,255,0.35);
+    width: 100% !important;
+    height: 48px !important;             /* match other input height */
+    border-radius: 12px !important;
+    border: 1px solid #c8d9ff !important;
+    background: #ffffff !important;
+    box-shadow: 0px 3px 6px rgba(180,200,255,0.35) !important;
 }
 
-/* SEARCH BUTTON (keep your myButton class as-is) */
-.search-container input.myButton {
-    background: linear-gradient(90deg, #6fb1fc, #1a73e8);
-    color: #ffffff;
-    border: none;
-    height: 46px;
-    padding: 0px 38px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0px 6px 18px rgba(26,115,232,0.30);
-}
-.search-container input.myButton:hover {
-    transform: translateY(-2px);
+/* Inner text inside THIS popup's date box */
+#debitdate .jqx-input-content {
+    height: 48px !important;
+    line-height: 48px !important;
+    font-size: 1.05rem !important;
+    padding-left: 14px !important;
+    color: #052a6b !important;
 }
 
-/* GRID AREA */
-.search-grid-area {
-    padding: 24px 28px 30px;
-    background: #f4f7ff;
-    border-top: 1px solid #e3eaff;
+/* Calendar icon ONLY inside this date box */
+#debitdate .jqx-DateTimeInput-button {
+    height: 48px !important;
+    width: 44px !important;
+    border-radius: 0 12px 12px 0 !important;
+    background: #ffffff !important;
 }
 
-/* Mobile fallback */
-@media (max-width: 900px) {
-    .search-row {
-        flex-direction: column;
-        gap: 18px;
-    }
-    .search-col-btn input {
-        width: 100%;
-    }
-}
 </style>
-
 <script>
 $(document).ready(function () {
     $("#debitdate").jqxDateTimeInput({

@@ -2,6 +2,41 @@
 <%ClsAccMasterDAO amd =new ClsAccMasterDAO(); %>
 
 <%--  <jsp:include page="../../../includes.jsp"></jsp:include>  --%>
+
+<style>
+/* Bigger & clearer filter-row inputs */
+.jqx-grid-cell-filter-row input[type="text"],
+.jqx-grid-cell-filter-row .jqx-input {
+    height: 26px !important;
+    font-size: 0.9rem !important;
+    padding: 4px 8px !important;
+    border: 1px solid #b5c6ff !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+}
+
+/* Filter row background */
+.jqx-grid-cell-filter-row {
+    background: #f1f4ff !important;
+    border-bottom: 1px solid #d6dfff !important;
+}
+/* Make grid stretch edge-to-edge inside popup */
+#window, 
+#window .jqx-window-content,
+#jqxAccmasterSearch {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+/* Remove internal spacing */
+.jqx-window-content {
+    border-radius: 0 !important;
+    overflow: hidden !important;
+}
+
+</style>
+
     <script type="text/javascript">
     var data= '<%=amd.searchDetails() %>';
         $(document).ready(function () { 	
