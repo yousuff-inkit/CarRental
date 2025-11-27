@@ -19,108 +19,107 @@
 		});
 		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 $('#txtforsearch').val(2);
-		
+
+		 /* windows used for search dialogs */
 		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-		 $('#accountDetailsToWindow').jqxWindow('close');  
-		 
+		 $('#accountDetailsToWindow').jqxWindow('close');
 		 $('#creditNoteGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-		 $('#creditNoteGridWindow').jqxWindow('close'); 
-		 
+		 $('#creditNoteGridWindow').jqxWindow('close');
 		 $('#costTypeSearchGridWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Type Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
  		 $('#costTypeSearchGridWindow').jqxWindow('close');
- 		 
  		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#costCodeSearchWindow').jqxWindow('close');
-		 
+
 		 $('#jqxCreditNoteDate').on('change', function (event) {
 				var creditdate = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 				var validdate=funDateInPeriod(creditdate);
 				if(parseInt(validdate)==0){
 					document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
-					return 0;	
-				} 
+					return 0;
+				}
 			 });
-			 
+
 		$('#txtaccid').dblclick(function(){
 			  var date = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 			  $("#maindate").jqxDateTimeInput('val', date);
 			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
 			  $('#txtforsearch').val(2);
-	    });  	 
-		
+	    });
+
 	});
-	
+	/* --- remaining functions kept as-is --- */
+
 	function CreditSearchContent(url) {
 		$('#creditNoteGridWindow').jqxWindow('open');
 		$.get(url).done(function (data) {
-		$('#creditNoteGridWindow').jqxWindow('setContent', data);
-		$('#creditNoteGridWindow').jqxWindow('bringToFront');
-	}); 
-	} 
-	
+			$('#creditNoteGridWindow').jqxWindow('setContent', data);
+			$('#creditNoteGridWindow').jqxWindow('bringToFront');
+		});
+	}
+
 	function accountSearchContent(url) {
-		    $('#accountDetailsToWindow').jqxWindow('open');
-			$.get(url).done(function (data) {
+		$('#accountDetailsToWindow').jqxWindow('open');
+		$.get(url).done(function (data) {
 			$('#accountDetailsToWindow').jqxWindow('setContent', data);
 			$('#accountDetailsToWindow').jqxWindow('bringToFront');
-		}); 
+		});
 	}
-	
+
 	function costTypeSearchContent(url) {
 	    $('#costTypeSearchGridWindow').jqxWindow('open');
 		$.get(url).done(function (data) {
-		$('#costTypeSearchGridWindow').jqxWindow('setContent', data);
-		$('#costTypeSearchGridWindow').jqxWindow('bringToFront');
-	}); 
+			$('#costTypeSearchGridWindow').jqxWindow('setContent', data);
+			$('#costTypeSearchGridWindow').jqxWindow('bringToFront');
+		});
 	}
-	
+
 	function costCodeSearchContent(url) {
 	    $('#costCodeSearchWindow').jqxWindow('open');
 		$.get(url).done(function (data) {
-		$('#costCodeSearchWindow').jqxWindow('setContent', data);
-		$('#costCodeSearchWindow').jqxWindow('bringToFront');
-	}); 
+			$('#costCodeSearchWindow').jqxWindow('setContent', data);
+			$('#costCodeSearchWindow').jqxWindow('bringToFront');
+		});
 	}
-	
+
 	function funwarningopen(){
 		$.messager.confirm('Confirm', 'Transaction will affect Links to the applied Bank Reconcilations & Prepayments.', function(r){
 		    if (r){
 		    	 $("#mode").val("EDIT");
 				 $('#txtaccid').attr('readonly', true);$('#txtaccname').attr('readonly', true);$('#txtamount').attr('readonly', false);$('#txtdescription').attr('readonly', false);
 				 $('#txtrate').attr('readonly', false);$('#txtbaseamount').attr('readonly', true);$('#txtdrtotal').attr('readonly', true);$('#txtcrtotal').attr('readonly', true);
-				 $('#frmTaxCreditNote select').attr('disabled', false);$("#jqxCreditNote").jqxGrid({ disabled: false});$('#frmTaxCreditNote select').attr('disabled', false);  
+				 $('#frmTaxCreditNote select').attr('disabled', false);$("#jqxCreditNote").jqxGrid({ disabled: false});$('#frmTaxCreditNote select').attr('disabled', false);
 		         $('#cmbcurrency').attr('disabled',true);
-					}
-		   });
-	  }
-	  
-	 function funReadOnly(){
-			$('#frmTaxCreditNote input').attr('readonly', true );
-			$('#frmTaxCreditNote select').attr('disabled', true);
-			$('#jqxCreditNoteDate').jqxDateTimeInput({disabled: true});
-			$("#jqxCreditNote").jqxGrid({ disabled: true});
-			$("#btnvaluechange").hide();
-	 }
-	 function funRemoveReadOnly(){
-		    $('#txtforsearch').val(2);
+			}
+		});
+	}
+
+	function funReadOnly(){
+		$('#frmTaxCreditNote input').attr('readonly', true );
+		$('#frmTaxCreditNote select').attr('disabled', true);
+		$('#jqxCreditNoteDate').jqxDateTimeInput({disabled: true});
+		$("#jqxCreditNote").jqxGrid({ disabled: true});
+		$("#btnvaluechange").hide();
+	}
+	function funRemoveReadOnly(){
+			$('#txtforsearch').val(2);
 			$('#frmTaxCreditNote input').attr('readonly', false );
 			$('#frmTaxCreditNote select').attr('disabled', false);
 			$('#cmbcurrency').attr('disabled', true);
-			
+
 			$('#txtaccid').attr('readonly', true );
 			$('#txtaccname').attr('readonly', true );
 			$('#txtnettotal').attr('readonly', true );
 		    $('#txtbaseamount').attr('readonly', true);
 			$('#jqxCreditNoteDate').jqxDateTimeInput({disabled: false});
 			$('#docno').attr('readonly', true);
-			$("#jqxCreditNote").jqxGrid({ disabled: false}); 
-			
+			$("#jqxCreditNote").jqxGrid({ disabled: false});
+
 			var date = $('#jqxCreditNoteDate').val();
 		    getCurrencyId(date);
-		    
+
 		   if ($("#mode").val() == "E") {
-      	    $("#btnvaluechange").show();
-      	    $('#frmTaxCreditNote input').attr('readonly', true );
+				$("#btnvaluechange").show();
+      	        $('#frmTaxCreditNote input').attr('readonly', true );
 			    $('#frmTaxCreditNote select').attr('disabled', true);
 			    $("#jqxCreditNote").jqxGrid({ disabled: true});
 			    $("#jqxCreditNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
@@ -129,27 +128,19 @@
 			  }
 			 else{
 				$("#btnvaluechange").hide();
-			} 
-			
+			}
+
 			if ($("#mode").val() == "A") {
 				$('#jqxCreditNoteDate').val(new Date());
-				$("#jqxCreditNote").jqxGrid('clear'); 
+				$("#jqxCreditNote").jqxGrid('clear');
 				$("#jqxCreditNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
-			} 
-	       }
-	 
-	function funSearchLoad(){
-		changeContent('cnoMainSearch.jsp'); 
-	 }
-			
-	function funChkButton(){
-		/* funReset(); */
+			}
 	}
-			 
-	function funFocus(){
-	    $('#jqxCreditNoteDate').jqxDateTimeInput('focus'); 	    			
-	}
-			 
+
+	function funSearchLoad(){ changeContent('cnoMainSearch.jsp'); }
+	function funChkButton(){ /* funReset(); */ }
+	function funFocus(){ $('#jqxCreditNoteDate').jqxDateTimeInput('focus'); }
+
 	$(function(){
 	    $('#frmTaxCreditNote').validate({
 	            rules: {
@@ -164,65 +155,57 @@
 	             }
 	    });
 	});
-			   
-	/* --- Validation + Save handling (keeps same logic as before) --- */
-	function funNotify(){	
-	    /* Validation */
+
+	/* Validation + Save handling kept exactly (unchanged business logic) */
+	function funNotify(){
 	    var creditdate = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 	    var taxacc=document.getElementById("taxaccount").value;
 		var validdate=funDateInPeriod(creditdate);
 		if(parseInt(validdate)==0){
 			document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
-			return 0;	
-		} 
-		
+			return 0;
+		}
+
 		acctype=document.getElementById("cmbtype").value;
 		if(acctype==""){
 			document.getElementById("errormsg").innerText="Account Type is Mandatory.";
 			return 0;
 		}
-		 
 		accid=document.getElementById("txtdocno").value;
 		if(accid==""){
 			document.getElementById("errormsg").innerText="Account is Mandatory.";
 			return 0;
 		}
-		 
 		currencyto=document.getElementById("cmbcurrency").value;
 		currencyrate=document.getElementById("txtrate").value;
 		if(currencyto=="" || currencyrate==""){
 			document.getElementById("errormsg").innerText="Currency & Rate is Mandatory.";
 			return 0;
 		}
-		 
+
 	    var drtot = parseFloat(document.getElementById("txtdrtotal").value);
  		var crtot = parseFloat(document.getElementById("txtcrtotal").value);
- 		
+
  		if(drtot>crtot || drtot<crtot){
  			document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should be Equal.";
           return 0;
  		}
- 		
  		if(drtot=="" || crtot=="" ){
  			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should be Equal.";
               return 0;
 	 		}
-
  		if(isNaN(drtot) || isNaN(crtot)){
  			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should be Equal.";
               return 0;
 	 		}
- 		
  		if(drtot==0 || crtot==0){
  			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should not be Zero.";
               return 0;
 	 		}
- 		
  		if(drtot==0.0 || crtot==0.0){
  			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should not be Zero.";
               return 0;
 	 		}
- 		
  		if(drtot==0.00 || crtot==0.00){
  			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should not be Zero.";
               return 0;
@@ -232,16 +215,16 @@
 			 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
 			 return 0;
 		 }
-	 	
+
  		document.getElementById("errormsg").innerText="";
-	    		
+
 	    /* Grid saving assembly */
 		var rows = $("#jqxCreditNote").jqxGrid('getrows');
 		var length=0,val=0;
 		for(var i=0 ; i < rows.length ; i++){
 			var chk=rows[i].docno;
 			var rate=rows[i].rate;
-			
+
 			if(typeof(chk) != "undefined" && typeof(chk) != "NaN" && chk != ""){
 				newTextBox = $(document.createElement("input"))
 			    .attr("type", "dil")
@@ -252,22 +235,18 @@
 				if(rate=="" || rate=="0" || rate=="0.00"){
 					  val=1;
 					  break;
-				 }	
-				
+				 }
 				var amount,baseamount,nettotal,taxamnt;
 				if(rows[i].dr==true){
 					 amount=rows[i].amount1;
 					 baseamount=rows[i].baseamount1;
-					
 					 taxamnt=rows[i].taxamount;
 				}
 				else if(rows[i].dr==false){
 					 amount=rows[i].amount1*-1;
 					 baseamount=rows[i].baseamount1*-1;
-					
 					 taxamnt=rows[i].taxamount*-1;
 				}
-				
 				newTextBox.val(rows[i].docno+"::"+rows[i].currencyid+"::"+rows[i].rate+"::"+rows[i].dr+"::"+amount+"::"+rows[i].description+"::"+baseamount+":: "+rows[i].costtype+":: "+rows[i].costcode+":: "+rows[i].tax+":: "+taxamnt+":: "+rows[i].nettotal+":: "+taxacc+":: "+taxamnt);
 				newTextBox.appendTo('form');
 			}
@@ -275,36 +254,34 @@
 		if(val==1){
 			 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
 			 return 0;
-		 } 
+		 }
 		$('#gridlength').val(length);
-		$('#cmbcurrency').attr('disabled',false); 
+		$('#cmbcurrency').attr('disabled',false);
 		return 1;
 	}
-			  
+
 	function setValues(){
 		$('#jqxCreditNoteDate').jqxDateTimeInput({disabled: false});
 		var date = $('#jqxCreditNoteDate').val();
 		getCurrencyId(date);
 		$('#jqxCreditNoteDate').jqxDateTimeInput({disabled: true});
-		
+
 		document.getElementById("cmbtype").value=document.getElementById("hidcmbtype").value;
 		document.getElementById("cmbcurrency").value=document.getElementById("hidcmbcurrency").value;
-		
+
 		if($('#hidjqxCreditNoteDate').val()){
 			 $("#jqxCreditNoteDate").jqxDateTimeInput('val', $('#hidjqxCreditNoteDate').val());
 		  }
-		
+
 		if($('#hidmaindate').val()){
 			 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
 		  }
-		
-		if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
-		
+
+		if($('#msg').val()!=""){ $.messager.alert('Message',$('#msg').val()); }
+
 		document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 		funSetlabel();
-			
+
 		var indexVal = document.getElementById("docno").value;
 		if(indexVal>0){
 			var check = 1;
@@ -316,7 +293,7 @@
 		funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
 		funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
 	}
-	
+
 	function funvalid(){
 		rate=document.getElementById("txtrate").value;
 		if(rate=="" || rate=="0" || rate=="0.00"){
@@ -328,7 +305,7 @@
 			document.getElementById("validrate").innerText= "";
 		}
 	}
-	
+
 	function getCrTotal(){
 	  var fromamount = $('#txtbaseamount').val();
 	  var baseamount = 0;
@@ -369,7 +346,7 @@
 		  $('#txtdrtotal').val(0.00);
 	  }
 	}
-	
+
 	function getAccType(event){
        var x= event.keyCode;
        if(x==114){
@@ -378,15 +355,14 @@
 		  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
     	  $('#txtforsearch').val(2);
        }
-       else{}
     }
-	
+
 	function funPrintBtn() {
 		if (($("#mode").val() == "view") && $("#docno").val()!="") {
 	        var url=document.URL;
 	        var reurl=url.split("saveTaxCreditNote");
-	        $("#docno").prop("disabled", false);  
-	     
+	        $("#docno").prop("disabled", false);
+
 	        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
 				if (r){
 					 var win= window.open(reurl[0]+"printTaxCreditNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
@@ -403,22 +379,27 @@
 			return;
 		}
     }
-	
+
 	function clearClientInfo(){
 		$("#txtdocno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
 	}
-	
+
 	function datechange(){
 		  var date = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 		  var validdate=funDateInPeriod(date);
 		  if(parseInt(validdate)==0){
 			document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
-			return 0;	
-		  } 
+			return 0;
+		  }
 		  $("#maindate").jqxDateTimeInput('val', date);
 	}
 </script>
 
+<!--
+  REPLACEABLE CSS START
+  Copy everything in this <style> into a single shared CSS file (eg. /css/master-ui.css)
+  and replace this block with: <link rel="stylesheet" href="/css/master-ui.css">
+-->
 <style>
 /* ----------- Scrollbar ------------ */
 .hidden-scrollbar {
@@ -427,16 +408,9 @@
   scrollbar-width: thin;
   scrollbar-color: #4da3ff #eaf3ff;
 }
-.hidden-scrollbar::-webkit-scrollbar {
-  width: 7px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4da3ff;
-  border-radius: 8px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #1a73e8;
-}
+.hidden-scrollbar::-webkit-scrollbar { width: 7px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background-color: #4da3ff; border-radius: 8px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1a73e8; }
 
 /* ----------- Page Background ------------ */
 body {
@@ -459,9 +433,7 @@ body {
   margin: 0 auto;
   transition: 0.3s ease;
 }
-#mainBG:hover {
-  box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25);
-}
+#mainBG:hover { box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25); }
 
 /* ----------- Section Container ------------ */
 .receipt-header {
@@ -474,30 +446,22 @@ body {
 }
 
 /* ----------- Labels ------------ */
-label {
-  font-weight: 600;
-  font-size: 15px;
-  color: #1a2d4d;
-  margin-bottom: 6px !important;
-}
+label { font-weight: 600; font-size: 15px; color: #1a2d4d; margin-bottom: 6px !important; }
 
 /* ----------- Unified Input Styling ------------ */
-input[type="text"],
-select,
-.clean-input {
+input[type="text"], select, .clean-input {
   width: 100%;
   height: 38px !important;
   padding: 6px 12px;
   border: 1px solid #b9ccf2;
   border-radius: 8px;
   background: #ffffff;
-  font-size: 0.95rem;
+  font-size: 16px !important; /* increased baseline per your preference */
   color: #1f2f46;
   box-sizing: border-box;
   transition: 0.25s ease;
 }
-input[type="text"]:focus,
-select:focus {
+input[type="text"]:focus, select:focus {
   border-color: #4da3ff;
   box-shadow: 0 0 6px rgba(77, 163, 255, 0.55);
   outline: none;
@@ -509,60 +473,39 @@ select {
   background: #ffffff url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") no-repeat right 10px center;
   background-size: 14px;
 }
-select option {
-  font-size: 15px;
-}
+select option { font-size: 15px; }
 
 /* ----------- Disabled Inputs ------------ */
-input[readonly],
-select:disabled {
-  background-color: #eef3ff !important;
-  color: #6a7ba1 !important;
-}
+input[readonly], select:disabled { background-color: #eef3ff !important; color: #6a7ba1 !important; }
 
 /* ----------- JQX Date Input ------------ */
-#jqxCreditNoteDate {
-  width: 100% !important;
-  height: 38px !important;
-}
-#jqxCreditNoteDate input {
-  height: 36px !important;
-  padding-left: 10px !important;
-  border-radius: 8px !important;
-  background-color: #ffffff !important;
-  box-shadow: none !important;
-}
+#jqxCreditNoteDate { width: 100% !important; height: 38px !important; }
+#jqxCreditNoteDate input { height: 36px !important; padding-left: 10px !important; border-radius: 8px !important; background-color: #ffffff !important; box-shadow: none !important; }
 
 /* ----------- Autofill Pink FIX ------------ */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill {
+/* Chrome / Blink fixes for input and select autofill */
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
+select:-webkit-autofill, textarea:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #1f2f46 !important;
+  background-color: #ffffff !important;
+}
+select, select:focus, select:hover {
+  -webkit-appearance: none !important;
+  appearance: none !important;
   background-color: #ffffff !important;
   color: #1f2f46 !important;
-}
-input::selection,
-#jqxCreditNoteDate input::selection {
-  background: #cfe2ff !important;
-  color: #000 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 14px !important;
 }
 
 /* ----------- Grid Form Layout (3-col) ------------ */
-.clean-grid-form {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px 32px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.clean-grid-item {
-  display: flex;
-  flex-direction: column;
-}
-.clean-grid-item.full {
-  grid-column: span 3;
-}
+.clean-grid-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 32px; width: 100%; box-sizing: border-box; }
+.clean-grid-item { display:flex; flex-direction:column; }
+.clean-grid-item.full { grid-column: span 3; }
 
 /* ----------- Table Styling ------------ */
 .cr-table {
@@ -573,26 +516,12 @@ input::selection,
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15);
 }
-.cr-table th,
-.cr-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #d6e1ff;
-  text-align: left;
-  font-size: 0.95rem;
-}
-.cr-table th {
-  background-color: #dcebff;
-  color: #1b3f73;
-  font-weight: 600;
-}
-.cr-table tr:hover td {
-  background-color: #eef5ff;
-  transition: 0.25s;
-}
+.cr-table th, .cr-table td { padding: 10px 12px; border-bottom: 1px solid #d6e1ff; text-align:left; font-size:0.95rem; }
+.cr-table th { background-color:#dcebff; color:#1b3f73; font-weight:600; }
+.cr-table tr:hover td { background-color:#eef5ff; transition:0.25s; }
 
 /* ----------- Buttons ------------ */
-button,
-.myButton {
+button, .myButton {
   background: linear-gradient(90deg, #3b82f6, #1a73e8);
   color: #fff;
   border: none;
@@ -603,58 +532,35 @@ button,
   transition: 0.25s ease;
   box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25);
 }
-button:hover,
-.myButton:hover {
-  background: linear-gradient(90deg, #1a73e8, #155cc6);
-  transform: translateY(-2px);
-}
-button:active {
-  transform: scale(0.96);
-}
+button:hover, .myButton:hover { background: linear-gradient(90deg, #1a73e8, #155cc6); transform: translateY(-2px); }
+button:active { transform: scale(0.96); }
 
 /* ----------- Error Text ------------ */
-#validrate,
-#errormsg {
-  color: #d62828;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
+#validrate, #errormsg { color: #d62828; font-weight: 600; font-size: 0.9rem; }
 
 /* Fade Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity:1; transform: translateY(0); } }
 
-/* Mobile */
+/* Mobile tweaks */
 @media (max-width: 900px) {
-  .clean-grid-form {
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .clean-grid-item.full {
-    grid-column: span 1;
-  }
+  .clean-grid-form { grid-template-columns: repeat(1, 1fr); }
+  .clean-grid-item.full { grid-column: span 1; }
 }
 
-/* jqxGrid visual adjustments (darker borders, stronger header) */
-/* These selectors are safe to keep as-is for the credit grid too */
-#jqxCreditNote {
-    border: 1px solid #9db4d9 !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-}
-.jqx-grid-column-header, .jqx-widget-header {
-    background: #d5e4ff !important; color: #0f2a4d !important; font-weight: 700 !important;
-    font-size: 14.5px !important; border-bottom: 1px solid #9db4d9 !important;
-    height: 38px !important; min-height: 38px !important; line-height: 38px !important; padding: 0 !important;
-}
-.jqx-grid-column-header div, .jqx-widget-header div { padding: 0 10px !important; margin: 0 !important; line-height: 38px !important; }
-.jqx-grid-cell { background-color: #ffffff !important; border-color: #d3def5 !important; font-size: 14px !important; color: #1c2f4a !important; height: 38px !important; min-height: 38px !important; padding: 0 10px !important; display:flex !important; align-items:center !important; }
-.jqx-grid-cell-alt { background-color: #f4f7ff !important; }
-.jqx-grid-cell-hover { background-color: #e4edff !important; }
-.jqx-grid-cell-selected { background-color: #c3d6ff !important; border-color: #6a92d7 !important; }
-.jqx-grid-statusbar { background: #e3ecff !important; border-top: 1px solid #9db4d9 !important; color: #0f2a4d !important; font-size: 14px !important; font-weight: 700 !important; height: 34px !important; padding: 6px 10px !important; }
+/* jqxGrid visuals (for #jqxCreditNote) */
+#jqxCreditNote { border: 1px solid #9db4d9 !important; border-radius: 12px !important; overflow: hidden !important; }
+.jqx-grid-column-header, .jqx-widget-header { background: #d5e4ff !important; color: #0f2a4d !important; font-weight:700 !important; font-size:14.5px !important; border-bottom:1px solid #9db4d9 !important; height:38px !important; min-height:38px !important; line-height:38px !important; padding:0 10px !important; }
+.jqx-grid-cell { background-color:#ffffff !important; border-color:#d3def5 !important; font-size:14px !important; color:#1c2f4a !important; height:38px !important; min-height:38px !important; padding:0 10px !important; display:flex !important; align-items:center !important; }
+.jqx-grid-cell-alt { background-color:#f4f7ff !important; }
+.jqx-grid-cell-hover { background-color:#e4edff !important; }
+.jqx-grid-cell-selected { background-color:#c3d6ff !important; border-color:#6a92d7 !important; }
+.jqx-grid-statusbar { background:#e3ecff !important; border-top:1px solid #9db4d9 !important; color:#0f2a4d !important; font-size:14px !important; font-weight:700 !important; height:34px !important; padding:6px 10px !important; }
+
+/* last-resort overrides (very high specificity) */
+body [style*="background"]:not(.keep-bg) { background-color: inherit !important; }
+
 </style>
+<!-- REPLACEABLE CSS END -->
 
 </head>
 <body onload="setValues();">
@@ -677,75 +583,52 @@ button:active {
             <div class="clean-grid-item">
                 <label>Date</label>
                 <div id="jqxCreditNoteDate" onchange="datechange();" onblur="datechange();"></div>
-                <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate"
-                       value='<s:property value="hidjqxCreditNoteDate"/>'/>
+                <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate" value='<s:property value="hidjqxCreditNoteDate"/>'/>
             </div>
 
             <div class="clean-grid-item">
                 <label>Ref. No.</label>
-                <input type="text" id="txtrefno" name="txtrefno"
-                       class="clean-input"
-                       value='<s:property value="txtrefno"/>'/>
+                <input type="text" id="txtrefno" name="txtrefno" class="clean-input" value='<s:property value="txtrefno"/>'/>
             </div>
 
             <div class="clean-grid-item">
                 <label>Doc No.</label>
-                <input type="text" id="docno" name="txtcreditnotedocno"
-                       class="clean-input"
-                       value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/>
+                <input type="text" id="docno" name="txtcreditnotedocno" class="clean-input" value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/>
             </div>
 
             <!-- ROW 2 -->
             <div class="clean-grid-item">
                 <label>Type</label>
-                <select id="cmbtype" name="cmbtype" class="clean-input"
-                        onchange="clearClientInfo();">
+                <select id="cmbtype" name="cmbtype" class="clean-input" onchange="clearClientInfo();">
                     <option value="AR">AR</option>
                     <option value="AP">AP</option>
                     <option value="GL">GL</option>
                 </select>
-                <input type="hidden" id="hidcmbtype" name="hidcmbtype"
-                       value='<s:property value="hidcmbtype"/>'/>
+                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
             </div>
 
             <div class="clean-grid-item">
                 <label>Account</label>
-                <input type="text" id="txtaccid" name="txtaccid"
-                       class="clean-input"
-                       placeholder="Press F3 to Search"
-                       value='<s:property value="txtaccid"/>'
-                       onkeydown="getAccType(event);" />
+                <input type="text" id="txtaccid" name="txtaccid" class="clean-input" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" />
             </div>
 
             <div class="clean-grid-item">
                 <label>Account Name</label>
-                <input type="text" id="txtaccname" name="txtaccname"
-                       class="clean-input"
-                       value='<s:property value="txtaccname"/>' tabindex="-1"/>
-                <input type="hidden" id="txtdocno" name="txtdocno"
-                       value='<s:property value="txtdocno"/>'/>
-                <input type="hidden" id="txttrno" name="txttrno"
-                       value='<s:property value="txttrno"/>'/>
+                <input type="text" id="txtaccname" name="txtaccname" class="clean-input" value='<s:property value="txtaccname"/>' tabindex="-1"/>
+                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
             </div>
 
             <!-- ROW 3 -->
             <div class="clean-grid-item">
                 <label>Currency</label>
-                <select id="cmbcurrency" name="cmbcurrency"
-                        class="clean-input"
-                        onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
-                </select>
-                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
-                       value='<s:property value="hidcmbcurrency"/>'/>
+                <select id="cmbcurrency" name="cmbcurrency" class="clean-input" onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());"></select>
+                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
             </div>
 
             <div class="clean-grid-item">
                 <label>Rate</label>
-                <input type="text" id="txtrate" name="txtrate"
-                       class="clean-input"
-                       style="text-align:right;"
-                       value='<s:property value="txtrate"/>'
-                       onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
+                <input type="text" id="txtrate" name="txtrate" class="clean-input" style="text-align:right;" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
                 <span id="validrate"></span>
             </div>
 
@@ -754,19 +637,12 @@ button:active {
             <!-- ROW 4 -->
             <div class="clean-grid-item">
                 <label>Amount</label>
-                <input type="text" id="txtamount" name="txtamount"
-                       class="clean-input"
-                       style="text-align:right;"
-                       value='<s:property value="txtamount"/>'
-                       onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
+                <input type="text" id="txtamount" name="txtamount" class="clean-input" style="text-align:right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
             </div>
 
             <div class="clean-grid-item">
                 <label>Base Amount</label>
-                <input type="text" id="txtbaseamount" name="txtbaseamount"
-                       class="clean-input"
-                       style="text-align:right;"
-                       value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
+                <input type="text" id="txtbaseamount" name="txtbaseamount" class="clean-input" style="text-align:right;" value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
             </div>
 
             <div></div>
@@ -774,9 +650,7 @@ button:active {
             <!-- ROW 5 -->
             <div class="clean-grid-item full">
                 <label>Description</label>
-                <input type="text" id="txtdescription" name="txtdescription"
-                       class="clean-input"
-                       value='<s:property value="txtdescription"/>'/>
+                <input type="text" id="txtdescription" name="txtdescription" class="clean-input" value='<s:property value="txtdescription"/>'/>
             </div>
 
         </div>
@@ -797,15 +671,11 @@ button:active {
         <tr>
             <td style="width:10%; text-align:right;">Dr. Total</td>
             <td style="width:55%;">
-                <input type="text" id="txtdrtotal" name="txtdrtotal"
-                       style="width:20%; text-align:right;"
-                       value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
+                <input type="text" id="txtdrtotal" name="txtdrtotal" style="width:20%; text-align:right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
             </td>
             <td style="width:10%; text-align:right;">Cr. Total</td>
             <td style="width:25%;">
-                <input type="text" id="txtcrtotal" name="txtcrtotal"
-                       style="width:50%; text-align:right;"
-                       value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+                <input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%; text-align:right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
             </td>
         </tr>
     </table>
@@ -834,5 +704,4 @@ button:active {
 
 </div>
 </body>
-
 </html>
