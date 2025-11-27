@@ -9,130 +9,111 @@
 <link href="../../../../css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="../../../../css/myButton.css" rel="stylesheet" type="text/css"/>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 <style>
 
-
-
-#whole
-{
-width:100%;
-}
-#header
-{
-background-color: #E0ECF8;
-color:black;
-text-align:left;
-height:7%;
-width:3%
-padding:0px;
+/* =======================
+   GLOBAL WRAPPER
+======================= */
+#whole {
+    width: 100%;
+    background: #f3f7ff;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-
-#nav
-{
-   line-height:30px;
-    background-color: #E0ECF8; 
-    height:50%;
-    width:100%;
-    /*float:left;*/
-    /*position:absolute;*/
-    
- /*    background-color:	#ffc0cb; */
-    
-    
+/* =======================
+   HEADER
+======================= */
+#header {
+    background: linear-gradient(135deg, #cce4ff, #a9ccf7);
+    color: #003366;
+    text-align: left;
+    height: 7%;
+    width: 100%;
+    padding: 8px 12px;
+    border-bottom: 2px solid #8bb8f0;
+    box-shadow: 0 2px 6px rgba(0, 60, 150, 0.15);
+    font-weight: 600;
 }
 
-#comiframe
-{
-/*float:center;*/
-width:100%;
-height:95%;
-color:#eeeeee;
+/* =======================
+   HORIZONTAL NAVIGATION
+======================= */
 
+
+/* NAV LINKS */
+#nav a {
+    color: #003f7f;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.25s ease;
 }
- 
- /*   .myButtons {
-	  -moz-box-shadow: 0px -2px 14px -7px #276873;
-	-webkit-box-shadow: 0px -2px 14px -7px #276873;  
-	box-shadow: 0px -2px 14px -7px #276873;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
-	background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
-	background-color:#599bb3;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Verdana;
-	font-size:10px;
-	padding:5px 10px;
-	text-decoration:none;
-	   text-shadow:0px 1px 13px #3d768a;  
+
+/* HOVER EFFECT */
+#nav a:hover {
+    background: linear-gradient(135deg, #8cc6ff, #5aa4f5);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 80, 160, 0.3);
+    transform: translateY(-2px);
 }
+#nav {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; /* optional if too many buttons */
+}
+
+#nav a, 
+#nav button, 
+#nav .myButtons {
+    display: inline-block !important;
+}
+
+/* =======================
+   IFRAME CONTENT SECTION
+======================= */
+#comiframe {
+    width: 100%;
+    height: 95%;
+    background: #ffffff;
+    color: #003366;
+    border: 1px solid #d0e3ff;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 70, 160, 0.15);
+}
+
+/* =======================
+   BUTTONS - PREMIUM BLUE
+======================= */
+.myButtons {
+    background: linear-gradient(to bottom, #5daeff 5%, #3e8be0 100%);
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 11px;
+    padding: 5px 12px;
+    border: 1px solid #2c6bb3;
+    text-decoration: none;
+    box-shadow: 0 3px 6px rgba(0, 60, 150, 0.2);
+    transition: all 0.2s ease;
+}
+
 .myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
-	background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
-	background-color:#408c99;
+    background: linear-gradient(to bottom, #3e8be0 5%, #5daeff 100%);
+    box-shadow: 0 4px 10px rgba(0, 60, 150, 0.3);
+    transform: translateY(-1px);
 }
+
 .myButtons:active {
-	position:relative;
-	top:1px;
-} 
-      */
- 
- 
-    .myButtons {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
-	background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
-	background-color:#599bb3;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
-	border-radius:4px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Verdana;
-	font-size:10px;
-	padding:4px 8px;
-	text-decoration:none;
+    position: relative;
+    top: 1px;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
-	background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
-	background-color:#408c99;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
-} 
- 
-  /*   #ss
-{
-background-color:	#ffc0cb;
-}
-   
-  */
+
 
 </style>
 <script type="text/javascript">
