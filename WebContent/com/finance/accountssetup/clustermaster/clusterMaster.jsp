@@ -3,7 +3,8 @@
 <html>
 <% String contextPath=request.getContextPath();%>
 <head>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css?v=50">
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
@@ -254,12 +255,166 @@
 	 
 </script>
 
+
 <style>
+/* ============================
+   PREMIUM BLUE RENTAL UI
+============================ */
+
+/* GLOBAL */
+body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(130deg,#e6efff,#d7e5ff,#cfe0ff);
+    font-family: "Poppins","Segoe UI",sans-serif;
+    color:#102a56;
+    overflow-y:auto;
+}
+
+/* MAIN PAGE CONTAINER */
+#mainBG {
+    width:95%;
+    margin:auto;
+    background:#ffffff;
+    padding:20px 28px;
+    border-radius:14px;
+    border:1px solid #dce6ff;
+    box-shadow:0 12px 30px rgba(40, 80, 160, 0.15);
+}
+
+/* HEADER INCLUDE SPACING */
+#mainBG > form > jsp\:include ~ br {
+    margin-bottom:10px;
+}
+
+/* FORM SCROLL WRAPPER */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    padding-right:8px;
+}
+
+/* FIELDSET CARD */
+fieldset {
+    border: 1px solid #d6ddff;
+    background:#f9fbff;
+    padding:18px;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* TABLE REFINED DESIGN */
+table {
+    width:100%;
+    border-spacing: 12px;
+}
+
+/* LABELS */
+td:first-child,
+td[align="right"] {
+    font-size:13px;
+    font-weight:600;
+    color:#3a4b76;
+    width:120px;
+}
+
+/* INPUTS */
+input[type="text"], select {
+    width:100%;
+    height:38px;
+    border-radius:10px;
+    padding:8px 12px;
+    border:1px solid #d4dbff;
+    background:white;
+    transition:0.23s ease;
+    font-size:13px;
+}
+
+/* FOCUS & HOVER EFFECT */
+input[type="text"]:focus, 
+select:focus {
+    border-color:#3f6cff;
+    box-shadow:0 0 10px rgba(63,108,255,0.35);
+    outline:none;
+}
+
+input:hover, select:hover {
+    border-color:#3f6cff;
+}
+
+/* JQX DATE PICKER MATCH */
+#clusterDate {
+    border-radius:10px!important;
+    box-shadow:0 0 5px rgba(63,108,255,0.15);
+    background:white;
+}
+
+/* GRID WRAPPER BELOW FIELDSET */
+#clusterMasterDiv {
+    background:white;
+    border-radius:10px;
+    border:1px solid #dce6ff;
+    padding:10px;
+    margin-top:16px;
+    box-shadow:0 6px 20px rgba(60,100,200,0.12);
+}
+
+/* SEARCH WINDOW (POPUP) */
+#accountDetailsWindow {
+    border-radius:12px!important;
+    background:white!important;
+    border:1px solid #3f6cff!important;
+}
+
+/* SEARCH POPUP HEADER */
+.jqx-window-header {
+    background:#3f6cff!important;
+    color:white!important;
+    font-weight:600!important;
+    font-size:14px!important;
+    border-radius:10px 10px 0 0!important;
+}
+
+/* CLOSE ICON FIX */
+.jqx-window-close-button {
+    background:none!important;
+    width:18px!important;
+    height:18px!important;
+    cursor:pointer!important;
+}
+
+.jqx-window-close-button:before {
+    content:"✕";
+    display:block;
+    color:white;
+    font-size:14px;
+    text-align:center;
+    line-height:18px;
+}
+
+/* GRID INSIDE SEARCH POPUP */
+#clusterMasterDiv .jqx-grid-cell,
+#clusterMasterDiv .jqx-grid-column-header {
+    font-size:13px!important;
+}
+
+/* BUTTONS (IF ADDED LATER) */
+button, .btn {
+    background:#3f6cff;
+    border:none;
+    padding:10px 18px;
+    border-radius:10px;
+    font-size:14px;
+    color:white;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover, .btn:hover {
+    background:#244ed8;
 }
 </style>
+
 
 </head>
 <body onload="setValues();">

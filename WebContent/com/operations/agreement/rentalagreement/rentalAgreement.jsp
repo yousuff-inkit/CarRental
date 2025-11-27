@@ -10,172 +10,193 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-form label.error {
-   color:red;
-  font-weight:bold;
-}
-
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
+/* --------- GLOBAL FONT --------- */
+* {
+    font-family: 'Poppins', sans-serif !important;
     box-sizing: border-box;
 }
+
+
+/* --------- PAGE BACKGROUND --------- */
+body {
+    background: linear-gradient(135deg, #edf4ff 0%, #d7e5ff 40%, #f8fbff 100%);
+    margin: 0;
+    padding: 20px 0;
+}
+
+
+/* --------- MAIN WRAPPER CARD --------- */
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+    background: #ffffff;
+    width: 92%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0px 10px 35px rgba(80,110,255,0.25);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+/* Remove blue background behind components */
+.homeContent {
+    background: transparent !important;
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
+/* --------- SECTION WRAPPER --------- */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    background: #ffffff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 14px;
+    border: 1px solid #e3e9ff;
+    box-shadow: 0px 8px 25px rgba(100,130,255,0.12);
 }
+
+/* Section Titles */
 .table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
     font-weight: 600;
+    color: #223a6b;
 }
-.cr-table {
+
+/* --------- INPUT FIELDS --------- */
+input[type="text"],
+select {
+    height: 35px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b8c6ff !important;
+    background: #ffffff !important;
+    padding: 6px 12px !important;
+    font-size: 0.9rem !important;
     width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    transition: 0.25s;
+    box-shadow: 0px 2px 5px rgba(130,155,255,0.18);
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+input:focus,
+select:focus {
+    border-color: #558cff !important;
+    box-shadow: 0px 0px 8px rgba(86,136,255,0.4) !important;
+    outline: none !important;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+
+/* Placeholder Style */
+input::placeholder {
+    color: #9da7c9;
+}
+
+/* --------- LABELS ALIGNMENT --------- */
+label {
     font-weight: 600;
+    color: #2a3960;
+    margin-right: 4px;
+    font-size: 0.9rem;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+/* --------- BUTTONS --------- */
+button,
+.myButton,
+input[type="button"] {
+    background: linear-gradient(120deg,#6fb1fc,#2563eb) !important;
+    border: none !important;
+    padding: 8px 25px !important;
+    border-radius: 10px !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    box-shadow: 0 5px 15px rgba(30,90,220,0.25) !important;
+    transition: 0.3s ease !important;
 }
+
+button:hover,
+.myButton:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+
+/* --------- JQX UI FIX --------- */
+.jqx-widget-content,
+.jqx-input {
+    border-radius: 10px !important;
+    border: 1px solid #bcd1ff !important;
+    padding-left: 8px !important;
+}
+
+.jqx-widget-header {
+    background: linear-gradient(120deg,#6fb1fc,#2563eb) !important;
+    color: white !important;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+
+/* -------- GRID -------- */
+.jqx-grid-column-header {
+    background: #e9f1ff !important;
+    font-weight: 600;
+    border: none !important;
+}
+
+.jqx-grid-cell-selected {
+    background: #6d95ff !important;
+    color: white !important;
+}
+
+/* Hover */
+.jqx-grid-cell-hover {
+    background: rgba(80,120,255,0.14) !important;
+}
+
+
+/* -------- POPUP WINDOW -------- */
+.jqx-window,
+.jqx-window-content {
+    border-radius: 18px !important;
+    border: 1px solid #cdd9ff !important;
+    box-shadow: 0px 8px 28px rgba(90,115,255,0.25) !important;
+}
+
+/* Header */
+.jqx-window-header {
+    background: linear-gradient(120deg,#6fb1fc,#2563eb) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 12px !important;
+}
+
+/* Close Icon Custom */
+.jqx-window-close-button,
+.jqx-icon-close,
+.jqx-icon-close-hover {
+    cursor: pointer !important;
+    background-image: url('../icons/close_new.png') !important;
+    background-repeat: no-repeat !important;
+    background-size: 14px !important;
+    background-position: center !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+/* -------- SCROLL SMOOTH -------- */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: 520px;
+    padding-right: 10px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.hidden-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+    background: #9bb5ff;
+    border-radius: 10px;
+}
+
+
+
 </style>
 <%-- <link rel="text/css" href="../../../../vendors/select2/select2.min.css"/>
 <script type="text/javascript" src="../../../../vendors/select2/select2.min.js"></script> --%>

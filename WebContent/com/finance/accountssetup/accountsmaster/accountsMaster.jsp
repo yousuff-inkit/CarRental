@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>GatewayERP(i) - Account Master (Modernized)</title>
 <meta charset="UTF-8">
@@ -10,173 +11,201 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-/* ---------- Master UI (based on your provided master) ---------- */
+/* ---------------- PREMIUM GRADIENT BLUE THEME ---------------- */
 
-/* general */
+/* Base theme tokens */
+:root {
+  --primary: #3f6cff;
+  --primary-light: #dce6ff;
+  --primary-dark: #1f3b99;
+  --secondary: #00b4ff;
+  --bg-lite: #f7faff;
+  --text-dark: #102a56;
+  --border: rgba(80,120,255,0.35);
+  --radius: 12px;
+  --transition: 0.25s ease;
+  --gradient: linear-gradient(135deg, #3f6cff, #00b4ff);
+}
+
+/* Universal reset */
 * { box-sizing: border-box; }
+
+/* Page background */
 body {
-  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  color: #1f2f46;
   margin: 0;
-  padding: 28px 0;
+  padding: 30px 0;
   min-height: 100vh;
+  background: linear-gradient(120deg, #dbe7ff, #c9dcff);
+  color: var(--text-dark);
+  font-family: "Poppins","Segoe UI",sans-serif;
 }
 
-/* main container */
+/* Main container */
 #mainBG {
-  background: #f4f8ff;
-  border-radius: 14px;
-  box-shadow: 0 6px 30px rgba(30, 80, 200, 0.08);
-  padding: 18px;
-  max-width: 1220px;
-  margin: 0 auto;
+  width: 95%;
+  max-width: 1260px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 12px 32px rgba(20,60,200,0.15);
+  transition: var(--transition);
+}
+#mainBG:hover {
+  box-shadow: 0 16px 42px rgba(20,60,200,0.22);
 }
 
-/* subtle inner card */
+/* Section/inner card */
 .receipt-header {
-  background: #fff;
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 18px;
-  border: 1px solid #e6eefc;
-  box-shadow: 0 3px 12px rgba(80,130,240,0.04);
+  background: var(--bg-lite);
+  border-radius: var(--radius);
+  border: 1px solid var(--primary-light);
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(50,80,200,0.1);
 }
 
-/* Top grid: date / docno on same row */
-.top-grid {
+/* Form grid */
+.top-grid,
+.clean-grid,
+.transaction-grid,
+.ui-row-inputs,
+.ui-row-labels {
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  gap: 12px 18px;
-  align-items: center;
-  width: 100%;
-}
-.top-grid .form-item { display:flex; align-items:center; gap:10px; }
-.top-grid label { font-weight:600; color:#274b8f; min-width:70px; }
-
-/* Clean grid form used for main account & transaction */
-.clean-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px 22px;
-  align-items: start;
-  margin-top: 16px;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
 }
 
-/* label row above inputs when required */
-.clean-grid .label-row {
-  display: contents;
-}
-.clean-grid .label {
-  font-weight:600;
-  color:#1a2d4d;
-  padding-bottom:4px;
-}
-
-/* inputs */
-input[type="text"], select {
-  width: 100%;
-  height: 38px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid #d1d9ee;
-  background: #fff;
-  font-size: 14px;
-  color: #1f2f46;
-}
-input[type="text"]:focus, select:focus {
-  outline: none;
-  border-color: #4da3ff;
-  box-shadow: 0 0 6px rgba(77,163,255,0.20);
-}
-
-/* grouped titled blocks */
-.block {
-  background: #f6f9ff;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #e9f0ff;
-  box-shadow: 0 2px 10px rgba(100,130,220,0.03);
-}
-.block h3 {
-  margin: 0 0 10px 0;
-  color:#16325a;
-  font-size:16px;
-}
-
-/* Sub-block where labels appear on top row and inputs below */
-.labels-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom:6px;
-}
-.inputs-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-/* transaction special layout (3 rows as requested) */
-.transaction-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.transaction-grid .full { grid-column: 1 / -1; }
-
-/* small helper */
-.helper { font-size: 13px; color:#6a7ba1; }
-
-/* responsive */
-@media (max-width: 980px) {
-  .clean-grid, .labels-row, .inputs-row, .top-grid, .transaction-grid {
+/* Responsive */
+@media(max-width:980px){
+  .top-grid,
+  .clean-grid,
+  .transaction-grid,
+  .ui-row-inputs,
+  .ui-row-labels {
     grid-template-columns: 1fr;
   }
-  .top-grid { grid-template-columns: 1fr; gap:8px; }
 }
 
-/* table style fallback */
-.cr-table {
+/* Input + select styling */
+input[type="text"], select {
   width:100%;
-  border-collapse: collapse;
-  margin-top:12px;
-  background:transparent;
+  height:42px;
+  padding:8px12px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  font-size:14px;
+  background:white;
+  color:var(--text-dark);
+  transition:var(--transition);
 }
-.cr-table td { padding:6px; vertical-align:top; }
+
+input:focus, select:focus {
+  border:1px solid var(--primary);
+  box-shadow: 0 0 12px rgba(63,108,255,0.35);
+  outline:none;
+}
+
+/* Labels */
+label, .ui-row-labels span {
+  font-weight:600;
+  color:#244b80;
+}
+
+/* Radio section cards */
 .ui-block {
-    background: #f7faff;
-    padding: 14px;
-    margin-bottom: 18px;
-    border-radius: 12px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  padding:18px;
+  border-radius:var(--radius);
+  border:1px solid var(--primary-light);
+  background:white;
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  transition:var(--transition);
+}
+.ui-block:hover {
+  box-shadow:0 12px 28px rgba(63,108,255,0.25);
 }
 
+/* Section titles */
 .block-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1a2d4d;
-    display: block;
-    margin-bottom: 12px;
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+  background: var(--gradient);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.ui-row-labels,
-.ui-row-inputs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 10px;
+/* Error message */
+#errormsg {
+  font-weight:600;
+  color:#d62828;
 }
 
-.inline-field {
-    display: flex;
-    gap: 10px;
+/* ---------- BUTTON STYLE (if buttons exist) ---------- */
+button,
+.jqx-button {
+  background: var(--gradient);
+  border:none;
+  color:white;
+  padding:12px20px;
+  border-radius:var(--radius);
+  font-size:14px;
+  cursor:pointer;
+  font-weight:600;
+  transition: var(--transition);
+}
+button:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(63,108,255,0.35);
 }
 
-.ui-row-labels span {
-    font-size: 0.9rem;
-    color: #3a4b6a;
-    font-weight: 600;
+/* ---------------- POPUP SEARCH WINDOW THEME ---------------- */
+
+#accountSearchwindow {
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--primary) !important;
+  background:white !important;
+  box-shadow:0 20px 50px rgba(63,108,255,0.35) !important;
+  overflow:hidden;
+}
+
+/* Popup title bar */
+#accountSearchwindow .jqx-window-header {
+  background: var(--gradient) !important;
+  color:white !important;
+  font-weight:600;
+  border-radius: var(--radius) var(--radius) 0 0 !important;
+}
+
+/* Popup inner content */
+#accountSearchwindow .jqx-widget-content {
+  background:white !important;
+  padding:16px;
+}
+
+/* Popup table UI */
+#accountSearchwindow table {
+  width:100%;
+  border-radius:var(--radius);
+  border:1px solid var(--primary-light);
+}
+
+#accountSearchwindow tr:hover {
+  background:#e9f1ff;
+}
+html, body {
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
 
 </style>
@@ -1028,7 +1057,8 @@ function getConfig() {
 </head>
 <body onload="getHead();getMainac();getbranch();setValues();getConfig();">
 
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG">
+
 <jsp:include page="../../../../header.jsp"></jsp:include>
 <br>
 
