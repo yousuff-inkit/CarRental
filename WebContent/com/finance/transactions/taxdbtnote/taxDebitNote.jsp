@@ -734,6 +734,115 @@ button:active {
 #jqxDebitNote::-webkit-scrollbar-thumb:hover {
     background: #6f8ec4;
 }
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    background-color: #ffffff !important;
+    color: #1f2f46 !important;
+}
+input[type="text"],
+select,
+.clean-input {
+  font-size: 15px !important;   /* increased text size */
+}
+/* 1) native autofill fixes (Chrome / Blink) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: #1f2f46 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* paint white */
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  background-color: #ffffff !important;
+}
+
+/* 2) force select appearance / remove pink background on selects (Chrome) */
+select,
+select:focus,
+select:hover {
+  background-color: #ffffff !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-text-fill-color: #1f2f46 !important;
+  color: #1f2f46 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 14px !important;
+}
+
+/* 3) standardize select option font-size */
+select, select option {
+  font-size: 15px !important;
+  line-height: 1.2 !important;
+}
+
+/* 4) JQX input / dropdown internals (covers most jqx styles) */
+.jqx-input,
+.jqx-input-content,
+.jqx-dropdownlist,
+.jqx-dropdownlist-content,
+.jqx-dropdownlist-input,
+.jqx-widget .jqx-input,
+.jqx-widget .jqx-input-content,
+.jqx-widget .jqx-dropdownlist {
+  background-color: #ffffff !important;
+  color: #1f2f46 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  border-color: #b9ccf2 !important;
+}
+
+/* 5) Remove any background-image set by JQX that could look pink */
+.jqx-input .jqx-input-content,
+.jqx-dropdownlist .jqx-input-content,
+.jqx-dropdownlist-content {
+  background-image: none !important;
+}
+
+/* 6) On focus ensure white background and visible text */
+.jqx-input:focus,
+.jqx-input-content:focus,
+.jqx-dropdownlist:focus,
+.jqx-dropdownlist-content:focus,
+select:focus {
+  background-color: #ffffff !important;
+  color: #1f2f46 !important;
+  -webkit-text-fill-color: #1f2f46 !important;
+}
+
+/* 7) Ensure date widget input (jqxDateTimeInput) text colour and background */
+#jqxDebitNoteDate input,
+#jqxBankReconciliationDate input,
+.jqx-datetimeinput-input {
+  background-color: #ffffff !important;
+  color: #1f2f46 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+/* 8) Increase input/select font-size globally (only size change) */
+input[type="text"],
+input,
+select,
+.clean-input,
+.jqx-input,
+.jqx-dropdownlist {
+  font-size: 16px !important; /* bump up a bit */
+}
+
+/* 9) last resort: override inline styles applied by scripts (very high specificity) */
+body [style*="background"]:not(.keep-bg) {
+  background-color: inherit !important;
+}
+
+/* 10) small visual guard for disabled fields (keeps them readable) */
+input[readonly],
+select:disabled {
+  background-color: #f4f7ff !important;
+  color: #6a7ba1 !important;
+}
 </style>
 
 </head>
