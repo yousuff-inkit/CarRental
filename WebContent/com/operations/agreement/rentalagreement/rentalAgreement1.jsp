@@ -10,18 +10,127 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
+/* ---------------- Error Message ---------------- */
 form label.error {
-   color:red;
-  font-weight:bold;
-
+    color: #ff4b4b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding-left: 6px;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
+/* Smooth fade effect for validation error */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+
+/* ---------------- ICON BUTTON ---------------- */
 .icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
+    width: 2.6em;
+    height: 2.4em;
+    background: linear-gradient(120deg, #6fb1fc, #2563eb);
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.28s ease;
+    box-shadow: 0px 4px 12px rgba(50, 100, 255, 0.25);
 }
+
+/* Icon Image inside stays neat */
+.icon img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+}
+
+/* Hover Bloom Effect */
+.icon:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0px 10px 22px rgba(30, 70, 230, 0.35);
+}
+
+/* Active pressed effect */
+.icon:active {
+    transform: scale(0.95);
+}
+
+
+/* ---------------- FORM FIELD ENHANCEMENTS ---------------- */
+
+/* Apply to any field near this icon or error labels */
+input[type="text"],
+select {
+    border: 1px solid #c3d4ff;
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 8px 12px;
+    height: 34px;
+    width: 100%;
+    outline: none;
+    transition: 0.25s ease-in-out;
+    box-shadow: 0px 2px 6px rgba(130,150,255,0.15);
+}
+
+/* Hover Soft Highlight */
+input[type="text"]:hover,
+select:hover {
+    border-color: #7b9eff;
+}
+
+/* Focus Glow Effect */
+input[type="text"]:focus,
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0px 0px 10px rgba(50,110,255,0.35);
+}
+
+
+/* ---------------- LABEL ALIGNMENT ---------------- */
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #244266;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+
+
+/* ---------------- CONTAINER FOR INPUT ROWS ---------------- */
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+/* For cleaner layout in dense forms */
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* ---------------- CARD CONTAINER IF NEEDED ---------------- */
+
+.gradient-box {
+    background: linear-gradient(145deg,#e9f0ff,#ffffff);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 10px 0;
+    box-shadow: 0px 8px 28px rgba(100,130,255,0.1);
+    border: 1px solid #d9e3ff;
+}
+
 </style>
 
  <script type="text/javascript">   
