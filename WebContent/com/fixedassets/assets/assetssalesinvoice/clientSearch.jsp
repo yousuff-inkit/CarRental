@@ -3,6 +3,89 @@
 
 <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>
  --%>
+ <style>
+
+/* -------------------- GRID WRAPPER -------------------- */
+#clientSearch {
+    margin-top: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #d8e4ff !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 255, 0.08);
+}
+
+/* -------------------- GRID BASE -------------------- */
+.jqx-grid {
+    border: none !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    font-size: 12px !important;
+    color: #333 !important;
+    background: #ffffff !important;
+}
+
+/* -------------------- HEADER STYLE -------------------- */
+.jqx-grid-column-header {
+    background: linear-gradient(180deg, #e6eeff, #d5e3ff) !important;
+    border-bottom: 1px solid #c7d7ff !important;
+    border-right: 1px solid #c7d7ff !important;
+    color: #274b8f !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+/* Hover on header */
+.jqx-grid-column-header:hover {
+    background: #cfdcff !important;
+    cursor: pointer;
+}
+
+/* -------------------- ROW STYLE -------------------- */
+.jqx-grid-cell {
+    border-color: #e6eaff !important;
+    padding-left: 8px !important;
+}
+
+/* Alternate row color */
+.jqx-grid-cell-alt {
+    background: #f7faff !important;
+}
+
+/* Hover row effect */
+.jqx-grid-cell-hover {
+    background: #e8f0ff !important;
+    transition: 0.2s ease;
+}
+
+/* Row selected */
+.jqx-grid-cell-selected {
+    background: #4a8dff !important;
+    color: white !important;
+    border-color: #4a8dff !important;
+}
+
+/* -------------------- SCROLLBAR -------------------- */
+.jqx-scrollbar {
+    background: #e8eefe !important;
+}
+
+.jqx-scrollbar-thumb {
+    background: #b8caff !important;
+    border-radius: 6px !important;
+}
+
+.jqx-scrollbar-thumb:hover {
+    background: #8aaeff !important;
+}
+
+/* -------------------- WINDOW POPUP (if used) -------------------- */
+#clientwindow {
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 255, 0.15) !important;
+}
+
+</style>
+ 
 <%@page import="javax.servlet.http.HttpServletRequest" %>
 <%@page import="javax.servlet.http.HttpSession" %>
  <%
