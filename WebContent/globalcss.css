@@ -1,136 +1,165 @@
-/* -------- MAIN CONTAINER -------- */
+/* ============================
+   ⭐ PREMIUM BLUE UI THEME ⭐
+   ============================ */
+
+/* -------- MAIN CARD CONTAINER -------- */
 #mainBG {
     background: #ffffff;
     border-radius: 16px;
-    padding: 10px;
+    padding: 25px;
     max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: 0 8px 24px rgba(30, 64, 175, 0.12);
-}
-
-/* Scroll styling */
-#mainBG::-webkit-scrollbar {
-    width: 10px;
-}
-#mainBG::-webkit-scrollbar-track {
-    background: #d0e4ff;
-    border-radius: 8px;
-}
-#mainBG::-webkit-scrollbar-thumb {
-    background: #376bff;
-    border-radius: 8px;
-}
-#mainBG::-webkit-scrollbar-thumb:hover {
-    background: #274dcc;
+    min-width: 900px;
+    margin: 20px auto;
+    box-shadow: 0 6px 28px rgba(58, 97, 171, 0.18);
+    box-sizing: border-box;
 }
 
 /* -------- FORM SECTIONS -------- */
-.section-row {
-    display: flex;
-    flex-direction: column;
-    gap: 26px;
-    width: 100%;
-}
-
-/* Blue section block */
 .section-block {
     width: 100%;
-    background: #f0f4ff;
-    border-radius: 12px;
-    padding: 20px 18px;
-    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.08);
-    border: none;
+    background: #f2f6ff;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 3px 10px rgba(75, 125, 226, 0.10);
+    margin-bottom: 25px;
+    box-sizing: border-box;
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: #1e2a44;
+    font-size: 1.7em;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #1b4f9a;
 }
 
+/* Form groups: label + input */
 .section-block .form-group {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 30px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
 }
 
-.section-block label {
-    min-width: 110px;
+/* ======= BIGGER LABELS (FINAL) ======= */
+.form-group label {
+    min-width: 230px;
+    font-size: 26px;
+    font-weight: 800;
     text-align: right;
-    font-weight: 500;
-    color: #1e2a44;
+    color: #1d2a4d;
+    transition: 0.25s ease;
 }
 
-.section-block input[type="text"],
-.section-block select {
+.form-group label:hover {
+    color: #3a78e0;
+}
+
+/* ======= BIGGER INPUTS (FINAL) ======= */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea,
+.txtbox {
     flex: 1;
-    border: 1px solid #b4c6ff;
-    border-radius: 6px;
-    padding: 6px 10px;
+    font-size: 22px;
+    padding: 22px 26px;
+    height: 54px;
+    border-radius: 26px;
+    border: 2px solid #b9c9e8;
     background: #fff;
-    font-size: 0.96rem;
-    transition: border-color 0.2s ease;
+    transition: all 0.25s ease;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #376bff;
+/* ======= BLUE HOVER & FOCUS (NO PINK) ======= */
+.form-group input[type="text"]:hover,
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:hover,
+.form-group input[type="email"]:focus,
+.form-group select:hover,
+.form-group select:focus,
+.form-group textarea:hover,
+.form-group textarea:focus,
+.txtbox:hover,
+.txtbox:focus {
+    border-color: #2f6dde;
+    box-shadow: 0 0 10px rgba(47, 109, 222, 0.6);
     outline: none;
+    background: #ffffff;
 }
 
-/* -------- TABLE SECTION -------- */
+/* -------- TABLE -------- */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f0f4ff;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #c8d3ff;
+    box-shadow: 0 0 0 1px #d5e1f7;
 }
 
 .cr-table th {
-    background: #dce6ff;
-    color: #1e2a44;
-    font-size: 1em;
+    background: #e6efff;
+    color: #1a3e7d;
+    font-size: 1.1em;
     font-weight: 600;
-    padding: 10px;
-    border-bottom: 1px solid #d6e0ff;
+    padding: 14px;
+    border-bottom: 1px solid #d3def4;
 }
 
 .cr-table td {
-    padding: 10px;
-    font-size: 0.98em;
-    color: #1e2a44;
-    border-bottom: 1px solid #d6e0ff;
+    padding: 14px;
+    font-size: 16px;
+    color: #1d2a4d;
+    border-bottom: 1px solid #e3e9f5;
 }
 
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-/* Hidden scrollbar wrapper (scroll allowed) */
+.cr-table tr:hover td {
+    background: #f1f6ff;
+}
+
+/* -------- SCROLLBAR (VISIBLE) -------- */
 .hidden-scrollbar {
-    max-height: 80vh;
+    max-height: 75vh;
     overflow-y: auto;
-    padding-right: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: #376bff #d0e4ff;
+    width: 100%;
+    padding-right: 6px;
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
     width: 8px;
 }
+
 .hidden-scrollbar::-webkit-scrollbar-track {
-    background: #d0e4ff;
-    border-radius: 4px;
+    background: #d5e1f7;
+    border-radius: 6px;
 }
+
 .hidden-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #376bff;
-    border-radius: 4px;
-    border: 2px solid #d0e4ff;
+    background-color: #3a78e0;
+    border-radius: 6px;
 }
+
 .hidden-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #274dcc;
+    background-color: #1f6feb;
+}
+
+/* -------- BUTTONS -------- */
+.myButton {
+    background-color: #3a78e0;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 12px 20px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.myButton:hover {
+    background-color: #1f6feb;
 }
