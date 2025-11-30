@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -428,420 +430,136 @@
 </script>
 
 <style>
-/* ----------- Scrollbar ------------ */
-.hidden-scrollbar {
-  overflow-y: auto;
-  height: 530px;
-  scrollbar-width: thin;
-  scrollbar-color: #4da3ff #eaf3ff;
-}
-.hidden-scrollbar::-webkit-scrollbar {
-  width: 7px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4da3ff;
-  border-radius: 8px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #1a73e8;
+/* ------------------------------
+   INPUT FIELD BASE STYLE
+------------------------------ */
+.inp {
+    width: 100%;
+    height: 32px !important;
+    padding: 4px 8px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b9c9e8 !important;
+    background: #fff !important;
+    transition: 0.25s;
 }
 
-/* ----------- Page Background ------------ */
-body {
-  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  color: #1f2f46;
-  margin: 0;
-  padding: 40px 0;
-  min-height: 100vh;
-  animation: fadeIn 0.6s ease-in-out;
+.inp:hover,
+.inp:focus {
+    border-color: #2f6dde !important;
+    box-shadow: 0 0 8px rgba(47,109,222,0.4) !important;
+    outline: none !important;
 }
 
-/* ----------- Main Container ------------ */
-#mainBG {
-  background: #f4f8ff;
-  border-radius: 16px;
-  box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15);
-  padding: 25px 30px;
-  max-width: 1250px;
-  margin: 0 auto;
-  transition: 0.3s ease;
-}
-#mainBG:hover {
-  box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25);
+/* Labels */
+.lbl {
+    min-width: 110px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2a4d;
 }
 
-/* ----------- Section Container ------------ */
-.receipt-header {
-  background: #edf4ff;
-  border: 1px solid #c9dafc;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 26px;
-  box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2);
+/* Layout spacing */
+.row-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 260px;
+}
+.row3 {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
 }
 
-/* ----------- Labels ------------ */
-label {
-  font-weight: 600;
-  font-size: 15px;
-  color: #1a2d4d;
-  margin-bottom: 6px !important;
-}
-
-/* ----------- Unified Input Styling ------------ */
-input[type="text"],
-select,
-.clean-input {
-  width: 100%;
-  height: 38px !important;
-  padding: 6px 12px;
-  border: 1px solid #b9ccf2;
-  border-radius: 8px;
-  background: #ffffff;
-  font-size: 0.95rem;
-  color: #1f2f46;
-  box-sizing: border-box;
-  transition: 0.25s ease;
-}
-input[type="text"]:focus,
-select:focus {
-  border-color: #4da3ff;
-  box-shadow: 0 0 6px rgba(77, 163, 255, 0.55);
-  outline: none;
-}
-
-/* ----------- Dropdown ------------ */
-select {
-  appearance: none;
-  background: #ffffff url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") no-repeat right 10px center;
-  background-size: 14px;
-}
-select option {
-  font-size: 15px;
-}
-
-/* ----------- Disabled Inputs ------------ */
-input[readonly],
-select:disabled {
-  background-color: #eef3ff !important;
-  color: #6a7ba1 !important;
-}
-
-/* ----------- JQX Date Input ------------ */
-#jqxDebitNoteDate {
-  width: 100% !important;
-  height: 38px !important;
-}
-#jqxDebitNoteDate input {
-  height: 36px !important;
-  padding-left: 10px !important;
-  border-radius: 8px !important;
-  background-color: #ffffff !important;
-  box-shadow: none !important;
-}
-
-/* ----------- Autofill Pink FIX ------------ */
+/* ------------------------------
+   FIX: Chrome Autofill (remove pink)
+------------------------------ */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-  background-color: #ffffff !important;
-  color: #1f2f46 !important;
-}
-input::selection,
-#jqxDebitNoteDate input::selection {
-  background: #cfe2ff !important;
-  color: #000 !important;
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #000 !important;
 }
 
-/* ----------- Grid Form Layout ------------ */
-.clean-grid-form {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px 32px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.clean-grid-item {
-  display: flex;
-  flex-direction: column;
-}
-.clean-grid-item.full {
-  grid-column: span 3;
+/* ------------------------------
+   FIX: Dropdown font size
+------------------------------ */
+select.inp,
+select.inp option {
+    font-size: 18px !important;
+    height: 32px !important;
+    line-height: 32px !important;
 }
 
-/* ----------- Table Styling ------------ */
-.cr-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15);
-}
-.cr-table th,
-.cr-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #d6e1ff;
-  text-align: left;
-  font-size: 0.95rem;
-}
-.cr-table th {
-  background-color: #dcebff;
-  color: #1b3f73;
-  font-weight: 600;
-}
-.cr-table tr:hover td {
-  background-color: #eef5ff;
-  transition: 0.25s;
+select.inp {
+    padding-right: 35px !important;
 }
 
-/* ----------- Buttons ------------ */
-button,
-.myButton {
-  background: linear-gradient(90deg, #3b82f6, #1a73e8);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 9px 22px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-  box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25);
-}
-button:hover,
-.myButton:hover {
-  background: linear-gradient(90deg, #1a73e8, #155cc6);
-  transform: translateY(-2px);
-}
-button:active {
-  transform: scale(0.96);
-}
+/* ------------------------------
+   JQX DATE INPUT — FINAL PINK FIX
+------------------------------ */
 
-/* ----------- Error Text ------------ */
-#validrate,
-#errormsg {
-  color: #d62828;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-/* Fade Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Mobile */
-@media (max-width: 900px) {
-  .clean-grid-form {
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .clean-grid-item.full {
-    grid-column: span 1;
-  }
-}
-/* Outer wrapper */
-#jqxDebitNote {
-    border: 1px solid #9db4d9 !important;   /* DARKER border */
-    border-radius: 12px !important;
-    overflow: hidden !important;
-}
-
-/* HEADER STYLING */
-.jqx-grid-column-header,
-.jqx-widget-header {
-    background: #d5e4ff !important;
-    color: #0f2a4d !important;             /* DARKER header text */
-    font-weight: 700 !important;           /* BOLDER */
-    font-size: 14.5px !important;
-    border-bottom: 1px solid #9db4d9 !important; /* darker header line */
-
-    height: 38px !important;
-    min-height: 38px !important;
-    line-height: 38px !important;
-    padding: 0 !important;
-}
-
-/* Remove inner alignment issues */
-.jqx-grid-column-header div,
-.jqx-widget-header div {
-    padding: 0 10px !important;
-    margin: 0 !important;
-    line-height: 38px !important;
-}
-
-/* ROW STYLING */
-.jqx-grid-cell {
+/* Force every JQX layer to stay white */
+#jqxDebitNoteDate *,
+.jqx-datetimeinput *,
+.jqx-datetimeinput-input,
+.jqx-datetimeinput-content input {
     background-color: #ffffff !important;
-    border-color: #d3def5 !important;       /* darker row borders */
-    font-size: 14px !important;
-    color: #1c2f4a !important;
-    
-    height: 38px !important;
-    min-height: 38px !important;
-    padding: 0 10px !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
 
+/* Override inline background that JQX injects */
+#jqxDebitNoteDate div[style*="background"],
+.jqx-datetimeinput div[style*="background"] {
+    background: #ffffff !important;
+}
+
+/* Match height of JQX container + internal input */
+.jqx-datetimeinput,
+.jqx-datetimeinput-input,
+.jqx-datetimeinput-content input {
+    height: 32px !important;
+    min-height: 32px !important;
+    line-height: 32px !important;
+    font-size: 15px !important;
+    padding-left: 8px !important;
+}
+
+/* Calendar button */
+.jqx-datetimeinput-button {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 10px !important;
+    background: transparent !important;
     display: flex !important;
-    align-items: center !important;         /* vertical centering */
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
 }
 
-/* Alternate rows */
-.jqx-grid-cell-alt {
-    background-color: #f4f7ff !important;
+.jqx-datetimeinput-button img {
+    width: 18px !important;
+    height: 18px !important;
+    display: block !important;
+    object-fit: contain !important;
 }
 
-/* Hover */
-.jqx-grid-cell-hover {
-    background-color: #e4edff !important;
-}
-
-/* Selected cell */
-.jqx-grid-cell-selected {
-    background-color: #c3d6ff !important;
-    border-color: #6a92d7 !important;
-}
-
-/* Checkbox alignment */
-.jqx-grid-cell input[type="checkbox"] {
-    transform: scale(1.2);
-    margin-left: 6px !important;
-}
-
-/* Status bar (footer) */
-.jqx-grid-statusbar {
-    background: #e3ecff !important;
-    border-top: 1px solid #9db4d9 !important;
-    color: #0f2a4d !important;
+/* ------------------------------
+   Dr / Cr total input tweak
+------------------------------ */
+#txtdrtotal,
+#txtcrtotal {
+    height: 30px !important;
+    width: 110px !important;
+    padding: 4px 8px !important;
     font-size: 14px !important;
-    font-weight: 700 !important;
-
-    height: 34px !important;
-    padding: 6px 10px !important;
-}
-
-/* Scrollbars */
-#jqxDebitNote::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-#jqxDebitNote::-webkit-scrollbar-thumb {
-    background: #8aa8d6;
-    border-radius: 6px;
-}
-#jqxDebitNote::-webkit-scrollbar-thumb:hover {
-    background: #6f8ec4;
-}
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-    color: #1f2f46 !important;
-}
-input[type="text"],
-select,
-.clean-input {
-  font-size: 15px !important;   /* increased text size */
-}
-/* 1) native autofill fixes (Chrome / Blink) */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill,
-textarea:-webkit-autofill {
-  -webkit-text-fill-color: #1f2f46 !important;
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* paint white */
-  box-shadow: 0 0 0px 1000px #ffffff inset !important;
-  background-color: #ffffff !important;
-}
-
-/* 2) force select appearance / remove pink background on selects (Chrome) */
-select,
-select:focus,
-select:hover {
-  background-color: #ffffff !important;
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  -webkit-text-fill-color: #1f2f46 !important;
-  color: #1f2f46 !important;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 10px center !important;
-  background-size: 14px !important;
-}
-
-/* 3) standardize select option font-size */
-select, select option {
-  font-size: 15px !important;
-  line-height: 1.2 !important;
-}
-
-/* 4) JQX input / dropdown internals (covers most jqx styles) */
-.jqx-input,
-.jqx-input-content,
-.jqx-dropdownlist,
-.jqx-dropdownlist-content,
-.jqx-dropdownlist-input,
-.jqx-widget .jqx-input,
-.jqx-widget .jqx-input-content,
-.jqx-widget .jqx-dropdownlist {
-  background-color: #ffffff !important;
-  color: #1f2f46 !important;
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-  box-shadow: 0 0 0px 1000px #ffffff inset !important;
-  border-color: #b9ccf2 !important;
-}
-
-/* 5) Remove any background-image set by JQX that could look pink */
-.jqx-input .jqx-input-content,
-.jqx-dropdownlist .jqx-input-content,
-.jqx-dropdownlist-content {
-  background-image: none !important;
-}
-
-/* 6) On focus ensure white background and visible text */
-.jqx-input:focus,
-.jqx-input-content:focus,
-.jqx-dropdownlist:focus,
-.jqx-dropdownlist-content:focus,
-select:focus {
-  background-color: #ffffff !important;
-  color: #1f2f46 !important;
-  -webkit-text-fill-color: #1f2f46 !important;
-}
-
-/* 7) Ensure date widget input (jqxDateTimeInput) text colour and background */
-#jqxDebitNoteDate input,
-#jqxBankReconciliationDate input,
-.jqx-datetimeinput-input {
-  background-color: #ffffff !important;
-  color: #1f2f46 !important;
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-}
-
-/* 8) Increase input/select font-size globally (only size change) */
-input[type="text"],
-input,
-select,
-.clean-input,
-.jqx-input,
-.jqx-dropdownlist {
-  font-size: 16px !important; /* bump up a bit */
-}
-
-/* 9) last resort: override inline styles applied by scripts (very high specificity) */
-body [style*="background"]:not(.keep-bg) {
-  background-color: inherit !important;
-}
-
-/* 10) small visual guard for disabled fields (keeps them readable) */
-input[readonly],
-select:disabled {
-  background-color: #f4f7ff !important;
-  color: #6a7ba1 !important;
+    border-radius: 8px !important;
+    border: 1px solid #c7d6ee !important;
 }
 </style>
 
@@ -852,123 +570,116 @@ select:disabled {
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
 <div  class='hidden-scrollbar receipt-header'>
-    <div class="table-section">
+    <div class="section-block">
+    <h2>Debit Note Details</h2>
 
-        <!-- ====== CLEAN GRID FORM (REPLACED TOP SECTION) ====== -->
-        <div class="clean-grid-form">
+    <!-- ROW 1 -->
+    <div class="row3">
 
-            <!-- ROW 1 -->
-            <div class="clean-grid-item">
-                <label>Date</label>
-                <div id="jqxDebitNoteDate"
-                     onchange="datechange();"
-                     onblur="datechange();"></div>
-                <input type="hidden" id="hidjqxDebitNoteDate" name="hidjqxDebitNoteDate"
-                       value='<s:property value="hidjqxDebitNoteDate"/>'/>
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Ref. No.</label>
-                <input type="text" id="txtrefno" name="txtrefno"
-                       class="clean-input"
-                       value='<s:property value="txtrefno"/>'/>
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Doc No.</label>
-                <input type="text" id="docno" name="txtdebitnotedocno"
-                       class="clean-input"
-                       value='<s:property value="txtdebitnotedocno"/>' tabindex="-1"/>
-            </div>
-
-            <!-- ROW 2 -->
-            <div class="clean-grid-item">
-                <label>Type</label>
-                <select id="cmbtype" name="cmbtype" class="clean-input"
-                        onchange="clearClientInfo();">
-                    <option value="AR">AR</option>
-                    <option value="AP">AP</option>
-                    <option value="GL">GL</option>
-                </select>
-                <input type="hidden" id="hidcmbtype" name="hidcmbtype"
-                       value='<s:property value="hidcmbtype"/>'/>
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Account</label>
-                <input type="text" id="txtaccid" name="txtaccid"
-                       class="clean-input"
-                       placeholder="Press F3 to Search"
-                       value='<s:property value="txtaccid"/>'
-                       onkeydown="getAccType(event);" />
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Account Name</label>
-                <input type="text" id="txtaccname" name="txtaccname"
-                       class="clean-input"
-                       value='<s:property value="txtaccname"/>' tabindex="-1"/>
-                <input type="hidden" id="txtdocno" name="txtdocno"
-                       value='<s:property value="txtdocno"/>'/>
-                <input type="hidden" id="txttrno" name="txttrno"
-                       value='<s:property value="txttrno"/>'/>
-            </div>
-
-            <!-- ROW 3 -->
-            <div class="clean-grid-item">
-                <label>Currency</label>
-                <select id="cmbcurrency" name="cmbcurrency"
-                        class="clean-input"
-                        onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
-                </select>
-                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
-                       value='<s:property value="hidcmbcurrency"/>'/>
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Rate</label>
-                <input type="text" id="txtrate" name="txtrate"
-                       class="clean-input"
-                       style="text-align:right;"
-                       value='<s:property value="txtrate"/>'
-                       onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
-                <span id="validrate"></span>
-            </div>
-
-            <div></div>
-
-            <!-- ROW 4 -->
-            <div class="clean-grid-item">
-                <label>Amount</label>
-                <input type="text" id="txtamount" name="txtamount"
-                       class="clean-input"
-                       style="text-align:right;"
-                       value='<s:property value="txtamount"/>'
-                       onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Base Amount</label>
-                <input type="text" id="txtbaseamount" name="txtbaseamount"
-                       class="clean-input"
-                       style="text-align:right;"
-                       value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
-            </div>
-
-            <div></div>
-
-            <!-- ROW 5 -->
-            <div class="clean-grid-item full">
-                <label>Description</label>
-                <input type="text" id="txtdescription" name="txtdescription"
-                       class="clean-input"
-                       value='<s:property value="txtdescription"/>'/>
-            </div>
-
+        <div class="row-flex">
+            <label class="lbl">Date</label>
+            <div id="jqxDebitNoteDate" class="inp"></div>
         </div>
-        <!-- ====== END CLEAN GRID FORM ====== -->
+
+        <div class="row-flex">
+            <label class="lbl">Ref. No.</label>
+            <input type="text" class="inp"
+                   id="txtrefno" name="txtrefno"
+                   value='<s:property value="txtrefno"/>'>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Doc No.</label>
+            <input type="text" class="inp"
+                   id="docno" name="txtdebitnotedocno"
+                   value='<s:property value="txtdebitnotedocno"/>'>
+        </div>
 
     </div>
+
+    <!-- ROW 2 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Type</label>
+            <select class="inp" id="cmbtype" name="cmbtype"
+                    onchange="clearClientInfo();">
+                <option value="AR">AR</option>
+                <option value="AP">AP</option>
+                <option value="GL">GL</option>
+            </select>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Account</label>
+            <input type="text" class="inp"
+                   id="txtaccid" name="txtaccid"
+                   placeholder="Press F3 to Search"
+                   value='<s:property value="txtaccid"/>'
+                   onkeydown="getAccType(event);">
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Account Name</label>
+            <input type="text" class="inp"
+                   id="txtaccname" name="txtaccname"
+                   value='<s:property value="txtaccname"/>'>
+        </div>
+
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Currency</label>
+            <select class="inp" id="cmbcurrency" name="cmbcurrency"
+                    onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
+            </select>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Rate</label>
+            <input type="text" class="inp"
+                   id="txtrate" name="txtrate"
+                   style="text-align:right;"
+                   value='<s:property value="txtrate"/>'
+                   onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();">
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Amount</label>
+            <input type="text" class="inp"
+                   id="txtamount" name="txtamount"
+                   style="text-align:right;"
+                   value='<s:property value="txtamount"/>'
+                   onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();">
+        </div>
+
+    </div>
+
+    <!-- ROW 4 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Base Amount</label>
+            <input type="text" class="inp"
+                   id="txtbaseamount" name="txtbaseamount"
+                   style="text-align:right;"
+                   value='<s:property value="txtbaseamount"/>'>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Description</label>
+            <input type="text" class="inp"
+                   id="txtdescription" name="txtdescription"
+                   value='<s:property value="txtdescription"/>'>
+        </div>
+
+    </div>
+
+</div>
+    
 
 <div class="cr-table" id="jqxDebitNoteGrid"><jsp:include page="debitNoteGrid.jsp"></jsp:include></div><br/>
 <table class="cr-table" width="100%">
