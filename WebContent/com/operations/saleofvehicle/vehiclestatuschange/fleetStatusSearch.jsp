@@ -1,5 +1,79 @@
 <%@page import="com.operations.saleofvehicle.vehiclestatuschange.*" %>
 <% ClsFleetStatusChangeDAO fleetdao=new ClsFleetStatusChangeDAO(); %>
+<style>
+/* Grid container */
+#fleetSearch {
+    margin-top: 10px;
+    border-radius: 8px !important;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Grid background */
+.jqx-grid, 
+.jqx-widget-content {
+    background: #ffffff !important;
+    border: 1px solid #d2e3f5 !important;
+}
+
+/* Header styling */
+.jqx-grid-column-header {
+    background: #2F75C5 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    text-align: center !important;
+    border-color: #2F75C5 !important;
+    padding: 6px 0 !important;
+}
+
+/* Header hover */
+.jqx-grid-column-header:hover {
+    background: #1E5CB8 !important;
+}
+
+/* Row styling */
+.jqx-grid-cell {
+    font-size: 13px !important;
+    padding-left: 8px !important;
+    border-color: #e4eef9 !important;
+}
+
+/* Alternate row color */
+.jqx-grid-cell-alt {
+    background-color: #f7faff !important;
+}
+
+/* Filter row styling */
+.jqx-grid-cell-filter-row {
+    background: #eef4fc !important;
+    border-bottom: 1px solid #c9dbf2 !important;
+}
+
+/* Row hover */
+.jqx-grid-cell-hover {
+    background: #E6F0FF !important;
+}
+
+/* Selected row */
+.jqx-grid-cell-selected {
+    background: #c9dbf9 !important;
+    color: #000 !important;
+}
+
+/* Scrollbar - modern look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: #b6c9e9;
+    border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94b2e4;
+}
+</style>
+
 <script type="text/javascript">
       var datafleet=[];
       <%-- '<%=fleetdao.fleetStatusSearch(session)%>'; --%>  

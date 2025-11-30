@@ -9,6 +9,81 @@ String group=request.getParameter("group")==null?"0":request.getParameter("group
 String branch=request.getParameter("branch")==null?"0":request.getParameter("branch");
 ClsFleetStatusChangeDAO fleetdao=new ClsFleetStatusChangeDAO();
 %>
+<style>
+/* Grid container */
+#fleetSearch {
+    margin-top: 10px;
+    border-radius: 8px !important;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Main grid look */
+.jqx-grid, 
+.jqx-widget-content {
+    background: #ffffff !important;
+    border: 1px solid #d4e3f7 !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+/* Header styling */
+.jqx-grid-column-header {
+    background: #2F75C5 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    text-align: center !important;
+    border-color: #2F75C5 !important;
+    padding: 6px 0 !important;
+}
+
+/* Header hover effect */
+.jqx-grid-column-header:hover {
+    background: #1E5CB8 !important;
+}
+
+/* Cell styling */
+.jqx-grid-cell {
+    font-size: 13px !important;
+    padding-left: 8px !important;
+    border-color: #e4eef9 !important;
+}
+
+/* Alternate row */
+.jqx-grid-cell-alt {
+    background: #f4f8ff !important;
+}
+
+/* Hover row */
+.jqx-grid-cell-hover {
+    background-color: #E8F1FF !important;
+}
+
+/* Selected row */
+.jqx-grid-cell-selected {
+    background-color: #c9daf7 !important;
+    color: #000 !important;
+}
+
+/* Scrollbar modern look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: #b6c9e9;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94b2e4;
+}
+
+/* Filter row styling (if enabled later) */
+.jqx-grid-cell-filter-row {
+    background: #eef4fc !important;
+    border-bottom: 1px solid #c9dbf2 !important;
+}
+</style>
+
 <script type="text/javascript">
       var datafleet= '<%=fleetdao.fleetSearch(branch,searchdate,fleetno,docno,regno,color,group) %>';
         $(document).ready(function () { 	

@@ -13,6 +13,152 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 </style>
+<style>
+/* ------------------- PAGE ------------------- */
+body {
+    background: #f3f7ff;
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ------------------- MAIN WRAPPER ------------------- */
+#search {
+    background: #ffffff;
+    width: 98%;
+    margin: 10px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 255, 0.08);
+    border: 1px solid #e4ebff;
+}
+
+/* ------------------- INPUT + LABEL ALIGNMENT ------------------- */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px 12px; /* EXACT GAP AS SCREENSHOT */
+}
+
+#search td {
+    font-size: 12px;
+    color: #444;
+    font-weight: 600;
+}
+
+/* ------------------- INPUT BOX STYLE ------------------- */
+#search input[type="text"] {
+    width: 100%;
+    height: 32px;
+    padding-left: 10px;
+    border: 1px solid #d4dff7;
+    border-radius: 8px;
+    background: #f9fbff;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+#search input[type="text"]:focus {
+    border-color: #4a8dff;
+    box-shadow: 0 0 5px rgba(74, 141, 255, 0.3);
+    outline: none;
+}
+
+/* ------------------- SEARCH BUTTON ------------------- */
+.myButton {
+    background: linear-gradient(180deg, #4a90ff, #2a6dff);
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 255, 0.2);
+}
+
+.myButton:hover {
+    background: linear-gradient(180deg, #2a6dff, #4a90ff);
+}
+
+/* ------------------- RESULT BOX ------------------- */
+#srefreshdiv {
+    background: #ffffff;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #e4ebff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 255, 0.05);
+}
+
+/* smooth fade */
+#srefreshdiv {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(3px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* ------------------- INPUT BOX STYLE (SMALLER) ------------------- */
+#search input[type="text"] {
+    width: 100%;
+    height: 26px;          /* reduced height */
+    padding-left: 8px;     /* slightly smaller padding */
+    border: 1px solid #d4dff7;
+    border-radius: 6px;    /* slightly smaller radius */
+    background: #f9fbff;
+    font-size: 11px;       /* slightly smaller text */
+    transition: all 0.2s;
+}
+
+#search input[type="text"]:focus {
+    border-color: #4a8dff;
+    box-shadow: 0 0 5px rgba(74, 141, 255, 0.3);
+    outline: none;
+}
+
+/* ------------------- SEARCH BUTTON (BIGGER) ------------------- */
+.myButton {
+    background: linear-gradient(180deg, #4a90ff, #2a6dff);
+    padding: 12px 28px;   /* increased for bigger look */
+    border-radius: 8px;   /* slightly bigger */
+    border: none;
+    font-size: 14px;      /* bigger font */
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 255, 0.2);
+}
+
+.myButton:hover {
+    background: linear-gradient(180deg, #2a6dff, #4a90ff);
+}
+.myButton {
+    background: linear-gradient(180deg, #4a90ff, #2a6dff);
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 255, 0.2);
+    transition: all 0.25s ease;   /* smooth animation */
+}
+
+/* PREMIUM HOVER EFFECT */
+.myButton:hover {
+    background: linear-gradient(180deg, #2a6dff, #1a54e8); /* richer blue */
+    transform: translateY(-2px); /* slight lift */
+    box-shadow: 0 6px 14px rgba(0, 0, 255, 0.25); /* glowing effect */
+}
+
+/* Pressed effect */
+.myButton:active {
+    transform: scale(0.97);
+}
+
+</style>
 
 	<script type="text/javascript">
 	$(document).ready(function () {

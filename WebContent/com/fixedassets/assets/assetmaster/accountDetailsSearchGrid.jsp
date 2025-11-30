@@ -18,7 +18,89 @@
 /*  String debitcredit = request.getParameter("debitcredit")==null?"0":request.getParameter("debitcredit"); */
  String date = request.getParameter("date")==null?"0":request.getParameter("date").trim();
  String check = request.getParameter("check")==null?"0":request.getParameter("check");
-%> 
+%>
+<style>
+/* ------------------- GRID WRAPPER ------------------- */
+#jqxAccountsTypeSearch {
+    margin-top: 10px;
+}
+
+/* ------------------- MAIN GRID ------------------- */
+.jqx-grid {
+    border: 1px solid #c6ddf5 !important;
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 92, 184, 0.15) !important;
+    font-family: "Segoe UI", Roboto, sans-serif !important;
+    font-size: 12px !important;
+    color: #003366 !important;
+}
+
+/* ------------------- HEADER ------------------- */
+.jqx-grid-column-header {
+    background: linear-gradient(180deg, #e9f1ff, #d7e5ff) !important;
+    color: #003b8e !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid #c6d8ff !important;
+    text-align: center !important;
+}
+
+.jqx-grid-column-header .jqx-grid-column-header-text {
+    padding-left: 5px !important;
+    font-size: 12px !important;
+}
+
+/* ------------------- ROWS ------------------- */
+.jqx-grid-cell {
+    border-color: #e1eaff !important;
+    font-size: 12px !important;
+    background-color: #ffffff !important;
+    color: #003366 !important;
+}
+
+.jqx-grid-cell-alt {
+    background-color: #f7faff !important;
+}
+
+/* Hover effect */
+.jqx-grid-cell-hover {
+    background-color: #e6f0ff !important;
+    cursor: pointer !important;
+}
+
+/* Selected row */
+.jqx-grid-cell-selected {
+    background-color: #4a8dff !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+/* ------------------- SCROLLBARS ------------------- */
+.jqx-scrollbar-thumb-state-normal {
+    background: #bcd1ff !important;
+}
+
+.jqx-scrollbar-thumb-state-hover {
+    background: #8fb4ff !important;
+}
+
+.jqx-scrollbar-button-state-normal {
+    background: #e4ecff !important;
+}
+
+/* ------------------- POPUP WINDOW (if used) ------------------- */
+.jqx-window-header {
+    background: linear-gradient(180deg, #0064c8, #004a99) !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+}
+
+.jqx-window-content {
+    background-color: #f9fbff !important;
+    border-radius: 10px !important;
+}
+</style>
+ 
 
  <script type="text/javascript">
  
