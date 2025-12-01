@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i) - Tax Credit Note</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -395,172 +397,117 @@
 	}
 </script>
 
-<!--
-  REPLACEABLE CSS START
-  Copy everything in this <style> into a single shared CSS file (eg. /css/master-ui.css)
-  and replace this block with: <link rel="stylesheet" href="/css/master-ui.css">
--->
 <style>
-/* ----------- Scrollbar ------------ */
-.hidden-scrollbar {
-  overflow-y: auto;
-  height: 530px;
-  scrollbar-width: thin;
-  scrollbar-color: #4da3ff #eaf3ff;
-}
-.hidden-scrollbar::-webkit-scrollbar { width: 7px; }
-.hidden-scrollbar::-webkit-scrollbar-thumb { background-color: #4da3ff; border-radius: 8px; }
-.hidden-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1a73e8; }
-
-/* ----------- Page Background ------------ */
-body {
-  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  color: #1f2f46;
-  margin: 0;
-  padding: 40px 0;
-  min-height: 100vh;
-  animation: fadeIn 0.6s ease-in-out;
+.inp {
+    width: 100%;
+    height: 32px !important;
+    padding: 4px 8px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b9c9e8 !important;
+    background: #fff !important;
+    transition: 0.25s;
 }
 
-/* ----------- Main Container ------------ */
-#mainBG {
-  background: #f4f8ff;
-  border-radius: 16px;
-  box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15);
-  padding: 25px 30px;
-  max-width: 1250px;
-  margin: 0 auto;
-  transition: 0.3s ease;
-}
-#mainBG:hover { box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25); }
-
-/* ----------- Section Container ------------ */
-.receipt-header {
-  background: #edf4ff;
-  border: 1px solid #c9dafc;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 26px;
-  box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2);
+.inp:hover,
+.inp:focus {
+    border-color: #2f6dde !important;
+    box-shadow: 0 0 8px rgba(47,109,222,0.4) !important;
+    outline: none !important;
 }
 
-/* ----------- Labels ------------ */
-label { font-weight: 600; font-size: 15px; color: #1a2d4d; margin-bottom: 6px !important; }
-
-/* ----------- Unified Input Styling ------------ */
-input[type="text"], select, .clean-input {
-  width: 100%;
-  height: 38px !important;
-  padding: 6px 12px;
-  border: 1px solid #b9ccf2;
-  border-radius: 8px;
-  background: #ffffff;
-  font-size: 16px !important; /* increased baseline per your preference */
-  color: #1f2f46;
-  box-sizing: border-box;
-  transition: 0.25s ease;
-}
-input[type="text"]:focus, select:focus {
-  border-color: #4da3ff;
-  box-shadow: 0 0 6px rgba(77, 163, 255, 0.55);
-  outline: none;
+/* ------------------------------
+   Labels
+------------------------------ */
+.lbl {
+    min-width: 110px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2a4d;
 }
 
-/* ----------- Dropdown ------------ */
-select {
-  appearance: none;
-  background: #ffffff url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") no-repeat right 10px center;
-  background-size: 14px;
-}
-select option { font-size: 15px; }
-
-/* ----------- Disabled Inputs ------------ */
-input[readonly], select:disabled { background-color: #eef3ff !important; color: #6a7ba1 !important; }
-
-/* ----------- JQX Date Input ------------ */
-#jqxCreditNoteDate { width: 100% !important; height: 38px !important; }
-#jqxCreditNoteDate input { height: 36px !important; padding-left: 10px !important; border-radius: 8px !important; background-color: #ffffff !important; box-shadow: none !important; }
-
-/* ----------- Autofill Pink FIX ------------ */
-/* Chrome / Blink fixes for input and select autofill */
-input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
-select:-webkit-autofill, textarea:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-  box-shadow: 0 0 0px 1000px #ffffff inset !important;
-  -webkit-text-fill-color: #1f2f46 !important;
-  background-color: #ffffff !important;
-}
-select, select:focus, select:hover {
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  background-color: #ffffff !important;
-  color: #1f2f46 !important;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 10px center !important;
-  background-size: 14px !important;
+/* Smaller labels for Totals */
+.lbl.small {
+    font-size: 16px;
+    min-width: 90px;
 }
 
-/* ----------- Grid Form Layout (3-col) ------------ */
-.clean-grid-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 32px; width: 100%; box-sizing: border-box; }
-.clean-grid-item { display:flex; flex-direction:column; }
-.clean-grid-item.full { grid-column: span 3; }
-
-/* ----------- Table Styling ------------ */
-.cr-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15);
-}
-.cr-table th, .cr-table td { padding: 10px 12px; border-bottom: 1px solid #d6e1ff; text-align:left; font-size:0.95rem; }
-.cr-table th { background-color:#dcebff; color:#1b3f73; font-weight:600; }
-.cr-table tr:hover td { background-color:#eef5ff; transition:0.25s; }
-
-/* ----------- Buttons ------------ */
-button, .myButton {
-  background: linear-gradient(90deg, #3b82f6, #1a73e8);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 9px 22px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-  box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25);
-}
-button:hover, .myButton:hover { background: linear-gradient(90deg, #1a73e8, #155cc6); transform: translateY(-2px); }
-button:active { transform: scale(0.96); }
-
-/* ----------- Error Text ------------ */
-#validrate, #errormsg { color: #d62828; font-weight: 600; font-size: 0.9rem; }
-
-/* Fade Animation */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity:1; transform: translateY(0); } }
-
-/* Mobile tweaks */
-@media (max-width: 900px) {
-  .clean-grid-form { grid-template-columns: repeat(1, 1fr); }
-  .clean-grid-item.full { grid-column: span 1; }
+/* ------------------------------
+   Layout Rows
+------------------------------ */
+.row-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 260px;
 }
 
-/* jqxGrid visuals (for #jqxCreditNote) */
-#jqxCreditNote { border: 1px solid #9db4d9 !important; border-radius: 12px !important; overflow: hidden !important; }
-.jqx-grid-column-header, .jqx-widget-header { background: #d5e4ff !important; color: #0f2a4d !important; font-weight:700 !important; font-size:14.5px !important; border-bottom:1px solid #9db4d9 !important; height:38px !important; min-height:38px !important; line-height:38px !important; padding:0 10px !important; }
-.jqx-grid-cell { background-color:#ffffff !important; border-color:#d3def5 !important; font-size:14px !important; color:#1c2f4a !important; height:38px !important; min-height:38px !important; padding:0 10px !important; display:flex !important; align-items:center !important; }
-.jqx-grid-cell-alt { background-color:#f4f7ff !important; }
-.jqx-grid-cell-hover { background-color:#e4edff !important; }
-.jqx-grid-cell-selected { background-color:#c3d6ff !important; border-color:#6a92d7 !important; }
-.jqx-grid-statusbar { background:#e3ecff !important; border-top:1px solid #9db4d9 !important; color:#0f2a4d !important; font-size:14px !important; font-weight:700 !important; height:34px !important; padding:6px 10px !important; }
+.row3 {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
 
-/* last-resort overrides (very high specificity) */
-body [style*="background"]:not(.keep-bg) { background-color: inherit !important; }
+/* ------------------------------
+   Dropdown text increase
+------------------------------ */
+select.inp,
+select.inp option {
+    font-size: 18px !important;
+}
 
+/* ------------------------------
+   Remove Pink Autofill
+------------------------------ */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: black !important;
+}
+
+/* ------------------------------
+   JQX Date Input – Keep White
+------------------------------ */
+#jqxCreditNoteDate * {
+    background: #ffffff !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* ------------------------------
+   Dr/Cr Totals Modern Container
+------------------------------ */
+.totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    padding: 18px;
+    background: #f6f8ff;
+    border-radius: 14px;
+    border: 1px solid #d8e3ff;
+}
+
+/* Each total block */
+.total-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Total input fields */
+.total-inp {
+    width: 120px !important;
+    height: 32px !important;
+    padding: 4px 8px !important;
+    text-align: right !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b9c9e8 !important;
+}
 </style>
-<!-- REPLACEABLE CSS END -->
 
 </head>
 <body onload="setValues();">
@@ -569,125 +516,168 @@ body [style*="background"]:not(.keep-bg) { background-color: inherit !important;
 <form id="frmTaxCreditNote" action="saveTaxCreditNote" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<!-- ================= SCROLLABLE CONTENT WRAPPER (FIXED) ================ -->
-<div class="hidden-scrollbar">
+<!-- EXACT SAME WRAPPER AS MASTER -->
+<div class="hidden-scrollbar receipt-header">
 
-    <!-- ================= TOP FORM SECTION ================= -->
-    <div class="receipt-header">
-      <div class="table-section">
+    <!-- EXACT SAME SECTION-BLOCK WRAPPING -->
+    <div class="section-block">
+        <h2>Credit Note Details</h2>
 
-        <!-- ====== CLEAN GRID FORM (TOP SECTION) for Credit Note ====== -->
-        <div class="clean-grid-form">
+        <!-- ROW 1 -->
+        <div class="row3">
 
-            <!-- ROW 1 -->
-            <div class="clean-grid-item">
-                <label>Date</label>
-                <div id="jqxCreditNoteDate" onchange="datechange();" onblur="datechange();"></div>
-                <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate" value='<s:property value="hidjqxCreditNoteDate"/>'/>
+            <div class="row-flex">
+                <label class="lbl">Date</label>
+                <div id="jqxCreditNoteDate" class="inp"></div>
+                <input type="hidden" id="hidjqxCreditNoteDate"
+                       name="hidjqxCreditNoteDate"
+                       value='<s:property value="hidjqxCreditNoteDate"/>'>
             </div>
 
-            <div class="clean-grid-item">
-                <label>Ref. No.</label>
-                <input type="text" id="txtrefno" name="txtrefno" class="clean-input" value='<s:property value="txtrefno"/>'/>
+            <div class="row-flex">
+                <label class="lbl">Ref. No.</label>
+                <input type="text" class="inp"
+                    id="txtrefno" name="txtrefno"
+                    value='<s:property value="txtrefno"/>'>
             </div>
 
-            <div class="clean-grid-item">
-                <label>Doc No.</label>
-                <input type="text" id="docno" name="txtcreditnotedocno" class="clean-input" value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/>
+            <div class="row-flex">
+                <label class="lbl">Doc No.</label>
+                <input type="text" class="inp"
+                    id="docno" name="txtcreditnotedocno"
+                    value='<s:property value="txtcreditnotedocno"/>'>
             </div>
 
-            <!-- ROW 2 -->
-            <div class="clean-grid-item">
-                <label>Type</label>
-                <select id="cmbtype" name="cmbtype" class="clean-input" onchange="clearClientInfo();">
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="row3">
+
+            <div class="row-flex">
+                <label class="lbl">Type</label>
+                <select class="inp" id="cmbtype" name="cmbtype"
+                        onchange="clearClientInfo();">
                     <option value="AR">AR</option>
                     <option value="AP">AP</option>
                     <option value="GL">GL</option>
                 </select>
-                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
+                <input type="hidden" id="hidcmbtype"
+                       name="hidcmbtype"
+                       value='<s:property value="hidcmbtype"/>'/>
             </div>
 
-            <div class="clean-grid-item">
-                <label>Account</label>
-                <input type="text" id="txtaccid" name="txtaccid" class="clean-input" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" />
+            <div class="row-flex">
+                <label class="lbl">Account</label>
+                <input type="text" class="inp"
+                       id="txtaccid" name="txtaccid"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="txtaccid"/>'
+                       onkeydown="getAccType(event);">
             </div>
 
-            <div class="clean-grid-item">
-                <label>Account Name</label>
-                <input type="text" id="txtaccname" name="txtaccname" class="clean-input" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-                <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-            </div>
-
-            <!-- ROW 3 -->
-            <div class="clean-grid-item">
-                <label>Currency</label>
-                <select id="cmbcurrency" name="cmbcurrency" class="clean-input" onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());"></select>
-                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Rate</label>
-                <input type="text" id="txtrate" name="txtrate" class="clean-input" style="text-align:right;" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
-                <span id="validrate"></span>
-            </div>
-
-            <div></div>
-
-            <!-- ROW 4 -->
-            <div class="clean-grid-item">
-                <label>Amount</label>
-                <input type="text" id="txtamount" name="txtamount" class="clean-input" style="text-align:right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
-            </div>
-
-            <div class="clean-grid-item">
-                <label>Base Amount</label>
-                <input type="text" id="txtbaseamount" name="txtbaseamount" class="clean-input" style="text-align:right;" value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
-            </div>
-
-            <div></div>
-
-            <!-- ROW 5 -->
-            <div class="clean-grid-item full">
-                <label>Description</label>
-                <input type="text" id="txtdescription" name="txtdescription" class="clean-input" value='<s:property value="txtdescription"/>'/>
+            <div class="row-flex">
+                <label class="lbl">Account Name</label>
+                <input type="text" class="inp"
+                       id="txtaccname" name="txtaccname"
+                       value='<s:property value="txtaccname"/>'>
+                <input type="hidden" id="txtdocno" name="txtdocno"
+                       value='<s:property value="txtdocno"/>'>
+                <input type="hidden" id="txttrno" name="txttrno"
+                       value='<s:property value="txttrno"/>'>
             </div>
 
         </div>
-        <!-- ====== END CLEAN GRID FORM ====== -->
 
-      </div>
-    </div>
+        <!-- ROW 3 -->
+        <div class="row3">
 
-    <!-- ================= GRID SECTION ================= -->
+            <div class="row-flex">
+                <label class="lbl">Currency</label>
+                <select class="inp" id="cmbcurrency" name="cmbcurrency"
+                        onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
+                </select>
+                <input type="hidden" id="hidcmbcurrency"
+                       name="hidcmbcurrency"
+                       value='<s:property value="hidcmbcurrency"/>'>
+            </div>
+
+            <div class="row-flex">
+                <label class="lbl">Rate</label>
+                <input type="text" class="inp"
+                       id="txtrate" name="txtrate"
+                       style="text-align:right;"
+                       value='<s:property value="txtrate"/>'
+                       onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();">
+            </div>
+
+            <div class="row-flex">
+                <label class="lbl">Amount</label>
+                <input type="text" class="inp"
+                       id="txtamount" name="txtamount"
+                       style="text-align:right;"
+                       value='<s:property value="txtamount"/>'
+                       onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();">
+            </div>
+
+        </div>
+
+        <!-- ROW 4 -->
+        <div class="row3">
+
+            <div class="row-flex">
+                <label class="lbl">Base Amount</label>
+                <input type="text" class="inp"
+                       id="txtbaseamount" name="txtbaseamount"
+                       style="text-align:right;"
+                       value='<s:property value="txtbaseamount"/>'>
+            </div>
+
+            <div class="row-flex">
+                <label class="lbl">Description</label>
+                <input type="text" class="inp"
+                       id="txtdescription" name="txtdescription"
+                       value='<s:property value="txtdescription"/>'>
+            </div>
+
+        </div>
+
+    </div> <!-- END section-block -->
+
+    <!-- ========== GRID SECTION ========== -->
     <div class="cr-table" id="jqxCreditNoteGrid" style="margin-top:18px;">
         <jsp:include page="creditNoteGrid.jsp"></jsp:include>
     </div>
-
     <br/>
 
-    <!-- ================= TOTALS SECTION ================= -->
-    <table class="cr-table" width="100%">
-        <tr>
-            <td style="width:10%; text-align:right;">Dr. Total</td>
-            <td style="width:55%;">
-                <input type="text" id="txtdrtotal" name="txtdrtotal" style="width:20%; text-align:right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
-            </td>
-            <td style="width:10%; text-align:right;">Cr. Total</td>
-            <td style="width:25%;">
-                <input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%; text-align:right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
-            </td>
-        </tr>
-    </table>
+    <!-- ========== TOTALS ========== -->
+    <div class="totals-row">
+
+    <div class="total-box">
+        <label class="lbl small">Dr. Total</label>
+        <input type="text" id="txtdrtotal" name="txtdrtotal"
+               class="inp total-inp"
+               value='<s:property value="txtdrtotal"/>'
+               tabindex="-1" />
+    </div>
+
+    <div class="total-box">
+        <label class="lbl small">Cr. Total</label>
+        <input type="text" id="txtcrtotal" name="txtcrtotal"
+               class="inp total-inp"
+               value='<s:property value="txtcrtotal"/>'
+               tabindex="-1" />
+    </div>
 
 </div>
-<!-- ================= END SCROLLABLE WRAPPER ================= -->
+    
 
-<!-- Hidden fields -->
+</div> <!-- END hidden-scrollbar receipt-header -->
+
+<!-- hidden fields (unchanged) -->
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<div hidden="hidden" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+<div hidden id="maindate"></div>
 <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
 <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
 <input type="hidden" id="txtvalidation" name="txtvalidation"  value='<s:property value="txtvalidation"/>'/>
@@ -704,4 +694,5 @@ body [style*="background"]:not(.keep-bg) { background-color: inherit !important;
 
 </div>
 </body>
+
 </html>
