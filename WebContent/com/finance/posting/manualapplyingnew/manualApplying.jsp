@@ -9,6 +9,8 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -315,231 +317,362 @@
 
 <style>
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+  overflow-y: auto;
+  max-height: none;   /* allow full natural height */
+  height: auto;       /* remove forced 530px */
 }
 
 
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 32px 0;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
+
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
+/* ===============================
+   TABLE SECTION STYLE
+==================================*/
 
 .table-section {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
+
 .table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+  color: #253858;
+  font-size: 1.04em;
+  font-weight: 600;
 }
+
 .cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+  width: 100%;
+  border-collapse: collapse;
+  background: #f9fafb;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.cr-table th, 
+.cr-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #e4e7ec;
+  text-align: left;
+  font-size: 1em;
 }
+
 .cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+  background: #eef0f6;
+  color: #354B6A;
+  font-weight: 600;
 }
+
 .cr-table tr:last-child td {
-    border-bottom: none;
+  border-bottom: none;
 }
+
+
+/* ===============================
+   MODERN TOP SECTION (NEW UI)
+==================================*/
+
+.modern-top-section {
+  background: #f5f8ff;
+  border: 1px solid #dce6ff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 12px;        /* FIXED: no gap */
+  box-shadow: 0 2px 8px rgba(44, 95, 255, 0.06);
+}
+
+/* EXPERTLY TUNED GRID (perfect alignment) */
+.form-grid-apply {
+  display: grid;
+  grid-template-columns: 160px 220px 360px 70px 120px;
+  gap: 18px;
+  align-items: end;
+}
+
+/* Labels */
+.form-item label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #274b8f;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Input / Select */
+.form-item input[type="text"],
+.form-item select {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 16px !important;   /* Your global rule: 16px input text */
+  border: 1px solid #ccd4e0;
+  border-radius: 8px;
+  background: white;
+  box-sizing: border-box;
+}
+
+/* Blue Modern Focus */
+.form-item input:focus,
+.form-item select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.18) !important;
+  outline: none;
+}
+
+/* Import icon column */
+.import-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.import-wrap { width: 56px; }
+
+.icon-btn {
+  width: 56px;
+  height: 36px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #ccd4e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon-btn img {
+  max-width: 22px;
+  max-height: 22px;
+}
+
+/* Submit button full width */
+.submit-col .submit-btn {
+  width: 100%;
+  height: 36px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+/* RESPONSIVE FALLBACK */
+@media (max-width: 980px) {
+  .form-grid-apply {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+}
+
+/* Autofill Fix (master UI rule) */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+/* === Modern Summary Row === */
+.apply-summary-row {
+    display: grid;
+    grid-template-columns: 140px 140px 160px 160px 160px 140px;
+    gap: 20px;
+    margin: 20px 0;
+    align-items: end;
+}
+
+/* Labels */
+.apply-item label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #274b8f;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Inputs */
+.apply-item input {
+    width: 100%;
+    height: 34px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0 10px;
+    background: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Focus effect */
+.apply-item input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.18) !important;
+    outline: none;
+}
+
+/* Update button styling */
+.update-btn {
+    width: 100%;
+    height: 34px !important;
+    border-radius: 8px !important;
+    font-weight: 700;
+}
+
+/* Button alignment */
+.btn-col {
+    text-align: center;
+}
+
 </style>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
-<form id="frmManualApplyingnew" action="saveManualApplyingNew" method="post" autocomplete="off">  
+<div id="mainBG" class="homeContent" data-type="background">
+<form id="frmManualApplyingnew" action="saveManualApplyingNew" method="post" autocomplete="off">
+
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div class="hidden-scrollbar receipt-header">
 
+    <!-- ===========================
+         MODERN TOP FORM SECTION
+    ============================ -->
+    <div class="modern-top-section">
+        <div class="form-grid-apply">
 
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Account</td>
-    <td width="6%"><select id="cmbacctype" name="cmbacctype" style="width:70%;" onchange="clearAccountInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="AP">AP</option><option value="AR">AR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:80%;" placeholder="Press F3 to Search" readonly value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td width="30%"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" readonly value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-			<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">  
-	</button></td>
-    <td width="45%" align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadappliedgrid();">Submit</button></td>
-  </tr>
-</table>
+            <!-- Account -->
+            <div class="form-item">
+                <label>Account</label>
+                <select id="cmbacctype" name="cmbacctype" onchange="clearAccountInfo();">
+                    <option value="AP">AP</option>
+                    <option value="AR">AR</option>
+                </select>
+                <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'>
+            </div>
 
-    <br/>
-<h3>Unapplied</h3>
-<div class="cr-table" id="jqxManualAppliedGrid"><jsp:include page="appliedInvoicingGrid.jsp"></jsp:include></div>
-<h3>Outstanding</h3>
-<div class="cr-table" id="jqxManualApplingGrid"><jsp:include page="applyInvoicingGrid.jsp"></jsp:include></div><br/>
- <table width="100%">
-  <tr>
-    <td width="3%" align="right">Doc No</td>
-    <td width="6%"><input type="text" id="txtgriddocno" name="txtgriddocno" style="width:70%;" readonly value='<s:property value="txtgriddocno"/>' tabindex="-1"/></td>
-    <td width="3%" align="right">Doc Type</td>
-    <td width="6%"><input type="text" id="txtdoctype" name="txtdoctype" style="width:60%;" readonly value='<s:property value="txtdoctype"/>' tabindex="-1"/></td>
-    <td width="5%" align="right">Amount</td>
-    <td width="6%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoiceamt"/>' tabindex="-1"/>
-    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/></td>
-    <td width="5%" align="right">Applying</td>
-    <td width="6%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/></td>
-    <td width="3%" align="right">Balance</td>
-    <td width="6%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/></td>
-    <td width="7%" align="center"><button class="myButton" type="button" id="btnUpdate" name="btnUpdate" onkeydown="funUpdateChanges();" onclick="funUpdateChanges();">Update</button></td>
-  </tr>
-</table>
+            <!-- Account ID -->
+            <div class="form-item">
+                <label>Account ID</label>
+                <input type="text" id="txtaccid" name="txtaccid"
+                       placeholder="Press F3 to Search"
+                       readonly onkeydown="getAcc(event);"
+                       value='<s:property value="txtaccid"/>'>
+            </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+            <!-- Account Name -->
+            <div class="form-item">
+                <label>Account Name</label>
+                <input type="text" id="txtaccname" name="txtaccname"
+                       readonly value='<s:property value="txtaccname"/>'>
+                <input type="hidden" id="txtdocno" name="txtdocno" 
+                       value='<s:property value="txtdocno"/>'>
+            </div>
 
-<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
-<input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="chkstatus" name="chkstatus" value='<s:property value="chkstatus"/>'/>
-<input type="hidden" id="txtoutamount" name="txtoutamount" value='<s:property value="txtoutamount"/>'/>
-<input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="exceldocno" name="exceldocno"/>  
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+            <!-- Excel Import Button -->
+            <div class="form-item import-col">
+                <label style="visibility:hidden;">Import Excel</label>
+                <div class="import-wrap">
+                    <input type="file" id="fileexcelimport" name="file" style="display:none;">
+                    <button type="button" class="icon-btn" id="btnsearch"
+                            onclick="$('#fileexcelimport').click(); return false;">
+                        <img src="<%=contextPath%>/icons/import_excel.png" alt="Import Excel">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-item submit-col">
+                <label>&nbsp;</label>
+                <button class="myButton submit-btn" id="btnSubmit"
+                        onclick="funloadappliedgrid();">Submit</button>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<!-- ===========================
+     UNAPPLIED / OUTSTANDING TABLES
+=========================== -->
+
+<h3>Unapplied</h3>
+<div class="cr-table" id="jqxManualAppliedGrid">
+    <jsp:include page="appliedInvoicingGrid.jsp"></jsp:include>
+</div>
+
+<h3>Outstanding</h3>
+<div class="cr-table" id="jqxManualApplingGrid">
+    <jsp:include page="applyInvoicingGrid.jsp"></jsp:include>
+</div><br>
+
+<!-- ===========================
+     FOOTER ROW VALUES
+=========================== -->
+<div class="apply-summary-row">
+    <div class="apply-item">
+        <label>Doc No</label>
+        <input type="text" id="txtgriddocno" name="txtgriddocno" readonly />
+    </div>
+
+    <div class="apply-item">
+        <label>Doc Type</label>
+        <input type="text" id="txtdoctype" name="txtdoctype" readonly />
+    </div>
+
+    <div class="apply-item">
+        <label>Amount</label>
+        <input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" readonly style="text-align:right;" />
+    </div>
+
+    <div class="apply-item">
+        <label>Applying</label>
+        <input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" readonly style="text-align:right;" />
+    </div>
+
+    <div class="apply-item">
+        <label>Balance</label>
+        <input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" readonly style="text-align:right;" />
+    </div>
+
+    <div class="apply-item btn-col">
+        <label>&nbsp;</label>
+        <button class="myButton update-btn" type="button" id="btnUpdate" onclick="funUpdateChanges();">
+            Update
+        </button>
+    </div>
+</div>
+
+
+<!-- Hidden Fields -->
+<input type="hidden" id="mode" name="mode">
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="hidden" id="txtforsearch" name="txtforsearch" value='<s:property value="txtforsearch"/>'>
+<input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'>
+<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'>
+<input type="hidden" id="chkstatus" name="chkstatus" value='<s:property value="chkstatus"/>'>
+<input type="hidden" id="txtoutamount" name="txtoutamount" value='<s:property value="txtoutamount"/>'>
+<input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'>
+<input type="hidden" id="gridlength" name="gridlength">
+<input type="hidden" id="exceldocno" name="exceldocno">
+<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+
 </form>
-	
-<div id="cashPaymentGridWindow">
-	<div></div><div></div>
-</div>  
-				
-<div id="accountDetailsToWindow">
-	<div></div><div></div>
-</div>  
-	
+
+<!-- Windows -->
+<div id="cashPaymentGridWindow"><div></div><div></div></div>
+<div id="accountDetailsToWindow"><div></div><div></div></div>
+
 </div>
 </body>
+
 </html>
