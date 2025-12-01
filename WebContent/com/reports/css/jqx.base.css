@@ -526,8 +526,7 @@ button.jqx-button, input[type=button].jqx-button,  input[type=submit].jqx-button
     font-weight: normal; 
     font-size: 10px;
     overflow: hidden; 
-    position: absolute !important; 
-    height: 100%; 
+   
  }
 .jqx-grid-cell-locked {
     color: #aaa !important;
@@ -2582,11 +2581,11 @@ of the horizontal scrollbar.*/
     overflow: hidden;
     border: 1px solid transparent;
 }
-/*applied to the jqxWindow when it’s disabled*/
+/*applied to the jqxWindow when itï¿½s disabled*/
 .jqx-window-disabled
 {
 }
-/*applied to the window’s header*/
+/*applied to the windowï¿½s header*/
 .jqx-window-header
 {
     outline: none;
@@ -2598,12 +2597,12 @@ of the horizontal scrollbar.*/
     white-space: nowrap;
     overflow: hidden;  
 }
-/*applied to the window’s header when the window is disabled*/
+/*applied to the windowï¿½s header when the window is disabled*/
 .jqx-window-header-disabled
 {
 
 }
-/*applied to the window’s content*/
+/*applied to the windowï¿½s content*/
 .jqx-window-content
 {
     outline: none;
@@ -2613,7 +2612,7 @@ of the horizontal scrollbar.*/
     padding: 5px;
     -webkit-background-clip: padding-box; background-clip: padding-box;
 }
-/*applied to the window’s content when the window is disabled*/
+/*applied to the windowï¿½s content when the window is disabled*/
 .jqx-window-content-disabled
 {
     outline: none;
@@ -2621,7 +2620,7 @@ of the horizontal scrollbar.*/
     text-align: left;
     padding: 5px;
 }
-/*applied to the window’s close button*/
+/*applied to the windowï¿½s close button*/
 .jqx-window-close-button
 {
     cursor: pointer;
@@ -2642,7 +2641,7 @@ of the horizontal scrollbar.*/
     cursor: pointer;
     background-image: url('icons/icon-down.png');
 }
-/*setting styles of the modal window’s background*/
+/*setting styles of the modal windowï¿½s background*/
 .jqx-window-modal
 {
    background-color: Black;
@@ -3364,7 +3363,7 @@ of the horizontal scrollbar.*/
 .jqx-fill-state-normal td, .jqx-fill-state-hover td, .jqx-fill-state-pressed td, .jqx-fill-state-disabled td, .jqx-fill-state-focus td, .jqx-widget td, .jqx-widget-content td, .jqx-widget-header td {
     box-sizing: border-box; -moz-box-sizing: border-box; 
 }
-.jqx-widget .jqx-grid-cell, .jqx-widget .jqx-grid-column-header, .jqx-widget .jqx-grid-group-cell {border-color: #aaa;}
+.jqx-widget .jqx-grid-cell, .jqx-widget .jqx-grid-column-header, .jqx-widget .jqx-grid-group-cell {border-color: rgb(255, 0, 0); }
 .jqx-widget .jqx-grid-column-menubutton, .jqx-widget .jqx-grid-column-sortascbutton, .jqx-widget .jqx-grid-column-sortdescbutton, .jqx-widget .jqx-grid-column-filterbutton
 {
    background-color: transparent;

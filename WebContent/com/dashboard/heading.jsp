@@ -9,6 +9,63 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
+<!-- PROFESSIONAL BUTTON STYLE -->
+<style>
+:root {
+  --shadow-light: #ffffff;
+  --shadow-dark: #9dafc2; /* slightly darker shadow [web:5] */
+}
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 130px);
+  justify-content: center;
+  column-gap: 18px;
+  row-gap: 14px;
+  width: 100%;
+}
+
+/* Darker modern buttons */
+.nbtn {
+  flex: 1;
+  min-width: 140px;
+  padding: 6px 10px;
+  border-radius: 12px;
+
+  /* darker gradient than before [web:4] */
+  background: linear-gradient(145deg, #d3e4fb, #b3cff5);
+  border: 1px solid #dfe9f5;
+
+  color: #003e75;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  cursor: pointer;
+  transition: all .2s ease;
+
+  box-shadow:
+     -4px -4px 10px var(--shadow-light),
+      4px 4px 10px var(--shadow-dark);
+}
+
+.nbtn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(145deg, #c4daf7, #a3c1f0);
+}
+
+.nbtn svg {
+  width: 18px;
+  height: 18px;
+}
+</style>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <script type="text/javascript">
@@ -462,47 +519,125 @@
 </head>
 <!-- getMessengerCount(); -->
 <body onclick="getformbranch();">
-<tr><td colspan="2"><center><label class="detail" name="lbldetail" id="lbldetail">&nbsp;&nbsp;</label>
-    &nbsp;-&nbsp;<label class="details" name="lbldetailname" id="lbldetailname"></label></center>
 
-    <hr  size=1 color="red"  width="100%"></td></tr>
-<tr><td colspan="2" align="center"><button type="button" class="icon" id="btnGuideline" title="Guideline" style="cursor: pointer;" onclick="funGuideline();">
-    <img alt="Guideline" src="<%=contextPath%>/icons/guidelinedb.png">
-</button>&nbsp;
+<tr>
+<td colspan="2" style="padding:15px; text-align:center;">
 
-    <button type="button" class="icon" id="btnSendingEmail" title="Send Email" style="cursor: pointer;" onclick="funSendingEmail();">
-        <img alt="Send Email" src="<%=contextPath%>/icons/sendemail.png">
-    </button>&nbsp;
+    <div style="padding:5px; text-align:center;">
+        <label id="lbldetail" 
+               style="font-size:24px;font-weight:800;color:#003e75;">
+        </label>
 
-    <button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" style="cursor: pointer;" onclick="funExportBtn();">
-        <img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">
-    </button>&nbsp;
+        <span style="font-size:22px;font-weight:600;color:#0061a8;"> - </span>
 
-    <button type="button" class="icon" id="btnCalculate" title="Calculate" style="cursor: pointer;" onclick="funCalculate();">
-        <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png">
-    </button>&nbsp;
+        <label id="lbldetailname" 
+               style="font-size:22px;font-weight:700;color:#005a9a;">
+        </label>
+    </div>
 
-    <button type="button" class="icon" id="btnSubmit" title="Submit" style="cursor: pointer;" onclick="funreload(event)">
-        <img alt="Submit" src="<%=contextPath%>/icons/submit_new.png">
-    </button>&nbsp;
 </td>
 </tr>
+
+<!-- ===== BUTTON GRID ===== -->
 <tr>
-    <td width="6%" align="right"><label class="branch" id="branchlabel">Branch</label></td>
-    <td width="94%"><div class="styled-select" id="branchdiv"><select id="cmbbranch" name="cmbbranch"  value='<s:property value="cmbbranch"/>' onchange="funMclose(this.value);getformbranch();">
-        <option value="">--Select--</option></select></div>
-        <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/></td>
+<td colspan="2" align="center" style="padding-top:10px;">
+
+<div class="btn-grid">
+
+    <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
+      <img src="<%=contextPath%>/icons/guidelinedb.png" alt=""> Guideline
+    </button>
+
+    <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
+      <img src="<%=contextPath%>/icons/sendemail.png" alt=""> Email
+    </button>
+
+    <button type="button" class="nbtn" id="btnExcel" onclick="funExportBtn();">
+      <img src="<%=contextPath%>/icons/excel_new.png" alt=""> Export
+    </button>
+
+    <button type="button" class="nbtn" id="btnCalculate" onclick="funCalculate();">
+      <img src="<%=contextPath%>/icons/calculate_new.png" alt=""> Calculate
+    </button>
+
+</div>
+
+</td>
 </tr>
+
+
+<!-- ===== BRANCH SECTION ===== -->
+<tr>
+<td width="6%" align="right" style="padding-top:20px;">
+    <label id="branchlabel"
+        style="font-size:16px;font-weight:800;color:#003e75;">
+        Branch
+    </label>
+</td>
+
+<td width="94%" style="padding-top:20px;">
+
+    <div class="styled-select" id="branchdiv"
+        style="background:linear-gradient(145deg,#ffffff,#d6eaff);
+               padding:8px 12px;
+               width:70%;
+               border-radius:14px;
+               margin-bottom:5px;
+               box-shadow:inset -4px -4px 10px rgba(255,255,255,0.8),
+                          inset 4px 4px 10px rgba(0,0,0,0.12);">
+
+        <select id="cmbbranch" name="cmbbranch"
+            onchange="funMclose(this.value);getformbranch();"
+            style="width:100%;border:none;background:transparent;
+                   font-size:14px;font-weight:700;color:#003e75;">
+            <option value="">--Select--</option>
+        </select>
+
+    </div>
+
+</td>
+</tr>
+
+<!-- ===== SUBMIT BUTTON (ALIGN WITH DROPDOWN) ===== -->
+<tr>
+<td width="6%"></td>
+
+<td width="94%">
+
+    <!-- Container same width as dropdown -->
+    <div style="
+        width:70%; 
+        display:flex;
+        justify-content:flex-end;   
+        padding-top:5px;
+    ">
+
+        <button type="button" class="nbtn" id="btnSubmit" onclick="funreload(event);" 
+            style="max-width:120px; padding:6px 10px;margin-right: 35px;
+            ">
+            <svg width="18" height="18" fill="#004d85" viewBox="0 0 24 24">
+              <path d="M5 12l5 5V7l-5 5zm6-5v10l8-5-8-5z"/>
+            </svg>
+            Submit
+        </button>
+
+    </div>
+
+</td>
+</tr>
+
+
+
+<!-- ===== REMAINING HIDDEN FIELDS & WINDOWS ===== -->
 <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'/>
 <input type="hidden" name="detail" id="detail" value="<s:property value="detail"/>" />
 <input type="hidden" name="detailname" id="detailname" value="<s:property value="detailname"/>" />
 <input type="hidden" name="txtdetailpermissiondocno" id="txtdetailpermissiondocno" value="<s:property value="txtdetailpermissiondocno"/>" />
 <input type="hidden" name="txtallbrch" id="txtallbrch" value="<s:property value="txtallbrch"/>" />
-<div id="windowattach">
-    <div></div>
-</div>
-<div id="windowguideline">
-    <div></div>
-</div>
+
+<div id="windowattach"><div></div></div>
+<div id="windowguideline"><div></div></div>
+
 </body>
+
 </html>

@@ -18,7 +18,7 @@ body {
 }
 fieldset 
 {
- border:1px solid #BDBDBD; 
+ border:1px solid black; 
 }
 
 legend {
@@ -79,4 +79,10 @@ input[type="email"] {
 
 label.mandatory{
  color: #FF0000;
+}
+
+
+fieldset {
+    background: #F2F8FF
+     !important;
 }

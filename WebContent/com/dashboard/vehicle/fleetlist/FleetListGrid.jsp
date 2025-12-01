@@ -1,3 +1,9 @@
+<%
+response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+response.setHeader("Pragma","no-cache");
+response.setDateHeader ("Expires", 0);
+%>
+
 <%@page import="com.dashboard.vehicle.fleetlist.ClsFleetListDAO"%>
 <% ClsFleetListDAO dao=new ClsFleetListDAO(); %>
 
@@ -7,6 +13,51 @@
  String brch = request.getParameter("brchid")==null?"0":request.getParameter("brchid");
  String date = request.getParameter("date")==null?"0":request.getParameter("date");
  %>
+ 
+ <style>
+
+/* Normal Rows */
+div[class*="jqx-grid-cell"] {
+    background: #ffffff !important;
+    color: #000 !important;
+    border-color: #d7d7d7 !important;
+    font-size: 12px !important;
+}
+
+/* Alternate Row */
+div[class*="jqx-grid-cell-alt"] {
+    background: #f4f7ff !important;
+}
+
+/* Hover Effect */
+div[class*="jqx-grid-cell"]:hover {
+    background: #d7e6ff !important;
+}
+
+/* Selected Row */
+div[class*="jqx-grid-cell-selected"] {
+    background: #bcd0ff !important;
+    color: #000 !important;
+}
+
+/* Header */
+div[class*="jqx-grid-column-header"],
+div[class*="jqx-grid-header"] {
+    background: #d9e6ff !important;
+    color: #1b3c89 !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    border-bottom: 1px solid #acc4ff !important;
+}
+
+/* Grid Outer Border */
+#fleetlist {
+    border: 1px solid #bfd3ff !important;
+    border-radius: 6px !important;
+}
+
+</style>
+ 
 
  <script type="text/javascript">
 
