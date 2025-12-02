@@ -11,7 +11,7 @@
       
         .yellowClass
         {
-            color: green;
+            color: #000000;
         }
        </style>
 <script type="text/javascript">
