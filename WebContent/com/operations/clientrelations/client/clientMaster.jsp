@@ -1,15 +1,17 @@
+```jsp
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <% String contextPath=request.getContextPath();%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="ISO-8859-1">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
+<link rel="stylesheet" href="<%=contextPath%>/css/global.css" type="text/css">
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
-
 <jsp:include page="tab.css"/>
 <%@ include file="tab.jsp" %> 
 
@@ -30,7 +32,7 @@
  		
  		getGroup();getSalesman();getCategory();getNationality();getSalutation();getContractDate();getContract();getIDPDetails();getCRMDriverDetailsVerify();getNonTaxableEntity();getTax();getSeparateServiceChargeAllowed();
       	getConfigs();refdetConfig();getclientSrvChrges();
-      	//$('#salikauhpercent,#salikpercent,#trafficpercent').attr('disabled',true);
+      	//$('#salikauhpercent,#salikpercent,#trafficpercent,#chkparkingpercent').attr('disabled',true);
       	
       	
       	$('#chksalikauhpercent,#chksalikdxbpercent,#chktrafficpercent,#chkparkingpercent').on('click',function(){
@@ -43,7 +45,7 @@
       		}
       	});
       }); 
-    
+      
       
       function getclientSrvChrges(){
 	  		var x = new XMLHttpRequest();
@@ -69,7 +71,6 @@
   			if (x.readyState == 4 && x.status == 200) {
 				items = x.responseText;
 				items = items.split('####');
-				//alert(items[0])
 				if (items[0]==1) 
 				{
 					 $("#jqxReferenceDetails2").show();
@@ -96,9 +97,6 @@
    			if(data.InvQuarterly=="1"){
    				htmldata+='<option value="4">Quarterly</option><option value="5">Half Yearly</option><option value="6">Yearly</option>';
    				$('#cmbinvoicing_method').append($.parseHTML(htmldata));
-   				/* $('#invoice').append($('<option></option>').val("4").text("Quarterly"));
-   				$('#invoice').append($('<option></option>').val("5").text("Half Yearly"));
-   				$('#invoice').append($('<option></option>').val("6").text("Yearly"));*/
    				if($('#hidcmbinvoicing_method').val()!="")
    				{
    					$('#cmbinvoicing_method').val($('#hidcmbinvoicing_method').val());
@@ -350,23 +348,17 @@
 			        	var currencyid=curidItems.split(",");
 			        	var currencycode=curcodeItems.split(",");
 			        	multiItems.split(",");
-			       
-			       for ( var i = 0; i < currencycode.length; i++) {
+			        for ( var i = 0; i < currencycode.length; i++) {
 			    	   optionscurr += '<option value="' + currencyid[i] + '">' + currencycode[i] + '</option>';
 			        }
-			      
 			         $("select#cmbcurrency").html(optionscurr);
 			         if ($('#hidcmbcurrency').val() != null && $('#hidcmbcurrency').val() != "") {
 			       		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
 			         } 
-					     
 				   }
-			
 			       else{
 			    	   optionscurr += '<option value="' + curidItems + '"selected>' + curcodeItems + '</option>';
-			    	   
 				    	 $("select#cmbcurrency").html(optionscurr);
-				       
 				         if ($('#hidcmbcurrency').val() != null && $('#hidcmbcurrency').val() != "") {
 				       		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
 				         }
@@ -375,7 +367,6 @@
 		     }
 		      x.open("GET", "getCurrencyId.jsp",true);
 		     x.send();
-		    
 		   }
      
       function getNationality() {
@@ -460,9 +451,6 @@
 		  					 }
 		  					}
 		  		 		 $('#gridlength').val(length);
-		  		 		 
-		  		 		 
-		  		 		/* new ref det grid*/
 		  		 		 var rows = $("#refdetsearch").jqxGrid('getrows');
 		  		 		 var referencelength1=0;
 		  		 		 for(var i=0,j=0 ; i < rows.length ; i++){
@@ -479,13 +467,10 @@
 		  					
 		  					newTextBox.val(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 		  					newTextBox.appendTo('form');
-		  					//alert(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 		  					j++;
 		  		 			}
 		  			      }
 		  			      $('#referencelength1').val(referencelength1);
-		  			      
-		  		 		 
 		  		 		 var rows = $("#jqxReferenceDetails").jqxGrid('getrows');
 		  		 		 var referencelength=0;
 		  		 		 for(var i=0 ; i < rows.length ; i++){
@@ -497,13 +482,11 @@
 		  					    .attr("id", "txtreference"+i)
 		  					    .attr("name", "txtreference"+i)
 		  					    .attr("hidden", "true");
-		  				
 		  					newTextBox.val(rows[i].cperson+" :: "+rows[i].desig+" :: "+rows[i].mob+" :: "+rows[i].email+" ::");
 		  					newTextBox.appendTo('form');
 		  					}
 		  			      }
 		  			      $('#referencelength').val(referencelength);
-		  		      
 		  			      var rows = $("#jqxCreditCardDetails").jqxGrid('getrows');
 		  					 var creditcardlength=0;
 		  						 for(var i=0 ; i < rows.length ; i++){
@@ -515,16 +498,12 @@
 		  							    .attr("id", "txtcard"+i)
 		  							    .attr("name", "txtcard"+i)
 		  							    .attr("hidden", "true");
-		  						
 		  						newTextBox.val(rows[i].type+" :: "+rows[i].cardno+" :: "+rows[i].hidexpdate+":: "+rows[i].defaultcard+":: "+rows[i].remarks);
 		  						newTextBox.appendTo('form');
 		  						 }
 		  						}
 		  			 		 $('#creditcardlength').val(creditcardlength);
-		  			 		 
-		  			 		 
 		  		    		if(parseInt($('#separateservicechargeallowed').val())==1){
-		  		    			 
 		  		    			var rows = $("#separateServiceChargeGridId").jqxGrid('getrows');
 			  					 var separateservicechargelength=0;
 			  						 for(var i=0 ; i < rows.length ; i++){
@@ -536,22 +515,17 @@
 			  							    .attr("id", "txtseparateservicecharge"+i)
 			  							    .attr("name", "txtseparateservicecharge"+i)
 			  							    .attr("hidden", "true");
-			  						
 			  						newTextBox.val(rows[i].doc_no+" :: "+rows[i].salik+" :: "+rows[i].traffic);
 			  						newTextBox.appendTo('form');
 			  						 }
 			  						}
 			  			 		 $('#separateservicechargelength').val(separateservicechargelength);
-			  			 		 
 		  		    		}
-		  		    		
-						 //   $('#cmbgroup1').attr('disabled', false);
-						    $("#cmbsalesman").attr("disabled",false);
+		  				    $("#cmbsalesman").attr("disabled",false);
 		  					$("#frmClientMaster").submit(); 
-		  					
 	  					}
 	  				 }
-	  			   
+	  			    }
 	  		}
 		}
 		x.open("GET", "getClientAlreadyExists.jsp?clientname="+clientname+"&salutation="+salutation+"&docno="+docno+"&mode="+mode, true);
@@ -593,15 +567,11 @@
 	  						    .attr("id", "test"+i)
 	  						    .attr("name", "test"+i)
 	  						    .attr("hidden", "true");
-	  					
 	  					newTextBox.val(rows[i].name+" :: "+rows[i].hiddob+":: "+rows[i].nation1+":: "+rows[i].mobno+":: "+rows[i].passport_no+":: "+rows[i].hidpassexp+":: "+rows[i].dlno+":: "+rows[i].hidissdate+":: "+rows[i].issfrm+":: "+rows[i].hidled+":: "+rows[i].ltype+":: "+rows[i].visano+":: "+rows[i].hidvisaexp+"::"+rows[i].dr_id+":: "+rows[i].hcdlno+":: "+rows[i].hidhcissdate+":: "+rows[i].hidhcled);
 	  					newTextBox.appendTo('form');
 	  					 }
 	  					}
 	  		 		 $('#gridlength').val(length);
-	  		 		 
-	  		 		 
-	  		 		/* new ref det grid*/
 	  		 		 var rows = $("#refdetsearch").jqxGrid('getrows');
 	  		 		 var referencelength1=0;
 	  		 		 for(var i=0,j=0 ; i < rows.length ; i++){
@@ -618,13 +588,10 @@
 	  					
 	  					newTextBox.val(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 	  					newTextBox.appendTo('form');
-	  					//alert(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 	  					j++;
 	  		 			}
 	  			      }
 	  			      $('#referencelength1').val(referencelength1);
-	  			      
-	  		 		
 	  		 		 var rows = $("#jqxReferenceDetails").jqxGrid('getrows');
 	  		 		 var referencelength=0;
 	  		 		 for(var i=0 ; i < rows.length ; i++){
@@ -636,13 +603,11 @@
 	  					    .attr("id", "txtreference"+i)
 	  					    .attr("name", "txtreference"+i)
 	  					    .attr("hidden", "true");
-	  				
 	  					newTextBox.val(rows[i].cperson+" :: "+rows[i].desig+" :: "+rows[i].mob+" :: "+rows[i].email+" ::");
 	  					newTextBox.appendTo('form');
 	  					}
 	  			      }
 	  			      $('#referencelength').val(referencelength);
-	  			      
 	  			      var rows = $("#jqxCreditCardDetails").jqxGrid('getrows');
 	  					 var creditcardlength=0;
 	  						 for(var i=0 ; i < rows.length ; i++){
@@ -654,16 +619,12 @@
 	  							    .attr("id", "txtcard"+i)
 	  							    .attr("name", "txtcard"+i)
 	  							    .attr("hidden", "true");
-	  						
 	  						newTextBox.val(rows[i].type+" :: "+rows[i].cardno+" :: "+rows[i].hidexpdate+":: "+rows[i].defaultcard+":: "+rows[i].remarks);
 	  						newTextBox.appendTo('form');
 	  						 }
 	  						}
 	  			 		 $('#creditcardlength').val(creditcardlength);
-	  			 		 
-	  			 		 
 	  		    		if(parseInt($('#separateservicechargeallowed').val())==1){
-	  		    			 
 	  		    			var rows = $("#separateServiceChargeGridId").jqxGrid('getrows');
 		  					 var separateservicechargelength=0;
 		  						 for(var i=0 ; i < rows.length ; i++){
@@ -675,19 +636,16 @@
 		  							    .attr("id", "txtseparateservicecharge"+i)
 		  							    .attr("name", "txtseparateservicecharge"+i)
 		  							    .attr("hidden", "true");
-		  						
 		  						newTextBox.val(rows[i].doc_no+" :: "+rows[i].salik+" :: "+rows[i].traffic);
 		  						newTextBox.appendTo('form');
 		  						 }
 		  						}
 		  			 		 $('#separateservicechargelength').val(separateservicechargelength);
-		  			 		 
 	  		    		}
-	  		    		
 					    $('#cmbgroup1').attr('disabled', false);
 	  					$("#frmClientMaster").submit(); 
 	  				 }
-	  			   
+	  			    }
 	  		}
 		}
 		x.open("GET", "getDriverDetailsVerification.jsp?driverdetails="+driverdetails+"&docno="+docno+"&mode="+mode, true);
@@ -719,7 +677,7 @@
 	  				if(parseInt(items)==1){
 	  					$.messager.alert('Message','Licence# Already Exists.','warning');
 	  					 return 0;
-	  				 }  			   
+	  				 }  			   				
 	  		}
 		}
 		x.open("GET", "getDrivingLicenceNoAlreadyExists.jsp?licenceno="+licenceno+"&docno="+docno+"&mode="+mode, true);
@@ -736,7 +694,6 @@
 	  					$.messager.alert('Message','ID# Already Exists.','warning');
 	  					 return 0;
 	  				 }
-	  			   
 	  		}
 		}
 		x.open("GET", "getVisaNoAlreadyExists.jsp?visano="+visano+"&docno="+docno+"&mode="+mode, true);
@@ -753,7 +710,6 @@
 	  					$.messager.alert('Message','Passport# Already Exists.','warning');
 	  					 return 0;
 	  				 }
-	  			   
 	  		}
 		}
 		x.open("GET", "getPassportNoAlreadyExists.jsp?passportno="+passportno+"&docno="+docno+"&mode="+mode, true);
@@ -794,13 +750,13 @@
       						$('#txtsalik').val(serviceRateItems[i]);	
       						}
       						
-        				}// saliksrv end
+        				}
       					else if(serviceItems[i]=='trafficsrv'){
         					$('#txttraffic').val(serviceRateItems[i]);
-        				}//trafficsrv end
+        				}
         				else if(serviceItems[i]=='saliksrvAUH'){
         					$('#txtsalikauh').val(serviceRateItems[i]);
-        				} //saliksrvAUH end
+        				}
         				else if(serviceItems[i]=='InvSalikParking'){
         					if(hidclientsrvchrges==2  || hidclientsrvchrges==3){
         						$('#txtparking').val(0);
@@ -823,9 +779,8 @@
                             	 $('#parkingpercent').val("0"); 
         					 }
         					}
-        				}  //InvSalikParking end
+        				}
         				else if(serviceItems[i]=='clientSrvChrges'){
-        				
         					if(hidclientsrvchrges==1 || hidclientsrvchrges==2  || hidclientsrvchrges==3){
         				    document.getElementById("chksalikdxbpercent").checked=true;
         					$('#salikpercent').val(parseInt(serviceRateItems[i]));
@@ -839,7 +794,6 @@
         				}
         					if(hidclientsrvchrges==3){
             				    document.getElementById("chktrafficpercent").checked=true;
-            				
             					 if(document.getElementById("chktrafficpercent").checked){
             						 	document.getElementById("hidchktrafficpercent").value = 1 ;
             							$('#trafficpercent').val(parseInt("10"));
@@ -848,10 +802,8 @@
                                 		$('#trafficpercent').val("0"); 
             					 }
             				}
-        				
-      				}//clientSrvChrges end
-    				}// loop end
-    				
+      				}
+    				}
     			} else {
     			}
     		}
@@ -865,7 +817,6 @@
 		  			if (x.readyState == 4 && x.status == 200) {
 		  				var items = x.responseText.trim();
 		  			    $('#cmbinvoicing_method').val(items);
-		  			    
 		  		}
 		  		}
 		  		x.open("GET", "getDefaultInvoicingMethod.jsp", true);
@@ -881,7 +832,6 @@
 	  				var taxItems = items[0].split(",");
 	  				var taxIdItems = items[1].split(",");
 	  				var optionstax ='<option value="">--Select--</option>';
-    				
 	  				for (var i = 0; i < taxItems.length; i++) {
 	  					optionstax += '<option value="' + taxIdItems[i] + '">'
 	  							+ taxItems[i] + '</option>';
@@ -925,7 +875,6 @@
 							document.getElementById("chcknontaxableentity").checked = false;
 	  			    	}
 	  			    }
-	  			    
 	  		}
 	  		}
 	  		x.open("GET", "getNonTaxableEntity.jsp", true);
@@ -953,17 +902,10 @@
 	                rules: {
 	                txtclient_name:"required",
 	                cmbcategory:"required",
-	                //cmbsalesman:"required",
-	                //cmbgroup1:"required",
-	                //txtmob: {"required":true,digits:true,maxlength:12,minlength:12},
-	                 
 	                 },
 	                 messages: {
 	                 txtclient_name:" *",
 	                 cmbcategory:" *",
-	                 //cmbsalesman:" *",
-	                 //cmbgroup1:" *",
-	                 //txtmob: {required:" *",digits:" Invalid Mobile Number",maxlength:" Maximum 12 Digits",minlength:" Please Enter 12 Digits"},
 	                 }
 	        });});
       
@@ -974,7 +916,6 @@
  			 $('#txtsalikauh').attr('readonly', true );
  			 $('#txttraffic').attr('readonly', true );
 			 getDefaultService();
- 			 
  		 }
  		 else{
  			 document.getElementById("hidchckdefault").value = 0;
@@ -982,10 +923,6 @@
  			 $('#txtsalikauh').attr('readonly', false );
  			 $('#txttraffic').attr('readonly', false );
  			 $('#txtparking').attr('readonly', false );
- 			/*  $('#txtsalik').val("0.0");
- 			 $('#txtsalikauh').val("0.0");
- 			 $('#txttraffic').val("0.0");
- 			 $('#txtparking').val("0.0"); */
  		 }
  	 }
      
@@ -997,8 +934,7 @@
  			$('#trafficpercent').attr('readonly',false );
  			if($('#mode').val()=='A' ){
  				$('#salikpercent,#salikauhpercent,#trafficpercent').val(0);	
- 			}
- 			
+ 			}	
 		}
  		else{
  			document.getElementById("hidchksalikpercent").value = 0;
@@ -1016,8 +952,7 @@
 	 			$('#salikauhpercent').attr('readonly',false );
 	 			if($('#mode').val()=='A' ){
 	 				$('#salikauhpercent').val(0);	
-	 			}
-	 			
+	 			}	
 			}
 	 		else{
 	 			document.getElementById("hidchksalikauhpercent").value = 0;
@@ -1036,7 +971,6 @@
 	 			if($('#mode').val()=='A' ){
 	 				$('#salikpercent').val(0);	
 	 			}
-	 			
 			}
 	 		else{
 	 			document.getElementById("hidchksalikdxbpercent").value = 0;
@@ -1052,8 +986,7 @@
 	 			$('#trafficpercent').attr('readonly',false );
 	 			if($('#mode').val()=='A' ){
 	 				$('#trafficpercent').val(0);	
-	 			}
-	 			
+	 			}	
 			}
 	 		else{
 	 			document.getElementById("hidchktrafficpercent").value = 0;
@@ -1073,7 +1006,6 @@
 	 			if($('#mode').val()=='A' ){
 	 				$('#parkingpercent').val(0);	
 	 			}
-	 			
 			}
 	 		else{
 	 			document.getElementById("hidchkparkingpercent").value = 0;
@@ -1154,7 +1086,6 @@
 			$('#frmClientMaster select').attr('disabled', false);
 			$('#chckdefault').attr('disabled', false);
 			$('#chckseparatesrvcdefault').attr('disabled', false);
-			// $('#cmbgroup1').attr('disabled', true);
 			$('#chcknontaxableentity').attr('disabled', false);
 			$('#jqxClientDate').jqxDateTimeInput({disabled: false});
 			$('#jqxContractDate').jqxDateTimeInput({disabled: false});
@@ -1162,22 +1093,19 @@
 			$('#txtaccount').attr('readonly', true);
 			$('#txtcode').attr('readonly', true);
 			$('#docno').attr('readonly', true);
-			//$("#jqxDriver").jqxGrid({ disabled: false});
 			$("#jqxReferenceDetails").jqxGrid({ disabled: false});
 			$("#refdetsearch").jqxGrid({ disabled: false});
 			$("#jqxCreditCardDetails").jqxGrid({ disabled: false});
 			$("#separateServiceChargeGridId").jqxGrid({ disabled: false});
 			
 			if ($("#mode").val() == "A") {
-			     
-					getDefaultService();getDefaultInvoicingMethod();
+			     	getDefaultService();getDefaultInvoicingMethod();
 		 			$('#txtsalik').attr('readonly', true );
 		 			$('#txtsalikauh').attr('readonly', true );
 		 			$('#txttraffic').attr('readonly', true );
 		 			$('#hidchckdefault').val(1);
 		 			$('#hidchckseparatesrvcdefault').val(1);
 					$('#hidchckadvance').val(0);
-					//document.getElementById("chckdefault").checked = true;
 				 	var hidclientsrvchrges=	$('#hidclientsrvchrges').val();
 					if(hidclientsrvchrges==1 ||hidclientsrvchrges==2 ||hidclientsrvchrges==3 ){
 						document.getElementById("chckdefault").checked = false;
@@ -1185,17 +1113,14 @@
 						}else{
 						document.getElementById("chckdefault").checked = true;
 						document.getElementById("hidchckdefault").value = 1;
-							
 						}
 					document.getElementById("chckseparatesrvcdefault").checked = true;
 					document.getElementById("chckadvance").checked = false;
 					$('#cmbsalesman').prop('selectedIndex',0);
 					$('#cmbtax').prop('selectedIndex',0);
-					 
 					$('#jqxClientDate').val(new Date());
 					$('#jqxContractDate').val(null);
 					$('#dateOfJoining').val(null);
-					
 					$("#jqxDriver").jqxGrid('clear'); 
 					$("#jqxDriver").jqxGrid('addrow', null, {});
 					$("#jqxCreditCardDetails").jqxGrid('clear'); 
@@ -1219,21 +1144,17 @@
 			funCreditCardValidate();
 	 }
 	 function funNotify(){	
-		 /* Validation */
 		 $('#jqxDriver').jqxGrid('clearfilters');  
-		 
 		 valid=document.getElementById("txtvalidation").value;
 		 if(valid==1){
 			 document.getElementById("errormsg").innerText="Invalid Values.";
 			 return 0;
 		 }
-		 
 		 accgroup=document.getElementById("txtcategoryvalidation").value;
 		 if(accgroup==1){
 			 document.getElementById("errormsg").innerText="Individual Client should have Retail Client A/C Group.";
 			 return 0;
 		 }
-		 
 		 if($('#mode').val()=="A"){
 			 if($('#cmbsalesman').val()==""){
 				 document.getElementById("errormsg").innerText="Salesman is mandatory.";
@@ -1260,42 +1181,31 @@
 				 return 0;
 			 }
 		 }
-		
 		 invoice=document.getElementById("cmbinvoicing_method").value;
 		 if(invoice=="" || invoice==0){
 			 document.getElementById("errormsg").innerText="Please Select Invoicing Method.";
 			 return 0;
 		 }
-		 
 		 chkvalid=document.getElementById("chkvalid").value;
 		 if(chkvalid==1){
 			 document.getElementById("errormsg").innerText="Invalid Values.";
 			 return 0;
 		 }
-		 
 		 chkcardvalid=document.getElementById("chkcardvalid").value;
 		 if(chkcardvalid==1){
 			 document.getElementById("errormsg").innerText="Invalid Credit Card.";
 			 return 0;
 		 }
-		 
-		 if($("#personal_tel2").val()==""){
-			/*  document.getElementById("errormsg").innerText="Invalid Mobile Number.";
-			 return 0; */
-		 }
-		 
 		 mobilevalid=document.getElementById("txtmobilevalidation").value;
 		 if(mobilevalid==1){
 			 document.getElementById("errormsg").innerText="Invalid Mobile Number.";
 			 return 0;
 		 }
-		 
 		 var tax=document.getElementById("cmbtax").value;
 		 if(tax.trim()=='' || tax.trim()=='0'){
 			 document.getElementById("errormsg").innerText="Tax is Mandatory.";
 			 return 0;
 		 }
-		 
 		 if($('#cmbtax').val()=='1'){
 			 var registeredtrnno=document.getElementById("txtregisteredtrnno").value;
 			 if(registeredtrnno.trim()==''){
@@ -1303,7 +1213,6 @@
 				 return 0;
 			 } 
 		 }
-		// cmbgroup1
 		var account=document.getElementById("cmbgroup1").value;
 		 if(account=="" || account=="null" || typeof(account)=="NaN" || typeof(account)=="undefined" || account=="0")
 			{
@@ -1311,15 +1220,10 @@
 			document.getElementById("cmbgroup1").focus();  
 			return 0;
 			}
-			
-		 
 		 if($('#creditcardstatus').val()=="1"){
-		 	//Checking Minimum 1 card is available
-		 	
 		 	var cardtype=$('#jqxCreditCardDetails').jqxGrid('getcellvalue',0,'type');
 		 	var cardno=$('#jqxCreditCardDetails').jqxGrid('getcellvalue',0,'cardno');
 		 	var cardexp=$('#jqxCreditCardDetails').jqxGrid('getcellvalue',0,'exp_date');
-		 	
 		 	if(cardtype==null || cardtype=="" || cardtype=="undefined" || typeof(cardtype)=="undefined"){
 		 		var targetid=$('#tabs').find('li').eq(2).attr('id');
 		 		if(targetid!="current"){
@@ -1335,7 +1239,6 @@
 		 	else if(cardtype=="AMEX"){
 		 		cardmax=15;
 		 	}
-		 	
 		 	if(cardno.length!=cardmax){
 		 		var targetid=$('#tabs').find('li').eq(2).attr('id');
 		 		if(targetid!="current"){
@@ -1344,15 +1247,12 @@
 		 		document.getElementById("errormsg").innerText="Card Number should be "+cardmax+" digits";
 				return 0;
 		 	}
-		 	
 		 	if(cardexp==null || cardexp=="" || cardexp=="undefined" || typeof(cardexp)=="undefined"){
 		 		document.getElementById("errormsg").innerText="Card Expiry not valid";
 				return 0;
 		 	}
 		 	var currentdate=new Date();
 		 	cardexp=new Date(cardexp);
-		 	console.log("Current:"+currentdate);
-		 	console.log("Card DAte:"+cardexp);
 		 	if(cardexp.getFullYear()<currentdate.getFullYear()){
 		 		var targetid=$('#tabs').find('li').eq(2).attr('id');
 		 		if(targetid!="current"){
@@ -1383,8 +1283,7 @@
 		 	}
 		 }
 		 document.getElementById("errormsg").innerText="";		 
-		 /* Validation Ends*/
-
+ 
 	 		 clientname=document.getElementById("txtclient_name").value;
 			 salutation=document.getElementById("cmbsalutation").value;
 			 docno=document.getElementById("docno").value;
@@ -1398,80 +1297,57 @@
 		 }
 	 
 	 function funFocus(){
-	    	$('#jqxClientDate').jqxDateTimeInput('focus'); 	    		
+	    	$('#jqxClientDate').jqxDateTimeInput('focus'); 	    			
 	    }
-	 
-	 /* function funCurrency(){
-		 
-		 if($('#hidcmbcurrency').val()!=""){
-			 $('#cmbcurrency').val($('#hidcmbcurrency').val());
-		 }
-	 } */
 	 
 	 function setValues(){
 		    getSeparateServiceChargeAllowed();
-		    
-		    /* Enquiry Form dtype */
 		    document.getElementById("formdetail").value="Client";
 		    document.getElementById("formdetailcode").value="CRM";
-		     // alert($('#hidjqxClientDate').val());
 			 if($('#hidjqxClientDate').val()){
 				 $("#jqxClientDate").jqxDateTimeInput('val', $('#hidjqxClientDate').val());
 			  }
-			 
 			 if($('#hidjqxContractDate').val()){
 				 $("#jqxContractDate").jqxDateTimeInput('val', $('#hidjqxContractDate').val());
 			  }
-			 
 			 if($('#hiddateOfJoining').val()){
 				 $("#dateOfJoining").jqxDateTimeInput('val', $('#hiddateOfJoining').val());
 			  }
-			 
 			 if(document.getElementById("hidchckdefault").value==1){
 	 			 document.getElementById("chckdefault").checked = true;
 	 		 }
 	 		 else if(document.getElementById("hidchckdefault").value==0){
 	 			document.getElementById("chckdefault").checked = false;
 	 		 }
-			 
 			 if(document.getElementById("hidchckseparatesrvcdefault").value==1){
 	 			 document.getElementById("chckseparatesrvcdefault").checked = true;
 	 		 }
 	 		 else if(document.getElementById("hidchckseparatesrvcdefault").value==0){
 	 			document.getElementById("chckseparatesrvcdefault").checked = false;
 	 		 }
-			 
 			 if(document.getElementById("hidchckadvance").value==1){
 	 			 document.getElementById("chckadvance").checked = true;
 	 		 }
 	 		 else if(document.getElementById("hidchckadvance").value==0){
 	 			document.getElementById("chckadvance").checked = false;
 	 		 }
-			 
 			 if(document.getElementById("hidchcknontaxableentity").value==1){
 	 			 document.getElementById("chcknontaxableentity").checked = true;
 	 		 }
 	 		 else if(document.getElementById("hidchcknontaxableentity").value==0){
 	 			document.getElementById("chcknontaxableentity").checked = false;
 	 		 }
-			 
 			 if($('#hidcmbcurrency').val()!=""){
 				 getCurrencyIds();
 				 $('#cmbcurrency').val($('#hidcmbcurrency').val());
 			 }
-			 
-			// funCurrency();
-			//document.getElementById("cmbcurrency").value=document.getElementById("hidcmbcurrency").value;
 			document.getElementById("cmbinvoicing_method").value=document.getElementById("hidcmbinvoicing_method").value;
 			$('#cmbdel_charges').val($('#hidcmbdel_charges').val());  
-			
 			 if($('#msg').val()!=""){
 				   $.messager.alert('Message',$('#msg').val());
 				  }
-			 
 			 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 			 funSetlabel();
-            
              var indexVal = document.getElementById("docno").value;
 			 if(indexVal> 0){
 				 getCategoryWiseEditEnable($('#cmbcategory').val());
@@ -1490,28 +1366,24 @@
 			 		funChangeSalikPercent();
 			 	}
 			 	funCreditCardValidate();
-			 	
 			 	if($('#hidchksalikauhpercent').val()=='1'){
 			 		document.getElementById('chksalikauhpercent').checked=true;
 			 	}
 			 	else{
 			 		document.getElementById('chksalikauhpercent').checked=false;
 			 	}
-			 	
 			 	if($('#hidchksalikdxbpercent').val()=='1'){
 			 		document.getElementById('chksalikdxbpercent').checked=true;
 			 	}
 			 	else{
 			 		document.getElementById('chksalikdxbpercent').checked=false;
 			 	}
-			 	
 			 	if($('#hidchktrafficpercent').val()=='1'){
 			 		document.getElementById('chktrafficpercent').checked=true;
 			 	}
 			 	else{
 			 		document.getElementById('chktrafficpercent').checked=false;
 			 	}
-			 	
 			 	if($('#hidchkparkingpercent').val()=='1'){
 			 		document.getElementById('chkparkingpercent').checked=true;
 			 	}
@@ -1521,23 +1393,18 @@
 			 }
 		}
 	 function getSalesmanConfigs(){
-		  
-	  		var x = new XMLHttpRequest();
+		 var x = new XMLHttpRequest();
 	  		x.onreadystatechange = function() {
 	  			if (x.readyState == 4 && x.status == 200) {
 	  				var items = x.responseText.trim();
 	  			    $('#salesmaneditstatus').val(items);
-	  			  	//alert(items)
 	  			  	if(items=="1")   
 	  			  	{
 	  			  		if($('#mode').val()!="A"){
 	  			  			$("#cmbsalesman").attr("disabled",true);	
-	  			  		}
-			  			
-			  			
+	  			  		}  			  			
 			  		}else {
-			  			$("#cmbsalesman").attr("disabled",false);
-			  			
+			  			$("#cmbsalesman").attr("disabled",false);			  			
 			  		}
 			  		}
 	  		}
@@ -1545,7 +1412,6 @@
 	  		x.send();
 	 }
 	 function funChkButton() {
-			/* funReset(); */
 		}
 	 function funexcelexport(){
 	 $("#documentExpiryDiv").excelexportjs({
@@ -1559,7 +1425,6 @@
 	 }
 	 
 	 function funCreditCardValidate(){
-		 
 		 var catid=$('#cmbcategory').val();
 		 $.get('getCreditCardValidate.jsp',{'catid':catid},function(data){
 			data=JSON.parse(data);
@@ -1569,168 +1434,34 @@
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-#validrate{
-    color:red;
-}
-#validrate1{
-    color:red;
-}
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
+html, body { height: 100%; overflow-y: auto; }
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 8px; }
+body::-webkit-scrollbar-thumb { background: #4da3ff; border-radius: 8px; border: 2px solid #eaf3ff; }
+body::-webkit-scrollbar-thumb:hover { background: #1a73e8; }
+.hidden-scrollbar { max-height: 80vh; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: #4da3ff #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar { width: 8px; }
+.hidden-scrollbar::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 4px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background-color: #4da3ff; border-radius: 4px; border: 2px solid #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1a73e8; }
+body { background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%); font-family: "Poppins", "Segoe UI", sans-serif; color: #1f2f46; margin: 0; padding: 40px 0; min-height: 100vh; animation: fadeIn 0.6s ease-in-out; box-sizing: border-box; }
+#mainBG { background: #f4f8ff; border-radius: 16px; box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15); padding: 25px 30px; max-width: 1250px; margin: 0 auto; transition: 0.3s ease; }
+.receipt-header { background: #edf4ff; border: 1px solid #c9dafc; border-radius: 14px; padding: 20px; margin-bottom: 26px; box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2); }
+.clean-grid-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 32px; width: 100%; box-sizing: border-box; align-items: start; }
+.clean-grid-item { display: flex; flex-direction: column; }
+.clean-grid-item.full { grid-column: span 3; }
+.clean-input, .clean-grid-item input[type="text"], .clean-grid-item select, .receipt-header input[type="text"], .receipt-header select { width: 100%; height: 44px; padding: 8px 12px; border: 1px solid #b9ccf2; border-radius: 8px; background: #ffffff; font-size: 0.95rem; color:#1f2f46; box-sizing: border-box; transition: 0.18s ease; }
+.clean-input:focus, .receipt-header input[type="text"]:focus, .receipt-header select:focus { border-color: #4da3ff; box-shadow: 0 0 6px rgba(77,163,255,0.35); outline: none; }
+#jqxClientDate, #jqxReferenceDate { width: 100% !important; height: 44px !important; }
+#jqxClientDate input, #jqxReferenceDate input { height: 42px !important; padding-left: 10px !important; border-radius: 8px !important; background-color: #ffffff !important; box-shadow: none !important; }
+.cr-table input[type="text"], .cr-table select { width: 100%; height: 40px; padding: 6px 10px; box-sizing: border-box; border-radius: 8px; border: 1px solid #d6e1ff; background: #fff; }
+label { font-weight: 600; font-size: 14px; color: #1a2d4d; margin-bottom: 8px; display:block; }
+.cr-table { width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15); }
+.cr-table th, .cr-table td { padding: 10px 12px; border-bottom: 1px solid #d6e1ff; text-align: left; font-size: 0.95rem; color: #1f2f46; vertical-align: middle; }
+.cr-table th { background-color: #dcebff; color: #1b3f73; font-weight: 600; }
+button, .myButton { background: linear-gradient(90deg, #3b82f6, #1a73e8); color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-weight: 600; cursor: pointer; transition: 0.25s ease; box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 900px) { .clean-grid-form { grid-template-columns: repeat(1, 1fr); } .clean-grid-item.full { grid-column: span 1; } }
 </style>
 
 </head>
@@ -1843,15 +1574,6 @@ body {
   			<input type="checkbox" id="chksalikpercent" name="chksalikpercent" value="" onchange="funChangeSalikPercent();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Percentage
             <input type="hidden" id="hidchksalikpercent" name="hidchksalikpercent" value='<s:property value="hidchksalikpercent"/>'/>
   		</td>
-    <%-- 	<td align="right"><input type="checkbox" id="chksalikauhpercent" name="chksalikauhpercent" value='<s:property value="chksalikauhpercent"/>' data-type="chksalikauhpercent">DARB %</td>
-    	<td align="left"><input type="text" id="salikauhpercent" name="salikauhpercent" style="text-align: right;"  value='<s:property value="salikauhpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chksalikdxbpercent" name="chksalikdxbpercent" value='<s:property value="chksalikdxbpercent"/>' data-type="chksalikdxbpercent">Salik DXB %</td>
-    	<td><input type="text" id="salikpercent" name="salikpercent" style="text-align: right;"  value='<s:property value="salikpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chktrafficpercent" name="chktrafficpercent" value='<s:property value="chktrafficpercent"/>' data-type="chktrafficpercent">Traffic %</td>
-    	<td><input type="text" id="trafficpercent" name="trafficpercent" style="text-align: right;"  value='<s:property value="trafficpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chkparkingpercent" name="chkparkingpercent" value='<s:property value="chkparkingpercent"/>' data-type="chkparkingpercent">Parking %</td>
-    	<td><input type="text" id="parkingpercent" name="parkingpercent" style="text-align: right;"  value='<s:property value="parkingpercent"/>'/></td>
-  	 --%>
   	 	<td align="right"><input type="checkbox" id="chksalikauhpercent" name="chksalikauhpercent" value='<s:property value="chksalikauhpercent"/>' onchange="funChangeSalikDARBPercent();" data-type="chksalikauhpercent">DARB %</td>
     	<td align="left"><input type="text" id="salikauhpercent" name="salikauhpercent" style="text-align: right;"  value='<s:property value="salikauhpercent"/>'/></td>
     	<td align="right"><input type="checkbox" id="chksalikdxbpercent" name="chksalikdxbpercent" value='<s:property value="chksalikdxbpercent"/>' onchange="funChangeSalikDXBPercent();" data-type="chksalikdxbpercent">Salik DXB %</td>
@@ -1865,7 +1587,6 @@ body {
   	<input type="hidden" id="hidchksalikdxbpercent" name="hidchksalikdxbpercent" value='<s:property value="hidchksalikdxbpercent"/>'/>
   	<input type="hidden" id="hidchktrafficpercent" name="hidchktrafficpercent" value='<s:property value="hidchktrafficpercent"/>'/>
   	<input type="hidden" id="hidchkparkingpercent" name="hidchkparkingpercent" value='<s:property value="hidchkparkingpercent"/>'/>
-  	
 </table>
 
 </div>
@@ -1894,23 +1615,14 @@ body {
 <div style="width:100%;" id="tab1">
 <div style="width:100%;">
  <div class="cr-table" id="jqxDriver1"> <jsp:include page="driver.jsp"></jsp:include></div><br/>
-
 </div>
 </div>
 
 <div style="width:100%;" id="tab2">
 <div style="width:100%;">
-<%-- <table width="100%">
-  <tr>
-    <td width="9%" align="right">Reference No.</td>
-    <td width="40%"><input type="text" id="txtref_no" name="txtref_no" style="width:30%;" tabindex="1" value='<s:property value="txtref_no"/>'/></td>
-    <td width=36% align="right">Reference Type</td>
-    <td width="15%"><input type="text" id="txtref_type" name="txtref_type" style="width:70%;" tabindex="2" value='<s:property value="txtref_type"/>'/></td>
-  </tr>
-</table><br/> --%>
 <table class="table1" style="border-collapse:collapse;" width="100%">
                 <thead>
-                    <tr> <!-- #81BEF7 -->
+                    <tr>
                         <th></th>
                         <th scope="col" abbr="personal" style="background: #D1D1D1;">Communication Details</th>
                         <th scope="col" abbr="office">Office Details</th>
@@ -1990,27 +1702,6 @@ body {
 </div>
 
 <div  style="width:100%;" id="tab4">
-<%-- <table width="100%">
-<tr><td width="70%">
-<fieldset>
-<legend>Documents Required</legend>
-<table width="100%">
-  <tr>
-    <td width="81%" align="right"><button  class="myButton" type="button" onclick="">Attach</button></td>
-    <td width="19%" align="left"><button class="myButton" type="button" onclick="">&nbsp;&nbsp;Preview</button></td>
-  </tr>
-</table>
-<div id="jqxDocumentsAttach1"> <jsp:include page="documentsAttach.jsp"></jsp:include></div><br/>
-</fieldset>
-</td>
- <td width="30%">
-<fieldset>
-<legend>Preview</legend>
-<textarea rows="16" style="width:98%;resize: none;"></textarea>
-</fieldset>
-</td> 
-</tr>
-</table> --%>
 <table width="100%">
 <tr><td width="50%">
 <div class="table-section"  style="width:100%;">
@@ -2115,3 +1806,4 @@ body {
 </div>
 </body>
 </html>
+
