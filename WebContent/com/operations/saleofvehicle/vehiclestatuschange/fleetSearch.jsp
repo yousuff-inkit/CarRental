@@ -10,79 +10,113 @@ String branch=request.getParameter("branch")==null?"0":request.getParameter("bra
 ClsFleetStatusChangeDAO fleetdao=new ClsFleetStatusChangeDAO();
 %>
 <style>
-/* Grid container */
-#fleetSearch {
-    margin-top: 10px;
-    border-radius: 8px !important;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
+    /* Body styling */
+    body {
+        background-color: #E0ECF8;
+        font-family: "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #000000; /* Black text */
+    }
 
-/* Main grid look */
-.jqx-grid, 
-.jqx-widget-content {
-    background: #ffffff !important;
-    border: 1px solid #d4e3f7 !important;
-    font-family: "Segoe UI", Arial, sans-serif !important;
-}
+    /* Outer Fleet Search Container */
+    #fleetSearch {
+        margin: 15px auto;
+        padding: 12px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 92, 184, 0.15);
+        border: 1px solid #c6ddf5;
+    }
 
-/* Header styling */
-.jqx-grid-column-header {
-    background: #2F75C5 !important;
-    color: #ffffff !important;
-    font-weight: bold !important;
-    font-size: 13px !important;
-    text-align: center !important;
-    border-color: #2F75C5 !important;
-    padding: 6px 0 !important;
-}
+    /* jqxGrid styling */
+    .jqx-grid, 
+    .jqx-grid-cell, 
+    .jqx-grid-column-header, 
+    .jqx-grid-filter-row {
+        font-family: "Segoe UI", Roboto, sans-serif;
+        font-size: 13px;
+        color: #000000; /* Black text */
+    }
 
-/* Header hover effect */
-.jqx-grid-column-header:hover {
-    background: #1E5CB8 !important;
-}
+    .jqx-grid-column-header {
+        background-color: #0d6efd; /* ERP Blue */
+        color: #ffffff;
+        font-weight: 600;
+        border-bottom: 1px solid #b7d1ee;
+    }
 
-/* Cell styling */
-.jqx-grid-cell {
-    font-size: 13px !important;
-    padding-left: 8px !important;
-    border-color: #e4eef9 !important;
-}
+    .jqx-grid-cell-alt {
+        background-color: #f4f9ff; /* alternate row color */
+    }
 
-/* Alternate row */
-.jqx-grid-cell-alt {
-    background: #f4f8ff !important;
-}
+    .jqx-grid-cell {
+        padding: 4px 6px;
+        border-bottom: 1px solid #cfdaf0;
+    }
 
-/* Hover row */
-.jqx-grid-cell-hover {
-    background-color: #E8F1FF !important;
-}
+    .jqx-grid-filter-row input {
+        border: 1px solid #b7d1ee;
+        border-radius: 4px;
+        padding: 2px 6px;
+        color: #000000;
+    }
 
-/* Selected row */
-.jqx-grid-cell-selected {
-    background-color: #c9daf7 !important;
-    color: #000 !important;
-}
+    /* jqxDateTimeInput styling */
+    .jqx-widget-content {
+        font-size: 13px;
+        color: #000000;
+        border-radius: 6px;
+        border: 1px solid #b7d1ee;
+        background-color: #ffffff;
+    }
 
-/* Scrollbar modern look */
-::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-thumb {
-    background: #b6c9e9;
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #94b2e4;
-}
+    /* Buttons */
+    .myButton {
+        background-color: #0d6efd;
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
 
-/* Filter row styling (if enabled later) */
-.jqx-grid-cell-filter-row {
-    background: #eef4fc !important;
-    border-bottom: 1px solid #c9dbf2 !important;
-}
+    .myButton:hover {
+        background-color: #0b5ed7;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* General Inputs */
+    input[type="text"], select {
+        width: 95%;
+        padding: 6px 8px;
+        border: 1px solid #b7d1ee;
+        border-radius: 6px;
+        outline: none;
+        font-size: 13px;
+        background-color: #ffffff;
+        color: #000000;
+        transition: 0.3s;
+    }
+
+    input[type="text"]:focus, select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 4px rgba(13, 110, 253, 0.4);
+    }
+
+    /* jqxWindow / Modal container */
+    #fleetwindow {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 92, 184, 0.12);
+        padding: 15px;
+    }
 </style>
+
 
 <script type="text/javascript">
       var datafleet= '<%=fleetdao.fleetSearch(branch,searchdate,fleetno,docno,regno,color,group) %>';

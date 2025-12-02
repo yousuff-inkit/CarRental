@@ -10,6 +10,65 @@
  String amount = request.getParameter("amount")==null?"0":request.getParameter("amount");
  String branch = request.getParameter("branch")==null?"0":request.getParameter("branch");
 %> 
+<style>
+
+    /* Main Grid Styling */
+    #jqxFixedAssetDepreciationMainSearch {
+        border: 1px solid #c6ddf5 !important;
+        border-radius: 10px !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(0, 92, 184, 0.15) !important;
+        margin-top: 10px;
+        font-family: "Segoe UI", Roboto, sans-serif !important;
+    }
+
+    /* Header Styling */
+    .jqx-grid-header {
+        background: linear-gradient(to right, #0d6efd, #5aa9ff) !important;
+        color: white !important;
+        font-weight: bold !important;
+        font-size: 13px !important;
+        text-align: center !important;
+    }
+
+    /* Grid Rows */
+    .jqx-grid-cell {
+        font-size: 12px !important;
+        color: #333 !important;
+    }
+
+    /* Hover Effect on Rows */
+    .jqx-grid-cell-hover {
+        background-color: #e7f1ff !important;
+    }
+
+    /* Selected Row */
+    .jqx-grid-cell-selected {
+        background-color: #cfe2ff !important;
+        color: #003f91 !important;
+    }
+
+    /* Search Button (if any) */
+    .search-btn {
+        background-color: #0d6efd;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    /* Hover Effect for Search Button */
+    .search-btn:hover {
+        background-color: #0b5ed7;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        transform: translateY(-2px);
+    }
+
+</style>
 
  <script type="text/javascript">
  
