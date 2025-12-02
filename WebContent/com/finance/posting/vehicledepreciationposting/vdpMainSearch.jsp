@@ -9,127 +9,100 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 <style>
-/* Full white clean theme */
-#jqxVehicleDepreciationMainSearch, #refreshdiv .jqx-grid {
-    background-color: #ffffff !important; 
-    border: 1px solid #D8E6F7 !important;
-    border-radius: 8px !important;
-    box-shadow: 0 2px 6px rgba(0, 80, 160, 0.10) !important;
-    font-family: "Segoe UI", Roboto, sans-serif !important;
-    font-size: 13px !important;
-}
+    /* Body styling */
+    body {
+        background-color: #E0ECF8;
+        font-family: "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #000000; /* Black text */
+    }
 
-/* Header white with blue text */
-#jqxVehicleDepreciationMainSearch .jqx-grid-column-header, 
-#refreshdiv .jqx-grid .jqx-grid-column-header {
-    background-color: #ffffff !important;
-    color: #2F75C5 !important;
-    font-weight: 600 !important;
-    border-bottom: 2px solid #C7DBF3 !important;
-    text-align: center !important;
-}
+    /* Outer Search Box */
+    #search {
+        width: 95%;
+        margin: 15px auto;
+        padding: 15px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 92, 184, 0.18);
+        border: 1px solid #c6ddf5;
+    }
 
-/* Normal rows – pure white */
-#jqxVehicleDepreciationMainSearch .jqx-grid-cell,
-#refreshdiv .jqx-grid .jqx-grid-cell {
-    background-color: #ffffff !important;
-    border-color: #E6EEF9 !important;
-    color: #00315C !important;
-}
+    /* Labels */
+    td {
+        font-size: 14px;
+        color: #000000; /* Black text */
+        padding: 4px 8px;
+    }
 
-/* Alternate rows – very light blue tint */
-#jqxVehicleDepreciationMainSearch .jqx-grid-cell-alt,
-#refreshdiv .jqx-grid .jqx-grid-cell-alt {
-    background-color: #F8FBFF !important; 
-}
+    /* Input Fields */
+    input[type="text"] {
+        width: 95%;
+        padding: 6px 8px;
+        border: 1px solid #b7d1ee;
+        border-radius: 6px;
+        outline: none;
+        transition: 0.3s;
+        font-size: 13px;
+        background: #ffffff;
+        color: #000000;
+    }
 
-/* Row hover */
-#jqxVehicleDepreciationMainSearch .jqx-grid-cell:hover,
-#refreshdiv .jqx-grid .jqx-grid-cell:hover {
-    background-color: #F0F6FF !important;
-}
+    input[type="text"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 4px rgba(13, 110, 253, 0.4);
+    }
 
-/* Selected row – subtle blue */
-#jqxVehicleDepreciationMainSearch .jqx-grid-row-selected,
-#refreshdiv .jqx-grid .jqx-grid-row-selected {
-    background-color: #DDEAFF !important;
-    color: #002B55 !important;
-    font-weight: 600 !important;
-}
+    /* jqxDateTimeInput styling */
+    .jqx-widget-content {
+        font-size: 13px;
+        color: #000000;
+        border-radius: 6px;
+        border: 1px solid #b7d1ee;
+    }
 
-/* Minimal scrollbar */
-#jqxVehicleDepreciationMainSearch::-webkit-scrollbar,
-#refreshdiv .jqx-grid::-webkit-scrollbar {
-    width: 7px;
-}
-#jqxVehicleDepreciationMainSearch::-webkit-scrollbar-thumb,
-#refreshdiv .jqx-grid::-webkit-scrollbar-thumb {
-    background: #C7DBF3;
-    border-radius: 10px;
-}
-#jqxVehicleDepreciationMainSearch::-webkit-scrollbar-track,
-#refreshdiv .jqx-grid::-webkit-scrollbar-track {
-    background: #F3F8FF;
-}
+    /* Search Button */
+    .myButton {
+        background: #0d6efd;
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.3s;
+        width: 120px;
+    }
+
+    .myButton:hover {
+        background: #0b5ed7;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* Grid / Refresh Div Styling */
+    #refreshdiv {
+        margin-top: 15px;
+        padding: 10px;
+        background: #ffffff;
+        border: 1px solid #cfdaf0;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 92, 184, 0.12);
+        color: #000000; /* Black text */
+    }
+
+    /* Table styling */
+    table {
+        border-collapse: collapse;
+    }
+
+    tr {
+        height: 40px;
+    }
 </style>
-<style>
-/* Container spacing */
-#search table {
-    width: 100%;
-    border-collapse: collapse;
-}
 
-/* Labels */
-#search td[align="right"] {
-    text-align: right;
-    padding-right: 5px;
-    vertical-align: middle;
-    font-weight: 600;
-    font-size: 13px;
-}
-
-/* Inputs */
-#search input[type="text"], 
-#search input[type="button"], 
-#search div[id^="vdpdate"] {
-    height: 28px;
-    padding: 4px 6px;
-    font-size: 13px;
-    border: 1px solid #C7DBF3;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-/* Date picker div styling */
-#search div[id^="vdpdate"] {
-    width: 110px;
-}
-
-/* Button styling */
-#search input.myButton {
-    background-color: #2F75C5;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    height: 32px;
-    padding: 0 12px;
-    font-size: 13px;
-}
-#search input.myButton:hover {
-    background-color: #1E5CB8;
-}
-
-/* Adjust spacing between label-input pairs */
-#search td {
-    padding: 4px 6px;
-}
-
-/* Full-width input for name field */
-#txtpartyname {
-    width: 100%;
-}
-</style>
 
 	<script type="text/javascript">
 	$(document).ready(function () {
