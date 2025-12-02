@@ -1219,6 +1219,140 @@ input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px white !important;
     -webkit-text-fill-color: #111 !important;
 }
+/* Increase width of Account + Account Name */
+#txtaccid {
+    width: 160px !important;
+}
+
+#txtaccname {
+    width: 200px !important;
+}
+
+/* Remove Pink Autofill inside JQX date input internal fields */
+.jqx-input, 
+input.jqx-input,
+.jqx-widget-content input,
+.jqx-calendar-text,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: inset 0 0 0 1000px white !important;
+    -webkit-text-fill-color: #111 !important;
+    caret-color: #111 !important;
+}
+
+/* Ensure jqxDateTimeInput height stays aligned */
+.jqx-datetimeinput {
+    height: 38px !important;
+}
+/* Increase text size in TYPE dropdown */
+#cmbtype {
+    font-size: 16px !important;
+    height: 38px !important;
+    padding: 6px 10px !important;
+}
+
+/* Increase text size inside the dropdown list */
+#cmbtype option {
+    font-size: 16px !important;
+    padding: 8px !important;
+}
+
+/* Fix alignment of Submit button */
+.top-filter-bar .btn-primary,
+.myButton {
+    height: 38px !important;       /* same height as inputs */
+    margin-top: 24px !important;   /* adjust vertical alignment */
+    padding: 6px 18px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Fix Submit button alignment */
+.top-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center !important;   /* ⭐ forces perfect vertical alignment */
+}
+
+.top-filter-bar .btn-primary {
+    height: 38px !important;          /* same as inputs */
+    margin-top: 0 !important;         /* remove offset */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px !important;
+}
+/* ============================
+   CLEAN & COMPACT DISTRIBUTION UI
+   ============================ */
+
+.distribution-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/* LEFT SIDE */
+.dist-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* 4-column compact grid */
+.dist-row {
+    display: grid;
+    grid-template-columns: 140px 180px 140px 180px;
+    align-items: center;
+    column-gap: 12px;
+}
+
+/* Smaller labels */
+.dist-row label {
+    font-weight: 600;
+    color: #2a3f5f;
+    font-size: 14px;
+}
+
+/* Compact inputs */
+.dist-row input[type="text"],
+.dist-row select {
+    height: 32px;
+    width: 100%;
+    border: 1px solid #d3d9e2;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 14px;
+    background: white;
+}
+
+/* Compact checkboxes */
+.dist-row input[type="checkbox"] {
+    transform: scale(1.1);
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+/* Inline label beside checkbox */
+.inline-label {
+    font-weight: 600;
+    margin-left: 4px;
+    font-size: 14px;
+}
+
+/* Date pickers sizing */
+.dist-row .jqx-widget,
+.dist-row .jqx-datetimeinput {
+    height: 32px !important;
+}
+
+/* Ensure right grid doesn't move */
+#jqxDistributionGrid1 {
+    width: 300px;
+}
 
 </style>
 
@@ -1231,25 +1365,68 @@ input:-webkit-autofill {
 <div  class='hidden-scrollbar receipt-header'>
 
     <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Account</td>
-    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td width="20%"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/> <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="5%" align="right">From</td>
-    <td width="13%"><div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
-    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/></td>
-    <td width="2%" align="right">To</td>
-    <td width="16%"><div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
-    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/></td>
-    <td width="4%" align="right">Type</td>
-    <td width="12%"><select id="cmbtype" name="cmbtype" style="width:70%;" onchange="funPostingGrid();" value='<s:property value="cmbtype"/>'>
-    <option value="0">--Select--</option><option value="1">For Distribution</option><option value="2">Summary</option><option value="3">To be Posted</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
-    <td width="9%" align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadgrid();">Submit</button>
-     </td>
-  </tr>
-</table></div>
+<div class="top-filter-bar">
+
+    <div class="filter-item">
+        <label>Account</label>
+        <input type="text" 
+               id="txtaccid" 
+               name="txtaccid"
+               placeholder="Press F3 to Search"
+               value='<s:property value="txtaccid"/>'
+               onkeydown="getAcc(event);"/>
+    </div>
+
+    <div class="filter-item">
+        <label>Account Name</label>
+        <input type="text" 
+               id="txtaccname" 
+               name="txtaccname"
+               value='<s:property value="txtaccname"/>'>
+        <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+    </div>
+
+    <div class="filter-item">
+        <label>From</label>
+        <div id="jqxFromDate"></div>
+        <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate"
+               value='<s:property value="hidjqxFromDate"/>'>
+    </div>
+
+    <div class="filter-item">
+        <label>To</label>
+        <div id="jqxToDate"></div>
+        <input type="hidden" id="hidjqxToDate" name="hidjqxToDate"
+               value='<s:property value="hidjqxToDate"/>'>
+    </div>
+
+    <div class="filter-item">
+        <label>Type</label>
+        <select id="cmbtype" 
+                name="cmbtype" 
+                onchange="funPostingGrid();">
+            <option value="0">--Select--</option>
+            <option value="1">For Distribution</option>
+            <option value="2">Summary</option>
+            <option value="3">To be Posted</option>
+        </select>
+        <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+               value='<s:property value="hidcmbtype"/>' />
+    </div>
+
+    <div class="filter-item" style="min-width: 120px;">
+        <label>&nbsp;</label>
+        <button class="btn-primary"
+                type="button"
+                id="btnSubmit"
+                name="btnSubmit"
+                onclick="funloadgrid();">
+            Submit
+        </button>
+    </div>
+
+</div>
+</div>
 <h3>Details</h3>
 <div class="cr-table" id="jqxPrePaymentGrid"><jsp:include page="prePaymentGrid.jsp"></jsp:include></div>
 
@@ -1258,31 +1435,108 @@ input:-webkit-autofill {
 <tr>
 <td width="70%">
 <h3>Distribution</h3>
-<table class="cr-table" width="100%" border="0" >
-  <tr>
-    <td width="10%" align="right">Account(To be Posted)</td>
-    <td width="16%"><input type="text" id="txtdistributionaccid" name="txtdistributionaccid" style="width:53%;" placeholder="Press F3 to Search" value='<s:property value="txtdistributionaccid"/>' onkeydown="getDistributionAcc(event);"/></td>
-     <td width="6%"></td>
-      <td><input type="text" id="txtdistributionaccname" name="txtdistributionaccname" style="width:95%;" tabindex="-1" value='<s:property value="txtdistributionaccname"/>'/>
-    <input type="hidden" id="txtdistributiondocno" name="txtdistributiondocno" value='<s:property value="txtdistributiondocno"/>'/>
-    <input type="hidden" id="txtaccountdocno" name="txtaccountdocno" value='<s:property value="txtaccountdocno"/>'/>
-    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-    <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
-    <input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/></td>
-    <td width="38%"></td>
-  <tr>
-    <td align="right">Cost Type</td>
-    <td><input type="text" id="txtcostgroup" readonly  name="txtcostgroup" style="width:53%;" placeholder="Press F3 to Search" tabindex="2" onkeydown="getcostType(event);" value='<s:property value="txtcostgroup"/>'/>
- 
-    <input type="hidden" id="txtcosttype" name="txtcosttype" style="width:80%;" value='<s:property value="txtcosttype"/>'/></td>
-    <td width="6%" align="right">Cost No</td>
-    <td><input type="text" id="txtcostcode" readonly name="txtcostcode" style="width:95%;" tabindex="4" onkeydown="getcostNo(event);" placeholder="Press F3 to Search" value='<s:property value="txtcostcode"/>'/>
-        <input type="hidden" id="txtcostno" name="txtcostno" style="width:80%;" value='<s:property value="txtcostno"/>'/>
-      <td width="20%" align="center"><input type="button" name="btnPrintSummary" id="btnPrintSummary" class="myButton" value="Print"  onclick="funPrintSummary();"><button class="myButton" type="button" id="btndist" name="btndist"  onclick="fundistribution();" >Mark as Distributed</button></td>
- 
-   
-  </tr>
-  </table>
+<div class="distribution-container">
+
+    <!-- LEFT PANEL -->
+    <div class="dist-left">
+
+        <!-- Row 1 -->
+        <div class="dist-row">
+            <label>Account</label>
+            <input type="text" id="txtdistributionaccid"
+                   placeholder="Press F3 to Search"
+                   onkeydown="getDistributionAcc(event);"
+                   value="<s:property value='txtdistributionaccid'/>">
+
+            <label>Account Name</label>
+            <input type="text" id="txtdistributionaccname"
+                   value="<s:property value='txtdistributionaccname'/>">
+        </div>
+
+        <!-- Row 2 -->
+        <div class="dist-row">
+            <label>Cost Type</label>
+            <input type="text" id="txtcostgroup" readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getcostType(event);"
+                   value="<s:property value='txtcostgroup'/>">
+
+            <label>Cost No</label>
+            <input type="text" id="txtcostcode" readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getcostNo(event);"
+                   value="<s:property value='txtcostcode'/>">
+        </div>
+
+        <!-- Row 3 -->
+        <div class="dist-row">
+            <label>Amount</label>
+            <input type="text" id="txtamount"
+                   onchange="fundecreaseamt();"
+                   value="<s:property value='txtamount'/>">
+
+            <div style="display:flex;align-items:center;">
+                <input type="checkbox" id="det_chk">
+                <span class="inline-label">Settle Amt</span>
+            </div>
+
+            <input type="text" id="txtdecamount"
+                   onchange="fundecreaseamt();"
+                   value="<s:property value='txtdecamount'/>">
+        </div>
+
+        <!-- Row 4 -->
+        <div class="dist-row">
+            <label>Frequency</label>
+            <select id="cmbfrequency" onchange="clearDistributionInfo();">
+                <option value="2">Month</option>
+            </select>
+
+            <label>Due After</label>
+            <input type="text" id="txtdueafter"
+                   value="<s:property value='txtdueafter'/>">
+        </div>
+
+        <!-- Row 5 -->
+        <div class="dist-row">
+            <div style="display:flex;align-items:center;">
+                <input type="checkbox" id="ins_chk">
+                <span class="inline-label">Equal Installment</span>
+            </div>
+
+            <input type="text" id="txtinstnos"
+                   onblur="funInstAmount(); funInsEndDate();"
+                   value="<s:property value='txtinstnos'/>">
+
+            <label></label><div></div>
+        </div>
+
+        <!-- Row 6 -->
+        <div class="dist-row">
+            <label>For the period</label>
+            <div id="jqxStartDate"></div>
+
+            <label>To</label>
+            <div id="jqxEndDate"></div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT GRID (unchanged) -->
+    <div id="jqxDistributionGrid1">
+        <jsp:include page="distributionGrid.jsp"></jsp:include>
+    </div>
+
+</div>
+
+
+    <!-- Right-Side Grid (Untouched) -->
+    <div id="jqxDistributionGrid1">
+        <jsp:include page="distributionGrid.jsp"></jsp:include>
+    </div>
+
+</div>
+
   <table class="cr-table"  width="100%" border="0" >
   <tr>
 
