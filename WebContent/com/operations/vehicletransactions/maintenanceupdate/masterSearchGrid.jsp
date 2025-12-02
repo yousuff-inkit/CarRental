@@ -14,6 +14,7 @@
 
  
  %>
+
  <script type="text/javascript">
 
    var master='<%=viewDAO.searchMaster(session, name, fleetno, documentno, regno, aa)%>';

@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <script type="text/javascript">
      
@@ -324,258 +326,347 @@
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+/* UNIVERSAL GRID ROW */
+.form-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr 150px 1fr 150px 1fr;
+    gap: 22px 28px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 25px;
 }
 
+/* ROW WITH FEWER ITEMS (3-column layout) */
+.form-grid-3 {
+    display: grid;
+    grid-template-columns: 180px 1fr 180px 1fr 180px 1fr;
+    gap: 22px 28px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
 
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
+/* LABELS */
+.form-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2f3b52;
+    margin-bottom: 4px;
+}
+
+/* INPUT + SELECT */
+.form-input {
+    width: 100%;
+    height: 38px !important;
+    border: 1px solid #ccd4e0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 15px !important;
+    background: white;
+}
+
+/* jqx Date controls */
+.jqx-datetimeinput {
+    width: 100% !important;
+    height: 38px !important;
+    border-radius: 8px !important;
+}
+
+/* SECTION CARD */
+.section-card {
+    background: #f7f9ff;
+    padding: 24px 28px;
+    border-radius: 14px;
+    box-shadow: 0 2px 7px rgba(0,0,0,0.07);
+    margin-bottom: 26px;
+}
+
+/* Autofill fix for ALL inputs and selects */
+input:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* Make selects look modern */
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 7l3 3 3-3z'/></svg>");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    padding-right: 35px;
+}
+/* Uniform modern input size for all fields */
+.form-input, 
+#jqxVendorDate, 
+#postingDate, 
+#jqxUnclearedChequeProcessFromDate,
+#jqxUnclearedChequeProcessToDate,
+#jqxUnclearedChequeProcessingDate {
+    width: 220px !important;     /* 👈 Same width as Currency, slight extra */
+    height: 38px !important;
+    border: 1px solid #cdd6e2;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: #fff !important;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+/* Label directly above input, aligned clean */
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #2f3b52;
+}
+
+/* 3-column grid for perfect ERP alignment */
+.form-grid,
+.form-grid-3 {
+    display: grid;
+    grid-template-columns: auto 220px auto 220px auto 220px; /* label + input pairs */
+    column-gap: 28px;
+    row-gap: 18px;
+    align-items: center;
+}
+
+/* Section card container */
+.section-card {
+    background: #f7f9ff;
+    border-radius: 12px;
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+/* Uniform modern input size */
+.form-input,
+#jqxVendorDate,
+#jqxUnclearedChequeProcessFromDate,
+#jqxUnclearedChequeProcessToDate,
+#jqxUnclearedChequeProcessingDate,
+#postingDate,
+input[type="text"],
+input[type="email"],
+select {
+    width: 210px !important;     /* SAME width for all input fields */
+    height: 36px !important;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd3df;
+    background: #fff !important;
+    font-size: 15px;
     box-sizing: border-box;
 }
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #2f3b52;
 }
 
-.receipt-header {
+/* Very tight label-input pairing */
+.pair {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 3px;            /* minimal spacing between label and input */
+}
+
+/* Tight horizontal grid: Label+Input repeated */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(4, auto 210px);  
+    /* auto = label width, 210px = input width */
+    gap: 14px 32px;      /* minimal row gap, small column spacing */
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
+}
+
+/* Section wrapper */
+.section-card {
+    background: #f7f9ff;
+    padding: 18px 24px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
 </style>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+
+<div id="mainBG" class="homeContent">
+
 <form id="frmVendorDetails" action="saveVendorDetails" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
-   
-<div class='hidden-scrollbar receipt-header'>
 
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="15%"><div id="jqxVendorDate" name="jqxVendorDate" value='<s:property value="jqxVendorDate"/>'></div>
-    <input type="hidden" id="hidjqxVendorDate" name="hidjqxVendorDate" value='<s:property value="hidjqxVendorDate"/>'/></td>
-    <td width="7%" align="right">Code</td>
-    <td width="20%"><input type="text" id="txtcode" name="txtcode" style="width:60%;" tabindex="-1" value='<s:property value="txtcode"/>'/></td>
-    <td width="5%" align="right">Name</td>
-    <td width="25%"><input type="text" id="txtvendorname" name="txtvendorname" style="width:100%;" value='<s:property value="txtvendorname"/>'/></td>
-    <td width="6%" align="right">Doc No</td>
-    <td width="17%"><input type="text" id="docno" name="txtvendordocno" style="width:75%;" tabindex="-1" value='<s:property value="txtvendordocno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Currency</td>
-    <td><select id="cmbcurrency" name="cmbcurrency" style="width:60%;" value='<s:property value="cmbcurrency"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/></td>
-    <td align="right">Category</td>
-    <td><select id="cmbcategory" name="cmbcategory" style="width:100%;" onchange="getCategoryAccountGroup(this.value);" value='<s:property value="cmbcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/></td>
-    <td align="right"><label id="lbltypeentity">Type</label></td>
-    <td><select id="cmbtype" name="cmbtype" style="width:70%;" value='<s:property value="cmbtype"/>'>
-      </select>
-      <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
-    <td align="right"><label id="lbltrnnoentity">TRN No.</label></td>
-    <td><input type="text" id="txtregisteredtrnno" name="txtregisteredtrnno" style="width:75%;" value='<s:property value="txtregisteredtrnno"/>'/></td>
-  </tr>
-</table>
-    </div>
-        <br/>
+    <!-- HEADER -->
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+    <br/>
 
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="6%" align="right">Account Group</td>
-    <td width="26%"><select id="cmbaccgroup" name="cmbaccgroup"  style="width:80%;" value='<s:property value="cmbaccgroup"/>'>
-      <option value="">--Select--</option></select>
-       <input type="hidden" id="hidcmbaccgroup" name="hidcmbaccgroup" value='<s:property value="hidcmbaccgroup"/>'/></td>
-    <td width="5%" align="right">Account</td>
-    <td width="14%"><input type="text" id="txtaccount" name="txtaccount" style="width:70%;" value='<s:property value="txtaccount"/>' tabindex="-1"/></td>
-    <td width="10%" align="right">Credit Period-Min(Days)</td>
-    <td width="10%"><input type="text" id="txtcredit_period_min" name="txtcredit_period_min" style="width:50%;text-align: right;" value='<s:property value="txtcredit_period_min"/>'/></td>
-    <td width="7%" align="right">Max(Days)</td>
-    <td width="8%"><input type="text" id="txtcredit_period_max" name="txtcredit_period_max" style="width:50%;text-align: right;" value='<s:property value="txtcredit_period_max"/>'/></td>
-    <td width="6%" align="right">Credit Limit</td>
-    <td width="10%"><input type="text" id="txtcredit_limit" name="txtcredit_limit" style="width:50%;text-align: right;" value='<s:property value="txtcredit_limit"/>'/></td>
-  </tr>
-</table>
-    </div>
-        <br/>
+    <!-- ============================
+         SECTION 1: DATE / CODE / NAME / DOC NO
+       ============================ -->
+    <div class="section-card">
+        <div class="form-grid">
 
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="9%" align="right">Address</td>
-    <td width="27%"><input type="text" id="txtaddress" name="txtaddress" style="width:90%;" value='<s:property value="txtaddress"/>'/></td>
-    <td width="6%" align="right">Address 2</td>
-    <td colspan="3"><input type="text" id="txtaddress1" name="txtaddress1" style="width:40%;" value='<s:property value="txtaddress1"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Tel</td>
-    <td><input type="text" id="txttel" name="txttel" style="width:40%;" value='<s:property value="txttel"/>'/></td>
-    <td align="right">Mob</td>
-    <td width="28%"><input type="text" id="txtmob" name="txtmob" style="width:40%;" onblur="getMobileNoAlreadyExists(this.value,$('#docno').val(),$('#mode').val());" value='<s:property value="txtmob"/>'/></td>
-    <td width="4%" align="right">Office No.</td>
-    <td width="26%"><input type="text" id="txtoffice" name="txtoffice" style="width:40%;" value='<s:property value="txtoffice"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Fax</td>
-    <td><input type="text" id="txtfax" name="txtfax" style="width:40%;" value='<s:property value="txtfax"/>'/></td>
-    <td align="right">Email</td>
-    <td colspan="3"><input type="email" id="txtemail" name="txtemail" style="width:40%;" placeholder="someone@example.com" value='<s:property value="txtemail"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Contact Person</td>
-    <td><input type="text" id="txtcontact" name="txtcontact" style="width:60%;" value='<s:property value="txtcontact"/>'/></td>
-    <td align="right">Extn. No.</td>
-    <td colspan="3"><input type="text" id="txtextno" name="txtextno" style="width:20%;" value='<s:property value="txtextno"/>'/></td>
-  </tr>
-</table>
+            <label class="form-label">Date</label>
+            <div id="jqxVendorDate"></div>
+            <input type="hidden" id="hidjqxVendorDate" name="hidjqxVendorDate"
+                   value='<s:property value="hidjqxVendorDate"/>'/>
+
+            <label class="form-label">Code</label>
+            <input type="text" id="txtcode" name="txtcode" class="form-input"
+                   value='<s:property value="txtcode"/>' tabindex="-1"/>
+
+            <label class="form-label">Name</label>
+            <input type="text" id="txtvendorname" name="txtvendorname" class="form-input"
+                   value='<s:property value="txtvendorname"/>'/>
+
+            <label class="form-label">Doc No</label>
+            <input type="text" id="docno" name="txtvendordocno" class="form-input"
+                   value='<s:property value="txtvendordocno"/>' tabindex="-1"/>
+
+        </div>
     </div>
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtmobilevalidation" name="txtmobilevalidation" value='<s:property value="txtmobilevalidation"/>'/>
-<input type="hidden" id="typeallowed" name="typeallowed" value='<s:property value="typeallowed"/>'/>
-</div>
+
+
+    <!-- ============================
+         SECTION 2: CURRENCY / CATEGORY / TYPE / TRN
+       ============================ -->
+    <div class="section-card">
+        <div class="form-grid">
+
+            <label class="form-label">Currency</label>
+            <select id="cmbcurrency" name="cmbcurrency" class="form-input">
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
+                   value='<s:property value="hidcmbcurrency"/>'/>
+
+            <label class="form-label">Category</label>
+            <select id="cmbcategory" name="cmbcategory" class="form-input"
+                    onchange="getCategoryAccountGroup(this.value);">
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbcategory" name="hidcmbcategory"
+                   value='<s:property value="hidcmbcategory"/>'/>
+
+            <label class="form-label" id="lbltypeentity">Type</label>
+            <select id="cmbtype" name="cmbtype" class="form-input"></select>
+            <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+                   value='<s:property value="hidcmbtype"/>'/>
+
+            <label class="form-label" id="lbltrnnoentity">TRN No.</label>
+            <input type="text" id="txtregisteredtrnno" name="txtregisteredtrnno"
+                   class="form-input" value='<s:property value="txtregisteredtrnno"/>'/>
+
+        </div>
+    </div>
+
+
+    <!-- ============================
+         SECTION 3: ACCOUNT GROUP / CREDIT
+       ============================ -->
+    <div class="section-card">
+        <div class="form-grid-3">
+
+            <label class="form-label">Account Group</label>
+            <select id="cmbaccgroup" name="cmbaccgroup" class="form-input">
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbaccgroup" name="hidcmbaccgroup"
+                   value='<s:property value="hidcmbaccgroup"/>'/>
+
+            <label class="form-label">Account</label>
+            <input type="text" id="txtaccount" name="txtaccount" class="form-input"
+                   value='<s:property value="txtaccount"/>' tabindex="-1"/>
+
+            <label class="form-label">Credit Min (Days)</label>
+            <input type="text" id="txtcredit_period_min" name="txtcredit_period_min"
+                   class="form-input" style="text-align:right;"
+                   value='<s:property value="txtcredit_period_min"/>'/>
+
+            <label class="form-label">Max (Days)</label>
+            <input type="text" id="txtcredit_period_max" name="txtcredit_period_max"
+                   class="form-input" style="text-align:right;"
+                   value='<s:property value="txtcredit_period_max"/>'/>
+
+            <label class="form-label">Credit Limit</label>
+            <input type="text" id="txtcredit_limit" name="txtcredit_limit"
+                   class="form-input" style="text-align:right;"
+                   value='<s:property value="txtcredit_limit"/>'/>
+
+        </div>
+    </div>
+
+
+    <!-- ============================
+         SECTION 4: ADDRESS / TEL / MOB / ETC
+       ============================ -->
+    <div class="section-card">
+
+        <div class="form-grid">
+            <label class="form-label">Address</label>
+            <input type="text" id="txtaddress" name="txtaddress" class="form-input"
+                   value='<s:property value="txtaddress"/>'/>
+
+            <label class="form-label">Address 2</label>
+            <input type="text" id="txtaddress1" name="txtaddress1" class="form-input"
+                   value='<s:property value="txtaddress1"/>'/>
+
+            <label class="form-label">Tel</label>
+            <input type="text" id="txttel" name="txttel" class="form-input"
+                   value='<s:property value="txttel"/>'/>
+        </div>
+
+        <div class="form-grid">
+            <label class="form-label">Mob</label>
+            <input type="text" id="txtmob" name="txtmob" class="form-input"
+                   onblur="getMobileNoAlreadyExists(this.value,$('#docno').val(),$('#mode').val());"
+                   value='<s:property value="txtmob"/>'/>
+
+            <label class="form-label">Office No.</label>
+            <input type="text" id="txtoffice" name="txtoffice" class="form-input"
+                   value='<s:property value="txtoffice"/>'/>
+
+            <label class="form-label">Fax</label>
+            <input type="text" id="txtfax" name="txtfax" class="form-input"
+                   value='<s:property value="txtfax"/>'/>
+        </div>
+
+        <div class="form-grid">
+            <label class="form-label">Email</label>
+            <input type="email" id="txtemail" name="txtemail" class="form-input"
+                   placeholder="someone@example.com"
+                   value='<s:property value="txtemail"/>'/>
+
+            <label class="form-label">Contact Person</label>
+            <input type="text" id="txtcontact" name="txtcontact" class="form-input"
+                   value='<s:property value="txtcontact"/>'/>
+
+            <label class="form-label">Extn. No.</label>
+            <input type="text" id="txtextno" name="txtextno" class="form-input"
+                   value='<s:property value="txtextno"/>'/>
+        </div>
+
+    </div>
+
+    <!-- ========== REQUIRED HIDDEN FIELDS ========== -->
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" id="txtmobilevalidation" name="txtmobilevalidation"
+           value='<s:property value="txtmobilevalidation"/>'/>
+    <input type="hidden" id="typeallowed" name="typeallowed"
+           value='<s:property value="typeallowed"/>'/>
+
 </form>
+
 </div>
+
 </body>
+
 </html>

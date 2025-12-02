@@ -10,6 +10,106 @@
  String mobile=request.getParameter("mobile")==null?"0":request.getParameter("mobile");
  String branch=request.getParameter("branch")==null?"0":request.getParameter("branch");
 %> 
+<style>
+/* ------------------- GRID WRAPPER ------------------- */
+#assetSalesSearch {
+    margin-top: 10px;
+}
+
+/* ------------------- GRID MAIN BOX ------------------- */
+.jqx-grid {
+    border: 1px solid #c6ddf5 !important;
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 92, 184, 0.15) !important;
+    font-family: "Segoe UI", Roboto, sans-serif !important;
+    font-size: 12px !important;
+    color: #003366 !important;
+}
+
+/* ------------------- GRID HEADER ------------------- */
+.jqx-grid-column-header {
+    background: linear-gradient(180deg, #e9f1ff, #d7e5ff) !important;
+    color: #003b8e !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid #c6d8ff !important;
+    text-align: center !important;
+}
+
+/* Header text */
+.jqx-grid-column-header .jqx-grid-column-header-text {
+    padding-left: 5px !important;
+    text-align: left !important;
+    font-size: 12px !important;
+}
+
+/* ------------------- GRID ROWS ------------------- */
+.jqx-grid-cell {
+    border-color: #e1eaff !important;
+    font-size: 12px !important;
+    color: #003366 !important;
+}
+
+/* Alternating rows */
+.jqx-grid-cell-alt {
+    background-color: #f7faff !important;
+}
+
+/* Hover effect */
+.jqx-grid-cell-hover {
+    background-color: #e6f0ff !important;
+    cursor: pointer !important;
+}
+
+/* Row selection */
+.jqx-grid-cell-selected {
+    background-color: #4a8dff !important;
+    color: #ffffff !important;
+}
+
+/* ------------------- FILTER ROW ------------------- */
+.jqx-grid-filterrow {
+    background-color: #f0f4ff !important;
+}
+
+.jqx-input, 
+.jqx-widget-content {
+    border-radius: 6px !important;
+    border: 1px solid #c9d9ff !important;
+}
+
+/* ------------------- DATE COLUMN ------------------- */
+.jqx-date-time-input {
+    border: 1px solid #bcd1ff !important;
+    border-radius: 6px !important;
+}
+
+/* ------------------- SCROLLBAR ------------------- */
+.jqx-scrollbar-thumb-state-normal {
+    background: #bcd1ff !important;
+}
+
+.jqx-scrollbar-thumb-state-hover {
+    background: #8fb4ff !important;
+}
+
+.jqx-scrollbar-button-state-normal {
+    background: #e4ecff !important;
+}
+
+/* ------------------- WINDOW POPUP OF SEARCH ------------------- */
+.jqx-window-header {
+    background: linear-gradient(180deg, #0064c8, #004a99) !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+}
+
+.jqx-window-content {
+    background-color: #f9fbff !important;
+    border-radius: 10px !important;
+}
+</style>
+
  <script type="text/javascript">
  var temp='<%=request.getParameter("id")==null?"0":request.getParameter("id")%>';
   var subsearchdata;

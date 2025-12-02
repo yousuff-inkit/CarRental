@@ -5,147 +5,68 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>GatewayERP(i)</title>
 	 <jsp:include page="../../../../includes.jsp"></jsp:include> 
-	 <style>
-	/* ============================
-   WHOLE FORM BACKGROUND
-   ============================ */
-#mainBG {
-    background: #f0f4ff; /* soft premium light blue */
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: 0 6px 20px rgba(30, 64, 175, 0.08);
-    max-height: 90vh;   /* limit height to viewport */
-    overflow-y: auto;   /* vertical scroll */
-}
-
-/* Premium blue-themed scrollbar */
-#mainBG::-webkit-scrollbar {
-    width: 10px;
-}
-
-#mainBG::-webkit-scrollbar-track {
-    background: #d0e4ff;
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
+</head>
+<style>
+/* Bigger Asset Description + all previous styling */
+#frmassetmastrer input[type="text"] {
+    width: 250px !important;
+    height: 42px;
+    border: 2px solid #e1e5e9;
     border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 15px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-sizing: border-box;
 }
 
-#mainBG::-webkit-scrollbar-thumb {
-    background: #1e40af;
-    border-radius: 8px;
+/* SPECIAL: Extra big description field */
+#assetname {
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 16px;
+    resize: vertical;
 }
 
-#mainBG::-webkit-scrollbar-thumb:hover {
-    background: #1e3a8a;
+#remarks {
+    width: 500px !important;
+    height: 45px !important;
+    resize: vertical;
 }
 
-/* ============================
-   VERTICAL SECTIONS
-   ============================ */
-.section-row {
-    display: flex;
-    flex-direction: column;
-    gap: 26px;
-    width: 100%;
+/* Rest of your existing hover/focus/table styles remain the same... */
+#frmassetmastrer input[type="text"]:hover {
+    border-color: #4a90e2;
+    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.2);
+    transform: translateY(-2px);
 }
 
-/* Each section block */
-.section-block {
-    width: 100%;
-    background: #ffffff; /* ONE solid color only */
-    border-radius: 14px;
-    padding: 22px 20px;
-    border: 1px solid #c8daf7;
-}
-
-/* Section title */
-.section-block h2 {
-    font-size: 1.15em;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: #1e3a8a;
-}
-
-/* Form groups inside sections */
-.section-block .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-}
-
-/* Labels */
-.section-block label {
-    text-align: left;
-    font-weight: 600;
-    color: #1e3a8a;
-}
-
-/* Inputs and selects – lighter curve */
-.section-block input[type="text"],
-.section-block select {
-    width: 100%;
-    border: 1px solid #b9ccf0;
-    border-radius: 12px;
-    padding: 10px 14px;
-    background: #f8fbff;
-    font-size: 0.95rem;
-    box-shadow: inset 0 1px 3px rgba(0, 42, 109, 0.05);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #1e40af;
-    box-shadow: 0 0 6px rgba(30, 64, 175, 0.25);
+#frmassetmastrer input[type="text"]:focus {
     outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
+    background-color: #fafbfc;
 }
 
-/* =======================
-   Tables inside sections
-   ======================= */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f3f7ff; /* single solid color */
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #d6e4ff;
+.cr-table { border-collapse: collapse; }
+.cr-table td { 
+    white-space: nowrap; 
+    padding: 12px 10px; 
+    vertical-align: middle; 
 }
+.cr-table td[align="right"] { 
+    width: 140px; 
+    text-align: right; 
+    font-weight: 500; 
+    padding-right: 12px; 
+}
+</style>
 
-.cr-table th {
-    background: #d7e6ff;
-    color: #1e3a8a;
-    font-size: 1em;
-    font-weight: 700;
-    padding: 10px;
-    border-bottom: 1px solid #bcd1fa;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.cr-table td {
-    padding: 10px;
-    font-size: 0.98em;
-    color: #1f2d50;
-    border-bottom: 1px solid #dbe6ff;
-}
-
-/* Remove alternating colors */
-.cr-table tr {
-    background: #f3f7ff;
-}
-
-/* =======================
-   PURCHASE SECTION CLEANUP
-   ======================= */
-/* Hide empty blocks */
-.purchase-section .section-block:empty {
-    display: none;
-}
 
 </style>
-</head>
 
 <script type="text/javascript">
 

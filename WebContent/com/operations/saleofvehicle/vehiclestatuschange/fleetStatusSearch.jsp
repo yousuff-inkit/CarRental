@@ -1,5 +1,109 @@
 <%@page import="com.operations.saleofvehicle.vehiclestatuschange.*" %>
 <% ClsFleetStatusChangeDAO fleetdao=new ClsFleetStatusChangeDAO(); %>
+
+<style>
+    /* Body styling */
+    body {
+        background-color: #E0ECF8;
+        font-family: "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #000000; /* Black text */
+    }
+
+    /* Outer Search / Grid Container */
+    #fleetSearch {
+        margin: 15px auto;
+        padding: 10px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 92, 184, 0.18);
+        border: 1px solid #c6ddf5;
+    }
+
+    /* jqxGrid styling */
+    .jqx-grid, .jqx-grid-cell, .jqx-grid-column-header, .jqx-grid-filter-row {
+        font-family: "Segoe UI", Roboto, sans-serif;
+        font-size: 13px;
+        color: #000000; /* Black text */
+    }
+
+    .jqx-grid-column-header {
+        background: #0d6efd;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .jqx-grid-cell-alt {
+        background: #f4f9ff;
+    }
+
+    .jqx-grid-cell {
+        padding: 4px 8px;
+        border-bottom: 1px solid #cfdaf0;
+    }
+
+    .jqx-grid-filter-row input {
+        border: 1px solid #b7d1ee;
+        border-radius: 4px;
+        padding: 2px 6px;
+        color: #000000;
+    }
+
+    /* jqxDateTimeInput styling */
+    .jqx-widget-content {
+        font-size: 13px;
+        color: #000000;
+        border-radius: 6px;
+        border: 1px solid #b7d1ee;
+    }
+
+    /* Buttons */
+    .myButton {
+        background: #0d6efd;
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .myButton:hover {
+        background: #0b5ed7;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* General Inputs */
+    input[type="text"], select {
+        width: 95%;
+        padding: 6px 8px;
+        border: 1px solid #b7d1ee;
+        border-radius: 6px;
+        outline: none;
+        font-size: 13px;
+        background: #ffffff;
+        color: #000000;
+        transition: 0.3s;
+    }
+
+    input[type="text"]:focus, select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 4px rgba(13, 110, 253, 0.4);
+    }
+
+    /* Window / Modal container */
+    #window {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 92, 184, 0.12);
+        padding: 15px;
+    }
+</style>
+
 <script type="text/javascript">
       var datafleet=[];
       <%-- '<%=fleetdao.fleetStatusSearch(session)%>'; --%>  

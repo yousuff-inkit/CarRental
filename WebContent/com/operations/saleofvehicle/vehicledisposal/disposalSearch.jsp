@@ -16,6 +16,68 @@ String item1 = request.getParameter("item1")==null?"NA":request.getParameter("it
  String branch=request.getParameter("branch")==null?"0":request.getParameter("branch");
  ClsVehicleDisposalDAO disposaldao=new ClsVehicleDisposalDAO();
 %> 
+<style>
+/* Container styling */
+#disposalSearch {
+    width: 98%;
+    background-color: #ffffff;
+    border: 1px solid #c6ddf5;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+/* Grid input styling (if any inputs inside the grid) */
+#disposalSearch input[type="text"], #disposalSearch select {
+    width: 95%;
+    padding: 4px;
+    border: 1px solid #c6ddf5;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* Buttons inside the page */
+input.myButton {
+    background-color: #0072C6;  /* original blue color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+input.myButton:hover {
+    background-color: #005a9e;  /* darker blue on hover */
+}
+
+/* Table spacing inside disposal search */
+table#disposalSearch td {
+    padding: 4px 6px;
+}
+
+/* Optional: highlight rows on hover in jqxGrid */
+.jqx-grid-content tr.jqx-grid-row:hover {
+    background-color: #e0f0ff;
+}
+
+/* jqxGrid header styling */
+.jqx-grid-column-header {
+    background-color: #0072C6 !important;
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 1px solid #c6ddf5;
+}
+
+/* Alternate row coloring */
+.jqx-grid-alt-row {
+    background-color: #f5faff;
+}
+</style>
+
  <script type="text/javascript">
  var temp='<%=request.getParameter("id")==null?"0":request.getParameter("id")%>';
   var subsearchdata=[];

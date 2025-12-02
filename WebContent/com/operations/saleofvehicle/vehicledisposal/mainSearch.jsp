@@ -14,6 +14,52 @@
 
 </style>
 
+<style>
+#search {
+    width: 100%;
+    background-color: #E0ECF8;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+#search input[type="text"], #search select {
+    width: 95%;
+    padding: 4px;
+    border: 1px solid #c6ddf5;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+#search input.myButton {
+    background-color: #0072C6; /* original blue button color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+#search input.myButton:hover {
+    background-color: #005a9e; /* hover darker blue */
+}
+
+#srefreshdiv {
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid #c6ddf5;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+table#search td {
+    padding: 4px 6px;
+}
+</style>
+
+
 	<script type="text/javascript">
 	$(document).ready(function () {
 		$("#msearchdate").jqxDateTimeInput({

@@ -10,6 +10,54 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
+<style>
+/* JUST LABELS + INPUTS - PERFECT ALIGNMENT + HOVER */
+.cr-table td[align="right"] {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #2c3e50 !important;
+    padding: 20px 16px !important;
+    min-width: 120px !important;
+}
+
+input[type="text"] {
+    height: 52px !important;
+    width: 280px !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 0 20px !important;
+    font-size: 18px !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-weight: 500 !important;
+}
+
+input[type="text"]:hover {
+    border-color: #4a90e2 !important;
+    box-shadow: 0 8px 25px rgba(74,144,226,0.25) !important;
+    transform: translateY(-2px) !important;
+}
+
+input[type="text"]:focus {
+    outline: none !important;
+    border-color: #4a90e2 !important;
+    box-shadow: 0 0 0 4px rgba(74,144,226,0.2) !important;
+    background: #fafbfc !important;
+    transform: translateY(-1px) !important;
+}
+
+/* TOTAL FIELDS SPECIAL */
+#txtdeprtotal, #txtdrtotal, #txtcrtotal {
+    width: 220px !important;
+    text-align: right !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef) !important;
+}
+</style>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );

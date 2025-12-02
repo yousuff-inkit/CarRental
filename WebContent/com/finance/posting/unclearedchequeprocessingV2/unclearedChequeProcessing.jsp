@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 
 
@@ -634,222 +636,292 @@ function funExcelBtn(){
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
-
+/* ---------------------------------------------------
+   GLOBAL BACKGROUND & CONTAINER
+--------------------------------------------------- */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
 }
+
 #mainBG {
-    background: #fff;
+    background: #ffffff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
+    padding: 20px;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+/* ---------------------------------------------------
+   TOP FILTER CARD
+--------------------------------------------------- */
+.top-filter-card {
+    background: #f7f9ff;
+    border-radius: 12px;
+    padding: 22px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(44, 95, 255, 0.08);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 180px 180px 180px 180px auto auto;
+    column-gap: 32px;
+    align-items: end;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2f3b52;
+    margin-bottom: 6px;
+}
+
+/* all input/select/jqx elements same size */
+.filter-item select,
+.filter-item input,
+.filter-item div.jqx-datetimeinput,
+.filter-item div {
+    height: 36px !important;
+    width: 100% !important;
+    border-radius: 8px !important;
+}
+
+/* ---------------------------------------------------
+   BUTTONS
+--------------------------------------------------- */
+.primary-btn {
+    background: linear-gradient(45deg, #1a73e8, #4ea1ff);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14.5px;
+    font-weight: 600;
+    min-width: 110px;
+}
+.primary-btn:hover {
+    background: linear-gradient(45deg, #0c5fcc, #3a8ded);
+}
+
+/* ---------------------------------------------------
+   TYPE DROPDOWN TEXT SIZE
+--------------------------------------------------- */
+#cmbtype {
+    font-size: 16px !important;
+    font-weight: 500;
+    height: 38px !important;
+    padding: 6px 10px !important;
+}
+
+#cmbtype option {
+    font-size: 16px !important;
+}
+
+/* ---------------------------------------------------
+   AUTOFILL FIX FOR ALL INPUTS & SELECTS
+--------------------------------------------------- */
+input:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+    color: #000 !important;
+}
+
+/* jqx inputs autofill fix */
+.jqx-input,
+.jqx-input-content,
+.jqx-widget-content,
+.jqx-datetimeinput-input {
+    background-color: #ffffff !important;
+    color: #000 !important;
+}
+
+/* jqx filter row input fix */
+.jqx-grid-cell input,
+.jqx-grid-column-filter input {
+    background-color: #ffffff !important;
+}
+
+/* ---------------------------------------------------
+   TOTALS FOOTER
+--------------------------------------------------- */
+.totals-wrapper {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
+.totals-row-fixed {
     width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+    margin-top: 18px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+
+.total-box label {
+    font-size: 15px;
     font-weight: 600;
+    color: #003c8f;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+.total-box input {
+    width: 180px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #ccd4e0;
+    padding: 6px 12px;
+    font-size: 15px;
+    text-align: right;
+    background: white !important;
+    box-sizing: border-box;
 }
+/* Remove autofill pink for SELECT */
+#cmbtype:-webkit-autofill,
+#cmbtype:-webkit-autofill:hover,
+#cmbtype:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* Ensure dropdown is always white */
+#cmbtype {
+    background-color: #ffffff !important;
+    color: #000 !important;
+}
+
 </style>
+
 
 </head>
 <body onload="setValues();headerbtndisable();">
-<div id="mainBG" class="homeContent" data-type="background" >
-<form id="frmUnclearedChequeProcessing" action="saveUnclearedChequeProcessing" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div id="mainBG" class="homeContent">
 
-<div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="3%" align="right"><!-- Date --> &nbsp;</td>
-    <td width="12%"><div id="jqxUnclearedChequeProcessingDate" hidden="true" name="jqxUnclearedChequeProcessingDate" value='<s:property value="jqxUnclearedChequeProcessingDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeProcessingDate" name="hidjqxUnclearedChequeProcessingDate" value='<s:property value="hidjqxUnclearedChequeProcessingDate"/>'/></td>
-    <td width="14%" align="right">Uncleared P.D.C From</td>
-    <td width="8%"><div id="jqxUnclearedChequeProcessFromDate" name="jqxUnclearedChequeProcessFromDate" value='<s:property value="jqxUnclearedChequeProcessFromDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeProcessFromDate" name="hidjqxUnclearedChequeProcessFromDate" value='<s:property value="hidjqxUnclearedChequeProcessFromDate"/>'/></td>
-    <td width="7%" align="right">P.D.C. Upto</td>
-    <td width="9%"><div id="jqxUnclearedChequeProcessToDate" name="jqxUnclearedChequeProcessToDate" value='<s:property value="jqxUnclearedChequeProcessToDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeProcessToDate" name="hidjqxUnclearedChequeProcessToDate" value='<s:property value="hidjqxUnclearedChequeProcessToDate"/>'/></td>
-    <td width="3%" align="right">Type</td>
-    <td width="9%"><select id="cmbtype" name="cmbtype" style="width:80%;" value='<s:property value="cmbtype"/>'>
-    <option value="">--Select--</option><option value="UCP">Payment</option><option value="UCR">Receipt</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
-    <td width="6%" align="right">Posting</td>
-    <td width="13%"><div id="postingDate" name="postingDate" onchange="datechange();" onblur="datechange();" value='<s:property value="postingDate"/>'></div>
-    <input type="hidden" id="hidpostingDate" name="hidpostingDate" value='<s:property value="hidpostingDate"/>'/></td>
-    <td width="16%" align="left"><button class="myButton" type="button" id="btnUnclearedChequeSearch" name="btnUnclearedChequeSearch" onclick="funloadgrid();">View</button></td>
-    <td width="16%" align="left"><button class="myButton" type="button" id="btnsavemaster" name="btnsavemaster">Save Changes</button></td>
-  </tr>
-</table>
+<form id="frmUnclearedChequeProcessing" 
+      action="saveUnclearedChequeProcessing" 
+      method="post" autocomplete="off">
+
+    <!-- HEADER -->
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+    <br/>
+
+<div class="top-filter-card">
+    <div class="filter-grid">
+
+        <!-- Hidden original processing date -->
+        <div hidden>
+            <div id="jqxUnclearedChequeProcessingDate"></div>
+        </div>
+
+        <!-- PDC From -->
+        <div class="filter-item">
+            <label>Uncleared P.D.C From</label>
+            <div id="jqxUnclearedChequeProcessFromDate"></div>
+        </div>
+
+        <!-- PDC Upto -->
+        <div class="filter-item">
+            <label>P.D.C Upto</label>
+            <div id="jqxUnclearedChequeProcessToDate"></div>
+        </div>
+
+        <!-- Type -->
+        <div class="filter-item">
+            <label>Type</label>
+            <select id="cmbtype" name="cmbtype">
+                <option value="">--Select--</option>
+                <option value="UCP">Payment</option>
+                <option value="UCR">Receipt</option>
+            </select>
+        </div>
+
+        <!-- Posting -->
+        <div class="filter-item">
+            <label>Posting</label>
+            <div id="postingDate" onchange="datechange();" onblur="datechange();"></div>
+        </div>
+
+        <!-- VIEW -->
+        <div class="filter-item">
+            <label>&nbsp;</label>
+            <button type="button" id="btnUnclearedChequeSearch" class="primary-btn">View</button>
+        </div>
+
+        <!-- SAVE CHANGES -->
+        <div class="filter-item">
+            <label>&nbsp;</label>
+            <button type="button" id="btnsavemaster" class="primary-btn">Save Changes</button>
+        </div>
+
+    </div>
 </div>
 
-<div class="cr-table" id="unclearedChequeProcessingDiv"><center><jsp:include page="unclearedChequeProcessingGrid.jsp"></jsp:include></center></div><br/>
-
-<div id="bankPaymentDiv" style="visibility:hidden;"><center><jsp:include page="bankPaymentGrid.jsp"></jsp:include></center></div><br/>
-
-<table width="100%">
-  <tr>
-    <td width="7%" align="right">Dr. Total</td>
-    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>'/></td>
-    <td width="6%" align="right">Cr. Total</td>
-    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-  </tr>
-</table>
-
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'/>
-<input type="hidden" id="txtchqdt" name="txtchqdt" value='<s:property value="txtchqdt"/>'/>
-<input type="hidden" id="txtchqname" name="txtchqname" value='<s:property value="txtchqname"/>'/>
-<input type="hidden" id="chckpdc" name="chckpdc" value='<s:property value="chckpdc"/>'/>
-<input type="hidden" id="txtfromrate" name="txtfromrate" value='<s:property value="txtfromrate"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-<input type="hidden" id="txtgriddtype" name="txtgriddtype" value='<s:property value="txtgriddtype"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
+    <div class="cr-table" id="unclearedChequeProcessingDiv">
+    <center><jsp:include page="unclearedChequeProcessingGrid.jsp"></jsp:include></center>
 </div>
+<br/>
+
+<!-- FIXED TOTALS SECTION (Aligned with page container) -->
+<div class="totals-wrapper">
+    <div class="totals-row-fixed">
+        
+        <div class="total-box">
+            <label>Dr. Total</label><br>
+            <input type="text" id="txtdrtotal" name="txtdrtotal"
+                   value='<s:property value="txtdrtotal"/>' />
+        </div>
+
+        <div class="total-box">
+            <label>Cr. Total</label><br>
+            <input type="text" id="txtcrtotal" name="txtcrtotal"
+                   value='<s:property value="txtcrtotal"/>' readonly />
+        </div>
+
+    </div>
+</div>
+
+    <!-- BANK PAYMENT GRID (hidden until needed) -->
+    <div id="bankPaymentDiv" style="visibility:hidden;">
+        <center>
+            <jsp:include page="bankPaymentGrid.jsp"></jsp:include>
+        </center>
+    </div>
+
+    <br/>
+
+
+    <!-- ================= HIDDEN FIELDS (DO NOT TOUCH) ================= -->
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'/>
+    <input type="hidden" id="txtchqdt" name="txtchqdt" value='<s:property value="txtchqdt"/>'/>
+    <input type="hidden" id="txtchqname" name="txtchqname" value='<s:property value="txtchqname"/>'/>
+    <input type="hidden" id="chckpdc" name="chckpdc" value='<s:property value="chckpdc"/>'/>
+    <input type="hidden" id="txtfromrate" name="txtfromrate" value='<s:property value="txtfromrate"/>'/>
+    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+    <input type="hidden" id="txtgriddtype" name="txtgriddtype" value='<s:property value="txtgriddtype"/>'/>
+    <input type="hidden" id="gridlength" name="gridlength"/>
+
 </form>
-	
 </div>
+
 </body>
+
 </html>

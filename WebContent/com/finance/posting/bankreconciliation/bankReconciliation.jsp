@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -299,136 +301,160 @@
 </script>
 
 <style>
+/* Scroll area */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow: auto;
+    height: 530px;
 }
 
-
+/* Page background */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
     margin: 0;
     padding: 32px 0;
     min-height: 100vh;
-    box-sizing: border-box;
+    color: #222;
 }
+
+/* Main page area */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
     padding: 10px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+/* ---------------------------------------
+   TOP SECTION INPUTS / SELECTS / DATE
+----------------------------------------*/
+
+.top-section input[type="text"],
+.top-section select,
+.top-section .jqx-datetimeinput,
+.top-section .jqx-datetimeinput input {
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 14px;
+    border-radius: 8px !important;
+    border: 1px solid #d1d5db !important;
+    background: #fff !important;
+    box-sizing: border-box;
 }
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
+
+/* jqx date alignment */
+.jqx-datetimeinput,
+.jqx-datetimeinput input {
+    height: 34px !important;
+    padding-left: 10px !important;
+    border-radius: 8px !important;
 }
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
+
+/* Calendar icon centering */
+.jqx-icon-calendar {
+    margin-top: 6px !important;
 }
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
+
+/* Remove Chrome pink autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
 }
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
+
+/* ---------------------------------------
+   FORM GRID LAYOUT
+----------------------------------------*/
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    align-items: end !important; /* Align submit button with Description */
+    margin-bottom: 14px;
 }
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
+
+/* Labels */
+.form-item label {
+    font-size: 14px;
     font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    color: #1f2f46;
+    margin-bottom: 4px;
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+/* Inputs inside grid */
+.form-item input,
+.form-item select,
+.form-item div.jqx-widget {
+    height: 34px !important;
+    width: 100% !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 8px !important;
     padding: 6px 10px;
     background: #fff;
-    transition: border-color 0.2s;
+    font-size: 14px;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
+/* Submit button */
+.myButton {
+    height: 34px !important;
+    width: 100%;
 }
 
+/* Row width adjustments */
+.form-grid.first-row .form-item > * {
+    width: 90% !important;
+}
+.form-grid.second-row .form-item > * {
+    width: 95% !important;
+}
 
-.table-section {
-    margin-bottom: 18px;
+/* ---------------------------------------
+   DROPDOWN UPGRADED FONT SIZE
+----------------------------------------*/
+
+#cmbbranch,
+#cmbcurrency {
+    font-size: 18px !important;
+    height: 34px !important;
+    padding-left: 10px !important;
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+
+#cmbbranch option,
+#cmbcurrency option {
+    font-size: 18px !important;
 }
+
+/* ---------------------------------------
+   BLUE BORDER ON FOCUS
+----------------------------------------*/
+
+input,
+select,
+.jqx-datetimeinput,
+.jqx-datetimeinput input {
+    border: 1px solid #d1d5db !important;
+    border-radius: 8px !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+.jqx-datetimeinput:focus,
+.jqx-datetimeinput input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.25) !important;
+    outline: none !important;
+}
+
+/* ---------------------------------------
+   TABLE STYLE (Applying + Summary)
+----------------------------------------*/
+
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -437,82 +463,50 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
+
+.cr-table th,
+.cr-table td {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
     font-size: 1em;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
-<div class="receipt-header">
-    <div class="cr-row" style="flex-wrap:nowrap; align-items:center; gap:18px;">
 
-        <!-- Account ID -->
-        <label>Account</label>
-        <input type="text"
-               id="txtaccid"
-               name="txtaccid"
-               placeholder="Press F3 to Search"
-               style="width:180px;"
-               value='<s:property value="txtaccid"/>'
-               onkeydown="getAcc(event);" />
+/* Space below top bar */
+.after-top-bar-gap {
+    height: 22px;
+}
+/* Default input appearance */
+input,
+select,
+.jqx-datetimeinput,
+.jqx-datetimeinput input {
+    border: 1px solid #d1d5db !important;   /* light grey */
+    border-radius: 8px !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-        <!-- Account Name -->
-        <input type="text"
-               id="txtaccname"
-               name="txtaccname"
-               style="width:260px;"
-               value='<s:property value="txtaccname"/>' />
-        <input type="hidden" id="txtdocno" name="txtdocno"
-               value='<s:property value="txtdocno"/>' />
-
-        <!-- From -->
-        <label for="jqxFromDate" style="margin-left:20px;">From</label>
-        <div id="jqxFromDate" style="width:140px;"></div>
-        <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate"
-               value='<s:property value="hidjqxFromDate"/>' />
-
-        <!-- To -->
-        <label for="jqxToDate">To</label>
-        <div id="jqxToDate" style="width:140px;"></div>
-        <input type="hidden" id="hidjqxToDate" name="hidjqxToDate"
-               value='<s:property value="hidjqxToDate"/>' />
-
-        <!-- Type -->
-        <label for="cmbtype" style="margin-left:20px;">Type</label>
-        <select id="cmbtype"
-                name="cmbtype"
-                style="width:160px;"
-                onchange="funPostingGrid();"
-                value='<s:property value="cmbtype"/>'>
-            <option value="0">--Select--</option>
-            <option value="1">For Distribution</option>
-            <option value="2">Summary</option>
-            <option value="3">To be Posted</option>
-        </select>
-        <input type="hidden" id="hidcmbtype" name="hidcmbtype"
-               value='<s:property value="hidcmbtype"/>' />
-
-        <!-- Submit -->
-        <button class="myButton"
-                type="button"
-                id="btnSubmit"
-                name="btnSubmit"
-                style="margin-left:20px;"
-                onclick="funloadgrid();">
-            Submit
-        </button>
-
-    </div>
-</div>
-
+/* Blue border on focus */
+input:focus,
+select:focus,
+.jqx-datetimeinput:focus,
+.jqx-datetimeinput input:focus {
+    border-color: #3b82f6 !important;   /* modern blue */
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.25) !important; /* soft blue glow */
+    outline: none !important;
+}
 </style>
 
 </head>
@@ -521,37 +515,63 @@ body {
 <form id="frmBankReconciliation" action="saveBankReconciliation" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="13%"><div id="jqxBankReconciliationDate" name="jqxBankReconciliationDate" onchange="datechange();" value='<s:property value="jqxBankReconciliationDate"/>'></div>
-    <input type="hidden" id="hidjqxBankReconciliationDate" name="hidjqxBankReconciliationDate" value='<s:property value="hidjqxBankReconciliationDate"/>'/></td>
-    <td width="10%" align="right">Branch</td>
-    <td width="20%"><select id="cmbbranch" name="cmbbranch" style="width:50%;" value='<s:property value="cmbbranch"/>'>
-    <option></option></select>
-    <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/></td>
-    <td width="12%" align="right">Currency</td>
-    <td width="14%"><select id="cmbcurrency" name="cmbcurrency" style="width:50%;" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value);">
-      <option></option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-      <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
-      <input type="hidden" id="txtrate" name="txtrate" value='<s:property value="txtrate"/>'/>
-      <i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 1px;font-family: Tahoma; color:#E0ECF8"><s:property value="lblformposted"/></label></b></i></td>
-    <td width="14%" align="right">Doc No</td>
-    <td width="12%"><input type="text" id="docno" name="txtbankreconciliationdocno" style="width:70%;" value='<s:property value="txtbankreconciliationdocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td><input type="text" id="txtaccid" name="txtaccid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td colspan="2"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="2"><input type="text" id="txtdescription" name="txtdescription" style="width:90%;" value='<s:property value="txtdescription"/>'/></td>
-    <td align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="getLastReconcileDate($('#jqxBankReconciliationDate').val(),$('#txtdocno').val());">Submit</button></td>
-  </tr>
-</table></div>
+<div class="top-section">
+<div class="top-form">
+
+    <!-- FIRST ROW -->
+    <div class="form-grid first-row">
+
+        <div class="form-item">
+            <label>Date</label>
+            <div id="jqxBankReconciliationDate"></div>
+        </div>
+
+        <div class="form-item">
+            <label>Branch</label>
+            <select id="cmbbranch" name="cmbbranch"></select>
+        </div>
+
+        <div class="form-item">
+            <label>Currency</label>
+            <select id="cmbcurrency" name="cmbcurrency"></select>
+        </div>
+
+        <div class="form-item">
+            <label>Doc No</label>
+            <input type="text" id="docno">
+        </div>
+
+    </div>
+
+    <!-- SECOND ROW -->
+    <div class="form-grid second-row">
+
+        <div class="form-item">
+            <label>Account</label>
+            <input type="text" id="txtaccid" placeholder="Press F3 to Search">
+        </div>
+
+        <div class="form-item">
+            <label>Account Name</label>
+            <input type="text" id="txtaccname">
+        </div>
+
+        <div class="form-item">
+            <label>Description</label>
+            <input type="text" id="txtdescription">
+        </div>
+
+        <div class="form-item">
+            <label>&nbsp;</label>
+            <button class="myButton" id="btnSubmit">Submit</button>
+        </div>
+
+    </div>
+
+</div>
+
+	<div class="after-top-bar-gap"></div>
+	
 
     <h3>Applying</h3>
     <div class="cr-table" id="jqxBankReconciliationGrid"><jsp:include page="bankReconciliationGrid.jsp"></jsp:include></div>

@@ -314,222 +314,159 @@
 </script>
 
 <style>
-
-/* ===========================
-   Global Premium Theme Tokens
-=========================== */
-
-:root {
-  --primary: #3164f4;
-  --primary-light: #6e99ff;
-  --primary-dark: #2447b8;
-  --text-dark: #263b75;
-  --border: rgba(0,0,0,0.09);
-  --radius: 10px;
-  --shadow: 0 4px 14px rgba(86,112,180,0.12);
-  --transition: .26s ease;
-  --surface: #ffffff;
-  --surface-secondary: #f5f7fc;
-}
-
-/* ===========================
-   Scrollable Area
-=========================== */
 .hidden-scrollbar {
   overflow: auto;
   height: 530px;
 }
 
-/* ===========================
-   Body & Layout
-=========================== */
-
-/* ===========================
-   Layout Fix (Compact Like Before)
-=========================== */
 
 body {
-  background: linear-gradient(135deg, #f7f9ff 0%, #dfe7ff 100%);
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-  margin: 0;
-  padding: 20px 0;
-  min-height: 100vh;
-  color: var(--text-dark);
-  display: flex;
-  justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
-
-/* Main Container — Restores Classic Center Alignment */
 #mainBG {
-  width: 1100px; /* fixed, not stretched */
-  background: var(--surface);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 18px 22px;
-  margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
-
-/* ===========================
-   Header Fields
-=========================== */
 
 .receipt-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 20px;
-  padding: 18px;
-  background: var(--surface-secondary);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    padding: 0px 24px;
+    font-size: 2vh;
 }
-
 .receipt-header label {
-  font-weight: 500;
-  color: var(--text-dark);
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
 }
-
-.receipt-header input[type="text"],
-.section-block input[type="text"],
-.section-block select {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 8px 10px;
-  font-size: 0.95rem;
-  width: 150px;
-  transition: var(--transition);
-  background: #fff;
+.receipt-header input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    width: 120px;
+    background: #fff;
+    transition: border-color 0.2s;
 }
-
-input:focus, select:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0px 3px rgba(49,100,244,0.17);
-  outline: none;
+.receipt-header input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
-
-/* ===========================
-   Buttons (Fix Missing Buttons)
-=========================== */
-
-button, .myButton, input[type="button"], input[type="submit"] {
-  background: var(--primary);
-  color: #fff !important;
-  border: none;
-  border-radius: var(--radius);
-  padding: 10px 18px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: var(--shadow);
+.receipt-header button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
 }
-
-button:hover, .myButton:hover, input[type="button"]:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
+.receipt-header button:hover {
+    background: #0056b3;
 }
-
-/* ===========================
-   Section Blocks
-=========================== */
+#txtStatus {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e67e22;
+    margin-left: 12px;
+}
 
 .section-row {
-  display: flex;
-  gap: 28px;
-  margin-bottom: 24px;
+    display: flex;
+    gap: 26px;
+    margin-bottom: 24px;
 }
-
 .section-block {
-  flex: 1;
-  background: var(--surface-secondary);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
+    flex: 1;
+    background: #f6f8fa;
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 
 .section-block h2 {
-  font-size: 1.12em;
-  font-weight: 600;
-  margin-bottom: 14px;
-  color: var(--primary-dark);
+    font-size: 1.09em;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: #253858;
 }
 
-/* ===========================
-   Table Styling
-=========================== */
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
 
+.section-block label {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 500;
+    color: #253858;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.table-section {
+    margin-bottom: 18px;
+}
 .table-section h3 {
-  font-size: 1.05em;
-  font-weight: 600;
-  color: var(--primary-dark);
+    color: #253858;
+    font-size: 1.04em;
+    font-weight: 600;
 }
-
 .cr-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
 }
-
+.cr-table th, .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 1em;
+}
 .cr-table th {
-  background: var(--primary-light);
-  color: #ffffff;
-  padding: 10px;
-  font-weight: 600;
-  font-size: 0.95rem;
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
 }
-
-.cr-table td {
-  padding: 10px;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.92rem;
-}
-
 .cr-table tr:last-child td {
-  border-bottom: none;
+    border-bottom: none;
 }
-
-
-/* ===========================
-   Enhanced Headings Typography
-=========================== */
-
-/* Page Titles (Example: "Manual Applying (MAPP)") */
-h1, .page-title, .main-title {
-  font-size: 1.9rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  color: var(--text-dark);
-}
-
-/* Section Titles (Example: Driver Details, Tariff Info, etc.) */
-h2, .section-block h2 {
-  font-size: 1.25rem;
-  font-weight: 650;
-  letter-spacing: 0.2px;
-  color: var(--primary-dark);
-}
-
-/* Table Headings (Unapplied, Payment Info, etc.) */
-h3, .table-section h3 {
-  font-size: 1.15rem;
-  font-weight: 650;
-  color: var(--text-dark);
-}
-
-/* Field Labels (like Branch, Currency, Account, Site etc.) */
-label {
-  font-weight: 600 !important;
-  color: var(--text-dark);
-  letter-spacing: 0.2px;
-}
-
-
 </style>
-
 
 </head>
 <body onload="setValues();">

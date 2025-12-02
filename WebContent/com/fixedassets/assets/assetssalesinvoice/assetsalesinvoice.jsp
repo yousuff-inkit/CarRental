@@ -13,6 +13,68 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
+<style>
+/* All previous styling + Doc No LEFT */
+#frmAssetSalesInvoice input[type="text"] {
+    width: 250px !important;
+    height: 42px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 15px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+/* DOC NO MOVED TO LEFT */
+#vocno {
+    width: 200px !important;
+    margin-left: 0;
+}
+
+.cr-table tr td:nth-child(6), 
+.cr-table tr td:nth-child(7) {
+    text-align: left !important;
+    padding-left: 20px;
+    width: auto;
+}
+
+/* Description field EXTRA BIG */
+#description {
+    width: 500px !important;
+    height: 50px !important;
+    font-size: 16px;
+    resize: vertical;
+}
+
+/* Client name full width */
+#clientname { width: 98% !important; height: 42px; }
+
+/* Hover/Focus effects */
+#frmAssetSalesInvoice input[type="text"]:hover {
+    border-color: #4a90e2;
+    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.2);
+    transform: translateY(-2px);
+}
+#frmAssetSalesInvoice input[type="text"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
+    background-color: #fafbfc;
+}
+
+/* Table alignment */
+.cr-table { border-collapse: collapse; width: 100%; }
+.cr-table td { padding: 12px 10px; vertical-align: middle; white-space: nowrap; }
+.cr-table td[align="right"] { width: 120px; text-align: right; font-weight: 500; padding-right: 12px; color: #333; }
+
+/* Button & Select styling */
+.myButton { /* Previous button styles */ }
+#frmAssetSalesInvoice select { /* Previous select styles */ }
+</style>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	//document.getElementById("btnEdit").disabled=true;  
