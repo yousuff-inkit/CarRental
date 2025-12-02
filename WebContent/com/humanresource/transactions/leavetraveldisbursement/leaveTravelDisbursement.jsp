@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
@@ -5,9 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="UTF-8">
-<title>GatewayERP(i)</title>
+<meta charset="ISO-8859-1">
+<title>GatewayERP(i) - Leave/Travel Disbursement</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<link rel="stylesheet" href="<%=contextPath%>/css/global.css" type="text/css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -18,7 +20,7 @@
 		 
 		 $('#employeeDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Employees Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
  		 $('#employeeDetailsWindow').jqxWindow('close');
-	    
+	     
 	     $('#txtemployeeid').dblclick(function(){
 	 			employeeSearchContent("employeeDetailsSearch.jsp");
 		 });
@@ -199,13 +201,12 @@
 			     $('#txtchkgridload').val(items[0]);
 			     $('#txtchkdate').val(items[1]);
 			     $('#txtchksalarypaid').val(items[3]);
-			   
+			   			     
 			     document.getElementById("errormsg").innerText="Terminal Benefits done till "+items[2]+".";
-			     
+			     			     
 			   if(parseInt($('#txtchkdate').val())==0){
 				  if(parseInt($('#txtchkgridload').val())==1){
 					if(parseInt($('#txtchksalarypaid').val())==0){  
-					    
 						 $("#overlay, #PleaseWait").show();
 						 getLeaveTravelDetails($("#txtemployeedocno").val(),$("#notifyDate").val());
 						 getAccounts($("#txtemployeedocno").val(),$("#notifyDate").val());
@@ -213,7 +214,6 @@
 						 $("#leaveTravelDisbursementGridID").jqxGrid('clear');
 						 $("#leaveTravelDisbursementGridID").jqxGrid('addrow', null, {}); 
 						 $("#leaveTravelDisbursementGridID").jqxGrid({ disabled: true});
-					   
 					    $('#txtchkgridload').val('');
 					    $('#txtgridload').val(1);
 					 } else {
@@ -322,12 +322,6 @@
 			  $.messager.alert('Message','Employee is Mandatory.','warning');
 			  return;
 		  }
-	
-		  /* if($('#txttravelticketvalue').val().trim()=="0" || $('#txttravelticketvalue').val().trim()=="0.00" || $('#txttravelticketvalue').val().trim()==""){
-			  	$.messager.alert('Warning','Enter Ticket Amount to be Calculated.');
-			  	document.getElementById("txttravelticketvalue").focus();
-				return false;
-		  } */
 		  
 		  if($('#txtleavesalarytobepaid').val()!='' && $('#txttravelcurrentexpenses').val()!=''){
 			  
@@ -338,7 +332,7 @@
 			  if(!($('#txtleavesalarytobepaid').val().trim()=="0" || $('#txtleavesalarytobepaid').val().trim()=="0.00" || $('#txtleavesalarytobepaid').val().trim()=="")){
 				  $("#leaveTravelDisbursementGridID").jqxGrid('addrow', null, {}); 
 				  $("#leaveTravelDisbursementGridID").jqxGrid('addrow', null, {}); 
-				  $("#leaveTravelDisbursementGridID").jqxGrid('addrow', null, {});
+				  $("#leaveTravelDisbursementGridID").jqxGrid('addrow', null, {}); 
 				  $("#leaveTravelDisbursementGridID").jqxGrid('addrow', null, {});
 			  }
 			  
@@ -483,7 +477,7 @@
 		      		} else {
 		      			funRoundAmt("0.00","txtdrtotal");
 		      		  }
-		 
+		         
 		          if(!isNaN(credit1)){
 		    	        funRoundAmt(credit1,"txtcrtotal");
 		      		 } else{
@@ -547,7 +541,6 @@
 	 }
 		
 	 function funChkButton() {
-			/* funReset(); */
 		}
 	 
 	 function funFocus(){
@@ -555,7 +548,6 @@
 	    }
 	   
 	  function funNotify(){	
-	        	/* Validation */
 	        	var rows = $("#leaveTravelDisbursementGridID").jqxGrid('getrows');
 	        	if(parseInt(rows[0].acno)>0){
 	        		document.getElementById("errormsg").innerText="";
@@ -589,10 +581,7 @@
 			 	 }
 			 		
 			     document.getElementById("errormsg").innerText="";
-			    	
-	    	    /* Validation Ends*/
-	 		   
-		         /* Account Details Grid Saving */
+	 		   		
 		    	 var rows = $("#leaveTravelDisbursementGridID").jqxGrid('getrows');
 		    	 var length=0;
 				 for(var i=0 ; i < rows.length ; i++){
@@ -621,12 +610,9 @@
 					}
 				 }
 				 $('#gridlength').val(length);
-		 		/* Account Details Grid Saving Ends */
-		 		
-	    		return 1;
+		 		return 1;
 		} 
-	  
-	  
+	  	
 	  function setValues(){
 		  
 		  if($('#hidleaveTravelDisbursementDate').val()){
@@ -650,14 +636,14 @@
 		  
 		  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 		  funSetlabel();
-	         
+	         	 
 			 var indexVal1 = document.getElementById("docno").value;
 	         var indexVal2 = document.getElementById("txttrno").value;
 	         if(indexVal1>0){
 	         	$("#leaveTravelDisbursementDiv").load("leaveTravelDisbursementGrid.jsp?docno="+indexVal1+"&trno="+indexVal2);
 	         }  
 		}	
-	  
+		
 	  function funExcelExporter(){
 			 if(parseInt(window.parent.chkexportdata.value)=="1") {
 			  	 JSONToCSVCon(data, 'LeaveTravelDisbursement', true);
@@ -669,349 +655,227 @@
 	  function funPrintBtn() {
 			
 			if (($("#mode").val() == "view") && $("#docno").val()!="") {
-				
 				 var url=document.URL;
 			     var reurl=url.split("saveLeaveTravelDisbursement");
 			     $("#docno").prop("disabled", false);
-					  
 				 var win= window.open(reurl[0]+"printLeaveTravelDisbursement?trno="+document.getElementById("txttrno").value,"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 			     win.focus();
-						 
 		     }
 		    else {
 				$.messager.alert('Message','Select a Document....!','warning');
 				return;
 			}
 	    }
-	  
 </script>
 
 <style>
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}
+html, body { height: 100%; overflow-y: auto; }
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 8px; }
+body::-webkit-scrollbar-thumb { background: #4da3ff; border-radius: 8px; border: 2px solid #eaf3ff; }
+body::-webkit-scrollbar-thumb:hover { background: #1a73e8; }
 
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
+body { background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%); font-family: "Poppins", "Segoe UI", sans-serif; color: #1f2f46; margin: 0; padding: 40px 0; min-height: 100vh; animation: fadeIn 0.6s ease-in-out; box-sizing: border-box; }
+#mainBG { background: #f4f8ff; border-radius: 16px; box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15); padding: 25px 30px; max-width: 1250px; margin: 0 auto; transition: 0.3s ease; }
 
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+.hidden-scrollbar { max-height: 80vh; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: #4da3ff #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar { width: 8px; }
+.hidden-scrollbar::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 4px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background-color: #4da3ff; border-radius: 4px; border: 2px solid #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1a73e8; }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
+.receipt-header { background: #edf4ff; border: 1px solid #c9dafc; border-radius: 14px; padding: 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(132, 168, 255, 0.12); }
+.receipt-header table { width: 100%; border-collapse: collapse; }
+.receipt-header td { vertical-align: middle; padding: 6px 8px; }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
+.table-section { margin-bottom: 18px; padding: 14px; border-radius: 10px; }
+.table-section h3 { color: #1b3f73; font-size: 1.04em; font-weight: 600; margin: 0 0 10px 0; }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
+.cr-table { width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(100, 140, 255, 0.08); }
+.cr-table th, .cr-table td { padding: 10px 12px; border-bottom: 1px solid #d6e1ff; text-align: left; font-size: 0.95rem; color: #1f2f46; vertical-align: middle; }
+.cr-table th { background-color: #dcebff; color: #1b3f73; font-weight: 600; }
+.cr-table tr:last-child td { border-bottom: none; }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
+.clean-input, input[type="text"], select { width: 100%; height: 40px; padding: 8px 10px; border: 1px solid #b9ccf2; border-radius: 8px; background: #ffffff; font-size: 0.95rem; color:#1f2f46; box-sizing: border-box; transition: 0.18s ease; }
+.clean-input:focus, input[type="text"]:focus, select:focus { border-color: #4da3ff; box-shadow: 0 0 6px rgba(77,163,255,0.18); outline: none; }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
+.icon { width: 2.5em; height: 2em; border: none; background-color: #E0ECF8; }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
+button, .myButton { background: linear-gradient(90deg, #3b82f6, #1a73e8); color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-weight: 600; cursor: pointer; transition: 0.25s ease; box-shadow: 0 3px 10px rgba(30, 100, 255, 0.18); }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+@media (max-width: 900px) {
+  .receipt-header { padding: 12px; }
+  .table-section { padding: 12px; }
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
 </style>
 
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background" >
 <form id="frmleaveTravelDisbursement" action="saveLeaveTravelDisbursement" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div class="hidden-scrollbar receipt-header">
+  <div class="table-section" style="background-color: #EBDEF0; width: 100%;">
+    <table class="cr-table" width="100%">
+      <tr>
+        <td width="6%" align="right">Date</td>
+        <td width="17%"><div id="leaveTravelDisbursementDate" name="leaveTravelDisbursementDate" value='<s:property value="leaveTravelDisbursementDate"/>'></div>
+        <input type="hidden" id="hidleaveTravelDisbursementDate" name="hidleaveTravelDisbursementDate" value='<s:property value="hidleaveTravelDisbursementDate"/>'/></td>
+        <td colspan="2" align="right">Calculated UpTo</td>
+        <td width="17%"><div id="notifyDate" name="notifyDate" value='<s:property value="notifyDate"/>'></div>
+        <input type="hidden" id="hidnotifyDate" name="hidnotifyDate" value='<s:property value="hidnotifyDate"/>'/></td>
+        <td width="15%" align="right">Doc No</td>
+        <td width="18%"><input type="text" id="docno" name="txtleavetraveldisbursementdocno" value='<s:property value="txtleavetraveldisbursementdocno"/>' tabindex="-1" class="clean-input"/></td>
+      </tr>
+      <tr>
+        <td align="right">Employee ID</td>
+        <td><input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="Press F3 to Search" style="width:94%;" onkeydown="getEmployeeDetails(event);" value='<s:property value="txtemployeeid"/>' class="clean-input"/></td>
+        <td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:94%;" value='<s:property value="txtemployeename"/>' tabindex="-1" class="clean-input"/>
+        <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
 
-<div class="table-section" style="background-color: #EBDEF0; width: 100%;">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="17%"><div id="leaveTravelDisbursementDate" name="leaveTravelDisbursementDate" value='<s:property value="leaveTravelDisbursementDate"/>'></div>
-    <input type="hidden" id="hidleaveTravelDisbursementDate" name="hidleaveTravelDisbursementDate" value='<s:property value="hidleaveTravelDisbursementDate"/>'/></td>
-    <td colspan="2" align="right">Calculated UpTo</td>
-    <td width="17%"><div id="notifyDate" name="notifyDate" value='<s:property value="notifyDate"/>'></div>
-    <input type="hidden" id="hidnotifyDate" name="hidnotifyDate" value='<s:property value="hidnotifyDate"/>'/></td>
-    <td width="15%" align="right">Doc No</td>
-    <td width="18%"><input type="text" id="docno" name="txtleavetraveldisbursementdocno" value='<s:property value="txtleavetraveldisbursementdocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Employee ID</td>
-    <td><input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="Press F3 to Search" style="width:94%;" onkeydown="getEmployeeDetails(event);" value='<s:property value="txtemployeeid"/>'/></td>
-    <td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:94%;" value='<s:property value="txtemployeename"/>' tabindex="-1"/>
-    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
-    
-    <td align="right"><button type="button" id="btnProcessing" title="Process"  style="border:none;background:none;" onclick="funProcessBtn();">
-      						 <img alt="Process" src="<%=contextPath%>/icons/process2.png" width="16" height="16">
-      					</button></td>
-                        <td align="center">
-                        <button type="button" class="icon" id="btnCalculate" title="Calculate" style="align:right;border:none;background:none;" onclick="funCalculateBtn();">
-							<img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png">
-						</button></td>
-  <td align="left"><button type="button" class="icon" id="btnExcelExporter" title="Export current Document to Excel" onclick="funExcelExporter();">
-      						 <img alt="Export current Document to Excel" src="<%=contextPath%>/icons/excel_new.png">
-      					</button></td>
-  </tr>
-</table>
+        <td align="right"><button type="button" id="btnProcessing" title="Process" style="border:none;background:none;" onclick="funProcessBtn();">
+           <img alt="Process" src="<%=contextPath%>/icons/process2.png" width="16" height="16">
+        </button></td>
+        <td align="center">
+          <button type="button" class="icon" id="btnCalculate" title="Calculate" style="align:right;border:none;background:none;" onclick="funCalculateBtn();">
+            <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png">
+          </button>
+        </td>
+        <td align="left">
+          <button type="button" class="icon" id="btnExcelExporter" title="Export current Document to Excel" onclick="funExcelExporter();">
+           <img alt="Export current Document to Excel" src="<%=contextPath%>/icons/excel_new.png">
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-</div>
-
-<table class="cr-table" width="100%">
-<tr>
-<td width="50%">
-<div class="table-section" style="background-color: #ECF8E0;">
-<h3><font style="font-family: comic sans ms;font-weight: bold;">Leave Disbursement</font></h3>
-<table class="" width="100%">
+  <table class="cr-table" width="100%">
   <tr>
-    <td colspan="2" align="right">Already Provision [Eligible Days]</td>
-    <td width="28%"><input type="text" id="txtalreadyprovisioneligibledays" name="txtalreadyprovisioneligibledays" style="width:50%;" value='<s:property value="txtalreadyprovisioneligibledays"/>' tabindex="-1"/></td>
-    <td width="24%" align="right">Current [Eligible Days]</td>
-    <td width="25%"><input type="text" id="txtcurrentprovisioneligibledays" name="txtcurrentprovisioneligibledays" style="width:50%;" value='<s:property value="txtcurrentprovisioneligibledays"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td colspan="2" align="right">Total [Eligible Days]</td>
-    <td><input type="text" id="txttotaleligibledays" name="txttotaleligibledays" style="width:50%;" value='<s:property value="txttotaleligibledays"/>' tabindex="-1"/></td>
-    <td align="right">Leave Salary [Calculated]</td>
-    <td><input type="text" id="txtleavesalarycalculated" name="txtleavesalarycalculated" style="width:80%;text-align: right;" value='<s:property value="txtleavesalarycalculated"/>' tabindex="-1"/></td>
+  <td width="50%">
+  <div class="table-section" style="background-color: #ECF8E0;">
+  <h3>Leave Disbursement</h3>
+  <table width="100%">
+    <tr>
+      <td colspan="2" align="right">Already Provision [Eligible Days]</td>
+      <td width="28%"><input type="text" id="txtalreadyprovisioneligibledays" name="txtalreadyprovisioneligibledays" style="width:50%;" value='<s:property value="txtalreadyprovisioneligibledays"/>' tabindex="-1" class="clean-input"/></td>
+      <td width="24%" align="right">Current [Eligible Days]</td>
+      <td width="25%"><input type="text" id="txtcurrentprovisioneligibledays" name="txtcurrentprovisioneligibledays" style="width:50%;" value='<s:property value="txtcurrentprovisioneligibledays"/>' tabindex="-1" class="clean-input"/></td>
     </tr>
-  <tr>
-    <td colspan="2" align="right">Already Posted</td>
-    <td><input type="text" id="txtleavesalaryalreadyprovided" name="txtleavesalaryalreadyprovided" style="width:80%;text-align: right;" value='<s:property value="txtleavesalaryalreadyprovided"/>' tabindex="-1"/></td>
-    <td align="right">Net to be Posted</td>
-    <td><input type="text" id="txtleavesalarynettobeprovided" name="txtleavesalarynettobeprovided" style="width:80%;text-align: right;" value='<s:property value="txtleavesalarynettobeprovided"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td width="9%" align="left"><input type="checkbox" id="chckpartialpayment" name="chckpartialpayment" value="" onchange="partialpaymentcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Partial
-                                 <input type="hidden" id="hidchckpartialpayment" name="hidchckpartialpayment" value='<s:property value="hidchckpartialpayment"/>'/></td>
-    <td width="14%" align="right">Leave Salary  Paid</td>
-    <td><input type="text" id="txtleavesalarytobepaid" name="txtleavesalarytobepaid" style="width:80%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funLeaveSalaryToBePaid();partialpaymentcheck();" value='<s:property value="txtleavesalarytobepaid"/>'/></td>
-    <td align="right">Leave Salary  Paid [Eligible Days]</td>
-    <td><input type="text" id="txtleavesalarypaideligibledays" name="txtleavesalarypaideligibledays" style="width:50%;" value='<s:property value="txtleavesalarypaideligibledays"/>' tabindex="-1"/></td>
-  </tr>
-</table>
-</div>
-</td>
+    <tr>
+      <td colspan="2" align="right">Total [Eligible Days]</td>
+      <td><input type="text" id="txttotaleligibledays" name="txttotaleligibledays" style="width:50%;" value='<s:property value="txttotaleligibledays"/>' tabindex="-1" class="clean-input"/></td>
+      <td align="right">Leave Salary [Calculated]</td>
+      <td><input type="text" id="txtleavesalarycalculated" name="txtleavesalarycalculated" style="width:80%;text-align: right;" value='<s:property value="txtleavesalarycalculated"/>' tabindex="-1" class="clean-input"/></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right">Already Posted</td>
+      <td><input type="text" id="txtleavesalaryalreadyprovided" name="txtleavesalaryalreadyprovided" style="width:80%;text-align: right;" value='<s:property value="txtleavesalaryalreadyprovided"/>' tabindex="-1" class="clean-input"/></td>
+      <td align="right">Net to be Posted</td>
+      <td><input type="text" id="txtleavesalarynettobeprovided" name="txtleavesalarynettobeprovided" style="width:80%;text-align: right;" value='<s:property value="txtleavesalarynettobeprovided"/>' tabindex="-1" class="clean-input"/></td>
+    </tr>
+    <tr>
+      <td width="9%" align="left"><input type="checkbox" id="chckpartialpayment" name="chckpartialpayment" value="" onchange="partialpaymentcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Partial
+           <input type="hidden" id="hidchckpartialpayment" name="hidchckpartialpayment" value='<s:property value="hidchckpartialpayment"/>'/></td>
+      <td width="14%" align="right">Leave Salary  Paid</td>
+      <td><input type="text" id="txtleavesalarytobepaid" name="txtleavesalarytobepaid" style="width:80%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funLeaveSalaryToBePaid();partialpaymentcheck();" value='<s:property value="txtleavesalarytobepaid"/>' class="clean-input"/></td>
+      <td align="right">Leave Salary  Paid [Eligible Days]</td>
+      <td><input type="text" id="txtleavesalarypaideligibledays" name="txtleavesalarypaideligibledays" style="width:50%;" value='<s:property value="txtleavesalarypaideligibledays"/>' tabindex="-1" class="clean-input"/></td>
+    </tr>
+  </table>
+  </div>
+  </td>
 
-<td width="50%">
-<div class="table-section" style="background-color: #F8E0F7; ">
-<h3><font style="font-family: comic sans ms;font-weight: bold;">Travel Disbursement</font></h3>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="22%" align="right">Ticket Value</td>
-    <td width="78%"><input type="text" id="txttravelticketvalue" name="txttravelticketvalue" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funTravelCurrentExpenses();" value='<s:property value="txttravelticketvalue"/>'/></td>
+  <td width="50%">
+  <div class="table-section" style="background-color: #F8E0F7;">
+  <h3>Travel Disbursement</h3>
+  <table width="100%">
+    <tr>
+      <td width="22%" align="right">Ticket Value</td>
+      <td width="78%"><input type="text" id="txttravelticketvalue" name="txttravelticketvalue" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funTravelCurrentExpenses();" value='<s:property value="txttravelticketvalue"/>' class="clean-input"/></td>
+    </tr>
+    <tr>
+      <td align="right">Already Posted</td>
+      <td><input type="text" id="txttravelalreadyposted" name="txttravelalreadyposted" style="width:30%;text-align: right;" value='<s:property value="txttravelalreadyposted"/>' tabindex="-1" class="clean-input"/></td>
+    </tr>
+    <tr>
+      <td align="right">Current Expenses</td>
+      <td><input type="text" id="txttravelcurrentexpenses" name="txttravelcurrentexpenses" style="width:30%;text-align: right;" value='<s:property value="txttravelcurrentexpenses"/>' tabindex="-1" class="clean-input"/></td>
+    </tr>
+  </table><br/><br/>
+  </div>
+  </td>
   </tr>
-  <tr>
-    <td align="right">Already Posted</td>
-    <td><input type="text" id="txttravelalreadyposted" name="txttravelalreadyposted" style="width:30%;text-align: right;" value='<s:property value="txttravelalreadyposted"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Current Expenses</td>
-    <td><input type="text" id="txttravelcurrentexpenses" name="txttravelcurrentexpenses" style="width:30%;text-align: right;" value='<s:property value="txttravelcurrentexpenses"/>' tabindex="-1"/></td>
-  </tr>
-</table><br/><br/>
-</div>
-</td>
-</tr></table>
+  </table>
 
-<div style="width: 100%;"><h3><font style="font-family: comic sans ms;font-weight: bold;">Accounts</font></h3>
-<div class="cr-table" id="leaveTravelDisbursementDiv"><jsp:include page="leaveTravelDisbursementGrid.jsp"></jsp:include></div>
-</div>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Dr. Total</td>
-    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td width="6%" align="right">Cr. Total</td>
-    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-  </tr>
-</table>
+  <div style="width: 100%; margin-top: 10px;">
+    <h3>Accounts</h3>
+    <div class="cr-table" id="leaveTravelDisbursementDiv"><jsp:include page="leaveTravelDisbursementGrid.jsp"></jsp:include></div>
+  </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="txttrno" name="txttrno"  value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtgridload" name="txtgridload"  value='<s:property value="txtgridload"/>'/>
-<input type="hidden" id="txtchkgridload" name="txtchkgridload"  value='<s:property value="txtchkgridload"/>'/>
-<input type="hidden" id="txtchksalarypaid" name="txtchksalarypaid"  value='<s:property value="txtchksalarypaid"/>'/>
-<input type="hidden" id="txtchkdate" name="txtchkdate"  value='<s:property value="txtchkdate"/>'/>
-<input type="hidden" id="txtempaccdocno" name="txtempaccdocno"  value='<s:property value="txtempaccdocno"/>'/>
-<input type="hidden" id="txtempaccid" name="txtempaccid"  value='<s:property value="txtempaccid"/>'/>
-<input type="hidden" id="txtempaccname" name="txtempaccname"  value='<s:property value="txtempaccname"/>'/>
-<input type="hidden" id="txtempaccatype" name="txtempaccatype"  value='<s:property value="txtempaccatype"/>'/>
-<input type="hidden" id="txtempacccurid" name="txtempacccurid"  value='<s:property value="txtempacccurid"/>'/>
-<input type="hidden" id="txtempaccrate" name="txtempaccrate"  value='<s:property value="txtempaccrate"/>'/>
-<input type="hidden" id="txtempacctype" name="txtempacctype"  value='<s:property value="txtempacctype"/>'/>
-<input type="hidden" id="txtlsexpenseaccdocno" name="txtlsexpenseaccdocno"  value='<s:property value="txtlsexpenseaccdocno"/>'/>
-<input type="hidden" id="txtlsexpenseaccid" name="txtlsexpenseaccid"  value='<s:property value="txtlsexpenseaccid"/>'/>
-<input type="hidden" id="txtlsexpenseaccname" name="txtlsexpenseaccname"  value='<s:property value="txtlsexpenseaccname"/>'/>
-<input type="hidden" id="txtlsexpenseaccatype" name="txtlsexpenseaccatype"  value='<s:property value="txtlsexpenseaccatype"/>'/>
-<input type="hidden" id="txtlsexpenseacccurid" name="txtlsexpenseacccurid"  value='<s:property value="txtlsexpenseacccurid"/>'/>
-<input type="hidden" id="txtlsexpenseaccrate" name="txtlsexpenseaccrate"  value='<s:property value="txtlsexpenseaccrate"/>'/>
-<input type="hidden" id="txtlsexpenseacctype" name="txtlsexpenseacctype"  value='<s:property value="txtlsexpenseacctype"/>'/>		    
-<input type="hidden" id="txtlsprovisionaccdocno" name="txtlsprovisionaccdocno"  value='<s:property value="txtlsprovisionaccdocno"/>'/>
-<input type="hidden" id="txtlsprovisionaccid" name="txtlsprovisionaccid"  value='<s:property value="txtlsprovisionaccid"/>'/>
-<input type="hidden" id="txtlsprovisionaccname" name="txtlsprovisionaccname"  value='<s:property value="txtlsprovisionaccname"/>'/>
-<input type="hidden" id="txtlsprovisionaccatype" name="txtlsprovisionaccatype"  value='<s:property value="txtlsprovisionaccatype"/>'/>
-<input type="hidden" id="txtlsprovisionacccurid" name="txtlsprovisionacccurid"  value='<s:property value="txtlsprovisionacccurid"/>'/>
-<input type="hidden" id="txtlsprovisionaccrate" name="txtlsprovisionaccrate"  value='<s:property value="txtlsprovisionaccrate"/>'/>
-<input type="hidden" id="txtlsprovisionacctype" name="txtlsprovisionacctype"  value='<s:property value="txtlsprovisionacctype"/>'/>
-<input type="hidden" id="txttravelexpenseaccdocno" name="txttravelexpenseaccdocno"  value='<s:property value="txttravelexpenseaccdocno"/>'/>
-<input type="hidden" id="txttravelexpenseaccid" name="txttravelexpenseaccid"  value='<s:property value="txttravelexpenseaccid"/>'/>
-<input type="hidden" id="txttravelexpenseaccname" name="txttravelexpenseaccname"  value='<s:property value="txttravelexpenseaccname"/>'/>
-<input type="hidden" id="txttravelexpenseaccatype" name="txttravelexpenseaccatype"  value='<s:property value="txttravelexpenseaccatype"/>'/>
-<input type="hidden" id="txttravelexpenseacccurid" name="txttravelexpenseacccurid"  value='<s:property value="txttravelexpenseacccurid"/>'/>
-<input type="hidden" id="txttravelexpenseaccrate" name="txttravelexpenseaccrate"  value='<s:property value="txttravelexpenseaccrate"/>'/>
-<input type="hidden" id="txttravelexpenseacctype" name="txttravelexpenseacctype"  value='<s:property value="txttravelexpenseacctype"/>'/>
-<input type="hidden" id="txttravelprovisionaccdocno" name="txttravelprovisionaccdocno"  value='<s:property value="txttravelprovisionaccdocno"/>'/>
-<input type="hidden" id="txttravelprovisionaccid" name="txttravelprovisionaccid"  value='<s:property value="txttravelprovisionaccid"/>'/>
-<input type="hidden" id="txttravelprovisionaccname" name="txttravelprovisionaccname"  value='<s:property value="txttravelprovisionaccname"/>'/>
-<input type="hidden" id="txttravelprovisionaccatype" name="txttravelprovisionaccatype"  value='<s:property value="txttravelprovisionaccatype"/>'/>
-<input type="hidden" id="txttravelprovisionacccurid" name="txttravelprovisionacccurid"  value='<s:property value="txttravelprovisionacccurid"/>'/>
-<input type="hidden" id="txttravelprovisionaccrate" name="txttravelprovisionaccrate"  value='<s:property value="txttravelprovisionaccrate"/>'/>
-<input type="hidden" id="txttravelprovisionacctype" name="txttravelprovisionacctype"  value='<s:property value="txttravelprovisionacctype"/>'/>
-<input type="hidden" id="txtlsexpensebalanceaccdocno" name="txtlsexpensebalanceaccdocno"  value='<s:property value="txtlsexpensebalanceaccdocno"/>'/>
-<input type="hidden" id="txtlsexpensebalanceaccid" name="txtlsexpensebalanceaccid"  value='<s:property value="txtlsexpensebalanceaccid"/>'/>
-<input type="hidden" id="txtlsexpensebalanceaccname" name="txtlsexpensebalanceaccname"  value='<s:property value="txtlsexpensebalanceaccname"/>'/>
-<input type="hidden" id="txtlsexpensebalanceaccatype" name="txtlsexpensebalanceaccatype"  value='<s:property value="txtlsexpensebalanceaccatype"/>'/>
-<input type="hidden" id="txtlsexpensebalanceacccurid" name="txtlsexpensebalanceacccurid"  value='<s:property value="txtlsexpensebalanceacccurid"/>'/>
-<input type="hidden" id="txtlsexpensebalanceaccrate" name="txtlsexpensebalanceaccrate"  value='<s:property value="txtlsexpensebalanceaccrate"/>'/>
-<input type="hidden" id="txtlsexpensebalanceacctype" name="txtlsexpensebalanceacctype"  value='<s:property value="txtlsexpensebalanceacctype"/>'/>	
+  <table class="cr-table" width="100%" style="margin-top:12px;">
+    <tr>
+      <td width="7%" align="right">Dr. Total</td>
+      <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1" class="clean-input"/></td>
+      <td width="6%" align="right">Cr. Total</td>
+      <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1" class="clean-input"/></td>
+    </tr>
+  </table>
+
+  <input type="hidden" id="mode" name="mode"/>
+  <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+  <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+  <input type="hidden" id="gridlength" name="gridlength"/>
+  <input type="hidden" id="txttrno" name="txttrno"  value='<s:property value="txttrno"/>'/>
+  <input type="hidden" id="txtgridload" name="txtgridload"  value='<s:property value="txtgridload"/>'/>
+  <input type="hidden" id="txtchkgridload" name="txtchkgridload"  value='<s:property value="txtchkgridload"/>'/>
+  <input type="hidden" id="txtchksalarypaid" name="txtchksalarypaid"  value='<s:property value="txtchksalarypaid"/>'/>
+  <input type="hidden" id="txtchkdate" name="txtchkdate"  value='<s:property value="txtchkdate"/>'/>
+  <input type="hidden" id="txtempaccdocno" name="txtempaccdocno"  value='<s:property value="txtempaccdocno"/>'/>
+  <input type="hidden" id="txtempaccid" name="txtempaccid"  value='<s:property value="txtempaccid"/>'/>
+  <input type="hidden" id="txtempaccname" name="txtempaccname"  value='<s:property value="txtempaccname"/>'/>
+  <input type="hidden" id="txtempaccatype" name="txtempaccatype"  value='<s:property value="txtempaccatype"/>'/>
+  <input type="hidden" id="txtempacccurid" name="txtempacccurid"  value='<s:property value="txtempacccurid"/>'/>
+  <input type="hidden" id="txtempaccrate" name="txtempaccrate"  value='<s:property value="txtempaccrate"/>'/>
+  <input type="hidden" id="txtempacctype" name="txtempacctype"  value='<s:property value="txtempacctype"/>'/>
+  <input type="hidden" id="txtlsexpenseaccdocno" name="txtlsexpenseaccdocno"  value='<s:property value="txtlsexpenseaccdocno"/>'/>
+  <input type="hidden" id="txtlsexpenseaccid" name="txtlsexpenseaccid"  value='<s:property value="txtlsexpenseaccid"/>'/>
+  <input type="hidden" id="txtlsexpenseaccname" name="txtlsexpenseaccname"  value='<s:property value="txtlsexpenseaccname"/>'/>
+  <input type="hidden" id="txtlsexpenseaccatype" name="txtlsexpenseaccatype"  value='<s:property value="txtlsexpenseaccatype"/>'/>
+  <input type="hidden" id="txtlsexpenseacccurid" name="txtlsexpenseacccurid"  value='<s:property value="txtlsexpenseacccurid"/>'/>
+  <input type="hidden" id="txtlsexpenseaccrate" name="txtlsexpenseaccrate"  value='<s:property value="txtlsexpenseaccrate"/>'/>
+  <input type="hidden" id="txtlsexpenseacctype" name="txtlsexpenseacctype"  value='<s:property value="txtlsexpenseacctype"/>'/>		    
+  <input type="hidden" id="txtlsprovisionaccdocno" name="txtlsprovisionaccdocno"  value='<s:property value="txtlsprovisionaccdocno"/>'/>
+  <input type="hidden" id="txtlsprovisionaccid" name="txtlsprovisionaccid"  value='<s:property value="txtlsprovisionaccid"/>'/>
+  <input type="hidden" id="txtlsprovisionaccname" name="txtlsprovisionaccname"  value='<s:property value="txtlsprovisionaccname"/>'/>
+  <input type="hidden" id="txtlsprovisionaccatype" name="txtlsprovisionaccatype"  value='<s:property value="txtlsprovisionaccatype"/>'/>
+  <input type="hidden" id="txtlsprovisionacccurid" name="txtlsprovisionacccurid"  value='<s:property value="txtlsprovisionacccurid"/>'/>
+  <input type="hidden" id="txtlsprovisionaccrate" name="txtlsprovisionaccrate"  value='<s:property value="txtlsprovisionaccrate"/>'/>
+  <input type="hidden" id="txtlsprovisionacctype" name="txtlsprovisionacctype"  value='<s:property value="txtlsprovisionacctype"/>'/>
+  <input type="hidden" id="txttravelexpenseaccdocno" name="txttravelexpenseaccdocno"  value='<s:property value="txttravelexpenseaccdocno"/>'/>
+  <input type="hidden" id="txttravelexpenseaccid" name="txttravelexpenseaccid"  value='<s:property value="txttravelexpenseaccid"/>'/>
+  <input type="hidden" id="txttravelexpenseaccname" name="txttravelexpenseaccname"  value='<s:property value="txttravelexpenseaccname"/>'/>
+  <input type="hidden" id="txttravelexpenseaccatype" name="txttravelexpenseaccatype"  value='<s:property value="txttravelexpenseaccatype"/>'/>
+  <input type="hidden" id="txttravelexpenseacccurid" name="txttravelexpenseacccurid"  value='<s:property value="txttravelexpenseacccurid"/>'/>
+  <input type="hidden" id="txttravelexpenseaccrate" name="txttravelexpenseaccrate"  value='<s:property value="txttravelexpenseaccrate"/>'/>
+  <input type="hidden" id="txttravelexpenseacctype" name="txttravelexpenseacctype"  value='<s:property value="txttravelexpenseacctype"/>'/>
+  <input type="hidden" id="txttravelprovisionaccdocno" name="txttravelprovisionaccdocno"  value='<s:property value="txttravelprovisionaccdocno"/>'/>
+  <input type="hidden" id="txttravelprovisionaccid" name="txttravelprovisionaccid"  value='<s:property value="txttravelprovisionaccid"/>'/>
+  <input type="hidden" id="txttravelprovisionaccname" name="txttravelprovisionaccname"  value='<s:property value="txttravelprovisionaccname"/>'/>
+  <input type="hidden" id="txttravelprovisionaccatype" name="txttravelprovisionaccatype"  value='<s:property value="txttravelprovisionaccatype"/>'/>
+  <input type="hidden" id="txttravelprovisionacccurid" name="txttravelprovisionacccurid"  value='<s:property value="txttravelprovisionacccurid"/>'/>
+  <input type="hidden" id="txttravelprovisionaccrate" name="txttravelprovisionaccrate"  value='<s:property value="txttravelprovisionaccrate"/>'/>
+  <input type="hidden" id="txttravelprovisionacctype" name="txttravelprovisionacctype"  value='<s:property value="txttravelprovisionacctype"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceaccdocno" name="txtlsexpensebalanceaccdocno"  value='<s:property value="txtlsexpensebalanceaccdocno"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceaccid" name="txtlsexpensebalanceaccid"  value='<s:property value="txtlsexpensebalanceaccid"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceaccname" name="txtlsexpensebalanceaccname"  value='<s:property value="txtlsexpensebalanceaccname"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceaccatype" name="txtlsexpensebalanceaccatype"  value='<s:property value="txtlsexpensebalanceaccatype"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceacccurid" name="txtlsexpensebalanceacccurid"  value='<s:property value="txtlsexpensebalanceacccurid"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceaccrate" name="txtlsexpensebalanceaccrate"  value='<s:property value="txtlsexpensebalanceaccrate"/>'/>
+  <input type="hidden" id="txtlsexpensebalanceacctype" name="txtlsexpensebalanceacctype"  value='<s:property value="txtlsexpensebalanceacctype"/>'/>
 </div>
 </form>
 

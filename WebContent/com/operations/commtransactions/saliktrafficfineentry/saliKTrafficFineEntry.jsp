@@ -10,165 +10,146 @@
 <!-- <link href="../../../../css/main.css" rel="stylesheet" type="text/css" />
 <link href="../../../../css/body.css" media="screen" rel="stylesheet" type="text/css" />
  -->
-    <style>
-        .hidden-scrollbar {
-            overflow: auto;
-            height: 530px;
-        }
-        #validrate{
-            color:red;
-        }
-        #validrate1{
-            color:red;
-        }
+ <style>
+   .hidden-scrollbar {
+  overflow-y: auto;
+  height: 530px;
+  scrollbar-width: thin;
+  scrollbar-color: #4da3ff #eaf3ff;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4da3ff;
+  border-radius: 8px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #1a73e8;
+}
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            color: #222;
-            margin: 0;
-            padding: 32px 0;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        #mainBG {
-            background: #fff;
-            border-radius: 16px;
-            /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-            padding: 10px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+body {
+  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  color: #1f2f46;
+  margin: 0;
+  padding: 40px 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
-        .receipt-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 16px;
-            border-radius: 12px;
-            padding: 0px 24px;
-            font-size: 2vh;
-        }
-        .receipt-header label {
-            font-weight: 500;
-            color: #333;
-            margin-right: 8px;
-        }
-        .receipt-header input[type="text"] {
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 1rem;
-            width: 120px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
-        .receipt-header input[type="text"]:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .receipt-header button {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .receipt-header button:hover {
-            background: #0056b3;
-        }
-        #txtStatus {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #e67e22;
-            margin-left: 12px;
-        }
+#mainBG {
+  background: #f4f8ff;
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15);
+  padding: 25px 30px;
+  max-width: 1250px;
+  margin: 0 auto;
+  transition: 0.3s ease;
+}
+#mainBG:hover {
+  box-shadow: 0 8px 35px rgba(30, 100, 255, 0.25);
+}
 
-        .section-row {
-            display: flex;
-            gap: 26px;
-            margin-bottom: 24px;
-        }
-        .section-block {
-            flex: 1;
-            background: #f6f8fa;
-            border-radius: 10px;
-            padding: 20px 18px;
-            box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-        }
+.receipt-header {
+  background: #edf4ff;
+  border: 1px solid #c9dafc;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 26px;
+  box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2);
+  font-size: 14px;
+}
 
-        .section-block h2 {
-            font-size: 1.09em;
-            font-weight: 500;
-            margin: 0 0 16px 0;
-            color: #253858;
-        }
+label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #1a2d4d;
+  margin-bottom: 6px;
+}
 
-        .section-block .form-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
+#validrate,
+#validrate1 {
+  color: #d62828;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
 
-        .section-block label {
-            min-width: 110px;
-            text-align: right;
-            font-weight: 500;
-            color: #253858;
-        }
+.receipt-header input[type="text"],
+.receipt-header select {
+  border: 1px solid #b9ccf2;
+  border-radius: 8px;
+  padding: 6px 12px;
+  height: 38px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  color: #1f2f46;
+  box-sizing: border-box;
+  transition: 0.25s ease;
+}
+.receipt-header input[type="text"]:focus,
+.receipt-header select:focus {
+  border-color: #4da3ff;
+  box-shadow: 0 0 6px rgba(77, 163, 255, 0.55);
+  outline: none;
+}
 
-        .section-block input[type="text"],
-        .section-block select {
-            flex: 1;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 6px 10px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
+select {
+  appearance: none;
+  background: #ffffff url("data:image/svg+xml;utf8,<svg fill='%233b82f6' height='20' width='20' viewBox='0 0 20 20'><polygon points='5,7 15,7 10,12' /></svg>") no-repeat right 10px center;
+  background-size: 14px;
+}
+select option {
+  font-size: 15px;
+}
 
-        .section-block input[type="text"]:focus,
-        .section-block select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+input[readonly],
+select:disabled {
+  background-color: #eef3ff;
+  color: #6a7ba1;
+}
 
+.cr-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15);
+}
+.cr-table th,
+.cr-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #d6e1ff;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #1f2f46;
+}
+.cr-table th {
+  background-color: #dcebff;
+  color: #1b3f73;
+  font-weight: 600;
+}
+.cr-table tr:hover td {
+  background-color: #eef5ff;
+  transition: 0.25s;
+}
 
-        .table-section {
-            margin-bottom: 18px;
-        }
-        .table-section h3 {
-            color: #253858;
-            font-size: 1.04em;
-            font-weight: 600;
-        }
-        .cr-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #f9fafb;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 0 1px #eef0f6;
-        }
-        .cr-table th, .cr-table td {
-            padding: 9px 10px;
-            border-bottom: 1px solid #e4e7ec;
-            text-align: left;
-            font-size: 1em;
-        }
-        .cr-table th {
-            background: #eef0f6;
-            color: #354B6A;
-            font-weight: 600;
-        }
-        .cr-table tr:last-child td {
-            border-bottom: none;
-        }
-    </style>
+input[type="text"]::selection {
+  background: #cfe2ff;
+  color: #000000;
+}
+input[type="text"]::-moz-selection {
+  background: #cfe2ff;
+  color: #000000;
+}
+
+@media (max-width: 900px) {
+  .receipt-header {
+    padding: 16px;
+  }
+}
+</style>
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript">
 
@@ -465,76 +446,60 @@ function funSearchLoad(){
  
 </script>
 </head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="rentalrefund.css">
+  <title>Rental Refund</title>
+</head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
-<form id="frmsalic" action="saveSalik" method="post" autocomplete="off" >
+  <div id="mainBG" class="homeContent" data-type="background">
+    <form id="frmsalic" action="saveSalik" method="post" autocomplete="off">
+      <jsp:include page="../../../../header.jsp" /><br/>
 
-<jsp:include page="../../../../header.jsp" /><br/>
-<div class="hidden-scrollbar receipt-header">
- <table class="cr-table" width="100%" >
-  <tr>
-  <td width="20%" align="right">Entry</td>
-  <td width="10%" align="left">
-  <select name="entry" id="entry" style="width:50%;"  value='<s:property value="entry"/>' onchange="gridchange()">
-      <option value="traffic">Traffic</option>
-       <option value="salik">Salik</option>
-    </select>
-  </td>
-   
-  <td width="4%" align="right" > 
-Date
-  </td> 
-    <td width="5%" align="left"><div id="tsDate" name="tsDate" value='<s:property value="tsDate"/>'></div>
-    
-    <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
-    </td>
-  
-  <td width="4%" align="right"> Doc NO </td>
- 
-  
-    <td width="5%" align="left"><input type="text" name="traficdocno" id="traficdocno"  tabindex="-1" value='<s:property value="traficdocno"/>'></td>
- 
-   
- <td width="30%"></td>
-    </tr>
-      
-</table> 
+      <div class="hidden-scrollbar receipt-header">
+        <table class="cr-table" width="100%">
+          <tr>
+            <td width="20%" align="right">Entry</td>
+            <td width="10%" align="left">
+              <select name="entry" id="entry" style="width:50%;" value='<s:property value="entry"/>' onchange="gridchange()">
+                <option value="traffic">Traffic</option>
+                <option value="salik">Salik</option>
+              </select>
+            </td>
+            <td width="4%" align="right">Date</td>
+            <td width="5%" align="left">
+              <div id="tsDate" name="tsDate" value='<s:property value="tsDate"/>'></div>
+              <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
+            </td>
+            <td width="4%" align="right">Doc NO</td>
+            <td width="5%" align="left">
+              <input type="text" name="traficdocno" id="traficdocno" tabindex="-1" value='<s:property value="traficdocno"/>'>
+            </td>
+            <td width="30%"></td>
+          </tr>
+        </table>
 
+        <br>
+        <div class="cr-table" style="width: 100%;" id="trafficdiv">
+          <jsp:include page="traficGrid.jsp"></jsp:include>
+        </div>
+        <div id="salikdiv" hidden="true">
+          <jsp:include page="salikmainGrid.jsp"></jsp:include>
+        </div>
+      </div>
 
-<br>
+      <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+      <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+      <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+      <input type="hidden" id="entryval" name="entryval" value='<s:property value="entryval"/>'>
+      <input type="hidden" id="salickgridlenght" name="salickgridlenght" value='<s:property value="salickgridlenght"/>'>
+      <input type="hidden" id="trafficgridlenght" name="trafficgridlenght" value='<s:property value="trafficgridlenght"/>'>
+    </form>
 
- 
-<div class="cr-table" style="width: 100%;" id="trafficdiv"  ><jsp:include page="traficGrid.jsp"></jsp:include></div>
-
-
-<div id="salikdiv" hidden="true"><jsp:include page="salikmainGrid.jsp"></jsp:include></div>
-
-</div>
-
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
-<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
-
-<input type="hidden" id="entryval" name="entryval" value='<s:property value="entryval"/>'>
-
-<input type="hidden" id="salickgridlenght" name="salickgridlenght" value='<s:property value="salickgridlenght"/>'>
-<input type="hidden" id="trafficgridlenght" name="trafficgridlenght" value='<s:property value="trafficgridlenght"/>'>
-
-</form>
-
-
-<div id="salickfleetsearchwindow">   <div ></div>
-</div>
-
-
-
-
-<div id="tafficfleetsearchwindow">    <div ></div></div>
-
-
-
-</div>
- 
-	
+    <div id="salickfleetsearchwindow"><div></div></div>
+    <div id="tafficfleetsearchwindow"><div></div></div>
+  </div>
 </body>
+
+
 </html>
