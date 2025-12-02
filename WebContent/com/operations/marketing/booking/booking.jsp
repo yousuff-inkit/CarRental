@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
 
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -11,24 +11,17 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-.icons {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
-}
-.iconss {
-	width: 4em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
+<style type="text/css">
+form label.error {
+color:red;
+  font-weight:bold;
+
 }
 
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;

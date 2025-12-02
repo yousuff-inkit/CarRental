@@ -9,6 +9,185 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+
+
+<style>
+
+/* -------------- PREMIUM BLUE UI (Universal Theme) ---------------- */
+
+/* GLOBAL FONT */
+* {
+	font-family: 'Poppins', sans-serif !important;
+}
+
+/* FIX: HIDE HIDDEN FIELDS SO THEY DON'T DISPLAY AS INPUTS */
+input[type="hidden"] {
+    display: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* WINDOW BOX / POPUP */
+.jqx-window,
+.jqx-window-content,
+.jqx-popup,
+.jqx-window-modal {
+    border-radius: 18px !important;
+    border: 1px solid #dce6ff !important;
+    background: #ffffff !important;
+    box-shadow: 0px 10px 35px rgba(93,125,255,0.20) !important;
+    overflow: hidden !important;
+}
+
+/* HEADER BAR */
+.jqx-window-header,
+.jqx-window-caption {
+    background: linear-gradient(90deg, #478dff, #67a8ff) !important;
+    color: #ffffff !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    padding: 12px 18px !important;
+    border: none !important;
+}
+
+/* CLOSE BUTTON */
+.jqx-window-close-button {
+    background: transparent !important;
+    filter: brightness(0) invert(1) !important;
+    border: none !important;
+}
+
+/* SEARCH WINDOW TOP BAR */
+.search-header {
+    background: linear-gradient(90deg, #478dff, #67a8ff) !important;
+    padding: 14px 20px !important;
+    color: white !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    border-radius: 14px 14px 0 0 !important;
+}
+
+/* POPUP BODY */
+.search-body {
+    padding: 18px 22px 10px !important;
+    background: #fbfcff !important;
+}
+
+/* INPUT FIELDS (excluding JQX generated shadow fields) */
+.jqx-input,
+input[type="text"]:not(.jqx-input-content),
+.jqx-widget-content input:not(.jqx-input-content) {
+    height: 34px !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #c4d3ff !important;
+    padding: 5px 10px !important;
+    font-size: 0.88rem !important;
+    box-shadow: 0 2px 6px rgba(150,175,255,0.20) !important;
+    transition: 0.2s ease !important;
+}
+
+/* FOCUS HIGHLIGHT */
+input:focus,
+.jqx-input:focus {
+    border-color: #6a96ff !important;
+    box-shadow: 0 0 0 2px rgba(70,120,255,0.15) !important;
+    outline: none !important;
+}
+
+/* LABEL TEXT */
+.jqx-window-content label {
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #263b75 !important;
+    margin-bottom: 4px !important;
+}
+
+/* BUTTONS */
+button,
+input[type="button"],
+.myButton {
+    background: linear-gradient(90deg,#6fb1fc,#1a73e8) !important;
+    height: 34px !important;
+    color: white !important;
+    border: none !important;
+    padding: 0px 26px !important;
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(26,115,232,0.30) !important;
+    transition: 0.2s !important;
+    margin: 4px !important;
+    white-space: nowrap !important;
+    min-width: 120px !important;
+}
+
+/* BUTTON HOVER */
+button:hover,
+.myButton:hover {
+    transform: translateY(-2px) scale(1.01) !important;
+}
+
+/* DATE INPUT HEIGHT FIX */
+.jqx-datetimeinput,
+#postingDate,
+#jqxUnclearedChequeProcessingDate,
+#jqxUnclearedChequeProcessFromDate,
+#jqxUnclearedChequeProcessToDate {
+    height: 30px !important;
+    min-height: 30px !important;
+    line-height: 30px !important;
+    border-radius: 10px !important;
+    padding: 0px 8px !important;
+    box-sizing: border-box !important;
+}
+
+/* DATE ICON FIX */
+.jqx-datetimeinput .jqx-input-content,
+.jqx-datetimeinput .jqx-icon-calendar {
+    margin-top: 2px !important;
+}
+
+/* GRID HEADER */
+.jqx-grid-column-header,
+.jqx-widget-header {
+    background: linear-gradient(90deg,#eff4ff,#dfe9ff) !important;
+    color: #2a3f85 !important;
+    font-weight: 600 !important;
+    border-color: #dce6ff !important;
+    font-size: 0.85rem !important;
+}
+
+/* GRID CELLS */
+.jqx-grid-cell {
+    font-size: 0.85rem !important;
+    padding: 6px !important;
+    border-color: #eef3ff !important;
+    color: #1f1f33 !important;
+}
+
+/* GRID HOVER */
+.jqx-grid-cell-hover {
+    background: rgba(70,120,255,0.08) !important;
+}
+
+/* SELECTED ROW */
+.jqx-grid-cell-selected {
+    background: #6e96ff !important;
+    color: white !important;
+}
+
+/* PINNED COLUMN */
+.jqx-grid-cell-pinned {
+    background-color: #e5e5e5 !important;
+}
+
+</style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnUnclearedChequeSearch").hide();

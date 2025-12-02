@@ -2,7 +2,7 @@
 
 /* GENERAL FONT */
 * {
-    font-family: 'Poppins', sans-serif !important;
+	font-family: 'Poppins', sans-serif !important;
 }
 
 /* WINDOW BOX / POPUP */
@@ -53,10 +53,15 @@
     background: #fbfcff !important;
 }
 
-/* INPUT FIELDS */
+
+
+
+
+
+/* INPUT FIELDS (excluding JQX generated shadow fields) */
 .jqx-input,
-input[type="text"],
-.jqx-widget-content input {
+input[type="text"]:not(.jqx-input-content),
+.jqx-widget-content input:not(.jqx-input-content) {
     height: 34px !important;
     border-radius: 10px !important;
     background: #ffffff !important;
@@ -66,6 +71,12 @@ input[type="text"],
     box-shadow: 0 2px 6px rgba(150,175,255,0.20) !important;
     transition: 0.2s ease !important;
 }
+
+
+
+
+
+
 
 /* FOCUS EFFECT */
 input:focus,
