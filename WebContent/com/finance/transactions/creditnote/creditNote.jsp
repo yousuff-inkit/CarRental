@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title> 
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<link href="<%=contextPath%>/css/css_global.css" rel="stylesheet" type="text/css" />
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <%
 	String mod = request.getParameter("mod")==null?"":request.getParameter("mod").toString();   
@@ -525,230 +525,300 @@
 		}
 	}
 </script>
-<style type="text/css">
-/* GRID STRUCTURE */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-column-gap: 30px;
-    grid-row-gap: 18px;
-    align-items: center;
-    font-size: 15px;
-}
 
-.form-grid label {
-    font-weight: 600;
-}
-
-.form-grid input,
-.form-grid select,
-.form-grid div {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 15px;
-}
-
-/* OUTER LIGHT BLUE BACKGROUND */
-.form-section-bg {
-    background: #eaf3ff;
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 25px rgba(100, 150, 255, 0.15);
-    margin-top: 20px;
-}
-
-/* WHITE INNER CARD */
-.form-inner-card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-
-/* TOTALS ROW STYLE */
-.totals-row {
-    display: grid;
-    grid-template-columns: 120px 1fr 120px 1fr;
+<style>
+.form-group {
+    display: flex;
     align-items: center;
     gap: 20px;
-    margin-top: 18px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    max-width: 120px;
     font-size: 15px;
+    font-weight: 700;
+    text-align: right;
+    color: #1d2a4d;
 }
 
-.totals-row label {
-    font-weight: 600;
+/* INPUT / SELECT / TEXTBOX */
+.form-group input[type="text"],
+.form-group select {
+    flex: 1;
+    font-size: 18px;
+    padding: 14px 20px;
+    border-radius: 14px;
+    border: 2px solid #b9c9e8;
+    background: #ffffff;
+    height: 40px;
+    transition: 0.2s ease;
 }
 
-/* H3 Title */
-.form-inner-card h3 {
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #325d9b;
-    font-weight: 600;
+/* FOCUS + HOVER */
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    border-color: #2f6dde !important;
+    box-shadow: 0 0 10px rgba(47,109,222,0.4);
+    outline: none;
 }
 
+fieldset {
+    border-radius: 14px;
+    border: 1px solid #c8d6ff;
+    padding: 15px 18px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(100,130,255,0.15);
+    margin-bottom: 20px;
+}
+.payment-one-row {
+    display: grid;
+    grid-template-columns: 120px 150px 140px 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+/* =======================
+   COMPACT FORM REFINEMENT
+   ======================= */
+
+/* Reduce overall height of form fields */
+.section-block .form-group input[type="text"],
+.section-block .form-group select,
+.section-block .form-group textarea {
+    font-size: 15px !important;
+    padding: 8px 12px !important;
+    height: 32px !important;
+    border-radius: 10px !important;
+}
+
+/* Labels smaller & closer */
+.section-block .form-group label {
+    min-width: 100px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+}
+
+/* Dropdown text visible */
+.section-block select {
+    font-size: 15px !important;
+    height: 42px !important;
+    line-height: 2px !important;
+}
+
+/* Account ID and Cash row aligned */
+.payment-one-row {
+    display: grid;
+    grid-template-columns: 100px 150px 120px 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+}
+
+/* General layout narrower */
+.section-block {
+    padding: 8px !important;
+}
+/* Currency dropdown same size as in Cash section */
+.compact-currency {
+    width: 85% !important;
+}
+.compact-currency-payment{
+width:83%;
+}
+
+.header-input {  
+   height: 45px !important;
+}
+
+
+
+
+/* Amount box */
+.compact-amount {
+ width: 85% !important;}
 </style>
+
+
+
 
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background" >
+
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
+
 <form id="frmCreditNote" action="saveCreditNote" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class=' receipt-header'>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
 
-   <div class="form-section-bg">
-    <div class="form-inner-card">
+    <!-- ======================================================
+         CREDIT NOTE — MAIN SECTION BLOCK
+    ======================================================= -->
+    <div class="section-block">
 
-        <div class="form-grid">
-
-            <!-- DATE -->
+        <!-- ============================
+             ROW 1 → Date | Ref No | Doc No
+        ============================= -->
+        <div class="form-group">
             <label>Date</label>
-            <div>
-                <div id="jqxCreditNoteDate" name="jqxCreditNoteDate"
+            <div style="flex:1;">
+                <div id="jqxCreditNoteDate"
+                     name="jqxCreditNoteDate"
                      onchange="datechange();" onblur="datechange();"
-                     value='<s:property value="jqxCreditNoteDate"/>'></div>
+                     value='<s:property value="jqxCreditNoteDate"/>'>
+                </div>
+
                 <input type="hidden" id="hidjqxCreditNoteDate"
-                       name="hidjqxCreditNoteDate" style="height:35px;"
+                       name="hidjqxCreditNoteDate"
                        value='<s:property value="hidjqxCreditNoteDate"/>' />
             </div>
 
-            <!-- REF NO -->
             <label>Ref. No.</label>
-            <div>
-                <input type="text" id="txtrefno" name="txtrefno" style="height:35px;"
-                       value='<s:property value="txtrefno"/>' />
-               
-            </div>
+            <input type="text" id="txtrefno" name="txtrefno"
+                   value='<s:property value="txtrefno"/>' />
 
-            <!-- DOC NO -->
             <label>Doc No.</label>
-            <div>
-                <input type="text" id="docno" name="txtcreditnotedocno" style="height:35px;"
-                       value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/>
-            </div>
-
-            <!-- ROW 2 -->
-            <label>Type</label>
-            <div>
-                <select id="cmbtype" name="cmbtype" style="height:35px;"
-                        onchange="clearClientInfo();"
-                        value='<s:property value="cmbtype"/>'>
-                    <option value="AP">AP</option>
-                    <option value="AR">AR</option>
-                </select>
-                <input type="hidden" id="hidcmbtype" name="hidcmbtype" 
-                       value='<s:property value="hidcmbtype"/>' />
-            </div>
-
-            <label>Account ID</label>
-            <div>
-                <input type="text" id="txtaccid" name="txtaccid"
-                       placeholder="Press F3 to Search" style="height:35px;"
-                       value='<s:property value="txtaccid"/>'
-                       onkeydown="getAccType(event);" />
-            </div>
-
-            <label>Account Name</label>
-            <div>
-                <input type="text" id="txtaccname" name="txtaccname"style="height:35px;"
-                       value='<s:property value="txtaccname"/>' tabindex="-1" />
-                <input type="hidden" id="txtdocno" name="txtdocno"
-                       value='<s:property value="txtdocno"/>' />
-                <input type="hidden" id="txttrno" name="txttrno"
-                       value='<s:property value="txttrno"/>' />
-            </div>
-
-            <!-- CURRENCY ROW -->
-            <label>Currency</label>
-            <div>
-                <select id="cmbcurrency" name="cmbcurrency" style="height:35px;"
-                        value='<s:property value="cmbcurrency"/>'
-                        onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
-                    <option></option>
-                </select>
-                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
-                       value='<s:property value="hidcmbcurrency"/>' />
-                <input type="hidden" id="hidcurrencytype" name="hidcurrencytype"
-                       value='<s:property value="hidcurrencytype"/>' />
-            </div>
-
-            <label>Rate</label>
-            <div>
-                <input type="text" id="txtrate" name="txtrate"style="height:35px;"
-                       value='<s:property value="txtrate"/>' 
-                       onchange="funvalid()" 
-                       onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
-                <span id="validrate"></span>
-            </div>
-
-            <label>Amount</label>
-            <div>
-                <input type="text" id="txtamount" name="txtamount"style="height:35px;"
-                       value='<s:property value="txtamount"/>'
-                       onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();setApplyAmount();" />
-            </div>
-
-            <label>Base Amount</label>
-            <div>
-                <input type="text" id="txtbaseamount" name="txtbaseamount"style="height:35px;"
-                       value='<s:property value="txtbaseamount"/>' tabindex="-1" />
-            </div>
-
-            <!-- DESCRIPTION -->
-            <label>Description</label>
-            <div style="grid-column: span 3;">
-                <input type="text" id="txtdescription" name="txtdescription"style="height:35px;"
-                       value='<s:property value="txtdescription"/>' />
-            </div>
-
+            <input type="text" id="docno" name="txtcreditnotedocno"
+                   tabindex="-1"
+                   value='<s:property value="txtcreditnotedocno"/>' />
         </div>
 
-        <!-- GRID BELOW -->
+        <!-- ============================
+             ROW 2 → Type | Account ID | Account Name
+        ============================= -->
+        <div class="form-group">
+            <label>Type</label>
+            <select id="cmbtype" name="cmbtype"
+                    onchange="clearClientInfo();">
+                <option value="AP">AP</option>
+                <option value="AR">AR</option>
+            </select>
+            <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+                   value='<s:property value="hidcmbtype"/>' />
+
+            <label>Account ID</label>
+            <input type="text" id="txtaccid" name="txtaccid"
+            		style="margin-left:-15px;"
+                   placeholder="Press F3 to Search"
+                   value='<s:property value="txtaccid"/>'
+                   onkeydown="getAccType(event);" />
+
+            <label>Account Name</label>
+            <input type="text" id="txtaccname" name="txtaccname"
+            		style="margin-left:-10px;"
+                   value='<s:property value="txtaccname"/>' tabindex="-1" />
+
+            <input type="hidden" id="txtdocno" name="txtdocno"
+                   value='<s:property value="txtdocno"/>' />
+            <input type="hidden" id="txttrno" name="txttrno"
+                   value='<s:property value="txttrno"/>' />
+        </div>
+
+        <!-- ============================
+             ROW 3 → Currency | Rate | Amount
+        ============================= -->
+        <div class="form-group">
+            <label>Currency</label>
+            <select id="cmbcurrency" name="cmbcurrency"
+                    onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
+                <option></option>
+            </select>
+
+            <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
+                   value='<s:property value="hidcmbcurrency"/>' />
+            <input type="hidden" id="hidcurrencytype" name="hidcurrencytype"
+                   value='<s:property value="hidcurrencytype"/>' />
+
+            <label>Rate</label>
+            <input type="text" id="txtrate" name="txtrate"
+            		style="margin-left:-19px;"
+                   value='<s:property value="txtrate"/>'
+                   onchange="funvalid();"
+                   onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" />
+
+            <label>Amount</label>
+            <input type="text" id="txtamount" name="txtamount"
+                   value='<s:property value="txtamount"/>'
+                   onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();setApplyAmount();" />
+        </div>
+
+        <!-- ============================
+             ROW 4 → Base Amount | Description (spans 2 columns)
+        ============================= -->
+        <div class="form-group">
+            <label>Base Amount</label>
+            <input type="text" id="txtbaseamount" name="txtbaseamount"
+                   value='<s:property value="txtbaseamount"/>' tabindex="-1" />
+
+            <label>Description</label>
+            <input type="text" id="txtdescription" name="txtdescription"
+                   style="flex:2;"
+                   value='<s:property value="txtdescription"/>' />
+        </div>
+
+    </div> <!-- /section-block -->
+
+
+    <!-- ======================================================
+         GRID + TOTALS SECTION
+    ======================================================= -->
+    <div class="section-block">
+
         <div id="jqxCreditNoteGrid">
             <jsp:include page="creditNoteGrid.jsp"></jsp:include>
         </div>
 
-        <br/>
+        <br>
 
-        <!-- TOTALS -->
-        <div class="totals-row">
+        <div class="form-group">
             <label>Dr. Total</label>
             <input type="text" id="txtdrtotal" name="txtdrtotal"
-                   value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
+                   value='<s:property value="txtdrtotal"/>' tabindex="-1">
 
             <label>Cr. Total</label>
             <input type="text" id="txtcrtotal" name="txtcrtotal"
-                   value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+                   value='<s:property value="txtcrtotal"/>' tabindex="-1">
         </div>
 
-        <!-- APPLY INVOICE -->
-        <h3>Apply Invoices</h3>
+    </div>
+
+    <!-- ======================================================
+         APPLY INVOICES SECTION
+    ======================================================= -->
+    <div class="section-block">
+        <h2>Apply Invoices</h2>
+
         <div id="jqxApplyInvoicing1">
             <center><jsp:include page="applyCreditNoteInvoicingGrid.jsp"></jsp:include></center>
         </div>
 
-        <div class="totals-row">
+        <div class="form-group">
             <label>Amount</label>
             <input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt"
                    value='<s:property value="txtapplyinvoiceamt"/>' />
 
             <label>Applied</label>
             <input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply"
-                   value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/>
+                   value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1" />
 
             <label>Balance</label>
             <input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance"
-                   value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/>
+                   value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1" />
         </div>
-
     </div>
-</div>
- 
 
-</div>
+    <!-- ======================================================
+         HIDDEN FIELDS
+    ======================================================= -->
+    <input type="hidden" id="mode" name="mode">
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+
 </form>
-<
+</div>
+
 </body>
+
+
 </html>

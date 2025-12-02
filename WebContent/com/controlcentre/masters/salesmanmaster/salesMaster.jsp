@@ -19,6 +19,23 @@
             padding: 0;
         }
 
+	.hidden-scrollbar {
+  overflow-y: auto;
+  height: 530px;
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #e3efff;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3b82f6;
+  border-radius: 8px;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #2563eb;
+}
+
         #nav table {
             background: #fff;
             border-radius: 8px;
@@ -79,7 +96,7 @@
 	</script>
 </head>
 <body>
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class=" hidden-scrollbar homeContent" data-type="background">
 <h3>Salesman Master</h3>
 
 
