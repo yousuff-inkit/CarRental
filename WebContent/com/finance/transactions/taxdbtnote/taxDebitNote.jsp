@@ -10,6 +10,7 @@
 <title>GatewayERP(i)</title>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<<<<<<< HEAD
 <style>
 .hidden-scrollbar {
   overflow-y: auto;
@@ -244,6 +245,560 @@ button:active {
 }
 #jqxDebitNote::-webkit-scrollbar-thumb:hover {
     background: #6f8ec4;
+=======
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		/* JQX Date: make it full width and same height as inputs */
+		$("#jqxDebitNoteDate").jqxDateTimeInput({
+		    width: '100%',
+		    height: 36,
+		    formatString: "dd.MM.yyyy"
+		});
+		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+		 $('#txtforsearch').val(2);
+		
+		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#accountDetailsToWindow').jqxWindow('close');  
+		 
+		 $('#debitNoteGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#debitNoteGridWindow').jqxWindow('close'); 
+		 
+		 $('#costTypeSearchGridWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Type Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+ 		 $('#costTypeSearchGridWindow').jqxWindow('close');
+ 		 
+ 		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#costCodeSearchWindow').jqxWindow('close');
+		 
+		 $('#jqxDebitNoteDate').on('change', function (event) {
+				 var debitdate = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+				 var validdate=funDateInPeriod(debitdate);
+				 if(parseInt(validdate)==0){
+					document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
+					return 0;	
+				 }
+		});
+			 
+		$('#txtaccid').dblclick(function(){
+			  var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+			  $("#maindate").jqxDateTimeInput('val', date);
+			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
+         	  $('#txtforsearch').val(2);
+		}); 	 
+	});
+	
+	function DebitSearchContent(url) {
+		$('#debitNoteGridWindow').jqxWindow('open');
+		$.get(url).done(function (data) {
+		$('#debitNoteGridWindow').jqxWindow('setContent', data);
+		$('#debitNoteGridWindow').jqxWindow('bringToFront');
+	}); 
+	} 
+	
+	function accountSearchContent(url) {
+		    $('#accountDetailsToWindow').jqxWindow('open');
+			$.get(url).done(function (data) {
+			$('#accountDetailsToWindow').jqxWindow('setContent', data);
+			$('#accountDetailsToWindow').jqxWindow('bringToFront');
+		}); 
+		}
+	
+	function costTypeSearchContent(url) {
+	    $('#costTypeSearchGridWindow').jqxWindow('open');
+		$.get(url).done(function (data) {
+		$('#costTypeSearchGridWindow').jqxWindow('setContent', data);
+		$('#costTypeSearchGridWindow').jqxWindow('bringToFront');
+	}); 
+	}
+	
+	function costCodeSearchContent(url) {
+	    $('#costCodeSearchWindow').jqxWindow('open');
+		$.get(url).done(function (data) {
+		$('#costCodeSearchWindow').jqxWindow('setContent', data);
+		$('#costCodeSearchWindow').jqxWindow('bringToFront');
+	}); 
+	}
+	
+	function funwarningopen(){  
+		$.messager.confirm('Confirm', 'Transaction will affect Links to the applied Bank Reconcilations & Prepayments.', function(r){
+		    if (r){
+		    	 $("#mode").val("EDIT");
+				 $('#txtaccid').attr('readonly', true);$('#txtaccname').attr('readonly', true);$('#txtamount').attr('readonly', false);$('#txtdescription').attr('readonly', false);
+				 $('#txtrate').attr('readonly', false);$('#txtbaseamount').attr('readonly', true);$('#txtdrtotal').attr('readonly', true);$('#txtcrtotal').attr('readonly', true);
+				 $('#frmTaxCreditNote select').attr('disabled', false);$("#jqxDebitNote").jqxGrid({ disabled: false}); $('#frmTaxDebitNote select').attr('disabled', false);    
+				 $('#cmbcurrency').attr('disabled',true);
+				    }
+		   });
+	  }
+	  
+	 function funReadOnly(){
+			$('#frmTaxDebitNote input').attr('readonly', true );
+			$('#frmTaxDebitNote select').attr('disabled', true);
+			$('#jqxDebitNoteDate').jqxDateTimeInput({disabled: true});
+			$("#jqxDebitNote").jqxGrid({ disabled: true});
+			$("#btnvaluechange").hide();
+	 }
+	 function funRemoveReadOnly(){
+		    $('#txtforsearch').val(2);
+			$('#frmTaxDebitNote input').attr('readonly', false );
+			$('#frmTaxDebitNote select').attr('disabled', false);
+			$('#cmbcurrency').attr('disabled', true);
+			
+			$('#txtaccid').attr('readonly', true );
+			$('#txtaccname').attr('readonly', true );
+			$('#txtnettotal').attr('readonly', true );
+			$('#jqxDebitNoteDate').jqxDateTimeInput({disabled: false});
+			$('#docno').attr('readonly', true);
+			$("#jqxDebitNote").jqxGrid({ disabled: false}); 
+			
+			var date = $('#jqxDebitNoteDate').val();
+		    getCurrencyId(date);
+		    
+		   if ($("#mode").val() == "E") {
+      	        $("#btnvaluechange").show();
+      	        $('#frmTaxDebitNote input').attr('readonly', true );
+			    $('#frmTaxDebitNote select').attr('disabled', true);    
+			    $("#jqxDebitNote").jqxGrid({ disabled: true});
+			    $('#txtrefno').attr('readonly', false );
+			    $('#txtdescription').attr('readonly', false );
+			    $("#jqxDebitNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
+			  }
+			 else{
+				$("#btnvaluechange").hide();
+			} 
+			
+			if ($("#mode").val() == "A") {
+				$('#jqxDebitNote').val(new Date());
+				$("#jqxDebitNote").jqxGrid('clear'); 
+				$("#jqxDebitNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
+			} 
+	       }
+	 
+			function funSearchLoad(){
+				changeContent('dnoMainSearch.jsp'); 
+			 }
+				
+			 function funChkButton() {
+					/* funReset(); */
+				}
+			 
+			 function funFocus(){
+			    	$('#jqxDebitNoteDate').jqxDateTimeInput('focus'); 	    		
+			    }
+			 
+			   $(function(){
+			        $('#frmTaxDebitNote').validate({
+			                rules: {
+			                txtaccid:"required",
+			                txtamount:{"required":true,number:true},
+			                txtdescription:{maxlength:500}
+			                 },
+			                 messages: {
+			                 txtaccid:" *",
+			                 txtamount:{required:" *",number:"Invalid"},
+			                 txtdescription: {maxlength:"    Max 500 chars"}
+			                 }
+			        });});
+			   
+			  function funNotify(){	
+				  /* Validation */
+				    var debitdate = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+				    var taxacc=document.getElementById("taxaccount").value;
+					var validdate=funDateInPeriod(debitdate);
+					if(parseInt(validdate)==0){
+						document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
+						return 0;	
+					}
+					
+					acctype=document.getElementById("cmbtype").value;
+					if(acctype==""){
+						document.getElementById("errormsg").innerText="Account Type is Mandatory.";
+						return 0;
+					}
+					 
+					accid=document.getElementById("txtdocno").value;
+					if(accid==""){
+						document.getElementById("errormsg").innerText="Account is Mandatory.";
+						return 0;
+					}
+					 
+					currencyto=document.getElementById("cmbcurrency").value;
+					currencyrate=document.getElementById("txtrate").value;
+					if(currencyto=="" || currencyrate==""){
+						document.getElementById("errormsg").innerText="Currency & Rate is Mandatory.";
+						return 0;
+					}
+					 
+					var drtot = parseFloat(document.getElementById("txtdrtotal").value);
+			 		var crtot = parseFloat(document.getElementById("txtcrtotal").value);
+			 		
+			 		if(drtot>crtot || drtot<crtot){
+			 			document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should be Equal.";
+		              return 0;
+			 		}
+			 		
+			 		if(drtot=="" || crtot=="" ){
+			 			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should be Equal.";
+			              return 0;
+				 		}
+
+			 		if(isNaN(drtot) || isNaN(crtot)){
+			 			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should be Equal.";
+			              return 0;
+				 		}
+			 		
+			 		if(drtot==0 || crtot==0){
+			 			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should not be Zero.";
+			              return 0;
+				 		}
+			 		
+			 		if(drtot==0.0 || crtot==0.0){
+			 			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should not be Zero.";
+			              return 0;
+				 		}
+			 		
+			 		if(drtot==0.00 || crtot==0.00){
+			 			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Credit and Debit should not be Zero.";
+			              return 0;
+				 		}
+			 		rate=document.getElementById("txtrate").value;
+					 if(rate=="" || rate=="0" || rate=="0.00"){
+						 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
+						 return 0;
+					 }
+				  
+			 		
+			 		document.getElementById("errormsg").innerText="";
+			    		
+			    /* Validation Ends*/
+			    		
+			     /* Debit-Note Grid  Saving*/
+				  var rows = $("#jqxDebitNote").jqxGrid('getrows');
+				  var length=0,val=0;
+					 for(var i=0 ; i < rows.length ; i++){
+						var chk=rows[i].docno;
+						var rate=rows[i].rate;
+						
+						if(typeof(chk) != "undefined" && typeof(chk) != "NaN" && chk != ""){
+							newTextBox = $(document.createElement("input"))
+						    .attr("type", "dil")
+						    .attr("id", "test"+length)
+						    .attr("name", "test"+length)
+						    .attr("hidden", "true");
+							length=length+1;
+							if(rate=="" || rate=="0" || rate=="0.00"){
+								  val=1;
+								  break;
+							 }	
+							
+							var amount,baseamount,nettotal,taxamnt;
+							if(rows[i].dr==true){
+								 amount=rows[i].amount1*-1;
+								 baseamount=rows[i].baseamount1*-1;  
+								
+								 taxamnt=rows[i].taxamount*-1;
+							}
+							else if(rows[i].dr==false){
+								 amount=rows[i].amount1;
+								 baseamount=rows[i].baseamount1;
+								
+								 taxamnt=rows[i].taxamount;
+							}
+							
+						newTextBox.val(rows[i].docno+"::"+rows[i].currencyid+"::"+rows[i].rate+"::"+rows[i].dr+"::"+amount+"::"+rows[i].description+"::"+baseamount+":: "+rows[i].costtype+":: "+rows[i].costcode+":: "+rows[i].tax+":: "+taxamnt+":: "+rows[i].nettotal+":: "+taxacc+":: "+taxamnt);
+						newTextBox.appendTo('form');
+						}
+						}
+					 if(val==1){
+						 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
+						 return 0;
+					 }  
+					    $('#gridlength').val(length);
+			 		   /* Debit-Note Grid  Saving Ends*/	
+			 		   	
+			 		$('#cmbcurrency').attr('disabled',false); 
+				  return 1;
+			  }
+			  
+			  function setValues(){
+				  $('#jqxDebitNoteDate').jqxDateTimeInput({disabled: false});
+				  var date = $('#jqxDebitNoteDate').val();
+				  getCurrencyId(date);
+				  $('#jqxDebitNoteDate').jqxDateTimeInput({disabled: true});
+				  
+				  document.getElementById("cmbtype").value=document.getElementById("hidcmbtype").value;
+				  document.getElementById("cmbcurrency").value=document.getElementById("hidcmbcurrency").value;  
+				  
+				  if($('#hidjqxDebitNoteDate').val()){
+						 $("#jqxDebitNoteDate").jqxDateTimeInput('val', $('#hidjqxDebitNoteDate').val());
+					  }
+				  
+				  if($('#hidmaindate').val()){
+						 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
+					  }
+				  
+				  if($('#msg').val()!=""){
+					   $.messager.alert('Message',$('#msg').val());
+					  }
+					
+				  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+				  funSetlabel();
+				  
+					 var indexVal = document.getElementById("docno").value;
+					 if(indexVal>0){
+						 var check = 1 ;
+			             $("#jqxDebitNoteGrid").load("debitNoteGrid.jsp?txtdebitnotedocno2="+indexVal+"&check="+check);
+					 }
+					    funRoundRate($('#txtrate').val(),"txtrate");
+				        funRoundAmt($('#txtamount').val(),"txtamount");
+				        funRoundAmt($('#txtbaseamount').val(),"txtbaseamount");
+						funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
+						funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
+				        		
+				}
+			  function funvalid(){
+				  rate=document.getElementById("txtrate").value;
+					 if(rate=="" || rate=="0" || rate=="0.00"){
+						 document.getElementById("validrate").innerText= "Rate is Mandatory.";
+						 document.getElementById("txtrate").focus();
+						 return 0;
+					 }
+					 else{
+						 document.getElementById("validrate").innerText= "";
+						 
+					 }
+			  }
+			       	   
+			       function getDrTotal(){
+			 		  var fromamount = $('#txtbaseamount').val();
+			 		  
+			 		  if(!isNaN(fromamount)){
+			 			  
+			 		  var dr=0.0,cr=0.0,dr1=0.0;
+			   	      var rows = $('#jqxDebitNote').jqxGrid('getrows');
+			 	      var rowlength= rows.length;
+			 	  		for(var i=0;i<=rowlength-1;i++) {
+			 	  		
+			 	  		  var value = rows[i].dr;
+			 	          var baseamount = rows[i].nettotal;
+			 	          
+			 	          if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
+			 	        	  if(value==true){
+			                	   if(!isNaN(baseamount)){
+			                	      cr=cr+baseamount;
+			                	   }else if(isNaN(baseamount)){
+			                  		 baseamount=0.00;
+			                  		 cr=cr+baseamount;
+			                  	   }
+			                   }
+			                   else{
+			                	   if(!isNaN(baseamount)){
+			                     	  	dr=dr+baseamount;
+			                   	   }else if(isNaN(baseamount)){
+			                   		    baseamount=0.00;
+			                   		 	dr=dr+baseamount;
+			                   	   }
+			                     }
+			 	  	       }
+			 	  		}
+			 	  		
+			 	  		if(!isNaN(fromamount)){
+			                	dr1=parseFloat(dr) + parseFloat(fromamount);
+			                    funRoundAmt(dr1,"txtdrtotal");
+			            	 }
+			 	      }
+			 		  else if(isNaN(fromamount)){
+			 			  $('#txtamount').val(0.00);
+				 		  $('#txtcrtotal').val(0.00);
+				 		  $('#txtdrtotal').val(0.00);			
+			 		}
+			 	  } 
+			       	
+			       function getAccType(event){
+			           var x= event.keyCode;
+			           if(x==114){
+			        	   var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+				 		   $("#maindate").jqxDateTimeInput('val', date);
+			        	   accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
+				           $('#txtforsearch').val(2);
+			           }
+			           else{}
+			           }
+			       	
+			       function funPrintBtn() {
+						
+						if (($("#mode").val() == "view") && $("#docno").val()!="") {
+					        var url=document.URL;
+					        var reurl=url.split("saveTaxDebitNote");
+					        $("#docno").prop("disabled", false);  
+					     
+					        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
+								if (r){
+									 var win= window.open(reurl[0]+"printTaxDebitNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+								     win.focus();
+								 }
+								else{
+									var win= window.open(reurl[0]+"printTaxDebitNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+								    win.focus();
+								}
+							   });
+					     }
+					    else {
+							$.messager.alert('Message','Select a Document....!','warning');
+							return;
+						}
+			      }
+	
+			       function clearClientInfo(){
+				 		  $("#txtdocno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
+				 	  }
+			       
+			       function datechange(){
+				 		  var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+						  var validdate=funDateInPeriod(date);
+						  if(parseInt(validdate)==0){
+							document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
+							return 0;	
+						  }
+				 		  $("#maindate").jqxDateTimeInput('val', date);
+				 	  }
+
+</script>
+
+<style>
+/* ------------------------------
+   INPUT FIELD BASE STYLE
+------------------------------ */
+.inp {
+    width: 100%;
+    height: 32px !important;
+    padding: 4px 8px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b9c9e8 !important;
+    background: #fff !important;
+    transition: 0.25s;
+}
+
+.inp:hover,
+.inp:focus {
+    border-color: #2f6dde !important;
+    box-shadow: 0 0 8px rgba(47,109,222,0.4) !important;
+    outline: none !important;
+}
+
+/* Labels */
+.lbl {
+    min-width: 110px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2a4d;
+}
+
+/* Layout spacing */
+.row-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 260px;
+}
+.row3 {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+/* ------------------------------
+   FIX: Chrome Autofill (remove pink)
+------------------------------ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* ------------------------------
+   FIX: Dropdown font size
+------------------------------ */
+select.inp,
+select.inp option {
+    font-size: 18px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+}
+
+select.inp {
+    padding-right: 35px !important;
+}
+
+/* ------------------------------
+   JQX DATE INPUT — FINAL PINK FIX
+------------------------------ */
+
+/* Force every JQX layer to stay white */
+#jqxDebitNoteDate *,
+.jqx-datetimeinput *,
+.jqx-datetimeinput-input,
+.jqx-datetimeinput-content input {
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* Override inline background that JQX injects */
+#jqxDebitNoteDate div[style*="background"],
+.jqx-datetimeinput div[style*="background"] {
+    background: #ffffff !important;
+}
+
+/* Match height of JQX container + internal input */
+.jqx-datetimeinput,
+.jqx-datetimeinput-input,
+.jqx-datetimeinput-content input {
+    height: 32px !important;
+    min-height: 32px !important;
+    line-height: 32px !important;
+    font-size: 15px !important;
+    padding-left: 8px !important;
+}
+
+/* Calendar button */
+.jqx-datetimeinput-button {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+}
+
+.jqx-datetimeinput-button img {
+    width: 18px !important;
+    height: 18px !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+
+/* ------------------------------
+   Dr / Cr total input tweak
+------------------------------ */
+#txtdrtotal,
+#txtcrtotal {
+    height: 30px !important;
+    width: 110px !important;
+    padding: 4px 8px !important;
+    font-size: 14px !important;
+    border-radius: 8px !important;
+    border: 1px solid #c7d6ee !important;
+>>>>>>> 24a78c3ad9450ab2511f66258f5ced924366d5d4
 }
 textarea {
   width: 100%;
@@ -671,8 +1226,125 @@ document.getElementById("cmbtariftype").disabled=true;
 	<jsp:include page="../../../../header.jsp" />
 	<br/>
 
+<<<<<<< HEAD
 <div class='hidden-scrollbar receipt-header'>
 <table class="cr-table" width="100%" >
+=======
+<div  class='hidden-scrollbar receipt-header'>
+    <div class="section-block">
+    <h2>Debit Note Details</h2>
+
+    <!-- ROW 1 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Date</label>
+            <div id="jqxDebitNoteDate" class="inp"></div>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Ref. No.</label>
+            <input type="text" class="inp"
+                   id="txtrefno" name="txtrefno"
+                   value='<s:property value="txtrefno"/>'>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Doc No.</label>
+            <input type="text" class="inp"
+                   id="docno" name="txtdebitnotedocno"
+                   value='<s:property value="txtdebitnotedocno"/>'>
+        </div>
+
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Type</label>
+            <select class="inp" id="cmbtype" name="cmbtype"
+                    onchange="clearClientInfo();">
+                <option value="AR">AR</option>
+                <option value="AP">AP</option>
+                <option value="GL">GL</option>
+            </select>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Account</label>
+            <input type="text" class="inp"
+                   id="txtaccid" name="txtaccid"
+                   placeholder="Press F3 to Search"
+                   value='<s:property value="txtaccid"/>'
+                   onkeydown="getAccType(event);">
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Account Name</label>
+            <input type="text" class="inp"
+                   id="txtaccname" name="txtaccname"
+                   value='<s:property value="txtaccname"/>'>
+        </div>
+
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Currency</label>
+            <select class="inp" id="cmbcurrency" name="cmbcurrency"
+                    onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
+            </select>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Rate</label>
+            <input type="text" class="inp"
+                   id="txtrate" name="txtrate"
+                   style="text-align:right;"
+                   value='<s:property value="txtrate"/>'
+                   onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();">
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Amount</label>
+            <input type="text" class="inp"
+                   id="txtamount" name="txtamount"
+                   style="text-align:right;"
+                   value='<s:property value="txtamount"/>'
+                   onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();">
+        </div>
+
+    </div>
+
+    <!-- ROW 4 -->
+    <div class="row3">
+
+        <div class="row-flex">
+            <label class="lbl">Base Amount</label>
+            <input type="text" class="inp"
+                   id="txtbaseamount" name="txtbaseamount"
+                   style="text-align:right;"
+                   value='<s:property value="txtbaseamount"/>'>
+        </div>
+
+        <div class="row-flex">
+            <label class="lbl">Description</label>
+            <input type="text" class="inp"
+                   id="txtdescription" name="txtdescription"
+                   value='<s:property value="txtdescription"/>'>
+        </div>
+
+    </div>
+
+</div>
+    
+
+<div class="cr-table" id="jqxDebitNoteGrid"><jsp:include page="debitNoteGrid.jsp"></jsp:include></div><br/>
+<table class="cr-table" width="100%">
+>>>>>>> 24a78c3ad9450ab2511f66258f5ced924366d5d4
   <tr>
     <td width="3%" align="right">Date</td>
     <td width="8%" align="left"><input type="hidden" id="hidjqxTariffDate" name="hidjqxTariffDate" value='<s:property value="hidjqxTariffDate"/>'/>

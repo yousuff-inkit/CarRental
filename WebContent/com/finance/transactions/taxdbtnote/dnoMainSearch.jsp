@@ -11,11 +11,10 @@
 <title>GatewayERP(i)</title>
 
 <style>
-
 /* RESET inside popup */
 .search-container * {
     box-sizing: border-box;
-    font-family: Poppins, Arial, sans-serif;
+    font-family: Poppins, Arial, sans-serif !important;
 }
 
 /* OUTER CARD */
@@ -51,7 +50,7 @@
     padding: 24px 28px;
 }
 
-/* FLEX ROW (master UI spacing) */
+/* FLEX ROW */
 .search-row {
     display: flex;
     gap: 26px;
@@ -61,7 +60,6 @@
 /* FLEX COLUMN */
 .search-col {
     flex: 1;
-    min-width: 0;
 }
 .search-col-btn {
     display: flex;
@@ -70,43 +68,74 @@
 
 /* LABELS */
 .search-label {
-    font-size: 0.90rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #263b75;
     margin-bottom: 8px;
 }
 
-/* MASTER UI INPUTS */
+/* INPUTS  larger, cleaner, modern */
 .search-input {
     width: 100%;
-    height: 42px;
+    height: 48px;                       /* bigger */
     border-radius: 12px;
     border: 1px solid #c8d9ff;
-    background: #ffffff;
-    padding: 0px 14px;
-    font-size: 1rem;
-    color: #052a6b;
-    box-shadow: 0px 3px 6px rgba(180,200,255,0.35);
+    background: #ffffff !important;
+    padding: 0px 16px;
+    font-size: 1.18rem !important;      /* bigger text */
+    font-weight: 500;
+    color: #052a6b !important;
+    box-shadow: 0px 3px 7px rgba(180,200,255,0.35);
 }
 
-/* DATE BOX */
+/* Bigger placeholder text */
+.search-input::placeholder {
+    font-size: 1.18rem !important;
+    opacity: 0.65;
+}
+
+/* REMOVE PINK AUTOFILL */
+.search-input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* DATE BOX outer container */
 #debitdate {
-    width: 100%;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid #c8d9ff;
-    box-shadow: 0px 3px 6px rgba(180,200,255,0.35);
+    width: 100% !important;
+    height: 48px !important;           /* match textbox */
+    border-radius: 12px !important;
+    border: 1px solid #c8d9ff !important;
+    background: #ffffff !important;
+    box-shadow: 0px 3px 7px rgba(180,200,255,0.35) !important;
+    display: flex;
+    align-items: center;
 }
 
-/* SEARCH BUTTON (keep your myButton class as-is) */
+/* JQX INPUT TEXT */
+.jqx-input-content {
+    height: 48px !important;
+    line-height: 48px !important;
+    font-size: 1.18rem !important;     /* bigger */
+    font-weight: 500 !important;
+    color: #052a6b !important;
+    background: #ffffff !important;
+}
+
+/* Remove pink autofill in jqx date input */
+.jqx-input-content:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* SEARCH BUTTON  bigger, bold */
 .search-container input.myButton {
     background: linear-gradient(90deg, #6fb1fc, #1a73e8);
     color: #ffffff;
     border: none;
-    height: 46px;
-    padding: 0px 38px;
+    height: 52px !important;           /* bigger */
+    padding: 0px 48px !important;       /* bigger */
     border-radius: 12px;
-    font-size: 1rem;
+    font-size: 1.15rem !important;     /* bigger text */
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0px 6px 18px rgba(26,115,232,0.30);
@@ -122,7 +151,7 @@
     border-top: 1px solid #e3eaff;
 }
 
-/* Mobile fallback */
+/* Mobile */
 @media (max-width: 900px) {
     .search-row {
         flex-direction: column;
@@ -132,6 +161,7 @@
         width: 100%;
     }
 }
+
 </style>
 
 <script>

@@ -1,54 +1,153 @@
-	.modalDialog {
-		position: fixed;
-		font-family: Tahoma;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		background: #f0f0f0;
-		z-index: 99999;
-		opacity:0;
-		-webkit-transition: opacity 400ms ease-in;
-		-moz-transition: opacity 400ms ease-in;
-		transition: opacity 400ms ease-in;
-		pointer-events: none;
-	}
+/* ==========================================================
+   MODERN BLUE ERP POPUP (UPDATED FOR NEW TDN UI)
+   ==========================================================*/
 
-	.modalDialog:target {
-		opacity:.9;
-		pointer-events: auto;
-	}
+/* FULLSCREEN BACKDROP */
+.modalDialog {
+    position: fixed;
+    font-family: "Poppins", sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 99999;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+    pointer-events: none;
+}
 
-	.modalDialog > div {
-		width: 40%;
-		height: 50%;
-		position: relative;
-		margin: 10% auto;
-		padding: 5px 0px 13px 20px;
-		border-radius: 10px;
-		background: #f0f0f0;
-		background: -moz-linear-gradient(#E6E6E6, #d8d8d8);
-		background: -webkit-linear-gradient(#E6E6E6, #d8d8d8);
-		background: -o-linear-gradient(#E6E6E6, #d8d8d8);
-	}
+.modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+}
 
-	.close {
-		background: #606061;
-		color: #FFFFFF;
-		line-height: 25px;
-		position: absolute;
-		right: -12px;
-		text-align: center;
-		top: -10px;
-		width: 24px;
-		text-decoration: none;
-		font-weight: bold;
-		-webkit-border-radius: 12px;
-		-moz-border-radius: 12px;
-		border-radius: 12px;
-		-moz-box-shadow: 1px 1px 3px #000;
-		-webkit-box-shadow: 1px 1px 3px #000;
-		box-shadow: 1px 1px 3px #000;
-	}
+/* POPUP WINDOW */
+.modalDialog > div {
+    width: 65%;
+    height: auto;
+    max-height: 70%;
+    overflow-y: auto;
+    position: relative;
+    margin: 6% auto;
+    padding: 0;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #d9e4ff;
+    box-shadow: 0 10px 35px rgba(80, 120, 255, 0.35);
+    animation: popupShow 0.3s ease-out;
+}
 
-	.close:hover { background: #6E6E6E; }
+/* POPUP SHOW ANIMATION */
+@keyframes popupShow {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* BLUE TOP HEADER */
+.modal-header {
+    background: linear-gradient(90deg, #7abaff, #4d8dff);
+    padding: 14px 20px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 18px 18px 0 0;
+}
+
+/* CONTENT AREA */
+.modal-body {
+    padding: 18px 22px;
+}
+
+/* CLOSE BUTTON */
+.close {
+    background: #ffffff !important;
+    color: #2e3f78 !important;
+    border: 2px solid #ffffff;
+    line-height: 20px;
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    transition: 0.25s ease-in-out;
+}
+
+.close:hover {
+    background: #e8edff !important;
+    color: #1a46c8 !important;
+    transform: scale(1.1);
+}
+
+/* INPUT FIELDS INSIDE POPUP */
+.modalDialog input[type="text"],
+.modalDialog input[type="date"],
+.modalDialog select {
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid #cbd8ff;
+    padding: 5px 10px;
+    font-size: 13px;
+    width: 100%;
+    box-shadow: 0 2px 6px rgba(180,200,255,0.25);
+    transition: 0.25s;
+}
+
+.modalDialog input:focus,
+.modalDialog select:focus {
+    border-color: #6e9bff;
+    box-shadow: 0 0 10px rgba(105,147,255,0.45);
+    outline: none;
+}
+
+/* BUTTON (SEARCH) */
+.modalDialog button,
+.modalDialog input[type="button"] {
+    background: linear-gradient(90deg, #6fb1fc, #1a73e8);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 3px 12px rgba(26,115,232,0.35);
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.modalDialog button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(26,115,232,0.45);
+}
+
+/* TABLE STYLING */
+.modalDialog table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #f6f8ff;
+    border-radius: 10px;
+}
+
+.modalDialog table th {
+    background: #e6edff;
+    padding: 8px;
+    font-weight: 600;
+    color: #354a92;
+    border-bottom: 1px solid #d4ddff;
+}
+
+.modalDialog table td {
+    padding: 7px;
+    border-bottom: 1px solid #edf0ff;
+}
+
+.modalDialog table tr:hover {
+    background: #eef4ff;
+    cursor: pointer;
+}

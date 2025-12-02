@@ -10,6 +10,71 @@
  String date = request.getParameter("dates")==null?"0":request.getParameter("dates").trim();
  String check = request.getParameter("check")==null?"0":request.getParameter("check");
 %> 
+<style>
+
+/* GRID WRAPPER */
+#jqxAccountsSearch {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* HEADER STYLE */
+.jqx-grid-column-header, 
+.jqx-widget-header {
+    background: linear-gradient(90deg,#eef3ff,#dbe7ff) !important;
+    color: #253b78 !important;
+    font-weight: 600 !important;
+    font-size: 0.92rem !important;
+    border-color: #c9d6ff !important;
+    height: 42px !important;        /* taller header */
+}
+
+/* GRID ROW HEIGHT */
+.jqx-grid-cell {
+    height: 38px !important;       /* larger rows */
+    line-height: 38px !important;  /* perfect vertical center */
+    font-size: 0.92rem !important;
+    border-color: #d0dafc !important;  /* darker border */
+}
+
+/* DARKER BORDER BETWEEN ROWS */
+.jqx-grid-cell, 
+.jqx-grid-content {
+    border-bottom: 1px solid #d0dafc !important;
+}
+
+/* HOVER ROW */
+.jqx-grid-cell-hover {
+    background: rgba(78,118,255,0.12) !important;
+    color: #000 !important;
+}
+
+/* SELECTED ROW */
+.jqx-grid-cell-selected {
+    background: #6f98ff !important;
+    color: #fff !important;
+}
+
+/* NO DATA TEXT */
+.jqx-grid-empty-cell {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #7283ba !important;
+}
+
+/* SCROLLBAR MODERNIZATION */
+::-webkit-scrollbar {
+    width: 8px !important;
+}
+::-webkit-scrollbar-thumb {
+    background: #b2c3ff !important;
+    border-radius: 6px !important;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #8aa3ff !important;
+}
+
+</style>
 
  <script type="text/javascript">
  

@@ -8,6 +8,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
+<style>
+    /* Body styling */
+    body {
+        background-color: #E0ECF8;
+        font-family: "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #000000; /* Black text */
+    }
+
+    /* Outer Search Box */
+    #search {
+        width: 95%;
+        margin: 15px auto;
+        padding: 15px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 92, 184, 0.18);
+        border: 1px solid #c6ddf5;
+    }
+
+    /* Labels */
+    td {
+        font-size: 14px;
+        color: #000000; /* Black text */
+        padding: 4px 8px;
+    }
+
+    /* Input Fields */
+    input[type="text"] {
+        width: 95%;
+        padding: 6px 8px;
+        border: 1px solid #b7d1ee;
+        border-radius: 6px;
+        outline: none;
+        transition: 0.3s;
+        font-size: 13px;
+        background: #ffffff;
+        color: #000000;
+    }
+
+    input[type="text"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 4px rgba(13, 110, 253, 0.4);
+    }
+
+    /* jqxDateTimeInput styling */
+    .jqx-widget-content {
+        font-size: 13px;
+        color: #000000;
+        border-radius: 6px;
+        border: 1px solid #b7d1ee;
+    }
+
+    /* Search Button */
+    .myButton {
+        background: #0d6efd;
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.3s;
+        width: 120px;
+    }
+
+    .myButton:hover {
+        background: #0b5ed7;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* Grid / Refresh Div Styling */
+    #refreshdiv {
+        margin-top: 15px;
+        padding: 10px;
+        background: #ffffff;
+        border: 1px solid #cfdaf0;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 92, 184, 0.12);
+        color: #000000; /* Black text */
+    }
+
+    /* Table styling */
+    table {
+        border-collapse: collapse;
+    }
+
+    tr {
+        height: 40px;
+    }
+</style>
+
 
 	<script type="text/javascript">
 	$(document).ready(function () {

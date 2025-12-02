@@ -2,172 +2,214 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>GatewayERP(i)</title>
+<title>GatewayERP(i) - Account Master (Modernized)</title>
 <meta charset="UTF-8">
 <s:head/>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+/* ---------------- PREMIUM GRADIENT BLUE THEME ---------------- */
+
+/* Base theme tokens */
+:root {
+  --primary: #3f6cff;
+  --primary-light: #dce6ff;
+  --primary-dark: #1f3b99;
+  --secondary: #00b4ff;
+  --bg-lite: #f7faff;
+  --text-dark: #102a56;
+  --border: rgba(80,120,255,0.35);
+  --radius: 12px;
+  --transition: 0.25s ease;
+  --gradient: linear-gradient(135deg, #3f6cff, #00b4ff);
 }
 
+/* Universal reset */
+* { box-sizing: border-box; }
 
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
+/* Page background */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 30px 0;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #dbe7ff, #c9dcff);
+  color: var(--text-dark);
+  font-family: "Poppins","Segoe UI",sans-serif;
 }
+
+/* Main container */
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+  width: 95%;
+  max-width: 1260px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 12px 32px rgba(20,60,200,0.15);
+  transition: var(--transition);
+}
+#mainBG:hover {
+  box-shadow: 0 16px 42px rgba(20,60,200,0.22);
 }
 
+/* Section/inner card */
 .receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+  background: var(--bg-lite);
+  border-radius: var(--radius);
+  border: 1px solid var(--primary-light);
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(50,80,200,0.1);
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+/* Form grid */
+.top-grid,
+.clean-grid,
+.transaction-grid,
+.ui-row-inputs,
+.ui-row-labels {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
 }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
+/* Responsive */
+@media(max-width:980px){
+  .top-grid,
+  .clean-grid,
+  .transaction-grid,
+  .ui-row-inputs,
+  .ui-row-labels {
+    grid-template-columns: 1fr;
+  }
 }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+/* Input + select styling */
+input[type="text"], select {
+  width:100%;
+  height:42px;
+  padding:8px12px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  font-size:14px;
+  background:white;
+  color:var(--text-dark);
+  transition:var(--transition);
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
+input:focus, select:focus {
+  border:1px solid var(--primary);
+  box-shadow: 0 0 12px rgba(63,108,255,0.35);
+  outline:none;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+/* Labels */
+label, .ui-row-labels span {
+  font-weight:600;
+  color:#244b80;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
+/* Radio section cards */
+.ui-block {
+  padding:18px;
+  border-radius:var(--radius);
+  border:1px solid var(--primary-light);
+  background:white;
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  transition:var(--transition);
+}
+.ui-block:hover {
+  box-shadow:0 12px 28px rgba(63,108,255,0.25);
 }
 
+/* Section titles */
+.block-title {
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+  background: var(--gradient);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-.table-section {
-    margin-bottom: 18px;
+/* Error message */
+#errormsg {
+  font-weight:600;
+  color:#d62828;
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+
+/* ---------- BUTTON STYLE (if buttons exist) ---------- */
+button,
+.jqx-button {
+  background: var(--gradient);
+  border:none;
+  color:white;
+  padding:12px20px;
+  border-radius:var(--radius);
+  font-size:14px;
+  cursor:pointer;
+  font-weight:600;
+  transition: var(--transition);
 }
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+button:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(63,108,255,0.35);
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+/* ---------------- POPUP SEARCH WINDOW THEME ---------------- */
+
+#accountSearchwindow {
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--primary) !important;
+  background:white !important;
+  box-shadow:0 20px 50px rgba(63,108,255,0.35) !important;
+  overflow:hidden;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+
+/* Popup title bar */
+#accountSearchwindow .jqx-window-header {
+  background: var(--gradient) !important;
+  color:white !important;
+  font-weight:600;
+  border-radius: var(--radius) var(--radius) 0 0 !important;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+/* Popup inner content */
+#accountSearchwindow .jqx-widget-content {
+  background:white !important;
+  padding:16px;
 }
+
+/* Popup table UI */
+#accountSearchwindow table {
+  width:100%;
+  border-radius:var(--radius);
+  border:1px solid var(--primary-light);
+}
+
+#accountSearchwindow tr:hover {
+  background:#e9f1ff;
+}
+html, body {
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
 </style>
+
 <script type="text/javascript">
 
 $(document).ready(function () {    
@@ -1011,201 +1053,227 @@ function getConfig() {
 }	
 </script>
 
+
 </head>
-
-
 <body onload="getHead();getMainac();getbranch();setValues();getConfig();">
 
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG">
+
 <jsp:include page="../../../../header.jsp"></jsp:include>
 <br>
-<form  id="frmAccountmaster" action="saveAccountmaster" method="post" autocomplete="off">
 
-    <div class="hidden-scrollbar receipt-header">
+<form id="frmAccountmaster" action="saveAccountmaster" method="post" autocomplete="off">
 
-<table class="cr-table" width="100%" >
-<tr>
-<td>
- <table class="cr-table" width="100%" >
- <tr><td width="6%" align="right">Date</td>
- <td width="31%"  align="left"><div id="date_accountmaster" name="date_accountmaster" value='<s:property value="date_accountmaster"/>'></div></td> 
-	<td width="46%" align="right">Doc No.</td><td width="17%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' >
-			</td></tr></table>
- <table class="cr-table" width="100%">
-<tr>
-<td width="40%">
+  <!-- TOP: Date and Doc No on same line -->
+  <div class="receipt-header">
+    <div class="top-grid">
+      <div class="form-item">
+        <label for="date_accountmaster">Date</label>
+        <div id="date_accountmaster" name="date_accountmaster" value='<s:property value="date_accountmaster"/>'></div>
+        <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
+      </div>
 
-<table class="cr-table" id="main1"><tr><td><input type="radio" id="category1" name="category" value="mainaccount" onchange="fundisable();"><label>Main Account</label></td>
-</tr></table>
+      <div style="display:flex; align-items:center; gap:20px;">
+        <!-- leave middle column for spacing / future controls -->
+        <div style="flex:1"></div>
+      </div>
 
-<table class="cr-table" width="100%" id="main" >
-  <tr>
-    <td width="50%" align="right"><div><label>Account Group</label></div></td>
-    <td width="%"><select name="mainaccgroup" id="mainaccgroup"  style="width:92%;"  value='<s:property value="mainaccgroup"/>' onchange="funclear1();" >
-      <option value="-1">--Select--</option>
-    </select><%-- <input type="text" id="maindata" name="maindata" value='<s:property value="maindata"/>'> --%></td> 
-    </tr>
-  <tr>
-     <td align="right"><div><label>Account Code</label></div></td>
-    <td><input type="text" name="mainacccode" id="mainacccode" style="width:90%;" value='<s:property value="mainacccode"/>' onblur="maincheck(this.value)" onkeypress="javascript:return isNumber (event);"></td>
-  </tr>
-  <tr>
-     <td align="right"><div><label>Account Name</label></div></td>
-    <td><input type="text" name="mainacconame" id="mainacconame" style="width:90%;"  value='<s:property value="mainacconame"/>' onblur="dismassge()">
-    <input type="hidden" name="main_account" id="main_account"  value='<s:property value="main_account"/>' />
-        </td>
-  </tr>
-  </table>
-
-  
-    </td>
-  <td>
-  
-  <fieldset id="subaccountfield">
-  <table class="cr-table" id="sub1"> <tr ><td><input type="radio" id="category2" name="category" value="subaccount" onchange="fundisable();"><label>Sub Account</label></td>
-</tr></table>
- 
- <table class="cr-table" width="100%"  id="sub">
-    <tr>
-    <td width="20%" align="right"><div>Main account Group</div></td>
-   <td width="62%"><select name="subaccgroup" id="subaccgroup"  style="width:40.5%;"  onChange="getAcgroup(this.value,1);" onfocus="funclear2();" value='<s:property value="subaccgroup"/>' > 
-        <option value="-1">--Select--</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="subaccgpname" name=subaccgpname style="width:40%;" value='<s:property value="subaccgpname"/>'  />
-        
-        
-        </td>
-    </tr>
-  <tr>
-     <td align="right" ><div>Account Code</div></td>
-    <td ><input type="text" name="subacccode" id="subacccode" style="width:40%;" value='<s:property value="subacccode"/>' onblur="subcheck(this.value)" onkeypress="javascript:return isNumber (event);"></td>
-  </tr>
-  <tr>
-     <td align="right"><div>Account Name</div></td>
-    <td ><input type="text" name="subaccname" id="subaccname" style="width:40%;" value='<s:property value="subaccname"/>' onblur="dismassge()" />
-    <input type="hidden" name="sub_account" id="sub_account"  value='<s:property value="sub_account"/>' />
-    </td>
-  </tr>
-  </table>
-  </fieldset>
-  
-    </td> </tr>    </table>
-  
- <table class="cr-table" width="100%">
- <tr >
- <td width="60" >
- 
-     <fieldset>
-     <table id="trans1"> <tr align="center"><td><input type="radio" id="category3" name="category" value="transaction" onchange="fundisable();"><label>Transaction</label></td></tr></table>
-
- <table width="100%"  id="trans"   >
-    <tr>  <td width="28.5%" align="right"><div>Main account Group</div></td>
-   <td ><select id="tansaccgroup" name="tansaccgroup" style="width:35.5%;"  onChange="getAcgroup(this.value,2);" value='<s:property value="tansaccgroup"/>'  onfocus="funclear3();" >
-        <option value="-1">--Select--</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" name="transcaccgpname" id="transcaccgpname" style="width:44%;"  value='<s:property value="transcaccgpname"/>' >
-        </td>   </tr>
-  <tr>
-     <td align="right"><div>Account Code</div></td>
-    <td ><input type="text" name="transacccode" id="transacccode" style="width:35%;"  value='<s:property value="transacccode"/>' onblur="trancheck(this.value)" onkeypress="javascript:return isNumber (event);"></td>
-  </tr>
-  <tr>
-     <td align="right"><div>Account Name</div></td>
-    <td ><input type="text" name="transaccname" id="transaccname" style="width:35%;"  value='<s:property value="transaccname"/>' onblur="dismassge()" >
-    
-    <input type="hidden" name="tran_account" id="tran_account"  value='<s:property value="tran_account"/>' />
-    
-    &nbsp; 
-    Currency   <input type="text" name="currs" id="currs"  value='<s:property value="currs"/>' onkeydown="getaccountdetails(event);" />
-   Rate  <input type="text" name="ratess" id="ratess"  value='<s:property value="ratess"/>' onblur="funRoundRate(this.value,this.id);" onkeypress="javascript:return isNumber (event);"  style="text-align: right;"> 
-    
-    </td>
-  </tr>  <tr>  <td>  </td>  <td> 
- <%--  <div>
-  <input type="checkbox" name="localcurrency"  id="localcurrency" value='<s:property value="localcurrency"/>' checked >local Currency
-  <input type="checkbox" name="ageingdetails" id="ageingdetails" value='<s:property value="ageingdetails"/>' checked>Ageing Details
-    </div> --%>
-    </td>
-         </tr>
-  
-  <tr>
-  <td>
-  <div width="100%">
-    <div align="center">
-    
-        <input type="checkbox" id="interbranch" name="interbranch"  onchange="funhidden();"   value="1"/>Inter branch Account 
-    
+      <div class="form-item" style="justify-self:end;">
+        <label for="docno" style="margin-right:8px;">Doc No.</label>
+        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' />
+      </div>
     </div>
-  
-    </td>     </tr>  <tr> <td></td>
-  <td>
-  <div  hidden="true" id="branch" >
-    
-        Branch <select name="branchone" id="branchone" required="required"style="width:40%;" value='<s:property value="branchone"/>' onClick="getSecbranch(this.value)">
-       <option value="0">--Select--</option> 
-        </select> -- 
-        <select name="branchtwo" id="branchtwo" required="required"style="width:40%;" value='<s:property value="branchtwo"/>'>
-       <option value="0">--Select--</option> 
-        </select>  
-        
-    </div> </td>  </tr>
-    </table>
-  </fieldset>
-  
-  
-  </td>
-  <td width=30%>
-  <div  hidden="true">
-    <input type="radio" name="data" value="debit" checked>Debit<br>
-    <input type="radio" name="data" value="Credit">Credit
-  
-  </div>
-  
-  </td></tr></table>
-  </td></tr>
-  <tr><td><input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'></td>
-  	<td><input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
-  	<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
-  <input type="hidden" id="radiotick" name="radiotick" value='<s:property value="radiotick"/>'> 
-   <input type="hidden" id="currsid" name="currsid" value='<s:property value="currsid"/>'>
-  
+
+    <!-- status / message line -->
+    <div style="margin-top:10px;">
+      <span id="errormsg" style="color:#d62828;font-weight:600;"></span>
+    </div>
+
+    <!-- MAIN / SUB / TRANSACTION blocks -->
+    <div style="margin-top:14px; display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+
+      <!-- LEFT: Main Account block -->
+      <!-- Main Account Block -->
+<div class="ui-block">
+    <label class="block-title">
+        <input type="radio" id="category1" name="category" value="mainaccount"
+               onchange="fundisable();"> Main Account
+    </label>
+
+    <!-- LABEL ROW -->
+    <div class="ui-row-labels">
+        <span>Account Group</span>
+        <span>Account Code</span>
+        <span>Account Name</span>
+    </div>
+
+    <!-- INPUT ROW -->
+    <div class="ui-row-inputs">
+        <select name="mainaccgroup" id="mainaccgroup">
+            <option value="-1">--Select--</option>
+        </select>
+
+        <input type="text" name="mainacccode" id="mainacccode"
+               onblur="maincheck(this.value)" onkeypress="return isNumber(event);" />
+
+        <input type="text" name="mainacconame" id="mainacconame"
+               onblur="dismassge()" />
+    </div>
+
+    <input type="hidden" name="main_account" id="main_account">
+</div>
+      
+
+      <!-- RIGHT: Sub Account block (keeps consistent look but remains separate) -->
+      <!-- Sub Account Block -->
+<div class="ui-block">
+    <label class="block-title">
+        <input type="radio" id="category2" name="category" value="subaccount"
+               onchange="fundisable();"> Sub Account
+    </label>
+
+    <!-- LABEL ROW -->
+    <div class="ui-row-labels">
+        <span>Main Account Group</span>
+        <span>Account Code</span>
+        <span>Account Name</span>
+    </div>
+
+    <!-- INPUT ROW -->
+    <div class="ui-row-inputs">
+        <div class="inline-field">
+            <select name="subaccgroup" id="subaccgroup"
+                    onchange="getAcgroup(this.value,1);" onfocus="funclear2();">
+                <option value="-1">--Select--</option>
+            </select>
+            <input type="text" id="subaccgpname" name="subaccgpname">
+        </div>
+
+        <input type="text" name="subacccode" id="subacccode"
+               onblur="subcheck(this.value)" onkeypress="return isNumber(event);" />
+
+        <input type="text" name="subaccname" id="subaccname"
+               onblur="dismassge()" />
+    </div>
+
+    <input type="hidden" name="sub_account" id="sub_account">
+</div>
+      
+
+    <!-- Transaction block spans full width below -->
+    <!-- Transaction Block -->
+<div class="ui-block">
+    <label class="block-title">
+        <input type="radio" id="category3" name="category" value="transaction"
+               onchange="fundisable();"> Transaction
+    </label>
+
+    <!-- ROW 1 LABELS -->
+    <div class="ui-row-labels">
+        <span>Main Account Group</span>
+        <span>Account Name</span>
+    </div>
+
+    <!-- ROW 1 INPUTS -->
+    <div class="ui-row-inputs">
+        <div class="inline-field">
+            <select id="tansaccgroup" name="tansaccgroup"
+                    onchange="getAcgroup(this.value,2);" onfocus="funclear3();">
+                <option value="-1">--Select--</option>
+            </select>
+            <input type="text" id="transcaccgpname" name="transcaccgpname">
+        </div>
+
+        <input type="text" id="transaccname" name="transaccname" onblur="dismassge()">
+    </div>
+
+    <!-- ROW 2 LABELS -->
+    <div class="ui-row-labels">
+        <span>Account Code</span>
+        <span>Currency</span>
+        <span>Rate</span>
+    </div>
+
+    <!-- ROW 2 INPUTS -->
+    <div class="ui-row-inputs">
+        <input type="text" id="transacccode" name="transacccode"
+               onblur="trancheck(this.value)" onkeypress="return isNumber(event);" />
+
+        <input type="text" id="currs" name="currs" onkeydown="getaccountdetails(event);" />
+
+        <input type="text" id="ratess" name="ratess"
+               onblur="funRoundRate(this.value,this.id);" style="text-align:right;">
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="ui-row-labels">
+        <span>Inter Branch Account</span>
+        <span>Branch</span>
+    </div>
+
+    <div class="ui-row-inputs">
+        <input type="checkbox" id="interbranch" name="interbranch"
+               onchange="funhidden();" value="1">
+
+        <div class="inline-field">
+            <select name="branchone" id="branchone">
+                <option value="0">--Select--</option>
+            </select>
+            <select name="branchtwo" id="branchtwo">
+                <option value="0">--Select--</option>
+            </select>
+        </div>
+    </div>
+
+    <input type="hidden" name="tran_account" id="tran_account">
+</div>
+      <!-- Row 3: Inter branch account checkbox and branch selectors -->
+      <div style="display:flex; gap:12px; align-items:center; margin-top:14px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="interbranch" name="interbranch" onchange="funhidden();" value="1"/>
+          <label style="margin:0; font-weight:600; color:#253858;">Inter branch Account</label>
+        </div>
+
+        <div id="branch" style="display:none; align-items:center; gap:8px;">
+          <div class="label" style="min-width:auto; margin-right:8px;">Branch</div>
+          <select name="branchone" id="branchone" style="height:38px;" value='<s:property value="branchone"/>' onClick="getSecbranch(this.value)">
+            <option value="0">--Select--</option>
+          </select>
+          <span style="padding:0 6px;"></span>
+          <select name="branchtwo" id="branchtwo" style="height:38px;" value='<s:property value="branchtwo"/>'>
+            <option value="0">--Select--</option>
+          </select>
+        </div>
+      </div>
+
+    </div> <!-- end transaction block -->
+
+  </div> <!-- end receipt-header -->
+
+  <!-- hidden/meta fields preserved -->
+  <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+  <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+  <input type="hidden" id="radiotick" name="radiotick" value='<s:property value="radiotick"/>'>
+  <input type="hidden" id="currsid" name="currsid" value='<s:property value="currsid"/>'>
   <input type="hidden" id="checksetval" name="checksetval" value='<s:property value="checksetval"/>'>
   <input type="hidden" id="subchecksetval" name="subchecksetval" value='<s:property value="subchecksetval"/>'>
   <input type="hidden" id="tranchecksetval" name="tranchecksetval" value='<s:property value="tranchecksetval"/>'>
-  </td>         
-  <td>
-  
   <input type="hidden" id="intertick" name="intertick" value='<s:property value="intertick"/>'>
-  
   <input type="hidden" id="interbr1" name="interbr1" value='<s:property value="interbr1"/>'>
   <input type="hidden" id="interbr2" name="interbr2" value='<s:property value="interbr2"/>'>
-  
-    <input type="hidden" id="otherdis" name="otherdis" value='<s:property value="otherdis"/>'>
-  
-  
-   <input type="hidden" id="radiosaveval" name="radiosaveval" value='<s:property value="radiosaveval"/>'>
-  <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-  
+  <input type="hidden" id="otherdis" name="otherdis" value='<s:property value="otherdis"/>'>
+  <input type="hidden" id="radiosaveval" name="radiosaveval" value='<s:property value="radiosaveval"/>'>
+  <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+  <input type="hidden" id="maindel" name="maindel" value='<s:property value="maindel"/>'>
+  <input type="hidden" id="codeval" name="codeval" value='<s:property value="codeval"/>'>
 
- 
-  <input type="hidden" id="maindel" name="maindel" value='<s:property value="maindel"/>'>  <!--  for delete condition chk -->
- 
-   <input type="hidden" id="codeval" name="codeval" value='<s:property value="codeval"/>'>  <!-- foe code VAL -->
- 
+</form>
 
-  
-  </td>
-  </tr>          
-  </table>
+<!-- account search window -->
+<div id="accountSearchwindow"><div></div></div>
 
-<br>
+</div> <!-- mainBG -->
 
-    </div>
-  </form>
-  </div>
-  
-    <div id="accountSearchwindow">
-	   <div></div>
-	</div>
-  </body>
-  </html>
-  
+
+</body>
+</html>

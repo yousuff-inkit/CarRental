@@ -13,6 +13,96 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 </style>
+<style>
+
+/* -------------------- PAGE -------------------- */
+body {
+    background: #f3f7ff;
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* -------------------- MAIN SEARCH BOX -------------------- */
+#search {
+    background: #ffffff;
+    width: 98%;
+    margin: 10px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 255, 0.08);
+    border: 1px solid #e4ebff;
+}
+
+/* -------------------- TABLE ALIGNMENT -------------------- */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px 12px;
+}
+
+#search td {
+    font-size: 12px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* -------------------- INPUT FIELDS -------------------- */
+#search input[type="text"] {
+    width: 100%;
+    height: 26px;          
+    padding-left: 8px;
+    border: 1px solid #cdd9f5;
+    border-radius: 6px;
+    background: #f9fbff;
+    font-size: 11px;
+    transition: 0.2s ease;
+}
+
+#search input[type="text"]:focus {
+    border-color: #4a8dff;
+    box-shadow: 0 0 6px rgba(74, 141, 255, 0.35);
+    outline: none;
+}
+
+/* -------------------- SEARCH BUTTON -------------------- */
+.myButton {
+    background: linear-gradient(180deg, #4a90ff, #2a6dff);
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 255, 0.2);
+    transition: all 0.25s ease;
+}
+
+/* Hover: premium glow */
+.myButton:hover {
+    background: linear-gradient(180deg, #2a6dff, #1a54e8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 255, 0.25);
+}
+
+/* Pressed effect */
+.myButton:active {
+    transform: scale(0.97);
+}
+
+/* -------------------- RESULT BOX -------------------- */
+#srefreshdiv {
+    background: #ffffff;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #e4ebff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 255, 0.05);
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+/
+
 
 	<script type="text/javascript">
 	$(document).ready(function () {

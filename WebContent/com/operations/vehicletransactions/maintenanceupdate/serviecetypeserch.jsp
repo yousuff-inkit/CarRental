@@ -5,6 +5,7 @@
  ClsmaintenanceDAO viewDAO=new ClsmaintenanceDAO();  
  
  %>
+
        <script type="text/javascript">
 
        var sertype='<%=viewDAO.searchservicetype()%>';

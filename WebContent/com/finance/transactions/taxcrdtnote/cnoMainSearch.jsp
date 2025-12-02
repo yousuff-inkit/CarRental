@@ -14,111 +14,169 @@
 /* RESET */
 .search-container * {
     box-sizing: border-box;
-    font-family: Poppins, Arial, sans-serif;
+    font-family: Poppins, Arial, sans-serif !important;
 }
 
-/* OUTER CARD */
+/* OUTER CARD - MASTER UI */
 .search-container {
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #dce6ff;
-    box-shadow: 0px 10px 35px rgba(93, 125, 255, 0.20);
-    overflow: hidden;
-    padding: 0;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    border: 1px solid #dce6ff !important;
+    box-shadow: 0px 10px 35px rgba(93,125,255,0.20) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
 }
 
-/* HEADER */
+/* HEADER - MASTER UI */
 .search-header {
-    background: linear-gradient(90deg, #478dff, #67a8ff);
-    padding: 16px 22px;
-    color: #ffffff;
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background: linear-gradient(90deg, #478dff, #67a8ff) !important;
+    padding: 16px 24px !important;
+    color: #ffffff !important;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
 }
 .search-header small {
-    font-size: 0.80rem;
-    font-weight: 300;
-    opacity: 0.95;
+    font-size: 0.80rem !important;
+    opacity: 0.90 !important;
 }
 
 /* BODY */
 .search-body {
-    padding: 20px 24px 12px;
-    background: #fbfcff;
+    padding: 22px 26px 14px !important;
+    background: #fbfcff !important;
 }
 
 /* GRID AREA */
 .search-grid-area {
-    padding: 18px 24px 22px;
-    background: #f4f7ff;
-    border-top: 1px solid #e3eaff;
+    padding: 20px 26px 24px !important;
+    background: #f4f7ff !important;
+    border-top: 1px solid #e3eaff !important;
 }
 
-/* LABEL */
+/* LABEL (MASTER UI FONT + SPACING) */
 .search-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #263b75;
-    margin-bottom: 6px;
-    display: block;
+    font-size: 0.90rem !important;
+    font-weight: 600 !important;
+    color: #263b75 !important;
+    margin-bottom: 6px !important;
+    display: block !important;
 }
 
-/* INPUTS */
+/* INPUT FIELD  EXACT MASTER UI STYLING */
 .search-input {
-    width: 100%;
-    height: 38px;
-    border-radius: 10px;
-    border: 1px solid #c4d3ff;
-    background: #ffffff;
-    padding: 6px 12px;
-    box-shadow: 0 2px 6px rgba(150,175,255,0.20);
-}
-.search-input:focus {
-    border-color: #6a96ff;
+    width: 100% !important;
+    height: 44px !important;
+    border-radius: 10px !important;
+    border: 1px solid #c4d3ff !important;
+    background: #ffffff !important;
+    padding: 8px 14px !important;
+    font-size: 1.05rem !important;
+    color: #052a6b !important;
+    box-shadow: 0px 3px 6px rgba(150,175,255,0.30) !important;
 }
 
+/* Remove pink autofill */
+.search-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* Input focus */
+.search-input:focus {
+    border-color: #6a96ff !important;
+    outline: none !important;
+}
+
+/* SEARCH BUTTON  MASTER UI */
 .search-btn {
     background: linear-gradient(90deg, #6fb1fc, #1a73e8) !important;
     height: 50px !important;
     color: #ffffff !important;
     border: none !important;
     padding: 0 42px !important;
-    border-radius: 14px !important;
-    font-size: 1.05rem !important;
+    border-radius: 12px !important;
+    font-size: 1.08rem !important;
     font-weight: 600 !important;
     cursor: pointer !important;
-    box-shadow: 0 6px 18px rgba(26,115,232,0.32) !important;
+    box-shadow: 0px 6px 16px rgba(26,115,232,0.30) !important;
 }
-
 .search-btn:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) !important;
 }
 
-/* ROW COL */
+/* ROW / COLUMN  MASTER SPACING */
 .row {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 16px;
+    display: flex !important;
+    gap: 22px !important;
+    margin-bottom: 18px !important;
 }
 .col {
-    flex: 1;
+    flex: 1 !important;
 }
 .btn-col {
-    display: flex;
-    align-items: flex-end;
+    display: flex !important;
+    align-items: flex-end !important;
+}
+/* ---- FIX JQX DATE INPUT SIZE FOR THIS PAGE (#creditdate) ---- */
+
+/* Outer container */
+#creditdate,
+#creditdate .jqx-widget-content,
+#creditdate .jqx-widget,
+#creditdate .jqx-rc-all {
+    width: 100% !important;
+    height: 48px !important;                 /* Increase height */
+    border-radius: 12px !important;
+    border: 1px solid #c4d3ff !important;
+    background: #ffffff !important;
+    box-shadow: 0 3px 6px rgba(170,190,255,0.35) !important;
+}
+
+/* Input box inside jqx datetime */
+#creditdate input.jqx-input-content {
+    height: 48px !important;
+    line-height: 48px !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    color: #052a6b !important;
+    padding-left: 12px !important;
+    background: #ffffff !important;
+}
+
+/* Remove pink autofill */
+#creditdate input.jqx-input-content:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* Calendar dropdown button */
+#creditdate .jqx-input-button-content,
+#creditdate .jqx-input-button {
+    width: 42px !important;
+    height: 48px !important;
+    border-radius: 0 12px 12px 0 !important;
+    background: #e7eeff !important;
+}
+
+/* Icon inside the calendar button */
+#creditdate .jqx-icon-calendar,
+#creditdate .jqx-icon-calendar-hover {
+    margin-top: 6px !important;
+    width: 24px !important;
+    height: 24px !important;
 }
 
 </style>
+
 
 <script type="text/javascript">
 
 $(document).ready(function () {
      $("#creditdate").jqxDateTimeInput({
          width: "100%",
-         height: "38px",
+         height: 48,
          formatString: "dd.MM.yyyy",
          value: null
      });

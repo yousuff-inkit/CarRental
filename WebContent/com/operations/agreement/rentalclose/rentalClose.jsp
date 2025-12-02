@@ -11,159 +11,212 @@
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
-    .hidden-scrollbar {
-        overflow: auto;
-        height: 530px;
-    }
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-        padding: 10px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+   /* Smooth Scroll Container */
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
 
-    .receipt-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        padding: 0px 24px;
-        font-size: 2vh;
-    }
-    .receipt-header label {
-        font-weight: 500;
-        color: #333;
-        margin-right: 8px;
-    }
-    .receipt-header input[type="text"] {
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 1rem;
-        width: 120px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
-    .receipt-header input[type="text"]:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    .receipt-header button {
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .receipt-header button:hover {
-        background: #0056b3;
-    }
-    #txtStatus {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #e67e22;
-        margin-left: 12px;
-    }
+/* Page Layout */
+body {
+    background: #f9fbff; /* Clean, soft canvas */
+    font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
+    color: #1f2d3d;
+    margin: 0;
+    padding: 28px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
 
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 24px;
-    }
-    .section-block {
-        flex: 1;
-        background: #f6f8fa;
-        border-radius: 10px;
-        padding: 20px 18px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-    }
-
-    .section-block h2 {
-        font-size: 1.09em;
-        font-weight: 500;
-        margin: 0 0 16px 0;
-        color: #253858;
-    }
-
-    .section-block .form-group {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 12px;
-    }
-
-    .section-block label {
-        min-width: 110px;
-        text-align: right;
-        font-weight: 500;
-        color: #253858;
-    }
-
-    .section-block input[type="text"],
-    .section-block select {
-        flex: 1;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
-
-    .section-block input[type="text"]:focus,
-    .section-block select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+/* Main Page Block */
+#mainBG {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 20px;
+    max-width: 1250px;
+    margin: 0 auto;
+    box-shadow: 0 8px 28px rgba(80, 110, 255, 0.08);
+    border: 1px solid #e5ebff;
+}
 
 
-    .table-section {
-        margin-bottom: 18px;
-        padding-inline: 1.04em;
-        padding-block: 1.04em;
-        border-radius: 8px;
-    }
-    .table-section h3 {
-        color: #253858;
-        font-size: 1.04em;
-        font-weight: 600;
-    }
-    .cr-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #f9fafb;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 0 1px #eef0f6;
-    }
-    .cr-table th, .cr-table td {
-        padding: 9px 10px;
-        border-bottom: 1px solid #e4e7ec;
-        text-align: left;
-        font-size: 1em;
-    }
-    .cr-table th {
-        background: #eef0f6;
-        color: #354B6A;
-        font-weight: 600;
-    }
-    .cr-table tr:last-child td {
-        border-bottom: none;
-    }
+/* ---------------- HEADER SECTION ---------------- */
+
+.receipt-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg,#f6f9ff,#eef3ff);
+    border-radius: 14px;
+    margin-bottom: 22px;
+    box-shadow: 0px 4px 18px rgba(120,145,255,0.12);
+}
+
+.receipt-header label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #324b7a;
+}
+
+.receipt-header input[type="text"] {
+    border: 1px solid #c8d5ff;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    width: 140px;
+    transition: 0.25s;
+    background: #ffffff;
+    box-shadow: 0 1px 6px rgba(120,135,255,0.12);
+}
+
+/* Focus Glow */
+.receipt-header input[type="text"]:focus {
+    border-color: #4c7bff;
+    box-shadow: 0 0 10px rgba(90,120,255,0.25);
+    outline: none;
+}
+
+/* Action Buttons */
+.receipt-header button {
+    background: linear-gradient(120deg,#6fb1fc,#2563eb);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+    box-shadow: 0 4px 14px rgba(50,100,255,0.25);
+}
+
+.receipt-header button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(50,100,255,0.32);
+}
+
+#txtStatus {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e58e26;
+}
+
+
+/* ---------------- FORM STRUCTURE ---------------- */
+
+.section-row {
+    display: flex;
+    gap: 22px;
+    margin-bottom: 24px;
+}
+
+.section-block {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #e6ebff;
+    box-shadow: 0 4px 18px rgba(80,110,255,0.06);
+}
+
+.section-block h2 {
+    font-size: 1.08em;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #243d68;
+}
+
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.section-block label {
+    min-width: 120px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #334d80;
+}
+
+.section-block input[type="text"],
+.section-block select {
+    flex: 1;
+    border: 1px solid #c8d5ff;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background: #ffffff;
+    transition: 0.25s;
+    box-shadow: 0 1px 6px rgba(140,155,255,0.10);
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus {
+    border-color: #4f7cff;
+    box-shadow: 0px 0px 12px rgba(60,110,255,0.30);
+    outline: none;
+}
+
+
+
+/* ---------------- TABLE SECTION ---------------- */
+
+.table-section {
+    margin-top: 22px;
+    padding: 18px;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e3e9ff;
+    box-shadow: 0px 4px 18px rgba(120,145,255,0.08);
+}
+
+.table-section h3 {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #243b65;
+    margin-bottom: 12px;
+}
+
+
+/* Data Table */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0px 4px 14px rgba(110,130,255,0.08);
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ebeffa;
+    font-size: 0.95rem;
+    color: #2e3e57;
+}
+
+.cr-table th {
+    background: linear-gradient(120deg,#eef3ff,#dfe7ff);
+    font-weight: 600;
+    color: #2e457a;
+}
+
+.cr-table tr:hover td {
+    background: rgba(110,135,255,0.06);
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+
+
+
 </style>
 <script type="text/javascript">
 $(document).ready(function () {

@@ -10,6 +10,7 @@
  String branch = request.getParameter("branch")==null?"0":request.getParameter("branch");
 %> 
 
+
  <script type="text/javascript">
  
  			var data1='<%=DAO.vdpMainSearch(branch, partyname, docNo, date, amount)%>';

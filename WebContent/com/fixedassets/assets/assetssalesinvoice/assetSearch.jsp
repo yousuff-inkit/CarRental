@@ -1,6 +1,92 @@
 <%@page import="com.fixedassets.assets.assetssalesinvoice.ClsAssetSalesInvDAO" %>
 <%ClsAssetSalesInvDAO asi=new ClsAssetSalesInvDAO(); %>
 <%String branch=request.getParameter("branch")==null?"0":request.getParameter("branch"); %>
+<style>
+/* ------------------- GRID WRAPPER ------------------- */
+#assetSearch {
+    margin-top: 10px;
+}
+
+/* ------------------- GRID MAIN BOX ------------------- */
+.jqx-grid {
+    border: 1px solid #c6ddf5 !important;
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(0, 92, 184, 0.15) !important;
+    font-family: "Segoe UI", Roboto, sans-serif !important;
+    font-size: 12px !important;
+    color: #003366 !important;
+}
+
+/* ------------------- GRID HEADER ------------------- */
+.jqx-grid-column-header {
+    background: linear-gradient(180deg, #e9f1ff, #d7e5ff) !important;
+    color: #003b8e !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid #c6d8ff !important;
+    text-align: center !important;
+}
+
+/* ------------------- HEADER TEXT ------------------- */
+.jqx-grid-column-header .jqx-grid-column-header-text {
+    padding-left: 5px !important;
+    text-align: left !important;
+    font-size: 12px !important;
+}
+
+/* ------------------- GRID ROWS ------------------- */
+.jqx-grid-cell {
+    border-color: #e1eaff !important;
+    font-size: 12px !important;
+    color: #003366 !important;
+}
+
+/* Alternating row colors */
+.jqx-grid-cell-alt {
+    background-color: #f7faff !important;
+}
+
+/* Row hover effect */
+.jqx-grid-cell-hover {
+    background-color: #e6f0ff !important;
+    cursor: pointer !important;
+}
+
+/* Selected row highlight */
+.jqx-grid-cell-selected {
+    background-color: #4a8dff !important;
+    color: #ffffff !important;
+}
+
+/* ------------------- FILTER ROW ------------------- */
+.jqx-grid-filterrow {
+    background-color: #f0f4ff !important;
+}
+
+.jqx-input, .jqx-widget-content {
+    border-radius: 6px !important;
+    border: 1px solid #c9d9ff !important;
+}
+
+/* Filter row cells */
+.jqx-grid-filterrow-cell {
+    padding: 3px !important;
+}
+
+/* ------------------- SCROLLBAR ------------------- */
+.jqx-scrollbar-thumb-state-normal {
+    background: #bcd1ff !important;
+}
+
+.jqx-scrollbar-thumb-state-hover {
+    background: #8fb4ff !important;
+}
+
+.jqx-scrollbar-button-state-normal {
+    background: #e4ecff !important;
+}
+</style>
+
 <script type="text/javascript">
       var dataassets= '<%=asi.assetSearch(branch)%>';
         $(document).ready(function () { 	

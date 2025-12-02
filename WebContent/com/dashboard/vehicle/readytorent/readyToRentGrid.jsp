@@ -8,7 +8,7 @@ String barchval = request.getParameter("barchval")==null?"NA":request.getParamet
 <style type="text/css">
 	.yellowClass
     {
-       background-color: #ffc0cb; 
+       background-color: #AED6F1; 
     }
     .redClass
     {

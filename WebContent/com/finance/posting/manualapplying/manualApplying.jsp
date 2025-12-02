@@ -195,38 +195,7 @@
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
 <div  class='hidden-scrollbar'>
-<table width="100%">
-  <tr>
-    <td width="5%" align="right">Account</td>
-    <td width="6%"><select id="cmbacctype" name="cmbacctype" style="width:70%;" onchange="clearAccountInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="AP">AP</option><option value="AR">AR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:80%;" placeholder="Press F3 to Search" readonly value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td width="30%"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" readonly value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="45%" align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadappliedgrid();">Submit</button></td>
-  </tr>
-</table>
-<fieldset><legend>Unapplied</legend>
-<div id="jqxManualAppliedGrid"><jsp:include page="appliedInvoicingGrid.jsp"></jsp:include></div></fieldset>
-<fieldset><legend>Outstanding</legend>
-<div id="jqxManualApplingGrid"><jsp:include page="applyInvoicingGrid.jsp"></jsp:include></div></fieldset><br/>
- <table width="100%">
-  <tr>
-    <td width="3%" align="right">Doc No</td>
-    <td width="6%"><input type="text" id="txtgriddocno" name="txtgriddocno" style="width:70%;" readonly value='<s:property value="txtgriddocno"/>' tabindex="-1"/></td>
-    <td width="3%" align="right">Doc Type</td>
-    <td width="6%"><input type="text" id="txtdoctype" name="txtdoctype" style="width:60%;" readonly value='<s:property value="txtdoctype"/>' tabindex="-1"/></td>
-    <td width="5%" align="right">Amount</td>
-    <td width="6%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoiceamt"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/>
-    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/></td>
-    <td width="5%" align="right">Applying</td>
-    <td width="6%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-    <td width="3%" align="right">Balance</td>
-    <td width="6%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-    <td width="7%" align="center"><button class="myButton" type="button" id="btnUpdate" name="btnUpdate" onkeydown="funUpdateChanges();" onclick="funUpdateChanges();">Update</button></td>
-  </tr>
-</table>
+
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>

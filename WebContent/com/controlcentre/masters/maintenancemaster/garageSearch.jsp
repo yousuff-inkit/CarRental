@@ -1,5 +1,62 @@
 <%@page import="com.controlcentre.masters.maintenancemaster.garage.ClsGarageDAO" %>
 <%ClsGarageDAO cgd=new ClsGarageDAO(); %>
+<style>
+/* Full white clean theme */
+#jqxGarageSearch {
+    background-color: #ffffff !important; 
+    border: 1px solid #D8E6F7 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 6px rgba(0, 80, 160, 0.10) !important;
+    font-family: "Segoe UI", Roboto, sans-serif !important;
+    font-size: 13px !important;
+}
+
+/* Header white with blue text */
+#jqxGarageSearch .jqx-grid-column-header {
+    background-color: #ffffff !important;
+    color: #2F75C5 !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid #C7DBF3 !important;
+    text-align: center !important;
+}
+
+/* Normal rows – pure white */
+#jqxGarageSearch .jqx-grid-cell {
+    background-color: #ffffff !important;
+    border-color: #E6EEF9 !important;
+    color: #00315C !important;
+}
+
+/* Alternate rows – very light blue tint */
+#jqxGarageSearch .jqx-grid-cell-alt {
+    background-color: #F8FBFF !important; 
+}
+
+/* Row hover */
+#jqxGarageSearch .jqx-grid-cell:hover {
+    background-color: #F0F6FF !important;
+}
+
+/* Selected row – clean blue highlight */
+#jqxGarageSearch .jqx-grid-row-selected {
+    background-color: #DDEAFF !important;
+    color: #002B55 !important;
+    font-weight: 600 !important;
+}
+
+/* Minimal scrollbar */
+#jqxGarageSearch::-webkit-scrollbar {
+    width: 7px;
+}
+#jqxGarageSearch::-webkit-scrollbar-thumb {
+    background: #C7DBF3;
+    border-radius: 10px;
+}
+#jqxGarageSearch::-webkit-scrollbar-track {
+    background: #F3F8FF;
+}
+</style>
+
     <script type="text/javascript">
     var data= '<%=cgd.getGarage()%>';
         $(document).ready(function () { 	

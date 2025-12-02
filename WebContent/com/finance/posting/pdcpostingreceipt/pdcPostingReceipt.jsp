@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>PDC Posting - Receipts (FRO)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -395,392 +397,136 @@
 </script>
 
 <style>
-/* ----------------------------
-   MASTER SKY-BLUE THEME (MATCHES TAX PAGES)
-   ---------------------------- */
-
-/* Scrollbar for page / grids */
-.hidden-scrollbar {
-  overflow-y: auto;
-  height: 530px;
-  scrollbar-width: thin;
-  scrollbar-color: #4da3ff #eaf3ff;
+/* ---------- Universal Modern Input ---------- */
+.inp {
+    width: 100%;
+    height: 32px !important;
+    padding: 4px 8px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b9c9e8 !important;
+    background: #fff !important;
+    transition: 0.25s ease;
 }
-.hidden-scrollbar::-webkit-scrollbar {
-  width: 8px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #8aa8d6;
-  border-radius: 6px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #6f8ec4;
+.inp:hover,
+.inp:focus {
+    border-color: #2f6dde !important;
+    box-shadow: 0 0 8px rgba(47,109,222,0.4) !important;
+    outline: none !important;
 }
 
-/* Page background */
-body {
-  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  color: #1f2f46;
-  margin: 0;
-  padding: 40px 0;
-  min-height: 100vh;
-  -webkit-font-smoothing:antialiased;
+/* ---------- Labels ---------- */
+.lbl {
+    min-width: 130px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d2a4d;
 }
 
-/* Main container */
-#mainBG {
-  background: #f4f8ff;
-  border-radius: 16px;
-  box-shadow: 0 4px 25px rgba(50, 110, 255, 0.12);
-  padding: 22px 26px;
-  max-width: 1250px;
-  margin: 0 auto;
+/* ---------- Layout (matches Master UI) ---------- */
+.row3 {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    align-items: center;
 }
 
-/* Header include spacing */
-.homeContent .table-section { margin-bottom: 12px; }
-
-/* Receipt header block */
-.receipt-header {
-  background: #edf4ff;
-  border: 1px solid #c9dafc;
-  border-radius: 12px;
-  padding: 14px 18px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 12px rgba(132, 168, 255, 0.08);
-  display: block;
+.row-flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 260px;
 }
 
-/* compact grid-style header fields */
-.receipt-header .cr-row {
-  display:flex;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.receipt-header label {
-  font-weight:600;
-  color:#274b8f;
-  margin-right:6px;
-}
-.receipt-header select,
-.receipt-header input[type="text"] {
-  height:36px;
-  padding:6px 10px;
-  border-radius:8px;
-  border:1px solid #d7e6ff;
-  background:#fff;
-  font-size:0.95rem;
-}
-.receipt-header .btn-primary {
-  background: linear-gradient(90deg, #6fb1fc, #1a73e8);
-  color:#fff;
-  padding:8px 18px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  box-shadow: 0 3px 10px rgba(26,115,232,0.18);
+/* ---------- Dropdown text size ---------- */
+select,
+select option {
+    font-size: 16px !important;
 }
 
-/* sections */
-.section-row {
-  display:flex;
-  gap:20px;
-  margin-bottom:18px;
-}
+/* ============================================================
+   JQX DATE INPUT — FIXED, CLEAN, ICON VISIBLE, MATCHES INPUTS
+   ============================================================ */
 
-/* Table / grids */
-.cr-table {
-  width:100%;
-  border-collapse:collapse;
-  background:#fff;
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow: 0 0 0 1px #eef4ff;
-}
-.cr-table th,
-.cr-table td {
-  padding:10px 12px;
-  border-bottom:1px solid #e6eefc;
-  font-size:0.95rem;
-  color:#2b3b5a;
-}
-.cr-table th {
-  background: #f1f6ff;
-  font-weight:700;
-  color:#16325a;
-}
-.cr-table tr:hover td {
-  background:#f7fbff;
-}
-
-/* Postponed fieldset */
-#pdcPostponedDiv fieldset {
-  border-radius:10px;
-  padding:12px;
-  border: 1px solid #e6f2d6;
-  background:#f6fff0;
-}
-
-/* small helpers */
-#errormsg { color:#d62828; font-weight:700; margin-top:8px; display:block; }
-
-/* responsive */
-@media (max-width: 900px){
-  #mainBG { padding:12px; }
-  .receipt-header { padding:12px; }
-  .receipt-header .cr-row { flex-direction:column; align-items:flex-start; }
-}
-
-#jqxFromDate, 
+/* Outer container same look as .inp */
+#jqxFromDate,
 #jqxToDate,
 #jqxDate,
-#chequedate,
-#checkchequedate {
-    height: 38px !important;         /* same height as input boxes */
-    display: flex !important;
-    align-items: center !important;  /* vertical centering */
-}
-
-#jqxFromDate input,
-#jqxToDate input,
-#jqxDate input,
-#chequedate input,
-#checkchequedate input {
-    height: 36px !important;
-    padding-left: 10px !important;
-    border-radius: 8px !important;
-    box-sizing: border-box !important;
-}
-#cmbcriteria,
-#cmbacctype {
-    height: 38px !important;
-    font-size: 15px !important;
-    padding: 6px 10px !important;
-    border-radius: 8px !important;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-    color: #1f2f46 !important;
-}
-
-/* for dropdowns getting pink tint */
-select {
-    background-color: #ffffff !important;
-}
-/* Standardize dropdown appearance (Criteria + Account) */
-#cmbcriteria,
-#cmbacctype {
-    height: 38px !important;
-    font-size: 15px !important;
-    padding: 6px 12px !important;
-    border-radius: 8px !important;
-    background-color: #ffffff !important;
-    border: 1px solid #d1d5db !important;
-    color: #1f2f46 !important;
-    box-sizing: border-box !important;
-}
-/* Remove pink shade inside jqxGrid inputs */
-.jqx-grid-cell input,
-.jqx-grid-editor,
-.jqx-input {
-    background-color: #ffffff !important;
-    box-shadow: none !important;
-    color: #1f2f46 !important;
-}
-
-/* Remove autofill pink */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px white inset !important;
-    background-color: white !important;
-}
-
-/* Force grid editable cells to stay white */
-.jqx-grid-cell-selected,
-.jqx-grid-cell-hover,
-.jqx-grid-cell {
-    background-color: #ffffff !important;
-}
-/* ----- Standardize ALL dropdowns ----- */
-select {
-    font-size: 15px !important;
-    padding: 6px 10px !important;
-    height: 34px !important;
-    color: #222 !important;
-    background: #fff !important;
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-}
-
-/* Remove pink autofill for dropdowns */
-select:-internal-autofill-selected {
-    background-color: #fff !important;
-    color: #222 !important;
-}
-
-/* Ensure option text is also bigger */
-select option {
-    font-size: 15px !important;
-    background: #fff !important;
-    color: #222 !important;
-}
-
-/* Fix jqxDateTimeInput alignment issue */
-.jqx-datetimeinput {
-    margin-top: -3px !important;
-}
-
-/* Remove any pink background from jqx inputs */
-.jqx-input,
-input.clean-input {
-    background-color: #fff !important;
-}
-/* Remove pink highlight from jqx Date Inputs */
-.jqx-widget-content,
-.jqx-input,
-.jqx-fill-state-focus,
-.jqx-fill-state-pressed,
-.jqx-fill-state-hover {
-    background-color: #ffffff !important;
-    border-color: #d1d5db !important;
-    color: #222 !important;
-}
-
-/* Override jqxDateTimeInput input box */
-.jqx-datetimeinput-input {
-    background-color: #ffffff !important;
-    color: #222 !important;
-}
-
-/* Remove inner table background jqx uses */
-.jqx-datetimeinput {
-    background: #ffffff !important;
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-}
-
-/* Remove jqx dropdown calendar background highlight */
-.jqx-calendar,
-.jqx-calendar-month-container,
-.jqx-calendar-cell,
-.jqx-calendar-title-container {
-    background-color: #ffffff !important;
-    color: #222 !important;
-}
-/* RESET jqxGrid: prevent master .cr-table and table CSS from overriding jqxGrid */
-#jqxJournalVoucherGrid table,
-#jqxJournalVoucherApplyingGrid table {
-    border-collapse: separate !important;
-    background: white !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-}
-
-/* jqxGrid header */
-#jqxJournalVoucherGrid .jqx-grid-column-header,
-#jqxJournalVoucherApplyingGrid .jqx-grid-column-header {
-    background: #e8f0ff !important;
-    color: #1b3f73 !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-}
-
-/* jqxGrid cells */
-#jqxJournalVoucherGrid .jqx-grid-cell,
-#jqxJournalVoucherApplyingGrid .jqx-grid-cell {
-    background: #ffffff !important;
-    color: #222 !important;
-    font-size: 13px !important;
-    border-color: #d7e2f5 !important;
-}
-
-/* Hover */
-#jqxJournalVoucherGrid .jqx-grid-cell-hover,
-#jqxJournalVoucherApplyingGrid .jqx-grid-cell-hover {
-    background: #f0f6ff !important;
-}
-
-/* Selected row */
-#jqxJournalVoucherGrid .jqx-grid-cell-selected,
-#jqxJournalVoucherApplyingGrid .jqx-grid-cell-selected {
-    background: #d0e4ff !important;
-}
-/* Remove the pink autofill completely */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-    box-shadow: 0 0 0px 1000px white inset !important;
-    -webkit-text-fill-color: #333 !important;
-}
-
-.jqx-widget-content {
-    background: #ffffff !important;
-}
-
-/* jqxGrid Header */
-.jqx-grid-column-header,
-.jqx-grid-header {
-    background: #eaf2ff !important;
-    border-bottom: 1px solid #c7d6f5 !important;
-    color: #1e2d4a !important;
-    font-weight: 600 !important;
-    height: 42px !important;
-    font-size: 14px !important;
-}
-
-/* jqxGrid Rows */
-.jqx-grid-cell {
-    background: #ffffff !important;
-    border-color: #dce6f9 !important;
-    color: #2a2a2a !important;
-    height: 40px !important;
-    font-size: 14px !important;
-}
-
-/* Row hover */
-.jqx-grid-cell-hover {
-    background: #f5f9ff !important;
-}
-
-/* Selected row */
-.jqx-grid-cell-selected {
-    background: #dceaff !important;
-}
-
-/* Input inside grid */
-.jqx-grid-cell input {
-    background: #ffffff !important;
-    border: 1px solid #c9d9f8 !important;
-    height: 28px !important;
-    font-size: 14px !important;
-    border-radius: 6px !important;
-    padding: 4px 8px !important;
-}
-
-/* Fix header row height */
-.jqx-grid-column-header {
-    padding: 10px !important;
-}
-
-/* Fix empty large white space */
-.jqx-grid-content {
-    background: #ffffff !important;
-}
-
-/* Make grid borders softer */
-.jqx-grid {
-    border: 1px solid #cddbf5 !important;
+#chequedate {
+    width: 160px !important;
+    height: 32px !important;
     border-radius: 10px !important;
-    overflow: hidden !important;
+    border: 1px solid #b9c9e8 !important;
+    background: #fff !important;
+    padding: 0 !important;
+}
+
+/* Date Textbox */
+.jqx-datetimeinput-input,
+.jqx-datetimeinput-content input {
+    height: 32px !important;
+    line-height: 32px !important;
+    padding-left: 10px !important;
+    padding-right: 34px !important;
+    font-size: 15px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* Restore visible calendar button */
+.jqx-datetimeinput-button {
+    width: 32px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    border-left: 1px solid #d0d7e6 !important;
+    border-radius: 0 10px 10px 0 !important;
+    background: transparent !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Show calendar icon */
+.jqx-datetimeinput-button img,
+.jqx-icon-calendar {
+    width: 18px !important;
+    height: 18px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Prevent autofill pink */
+.jqx-datetimeinput-input,
+.jqx-datetimeinput-content input {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* Fix any icon hiding by older rules */
+#jqxFromDate *,
+#jqxToDate *,
+#jqxDate *,
+#chequedate * {
+    background-image: none !important;
+    overflow: visible !important;
+}
+
+/* ---------- Error text ---------- */
+#errormsg {
+    color: red;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+/* ---------- Grid container ---------- */
+.cr-table {
+    margin-top: 16px;
+    padding: 0 !important;
 }
 </style>
 
@@ -792,50 +538,55 @@ input:-webkit-autofill:focus {
 
 <!-- ====== Top criteria (modern clean layout) ====== -->
 <div class="receipt-header">
-  <div class="cr-row">
+  <div class="row3">
+    <div class="row-flex">
+        <label class="lbl">Criteria</label>
+        <select id="cmbcriteria" name="cmbcriteria" class="inp" onchange="dateDisable();getPDCAccounts();getPDCPostAccount();clearClientInfo();">
+            <option value="">--Select--</option>
+            <option value="1">PDC to be Posted</option>
+            <option value="2">PDC to be Returned</option>
+            <option value="3">Posted PDC to be Dishonoured</option>
+            <option value="4">PDC to be Postponed</option>
+            <option value="5">Returned PDC to be Reversed</option>
+            <option value="6">Dishonoured PDC to be Reversed</option>
+            <option value="7">CDC to be Dishonoured</option>
+        </select>
+    </div>
 
-    <label for="cmbcriteria">Criteria</label>
-    <select id="cmbcriteria" name="cmbcriteria" style="min-width:220px;" value='<s:property value="cmbcriteria"/>' onchange="dateDisable();getPDCAccounts();getPDCPostAccount();clearClientInfo();">
-      <option value="">--Select--</option>
-      <option value="1">PDC to be Posted</option>
-      <option value="2">PDC to be Returned</option>
-      <option value="3">Posted PDC to be Dishonoured</option>
-      <option value="4">PDC to be Postponed</option>
-      <option value="5">Retuned PDC to be Reversed</option>
-      <option value="6">Dishourned PDC to be Reversed</option>
-      <option value="7">CDC to be Dishourned</option>
-    </select>
-    <input type="hidden" id="hidcmbcriteria" name="hidcmbcriteria" value='<s:property value="hidcmbcriteria"/>'/>
+    <div class="row-flex">
+        <label class="lbl">From</label>
+        <div id="jqxFromDate" class="inp" style="padding:0!important;"></div>
+    </div>
 
-    <label for="jqxFromDate">From</label>
-    <div id="jqxFromDate" style="width:125px;"></div>
-    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/>
+    <div class="row-flex">
+        <label class="lbl">To</label>
+        <div id="jqxToDate" class="inp" style="padding:0!important;"></div>
+    </div>
+</div>
+  <div class="row3">
 
-    <label for="jqxToDate">To</label>
-    <div id="jqxToDate" style="width:125px;"></div>
-    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/>
+    <div class="row-flex">
+        <label class="lbl">Account Type</label>
+        <select id="cmbacctype" name="cmbacctype" class="inp" onchange="clearClientInfo();">
+            <option value="0">--Select--</option>
+            <option value="BANK">Bank</option>
+            <option value="AP">AP</option>
+            <option value="AR">AR</option>
+        </select>
+    </div>
 
-    <label for="cmbacctype">Account</label>
-    <select id="cmbacctype" name="cmbacctype" style="min-width:140px;" onchange="clearClientInfo();" value='<s:property value="cmbacctype"/>'>
-      <option value="0">--Select--</option>
-      <option value="BANK">Bank</option>
-      <option value="AP">AP</option>
-      <option value="AR">AR</option>
-    </select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+    <div class="row-flex">
+        <label class="lbl">Account</label>
+        <input type="text" id="txtaccid" class="inp" placeholder="Press F3 to Search" onkeydown="getAcc(event);">
+    </div>
 
-    <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" style="min-width:180px;" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
+    <div class="row-flex">
+        <label class="lbl">Posting Date</label>
+        <div id="jqxDate" class="inp" style="padding:0!important;"></div>
+    </div>
 
-    <input type="text" id="txtaccname" name="txtaccname" style="min-width:320px;" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-
-    <label for="jqxDate">Posting</label>
-    <div id="jqxDate" style="width:125px;"></div>
-    <input type="hidden" id="hidjqxDate" name="hidjqxDate" value='<s:property value="hidjqxDate"/>'/>
-
-    <button type="button" id="btnview" class="btn-primary" onclick="funloadgrid();">View</button>
-
-  </div>
+</div>
+  
 
   <span id="errormsg"></span>
 </div>

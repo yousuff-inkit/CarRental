@@ -12,6 +12,98 @@
 <style>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 </style>
+<style>
+    /* Body styling */
+    body {
+        background-color: #E0ECF8;
+        font-family: "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #000000; /* Black text */
+    }
+
+    /* Outer search box */
+    #search {
+        width: 98%;
+        margin: 20px auto;
+        padding: 15px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 92, 184, 0.18);
+        border: 1px solid #c6ddf5;
+        color: #000000; /* Ensure text inside search box is black */
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td {
+        font-size: 14px;
+        color: #000000; /* Black labels */
+        padding: 4px 8px;
+        vertical-align: middle;
+    }
+
+    td[align="right"] {
+        text-align: right;
+        font-weight: 600;
+    }
+
+    td[align="left"] input[type="text"] {
+        width: 90%;
+        padding: 6px 8px;
+        font-size: 13px;
+        color: #000000; /* Black input text */
+        border: 1px solid #b7d1ee;
+        border-radius: 6px;
+        outline: none;
+        transition: 0.3s;
+        background-color: #ffffff;
+    }
+
+    td[align="left"] input[type="text"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 4px rgba(13, 110, 253, 0.4);
+        color: #000000; /* Ensure focused text stays black */
+    }
+
+    /* Search button */
+    .myButton {
+        background: #0d6efd;
+        color: #ffffff;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .myButton:hover {
+        background: #0b5ed7;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* Refresh div styling */
+    #refreshdivs {
+        margin-top: 15px;
+        padding: 10px;
+        background: #ffffff;
+        border: 1px solid #cfdaf0;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 92, 184, 0.12);
+        color: #000000; /* Black text inside grid */
+    }
+
+</style>
+
+
+
 	<script type="text/javascript">
 
  	function loadSearchs() {

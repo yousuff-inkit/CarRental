@@ -12,209 +12,158 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/globalcss.css">
+
 <style>
-form label.error {
-color:red;
-font-weight:bold;
+    /* --- GLOBAL LAYOUT --- */
+    body {
+        background-color: #f0f4f8;
+        font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+        margin: 0; padding: 0;
+        color: #334155;
+        overflow-x: auto; 
+    }
 
-                }
+    /* --- BACKGROUND WIDTH FIX --- */
+    #mainBG, .homeContent {
+        width: 100%;
+        min-width: 1250px !important; 
+        box-sizing: border-box;
+        display: block;
+    }
 
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-#validrate{
-    color:red;
-}
-#validrate1{
-    color:red;
-}
+    #frmcomplaint {
+        width: 98%;
+        margin: 20px auto;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
 
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+    /* --- BLUE HEADER CARD SECTION --- */
+    .header-card-section {
+        background: linear-gradient(to right, #dbeafe, #eff6ff); 
+        border-radius: 16px;
+        padding: 25px 30px;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+        margin-bottom: 25px;
+        border: 1px solid #bfdbfe;
+    }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
+    .header-card-section h3 {
+        color: #1e3a8a; 
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
+    /* --- HEADER TABLE LAYOUT --- */
+    .header-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 15px; 
+        table-layout: fixed; 
+    }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
+    /* Labels */
+    .header-table td.label-cell {
+        text-align: right;
+        color: #1e3a8a;
+        font-weight: 700;
+        font-size: 15px; /* Increased Size */
+        white-space: nowrap;
+        vertical-align: middle;
+        padding-right: 15px; 
+    }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
+    /* Inputs */
+    .header-table td.input-cell {
+        vertical-align: middle;
+        text-align: left;
+    }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
+    /* --- PILL INPUT STYLING --- */
+    .header-card-section input[type="text"],
+    .header-card-section .jqxDateTimeInput {
+        background-color: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        border-radius: 8px !important; 
+        height: 38px !important;
+        padding: 0 12px !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+        color: #334155;
+        font-size: 14px;
+        font-weight: 500;
+        width: 100% !important;
+        box-sizing: border-box; 
+    }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
+    /* Focus State */
+    .header-card-section input[type="text"]:focus {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
+        outline: none;
+    }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
+    /* --- GRID CARD SECTION --- */
+    .grid-card-section {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
+    }
 
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
+    /* JQX Override */
+    .jqx-widget-content {
+        border-radius: 8px !important;
+        border-color: #94a3b8 !important;
+    }
 </style>
+
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#compdate").jqxDateTimeInput({
-		width : '125px',
-		height : '15px',
-		formatString : "dd.MM.yyyy"
-	});
-	
-		document.getElementById("formdet").innerText="Complaint(CMT)";
-		document.getElementById("formdetail").value="Complaint";
-		document.getElementById("formdetailcode").value="CMT";
-		window.parent.formCode.value="CMT";
+    // UPDATED JQX INPUT SIZE
+    $("#compdate").jqxDateTimeInput({
+        width : '100%',
+        height : '38px',
+        formatString : "dd.MM.yyyy"
+    });
+    
+        document.getElementById("formdet").innerText="Complaint(CMT)";
+        document.getElementById("formdetail").value="Complaint";
+        document.getElementById("formdetailcode").value="CMT";
+        window.parent.formCode.value="CMT";
 window.parent.formName.value="Complaint";
     var comdata= '<%=ccd.mainserch() %>';
-	             var num = 0; 
+                 var num = 0; 
             var source =
-            {                            
+            {                           
                 datatype: "json",
                 datafields: [  
-                          	{name : 'doc_no' , type: 'number' },
-     						{name : 'compname', type: 'String'  },
-                        	{name : 'date', type: 'date'  }
-          
+                            {name : 'doc_no' , type: 'number' },
+                        {name : 'compname', type: 'String'  },
+                            {name : 'date', type: 'date'  }
+           
                  ],
                  localdata: comdata,
+                 
                 
-                
-                pager: function (pagenum, pagesize, oldpagenum) {
-                    // callback called when a page or page size is changed.
-                }
+                 pager: function (pagenum, pagesize, oldpagenum) {
+                     // callback called when a page or page size is changed.
+                 }
             };
             
             var dataAdapter = new $.jqx.dataAdapter(source,
-            		 {
-                		loadError: function (xhr, status, error) {
-	                  //  alert(error);    
-	                    }
-		            }		
+                     {
+                        loadError: function (xhr, status, error) {
+                      //  alert(error);    
+                        }
+                    }        
             );
             $("#maintearch10").jqxGrid(
             {
@@ -225,21 +174,21 @@ window.parent.formName.value="Complaint";
                 selectionmode: 'singlerow',
 
                 columns: [
-					{ text: 'Doc No', datafield: 'doc_no', width: '20%' },
-					{ text: ' Name', datafield: 'compname', width: '80%' },
-					{ text: ' Date', datafield: 'date', width: '10%',cellsformat:'dd.MM.yyyy',hidden:true }
-					
-					]
+                    { text: 'Doc No', datafield: 'doc_no', width: '20%' },
+                    { text: ' Name', datafield: 'compname', width: '80%' },
+                    { text: ' Date', datafield: 'date', width: '10%',cellsformat:'dd.MM.yyyy',hidden:true }
+                    
+                    ]
             });
       
 
             $('#maintearch10').on('rowselect', function (event) {
-                
-            	var rowindex1=event.args.rowindex;
-                document.getElementById("docno").value= $('#maintearch10').jqxGrid('getcellvalue', rowindex1, "doc_no");
-                document.getElementById("compliant").value=$('#maintearch10').jqxGrid('getcellvalue', rowindex1, "compname");
-                $("#compdate").jqxDateTimeInput('val',$("#maintearch10").jqxGrid('getcellvalue', rowindex1, "date"));
-               
+                 
+                var rowindex1=event.args.rowindex;
+                 document.getElementById("docno").value= $('#maintearch10').jqxGrid('getcellvalue', rowindex1, "doc_no");
+                 document.getElementById("compliant").value=$('#maintearch10').jqxGrid('getcellvalue', rowindex1, "compname");
+                 $("#compdate").jqxDateTimeInput('val',$("#maintearch10").jqxGrid('getcellvalue', rowindex1, "date"));
+                 
             }); 
             
 });
@@ -248,62 +197,62 @@ window.parent.formName.value="Complaint";
 <script type="text/javascript">
 
 function funReadOnly(){
-	$('#frmcomplaint input').attr('readonly', true );
-	 $('#compdate').jqxDateTimeInput({ disabled: true}); 
+    $('#frmcomplaint input').attr('readonly', true );
+     $('#compdate').jqxDateTimeInput({ disabled: true}); 
 }
 function funRemoveReadOnly(){
-	$('#frmcomplaint input').attr('readonly', false );
-	//$('#jqxDateTimeInput').jqxDateTimeInput({ disabled: false});
-		 $('#compdate').jqxDateTimeInput({ disabled: false}); 
-	$('#docno').attr('readonly', true);
+    $('#frmcomplaint input').attr('readonly', false );
+    //$('#jqxDateTimeInput').jqxDateTimeInput({ disabled: false});
+         $('#compdate').jqxDateTimeInput({ disabled: false}); 
+    $('#docno').attr('readonly', true);
 }
 function funFocus()
 {
-	document.getElementById("compliant").focus();
-		
+    document.getElementById("compliant").focus();
+        
 }
 function funSearchLoad(){
-	changeContent('complaintmastersearch.jsp'); 
+    changeContent('complaintmastersearch.jsp'); 
  }
 function funNotify(){
-	 $('#compdate').jqxDateTimeInput({ disabled: false}); 	
-	return 1;
+     $('#compdate').jqxDateTimeInput({ disabled: false});   
+    return 1;
 } 
 
     
     $(function(){
         $('#frmcomplaint').validate({
-                	 rules: {
-                	
-                         compliant:{
-                        	required:true,
-                        	maxlength:50
-                        }
-                       
-                        },
-                         
-                         messages: {
-                        	 
-                        	 compliant:{
-                        	 required:"  *   required",
-                        	  maxlength:"   Max 50 chars"
-                          }
-                       
-                         
-                          }
+                     rules: {
+                    
+                             compliant:{
+                                required:true,
+                                maxlength:50
+                             }
+                        
+                         },
+                          
+                          messages: {
+                             
+                             compliant:{
+                             required:"  * required",
+                              maxlength:"   Max 50 chars"
+                           }
+                        
+                          
+                           }
         });});
     
 function setValues()
 {
-	if($('#compdatehidden').val()){
-		$("#compdate").jqxDateTimeInput('val', $('#compdatehidden').val());
-	}
-   	//$('#prevdate').val($('#prevdatehidden').val()) ;
-	if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
+    if($('#compdatehidden').val()){
+        $("#compdate").jqxDateTimeInput('val', $('#compdatehidden').val());
+    }
+    //$('#prevdate').val($('#prevdatehidden').val()) ;
+    if($('#msg').val()!=""){
+           $.messager.alert('Message',$('#msg').val());
+          }
 
-	}
+    }
 </script>
 
 </head>
@@ -311,44 +260,50 @@ function setValues()
 <form id="frmcomplaint" action="saveComplaint" autocomplete="off" method="post">
 <jsp:include page="../../../../header.jsp" /><br/>
     <div class='hidden-scrollbar receipt-header'>
-<div class="table-section" style="width: 100%;"><h3>Compliant Details</h3>
-<table class="cr-table" width="100%" >
-  <tr>
-    <td width="12%"><div align="right">Date</div></td> 
-    <td colspan="3"><div id="compdate" name="compdate" value='<s:property value="compdate"/>'></div></td>
-    <input type="hidden" name="compdatehidden" id="compdatehidden" value='<s:property value="compdatehidden"/>'>
-    <td width="9%"><div align="right">Doc No</div></td>
-    <td width="24%">
-      <input type="text" name="docno" readonly="readonly" id="docno" value='<s:property value="docno"/>'>
-   </td>
-  </tr>                   
-  <tr>
-    <td><div align="right">Name</div></td>
-    <td width="50%"><input type="text" name="compliant" style="width:50%;" id="compliant" value='<s:property value="compliant"/>'></td>
     
-  </tr>
+    <div class="header-card-section">
+        <h3>Compliant Details</h3>
+        
+        <table class="header-table">
+            <colgroup>
+                <col style="width: 15%;">  <col style="width: 22%;">  <col style="width: 10%;">  <col style="width: 22%;">  <col style="width: auto;"> </colgroup>
 
-</table>
-<input type="hidden" id="mode" name="mode"/>
-          <input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
-          	 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+            <tr>
+                <td class="label-cell">Date</td> 
+                <td class="input-cell">
+                    <div id="compdate" name="compdate" value='<s:property value="compdate"/>'></div>
+                    <input type="hidden" name="compdatehidden" id="compdatehidden" value='<s:property value="compdatehidden"/>'>
+                </td>
+                
+                <td class="label-cell">Doc No</td>
+                <td class="input-cell">
+                    <input type="text" name="docno" readonly="readonly" id="docno" value='<s:property value="docno"/>'>
+                </td>
+                
+                <td></td>
+            </tr>   
+            
+            <tr>
+                <td class="label-cell">Name</td>
+                <td class="input-cell" colspan="3">
+                    <input type="text" name="compliant" id="compliant" value='<s:property value="compliant"/>'>
+                </td>
+                <td></td>
+            </tr>
+
+        </table>
+    </div>
+
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
+    <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
           
-</div>
-
-			    <table class="cr-table" width="100%">
-                  <tr>
-                    <td width="20%">&nbsp;</td>
-                     
-                    <td width="60%"><div id="maintearch10" style="position:relative;"></div>
-</td>
-                    <td width="20%">&nbsp;</td>
-                  </tr>
-                </table>
-               
+    <div class="grid-card-section">
+        <div id="maintearch10" style="position:relative;"></div>
+    </div>
+                
     </div>
 </form>
-
-
 
 </div>
 </body>
