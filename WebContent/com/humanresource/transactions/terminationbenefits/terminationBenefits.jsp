@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
@@ -5,21 +6,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="UTF-8">
-<title>GatewayERP(i)</title>
+<meta charset="ISO-8859-1">
+<title>GatewayERP(i) - Terminal Benefits</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<link rel="stylesheet" href="<%=contextPath%>/css/global.css" type="text/css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		/*  $('#btnPrint').attr('disabled', true ); */$('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
-		 
+		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
 		 $("#terminationBenefitsPostingDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 
 	     var curfromdate= $('#terminationBenefitsPostingDate').jqxDateTimeInput('getDate');
 		 var lastdaydate = new Date(curfromdate.getFullYear(), curfromdate.getMonth() + 1, 0);
 	     var lastdaymonthdate=new Date(new Date(lastdaydate).setDate(lastdaydate.getDate()));
 	     $('#terminationBenefitsPostingDate ').jqxDateTimeInput('setDate', new Date(lastdaymonthdate));
-	    
 	});
 	
 	function getLeaveDaysConfig(){
@@ -44,9 +43,7 @@
 	  			     $('#txtchkgridload').val(items[0]);
 	  			     $('#txtchkdate').val(items[1]);
 	  			     $('#txtchksalarypaid').val(items[3]);
-	  			   
 	  			     document.getElementById("errormsg").innerText="Terminal Benefits done till "+items[2]+".";
-	  			     
 	  			   if(parseInt($('#txtchkdate').val())==0){
 	  				  if(parseInt($('#txtchkgridload').val())==1){
 	  					if(parseInt($('#txtchksalarypaid').val())==0){
@@ -127,20 +124,17 @@
 			$("#terminationBenefitsAccounts").jqxGrid({ disabled: false});
 			$('#terminationBenefitsPostingDate').jqxDateTimeInput({disabled: false});
 			getLeaveDaysConfig();
-			
 			if ($("#mode").val() == "A") {
 				$('#terminationBenefitsPostingDate').val(new Date());
 				var curfromdate= $('#terminationBenefitsPostingDate').jqxDateTimeInput('getDate');
 				var lastdaydate = new Date(curfromdate.getFullYear(), curfromdate.getMonth() + 1, 0);
 			    var lastdaymonthdate=new Date(new Date(lastdaydate).setDate(lastdaydate.getDate()));
 			    $('#terminationBenefitsPostingDate ').jqxDateTimeInput('setDate', new Date(lastdaymonthdate));
-				
 				$("#terminationBenefitsDetails").jqxGrid('clear'); 
 				$("#terminationBenefitsDetails").jqxGrid('addrow', null, {});
 				$("#terminationBenefitsAccounts").jqxGrid('clear');
 				$("#terminationBenefitsAccounts").jqxGrid('addrow', null, {});
 			}
-			
 	 }
 	 
 	 function funSearchLoad(){
@@ -148,7 +142,6 @@
 	 }
 		
 	 function funChkButton() {
-			/* funReset(); */
 		}
 	 
 	 function funFocus(){
@@ -156,7 +149,6 @@
 	    }
 	   
 	  function funNotify(){	
-	        	/* Validation */
 	        	var rows = $("#terminationBenefitsAccounts").jqxGrid('getrows');
 	        	if(parseInt(rows[0].acno)>0){
 	        		document.getElementById("errormsg").innerText="";
@@ -164,15 +156,11 @@
 	        		document.getElementById("errormsg").innerText="Process,Calculate & Save.";
 	        	    return 0;	
 	        	}
-	    		
 				var paydate = $('#terminationBenefitsPostingDate').jqxDateTimeInput('getDate');
 		        var validdate=funDateInPeriod(paydate);
 		         if(validdate==0){
 			        return 0;	
 		         }
-	    	    /* Validation Ends*/
-	        	
-	        	/* Terminal Benefits Details Grid  Saving*/
 				 var rows = $("#terminationBenefitsDetails").jqxGrid('getrows');
 				 var length=0;
 					 for(var i=0 ; i < rows.length ; i++){
@@ -184,15 +172,11 @@
 						    .attr("name", "test"+length)
 							.attr("hidden", "true");
 							length=length+1;
-							
 				    newTextBox.val(rows[i].employeedocno+"::"+rows[i].salary+"::"+rows[i].terminalbenefitsyears+"::"+rows[i].terminalbenefitsdaystobeposted+"::"+rows[i].terminalbenefitscurrentprovision+"::"+rows[i].terminalbenefitsalreadyposted+"::"+rows[i].terminalbenefitstobeposted+"::"+rows[i].leavesalary+"::"+rows[i].leavesalarydaystobeposted+"::"+rows[i].leavesalarytotaldaysposted+"::"+rows[i].leavesalarycurrentprovision+"::"+rows[i].leavesalaryalreadyposted+"::"+rows[i].leavesalarytobeposted+"::"+rows[i].travelstotalperyear+"::"+rows[i].travelsdaystobeposted+"::"+rows[i].travelstotaldaysposted+"::"+rows[i].travelstotal+"::"+rows[i].travelsalreadyposted+"::"+rows[i].travelstobeposted);
 					newTextBox.appendTo('form');
 					 }
 					}
 		 		 $('#gridlength').val(length);
-	 		   /* Terminal Benefits Details Grid  Saving Ends*/	
-	 		   
-		 		/* Account Details Grid Saving */
 		    	 var accountrows = $("#terminationBenefitsAccounts").jqxGrid('getrows');
 		    	 var journallength=0;
 				 for(var j=0 ; j < accountrows.length ; j++){
@@ -204,47 +188,36 @@
 					    .attr("name", "journal"+journallength)
 					    .attr("hidden", "true");
 						journallength=journallength+1;
-						
 					var amount=0,id=1;
 					if((accountrows[j].credit!=null) && (accountrows[j].credit!='undefined') &&  (accountrows[j].credit!='NaN') && (accountrows[j].credit!="") && (accountrows[j].credit!=0)){
 						 amount=accountrows[j].credit*-1;
 						 id=-1;
 					}
-					
 					if((accountrows[j].debit!=null) && (accountrows[j].debit!='undefined') && (accountrows[j].debit!='NaN') && (accountrows[j].debit!="") && (accountrows[j].debit!=0)){
 						 amount=accountrows[j].debit;
 						 id=1;
 					}
-					
 					newTextBox.val(accountrows[j].acno+"::"+amount+"::"+id);
 					newTextBox.appendTo('form');
 					}
 				 }
 				 $('#journalgridlength').val(journallength);
-		 		/* Account Details Grid Saving Ends */
-	 		   
 	    		return 1;
 		} 
 	  
-	  
 	  function setValues(){
-		  
 		  if($('#hidterminationBenefitsPostingDate').val()){
 				 $("#terminationBenefitsPostingDate").jqxDateTimeInput('val', $('#hidterminationBenefitsPostingDate').val());
 			  }
-		  
 		  if($('#msg').val()!=""){
 			   $.messager.alert('Message',$('#msg').val());
 			  }
-		  
 		  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 		  funSetlabel();
-			
 		     var indexVal = document.getElementById("txttrno").value;
 			 if(indexVal>0){
 	         $("#accountsDetailsDiv").load("accountsDetailsGrid.jsp?trno="+indexVal);
 			 }
-	         
 			 var indexVal1 = document.getElementById("docno").value;
 	         var indexVal2 = document.getElementById("txttrno").value;
 	         if(indexVal1>0){
@@ -253,7 +226,7 @@
 	         	$("#terminationBenefitsDetailsDiv").load("terminationBenefitsGrid.jsp?docno="+indexVal1+"&trno="+indexVal2+'&branch='+branch+'&employeebranchchk='+employeebranchchk);
 	         } 
 		}	
-	  
+		
 	  function funProcessBtn(){
 	      var paydate = $('#terminationBenefitsPostingDate').jqxDateTimeInput('getDate');
 		  var validdate=funDateInPeriod(paydate);
@@ -272,11 +245,9 @@
 			  var curfromdate= $('#terminationBenefitsPostingDate').jqxDateTimeInput('getDate');
 			  var lastday = new Date(curfromdate.getFullYear(), curfromdate.getMonth() + 1, 0);
 			  var lastdaydate = lastday.getDate();
-			  
 			  $("#overlay, #PleaseWait").show();
 			  var employeebranchchk=window.parent.employeebranchchk.value; 
 			  $("#terminationBenefitsDetailsDiv").load("terminationBenefitsGrid.jsp?check=2&day="+lastdaydate+"&deprdate="+date+"&branch="+document.getElementById("brchName").value+'&employeebranchchk='+employeebranchchk);
-			  
 			  var rows = $("#terminationBenefitsDetails").jqxGrid('getrows');
 			  length = rows.length;
 			  if(!(length=='0')){
@@ -301,13 +272,10 @@
 	  }
 		
 		function funPrintBtn() {
-			
 			if (($("#mode").val() == "view") && $("#docno").val()!="") {
-				
 				 var url=document.URL;
 				 reurl=url.split("transactions");
 			     $("#docno").prop("disabled", false);
-			     
 					   $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
 						if (r){
 							 var win= window.open(reurl[0]+"transactions/terminationbenefits/printTerminalBenefitsPosting?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
@@ -331,192 +299,56 @@
 		    var lastdaymonthdate=new Date(new Date(lastdaydate).setDate(lastdaydate.getDate()));
 		    $('#terminationBenefitsPostingDate ').jqxDateTimeInput('setDate', new Date(lastdaymonthdate));
 	  }
-	  
 </script>
 
 <style>
-.icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}
-
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
+html, body { height: 100%; overflow-y: auto; }
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 8px; }
+body::-webkit-scrollbar-thumb { background: #4da3ff; border-radius: 8px; border: 2px solid #eaf3ff; }
+body::-webkit-scrollbar-thumb:hover { background: #1a73e8; }
+.hidden-scrollbar { max-height: 80vh; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: #4da3ff #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar { width: 8px; }
+.hidden-scrollbar::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 4px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background-color: #4da3ff; border-radius: 4px; border: 2px solid #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1a73e8; }
+body { background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%); font-family: "Poppins", "Segoe UI", sans-serif; color: #1f2f46; margin: 0; padding: 40px 0; min-height: 100vh; animation: fadeIn 0.6s ease-in-out; box-sizing: border-box; }
+#mainBG { background: #f4f8ff; border-radius: 16px; box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15); padding: 25px 30px; max-width: 1250px; margin: 0 auto; transition: 0.3s ease; }
+.receipt-header { background: #edf4ff; border: 1px solid #c9dafc; border-radius: 14px; padding: 20px; margin-bottom: 26px; box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2); }
+.clean-grid-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 32px; width: 100%; box-sizing: border-box; align-items: start; }
+.clean-grid-item { display: flex; flex-direction: column; }
+.clean-grid-item.full { grid-column: span 3; }
+.clean-input, .clean-grid-item input[type="text"], .clean-grid-item select, .receipt-header input[type="text"], .receipt-header select { width: 100%; height: 44px; padding: 8px 12px; border: 1px solid #b9ccf2; border-radius: 8px; background: #ffffff; font-size: 0.95rem; color:#1f2f46; box-sizing: border-box; transition: 0.18s ease; }
+.clean-input:focus, .receipt-header input[type="text"]:focus, .receipt-header select:focus { border-color: #4da3ff; box-shadow: 0 0 6px rgba(77,163,255,0.35); outline: none; }
+#jqxRentalRefundDate, #jqxReferenceDate { width: 100% !important; height: 44px !important; }
+#jqxRentalRefundDate input, #jqxReferenceDate input { height: 42px !important; padding-left: 10px !important; border-radius: 8px !important; background-color: #ffffff !important; box-shadow: none !important; }
+.cr-table input[type="text"], .cr-table select { width: 100%; height: 40px; padding: 6px 10px; box-sizing: border-box; border-radius: 8px; border: 1px solid #d6e1ff; background: #fff; }
+label { font-weight: 600; font-size: 14px; color: #1a2d4d; margin-bottom: 8px; display:block; }
+.cr-table { width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15); }
+.cr-table th, .cr-table td { padding: 10px 12px; border-bottom: 1px solid #d6e1ff; text-align: left; font-size: 0.95rem; color: #1f2f46; vertical-align: middle; }
+.cr-table th { background-color: #dcebff; color: #1b3f73; font-weight: 600; }
+button, .myButton { background: linear-gradient(90deg, #3b82f6, #1a73e8); color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-weight: 600; cursor: pointer; transition: 0.25s ease; box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 900px) { .clean-grid-form { grid-template-columns: repeat(1, 1fr); } .clean-grid-item.full { grid-column: span 1; } }
 </style>
-
 </head>
+
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background" >
 <form id="frmTerminalBenefitsPosting" action="terminalbenefitsposting" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div class="hidden-scrollbar receipt-header">
 <div class="table-section" style="width: 100%;">
 <table class="cr-table" width="100%">
   <tr>
     <td width="3%" align="right">Date</td>
-    <td width="24%"><div id="terminationBenefitsPostingDate" name="terminationBenefitsPostingDate"  onchange="datechange();" value='<s:property value="terminationBenefitsPostingDate"/>'></div>
+    <td width="24%"><div id="terminationBenefitsPostingDate" name="terminationBenefitsPostingDate" onchange="datechange();" value='<s:property value="terminationBenefitsPostingDate"/>'></div>
     <input type="hidden" id="hidterminationBenefitsPostingDate" name="hidterminationBenefitsPostingDate" value='<s:property value="hidterminationBenefitsPostingDate"/>'/></td>
     <td width="8%" align="right"><button type="button" class="icon" id="btnExcelExporter" title="Export current Document to Excel" onclick="funExcelExporter();">
       						 <img alt="Export current Document to Excel" src="<%=contextPath%>/icons/excel_new.png">
       					</button></td>
-    <td width="13%" align="right"><button type="button" id="btnProcessing" title="Process"  style="border:none;background:none;" onclick="funProcessBtn();">
+    <td width="13%" align="right"><button type="button" id="btnProcessing" title="Process" style="border:none;background:none;" onclick="funProcessBtn();">
       						 <img alt="Process" src="<%=contextPath%>/icons/process2.png" width="16" height="16">
       					</button></td>
     <td width="10%" align="center"><button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funCalculateBtn();">
@@ -567,7 +399,6 @@ body {
 <input type="hidden" id="chkleavedayconfig" name="chkleavedayconfig"/>
 </div>
 </form>
-	
 </div>
 </body>
 </html>

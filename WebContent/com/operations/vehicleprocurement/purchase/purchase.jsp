@@ -1,15 +1,16 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
- <%@page import="java.util.*" %>
- <%@page import="java.sql.*"%>
+<%@page import="java.util.*" %>
+<%@page import="java.sql.*"%>
 <%@page import="javax.sql.*"%>
 <%@page import="com.connection.*" %>
- <%@page import="java.text.SimpleDateFormat" %>
- <%@page import="com.operations.vehicleprocurement.purchase.ClsvehpurchaseDAO" %>
- <% String contextPath=request.getContextPath();
- 	ClsvehpurchaseDAO cvp=new ClsvehpurchaseDAO();
- 	String method=cvp.getMethod();
- %>
- 
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="com.operations.vehicleprocurement.purchase.ClsvehpurchaseDAO" %>
+<%@ page pageEncoding="ISO-8859-1" contentType="text/html; charset=ISO-8859-1" %>
+<% String contextPath=request.getContextPath();
+	ClsvehpurchaseDAO cvp=new ClsvehpurchaseDAO();
+	String method=cvp.getMethod();
+%>
+
 <!DOCTYPE html>
 <html>
 <%-- <% String contextPath=request.getContextPath();%> --%>
@@ -288,7 +289,7 @@ body {
 		 $("#jqxStartDate").jqxDateTimeInput({ width: '120px', height: '15px', formatString:"dd.MM.yyyy",enableBrowserBoundsDetection: true});
 		 $("#uptoDate").jqxDateTimeInput({ width: '120px', height: '15px', formatString:"dd.MM.yyyy",enableBrowserBoundsDetection: true});
  
-		 
+ 
 		 $("#vehpurinvDate").jqxDateTimeInput({ width: '120px', height: '15px', formatString:"dd.MM.yyyy"});
 		 $("#vehpurorderdelDate").jqxDateTimeInput({ width: '120px', height: '15px', formatString:"dd.MM.yyyy"});
 		 $('#brandsearchwndow').jqxWindow({ width: '40%', height: '55%',  maxHeight: '62%' ,maxWidth: '60%' , title: 'Brand Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
@@ -317,6 +318,7 @@ body {
 			  
 			   
 			   
+
 			   $('#vehrefno').dblclick(function(){
 				   
 				    if($('#mode').val()=="A")
@@ -330,29 +332,30 @@ body {
 				    
 		  $('#financeaccid').dblclick(function(){
 				  	   
-			  		  
+
 			  $('#accountSearchwindow').jqxWindow('open');
 			 commenSearchContent('finaccountSearch.jsp?');
 				        
 		  }); 
 			   
+
 		  $('#bankaccid').dblclick(function(){
 		  	   
-	  		  
+
 			  $('#accountSearchwindow').jqxWindow('open');
 			 commenSearchContent('bankaccountsearch.jsp?');
 				        
 		  }); 
 	  $('#interestaccid').dblclick(function(){
 		  	   
-	  		  
+
 			  $('#accountSearchwindow').jqxWindow('open');
 			 commenSearchContent('inetestaccsearch.jsp?');
 				        
 		  }); 
 	  $('#loanaccid').dblclick(function(){
 	  	   
-  		  
+
 		  $('#accountSearchwindow').jqxWindow('open');
 		 commenSearchContent('loanaccount.jsp?');
 			        
@@ -380,12 +383,11 @@ body {
 	    
 	 //   $("#imagedivv").hide(); 
 	
-	 
-	 
-	 
-		
+	
+	
 	});
 			   
+
 			   function commenSearchContent(url) {
 				 	 //alert(url);
 				 		 $.get(url).done(function (data) {
@@ -396,7 +398,7 @@ body {
 				 	}); 
 				 	} 	
 			   
-			   
+
 				function  getloanacc(event){
 				 	 var x= event.keyCode;
 				 	 if(x==114){
@@ -406,6 +408,7 @@ body {
 				 	 commenSearchContent('loanaccount.jsp?');
 					          }
 				 		   
+
 				 	 else{
 				 		 }
 				 	 }    
@@ -418,6 +421,7 @@ body {
 				 	 commenSearchContent('inetestaccsearch.jsp?');
 					          }
 				 		   
+
 				 	 else{
 				 		 }
 				 	 }   
@@ -430,12 +434,13 @@ body {
 				 	 commenSearchContent('bankaccountsearch.jsp?');
 					          }
 				 		   
+
 				 	 else{
 				 		 }
 				 	 }    
 			   
-				
-				
+
+
 			 //   getfinacc(event)
 			function  getfinacc(event){
 	 	 var x= event.keyCode;
@@ -446,10 +451,12 @@ body {
 	 	 commenSearchContent('finaccountSearch.jsp?');
 		          }
 	 		   
+
 	 	 else{
 	 		 }
 	 	 }     
 			   
+
 	function slnoSearchContent(url) {
 	 	 //alert(url);
 	 		 $.get(url).done(function (data) {
@@ -468,7 +475,7 @@ body {
 	 
 	 	}); 
 	 	} 
-	
+
 	function getrefDetails(event){
 	 	 var x= event.keyCode;
 	 	 if(x==114){
@@ -485,7 +492,7 @@ body {
 		  function refsearchContent(url) {
 	       //alert(url);
 	          $.get(url).done(function (data) {
-	//alert(data);
+//alert(data);
 	        $('#refnosearchwindow').jqxWindow('setContent', data);
 
 		}); 
@@ -506,7 +513,7 @@ body {
 		  function accountSearchContent(url) {
 	       //alert(url);
 	          $.get(url).done(function (data) {
-	//alert(data);
+//alert(data);
 	        $('#accountSearchwindow').jqxWindow('setContent', data);
 
 		}); 
@@ -582,7 +589,7 @@ body {
 			   $('#updatefleet').show();
 			   $('#updateposting').show();
 			   
-			   
+			
 	 }
 	 function funRemoveReadOnly(){
 		 
@@ -754,14 +761,13 @@ body {
 			   } */
 		
 			   
-			   
+		
 			 var rows = $("#vehoredergrid").jqxGrid('getrows');
 			 
-				
+		
 			   for(var i=0 ; i < rows.length ; i++){
 			    	
-			 
-				
+		
 			    if(parseInt(rows[i].brdid)>0)
 	  		  {
 			    
@@ -781,8 +787,8 @@ body {
 	   	            
 			   }
 		   
-			   
-			   
+		   
+		   
 			   var rows = $("#vehoredergrid").jqxGrid('getrows');   
 			   
 		    $('#vehpurchasegridlenght').val(rows.length);
@@ -860,6 +866,7 @@ body {
 			  $.messager.confirm('Message', 'Do you want to calculate with '+calcumethod, function(r){
 		        	  
      		       
+
 		        	if(r==false)
 		        	  {
 		        		return false; 
@@ -867,6 +874,8 @@ body {
 		        	else{ 
 		        	      
 	  
+
+
 						  $("#jqxDistributionGrid").jqxGrid('clear');
 						   $("#jqxDistributionGrid").jqxGrid('addrow', null, {});
 					
@@ -962,13 +971,10 @@ body {
 											$("#jqxDistributionGrid").jqxGrid('addrow', null, {});
 											//$("#imagedivv").show();
 											}
+											
+									   }
 										
-								           }
-										
-							      
-						  
-				
-					
+		
 						  
 		        	}
 		        	}); 
@@ -1189,6 +1195,7 @@ body {
 				$.messager.confirm('Message', 'Do you want to save changes?', function(r){
 		        	  
 	     		       
+
  		        	if(r==false)
  		        	  {
  		        		return false; 
@@ -1214,8 +1221,8 @@ body {
 	//alert(newTextBox.val());
 		   newTextBox.appendTo('form');
 		   
-		  
-		    
+
+
 		   }
 		   $("table#finance input").prop("disabled", false);
 		   $("table#finance select").prop("disabled", false);
@@ -1235,16 +1242,18 @@ body {
 		   document.getElementById("msg").value="";
 		   document.getElementById("detval").value="";
 		   
-		   
+
+
 		   //alert(document.getElementById("loanamount").value);
 		// return 0;
 		   $('#frmpurchase').submit();
 		        
  		        	
- 		           
+ 		           	
  		       	}
 			     });
  		        	
+
 		
 		//calculate_new
 		
@@ -1320,8 +1329,8 @@ body {
 	        // alert(document.getElementById("detval").value);
 	       
 	       
-	         
-	        if(parseInt(document.getElementById("detval").value)==10)
+	        	
+	         if(parseInt(document.getElementById("detval").value)==10)
 	        	 {
 	        	// jqxStartDate hidjqxStartDate uptoDate 	 
 	        	//calcumethod  paymentmethod calcuval paymentval
@@ -1607,6 +1616,7 @@ body {
 			
 			
 
+
 			var rows2 = $("#vehoredergrid").jqxGrid('getrows');
 			
 			var fleetval=0;
@@ -1681,12 +1691,14 @@ body {
 			    $.messager.confirm('Message', 'Do you want to save changes?', function(r){
 		        	  
 	     		       
+
 		        	if(r==false)
 		        	  {
 		        		return false; 
 		        	  }
 		        	else{	
 			   
+
 						  var rows = $("#vehoredergrid").jqxGrid('getrows');
 						    $('#vehpurchasegridlenght').val(rows.length);
 						 
@@ -1818,7 +1830,7 @@ else{
 		if (($("#mode").val() == "view") && parseInt(document.getElementById("masterdoc_no").value)>0) {
 			
 		
-			
+
 			var x=new XMLHttpRequest();
 			x.onreadystatechange=function(){
 							if (x.readyState==4 && x.status==200)
@@ -1839,9 +1851,9 @@ else{
 											var rows1 = $("#vehoredergrid").jqxGrid('getrows');
 											
 											   for(var i=0 ; i < rows1.length ; i++){
-										
+										 	
 													 var brdid=rows1[i].brdid;
-													
+													 
 													 if(parseInt(brdid)>=0)
 														{
 														       
@@ -1852,7 +1864,7 @@ else{
 																document.getElementById("errormsg").innerText="Update All Fleet Before Posting";  
 														    	return 0;
 																}
-													
+													 
 														}
 											              }
 												 
@@ -1896,6 +1908,7 @@ else{
 			}
  
 	
+	
 	function funupdateposting()
 	{
 	//alert(1)
@@ -1911,14 +1924,13 @@ else{
 		
 		
 		
-		
            if(parseInt(document.getElementById("validatepostcalu").value)==1)
         	   {
         	   
         		
         	    $.messager.confirm('Message', 'Do you want to save changes?', function(r){
         	   	  
-        		       
+        	       
         	     	if(r==false)
         	     	  {
         	     		return false; 
@@ -1927,7 +1939,7 @@ else{
         	     		
         	     	
 		
-				   
+				
 
 					  var rows = $("#vehoredergrid").jqxGrid('getrows');
 					    $('#vehpurchasegridlenght').val(rows.length);
@@ -1985,7 +1997,7 @@ else{
 			
 				 
 											     			   
-		
+			
 		
 	}
 	  
@@ -2048,6 +2060,8 @@ else{
 	 {
 
 								
+
+
 	var x =new XMLHttpRequest();
 	
 	x.onreadystatechange=function()
@@ -2086,6 +2100,8 @@ else{
 	 {
 
 								
+
+
 	var x =new XMLHttpRequest();
 	
 	x.onreadystatechange=function()
@@ -2110,6 +2126,7 @@ else{
 		{
 		 document.getElementById("errormsg").innerText="";
 		}
+		
 		
 		
 	
@@ -2262,30 +2279,30 @@ else{
 				 {
 				 var dealno=document.getElementById("dealno").value;
 			 
-			 var x=new XMLHttpRequest();
-				x.onreadystatechange=function(){
-				if (x.readyState==4 && x.status==200)
-					{
-						var items=x.responseText.trim();
-						
-						if(items==1){
+				 var x=new XMLHttpRequest();
+					x.onreadystatechange=function(){
+					if (x.readyState==4 && x.status==200)
+						{
+							var items=x.responseText.trim();
 							
-						$.messager.alert('Message', ' Deal No Successfully Updated.');
-						document.getElementById("editdeal").value="Edit";
-						$("#dealno").prop("disabled", true);
-					    $("#dealno").prop("readonly", true);
-							}
+							if(items==1){
+								
+							$.messager.alert('Message', ' Deal No Successfully Updated.');
+							document.getElementById("editdeal").value="Edit";
+							$("#dealno").prop("disabled", true);
+						    $("#dealno").prop("readonly", true);
+								}
+							
+					  }
+					}
 						
-				  }
-				}
-					
-			x.open("GET","updateDealNo.jsp?dealno="+dealno+"&masterdoc="+document.getElementById("masterdoc_no").value,true);
-			x.send();
-				}
-			 else
-				 {
-				 }
-			
+				x.open("GET","updateDealNo.jsp?dealno="+dealno+"&masterdoc="+document.getElementById("masterdoc_no").value,true);
+				x.send();
+					}
+				 else
+					 {
+					 }
+				
 		}
 		
 </script>
@@ -2300,9 +2317,6 @@ else{
 </head>
 <body onload="setValues();getNonTaxableEntity();">
 <div id="mainBG" class="homeContent" data-type="background" >
-
-
-
 
 <form id="frmpurchase" action="savePurchase" method="post" autocomplete="off" >
     <jsp:include page="../../../../header.jsp"></jsp:include><br><br>
@@ -2475,7 +2489,7 @@ else{
 </Select>
   </td>
   
-   
+  
   </tr>
   <tr>
     
@@ -2539,6 +2553,9 @@ else{
 
 
 
+
+
+
 <table class="cr-table"  align="center" width="50%" >
 
 <tr>
@@ -2551,7 +2568,7 @@ else{
     <input type="hidden" id="hidvehpurinvDate" name="hidvehpurinvDate" value='<s:property value="hidvehpurinvDate"/>'/>
     <td>
   
-   
+  
      <td align="center"><button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funpostcalcu();">
        <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png">
       </button> 
@@ -2560,17 +2577,22 @@ else{
   <input type="button" class="myButtonp" name="updateposting" id="updateposting" onclick="funupdateposting()"  value="Posting"  >
    
     
+    
           
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   <input type="button" class="myButton" name="editss" id="editss" onclick="funeditpost()"  value="Edit"  >
     
-        
+    
     </td>
 
 </tr>
 
 
 </table>
+
+
+
+
 
 
 
@@ -2651,10 +2673,6 @@ else{
 <input type="hidden" id="vendorcurr" name="vendorcurr" value='<s:property value="vendorcurr"/>'/>
 <input type="hidden" id="vendorrate" name="vendorrate" value='<s:property value="vendorrate"/>'/>
 
- 
-
-
-
 
 
  
@@ -2670,9 +2688,11 @@ else{
 <input type="hidden" id="clstatus" name="clstatus" value='<s:property value="clstatus"/>'/>
 
 
+
 <input type="hidden" id="masterstatus" name="masterstatus" value='<s:property value="masterstatus"/>'/>
  
 <input type="hidden" id="tranno" name="tranno" value='<s:property value="tranno"/>'/>
+
 
 
 <input type="hidden" id="priamounts" name="priamounts" value='<s:property value="priamounts"/>'/> <!--  distribution grid validation total principle amt=loan amt -->
@@ -2683,6 +2703,7 @@ else{
 <input type="hidden" id="txtnontaxableentity" name="txtnontaxableentity" value='<s:property value="txtnontaxableentity"/>'/>
 
 <input type="hidden" id="txttaxpercentage" name="txttaxpercentage" value='<s:property value="txttaxpercentage"/>'/>
+
 
 
 <%-- <input type="text" id="prinamtval" name="prinamtval" value='<s:property value="prinamtval"/>'/> 

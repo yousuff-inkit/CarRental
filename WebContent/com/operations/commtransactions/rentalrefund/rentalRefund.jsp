@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
@@ -5,902 +6,300 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="UTF-8">
-<title>GatewayERP(i)</title>
+<meta charset="ISO-8859-1">
+<title>GatewayERP(i) - Rental Refund</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-
+<link rel="stylesheet" href="<%=contextPath%>/css/global.css" type="text/css">
 <%
-	String mod = request.getParameter("mod")==null?"":request.getParameter("mod").toString();   
-	String acno = request.getParameter("acno")==null || request.getParameter("acno")==""?"0":request.getParameter("acno").toString();  
+	String mod = request.getParameter("mod")==null?"":request.getParameter("mod").toString();
+	String acno = request.getParameter("acno")==null || request.getParameter("acno")==""?"0":request.getParameter("acno").toString();
 	String client = request.getParameter("client")==null?"":request.getParameter("client").toString();
 	String cldocno = request.getParameter("cldocno")==null || request.getParameter("cldocno").equals("")?"0":request.getParameter("cldocno").toString();
-	String account = request.getParameter("account")==null?"":request.getParameter("account").toString(); 
-	String agmttype = request.getParameter("agmttype")==null?"":request.getParameter("agmttype").toString();  
-	String agmtvocno = request.getParameter("agmtvocno")==null?"":request.getParameter("agmtvocno").toString();  
-	String agmtdocno = request.getParameter("agmtdocno")==null?"":request.getParameter("agmtdocno").toString();     
+	String account = request.getParameter("account")==null?"":request.getParameter("account").toString();
+	String agmttype = request.getParameter("agmttype")==null?"":request.getParameter("agmttype").toString();
+	String agmtvocno = request.getParameter("agmtvocno")==null?"":request.getParameter("agmtvocno").toString();
+	String agmtdocno = request.getParameter("agmtdocno")==null?"":request.getParameter("agmtdocno").toString();
 	String amount = request.getParameter("amount")==null || request.getParameter("amount").equals("")?"0":request.getParameter("amount").toString();
 	String remarks = request.getParameter("remarks")==null?"":request.getParameter("remarks").toString();
 	String cnrdocno = request.getParameter("cnrdocno")==null || request.getParameter("cnrdocno").equals("")?"0":request.getParameter("cnrdocno").toString();
-%>    
+%>
 <script type="text/javascript">
 var mod1 = '<%=mod%>';
 $(document).ready(function() {
-	
-	 $("#jqxRentalRefundDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-	 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-	 $("#jqxReferenceDate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy"});		 
-
-	 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#accountDetailsWindow').jqxWindow('close'); 
-	 
-	 $('#agreementDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Agreement Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#agreementDetailsWindow').jqxWindow('close');
-	 
-	 $('#clientDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Client Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#clientDetailsWindow').jqxWindow('close'); 
-	 
-	 $('#cardDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Card Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#cardDetailsWindow').jqxWindow('close');
-	 
-	 $('#printWindow').jqxWindow({width: '31%', height: '28%',  maxHeight: '70%' ,maxWidth: '31%' , title: 'Print',position: { x: 400, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#printWindow').jqxWindow('close');
-	 
-	 $('#txtaccid').dblclick(function(){
-		  var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
- 	  	  $("#maindate").jqxDateTimeInput('val', date);
- 	  	  accountSearchContent(<%=contextPath+"/"%>+"com/operations/accountsDetailsSearch.jsp?date="+date);
-		  });
-	 
-	  $('#txtagreementvocher').dblclick(function(){
-		  agreementSearchContent('agreementSearch.jsp?clientId='+$('#txtcldocno').val());
-		  });
-	 
-	  $('#txtclientid').dblclick(function(){
-		  var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
-		  $("#maindate").jqxDateTimeInput('val', date);
-		  clientSearchContent(<%=contextPath+"/"%>+"com/operations/clientAccountDetailsSearch.jsp?atype=AR"+"&date="+date);
-          $('#txtforsearch').val(1);
-	 });
+	$("#jqxRentalRefundDate").jqxDateTimeInput({ width: '100%', height: 44, formatString:"dd.MM.yyyy"});
+	$("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+	$("#jqxReferenceDate").jqxDateTimeInput({ width: '100%', height: 44, formatString:"dd.MM.yyyy"});
+	$('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Accounts Search', position: { x: 300, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	$('#accountDetailsWindow').jqxWindow('close');
+	$('#agreementDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Agreement Search', position: { x: 300, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	$('#agreementDetailsWindow').jqxWindow('close');
+	$('#clientDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Client Search', position: { x: 300, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	$('#clientDetailsWindow').jqxWindow('close');
+	$('#cardDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Card Search', position: { x: 300, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	$('#cardDetailsWindow').jqxWindow('close');
+	$('#printWindow').jqxWindow({width: '31%', height: '28%', maxHeight: '70%', maxWidth: '31%', title: 'Print', position: { x: 400, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	$('#printWindow').jqxWindow('close');
+	$('#txtaccid').dblclick(function(){
+		var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
+		$("#maindate").jqxDateTimeInput('val', date);
+		accountSearchContent(<%=contextPath+"/"%>+"com/operations/accountsDetailsSearch.jsp?date="+date);
+	});
+	$('#txtagreementvocher').dblclick(function(){
+		agreementSearchContent('agreementSearch.jsp?clientId='+$('#txtcldocno').val());
+	});
+	$('#txtclientid').dblclick(function(){
+		var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
+		$("#maindate").jqxDateTimeInput('val', date);
+		clientSearchContent(<%=contextPath+"/"%>+"com/operations/clientAccountDetailsSearch.jsp?atype=AR"+"\&date="+date);
+		$('#txtforsearch').val(1);
+	});
 });
-
-function getBranch() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('####');
-				var branchIdItems  = items[0].split(",");
-				var branchItems = items[1].split(",");
-				var optionsbranch = '<option value="">--Select--</option>';
-				for (var i = 0; i < branchItems.length; i++) {
-					optionsbranch += '<option value="' + branchIdItems[i].trim() + '">'
-							+ branchItems[i] + '</option>';
-				}
-				$("select#cmbbranch").html(optionsbranch);
-				if ($('#hidcmbbranch').val() != null) {
-					$('#cmbbranch').val($('#hidcmbbranch').val());
-				}
-			} else {
-			}
-		}
-		x.open("GET", <%=contextPath+"/"%>+"com/operations/commtransactions/getBranch.jsp", true);
-		x.send();
-	}
-	
-	function accountSearchContent(url) {
-	 	$('#accountDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
+function accountSearchContent(url) {
+	$('#accountDetailsWindow').jqxWindow('open');
+	$.get(url).done(function (data) {
 		$('#accountDetailsWindow').jqxWindow('setContent', data);
 		$('#accountDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function agreementSearchContent(url) {
-	 	$('#agreementDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
+	});
+}
+function agreementSearchContent(url) {
+	$('#agreementDetailsWindow').jqxWindow('open');
+	$.get(url).done(function (data) {
 		$('#agreementDetailsWindow').jqxWindow('setContent', data);
 		$('#agreementDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function clientSearchContent(url) {
-	 	$('#clientDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
+	});
+}
+function clientSearchContent(url) {
+	$('#clientDetailsWindow').jqxWindow('open');
+	$.get(url).done(function (data) {
 		$('#clientDetailsWindow').jqxWindow('setContent', data);
 		$('#clientDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function cardSearchContent(url) {
-	 	$('#cardDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
+	});
+}
+function cardSearchContent(url) {
+	$('#cardDetailsWindow').jqxWindow('open');
+	$.get(url).done(function (data) {
 		$('#cardDetailsWindow').jqxWindow('setContent', data);
 		$('#cardDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function RefundPrintContent(url) {
-		$('#printWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#printWindow').jqxWindow('setContent', data);
-		$('#printWindow').jqxWindow('bringToFront');
-	}); 
-	} 
-	
-	function checkIb(){
-		 if(document.getElementById("hidchckib").value==1){
-			 document.getElementById("chckib").checked = true;
-		 }
-		 else if(document.getElementById("hidchckib").value==0){
-			document.getElementById("chckib").checked = false;
-		  }
-		 }
-	
-	 function funReadOnly(){
-			$('#frmRentalRefund input').attr('readonly', true );
-			$('#frmRentalRefund select').attr('disabled', true);
-			$('#chckib').attr('disabled', true);
-			$('#jqxRentalRefundDate').jqxDateTimeInput({disabled: true});
-			$('#jqxReferenceDate').jqxDateTimeInput({disabled: true});
-			$('#btnCardSearch').attr('disabled', true);
-			$("#jqxSecurity").jqxGrid({ disabled: true});
-			
-			if(mod1=="A") {
-			    document.getElementById("formdet").innerText=window.parent.formName.value+" ("+window.parent.formCode.value.trim()+")";
-				document.getElementById("formdetail").value=window.parent.formName.value;
-				document.getElementById("formdetailcode").value=window.parent.formCode.value.trim(); 
-				funCreateBtn();  
+	});
+}
+function getBranch() {
+	var x = new XMLHttpRequest();
+	x.onreadystatechange = function() {
+		if (x.readyState == 4 && x.status == 200) {
+			var items = x.responseText;
+			items = items.split('####');
+			var branchIdItems  = items[0].split(",");
+			var branchItems = items[1].split(",");
+			var optionsbranch = '<option value="">--Select--</option>';
+			for (var i = 0; i < branchItems.length; i++) {
+				optionsbranch += '<option value="' + branchIdItems[i].trim() + '">' + branchItems[i] + '</option>';
 			}
-	 }
-	 function funRemoveReadOnly(){
-		    getBranch();getCardTypes();checkIb();
-			$('#frmRentalRefund input').attr('readonly', false );
-			$('#frmRentalRefund select').attr('disabled', false);
-			$('#chckib').attr('disabled', false);
-			$('#jqxRentalRefundDate').jqxDateTimeInput({disabled: false});
-			$('#jqxReferenceDate').jqxDateTimeInput({disabled: false});
-			$('#docno').attr('readonly', true);
-			$('#txtdoctype').attr('readonly', true);
-			$('#txtsrno').attr('readonly', true);
-			$('#txtaccid').attr('readonly', true);
-			$('#txtaccname').attr('readonly', true);
-			$('#txtclientid').attr('readonly', true);
-			$('#txtclientname').attr('readonly', true);
-			$('#txtagreementvocher').attr('readonly', true);
-			$('#txtnetamount').attr('readonly', true ); 
-			$('#txtchequeno').attr('readonly', true);
-			$('#cmbbranch').attr('disabled', true);
-			$('#txtamount').attr('readonly', true);
-			$("#jqxSecurity").jqxGrid({ disabled: false});
-			
-		    if ($("#mode").val() == "E") {
-			    $('#cmbpaytype').attr('disabled', true);
-				$('#chckib').attr('disabled', true);
-				$('#cmbbranch').attr('disabled', true);
-				$('#txtaccid').attr('readonly', true);
-				$('#txtaccname').attr('readonly', true);
-				$('#cmbcardtype').attr('disabled', true);
-			} 
-			
-			if ($("#mode").val() == "A") {
-				$('#jqxRentalRefundDate').val(new Date());
-				$('#jqxReferenceDate').val(new Date());
-				$("#jqxSecurity").jqxGrid('clear');
-				$("#jqxSecurity").jqxGrid('addrow', null, {});
-				$('#cmbpaytype').val('');$('#cmbcardtype').val('');$('#cmbratype').val('');$('#cmbpayedas').val('');
-				$('#txtaccid').attr('placeholder','');
+			$("select#cmbbranch").html(optionsbranch);
+			if ($('#hidcmbbranch').val() != null) {
+				$('#cmbbranch').val($('#hidcmbbranch').val());
 			}
-			
-			if (mod1 == "A") { 
-				 document.getElementById("cnrdocno").value='<%=cnrdocno%>'; 
-				 document.getElementById("txtclientid").value='<%=account%>';
-				 document.getElementById("txtclientname").value='<%=client%>';  
-			     document.getElementById("txtacno").value='<%=acno%>';
-		         document.getElementById("txtcldocno").value='<%=cldocno%>';  
-		         document.getElementById("cmbratype").value='<%=agmttype%>';  
-		         document.getElementById("hidcmbratype").value='<%=agmttype%>';  
-		         document.getElementById("txtagreementvocher").value='<%=agmtvocno%>';  
-		         document.getElementById("txtagreement").value='<%=agmtdocno%>';  
-		         document.getElementById("txtamount").value='<%=amount%>';
-		         document.getElementById("txtdescriptions").value='<%=remarks%>';  
-		         document.getElementById("txtonaccountamount").value='<%=amount%>';
-		         
-		         $("#txtclientid, #txtclientname,#txtacno, #cmbratype,#txtagreementvocher, #txtamount, #txtonaccountamount").prop("readonly", true);
-		     }
-	 }
-	
-	function funSearchLoad(){
-	      changeContent('rrpMainSearch.jsp');  
-	}
-		
-	 function funChkButton() {
-			/* funReset(); */
-	}
-	 
-	function funFocus(){
-	    	$('#jqxRentalRefundDate').jqxDateTimeInput('focus'); 	    		
-	}
-	
-	 /* Validations */
-	 $(function(){
-	    $('#frmRentalRefund').validate({
-	    	    rules: {
-	            txtamount:{number:true},
-	            txtdeduction:{number:true},
-				txtaddamount:{number:true},
-	            txtnetamount:{number:true},
-	            txtonaccountamount:{number:true},
-	            txtdescription:{maxlength:500},
-	            txtdescriptions:{maxlength:500},
-	            cmbpayedas:"required"
-	             },
-	             messages: {
-	             txtamount:{number:"Invalid"},
-	             txtdeduction:{number:"Invalid"},
-				 txtaddamount:{number:"Invalid"},
-	             txtnetamount:{number:"Invalid"},
-	             txtonaccountamount:{number:"Invalid"},
-	             txtdescription: {maxlength:"    Max 500 chars"},
-	             txtdescriptions: {maxlength:"    Max 500 chars"},
-	             cmbpayedas:"*"
-	             }
-	 });}); 
-	
-    function funNotify(){	
-    	/* Validation */
-		
-		var paydate = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
-		var validdate=funDateInPeriod(paydate);
-		 if(parseInt(validdate)==0){
-			document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
-			return 0;	
-		 }
-		
-		ibvalid=document.getElementById("txtibvalidation").value;
-		 if(ibvalid==1){
-			 document.getElementById("errormsg").innerText="Closing Done For Inter-Branch,Transaction Restricted. ";
-			 return 0;
-		 }
-		 
-    	valid=document.getElementById("txtvalidation").value;
-		if(valid==1){
-			 document.getElementById("errormsg").innerText="Invalid Transaction !!!";
-			 return 0;
 		}
-		 
-		if($('#hidchckib').val()==1){
-			 mainbranch=document.getElementById("brchName").value;
-			 ibbranch=document.getElementById("cmbbranch").value;
-			 if(mainbranch==ibbranch){
-				 document.getElementById("errormsg").innerText="Main branch & Inter-Branch need to be Different,Transaction Restricted.";
-				 return 0;
-			 }
-		}
-		
-		 var netvalue = document.getElementById("txtnetamount").value;
-		 var onaccountvalue = document.getElementById("txtonaccountamount").value;
-		 if((netvalue=="" || netvalue=="NaN" || netvalue==0 || netvalue==0.0 || netvalue==0.00) && (onaccountvalue=="" || onaccountvalue=="NaN" || onaccountvalue==0 || onaccountvalue==0.0 || onaccountvalue==0.00)){
-			 document.getElementById("errormsg").innerText="Invalid Transaction !!! Amount should not be Zero.";
-             return 0;
-	 	 }
-		 
-		 document.getElementById("errormsg").innerText="";
-		 /* Validation Ends*/
-    	 
-    	/* Security Grid Saving */
- 		var rows = $("#jqxSecurity").jqxGrid('getrows');
-		var length=0;
-		 for(var i=0 ; i < rows.length ; i++){
-			var chk=rows[i].tobepaid;
-			if(typeof(chk) != "undefined"){
-				length=length+1;
-				newTextBox = $(document.createElement("input"))
-			    .attr("type", "dil")
-			    .attr("id", "txtapply"+i)
-			    .attr("name", "txtapply"+i)
-			    .attr("hidden", "true");
-				
-			newTextBox.val(rows[i].tobepaid+"::"+(parseInt(rows[i].out_amount)+parseInt(rows[i].tobepaid))+"::"+rows[i].currency+"::"+rows[i].tranid+"::"+rows[i].securityacno);
-			newTextBox.appendTo('form');
+	}
+	x.open("GET", <%=contextPath+"/"%>+"com/operations/commtransactions/getBranch.jsp", true);
+	x.send();
+}
+function getCardTypes() {
+	var x = new XMLHttpRequest();
+	x.onreadystatechange = function() {
+		if (x.readyState == 4 && x.status == 200) {
+			var items = x.responseText;
+			items = items.split('####');
+			var cardIdItems  = items[0].split(",");
+			var cardItems = items[1].split(",");
+			var optionscard = '<option value="">--Select--</option>';
+			for (var i = 0; i < cardItems.length; i++) {
+				optionscard += '<option value="' + cardIdItems[i].trim() + '">' + cardItems[i] + '</option>';
 			}
-		 }
-		 $('#applylength').val(length);
-		 /* Security Grid Saving Ends*/
-		 
-		 /* Security Grid Updating */
-	 		var rows = $("#jqxSecurity").jqxGrid('getrows');
-			var length=0;
-			 for(var i=0 ; i < rows.length ; i++){
-				var chk=rows[i].tobepaid;
-				if(typeof(chk) != "undefined"){
-					length=length+1;
-					newTextBox = $(document.createElement("input"))
-				    .attr("type", "dil")
-				    .attr("id", "txtapplyupdate"+i)
-				    .attr("name", "txtapplyupdate"+i)
-				    .attr("hidden", "true");
-					
-				newTextBox.val(parseInt(rows[i].out_amount)-parseInt(rows[i].tobepaid)+"::"+rows[i].tranid);
-				newTextBox.appendTo('form');
-				}
-			 }
-			 $('#applylengthupdate').val(length);
-			 /* Security Grid Updating Ends*/
-			 
-		 $('#jqxRentalRefundDate').jqxDateTimeInput({disabled: false});
-         $('#jqxReferenceDate').jqxDateTimeInput({disabled: false});
-         $('#cmbpaytype').attr('disabled', false);
-		 $('#cmbcardtype').attr('disabled', false);
-  		 $('#chckib').attr('disabled', false);
-  		 $('#cmbbranch').attr('disabled', false);
-	   			 
-  		return 1;
-	} 
-	
-   function setValues(){
-	  getBranch();getCardTypes();checkIb();
-	  
-	  document.getElementById("cmbpaytype").value=document.getElementById("hidcmbpaytype").value;
-	  document.getElementById("cmbratype").value=document.getElementById("hidcmbratype").value;
-	  document.getElementById("cmbpayedas").value=document.getElementById("hidcmbpayedas").value;
-	  document.getElementById("cmbcardtype").value=document.getElementById("hidcmbcardtype").value;
-	   
-	  if($('#hidjqxRentalRefundDate').val()){
-			 $("#jqxRentalRefundDate").jqxDateTimeInput('val', $('#hidjqxRentalRefundDate').val());
-		  }
-	  
-	  if($('#hidjqxReferenceDate').val()){
-			 $("#jqxReferenceDate").jqxDateTimeInput('val', $('#hidjqxReferenceDate').val());
-		  }
-	  
-	   if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
-	   
-	   var paid = document.getElementById("cmbpayedas").value;
-	   if(paid==1){
-	    var indexVal = document.getElementById("txttranno").value;
-	    var indexVal1 = document.getElementById("txtsecurityacno").value;
-		if(indexVal>0){
-	         $("#jqxSecurityGrid").load("securityGrid.jsp?txttranno2="+indexVal+"&txtsecurityacno2="+indexVal1); 
-	         } 
-	      }
-       } 
-	
-	function getAccounts(a){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var accountIdItems  = items[0];
-  				var accountItems = items[1];
-  				var docNoItems = items[2];
-				var payTypeItems = items[3];
-  				
-  				if(parseInt(payTypeItems)==1 || parseInt(payTypeItems)==3){
-					$('#txtaccid').val(accountIdItems) ;
-					$('#txtaccname').val(accountItems) ;
-					$('#txtdocno').val(docNoItems) ;
-				}
-  		}
-  		}
-  		x.open("GET", "getAccounts.jsp?paytype="+a, true);
-  		x.send();
-    }
-	
-	function getCardTypes() {
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var cardIdItems  = items[0].split(",");
-  				var cardItems = items[1].split(",");
-  				var optionscard = '<option value="">--Select--</option>';
-  				for (var i = 0; i < cardItems.length; i++) {
-  					optionscard += '<option value="' + cardIdItems[i].trim() + '">'
-  							+ cardItems[i] + '</option>';
-  				}
-  				$("select#cmbcardtype").html(optionscard);
-  				if ($('#hidcmbcardtype').val() != null) {
-  					$('#cmbcardtype').val($('#hidcmbcardtype').val());
-  				}
-  			} else {
-  			}
-  		}
-  		x.open("GET", "getCardTypes.jsp", true);
-  		x.send();
-  	}
-	
-	function getAgreement(event){
-	  var x= event.keyCode;
-	  if(x==114){
-	  	agreementSearchContent('agreementSearch.jsp');
-	  }
-	 }
-	 
-	function getClient(event){
-	  var x= event.keyCode;
-	  if(x==114){
-		  var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
-		  $("#maindate").jqxDateTimeInput('val', date);
-		  clientSearchContent(<%=contextPath+"/"%>+"com/operations/clientAccountDetailsSearch.jsp?atype=AR"+"&date="+date);
-          $('#txtforsearch').val(1);
-	  }
-	 }
-	 
-	 function funCardSearch(){
-		cardSearchContent('cardDetailsSearchGrid.jsp?clientId='+$('#txtcldocno').val());
-	}
-	 
-	 function getAcc(event){
-        var x= event.keyCode;
-        if(x==114){
-      	  var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
-      	  $("#maindate").jqxDateTimeInput('val', date);
-      	  accountSearchContent(<%=contextPath+"/"%>+"com/operations/accountsDetailsSearch.jsp?date="+date);
-        }
-        else{}
-        }
-	
-	function funCheck(a){
-		  if(document.getElementById("chckib").checked != false){
-		 		 $('#hidchckib').val(1);
-		 		 $('#cmbbranch').attr('disabled', false );
-		  }
-		  else{
-			  $('#hidchckib').val(0); 
-			  $('#cmbbranch').attr('disabled', true );
-		  }
-	  }
-		
-	function funchequedate(){
-		  paytype=document.getElementById("cmbpaytype").value;
-		  if(paytype==1){
-			  $('#cmbcardtype').attr('disabled', true);
-			  $('#txtchequeno').attr('readonly', true);  
-			  $('#btnCardSearch').attr('disabled', true);
-			  $('#cmbcardtype').val('');
-			  $('#txtchequeno').val('');$('#jqxReferenceDate').val(new Date());
-		  }else if(paytype==2){
-			  $('#cmbcardtype').attr('disabled', true);
-			  $('#txtchequeno').attr('readonly', false);
-			  $('#btnCardSearch').attr('disabled', true);
-			  $('#cmbcardtype').val('');
-			  $('#txtchequeno').val('');$('#jqxReferenceDate').val(new Date());
-	      } else if(paytype==3){
-    		  $('#cmbcardtype').attr('disabled', false); 
-    		  $('#txtchequeno').attr('readonly', false);
-    		  $('#btnCardSearch').attr('disabled', false);
-    		  $('#cmbcardtype').val('');
-    		  $('#txtchequeno').val('');$('#jqxReferenceDate').val(new Date());
-    	  }
-    }
-	
-	function funclearchequecardno(){
-    	$('#txtchequeno').val('');$('#jqxReferenceDate').val(new Date());
-    }
-	
-	function bankAccountSearch(){
-		 if(document.getElementById("cmbpaytype").value == 2){
-			 $('#txtaccid').val('');$('#txtaccname').val('');$('#txtdocno').val('');
-			 if (document.getElementById("txtaccid").value == "") {
-			        $('#txtaccid').attr('placeholder', 'Press F3 to Search'); 
-			    }
-			 $('#txtaccid').focus();
-			 
-		 }else{
-			 $('#txtaccid').val('');$('#txtaccid').attr('placeholder', '');
-			 $('#txtaccid').attr('tabindex', '-1');
-			 $('#txtaccname').attr('tabindex', '-1');
-		 }
-	}
-	 
-	function applyDisable(){
-    	paid=document.getElementById("cmbpayedas").value;
-    	deduction=document.getElementById("txtdeduction").value;
-    	if(deduction==null || deduction=="" || typeof(deduction)=="undefined" || typeof(deduction)=="NaN"){
-    		$('#txtdeduction').val(0.00);
-    	}
-        if(paid==1){
-    		var indexVal = document.getElementById("txtagreement").value;
-    		var rtype = document.getElementById("cmbratype").value;
-    		if(indexVal>0){
-   	         $("#jqxSecurityGrid").load("securityGrid.jsp?txtagreement2="+indexVal+"&cmbratype2="+rtype); 
-   	         } 
-    		$("#jqxSecurity").jqxGrid({ disabled: false});
-    		$('#txtdeduction').attr('readonly', false);
-			$('#txtaddamount').attr('readonly', false);
-    		$('#txtnetamount').attr('readonly', false);
-    		$('#txtonaccountamount').attr('readonly', true);
-    		$('#txtonaccountamount').val('');
-    		
-    	}
-        else if(paid==2){
-    		$("#jqxSecurity").jqxGrid('clear');
-			$("#jqxSecurity").jqxGrid('addrow', null, {});
-    	    $("#jqxSecurity").jqxGrid({ disabled: true});
-    		$('#txtdeduction').attr('readonly', true);
-			$('#txtaddamount').attr('readonly', true);
-    		$('#txtnetamount').attr('readonly', true);
-    		$('#txtonaccountamount').attr('readonly', false);
-    		$('#txtamount').val('');$('#txtdeduction').val('');
-    		$('#txtaddamount').val('');$('#txtnetamount').val('');
-    	}
-    } 
-	
-	function getNetTotal(){
-        var amount = $('#txtamount').val();
-        var discount = $('#txtdeduction').val();
-        var additionalamt = $('#txtaddamount').val();
-        var netamount=$('#txtnetamount').val();
-        
-        if(amount!=''){
-        	netamount=(parseFloat(amount));
-      	}
-        
-        if(discount!=''){
-      		netamount=((parseFloat(amount)-parseFloat(discount)));
-      	}
-     
-        if(additionalamt!=''){
-     		netamount=((parseFloat(amount)-parseFloat(discount))+parseFloat(additionalamt));
-     	}
-        
-     	funRoundAmt(Math.round(netamount),"txtnetamount");
-    }
-	
-	function funPrintBtn(){
-    	if (($("#mode").val() == "view") && $("#txtsrno").val()!="") {
-	        RefundPrintContent('printVoucherWindow.jsp');
-	     }
-	    else {
-			$.messager.alert('Message','Select a Document....!','warning');
-			return;
-		}
-    }
-	
-	function datechange(){
-		  var date = $('#jqxRentalRefundDate').jqxDateTimeInput('getDate');
-		  var validdate=funDateInPeriod(date);
-			 if(parseInt(validdate)==0){
-				document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
-				return 0;	
-			 }
-		  $("#maindate").jqxDateTimeInput('val', date);
-		  
-		  if($('#hidchckib').val()==1){
-			  if($('#cmbbranch').val()!='' && $('#cmbbranch').val()!=null){
-				funIBDateInPeriod($('#jqxRentalRefundDate').val(),$('#cmbbranch').val());
-			  }
+			$("select#cmbcardtype").html(optionscard);
+			if ($('#hidcmbcardtype').val() != null) {
+				$('#cmbcardtype').val($('#hidcmbcardtype').val());
 			}
-	  }
-	function clearfields(){
-		  $("#jqxSecurity").jqxGrid('clear');
-		  $("#cmbratype").val('');
-		  $("#txtagreementvocher").val('');
-		
+		}
 	}
-	function getPayTypes() {
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var cardIdItems  = items[0].split(",");
-  				var cardItems = items[1].split(",");
-  				var optionscard = '<option value="">--Select--</option>';
-  				for (var i = 0; i < cardItems.length; i++) {
-  					optionscard += '<option value="' + cardIdItems[i].trim() + '">'
-  							+ cardItems[i] + '</option>';
-  				}
-  				$("select#cmbpaytype").html(optionscard);
-  				if ($('#hidcmbpaytype').val() != null) {
-  					$('#cmbpaytype').val($('#hidcmbpaytype').val());
-  				}
-  			} else {
-  			}
-  		}
-  		x.open("GET", "getPayTypes.jsp", true);
-  		x.send();
-  }
+	x.open("GET", "getCardTypes.jsp", true);
+	x.send();
+}
+function getPayTypes() {
+	var x = new XMLHttpRequest();
+	x.onreadystatechange = function() {
+		if (x.readyState == 4 && x.status == 200) {
+			var items = x.responseText;
+			items = items.split('####');
+			var idItems  = items[0].split(",");
+			var nameItems = items[1].split(",");
+			var options = '<option value="">--Select--</option>';
+			for (var i = 0; i < nameItems.length; i++) {
+				options += '<option value="' + idItems[i].trim() + '">' + nameItems[i] + '</option>';
+			}
+			$("select#cmbpaytype").html(options);
+			if ($('#hidcmbpaytype').val() != null) {
+				$('#cmbpaytype').val($('#hidcmbpaytype').val());
+			}
+		}
+	}
+	x.open("GET", "getPayTypes.jsp", true);
+	x.send();
+}
 </script>
+
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-#validrate{
-    color:red;
-}
-#validrate1{
-    color:red;
-}
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
+html, body { height: 100%; overflow-y: auto; }
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 8px; }
+body::-webkit-scrollbar-thumb { background: #4da3ff; border-radius: 8px; border: 2px solid #eaf3ff; }
+body::-webkit-scrollbar-thumb:hover { background: #1a73e8; }
+.hidden-scrollbar { max-height: 80vh; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: #4da3ff #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar { width: 8px; }
+.hidden-scrollbar::-webkit-scrollbar-track { background: #eaf3ff; border-radius: 4px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background-color: #4da3ff; border-radius: 4px; border: 2px solid #eaf3ff; }
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1a73e8; }
+body { background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%); font-family: "Poppins", "Segoe UI", sans-serif; color: #1f2f46; margin: 0; padding: 40px 0; min-height: 100vh; animation: fadeIn 0.6s ease-in-out; box-sizing: border-box; }
+#mainBG { background: #f4f8ff; border-radius: 16px; box-shadow: 0 4px 25px rgba(50, 110, 255, 0.15); padding: 25px 30px; max-width: 1250px; margin: 0 auto; transition: 0.3s ease; }
+.receipt-header { background: #edf4ff; border: 1px solid #c9dafc; border-radius: 14px; padding: 20px; margin-bottom: 26px; box-shadow: 0 2px 10px rgba(132, 168, 255, 0.2); }
+.clean-grid-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 32px; width: 100%; box-sizing: border-box; align-items: start; }
+.clean-grid-item { display: flex; flex-direction: column; }
+.clean-grid-item.full { grid-column: span 3; }
+.clean-input, .clean-grid-item input[type="text"], .clean-grid-item select, .receipt-header input[type="text"], .receipt-header select { width: 100%; height: 44px; padding: 8px 12px; border: 1px solid #b9ccf2; border-radius: 8px; background: #ffffff; font-size: 0.95rem; color:#1f2f46; box-sizing: border-box; transition: 0.18s ease; }
+.clean-input:focus, .receipt-header input[type="text"]:focus, .receipt-header select:focus { border-color: #4da3ff; box-shadow: 0 0 6px rgba(77,163,255,0.35); outline: none; }
+#jqxRentalRefundDate, #jqxReferenceDate { width: 100% !important; height: 44px !important; }
+#jqxRentalRefundDate input, #jqxReferenceDate input { height: 42px !important; padding-left: 10px !important; border-radius: 8px !important; background-color: #ffffff !important; box-shadow: none !important; }
+.cr-table input[type="text"], .cr-table select { width: 100%; height: 40px; padding: 6px 10px; box-sizing: border-box; border-radius: 8px; border: 1px solid #d6e1ff; background: #fff; }
+label { font-weight: 600; font-size: 14px; color: #1a2d4d; margin-bottom: 8px; display:block; }
+.cr-table { width: 100%; border-collapse: collapse; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(100, 140, 255, 0.15); }
+.cr-table th, .cr-table td { padding: 10px 12px; border-bottom: 1px solid #d6e1ff; text-align: left; font-size: 0.95rem; color: #1f2f46; vertical-align: middle; }
+.cr-table th { background-color: #dcebff; color: #1b3f73; font-weight: 600; }
+button, .myButton { background: linear-gradient(90deg, #3b82f6, #1a73e8); color: #fff; border: none; border-radius: 8px; padding: 9px 22px; font-weight: 600; cursor: pointer; transition: 0.25s ease; box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 900px) { .clean-grid-form { grid-template-columns: repeat(1, 1fr); } .clean-grid-item.full { grid-column: span 1; } }
 </style>
-
 </head>
+
 <body onload="setValues();getBranch();getCardTypes();getPayTypes();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmRentalRefund" action="saveRentalRefund" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
-    <div style="width: 100%;" class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="3%" height="42" align="right">Date</td>
-    <td width="20%"><div id="jqxRentalRefundDate" name="jqxRentalRefundDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxRentalRefundDate"/>'></div>
-    <input type="hidden" id="hidjqxRentalRefundDate" name="hidjqxRentalRefundDate" value='<s:property value="hidjqxRentalRefundDate"/>'/></td>
-    <td width="10%" align="right">Doc Type</td>
-    <td width="20%"><input type="text" id="txtdoctype" name="txtdoctype" style="width:50%;" value='<s:property value="txtdoctype"/>' tabindex="-1"/></td>
-    <td width="7%" align="right">Doc No.</td>
-    <td width="21%"><input type="text" id="docno" name="txtrentalrefunddocno" style="width:50%;" value='<s:property value="txtrentalrefunddocno"/>' tabindex="-1"/></td>
-    <td width="5%" align="right">Receipt No.</td>
-    <td width="14%"><input type="text" id="txtsrno" name="txtsrno" style="width:60%;" value='<s:property value="txtsrno"/>' tabindex="-1"/></td>
-  </tr>
-</table>
-    </div>
+<div class="hidden-scrollbar">
+  <div class="receipt-header">
+    <div class="clean-grid-form">
 
-    <div class="section-row">
-        <div class="section-block">
-            <div class="form-group" style="margin-bottom: 10px;">
-                <input type="checkbox" id="chckib" name="chckib" onclick="funCheck();">&nbsp;Inter-Branch
-                <input type="hidden" id="hidchckib" name="hidchckib" value='<s:property value="hidchckib"/>'/>
+      <div class="clean-grid-item">
+        <label>Date</label>
+        <div id="jqxRentalRefundDate" onchange="datechange();" onblur="datechange();"></div>
+        <input type="hidden" id="hidjqxRentalRefundDate" name="hidjqxRentalRefundDate" value='<s:property value="hidjqxRentalRefundDate"/>'/>
+      </div>
 
-                <label for="cmbbranch">Branch</label>
-                <select id="cmbbranch" name="cmbbranch" style="width:65%; height: 28px;" onchange="funIBDateInPeriod($('#jqxRentalRefundDate').val(),this.value);" value='<s:property value="cmbbranch"/>'>
-                    <option value=""></option></select>
-                <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/>
-            </div>
+      <div class="clean-grid-item">
+        <label>Ref. No.</label>
+        <input type="text" id="txtrefno" name="txtrefno" class="clean-input" value='<s:property value="txtrefno"/>'/>
+      </div>
 
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="txtclientid">Client</label>
-                <input type="text" id="txtclientid" name="txtclientid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtclientid"/>' onkeydown="getClient(event);"/>
-                <input type="text" id="txtclientname" name="txtclientname" style="width:75%;" value='<s:property value="txtclientname"/>'/>
-                <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/>
-                <input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'/>
-            </div>
+      <div class="clean-grid-item">
+        <label>Doc No.</label>
+        <input type="text" id="docno" name="txtrentalrefunddocno" class="clean-input" value='<s:property value="txtrentalrefunddocno"/>' tabindex="-1"/>
+      </div>
 
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="cmbratype">Agreement</label>
-                <select id="cmbratype" name="cmbratype" style="width:50%;" value='<s:property value="cmbratype"/>'>
-                    <option value="RAG">Rental</option><option value="LAG">Lease</option></select>
-                <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/>
+      <div class="clean-grid-item">
+        <label>Type</label>
+        <select id="cmbratype" name="cmbratype" class="clean-input">
+          <option value="RAG">Rental</option>
+          <option value="LAG">Lease</option>
+        </select>
+        <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/>
+      </div>
 
-                <input type="text" id="txtagreementvocher" name="txtagreementvocher" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtagreementvocher"/>' onkeydown="getAgreement(event);"/>
-                <input type="hidden" id="txtagreement" name="txtagreement" value='<s:property value="txtagreement"/>'/>
+      <div class="clean-grid-item">
+        <label>Account</label>
+        <input type="text" id="txtaccid" name="txtaccid" class="clean-input" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);" />
+      </div>
 
-                <label for="cmbpayedas">Agreement</label>
-                <select id="cmbpayedas" name="cmbpayedas" style="width:50%;height: 28px;" onchange="applyDisable();" value='<s:property value="cmbpayedas"/>'>
-                    <option value="1">Security</option><option value="2">On Account</option></select>
-                <input type="hidden" id="hidcmbpayedas" name="hidcmbpayedas" value='<s:property value="hidcmbpayedas"/>'/>
-                <input type="hidden" id="txtsecurityacno" name="txtsecurityacno" value='<s:property value="txtsecurityacno"/>'/>
-            </div>
+      <div class="clean-grid-item">
+        <label>Account Name</label>
+        <input type="text" id="txtaccname" name="txtaccname" class="clean-input" value='<s:property value="txtaccname"/>' tabindex="-1"/>
+      </div>
+
+      <div class="clean-grid-item">
+        <label>Branch</label>
+        <select id="cmbbranch" name="cmbbranch" class="clean-input" value='<s:property value="cmbbranch"/>' onchange="funIBDateInPeriod($('#jqxRentalRefundDate').val(),this.value);">
+          <option value=""></option>
+        </select>
+        <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/>
+      </div>
+
+      <div class="clean-grid-item">
+        <label>Pay Type</label>
+        <select id="cmbpaytype" name="cmbpaytype" class="clean-input" onchange="bankAccountSearch();funchequedate();getAccounts(this.value);"></select>
+        <input type="hidden" id="hidcmbpaytype" name="hidcmbpaytype" value='<s:property value="hidcmbpaytype"/>'/>
+      </div>
+
+      <div class="clean-grid-item">
+        <label>Card Type</label>
+        <select id="cmbcardtype" name="cmbcardtype" class="clean-input" onchange="funclearchequecardno();">
+          <option value="">--Select--</option>
+        </select>
+        <input type="hidden" id="hidcmbcardtype" name="hidcmbcardtype" value='<s:property value="hidcmbcardtype"/>'/>
+      </div>
+
+      <div class="clean-grid-item">
+        <label>Chq/Card No/Online</label>
+        <input type="text" id="txtchequeno" name="txtchequeno" class="clean-input" value='<s:property value="txtchequeno"/>'/>
+      </div>
+
+      <div class="clean-grid-item">
+        <label>Date</label>
+        <div id="jqxReferenceDate" name="jqxReferenceDate"></div>
+        <input type="hidden" id="hidjqxReferenceDate" name="hidjqxReferenceDate" value='<s:property value="hidjqxReferenceDate"/>'/>
+      </div>
+
+      <div class="clean-grid-item">
+        <label>Description</label>
+        <input type="text" id="txtdescription" name="txtdescription" class="clean-input" value='<s:property value="txtdescription"/>'/>
+      </div>
+
+      <div class="clean-grid-item full">
+        <h3 style="margin:0 0 12px 0; color:#1b3f73; font-size:1.02rem; font-weight:600;">Security Details</h3>
+        <div class="cr-table" id="jqxSecurityGrid">
+          <center><jsp:include page="securityGrid.jsp"></jsp:include></center>
         </div>
+      </div>
 
-        <div class="section-block">
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="cmbpaytype">Pay Type</label>
-                <select id="cmbpaytype" name="cmbpaytype" style="width:95%;height: 28px;" value='<s:property value="cmbpaytype"/>' onchange="bankAccountSearch();funchequedate();getAccounts(this.value);">
-                    <%--   <option value="1">Cash</option><option value="2">Cheque/Online</option><option value="3">Paid to Card</option><option value="4">Paid to Card</option><option value="3">Paid to Card</option>--%></select>
-                <input type="hidden" id="hidcmbpaytype" name="hidcmbpaytype" value='<s:property value="hidcmbpaytype"/>'/>
+      <div class="clean-grid-item full">
+        <table class="cr-table" width="100%">
+          <tr>
+            <td style="width:12%; text-align:right;">Amount</td>
+            <td style="width:18%;"><input type="text" id="txtamount" name="txtamount" class="clean-input" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/></td>
+            <td style="width:12%; text-align:right;">Deduction</td>
+            <td style="width:18%;"><input type="text" id="txtdeduction" name="txtdeduction" class="clean-input" onblur="funRoundAmt(this.value,this.id);getNetTotal();" value='<s:property value="txtdeduction"/>'/></td>
+            <td style="width:12%; text-align:right;">Add. Amount</td>
+            <td style="width:18%;"><input type="text" id="txtaddamount" name="txtaddamount" class="clean-input" value='<s:property value="txtaddamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/></td>
+          </tr>
+          <tr>
+            <td style="width:12%; text-align:right;">Net Amount</td>
+            <td style="width:18%;"><input type="text" id="txtnetamount" name="txtnetamount" class="clean-input" value='<s:property value="txtnetamount"/>' tabindex="-1"/></td>
+            <td style="width:12%; text-align:right;">On Account Amount</td>
+            <td style="width:18%;"><input type="text" id="txtonaccountamount" name="txtonaccountamount" class="clean-input" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtonaccountamount"/>'/></td>
+            <td style="width:12%; text-align:right;">Paid To</td>
+            <td style="width:18%;"><input type="text" id="txtpaidto" name="txtpaidto" class="clean-input" value='<s:property value="txtpaidto"/>'/></td>
+          </tr>
+          <tr>
+            <td style="width:12%; text-align:right;">Description</td>
+            <td colspan="5"><input type="text" id="txtdescriptions" name="txtdescriptions" class="clean-input" value='<s:property value="txtdescriptions"/>'/></td>
+          </tr>
+        </table>
+      </div>
 
-                <label for="txtaccid">Account</label>
-                <input type="text" id="txtaccid" name="txtaccid" style="width:95%;" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);" />
-                <input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/>
-                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-                <input type="hidden" id="txttranno" name="txttranno" value='<s:property value="txttranno"/>'/>
-
-            </div>
-
-            <div class="form-group" style="margin-bottom: 10px;">
-                <button type="button" class="icon" id="btnCardSearch" title="Search Card" onclick="funCardSearch();">
-                    <img alt="Search Card" src="<%=contextPath%>/icons/cardsearch.png">
-                </button>
-
-                <label for="cmbcardtype">Card Type</label>
-
-                <select id="cmbcardtype" name="cmbcardtype" style="width:50%;" onchange="funclearchequecardno();" value='<s:property value="cmbcardtype"/>'>
-                    <%-- <option value="">--Select--</option><option value="1">Visa</option><option value="2">Master</option></select> --%>
-                    <option value="">--Select--</option></select>
-                <input type="hidden" id="hidcmbcardtype" name="hidcmbcardtype" value='<s:property value="hidcmbcardtype"/>'/>
-
-                <label for="txtchequeno">Chq/Card No/Online</label>
-
-                <input type="text" id="txtchequeno" name="txtchequeno" style="width:100%;" value='<s:property value="txtchequeno"/>'/>
-
-                <label for="jqxReferenceDate">Date</label>
-                <div id="jqxReferenceDate" name="jqxReferenceDate" value='<s:property value="jqxReferenceDate"/>'></div>
-                <input type="hidden" id="hidjqxReferenceDate" name="hidjqxReferenceDate" value='<s:property value="hidjqxReferenceDate"/>'/>
-            </div>
-
-
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="txtdescription">Description</label>
-                <input type="text" id="txtdescription" name="txtdescription" style="width:95%;" value='<s:property value="txtdescription"/>'/>
-            </div>
-        </div>
     </div>
-
-
-<div class="table-section" style="width: 100%;"><h3>Security Details</h3>
-<div class="cr-table" id="jqxSecurityGrid"><center><jsp:include page="securityGrid.jsp"></jsp:include></center></div>
-</div><br/>
-<div style="width: 100%;" class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Amount</td>
-    <td width="14%"><input type="text" id="txtamount" name="txtamount" style="width:70%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/></td>
-    <td width="6%" align="right">Deduction</td>
-    <td width="12%"><input type="text" id="txtdeduction" name="txtdeduction" style="width:70%;text-align: right;" onblur="funRoundAmt(this.value,this.id);getNetTotal();" value='<s:property value="txtdeduction"/>'/></td>
-    <td width="5%" align="right">Add. Amount</td>
-    <td width="12%"><input type="text" id="txtaddamount" name="txtaddamount" style="width:70%;text-align: right;" value='<s:property value="txtaddamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/></td>
-    <td width="8%" align="right">Net Amount</td>
-    <td width="14%"><input type="text" id="txtnetamount" name="txtnetamount" style="width:70%;text-align: right;" value='<s:property value="txtnetamount"/>' tabindex="-1"/></td>
-    <td width="8%" align="right">On Account Amount</td>
-    <td width="15%"><input type="text" id="txtonaccountamount" name="txtonaccountamount" style="width:75%;text-align: right;" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtonaccountamount"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Description</td>
-    <td colspan="5"><input type="text" id="txtdescriptions" name="txtdescriptions" style="width:93%;" value='<s:property value="txtdescriptions"/>'/></td>
-    <td align="right">Paid To</td>
-    <td colspan="5"><input type="text" id="txtpaidto" name="txtpaidto" style="width:90%;" value='<s:property value="txtpaidto"/>'/></td>
-  </tr>
-</table>
+  </div>
 </div>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
 <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
 <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
 <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
@@ -908,24 +307,15 @@ body {
 <input type="hidden" id="txtibvalidation" name="txtibvalidation" value='<s:property value="txtibvalidation"/>'/>
 <input type="hidden" id="applylength" name="applylength"/>
 <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
-<input type="hidden" id="cnrdocno" name="cnrdocno"  value='<s:property value="cnrdocno"/>'/>
-</div>
+<input type="hidden" id="cnrdocno" name="cnrdocno" value='<s:property value="cnrdocno"/>'/>
 </form>
-<div id="agreementDetailsWindow">
-	<div></div><div></div>
-</div>  
-<div id="clientDetailsWindow">
-	<div></div><div></div>
-</div> 
-<div id="accountDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="cardDetailsWindow">
-	<div></div><div></div>
-</div> 
-<div id="printWindow">
-	<div></div><div></div>
-</div> 
+
+<div id="agreementDetailsWindow"><div></div><div></div></div>
+<div id="clientDetailsWindow"><div></div><div></div></div>
+<div id="accountDetailsWindow"><div></div><div></div></div>
+<div id="cardDetailsWindow"><div></div><div></div></div>
+<div id="printWindow"><div></div><div></div></div>
+
 </div>
 </body>
 </html>
