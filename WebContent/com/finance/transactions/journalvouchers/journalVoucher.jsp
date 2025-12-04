@@ -559,21 +559,19 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 </script>
 
 <style>
+/* ---------- SCROLL AREA ---------- */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow: auto;
+    height: 530px;
 }
 
-#validrate{
-    color:red;
+/* Validation labels (if used) */
+#validrate,
+#validrate1 {
+    color: red;
 }
-#validrate1{
-    color:red;
-}
 
-
-
-
+/* ---------- BACKGROUND & MAIN CARD ---------- */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -583,219 +581,442 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
 }
+
 #mainBG {
-    background: #fff;
+    background: #ffffff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
     padding: 10px;
     max-width: 1200px;
     margin: 0 auto;
+    box-shadow: 0 6px 28px rgba(58, 97, 171, 0.18);
+}
+#mainBG:hover {
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.30);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+
+/* ---------- HEADER WRAPPER (FOR THIS FORM ONLY) ---------- */
+#frmJournalVoucher .receipt-header {
+    display: block;          /* override global flex so table works normally */
+    padding: 0 24px;
+        box-shadow: 0 6px 28px rgba(58, 97, 171, 0.18);
+    
 }
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
+
+/* Status text */
 #txtStatus {
-    font-size: 1rem;
+    font-size: 13px;
     font-weight: 600;
     color: #e67e22;
-    margin-left: 12px;
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
+/* ---------- TABLE STYLING ---------- */
 .table-section {
     margin-bottom: 18px;
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
+
 .cr-table {
     width: 100%;
     border-collapse: collapse;
     background: #f9fafb;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
+
+.cr-table th,
+.cr-table td {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 0.95rem;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+.cr-table td {
+    vertical-align: middle;  /* center all header fields nicely */
+}
+
+/* ---------- HEADER INPUTS & BUTTONS ---------- */
+.header-input {
+    height: 38px !important;
+    padding: 6px 12px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    box-sizing: border-box;
+}
+
+/* Grouping inside header rows */
+.form-group-header {
+    display: contents; /* let table layout handle widths but keep class hook */
+}
+
+/* ---------- BLUE ACTION BUTTONS (REUSE GLOBAL LOOK) ---------- */
+.myButton {
+    background-color: #3a78e0;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.myButton:hover {
+    background-color: #1f6feb;
+}
+.hidden-scrollbar {
+	max-height: 75vh;
+	overflow-y: auto;
+	width: 100%;
+	padding-right: 6px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+	width: 8px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-track {
+	background: #d5e1f7;
+	border-radius: 6px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #3a78e0;
+	border-radius: 6px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: #1f6feb;
+} 
+/* ===============================
+   JOURNAL VOUCHER MODERN UI
+   =============================== */
+
+/* Table container background */
+.table-section .cr-table {
+    background: #eef3ff; /* soft blue */
+    border-radius: 14px;
+    border: none;
+     box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+}
+
+/* Table cells */
+.cr-table td {
+    padding: 12px 14px !important;
+    font-size: 15px;
+    color: #1d2a4d;
+}
+
+/* Labels inside tables */
+.cr-table label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d2a4d;
+}
+
+/* ===============================
+   MODERN INPUT STYLING
+   =============================== */
+
+.header-input,
+.section-block input[type="text"],
+.section-block select,
+.cr-table input[type="text"],
+.cr-table select {
+    height: 40px !important;
+    border-radius: 10px !important;
+    padding: 8px 12px !important;
+    font-size: 15px !important;
+    border: 1px solid #c9d6f0 !important;
+    background: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* ⭐ NEUMORPHIC SHADOW */
+     box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+
+    transition: 0.25s ease;
+}
+
+/* Input hover */
+.header-input:hover,
+.cr-table input[type="text"]:hover,
+.cr-table select:hover {
+    border-color: #2d6cdf !important;
+    box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+
+/* Input focus */
+.header-input:focus,
+.cr-table input[type="text"]:focus,
+.cr-table select:focus {
+    border-color: #2d6cdf !important;
+    outline: none;
+     box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+}
+
+/* Disabled inputs (tabindex -1) */
+input[tabindex="-1"] {
+    background: #f3f6ff !important;
+    color: #6b7a99 !important;
+}
+
+/* ===============================
+   BUTTONS — Modern Blue Style
+   =============================== */
+
+.myButton {
+    background: linear-gradient(135deg, #3a78e0, #1f5fd6);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #1f6feb, #1553be);
+    box-shadow:
+        0 4px 10px rgba(46, 104, 255, 0.35);
+}
+
+/* Icon button */
+button.icon {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 8px 12px;
+    border: 1px solid #cdd8f4;
+    cursor: pointer;
+    transition: 0.25s;
+    box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+}
+
+button.icon:hover {
+     box-shadow:
+        0 0 6px rgba(88,130,255,0.25),   /* outer soft blue glow */
+        inset 1px 1px 3px rgba(0,0,0,0.12), 
+        inset -2px -2px 4px rgba(255,255,255,0.9);
+}
+#frmJournalVoucher input[type="file"] {
+    display: inline-block !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: 38px !important;
+    padding: 6px 12px !important;
+    color: #333 !important;
+    background: #ffffff !important;
+    border: 1px solid #b9c9e8 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px rgba(47,109,222,0.2);
+}
+#fileexcelimport {
+    min-width: 140px !important;
+    flex-shrink: 0 !important;
+}
+
 </style>
-
 </head>
+
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
+
 <form id="frmJournalVoucher" action="saveJournalVoucher" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
-    <div class="table-section">
-<table class='cr-table' width="100%">
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="15%"><div id="jqxJournalVouchersDate" name="jqxJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxJournalVouchersDate"/>'></div>
-    <input type="hidden" id="hidjqxJournalVouchersDate" name="hidjqxJournalVouchersDate" value='<s:property value="hidjqxJournalVouchersDate"/>'/></td>
-    <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
-						</button></td>
-	<td ><button class="myButton" type="button" id="btnclone" name="btnclone" onclick="funClone();">Clone</button></td>
-    <td width="13%" align="center"><button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-    <td width="6%" align="right">Doc No</td>
-    <td width="21%"><input type="text" id="docno" name="txtjournalvouchersdocno" style="width:50%;" value='<s:property value="txtjournalvouchersdocno"/>' tabindex="-1"/></td>
-  </tr>
-   <tr>
-    <td colspan="8"></td>
-    <td><span id="txtStatus"></span></td>
-  </tr>
-  <tr>
-    <td align="right">Ref. No.</td>
-    <td><input type="text" id="txtrefno" name="txtrefno" style="width:62%;" value='<s:property value="txtrefno"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:80%;"  value='<s:property value="txtdescription"/>'/></td>
-	<td align="left" colspan="2"><i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="lblformposted"/></label></b></i></td>
-  </tr>
-  <tr>
-    <td colspan="8"><div id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div></td>
-  </tr>
-  <tr>  
-    <td align="right">Dr. Total</td>
-    <td><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:65%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td colspan="5" align="right">Cr. Total</td>
-    <td width="11%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-       <td  >&nbsp;</td>
-  </tr>
-</table></div>
+    <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
-<input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
-<input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
-<input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="hidstatus" name="hidstatus" value='<s:property value="status"/>'/>
-<input type="hidden" id="currstatus" name="currstatus"  value='<s:property value="currstatus"/>'/>
-</div>
+    <!-- ==============================
+           JOURNAL VOUCHER HEADER
+       =============================== -->
+    <div class="receipt-header">
+        <div class="table-section">
+            <table class="cr-table" width="100%">
+                <!-- ROW 1: Date | File | Import | Clone | Value Change | Doc No -->
+                <tr class="form-group-header">
+                    <!-- Date -->
+                    <td width="6%" align="right"><label>Date</label></td>
+                    <td width="15%">
+                        <div id="jqxJournalVouchersDate"
+                             name="jqxJournalVouchersDate"
+                             onchange="datechange();" onblur="datechange();"
+                             value='<s:property value="jqxJournalVouchersDate"/>'>
+                        </div>
+                        <input type="hidden" id="hidjqxJournalVouchersDate"
+                               name="hidjqxJournalVouchersDate"
+                               value='<s:property value="hidjqxJournalVouchersDate"/>'/>
+                    </td>
+
+                    <!-- File upload -->
+                    <td width="28%" align="right">
+                        <input type="file" id="fileexcelimport" name="file" class="header-input">
+                    </td>
+
+                    <!-- Import Excel icon button -->
+                    <td width="11%" align="center">
+                        <button class="icon"
+                                id="btnsearch" name="btnsearch"
+                                title="Import Excel"
+                                type="button"
+                                onclick="return upload();">
+                            <img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
+                        </button>
+                    </td>
+
+                    <!-- Clone -->
+                    <td width="10%" align="center">
+                        <button class="myButton"
+                                type="button"
+                                id="btnclone" name="btnclone"
+                                onclick="funClone();">
+                            Clone
+                        </button>
+                    </td>
+
+                    <!-- Value Change -->
+                    <td width="13%" align="center">
+                        <button class="myButton"
+                                type="button"
+                                id="btnvaluechange" name="btnvaluechange"
+                                onclick="funwarningopen();">
+                            Value Change
+                        </button>
+                    </td>
+
+                    <!-- Doc No -->
+                    <td width="6%" align="right"><label>Doc No</label></td>
+                    <td width="21%">
+                        <input type="text" id="docno" name="txtjournalvouchersdocno"
+                               class="header-input"
+                               style="width:50%; text-align:right;"
+                               value='<s:property value="txtjournalvouchersdocno"/>' tabindex="-1">
+                    </td>
+                </tr>
+
+                <!-- ROW 2: Status -->
+                <tr>
+                    <td colspan="8">
+                        <span id="txtStatus"></span>
+                    </td>
+                </tr>
+
+                <!-- ROW 3: Ref No, Description, Posted label -->
+                <tr class="form-group-header">
+                    <td align="right"><label>Ref. No.</label></td>
+                    <td>
+                        <input type="text" id="txtrefno" name="txtrefno"
+                               class="header-input"
+                               style="width:70%;"
+                               value='<s:property value="txtrefno"/>'>
+                    </td>
+
+                    <td align="right"><label>Description</label></td>
+                    <td colspan="3">
+                        <input type="text" id="txtdescription" name="txtdescription"
+                               class="header-input"
+                               style="width:90%;"
+                               value='<s:property value="txtdescription"/>'>
+                    </td>
+
+                    <td colspan="2" align="left">
+                        <i><b>
+                            <label id="lblformposted" name="lblformposted"
+                                   style="font-size:13px;font-family:Tahoma;color:#6000FC;">
+                                <s:property value="lblformposted"/>
+                            </label>
+                        </b></i>
+                    </td>
+                </tr>
+
+                <!-- ROW 4: JQX GRID -->
+                <tr>
+                    <td colspan="8">
+                        <div id="jqxJournalVoucherGrid">
+                            <jsp:include page="journalVoucherGrid.jsp"></jsp:include>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- ROW 5: Totals -->
+                <tr class="form-group-header">
+                    <td align="right"><label>Dr. Total</label></td>
+                    <td>
+                        <input type="text" id="txtdrtotal" name="txtdrtotal"
+                               class="header-input"
+                               style="width:65%;text-align:right;"
+                               value='<s:property value="txtdrtotal"/>' tabindex="-1">
+                    </td>
+
+                    <td colspan="5" align="right"><label>Cr. Total</label></td>
+                    <td width="11%">
+                        <input type="text" id="txtcrtotal" name="txtcrtotal"
+                               class="header-input"
+                               style="width:60%;text-align:right;"
+                               value='<s:property value="txtcrtotal"/>' tabindex="-1">
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- ========= HIDDEN FIELDS ========= -->
+        <input type="hidden" id="mode" name="mode"/>
+        <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
+        <input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
+        <input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
+        <input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
+        <input type="hidden" id="gridlength" name="gridlength"/>
+        <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+        <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+        <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+        <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+        <input type="hidden" id="hidstatus" name="hidstatus" value='<s:property value="status"/>'/>
+        <input type="hidden" id="currstatus" name="currstatus"  value='<s:property value="currstatus"/>'/>
+
+    </div> <!-- /receipt-header -->
+
 </form>
 
+<!-- ========= POPUP WINDOWS ========= -->
 <div id="journalVoucherGridWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
 
 <div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
+    <div></div><div></div>
+</div>
 
 <div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
-
+    <div></div><div></div>
 </div>
+
+</div> <!-- /mainBG -->
+
 </body>
 </html>
