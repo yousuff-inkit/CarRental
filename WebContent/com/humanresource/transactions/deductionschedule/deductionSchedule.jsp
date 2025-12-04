@@ -438,98 +438,212 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+.form-header-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+.form-header-col {
+    display: flex;
+    flex-direction: column;
+}
+.form-header-col-wide {
+    flex: 1;
+}
+
+.form-body-row {
+    display: flex;
+    gap: 16px;
+}
+.form-body-col {
+    flex: 1;
+}
+.form-card {
+    background: #EBDEF0;
+    padding: 12px 16px;
+    border-radius: 4px;
+}
+.form-row {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.form-row label {
+    width: 90px;
+}
+.form-row input {
+    flex: 1;
+}
+.inline-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.form-actions {
+    justify-content: center;
+}
+
 
 </style>
 
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
+
 <form id="frmDeductionSchedule" action="saveDeductionSchedule" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>   
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div class='hidden-scrollbar receipt-header'>
-<div style="width: 100%;" class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="20%"><div id="deductionScheduleDate" name="deductionScheduleDate" value='<s:property value="deductionScheduleDate"/>'></div>
-    <input type="hidden" id="hiddeductionScheduleDate" name="hiddeductionScheduleDate" value='<s:property value="hiddeductionScheduleDate"/>'/></td>
-    <td width="19%" align="right">Ref. No.</td>
-    <td width="20%"><input type="text" id="txtemployeerefno" name="txtemployeerefno" placeholder="Ref. No." style="width:50%;" value='<s:property value="txtemployeerefno"/>'/></td>
-    <td width="17%" align="right">Doc No </td>
-    <td width="19%"><input type="text" id="docno" name="txtdeductionscheduledocno" style="width:70%;" tabindex="-1" value='<s:property value="txtdeductionscheduledocno"/>'/></td>
-  </tr>
-</table>
-</div>
-<div style="width: 100%;" class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Employee</td>
-    <td width="95%"><input type="text" id="txtemployeedetails" name="txtemployeedetails" placeholder="Press F3 to Search" style="width:94%;" onkeydown="getEmployeeDetails(event);" value='<s:property value="txtemployeedetails"/>'/>
-    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
-  </tr>
-</table>
-</div><br/>
+<div class="receipt-header hidden-scrollbar">
 
-<div class="table-section" style="width: 100%;">
-<table class="cr-table" width="99%">
-<tr><td  width="50%">
-<div style="background-color: #EBDEF0;">
-<table  width="99%">
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td width="10%" align="right">Amount</td>
-    <td width="90%"><input type="text" id="txtamount" name="txtamount" placeholder="Amount" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funInstAmount();" value='<s:property value="txtamount"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Inst. Nos</td>
-    <td><input type="text" id="txtinstnos" name="txtinstnos" placeholder="Inst. Nos" style="width:10%;" onblur="funInstAmount();" value='<s:property value="txtinstnos"/>'/>
-    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	<input type="checkbox" id="allowinstamt" name="allowinstamt"  onblur="funInstAmount();" onchange="this.checked?$('#txtinstcustomamt').prop('disabled',false): $('#txtinstcustomamt').prop('disabled',true);">
-    	<span>Inst. Amount</span>
-    	<input type="text" id="txtinstcustomamt" name="txtinstcustomamt" placeholder="Inst. Amount" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funInstAmount();" value='<s:property value="txtinstcustomamt"/>'/>
-    <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/>
-    <input type="hidden" id="txtinstamttotal" name="txtinstamttotal" value='<s:property value="txtinstamttotal"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Start Date</td>
-    <td><div id="startDate" name="startDate" value='<s:property value="startDate"/>'></div>
-    <input type="hidden" id="hidstartDate" name="hidstartDate" value='<s:property value="hidstartDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Description</td>
-    <td><input type="text" id="txtdescription" name="txtdescription" placeholder="Description" style="width:85%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" align="center"><button class="myButton" type="button" id="btnDistributionSubmit" name="btnDistributionSubmit" onclick="deductionGridLoading();">Submit</button></td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr>
+<div class="table-section" style="width:100%;">
+<h3 style="font-size:18px;font-weight:600;color:#1B4F9A;">Deduction Schedule</h3>
+
+<table class="cr-table" width="100%" style="background:#ffffff;border-radius:12px;">
+
+    <!-- Row 1: Date / Ref / Doc -->
+    <tr>
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Date</td>
+        <td width="20%">
+            <div id="deductionScheduleDate"
+                 name="deductionScheduleDate"
+                 value="<s:property value='deductionScheduleDate'/>"></div>
+            <input type="hidden" id="hiddeductionScheduleDate" name="hiddeductionScheduleDate"
+                   value="<s:property value='hiddeductionScheduleDate'/>">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Ref. No.</td>
+        <td width="25%">
+            <input type="text" id="txtemployeerefno" name="txtemployeerefno"
+                   placeholder="Ref. No."
+                   value="<s:property value='txtemployeerefno'/>"
+                   style="width:70%;padding:8px;border-radius:8px;
+                          border:1px solid #cfe0ff;background:#f9fbff;">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Doc No</td>
+        <td width="25%">
+            <input type="text" id="docno" name="txtdeductionscheduledocno"
+                   value="<s:property value='txtdeductionscheduledocno'/>"
+                   tabindex="-1" readonly
+                   style="width:60%;padding:8px;border-radius:8px;
+                          background:#f0f5ff;border:1px solid #cfe0ff;">
+        </td>
+    </tr>
+
+    <!-- Row 2: Employee -->
+    <tr>
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Employee</td>
+        <td colspan="5">
+            <input type="text" id="txtemployeedetails" name="txtemployeedetails"
+                   placeholder="Press F3 to Search"
+                   onkeydown="getEmployeeDetails(event);"
+                   value="<s:property value='txtemployeedetails'/>"
+                   style="width:50%;padding:8px;border-radius:8px;
+                          border:1px solid #cfe0ff;background:#f0f5ff;">
+            <input type="hidden" id="txtemployeedocno" name="txtemployeedocno"
+                   value="<s:property value='txtemployeedocno'/>">
+        </td>
+    </tr>
+
+    <!-- Row 3: Amount -->
+    <tr>
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Amount</td>
+        <td colspan="2">
+            <input type="text" id="txtamount" name="txtamount"
+                   placeholder="Amount"
+                   onblur="funRoundAmt(this.value,this.id);funInstAmount();"
+                   value="<s:property value='txtamount'/>"
+                   style="width:60%;padding:8px;border-radius:8px;
+                          border:1px solid #cfe0ff;background:#f9fbff;
+                          text-align:right;">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Inst. Nos</td>
+        <td colspan="2">
+            <input type="text" id="txtinstnos" name="txtinstnos"
+                   placeholder="Inst. Nos"
+                   onblur="funInstAmount();"
+                   value="<s:property value='txtinstnos'/>"
+                   style="width:25%;padding:8px;border-radius:8px;
+                          border:1px solid #cfe0ff;background:#f9fbff;">
+
+            <input type="checkbox" id="allowinstamt" name="allowinstamt"
+                   onblur="funInstAmount();"
+                   onchange="this.checked?$('#txtinstcustomamt').prop('disabled',false):$('#txtinstcustomamt').prop('disabled',true);">
+            <span style="font-weight:600;color:#1A3E7A;">Inst. Amount</span>
+
+            <input type="text" id="txtinstcustomamt" name="txtinstcustomamt"
+                   placeholder="Inst. Amount"
+                   onblur="funRoundAmt(this.value,this.id);funInstAmount();"
+                   value="<s:property value='txtinstcustomamt'/>"
+                   style="width:30%;padding:8px;border-radius:8px;
+                          border:1px solid #cfe0ff;background:#ffffff;
+                          text-align:right;">
+
+            <input type="hidden" id="txtinstamt" name="txtinstamt"
+                   value="<s:property value='txtinstamt'/>">
+            <input type="hidden" id="txtinstamttotal" name="txtinstamttotal"
+                   value="<s:property value='txtinstamttotal'/>">
+        </td>
+    </tr>
+
+    <!-- Row 4: Start Date / Description -->
+    <tr>
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Start Date</td>
+        <td colspan="2">
+            <div id="startDate" name="startDate"
+                 value="<s:property value='startDate'/>"></div>
+            <input type="hidden" id="hidstartDate" name="hidstartDate"
+                   value="<s:property value='hidstartDate'/>">
+        </td>
+
+        <td align="right" style="font-weight:600;color:#1A3E7A;">Description</td>
+        <td colspan="2">
+            <input type="text" id="txtdescription" name="txtdescription"
+                   placeholder="Description"
+                   value="<s:property value='txtdescription'/>"
+                   style="width:80%;padding:8px;border-radius:8px;
+                          border:1px solid #cfe0ff;background:#f9fbff;">
+        </td>
+    </tr>
+
+    <!-- Row 5: Submit -->
+    <tr>
+        <td colspan="6" align="center" style="padding:10px 0;">
+            <button class="myButton" type="button"
+                    id="btnDistributionSubmit" name="btnDistributionSubmit"
+                    onclick="deductionGridLoading();">
+                Submit
+            </button>
+        </td>
+    </tr>
+
 </table>
 </div>
-</td>
-<td  width="60%">
-<div class="cr-table" id="deductionScheduleDiv"><jsp:include page="deductionScheduleGrid.jsp"></jsp:include></div>
-</td></tr></table>
+
+<br>
+
+<!-- GRID same style as User Master grid -->
+<div class="cr-table" id="deductionScheduleDiv" align="center">
+    <jsp:include page="deductionScheduleGrid.jsp"></jsp:include>
 </div>
+
 <input type="hidden" id="mode" name="mode"/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+<input type="hidden" id="deleted" name="deleted" value="<s:property value='deleted'/>"/>
+<input type="hidden" id="msg" name="msg" value="<s:property value='msg'/>"/>
+<input type="hidden" id="txtvalidation" name="txtvalidation" value="<s:property value='txtvalidation'/>"/>
 <input type="hidden" id="gridlength" name="gridlength"/>
 <input type="hidden" id="hidsaldate" name="hidsaldate"/>
+
 </div>
 </form>
-<div id="employeeDetailsWindow">
-   <div></div>
-</div>
+
+<div id="employeeDetailsWindow"><div></div></div>
 
 </div>
 </body>
+
+
+
 </html>
