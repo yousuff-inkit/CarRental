@@ -3,6 +3,7 @@
 <html>
 <% String contextPath=request.getContextPath();%>
 <head>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">

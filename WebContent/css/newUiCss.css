@@ -1,141 +1,266 @@
-/* -------------- PREMIUM BLUE UI (Universal Theme) ---------------- */
+/* ======================================================== 
+   🔷 GLOBAL ERP UI THEME - CLEAN, TWO COLUMN ALIGNMENT
+   ======================================================== */
 
-/* GENERAL FONT */
+/* Global text color override */
 * {
-    font-family: 'Poppins', sans-serif !important;
+    color: #1A3E7A;
 }
 
-/* WINDOW BOX / POPUP */
-.jqx-window,
-.jqx-window-content,
-.jqx-popup,
-.jqx-window-modal {
-    border-radius: 18px !important;
-    border: 1px solid #dce6ff !important;
-    background: #ffffff !important;
-    box-shadow: 0px 10px 35px rgba(93,125,255,0.20) !important;
-    overflow: hidden !important;
+/* ---- MAIN PAGE CONTAINER ---- */
+#mainBG {
+    background: #ffffff;
+    padding: 20px 25px;
+    max-width: 1380px;
+    width: 96%;
+    margin: 22px auto;
+    box-shadow: 0px 6px 22px rgba(0,0,0,0.07);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    box-sizing: border-box;
 }
 
-/* HEADER BAR */
-.jqx-window-header,
-.jqx-window-caption {
-    background: linear-gradient(90deg, #478dff, #67a8ff) !important;
-    color: #ffffff !important;
-    font-size: 1.05rem !important;
-    font-weight: 600 !important;
-    padding: 12px 18px !important;
-    border: none !important;
+/* ---- FORM SECTION FRAME ---- */
+.form-section, 
+.section-block, 
+.table-section {
+    background: #ffffff;
+    border: 1px solid #cdd8e9;
+    padding: 20px;
+    margin-bottom: 22px;
+    box-shadow: 0px 3px 10px rgba(130,160,220,0.10);
 }
 
-/* CLOSE BUTTON */
-.jqx-window-close-button {
-    background: transparent !important;
-    filter: brightness(0) invert(1) !important;
-    border: none !important;
+/* ---- SECTION TITLES ---- */
+.form-section h3,
+.section-block h3,
+.table-section h3 {
+    background: #e9f1ff;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A3E7A;
+    border-left: 4px solid #356ad4;
 }
 
-/* SEARCH HEADER INSIDE WINDOW */
-.search-header {
-    background: linear-gradient(90deg, #478dff, #67a8ff) !important;
-    padding: 14px 20px !important;
-    color: white !important;
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    border-radius: 14px 14px 0 0 !important;
+/* ========================================================
+   🔹 UNIFORM TWO COLUMN FORM GRID
+   ======================================================== */
+
+.uniform-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 18px;
+    width: 100%;
 }
 
-/* BODY SECTION INSIDE WINDOW */
-.search-body {
-    padding: 18px 22px 10px !important;
-    background: #fbfcff !important;
+/* ---- LABEL + INPUT BLOCK ---- */
+.field-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-/* INPUT FIELDS */
-.jqx-input,
-input[type="text"],
-.jqx-widget-content input {
-    height: 34px !important;
-    border-radius: 10px !important;
-    background: #ffffff !important;
-    border: 1px solid #c4d3ff !important;
-    padding: 5px 10px !important;
-    font-size: 0.88rem !important;
-    box-shadow: 0 2px 6px rgba(150,175,255,0.20) !important;
-    transition: 0.2s ease !important;
+/* ---- LABELS ---- */
+.field-block label,
+.uniform-grid label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A3E7A;
+    text-align: left;
 }
 
-/* FOCUS EFFECT */
-input:focus,
-.jqx-input:focus {
-    border-color: #6a96ff !important;
-    box-shadow: 0 0 0 2px rgba(70,120,255,0.15) !important;
-    outline: none !important;
+/* ---- INPUT ELEMENTS ---- */
+.uniform-grid input,
+.uniform-grid select,
+.uniform-grid textarea,
+.uniform-grid div[id^="jqx"] {
+    height: 38px;
+    width: 100%;
+    border: 1px solid #aebed5;
+    background: white;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #1A3E7A;
+    border-radius: 0;
+    box-sizing: border-box;
+    transition: 0.15s;
 }
 
-/* LABEL STYLING */
-.jqx-window-content label {
-    font-size: 0.82rem !important;
-    font-weight: 600 !important;
-    color: #263b75 !important;
-    margin-bottom: 4px !important;
+/* ---- TEXTAREA FIX ---- */
+.uniform-grid textarea {
+    height: 80px;
 }
 
-/* BUTTONS (Search, Attach, etc.) */
-button,
-input[type="button"],
+/* ---- jqx Picker Fix ---- */
+.uniform-grid div[id^="jqx"] {
+    padding: 0 !important;
+    line-height: 38px;
+}
+
+/* ---- INPUT FOCUS ---- */
+.uniform-grid input:focus,
+.uniform-grid select:focus,
+.uniform-grid textarea:focus {
+    border-color: #2f6dde;
+    box-shadow: 0 0 6px rgba(47, 109, 222, 0.25);
+    outline: none;
+}
+
+/* ========================================================
+   🔹 TABLES
+   ======================================================== */
+
+.cr-table {
+    width: 100%;
+    border-spacing: 12px 10px;
+    background: white;
+}
+
+.cr-table td {
+    font-size: 14px;
+    color: #1A3E7A;
+}
+
+/* ========================================================
+   🔹 SCROLL AREAS
+   ======================================================== */
+
+.hidden-scrollbar {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+    background: #356ad4;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-track {
+    background: #dce8ff;
+}
+
+/* ========================================================
+   🔹 BUTTON BAR
+   ======================================================== */
+
+.action-bar {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    background: white;
+    border: 1px solid #cdd8e9;
+    margin-bottom: 20px;
+}
+
+.action-bar .btn,
 .myButton {
-    background: linear-gradient(90deg,#6fb1fc,#1a73e8) !important;
-    height: 34px !important;
+    background: linear-gradient(90deg,#5d99ff,#2f6dde);
+    border: none;
+    padding: 9px 18px;
     color: white !important;
-    border: none !important;
-    padding: 0px 26px !important;
-    border-radius: 10px !important;
-    font-size: 0.9rem !important;
-    font-weight: 600 !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(26,115,232,0.30) !important;
-    transition: 0.2s !important;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.22s;
 }
 
-/* BUTTON HOVER LIFT EFFECT */
-button:hover,
+.action-bar .btn:hover,
 .myButton:hover {
-    transform: translateY(-2px) !important;
+    background: #114dc8;
 }
 
-/* GRID HEADER */
-.jqx-grid-column-header,
-.jqx-widget-header {
-    background: linear-gradient(90deg,#eff4ff,#dfe9ff) !important;
-    color: #2a3f85 !important;
+/* ============================
+   🔹 TWO PANEL FORM ALIGNMENT
+   ============================ */
+
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 18px;
+}
+
+/* Force both panels same height visually */
+.form-section {
+    height: auto;
+    min-height: 340px;
+}
+
+/* Fix label alignment */
+.uniform-grid label {
+    display: block;
+    min-width: 120px;
+    margin-bottom: 3px;
+}
+
+/* Fix field alignment */
+.uniform-grid input,
+.uniform-grid select,
+.uniform-grid textarea,
+.uniform-grid div[id^="jqx"] {
+    width: 100% !important;
+}
+
+/* Button & Icon Alignment */
+.field-block button,
+.field-block img {
+    height: 38px;
+    width: 38px;
+    border: none;
+    padding: 0;
+}
+
+.field-inline-buttons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+/* ============================================
+   🔹 FONT WEIGHT UPGRADE FOR BOLDER UI LOOK
+   ============================================ */
+
+/* Global text boldness */
+body, #mainBG, * {
     font-weight: 600 !important;
-    border-color: #dce6ff !important;
-    font-size: 0.85rem !important;
+    color: #1A3E7A;
 }
 
-/* GRID CELLS */
-.jqx-grid-cell {
-    font-size: 0.85rem !important;
-    padding: 6px !important;
-    border-color: #eef3ff !important;
-    color: #1f1f33 !important;
+/* Section titles extra bold */
+.form-section h3,
+.section-block h3,
+.table-section h3 {
+    font-weight: 700 !important;
+    color: #1A3E7A;
 }
 
-/* HOVER */
-.jqx-grid-cell-hover {
-    background: rgba(70,120,255,0.08) !important;
+/* Labels slightly heavier */
+.uniform-grid label,
+.field-block label {
+    font-weight: 700 !important;
 }
 
-/* SELECTED ROW */
-.jqx-grid-cell-selected {
-    background: #6e96ff !important;
-    color: white !important;
+/* Input text bold but clean */
+.uniform-grid input,
+.uniform-grid select,
+.uniform-grid textarea,
+.uniform-grid div[id^="jqx"] {
+    font-weight: 600 !important;
+    color: #1A3E7A;
 }
 
-/* LEFT PINNED COLUMN */
-.jqx-grid-cell-pinned {
-    background-color: #e5e5e5 !important;
+/* Table text bold */
+.cr-table td {
+    font-weight: 600 !important;
+    color: #1A3E7A;
+}
+
+/* Buttons remain white text but bold */
+.action-bar .btn,
+.myButton {
+    font-weight: 700 !important;
 }

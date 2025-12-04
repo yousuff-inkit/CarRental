@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/globalcss.css">
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
    /* Smooth Scroll Container */

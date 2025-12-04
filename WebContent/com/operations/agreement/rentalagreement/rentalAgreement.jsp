@@ -4,7 +4,6 @@
 <% String contextPath=request.getContextPath();%>
 <head>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/newUiCss.css">
-
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,13 +27,16 @@ body {
 
 
 /* --------- MAIN WRAPPER CARD --------- */
+/* --------- CLEAN COMPACT HEADER CONTAINER --------- */
 #mainBG {
     background: #ffffff;
-    width: 92%;
-    margin: auto;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0px 10px 35px rgba(80,110,255,0.25);
+    width: 75%;                 /* reduced width (was 92%) */
+    min-width: 1000px;          /* keeps it clean on smaller screens */
+    margin: 25px auto;
+    padding: 20px 28px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(80,110,255,0.22);
+    border: 1px solid #d9e4ff;
 }
 
 /* Remove blue background behind components */
