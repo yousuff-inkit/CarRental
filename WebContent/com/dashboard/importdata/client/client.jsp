@@ -16,328 +16,434 @@
 <link href="../../../../vendors/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="../../../../vendors/select2/select2.min.css" rel="stylesheet" />
   
-<style type="text/css">
-.hidden-scrollbar {
-  overflow-y: auto;
-  height: 530px;
-  scrollbar-width: thin;
-  scrollbar-color: #4da3ff #eaf3ff;
-}
-.hidden-scrollbar::-webkit-scrollbar {
-  width: 7px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4da3ff;
-  border-radius: 8px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #1a73e8;
-}
-
-body {
-  background: linear-gradient(135deg, #e8f1ff 0%, #d1e4ff 100%);
-  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
-  color: #1f2f46;
-  margin: 0;
-  padding: 40px 0;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
+  <style type="text/css">
 .border1 {
-  border-radius: 16px;
-  padding: 8px;
-  box-shadow: inset 0 0 3px #b9ccf2;
-  border: 1px solid #c9dafc;
-  background: #f4f8ff;
+	  border-radius: 25px;   
+	  padding: 8px;
+	  -moz-box-shadow:    inset 0 0 3px #000000;
+      -webkit-box-shadow: inset 0 0 3px #000000;
+      box-shadow:         inset 0 0 3px #000000;   
 }
-
-.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
-  border-radius: 30px;
-}
-
-.btn:focus,
-.btn:active {
-  outline: none;
-  box-shadow: none;
-}
-
-.modalStyle {
-  background-color: #3b82f6;
-  padding: 10px;
-  color: #ffffff;
-}
-
-.borderStyle {
-  margin-bottom: 0;
-  white-space: nowrap;
-  vertical-align: middle;
-  border: 1px solid #c9dafc;
-  box-shadow: 0 4px 18px rgba(50, 110, 255, 0.18);
-  border-radius: 14px;
-  background: #f4f8ff;
-  transition: 0.3s;
-}
-.borderStyle:hover {
-  box-shadow: 0 6px 24px rgba(30, 100, 255, 0.25);
-}
-
-.iconStyle {
-  color: #ffffff;
-  display: inline-block;
-  border: none;
-  transition: all 0.25s ease;
-}
-
-.btnStyle {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: 600;
-  margin-right: 5px;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
-  padding: 6px 14px;
-  font-size: 14px;
-  line-height: 1.4;
-  border-radius: 30px;
-  border: none;
-  color: #ffffff;
-  background: linear-gradient(90deg, #3b82f6, #1a73e8);
-  box-shadow: 0 3px 10px rgba(30, 100, 255, 0.25);
-  transition: 0.25s ease;
-}
-.btnStyle:hover {
-  background: linear-gradient(90deg, #1a73e8, #155cc6);
-  transform: translateY(-2px);
-}
-.btnStyle:active {
-  transform: scale(0.96);
-}
-
-@media (min-width: 900px) {
+  .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {       
+    border-radius: 30px !important;       
+} 
+  .btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+   }
+   .modalStyle {      
+    background-color:#33b5e5; `
+    padding: 10px; 
+   }
+   .borderStyle{  
+    margin-bottom: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    border: none;
+    line-height: 1.42857143;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+   box-shadow: 1px 2px 7px 3px #d4cece;                          
+    position: relative;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   transition: all 0.3s;
+  }   
+  .iconStyle{
+	color: #000000 !important;  
+	display: inline-block;
+	border: none;
+	transition: all 0.4s ease 0s;   
+  }
+  .btnStyle{  
+  	display: inline-block;   
+    margin-bottom: 0;
+    font-weight: 400;
+    margin-right:5px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: none;
+    padding: 3px 8px;  
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    box-shadow: 0px 2px 3px 0.1px rgba(0, 0, 0, 0.6);                     
+    position: relative;
+   -webkit-transition: all 0.3s;
+   -moz-transition: all 0.3s;
+   transition: all 0.3s;
+  }
+   @media (min-width: 900px) {               
   .modal-xl {
-    width: 100%;
-    max-width: 1200px;
+    width: 100%;  
+   max-width:1200px;  
   }
+} 
+   .textpanel{
+    color: blue;
+  }   
+    .custompanel{
+      float: left;
+      display: inline-block;
+      margin-top: 0px; 
+      padding-top: 10px;
+      padding-bottom: 0px;
+      border-radius: 8px;
+    }
+    .badge-notify{
+	   position:absolute;right:-5px;top:-8px;z-index:2;background-color:red;
+	} 
+	.comment{
+      /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+      background-color:#FEFE56;   
+      color: black;
+      clear:both;
+      float: right;
+      display: block;
+      padding-top: 8px;
+      padding-bottom: 2px;
+      padding-left: 10px;
+      padding-right: 5px;
+      border-radius: 12px;
+      border-top-right-radius: 0;
+      margin-bottom: 8px;
+      transition:all 0.5s ease-in;
+    }
+    .msg-details{
+      text-align: right;
+    }
+    .comments-container{
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 8px;
+      padding-right: 5px;
+    }
+    .comments-outer-container{
+      width: 100%;
+      height: 100%;
+    }
+
+    .rowgap{
+    	margin-bottom:6px;
+    }
+    .msg{
+    	word-break:break-all;
+    }
+ 
+    .textpanel{
+      color: blue;
+    } 
+    .load-wrapp {
+	    float: left;
+	    width: 100px;
+	    height: 100px;
+	    margin: 0 10px 10px 0;
+	    padding: 20px 20px 20px;
+	    border-radius: 5px;
+	    text-align: center;
+	    background-color: #fff;
+	    position:absolute;
+	    z-index:9999;
+	    top:50%;
+	    left:50%;
+	    transform:translate(-50%,-50%);
+	    border:1px solid #000;
+	}
+
+	.spinner {
+	    position: relative;
+	    width: 45px;
+	    height: 45px;
+	    margin: 0 auto;
+	}
+	 .fieldset{
+ border: 1px solid #ccc;
+    padding: 10px;	}
+	/* #field-existing > table > tbody > tr > td,#field-extend > table > tbody > tr > td,,#field-paymentdet > table > tbody > tr > td{
+		font:13px Tahoma;
+	} */
+	.bubble-1,
+	.bubble-2 {
+	    position: absolute;
+	    top: 0;
+	    width: 25px;
+	    height: 25px;
+	    border-radius: 100%;
+	    
+	    background-color: #000;
+	}
+	
+	.bubble-2 {
+	    top: auto;
+	    bottom: 0;
+	}
+	.load-9 .spinner {border:none;animation: loadingI 2s linear infinite;}
+	.load-9 .bubble-1, .load-9 .bubble-2 {animation: bounce 2s ease-in-out infinite;}
+	.load-9 .bubble-2 {animation-delay: -1.0s;}
+	@keyframes loadingI {
+	    100% {transform: rotate(360deg);}
+	}
+	
+	@keyframes bounce  {
+	  0%, 100% {transform: scale(0.0);}
+	  50% {transform: scale(1.0);}
+	}
+	
+/* 	.modal-dialog,
+.modal-content {
+    /* 80% of window height */
+    height: 80%;
 }
 
-.textpanel {
-  color: #1b3f73;
-}
+.modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 120px);
+    overflow-y: scroll;
+}	
 
-.custompanel {
-  float: left;
-  display: inline-block;
-  margin-top: 0;
-  padding-top: 10px;
-  padding-bottom: 0;
-  border-radius: 8px;
-}
-
-.badge-notify {
-  position: absolute;
-  right: -5px;
-  top: -8px;
-  z-index: 2;
-  background-color: #d62828;
-}
-
-.comment {
-  background-color: #fff9c4;
-  color: #1f2f46;
-  clear: both;
-  float: right;
-  display: block;
-  padding: 8px 5px 2px 10px;
-  border-radius: 12px;
-  border-top-right-radius: 0;
-  margin-bottom: 8px;
-  transition: all 0.5s ease-in;
-}
-
-.msg-details {
-  text-align: right;
-}
-
-.comments-container {
-  height: 400px;
-  overflow-y: auto;
-  margin-bottom: 8px;
-  padding-right: 5px;
-}
-
-.comments-outer-container {
-  width: 100%;
-  height: 100%;
-}
-
-.rowgap {
-  margin-bottom: 6px;
-}
-
-.msg {
-  word-break: break-all;
-}
-
-.load-wrapp {
-  float: left;
-  width: 100px;
-  height: 100px;
-  margin: 0 10px 10px 0;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-  background-color: #ffffff;
-  position: absolute;
-  z-index: 9999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid #b9ccf2;
-}
-
-.spinner {
-  position: relative;
-  width: 45px;
-  height: 45px;
-  margin: 0 auto;
-}
-
-.fieldset {
-  border: 1px solid #c9dafc;
-  padding: 10px;
-  border-radius: 8px;
-  background: #f4f8ff;
-}
-
-.bubble-1,
-.bubble-2 {
-  position: absolute;
-  top: 0;
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  background-color: #1a73e8;
-}
-
-.bubble-2 {
-  top: auto;
-  bottom: 0;
-}
-
-.load-9 .spinner {
-  border: none;
-  animation: loadingI 2s linear infinite;
-}
-.load-9 .bubble-1,
-.load-9 .bubble-2 {
-  animation: bounce 2s ease-in-out infinite;
-}
-.load-9 .bubble-2 {
-  animation-delay: -1.0s;
-}
-
-@keyframes loadingI {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: scale(0.0);
-  }
-  50% {
-    transform: scale(1.0);
-  }
-}
-</style>
-
-<body>
+  </style>
+</head>
+<body >
   <div class="container-fluid">
-    <div class="row rowgap">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="primarypanel custompanel" style="margin-left:5px;">
-          <div class="border1">
-            <button type="button" class="btn btn-default btnStyle" id="btnsubmit" data-toggle="tooltip" title="Submit" data-placement="bottom">
-              <i class="fa fa-refresh iconStyle" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="btn btn-default btnStyle" id="btnexcel" data-toggle="tooltip" title="Excel Export" data-placement="bottom">
-              <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="otherpanel custompanel" style="margin-left:5px;">
-          <div class="border1">
-            <input type="file" id="fileexcelimport" name="file" style="width:75%;">
-          </div>
-        </div>
-
-        <div class="otherpanel custompanel" style="margin-left:5px;">
-          <div class="border1">
-            <button type="button" class="btn btn-default btnStyle" id="btnimport" data-toggle="tooltip" title="Excel Import" data-placement="bottom">
-              <i class="fa fa-download" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="btn btn-default btnStyle" id="btnsalesman" data-toggle="tooltip" title="Salesman" data-placement="bottom">
-              <i class="fa fa-street-view" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="btn btn-default btnStyle" id="btncategory" data-toggle="tooltip" title="Category" data-placement="bottom">
-              <i class="fa fa-list" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="btn btn-default btnStyle" id="btnarea" data-toggle="tooltip" title="Area" data-placement="bottom">
-              <i class="fa fa-th-large" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="btn btn-default btnStyle" id="btnconfirm" data-toggle="tooltip" title="Confirm" data-placement="bottom">
-              <i class="fa fa-check-circle" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
+    <div class="row rowgap">    
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	         <div class="primarypanel custompanel" style="margin-left:5px;">    
+	             <div class="border1">
+	                <button type="button" class="btn btn-default btnStyle" id="btnsubmit" data-toggle="tooltip" title="Submit" data-placement="bottom"><i class="fa fa-refresh iconStyle" aria-hidden="true"></i></button>        
+		          	<button type="button" class="btn btn-default btnStyle" id="btnexcel" data-toggle="tooltip" title="Excel Export" data-placement="bottom"><i class="fa fa-file-excel-o " aria-hidden="true"></i></button>    
+	            </div>                               
+		  	 </div>   
+	        
+	         <div class="otherpanel custompanel"  style="margin-left:5px;">   
+			        <div class="border1">     
+			              <input type="file" id="fileexcelimport" name="file" style="width:75%;" > 
+			         </div> 
+		     </div> 
+		     
+		     <div class="otherpanel custompanel"  style="margin-left:5px;">        
+			        <div class="border1">     
+			                 <button type="button" class="btn btn-default btnStyle" id="btnimport" data-toggle="tooltip" title="Excel Import" data-placement="bottom"><i class="fa fa-download" aria-hidden="true" ></i></button>
+			                 <button type="button" class="btn btn-default btnStyle" id="btnsalesman" data-toggle="tooltip" title="Salesman" data-placement="bottom"><i class="fa fa-street-view" aria-hidden="true" ></i></button>
+			                 <button type="button" class="btn btn-default btnStyle" id="btncategory" data-toggle="tooltip" title="Category" data-placement="bottom"><i class="fa fa-list" aria-hidden="true" ></i></button>
+			                 <button type="button" class="btn btn-default btnStyle" id="btnarea" data-toggle="tooltip" title="Area" data-placement="bottom"><i class="fa fa-th-large" aria-hidden="true" ></i></button>
+			                 <button type="button" class="btn btn-default btnStyle" id="btnconfirm" data-toggle="tooltip" title="Confirm" data-placement="bottom"><i class="fa fa-check-circle" aria-hidden="true" ></i></button>
+			         </div> 
+		     </div>   
+        </div>  
       </div>
-    </div>
-
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div id="clientdiv" class="borderStyle">
-          <jsp:include page="clientGrid.jsp"></jsp:include>
-        </div>
+        <div id="clientdiv" class="borderStyle"><jsp:include page="clientGrid.jsp"></jsp:include></div>
       </div>
     </div>
-
-    <!-- Modals for Salesman, Category, Area -->
-    <!-- Each modal structured similarly with modal-header, modal-body, forms, buttons, etc. -->
-    <!-- Keep indentation consistent -->
     
-    <input type="hidden" name="divname" id="divname">
-    <input type="hidden" id="agmtvocno" name="agmtvocno">
-    <input type="hidden" id="agmtdocno" name="agmtdocno">
-    <input type="hidden" id="extdocno" name="extdocno">
-    <input type="hidden" id="date1" name="date1">
-    <input type="hidden" id="le_clacno" name="le_clacno">
-    <input type="hidden" id="extno" name="extno">
-    <input type="hidden" id="brhid1" name="brhid1">
-    <input type="hidden" id="hidapprstatus" name="hidapprstatus">
-    <input type="hidden" id="hidperfleet" name="hidperfleet">
-    <input type="hidden" id="hidfromdt" name="hidfromdt">
-    <input type="hidden" id="hidtodt" name="hidtodt">
-
-    <div id="partssearchwindow">
-      <div>
-        <img id="loadingImage" src="../../../../icons/31load.gif" style="position: absolute; vertical-align: middle; text-align: center; margin-right:50%; margin-left:60%; margin-top:25%;">
-      </div>
-    </div>
-    <div id="categoryaccinfowindow"><div></div></div>
-    <div id="salesmanaccinfowindow"><div></div></div>
-    <div id="areainfowindow"><div></div></div>
-    <div id="sourcesearchwndow"><div></div></div>
-  </div>
-
-
-
+    
+    <!-- Salesman modal-->                
+    <div id="modalSalesman" class="modal fade" role="dialog">          
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header modalStyle">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>  
+            <h4 class="modal-title" style="text-align:center">Salesman</h4>                  
+          </div>                             
+          <div class="modal-body">
+            <div class="container-fluid">
+            <form class="form-inline">
+                <div class="row rowgap">        
+			      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">            
+			        <div id="saldiv" class="borderStyle"><jsp:include page="salesmanGrid.jsp"></jsp:include></div>                    
+			      </div>                                  
+			    </div> 
+			    <div class="row rowgap">  
+			     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">     
+				    <fieldset>   
+	                 <legend style="font-size:14px;font-weight: bold">Update:</legend>    
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-10">           
+		                <div class="form-group">
+							<label>Salesman</label>           
+							<select class="form-control input-sm" id="cmbsal" name="cmbsal" style="width:200px;">
+			  							<option></option>   
+							</select>                   
+						</div>       
+					 </div>  
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">         
+		                <div class="form-group">
+							<button type="button" class="btn btn-default btnStyle" id="btnupdateSalesman" title="Update" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-floppy-o " aria-hidden="true"></i></button>   
+						</div>       
+					 </div> 
+					 </fieldset> 
+				 </div>
+			     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">     
+					 <fieldset>   
+	                 <legend style="font-size:14px;font-weight: bold">Save:</legend>    
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">         
+		                <div class="form-group">  
+							<button type="button" class="btn btn-default btnStyle" id="btnsaveSalesman" title="Save" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-floppy-o " aria-hidden="true"></i></button>   
+						</div>       
+					 </div> 
+					 </fieldset> 
+				 </div>     
+               </div>
+              </form>
+           </div>   
+          </div>  
+          </div>  
+        </div>    
+      </div> 
+    
+    <!-- Category modal-->                
+    <div id="modalCategory" class="modal fade" role="dialog">          
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header modalStyle">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>  
+            <h4 class="modal-title" style="text-align:center">Category</h4>                  
+          </div>                             
+          <div class="modal-body">
+            <div class="container-fluid">
+            <form class="form-inline">
+                <div class="row rowgap">        
+			      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">            
+			        <div id="categorydiv" class="borderStyle"><jsp:include page="categoryGrid.jsp"></jsp:include></div>                    
+			      </div>                                  
+			    </div> 
+			    <div class="row rowgap">  
+			     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">     
+				    <fieldset>   
+	                 <legend style="font-size:14px;font-weight: bold">Update:</legend>    
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-10">           
+		                <div class="form-group">
+							<label>Category</label>           
+							<select class="form-control input-sm" id="cmbcategory" name="cmbcategory" style="width:200px;">
+			  							<option></option>   
+							</select>                   
+						</div>       
+					 </div>  
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">         
+		                <div class="form-group">
+							<button type="button" class="btn btn-default btnStyle" id="btnupdateCategory" title="Update" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-floppy-o " aria-hidden="true"></i></button>   
+						</div>       
+					 </div> 
+					 </fieldset> 
+				 </div>
+			     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">     
+					 <fieldset>   
+	                 <legend style="font-size:14px;font-weight: bold">Save:</legend>    
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">         
+		                <div class="form-group">  
+							<button type="button" class="btn btn-default btnStyle" id="btnsaveCategory" title="Save" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-floppy-o " aria-hidden="true"></i></button>   
+						</div>       
+					 </div> 
+					 </fieldset> 
+				 </div>     
+               </div>
+              </form>
+           </div>   
+          </div>  
+          </div>  
+        </div>    
+      </div> 
+      
+      <!-- Area modal-->                
+    <div id="modalArea" class="modal fade" role="dialog">          
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header modalStyle">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>  
+            <h4 class="modal-title" style="text-align:center">Area</h4>                  
+          </div>                             
+          <div class="modal-body">
+            <div class="container-fluid">
+            <form class="form-inline">
+                <div class="row rowgap">        
+			      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">            
+			        <div id="areadiv" class="borderStyle"><jsp:include page="areaGrid.jsp"></jsp:include></div>                    
+			      </div>                                  
+			    </div> 
+			    <div class="row rowgap">  
+			     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">     
+				    <fieldset>   
+	                 <legend style="font-size:14px;font-weight: bold">Update:</legend>    
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-10">           
+		                <div class="form-group">
+							<label>Area</label>           
+							<select class="form-control input-sm" id="cmbarea" name="cmbarea" style="width:200px;">  
+			  							<option></option>   
+							</select>                   
+						</div>       
+					 </div>  
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">         
+		                <div class="form-group">
+							<button type="button" class="btn btn-default btnStyle" id="btnupdateArea" title="Update" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-floppy-o " aria-hidden="true"></i></button>   
+						</div>       
+					 </div> 
+					 </fieldset> 
+				 </div>
+			     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">     
+					 <fieldset>   
+	                 <legend style="font-size:14px;font-weight: bold">Save:</legend>    
+					 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">         
+		                <div class="form-group">  
+							<button type="button" class="btn btn-default btnStyle" id="btnsaveArea" title="Save" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-floppy-o " aria-hidden="true"></i></button>   
+						</div>       
+					 </div> 
+					 </fieldset> 
+				 </div>     
+               </div>
+              </form>
+           </div>   
+          </div>  
+          </div>  
+        </div>    
+      </div> 
+    
+    
+       <input type="hidden" name="divname" id="divname"> 
+       <input type="hidden" id="agmtvocno" name="agmtvocno">
+	   <input type="hidden" id="agmtdocno" name="agmtdocno">
+       <input type="hidden" id="extdocno" name="extdocno">
+       <input type="hidden" id="date1" name="date1">
+       <input type="hidden" id="le_clacno" name="le_clacno">
+       <input type="hidden" id="extno" name="extno">
+       <input type="hidden" id="brhid1" name="brhid1">
+       <input type="hidden" id="hidapprstatus" name="hidapprstatus">
+       <input type="hidden" id="hidperfleet" name="hidperfleet">
+             <input type="hidden" id="hidfromdt" name="hidfromdt">
+             <input type="hidden" id="hidtodt" name="hidtodt">
+      
+       
+       
+       
+            
+  <div id="partssearchwindow">
+   		<div><img id="loadingImage" src="../../../../icons/31load.gif" style="position: absolute;vertical-align:middle;text-align:center;margin-right:50%;margin-left:60%;margin-top:25%;" /></div>
+	</div>
+	<div id="categoryaccinfowindow">
+   <div ></div>
+   </div>
+	<div id="salesmanaccinfowindow">
+   <div ></div>
+   </div>
+	<div id="areainfowindow">
+   <div ></div>
+</div>
+<div id="sourcesearchwndow">
+   <div ></div>
+</div>
+</div>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 
 <script src="../../../../js/sweetalert2.all.min.js"></script>
