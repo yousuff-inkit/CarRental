@@ -9,17 +9,17 @@
 
 <style>
 form label.error {
-color:red;
-  font-weight:bold;
-
+    color: red;
+    font-weight: bold;
 }
 
-
+/* Scroll wrapper */
 .hidden-scrollbar {
     overflow: auto;
     height: 530px;
 }
 
+/* Page BG */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -29,29 +29,37 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
 }
+
+/* Main container */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 10px 18px;
+    max-width: 1350px;
     margin: 0 auto;
+    box-shadow: 0 6px 28px rgba(140,160,255,0.22);
 }
 
+/* HEADER SECTION */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     border-radius: 12px;
-    padding: 0px 24px;
+    padding: 8px 24px;
     font-size: 2vh;
+    background: rgba(240,245,255,0.8);
 }
+
+/* Header labels */
 .receipt-header label {
     font-weight: 500;
     color: #333;
     margin-right: 8px;
 }
+
+/* Header input */
 .receipt-header input[type="text"] {
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -61,10 +69,13 @@ body {
     background: #fff;
     transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
+/* Header buttons */
 .receipt-header button {
     background: #007bff;
     color: #fff;
@@ -75,9 +86,11 @@ body {
     cursor: pointer;
     transition: background 0.2s;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
+
 #txtStatus {
     font-size: 1rem;
     font-weight: 600;
@@ -85,11 +98,13 @@ body {
     margin-left: 12px;
 }
 
+/* FORM SECTIONS */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
@@ -129,43 +144,105 @@ body {
     transition: border-color 0.2s;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
+/* TABLE SECTION */
 .table-section {
     margin-bottom: 18px;
 }
+
 .table-section h3 {
     color: #253858;
     font-size: 1.04em;
     font-weight: 600;
 }
+
+/* Table wrapper */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
     background: #f9fafb;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    box-shadow: 0 0 0 1px #e0e7ff;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
+
+/* Table cells */
+.cr-table th,
+.cr-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e3e8f5;
     text-align: left;
-    font-size: 1em;
+    font-size: 0.95rem;
 }
+
+/* Table header */
 .cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+    background: #eef3ff;
+    color: #304a78;
     font-weight: 600;
 }
+
+/* Remove last border */
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+/* NEW: Enhanced table styles */
+.enhanced-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-spacing: 0 4px;
+    margin-top: 10px;
+}
+
+.enhanced-table td {
+    padding: 14px 12px !important;
+}
+
+/* Label styling */
+.col-label {
+    font-weight: 600;
+    color: #1f3b70;
+    text-align: right;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Input fields */
+.input-box {
+    width: 100%;
+    height: 34px;
+    border: 1px solid #bcd0ff;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 14px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(130,150,255,0.18);
+    transition: 0.15s;
+}
+
+.input-box:focus {
+    border-color: #6a9cff;
+    box-shadow: 0 0 0 2px rgba(106,155,255,0.28);
+    outline: none;
+}
+
+/* Vendor row input small */
+.input-box-small {
+    width: 160px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid #bcd0ff;
+    padding: 6px 10px;
+    background: #fff;
+}
+
+/* Vendor flex row */
+.vendor-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -994,99 +1071,140 @@ function getProdType(event){
 	<br/>
     <div class="hidden-scrollbar receipt-header">
 	<div class="table-section">
-<table class="cr-table" width="100%"   >
+<table class="cr-table enhanced-table" width="100%">
 
-  <tr>
-    <td width="4%" align="right">Date</td>
-    <td width="8%" align="left"><div id="nipurchasedate" name="nipurchasedate" value='<s:property value="nipurchasedate"/>'></div>
-    
-    <input type="hidden" name="hidnipurchasedate" id="hidnipurchasedate" value='<s:property value="hidnipurchasedate"/>'>
-    </td>
-<td align="right" width="10%" >Ref Type</td>
-    <td align="left" width="10%" >
-    <select name="nireftype" id="nireftype" style="width:99%;"  value='<s:property value="nireftype"/>' onchange="funrefdisslno()">
-      <option value="DIR" >DIR</option>
-      <option value="NPO" >NPO</option>
-    </select></td>
-    <td align="right" width="5%" >Ref No</td> 
-    <td align="left" width="15%" > <input type="text" name="refno" id="refno" placeholder="Press F3 To Search" style="width:95%;" value='<s:property value="refno"/>' onKeyDown="getrefnosearch(event);"> </td>
-   
-   
-    <td  align="right" width="4%"> Inv NO</td><td  align="left" width="1%"> <input type="text" id="invno" name="invno" onblur="funchkinv();" value='<s:property value="invno"/>'></td>
-    
-    
-    
-    <%-- <td  align="right" width="10%">
-    
-    <label id="billname">Type</label> &nbsp;
-    <select id="cmbbilltype" name="cmbbilltype" onchange="gettaxaccounts()" value='<s:property value="cmbbilltype"/>'>
-      <option value="1" selected>ST</option>
-      <option value="2">RCM</option>
-      </select>
-    </td> --%>
-    <td align="right" width="10%" >Type</td>
-    <td align="left" width="10%" >
-    <select name="cmbbilltype" id="cmbbilltype" style="width:99%;"  value='<s:property value="cmbbilltype"/>'>
-      <option value="1" >VAT</option>
-      <option value="2" >RCM</option>
-    </select></td>
-    
-    <input type="hidden" id="hidcmbbilltype" name="hidcmbbilltype" value='<s:property value="hidcmbbilltype"/>'/>
-    
-    
-    
-    
-<td  align="right" width="10%"> Inv Date</td><td  align="left" width="14%"> <div id="invDate" name="invDate"  value='<s:property value="invDate"/>'></div>
-<input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'> </td>
-   
-    <td width="13%" align="right">Doc No </td><td width="13%"><input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly"></td>
-  </tr>
- 
-  <tr>
-   
-    <td width="3.1%" align="right">Vendor</td>
-    <td colspan="5" width="14%" align="left"> 
-      <input type="hidden" name="acctype" id="acctype" value='<s:property value="acctype"/>'>
- 
-    <input type="text" name="nipuraccid" id="nipuraccid" value='<s:property value="nipuraccid"/>' placeholder="Press F3 To Search"  style="width:20%;" onKeyDown="getaccountdetails(event);" >  
-      <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>'  style="width:77.5%;"></td>
-     
-    <td align="right" width="3%">Curr</td>
-    <td width="6%" align="left"><select name="cmbcurr" id="cmbcurr" style="width:100%;pointer-events:none;" tabindex="-1"  value='<s:property value="cmbcurr"/>' onchange="getRatevalue1(this.value,$('#nipurchasedate').val());">
-      <option value="-1" >--Select--</option>
-    </select>    </td>   
-
-    <td width="15%" align="right">Rate &nbsp; <input type="text" style="width:70%;"   name="currate" id="currate"  value='<s:property value="currate"/>'></td>
- 
-   <input type="hidden" name="refslno" id="refslno"  value='<s:property value="refslno"/>' >    
-        <td align="left" colspan="2" > <label id="billtype">Bill Type</label> &nbsp;<input type="text" id="txtproducttype" name="txtproducttype"
-											style="width: 68%;" placeholder="Press F3 for Search"  onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>' /> </td>
-
-<!--  <td width="3.1%" align="right">  &nbsp;</td> <td width="3.1%" align="right">  &nbsp;</td> -->
- 
-  </tr>
- 
-  <tr>
- 
-    <td align="right" width="6%" >Del Date</td>
-    <td align="left"width="3%" ><div id="deliverydate" name="deliverydate" value='<s:property value="deliverydate"/>'></div>
-    <input type="hidden" name="hiddeliverydate" id="hiddeliverydate" value='<s:property value="hiddeliverydate"/>'></td>
- 
- <td>&nbsp;<div id="interdiv" hidden="true"><input type="checkbox" name="interstate" id="interstate" value="interstate"  value='<s:property value="interstate"/>' onclick="$(this).attr('value', this.checked ? 1 : 0);" >Interstate</div></td>
-    <td align="right" width="5%" >Del Terms</td>
-    <td colspan="7" align="left" width="56%" ><input type="text" name="delterms" id="delterms" value='<s:property value="delterms"/>' style="width:96%;"></td>
- 
-     
-  </tr> 
-  <tr>
-  <td align="right"  width="4.7%">Pay Terms</td>
-    <td colspan="10"  width="94%" align="left"><input type="text" name="payterms" id="payterms" value='<s:property value="payterms"/>' style="width:97.3%;"></td>
-    </tr>
+    <!-- ROW 1 -->
     <tr>
-    <td align="right"  width="4.7%">Description</td>
-    <td colspan="10"  width="94%" align="left"><input type="text" name="purdesc" id="purdesc" value='<s:property value="purdesc"/>' style="width:97.3%;"></td></tr>
-    
+        <td class="col-label">Date</td>
+        <td class="col-input">
+            <div id="nipurchasedate"></div>
+            <input type="hidden" id="hidnipurchasedate" name="hidnipurchasedate"
+                   value='<s:property value="hidnipurchasedate"/>'>
+        </td>
+
+        <td class="col-label">Ref Type</td>
+        <td class="col-input">
+            <select id="nireftype" name="nireftype" class="input-box">
+                <option value="DIR">DIR</option>
+                <option value="NPO">NPO</option>
+            </select>
+        </td>
+
+        <td class="col-label">Ref No</td>
+        <td class="col-input">
+            <input type="text" id="refno" name="refno"
+                   placeholder="Press F3 To Search"
+                   class="input-box"
+                   onKeyDown="getrefnosearch(event);">
+        </td>
+    </tr>
+
+    <!-- ROW 2 -->
+    <tr>
+        <td class="col-label">Inv No</td>
+        <td class="col-input">
+            <input type="text" id="invno" name="invno" class="input-box" onblur="funchkinv();">
+        </td>
+
+        <td class="col-label">Type</td>
+        <td class="col-input">
+            <select id="cmbbilltype" name="cmbbilltype" class="input-box">
+                <option value="1">VAT</option>
+                <option value="2">RCM</option>
+            </select>
+        </td>
+
+        <td class="col-label">Inv Date</td>
+        <td class="col-input">
+            <div id="invDate"></div>
+            <input type="hidden" id="hidinvDate" name="hidinvDate"
+                   value='<s:property value="hidinvDate"/>'>
+        </td>
+
+        <td class="col-label">Doc No</td>
+        <td class="col-input">
+            <input type="text" id="docno" name="docno" class="input-box" readonly>
+        </td>
+    </tr>
+
+    <!-- ROW 3 -->
+    <tr>
+        <td class="col-label">Vendor</td>
+        <td colspan="3" class="col-input">
+            <div class="vendor-flex">
+                <input type="hidden" id="acctype" name="acctype"
+                       value='<s:property value="acctype"/>'>
+
+                <input type="text" id="nipuraccid" name="nipuraccid"
+                       placeholder="Press F3 To Search"
+                       onKeyDown="getaccountdetails(event);"
+                       class="input-box-small">
+
+                <input type="text" id="puraccname" name="puraccname"
+                       class="input-box">
+            </div>
+        </td>
+
+        <td class="col-label">Curr</td>
+        <td class="col-input">
+            <select id="cmbcurr" name="cmbcurr"
+                    class="input-box"
+                    onchange="getRatevalue1(this.value,$('#nipurchasedate').val());">
+                <option value="-1">--Select--</option>
+            </select>
+        </td>
+
+        <td class="col-label">Rate</td>
+        <td class="col-input">
+            <input type="text" id="currate" name="currate" class="input-box">
+        </td>
+    </tr>
+
+    <!-- ROW 4: Bill Type -->
+    <tr>
+        <td class="col-label">Bill Type</td>
+        <td colspan="7" class="col-input">
+            <input type="text" id="txtproducttype" name="txtproducttype"
+                   class="input-box"
+                   placeholder="Press F3 for Search"
+                   onKeyDown="getProdType(event);">
+        </td>
+    </tr>
+
+    <!-- ROW 5 -->
+    <tr>
+        <td class="col-label">Del Date</td>
+        <td class="col-input">
+            <div id="deliverydate"></div>
+            <input type="hidden" id="hiddeliverydate" name="hiddeliverydate"
+                   value='<s:property value="hiddeliverydate"/>'>
+        </td>
+
+        <td class="col-label">Del Terms</td>
+        <td colspan="5" class="col-input">
+            <input type="text" id="delterms" name="delterms" class="input-box">
+        </td>
+    </tr>
+
+    <!-- ROW 6 -->
+    <tr>
+        <td class="col-label">Pay Terms</td>
+        <td colspan="7" class="col-input">
+            <input type="text" id="payterms" name="payterms" class="input-box">
+        </td>
+    </tr>
+
+    <!-- ROW 7 -->
+    <tr>
+        <td class="col-label">Description</td>
+        <td colspan="7" class="col-input">
+            <input type="text" id="purdesc" name="purdesc" class="input-box">
+        </td>
+    </tr>
+
 </table>
+
+
     </div>
     
  
