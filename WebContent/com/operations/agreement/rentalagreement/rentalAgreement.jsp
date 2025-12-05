@@ -9,130 +9,40 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-/* ---------- MASTER UI THEME ---------- */
-:root {
-    --card-bg: #ffffff;
-    --section-bg: #F6F9FF;
-    --border: #d7e2f3;
-    --label: #253858;
-    --input-h: 36px;
-    --fs: 14px;
-}
-
+/* ===================== MASTER UI RESET ===================== */
 body {
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
     margin: 0;
-    padding: 28px 0;
+    padding: 24px 0;
 }
 
 #mainBG {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 1200px;
+    margin: auto;
     background: #fff;
-    border-radius: 16px;
-    padding: 20px 26px;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.06);
-}
-
-/* ------------ TITLES ------------ */
-.section-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--label);
-    margin-bottom: 12px;
-}
-
-/* ------------ SECTION CARD ------------ */
-.section {
-    background: var(--section-bg);
     border-radius: 14px;
-    padding: 18px 22px;
-    margin-top: 20px;
-    border: 1px solid var(--border);
+    padding: 20px 26px 30px 26px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
-/* ------------ FORM GRID ------------ */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px 22px;
-}
-
-.form-grid.full {
-    grid-template-columns: 1fr;
-}
-
-.form-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-item label {
-    font-size: var(--fs);
-    font-weight: 600;
-    color: var(--label);
-}
-
-.input,
-select {
-    height: var(--input-h);
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: var(--fs);
-    padding: 6px 10px;
-    background: #fff;
-}
-
-.input[readonly] {
-    background: #f3f6fb;
-}
-
-/* Date/Time widgets */
-.widget {
-    height: var(--input-h);
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: #fff;
-}
-
-/* Responsive */
-@media (max-width: 980px) {
-    .form-grid { grid-template-columns: 1fr; }
-}
-/* Scroll Section */
-.scroll-area {
-    max-height: 540px;     /* adjust if needed */
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-/* Smooth scrollbar */
-.scroll-area::-webkit-scrollbar {
-    width: 6px;
-}
-.scroll-area::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 6px;
-}
-.scroll-area::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-/* Heading row restored to original position */
+/* ===================== HEADER BAR ===================== */
 .ra-header-bar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin: 10px 0 18px 0;
+    align-items: center;
+    padding: 14px 18px;
+    background: #f0f4ff;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 0 1px #e1e7f5;
 }
 
 .ra-header-bar h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #253858;
     margin: 0;
+    color: #243b55;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 .ra-actions {
@@ -142,19 +52,201 @@ select {
 
 .ra-button {
     background: #eef3fb;
-    border: none;
-    padding: 6px 18px;
-    border-radius: 18px;
+    border: 1px solid #d5ddee;
+    padding: 6px 16px;
+    border-radius: 6px;
+    color: #364b75;
     font-weight: 600;
     cursor: pointer;
 }
 
 .ra-button:hover {
-    background: #dfe8f9;
+    background: #dfe7f7;
+}
+
+/* ===================== SCROLL AREA ===================== */
+.scroll-area {
+    max-height: 75vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Hide scrollbars but keep scroll functionality */
+.scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+    background: #c9d3e6;
+    border-radius: 10px;
+}
+
+/* ===================== TWO COLUMN LAYOUT ===================== */
+.section-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+/* ===================== SECTION CARD ===================== */
+.section {
+    background: #f7f9fc;
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 0 0 1px #e6e9f1;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #243b55;
+}
+
+/* ===================== FORM GRID ===================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-item.full {
+    grid-column: 1 / -1;
+}
+
+.form-item label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: #253858;
+}
+
+/* ===================== INPUT FIELDS ===================== */
+.input, select, .widget {
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #d1d9e6;
+    padding: 4px 8px;
+    font-size: 13px;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.input:focus, select:focus {
+    border-color: #4b75e6;
+    outline: none;
+}
+
+/* jqx widgets fix */
+.jqx-widget, .jqx-input {
+    height: 30px !important;
+    font-size: 13px !important;
+}
+
+/* ===================== GRIDS INSIDE SECTIONS ===================== */
+#divDrivGrid,
+#tariffDivId,
+#divpaymentGrid {
+    background: #fff;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid #e3e7ef;
+    box-shadow: inset 0 0 0 1px #f2f4f8;
+}
+
+/* Table UI inside grids */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+.cr-table td, .cr-table th {
+    padding: 6px 8px;
+    border-bottom: 1px solid #eceef3;
+    font-size: 13px;
+}
+
+.cr-table th {
+    background: #f0f3fa;
+    font-weight: 600;
+    color: #364b75;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1100px) {
+    .section-two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* make jqx-date div look like an input fallback */
+.widget, .date-fallback {
+  display: inline-block;
+  min-width: 140px;
+  height: 30px;
+  line-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid #d1d9e6;
+  border-radius: 6px;
+  background: #fff;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: #222;
+  vertical-align: middle;
+}
+
+/* ensure the jqx widget stays compact when present */
+.jqx-widget, .jqx-input {
+  height: 30px !important;
+  font-size: 13px !important;
+}
+
+/* small visual hint when fallback input is active */
+.date-fallback.placeholder {
+  color: #7a8698;
+}
+.date-input-fallback {
+    width: 130px;
+    height: 28px;
+    border: 1px solid #ccd3e0;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 13px;
+    background: #fff;
+    box-sizing: border-box;
+}
+/* Force JQX date & time fields to appear properly */
+.jqx-widget,
+.jqx-input,
+.jqx-datetimeinput {
+    width: 100% !important;
+    height: 32px !important;
+    font-size: 13px !important;
+    box-sizing: border-box;
+}
+
+.jqx-fill-state-normal {
+    border-radius: 6px !important;
+}
+
+.jqx-datetimeinput-input {
+    padding: 6px 8px !important;
 }
 
 
+
 </style>
+
 <%-- <link rel="text/css" href="../../../../vendors/select2/select2.min.css"/>
 <script type="text/javascript" src="../../../../vendors/select2/select2.min.js"></script> --%>
 <script type="text/javascript">   
@@ -2902,185 +2994,316 @@ function funResetExcessInsur(){
 }
 </script>
     
-<style>
-
-</style>  
 
 </head>
+<script>
+(function(){
+  // list of date/time element ids you use on the page (add/remove as needed)
+  var widgets = [
+    {id: 'jqxRentalDate', serverVal: '<s:property value="hidjqxRentalDate"/>'},
+    {id: 'jqxDateOut', serverVal: '<s:property value="hidjqxDateOut"/>'},
+    {id: 'jqxOnDate', serverVal: '<s:property value="hidjqxOnDate"/>'},
+    {id: 'date', serverVal: '<s:property value="date"/>'},
+    {id: 'dateout', serverVal: '<s:property value="dateout"/>'},
+    {id: 'garagedeldate', serverVal: '<s:property value="garagedeldate"/>'},
+    {id: 'garagecollectdate', serverVal: '<s:property value="garagecollectdate"/>'},
+    {id: 'closedate', serverVal: '<s:property value="closedate"/>'}
+    // add other ids if you have more
+  ];
+
+  function initJqx(id, opts){
+    try {
+      if (typeof $ !== 'undefined' && typeof $.jqx !== 'undefined' && $('#' + id).jqxDateTimeInput) {
+        // choose a compact width/height so it looks like small textbox
+        $('#' + id).jqxDateTimeInput(opts || { width: '140px', height: '30px', formatString: 'dd.MM.yyyy' });
+        return true;
+      }
+    } catch (e) {
+      // ignore - we'll fallback
+    }
+    return false;
+  }
+
+  function insertFallback(id, value){
+    var $div = $('#' + id);
+    if (!$div.length) return;
+    // build fallback input element (small)
+    var inputId = id + '_fallback';
+    // if already replaced, do nothing
+    if ($('#' + inputId).length) return;
+    var text = (value && value !== 'null') ? value : '';
+    var $input = $('<input>', {
+      type: 'text',
+      id: inputId,
+      class: 'date-fallback',
+      value: text,
+      placeholder: text ? '' : 'dd.MM.yyyy'
+    });
+    // replace the div with input (preserves layout)
+    $div.replaceWith($input);
+  }
+
+  // run after DOM ready
+  $(function(){
+    widgets.forEach(function(w){
+      var ok = initJqx(w.id, null);
+      if (!ok) {
+        // fallback to input and set server value
+        insertFallback(w.id, w.serverVal);
+      } else {
+        // if server provided a value, set it into jqx widget
+        try {
+          if (w.serverVal && w.serverVal !== '') {
+            $('#' + w.id).jqxDateTimeInput('setDate', w.serverVal);
+          }
+        } catch(e){}
+      }
+    });
+  });
+})();
+</script>
+<script>
+$(document).ready(function() {
+
+    // list of jqx date div IDs used in RA page
+    const dateIDs = [
+        "jqxRentalDate", "jqxDateOut", "jqxOnDate",
+        "date", "dateout", "garagedeldate",
+        "garagecollectdate", "closedate"
+    ];
+
+    dateIDs.forEach(id => {
+        const el = $("#" + id);
+        if (el.length) {
+
+            // read server value (if stored in hidden field)
+            const hiddenVal = $("[name='hid" + id + "']").val() || "";
+
+            // Create a real input box
+            const input = $("<input>")
+                .attr("type", "text")
+                .attr("id", id)
+                .attr("name", id)
+                .addClass("date-input-fallback")
+                .val(hiddenVal);
+
+            // Replace the div with input
+            el.replaceWith(input);
+        }
+    });
+
+});
+$(document).ready(function(){
+    $("#jqxRentalDate").jqxDateTimeInput({
+        width: "100%",
+        height: 32,
+        formatString: "dd.MM.yyyy"
+    });
+});
+
+</script>
+
 <body onload="setValues();">
 
 <div id="mainBG" class="homeContent">
 
 <form id="frmRentalAgreement" autocomplete="off">
 
-<jsp:include page="../../../../header.jsp"></jsp:include>
-<jsp:include page="../../../../header.jsp"></jsp:include>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div class="ra-header-bar">
-    <h2>Rental Agreement (RA)</h2>
-
-    <div class="ra-actions">
-        <button type="button" class="ra-button">Search</button>
-        <button type="button" class="ra-button">Create</button>
-        <button type="button" class="ra-button">Edit</button>
-        <button type="button" class="ra-button">Print</button>
-        <button type="button" class="ra-button">Delete</button>
-    </div>
-</div>
-
-<div class="scroll-area">
-
-
-
-<!-- ====================== TITLE ======================== -->
-<h2 class="section-title" style="margin-top:10px;">Rental Agreement (RA)</h2>
-
-
-<!-- ====================== VEHICLE & CLIENT SECTION ======================== -->
-<div class="section">
-    <div class="section-title">Vehicle & Client Info</div>
-
-    <div class="form-grid">
-        <div class="form-item">
-            <label>Vehicle</label>
-            <input class="input" id="txtfleetno" name="txtfleetno" placeholder="Press F3 To Search"
-                   onkeydown="getvehinfo(event);" value='<s:property value="txtfleetno"/>'>
-        </div>
-
-        <div class="form-item">
-            <label>Client</label>
-            <input class="input" id="txtcusid" name="txtcusid" placeholder="Press F3 To Search"
-                   onkeydown="getclientinfo(event);" value='<s:property value="txtcusid"/>'>
-        </div>
-
-        <div class="form-item">
-            <label>Doc No</label>
-            <input class="input" id="docno" name="docno" readonly value='<s:property value="docno"/>'>
-        </div>
-
-        <div class="form-item full">
-            <label>Vehicle Details</label>
-            <input class="input" id="vehdetails" name="vehdetails" value='<s:property value="vehdetails"/>'>
-        </div>
-
-        <div class="form-item">
-            <label>Date</label>
-            <div id="jqxRentalDate" class="widget"></div>
-        </div>
-
-        <div class="form-item full">
-            <label>Description</label>
-            <input class="input" id="rentaldesc" name="rentaldesc"
-                   value='<s:property value="rentaldesc"/>' onblur="fundescvalidate()">
+    <!-- ======== HEADER BAR ======== -->
+    <div class="ra-header-bar">
+        <h2>Rental Agreement (RA)</h2>
+        <div class="ra-actions">
+            <button type="button" class="ra-button">Search</button>
+            <button type="button" class="ra-button">Create</button>
+            <button type="button" class="ra-button">Edit</button>
+            <button type="button" class="ra-button">Print</button>
+            <button type="button" class="ra-button">Delete</button>
         </div>
     </div>
-</div>
+
+    <!-- ========= SCROLL WRAPPER ========== -->
+    <div class="scroll-area">
 
 
-<!-- ====================== DRIVER SECTION ======================== -->
-<div class="section">
-    <div class="section-title">Driver Details</div>
+        <!-- ========================================================= -->
+        <!-- ===============   ROW 1 (2 Columns)    ================== -->
+        <!-- ========================================================= -->
+        <div class="section-two-col">
 
-    <div class="form-grid">
+            <!-- ========== COLUMN 1: VEHICLE & CLIENT INFO ========== -->
+            <div class="section">
+                <h3 class="section-title">Vehicle & Client Info</h3>
 
-        <div class="form-item">
-            <label>Additional Driver</label>
-            <input type="checkbox" id="additional_driver" name="additional_driver"
-                   onclick="$(this).attr('value', this.checked ? 1 : 0)">
-        </div>
+                <div class="form-grid">
 
-        <div class="form-item">
-            <label>Driver</label>
-            <input class="input" id="radriverlist" name="radriverlist" placeholder="Press F3 To Search"
-                   onkeydown="getchauffeur(event);" value='<s:property value="radriverlist"/>'>
-        </div>
+                    <div class="form-item">
+                        <label>Vehicle</label>
+                        <input class="input" id="txtfleetno" name="txtfleetno"
+                               placeholder="Press F3 To Search"
+                               onkeydown="getvehinfo(event);"
+                               value='<s:property value="txtfleetno"/>'>
+                    </div>
 
-        <div class="form-item full">
-            <div id="divDrivGrid">
-                <jsp:include page="driverGrid.jsp"></jsp:include>
+                    <div class="form-item">
+                        <label>Client</label>
+                        <input class="input" id="txtcusid" name="txtcusid"
+                               placeholder="Press F3 To Search"
+                               onkeydown="getclientinfo(event);"
+                               value='<s:property value="txtcusid"/>'>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Doc No</label>
+                        <input class="input" id="docno" name="docno" readonly
+                               value='<s:property value="docno"/>'>
+                    </div>
+
+                    <div class="form-item full">
+                        <label>Vehicle Details</label>
+                        <input class="input" id="vehdetails" name="vehdetails"
+                               value='<s:property value="vehdetails"/>'>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Date</label>
+                        <div id="jqxRentalDate"></div>
+                    </div>
+
+                    <div class="form-item full">
+                        <label>Description</label>
+                        <input class="input" id="rentaldesc" name="rentaldesc"
+                               value='<s:property value="rentaldesc"/>'
+                               onblur="fundescvalidate()">
+                    </div>
+
+                </div>
             </div>
-        </div>
-
-    </div>
-</div>
 
 
-<!-- ====================== TARIFF SECTION ======================== -->
-<div class="section">
-    <div class="section-title">Tariff Info</div>
 
-    <div class="form-grid">
+            <!-- =========== COLUMN 2: DRIVER DETAILS =========== -->
+            <div class="section">
+                <h3 class="section-title">Driver Details</h3>
 
-        <div class="form-item">
-            <label>Sales Agent</label>
-            <input class="input" id="rasales_Agent" name="rasales_Agent" placeholder="Press F3 To Search"
-                   onkeydown="getsalesAgent(event);" value='<s:property value="rasales_Agent"/>'>
-        </div>
+                <div class="form-grid">
 
-        <div class="form-item">
-            <label>Rental Agent</label>
-            <input class="input" id="rarenral_Agent" name="rarenral_Agent" placeholder="Press F3 To Search"
-                   onkeydown="getrentalAgent(event);" value='<s:property value="rarenral_Agent"/>'>
-        </div>
+                    <div class="form-item">
+                        <label>Additional Driver</label>
+                        <input type="checkbox" id="additional_driver" name="additional_driver"
+                               onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                    </div>
 
-        <div class="form-item">
-            <label>Out KM</label>
-            <input class="input" id="re_Km" name="re_Km" value='<s:property value="re_Km"/>'>
-        </div>
+                    <div class="form-item">
+                        <label>Driver</label>
+                        <input class="input" id="radriverlist" name="radriverlist"
+                               placeholder="Press F3 To Search"
+                               onkeydown="getchauffeur(event);"
+                               value='<s:property value="radriverlist"/>'>
+                    </div>
 
-        <div class="form-item full">
-            <div id="tariffDivId">
-                <jsp:include page="rateDescription.jsp"></jsp:include>
+                    <div class="form-item full">
+                        <div id="divDrivGrid">
+                            <jsp:include page="driverGrid.jsp"></jsp:include>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
-    </div>
-</div>
+        </div> <!-- END ROW 1 -->
 
 
-<!-- ====================== PAYMENT SECTION ======================== -->
-<div class="section">
-    <div class="section-title">Payment Info</div>
 
-    <div class="form-grid">
 
-        <div class="form-item full">
-            <div id="divpaymentGrid">
-                <jsp:include page="paymentdetailsgrid.jsp"></jsp:include>
+        <!-- ========================================================= -->
+        <!-- ===============   ROW 2 (2 Columns)    ================== -->
+        <!-- ========================================================= -->
+        <div class="section-two-col">
+
+            <!-- ========== COLUMN 1: TARIFF INFO ========== -->
+            <div class="section">
+                <h3 class="section-title">Tariff Info</h3>
+
+                <div class="form-grid">
+
+                    <div class="form-item">
+                        <label>Sales Agent</label>
+                        <input class="input" id="rasales_Agent" name="rasales_Agent"
+                               placeholder="Press F3 To Search"
+                               onkeydown="getsalesAgent(event);"
+                               value='<s:property value="rasales_Agent"/>'>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Rental Agent</label>
+                        <input class="input" id="rarenral_Agent" name="rarenral_Agent"
+                               placeholder="Press F3 To Search"
+                               onkeydown="getrentalAgent(event);"
+                               value='<s:property value="rarenral_Agent"/>'>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Out KM</label>
+                        <input class="input" id="re_Km" name="re_Km"
+                               value='<s:property value="re_Km"/>'>
+                    </div>
+
+                    <div class="form-item full">
+                        <div id="tariffDivId">
+                            <jsp:include page="rateDescription.jsp"></jsp:include>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-
-        <div class="form-item">
-            <label>Manual RA</label>
-            <input class="input" id="payment_Mra" name="payment_Mra"
-                   value='<s:property value="payment_Mra"/>'>
-        </div>
-
-        <div class="form-item">
-            <label>LPO</label>
-            <input class="input" id="payment_PO" name="payment_PO"
-                   value='<s:property value="payment_PO"/>'>
-        </div>
-
-        <div class="form-item">
-            <label>Project</label>
-            <input class="input" id="rentalproject" name="rentalproject"
-                   placeholder="Press F3 To Search" readonly value='<s:property value="rentalproject"/>'>
-        </div>
-
-    </div>
-</div>
 
 
-<!-- Hidden fields (unchanged) -->
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-</div>
+
+            <!-- ========== COLUMN 2: PAYMENT INFO ========== -->
+            <div class="section">
+                <h3 class="section-title">Payment Info</h3>
+
+                <div class="form-grid">
+
+                    <div class="form-item full">
+                        <div id="divpaymentGrid">
+                            <jsp:include page="paymentdetailsgrid.jsp"></jsp:include>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Manual RA</label>
+                        <input class="input" id="payment_Mra" name="payment_Mra"
+                               value='<s:property value="payment_Mra"/>'>
+                    </div>
+
+                    <div class="form-item">
+                        <label>LPO</label>
+                        <input class="input" id="payment_PO" name="payment_PO"
+                               value='<s:property value="payment_PO"/>'>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Project</label>
+                        <input class="input" id="rentalproject" name="rentalproject"
+                               placeholder="Press F3 To Search" readonly
+                               value='<s:property value="rentalproject"/>'>
+                    </div>
+
+                </div>
+            </div>
+
+        </div> <!-- END ROW 2 -->
+
+    </div> <!-- scroll-area end -->
+
 </form>
-
 </div>
 
 </body>
 
- 
+
 </html> 
     
