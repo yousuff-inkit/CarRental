@@ -1,5 +1,5 @@
 body {
-	font: 10px Tahoma;
+	font: 14px Tahoma;
 	color: #404040;
 	background: #E0ECF8;
 	overflow:hidden;
@@ -15,7 +15,7 @@ legend {
   font-size: 8pt;
   font-weight:bold;
   text-align: left;
-  font: 13px  Tahoma;
+  font: 14px  Tahoma;
   
   }
   input[type="text"] {
