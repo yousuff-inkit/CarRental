@@ -9,460 +9,188 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <style>
-
-/* ------------------------------------------
-    GLOBAL LAYOUT (same as cash receipt)
---------------------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: "Segoe UI", sans-serif;
-    padding: 32px 0;
-    margin: 0;
-}
-
-#mainBG {
-    background: #fff;
-    max-width: 1450px;
-    margin: auto;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-
-/* ------------------------------------------
-   SCROLL AREA FIX (no clipping)
---------------------------------------------- */
-
-.hidden-scrollbar {
-    overflow-y: auto;
-    max-height: calc(100vh - 210px);
-}
-
-/* Subtle scrollbar */
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 6px;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-    background: #b9c3d6;
-    border-radius: 6px;
-}
-
-
-
-/* ------------------------------------------
-    INPUT FORM STYLING (Identical rules)
---------------------------------------------- */
-
-label {
-    font-weight: 600;
-    color: #253858;
-}
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 14px;
-    width: 100%;
-    transition: border 0.2s ease;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-
-/* ------------------------------------------
-   FORM GRID SYSTEM (Same as cash receipt)
---------------------------------------------- */
-
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-    align-items: center;
-}
-
-.form-group.dual {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-
-
-/* ------------------------------------------
-   CARD STRUCTURE (Copied styling)
---------------------------------------------- */
-
-.section-row {
-    display: flex;
-    gap: 28px;
-    margin-top: 25px;
-    flex-wrap: wrap;
-}
-
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 14px;
-    padding: 20px;
-    border: 1px solid #e4e7ec;
-    min-width: 600px;
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-}
-
-
-
-/* ------------------------------------------
-   BUTTONS
---------------------------------------------- */
-
-.myButton, button {
-    background: #eef5ff;
-    border: 1px solid #d7e3ff;
-    padding: 6px 16px;
-    color: #003078;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.myButton:hover, button:hover {
-    background: #d9e9ff;
-}
-
-
-
-/* ------------------------------------------
-   TABLES (premium gradient like requested)
---------------------------------------------- */
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 10px;
-    overflow:hidden;
-    margin-top:20px;
-}
-
-.cr-table th {
-    background: linear-gradient(145deg, #e9f2ff, #cfe2ff);
-    padding:10px;
-    color:#003366;
-    font-weight:600;
-    font-size:14px;
-}
-
-.cr-table td {
-    padding:10px;
-    background:white;
-    border-bottom:1px solid #e7e9ef;
-}
-
-.cr-table tr:nth-child(even) td {
-    background:#f7faff;
-}
-
-fieldset { border: none; }
-
-/* --- FIX LABEL SIZE TO MATCH CASH RECEIPTS --- */
-label {
-    font-size: 15px;
-    font-weight: 600;
-    color: #253858;
-    display: flex;
-    align-items: center;
-}
-
-/* --- FIX INPUT ALIGNMENT + HEIGHT ISSUES --- */
-input[type="text"], select {
-    height: 36px !important;
-    font-size: 15px;
-    padding: 6px 12px;
-    line-height: 1.3;
-}
-
-/* --- SPACING BETWEEN FORM ROWS (Remove overlap) --- */
-.form-group {
-    margin-bottom: 18px !important;
-    row-gap: 12px;
-}
-
-/* Tighten multi-field grid layout spacing */
-.form-group.dual {
-    column-gap: 22px !important;
-}
-
-/* Align checkbox + label cleanly */
-.form-group input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin-left: 6px;
-}
-
-/* Fix misaligned section-block spacing */
-.section-block {
-    padding: 26px 26px 32px 26px !important;
-}
-
-/* Better heading spacing */
-.section-block h2 {
-    margin-bottom: 28px !important;
-}
-
-/* Remove grid panel internal scroll clipping */
-.hidden-scrollbar {
-    padding-bottom: 50px;
-}
-
-/* Fix layout shifting at right column */
-.section-row {
-    align-items: flex-start;
-}
-
-/* Improve field readability */
-input::placeholder {
-    font-size: 14px;
-    opacity: 0.6;
-}
-
-
-/* ---------------------------
-   FINAL COMPACT UI FIX
-----------------------------*/
-
-/* Compact field height */
-input[type="text"], select, textarea {
-    height: 30px !important;
-    font-size: 14px !important;
-    padding: 4px 8px !important;
-}
-
-/* Reduce spacing between rows */
-.form-group {
-    margin-bottom: 12px !important;
-    row-gap: 6px !important;
-}
-
-/* Compact dual-column spacing */
-.form-group.dual {
-    column-gap: 16px !important;
-}
-
-/* Fix labels so they don't collide */
-.form-group label {
-    font-size: 14px !important;
-    line-height: 1 !important;
-    padding-right: 4px !important;
-}
-
-/* Fix vertical scaling inside input */
-input, select {
-    box-sizing: border-box;
-}
-
-/* Reduce padding inside section card */
-.section-block {
-    padding: 20px 22px !important;
-}
-
-/* Tighten heading spacing */
-.section-block h2 {
-    margin-bottom: 18px !important;
-}
-
-/* Reduce the excessive blank area after layout */
-.section-row {
-    margin-bottom: 20px !important;
-}
-
-/* Fix text overflow in large fields */
-input[type="text"]::placeholder {
-    font-size: 13px !important;
-    opacity: 0.45;
-}
-
-/* Fix checkbox alignment */
-input[type="checkbox"] {
-    transform: translateY(-1px);
-}
-
-/* Prevent scroll bar from overlapping content */
-.hidden-scrollbar {
-    padding-bottom: 20px !important;
-}
-
-/* Card shadow slightly reduced for compact feel */
-.section-block {
-    border-radius: 12px !important;
-}
-
-/* Make two columns align tighter */
-.section-row {
-    gap: 20px !important;
-}
-/* ---------------------------
-   UNIFY FIELD WIDTH (Option B)
-----------------------------*/
-
-/* Apply consistent width for all form fields */
-.form-grid {
-    display: grid;
-    grid-template-columns: 120px 1fr 120px 1fr;
-    align-items: center;
-    gap: 14px 22px;
-}
-
-/* Make all long single-field rows align in grid */
-.full-row {
-    grid-column: span 3;
-}
-
-/* Ensure description and similar fields do NOT stretch full width */
-input.long-field,
-textarea.long-field {
-    width: 100% !important;
-}
-
-/* Fix labels for consistent spacing */
-.form-grid label {
-    font-weight: 600;
-    font-size: 14px;
-    text-align: right;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-}
-
-/* Prevent fields from overflowing card edges */
-.section-block {
-    overflow: hidden;
-}
-
-/* Responsive layout: collapse to 1 column */
-@media (max-width: 1100px) {
-    .form-grid {
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 0 0 5px;
+    }
+
+    .form-group {
+        display: grid;
         grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
     }
-    .full-row {
-        grid-column: span 2;
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
     }
-}
-/* Fix JQWidgets date/time div inputs */
-div[id*="date"], 
-div[id*="time"], 
-#dateout, 
-#timeout, 
-#date, 
-#refdate, 
-#colleteddate, 
-#collectedtime,
-#indate,
-#intime,
-#outdate,
-#outtime,
-#deldate,
-#deltime {
-    width: 100% !important;
-    height: 30px !important;
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-    background: #fff !important;
-    display: flex !important;
-    align-items: center !important;
-    padding-left: 8px !important;
-    box-sizing: border-box !important;
-}
-/* Button UI restored */
-button, .myButton {
-    background: linear-gradient(180deg, #eef3fb, #d6deed);
-    border: 1px solid #ccd6e7;
-    border-radius: 8px;
-    padding: 6px 20px;
-    color: #33415c;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
 
-button:hover, .myButton:hover {
-    background: linear-gradient(180deg, #dfe8f9, #c1cce2);
-    border-color: #b4c1d8;
-}
+    .form-group.triple-input {
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    }
 
-button:active, .myButton:active {
-    background: #b8c7df;
-    transform: scale(0.97);
-}
-/* ------------------------------------
-   PREMIUM SOFT GLASS BUTTON STYLE
--------------------------------------*/
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
 
-button, .myButton {
-    background: linear-gradient(180deg, #ffffffcc 0%, #dfe6f3cc 100%);
-    backdrop-filter: blur(4px);
-    border: 1px solid #cfd8e6;
-    border-radius: 10px;
-    padding: 8px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #2c3e50;
-    cursor: pointer;
-    box-shadow:
-        0 2px 4px rgba(0,0,0,0.08),
-        inset 0 1px 1px rgba(255,255,255,0.6);
-    transition: all 0.22s ease-in-out;
-}
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap; /* Allows sections to wrap on smaller screens */
+    }
 
-/* Hover: soft crystal highlight + lift */
-button:hover, .myButton:hover {
-    background: linear-gradient(180deg, #f7faff 0%, #d9e4f5 100%);
-    box-shadow:
-        0 4px 8px rgba(0,0,0,0.12),
-        inset 0 1px 1px rgba(255,255,255,0.7);
-    transform: translateY(-1px);
-}
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%; /* Ensures blocks have a minimum size before wrapping */
+    }
 
-/* Active click animation */
-button:active, .myButton:active {
-    background: linear-gradient(180deg, #e2e8f3 0%, #cfd8e6 100%);
-    box-shadow:
-        inset 0 2px 3px rgba(0,0,0,0.18),
-        0 1px 2px rgba(0,0,0,0.06);
-    transform: scale(0.97);
-}
+    .full-width-block {
+        flex: 1 1 100%; /* forces this block to take full width */
+    }
 
-/* Restore functional behavior */
-input, select, button, .jqx-widget, .jqx-input, .jqx-dropdownlist, .jqx-datetimeinput {
-    pointer-events: auto !important;
-}
-.jqx-popup, .jqx-listbox, .jqx-menu, .jqx-calendar {
-    z-index: 999999 !important;
-    position: absolute !important;
-    visibility: visible !important;
-}
-button, .myButton {
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 10;
-}
 
+    .section-block h2, .section-block legend {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+    }
+
+    .section-block legend {
+        border: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+
+    /* CUSTOM STYLES FOR CUSTODY */
+    /* Removed custom background colors */
+
+    .inline-label-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .inline-label-input label {
+        text-align: left;
+        padding-right: 0;
+        width: auto;
+    }
+
+    .two-col-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-items: center;
+    }
 
 </style>
-
-
 </head>
 <script type="text/javascript">
 $(document).ready(function () { 
@@ -1924,335 +1652,306 @@ win.focus();
 	} 
 
 </script>
-<script>
-    function initDateTimeFields() {
-
-        const dateFields = [
-            "date", "refdate", "dateout", "colleteddate", "indate",
-            "outdate", "deldate"
-        ];
-
-        const timeFields = [
-            "timeout", "collectedtime", "intime", "outtime", "deltime"
-        ];
-
-        // Initialize all date selectors
-        dateFields.forEach(id => {
-            if ($("#" + id).length) {
-                $("#" + id).jqxDateTimeInput({
-                    width: '100%',
-                    height: 30,
-                    formatString: "dd-MM-yyyy",
-                    theme: 'fresh'
-                });
-            }
-        });
-
-        // Initialize all time selectors
-        timeFields.forEach(id => {
-            if ($("#" + id).length) {
-                $("#" + id).jqxDateTimeInput({
-                    width: '100%',
-                    height: 30,
-                    showTimeButton: true,
-                    showCalendarButton: false,
-                    formatString: "HH:mm",
-                    theme: 'fresh'
-                });
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        initDateTimeFields();
-    });
-</script>
 
 <body onload="setValues();getBranch();getBranch1();">
-<script>
-    function initDateTimeFields() {
-
-        const dateFields = [
-            "date", "refdate", "dateout", "colleteddate", "indate",
-            "outdate", "deldate"
-        ];
-
-        const timeFields = [
-            "timeout", "collectedtime", "intime", "outtime", "deltime"
-        ];
-
-        // Initialize all date selectors
-        dateFields.forEach(id => {
-            if ($("#" + id).length) {
-                $("#" + id).jqxDateTimeInput({
-                    width: '100%',
-                    height: 30,
-                    formatString: "dd-MM-yyyy",
-                    theme: 'fresh'
-                });
-            }
-        });
-
-        // Initialize all time selectors
-        timeFields.forEach(id => {
-            if ($("#" + id).length) {
-                $("#" + id).jqxDateTimeInput({
-                    width: '100%',
-                    height: 30,
-                    showTimeButton: true,
-                    showCalendarButton: false,
-                    formatString: "HH:mm",
-                    theme: 'fresh'
-                });
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        initDateTimeFields();
-    });
-</script>
-
-<div id="mainBG">
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="custody" action="saveCustody" autocomplete="off">
+	<%-- <script>
+			window.parent.formName.value="Replacement";
+			window.parent.formCode.value="RPL";
+	</script> --%>
+	<jsp:include page="../../../../header.jsp" />
 
-<jsp:include page="../../../../header.jsp" />
+<div class='hidden-scrollbar'>
 
-<div class="hidden-scrollbar">
+    <div class="section-block full-width-block">
+        <h2>Vehicle Custody</h2>
 
-<!-- ======================= ROW 1 ======================= -->
+        <div class="form-group dual-input" style="grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;">
+            <label>Date</label>
+            <div>
+                <div id="date" name="date" value='<s:property value="date"/>'></div>
+            </div>
 
-<div class="section-row">
+            <label>Branch</label>
+            <select name="searchbranch" id="searchbranch" value='<s:property value="searchbranch"/>'><option value="">--Select--</option></select>
 
-    <!-- LEFT: VEHICLE CUSTODY -->
-    <div class="section-block">
-    <h2>Vehicle Custody</h2>
+            <label>Doc No</label>
+            <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/>
+        </div>
 
-    <div class="form-grid">
+        <div class="form-group dual-input">
+            <label>Rental Type</label>
+            <select id="cmbrentaltype" name="cmbrentaltype" onchange="funcleardatas()" value='<s:property value="cmbrentaltype"/>'>
+                <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
+            </select>
 
-        <label for="date">Date</label>
-        <div id="date" name="date"></div>
+            <label>Ref No</label>
+            <div class="two-col-group">
+                <input type="text" id="refno" name="refno" value='<s:property value="refno"/>' placeholder="Press F3 to Search" readonly onkeydown="getAgmtno(event);"/>
+                <input type="text" id="refname" name="refname" value='<s:property value="refname"/>' readonly/>
+            </div>
+        </div>
 
-        <label for="searchbranch">Branch</label>
-        <select id="searchbranch" name="searchbranch"></select>
+        <div class="form-group dual-input">
+            <label>Ref Date</label>
+            <div>
+                <div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div>
+            </div>
 
-        <label for="cmbrentaltype">Rental Type</label>
-        <select id="cmbrentaltype" name="cmbrentaltype"></select>
+            <label>Fleet No</label>
+            <div class="two-col-group">
+                <input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' readonly />
+                <input type="text" id="txtfleetname" name="txtfleetname" value='<s:property value="txtfleetname"/>' readonly/>
+            </div>
+        </div>
 
-        <label for="refno">Ref No</label>
-        <input type="text" id="refno" name="refno" placeholder="Press F3 to Search">
+        <div class="form-group dual-input">
+            <label>Date Out</label>
+            <div>
+                <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
+            </div>
 
-        <label for="refname">Ref Name</label>
-        <input type="text" id="refname" name="refname" class="long-field">
+            <label>Time Out</label>
+            <div>
+                <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
+            </div>
+        </div>
 
-        <label for="txtfleetno">Fleet No</label>
-        <input type="text" id="txtfleetno" name="txtfleetno">
-<label for="dateout">Date Out</label>
-<div id="dateout" name="dateout"></div>
+        <div class="form-group dual-input">
+            <label>Km Out</label>
+            <input type="text" id="outkm" name="outkm" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event)"/>
 
+            <label>Fuel</label>
+            <select id="cmbfuel" name="cmbfuel" value='<s:property value="cmbfuel"/>'>
+                <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+            </select>
+        </div>
 
-        <label for="txtfleetname">Fleet Name</label>
-        <input type="text" id="txtfleetname" name="txtfleetname">
+        <div class="form-group dual-input">
+            <label>Branch</label>
+            <input type="text" name="txtbranch" id="txtbranch" readonly value='<s:property value="txtbranch"/>'/>
 
-        <label for="timeout">Time Out</label>
-        <div id="timeout" name="timeout"></div>
+            <label>Location</label>
+            <input type="text" name="txtlocation" id="txtlocation" readonly value='<s:property value="txtlocation"/>'/>
+        </div>
 
-        <label for="outkm">Km Out</label>
-        <input type="text" id="outkm" name="outkm">
+        <div class="form-group">
+            <label>Tr. Reason</label>
+            <input type="text" id="reason" name="reason" readonly value='<s:property value="reason"/>'>
+        </div>
 
-        <label for="txtlocation">Location</label>
-        <input type="text" id="txtlocation" name="txtlocation">
-
-        <label for="reason">Tr. Reason</label>
-        <input type="text" id="reason" name="reason">
-
-        <label for="descnew">Description</label>
-        <input type="text" id="descnew" name="descnew" class="long-field">
-
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="descnew" id="descnew" value='<s:property value="descnew"/>'>
+        </div>
     </div>
+
+
+    <div class="section-row">
+        <div class="section-block" id="collection">
+            <legend>
+                <input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();">
+                <b>Collection Details</b>
+            </legend>
+
+            <div class="form-group">
+                <label>Driver</label>
+                <input type="text" name="collectiondriver" id="collectiondriver" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);">
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="colletedkm" id="colletedkm" value='<s:property value="colletedkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="collectedfuel" id="collectedfuel" value='<s:property value="collectedfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="section-block" id="collectfield">
+            <legend><b>Branch In</b></legend>
+
+            <div class="form-group dual-input">
+                <label>Branch</label>
+                <select name="inbranch" id="inbranch" value='<s:property value="inbranch"/>' onchange="getLoc(this.value);"><option value="">--Select--</option></select>
+
+                <label>Location</label>
+                <select name="inlocation" id="inlocation" value='<s:property value="inlocation"/>'><option value="">--Select--</option></select>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="indate" name="indate" value='<s:property value="indate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="intime" name="intime" value='<s:property value="intime"/>' ></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="binkm" id="binkm" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="binfuel" id="binfuel" value='<s:property value="binfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-block" id="branchout">
+            <legend><b>Branch Out</b></legend>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="boutkm" id="boutkm" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="boutfuel" id="boutfuel" value='<s:property value="boutfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Delivery</label>
+                <div class="inline-label-input" style="justify-content: space-between;">
+                    <select name="delyesorno" id="delyesorno" value='<s:property value="delyesorno"/>' style="width: 50%;">
+                        <option value="">--Select--</option>
+                        <option value=1>YES</option>
+                        <option value=0>NO</option>
+                    </select>
+                    <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" name="outdesc" id="outdesc" value='<s:property value="outdesc"/>'>
+            </div>
+        </div>
+
+
+        <div class="section-block" id="deliveryfield">
+            <legend>
+                <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
+                <label for="chkdelivery"><b>Delivery</b></label>
+            </legend>
+
+            <div class="form-group">
+                <label>Driver</label>
+                <input type="text" name="deldriver" id="deldriver" readonly value='<s:property value="deldriver"/>' placeholder="Press F3 to Search" onkeydown="getDriver(event,2);">
+            </div>
+
+            <div class="form-group">
+                <label>Deliver To</label>
+                <input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="delkm" id="delkm" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="delfuel" id="delfuel" value='<s:property value="delfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()" style="width: auto;">
+            </div>
+        </div>
+    </div>
+
+<input type="hidden" name="masterrefno" id="masterrefno" value='<s:property value="masterrefno"/>'>
+<input type="hidden" name="searchbranchval" id="searchbranchval" value='<s:property value="searchbranchval"/>'>
+<input type="hidden" name="branchoutval" id="branchoutval" value='<s:property value="branchoutval"/>'>
+<input type="hidden" name="delyornval" id="delyornval" value='<s:property value="delyornval"/>'>
+<input type="hidden" name="clientnumbers" id="clientnumbers" value='<s:property value="clientnumbers"/>'>
+<input type="hidden" name="hidedate" id="hidedate" value='<s:property value="hidedate"/>'>
+<input type="hidden" name="hiderefdate" id="hiderefdate" value='<s:property value="hiderefdate"/>'>
+<input type="hidden" name="hideroutdate" id="hideroutdate" value='<s:property value="hideroutdate"/>'>
+<input type="hidden" name="hidertimeout" id="hidertimeout" value='<s:property value="hidertimeout"/>'>
+<input type="hidden" name="rfuelval" id="rfuelval" value='<s:property value="rfuelval"/>'>
+<input type="hidden" name="renttypeval" id="renttypeval" value='<s:property value="renttypeval"/>'>
+<input type="hidden" name="hidcollecteddate" id="hidcollecteddate" value='<s:property value="hidcollecteddate"/>'>
+<input type="hidden" name="hidcollectedTime" id="hidcollectedTime" value='<s:property value="hidcollectedTime"/>'>
+<input type="hidden" name="hidcollectedFuelval" id="hidcollectedFuelval" value='<s:property value="hidcollectedFuelval"/>'>
+<input type="hidden" name="hideIndate" id="hideIndate" value='<s:property value="hideIndate"/>'>
+<input type="hidden" name="hideIntime" id="hideIntime" value='<s:property value="hideIntime"/>'>
+<input type="hidden" name="inFuelval" id="inFuelval" value='<s:property value="inFuelval"/>'>
+<input type="hidden" name="mainbranchid" id="mainbranchid" value='<s:property value="mainbranchid"/>'>
+<input type="hidden" name="mainlocationid" id="mainlocationid" value='<s:property value="mainlocationid"/>'>
+<input type="hidden" name="infleettrancode" id="infleettrancode" value='<s:property value="infleettrancode"/>'>
+<input type="hidden" name="hidebranch" id="hidebranch" value='<s:property value="hidebranch"/>'>
+<input type="hidden" name="hidelocation" id="hidelocation" value='<s:property value="hidelocation"/>'>
+<input type="hidden" name="hidoutdate" id="hidoutdate" value='<s:property value="hidoutdate"/>'>
+<input type="hidden" name="hidouttime" id="hidouttime" value='<s:property value="hidouttime"/>'>
+<input type="hidden" name="outfuelval" id="outfuelval" value='<s:property value="outfuelval"/>'>
+<input type="hidden" name="hiddeldate" id="hiddeldate" value='<s:property value="hiddeldate"/>'>
+<input type="hidden" name="hiddeltime" id="hiddeltime" value='<s:property value="hiddeltime"/>'>
+<input type="hidden" name="hiddelfuelval" id="hiddelfuelval" value='<s:property value="hiddelfuelval"/>'>
+<input type="hidden" name="colldriverid" id="colldriverid" value='<s:property value="colldriverid"/>'>
+<input type="hidden" name="deldriverid" id="deldriverid" value='<s:property value="deldriverid"/>'>
+<input type="hidden" name="collectintickval" id="collectintickval" value='<s:property value="collectintickval"/>'>
+<input type="hidden" name="delchkval" id="delchkval" value='<s:property value="delchkval"/>'>
+<div hidden="true" id="hidevmovedate" name="hidevmovedate" value='<s:property value="hidevmovedate"/>'></div>
+<div hidden="true" id="hidevmovetime" name="hidevmovetime" value='<s:property value="hidevmovetime"/>'></div>
+<input type="hidden" name="hidevmovekm" id="hidevmovekm" value='<s:property value="hidevmovekm"/>'>
+<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+<input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+
 </div>
-
-
-
-
-    <!-- RIGHT: COLLECTION -->
-    <div class="section-block">
-        <h2>Collection Details</h2>
-
-        <div class="form-group">
-            <label>Enable</label><input type="checkbox" id="chkcollection" onchange="checkCollection()">
-        </div>
-
-        <div class="form-group">
-            <label>Driver</label>
-            <input type="text" id="collectiondriver" readonly placeholder="Press F3 to Search" onkeydown="getDriver(event,1)">
-        </div>
-
-        <div class="form-group dual">
-            <label>Date</label><div id="colleteddate"></div>
-            <label>Time</label><div id="collectedtime"></div>
-        </div>
-
-        <div class="form-group dual">
-            <label>KM</label><input type="text" id="colletedkm">
-            <label>Fuel</label><select id="collectedfuel"></select>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- ======================= ROW 2 ======================= -->
-
-<div class="section-row">
-
-    <!-- BRANCH IN -->
-    <div class="section-block">
-        <h2>Branch In</h2>
-
-        <div class="form-group dual">
-            <label>Branch</label><select id="inbranch" onchange="getLoc(this.value)"></select>
-            <label>Location</label><select id="inlocation"></select>
-        </div>
-
-        <div class="form-group dual">
-            <label>Date</label><div id="indate"></div>
-            <label>Time</label><div id="intime"></div>
-        </div>
-
-        <div class="form-group dual">
-            <label>KM</label><input type="text" id="binkm">
-            <label>Fuel</label><select id="binfuel"></select>
-        </div>
-    </div>
-
-
-    <!-- BRANCH OUT -->
-    <div class="section-block">
-        <h2>Branch Out</h2>
-
-        <div class="form-group dual">
-            <label>Date</label><div id="outdate"></div>
-            <label>Time</label><div id="outtime"></div>
-        </div>
-
-        <div class="form-group dual">
-            <label>KM</label><input type="text" id="boutkm">
-            <label>Fuel</label><select id="boutfuel"></select>
-        </div>
-
-        <div class="form-group dual">
-            <label>Delivery</label><select id="delyesorno"></select>
-            <label></label><button type="button" onclick="funoutupdate()">Edit</button>
-        </div>
-
-        <div class="form-group">
-            <label>Description</label><input type="text" id="outdesc">
-        </div>
-    </div>
-
-</div>
-
-
-
-
-<!-- ======================= ROW 3 ======================= -->
-
-<div class="section-row">
-
-    <!-- DELIVERY -->
-    <div class="section-block">
-        <h2>Delivery</h2>
-
-        <div class="form-group">
-            <label>Enable</label><input type="checkbox" id="chkdelivery" onchange="checkDelivery()">
-        </div>
-
-        <div class="form-group">
-            <label>Driver</label>
-            <input type="text" id="deldriver" readonly placeholder="Press F3 to Search" onkeydown="getDriver(event,2)">
-        </div>
-
-        <div class="form-group">
-            <label>Deliver To</label><input type="text" id="deliveryto">
-        </div>
-
-        <div class="form-group dual">
-            <label>Date</label><div id="deldate"></div>
-            <label>Time</label><div id="deltime"></div>
-        </div>
-
-        <div class="form-group dual">
-            <label>KM</label><input type="text" id="delkm">
-            <label>Fuel</label><select id="delfuel"></select>
-        </div>
-
-        <div class="form-group">
-            <label></label>
-            <button type="button" onclick="fundelUpdate()">Edit</button>
-        </div>
-    </div>
-
-</div>
-
-
-<!-- ===== ALL HIDDEN FIELDS REMAIN EXACTLY INTACT ===== -->
-<!-- (Unmodified, untouched, this ensures backend works) -->
-${pageContext.request.getAttribute("hiddenFieldsHTML")}
-
-</div> <!-- scroll wrapper -->
-
 </form>
+<div id="collectionwindow">
+   <div ></div>
 </div>
-<script>
-function refreshAllDateTimeInputs(){
-    const dateFields = [
-        "date", "refdate", "dateout", "colleteddate", 
-        "indate", "outdate", "deldate"
-    ];
-    const timeFields = [
-        "timeout", "collectedtime", "intime", 
-        "outtime", "deltime"
-    ];
-
-    dateFields.forEach(id => {
-        if ($("#" + id).length) {
-            try {
-                $("#" + id).jqxDateTimeInput('destroy');
-            } catch(e){}
-            $("#" + id).jqxDateTimeInput({
-                width: "100%",
-                height: 30,
-                formatString: "dd-MM-yyyy",
-                theme: "fresh",
-                showCalendarButton: true
-            });
-        }
-    });
-
-    timeFields.forEach(id => {
-        if ($("#" + id).length) {
-            try {
-                $("#" + id).jqxDateTimeInput('destroy');
-            } catch(e){}
-            $("#" + id).jqxDateTimeInput({
-                width: "100%",
-                height: 30,
-                formatString: "HH:mm",
-                theme: "fresh",
-                showTimeButton: true,
-                showCalendarButton: false
-            });
-        }
-    });
-}
-
-// RUN after your existing onload
-$(document).ready(function(){
-    setTimeout(() => refreshAllDateTimeInputs(), 500);
-});
-</script>
+.<div id="agmtnowindow">
+   <div ></div>
+</div>
+</div>
 
 </body>
 </html>
