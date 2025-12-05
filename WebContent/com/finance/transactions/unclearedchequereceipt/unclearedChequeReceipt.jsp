@@ -9,6 +9,162 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important; 
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons)
+    ------------------------------ */
+    
+    /* This overrides any <center> tags coming from header.jsp */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    /* Force the Title (#formdet) to be Left Aligned and Big */
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT)
+    ------------------------------ */
+    .receipt-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 0 0 5px; 
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    }
+
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS
+    ------------------------------ */
+    input[type="text"], select {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    
+    input[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS
+    ------------------------------ */
+    .table-section { margin: 20px 0; }
+    .table-section h3 {
+        color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
+    }
+    
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    .doc-group { display: flex; gap: 5px; }
+    
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
+    
+    #validrate, #validrate1 { color: red; font-size: 12px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
@@ -135,13 +291,13 @@
 		    getCurrencyId(date);
 			
 			if ($("#mode").val() == "E") {
-         	    $("#btnvaluechange").show();
-         	    $('#frmUnclearedChequeReceipt input').attr('readonly', true );
-   			    $('#frmUnclearedChequeReceipt select').attr('disabled', true);
-   			    $('#jqxChequeDate').jqxDateTimeInput({disabled: true});
-			    $("#jqxUnclearedChequeReceipt").jqxGrid({ disabled: true});
-   			    $('#txtrefno').attr('readonly', false );
-   			    $("#jqxUnclearedChequeReceipt").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
+             $("#btnvaluechange").show();
+             $('#frmUnclearedChequeReceipt input').attr('readonly', true );
+   			 $('#frmUnclearedChequeReceipt select').attr('disabled', true);
+   			 $('#jqxChequeDate').jqxDateTimeInput({disabled: true});
+			 $("#jqxUnclearedChequeReceipt").jqxGrid({ disabled: true});
+   			 $('#txtrefno').attr('readonly', false );
+   			 $("#jqxUnclearedChequeReceipt").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
 			  }
 			 else{
 				$("#btnvaluechange").hide();
@@ -242,49 +398,49 @@
 				 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
 				 return 0;
 			 }
-	    	
+	 	    
 	 		
-	    	document.getElementById("errormsg").innerText="";
-	    		
+	 		document.getElementById("errormsg").innerText="";
+	 		
 	    /* Validation Ends*/
 	    
 	    	/* Uncleared Cheque Receipt Grid  Saving*/
-	  		  var rows = $("#jqxUnclearedChequeReceipt").jqxGrid('getrows');
-	  		var length=0,val=0,valid=0;
+	 		  var rows = $("#jqxUnclearedChequeReceipt").jqxGrid('getrows');
+	 		var length=0,val=0,valid=0;
 			  for(var i=0 ; i < rows.length ; i++){
 				    var chk=rows[i].docno;
 				    var rate=rows[i].rate;
 				    var amount=rows[i].amount1;
 					
 				    if(typeof(chk) != "undefined" && typeof(chk) != "NaN" && chk != ""){
-	  					newTextBox = $(document.createElement("input"))
-	  				    .attr("type", "dil")
-	  				    .attr("id", "test"+length)
-	  				    .attr("name", "test"+length)
-	  				    .attr("hidden", "true");
-	  					length=length+1;
-	  					if(rate=="" || rate=="0" || rate=="0.00"){
+	 					newTextBox = $(document.createElement("input"))
+	 				    .attr("type", "dil")
+	 				    .attr("id", "test"+length)
+	 				    .attr("name", "test"+length)
+	 				    .attr("hidden", "true");
+	 					length=length+1;
+	 					if(rate=="" || rate=="0" || rate=="0.00"){
 							  val=1;
 							  break;
 						 }
-	  					if(amount=="" || amount=="0" || amount=="0.00"){
+	 					if(amount=="" || amount=="0" || amount=="0.00"){
 							  valid=1;
 							  break;
 						 }
-	  					
-	  					var amount,baseamount;
-	  					if(rows[i].dr==true){
-	  						 amount=rows[i].amount1*-1;
-	  						 baseamount=rows[i].rate*rows[i].amount1*-1;
-	  					}
-	  					else if(rows[i].dr==false){
-	  						 amount=rows[i].amount1;
-	  						 baseamount=rows[i].rate*rows[i].amount1;
-	  					}
-	  					
-	  				newTextBox.val(rows[i].docno+":: "+rows[i].currencyid+":: "+rows[i].rate+":: "+rows[i].dr+":: "+rows[i].amount1+":: "+rows[i].description+":: "+baseamount+":: "+rows[i].costtype+":: "+rows[i].costcode);
-	  				newTextBox.appendTo('form');
-	  				}
+	 					
+	 					var amount,baseamount;
+	 					if(rows[i].dr==true){
+	 						 amount=rows[i].amount1*-1;
+	 						 baseamount=rows[i].rate*rows[i].amount1*-1;
+	 					}
+	 					else if(rows[i].dr==false){
+	 						 amount=rows[i].amount1;
+	 						 baseamount=rows[i].rate*rows[i].amount1;
+	 					}
+	 					
+	 				newTextBox.val(rows[i].docno+":: "+rows[i].currencyid+":: "+rows[i].rate+":: "+rows[i].dr+":: "+rows[i].amount1+":: "+rows[i].description+":: "+baseamount+":: "+rows[i].costtype+":: "+rows[i].costcode);
+	 				newTextBox.appendTo('form');
+	 				}
 			      }
 			  if(val==1){
 					 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
@@ -296,17 +452,17 @@
 				 }
 			      
 			      $('#gridlength').val(length);
-	  	 		   /* Uncleared Cheque Receipt Grid  Saving Ends*/	 
-	  				 
-	  				 $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput({disabled: false});
+	 	 		   /* Uncleared Cheque Receipt Grid  Saving Ends*/	 
+	 				
+	 				 $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput({disabled: false});
 			         $('#jqxChequeDate').jqxDateTimeInput({disabled: false});
 			         
 			         if ($("#mode").val() == "E") {
 			        	 $('#frmUnclearedChequeReceipt select').attr('disabled', false); 
 			         }
 			         $('#cmbfromcurrency').attr('disabled', false);
-			  		  $('#cmbtocurrency').attr('disabled', false);
-			  		
+			 		  $('#cmbtocurrency').attr('disabled', false);
+			 		
 	    		return 1;
 		} 
 	  
@@ -407,22 +563,23 @@
                 var baseamount = rows[i].baseamount1;
                 
                 if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
-	              if(value==true){
-                	   if(!isNaN(baseamount)){
-                	      cr=cr+baseamount;
-                	   }else if(isNaN(baseamount)){
-                  		 baseamount=0.00;
-                  		 cr=cr+baseamount;
-                  	   }
-                   }
-                   else{
-                	   if(!isNaN(baseamount)){
-                     	  	dr=dr+baseamount;
-                   	   }else if(isNaN(baseamount)){
-                   		    baseamount=0.00;
-                   		 	dr=dr+baseamount;
-                   	   }
-                     }
+                	  
+                	if(value==true){
+                  	   if(!isNaN(baseamount)){
+                  	      dr=dr+baseamount;
+                  	   }else if(isNaN(baseamount)){
+                    		    baseamount=0.00;
+                    		    dr=dr+baseamount;
+                    	   }
+                  }
+                  else{
+                  	   if(!isNaN(baseamount)){
+                       	  	cr=cr+baseamount;
+                     	   }else if(isNaN(baseamount)){
+                     		 baseamount=0.00;
+                     		 cr=cr+baseamount;
+                     	   }
+                  }
         	       }
         		}
         		
@@ -451,22 +608,22 @@
 	          var baseamount = rows[i].baseamount1;
 	          
 	          if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
-	            if(value==true){
-	          	   if(!isNaN(baseamount)){
-	          	      cr=cr+baseamount;
-	          	   }else if(isNaN(baseamount)){
-	            		 baseamount=0.00;
-	            		 cr=cr+baseamount;
-	            	   }
-	             }
-	             else{
-	          	   if(!isNaN(baseamount)){
-	               	  	dr=dr+baseamount;
-	             	   }else if(isNaN(baseamount)){
-	             		    baseamount=0.00;
-	             		 	dr=dr+baseamount;
-	             	   }
-	               }
+	        	  if(value==true){
+               	   if(!isNaN(baseamount)){
+               	      cr=cr+baseamount;
+               	   }else if(isNaN(baseamount)){
+                 		 baseamount=0.00;
+                 		 cr=cr+baseamount;
+                 	   }
+                  }
+                  else{
+               	   if(!isNaN(baseamount)){
+                    	  	dr=dr+baseamount;
+                  	   }else if(isNaN(baseamount)){
+                  		    baseamount=0.00;
+                  		 	dr=dr+baseamount;
+                  	   }
+                  }
 	  	       }
 	  		}
 	  		
@@ -529,377 +686,140 @@
 	  
 </script>
 
-<style>
-	.hidden-scrollbar {
-	  overflow: auto;
-	  height: 530px;
-	}
-	#validrate{
- color:red;
- }
- #validrate1{
- color:red;
- }
-
-
-
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-        padding: 10px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .receipt-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        padding: 0px 24px;
-        font-size: 2vh;
-    }
-    .receipt-header label {
-        font-weight: 500;
-        color: #333;
-        margin-right: 8px;
-    }
-    .receipt-header input[type="text"] {
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 1rem;
-        width: 120px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
-    .receipt-header input[type="text"]:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    .receipt-header button {
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .receipt-header button:hover {
-        background: #0056b3;
-    }
-    #txtStatus {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #e67e22;
-        margin-left: 12px;
-    }
-
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 24px;
-    }
-    .section-block {
-        flex: 1;
-        background: #f6f8fa;
-        border-radius: 10px;
-        padding: 20px 18px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-    }
-
-    .section-block h2 {
-        font-size: 1.09em;
-        font-weight: 500;
-        margin: 0 0 16px 0;
-        color: #253858;
-    }
-
-    .section-block .form-group {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 12px;
-    }
-
-    .section-block label {
-        min-width: 110px;
-        text-align: right;
-        font-weight: 500;
-        color: #253858;
-    }
-
-    .section-block input[type="text"],
-    .section-block select {
-        flex: 1;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-    }
-
-    .section-block input[type="text"]:focus,
-    .section-block select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-
-
-    .table-section {
-        margin-bottom: 18px;
-    }
-    .table-section h3 {
-        color: #253858;
-        font-size: 1.04em;
-        font-weight: 600;
-    }
-    .cr-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #f9fafb;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 0 0 1px #eef0f6;
-    }
-    .cr-table th, .cr-table td {
-        padding: 9px 10px;
-        border-bottom: 1px solid #e4e7ec;
-        text-align: left;
-        font-size: 1em;
-    }
-    .cr-table th {
-        background: #eef0f6;
-        color: #354B6A;
-        font-weight: 600;
-    }
-    .cr-table tr:last-child td {
-        border-bottom: none;
-    }
-</style>
-
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmUnclearedChequeReceipt" action="saveUnclearedChequeReceipt" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
-<table width="100%">
-  <tr>
-    <td width="3%" height="42" align="right">Date</td>
-    <td width="11%"><div id="jqxUnclearedChequeReceiptDate" name="jqxUnclearedChequeReceiptDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxUnclearedChequeReceiptDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeReceiptDate" name="hidjqxUnclearedChequeReceiptDate" value='<s:property value="hidjqxUnclearedChequeReceiptDate"/>'/></td>
-    <td width="21%" align="left">&nbsp;</td>
-    <td width="9%" align="right">Ref. No.</td>
-    <td width="29%"><input type="text" id="txtrefno" name="txtrefno" style="width:40%;" value='<s:property value="txtrefno"/>'/></td>
-    <td width="6%" align="right">Doc No.</td>
-    <td width="21%"><input type="text" id="docno" name="txtunclearedchequereceiptdocno" style="width:50%;" value='<s:property value="txtunclearedchequereceiptdocno"/>' tabindex="-1"/>
-    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-  </tr>
-</table>
+    <!-- HEADER / TOP BAR -->
+    <div class='receipt-header'>
+        <label>Date</label>
+        <div>
+            <div id="jqxUnclearedChequeReceiptDate" name="jqxUnclearedChequeReceiptDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxUnclearedChequeReceiptDate"/>'></div>
+            <input type="hidden" id="hidjqxUnclearedChequeReceiptDate" name="hidjqxUnclearedChequeReceiptDate" value='<s:property value="hidjqxUnclearedChequeReceiptDate"/>'/>
+        </div>
+
+        <label>Ref. No.</label>
+        <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
+
+        <label>Doc No.</label>
+        <div class="doc-group">
+            <input type="text" id="docno" name="txtunclearedchequereceiptdocno" value='<s:property value="txtunclearedchequereceiptdocno"/>' tabindex="-1"/>
+            <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
+        </div>
+    </div>
+
 
     <div class="section-row">
-        <!-- Cash Section -->
+        <!-- Bank / From Section -->
         <div class="section-block">
             <h2>Bank</h2>
-            <div class="form-group" style="margin-bottom: 10px;">
-
-                <label for="txtfromaccid">Bank</label>
-                <input type="text" id="txtfromaccid" name="txtfromaccid" style="width:90%;" placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>'  onkeydown="getAcc(event);"/>
-                <input type="text" id="txtfromaccname" name="txtfromaccname" style="width:60%;" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
+            
+            <div class="form-group single-label-dual-input">
+                <label>Bank</label>
+                <input type="text" id="txtfromaccid" name="txtfromaccid" placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>'  onkeydown="getAcc(event);"/>
+                <input type="text" id="txtfromaccname" name="txtfromaccname" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
                 <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
-
             </div>
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="cmbfromcurrency">Currency</label>
 
-                <select id="cmbfromcurrency" name="cmbfromcurrency" style="width:71%; height: 28px;" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
-                    <option></option></select>
+            <div class="form-group dual-input">
+                <label>Currency</label>
+                <select id="cmbfromcurrency" name="cmbfromcurrency" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
+                    <option></option>
+                </select>
                 <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>
                 <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/>
 
-
-                <label for="txtfromrate" style="margin-left: 18px;">Rate</label>
-                <input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" style="width:37%;text-align: right;" value='<s:property value="txtfromrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
+                <label>Rate</label>
+                <input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" value='<s:property value="txtfromrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
                 <span id="validrate"></span>
-
-
             </div>
+
+            <div class="form-group dual-input">
+                 <label>Cheque No</label>
+                 <input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>' />
+                 
+                 <label>Cheque Date</label>
+                 <div>
+                    <div id="jqxChequeDate" name="jqxChequeDate" value='<s:property value="jqxChequeDate"/>'></div>
+                    <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate" value='<s:property value="hidjqxChequeDate"/>'/>
+                 </div>
+            </div>
+            
             <div class="form-group">
-
-
-                <label for="txtchequeno">Cheque No</label>
-
-                <input type="text" id="txtchequeno" name="txtchequeno" style="width:100%;" value='<s:property value="txtchequeno"/>' />
-
-
-                <label for="jqxChequeDate">Cheque Date</label>
-                <div id="jqxChequeDate" name="jqxChequeDate" value='<s:property value="jqxChequeDate"/>'></div>
-                <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate" value='<s:property value="hidjqxChequeDate"/>'/>
+                <label>Cheque Name</label>
+                <input type="text" id="txtchequename" name="txtchequename" value='<s:property value="txtchequename"/>' />
             </div>
 
-            <div class="form-group">
-                <label for="txtchequename">Cheque Name</label>
-                <input type="text" id="txtchequename" name="txtchequename" style="width:69%;" value='<s:property value="txtchequename"/>' />
-            </div>
-
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="txtfromamount">Amount</label>
-                <input type="text" id="txtfromamount" name="txtfromamount" style="width:90%;text-align: right;" value='<s:property value="txtfromamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
-                <label for="txtfrombaseamount" style="margin-left: 18px;">Base Amount</label>
-                <input type="text" id="txtfrombaseamount" name="txtfrombaseamount" style="width:37%;text-align: right;" value='<s:property value="txtfrombaseamount"/>' tabindex="-1"/>
+            <div class="form-group dual-input">
+                <label>Amount</label>
+                <input type="text" id="txtfromamount" name="txtfromamount" value='<s:property value="txtfromamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
+                
+                <label>Base Amount</label>
+                <input type="text" id="txtfrombaseamount" name="txtfrombaseamount" value='<s:property value="txtfrombaseamount"/>' tabindex="-1"/>
             </div>
 
             <div class="form-group">
-                <label for="txtdescription">Description</label>
-                <input type="text" id="txtdescription" name="txtdescription" style="width:69%;" value='<s:property value="txtdescription"/>'/>
+                <label>Description</label>
+                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
             </div>
         </div>
 
-        <!-- Payment From Section -->
+        <!-- Payment To Section -->
         <div class="section-block">
             <h2>Received From</h2>
-
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="cmbtotype">Type</label>
-
-                <select id="cmbtotype" name="cmbtotype" style="width:90%; height: 28px" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
-                    <option value="AP">AP</option><option value="AR">AR</option></select>
+            
+            <div class="form-group">
+                <label>Type</label>
+                <select id="cmbtotype" name="cmbtotype" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
+                    <option value="AP">AP</option><option value="AR">AR</option>
+                </select>
                 <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/>
-
-                <input type="text" id="txttoaccid" name="txttoaccid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
-
-                <input type="text" id="txttoaccname" name="txttoaccname" style="width:53%;" value='<s:property value="txttoaccname"/>' tabindex="-1"/>
-                <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
             </div>
 
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="cmbtocurrency">Currency</label>
+            <div class="form-group single-label-dual-input">
+                 <label>Account</label>
+                 <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
+                 <input type="text" id="txttoaccname" name="txttoaccname" value='<s:property value="txttoaccname"/>' tabindex="-1"/>
+                 <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
+            </div>
 
-                <select id="cmbtocurrency" name="cmbtocurrency" style="width:50%;height: 28px;" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
-                    <option></option></select>
+            <div class="form-group dual-input">
+                <label>Currency</label>
+                <select id="cmbtocurrency" name="cmbtocurrency" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
+                    <option></option>
+                </select>
                 <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency" value='<s:property value="hidcmbtocurrency"/>'/>
                 <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype" value='<s:property value="hidtocurrencytype"/>'/>
 
-                <label for="txttorate">Rate</label>
-                <input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" style="width:30%;text-align: right;" value='<s:property value="txttorate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>
+                <label>Rate</label>
+                <input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" value='<s:property value="txttorate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>
                 <span id="validrate1"></span>
-
             </div>
 
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="txttoamount">Amount</label>
-                <input type="text" id="txttoamount" name="txttoamount" style="width:50%;text-align: right;" value='<s:property value="txttoamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();" />
-                <label for="txttobaseamount" style="margin-left: 18px;">Base Amount</label>
-                <input type="text" id="txttobaseamount" name="txttobaseamount" style="width:30%;text-align: right;" value='<s:property value="txttobaseamount"/>' tabindex="-1"/>
+            <div class="form-group dual-input">
+                <label>Amount</label>
+                <input type="text" id="txttoamount" name="txttoamount" value='<s:property value="txttoamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();" />
+                
+                <label>Base Amount</label>
+                <input type="text" id="txttobaseamount" name="txttobaseamount" value='<s:property value="txttobaseamount"/>' tabindex="-1"/>
             </div>
         </div>
     </div>
- 
-<%--<table width="100%">--%>
-<%--<tr>--%>
-<%--<td width="50%">--%>
-<%--<fieldset>--%>
-<%--<table width="100%">--%>
-<%--  <tr>--%>
-<%--    <td width="11%" align="right">Bank</td>--%>
-<%--    <td><input type="text" id="txtfromaccid" name="txtfromaccid" style="width:90%;" placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>'  onkeydown="getAcc(event);"/></td>--%>
-<%--    <td colspan="2"><input type="text" id="txtfromaccname" name="txtfromaccname" style="width:60%;" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>--%>
-<%--    <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/></td>--%>
-<%--  </tr>--%>
-<%--  <tr>--%>
-<%--    <td align="right">Currency</td>--%>
-<%--    <td width="20%"><select id="cmbfromcurrency" name="cmbfromcurrency" style="width:71%;" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxUnclearedChequeReceiptDate').val());">--%>
-<%--      <option></option></select>--%>
-<%--      <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>--%>
-<%--      <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/></td>--%>
-<%--    <td align="right">Rate</td>--%>
-<%--    <td width="45%"><input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" style="width:37%;text-align: right;" value='<s:property value="txtfromrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>--%>
-<%--    <span id="validrate"></span></td>--%>
-<%--  </tr>--%>
-<%--  <tr>--%>
-<%--   <td align="right">Cheque No.</td>--%>
-<%--   <td width="20%"><input type="text" id="txtchequeno" name="txtchequeno" style="width:100%;" value='<s:property value="txtchequeno"/>' /></td>--%>
-<%--   <td width="24%" align="right">Cheque Date</td>--%>
-<%--   <td align="left"><div id="jqxChequeDate" name="jqxChequeDate" value='<s:property value="jqxChequeDate"/>'></div>--%>
-<%--    <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate" value='<s:property value="hidjqxChequeDate"/>'/></td>--%>
-<%--   </tr>--%>
-<%--   <tr>--%>
-<%--      <td align="right">Cheque Name</td>--%>
-<%--    <td colspan="3" align="left"><input type="text" id="txtchequename" name="txtchequename" style="width:69%;" value='<s:property value="txtchequename"/>' /></td>--%>
-<%--  </tr>--%>
-<%--  <tr>--%>
-<%--    <td align="right">Amount</td>--%>
-<%--    <td><input type="text" id="txtfromamount" name="txtfromamount" style="width:90%;text-align: right;" value='<s:property value="txtfromamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" /></td>--%>
-<%--    <td align="right">Base Amount</td>--%>
-<%--    <td><input type="text" id="txtfrombaseamount" name="txtfrombaseamount" style="width:37%;text-align: right;" value='<s:property value="txtfrombaseamount"/>' tabindex="-1"/></td>--%>
-<%--  </tr>--%>
-<%--   <tr>--%>
-<%--    <td align="right">Description</td>--%>
-<%--    <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:69%;" value='<s:property value="txtdescription"/>'/></td>--%>
-<%--  </tr>--%>
-<%--</table>--%>
-<%--</fieldset>--%>
-<%--</td>--%>
 
-<%--<td width="50%">--%>
-<%--<fieldset>--%>
-<%--<legend>Received From</legend>--%>
-<%--<table width="100%">--%>
-<%--  <tr>--%>
-<%--    <td width="6%" align="right">Type</td>--%>
-<%--    <td width="10%"><select id="cmbtotype" name="cmbtotype" style="width:90%;" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>--%>
-<%--    <option value="AP">AP</option><option value="AR">AR</option></select>--%>
-<%--    <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/></td>--%>
-<%--    <td width="20%"><input type="text" id="txttoaccid" name="txttoaccid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/></td>--%>
-<%--    <td colspan="2"><input type="text" id="txttoaccname" name="txttoaccname" style="width:53%;" value='<s:property value="txttoaccname"/>' tabindex="-1"/>--%>
-<%--    <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/></td>--%>
-<%--  </tr>--%>
-<%--  <tr>--%>
-<%--    <td align="right">Currency</td>--%>
-<%--    <td colspan="2"><select id="cmbtocurrency" name="cmbtocurrency" style="width:50%;" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxUnclearedChequeReceiptDate').val());">--%>
-<%--      <option></option></select>--%>
-<%--      <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency" value='<s:property value="hidcmbtocurrency"/>'/>--%>
-<%--      <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype" value='<s:property value="hidtocurrencytype"/>'/></td>--%>
-<%--    <td width="20%" align="right">Rate</td>--%>
-<%--    <td width="57%"><input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" style="width:30%;text-align: right;" value='<s:property value="txttorate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>--%>
-<%--    <span id="validrate1"></span></td>--%>
-<%--  </tr>--%>
-<%--  <tr>--%>
-<%--    <td align="right">Amount</td>--%>
-<%--    <td colspan="2"><input type="text" id="txttoamount" name="txttoamount" style="width:50%;text-align: right;" value='<s:property value="txttoamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();" /></td>--%>
-<%--    <td align="right">Base Amount</td>--%>
-<%--    <td><input type="text" id="txttobaseamount" name="txttobaseamount" style="width:30%;text-align: right;" value='<s:property value="txttobaseamount"/>' tabindex="-1"/></td>--%>
-<%--  </tr>--%>
-<%--</table><br/><br/><br/><br/>--%>
-<%--</fieldset>--%>
-<%--</td>--%>
-<%--</tr></table>--%>
-
+    <!-- Grid Section -->
     <div class="table-section">
-<div id="jqxUnclearedChequeReceiptGrid"><jsp:include page="unclearedChequeReceiptGrid.jsp"></jsp:include></div><br/>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Dr. Total</td>
-    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>'/></td>
-    <td width="6%" align="right">Cr. Total</td>
-    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-  </tr>
-</table></div>
+        <div id="jqxUnclearedChequeReceiptGrid"><jsp:include page="unclearedChequeReceiptGrid.jsp"></jsp:include></div><br/>
+        
+        <div class="form-group dual-input">
+            <label>Dr. Total</label>
+            <input type="text" id="txtdrtotal" name="txtdrtotal" value='<s:property value="txtdrtotal"/>'/>
+            
+            <label>Cr. Total</label>
+            <input type="text" id="txtcrtotal" name="txtcrtotal" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+        </div>
+    </div>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>

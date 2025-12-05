@@ -20,6 +20,165 @@
 	String remarks = request.getParameter("remarks")==null?"":request.getParameter("remarks").toString();  
 	String cnrdocno = request.getParameter("cnrdocno")==null || request.getParameter("cnrdocno").equals("")?"0":request.getParameter("cnrdocno").toString();  
 %>
+
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important; 
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons)
+    ------------------------------ */
+    
+    /* This overrides any <center> tags coming from header.jsp */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    /* Force the Title (#formdet) to be Left Aligned and Big */
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT)
+    ------------------------------ */
+    .receipt-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        /* Padding matched to section-block for perfect left alignment */
+        padding: 0 0 0 5px; 
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+    
+    .form-group.triple-input {
+        grid-template-columns: 80px 1fr 80px 1fr 80px 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa;
+        border-radius: 12px;
+        padding: 20px; /* Internal padding */
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    }
+
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS
+    ------------------------------ */
+    input[type="text"], select {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    
+    input[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS
+    ------------------------------ */
+    .table-section { margin: 20px 0; }
+    .table-section h3 {
+        color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
+    }
+    
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    .doc-group { display: flex; gap: 5px; }
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+    #validrate { color: red; font-size: 12px; }
+</style>
+
 <script type="text/javascript">
     var mod1 = '<%=mod%>';
 	$(document).ready(function() {
@@ -53,7 +212,7 @@
 			  $("#maindate").jqxDateTimeInput('val', date);
 			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
 			  $('#txtforsearch').val(2);
-	    });  	 
+	    });   	 
 		getConfigs();
 	});
 	
@@ -148,8 +307,8 @@
 		    getCurrencyId(date);
 		    
 		   if ($("#mode").val() == "E") {
-      	    $("#btnvaluechange").show();
-      	    $('#frmCreditNote input').attr('readonly', true );
+   	         $("#btnvaluechange").show();
+   	         $('#frmCreditNote input').attr('readonly', true );
 			    $('#frmCreditNote select').attr('disabled', true);
 			    $("#jqxCreditNote").jqxGrid({ disabled: true});
 			    $("#jqxCreditNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
@@ -218,26 +377,26 @@
 						document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
 						return 0;	
 					} 
-					 
+					
 					acctype=document.getElementById("cmbtype").value;
 					if(acctype==""){
 						document.getElementById("errormsg").innerText="Account Type is Mandatory.";
 						return 0;
 					}
-					 
+					
 					accid=document.getElementById("txtdocno").value;
 					if(accid==""){
 						document.getElementById("errormsg").innerText="Account is Mandatory.";
 						return 0;
 					}
-					 
+					
 					currencyto=document.getElementById("cmbcurrency").value;
 					currencyrate=document.getElementById("txtrate").value;
 					if(currencyto=="" || currencyrate==""){
 						document.getElementById("errormsg").innerText="Currency & Rate is Mandatory.";
 						return 0;
 					}
-					 
+					
 				    var drtot = parseFloat(document.getElementById("txtdrtotal").value);
 			 		var crtot = parseFloat(document.getElementById("txtcrtotal").value);
 			 		
@@ -278,9 +437,9 @@
 					  
 			 		
 			 		document.getElementById("errormsg").innerText="";
-			    		
+			 		
 			    /* Validation Ends*/
-			    		
+			 		
 			     /* Credit-Note Grid  Saving*/
 				  var rows = $("#jqxCreditNote").jqxGrid('getrows');
 				  var length=0,val=0;
@@ -320,48 +479,48 @@
 					 }
 					 
 					 /* Applying Invoice Grid Saving */
-			  	 	rows = $("#jqxApplyCreditNoteInvoicing").jqxGrid('getrows');
-			  	 	var lengthapply=0;
-			  		for(var i=0 ; i < rows.length ; i++){
-			  			var chks=rows[i].applying;
+			 	 	rows = $("#jqxApplyCreditNoteInvoicing").jqxGrid('getrows');
+			 	 	var lengthapply=0;
+			 		for(var i=0 ; i < rows.length ; i++){
+			 			var chks=rows[i].applying;
 						if(typeof(chks) != "undefined" && typeof(chks) != "NaN" && chks != ""){
-			  				newTextBox = $(document.createElement("input"))
-			  					.attr("type", "dil")
-			  				    .attr("id", "txtapply"+lengthapply)
-			  				    .attr("name", "txtapply"+lengthapply)
-			  				    .attr("hidden", "true");
-			  				lengthapply=lengthapply+1;
-			  				newTextBox.val(rows[i].applying+"::"+parseFloat((rows[i].out_amount+rows[i].applying)*-1)+"::"+rows[i].currency+"::"+rows[i].tranid+"::"+rows[i].acno);
-			  				newTextBox.appendTo('form');
-			  			}
-			  		}
-			  		$('#applylength').val(lengthapply);
+			 				newTextBox = $(document.createElement("input"))
+			 					.attr("type", "dil")
+			 				    .attr("id", "txtapply"+lengthapply)
+			 				    .attr("name", "txtapply"+lengthapply)
+			 				    .attr("hidden", "true");
+			 				lengthapply=lengthapply+1;
+			 				newTextBox.val(rows[i].applying+"::"+parseFloat((rows[i].out_amount+rows[i].applying)*-1)+"::"+rows[i].currency+"::"+rows[i].tranid+"::"+rows[i].acno);
+			 				newTextBox.appendTo('form');
+			 			}
+			 		}
+			 		$('#applylength').val(lengthapply);
 					
-			  		rows = $("#jqxApplyCreditNoteInvoicing").jqxGrid('getrows');
-	  		 	    var lengthupdate=0;
-	  				for(var i=0 ; i < rows.length ; i++){
-	  					var chkd=rows[i].applying;
-		  			    if(typeof(chkd) != "undefined" && typeof(chkd) != "NaN" && chkd != ""){
-	  						newTextBox = $(document.createElement("input"))
-	  					    	.attr("type", "dil")
-	  					    	.attr("id", "txtapplyupdate"+lengthupdate)
-	  					    	.attr("name", "txtapplyupdate"+lengthupdate)
-	  					    	.attr("hidden", "true");
-	  						lengthupdate=lengthupdate+1;
-	  						
-	  						newTextBox.val(parseFloat(rows[i].out_amount-rows[i].applying)+"::"+rows[i].tranid);
-	  						newTextBox.appendTo('form');
-	  					}
+			 		rows = $("#jqxApplyCreditNoteInvoicing").jqxGrid('getrows');
+	 		 	    var lengthupdate=0;
+	 				for(var i=0 ; i < rows.length ; i++){
+	 					var chkd=rows[i].applying;
+		 			    if(typeof(chkd) != "undefined" && typeof(chkd) != "NaN" && chkd != ""){
+	 						newTextBox = $(document.createElement("input"))
+	 					    	.attr("type", "dil")
+	 					    	.attr("id", "txtapplyupdate"+lengthupdate)
+	 					    	.attr("name", "txtapplyupdate"+lengthupdate)
+	 					    	.attr("hidden", "true");
+	 						lengthupdate=lengthupdate+1;
+	 						
+	 						newTextBox.val(parseFloat(rows[i].out_amount-rows[i].applying)+"::"+rows[i].tranid);
+	 						newTextBox.appendTo('form');
+	 					}
 					}
-	  				
-	  				
+	 				
+	 				
 					$('#applylengthupdate').val(lengthupdate);
 					 
 					    $('#gridlength').val(length);
 			 		   /* Credit-Note Grid  Saving Ends*/
 			 		   
 			 		   if ($("#mode").val() == "E") {
-			             $('#frmCreditNote select').attr('disabled', false); 
+			              $('#frmCreditNote select').attr('disabled', false); 
 			           }
 			 		   $('#cmbcurrency').attr('disabled', false);
 			 		  
@@ -428,38 +587,38 @@
 			 		  if(!isNaN(fromamount)){
 			 			  
 			 			    var dr=0.0,cr=0.0,cr1=0.0;
-			         	    var rows = $('#jqxCreditNote').jqxGrid('getrows');
-			     	        var rowlength= rows.length;
-			         		for(var i=0;i<=rowlength-1;i++) {
-			         		
-			         		 var value = rows[i].dr;
-			                 var baseamount = rows[i].baseamount1;
-			                 
-			                 if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
-			 	              
-			                	 if(value==true){
-				                  	   if(!isNaN(baseamount)){
-				                        	dr=dr+baseamount;
-				                  	   }else if(isNaN(baseamount)){
-				                  		 baseamount=0.00;
-				                  		 dr=dr+baseamount;
-				                  	   }
-				                     }
-				                     else{
-				                  	   if(!isNaN(baseamount)){
-				                    	  	cr=cr+baseamount;
-				                  	   }else if(isNaN(baseamount)){
-				                  		 baseamount=0.00;
-				                  		 cr=cr+baseamount;
-				                  	   }
-				                     }
-			         	         }
-			         		}
-			         		
-			         		if(!isNaN(fromamount)){
-			                     cr1=parseFloat(cr) + parseFloat(fromamount);
-			                     funRoundAmt(cr1,"txtcrtotal");
-			                     }
+			 	        	    var rows = $('#jqxCreditNote').jqxGrid('getrows');
+			 	    	        var rowlength= rows.length;
+			 	        		for(var i=0;i<=rowlength-1;i++) {
+			 	        		
+			 	        		 var value = rows[i].dr;
+			 	                var baseamount = rows[i].baseamount1;
+			 	                
+			 	                if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
+			 	 	              
+			 	                	 if(value==true){
+				 	                  	   if(!isNaN(baseamount)){
+				 	                  	      dr=dr+baseamount;
+				 	                  	   }else if(isNaN(baseamount)){
+				 	                    		 baseamount=0.00;
+				 	                    		 dr=dr+baseamount;
+				 	                    	   }
+				 	                     }
+				 	                     else{
+				 	                  	   if(!isNaN(baseamount)){
+				 	                       	  	cr=cr+baseamount;
+				 	                     	   }else if(isNaN(baseamount)){
+				 	                     		    baseamount=0.00;
+				 	                     		 	cr=cr+baseamount;
+				 	                     	   }
+				 	                       }
+			 	        	       }
+			 	        		}
+			 	        		
+			 	        		if(!isNaN(fromamount)){
+			 	                    cr1=parseFloat(cr) + parseFloat(fromamount);
+			 	                    funRoundAmt(cr1,"txtcrtotal");
+			 	                    }
 			 		  }
 			 		  else if(isNaN(fromamount)){
 			 			  $('#txtamount').val(0.00);
@@ -474,7 +633,7 @@
 			        	  var date = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 			 			  $("#maindate").jqxDateTimeInput('val', date);
 			 			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
-			         	  $('#txtforsearch').val(2);
+			        	  $('#txtforsearch').val(2);
 			           }
 			           else{
 			            }
@@ -529,245 +688,107 @@
 	}
 </script>
 
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
- #validrate{
- color:red;
- }
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-</style>
-
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background" >
 <form id="frmCreditNote" action="saveCreditNote" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
+    <div class='receipt-header'>
+        <label>Date</label>
+        <div>
+            <div id="jqxCreditNoteDate" name="jqxCreditNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxCreditNoteDate"/>'></div>
+            <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate" value='<s:property value="hidjqxCreditNoteDate"/>'/>
+        </div>
 
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" height="42" align="right">Date</td>
-    <td colspan="2"><div id="jqxCreditNoteDate" name="jqxCreditNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxCreditNoteDate"/>'></div>
-    <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate" value='<s:property value="hidjqxCreditNoteDate"/>'/></td>
-    <td width="8%" align="right">Ref. No.</td>
-    <td width="25%"><input type="text" id="txtrefno" name="txtrefno" style="width:40%;" value='<s:property value="txtrefno"/>'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-    <td width="22%" align="right">Doc No.</td>
-    <td width="18%"><input type="text" id="docno" name="txtcreditnotedocno" style="width:50%;" value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td width="7%" align="right">Type</td>
-    <td width="6%"><select id="cmbtype" name="cmbtype" style="width:100%;height: 28px;" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>'>
-    <option value="AP">AP</option><option value="AR">AR</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
-    <td width="14%" align="center"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/></td>
-    <td colspan="4"><input type="text" id="txtaccname" name="txtaccname" style="width:40%;" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Currency</td>
-    <td colspan="2"><select id="cmbcurrency" name="cmbcurrency" style="width:30%;height: 28px;" value='<s:property value="cmbcurrency"/>'  onload="getRatevalue(this.value,$('#jqxCreditNoteDate').val());" onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
-      <option></option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-      <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/></td>
-    <td width="8%" align="right">Rate</td>
-    <td colspan="3"><input type="text" id="txtrate" name="txtrate" onchange="funvalid()" style="width:15%;text-align: right;" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" tabindex="-1" />
-    <span id="validrate"></span>
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Amount</td>
-    <td colspan="2"><input type="text" id="txtamount" name="txtamount" style="width:35%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();setApplyAmount();" /></td>
-    <td align="right">Base Amount</td>
-    <td colspan="3"><input type="text" id="txtbaseamount" name="txtbaseamount" style="width:15%;text-align: right;" value='<s:property value="txtbaseamount"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Description</td>
-    <td colspan="6"><input type="text" id="txtdescription" name="txtdescription" style="width:53%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-  </table>
+        <label>Ref. No.</label>
+        <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
+
+        <label>Doc No.</label>
+        <div class="doc-group">
+            <input type="text" id="docno" name="txtcreditnotedocno" value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/>
+            <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
+        </div>
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-block">
+            <h2>Account Details</h2>
+            <div class="form-group">
+                <label for="cmbtype">Type</label>
+                <select id="cmbtype" name="cmbtype" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>'>
+                    <option value="AP">AP</option><option value="AR">AR</option>
+                </select>
+                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
+            </div>
+
+            <div class="form-group single-label-dual-input">
+                <label for="txtaccid">Account</label>
+                <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/>
+                <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' tabindex="-1"/>
+                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>Transaction Details</h2>
+            <div class="form-group dual-input">
+                <label for="cmbcurrency">Currency</label>
+                <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value,$('#jqxCreditNoteDate').val());" onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
+                    <option></option>
+                </select>
+                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+                <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+
+                <label for="txtrate">Rate</label>
+                <input type="text" id="txtrate" name="txtrate" onchange="funvalid()" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" tabindex="-1" />
+                <span id="validrate"></span>
+            </div>
+
+            <div class="form-group dual-input">
+                <label for="txtamount">Amount</label>
+                <input type="text" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();setApplyAmount();" />
+                
+                <label for="txtbaseamount">Base Amount</label>
+                <input type="text" id="txtbaseamount" name="txtbaseamount" value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtdescription">Description</label>
+                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+            </div>
+        </div>
     </div>
 
     <div class="table-section">
-<div id="jqxCreditNoteGrid"><jsp:include page="creditNoteGrid.jsp"></jsp:include></div><br/>
-
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Dr. Total</td>
-    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td width="6%" align="right">Cr. Total</td>
-    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-  </tr>
-</table>
+        <div id="jqxCreditNoteGrid"><jsp:include page="creditNoteGrid.jsp"></jsp:include></div><br/>
+        
+        <div class="form-group dual-input">
+            <label>Dr. Total</label>
+            <input type="text" id="txtdrtotal" name="txtdrtotal" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
+            
+            <label>Cr. Total</label>
+            <input type="text" id="txtcrtotal" name="txtcrtotal" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+        </div>
     </div>
 
     <div class="table-section">
-<h3>Apply Invoices</h3>
-<div id="jqxApplyInvoicing1"><center><jsp:include page="applyCreditNoteInvoicingGrid.jsp"></jsp:include></center></div> 
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="8%" align="right">Amount</td>
-    <td width="24%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="width:50%;text-align: right;" value='<s:property value="txtapplyinvoiceamt"/>'/>
-    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/></td>
-    <td width="5%" align="right">Applied</td>
-    <td width="26%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="width:50%;text-align: right;" value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/></td>
-    <td width="10%" align="right">Balance</td>
-    <td width="27%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="width:50%;text-align: right;" value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/></td>
-  </tr>
-</table>
+        <h3>Apply Invoices</h3>
+        <div id="jqxApplyInvoicing1"><center><jsp:include page="applyCreditNoteInvoicingGrid.jsp"></jsp:include></center></div> 
+        
+        <div class="form-group triple-input" style="margin-top: 10px;">
+            <label>Amount</label>
+            <input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" value='<s:property value="txtapplyinvoiceamt"/>'/>
+            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+            
+            <label>Applied</label>
+            <input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/>
+            
+            <label>Balance</label>
+            <input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/>
+        </div>
     </div>
 
 <input type="hidden" id="mode" name="mode"/>
@@ -782,8 +803,10 @@ body {
 <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
 <input type="hidden" id="cnoapplyconfig" name="cnoapplyconfig"/>
 <input type="hidden" id="cnrdocno" name="cnrdocno"  value='<s:property value="cnrdocno"/>'/>
-</div>
+
 </form>
+</div>
+
 <div id="creditNoteGridWindow">
 	<div></div><div></div>
 </div>  
@@ -800,6 +823,5 @@ body {
 	<div></div><div></div>
 </div> 
 
-</div>
 </body>
 </html>

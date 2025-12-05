@@ -9,6 +9,169 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important; 
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons)
+    ------------------------------ */
+    
+    /* This overrides any <center> tags coming from header.jsp */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    /* Force the Title (#formdet) to be Left Aligned and Big */
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT)
+    ------------------------------ */
+    .receipt-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 0 0 5px; 
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    }
+
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS
+    ------------------------------ */
+    input[type="text"], select {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    
+    input[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS
+    ------------------------------ */
+    .table-section { margin: 20px 0; }
+    .table-section h3 {
+        color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
+    }
+    
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    .doc-group { display: flex; gap: 5px; }
+    
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; } /* Set to 8px if you want to see the bar */
+    
+    #validrate { color: red; font-size: 12px; }
+    
+    #txtStatus {
+        font-size: 14px;
+        font-weight: 600;
+        color: #e67e22;
+        margin-left: 12px;
+    }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
@@ -36,13 +199,13 @@
 					document.getElementById("errormsg").innerText="Transaction prior or after Account Period is not valid.";
 					return 0;	
 				}
-	     });
+	      });
 		 
 		 $('#txtaccid').dblclick(function(){
 			  var date = $('#jqxPettyCashDate').jqxDateTimeInput('getDate');
 			  $("#maindate").jqxDateTimeInput('val', date);
 			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/accountsDetailsSearch.jsp?date="+date);
-        	  $('#txtforsearch').val(2);
+  	          $('#txtforsearch').val(2);
 		});
 		 
 	});
@@ -106,13 +269,13 @@
 		    getCurrencyId(date);
 		    
 			if ($("#mode").val() == "E") {
-         	    $("#btnvaluechange").show();
-         	    $('#frmPettyCash input').attr('readonly', true );
-   			    $('#frmPettyCash select').attr('disabled', true);
-			    $("#jqxPettyCash").jqxGrid({ disabled: true});
-   			    $('#txtrefno').attr('readonly', false );
-   			 	$('#txtdescription').attr('readonly', false);
-   			    $("#jqxPettyCash").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","amount1": "","description": ""});
+             $("#btnvaluechange").show();
+             $('#frmPettyCash input').attr('readonly', true );
+   			 $('#frmPettyCash select').attr('disabled', true);
+			 $("#jqxPettyCash").jqxGrid({ disabled: true});
+   			 $('#txtrefno').attr('readonly', false );
+   			 $('#txtdescription').attr('readonly', false);
+   			 $("#jqxPettyCash").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","amount1": "","description": ""});
 			  }
 			 else{
 				$("#btnvaluechange").hide();
@@ -160,7 +323,7 @@
 				return 0;	
 			}
 		  var summ= $("#jqxPettyCash").jqxGrid('getcolumnaggregateddata', 'amount1', ['sum'],true);
-	   		 var sum1=summ.sum.replace(/,/g,'');
+	      var sum1=summ.sum.replace(/,/g,'');
 		  if(sum1==0){
 			   document.getElementById("errormsg").innerText="Enter amount value.";
 				return 0;
@@ -187,11 +350,11 @@
 				 }
 			  
 		  
-		   	document.getElementById("errormsg").innerText=""; 
+		    document.getElementById("errormsg").innerText=""; 
 	    		
-	    /* Validation Ends*/
+	     /* Validation Ends*/
 	    		
-	     /* Petty Cash Grid  Saving*/
+	      /* Petty Cash Grid  Saving*/
 			 var rows = $("#jqxPettyCash").jqxGrid('getrows');
 			 var length=0,val=0;
 				 for(var i=0 ; i < rows.length ; i++){
@@ -352,223 +515,74 @@
 		  }
 </script>
 
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
- #validrate{
- color:red;
- }
-
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-</style>
-
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background" >
 <form id="frmPettyCash" action="savePettyCash" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
-    <div class="table-section">
-<table width="100%">
-  <tr>
-    <td width="3%" height="42" align="right">Date</td>
-    <td width="11%"><div id="jqxPettyCashDate" name="jqxPettyCashDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxPettyCashDate"/>'></div>
-    <input type="hidden" id="hidjqxPettyCashDate" name="hidjqxPettyCashDate" value='<s:property value="hidjqxPettyCashDate"/>'/></td>
-    <td width="21%" align="left">&nbsp;</td>
-    <td width="9%" align="right">Ref. No.</td>
-    <td width="29%"><input type="text" id="txtrefno" name="txtrefno" style="width:40%;" value='<s:property value="txtrefno"/>'/></td>
-    <td width="6%" align="right">Doc No.</td>
-    <td width="21%"><input type="text" id="docno" name="txtpettycashdocno" style="width:50%;" value='<s:property value="txtpettycashdocno"/>' tabindex="-1"/>
-    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-  </tr>
-  
-  <tr>
-    <td colspan="6"></td>
-    <td><span id="txtStatus"></span></td>
-  </tr>
-</table>
+    <div class='receipt-header'>
+        <label>Date</label>
+        <div>
+            <div id="jqxPettyCashDate" name="jqxPettyCashDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxPettyCashDate"/>'></div>
+            <input type="hidden" id="hidjqxPettyCashDate" name="hidjqxPettyCashDate" value='<s:property value="hidjqxPettyCashDate"/>'/>
+        </div>
+
+        <label>Ref. No.</label>
+        <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
+
+        <label>Doc No.</label>
+        <div class="doc-group">
+            <input type="text" id="docno" name="txtpettycashdocno" value='<s:property value="txtpettycashdocno"/>' tabindex="-1"/>
+            <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
+        </div>
+        
+        <span id="txtStatus"></span>
+    </div>
+
+    <div class="section-row">
+        <div class="section-block">
+            <h2>Transaction Details</h2>
+            
+            <div class="form-group single-label-dual-input">
+                <label>Cash</label>
+                <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>'  onkeydown="getAcc(event);"/>
+                <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' tabindex="-1"/>
+                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+            </div>
+            
+            <div class="form-group dual-input">
+                <label>Currency</label>
+                <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value,$('#jqxPettyCashDate').val());" onchange="getRatevalue(this.value,$('#jqxPettyCashDate').val());">
+                  <option></option>
+                </select>
+                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+                <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+
+                <label>Rate</label>
+                <input type="text" id="txtrate" name="txtrate" onchange="funvalid()" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);" tabindex="-1"/>
+                <span id="validrate"></span>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Amount</label>
+                <input type="text" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>' readonly onblur="funRoundAmt(this.value,this.id);" tabindex="-1"/>
+                
+                <label>Base Amount</label>
+                <input type="text" id="txtbaseamount" name="txtbaseamount" readonly value='<s:property value="txtbaseamount"/>' tabindex="-1" tabindex="-1"/>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+            </div>
+        </div>
     </div>
 
 
-
     <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="6%" align="right">Cash</td>
-    <td width="16%"><input type="text" id="txtaccid" name="txtaccid" style="width:70%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>'  onkeydown="getAcc(event);"/></td>
-    <td colspan="2"><input type="text" id="txtaccname" name="txtaccname" style="width:85%;" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="7%" align="right">Currency</td>
-    <td width="18%"><select id="cmbcurrency" name="cmbcurrency" style="width:40%;" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value,$('#jqxPettyCashDate').val());" onchange="getRatevalue(this.value,$('#jqxPettyCashDate').val());">
-      <option></option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-      <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/></td>
-    <td width="4%" align="right">Rate</td>
-    <td width="20%"><input type="text" id="txtrate" name="txtrate" onchange="funvalid()" style="width:32%;text-align: right;" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);" tabindex="-1"/>
-    <span id="validrate"></span>
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Amount</td>
-    <td><input type="text" id="txtamount" name="txtamount" style="width:70%;text-align: right;" value='<s:property value="txtamount"/>' readonly onblur="funRoundAmt(this.value,this.id);" tabindex="-1"/></td>
-    <td width="15%" align="right">Base Amount</td>
-    <td width="14%"><input type="text" id="txtbaseamount" name="txtbaseamount" style="width:70%;text-align: right;" readonly value='<s:property value="txtbaseamount"/>' tabindex="-1" tabindex="-1"/></td>
-    <td align="right">Description</td>
-     <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:68%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-</table></div>
-
-<div id="jqxPettyCashGrid"><jsp:include page="pettyCashGrid.jsp"></jsp:include></div><br/>
+        <div id="jqxPettyCashGrid"><jsp:include page="pettyCashGrid.jsp"></jsp:include></div><br/>
+    </div>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
