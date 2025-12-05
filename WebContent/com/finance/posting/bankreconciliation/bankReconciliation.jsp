@@ -451,6 +451,13 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+/* Make only the LEFT labels in this section bold */
+.table-section .cr-table td[align="right"] {
+    font-weight: 700 !important;
+    color: #1f2937; /* optional: makes it look cleaner */
+}
+
 </style>
 
 </head>

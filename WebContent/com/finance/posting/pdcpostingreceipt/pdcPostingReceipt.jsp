@@ -558,6 +558,49 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+
+.cr-table td {
+    font-weight: 700 !important;
+}
+
+
+
+/* Remove autofill color from normal inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    box-shadow: 0 0 0 1000px #ffffff inset !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #1f2933 !important;
+    font-weight: 700 !important;
+}
+
+/* Fix autofill for JQX Date / JQX widgets */
+.jqx-widget input:-webkit-autofill,
+.jqx-input-content:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    box-shadow: 0 0 0 1000px #ffffff inset !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #1f2933 !important;
+}
+
+
+
+
+
+
+.cr-table input:focus,
+.cr-table select:focus {
+    border-color: #4d7dff;
+    box-shadow: 0 0 0 2px rgba(90,140,255,0.25);
+    outline: none;
+}
+
+
+
 </style>
 
 </head>
@@ -590,7 +633,8 @@ body {
     <td width="12%"><input type="text" id="txtaccid" name="txtaccid" style="width:85%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
     <td width="24%"><input type="text" id="txtaccname" name="txtaccname" style="width:97%;" value='<s:property value="txtaccname"/>'/>
     <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="3%" align="right">Posting</td>
+<td width="3%" align="right" style="padding-left:35px;">Posting</td>
+
     <td width="4%"><div id="jqxDate" name="jqxDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDate"/>'></div>
 	<input type="hidden" id="hidjqxDate" name="hidjqxDate" value='<s:property value="hidjqxDate"/>'/></td>
     <td width="8%" align="center"><button class="myButton" type="button" id="btnview" name="btnview" onclick="funloadgrid();">View</button></td>
