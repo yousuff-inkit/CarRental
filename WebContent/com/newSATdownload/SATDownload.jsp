@@ -437,8 +437,12 @@
 			   $.messager.alert('Message',$('#msg').val());
 			  }
 		  
-		  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-		  funSetlabel();
+		  let det = $('#formdetail').val()?.trim() || "";
+		  let code = $('#formdetailcode').val()?.trim() || "";
+
+		  document.getElementById("formdet").innerText = 
+		      (det || code) ? `${det} (${code})` : "";
+
 		  
 		  if(document.getElementById("itemcount").innerHTML==""){
 				document.getElementById("itemcount").innerHTML="0";
@@ -779,289 +783,528 @@
 </script>
 
 <style>
+
+/* ===================== GLOBAL PAGE LAYOUT ===================== */
+body {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    font-family: "Segoe UI", sans-serif;
+    padding: 32px 0;
+    margin: 0;
+}
+
+/* ---- DO NOT MODIFY HEADER ---- */
+#mainBG > div:first-child,
+#mainBG > *:first-child,
+header, .header, .pageTitle {
+    all: unset !important;
+    display: block !important;
+}
+
+/* ---- MAIN WRAPPER ---- */
+#mainBG {
+    background: #fff;
+    max-width: 1450px;
+    margin: auto;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ===================== SCROLL AREA ===================== */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow-y: auto;
+    max-height: calc(100vh - 210px);
+    padding-right: 10px;
 }
-.gw-animate-opacity{
-	animation:opac 0.8s;
+
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+    background: #b9c3d6;
+    border-radius: 6px;
 }
-@keyframes opac{
-	from{
-		opacity:0;
-	}
-	to{
-		opacity:1;
-	}
+
+/* ===================== INPUT + SELECTS ===================== */
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
 }
-.gw-text-green{
-	color:#4CAF50;
+
+input[type="text"], select, textarea {
+    height: 30px !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    padding: 4px 10px !important;
+    font-size: 14px !important;
+    background: white !important;
+    width: 100%;
+    box-sizing: border-box;
 }
-.gw-container:after,.gw-container-after{
-	content: "";
-	display: table;
-	clear:both;
+
+input:focus, select:focus {
+    border-color: #6a8ed9 !important;
+    box-shadow: 0 0 4px rgba(90,132,205,0.25);
+    outline: none !important;
 }
-.gw-container{
-	padding:0.01em 16px;
+
+input::placeholder { opacity: .6; }
+
+/* Fix dropdowns — MUST stay functional */
+select {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    -moz-appearance: auto !important;
 }
-.gw-green{
-	color:#fff;
-	background-color:#4CAF50;
+
+/* ===================== FORM GRID ===================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px 18px;
+    align-items: center;
 }
-.gw-light-grey{
-	color:#000;
-	background-color:#f1f1f1;
+
+.form-grid.dual {
+    grid-template-columns: 130px 1fr 130px 1fr;
 }
+
+/* ===================== PANEL/SECTION BOXES ===================== */
+.section-row {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 600px;
+    background: #f6f8fa;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.section-block h2 {
+    font-size: 15px;
+    font-weight: 700;
+    padding-left: 8px;
+    margin: 0 0 12px 0;
+    border-left: 4px solid #187bff;
+}
+
+/* ===================== BUTTONS ===================== */
+button, .myButton {
+    background: linear-gradient(180deg, #ffffffcc 0%, #dfe6f3cc 100%);
+    border: 1px solid #cfd8e6;
+    border-radius: 10px;
+    padding: 8px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #2c3e50;
+    transition: all .2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.09), inset 0 1px 1px rgba(255,255,255,0.6);
+    pointer-events: auto !important;
+}
+
+button:hover, .myButton:hover {
+    background: linear-gradient(180deg, #f7faff, #d9e4f5);
+    transform: translateY(-1px);
+}
+
+button:active, .myButton:active {
+    transform: scale(.97);
+    background: #ccd7e6;
+}
+
+/* ===================== JQX FIX ===================== */
+.jqx-datetimeinput,
+div[id*="date"],
+div[id*="time"] {
+    height: 30px !important;
+    border-radius: 6px !important;
+}
+
+/* ===== EMERGENCY FIX: ENABLE ALL INPUT INTERACTIVITY ===== */
+
+button, 
+.myButton,
+input,
+select,
+textarea,
+.jqx-widget,
+.jqx-dropdownlist,
+.jqx-input,
+.jqx-datetimeinput {
+    pointer-events: auto !important;
+    z-index: 999 !important;
+}
+
+/* Fix invisible overlay blocking clicks */
+* {
+    user-select: auto !important;
+}
+
+/* Fix any accidental overlay container */
+div[style*="z-index"],
+.modal,
+.overlay {
+    pointer-events: auto !important;
+}
+/* ===== LOCK ORIGINAL HEADER ===== */
+
+#mainBG > *:first-child,
+header,
+.header,
+.pageTitle,
+#header,
+.appHeader {
+    all: revert !important;
+    pointer-events: auto !important;
+}
+.jqx-popup, 
+.jqx-listbox,
+.jqx-calendar,
+.jqx-menu {
+    visibility: visible !important;
+    display: block !important;
+    z-index: 999999 !important;
+}
+/* -------- Restore Page Title / Form Title -------- */
+#formdet,
+legend,
+.page-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: #253858 !important;
+    margin-bottom: 18px !important;
+    text-align: left !important;
+    padding-left: 6px;
+    border-left: 4px solid #007bff;
+}
+
+/* Fix case where older JSP uses <label id="formdet"> inside header block */
+label#formdet {
+    width: auto !important;
+    white-space: nowrap !important;
+}
+
+
+
+.HeadIcons {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: #253858 !important;
+    margin-bottom: 18px !important;
+}
+/* ---- FIX HIDDEN PAGE TITLES ---- */
+legend, 
+#formdet, 
+label#formdet {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+    padding: 6px 12px !important;
+    color: #253858 !important;
+    border-left: 4px solid #3b82f6 !important;
+    background: transparent !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+/* Older layout sometimes places title inside table row */
+fieldset legend {
+    padding-left: 8px !important;
+}
+
+/* Prevent fieldsets from collapsing */
+fieldset {
+    padding-top: 8px !important;
+}
+/* ---- RESTORE FORM TITLE AT PAGE TOP ---- */
+#formdet {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #1a2a4f !important;
+    margin: 0 0 15px 10px !important;
+    padding: 4px 10px !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+/* Fix accidental collapse by container */
+.HeadIcons {
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Ensure the container row isn't hidden */
+div[id="mainBG"] label#formdet {
+    display: inline-block !important;
+}
+
+
+/* ---- RESTORE PAGE TITLE (SAT DOWNLOAD, etc.) ---- */
+#formdet {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #2c3e50 !important;
+    padding: 4px 6px !important;
+    margin-left: 10px !important;
+    text-transform: uppercase;
+}
+
+/* ensure label container stays visible */
+.HeadIcons {
+    display: flex !important;
+    align-items: center !important;
+}
+
+
+
+
 </style>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+
+<div id="mainBG">
 <form id="frmnewSATdownload" action="newSATdownload" method="post" autocomplete="off">
+
+<!-- 🔹 HEADER MUST REMAIN UNTOUCHED -->
 <jsp:include page="../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar'>
-<table width="100%">
-<tr>
-<td width="50%">
-<fieldset><legend>Salik</legend>
-<table width="100%" id="salik" border="0">
-  <tr>
-    <td width="11%" align="left"><input type="radio" id="radio_salik" name="category" value="salik" onchange="fundisable();">Site</td>
-    <td width="20%"><input type="hidden" id="hiddencategory" name="hiddencategory" value='<s:property value="hiddencategory"/>'></td>
-    <td width="13%" align="right">Site</td>
-    <td width="19%"><select id="cmbsaliksite" name="cmbsaliksite" style="width:95%;" value='<s:property value="cmbsaliksite"/>'>
-    <option value="DXB">DXB</option>
-	<option value="AUH">AUH</option>
-	</select>
-    <input type="hidden" id="hidcmbsaliksite" name="hidcmbsaliksite" value='<s:property value="hidcmbsaliksite"/>'/></td>
-    <td colspan="2" align="center"><input type="checkbox" id="chck_salikautomatic" name="chck_salikautomatic" value="salikautomatic" onchange="fundisable();">&nbsp;Automatic</td>
-  </tr>
-  <tr>
-    <td colspan="6">
-    <fieldset> 
-<table width="100%" >
-  <tr>
-    <td align="right" width="10%">Time-Period</td>
-    <td width="26%"><select id="cmbtype" name="cmbtype" style="width:95%;" value='<s:property value="cmbtype"/>' onchange="fundisable();">
-    <option value="lhrs">Last 24 Hours</option>
-    <option value="ldays">Last 7 Days</option>
-    <option value="l30d">Last 30 Days</option>
-    <option value="customdates">Custom Dates</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/> </td>
-    <td width="8%" align="right">Start Date</td>
-    <td width="23%"><div id="jqxStartDate" name="jqxStartDate" value='<s:property value="jqxStartDate"/>'></div>
-    <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/></td>
-    <td width="9%" align="right">End Date</td>
-    <td width="24%"><div id="jqxEndDate" name="jqxEndDate" value='<s:property value="jqxEndDate"/>'></div>
-    <input type="hidden" id="hidjqxEndDate" name="hidjqxEndDate" value='<s:property value="hidjqxEndDate"/>'/></td>
-  </tr>
-  <tr>
-   <td width="10%" align="right">Username</td>
-    <td colspan="5"><input type="text" id="txtusername" name="txtusername" style="width:60%;" value='<s:property value="txtusername"/>' onkeydown="getUname(event);" readonly placeholder="Press F3 to Search" />
-    <!-- <input type="checkbox" id="chck_salikpdata" name="chck_salikpdata"  value="salikpdata" onchange="fundisable();">Inquiry by Fleet --></td>
-   
-   </tr>
-</table>
- </fieldset>
-    </td>
-  </tr>
-  <tr>
-    <td align="right" width="18%">Fleet No.</td>
-    <td colspan="2"><input type="text" id="txtsalikfleetno" name="txtsalikfleetno" style="width:95%;" value='<s:property value="txtsalikfleetno"/>'  onkeydown="getvehinfo(event);" readonly placeholder="Press F3 to Search" /></td>
-    <td  align="right" colspan="2">Reg No.</td>
-    <td width="28%"><input type="text" id="txtxslregno" name="txtxslregno" style="width:95%;" readonly value='<s:property value="txtxslregno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Fleet Name</td>
-    <td colspan="2"><input type="text" id="txtsalfleetnme" name="txtsalfleetnme" style="width:95%;" readonly value='<s:property value="txtsalfleetnme"/>'/></td>
-    <td align="right" colspan="2">Plate Code</td>
-    <td width="28%"><input type="text" id="txtsalplcode" name="txtsalplcode" style="width:95%;" readonly value='<s:property value="txtsalplcode"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Salik Tag</td>
-    <td colspan="2"><input type="text" id="txtsaliktagno" name="txtsaliktagno" style="width:95%;" readonly onkeydown="getPlateNo(event);" value='<s:property value="txtsaliktagno"/>'/></td>
-  	  	<td colspan="2"><input type="file" name="file" id="file"></td>
-  	<td><button type="button" id="btnfileupload" name="btnfileupload" class="myButton">Upload</button></td>
-  	
-  </tr>
-  <tr>
-  	<td colspan="6">
-  		<fieldset><legend>Advanced Options</legend>
-  			<table style="width:100%;">
-  				<tr>
-  					<td align="right" width="10%">Start Position</td>
-  					<td><input type="text" name="salikcounter" id="salikcounter" value='<s:property value="salikcounter"/>' onKeyPress="javascript:return isNumber (event,id)"></td>
-  					<td align="right" width="30%">Month</td>
-  					<td>
-  						<select id="cmbmonthname" name="cmbmonthname" style="width:95%;">
-  							<option value="">--Select--</option>
-  							<option value="January">January</option>
-  							<option value="February">February</option>
-  							<option value="March">March</option>
-  							<option value="April">April</option>
-  							<option value="May">May</option>
-  							<option value="June">June</option>
-  							<option value="July">July</option>
-  							<option value="August">August</option>
-  							<option value="September">September</option>
-  							<option value="October">October</option>
-  							<option value="November">November</option>
-  							<option value="December">December</option>
-  						</select>
-  						<input type="hidden" name="hidcmbmonthname" id="hidcmbmonthname">
-  					</td>
-  				</tr>
-  			</table>
-  		</fieldset>
-  	</td>
-</table>
-</fieldset>
-</td>
+<div class="hidden-scrollbar">
 
-<td width="50%">
-<fieldset><legend>Traffic</legend>
-<table width="100%" id="traffic">
-  <tr>
-    <td width="11%"><input type="radio" id="radio_traffic" name="category" value="traffic" onchange="fundisable();">Traffic</td>
-    
-    <td width="25%" align="right">Site</td>
-    <td width="30%"><select id="cmbtrafficsite" name="cmbtrafficsite" style="width:40%;" onchange="fundisable();" value='<s:property value="cmbtrafficsite"/>' >
-    <option value="AUH">AUH</option><option value="DXB">DXB</option></select></select>
-    <input type="hidden" id="hidcmbtrafficsite" name="hidcmbtrafficsite" value='<s:property value="hidcmbtrafficsite"/>'/> </td>
-    <td width="30%" align="center" colspan="2"><input type="checkbox" id="chck_trafficautomatic" name="chck_trafficautomatic" value="trafficautomatic" onchange="fundisable();">&nbsp;Automatic</td>
-  </tr>
-  <tr>
-    <td colspan="5">
-    <fieldset>
-  <table width="100%">
- <tr>
-    <td align="center" colspan="2"><input type="checkbox" id="chck_trafficfileno" name="chck_trafficfileno"  value="trafficfileno" onchange="fundisable();">&nbsp;Traffic File No.</td>
-    <td width="15%" align="right">Traffic File  No.</td>
-    <td width="43%"><input type="text" id="txttrafficplateno" name="txttrafficplateno" style="width:60%;" placeholder="Press F3 to Search" onkeydown="getFilename(event);" readonly value='<s:property value="txttrafficplateno"/>'/></td>
-	<td>Year</td>
-	<td>
-		<select name="cmbyear" id="cmbyear">
-			<option value="">--Select--</option>
-		</select>
-	</td>
-    </tr>
-</table>
+<!-- ========================================================= -->
+<!-- ROW 1 (Two Column Layout: Salik | Traffic) -->
+<!-- ========================================================= -->
 
-<table width="100%">
-<tr>
-<td><input type="hidden" name="hidchkblackpoints" id="hidchkblackpoints" value='<s:property value="hidchkblackpoints"/>'><input type="checkbox" name="chkblackpoints" id="chkblackpoints" onchange="funBlackPoints();">Black Points</td>
-<td colspan="2" align="left"><input type="checkbox" id="chck_trafficpdata" name="chck_trafficpdata"  value="trafficpdata" onchange="fundisable();">Inquiry by plate data</td>
-<td colspan="2" align="left">Go To Page<input type="text" id="gotopage" name="gotopage"  value='<s:property value="gotopage"/>' ></td></tr>
-</table>
-<fieldset>
-<table width="100%">
-  <tr>
-  
-    <td width="18%" align="right">Plate No.</td>
-    <td width="24%"><input type="text" id="txttrafficpno" name="txttrafficpno" placeholder="Press F3 to Search" onkeydown="getPlateNo(event);"   style="width:70%;" value='<s:property value="txttrafficpno"/>'/></td>
-    <td width="11%" align="right">Plate Source</td>
-    <td width="47%"><input type="text" id="txttrafficpsource" name="txttrafficpsource" placeholder="Press F3 to Search" onkeydown="getSource(event);"  readonly style="width:40%;" value='<s:property value="txttrafficpsource"/>'/></td>
-    </tr>
-  
-    <tr>
-    <td align="right">Plate Color</td>
-    <td><input type="text" id="txttrafficpcolor" name="txttrafficpcolor" style="width:70%;" placeholder="Press F3 to Search" onkeydown="getColor(event);" readonly value='<s:property value="txttrafficpcolor"/>'/></td>
-    <td align="right">Plate Type</td>
-    <td><input type="text" id="txttrafficptype" name="txttrafficptype" style="width:50%;"  readonly value='<s:property value="txttrafficptype"/>'/></td>
-  </tr>
-</table>
+<div class="section-row">
 
-</fieldset>
-</fieldset>
-</td></tr>
-</table><br/>
-<br><br><br><br><br><br>
-</fieldset>
-</td></tr>
-</table>
+    <!-- ---------------- SALIK PANEL ---------------- -->
+    <div class="section-block">
+        <h2>Salik</h2>
 
-<table width="99%" border="0">
-<tr>
-	<td colspan="2">
-		<div class="gw-container">
-			<div class="gw-light-grey">
-				<div id="gwProgressBar" class="gw-container gw-green" style="height:24px;width:0%;"></div>
-			</div>
-			<p id="gwprogresstext">Added <span id="itemcount" name="itemcount"><s:property value="itemcount"/></span> of <span id="itemtotalcount" name="itemtotalcount"><s:property value="itemtotalcount"/></span> <span id="itemtype" name="itemtotalcount"><s:property value="itemtype"/></span></p>	
-		</div>
-		
-	</td>
-</tr>
+        <div class="form-grid">
 
-<tr>
-    <td colspan="2" align="center">
-    	<button class="myButton" type="button"  id="btnGo" name="btnGo" onClick="getBrowser();" >Download Now !!!</button>
-    	<button class="myButton" type="button"  id="btnclientside" name="btnclientside" onclick="funCheckClientSide();">Update Chrome Driver</button>
-    </td>
-</tr>
-<tr>
-    <td colspan="2" align="center">
-    	<div id="loadcaptcha"><jsp:include page="captcha.jsp"></jsp:include></div> 
-	</td>
-</tr>
-<tr>
-    <td colspan="2" align="center"><div id="loadsalikdata"><jsp:include page="SATloadDetails.jsp"></jsp:include></div>
-		<div id="loadtrafficdata"><jsp:include page="SATTrafficloadDetails.jsp"></jsp:include></div></td>
-</tr>
-</table>
+            <label>Category</label>
+            <div><input type="radio" id="radio_salik" name="category" value="salik" onchange="fundisable();"> Site</div>
+
+            <label>Site</label>
+            <select id="cmbsaliksite" name="cmbsaliksite">
+                <option value="DXB">DXB</option>
+                <option value="AUH">AUH</option>
+            </select>
+
+            <label>Auto</label>
+            <input type="checkbox" id="chck_salikautomatic" name="chck_salikautomatic" onchange="fundisable();">
+
+            <!-- Time Period -->
+            <label>Time Period</label>
+            <select id="cmbtype" name="cmbtype" onchange="fundisable();">
+                <option value="lhrs">Last 24 Hours</option>
+                <option value="ldays">Last 7 Days</option>
+                <option value="l30d">Last 30 Days</option>
+                <option value="customdates">Custom Dates</option>
+            </select>
+
+            <!-- Date Range -->
+            <label>Start Date</label>
+            <div id="jqxStartDate"></div>
+
+            <label>End Date</label>
+            <div id="jqxEndDate"></div>
+
+            <!-- Username -->
+            <label>Username</label>
+            <input type="text" id="txtusername" name="txtusername" readonly placeholder="Press F3 to Search" onkeydown="getUname(event);" />
+
+            <!-- Fleet -->
+            <label>Fleet No</label>
+            <input type="text" id="txtsalikfleetno" name="txtsalikfleetno" readonly placeholder="Press F3 to Search" onkeydown="getvehinfo(event);" />
+
+            <label>Reg No</label>
+            <input type="text" id="txtxslregno" name="txtxslregno" readonly>
+
+            <label>Fleet Name</label>
+            <input type="text" id="txtsalfleetnme" name="txtsalfleetnme" readonly>
+
+            <label>Plate Code</label>
+            <input type="text" id="txtsalplcode" name="txtsalplcode" readonly>
+
+            <label>Salik Tag</label>
+            <input type="text" id="txtsaliktagno" name="txtsaliktagno" readonly onkeydown="getPlateNo(event);" />
+
+            <label>Upload File</label>
+            <div style="display:flex; gap:10px;">
+                <input type="file" id="file" name="file" style="flex:1;">
+                <button type="button" id="btnfileupload" class="myButton">Upload</button>
+            </div>
+
+            <!-- Advanced -->
+            <label style="font-weight:bold; margin-top:12px;">Start Position</label>
+            <input type="text" id="salikcounter" name="salikcounter" onkeypress="javascript:return isNumber (event,id)">
+
+            <label>Month</label>
+            <select id="cmbmonthname" name="cmbmonthname">
+                <option value="">--Select--</option>
+                <option>January</option><option>February</option><option>March</option><option>April</option>
+                <option>May</option><option>June</option><option>July</option><option>August</option>
+                <option>September</option><option>October</option><option>November</option><option>December</option>
+            </select>
+
+        </div>
+    </div>
+
+
+    <!-- --------------- TRAFFIC PANEL ---------------- -->
+    <div class="section-block">
+        <h2>Traffic</h2>
+
+        <div class="form-grid">
+
+            <label>Category</label>
+            <div><input type="radio" id="radio_traffic" name="category" value="traffic" onchange="fundisable();"> Traffic</div>
+
+            <label>Site</label>
+            <select id="cmbtrafficsite" name="cmbtrafficsite" onchange="fundisable();">
+                <option value="AUH">AUH</option>
+                <option value="DXB">DXB</option>
+            </select>
+
+            <label>Automatic</label>
+            <input type="checkbox" id="chck_trafficautomatic" name="chck_trafficautomatic" onchange="fundisable();">
+
+            <label>Traffic File?</label>
+            <input type="checkbox" id="chck_trafficfileno" onchange="fundisable();">
+
+            <label>File No.</label>
+            <input type="text" id="txttrafficplateno" placeholder="Press F3 to Search" readonly onkeydown="getFilename(event);">
+
+            <label>Year</label>
+            <select id="cmbyear" name="cmbyear"></select>
+
+            <label>Black Points</label>
+            <input type="checkbox" id="chkblackpoints" onchange="funBlackPoints();">
+
+            <label>Plate Inquiry</label>
+            <input type="checkbox" id="chck_trafficpdata" onchange="fundisable();">
+
+            <label>Go To Page</label>
+            <input type="text" id="gotopage">
+
+            <label>Plate No.</label>
+            <input type="text" id="txttrafficpno" onkeydown="getPlateNo(event);" placeholder="Press F3 to Search">
+
+            <label>Plate Source</label>
+            <input type="text" id="txttrafficpsource" readonly onkeydown="getSource(event);" placeholder="Press F3 to Search">
+
+            <label>Plate Color</label>
+            <input type="text" id="txttrafficpcolor" readonly onkeydown="getColor(event);" placeholder="Press F3 to Search">
+
+            <label>Plate Type</label>
+            <input type="text" id="txttrafficptype" readonly>
+
+        </div>
+    </div>
+</div>
 
 
 
-<input type="hidden" id="docs" name="docs" value='<s:property value="docs"/>'/>
-<input type="hidden"  id="captcha" name="captcha"  value='<s:property value="captcha"/>'/>
-<input type="hidden"  id="captchacount" name="captchacount"  value='<s:property value="captchacount"/>'/>
-<input type="hidden" id="iscaptcha" name="iscaptcha"  value='<s:property value="iscaptcha"/>'/>
-<input type="hidden" id="iscaptchaloaded" name="iscaptchaloaded"  value='<s:property value="iscaptchaloaded"/>'/>
-<input type="hidden" id="captchapath" name="captchapath"  value='<s:property value="captchapath"/>'/>
-<input type="hidden"  id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden"  id="txtsalikregno" name="txtsalikregno"  value='<s:property value="txtsalikregno"/>'/>
-<input type="hidden"  id="txttrafficpsourceid" name="txttrafficpsourceid"  value='<s:property value="txttrafficpsourceid"/>'/>
-<input type="hidden"  id="txttrafficpcolorid" name="txttrafficpcolorid"  value='<s:property value="txttrafficpcolorid"/>'/>
-<input type="hidden"  id="txttrafficptypeid" name="txttrafficptypeid"  value='<s:property value="txttrafficptypeid"/>'/>
-<input type="hidden"  id="browserstatus" name="browserstatus"  value='<s:property value="browserstatus"/>'/>
-<input type="hidden"  id="browsermsg" name="browsermsg"  value='<s:property value="browsermsg"/>'/>
+<!-- ========================================================= -->
+<!-- PROGRESS + ACTIONS -->
+<!-- ========================================================= -->
+
+<div class="section-block" style="margin-top:22px;">
+    <h2>Progress</h2>
+
+    <div class="gw-container">
+        <div class="gw-light-grey">
+            <div id="gwProgressBar" class="gw-container gw-green" style="height:24px;width:0%;"></div>
+        </div>
+        <p id="gwprogresstext">Added <span id="itemcount"></span> of <span id="itemtotalcount"></span></p>
+    </div>
+
+    <div style="text-align:center; margin-top:18px; display:flex; justify-content:center; gap:18px;">
+        <button class="myButton" type="button" id="btnGo" name="btnGo" onclick="getBrowser();">Download Now</button>
+        <button class="myButton" type="button" id="btnclientside" onclick="funCheckClientSide();">Update Chrome Driver</button>
+    </div>
+
+    <div style="margin-top:22px; text-align:center;">
+        <div id="loadcaptcha"><jsp:include page="captcha.jsp"></jsp:include></div>
+    </div>
+
+    <div style="margin-top:22px;">
+        <div id="loadsalikdata"><jsp:include page="SATloadDetails.jsp"></jsp:include></div>
+        <div id="loadtrafficdata"><jsp:include page="SATTrafficloadDetails.jsp"></jsp:include></div>
+    </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- HIDDEN FIELDS — DO NOT TOUCH -->
+<!-- ========================================================= -->
+
+
+
 </div>
 </form>
-	
-<div id="flash"></div>
-<div id="display"></div>
-<div id="unameWindow">
-   <div></div><div></div>
-</div>
- 
-<div id="filenameWindow">
-   <div></div><div></div>
-</div> 
-
-<div id="sourceWindow">
-   <div></div><div></div>
 </div>
 
-<div id="colorWindow">
-	<div></div><div></div>
-</div> 				 				
 
-<div id="fleetWindow">
-    <div></div><div></div>
-</div>
+<script>
+/* Reinitialize jqx controls after UI rebuild */
+function refreshSATInputs(){
+    const datePickers=["jqxStartDate","jqxEndDate"];
+    datePickers.forEach(id=>{
+        if($("#"+id).length){
+            try{$("#"+id).jqxDateTimeInput('destroy');}catch(e){}
+            $("#"+id).jqxDateTimeInput({
+                width:"100%",height:30,formatString:"dd-MM-yyyy",theme:"fresh"
+            });
+        }
+    });
+}
 
-<div id="vehinfowindow">
-   <div></div><div></div>
-</div>
+$(document).ready(()=>{ setTimeout(refreshSATInputs,400); });
+</script>
+<script>
+(function(){
+    // Override messager alert globally
+    const originalAlert = $.messager.alert;
 
-<div id="platenoWindow">
-	<div></div><div></div>
-</div>				
+    $.messager.alert = function(title, msg, type, callback) {
 
-<div class="modal"></div>
-	
-</div>
+        // Normalize value
+        msg = (msg || "").toString().trim();
+
+        // Stop alerts with empty string, null or undefined text
+        if (msg === "" || msg === "undefined" || msg === "null") {
+            return;
+        }
+
+        originalAlert.call($.messager, title, msg, type, callback);
+    };
+})();
+</script>
+
 </body>
 </html>
