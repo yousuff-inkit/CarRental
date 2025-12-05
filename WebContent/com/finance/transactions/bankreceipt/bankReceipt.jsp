@@ -729,25 +729,287 @@
 </script>
 
 <style>
-.hidden-scrollbar {
-   overflow: auto;
-   height: 530px;
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 130vh;
+    box-sizing: border-box;
 }
-#validrate{
- color:red;
- }
- #validrate1{
- color:red;
- }
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+}
+
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
+#txtStatus {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e67e22;
+}
+
+/* ------------------------------
+   FORM ROWS LAYOUT (FIXED)
+------------------------------ */
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size:1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Special case: One label with two equal-width inputs */
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
+
+.form-group.single-label-dual-input input[type="text"]:first-of-type {
+    width: 100%;
+}
+
+.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
+    width: 100%;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 30px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* Special handling for the "to-account-row" - all items in one line */
+.to-account-row {
+    display: grid;
+    grid-template-columns: 120px 110px 120px 140px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.to-account-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.to-account-row #cmbtotype {
+    width: 100%;
+}
+
+.to-account-row #txttoaccid {
+    width: 100%;
+}
+
+.to-account-row #txttoaccname {
+    width: 100%;
+}
+
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
+}
+
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+/* Hide scrollbars (but allow scrolling) */
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+/* ------------------------------
+   ERROR LABELS
+------------------------------ */
+
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
+
+/* ------------------------------
+   APPROVAL TABLE
+------------------------------ */
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
+}
 </style>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmBankReceipt" action="saveBankReceipt" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar'>
+<div  class='receipt-header'>
 <table width="100%">
   <tr>
     <td width="3%" height="42" align="right">Date</td>
@@ -755,9 +1017,9 @@
     <input type="hidden" id="hidjqxBankReceiptDate" name="hidjqxBankReceiptDate" value='<s:property value="hidjqxBankReceiptDate"/>'/></td>
     <td width="21%" align="left">&nbsp;</td>
     <td width="9%" align="right">Ref. No.</td>
-    <td width="29%"><input type="text" id="txtrefno" name="txtrefno" style="width:40%;" value='<s:property value="txtrefno"/>'/></td>
+    <td width="29%"><input type="text" id="txtrefno" name="txtrefno" 40%;" value='<s:property value="txtrefno"/>'/></td>
     <td width="6%" align="right">Doc No.</td>
-    <td width="21%"><input type="text" id="docno" name="txtbankreceiptdocno" style="width:50%;" value='<s:property value="txtbankreceiptdocno"/>' tabindex="-1"/>
+    <td width="21%"><input type="text" id="docno" name="txtbankreceiptdocno" 50%;" value='<s:property value="txtbankreceiptdocno"/>' tabindex="-1"/>
     <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
   </tr>
    <tr>
@@ -765,103 +1027,207 @@
     <td><span id="txtStatus"></span></td>
   </tr>
 </table>
-<table width="100%">
-<tr>
-<td width="50%">
-<fieldset>
-<table width="100%" >
-  <tr>
-    <td width="8%" align="right">Bank</td>
-    <td><input type="text" id="txtfromaccid" name="txtfromaccid" style="width:90%;" placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>'  onkeydown="getAcc(event);"/></td>
-    <td colspan="3"><input type="text" id="txtfromaccname" name="txtfromaccname" style="width:57%;" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Currency</td>
-    <td width="16%"><select id="cmbfromcurrency" name="cmbfromcurrency" style="width:71%;" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxBankReceiptDate').val());">
-      <option></option></select>
-      <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>
-      <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/></td>
-    <td colspan="2" align="right">Rate</td>
-    <td width="50%"><input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" style="width:35%;text-align: right;" value='<s:property value="txtfromrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
-    <span id="validrate"></span></td>
-  </tr>
-   <tr>
-   <td align="right">Bank Name</td>
-    <td colspan="4"><input type="text" id="txtbankname" name="txtbankname" style="width:65%;" value='<s:property value="txtbankname"/>' onblur="" /></td>
-   
-   </tr>
-  <tr>
-   <td align="right"><input type="checkbox" id="chckpdc" name="chckpdc" onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxBankReceiptDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" >&nbsp;PDC
-   <input type="hidden" id="hidchckpdc" name="hidchckpdc" value='<s:property value="hidchckpdc"/>'/>
-   <input type="hidden" id="txtpdcacno" name="txtpdcacno" value='<s:property value="txtpdcacno"/>'/></td>
-   <td align="right">Cheque No.</td>
-   <td width="14%"><input type="text" id="txtchequeno" name="txtchequeno" style="width:100%;" value='<s:property value="txtchequeno"/>' /></td>
-   <td width="12%" align="right">Cheque Date</td>
-   <td align="left"><div id="jqxChequeDate" name="jqxChequeDate" onchange="funPDCDate($('#hidchckpdc').val(),$('#jqxBankReceiptDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" value='<s:property value="jqxChequeDate"/>'></div>
-    <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate" value='<s:property value="hidjqxChequeDate"/>'/></td>
-   </tr>
-  <tr>
-    <td align="right">Amount</td>
-    <td><input type="text" id="txtfromamount" name="txtfromamount" style="width:90%;text-align: right;" value='<s:property value="txtfromamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" /></td>
-    <td colspan="2"  align="right">Base Amount</td>
-    <td><input type="text" id="txtfrombaseamount" name="txtfrombaseamount" style="width:35%;text-align: right;" value='<s:property value="txtfrombaseamount"/>' tabindex="-1"/></td>
-  </tr>
-   <tr>
-    <td align="right">Description</td>
-    <td colspan="4"><input type="text" id="txtdescription" name="txtdescription" style="width:65%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-</table>
-</fieldset>
-</td>
+<div class="section-row">
+<div class="section-block">
+    <h2>Bank</h2>
 
-<td width="50%">
-<fieldset>
-<legend>Payment From</legend>
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">Type</td>
-    <td width="10%"><select id="cmbtotype" name="cmbtotype" style="width:90%;" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
-    <option value="AR">AR</option><option value="AP">AP</option></select>
-    <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/></td>
-    <td width="20%"><input type="text" id="txttoaccid" name="txttoaccid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/></td>
-    <td colspan="2"><input type="text" id="txttoaccname" name="txttoaccname" style="width:53%;" value='<s:property value="txttoaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
-    <input type="hidden" id="txttotranid" name="txttotranid" value='<s:property value="txttotranid"/>'/>
-    <input type="hidden" id="txttotrno" name="txttotrno" value='<s:property value="txttotrno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Currency</td>
-    <td colspan="2"><select id="cmbtocurrency" name="cmbtocurrency" style="width:50%;" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxBankReceiptDate').val());">
-      <option></option></select>
-      <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency" value='<s:property value="hidcmbtocurrency"/>'/>
-      <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype" value='<s:property value="hidtocurrencytype"/>'/></td>
-    <td width="20%" align="right">Rate</td>
-    <td width="57%"><input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" style="width:30%;text-align: right;" value='<s:property value="txttorate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>
-    <span id="validrate1"></span></td>
-  </tr>
-  <tr>
-    <td align="right">Amount</td>
-    <td colspan="2"><input type="text" id="txttoamount" name="txttoamount" style="width:50%;text-align: right;" value='<s:property value="txttoamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();getAmount();" onfocus="this.oldvalue = this.value;" onchange="funPaymentAmount(this);this.oldvalue = this.value;" /></td>
-    <td align="right">Base Amount</td>
-    <td><input type="text" id="txttobaseamount" name="txttobaseamount" style="width:30%;text-align: right;" value='<s:property value="txttobaseamount"/>' tabindex="-1"/></td>
-  </tr>
-</table><br/><br/>
-</fieldset>
-</td>
-</tr></table>
+    <!-- Bank + Acc ID + Acc Name -->
+    <div class="form-group single-label-dual-input">
+        <label for="txtfromaccid">Bank</label>
+
+        <input type="text" id="txtfromaccid" name="txtfromaccid"
+               placeholder="Press F3 to Search"
+               value='<s:property value="txtfromaccid"/>'
+               onkeydown="getAcc(event);" />
+
+        <input type="text" id="txtfromaccname" name="txtfromaccname"
+               value='<s:property value="txtfromaccname"/>'
+               tabindex="-1" />
+
+        <input type="hidden" id="txtfromdocno" name="txtfromdocno"
+               value='<s:property value="txtfromdocno"/>' />
+    </div>
+
+    <!-- Currency + Rate -->
+    <div class="form-group dual-input">
+        <label for="cmbfromcurrency">Currency</label>
+
+        <select id="cmbfromcurrency" name="cmbfromcurrency"
+                value='<s:property value="cmbfromcurrency"/>'
+                onchange="getRate(this.value,$('#jqxBankReceiptDate').val());">
+            <option></option>
+        </select>
+
+        <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency"
+               value='<s:property value="hidcmbfromcurrency"/>' />
+
+        <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype"
+               value='<s:property value="hidfromcurrencytype"/>' />
+
+        <label for="txtfromrate">Rate</label>
+
+        <input type="text" id="txtfromrate" name="txtfromrate"
+               value='<s:property value="txtfromrate"/>'
+               onchange="funvalid()"
+               onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();"
+               tabindex="-1" />
+
+        <span id="validrate"></span>
+    </div>
+
+    <!-- Bank Name -->
+    <div class="form-group full-row">
+        <label for="txtbankname">Bank Name</label>
+        <input type="text" id="txtbankname" name="txtbankname"
+               value='<s:property value="txtbankname"/>' />
+    </div>
+
+    <!-- PDC + Cheque No + Cheque Date -->
+    <div class="form-group to-account-row">
+        <label>
+            <input type="checkbox" id="chckpdc" name="chckpdc"
+                   onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxBankReceiptDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" />
+            PDC
+        </label>
+
+        <input type="hidden" id="hidchckpdc" name="hidchckpdc"
+               value='<s:property value="hidchckpdc"/>' />
+
+        <input type="hidden" id="txtpdcacno" name="txtpdcacno"
+               value='<s:property value="txtpdcacno"/>' />
+
+        <label for="txtchequeno">Cheque No.</label>
+        <input type="text" id="txtchequeno" name="txtchequeno"
+               value='<s:property value="txtchequeno"/>' />
+
+        <label for="jqxChequeDate">Cheque Date</label>
+
+        <div id="jqxChequeDate" name="jqxChequeDate"
+             onchange="funPDCDate($('#hidchckpdc').val(),$('#jqxBankReceiptDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));"
+             value='<s:property value="jqxChequeDate"/>'>
+        </div>
+
+        <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate"
+               value='<s:property value="hidjqxChequeDate"/>' />
+    </div>
+
+    <!-- Amount + Base Amount -->
+    <div class="form-group dual-input">
+        <label for="txtfromamount">Amount</label>
+        <input type="text" id="txtfromamount" name="txtfromamount"
+               value='<s:property value="txtfromamount"/>'
+               onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
+
+        <label for="txtfrombaseamount">Base Amount</label>
+        <input type="text" id="txtfrombaseamount" name="txtfrombaseamount"
+               value='<s:property value="txtfrombaseamount"/>'
+               tabindex="-1" />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group full-row">
+        <label for="txtdescription">Description</label>
+        <input type="text" id="txtdescription" name="txtdescription"
+               value='<s:property value="txtdescription"/>' />
+    </div>
+
+</div>
+
+
+<div class="section-block">
+    <h2>Payment From</h2>
+
+    <!-- Type + Account ID + Account Name -->
+    <div class="form-group to-account-row">
+        <label for="cmbtotype">Type</label>
+
+        <select id="cmbtotype" name="cmbtotype"
+                onchange="clearClientInfo();"
+                value='<s:property value="cmbtotype"/>'>
+            <option value="AR">AR</option>
+            <option value="AP">AP</option>
+        </select>
+
+        <input type="hidden" id="hidcmbtotype" name="hidcmbtotype"
+               value='<s:property value="hidcmbtotype"/>' />
+
+        <input type="text" id="txttoaccid" name="txttoaccid"
+               placeholder="Press F3 to Search"
+               value='<s:property value="txttoaccid"/>'
+               onkeydown="getAccType(event);" />
+
+        <input type="text" id="txttoaccname" name="txttoaccname"
+               value='<s:property value="txttoaccname"/>'
+               tabindex="-1" />
+
+        <input type="hidden" id="txttodocno" name="txttodocno"
+               value='<s:property value="txttodocno"/>' />
+
+        <input type="hidden" id="txttotranid" name="txttotranid"
+               value='<s:property value="txttotranid"/>' />
+
+        <input type="hidden" id="txttotrno" name="txttotrno"
+               value='<s:property value="txttotrno"/>' />
+    </div>
+
+    <!-- Currency + Rate -->
+    <div class="form-group dual-input">
+        <label for="cmbtocurrency">Currency</label>
+
+        <select id="cmbtocurrency" name="cmbtocurrency"
+                value='<s:property value="cmbtocurrency"/>'
+                onchange="getRatevalue(this.value,$('#jqxBankReceiptDate').val());">
+            <option></option>
+        </select>
+
+        <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency"
+               value='<s:property value="hidcmbtocurrency"/>' />
+
+        <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype"
+               value='<s:property value="hidtocurrencytype"/>' />
+
+        <label for="txttorate">Rate</label>
+
+        <input type="text" id="txttorate" name="txttorate"
+               value='<s:property value="txttorate"/>'
+               onchange="funvalid1()"
+               onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();"
+               tabindex="-1" />
+
+        <span id="validrate1"></span>
+    </div>
+
+    <!-- Amount + Base Amount -->
+    <div class="form-group dual-input">
+        <label for="txttoamount">Amount</label>
+
+        <input type="text" id="txttoamount" name="txttoamount"
+               value='<s:property value="txttoamount"/>'
+               onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();getAmount();"
+               onfocus="this.oldvalue = this.value;"
+               onchange="funPaymentAmount(this);this.oldvalue = this.value;" />
+
+        <label for="txttobaseamount">Base Amount</label>
+
+        <input type="text" id="txttobaseamount" name="txttobaseamount"
+               value='<s:property value="txttobaseamount"/>'
+               tabindex="-1" />
+    </div>
+
+</div>
+</div>
 <fieldset>
 <legend>Apply Invoices</legend>
 <div id="bankApplyInvoicing1"><center><jsp:include page="applyBankReceiptInvoicingGrid.jsp"></jsp:include></center></div>
 <table width="100%">
   <tr>
     <td width="8%" align="right">Amount</td>
-    <td width="24%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="width:50%;text-align: right;" value='<s:property value="txtapplyinvoiceamt"/>'/>
+    <td width="24%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt"  value='<s:property value="txtapplyinvoiceamt"/>'/>
     <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/></td>
     <td width="5%" align="right">Applied</td>
-    <td width="26%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="width:50%;text-align: right;" value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/></td>
+    <td width="26%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/></td>
     <td width="10%" align="right">Balance</td>
-    <td width="27%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="width:50%;text-align: right;" value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/></td>
+    <td width="27%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/></td>
   </tr>
 </table>
 </fieldset><br/>
@@ -869,9 +1235,9 @@
 <table width="100%">
   <tr>
     <td width="7%" align="right">Dr. Total</td>
-    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>'/></td>
+    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" value='<s:property value="txtdrtotal"/>'/></td>
     <td width="6%" align="right">Cr. Total</td>
-    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
+    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
   </tr>
 </table>
 
