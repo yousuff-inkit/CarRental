@@ -272,7 +272,7 @@ input:-webkit-autofill:focus {
     font-weight: 800;         /* Bold */
     color: #1f2937;           /* Rich heading color */
     display: block;
-    margin-bottom: 18px;      /* GAP between heading and buttons */
+   /* margin-bottom: 18px;  */    /* GAP between heading and buttons */
 }
 
 /* Arrange heading & top button row with spacing */
@@ -298,6 +298,48 @@ input:-webkit-autofill:focus {
     border-radius: 6px;
     min-width: 120px;
 }
+
+
+
+
+/* Reduce space between Heading and Buttons */
+#formdet {
+    margin-bottom: 0 !important;   /* remove extra gap below heading */
+    padding-bottom: 0 !important;
+}
+
+.HeadIcons {
+    margin-bottom: 4px !important; /* reduce gap below the Branch/Currency bar */
+    padding-bottom: 4px !important;
+}
+
+.action-bar {
+    margin-top: 2px !important;      /* remove top gap above buttons */
+    padding-top: 4px !important;
+}
+
+
+
+
+
+/* REMOVE unwanted ERP padding/margin at top */
+#mainBG.homeContent {
+    padding-top: 2px !important;
+    margin-top: 2px !important;
+}
+
+/* Also remove top space from the first HeadIcons bar */
+#full.HeadIcons {
+    margin-top: 2px !important;
+    padding-top: 2px !important;
+}
+
+
+html, body {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -1765,7 +1807,7 @@ function setapprbrch(branchval){
 <div class="HeadIcons" id="full">
 	<font size=5px style="width: 100%"><label id="formdet" name="formdet" ></label></font>
 
-    <div class="HeadIcons" id="full">
+   
         <label class="branch">Branch</label>
         <select name="brchName" id="brchName" onChange="getCurr(this.value)"></select>
         <input type="text" name="brchNames" id="brchNames" readonly="readonly" />
@@ -1777,7 +1819,7 @@ function setapprbrch(branchval){
         <label id="savemsg"></label>
         <label id="errormsg"></label>
         <!-- hidden fields as needed -->
-    </div>
+  
 <%--			<label class="branch">Branch&nbsp;&nbsp;</label>--%>
 <%--			<select name="brchName" id="brchName" onChange="getCurr(this.value)">--%>
 <%--			</select>--%>
@@ -1830,6 +1872,22 @@ function setapprbrch(branchval){
     <svg viewBox="0 0 20 20"><path d="M6 8h1v9H6V8zm3 0h1v9H9V8zm3 0h1v9h-1V8zm2-5h-3l-1-1h-4L8 3H5v2h10V3z"/></svg>
     Delete
 </button>
+
+<button type="button" class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden>
+    <svg viewBox="0 0 20 20">
+        <path d="M17 3H3v14h14V3zm-4 12H7v-2h6v2zm0-4H7V7h6v4z"/>
+    </svg>
+    Save
+</button>
+
+<button type="button" class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden>
+    <svg viewBox="0 0 20 20">
+        <path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/>
+    </svg>
+    Cancel
+</button>
+
+
 
 <button type="button" class="action-btn" id="btnSearch" onclick="funSearchBtn()">
     <svg viewBox="0 0 20 20"><path d="M12.9 14.32a7 7 0 1 1 1.41-1.41l4.39 4.39-1.41 1.41-4.39-4.39zM9 14A5 5 0 1 0 9 4a5 5 0 0 0 0 10z"/></svg>
