@@ -9,161 +9,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
- <style>
-     .hidden-scrollbar {
-         overflow: auto;
-         height: 530px;
-     }
-     body {
-         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-         color: #222;
-         margin: 0;
-         padding: 32px 0;
-         min-height: 100vh;
-         box-sizing: border-box;
-     }
-     #mainBG {
-         background: #fff;
-         border-radius: 16px;
-         /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-         padding: 10px;
-         max-width: 1200px;
-         margin: 0 auto;
-     }
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
 
-     .receipt-header {
-         display: flex;
-         flex-wrap: wrap;
-         align-items: center;
-         margin-bottom: 16px;
-         border-radius: 12px;
-         padding: 0px 24px;
-         font-size: 2vh;
-     }
-     .receipt-header label {
-         font-weight: 500;
-         color: #333;
-         margin-right: 8px;
-     }
-     .receipt-header input[type="text"] {
-         border: 1px solid #d1d5db;
-         border-radius: 6px;
-         padding: 6px 10px;
-         font-size: 1rem;
-         width: 120px;
-         background: #fff;
-         transition: border-color 0.2s;
-     }
-     .receipt-header input[type="text"]:focus {
-         border-color: #007bff;
-         outline: none;
-     }
-     .receipt-header button {
-         background: #007bff;
-         color: #fff;
-         border: none;
-         border-radius: 6px;
-         padding: 6px 16px;
-         font-weight: 500;
-         cursor: pointer;
-         transition: background 0.2s;
-     }
-     .receipt-header button:hover {
-         background: #0056b3;
-     }
-     #txtStatus {
-         font-size: 1rem;
-         font-weight: 600;
-         color: #e67e22;
-         margin-left: 12px;
-     }
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
 
-     .section-row {
-         display: flex;
-         gap: 26px;
-         margin-bottom: 24px;
-     }
-     .section-block {
-         flex: 1;
-         background: #f6f8fa;
-         border-radius: 10px;
-         padding: 20px 18px;
-         box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-     }
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
 
-     .section-block h2 {
-         font-size: 1.09em;
-         font-weight: 500;
-         margin: 0 0 16px 0;
-         color: #253858;
-     }
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-     .section-block .form-group {
-         display: flex;
-         align-items: center;
-         gap: 16px;
-         margin-bottom: 12px;
-     }
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: block; /* Header block container */
+        padding: 0 0 0 5px;
+    }
 
-     .section-block label {
-         min-width: 110px;
-         text-align: right;
-         font-weight: 500;
-         color: #253858;
-     }
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
 
-     .section-block input[type="text"],
-     .section-block select {
-         flex: 1;
-         border: 1px solid #d1d5db;
-         border-radius: 6px;
-         padding: 6px 10px;
-         background: #fff;
-         transition: border-color 0.2s;
-     }
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
 
-     .section-block input[type="text"]:focus,
-     .section-block select:focus {
-         border-color: #007bff;
-         outline: none;
-     }
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
 
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
 
-     .table-section {
-         margin-bottom: 18px;
-         padding-inline: 1.04em;
-         padding-block: 1.04em;
-         border-radius: 8px;
-     }
-     .table-section h3 {
-         color: #253858;
-         font-size: 1.04em;
-         font-weight: 600;
-     }
-     .cr-table {
-         width: 100%;
-         border-collapse: collapse;
-         background: #f9fafb;
-         border-radius: 8px;
-         overflow: hidden;
-         box-shadow: 0 0 0 1px #eef0f6;
-     }
-     .cr-table th, .cr-table td {
-         padding: 9px 10px;
-         border-bottom: 1px solid #e4e7ec;
-         text-align: left;
-         font-size: 1em;
-     }
-     .cr-table th {
-         background: #eef0f6;
-         color: #354B6A;
-         font-weight: 600;
-     }
-     .cr-table tr:last-child td {
-         border-bottom: none;
-     }
- </style>
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
+    }
+
+    .full-width-block {
+        flex: 1 1 100%;
+    }
+
+    .section-block h2, .section-block h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], input[type="email"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+  font: Tahoma;
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 16px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+    
+    .input-group-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .input-group-stack input:first-child {
+        margin-bottom: 0;
+    }
+
+</style>
 <script type="text/javascript">
 
 $(document).ready(function () {     
@@ -344,52 +346,57 @@ $(document).ready(function () {
 	<jsp:include page="../../../../header.jsp" />
 	<br/>
     <div class="hidden-scrollbar receipt-header">
-<div class="table-section" style="width: 100%"><h3>Salesman Details</h3>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="16%"><div id="salesmandate" name="salesmandate" value='<s:property value="salesmandate"/>'></div></td>
-    <td colspan="3" align="right">Doc No.</td>
-    <td width="30%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td align="right">Code</td>
-    <td><input type="text" name="salesmanid" id="salesmanid" placeholder="Code" value='<s:property value="salesmanid"/>' ></td>
-    <td width="11%" align="right">Name</td>
-    <td width="33%"><input type="text" name="salesmanname" id="salesmanname" placeholder="Code Name" value='<s:property value="salesmanname"/>' style="width:59%;"></td>
-    <td width="5%" align="right">Email</td>
-    <td><input type="email" name="salesmanmail" id="salesmanmail" style="width:80%;" placeholder="someone@example.com" value='<s:property value="salesmanmail"/>' ></td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td><input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search"></td>
-    <td colspan="2"><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>'  style="width:70%;" readonly></td>
-    <td align="right">Mobile</td>
-    <td><input type="text" name="telephone" id="telephone" value='<s:property value="telephone"/>'></td>
-  </tr>
-</table>
-</div>
 
-<input type="hidden" name="hidsalesmandate" id="hidsalesmandate" value='<s:property value="hidsalesmandate"/>'/>
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="hidacno" name="hidacno"  value='<s:property value="hidacno"/>'/>
+        <div class="section-block full-width-block">
+            <h3>Salesman Details</h3>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div>
+                    <div id="salesmandate" name="salesmandate" value='<s:property value="salesmandate"/>'></div>
+                </div>
+
+                <label>Doc No.</label>
+                <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Code</label>
+                <input type="text" name="salesmanid" id="salesmanid" placeholder="Code" value='<s:property value="salesmanid"/>' >
+
+                <label>Name</label>
+                <input type="text" name="salesmanname" id="salesmanname" placeholder="Code Name" value='<s:property value="salesmanname"/>'>
+            </div>
+            
+            <div class="form-group dual-input">
+                <label>Email</label>
+                <input type="email" name="salesmanmail" id="salesmanmail" placeholder="someone@example.com" value='<s:property value="salesmanmail"/>' >
+
+                <label>Mobile</label>
+                <input type="text" name="telephone" id="telephone" value='<s:property value="telephone"/>'>
+            </div>
+            
+            <div class="form-group single-label-dual-input">
+                <label>Account</label>
+                <input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search">
+                <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' readonly>
+            </div>
+        </div>
+
+
+        <input type="hidden" name="hidsalesmandate" id="hidsalesmandate" value='<s:property value="hidsalesmandate"/>'/>
+        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+        <input type="hidden" id="hidacno" name="hidacno" value='<s:property value="hidacno"/>'/>
+
         <div id="jqxSalesmanSearch1"></div>
 
         <div id="accountWindow">
-            <div >
-
+            <div ></div>
+        </div>
     </div>
 </form>
 </div>
-<br/>
-
-	
-	</div>
-	<div>
-	</div>
-	 </div>  
-	
 </body>
 </html>
