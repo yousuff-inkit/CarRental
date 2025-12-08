@@ -170,6 +170,58 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+/* Make all text bold */
+body, body * {
+    font-weight: 700 !important;
+}
+
+/* Prevent wrapping everywhere */
+.cr-table td,
+.cr-table th,
+.cr-table label,
+.cr-table div,
+.cr-table input,
+.cr-table select {
+    white-space: nowrap !important;
+}
+
+
+
+/* Improve dropdown option spacing */
+select option {
+    padding: 8px 12px !important;     /* Top/Bottom 8px, Left/Right 12px */
+    font-size: 14px;                  /* Clean readable size */
+    line-height: 1.6;                 /* Extra breathing room */
+}
+
+/* Improve the select box itself */
+select {
+    padding: 6px 10px !important;
+    height: 34px !important;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+
+/* --- STYLING ALL DROPDOWNS (SELECT BOXES) --- */
+select {
+    width: 100% !important;          /* make it fill the cell neatly */
+    padding: 4px 10px;               /* make dropdown taller */
+    height: 28px !important;         /* uniform height */
+    border: 1px solid #b8c6d8;       /* clean border */
+    border-radius: 6px;              /* modern rounded look */
+    background-color: #fff;          /* remove any pink */
+    font-weight: 600;                /* bold text */
+    color: #222;                     /* clean dark text */
+    box-sizing: border-box;
+}
+
+/* Dropdown on focus (blue border) */
+select:focus {
+    border-color: #007bff !important;
+    outline: none;
+}
 </style>
 <script type="text/javascript">
 
@@ -547,7 +599,8 @@ x.send();
 </tr>
 </table></div>
 
-<div class="table-section" style="background-color: #EBDEF0; width: 100%;">
+<div class="table-section" style="background-color: #E8F1FF;
+ width: 100%;">
 <h3><b><i>Effect In</i></b></h3>
 <table class="cr-table" width="100%" >
 <tr>

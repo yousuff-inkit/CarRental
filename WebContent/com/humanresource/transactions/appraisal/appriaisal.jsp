@@ -578,6 +578,76 @@ body {
     border-bottom: none;
 }
 
+label,
+.cr-table td label,
+.cr-table th,
+.cr-table td {
+    font-weight: 700 !important;
+}
+
+/* --- FORCE SINGLE-LINE TEXT (NO WRAP) --- */
+label,
+td,
+th,
+.cr-table td,
+.cr-table th {
+    white-space: nowrap !important;
+}
+
+
+
+/* ❌ Remove Chrome autofill yellow/pink background */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;  /* set background to white */
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: #222 !important; /* text color */
+}
+
+/* Also remove blue border Chrome applies */
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+}
+
+
+select {
+    width: 100% !important;          /* make it fill the cell neatly */
+    padding: 4px 10px;               /* make dropdown taller */
+    height: 28px !important;         /* uniform height */
+    border: 1px solid #b8c6d8;       /* clean border */
+    border-radius: 6px;              /* modern rounded look */
+    background-color: #fff;          /* remove any pink */
+    font-weight: 600;                /* bold text */
+    color: #222;                     /* clean dark text */
+    box-sizing: border-box;
+}
+
+/* Dropdown on focus (blue border) */
+select:focus {
+    border-color: #007bff !important;
+    outline: none;
+}
+
+
+/* Improve dropdown option spacing */
+select option {
+    padding: 8px 12px !important;     /* Top/Bottom 8px, Left/Right 12px */
+    font-size: 14px;                  /* Clean readable size */
+    line-height: 1.6;                 /* Extra breathing room */
+}
+
+/* Improve the select box itself */
+select {
+    padding: 4px 10px !important;
+    height: 28px !important;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+
 </style>  
 </head>
 <body onload="setValues();getYear();getDepartment();getDesignation();getPayrollCategory();" onmouseover="editstatus();">
