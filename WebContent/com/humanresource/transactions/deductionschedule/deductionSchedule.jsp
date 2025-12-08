@@ -439,6 +439,23 @@ body {
     border-bottom: none;
 }
 
+/* --- MAKE ALL LABELS, TH, TD TEXT BOLD --- */
+label,
+.cr-table td label,
+.cr-table th,
+.cr-table td {
+    font-weight: 700 !important;
+}
+
+/* --- FORCE SINGLE-LINE TEXT (NO WRAP) --- */
+label,
+td,
+th,
+.cr-table td,
+.cr-table th {
+    white-space: nowrap !important;
+}
+
 </style>
 
 </head>
@@ -474,7 +491,8 @@ body {
 <div class="table-section" style="width: 100%;">
 <table class="cr-table" width="99%">
 <tr><td  width="50%">
-<div style="background-color: #EBDEF0;">
+<div style="background-color: #E8F1FF;
+">
 <table  width="99%">
   <tr>
     <td colspan="2">&nbsp;</td>
