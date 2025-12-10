@@ -8,8 +8,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 
-<style>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+
+
+<style>
+#search td,
+#search label {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+#search input[type="text"] {
+    padding: 5px 8px;
+    height: 26px;
+    border: 1px solid #b8c6d8;
+    border-radius: 5px;
+    font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#search td {
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+.myButton {
+    padding: 5px 16px;
+    font-weight: 700;
+}
+</style>
+
 </style>
 
 <script type="text/javascript">
@@ -33,32 +63,53 @@
  
 </script>
 <body bgcolor="#E0ECF8">
-<div id=search>
+<div id="search">
 <table width="100%">
   <tr>
     <td>
-    <table width="100%">
-    <tr>
-    <td align="right" width="10%">Name</td> 
-    <td align="left" colspan="3"><input type="text" name="empnames" id="empnames"  style="width:99%;" value='<s:property value="empnames"/>'></td>
-    <td align="right"  width="7%">Emp ID</td>
-    <td align="left" width="27%"><input type="text" name="empids" id="empids" value='<s:property value="empids"/>'></td>
-    <tr>
-  <tr>
-    <td  align="right" width="10%">Doc No</td>
-    <td width="24%" align="left"  ><input type="text" name="docnoss" id="docnoss" value='<s:property value="docnoss"/>'>
-    <td width="10%"   align="right">Mobile</td>
-    <td width="12%"  ><input type="text" name="mobnos" id="mobnos" value='<s:property value="mobnos"/>'></td>
-    <td  >&nbsp;</td>
-    <td align="left"  ><input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
+      <table width="100%">
+        <tr>
+          <td align="right" width="10%">Name</td>
+          <td align="left" colspan="3">
+            <input type="text" name="empnames" id="empnames" value='<s:property value="empnames"/>'>
+          </td>
+
+          <td align="right" width="7%">Emp ID</td>
+          <td align="left" width="27%">
+            <input type="text" name="empids" id="empids" value='<s:property value="empids"/>'>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" width="10%">Doc No</td>
+          <td width="24%">
+            <input type="text" name="docnoss" id="docnoss" value='<s:property value="docnoss"/>'>
+          </td>
+
+          <td width="10%" align="right">Mobile</td>
+          <td width="12%">
+            <input type="text" name="mobnos" id="mobnos" value='<s:property value="mobnos"/>'>
+          </td>
+
+          <td>&nbsp;</td>
+
+          <td align="left">
+            <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
+          </td>
+        </tr>
+      </table>
+    </td>
   </tr>
-  </table>
-  </td>
+
   <tr>
-    <td colspan="8" align="right"><div id="srefreshdiv"><jsp:include  page="submainSearch.jsp"></jsp:include> </div>
+    <td colspan="8">
+      <div id="srefreshdiv">
+        <jsp:include page="submainSearch.jsp"></jsp:include>
+      </div>
     </td>
   </tr>
 </table>
-  </div>
+</div>
+
 </body>
 </html>
