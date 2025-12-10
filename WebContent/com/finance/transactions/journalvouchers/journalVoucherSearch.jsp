@@ -9,7 +9,47 @@
 <title>GatewayERP(i)</title>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <% String atype = request.getParameter("atype")==null?"0":request.getParameter("atype"); %>
+<style type="text/css">
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  /* Increased gap between cells */
+}
 
+/* Bold labels */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Bold text inside inputs */
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;               /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box;   /* Include padding in width */
+}
+
+/* Bold text in date fields */
+#bankdate, #chqdate {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
 <script type="text/javascript">
 	$(document).ready(function () {
 		var atype='<%=atype%>';

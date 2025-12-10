@@ -30,6 +30,10 @@
 	}
 
 	</script>
+
+<style type="text/css">
+
+</style>
 <body>
 <div id=search>
 <table width="100%">

@@ -321,7 +321,7 @@ $(document).ready(function () {
 
     $("#jqxColorSearch1").jqxGrid(
             {
-            	width: '90%',
+            	width: '100%',
                 height: 315,
                 source: dataAdapter,
                 showfilterrow: true,

@@ -55,7 +55,7 @@ select:focus {
 }
 
 label {
-    font-weight: 600;
+    font-weight: 700;
     color: #253858;
     white-space: nowrap;
 }
@@ -331,18 +331,18 @@ function funExcelBtn(){
 <form id="frmSpecification" action="saveSpecification" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/> 
 <fieldset><legend>Specification Info</legend>
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">Name</td>
-    <td width="25%" align="left"><input type="text" name="specname" id="specname" value='<s:property value="specname"/>' placeholder="Spec Name" /></td>
-    <td width="58%" align="right">Doc No</td>
-    <td width="11%" align="left"><input type="text" name="docno" tabindex="-1" readonly id="docno" value='<s:property value="docno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Details</td>
-    <td colspan="3" align="left"><input type="text" name="specdetails" id="specdetails" style="width:100%;" value='<s:property value="specdetails"/>' placeholder="Spec Details"/></td>
-    </tr>
-</table>
+<div class="section-block">
+  <div class="form-group dual-input">
+   <label>Name</label>
+    <input type="text" name="specname" id="specname" value='<s:property value="specname"/>' placeholder="Spec Name" />
+   <label>Doc No</label> 
+    <input type="text" name="docno" tabindex="-1" readonly id="docno" value='<s:property value="docno"/>'/>
+  </div>
+  <div class="form-group">
+    <label>Details</label>
+    <input type="text" name="specdetails" id="specdetails" style="width:100%;" value='<s:property value="specdetails"/>' placeholder="Spec Details"/>
+    </div>
+</div>
 </fieldset>
 <table  width="100%">
 <tr>
