@@ -31,27 +31,100 @@
 		}
 
 	</script>
+		<style>
+#search td,
+#search label {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+#search input[type="text"] {
+    padding: 5px 8px;
+    height: 26px;
+    border: 1px solid #b8c6d8;
+    border-radius: 5px;
+    font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#search td {
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+.myButton {
+    padding: 6px 18px;
+    font-weight: 700;
+}
+
+#dscdate {
+    border: 1px solid #b8c6d8 !important;
+    border-radius: 5px;
+    padding: 2px;
+    background: white !important;
+}
+
+#search-table {
+    width: 100%;
+    table-layout: auto;      /* natural spacing */
+}
+
+</style>
 <body>
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%"><div id="dscdate"></div>
-        <input type="hidden" name="hiddscdate" id="hiddscdate" value='<s:property value="hiddscdate"/>'></td>
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  <tr>
-    <td align="right">Name</td>
-    <td colspan="2"><input type="text" name="txtempname" id="txtempname" style="width:100%" value='<s:property value="txtempname"/>'></td>
-    <td align="right">Amount</td>
-    <td><input type="text" name="txtamount1" id="txtamount1" value='<s:property value="txtamount"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="dscMainSearchGrid.jsp"></jsp:include></div></td>
-  </tr>
+<div id="search">
+
+<table id="search-table">
+
+<tr>
+    <td>Date</td>
+    <td>
+        <div class="row-flex">
+            <div class="col">
+                <div id="dscdate"></div>
+            </div>
+        </div>
+    </td>
+
+    <td>Doc No</td>
+    <td>
+        <input type="text" id="txtdocno" name="txtdocno" class="input-box"
+               value="<s:property value='txtdocno'/>">
+    </td>
+
+    <td rowspan="2" align="center">
+        <button type="button" class="search-btn myButton" onclick="loadSearch();">
+            Search
+        </button>
+    </td>
+</tr>
+
+<tr>
+    <td>Name</td>
+    <td>
+        <input type="text" id="txtempname" name="txtempname" 
+               class="input-box" value="<s:property value='txtempname'/>">
+    </td>
+
+    <td>Amount</td>
+    <td>
+        <input type="text" id="txtamount1" name="txtamount1" 
+               class="input-box" value="<s:property value='txtamount'/>">
+    </td>
+</tr>
+
+<tr>
+    <td colspan="5">
+        <div id="refreshdiv">
+            <jsp:include page="dscMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+
 </table>
-  </div>
+
+</div>
+
 </body>
+
 </html>
