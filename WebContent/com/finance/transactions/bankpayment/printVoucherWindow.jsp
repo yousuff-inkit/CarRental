@@ -8,6 +8,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
+<style>
+#search table {
+  width: auto;            /* shrink table width */
+  margin: 0 auto;         /* center the table */
+  border-collapse: collapse;
+}
+
+#search td {
+  padding: 4px 6px;       /* reduce gap between buttons */
+}
+
+.myButton {
+  padding: 6px 12px;      /* size of button */
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;    /* prevents text from breaking */
+}
+.center-buttons {
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: center;       /* vertical center */
+  height: 25vh;              /* vertical positioning without <br> */
+}
+
+.center-buttons table td {
+  padding: 5px 8px;          /* spacing between buttons */
+}
+</style>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -38,7 +66,7 @@ x.send();
         var reurl=url.split("saveBankPayment");
         $("#docno").prop("disabled", false);
 
-        var win= window.open(reurl[0]+"printBankPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+        var win= window.open(reurl[0]+"printBankPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=900,Height=300,location=no,scrollbars=no,toolbar=yes");
 	    win.focus();
 	
  /* var win= window.open(reurl[0]+"BankPaymentPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
@@ -51,7 +79,7 @@ x.send();
         var reurl=url.split("com");
         $("#docno").prop("disabled", false);  
         
-		var win= window.open(reurl[0]+"printBankPaymentCheque?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value,"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+		var win= window.open(reurl[0]+"printBankPaymentCheque?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value,"_blank","top=150,left=250,Width=900,Height=300,location=no,scrollbars=no,toolbar=yes");
 	    win.focus();
  	}
  	
@@ -61,7 +89,7 @@ x.send();
         var reurl=url.split("saveBankPayment");
         $("#docno").prop("disabled", false); 
        
- 		var win= window.open(reurl[0]+"printBankPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+ 		var win= window.open(reurl[0]+"printBankPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=900,Height=300,location=no,scrollbars=no,toolbar=yes");
 	    win.focus();
 
 /* var win= window.open(reurl[0]+"BankPaymentPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
@@ -72,7 +100,7 @@ x.send();
 	        var reurl=url.split("saveBankPayment");
 	        $("#docno").prop("disabled", false);
 
-	        var win= window.open(reurl[0]+"paymentauthform?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+	        var win= window.open(reurl[0]+"paymentauthform?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=900,Height=300,location=no,scrollbars=no,toolbar=yes");
 		    win.focus();
 		
 	}
@@ -95,17 +123,19 @@ x.send();
 </script>
 
 <body onload="checkConfig();">
-<div id=search>
-<br/><br/><br/><br/><br/><br/>
-<table width="100%">
+<div id=search class="center-buttons">
+
+<table >
+
   <tr>
     <td align="center"><input type="button" name="btnvoucherhead" id="btnvoucherhead" class="myButton" value="Voucher(Header)"  onclick="printHeaderVoucher();"></td>
     <td align="center"><input type="button" name="btncheque" id="btncheque" class="myButton" value="Cheque"  onclick="printCheque();"></td>
     <td align="center"><input type="button" name="btnvoucherwithouthead" id="btnvoucherwithouthead" class="myButton" value="Voucher(Without Header)"  onclick="printWithOutHeader();"></td>
     <td align="center"><input type="button" name="btnpaymentauthform" id="btnpaymentauthform" class="myButton" value="PaymentAuthorizationForm"  onclick="printPaymentauthform();"></td>
   </tr>
+  
 </table>
-<br/><br/><br/><br/><br/><br/>
+
   </div>
 </body>
 </html>

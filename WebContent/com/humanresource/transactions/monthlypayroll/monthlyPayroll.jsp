@@ -1169,6 +1169,59 @@ body {
     border-bottom: none;
 }
 
+/* -------- PREMIUM BLUE BUTTONS -------- */
+/* ULTRA SMALL PREMIUM BUTTONS */
+.myButtons,
+.myProcessCalcButton,
+.mySaveButton,
+.myConfirmButton,
+#btnProcess,
+#btnPayrollprocessPrint,
+#btnSavePayRoll,
+#btnConfirmed,
+#btnView,
+#btnPayrollPrint,
+#btnPayrollEmail,
+#clear,
+#clearPrint {
+    background: #4FA8FF !important;      /* Premium Sky Blue */
+    color: #fff !important;
+    border: none !important;
+    padding: 2px 6px !important;          /* very small size */
+    min-width: 55px !important;           /* smaller width */
+    height: 22px !important;              /* compact height */
+    border-radius: 4px !important;        /* slight rounding */
+    cursor: pointer;
+    font-weight: 700 !important;
+    font-size: 11px !important;           /* small font inside button */
+    line-height: 16px !important;         /* centers text better */
+    transition: 0.2s ease-in-out;
+}
+
+/* Hover — darker blue */
+.myButtons:hover,
+.myProcessCalcButton:hover,
+.mySaveButton:hover,
+.myConfirmButton:hover,
+#btnProcess:hover,
+#btnPayrollprocessPrint:hover,
+#btnSavePayRoll:hover,
+#btnConfirmed:hover,
+#btnView:hover,
+#btnPayrollPrint:hover,
+#btnPayrollEmail:hover,
+#clear:hover,
+#clearPrint:hover {
+    background: #2F7FD4 !important;
+}
+
+/* -------- MAKE LABELS & TEXT BOLD -------- */
+label, td, th {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
+
 </style>
 
 </head>
