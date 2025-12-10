@@ -13,10 +13,263 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
 
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 130vh;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1350px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+}
+
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
+
+.receipt-header {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section_row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ------------------------------
+   FORM ROWS LAYOUT
+------------------------------ */
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* Dual input rows (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Date/Ref/Doc row - 3 pairs */
+.form-group.date-ref-doc-row {
+    grid-template-columns: 80px 200px 80px 1fr 80px 200px;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-group.date-ref-doc-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.form-group.date-ref-doc-row .date-wrapper,
+.form-group.date-ref-doc-row .ref-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group.date-ref-doc-row #jqxDebitNoteDate {
+    flex: 1;
+}
+
+.form-group.date-ref-doc-row #txtrefno {
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-group.date-ref-doc-row .myButton {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Type/AccID/AccName row */
+.form-group.type-acc-row {
+    grid-template-columns: 120px 120px 120px 200px 1fr;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-group.type-acc-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Full width description row */
+.form-row.full-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.form-row.full-row label {
+    text-align: right;
+    padding-right: 8px;
+    font-weight: 600;
+    color: #253858;
+}
+
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
+}
+
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    font-size: 13px;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+/* ------------------------------
+   ERROR LABELS
+------------------------------ */
+
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
+
+/* ------------------------------
+   APPROVAL TABLE
+------------------------------ */
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
 }
 </style>
 <script type="text/javascript">
@@ -188,31 +441,54 @@ color:red;
 </script>
 </head>
 <body onLoad="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmInsurance" action="saveActionInsurance"  autocomplete="off">
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
+	<div  class='receipt-header'>
 	<fieldset>
- <table width="100%"><legend>Insurance Details</legend>
-  <tr>
-    <td width="11%"><div align="right">Date</div></td>
-    <td width="24%"><div id="insurdate" name="insurdate" value='<s:property value="insurdate"/>'></div></td>
-    <td width="16%"><div align="right">Doc No</div></td>
-    <td width="49%" ><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td style="text-align: right"><div align="right">Account</div></td>
-    <td><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' style="width:85%;" ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" placeholder="Press F3 to Search"></td>
-    <td ><div align="right">Company</div></td>
-     <td><input type="text" name="insurcompany" id="insurcompany"  value='<s:property value="insurcompany"/>' style="width:50%;"></td><input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>     </tr> 
-</table>
-<input type="hidden" id="mode" name="mode"/>
-										        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+    <legend>Insurance Details</legend>
 
-<input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
-<input type="hidden" id="insurdatehidden" name="insurdatehidden" value='<s:property value="insurdatehidden"/>'/>
+    <!-- ROW 1 -->
+    <div class="form-group dual-input">
+        <label>Date</label>
+        <div id="insurdate" name="insurdate"
+             value='<s:property value="insurdate"/>'></div>
 
+        <label>Doc No</label>
+        <input type="text" name="docno" id="docno"
+               value='<s:property value="docno"/>' readonly tabindex="-1">
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="form-group dual-input">
+        <label>Account</label>
+        <input type="text" name="txtaccname" id="txtaccname"
+               value='<s:property value="txtaccname"/>'
+               ondblclick="funSearchdblclick();"
+               onkeydown="getAcc(event);"
+               placeholder="Press F3 to Search">
+
+        <label>Company</label>
+        <input type="text" name="insurcompany" id="insurcompany"
+               value='<s:property value="insurcompany"/>'>
+    </div>
+
+    <!-- ✅ HIDDEN FIELDS (UNCHANGED) -->
+    <input type="hidden" name="txtaccno" id="txtaccno"
+           value='<s:property value="txtaccno"/>'>
+
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="msg" name="msg"
+           value='<s:property value="msg"/>'/>
+
+    <input type="text" name="deleted" id="deleted"
+           value='<s:property value="deleted"/>' hidden="true"/>
+
+    <input type="hidden" id="insurdatehidden" name="insurdatehidden"
+           value='<s:property value="insurdatehidden"/>'/>
 </fieldset>
+</div>
 </form>
 <br/>
 <div id="jqxInsuranceSearch1"></div>
