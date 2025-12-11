@@ -327,7 +327,7 @@ function funExcelBtn(){
 <body onload="setValues();">
 
 <div>
-<div id="mainBG" class="homeContent" data-type="background"> 
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background"> 
 <form id="frmSpecification" action="saveSpecification" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/> 
 <fieldset><legend>Specification Info</legend>

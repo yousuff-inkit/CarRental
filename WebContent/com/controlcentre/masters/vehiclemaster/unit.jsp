@@ -403,7 +403,7 @@ function funSearchLoad(){
 		   }
 </script>
 </head>
-<body onload="setValues();">
+<body onload="setValues();" class="hidden-scrollbar">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmUnit" action="saveActionUnit"  autocomplete="off">
 
