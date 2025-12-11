@@ -1151,6 +1151,35 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+
+.cr-table td[align="right"] {
+    font-weight: 700 !important;
+}
+
+
+
+
+
+
+
+
+/* Prevent label text from breaking into two lines */
+.cr-table td {
+    white-space: nowrap !important;
+}
+
+/* Add spacing between rows for clean alignment */
+.cr-table tr td {
+    padding: 8px 10px !important;
+    vertical-align: middle;
+}
+
+/* Optional: make labels bold for clarity */
+.cr-table td[align="right"] {
+    font-weight: 700 !important;
+}
+
 </style>
 
 </head>
@@ -1191,7 +1220,7 @@ body {
 <h3>Distribution</h3>
 <table class="cr-table" width="100%" border="0" >
   <tr>
-    <td width="10%" align="right">Account(To be Posted)</td>
+    <td width="40%" align="right">Account(To be Posted)</td>
     <td width="16%"><input type="text" id="txtdistributionaccid" name="txtdistributionaccid" style="width:53%;" placeholder="Press F3 to Search" value='<s:property value="txtdistributionaccid"/>' onkeydown="getDistributionAcc(event);"/></td>
      <td width="6%"></td>
       <td><input type="text" id="txtdistributionaccname" name="txtdistributionaccname" style="width:95%;" tabindex="-1" value='<s:property value="txtdistributionaccname"/>'/>
@@ -1206,7 +1235,7 @@ body {
     <td><input type="text" id="txtcostgroup" readonly  name="txtcostgroup" style="width:53%;" placeholder="Press F3 to Search" tabindex="2" onkeydown="getcostType(event);" value='<s:property value="txtcostgroup"/>'/>
  
     <input type="hidden" id="txtcosttype" name="txtcosttype" style="width:80%;" value='<s:property value="txtcosttype"/>'/></td>
-    <td width="6%" align="right">Cost No</td>
+    <td width="30%" align="right">Cost No</td>
     <td><input type="text" id="txtcostcode" readonly name="txtcostcode" style="width:95%;" tabindex="4" onkeydown="getcostNo(event);" placeholder="Press F3 to Search" value='<s:property value="txtcostcode"/>'/>
         <input type="hidden" id="txtcostno" name="txtcostno" style="width:80%;" value='<s:property value="txtcostno"/>'/>
       <td width="20%" align="center"><input type="button" name="btnPrintSummary" id="btnPrintSummary" class="myButton" value="Print"  onclick="funPrintSummary();"><button class="myButton" type="button" id="btndist" name="btndist"  onclick="fundistribution();" >Mark as Distributed</button></td>
@@ -1231,15 +1260,14 @@ body {
     <td width="20%"  align="center"></td>
   </tr>
   <tr>
-    <td align="right">Due After</td>
+    <td align="right" width="35%">Due After</td>
     <td><input type="text" id="txtdueafter" name="txtdueafter" style="width:53%;"  onblur="clearDistributionsInfo();" value='<s:property value="txtdueafter"/>'/></td>
    <td width="6%"  align="right"><input type="checkbox" id="ins_chk"  name="ins_chk" value="" onchange="funinstallment();"  onclick="$(this).attr('value', this.checked ? 1 : 0)" >
    <input type="hidden" id="hiins_chk"  name="hiins_chk" > 
    
- <td><label align="right"> Equal Installment</label></td>
- 
-   
-    <td  align="right">Inst. Nos</td>
+<%--- <td><label align="right"> Equal Installment</label></td> ---%> 
+
+    <td  align="right" width="35;">Inst. Nos</td>
     <td width="30%" ><input type="text" id="txtinstnos" name="txtinstnos" style="width:34%;" onblur="funInstAmount();funInsEndDate();" value='<s:property value="txtinstnos"/>'/>
      <input type="hidden" id="hitxtinstnos" name="hitxtinstnos" value='<s:property value="hitxtinstnos"/>'/> <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/></td>
     <td width="20%" align="center"></td>
@@ -1248,10 +1276,10 @@ body {
   <table class="cr-table"  width="100%" border="0" >
   <tr>
 
-    <td width="10%" align="right">For the period From</td>
+    <td width="40%" align="right">For the period From</td>
     <td width="16%"><div id="jqxStartDate" name="jqxStartDate" tabindex="8" onchange="funInsEndDate();funInsNoFromEndDate();" value='<s:property value="jqxStartDate"/>'></div>
     <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/></td>
-    <td width="6%"align="right">To date</td>
+    <td width="30%"align="right">To date</td>
     <td colspan="2"><div id="jqxEndDate" name="jqxEndDate" tabindex="9" onchange="funInsNoFromEndDate();" value='<s:property value="jqxEndDate"/>'></div>
     <input type="hidden" id="hidjqxEndDate" name="hidjqxEndDate" value='<s:property value="hidjqxEndDate"/>'/></td>
       <td width="38%" align="center"><button class="myButton" type="button" id="btnDistributionSubmit" name="btnDistributionSubmit" tabindex="11" onclick="funloaddistributiongrid();">Submit</button><input type="button" name="btnUpdate" id="btnUpdate" class="myButton" value="Edit" tabindex="12" onclick="funUpdate();"></td>

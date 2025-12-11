@@ -17,47 +17,62 @@ String contextPath=request.getContextPath();
 <%-- <jsp:include page="tab.css"/>
 <jsp:include page="tab.jsp" /> --%>
 
+To make this screen “big” like your other wide layouts, only the container and header paddings need changes.
+
+Use this updated style:
+
+```css
 <style>
 .icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
-}	
-#level1{  background: #E0ECF8; width: 100%; height: 100%;}
-#level2{  background: #E0ECF8;  width: 100%; height: 100%;}
-#level3{  background: #E0ECF8;  width: 100%; height: 100%;}
+    width: 2.5em;
+    height: 2em;
+    border: none;
+    background-color: #E0ECF8;
+}
+#level1, #level2, #level3 {
+    background: #E0ECF8;
+    width: 100%;
+    height: 100%;
+}
 
 .hidden-scrollbar {
     overflow: auto;
     height: 530px;
 }
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0;
+}
+
+/* page background */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
     color: #222;
     margin: 0;
-    padding: 32px 0;
+    padding: 24px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 14px;
 }
+
+/* main card – wider */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 18px 28px;
+    max-width: 1600px;      /* was 1200px */
     margin: 0 auto;
 }
 
+/* header strip */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
+    align-items: flex-start;
+    margin-bottom: 20px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 8px;         /* less padding so content uses width */
+    font-size: 14px;
 }
 .receipt-header label {
     font-weight: 500;
@@ -68,8 +83,8 @@ body {
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
+    font-size: 14px;
+    width: 150px;
     background: #fff;
     transition: border-color 0.2s;
 }
@@ -82,7 +97,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 6px 18px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
@@ -90,16 +105,11 @@ body {
 .receipt-header button:hover {
     background: #0056b3;
 }
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
 
+/* generic blocks if needed */
 .section-row {
     display: flex;
-    gap: 26px;
+    gap: 28px;
     margin-bottom: 24px;
 }
 .section-block {
@@ -109,28 +119,24 @@ body {
     padding: 20px 18px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
-
 .section-block h2 {
-    font-size: 1.09em;
+    font-size: 1.1em;
     font-weight: 500;
-    margin: 0 0 16px 0;
+    margin: 0 0 16px;
     color: #253858;
 }
-
 .section-block .form-group {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 12px;
 }
-
 .section-block label {
-    min-width: 110px;
+    min-width: 120px;
     text-align: right;
     font-weight: 500;
     color: #253858;
 }
-
 .section-block input[type="text"],
 .section-block select {
     flex: 1;
@@ -140,25 +146,31 @@ body {
     background: #fff;
     transition: border-color 0.2s;
 }
-
 .section-block input[type="text"]:focus,
 .section-block select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-
+/* section cards (Approval Master, levels) */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 .table-section h3 {
+    margin: 0 0 14px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 1.04em;
+    font-size: 14px;
     font-weight: 600;
 }
+
+/* tables and grids – full width */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -167,11 +179,12 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
+.cr-table th,
+.cr-table td {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 13px;
 }
 .cr-table th {
     background: #eef0f6;
@@ -181,7 +194,24 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+/* primary action button */
+.myButton {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+}
+.myButton:hover {
+    background: #0056b3;
+}
 </style>
+```
+
 <script type="text/javascript">
 $(document).ready(function () {
 	document.getElementById("txtuserdoc").value="0";
@@ -776,456 +806,685 @@ function funReset(){
 			
 </script>
 </head>
-<body onload="view();setValues();" class='default'>
+<body onload="view();setValues();" class="default">
 <div id="mainBG" class="homeContent" data-type="background">
-  <form id="frmApprovalMaster" action="saveApprovalMaster" method="post" autocomplete="off" > 
- <jsp:include page="../../../../header.jsp"></jsp:include><br/>  
- <div class="hidden-scrollbar receipt-header">
-<div style="width:100%;">
 
-<br>
-<table class="cr-table" id="main"  width="100%"><tr><td  width="100%">
-<table width="100%" >
-  <tr>
-    <td width="11%" align="right">Doc Type</td>
-    <td width="10%"><input type="text" id="doctype" name="doctype" style="width:85%;" placeholder="Press F3 To Search" value='<s:property value="doctype"/>' required="required" onKeyDown="getUser(event);" readonly/></td>
-    <td width="28%" ><input type="text" id="doctypename" name="doctypename" style="width:90%;" value='<s:property value="doctypename"/>' readonly /> </td>
-    <td width="29%" align="right">Doc No</td>
-    <td width="18%"><input type="text" id="docno" name="docno" tabindex="-1" style="width:50%;" value='<s:property value="docno"/>'/></td>
-  </tr>
-</table>
-<br/>
-<div id="jqxTabs" >
-<ul >
-    <li>Final Level</li>
-    <li>Second Level</li>
-    <li>First Level</li>
-    </ul>
- 
+<form id="frmApprovalMaster" action="saveApprovalMaster" method="post" autocomplete="off">
+    <jsp:include page="../../../../header.jsp"></jsp:include><br/>
+    <div class="hidden-scrollbar receipt-header">
+        <div style="width:100%;">
 
-<div id="level1" >
-<table class="cr-table" width="100%" id="lev1">
-<br/><br/><br/>
-  <tr>
-  <td width="6%"></td>  
-    <td width="12%"><!-- <button class="myButton" id="addUser1" name="addUser1" type="button" value="Add User" onclick="addUser1();">&nbsp;&nbsp;Add User</button> -->
-    <input type="button" class="myButton" id="addUser" name="addUser" value="AddUser" onclick="addUser1();" readonly >
-    </td>
-    <td width="8%" align="right"><input type="checkbox" id="chckfinalmodify" name="chckfinalmodify" value="0"  onclick="$(this).attr('value', this.checked ? 1 : 0)" />&nbsp;Modify
-    <!-- <input type="text" id="chckfinalmodify" name="chckfinalmodify" value="0"/>  -->
-   </td>
-    
-    <td width="11%" align="right">Min. Approval</td>
-    <td width="69%"><input type="text" id="txtfinal_minapproval" name="txtfinal_minapproval" style="width:30%"  value='<s:property value="txtfinal_minapproval"/>'/></td>
-    <!-- <td width="11%" align="right"><input type="checkbox" name="final_sendmail"/>&nbsp;Send Mail</td>
-    <td width="11%" align="right">Forward To</td>
-    <td width="33%"><input type="text" name="final_forwardto" style="width:90%"/></td> -->
-    
-  </tr>
-</table>
-<br /><br /><br /><br /><br /><br/>
-<div id="users">
-<div id="user1">
-<table class="cr-table" width="100%">
-  <tr>                                 <!-- ---------------------------------------------------final---------------------------------------------- -->
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfinal_user1" name="txtfinal_user1"  style="width:90%" value='<s:property value="txtfinal_user1"/>'/>
-    <input type="hidden" name="txtfinal_userdoc1" id="txtfinal_userdoc1" value='<s:property value="txtfinal_userdoc1"/>'>
-    </td>
-    <td width="31%"><input type="text" id="txtfinal_userfull1" name="txtfinal_userfull1" style="width:90%" value='<s:property value="txtfinal_userfull1"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfinal_mandatory1" name="chckfinal_mandatory1" value='<s:property value="chckfinal_mandatory1"/>'/>&nbsp;Mandatory</td> --%>
-<td width="6%"><button type="button" class="icon" id="final_btnSearch1" title="Search" onclick="funSearchBtn11(1,'level1')">
-							<img alt="search" src="../../../../icons/search_new.png">
-	</button></td>
-<td width="31%"><button type="button" class="icon" id="final_btnCancel1" title="Remove" onclick="funResetbtn1(1,'final')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png">
-	</button></td>
-  </tr></table></div>
-<div id="user2">
-  <table class="cr-table"   width="100%" >
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%%"><input type="text" id="txtfinal_user2" name="txtfinal_user2" style="width:90%" value='<s:property value="txtfinal_user2"/>'/>
-    
-     <input type="hidden" name="txtfinal_userdoc2" id="txtfinal_userdoc2" value='<s:property value="txtfinal_userdoc2"/>'>
-    </td>
-    <td width="31%"><input type="text" id="txtfinal_userfull2" name="txtfinal_userfull2" style="width:90%" value='<s:property value="txtfinal_userfull2"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfinal_mandatory2" name="chckfinal_mandatory2" value='<s:property value="chckfinal_mandatory2"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="final_btnSearch2" title="Search" onclick="funSearchBtn11(2,'level1')">
-							<img alt="search" src="../../../../icons/search_new.png">
-	</button></td>
-    <td width="31%"><button type="button" class="icon" id="final_btnCancel2" title="Remove" onclick="funResetbtn1(2,'final')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png">
-	</button></td>
-  </tr></table>
-  
-  </div>
+            <table class="cr-table" id="main" width="100%">
+                <tr>
+                    <td width="11%" align="right">Doc Type</td>
+                    <td width="10%">
+                        <input type="text" id="doctype" name="doctype" style="width:85%;"
+                               placeholder="Press F3 To Search"
+                               value='<s:property value="doctype"/>'
+                               required="required" onkeydown="getUser(event);" readonly/>
+                    </td>
+                    <td width="28%">
+                        <input type="text" id="doctypename" name="doctypename" style="width:90%;"
+                               value='<s:property value="doctypename"/>' readonly/>
+                    </td>
+                    <td width="29%" align="right">Doc No</td>
+                    <td width="18%">
+                        <input type="text" id="docno" name="docno" tabindex="-1" style="width:50%;"
+                               value='<s:property value="docno"/>'/>
+                    </td>
+                </tr>
+            </table>
 
+            <br/>
 
-  <div id="user3" >
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfinal_user3" name="txtfinal_user3" style="width:90%" value='<s:property value="txtfinal_user3"/>'/>
-    
-         <input type="hidden" name="txtfinal_userdoc3" id="txtfinal_userdoc3" value='<s:property value="txtfinal_userrole3"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfinal_userfull3" name="txtfinal_userfull3" style="width:90%" value='<s:property value="txtfinal_userfull3"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfinal_mandatory3" name="chckfinal_mandatory3" value='<s:property value="chckfinal_mandatory3"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="final_btnSearch3" title="Search" onclick="funSearchBtn11(3,'level1')">
-							<img alt="search" src="../../../../icons/search_new.png">
-	</button></td>
-    <td width="31%"><button type="button" class="icon" id="final_btnCancel3" title="Remove" onclick="funResetbtn1(3,'final')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png">
-	</button></td>
-  </tr></table>
-  </div>
-  
-  <div id="user4">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfinal_user4" name="txtfinal_user4" style="width:90%" value='<s:property value="txtfinal_user4"/>'/>
-    <input type="hidden" name="txtfinal_userdoc4" id="txtfinal_userdoc4" value='<s:property value="txtfinal_userdoc4"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfinal_userfull4" name="txtfinal_userfull4" style="width:90%" value='<s:property value="txtfinal_userfull4"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfinal_mandatory4" name="chckfinal_mandatory4" value='<s:property value="chckfinal_mandatory4"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="final_btnSearch4" title="Search" onclick="funSearchBtn11(4,'level1')">
-							<img alt="search" src="../../../../icons/search_new.png">
-	</button></td>
-    <td width="31%"><button type="button" class="icon" id="final_btnCancel4" title="Remove" onclick="funResetbtn1(4,'final')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png">
-	</button></td>
-  </tr></table>
-  </div>
-  
-  <div id="user5">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfinal_user5" name="txtfinal_user5" style="width:90%" value='<s:property value="txtfinal_user5"/>'/>
-    
-    <input type="hidden" name="txtfinal_userdoc5" id="txtfinal_userdoc5" value='<s:property value="txtfinal_userdoc5"/>'>
-  </td>
-    <td width="31%"><input type="text" id="txtfinal_userfull5" name="txtfinal_userfull5" style="width:90%" value='<s:property value="txtfinal_userfull5"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfinal_mandatory5" name="chckfinal_mandatory5" value='<s:property value="chckfinal_mandatory5"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="final_btnSearch5" title="Search" onclick="funSearchBtn11(5,'level1')">
-							<img alt="search" src="../../../../icons/search_new.png">
-	</button></td>
-    <td width="31%"><button type="button" class="icon" id="final_btnCancel5" title="Remove" onclick="funResetbtn1(5,'final')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png">
-	</button></td>
-  </tr>
-</table>
-</div>
+            <div id="jqxTabs">
+                <ul>
+                    <li>Final Level</li>
+                    <li>Second Level</li>
+                    <li>First Level</li>
+                </ul>
 
-</div>
+                <!-- ================= FINAL LEVEL ================= -->
+                <div id="level1">
+                    <table class="cr-table" width="100%" id="lev1">
+                        <tr>
+                            <td width="6%"></td>
+                            <td width="12%">
+                                <input type="button" class="myButton" id="addUser" name="addUser"
+                                       value="Add User" onclick="addUser1();" readonly>
+                            </td>
+                            <td width="8%" align="right">
+                                <input type="checkbox" id="chckfinalmodify" name="chckfinalmodify"
+                                       value="0"
+                                       onclick="$(this).attr('value', this.checked ? 1 : 0)"/>&nbsp;Modify
+                            </td>
+                            <td width="11%" align="right">Min. Approval</td>
+                            <td width="69%">
+                                <input type="text" id="txtfinal_minapproval" name="txtfinal_minapproval"
+                                       style="width:30%"
+                                       value='<s:property value="txtfinal_minapproval"/>'/>
+                            </td>
+                        </tr>
+                    </table>
 
-</div>
-<div id="level2"  >
-<table width="100%"  id="lev2"> 
-<br/><br/><br/>
-  <tr>
-  <td width="6%"></td>   <!-- ---------------------------------------------------second---------------------------------------------- -->
-    <td width="12%"><!-- <button class="myButton" id="addUsr" type="button" onclick="addUsr();">&nbsp;&nbsp;Add User</button> -->
-    <input type="button" class="myButton" id="addUsr" value="AddUser" name="addUsr" onclick="addUsr1();">
-    
-    </td>
-    <td width="8%" align="right"><input type="checkbox" id="chcksecondmodify" name="chcksecondmodify"   value="0"  onclick="$(this).attr('value', this.checked ? 1 : 0)" />&nbsp;Modify</td>
-    <td width="11%" align="right">Min. Approval</td>
-    <td width="69%"><input type="text" id="txtsecond_minapproval" name="txtsecond_minapproval" style="width:30%" value='<s:property value="txtsecond_minapproval"/>'/></td>
-    <!-- <td width="11%" align="right"><input type="checkbox" name="second_sendmail"/>&nbsp;Send Mail</td>
-    <td width="11%" align="right">Forward To</td>
-    <td width="33%"><input type="text" name="second_forwardto" style="width:90%"/></td> -->
-       
-    
-  </tr>
-</table>
-<br /><br /><br /><br /><br /><br />
-<div id="usrs">
-<div id="usr1">
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtsecond_user1" name="txtsecond_user1" style="width:90%" value='<s:property value="txtsecond_user1"/>'/>
-    <input type="hidden" name="txtsecond_userdoc1" id="txtsecond_userdoc1" value='<s:property value="txtsecond_userdoc1"/>'>
-    </td>
-    <td width="31%"><input type="text" id="txtsecond_userfull1" name="txtsecond_userfull1" style="width:90%" value='<s:property value="txtsecond_userfull1"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chcksecond_mandatory1" name="chcksecond_mandatory1" value='<s:property value="chcksecond_mandatory1"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="second_btnSearch1" title="Search" onclick="funSearchBtn11(1,'level2')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="second_btnCancel1" title="Remove" onclick="funResetbtn1(1,'second')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-    </tr></table></div>
-  
-  <div id="usr2" >
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtsecond_user2" name="txtsecond_user2" style="width:90%" value='<s:property value="txtsecond_user2"/>'/>
-        <input type="hidden" name="txtsecond_userdoc2" id="txtsecond_userdoc2" value='<s:property value="txtsecond_userdoc2"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtsecond_userfull2" name="txtsecond_userfull2" style="width:90%" value='<s:property value="txtsecond_userfull2"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chcksecond_mandatory2" name="chcksecond_mandatory2" value='<s:property value="chcksecond_mandatory2"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="second_btnSearch2" title="Search" onclick="funSearchBtn11(2,'level2')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="second_btnCancel2" title="Remove" onclick="funResetbtn1(2,'second')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-   </tr></table>
-   </div>
-  
-  <div id="usr3">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtsecond_user3" name="txtsecond_user3" style="width:90%" value='<s:property value="txtsecond_user3"/>'/>
-        <input type="hidden" name="txtsecond_userdoc3" id="txtsecond_userdoc3" value='<s:property value="txtsecond_userdoc3"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtsecond_userfull3" name="txtsecond_userfull3" style="width:90%" value='<s:property value="txtsecond_userfull3"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chcksecond_mandatory3" name="chcksecond_mandatory3" value='<s:property value="chcksecond_mandatory3"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="second_btnSearch3" title="Search" onclick="funSearchBtn11(3,'level2')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="second_btnCancel3" title="Remove" onclick="funResetbtn1(3,'second')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr></table>
-  </div>
-  
-  <div id="usr4">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtsecond_user4" name="txtsecond_user4" style="width:90%" value='<s:property value="txtsecond_user4"/>'/>
-        <input type="hidden" name="txtsecond_userdoc4" id="txtsecond_userdoc4" value='<s:property value="txtsecond_userdoc4"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtsecond_userfull4" name="txtsecond_userfull4" style="width:90%" value='<s:property value="txtsecond_userfull4"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chcksecond_mandatory4" name="chcksecond_mandatory4" value='<s:property value="chcksecond_mandatory4"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="second_btnSearch4" title="Search" onclick="funSearchBtn11(4,'level2')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="second_btnCancel4" title="Remove" onclick="funResetbtn1(4,'second')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr></table>
-  </div>
-  
-  <div id="usr5">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtsecond_user5" name="txtsecond_user5" style="width:90%" value='<s:property value="txtsecond_user5"/>'/>
-        <input type="hidden" name="txtsecond_userdoc5" id="txtsecond_userdoc5" value='<s:property value="txtsecond_userdoc5"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtsecond_userfull5" name="txtsecond_userfull5" style="width:90%" value='<s:property value="txtsecond_userfull5"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chcksecond_mandatory5" name="chcksecond_mandatory5" value='<s:property value="chcksecond_mandatory5"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="second_btnSearch5" title="Search" onclick="funSearchBtn11(5,'level2')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="second_btnCancel5" title="Remove" onclick="funResetbtn1(5,'second')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr>
-</table>
-</div></div>
-</div>
+                    <br/>
 
-<div id="level3" >
-<table width="100%"  id="lev3">  
-<br/><br/><br/> 
-  <tr>
-  <td width="6%"></td>   <!-- ---------------------------------------------------first---------------------------------------------- -->
-    <td width="12%">
-    
-    <input type="button" class="myButton" id="addUsers" value="AddUser" name="addUsers" onclick="addUsers1();">
-    
-    </td>
-    <td width="8%" align="right"><input type="checkbox" id="chckfirstmodify" name="chckfirstmodify"   value="0"  onclick="$(this).attr('value', this.checked ? 1 : 0)" />&nbsp;Modify
-  
-    </td>
-    <td width="11%" align="right">Min. Approval</td>
-    <td width="69%"><input type="text" id="txtfirst_minapproval" name="txtfirst_minapproval" style="width:30%" value='<s:property value="txtfirst_minapproval"/>'/></td>
-    <!-- <td width="11%" align="right"><input type="checkbox" name="second_sendmail"/>&nbsp;Send Mail</td>
-    <td width="11%" align="right">Forward To</td>
-    <td width="33%"><input type="text" name="second_forwardto" style="width:90%"/></td> -->
-    
-    
-  </tr>
-</table>
-<br /><br /><br /><br /><br /><br />
-<div id="new_users">
-<div id="new_user1">
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfirst_user1" name="txtfirst_user1" style="width:90%" value='<s:property value="txtfirst_user1"/>'/>
-        <input type="hidden" name="txtfirst_userdoc1" id="txtfirst_userdoc1" value='<s:property value="txtfirst_userdoc1"/>'>
-    
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfirst_userfull1" name="txtfirst_userfull1" style="width:90%" value='<s:property value="txtfirst_userfull1"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfirst_mandatory1" name="chckfirst_mandatory1" value='<s:property value="chckfirst_mandatory1"/>' />&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="first_btnSearch1" title="Search" onclick="funSearchBtn11(1,'level3')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="first_btnCancel1" title="Remove" onclick="funResetbtn1(1,'first')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr></table></div>
-  
-  <div id="new_user2">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfirst_user2" name="txtfirst_user2" style="width:90%" value='<s:property value="txtfirst_user2"/>'/>
-            <input type="hidden" name="txtfirst_userdoc2" id="txtfirst_userdoc2" value='<s:property value="txtfirst_userdoc2"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfirst_userfull2" name="txtfirst_userfull2" style="width:90%" value='<s:property value="txtfirst_userfull2"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfirst_mandatory2" name="chckfirst_mandatory2" value='<s:property value="chckfirst_mandatory2"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="first_btnSearch2" title="Search" onclick="funSearchBtn11(2,'level3')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="first_btnCancel2" title="Remove" onclick="funResetbtn1(2,'first')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr></table>
-  </div>
-  
-  <div id="new_user3">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfirst_user3" name="txtfirst_user3" style="width:90%" value='<s:property value="txtfirst_user3"/>'/>
-            <input type="hidden" name="txtfirst_userdoc3" id="txtfirst_userdoc3" value='<s:property value="txtfirst_userdoc3"/>'>
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfirst_userfull3" name="txtfirst_userfull3" style="width:90%" value='<s:property value="txtfirst_userfull3"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfirst_mandatory3" name="chckfirst_mandatory3" value='<s:property value="chckfirst_mandatory3"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="first_btnSearch3" title="Search" onclick="funSearchBtn11(3,'level3')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="first_btnCancel3" title="Remove" onclick="funResetbtn1(3,'first')"  >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr></table>
-  </div>
-  
-  <div id="new_user4">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfirst_user4" name="txtfirst_user4" style="width:90%" value='<s:property value="txtfirst_user4"/>'/>
-            <input type="hidden" name="txtfirst_userdoc4" id="txtfirst_userdoc4" value='<s:property value="txtfirst_userdoc4"/>'>
-    
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfirst_userfull4" name="txtfirst_userfull4" style="width:90%" value='<s:property value="txtfirst_userfull4"/>'/></td>
-    <%-- <td width="10"><input type="checkbox" id="chckfirst_mandatory4" name="chckfirst_mandatory4" value='<s:property value="chckfirst_mandatory4"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="first_btnSearch4" title="Search" onclick="funSearchBtn11(4,'level3')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="first_btnCancel4" title="Remove" onclick="funResetbtn1(4,'first')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr></table>
-  </div>
-  
-  <div id="new_user5">
-  <table  width="100%">
-  <tr>
-    <td width="6%" align="right">User</td>
-    <td width="16%"><input type="text" id="txtfirst_user5" name="txtfirst_user5" style="width:90%" value='<s:property value="txtfirst_user5"/>'/>
-            <input type="hidden" name="txtfirst_userdoc5" id="txtfirst_userdoc5" value='<s:property value="txtfirst_userdoc5"/>'>
-    
-    
-    </td>
-    <td width="31%"><input type="text" id="txtfirst_userfull5" name="txtfirst_userfull5" style="width:90%" value='<s:property value="txtfirst_userfull5"/>'/></td>
-    <%-- <td width="10%"><input type="checkbox" id="chckfirst_mandatory5" name="chckfirst_mandatory5" value='<s:property value="chckfirst_mandatory5"/>'/>&nbsp;Mandatory</td> --%>
-    <td width="6%"><button type="button" class="icon" id="first_btnSearch5" title="Search" onclick="funSearchBtn11(5,'level3')">
-							<img alt="search" src="../../../../icons/search_new.png"></button></td>
-    <td width="31%"><button type="button" class="icon" id="first_btnCancel5" title="Remove" onclick="funResetbtn1(5,'first')" >
-							<img alt="Remove" src="../../../../icons/cancel_new.png"></button></td>
-  </tr>
-</table>
-</div></div>
-</div>
-	</div>		 
-		
-		  <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>		
-  <input type="hidden" id="deleted" name="deleted"  value='<s:property value="deleted"/>'/>
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-</td>
-</tr>
-</table>
+                    <div id="users">
 
+                        <div id="user1">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfinal_user1" name="txtfinal_user1"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_user1"/>'/>
+                                        <input type="hidden" name="txtfinal_userdoc1" id="txtfinal_userdoc1"
+                                               value='<s:property value="txtfinal_userdoc1"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfinal_userfull1" name="txtfinal_userfull1"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_userfull1"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="final_btnSearch1"
+                                                title="Search" onclick="funSearchBtn11(1,'level1')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="final_btnCancel1"
+                                                title="Remove" onclick="funResetbtn1(1,'final')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-</div>
+                        <div id="user2">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfinal_user2" name="txtfinal_user2"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_user2"/>'/>
+                                        <input type="hidden" name="txtfinal_userdoc2" id="txtfinal_userdoc2"
+                                               value='<s:property value="txtfinal_userdoc2"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfinal_userfull2" name="txtfinal_userfull2"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_userfull2"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="final_btnSearch2"
+                                                title="Search" onclick="funSearchBtn11(2,'level1')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="final_btnCancel2"
+                                                title="Remove" onclick="funResetbtn1(2,'final')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-<!-- =====================================================modify -->
+                        <div id="user3">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfinal_user3" name="txtfinal_user3"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_user3"/>'/>
+                                        <input type="hidden" name="txtfinal_userdoc3" id="txtfinal_userdoc3"
+                                               value='<s:property value="txtfinal_userrole3"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfinal_userfull3" name="txtfinal_userfull3"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_userfull3"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="final_btnSearch3"
+                                                title="Search" onclick="funSearchBtn11(3,'level1')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="final_btnCancel3"
+                                                title="Remove" onclick="funResetbtn1(3,'final')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
+                        <div id="user4">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfinal_user4" name="txtfinal_user4"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_user4"/>'/>
+                                        <input type="hidden" name="txtfinal_userdoc4" id="txtfinal_userdoc4"
+                                               value='<s:property value="txtfinal_userdoc4"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfinal_userfull4"
+                                               name="txtfinal_userfull4" style="width:90%"
+                                               value='<s:property value="txtfinal_userfull4"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="final_btnSearch4"
+                                                title="Search" onclick="funSearchBtn11(4,'level1')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="final_btnCancel4"
+                                                title="Remove" onclick="funResetbtn1(4,'final')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
- 		  <input type="hidden" id="chckfinalmodifyval" name="chckfinalmodifyval"  value='<s:property value="chckfinalmodifyval"/>'/>	
- 		  <input type="hidden" id="chcksecondmodifyval" name="chcksecondmodifyval"  value='<s:property value="chcksecondmodifyval"/>'/>	
- 		  <input type="hidden" id="chckfirstmodifyval" name="chckfirstmodifyval"  value='<s:property value="chckfirstmodifyval"/>'/>	
+                        <div id="user5">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfinal_user5" name="txtfinal_user5"
+                                               style="width:90%"
+                                               value='<s:property value="txtfinal_user5"/>'/>
+                                        <input type="hidden" name="txtfinal_userdoc5" id="txtfinal_userdoc5"
+                                               value='<s:property value="txtfinal_userdoc5"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfinal_userfull5"
+                                               name="txtfinal_userfull5" style="width:90%"
+                                               value='<s:property value="txtfinal_userfull5"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="final_btnSearch5"
+                                                title="Search" onclick="funSearchBtn11(5,'level1')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="final_btnCancel5"
+                                                title="Remove" onclick="funResetbtn1(5,'final')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-<!-- =====================================================mandatory --> 
+                    </div>
+                </div>
 
-<!-- chckfinal_mandatory1 chcksecond_mandatory1 chckfirst_mandatory1 -->
+                <!-- ================= SECOND LEVEL ================= -->
+                <div id="level2">
+                    <table class="cr-table" width="100%" id="lev2">
+                        <tr>
+                            <td width="6%"></td>
+                            <td width="12%">
+                                <input type="button" class="myButton" id="addUsr"
+                                       value="Add User" name="addUsr" onclick="addUsr1();">
+                            </td>
+                            <td width="8%" align="right">
+                                <input type="checkbox" id="chcksecondmodify" name="chcksecondmodify"
+                                       value="0"
+                                       onclick="$(this).attr('value', this.checked ? 1 : 0)"/>&nbsp;Modify
+                            </td>
+                            <td width="11%" align="right">Min. Approval</td>
+                            <td width="69%">
+                                <input type="text" id="txtsecond_minapproval"
+                                       name="txtsecond_minapproval"
+                                       style="width:30%"
+                                       value='<s:property value="txtsecond_minapproval"/>'/>
+                            </td>
+                        </tr>
+                    </table>
 
-                           <!--        ------------------------final   chckfinal_mandatory1-------------------------------- -->
+                    <br/>
 
-	  <input type="hidden" id="chckfinal_mandatory1val" name="chckfinal_mandatory1val"  value='<s:property value="chckfinal_mandatory1val"/>'/>	
-	  
-	  <input type="hidden" id="chckfinal_mandatory2val" name="chckfinal_mandatory2val"  value='<s:property value="chckfinal_mandatory2val"/>'/>	
-	  
-	  <input type="hidden" id="chckfinal_mandatory3val" name="chckfinal_mandatory3val"  value='<s:property value="chckfinal_mandatory3val"/>'/>	
-	  
-	  <input type="hidden" id="chckfinal_mandatory4val" name="chckfinal_mandatory4val"  value='<s:property value="chckfinal_mandatory4val"/>'/>	
-	  
-	  <input type="hidden" id="chckfinal_mandatory5val" name="chckfinal_mandatory5val"  value='<s:property value="chckfinal_mandatory5val"/>'/>
-	  
-	  <input type="hidden" id="txtuserdoc" name="txtuserdoc"  value='<s:property value="txtuserdoc"/>'/>
-	  
+                    <div id="usrs">
 
- 
- 
- 
-                 <!--        ------------------------second   chcksecond_mandatory1-------------------------------- -->
+                        <div id="usr1">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtsecond_user1" name="txtsecond_user1"
+                                               style="width:90%"
+                                               value='<s:property value="txtsecond_user1"/>'/>
+                                        <input type="hidden" name="txtsecond_userdoc1"
+                                               id="txtsecond_userdoc1"
+                                               value='<s:property value="txtsecond_userdoc1"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtsecond_userfull1"
+                                               name="txtsecond_userfull1" style="width:90%"
+                                               value='<s:property value="txtsecond_userfull1"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="second_btnSearch1"
+                                                title="Search" onclick="funSearchBtn11(1,'level2')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="second_btnCancel1"
+                                                title="Remove" onclick="funResetbtn1(1,'second')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-	  <input type="hidden" id="chcksecond_mandatory1val" name="chcksecond_mandatory1val"  value='<s:property value="chcksecond_mandatory1val"/>'/>	
-	  
-	  <input type="hidden" id="chcksecond_mandatory2val" name="chcksecond_mandatory2val"  value='<s:property value="chcksecond_mandatory2val"/>'/>	
-	  
-	  <input type="hidden" id="chcksecond_mandatory3val" name="chcksecond_mandatory3val"  value='<s:property value="chcksecond_mandatory3val"/>'/>	
-	  
-	  <input type="hidden" id="chcksecond_mandatory4val" name="chcksecond_mandatory4val"  value='<s:property value="chcksecond_mandatory4val"/>'/>	
-	  
-	  <input type="hidden" id="chcksecond_mandatory5val" name="chcksecond_mandatory5val"  value='<s:property value="chcksecond_mandatory5val"/>'/>	
-	  
-	  
-	   
- 
-                 <!--        ------------------------second   chcksecond_mandatory1-------------------------------- -->
+                        <div id="usr2">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtsecond_user2" name="txtsecond_user2"
+                                               style="width:90%"
+                                               value='<s:property value="txtsecond_user2"/>'/>
+                                        <input type="hidden" name="txtsecond_userdoc2"
+                                               id="txtsecond_userdoc2"
+                                               value='<s:property value="txtsecond_userdoc2"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtsecond_userfull2"
+                                               name="txtsecond_userfull2" style="width:90%"
+                                               value='<s:property value="txtsecond_userfull2"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="second_btnSearch2"
+                                                title="Search" onclick="funSearchBtn11(2,'level2')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="second_btnCancel2"
+                                                title="Remove" onclick="funResetbtn1(2,'second')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-	  <input type="hidden" id="chckfirst_mandatory1val" name="chckfirst_mandatory1val"  value='<s:property value="chckfirst_mandatory1val"/>'/>	
-	  
-	  <input type="hidden" id="chckfirst_mandatory2val" name="chckfirst_mandatory2val"  value='<s:property value="chckfirst_mandatory2val"/>'/>	
-	   
-	  <input type="hidden" id="chckfirst_mandatory3val" name="chckfirst_mandatory3val"  value='<s:property value="chckfirst_mandatory3val"/>'/>	
-	    
-	  <input type="hidden" id="chckfirst_mandatory4val" name="chckfirst_mandatory4val"  value='<s:property value="chckfirst_mandatory4val"/>'/>	
-	     
-	  <input type="hidden" id="chckfirst_mandatory5val" name="chckfirst_mandatory5val"  value='<s:property value="chckfirst_mandatory5val"/>'/>	
-	  
+                        <div id="usr3">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtsecond_user3" name="txtsecond_user3"
+                                               style="width:90%"
+                                               value='<s:property value="txtsecond_user3"/>'/>
+                                        <input type="hidden" name="txtsecond_userdoc3"
+                                               id="txtsecond_userdoc3"
+                                               value='<s:property value="txtsecond_userdoc3"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtsecond_userfull3"
+                                               name="txtsecond_userfull3" style="width:90%"
+                                               value='<s:property value="txtsecond_userfull3"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="second_btnSearch3"
+                                                title="Search" onclick="funSearchBtn11(3,'level2')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="second_btnCancel3"
+                                                title="Remove" onclick="funResetbtn1(3,'second')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-	  
+                        <div id="usr4">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtsecond_user4" name="txtsecond_user4"
+                                               style="width:90%"
+                                               value='<s:property value="txtsecond_user4"/>'/>
+                                        <input type="hidden" name="txtsecond_userdoc4"
+                                               id="txtsecond_userdoc4"
+                                               value='<s:property value="txtsecond_userdoc4"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtsecond_userfull4"
+                                               name="txtsecond_userfull4" style="width:90%"
+                                               value='<s:property value="txtsecond_userfull4"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="second_btnSearch4"
+                                                title="Search" onclick="funSearchBtn11(4,'level2')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="second_btnCancel4"
+                                                title="Remove" onclick="funResetbtn1(4,'second')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-</div>
+                        <div id="usr5">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtsecond_user5" name="txtsecond_user5"
+                                               style="width:90%"
+                                               value='<s:property value="txtsecond_user5"/>'/>
+                                        <input type="hidden" name="txtsecond_userdoc5"
+                                               id="txtsecond_userdoc5"
+                                               value='<s:property value="txtsecond_userdoc5"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtsecond_userfull5"
+                                               name="txtsecond_userfull5" style="width:90%"
+                                               value='<s:property value="txtsecond_userfull5"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="second_btnSearch5"
+                                                title="Search" onclick="funSearchBtn11(5,'level2')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="second_btnCancel5"
+                                                title="Remove" onclick="funResetbtn1(5,'second')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================= FIRST LEVEL ================= -->
+                <div id="level3">
+                    <table class="cr-table" width="100%" id="lev3">
+                        <tr>
+                            <td width="6%"></td>
+                            <td width="12%">
+                                <input type="button" class="myButton" id="addUsers"
+                                       value="Add User" name="addUsers" onclick="addUsers1();">
+                            </td>
+                            <td width="8%" align="right">
+                                <input type="checkbox" id="chckfirstmodify" name="chckfirstmodify"
+                                       value="0"
+                                       onclick="$(this).attr('value', this.checked ? 1 : 0)"/>&nbsp;Modify
+                            </td>
+                            <td width="11%" align="right">Min. Approval</td>
+                            <td width="69%">
+                                <input type="text" id="txtfirst_minapproval"
+                                       name="txtfirst_minapproval"
+                                       style="width:30%"
+                                       value='<s:property value="txtfirst_minapproval"/>'/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br/>
+
+                    <div id="new_users">
+
+                        <div id="new_user1">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfirst_user1" name="txtfirst_user1"
+                                               style="width:90%"
+                                               value='<s:property value="txtfirst_user1"/>'/>
+                                        <input type="hidden" name="txtfirst_userdoc1"
+                                               id="txtfirst_userdoc1"
+                                               value='<s:property value="txtfirst_userdoc1"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfirst_userfull1"
+                                               name="txtfirst_userfull1" style="width:90%"
+                                               value='<s:property value="txtfirst_userfull1"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="first_btnSearch1"
+                                                title="Search" onclick="funSearchBtn11(1,'level3')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="first_btnCancel1"
+                                                title="Remove" onclick="funResetbtn1(1,'first')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="new_user2">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfirst_user2" name="txtfirst_user2"
+                                               style="width:90%"
+                                               value='<s:property value="txtfirst_user2"/>'/>
+                                        <input type="hidden" name="txtfirst_userdoc2"
+                                               id="txtfirst_userdoc2"
+                                               value='<s:property value="txtfirst_userdoc2"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfirst_userfull2"
+                                               name="txtfirst_userfull2" style="width:90%"
+                                               value='<s:property value="txtfirst_userfull2"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="first_btnSearch2"
+                                                title="Search" onclick="funSearchBtn11(2,'level3')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="first_btnCancel2"
+                                                title="Remove" onclick="funResetbtn1(2,'first')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="new_user3">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfirst_user3" name="txtfirst_user3"
+                                               style="width:90%"
+                                               value='<s:property value="txtfirst_user3"/>'/>
+                                        <input type="hidden" name="txtfirst_userdoc3"
+                                               id="txtfirst_userdoc3"
+                                               value='<s:property value="txtfirst_userdoc3"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfirst_userfull3"
+                                               name="txtfirst_userfull3" style="width:90%"
+                                               value='<s:property value="txtfirst_userfull3"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="first_btnSearch3"
+                                                title="Search" onclick="funSearchBtn11(3,'level3')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="first_btnCancel3"
+                                                title="Remove" onclick="funResetbtn1(3,'first')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="new_user4">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfirst_user4" name="txtfirst_user4"
+                                               style="width:90%"
+                                               value='<s:property value="txtfirst_user4"/>'/>
+                                        <input type="hidden" name="txtfirst_userdoc4"
+                                               id="txtfirst_userdoc4"
+                                               value='<s:property value="txtfirst_userdoc4"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfirst_userfull4"
+                                               name="txtfirst_userfull4" style="width:90%"
+                                               value='<s:property value="txtfirst_userfull4"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="first_btnSearch4"
+                                                title="Search" onclick="funSearchBtn11(4,'level3')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="first_btnCancel4"
+                                                title="Remove" onclick="funResetbtn1(4,'first')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="new_user5">
+                            <table class="cr-table" width="100%">
+                                <tr>
+                                    <td width="6%" align="right">User</td>
+                                    <td width="16%">
+                                        <input type="text" id="txtfirst_user5" name="txtfirst_user5"
+                                               style="width:90%"
+                                               value='<s:property value="txtfirst_user5"/>'/>
+                                        <input type="hidden" name="txtfirst_userdoc5"
+                                               id="txtfirst_userdoc5"
+                                               value='<s:property value="txtfirst_userdoc5"/>'/>
+                                    </td>
+                                    <td width="31%">
+                                        <input type="text" id="txtfirst_userfull5"
+                                               name="txtfirst_userfull5" style="width:90%"
+                                               value='<s:property value="txtfirst_userfull5"/>'/>
+                                    </td>
+                                    <td width="6%">
+                                        <button type="button" class="icon" id="first_btnSearch5"
+                                                title="Search" onclick="funSearchBtn11(5,'level3')">
+                                            <img alt="search" src="../../../../icons/search_new.png">
+                                        </button>
+                                    </td>
+                                    <td width="31%">
+                                        <button type="button" class="icon" id="first_btnCancel5"
+                                                title="Remove" onclick="funResetbtn1(5,'first')">
+                                            <img alt="Remove" src="../../../../icons/cancel_new.png">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- /jqxTabs -->
+
+            <!-- all your existing hidden fields below (unchanged) -->
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
+
+            <input type="hidden" id="chckfinalmodifyval" name="chckfinalmodifyval"
+                   value='<s:property value="chckfinalmodifyval"/>'/>
+            <input type="hidden" id="chcksecondmodifyval" name="chcksecondmodifyval"
+                   value='<s:property value="chcksecondmodifyval"/>'/>
+            <input type="hidden" id="chckfirstmodifyval" name="chckfirstmodifyval"
+                   value='<s:property value="chckfirstmodifyval"/>'/>
+
+            <input type="hidden" id="chckfinal_mandatory1val" name="chckfinal_mandatory1val"
+                   value='<s:property value="chckfinal_mandatory1val"/>'/>
+            <input type="hidden" id="chckfinal_mandatory2val" name="chckfinal_mandatory2val"
+                   value='<s:property value="chckfinal_mandatory2val"/>'/>
+            <input type="hidden" id="chckfinal_mandatory3val" name="chckfinal_mandatory3val"
+                   value='<s:property value="chckfinal_mandatory3val"/>'/>
+            <input type="hidden" id="chckfinal_mandatory4val" name="chckfinal_mandatory4val"
+                   value='<s:property value="chckfinal_mandatory4val"/>'/>
+            <input type="hidden" id="chckfinal_mandatory5val" name="chckfinal_mandatory5val"
+                   value='<s:property value="chckfinal_mandatory5val"/>'/>
+            <input type="hidden" id="txtuserdoc" name="txtuserdoc"
+                   value='<s:property value="txtuserdoc"/>'/>
+
+            <input type="hidden" id="chcksecond_mandatory1val" name="chcksecond_mandatory1val"
+                   value='<s:property value="chcksecond_mandatory1val"/>'/>
+            <input type="hidden" id="chcksecond_mandatory2val" name="chcksecond_mandatory2val"
+                   value='<s:property value="chcksecond_mandatory2val"/>'/>
+            <input type="hidden" id="chcksecond_mandatory3val" name="chcksecond_mandatory3val"
+                   value='<s:property value="chcksecond_mandatory3val"/>'/>
+            <input type="hidden" id="chcksecond_mandatory4val" name="chcksecond_mandatory4val"
+                   value='<s:property value="chcksecond_mandatory4val"/>'/>
+            <input type="hidden" id="chcksecond_mandatory5val" name="chcksecond_mandatory5val"
+                   value='<s:property value="chcksecond_mandatory5val"/>'/>
+
+            <input type="hidden" id="chckfirst_mandatory1val" name="chckfirst_mandatory1val"
+                   value='<s:property value="chckfirst_mandatory1val"/>'/>
+            <input type="hidden" id="chckfirst_mandatory2val" name="chckfirst_mandatory2val"
+                   value='<s:property value="chckfirst_mandatory2val"/>'/>
+            <input type="hidden" id="chckfirst_mandatory3val" name="chckfirst_mandatory3val"
+                   value='<s:property value="chckfirst_mandatory3val"/>'/>
+            <input type="hidden" id="chckfirst_mandatory4val" name="chckfirst_mandatory4val"
+                   value='<s:property value="chckfirst_mandatory4val"/>'/>
+            <input type="hidden" id="chckfirst_mandatory5val" name="chckfirst_mandatory5val"
+                   value='<s:property value="chckfirst_mandatory5val"/>'/>
+
+        </div>
+    </div>
 </form>
-<div id="userWindow">
-	<div >
-</div>
-</div>
-<div id="userinfoWindow">
-	<div >
-</div>
-</div>
 
+<div id="userWindow"><div></div></div>
+<div id="userinfoWindow"><div></div></div>
 
 </div>
-
 </body>
+
+
+
 </html>

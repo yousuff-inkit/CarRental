@@ -10,18 +10,176 @@
 <% String contextPath=request.getContextPath();%>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
+
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important; 
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT)
+    ------------------------------ */
+    .receipt-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 0 0 5px; 
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    }
+
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS
+    ------------------------------ */
+    input[type="text"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+    
+    textarea {
+        height: auto !important;
+        min-height: 32px;
+        resize: vertical;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS
+    ------------------------------ */
+    .table-section { margin: 20px 0; }
+    .table-section h3 {
+        color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
+    }
+    
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    .doc-group { display: flex; gap: 5px; }
+    
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
+</style>
+
 <script type="text/javascript">
-     $(document).ready(function () { 
+      $(document).ready(function () { 
 
     	//$('#btnEdit').attr('disabled',true);
     	$('#btnEdit').click(function(){
     		$("#jqxManualInvoice").jqxGrid("addrow", null, {}); 
     	});
     	
- 	    $("#date").jqxDateTimeInput({ width: '100%', height: '15px',formatString:"dd.MM.yyyy"}); 
+ 	    $("#date").jqxDateTimeInput({ width: '100%', height: '30px',formatString:"dd.MM.yyyy"}); 
     
-		$("#fromdate").jqxDateTimeInput({ width: '90%', height: '15px',formatString:"dd.MM.yyyy"});
-        $("#todate").jqxDateTimeInput({ width: '90%', height: '15px',formatString:"dd.MM.yyyy"});
+		$("#fromdate").jqxDateTimeInput({ width: '100%', height: '30px',formatString:"dd.MM.yyyy"});
+        $("#todate").jqxDateTimeInput({ width: '100%', height: '30px',formatString:"dd.MM.yyyy"});
         $('#accountwindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Account Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     	   $('#accountwindow').jqxWindow('close');
     	   $('#agmtnowindow').jqxWindow({ width: '60%', height: '57%',  maxHeight: '57%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
@@ -34,47 +192,47 @@
    						return false;
    					}
    				});
-    	  	 $('#agmtvoucherno').dblclick(function(){
-    	  		 if(document.getElementById("mode").value!="A"){
-    	  			 return false;
-    	  		 }
-    	  		 if(document.getElementById("cmbagmttype").value==''){
-    	  			 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
-    	  			 return false;
-    	  		 }
+    	 	 $('#agmtvoucherno').dblclick(function(){
+    	 		 if(document.getElementById("mode").value!="A"){
+    	 			 return false;
+    	 		 }
+    	 		 if(document.getElementById("cmbagmttype").value==''){
+    	 			 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
+    	 			 return false;
+    	 		 }
     			 document.getElementById("errormsg").innerText="";
 
     			    $('#agmtnowindow').jqxWindow('open');
     			$('#agmtnowindow').jqxWindow('focus');
     			 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
     			});
-    	  	<%--  document.getElementById("dtype").value='<%session.getAttribute("Code").toString();%>'; --%>
-     });
-     function getAgmtno(event){
+    	 	<%--  document.getElementById("dtype").value='<%session.getAttribute("Code").toString();%>'; --%>
+      });
+      function getAgmtno(event){
     	 if(document.getElementById("mode").value!="A"){
-  			 return false;
-  		 }
+ 			 return false;
+ 		 }
     	 if(document.getElementById("cmbagmttype").value==''){
-  			 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
-  			 return false;
-  		 }
+ 			 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
+ 			 return false;
+ 		 }
 			 document.getElementById("errormsg").innerText="";
 
     	  var x= event.keyCode;
           if(x==114){
         	  $('#agmtnowindow').jqxWindow('open');
-  			$('#agmtnowindow').jqxWindow('focus');
-  			 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
+ 			$('#agmtnowindow').jqxWindow('focus');
+ 			 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
           }
           else{
            }
-     }
-     function accountSearchContent(url) {
+      }
+      function accountSearchContent(url) {
     	      $.get(url).done(function (data) {
     	    $('#accountwindow').jqxWindow('setContent', data);
     	}); 
     	}
-     function agmtnoSearchContent(url) {
+      function agmtnoSearchContent(url) {
 	      $.get(url).done(function (data) {
 	    $('#agmtnowindow').jqxWindow('setContent', data);
 	}); 
@@ -90,7 +248,7 @@
 	    $('#date').jqxDateTimeInput({ disabled: true});
 	    $("#fromdate").jqxDateTimeInput({ disabled: true});
         $("#todate").jqxDateTimeInput({ disabled: true});
-      
+       
 	}
 	
 	function funRemoveReadOnly(){
@@ -211,7 +369,7 @@
 		document.getElementById("errormsg").innerText="";
 		document.getElementById("errormsg").innerText="Deleted Invoice";
 	}
-/* 	if($('#hiddate').val()){
+/* if($('#hiddate').val()){
 			$("#date").jqxDateTimeInput('val', $('#hiddate').val());
 		} 
 		if($('#hidfromdate').val()){
@@ -256,12 +414,12 @@
     		if(document.getElementById("mode").value=="view"){
     			var reurl=url.split("invoice.jsp");
         		
-    	       	 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");		
+    	        	 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");		
     		}
     		else{
     			var reurl=url.split("saveManualInvoice");
         		
-   	       	 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");		
+   	        	 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");		
     		}
     		
     	}
@@ -269,8 +427,8 @@
     		
     		var reurl=url.split("saveManualInvoice");
     		//alert(reurl[0]);
-          	 var win_voucher= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");
-          	win_voucher.focus(); 
+           	 var win_voucher= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");
+           	win_voucher.focus(); 
     	} 
     	
     	
@@ -279,8 +437,8 @@
     	//    	var win= window.open(reurl[0]+"printManualInvoice?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
     	
     	 }
-    
-    
+     
+     
     function funSendmail()
  	{
  			
@@ -298,21 +456,21 @@
  		sample();
  		
  		 var recipient1=document.getElementById("email").value; 
-     	var recipient=recipient1.replace(/ /g, "%20");
-       	
-     <%-- window.open("<%=contextPath%>/com/email/Email.jsp?formcode="+document.getElementById("formdetailcode").value+'&recipient='+recipient+'&code='+document.getElementById("docno").value,"E-Mail","menubar=0,resizable=1,width=900,height=525 "); --%>  
+      	var recipient=recipient1.replace(/ /g, "%20");
+        	
+      <%-- window.open("<%=contextPath%>/com/email/Email.jsp?formcode="+document.getElementById("formdetailcode").value+'&recipient='+recipient+'&code='+document.getElementById("docno").value,"E-Mail","menubar=0,resizable=1,width=900,height=525 "); --%>  
  		
 
-     	//getMailservDets();
+      	//getMailservDets();
  		//sendmails();
  		
  		
  		
  		 }
  		else {
-   	      $.messager.alert('Message','Select a Document....!','warning');
-   	      return false;
-   	     }
+    	      $.messager.alert('Message','Select a Document....!','warning');
+    	      return false;
+    	     }
  		
  	}
  
@@ -336,20 +494,20 @@
     	              // alert(status);
     	             if(status=='success'){
     	            	
-    	            	    
+    	            	   
 						$("#overlay, #PleaseWait").hide();
-    	            	 
+    	            	  
     	            	 $.messager.show({title:'Message',msg:'E-Mail Send Successfully',showType:'show',
-    	                       style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-    	                   });
+    	                     style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+    	                    });
     	                 
     	              }
     	             if(status=='error'){
     	            	 // $.messager.alert('Message',"E-Mail Sending failed");
     	            	 $.messager.show({title:'Message',msg:' E-Mail Sending failed',showType:'show',
-    	                       style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-    	                   });
-    	                    
+    	                     style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+    	                    });
+    	                   
     	             }
     	             
     	              $("#testImg").attr("src",data.message);
@@ -373,106 +531,113 @@
     	  return false;
       }
 
-    
      
+      
 </script>  
-<style>
-.hidden-scrollbar {
-overflow: hidden;
-height: 530px;
-}
-.icons {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
-}
-</style>
 </head>
 <body onload="funReadOnly();setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmManualInvoice" action="saveManualInvoice" autocomplete="off">
 	<script>
 			window.parent.formName.value="Invoice";
 			window.parent.formCode.value="INV";
 	</script>
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
-<div class='hidden-scrollbar'>
-<fieldset>
-    <legend>Document Details</legend>
-<table width="100%" >
-  <tr>
-    <td width="6%" align="right">Agreement Type</td>
-    <td width="8%" align="left"><select name="cmbagmttype" id="cmbagmttype" style="width:99%;" value='<s:property value="cmbagmttype"/>'><option value="">--Select--</option>
-    <option value="RAG">Rental</option><option value="LAG">Lease</option>
-    </select></td>
-    <input type="hidden" name="hidcmbagmttype" id="hidcmbagmttype" value='<s:property value="hidcmbagmttype"/>'>
-    <td width="6%" align="right">Agreement No</td>
-    <td width="20%" align="left"><input type="text" name="agmtvoucherno" id="agmtvoucherno" value='<s:property value="agmtvoucherno"/>' onkeydown="getAgmtno(event);" placeholder="Press F3 to Search"></td>
-    <td colspan="2" align="right">Date</td>
-    <td width="8%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-    <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-    <td width="6%" align="right">Doc No</td>
-    <td width="18%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Client</td>
-    <td align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>'></td>
-    <td colspan="2"><input type="text" style="width:100%;" name="clientdetails" id="clientdetails" value='<s:property value="clientdetails"/>'></td>
-    <td width="21%"><input type="text" style="width:90%;" title="E-mail" name="email" id="email" value='<s:property value="email"/>'></td>
-    <td width="7%" align="right">Contract Vehicle</td>
-    <td colspan="4" align="left"><input type="text" style="width:74%;" name="contractvehicle" id="contractvehicle" value='<s:property value="contractvehicle"/>'></td>
-    </tr>
-  <tr>
-    <td align="right">Driver</td>
-    <td align="left"><input type="text" name="driver" id="driver" value='<s:property value="driver"/>'></td>
-    <td colspan="2"><input type="text" style="width:100%;" name="driverdetails" id="driverdetails" value='<s:property value="driverdetails"/>'> </td>
-    <%-- <td> <div> 
-        <button type="button"   title="Send Mail"  class="icons" id="Sendmail"  onclick="funSendmail()" value='<s:property value="Sendmail" />'  >
-					 <img alt="Send Mail" src="<%=contextPath%>/icons/sendmailto.png "> 
-					</button> 
-				</div>	</td>
- --%>
-    <td colspan="2" align="right">Vehicle Details</td>
-    <td colspan="3" align="left"><textarea rows="" cols="41.5" name="vehicledetails" id="vehicledetails" style="resize:none;"><s:property value="vehicledetails"/></textarea></td>
-    </tr><%-- <input type="text" style="width:81.5%;"  value=''> --%>
-</table>
+	
+    <div class='receipt-header'>
+        <label>Date</label>
+        <div>
+            <div id="date" name="date" value='<s:property value="date"/>'></div>
+            <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
+        </div>
 
-</fieldset>
+        <label style="margin-left:auto;">Doc No.</label>
+        <input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'>
+    </div>
 
-<fieldset>
-    <legend>Invoice Details</legend>
-<table width="100%" >
-  <tr>
-    <td width="7%" align="right">Period From</td>
-    <td width="8%" align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-    <input type="hidden" name="hidfromdate" id="hidfromdate" value='<s:property value="hidfromdate"/>'>
-    <td width="6%" align="right">Ledger Note</td>
-    <td width="27%" align="left"><input type="text" name="ledgernote" style="width:83%;" id="ledgernote" value='<s:property value="ledgernote"/>'></td>
-    <td width="9%" align="right">Period To</td>
-    <td width="8%" align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-    <input type="hidden" name="hidtodate" id="hidtodate" value='<s:property value="hidtodate"/>'>
-    <td width="6%" align="right">Invoice Note</td>
-    <td width="29%" align="left"><input type="text" name="invoicenote" id="invoicenote" style="width:82%;" value='<s:property value="invoicenote"/>'></td>
-  </tr>
-</table>
+    <div class="section-row">
+        <div class="section-block">
+            <h2>Document Details</h2>
+            
+            <div class="form-group dual-input">
+                <label>Agreement</label>
+                <select name="cmbagmttype" id="cmbagmttype" value='<s:property value="cmbagmttype"/>'>
+                    <option value="">--Select--</option>
+                    <option value="RAG">Rental</option>
+                    <option value="LAG">Lease</option>
+                </select>
+                <input type="hidden" name="hidcmbagmttype" id="hidcmbagmttype" value='<s:property value="hidcmbagmttype"/>'>
 
+                <label>Agmt No</label>
+                <input type="text" name="agmtvoucherno" id="agmtvoucherno" value='<s:property value="agmtvoucherno"/>' onkeydown="getAgmtno(event);" placeholder="Press F3 to Search">
+            </div>
 
-</fieldset>
-<input type="hidden" name="acno" id="acno" value='<s:property value="acno"/>'>
-<input type="hidden" name="hidclient" id="hidclient" value='<s:property value="hidclient"/>'>
-<fieldset>
-<table width="100%">
-  <tr>
-     <td><div id="invoiceDiv">
-     <jsp:include page="invoiceGrid.jsp"></jsp:include>
-     </div></td> 
-  </tr>
-</table>
+            <div class="form-group single-label-dual-input">
+                <label>Client</label>
+                <input type="text" name="client" id="client" value='<s:property value="client"/>'>
+                <input type="text" name="clientdetails" id="clientdetails" value='<s:property value="clientdetails"/>'>
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" title="E-mail" name="email" id="email" value='<s:property value="email"/>'>
+            </div>
 
-</fieldset>
-</div>
+            <div class="form-group single-label-dual-input">
+                <label>Driver</label>
+                <input type="text" name="driver" id="driver" value='<s:property value="driver"/>'>
+                <input type="text" name="driverdetails" id="driverdetails" value='<s:property value="driverdetails"/>'>
+            </div>
+
+            <div class="form-group">
+                <label>Contract Veh</label>
+                <input type="text" name="contractvehicle" id="contractvehicle" value='<s:property value="contractvehicle"/>'>
+            </div>
+
+            <div class="form-group">
+                <label>Veh Details</label>
+                <textarea rows="3" name="vehicledetails" id="vehicledetails"><s:property value="vehicledetails"/></textarea>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>Invoice Period & Notes</h2>
+            
+            <div class="form-group dual-input">
+                <label>Period From</label>
+                <div>
+                    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
+                    <input type="hidden" name="hidfromdate" id="hidfromdate" value='<s:property value="hidfromdate"/>'>
+                </div>
+
+                <label>Period To</label>
+                <div>
+                    <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
+                    <input type="hidden" name="hidtodate" id="hidtodate" value='<s:property value="hidtodate"/>'>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Ledger Note</label>
+                <input type="text" name="ledgernote" id="ledgernote" value='<s:property value="ledgernote"/>'>
+            </div>
+
+            <div class="form-group">
+                <label>Invoice Note</label>
+                <input type="text" name="invoicenote" id="invoicenote" value='<s:property value="invoicenote"/>'>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h3>Invoice Details Grid</h3>
+        <input type="hidden" name="acno" id="acno" value='<s:property value="acno"/>'>
+        <input type="hidden" name="hidclient" id="hidclient" value='<s:property value="hidclient"/>'>
+        <div id="invoiceDiv">
+            <jsp:include page="invoiceGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
 <input type="hidden" id="curntvehgrn" name="curntvehgrn" value='<s:property value="curntvehgrn"/>'>

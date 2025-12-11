@@ -11,347 +11,507 @@
 <title>GatewayERP(i) - Financier Master</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (Adopted)
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
 
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 1450px;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        text-align: left !important; 
-        max-height: calc(100vh - 64px); 
-        overflow-y: auto; 
-    }
-    
-    /* ------------------------------
-       HEADER & TITLE FIXES
-    ------------------------------ */
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 130vh;
+    box-sizing: border-box;
+}
 
-    /* ------------------------------
-       GRID SYSTEM & SECTIONS
-    ------------------------------ */
-    .section-block {
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 20px; 
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        margin-bottom: 30px;
-    }
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
 
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
 
-    .form-row {
-        display: grid;
-        /* Layout: Label | Input/Date | Label | Input */
-        grid-template-columns: 120px 1fr 120px 1fr; 
-        gap: 15px 30px;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-    
-    .form-row.code-name {
-        grid-template-columns: 120px 150px auto 120px 1fr;
-    }
-    .form-row.account {
-        grid-template-columns: 120px 1fr 1fr; 
-    }
-    .form-row.account input[type="text"] {
-        grid-column: 2 / span 2;
-    }
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
 
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
-    input[type="text"], select {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s, box-shadow 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
-    
-    /* FIX: BLUE HOVER EFFECT */
-    input[type="text"]:focus, select:focus,
-    .jqx-datetimeinput:hover,
-    input[type="text"]:not([readonly]):hover {
-        border-color: #007bff; /* Blue Border */
-        box-shadow: 0 0 0 1px #007bff; /* Light blue glow/shadow */
-        outline: none;
-    }
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+}
 
-    input[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
 
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 14px;
-    }
-    
-    form label.error {
-        color:red;
-        font-weight:bold;
-        font-size: 12px;
-    }
-    
-    /* JQ Date Picker size and alignment */
-    .jqx-datetimeinput-container {
-         height: 32px;
-    }
-    #findate {
-        height: 32px !important;
-        width: 100% !important;
-        line-height: 32px !important;
-    }
-    .jqx-datetimeinput {
-        height: 32px !important;
-        line-height: 32px !important;
-    }
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
 
+.receipt-header table {
+    width: 100%;
+}
 
-    /* JQWigets/Grid Styling */
-    #jqxFinancierSearch1 {
-        margin-top: 20px;
-        width: 100% !important; 
-    }
-    .jqx-grid-cell {
-        font-size: 13px !important;
-    }
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
 
-    /* ------------------------------
-       UTILITY STYLES
-    ------------------------------ */
-    fieldset {
-        border: none;
-        padding: 0;
-        margin: 0;
-    }
+#txtStatus {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e67e22;
+}
+
+/* ------------------------------
+   FORM ROWS LAYOUT (FIXED)
+------------------------------ */
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size:1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Special case: One label with two equal-width inputs */
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
+
+.form-group.single-label-dual-input input[type="text"]:first-of-type {
+    width: 100%;
+}
+
+.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
+    width: 100%;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 30px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* Special handling for the "to-account-row" - all items in one line */
+.to-account-row {
+    display: grid;
+    grid-template-columns: 120px 110px 120px 140px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.to-account-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.to-account-row #cmbtotype {
+    width: 100%;
+}
+
+.to-account-row #txttoaccid {
+    width: 100%;
+}
+
+.to-account-row #txttoaccname {
+    width: 100%;
+}
+
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
+}
+
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+/* Hide scrollbars (but allow scrolling) */
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+/* ------------------------------
+   ERROR LABELS
+------------------------------ */
+
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
+
+/* ------------------------------
+   APPROVAL TABLE
+------------------------------ */
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.form-row label {
+    min-width: 120px;
+    text-align: right;
+}
+
+.form-row input {
+    flex: 1;
+}
+
+.single-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.single-row label {
+    min-width: 120px;
+}
+
 </style>
 <script type="text/javascript">
-      $(document).ready(function () {  
-    	  $('#accountWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
-		  $('#accountWindow').jqxWindow('close');
-    	  $("#findate").jqxDateTimeInput({ width : '100%', height : '32px', formatString : "dd.MM.yyyy" }); // Adjusted size
-    	  
-    	  document.getElementById("formdet").innerText="Financier(VFI)";
-		  document.getElementById("formdetail").value="Financier";
-		  document.getElementById("formdetailcode").value="VFI";
-		  window.parent.formCode.value="VFI";
-		  window.parent.formName.value="Financier";
-    	  var data1= '<%=cfa.searchDetails() %>';
-              
-              var num = 0; 
-              var source =
-              {
-                  datatype: "json",
-                  datafields: [
-                            	{name : 'DOC_NO' , type: 'number' },
-       						{name : 'fname', type: 'String'  },
-       						{name : 'fid',type:'String'},
-                            	{name : 'date', type: 'date'  },
-                            	{name : 'acc_no',type:'String'},
-                            	{name : 'description',type:'String'}
-                   ],
-                   localdata: data1,
-                  pager: function (pagenum, pagesize, oldpagenum) {
-                      // callback called when a page or page size is changed.
-                  }
-              };
-              
-              var dataAdapter = new $.jqx.dataAdapter(source,
-              		 {
-                  		loadError: function (xhr, status, error) {
-  	                    alert(error);    
-  	                    }
-  		            }		
-              );
-           
-              $("#jqxFinancierSearch1").jqxGrid(
-                      {
-                      	width: '100%',
-                          height: 350,
-                          source: dataAdapter,
-                          showfilterrow: true,
-                          filterable: true,
-                          selectionmode: 'singlerow',
-                          sortable: true,
-                          altrows:true,
-                          columns: [
-          					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
-          					{ text: 'F ID',columntype:'textbox', filtertype:'input',datafield:'fid',width:'10%',hidden:true},
-          					{ text: 'Financier',columntype: 'textbox', filtertype: 'input', datafield: 'fname', width: '30%' },
-          					{ text: 'Date',columntype: 'textbox', filtertype: 'input', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy' },
-          					{ text: 'Acc No',columntype: 'textbox', filtertype: 'input', datafield: 'acc_no', width: '20%',hidden:true },
-          					{ text: 'Account',columntype: 'textbox', filtertype: 'input', datafield: 'description', width: '40%' },
-          					]
-                      });
-              $('#jqxFinancierSearch1').on('rowdoubleclick', function (event) 
-              		{ 
-  		            	var rowindex1=event.args.rowindex;
-  		                document.getElementById("docno").value= $('#jqxFinancierSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
-  		                document.getElementById("finid").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "fid");
-  		                document.getElementById("finname").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "fname");
-  		                $("#findate").jqxDateTimeInput('val',$("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
-  		                document.getElementById("txtaccname").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "description");
-  		                document.getElementById("txtaccno").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "acc_no");
-              		 });
-        
-            		 });
-      function accountSearchContent(url) {
-		  $('#accountWindow').jqxWindow('open');
+ï¿½ ï¿½ ï¿½ $(document).ready(function () {ï¿½ï¿½
+ï¿½ ï¿½ 	ï¿½ $('#accountWindow').jqxWindow({width: '51%', height: '58%',ï¿½ maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
+		ï¿½ $('#accountWindow').jqxWindow('close');
+ï¿½ ï¿½ 	ï¿½ $("#findate").jqxDateTimeInput({ width : '100%', height : '32px', formatString : "dd.MM.yyyy" }); // Adjusted size
+ï¿½ ï¿½ 	ï¿½ï¿½
+ï¿½ ï¿½ 	ï¿½ document.getElementById("formdet").innerText="Financier(VFI)";
+		ï¿½ document.getElementById("formdetail").value="Financier";
+		ï¿½ document.getElementById("formdetailcode").value="VFI";
+		ï¿½ window.parent.formCode.value="VFI";
+		ï¿½ window.parent.formName.value="Financier";
+ï¿½ ï¿½ 	ï¿½ var data1= '<%=cfa.searchDetails() %>';
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ var num = 0;ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ var source =
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ {
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ datatype: "json",
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ datafields: [
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	{name : 'DOC_NO' , type: 'number' },
+ï¿½ ï¿½ ï¿½ ï¿½						{name : 'fname', type: 'String'ï¿½ },
+ï¿½ ï¿½ ï¿½ ï¿½						{name : 'fid',type:'String'},
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	{name : 'date', type: 'date'ï¿½ },
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	{name : 'acc_no',type:'String'},
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	{name : 'description',type:'String'}
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½],
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½localdata: data1,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ pager: function (pagenum, pagesize, oldpagenum) {
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ // callback called when a page or page size is changed.
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ }
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ };
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ var dataAdapter = new $.jqx.dataAdapter(source,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 		 {
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 		loadError: function (xhr, status, error) {
+ï¿½ 	ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ alert(error);ï¿½ ï¿½ï¿½
+ï¿½ 	ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ }
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ }		
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ );
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ $("#jqxFinancierSearch1").jqxGrid(
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ {
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	width: '100%',
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ height: 350,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ source: dataAdapter,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ showfilterrow: true,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ filterable: true,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ selectionmode: 'singlerow',
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ sortable: true,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ altrows:true,
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ columns: [
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					{ text: 'F ID',columntype:'textbox', filtertype:'input',datafield:'fid',width:'10%',hidden:true},
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					{ text: 'Financier',columntype: 'textbox', filtertype: 'input', datafield: 'fname', width: '30%' },
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					{ text: 'Date',columntype: 'textbox', filtertype: 'input', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy' },
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					{ text: 'Acc No',columntype: 'textbox', filtertype: 'input', datafield: 'acc_no', width: '20%',hidden:true },
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					{ text: 'Account',columntype: 'textbox', filtertype: 'input', datafield: 'description', width: '40%' },
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 					]
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ });
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ $('#jqxFinancierSearch1').on('rowdoubleclick', function (event)ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 		{ï¿½
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	var rowindex1=event.args.rowindex;
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ document.getElementById("docno").value= $('#jqxFinancierSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO");ï¿½
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ document.getElementById("finid").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "fid");
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ document.getElementById("finname").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "fname");
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ $("#findate").jqxDateTimeInput('val',$("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ document.getElementById("txtaccname").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "description");
+ï¿½ 		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ document.getElementById("txtaccno").value = $("#jqxFinancierSearch1").jqxGrid('getcellvalue', rowindex1, "acc_no");
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 		 });
+ï¿½ ï¿½ ï¿½ ï¿½ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 		 });
+ï¿½ ï¿½ ï¿½ function accountSearchContent(url) {
+		ï¿½ $('#accountWindow').jqxWindow('open');
 
 			 $.get(url).done(function (data) {
-				 
+				ï¿½
 			$('#accountWindow').jqxWindow('setContent', data);
-		}); 
+		});ï¿½
 		}
-      function funSearchdblclick(){
-    	  var dtype="VFI"; 
-		//  $('#txtaccname').dblclick(function(){
-			   var url=document.URL;
-			     var reurl=url.split("/com/");
-				  	  accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchGL.jsp?dtype='+dtype);
-			//  });  
+ï¿½ ï¿½ ï¿½ function funSearchdblclick(){
+ï¿½ ï¿½ 	ï¿½ var dtype="VFI";ï¿½
+		//ï¿½ $('#txtaccname').dblclick(function(){
+			ï¿½ ï¿½var url=document.URL;
+			ï¿½ ï¿½ ï¿½var reurl=url.split("/com/");
+				ï¿½ 	ï¿½ accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchGL.jsp?dtype='+dtype);
+			//ï¿½ });ï¿½ï¿½
 	}
-     function getAcc(event){
-    	 var dtype="VFI";
-          var x= event.keyCode;
-          if(x==114){
-        	 
-        	  var url=document.URL;
-			     var reurl=url.split("/com/");
-				  	  accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchGL.jsp?dtype='+dtype);
-          }
-          else{
-           }
-          }
-      function funSearchLoad(){
-  		changeContent('financierSearch.jsp', $('#window')); 
-  	 }
+ï¿½ ï¿½ ï¿½function getAcc(event){
+ï¿½ ï¿½ 	 var dtype="VFI";
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ var x= event.keyCode;
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ if(x==114){
+ï¿½ ï¿½ ï¿½ ï¿½ 	ï¿½
+ï¿½ ï¿½ ï¿½ ï¿½ 	ï¿½ var url=document.URL;
+			ï¿½ ï¿½ ï¿½var reurl=url.split("/com/");
+				ï¿½ 	ï¿½ accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchGL.jsp?dtype='+dtype);
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ }
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ else{
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½}
+ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ }
+ï¿½ ï¿½ ï¿½ function funSearchLoad(){
+ï¿½ 		changeContent('financierSearch.jsp', $('#window'));ï¿½
+ï¿½ 	 }
 	function funReadOnly() {
 		$('#frmFinancier input').attr('readonly', true);
-		 $('#findate').jqxDateTimeInput({ disabled: true}); 
+		 $('#findate').jqxDateTimeInput({ disabled: true});ï¿½
 	}
 	function funRemoveReadOnly() {
 		$('#frmFinancier input').attr('readonly', false);
-		 $('#findate').jqxDateTimeInput({ disabled: false}); 
+		 $('#findate').jqxDateTimeInput({ disabled: false});ï¿½
 		$('#docno').attr('readonly', true);
 		$('#txtaccname').attr('readonly', true);
 		$('#finname').attr('readonly', true);
 	}
 	
 	 function setValues(){	
-		    if($('#hidfindate').val()){
+		ï¿½ ï¿½ if($('#hidfindate').val()){
 				$("#findate").jqxDateTimeInput('val', $('#hidfindate').val());
 			}
-		    if($('#msg').val()!=""){
-				   $.messager.alert('Message',$('#msg').val());
-				  }
+		ï¿½ ï¿½ if($('#msg').val()!=""){
+				ï¿½ ï¿½$.messager.alert('Message',$('#msg').val());
+				ï¿½ }
 
 			}
-		    function funFocus()
-		    {
-		    	document.getElementById("finid").focus();
-		    		
-		    }
-		    $(function(){
-		        $('#frmFinancier').validate({
-		                 rules: {
-		                 finid:{
-		                	 required:true,
-		                	 maxlength:8
-		                 }, 
-		                 txtaccname:{
-		                	required:true
-		                	},
-		                	finname:{
-		                		maxlength:40
-		                	}
-		                
-		                 },
-		                 messages: {
-		                	 finid:{
-		                	  required:" *",
-		                	  maxlength:"max 8 chars"
-		                  },
-		                  txtaccname:{
-		                	  required:" *"
-		                  },
-		                  finname:{
-		                	  maxlength:"max 40 chars"
-		                  }
-		                 }
-		        });});
-		     function funNotify(){
-		    	 if(document.getElementById("txtaccname").value==''){
-		    			document.getElementById("errormsg").innerText="A/c is Mandatory";
-		    		return 0;
-		    		}
-		    		else{
-		    			document.getElementById("errormsg").innerText="";
-		    		}
-		    		return 1;
-			} 
-		     function funExcelBtn(){
-				  $("#jqxFinancierSearch1").jqxGrid('exportdata', 'xls', 'Financier');
-			  }
+		ï¿½ ï¿½ function funFocus()
+		ï¿½ ï¿½ {
+		ï¿½ ï¿½ 	document.getElementById("finid").focus();
+		ï¿½ ï¿½ 		
+		ï¿½ ï¿½ }
+		ï¿½ ï¿½ $(function(){
+		ï¿½ ï¿½ ï¿½ ï¿½ $('#frmFinancier').validate({
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½rules: {
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½finid:{
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	 required:true,
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	 maxlength:8
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½},ï¿½
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½txtaccname:{
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	required:true
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	},
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	finname:{
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 		maxlength:40
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	}
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ï¿½
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½},
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½messages: {
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	 finid:{
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	ï¿½ required:" *",
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	ï¿½ maxlength:"max 8 chars"
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ },
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ txtaccname:{
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	ï¿½ required:" *"
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ },
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ finname:{
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ 	ï¿½ maxlength:"max 40 chars"
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ }
+		ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿½}
+		ï¿½ ï¿½ ï¿½ ï¿½ });});
+		ï¿½ ï¿½ ï¿½function funNotify(){
+		ï¿½ ï¿½ 	 if(document.getElementById("txtaccname").value==''){
+		ï¿½ ï¿½ 			document.getElementById("errormsg").innerText="A/c is Mandatory";
+		ï¿½ ï¿½ 		return 0;
+		ï¿½ ï¿½ 		}
+		ï¿½ ï¿½ 		else{
+		ï¿½ ï¿½ 			document.getElementById("errormsg").innerText="";
+		ï¿½ ï¿½ 		}
+		ï¿½ ï¿½ 		return 1;
+			}ï¿½
+		ï¿½ ï¿½ ï¿½function funExcelBtn(){
+				ï¿½ $("#jqxFinancierSearch1").jqxGrid('exportdata', 'xls', 'Financier');
+			ï¿½ }
 </script>
 
 
 </head>
 <body onload="setValues();" >
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class=" hidden-scrollbar homeContent" data-type="background">
 <form id="frmFinancier" action="saveActionFinancier" autocomplete="off">
-<jsp:include page="../../../../header.jsp" />
-    
-    <div class="section-block">
-        <h2>Financier Master</h2>
-        
-        <div class="form-row">
-            <label>Date</label>
-            <div class="jqx-datetimeinput-container">
-                <div id="findate" name="findate" value='<s:property value="findate"/>'></div>
-            </div>
-            <input type="hidden" name="hidfindate" id="hidfindate" value='<s:property value="hidfindate"/>'>
+<jsp:include page="../../../../header.jsp" /><br/> 
+<div style="100%;">
+<fieldset>
+    <legend>Financier Master</legend>
+<div class="section-block">
+<div class="form-group dual-input">
+    <label>Date</label>
+    <div id="findate" name="findate" value='<s:property value="findate"/>'></div>
+    <input type="hidden" name="hidfindate" id="hidfindate" value='<s:property value="hidfindate"/>'>
+    <label>Doc No</label>
+    <input type="text" name="docno" id="docno"  value='<s:property value="docno"/>' readonly tabindex="-1">
+  </div>
+  <div class="form-group dual-input">
+    <label>Financier Code</label>
+    <input type="text" name="finid" id="finid" value='<s:property value="finid"/>'>
+    <label>Name</label>
+    <input type="text" name="finname"  id="finname" value='<s:property value="finname"/>'>
+  </div>
+  <div class="form-group ">
+  <label>Account</label>
+  <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>'  ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" placeholder="Press F3 to Search" > 
+  </div>
+</div>
+<input type="hidden" id="txtaccno" name="txtaccno" value='<s:property value="txtaccno"/>'> 
+<input type="hidden" id="mode" name="mode"/>
+				        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
 
             <label>Doc No</label>
             <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
@@ -373,7 +533,7 @@
         </div>
 
         <input type="hidden" id="mode" name="mode"/>
-        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <input type="hidden" id="msg" name="msg"ï¿½ value='<s:property value="msg"/>'/>
         <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
     </div>
 </form>
@@ -381,7 +541,7 @@
 <div style="padding: 0 20px;">
     <div id="jqxFinancierSearch1"></div>
 </div>
- 
+ï¿½
 <div id="accountWindow">
     <div></div><div></div>
 </div>

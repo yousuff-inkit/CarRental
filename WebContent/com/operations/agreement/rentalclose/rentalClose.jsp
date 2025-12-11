@@ -11,10 +11,9 @@
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
-    .hidden-scrollbar {
-        overflow: auto;
-        height: 530px;
-    }
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -24,124 +23,145 @@
         min-height: 100vh;
         box-sizing: border-box;
     }
+
     #mainBG {
         background: #fff;
         border-radius: 16px;
-        /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-        padding: 10px;
-        max-width: 1200px;
-        margin: 0 auto;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
     }
 
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
     .receipt-header {
-        display: flex;
-        flex-wrap: wrap;
+        display: block; /* Header block container */
+        padding: 0 0 0 5px;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
         align-items: center;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        padding: 0px 24px;
-        font-size: 2vh;
+        gap: 12px;
+        margin-bottom: 12px;
     }
-    .receipt-header label {
-        font-weight: 500;
-        color: #333;
-        margin-right: 8px;
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
     }
-    .receipt-header input[type="text"] {
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 1rem;
-        width: 120px;
-        background: #fff;
-        transition: border-color 0.2s;
+
+    .form-group.triple-input {
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
     }
-    .receipt-header input[type="text"]:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    .receipt-header button {
-        background: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 6px 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .receipt-header button:hover {
-        background: #0056b3;
-    }
-    #txtStatus {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #e67e22;
-        margin-left: 12px;
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
     }
 
     .section-row {
         display: flex;
         gap: 26px;
-        margin-bottom: 24px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
     }
+
     .section-block {
         flex: 1;
-        background: #f6f8fa;
-        border-radius: 10px;
-        padding: 20px 18px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
     }
 
-    .section-block h2 {
-        font-size: 1.09em;
-        font-weight: 500;
-        margin: 0 0 16px 0;
-        color: #253858;
+    .full-width-block {
+        flex: 1 1 100%;
     }
 
-    .section-block .form-group {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 12px;
+    .section-block h2, .section-block h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
     }
 
-    .section-block label {
-        min-width: 110px;
-        text-align: right;
-        font-weight: 500;
-        color: #253858;
-    }
-
-    .section-block input[type="text"],
-    .section-block select {
-        flex: 1;
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], select, textarea {
+        height: 32px !important;
         border: 1px solid #d1d5db;
         border-radius: 6px;
         padding: 6px 10px;
         background: #fff;
         transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
     }
 
-    .section-block input[type="text"]:focus,
-    .section-block select:focus {
+    input[type="text"]:focus, select:focus, textarea:focus {
         border-color: #007bff;
         outline: none;
     }
 
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
 
-    .table-section {
-        margin-bottom: 18px;
-        padding-inline: 1.04em;
-        padding-block: 1.04em;
-        border-radius: 8px;
-    }
-    .table-section h3 {
-        color: #253858;
-        font-size: 1.04em;
+    label {
+    font: 16px Tahoma;
         font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
     }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+
+    /* Legacy table styles for included JSPs and complex structures */
     .cr-table {
         width: 100%;
         border-collapse: collapse;
@@ -150,20 +170,48 @@
         overflow: hidden;
         box-shadow: 0 0 0 1px #eef0f6;
     }
-    .cr-table th, .cr-table td {
+    .cr-table td {
         padding: 9px 10px;
         border-bottom: 1px solid #e4e7ec;
         text-align: left;
         font-size: 1em;
     }
-    .cr-table th {
-        background: #eef0f6;
-        color: #354B6A;
-        font-weight: 600;
+    
+    .agmt-details-table td {
+        padding: 5px;
     }
-    .cr-table tr:last-child td {
-        border-bottom: none;
+    
+    .collection-info-group {
+        display: grid;
+        grid-template-columns: 120px 1fr; /* Label + Content */
+        gap: 12px;
+        align-items: start;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        background: #fff;
     }
+    
+    .collection-checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .collection-checkbox-group input[type="text"] {
+        margin-top: 5px;
+        width: 100%;
+    }
+    .label-checkbox-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-start;
+        padding-right: 0;
+        font-weight: 500;
+    }
+
 </style>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -1539,171 +1587,201 @@ if(document.getElementById("rentalagent").value==""){
 			window.parent.formCode.value="RAC";
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
+	<br/>
 <div class='hidden-scrollbar receipt-header'>
-<div class="table-section" style="width: 100%;">
-    <table class="cr-table" width="100%">
-        <tr>
-            <td width="4%" align="right">Branch</td>
-            <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
 
-            <td width="6%" align="right">Agmt No</td>
-            <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
-            <td width="5%" align="right">Vehicle</td>
-            <td width="47%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
-            <td width="6%" align="right">Doc No</td>
-            <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
-            <td width="8%" rowspan="2" align="left"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-                <ul>
-                    <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-                    <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-                    <li><a href="#history" onclick="account();">Account Statement</a></li>
-                    <li><a href="#close" onclick="closing();">Closing Summary</a></li>
-                </ul>
-            </div></td>
-        </tr>
-        <tr>
-            <td align="right">Client</td>
-            <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
-            <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:99%;"></td>
+    <div class="section-block full-width-block">
+        <h3>Agreement Details</h3>
+        
+        <div class="form-group dual-input">
+            <label>Branch</label>
+            <select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>'><option value="">--Select--</option></select>
+
+            <label>Agmt No</label>
+            <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" >
+        </div>
+        
+        <div class="form-group dual-input">
+            <label>Vehicle</label>
+            <input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>'>
+            
+            <label>Doc No</label>
+            <input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Client</label>
+            <input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' >
             <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-            <td align="right">Date</td>
-            <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
-            <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
-        </tr>
-        <tr>
-            <td align="right">Description</td>
-            <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;">Org Reg Card Collected</label>&nbsp;
-                <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
-            </td>
-            <input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
-            <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
-            <td align="right">Location</td>
-            <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
+
+            <label>Date</label>
+            <div>
+                <div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div>
+                <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Client Name</label>
+            <input type="text" name="client" id="client" value='<s:property value="client"/>'>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Description</label>
+            <input type="text" name="description" id="description" value='<s:property value="description"/>' >
+
+            <label>Location</label>
+            <select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>'>
                 <option value="">--Select--</option>
-            </select></td>
+            </select>
             <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
             <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
-            <td align="left">&nbsp;</td>
-        </tr>
-    </table>
-</div>
-
-   <div class="table-section" style="width: 100%;">
-        <h3>In Info</h3>
-        <table class="cr-table" width="100%">
-            <tr>
-                <td width="11%" rowspan="2">Collection
-                    <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
-                    &nbsp;
-                    <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search"><br>
-                    <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
-                </td>
-                <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-                <td width="8%" align="right">Collection Details</td>
-                <td width="1%" align="right">KM</td>
-                <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
-                <td width="2%" align="right">Fuel</td>
-                <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-                <td width="7%" align="left">
-                    <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-                <td width="2%" align="right">Date</td>
-                <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
-                <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-                <td width="2%" align="right">Time</td>
-                <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
-                <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-                <td width="5%" align="right">Rental Agent</td>
-                <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
-                  <option value="">--Select--</option>
-                </select> --%>
-                <td width="6%" align="left">
-                    <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
-                </td>
-                <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
-                <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-                <td width="7%" align="right">Days Used</td>
-                <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
-                <td width="5%" align="right">Hours Used</td>
-                <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
-                <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
-                    <img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
-            </tr>
-            <tr>
-                <td align="right">In Details</td>
-                <td align="right">KM</td>
-                <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-                <td align="right">Fuel</td>
-                <td align="left"><!--<input type="text" name="infuel" id="infuel" value='<s:property value="infuel"/>'>-->
-                    <select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-                <td align="right">Date</td>
-                <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
-                <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
-                <td align="right">Time</td>
-                <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
-                <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
-                <td align="right">Check In</td>
-                <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
-                  <option value="">--Select--</option>
-                </select> --%>
-                <td align="left">
-                    <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
-                </td>
-                <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
-                <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
-                <div border="1">
-                    <td align="right">Total KM</td>
-                    <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
-                    <td align="right">Excess KM</td>
-                    <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
-                    <td width="0%" align="left">&nbsp;</td>
+        </div>
+        
+        <div class="form-group">
+            <label>Reg Card</label>
+            <div class="label-checkbox-inline">
+                <label id="lblchkorgregcard" for="chkorgregcardcollect">Org Reg Card Collected</label>
+                <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
+                <input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
+                <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
+            </div>
+        </div>
+        
+        <div style="text-align: right; margin-top: -50px; margin-right: 10px;">
+             <div id='jqxMenuMore' title="More" style='visibility: hidden; display: inline-block;'>
+                <button class="myButton" type="button" style="padding: 6px 10px;">More Options</button>
                 </div>
-            </tr>
-        </table>
+        </div>
     </div>
-    <table class="cr-table" width="100%">
-        <tr>
-            <td width="65%">
-    <table width="100%">
-        <tr>
-            <td><div class="cr-table" id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
-        </tr>
-        <tr id="referencefield">
-            <td><div class="cr-table" id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></td>
-        </tr>
-        <tr>
-            <td><div class="cr-table" id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
-        </tr>
-        <tr>
-            <td><div class="cr-table" id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
-        </tr>
-    </table>
-            </td>
 
 
-            <td width="34%" rowspan="3">
-                <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
-                <center>
-                    <input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
-                    <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
-                </center>
-                <div><h3>Calculation Info
-                </h3>
-                    <table width="100%">
-                        <tr>
-                            <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
-                            <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-                        </tr>
-                    </table>
+    <div class="section-block full-width-block">
+        <h3>In Info</h3>
+        
+        <div class="section-row" style="gap: 15px; margin-bottom: 0;">
+            
+            <div class="section-block" style="flex: 1; padding: 10px; background: transparent; box-shadow: none;">
+                <div class="collection-info-group">
+                    <label>Collection</label>
+                    <div class="collection-checkbox-group">
+                        <label class="label-checkbox-inline" style="padding-right: 0;">
+                            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
+                            <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
+                        </label>
+                        <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search">
+                        <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
+                    </div>
                 </div>
-            </td>
-        </tr>
-    </table>
+
+                <div class="form-group">
+                    <label>Rental Agent</label>
+                    <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
+                    <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
+                    <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
+                </div>
+                
+                <div class="form-group">
+                    <label>Check In</label>
+                    <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
+                    <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
+                </div>
+                
+                <div style="text-align: center; padding-top: 15px;">
+                    <button type="button" id="btnprocess" title="Process" style="border:none;background:none;" onclick="funChecking();">
+                        <img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30">
+                    </button>
+                </div>
+            </div>
+
+            <div class="section-block" style="flex: 2; padding: 10px; background: transparent; box-shadow: none;">
+                
+                <div class="form-group triple-input" style="grid-template-columns: 120px 1fr 60px 1fr;">
+                    <label>Collection Details</label>
+                    <label>KM</label>
+                    <input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'>
+                    
+                    <label>Fuel</label>
+                    <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select>
+                    <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
+                </div>
+
+                <div class="form-group triple-input" style="grid-template-columns: 120px 1fr 60px 1fr;">
+                    <label>Date</label>
+                    <div><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></div>
+                    <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
+                    
+                    <label>Time</label>
+                    <div><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></div>
+                    <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
+                </div>
+
+                <div class="form-group triple-input" style="grid-template-columns: 120px 1fr 60px 1fr;">
+                    <label>In Details</label>
+                    <label>KM</label>
+                    <input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)">
+                    
+                    <label>Fuel</label>
+                    <select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select>
+                </div>
+
+                <div class="form-group triple-input" style="grid-template-columns: 120px 1fr 60px 1fr;">
+                    <label>Date</label>
+                    <div><div id="indate" name="indate" value='<s:property value="indate"/>'></div></div>
+                    <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
+                    
+                    <label>Time</label>
+                    <div><div id="intime" name="intime" value='<s:property value="intime"/>'></div></div>
+                    <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
+                </div>
+
+                <div class="form-group dual-input" style="grid-template-columns: 120px 1fr 120px 1fr;">
+                    <label>Days Used</label>
+                    <input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' readonly>
+
+                    <label>Hours Used</label>
+                    <input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly>
+                </div>
+
+                <div class="form-group dual-input" style="grid-template-columns: 120px 1fr 120px 1fr;">
+                    <label>Total KM</label>
+                    <input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' readonly>
+
+                    <label>Excess KM</label>
+                    <input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="section-row full-width-block">
+        
+        <div class="section-block" style="flex: 2; padding: 0; background: transparent; box-shadow: none;">
+            <div class="table-section" id="agmttarifdiv" style="padding: 0;"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div>
+            <div class="table-section" id="referencetarifdiv" style="padding: 0;"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div>
+            <div class="table-section" id="totaldiv" style="padding: 0;"><jsp:include page="totalGrid.jsp"></jsp:include></div>
+            <div class="table-section" id="trafficdiv" style="padding: 0;"><jsp:include page="trafficGrid.jsp"></jsp:include></div>
+        </div>
+        
+        <div class="section-block" style="flex: 1; min-width: 300px;">
+            <h3>Calculation Info</h3>
+            
+            <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
+            
+            <div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
+            <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
+                <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
+            </div>
+        </div>
+    </div>
 
 
-<br><br><br><br><br><br>
 <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
 <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>
 <input type="hidden" name="agmtdate" id="agmtdate" value='<s:property value="agmtdate"/>'>
@@ -1711,7 +1789,7 @@ if(document.getElementById("rentalagent").value==""){
 <input type="hidden" name="agmtfuel" id="agmtfuel" value='<s:property value="agmtfuel"/>'>
 <input type="hidden" name="agmtdeliveryfuel" id="agmtdeliveryfuel" value='<s:property value="agmtdeliveryfuel"/>'>
 <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-<div id="datehidden" name="datehidden" hidden="true"></div> 
+<div id="datehidden" name="datehidden" hidden="true"></div>
 <div id="closedatehidden" name="closedatehidden" hidden="true"></div>
 <div id="agmtdeliverydate" name="agmtdeliverydate" hidden="true"></div>
 <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
@@ -1736,29 +1814,30 @@ if(document.getElementById("rentalagent").value==""){
 <div name="closeinvdate" id="closeinvdate" value='<s:property value="closeinvdate"/>' hidden="true"></div>
 <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
 <input type="hidden" name="fuel2" id="fuel2" value='<s:property value="fuel2"/>' >
-<input type="hidden" name="agreementno" id="agreementno" value='<s:property value="agreementno"/>' onkeydown="getAgmt(event);" placeholder="Press F3 to Search"  >
+<input type="hidden" name="agreementno" id="agreementno" value='<s:property value="agreementno"/>' onkeydown="getAgmt(event);" placeholder="Press F3 to Search" >
 <input type="hidden" name="allbranch" id="allbranch" value='<s:property value="allbranch"/>' >
 <input type="hidden" name="priormethod" id="priormethod">
 <input type="hidden" name="priorvalue" id="priorvalue">
 <input type="hidden" name="defaultdate" id="defaultdate">
 <input type="hidden" name="invtype" id="invtype">
 <input type="hidden" name="agmtsat" id="agmtsat">
+
 </div>
 </form>
 <div id="agmtnowindow">
-   <div ></div>
+   <div ></div>
 </div>
 <div id="collectionWindow">
-   <div ></div>
+   <div ></div>
 </div>
 <div id="checkinWindow">
-   <div ></div>
+   <div ></div>
 </div>
 <div id="rentalAgentWindow">
-   <div ></div>
+   <div ></div>
 </div>
 <div id="window1">
-   <div ></div>
+   <div ></div>
 </div>
 </div>
 </body>

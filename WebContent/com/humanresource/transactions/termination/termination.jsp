@@ -522,6 +522,24 @@ body {
     border-bottom: none;
 }
 
+
+/* --- MAKE ALL LABELS, TH, TD TEXT BOLD --- */
+label,
+.cr-table td label,
+.cr-table th,
+.cr-table td {
+    font-weight: 700 !important;
+}
+
+/* --- FORCE SINGLE-LINE TEXT (NO WRAP) --- */
+label,
+td,
+th,
+.cr-table td,
+.cr-table th {
+    white-space: nowrap !important;
+}
+
 </style>
 
 </head>
@@ -534,15 +552,24 @@ body {
 <div class="table-section" style="width: 100%;">
 <table class="cr-table" width="100%">
   <tr>
-    <td width="3%" align="right">Date</td>
-    <td width="11%"><div id="terminationDate" name="terminationDate" value='<s:property value="terminationDate"/>'></div>
-    <input type="hidden" id="hidterminationDate" name="hidterminationDate" value='<s:property value="hidterminationDate"/>'/></td>
-    <td align="right">Doc No.</td>
-    <td width="21%"><input type="text" id="docno" name="txtterminationdocno" style="width:50%;" value='<s:property value="txtterminationdocno"/>' tabindex="-1"/></td>
-  </tr>
+    <td align="right" style="white-space:nowrap; width:8%;">Date</td>
+    <td style="width:12%;">
+        <div id="terminationDate" name="terminationDate" value='<s:property value="terminationDate"/>'></div>
+        <input type="hidden" id="hidterminationDate" name="hidterminationDate" value='<s:property value="hidterminationDate"/>'/>
+    </td>
+
+    <td align="right" style="white-space:nowrap; width:8%;">Doc No.</td>
+
+    <td style="width:12%;">
+        <input type="text" id="docno" name="txtterminationdocno"
+               style="width:95%;"
+               value='<s:property value="txtterminationdocno"/>'
+               tabindex="-1"/>
+    </td>
+</tr>
 </table>
 </div>
-<div class="table-section" style="background-color: #EBDEF0;">
+<div class="table-section" style="background-color: #E8F1FF;">
 <h3>Employee Details</h3>
 <table class="cr-table" width="100%">
   <tr>

@@ -423,161 +423,192 @@
 </script>
 
 <style>
+
+/* ---------------- SCROLL AREA ---------------- */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow: auto;
+    height: 530px;
 }
-#validrate{
- color:red;
- }
 
+#validrate {
+    color: red;
+    font-weight: 700;
+}
 
+/* ---------------- BODY NORMAL BG ---------------- */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: #f4f6f9;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    color: #1f2933;
     margin: 0;
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
 }
+
+/* ---------------- MAIN CONTAINER ---------------- */
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 12px;
     max-width: 1200px;
     margin: 0 auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
+/* ---------------- HEADER ---------------- */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 16px;
     border-radius: 12px;
-    padding: 0px 24px;
+    padding: 6px 24px;
     font-size: 2vh;
+    background: #ffffff;
 }
+
 .receipt-header label {
-    font-weight: 500;
-    color: #333;
+    font-weight: 800;
+    color: #253858;
     margin-right: 8px;
 }
+
+/* ---------------- INPUT STYLE ---------------- */
 .receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
+    height: 36px;
+    border: 1px solid #cfd6e4;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 0 12px;
     font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
+    width: 140px;
+    background: #ffffff;
 }
+
 .receipt-header input[type="text"]:focus {
-    border-color: #007bff;
+    border-color: #6b93ff;
     outline: none;
 }
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
+
+/* ---------------- BUTTON ---------------- */
+.receipt-header button,
+.myButton {
+    height: 36px;
+    background: #4f73d8;
+    color: #ffffff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
+    padding: 0 16px;
+    font-weight: 800;
     cursor: pointer;
-    transition: background 0.2s;
 }
+
+.myButton:hover,
 .receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    background: #3a5fcc;
 }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
+/* ---------------- TABLE ---------------- */
+.cr-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 12px 12px;
+    background: #ffffff;
     border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
+.cr-table td {
+    vertical-align: middle;
+    font-size: 13px;
+    white-space: nowrap;
+    font-weight: 800;
     color: #253858;
 }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
+.cr-table td[align="right"] {
     text-align: right;
-    font-weight: 500;
-    color: #253858;
+    width: 120px;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
+/* ---------------- INPUTS & SELECT ---------------- */
+.cr-table input,
+.cr-table select {
+    height: 36px !important;
+    line-height: 36px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 800;
+    border: 1px solid #cfd6e4;
     border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+    background: #ffffff;
+    min-width: 140px;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
+.cr-table input:focus,
+.cr-table select:focus {
+    border-color: #6b93ff;
     outline: none;
 }
 
+/* ---------------- REMOVE AUTOFILL COLOR ---------------- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
+    transition: background-color 5000s ease-in-out 0s;
+    font-weight: 800;
+}
 
-.table-section {
-    margin-bottom: 18px;
+input:-moz-autofill,
+select:-moz-autofill {
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -moz-text-fill-color: #253858 !important;
+    font-weight: 800;
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
+
+/* ---------------- TYPE DROPDOWN BIGGER ---------------- */
+#cmbtype {
+    height: 42px !important;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 0 12px;
+    min-width: 95px;
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+
+
+/* REMOVE BROWSER AUTOFILL COLOR COMPLETELY */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+
+input:-moz-autofill,
+textarea:-moz-autofill,
+select:-moz-autofill {
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -moz-text-fill-color: #253858 !important;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+
+
+
+
+/* Make all left-side labels in the Debit Note table bold */
+.cr-table td[align="right"] {
+    font-weight: 700 !important;
+    color: #1f2937; /* optional, looks premium */
 }
+
 </style>
 
 </head>
@@ -587,49 +618,143 @@ body {
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
 <div  class='hidden-scrollbar receipt-header'>
-    <div class="table-section"><table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" height="42" align="right">Date</td>
-    <td colspan="2"><div id="jqxDebitNoteDate" name="jqxDebitNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDebitNoteDate"/>'></div>
-    <input type="hidden" id="hidjqxDebitNoteDate" name="hidjqxDebitNoteDate" value='<s:property value="hidjqxDebitNoteDate"/>'/></td>
-    <td width="8%" align="right">Ref. No.</td>
-    <td width="25%"><input type="text" id="txtrefno" name="txtrefno" style="width:40%;" value='<s:property value="txtrefno"/>'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-    <td width="22%" align="right">Doc No.</td>
-    <td width="18%"><input type="text" id="docno" name="txtdebitnotedocno" style="width:50%;" value='<s:property value="txtdebitnotedocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td width="7%" align="right">Type</td>
-    <td width="6%"><select id="cmbtype" name="cmbtype" style="width:100%;" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>'>
-    <option value="AR">AR</option><option value="AP">AP</option><option value="GL">GL</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
-    <td width="14%" align="center"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/></td>
-    <td colspan="4"><input type="text" id="txtaccname" name="txtaccname" style="width:40%;" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Currency</td>
-    <td colspan="2"><select id="cmbcurrency" name="cmbcurrency" style="width:30%;" value='<s:property value="cmbcurrency"/>'  onload="getRatevalue(this.value,$('#jqxDebitNoteDate').val());" onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
-      <option></option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-      <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/></td>
-    <td width="8%" align="right">Rate</td>
-    <td colspan="3"><input type="text" id="txtrate" name="txtrate" onchange="funvalid()" style="width:15%;text-align: right;" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
-    <span id="validrate"></span>
+    <div class="table-section">
+<table class="cr-table">
+
+<tr>
+    <td align="right">Date</td>
+    <td colspan="2">
+        <div id="jqxDebitNoteDate" name="jqxDebitNoteDate"
+             onchange="datechange();" onblur="datechange();"
+             value='<s:property value="jqxDebitNoteDate"/>'></div>
+
+        <input type="hidden" id="hidjqxDebitNoteDate"
+               name="hidjqxDebitNoteDate"
+               value='<s:property value="hidjqxDebitNoteDate"/>'/>
     </td>
-  </tr>
-  <tr>
+
+    <td align="right">Ref. No.</td>
+    <td>
+        <input type="text" id="txtrefno" name="txtrefno"
+               style="width:160px;"
+               value='<s:property value="txtrefno"/>'/>
+
+        &nbsp;&nbsp;
+
+        <button class="myButton" type="button" id="btnvaluechange"
+                name="btnvaluechange" onclick="funwarningopen();">
+            Value Change
+        </button>
+    </td>
+
+    <td align="right">Doc No.</td>
+    <td>
+        <input type="text" id="docno" name="txtdebitnotedocno"
+               style="width:140px;"
+               value='<s:property value="txtdebitnotedocno"/>' tabindex="-1"/>
+    </td>
+</tr>
+
+
+<tr>
+    <td align="right">Type</td>
+
+    <td>
+        <select id="cmbtype" name="cmbtype" style="width:80px;"
+                onchange="clearClientInfo();" value='<s:property value="cmbtype"/>'>
+            <option value="AR">AR</option>
+            <option value="GL">GL</option>
+            <option value="AP">AP</option>
+        </select>
+
+        <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+               value='<s:property value="hidcmbtype"/>'/>
+    </td>
+
+    <td>
+        <input type="text" id="txtaccid" name="txtaccid"
+               style="width:130px;"
+               placeholder="Press F3 to Search"
+               value='<s:property value="txtaccid"/>' 
+               onkeydown="getAccType(event);" />
+    </td>
+
+    <td colspan="4">
+        <input type="text" id="txtaccname" name="txtaccname"
+               style="width:300px;"
+               value='<s:property value="txtaccname"/>' tabindex="-1"/>
+
+        <input type="hidden" id="txtdocno" name="txtdocno"
+               value='<s:property value="txtdocno"/>'/>
+
+        <input type="hidden" id="txttrno" name="txttrno"
+               value='<s:property value="txttrno"/>'/>
+    </td>
+</tr>
+
+
+<tr>
+    <td align="right">Currency</td>
+
+    <td colspan="2">
+        <select id="cmbcurrency" name="cmbcurrency"
+                style="width:120px;"
+                onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
+            <option></option>
+        </select>
+
+        <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
+               value='<s:property value="hidcmbcurrency"/>'/>
+        <input type="hidden" id="hidcurrencytype" name="hidcurrencytype"
+               value='<s:property value="hidcurrencytype"/>'/>
+    </td>
+
+    <td align="right">Rate</td>
+
+    <td colspan="3">
+        <input type="text" id="txtrate" name="txtrate"
+               style="width:100px;text-align:right;"
+               value='<s:property value="txtrate"/>' 
+               onblur="funRoundRate(this.value,this.id);
+                       getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
+        <span id="validrate"></span>
+    </td>
+</tr>
+
+
+<tr>
     <td align="right">Amount</td>
-    <td colspan="2"><input type="text" id="txtamount" name="txtamount" style="width:35%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" /></td>
+
+    <td colspan="2">
+        <input type="text" id="txtamount" name="txtamount"
+               style="width:140px;text-align:right;"
+               value='<s:property value="txtamount"/>' 
+               onblur="funRoundAmt(this.value,this.id);
+                       getBaseAmountFrom();getDrTotal();" />
+    </td>
+
     <td align="right">Base Amount</td>
-    <td colspan="3"><input type="text" id="txtbaseamount" name="txtbaseamount" style="width:15%;text-align: right;" value='<s:property value="txtbaseamount"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
+
+    <td colspan="3">
+        <input type="text" id="txtbaseamount" name="txtbaseamount"
+               style="width:140px;text-align:right;"
+               value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
+    </td>
+</tr>
+
+
+<tr>
     <td align="right">Description</td>
-    <td colspan="6"><input type="text" id="txtdescription" name="txtdescription" style="width:53%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-    </table></div>
+    <td colspan="6">
+        <input type="text" id="txtdescription" name="txtdescription"
+               style="width:420px;"
+               value='<s:property value="txtdescription"/>'/>
+    </td>
+</tr>
+
+</table>
+</div>
+
 
 <div class="cr-table" id="jqxDebitNoteGrid"><jsp:include page="debitNoteGrid.jsp"></jsp:include></div><br/>
 <table class="cr-table" width="100%">

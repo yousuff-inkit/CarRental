@@ -162,25 +162,184 @@ button.icon:disabled { opacity: 0.5; };
     margin-left: 16px;
 }
 
-    .action-bar {
-        display: flex;
-        gap: 14px;
-        padding: 0.5% 2%;
-    }
-    .action-btn {
-        background: #e4e7ed;
-        border: none;
-        color: #253858;
-        padding: 4px 25px;
-        border-radius: 23px;
-        font-size: 15px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background .2s;
-    }
-    .action-btn:hover {
-        background: #cdd9e5;
-    }
+.action-bar {
+    display: flex;
+    gap: 10px;
+    padding: 0.4% 2%;
+}
+
+.action-btn {
+    background: #e4e7ed;
+    border: none;
+    color: #000;
+    padding: 4px 12px;           /* same size, smaller side padding */
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.action-btn:hover {
+    background: #c3ccd8;
+}
+
+.action-btn:active {
+    background: #b6bfcc;
+}
+
+/* SVG ICON SIZE */
+.action-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;   /* icon uses button text color */
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: #1f3b70 !important;
+}
+
+
+
+/* Target only Branch & Currency labels */
+#full label.branch,
+#full label.currency {
+    font-weight: 700 !important;
+    font-size: 14px;
+    color: #253858;
+}
+
+/* Target only Branch & Currency dropdowns */
+#full select#brchName,
+#full select#currency {
+    height: 34px !important;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #b8c7e0;
+    border-radius: 6px;
+    background: #ffffff;
+    width: 150px;           /* increase dropdown width */
+    box-sizing: border-box;
+}
+
+/* Improve spacing ONLY inside this section */
+#full {
+    display: flex;
+    align-items: center;
+    gap: 20px;               /* spacing between each element */
+    padding: 6px 15px;
+}
+
+
+
+
+/* Increase visible dropdown list width */
+#brchName,
+#currency {
+    width: 180px !important;       /* Bigger dropdown box */
+}
+
+/* Increase dropdown OPTION list width */
+#brchName option,
+#currency option {
+    padding: 6px 10px;
+    font-size: 14px;
+    min-width: 180px !important;   /* Ensures dropdown list is wide */
+}
+
+/* For browsers that override list width */
+#brchName:focus,
+#currency:focus {
+    width: 200px !important;
+}
+
+
+
+
+
+
+/* Heading Style */
+#formdet {
+    font-size: 22px;          /* Bigger title */
+    font-weight: 800;         /* Bold */
+    color: #1f2937;           /* Rich heading color */
+    display: block;
+   /* margin-bottom: 18px;  */    /* GAP between heading and buttons */
+}
+
+/* Arrange heading & top button row with spacing */
+.HeadIcons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px; /* gap below buttons */
+}
+
+/* Make ONLY Branch & Currency labels bold */
+.HeadIcons label.branch,
+.HeadIcons label.currency {
+    font-weight: 700 !important;
+}
+
+/* Enlarge branch & currency dropdown */
+#brchName,
+#currency {
+    height: 38px;
+    padding: 0 10px;
+    font-weight: 600;
+    border-radius: 6px;
+    min-width: 120px;
+}
+
+
+
+
+/* Reduce space between Heading and Buttons */
+#formdet {
+    margin-bottom: 0 !important;   /* remove extra gap below heading */
+    padding-bottom: 0 !important;
+}
+
+.HeadIcons {
+    margin-bottom: 4px !important; /* reduce gap below the Branch/Currency bar */
+    padding-bottom: 4px !important;
+}
+
+.action-bar {
+    margin-top: 2px !important;      /* remove top gap above buttons */
+    padding-top: 4px !important;
+}
+
+
+
+
+
+/* REMOVE unwanted ERP padding/margin at top */
+#mainBG.homeContent {
+    padding-top: 2px !important;
+    margin-top: 2px !important;
+}
+
+/* Also remove top space from the first HeadIcons bar */
+#full.HeadIcons {
+    margin-top: 2px !important;
+    padding-top: 2px !important;
+}
+
+
+html, body {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -1648,7 +1807,7 @@ function setapprbrch(branchval){
 <div class="HeadIcons" id="full">
 	<font size=5px style="width: 100%"><label id="formdet" name="formdet" ></label></font>
 
-    <div class="HeadIcons" id="full">
+   
         <label class="branch">Branch</label>
         <select name="brchName" id="brchName" onChange="getCurr(this.value)"></select>
         <input type="text" name="brchNames" id="brchNames" readonly="readonly" />
@@ -1660,7 +1819,7 @@ function setapprbrch(branchval){
         <label id="savemsg"></label>
         <label id="errormsg"></label>
         <!-- hidden fields as needed -->
-    </div>
+  
 <%--			<label class="branch">Branch&nbsp;&nbsp;</label>--%>
 <%--			<select name="brchName" id="brchName" onChange="getCurr(this.value)">--%>
 <%--			</select>--%>
@@ -1682,25 +1841,66 @@ function setapprbrch(branchval){
 	<!-- 	If Add=1,Edit=2 -->
 		</div>
 
+<div class="action-bar">
 
-    <div class="action-bar">
-        <button type="button" class="action-btn" id="btnApproval" title="Document Status" onclick="funApproveBtn()">Approval</button>
-        <button type="button" class="action-btn" id="btnClose" title="Close Form" onclick="funCloseBtn()">Close</button>
-        <button type="button" class="action-btn" id="btnCreate" title="Create a new Document" onclick="funCreateBtn()">Create</button>
-        <button type="button" class="action-btn" id="btnEdit" title="Change current Document" onclick="funEditBtn()">Edit</button>
-        <button type="button" class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>
-<%--        <button class="action-btn" id="btnPrint" title="Print current Document" onclick="funPrintBtn()">Print</button>--%>
-<%--        <button class="action-btn" id="btnExcel" title="Export current Document to Excel" onclick="funExcelBtn()">Excel</button>--%>
-        <button type="button" class="action-btn" id="btnDelete" title="Delete current Document" onclick="funDeleteBtn()">Delete</button>
-        <button type="button" class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden="true">Save</button>
-        <button type="button" class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden="true">Cancel</button>
-        <button  type="button" class="action-btn" id="btnSearch" title="Search a Document" onclick="funSearchBtn()">Search</button>
-        <button type="button" class="action-btn" id="btnAttach" title="Attachment" onclick="funAttachBtn()">Attach</button>
-<%--        <button class="action-btn" id="btnCosting" title="Costing" onclick="funCostingBtn()">Costing</button>--%>
-<%--        <button class="action-btn" id="btnGuideLine" title="Guideline" onclick="funGuideLineBtn()">Guideline</button>--%>
-<%--        <button class="action-btn" id="btnSendmail" title="Send Document to Client" onclick="funSendMail()">Send Mail</button>--%>
-<%--        <button class="action-btn" id="btnTerms" title="Terms and Conditions" onclick="funTermsCond()">Terms</button>--%>
-    </div>
+<button type="button" class="action-btn" id="btnApproval" onclick="funApproveBtn()">
+    <svg viewBox="0 0 20 20"><path d="M7.629 15.314l-4.71-4.71 1.414-1.415 3.296 3.296 8.042-8.042 1.414 1.414z"/></svg>
+    Approval
+</button>
+
+<button type="button" class="action-btn" id="btnClose" onclick="funCloseBtn()">
+    <svg viewBox="0 0 20 20"><path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/></svg>
+    Close
+</button>
+
+<button type="button" class="action-btn" id="btnCreate" onclick="funCreateBtn()">
+    <svg viewBox="0 0 20 20"><path d="M9 3h2v14H9zM3 9h14v2H3z"/></svg>
+    Create
+</button>
+
+<button type="button" class="action-btn" id="btnEdit" onclick="funEditBtn()">
+    <svg viewBox="0 0 20 20"><path d="M3 14.25V17h2.75l8.06-8.06-2.75-2.75L3 14.25zm12.71-7.04a1 1 0 0 0 0-1.41l-1.5-1.5a1 1 0 0 0-1.41 0l-1.29 1.29 2.75 2.75 1.45-1.13z"/></svg>
+    Edit
+</button>
+
+<button type="button" class="action-btn" id="btnPrint" onclick="funPrintBtn()">
+    <svg viewBox="0 0 20 20"><path d="M6 2h8v4H6V2zm10 5H4c-1.1 0-2 .9-2 2v5h4v4h8v-4h4v-5c0-1.1-.9-2-2-2z"/></svg>
+    Print
+</button>
+
+<button type="button" class="action-btn" id="btnDelete" onclick="funDeleteBtn()">
+    <svg viewBox="0 0 20 20"><path d="M6 8h1v9H6V8zm3 0h1v9H9V8zm3 0h1v9h-1V8zm2-5h-3l-1-1h-4L8 3H5v2h10V3z"/></svg>
+    Delete
+</button>
+
+<button type="button" class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden>
+    <svg viewBox="0 0 20 20">
+        <path d="M17 3H3v14h14V3zm-4 12H7v-2h6v2zm0-4H7V7h6v4z"/>
+    </svg>
+    Save
+</button>
+
+<button type="button" class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden>
+    <svg viewBox="0 0 20 20">
+        <path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/>
+    </svg>
+    Cancel
+</button>
+
+
+
+<button type="button" class="action-btn" id="btnSearch" onclick="funSearchBtn()">
+    <svg viewBox="0 0 20 20"><path d="M12.9 14.32a7 7 0 1 1 1.41-1.41l4.39 4.39-1.41 1.41-4.39-4.39zM9 14A5 5 0 1 0 9 4a5 5 0 0 0 0 10z"/></svg>
+    Search
+</button>
+
+<button type="button" class="action-btn" id="btnAttach" onclick="funAttachBtn()">
+    <svg viewBox="0 0 20 20"><path d="M7 13.5V6a3 3 0 1 1 6 0v7.5a4.5 4.5 0 1 1-9 0V7h2v6.5a2.5 2.5 0 1 0 5 0V6a1 1 0 1 0-2 0v7.5"/></svg>
+    Attach
+</button>
+
+</div>
+
     <div id="attachment-container"></div>
 <%--    <div>--%>
 <%--        <button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >--%>

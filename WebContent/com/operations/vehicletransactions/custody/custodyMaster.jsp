@@ -8,12 +8,189 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
- <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-</style> 
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 0 0 5px;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.triple-input {
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap; /* Allows sections to wrap on smaller screens */
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%; /* Ensures blocks have a minimum size before wrapping */
+    }
+
+    .full-width-block {
+        flex: 1 1 100%; /* forces this block to take full width */
+    }
+
+
+    .section-block h2, .section-block legend {
+        font-size: 1.1rem;
+
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+    }
+
+    .section-block legend {
+        border: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+
+    /* CUSTOM STYLES FOR CUSTODY */
+    /* Removed custom background colors */
+
+    .inline-label-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .inline-label-input label {
+        text-align: left;
+        padding-right: 0;
+        width: auto;
+    }
+
+    .two-col-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-items: center;
+    }
+
+</style>
 </head>
 <script type="text/javascript">
 $(document).ready(function () { 
@@ -1484,426 +1661,295 @@ win.focus();
 			window.parent.formCode.value="RPL";
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
-	<br/>
+
 <div class='hidden-scrollbar'>
-<fieldset>
-      <legend>Vehicle  Custody</legend>
-      <%-- <table width="100%" >
-        <tr>
-          <td align="right">Date</td> 
-          <td width="7%"><div id="date" name="date" value='<s:property value="date"/>'></div>
-		    </td>
-          <td width="6%" align="right">Rental Type</td>
-          <td width="7%"><select id="cmbrentaltype" name="cmbrentaltype"  onchange="funcleardatas()"       value='<s:property value="cmbrentaltype"/>'> 
-            <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
-          </select></td>
-          <td width="5%" align="right">Ref No</td>
-          <td width="8%" align="left"><input type="text" id="refno" name="refno" value='<s:property value="refno"/>' placeholder="Press F3 to Search" readonly onkeydown="getAgmtno(event);"/></td>
-          <td colspan="2" align="left"><input type="text" id="refname" name="refname" style="width:100%;" value='<s:property value="refname"/>' readonly/></td>
-          <td width="7%" align="right">Ref Date</td>
-          <td width="10%" align="right"><div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div></td>
-                   <td width="5%" align="right"></td>
-          <td width="8%" align="left"></td>
-       
-          <td align="right">Doc No</td>
-          <td colspan="2"><input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/></td>
-        </tr>
-        <tr>
-          <td width="6%" align="right">Fleet No</td> 
-          <td colspan="5" align="left"><input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' readonly /> 
-            <input type="text" id="txtfleetname" name="txtfleetname" style="width:72.2%;" value='<s:property value="txtfleetname"/>' readonly/></td>
-          <td width="7%" align="right">Date Out</td>
-          <td width="11%" align="left"><div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div></td>
-     
-          <td align="right">Time Out</td>
-          <td align="left"><div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div></td>
-        
-          <td align="right">Km Out</td>
-          <td align="left"><input type="text" id="outkm" name="outkm" style="width:68%;" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event)"/></td>
-         
-          <td width="4%" align="right">Fuel</td>
-          <td width="9%" align="left"><select id="cmbfuel" name="cmbfuel" value='<s:property value="cmbfuel"/>'> 
-            <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-          </select></td>
-            
-        </tr>
-        <tr>
-          <td align="right">Branch</td>
-          <td colspan="3" align="left"><input type="text" name="txtbranch" id="txtbranch" readonly value='<s:property value="txtbranch"/>'/></td>
-            
-          <td align="right">Location</td>
-          <td align="left"><input type="text" name="txtlocation" id="txtlocation" readonly value='<s:property value="txtlocation"/>'/></td>
-          
-          <td align="right">Tr. Reason</td>
-          <td align="left"><input type="text" id="reason" name="reason" style="width:95%;" readonly  value='<s:property value="reason"/>'></td>
-          
-            
-          <td align="right"></td>
-          <td></td>
- 
-          <td align="right">&nbsp;</td>
-          <td>&nbsp;</td>
-       
-          <td align="right">&nbsp;</td>
-          <td align="left">&nbsp;</td>
-        </tr>
-      </table> --%>
-        
-    <table width="100%" >
-        <tr>
-          <td align="right">Date</td> 
-          <td width="6%"><div id="date" name="date" value='<s:property value="date"/>'></div>
-		    </td>
-          <td width="4%" align="right">Branch</td>
-          <td width="10%" align="right"><select name="searchbranch" id="searchbranch" value='<s:property value="searchbranch"/>' style="width:100%;" ><option value="">--Select--</option></select>
-          </td>
-          <td width="7%" align="right">Rental Type</td>
-          <td width="6%"><select id="cmbrentaltype" name="cmbrentaltype"  onchange="funcleardatas()"   value='<s:property value="cmbrentaltype"/>'> 
-            <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
-          </select></td>
-          <td width="7%" align="right">Ref No</td>
-          <td width="7%" align="left"><input type="text" id="refno" name="refno" value='<s:property value="refno"/>' placeholder="Press F3 to Search" readonly onkeydown="getAgmtno(event);"/></td>
-          <td colspan="2" align="left"><input type="text" id="refname" name="refname" style="width:100%;" value='<s:property value="refname"/>' readonly/></td>
-          <td width="6%" align="right">Ref Date</td>
-          <td width="6%" align="right"><div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div></td>
-                   <td width="6%" align="right"></td>
-          <td align="right">Doc No</td>
-          <td colspan="2"><input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/></td>
-        </tr>
-        <tr>
-          <td width="6%" align="right">Fleet No</td> 
-          <td colspan="7" align="left"><input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' readonly /> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="text" id="txtfleetname" name="txtfleetname" style="width:70%;" value='<s:property value="txtfleetname"/>' readonly/></td>
-          <td width="7%" align="right">Date Out</td>
-          <td width="9%" align="left"><div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div></td>
-     
-          <td align="right">Time Out</td>
-          <td align="left"><div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div></td>
-        
-          <td align="right">&nbsp;</td>
-          <td width="6%" align="right">&nbsp;</td>
-          <td width="9%" align="left">&nbsp;</td>
-            
-        </tr>
-        <tr>
-          <td align="right">Branch</td>
-          <td colspan="5" align="left"><input type="text" name="txtbranch" id="txtbranch" readonly value='<s:property value="txtbranch"/>'/>     
-             &nbsp;&nbsp;&nbsp;Location 
-               <input type="text" name="txtlocation" id="txtlocation" style="width:45%;" readonly value='<s:property value="txtlocation"/>'/></td>
-            
-          <td align="right">Tr. Reason</td>
-          <td align="left"><input type="text" id="reason" name="reason" style="width:95.6%;" readonly  value='<s:property value="reason"/>'></td>
-          
-          <td align="right">Km Out</td>
-          <td align="left"><input type="text" id="outkm" name="outkm" style="width:99%;" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event)"/></td>
-          
-            
-          <td align="right">Fuel</td>
-          <td><select id="cmbfuel" name="cmbfuel" value='<s:property value="cmbfuel"/>'>
-            <option value="">--Select--</option>
-            <option value=0.000>Level 0/8</option>
-            <option value=0.125>Level 1/8</option>
-            <option value=0.250>Level 2/8</option>
-            <option value=0.375>Level 3/8</option>
-            <option value=0.500>Level 4/8</option>
-            <option value=0.625>Level 5/8</option>
-            <option value=0.750>Level 6/8</option>
-            <option value=0.875>Level 7/8</option>
-            <option value=1.000>Level 8/8</option>
-          </select></td>
- 
-          <td align="right">&nbsp;</td>
-          <td align="right">&nbsp;</td>
-          <td align="left">&nbsp;</td>
-        </tr>
-		  <tr>
-          <td align="right">Description</td>
-          <td colspan="11" align="left"><input type="text" name="descnew" id="descnew" value='<s:property value="descnew"/>' style="width:100%;"></td>
-          <td align="right">&nbsp;</td>
-          <td align="right">&nbsp;</td>
-          <td align="left">&nbsp;</td>
-        </tr>
-      </table>
-    </fieldset>
-    <br/>
-      <fieldset style="background-color:#ffe4e1;"><legend><input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();"><b>Collection Details</b></legend>
-    <table width="100%" id="collection"  >
-  <tr>
-   <td width="10%" align="right">Driver</td> 
-    <td width="18%" align="left"><input type="text" name="collectiondriver" id="collectiondriver" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);"></td>
-    
-      <td align="right" width="9%">&nbsp;</td>
-    <td align="left" width="12%">&nbsp;</td> 
-    
-    <td align="right" width="10%">&nbsp;</td> 
-    <td align="left" width="18%">&nbsp;</td>
-   
-    <td align="right" width="5%">&nbsp;</td>
-    <td align="left" width="10%">&nbsp;</td>
-    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    </tr>
-    <tr>
-    <td align="right" width="10%">Date</td>
-    <td align="left" width="18%"><div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div></td>
-    
-    <td align="right" width="9%">Time</td>
-    <td align="left" width="12%"><div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div></td>
-   
-    <td align="right" width="10%">KM</td>
-    <td align="left" width="18%"><input type="text" name="colletedkm"  style="width:60%;" id="colletedkm" value='<s:property value="colletedkm"/>'onkeypress="javascript:return isNumber (event)"></td>
-    <td align="right" width="5%">Fuel</td>
-    <td align="left" width="10%"><select name="collectedfuel" id="collectedfuel" value='<s:property value="collectedfuel"/>'>
-    <option value="">--Select--</option>
-    <option value=0.000>Level 0/8</option>
-    <option value=0.125>Level 1/8</option>
-    <option value=0.250>Level 2/8</option>
-    <option value=0.375>Level 3/8</option>
-    <option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option>
-    <option value=0.750>Level 6/8</option>
-    <option value=0.875>Level 7/8</option>
-    <option value=1.000>Level 8/8</option></select>
 
-    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-     <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  </tr>
-</table>
-</fieldset>
-    <fieldset style="background-color:#FFFAFA;" id="collectfield"><legend><label><b>Branch In</b></label></legend>
-    <table width="100%" >
-  <tr>
- 
- 
-<td width="10%" align="right">Branch</td>
-    <td width="18%" align="left"><select name="inbranch" id="inbranch" value='<s:property value="inbranch"/>' style="width:60%;" onchange="getLoc(this.value);"><option value="">--Select--</option></select></td>
-   
-    <td width="9%" align="right">Location</td>
-    <td width="12%" align="left"><select name="inlocation" id="inlocation" value='<s:property value="inlocation"/>' style="width:99%;"><option value="">--Select--</option></select></td>
+    <div class="section-block full-width-block">
+        <h2>Vehicle Custody</h2>
 
-    
-    <td align="right" width="10%">&nbsp;</td>
-    <td align="left" width="18%">&nbsp;</td>  
-   
- <td align="right" width="5%">&nbsp;</td>
-    <td align="left" width="10%">&nbsp;</td>
-    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  
- </tr>
- <tr>
+        <div class="form-group dual-input" style="grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;">
+            <label>Date</label>
+            <div>
+                <div id="date" name="date" value='<s:property value="date"/>'></div>
+            </div>
 
- 
-    <td align="right" width="10%">Date</td>
-    <td align="left" width="18%"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
-   
-    <td align="right" width="9%">Time</td>
-    <td align="left" width="12%"><div id="intime" name="intime" value='<s:property value="intime"/>' ></div></td>
-    
-    <td align="right" width="10%">KM</td>
-    <td align="left" width="18%"><input type="text" name="binkm" style="width:60%;"  id="binkm" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)"></td>
-    <td align="right" width="5%">Fuel</td>
-    <td align="left" width="10%"><select name="binfuel" id="binfuel" value='<s:property value="binfuel"/>'>
-      <option value="">--Select--</option>
-    <option value=0.000>Level 0/8</option>
-    <option value=0.125>Level 1/8</option>
-    <option value=0.250>Level 2/8</option>
-    <option value=0.375>Level 3/8</option>
-    <option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option>
-    <option value=0.750>Level 6/8</option>
-    <option value=0.875>Level 7/8</option>
-    <option value=1.000>Level 8/8</option></select>
-    </td>
+            <label>Branch</label>
+            <select name="searchbranch" id="searchbranch" value='<s:property value="searchbranch"/>'><option value="">--Select--</option></select>
 
-    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-     </tr>
-  </table>
-</fieldset>
-<fieldset style="background-color:#ECF8E0"><legend><b>Branch Out</b></legend>
-    <table width="100%" id="branchout" >
-  <tr>
+            <label>Doc No</label>
+            <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Rental Type</label>
+            <select id="cmbrentaltype" name="cmbrentaltype" onchange="funcleardatas()" value='<s:property value="cmbrentaltype"/>'>
+                <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
+            </select>
+
+            <label>Ref No</label>
+            <div class="two-col-group">
+                <input type="text" id="refno" name="refno" value='<s:property value="refno"/>' placeholder="Press F3 to Search" readonly onkeydown="getAgmtno(event);"/>
+                <input type="text" id="refname" name="refname" value='<s:property value="refname"/>' readonly/>
+            </div>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Ref Date</label>
+            <div>
+                <div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div>
+            </div>
+
+            <label>Fleet No</label>
+            <div class="two-col-group">
+                <input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' readonly />
+                <input type="text" id="txtfleetname" name="txtfleetname" value='<s:property value="txtfleetname"/>' readonly/>
+            </div>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Date Out</label>
+            <div>
+                <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
+            </div>
+
+            <label>Time Out</label>
+            <div>
+                <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
+            </div>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Km Out</label>
+            <input type="text" id="outkm" name="outkm" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event)"/>
+
+            <label>Fuel</label>
+            <select id="cmbfuel" name="cmbfuel" value='<s:property value="cmbfuel"/>'>
+                <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+            </select>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Branch</label>
+            <input type="text" name="txtbranch" id="txtbranch" readonly value='<s:property value="txtbranch"/>'/>
+
+            <label>Location</label>
+            <input type="text" name="txtlocation" id="txtlocation" readonly value='<s:property value="txtlocation"/>'/>
+        </div>
+
+        <div class="form-group">
+            <label>Tr. Reason</label>
+            <input type="text" id="reason" name="reason" readonly value='<s:property value="reason"/>'>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="descnew" id="descnew" value='<s:property value="descnew"/>'>
+        </div>
+    </div>
 
 
-    <td align="right" width="85">Date</td>
-    <td align="left" width="118"><div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div></td> 
+    <div class="section-row">
+        <div class="section-block" id="collection">
+            <h2>
+                <input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();">
+                <b>Collection Details</b>
+            </h2>
 
-    <td align="right" width="21">Time</td>
-    <td align="left" width="98"><div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div></td> 
+            <div class="form-group">
+                <label>Driver</label>
+                <input type="text" name="collectiondriver" id="collectiondriver" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);">
+            </div>
 
-    <td align="right" width="88">KM</td>
-    <td align="left" width="151"><input type="text" name="boutkm" style="width:61%;"  id="boutkm" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)"></td>
-    <td align="right" width="46">Fuel</td>
-    <td align="left" width="98"><select name="boutfuel" id="boutfuel" value='<s:property value="boutfuel"/>'>
-      <option value="">--Select--</option>
-      <option value=0.000>Level 0/8</option>
-      <option value=0.125>Level 1/8</option>
-      <option value=0.250>Level 2/8</option>
-      <option value=0.375>Level 3/8</option>
-      <option value=0.500>Level 4/8</option>
-      <option value=0.625>Level 5/8</option>
-      <option value=0.750>Level 6/8</option>
-      <option value=0.875>Level 7/8</option>
-      <option value=1.000>Level 8/8</option></select>
-    </td>
-   <td width="308" colspan="2">Delivery&nbsp;<select name="delyesorno" id="delyesorno" value='<s:property value="delyesorno"/>'> 
-      <option value="">--Select--</option>
-           <option value=1>YES</option>
-                <option value=0>NO</option>
-      </select>&nbsp;&nbsp;&nbsp;&nbsp;
-   <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()"></td>
-  
-</tr>
-  <tr>
-    <td align="right">Description</td>
-    <td colspan="9" align="left"><input type="text" name="outdesc" id="outdesc" value='<s:property value="outdesc"/>' style="width:95%;"></td>
-    </tr>
-    </table>
-<br/>
-</fieldset>
-    <fieldset style="background-color:#e6e6fa;" id="deliveryfield"><legend><input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();"><label for="chkdelivery"><b>Delivery</b></label></legend>
-<table width="100%" id="delivery" >
-<tr>
-  <td align="right" width="11%">Driver</td> 
-    <td align="left" width="16%"><input type="text" name="deldriver" id="deldriver" readonly value='<s:property value="deldriver"/>' placeholder="Press F3 to Search" onkeydown="getDriver(event,2);"></td>
- 
-    <td align="right" width="13%">Deliver To</td>
-    <td align="left" width="15%"><input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'></td>
-   
-    
-    <td align="right" width="6%">&nbsp;</td>
-    <td align="left" width="18%">&nbsp;</td>
-   
-   <td align="right" width="5%">&nbsp;</td>
-    <td align="left" width="10%">&nbsp;</td>
-    <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-     <td width="20%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    </tr>
-    <tr>
-    <td align="right" width="10%">Date</td>
-    <td align="left" width="16%"><div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div></td>
-    <td align="right" width="11%">Time</td>
-    <td align="left" width="15%"><div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div></td>
-   
-    <td align="right" width="6%">KM</td>
-    <td align="left" width="18%"><input type="text" name="delkm" style="width:65%;"  id="delkm" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)"></td>
-    <td align="right" width="7%">Fuel</td>
-    <td align="left" width="10%"><select name="delfuel" id="delfuel" value='<s:property value="delfuel"/>'>
-    <option value="">--Select--</option>
-    <option value=0.000>Level 0/8</option>
-    <option value=0.125>Level 1/8</option>
-    <option value=0.250>Level 2/8</option>
-    <option value=0.375>Level 3/8</option>
-    <option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option>
-    <option value=0.750>Level 6/8</option>
-    <option value=0.875>Level 7/8</option>
-    <option value=1.000>Level 8/8</option>
-    </select>
-    </td>
-     <td align="left" width="18%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-   <td align="left" width="20%">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()"></td>
-    
-  </tr>
-</table>
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div></div>
 
-</fieldset>
-</div>
+                <label>Time</label>
+                <div><div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="colletedkm" id="colletedkm" value='<s:property value="colletedkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="collectedfuel" id="collectedfuel" value='<s:property value="collectedfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="section-block" id="collectfield">
+            <h2><b>Branch In</b></h2>
+
+            <div class="form-group dual-input">
+                <label>Branch</label>
+                <select name="inbranch" id="inbranch" value='<s:property value="inbranch"/>' onchange="getLoc(this.value);"><option value="">--Select--</option></select>
+
+                <label>Location</label>
+                <select name="inlocation" id="inlocation" value='<s:property value="inlocation"/>'><option value="">--Select--</option></select>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="indate" name="indate" value='<s:property value="indate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="intime" name="intime" value='<s:property value="intime"/>' ></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="binkm" id="binkm" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="binfuel" id="binfuel" value='<s:property value="binfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-row">
+        <div class="section-block" id="branchout">
+            <h2><b>Branch Out</b></h2>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="boutkm" id="boutkm" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="boutfuel" id="boutfuel" value='<s:property value="boutfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Delivery</label>
+                <div class="inline-label-input" style="justify-content: space-between;">
+                    <select name="delyesorno" id="delyesorno" value='<s:property value="delyesorno"/>' style="width: 50%;">
+                        <option value="">--Select--</option>
+                        <option value=1>YES</option>
+                        <option value=0>NO</option>
+                    </select>
+                    <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" name="outdesc" id="outdesc" value='<s:property value="outdesc"/>'>
+            </div>
+        </div>
+
+
+        <div class="section-block" id="deliveryfield">
+            <h2>
+                <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
+                <label for="chkdelivery"><b>Delivery</b></label>
+            </h2>
+
+            <div class="form-group">
+                <label>Driver</label>
+                <input type="text" name="deldriver" id="deldriver" readonly value='<s:property value="deldriver"/>' placeholder="Press F3 to Search" onkeydown="getDriver(event,2);">
+            </div>
+
+            <div class="form-group">
+                <label>Deliver To</label>
+                <input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div><div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div></div>
+
+                <label>Time</label>
+                <div><div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div></div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="delkm" id="delkm" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)">
+
+                <label>Fuel</label>
+                <select name="delfuel" id="delfuel" value='<s:property value="delfuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()" style="width: auto;">
+            </div>
+        </div>
+    </div>
 
 <input type="hidden" name="masterrefno" id="masterrefno" value='<s:property value="masterrefno"/>'>
-
-<input type="hidden" name="searchbranchval" id="searchbranchval" value='<s:property value="searchbranchval"/>'> 
-
-
-
-<input type="hidden" name="branchoutval" id="branchoutval" value='<s:property value="branchoutval"/>'> <!-- for branch out burrion disabled val -->
-<input type="hidden" name="delyornval" id="delyornval" value='<s:property value="delyornval"/>'> <!-- del s or n val -->
+<input type="hidden" name="searchbranchval" id="searchbranchval" value='<s:property value="searchbranchval"/>'>
+<input type="hidden" name="branchoutval" id="branchoutval" value='<s:property value="branchoutval"/>'>
+<input type="hidden" name="delyornval" id="delyornval" value='<s:property value="delyornval"/>'>
 <input type="hidden" name="clientnumbers" id="clientnumbers" value='<s:property value="clientnumbers"/>'>
-<!-- 
-main set value fields  -->
-
-<input type="hidden" name="hidedate" id="hidedate" value='<s:property value="hidedate"/>'> 
+<input type="hidden" name="hidedate" id="hidedate" value='<s:property value="hidedate"/>'>
 <input type="hidden" name="hiderefdate" id="hiderefdate" value='<s:property value="hiderefdate"/>'>
 <input type="hidden" name="hideroutdate" id="hideroutdate" value='<s:property value="hideroutdate"/>'>
-
 <input type="hidden" name="hidertimeout" id="hidertimeout" value='<s:property value="hidertimeout"/>'>
-
 <input type="hidden" name="rfuelval" id="rfuelval" value='<s:property value="rfuelval"/>'>
 <input type="hidden" name="renttypeval" id="renttypeval" value='<s:property value="renttypeval"/>'>
-
-
-<!-- main collection and in  -->
-
-
-<input type="hidden" name="hidcollecteddate" id="hidcollecteddate" value='<s:property value="hidcollecteddate"/>'> 
+<input type="hidden" name="hidcollecteddate" id="hidcollecteddate" value='<s:property value="hidcollecteddate"/>'>
 <input type="hidden" name="hidcollectedTime" id="hidcollectedTime" value='<s:property value="hidcollectedTime"/>'>
 <input type="hidden" name="hidcollectedFuelval" id="hidcollectedFuelval" value='<s:property value="hidcollectedFuelval"/>'>
-
 <input type="hidden" name="hideIndate" id="hideIndate" value='<s:property value="hideIndate"/>'>
-<input type="hidden" name=hideIntime id="hideIntime" value='<s:property value="hideIntime"/>'>
+<input type="hidden" name="hideIntime" id="hideIntime" value='<s:property value="hideIntime"/>'>
 <input type="hidden" name="inFuelval" id="inFuelval" value='<s:property value="inFuelval"/>'>
-
-
-
-<!-- for branch -->
-<input type="hidden" name="mainbranchid" id="mainbranchid" value='<s:property value="mainbranchid"/>'>              
+<input type="hidden" name="mainbranchid" id="mainbranchid" value='<s:property value="mainbranchid"/>'>
 <input type="hidden" name="mainlocationid" id="mainlocationid" value='<s:property value="mainlocationid"/>'>
 <input type="hidden" name="infleettrancode" id="infleettrancode" value='<s:property value="infleettrancode"/>'>
-
-
-
-<!-- for   branchin-->
-<input type="hidden" name="hidebranch" id="hidebranch" value='<s:property value="hidebranch"/>'> 
+<input type="hidden" name="hidebranch" id="hidebranch" value='<s:property value="hidebranch"/>'>
 <input type="hidden" name="hidelocation" id="hidelocation" value='<s:property value="hidelocation"/>'>
-
-
-<!-- out -->
 <input type="hidden" name="hidoutdate" id="hidoutdate" value='<s:property value="hidoutdate"/>'>
-<input type="hidden" name=hidouttime id="hidouttime" value='<s:property value="hidouttime"/>'>
+<input type="hidden" name="hidouttime" id="hidouttime" value='<s:property value="hidouttime"/>'>
 <input type="hidden" name="outfuelval" id="outfuelval" value='<s:property value="outfuelval"/>'>
-
-
-<!-- del --> 
-<input type="hidden" name="hiddeldate" id="hiddeldate" value='<s:property value="hiddeldate"/>'> 
+<input type="hidden" name="hiddeldate" id="hiddeldate" value='<s:property value="hiddeldate"/>'>
 <input type="hidden" name="hiddeltime" id="hiddeltime" value='<s:property value="hiddeltime"/>'>
 <input type="hidden" name="hiddelfuelval" id="hiddelfuelval" value='<s:property value="hiddelfuelval"/>'>
-
-
-<!-- driver ids -->
-
-<input type="hidden" name="colldriverid" id="colldriverid" value='<s:property value="colldriverid"/>'> 
+<input type="hidden" name="colldriverid" id="colldriverid" value='<s:property value="colldriverid"/>'>
 <input type="hidden" name="deldriverid" id="deldriverid" value='<s:property value="deldriverid"/>'>
-
-
-<!-- set collection tickval -->
 <input type="hidden" name="collectintickval" id="collectintickval" value='<s:property value="collectintickval"/>'>
 <input type="hidden" name="delchkval" id="delchkval" value='<s:property value="delchkval"/>'>
-
-
-<!-- validate out or in  for brachin-->
-<div  hidden="true" id="hidevmovedate" name="hidevmovedate" value='<s:property value="hidevmovedate"/>'></div>
-
+<div hidden="true" id="hidevmovedate" name="hidevmovedate" value='<s:property value="hidevmovedate"/>'></div>
 <div hidden="true" id="hidevmovetime" name="hidevmovetime" value='<s:property value="hidevmovetime"/>'></div>
 <input type="hidden" name="hidevmovekm" id="hidevmovekm" value='<s:property value="hidevmovekm"/>'>
-
-
-
-
-
-
-
 <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
 <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
 <input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+
+</div>
 </form>
 <div id="collectionwindow">
-   <div ></div>
+   <div ></div>
 </div>
 .<div id="agmtnowindow">
-   <div ></div>
+   <div ></div>
 </div>
 </div>
 

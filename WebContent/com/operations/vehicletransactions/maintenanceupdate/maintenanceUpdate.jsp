@@ -11,13 +11,290 @@
 <link href="../../../../css/body.css" media="screen" rel="stylesheet" type="text/css" />
  -->
  <jsp:include page="../../../../includes.jsp"></jsp:include>
- <style>
+<style>
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 130vh;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+}
+
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
+#txtStatus {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e67e22;
+}
+
+/* ------------------------------
+   FORM ROWS LAYOUT (FIXED)
+------------------------------ */
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size:1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Special case: One label with two equal-width inputs */
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
+
+.form-group.single-label-dual-input input[type="text"]:first-of-type {
+    width: 100%;
+}
+
+.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
+    width: 100%;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 30px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* Special handling for the "to-account-row" - all items in one line */
+.to-account-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;       /* Prevent wrapping → keeps everything in one line */
+    gap: 16px;               /* Space between elements */
+    margin-left: -12px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.to-account-row label {
+    white-space: nowrap;     /* Prevent label text from breaking */
+    font-weight: 600;
+    min-width: 120px;        /* You can adjust for label alignment */
+}
+
+.to-account-row input[type="text"],
+.to-account-row select,
+.to-account-row div[id$="Date"] {
+    height: 32px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #d1d1d1;
+}
+
+.to-account-row select {
+    width: 150px;            /* Adjust based on your design */
+}
+
+.to-account-row input[type="text"] {
+    width: 180px;            /* Default width */
+}
+
+/* If you want some inputs wider */
+#garagemaster { width: 320px !important; }
 
 
-form label.error {
-color:red;
-  font-weight:bold;
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
 
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
+}
+
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+/* Hide scrollbars (but allow scrolling) */
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+/* ------------------------------
+   ERROR LABELS
+------------------------------ */
+
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
+
+/* ------------------------------
+   APPROVAL TABLE
+------------------------------ */
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
 }
 </style>
 <script type="text/javascript">
@@ -614,18 +891,10 @@ function nextserdueValidate()
 } */
 </script>
 
-<%--   <style>
-.hidden-scrollbar {
-  /* // overflow: auto; */
-  height: 530px;
-    overflow-x: hidden;
-    
-} 
-
-</style>  --%>   
+ 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrolbar homeContent" data-type="background">
 <form id="frmmaint" action="saveMaint" name="maintUpdate" method="post" autocomplete="OFF">
 <!-- <div class='hidden-scrollbar'>   -->
 <jsp:include page="../../../../header.jsp" /><br/>
@@ -634,47 +903,58 @@ function nextserdueValidate()
 
 <fieldset>
 <legend>Maintenance Update</legend> 
-<table width="100%" >
-<tr>
-<td width="5%" align="right">Date</td> 
-<td width="5%" align="left"><div id="maintainceDate" name="maintainceDate"  value='<s:property value="date_accountmaster"/>'></div>
-<input type="hidden" id="hidmaintainceDate" name="hidmaintainceDate" value='<s:property value="hidmaintainceDate"/>'>
+<div class=section-block">
+<div class="form-group dual-input">
+<label>Date</label>
+<div id="maintainceDate" name="maintainceDate"  value='<s:property value="date_accountmaster"/>'></div><input type="hidden" id="hidmaintainceDate" name="hidmaintainceDate" value='<s:property value="hidmaintainceDate"/>'>
 
-</td>
-<td width="23.7%" align="right">Fleet No</td> <td width="11%" align="left"><input type="text" id="mtfleetno" name="mtfleetno" style="width:85%;" placeholder="Press F3 To Search"    value='<s:property value="mtfleetno"/>' onkeydown="getfleet(event)"></td>
-<td align="right" width="8.5%">Name</td> <td align="left" width="30%"><input type="text" id="mtflname" style="width:90%;" tabindex="-1" name="mtflname" value='<s:property value="mtflname"/>'></td>
+<label>Fleet No</label>
+<input type="text" id="mtfleetno" name="mtfleetno" style="width:85%;" placeholder="Press F3 To Search"    value='<s:property value="mtfleetno"/>' onkeydown="getfleet(event)">
+</div>
 
-<td align="right" width="15%"> Doc No</td> <td align="left"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'></td>
+<div class="form-group dual-input">
+<label>Name</label>
+<input type="text" id="mtflname" style="width:90%;" tabindex="-1" name="mtflname" value='<s:property value="mtflname"/>'>
 
-</tr>
-<tr>
-<td align="right">Remarks</td><td colspan="7" align="left"> <input type="text" id="mtremark" name="mtremark" style="width:73.4%;"   value='<s:property value="mtremark"/>'></td>
+<label>Doc No</label>
+<input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'>
 
-</tr>
-</table>
-<table width="100%" >
+</div>
 
-<tr>
-<td align="right" width="3.4%">Type</td>
-<td align="left" width="2%" ><select id="maintype" name="maintype" onchange="changetype()" value='<s:property value="maintype"/>'>
+<div class="form-group ">
+<label>Remarks</label>
+<input type="text" id="mtremark" name="mtremark" style="width:73.4%;"   value='<s:property value="mtremark"/>'>
+
+</div>
+
+
+
+<div class="form-group to-account-row">
+<label>Type</label>
+<select id="maintype" name="maintype" onchange="changetype()" value='<s:property value="maintype"/>'>
 <option value="service">Service</option>
 <option value="repair">Repair</option>   
 </select>
-</td>
-<td align="right" width="1%">Curr.KM</td><td align="left" width="7%"><input type="text" id="currkm" name="currkm" style="width:50%;"  value='<s:property value="currkm"/>'> </td>
-<td align="right" width="5%">Next Ser.Due KM</td><td align="left" width="7%"><input type="text" id="nextserdue" name="nextserdue" style="width:50%;" value='<s:property value="nextserdue"/>' > </td>
-<td align="right" width="1.2%">Garage</td><td align="left" width="12.5%"><input type="text" id="garagemaster"  name="garagemaster" placeholder="Press F3 To Search" style="width:83.3%;"  value='<s:property value="garagemaster"/>' onkeydown="getgarrage(event)"></td> 
-<td  align="right" width="2%"> Inv NO</td><td  align="left" width="1%"> <input type="text" id="invno" name="invno" value='<s:property value="invno"/>' onblur="funchkinv();"></td>
-<td  align="right" width="3%"> Inv Date</td><td  align="left" width="14%"> <div id="invDate" name="invDate"  value='<s:property value="invDate"/>'></div>
-<input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'>
 
-</td>
+<label>Curr.KM</label>
+<input type="text" id="currkm" name="currkm" style="width:50%;"  value='<s:property value="currkm"/>'> 
+<label>Next Ser.Due KM</label>
+<input type="text" id="nextserdue" name="nextserdue" style="width:50%;" value='<s:property value="nextserdue"/>' > 
+</div>
+
+<div class="form-group to-account-row">
+<label>Garage</label>
+<input type="text" id="garagemaster"  name="garagemaster" placeholder="Press F3 To Search" style="width:83.3%;"  value='<s:property value="garagemaster"/>' onkeydown="getgarrage(event)">
+<label>Inv NO</label>
+<input type="text" id="invno" name="invno" value='<s:property value="invno"/>' onblur="funchkinv();">
+<label>Inv Date</label>
+<div id="invDate" name="invDate"  value='<s:property value="invDate"/>'></div><input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'>
+
 
                                 
-</tr>
-                        
-
-</table>
+</div>
+                       
+</div>
 </fieldset>
 
 <fieldset>

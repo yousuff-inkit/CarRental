@@ -11,164 +11,202 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link href="../../../../css/body.css" rel="stylesheet" type="text/css">
 <style>
-form label.error {
-	color:red;
-  	font-weight:bold;
-}
-.hidden-scrollbar {
-    overflow: auto;
-    height: 600px;
-}
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
 
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
 
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: block; /* Header block container */
+        padding: 0 0 0 5px;
+    }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
+    .form-group.triple-input {
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    }
+    
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
 
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
+    }
+    
+    .full-width-block {
+        flex: 1 1 100%;
+    }
 
-.table-section {
-    margin-bottom: 8px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
+    .section-block h2, .section-block h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 600px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+    
+    /* Legacy table styles for included JSPs */
+    .cr-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f9fafb;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px #eef0f6;
+    }
+    .cr-table td {
+        padding: 9px 10px;
+        border-bottom: 1px solid #e4e7ec;
+        text-align: left;
+        font-size: 1em;
+    }
+    .termination-table {
+        /* Custom layout for termination clauses */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 10px 0;
+    }
+    .termination-row {
+        display: contents; /* makes the divs behave like table rows */
+    }
+    .termination-row input[type="text"] {
+        display: inline-block;
+        width: 35%;
+        text-align: center;
+        margin: 0 5px;
+    }
+    .termination-cell-months {
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .termination-cell-amt {
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+    .rate-select-group {
+        display: flex;
+        gap: 10px;
+    }
+
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -1028,284 +1066,264 @@ function getvalidationforeditandcloe(){
 <br>
 <div class="hidden-scrollbar receipt-header">
 
-<div class="table-section" style="width: 100%;"><h3>Vehicle Info</h3>
-<table class="cr-table" width="100%" >
-  <tr>
-    <td align="right">Date</td>
-    <td width="26%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-    <td width="47.5%"  align="right">Doc No</td>
-    <td width="18%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'></td>
-  </tr>
-  <tr>
-    <td width="9%" align="right">Vehicle</td>
-    <td colspan="3"><input type="text" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search" />&nbsp;&nbsp;
-    <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' style="width:80%;">
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Vendor</td>
-    <td colspan="3"><input type="text" name="vendor" id="vendor" value='<s:property value="vendor"/>'  readonly placeholder="Press F3 to Search" onkeydown="getVendor(event);">&nbsp;&nbsp;
-    <input type="text" name="vendorname" id="vendorname" value='<s:property value="vendorname"/>' style="width:80%;" >
-    </td>
-  </tr>
-</table>
-</div>
-<br />
-      <div class="table-section" style="width: 100%;">
-    <h3>Rate Info</h3>
-    <table class="cr-table" width="100%">
-      <tr>
-        <td width="7%" align="right">Period</td>
-        <input type="hidden" id="hidcmbperiodno" name="hidcmbperiodno" value='<s:property value="hidcmbperiodno"/>'>
-        <td width="93%" align="left">
-          
-            <select name="cmbperiodtype" id="cmbperiodtype" value='<s:property value="cmbperiodtype"/>' onblur="setPeriods(this.value);">
-              <option value="">--Select--</option><option value="Months">Months</option><option value="Years">Years</option><option value="Days">Days</option>
-          </select>
-            <select name="cmbperiodno" id="cmbperiodno" value='<s:property value="cmbperiodno"/>'><option value="">--Select--</option>
-              
-          </select></td><input type="hidden" name="hidcmbperiodtype" id="hidcmbperiodtype" value='<s:property value="hidcmbperiodtype"/>'>
-          <%-- 
-        <td width="8%" align="right">Rent</td>
-        <td width="10%" align="left"><input type="text" name="rent" id="rent" value='<s:property value="rent"/>' style="text-align:right;"></td>
-        <td width="6%" align="right">CDW</td>
-        <td width="15%" align="left"><input type="text" name="cdw" id="cdw" value='<s:property value="cdw"/>' style="text-align:right;"></td>
-        <td width="8%" align="right">PAI </td>
-        <td width="26%" align="left"><input type="text" name="pai" id="pai" value='<s:property value="pai"/>' style="text-align:right;"></td> --%>
-      </tr>
-      <tr>
-        <td colspan="8" align="right"><div class="cr-table" id="ratediv"><jsp:include page="rateGrid.jsp"></jsp:include></div></td>
-      </tr>
-    </table>
-    </div></td>
-  </tr>
-  <tr>
-    <td colspan="2"><div class="table-section" style="width: 100%;">
-      <h3>Opening Details</h3>
-      <table class="cr-table" width="100%">
-        <tr>
-          <td width="6%" align="right">Date In</td>
-          <td width="12%" align="left"><div id="datein" name="datein" value='<s:property value="datein"/>'></div></td>
-          <input type="hidden" name="hiddatein" id="hiddatein" value='<s:property value="hiddatein"/>'>
-          
-          <td width="8%" align="right">Time</td>
-          <td width="11%" align="left"><div id="timein" name="timein" value='<s:property value="timein"/>'></div></td>
-          <input type="hidden" name="hidtimein" id="hidtimein" value='<s:property value="hidtimein"/>'>
-          
-          <td width="7%" align="right">Date Due</td>
-          <td width="10%" align="left"><div id="datedue" name="datedue" value='<s:property value="datedue"/>'></div></td>
-          <input type="hidden" name="hiddatedue" id="hiddatedue" value='<s:property value="hiddatedue"/>'>
-          
-          <td width="8%" align="right">Time Due</td>
-          <td align="left"><div id="timedue" name="timedue" value='<s:property value="timedue"/>'></div></td>
-          <td align="right">Branch</td>
-          <td align="left"><select name="cmbbranch" id="cmbbranch" value='<s:property value="cmbbranch"/>' style="width:70%;" onchange="getLocation(this.value);"><option value="">--Select--</option></select> </td>
-          <input type="hidden" name="hidcmbbranch" id="hidcmbbranch" value='<s:property value="hidcmbbranch"/>' />
-          <input type="hidden" name="hidtimedue" id="hidtimedue" value='<s:property value="hidtimedue"/>'>
-          
-        </tr>
-        <tr>
-          <td align="right" >KM</td>
-          <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>'></td>
-          <td align="right">Fuel</td><input type="hidden" name="hidcmbinfuel" id="hidcmbinfuel" value='<s:property value="hidcmbinfuel"/>'>
-          <td align="left">
-          <select name="cmbinfuel" id="cmbinfuel" value='<s:property value="cmbinfuel"/>'><option value="">--Select--</option><option value=0.000>Level 0/8</option>
-        <option value=0.125 >Level 1/8</option>
-        <option value=0.250>Level 2/8</option>
-        <option value=0.375>Level 3/8</option>
-        <option value=0.500>Level 4/8</option>
-        <option value=0.625>Level 5/8</option>
-        <option value=0.750>Level 6/8</option>
-        <option value=0.875>Level 7/8</option>
-        <option value=1.000>Level 8/8</option>
-        </select>
-          <%-- <input type="text" name="hidinfuel" id="hidinfuel" value='<s:property value="hidinfuel"/>' readonly tabindex="-1"> --%></td>
-          <td align="right">Check In</td>
-          <td align="left"><input type="text" name="checkin" id="checkin"  value='<s:property value="checkin"/>' readonly onkeydown="getCheck(event,1);" placeholder="Press F3 to Search" />
-          
-        </td><%--   <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' style="width:85%;">
-              <option value="">--Select--</option></select> --%>
-              <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
+    <div class="section-block full-width-block">
+        <h3>Vehicle Info</h3>
+        <div class="form-group dual-input">
+            <label>Date</label>
+            <div><div id="date" name="date" value='<s:property value="date"/>'></div></div>
+
+            <label>Doc No</label>
+            <input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'>
+        </div>
+
+        <div class="form-group single-label-dual-input">
+            <label>Vehicle</label>
+            <input type="text" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search" />
+            <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>'>
+        </div>
+
+        <div class="form-group single-label-dual-input">
+            <label>Vendor</label>
+            <input type="text" name="vendor" id="vendor" value='<s:property value="vendor"/>' readonly placeholder="Press F3 to Search" onkeydown="getVendor(event);">
+            <input type="text" name="vendorname" id="vendorname" value='<s:property value="vendorname"/>'>
+        </div>
+    </div>
+
+
+    <div class="section-block full-width-block">
+        <h3>Rate Info</h3>
+        
+        <div class="form-group">
+            <label>Period</label>
+            <div class="rate-select-group">
+                <select name="cmbperiodtype" id="cmbperiodtype" value='<s:property value="cmbperiodtype"/>' onblur="setPeriods(this.value);">
+                    <option value="">--Select--</option><option value="Months">Months</option><option value="Years">Years</option><option value="Days">Days</option>
+                </select>
+                <select name="cmbperiodno" id="cmbperiodno" value='<s:property value="cmbperiodno"/>'><option value="">--Select--</option></select>
+                <input type="hidden" id="hidcmbperiodno" name="hidcmbperiodno" value='<s:property value="hidcmbperiodno"/>'>
+                <input type="hidden" name="hidcmbperiodtype" id="hidcmbperiodtype" value='<s:property value="hidcmbperiodtype"/>'>
+            </div>
+        </div>
+        
+        <div class="table-section" style="padding: 0; background: transparent; box-shadow: none;">
+            <div id="ratediv"><jsp:include page="rateGrid.jsp"></jsp:include></div>
+        </div>
+    </div>
+
+
+    <div class="section-block full-width-block">
+        <h3>Opening Details</h3>
+        
+        <div class="form-group dual-input">
+            <label>Date In</label>
+            <div>
+                <div id="datein" name="datein" value='<s:property value="datein"/>'></div>
+                <input type="hidden" name="hiddatein" id="hiddatein" value='<s:property value="hiddatein"/>'>
+            </div>
+
+            <label>Time</label>
+            <div>
+                <div id="timein" name="timein" value='<s:property value="timein"/>'></div>
+                <input type="hidden" name="hidtimein" id="hidtimein" value='<s:property value="hidtimein"/>'>
+            </div>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Date Due</label>
+            <div>
+                <div id="datedue" name="datedue" value='<s:property value="datedue"/>'></div>
+                <input type="hidden" name="hiddatedue" id="hiddatedue" value='<s:property value="hiddatedue"/>'>
+            </div>
+
+            <label>Time Due</label>
+            <div>
+                <div id="timedue" name="timedue" value='<s:property value="timedue"/>'></div>
+                <input type="hidden" name="hidtimedue" id="hidtimedue" value='<s:property value="hidtimedue"/>'>
+            </div>
+        </div>
+        
+        <div class="form-group dual-input">
+            <label>Branch</label>
+            <select name="cmbbranch" id="cmbbranch" value='<s:property value="cmbbranch"/>' onchange="getLocation(this.value);"><option value="">--Select--</option></select>
+            <input type="hidden" name="hidcmbbranch" id="hidcmbbranch" value='<s:property value="hidcmbbranch"/>' />
+
+            <label>Location</label>
+            <select name="cmblocation" id="cmblocation" value='<s:property value="cmblocation"/>' ><option value="">--Select--</option></select>
+            <input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>' />
+        </div>
+
+        <div class="form-group dual-input">
+            <label>KM</label>
+            <input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>'>
+
+            <label>Fuel</label>
+            <select name="cmbinfuel" id="cmbinfuel" value='<s:property value="cmbinfuel"/>'>
+                <option value="">--Select--</option><option value=0.000>Level 0/8</option>
+                <option value=0.125 >Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+                <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+            </select>
+            <input type="hidden" name="hidcmbinfuel" id="hidcmbinfuel" value='<s:property value="hidcmbinfuel"/>'>
+        </div>
+        
+        <div class="form-group dual-input">
+            <label>Check In</label>
+            <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly onkeydown="getCheck(event,1);" placeholder="Press F3 to Search" />
+            <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
             
-          <td align="right">User</td>
-          <td width="10%" align="left"><input type="text" name="inuser" id="inuser" value='<s:property value="inuser"/>' ></td>
-          <input type="hidden" name="hidinuser" id="hidinuser" value='<s:property value="hidinuser"/>' >
-          <td width="14%" align="right">Location</td>
-          <td width="14%" align="left"><select name="cmblocation" id="cmblocation" value='<s:property value="cmblocation"/>' style="width:70%;"  ><option value="">--Select--</option></select></td>
-          <input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>' />
-        </tr>
-      </table>
-    </div>    </td>
-  </tr>
- 
-  <tr>
-    <td width="100%">
+            <label>User</label>
+            <input type="text" name="inuser" id="inuser" value='<s:property value="inuser"/>' >
+            <input type="hidden" name="hidinuser" id="hidinuser" value='<s:property value="hidinuser"/>' >
+        </div>
+    </div>
 
 
-
-    <table class="cr-table" width="100%">
-        <tr>
-            <td style="width: 50%; vertical-align: top;">
-                <div style="width:100%">
-                    <h3>Termination Clauses Info</h3>
-                    <table class="cr-table" width="100%">
-                        <tr>
-                            <td width="50%" align="right"><input type="text" name="m1" id="m1" value='<s:property value="m1"/>' onkeypress="javascript:return isNumber (event)" style="width:35%;text-align: center;">
-                                &nbsp;to&nbsp;
-                                <input type="text" name="m2" id="m2" value='<s:property value="m2"/>' style="width:35%;text-align: center;" onkeypress="javascript:return isNumber (event)" onblur="change1();"></td>
-                            <td width="50%" align="left"><input type="text" id="amt1" name="amt1" value='<s:property value="amt1"/>' onkeypress="javascript:return isNumber (event)"/></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><input type="text" name="m3" id="m3" value='<s:property value="m3"/>' onkeypress="javascript:return isNumber (event)" readonly style="width:35%;text-align: center;  ">
-                                &nbsp;to&nbsp;
-                                <input type="text" name="m4" id="m4" value='<s:property value="m4"/>' onkeypress="javascript:return isNumber (event)"  style="width:35%;text-align: center;" onblur="change2();"></td>
-                            <td align="left"><input type="text" id="amt2" name="amt2" value='<s:property value="amt2"/>' onkeypress="javascript:return isNumber (event)"/></td> </tr>
-                        <tr>
-                            <td align="right"><input type="text" name="m5" id="m5" value='<s:property value="m5"/>' onkeypress="javascript:return isNumber (event)"  readonly="true" style="width:35%;text-align: center;">
-                                &nbsp;to&nbsp;
-                                <input type="text" name="m6" id="m6" value='<s:property value="m6"/>' onkeypress="javascript:return isNumber (event)" style="width:35%;text-align: center;"onblur="change3();"></td>
-                            <td align="left"><input type="text" id="amt3" name="amt3" value='<s:property value="amt3"/>' onkeypress="javascript:return isNumber (event)" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><input type="text" name="m7" id="m7" value='<s:property value="m7"/>' onkeypress="javascript:return isNumber (event)"  readonly="true" style="width:35%;text-align: center;">
-                                &nbsp;to&nbsp;
-                                <input type="text"  value='<s:property value="m8"/>' name="m8" id="m8" onkeypress="javascript:return isNumber (event)"  style="width:35%;text-align: center;" onblur="change4();"></td>
-                            <td align="left"><input type="text" id="amt4" name="amt4"   value='<s:property value="amt4"/>' onkeypress="javascript:return isNumber (event)" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><input type="text" name="m9" id="m9" value='<s:property value="m9"/>' onkeypress="javascript:return isNumber (event)" readonly style="width:35%;text-align: center;">
-                                &nbsp;to&nbsp;
-                                <input type="text" name="m10"  id="m10" value='<s:property value="m10"/>' onkeypress="javascript:return isNumber (event)"  style="width:35%;text-align: center;"></td>
-                            <td align="left"><input type="text" id="amt5" name="amt5"  value='<s:property value="amt5"/>' onkeypress="javascript:return isNumber (event)" /></td>
-                        </tr>
-                    </table>
+    <div class="section-row full-width-block">
+        <div class="section-block" style="min-width: 48%;">
+            <h3>Termination Clauses Info</h3>
+            
+            <div class="termination-table">
+                <div class="termination-row">
+                    <div class="termination-cell-months">
+                        <input type="text" name="m1" id="m1" value='<s:property value="m1"/>' onkeypress="javascript:return isNumber (event)" >
+                        &nbsp;to&nbsp;
+                        <input type="text" name="m2" id="m2" value='<s:property value="m2"/>' onkeypress="javascript:return isNumber (event)" onblur="change1();">
+                    </div>
+                    <div class="termination-cell-amt"><input type="text" id="amt1" name="amt1" value='<s:property value="amt1"/>' onkeypress="javascript:return isNumber (event)"/></div>
                 </div>
-            </td>
-            <td style="width: 50%; vertical-align: top;">
-                <div style="width: 100%;" id="closefield">
-                    <h3>Closing Info</h3>
-                    <table class="cr-table" width="100%">
-                        <tr>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="center"><input type="button" name="btnClosedetail" id="btnClosedetail" value="Close" class="myButton" onclick="funClose();" ><input type="button" name="btnCloseSave" id="btnCloseSave" value="Save" class="myButton" onclick="funCloseSave();" ></td>
-                        </tr>
-                        <tr>
-                            <td width="13%" align="right">Date</td>
-                            <td width="20%" align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
-                            <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
-                            <td width="8%" align="right">Time</td>
-                            <input type="hidden" name="hidclosetime" id="hidclosetime" value='<s:property value="hidclosetime"/>'>
-                            <td width="16%" align="left"><div id="closetime" name="closetime" value='<s:property value="closetime"/>'></div></td>
-                            <td width="6%" align="right">KM</td>
-                            <td width="15%" align="left"><input type="text" name="closekm" id="closekm" value='<s:property value="closekm"/>' onblur="getTotalkm(this.value);"></td>
-                            <td width="5%" align="right">Fuel</td>
-                            <td width="17%" align="left"><select id="cmbclosefuel" name="cmbclosefuel" value='<s:property value="cmbclosefuel"/>' style="width:76%;"><option value="">--Select--</option>     <option value=0.000>Level 0/8</option>
-                                <option value=0.125 >Level 1/8</option>
-                                <option value=0.250>Level 2/8</option>
-                                <option value=0.375>Level 3/8</option>
-                                <option value=0.500>Level 4/8</option>
-                                <option value=0.625>Level 5/8</option>
-                                <option value=0.750>Level 6/8</option>
-                                <option value=0.875>Level 7/8</option>
-                                <option value=1.000>Level 8/8</option></select></td>
-                            <input type="hidden" name="hidcmbclosefuel" id="hidcmbclosefuel" value='<s:property value="hidcmbclosefuel"/>'>
-                        </tr>
-                        <tr>
-                            <td align="right">Total Km</td>
-                            <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' /></td>
-                            <td align="right">Avg Km/M</td>
-                            <td align="left"><input type="text" name="avgkm" id="avgkm" value='<s:property value="avgkm"/>'></td>
-                            <td align="right">Check Out</td>
-                            <td align="left">
-                                <input type="text" name="checkout" id="checkout"  value='<s:property value="checkout"/>' onkeydown="getCheck(event,2);"readonly placeholder="Press F3 to Search">
-                            </td>
-                            <input type="hidden" name="hidcheckout" id="hidcheckout" value='<s:property value="hidcheckout"/>'>
-                            <td align="right">User</td>
-                            <td align="left"><input type="text" name="closeuser" id="closeuser" value='<s:property value="closeuser"/>'></td>
-                        </tr>
-                        <tr>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
-                            <td align="left">&nbsp;</td>
-                        </tr>
-                    </table>
+                <div class="termination-row">
+                    <div class="termination-cell-months">
+                        <input type="text" name="m3" id="m3" value='<s:property value="m3"/>' onkeypress="javascript:return isNumber (event)" readonly >
+                        &nbsp;to&nbsp;
+                        <input type="text" name="m4" id="m4" value='<s:property value="m4"/>' onkeypress="javascript:return isNumber (event)" onblur="change2();">
+                    </div>
+                    <div class="termination-cell-amt"><input type="text" id="amt2" name="amt2" value='<s:property value="amt2"/>' onkeypress="javascript:return isNumber (event)"/></div>
                 </div>
-            </td>
-        </tr>
-  <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-      <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-      <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-      <input type="hidden" name="vendoracno" id="vendoracno" value='<s:property value="vendoracno"/>'>
-      <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-      <input type="hidden" name="nonpoolgridlength" id="nonpoolgridlength" value='<s:property value="nonpoolgridlength"/>'>
-      <input type="hidden" name="amttotal" id="amttotal" value='<s:property value="amttotal"/>'>
-      <input type="hidden" name="closestatus" id="closestatus" value='<s:property value="closestatus"/>'>
-     <input type="hidden" name="gridstatus" id="gridstatus" value='<s:property value="gridstatus"/>'>
-      <div id="temptimein" name="temptimein" hidden="true"></div>
-      <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
-</table>
+                <div class="termination-row">
+                    <div class="termination-cell-months">
+                        <input type="text" name="m5" id="m5" value='<s:property value="m5"/>' onkeypress="javascript:return isNumber (event)" readonly="true">
+                        &nbsp;to&nbsp;
+                        <input type="text" name="m6" id="m6" value='<s:property value="m6"/>' onkeypress="javascript:return isNumber (event)" onblur="change3();">
+                    </div>
+                    <div class="termination-cell-amt"><input type="text" id="amt3" name="amt3" value='<s:property value="amt3"/>' onkeypress="javascript:return isNumber (event)" /></div>
+                </div>
+                <div class="termination-row">
+                    <div class="termination-cell-months">
+                        <input type="text" name="m7" id="m7" value='<s:property value="m7"/>' onkeypress="javascript:return isNumber (event)" readonly="true">
+                        &nbsp;to&nbsp;
+                        <input type="text" value='<s:property value="m8"/>' name="m8" id="m8" onkeypress="javascript:return isNumber (event)" onblur="change4();">
+                    </div>
+                    <div class="termination-cell-amt"><input type="text" id="amt4" name="amt4" value='<s:property value="amt4"/>' onkeypress="javascript:return isNumber (event)" /></div>
+                </div>
+                <div class="termination-row">
+                    <div class="termination-cell-months">
+                        <input type="text" name="m9" id="m9" value='<s:property value="m9"/>' onkeypress="javascript:return isNumber (event)" readonly>
+                        &nbsp;to&nbsp;
+                        <input type="text" name="m10" id="m10" value='<s:property value="m10"/>' onkeypress="javascript:return isNumber (event)">
+                    </div>
+                    <div class="termination-cell-amt"><input type="text" id="amt5" name="amt5" value='<s:property value="amt5"/>' onkeypress="javascript:return isNumber (event)" /></div>
+                </div>
+            </div>
+        </div>
 
-     </td>
+        <div class="section-block" id="closefield" style="min-width: 48%;">
+            <h3>Closing Info</h3>
+            
+            <div class="form-group dual-input">
+                <label>Date</label>
+                <div>
+                    <div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div>
+                    <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
+                </div>
 
-</tr>
+                <label>Time</label>
+                <div>
+                    <div id="closetime" name="closetime" value='<s:property value="closetime"/>'></div>
+                    <input type="hidden" name="hidclosetime" id="hidclosetime" value='<s:property value="hidclosetime"/>'>
+                </div>
+            </div>
 
-</table>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="90%"><div class="cr-table" id="nonpoolratediv"><jsp:include page="nonPoolRate.jsp"></jsp:include></div></td>
-    <td width="10%" align="center"><input type="button" name="btnGridEdit" id="btnGridEdit" value="Edit" class="myButton" onclick="funGridEdit();" >
-    <input type="button" name="btnGridSave" id="btnGridSave" value="Save" class="myButton" onclick="funGridSave();" ></td>
-  </tr>
-</table>
+            <div class="form-group dual-input">
+                <label>KM</label>
+                <input type="text" name="closekm" id="closekm" value='<s:property value="closekm"/>' onblur="getTotalkm(this.value);">
 
-<div id="fleetwindow">
-				<div></div><div></div>
-				</div>
-				<div id="checkwindow">
-				<div></div><div></div>
-				</div>
-				<div id="vendorwindow">
-				<div></div><div></div>
-				</div>
-				<div id="invmodewindow">
-				<div></div><div></div>
-				</div>
-				<br><br><br><br><br><br><br><br><br><br>
+                <label>Fuel</label>
+                <select id="cmbclosefuel" name="cmbclosefuel" value='<s:property value="cmbclosefuel"/>'>
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125 >Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+                    <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option>
+                    <option value=1.000>Level 8/8</option>
+                </select>
+                <input type="hidden" name="hidcmbclosefuel" id="hidcmbclosefuel" value='<s:property value="hidcmbclosefuel"/>'>
+            </div>
+            
+            <div class="form-group dual-input">
+                <label>Total Km</label>
+                <input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' />
+
+                <label>Avg Km/M</label>
+                <input type="text" name="avgkm" id="avgkm" value='<s:property value="avgkm"/>'>
+            </div>
+            
+            <div class="form-group dual-input">
+                <label>Check Out</label>
+                <input type="text" name="checkout" id="checkout" value='<s:property value="checkout"/>' onkeydown="getCheck(event,2);"readonly placeholder="Press F3 to Search">
+                <input type="hidden" name="hidcheckout" id="hidcheckout" value='<s:property value="hidcheckout"/>'>
+
+                <label>User</label>
+                <input type="text" name="closeuser" id="closeuser" value='<s:property value="closeuser"/>'>
+            </div>
+
+            <div class="form-group">
+                <label></label>
+                <div>
+                    <input type="button" name="btnClosedetail" id="btnClosedetail" value="Close" class="myButton" onclick="funClose();" >
+                    <input type="button" name="btnCloseSave" id="btnCloseSave" value="Save" class="myButton" onclick="funCloseSave();" >
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-block full-width-block">
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="90%"><div class="cr-table" id="nonpoolratediv"><jsp:include page="nonPoolRate.jsp"></jsp:include></div></td>
+                <td width="10%" align="center" style="vertical-align: top;">
+                    <input type="button" name="btnGridEdit" id="btnGridEdit" value="Edit" class="myButton" onclick="funGridEdit();" ><br><br>
+                    <input type="button" name="btnGridSave" id="btnGridSave" value="Save" class="myButton" onclick="funGridSave();" >
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+    <input type="hidden" name="vendoracno" id="vendoracno" value='<s:property value="vendoracno"/>'>
+    <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+    <input type="hidden" name="nonpoolgridlength" id="nonpoolgridlength" value='<s:property value="nonpoolgridlength"/>'>
+    <input type="hidden" name="amttotal" id="amttotal" value='<s:property value="amttotal"/>'>
+    <input type="hidden" name="closestatus" id="closestatus" value='<s:property value="closestatus"/>'>
+    <input type="hidden" name="gridstatus" id="gridstatus" value='<s:property value="gridstatus"/>'>
+    <div id="temptimein" name="temptimein" hidden="true"></div>
+    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
+    
+
+    <div id="fleetwindow">
+        <div></div><div></div>
+    </div>
+    <div id="checkwindow">
+        <div></div><div></div>
+    </div>
+    <div id="vendorwindow">
+        <div></div><div></div>
+    </div>
+    <div id="invmodewindow">
+        <div></div><div></div>
+    </div>
 </div>
 </form>
 </div>
-
 </body>
 </html>
 

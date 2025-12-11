@@ -1017,6 +1017,49 @@ button:hover, .myButton:hover {
 #approval-table tr:nth-child(even) {
     background: #f9fafb;
 }
+/* PDC Cheque Row - specific styling for PDC checkbox row */
+/* PDC Cheque Row - all in one line */
+.pdc-cheque-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+}
+
+/* Checkbox with PDC text - keep them together */
+.pdc-cheque-row input[type="checkbox"] {
+    width: auto;
+    margin: 0 4px 0 0;
+    flex-shrink: 0;
+}
+
+/* Hidden inputs should not take space */
+.pdc-cheque-row input[type="hidden"] {
+    display: none;
+}
+
+/* Labels styling */
+.pdc-cheque-row label {
+    text-align: right;
+    padding-right: 8px;
+    white-space: nowrap;
+    margin: 0;
+    flex-shrink: 0;
+    font-weight: 600;
+}
+
+/* Cheque No input */
+.pdc-cheque-row #txtchequeno {
+    width: 200px;
+    flex-shrink: 0;
+}
+
+/* Cheque Date */
+.pdc-cheque-row #jqxChequeDate {
+    width: 200px;
+    flex-shrink: 0;
+}
 </style>
 
 
@@ -1073,7 +1116,7 @@ button:hover, .myButton:hover {
             </div>
 
 
-            <div class="form-group to-account-row">
+            <div class="form-group pdc-cheque-row">
                 <input type="checkbox" id="chckpdc" name="chckpdc" onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxBankPaymentDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" >&nbsp;PDC
                 <input type="hidden" id="hidchckpdc" name="hidchckpdc" value='<s:property value="hidchckpdc"/>'/>
                 <input type="hidden" id="txtpdcacno" name="txtpdcacno" value='<s:property value="txtpdcacno"/>'/>

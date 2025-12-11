@@ -182,76 +182,89 @@
   height: 530px;
 }
 
+/* background + base font */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-size: 13px;
     color: #222;
     margin: 0;
-    padding: 32px 0;
+    padding: 24px 0;
     min-height: 100vh;
     box-sizing: border-box;
 }
+
+/* WIDER main card */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 12px 24px;
+    max-width: 1500px;          /* wider than before */
     margin: 0 auto;
 }
 
+/* header strip */
 .receipt-header {
-    display: flex;
+    display: block;
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 16px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 8px;             /* less side padding so content uses width */
+    font-size: 13px;
 }
+
 .receipt-header label {
     font-weight: 500;
     color: #333;
     margin-right: 8px;
 }
+
 .receipt-header input[type="text"] {
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
+    padding: 4px 8px;
+    font-size: 12px;
     width: 120px;
     background: #fff;
     transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 4px 12px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    font-size: 12px;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
+
 #txtStatus {
-    font-size: 1rem;
+    font-size: 13px;
     font-weight: 600;
     color: #e67e22;
     margin-left: 12px;
 }
 
+/* generic blocks (unchanged) */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
@@ -297,18 +310,21 @@ body {
     outline: none;
 }
 
-
+/* table sections */
 .table-section {
     margin-bottom: 18px;
     padding-inline: 1.04em;
     padding-block: 1.04em;
     border-radius: 8px;
 }
+
 .table-section h3 {
     color: #253858;
     font-size: 1.04em;
     font-weight: 600;
 }
+
+/* tables fill width */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -316,22 +332,28 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
 }
-.cr-table th, .cr-table td {
+
+.cr-table th,
+.cr-table td {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
     font-size: 1em;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 </style>
+
 
 </head>
 <body onload="setValues();">
