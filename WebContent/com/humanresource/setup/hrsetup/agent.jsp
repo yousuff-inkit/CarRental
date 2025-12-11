@@ -9,6 +9,8 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
     /* ------------------------------
+� � � �GLOBAL STYLES & LAYOUT (From Master)
+� � ------------------------------ */
        GLOBAL STYLES & LAYOUT (From Master)
     ------------------------------ */
     body {
@@ -33,6 +35,8 @@
     }
 
     /* ------------------------------
+� � � �HEADER FIXES (Title & Buttons) (From Master)
+� � ------------------------------ */
        HEADER FIXES (Title & Buttons) (From Master)
     ------------------------------ */
     center {
@@ -53,6 +57,8 @@
     }
 
     /* ------------------------------
+� � � �GRID SYSTEM (FORM LAYOUT) (From Master)
+� � ------------------------------ */
        GRID SYSTEM (FORM LAYOUT) (From Master)
     ------------------------------ */
     .receipt-header {
@@ -92,6 +98,8 @@
         flex: 1 1 100%;
     }
 
+    .section-block h2, .section-block legend {
+        /* Common styling for headings and legends */
     .section-block h2 {
         font-size: 1.1rem;
         font-weight: 600;
@@ -103,6 +111,13 @@
     }
     
     .section-block legend {
+        /* Ensure legend specific properties are maintained/cleaned up */
+        border: none; /* Remove default legend border */
+    }
+
+    /* ------------------------------
+� � � �INPUTS & CONTROLS (From Master)
+� � ------------------------------ */
         /* Apply h2 styling to legend, as per request */
         font-size: 1.1rem;
         font-weight: 600;
@@ -154,6 +169,8 @@
     }
 
     /* ------------------------------
+� � � �TABLES & UTILS (From Master)
+� � ------------------------------ */
        TABLES & UTILS (From Master)
     ------------------------------ */
     .myButton {
@@ -284,7 +301,7 @@
 <jsp:include page="../../../../header.jsp" /><br/>
 
 <div class="section-block full-width-block">
-    <legend>Agent Details</legend>
+    <h2>Agent Details</h2>
 
     <div class="form-group dual-input">
         <label>Date</label>

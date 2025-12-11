@@ -25,6 +25,51 @@ function loadAccountSearch() {
 	}
 
 </script>
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
+
+/* Bold labels - This targets only the align="right" cells */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px; /* Default master font size */
+  color: #222;
+}
+
+/* Overriding the default master label style for the specific 9px inline styles */
+/* Note: The inline style font-size:9px; on the <td> will take precedence over the 14px master style */
+td[align="right"][style*="font-size:9px"] {
+  font-weight: 700; /* Keeping master bold */
+  color: #222;
+  /* font-size: 9px; is preserved by the inline style in the HTML */
+}
+
+/* Bold text inside inputs */
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  /* Resetting width to use inline styles for width, but applying padding/font */
+  max-width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
 <body>
 <div id=search>
 <table width="100%">
@@ -38,9 +83,12 @@ function loadAccountSearch() {
     <td colspan="2"><input type="text" name="txtaccountsname" id="txtaccountsname" style="width:70%;" value='<s:property value="txtaccountsname"/>'></td>
   </tr>
   <tr>
-   <td colspan="3"><div id="ss"><jsp:include page="detailsSearchGrid.jsp"></jsp:include></div></td>
+   <td colspan="3">
+     <div id="ss">
+       <jsp:include page="detailsSearchGrid.jsp" />
+     </div>
+   </td>
   </tr>
-
 </table>
 </div>
 </body>

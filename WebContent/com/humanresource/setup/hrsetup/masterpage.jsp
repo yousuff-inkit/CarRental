@@ -34,13 +34,14 @@ body {
 
 #nav table td {
     /* Increase vertical padding to space out buttons rows */
-    padding: 10px 12px; 
+    padding: 10px 5px; 
 }
 
 /* Applying the preferred myButton style to the new buttons */
 input[type="button"].myButton {
-    font-size: 1rem;
-    padding: 10px 20px;
+    font-size: 12px;
+    font: Tahoma;
+    padding: 10px 5px;
     border-radius: 8px;
     border: none;
     background: #4a90e2;
@@ -135,27 +136,41 @@ label {
 
 
 <div id="nav">
-<table id="ss"> 
+<table id="ss">
+
+<!-- ⭐ FIRST ROW — 7 BUTTONS -->
 <tr>
-<td><input type="button" class="myButton" value="GENERAL" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/hrsetupgeneral/hrsetupgeneralmaster.jsp";'></td>
-<td><input type="button" class="myButton" value="DESIGNATION" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/designation.jsp";'></td>
-<td><input type="button" class="myButton" value="DEPARTMENT" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/department.jsp";'></td>
-<td><input type="button" class="myButton" value="PAYROLL CATEGORY" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/payrollcategory.jsp";'></td>
-<td><input type="button" class="myButton" value="DOCUMENT" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/document.jsp";'></td>
-<td><input type="button" class="myButton" value="LEAVE" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leave.jsp";'></td>
+<td><input type="button" class="myButton" value="GENERAL" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/hrsetupgeneral/hrsetupgeneralmaster.jsp";'></td>
+
+<td><input type="button" class="myButton" value="DESIGNATION" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/designation.jsp";'></td>
+
+<td><input type="button" class="myButton" value="DEPARTMENT" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/department.jsp";'></td>
+
+<td><input type="button" class="myButton" value="PAYROLL CATEGORY" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/payrollcategory.jsp";'></td>
+
+<td><input type="button" class="myButton" value="DOCUMENT" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/document.jsp";'></td>
+
+<td><input type="button" class="myButton" value="LEAVE" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leave.jsp";'></td>
+
+<td><input type="button" class="myButton" value="ALLOWANCES" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/allowances.jsp";'></td>
 </tr>
+
+
+<!-- ⭐ SECOND ROW — 6 BUTTONS -->
 <tr>
-<td><input type="button" class="myButton" value="ALLOWANCES" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/allowances.jsp";'></td>
-<td><input type="button" class="myButton" value="STATUTORY DEDUCTIONS" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/statutorydeductions.jsp";'></td>
-<td><input type="button" class="myButton" value="AGENT" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/agent.jsp";'></td>
-<td><input type="button" class="myButton" value="LEAVE SETUP" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leavesetup/leavesetupmaster.jsp";'></td>
-<td><input type="button" class="myButton" value="COMPANY SETUP" id="btncompanysetup" name="btncompanysetup" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/companysetup/companysetup.jsp";'></td>
-<td><input type="button" class="myButton" value="BANK DETAILS" id="btnbankdetails" name="btnbankdetails" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/bankdetails/bankdetails.jsp";'></td>
+<td><input type="button" class="myButton" value="STATUTORY DEDUCTIONS" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/statutorydeductions.jsp";'></td>
+
+<td><input type="button" class="myButton" value="AGENT" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/agent.jsp";'></td>
+
+<td><input type="button" class="myButton" value="LEAVE SETUP" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leavesetup/leavesetupmaster.jsp";'></td>
+
+<td><input type="button" class="myButton" value="COMPANY SETUP" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/companysetup/companysetup.jsp";'></td>
+
+<td><input type="button" class="myButton" value="BANK DETAILS" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/bankdetails/bankdetails.jsp";'></td>
+
+<td><input type="button" class="myButton" value="TERMINATION SETUP" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/terminationsetup/terminationsetupmaster.jsp";'></td>
 </tr>
-<tr>
-<td><input type="button" class="myButton" value="TERMINATION SETUP" id="btnterminationsetup" name="btnterminationsetup" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/terminationsetup/terminationsetupmaster.jsp";'></td>
-<td></td><td></td><td></td><td></td><td></td>
-</tr>
+
 </table>
 </div>
 
