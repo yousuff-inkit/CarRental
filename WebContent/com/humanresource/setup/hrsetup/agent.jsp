@@ -9,8 +9,10 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
     /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
+ï¿½ ï¿½ ï¿½ ï¿½GLOBAL STYLES & LAYOUT (From Master)
+ï¿½ ï¿½ ------------------------------ */
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -33,8 +35,10 @@
     }
 
     /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
+ï¿½ ï¿½ ï¿½ ï¿½HEADER FIXES (Title & Buttons) (From Master)
+ï¿½ ï¿½ ------------------------------ */
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
     center {
         text-align: left !important;
         display: block;
@@ -53,8 +57,10 @@
     }
 
     /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
+ï¿½ ï¿½ ï¿½ ï¿½GRID SYSTEM (FORM LAYOUT) (From Master)
+ï¿½ ï¿½ ------------------------------ */
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
     .receipt-header {
         display: block; /* Content container for the whole form body */
         padding: 0 0 0 5px;
@@ -94,6 +100,7 @@
 
     .section-block h2, .section-block legend {
         /* Common styling for headings and legends */
+    .section-block h2 {
         font-size: 1.1rem;
         font-weight: 600;
         margin: 0 0 20px;
@@ -109,8 +116,22 @@
     }
 
     /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
+ï¿½ ï¿½ ï¿½ ï¿½INPUTS & CONTROLS (From Master)
+ï¿½ ï¿½ ------------------------------ */
+        /* Apply h2 styling to legend, as per request */
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px; 
+        padding-left: 10px;
+        border-left: 4px solid #007bff; /* Blue vertical line */
+        color: #333;
+        display: block;
+        border: none;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
     input[type="text"], input[type="email"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -148,8 +169,10 @@
     }
 
     /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
+ï¿½ ï¿½ ï¿½ ï¿½TABLES & UTILS (From Master)
+ï¿½ ï¿½ ------------------------------ */
+       TABLES & UTILS (From Master)
+    ------------------------------ */
     .myButton {
         background: #007bff; border: none; padding: 6px 16px; color: #fff;
         border-radius: 6px; cursor: pointer; font-weight: 600;

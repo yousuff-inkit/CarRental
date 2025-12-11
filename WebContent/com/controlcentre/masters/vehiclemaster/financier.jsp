@@ -11,11 +11,305 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
 
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 130vh;
+    box-sizing: border-box;
 }
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+}
+
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
+#txtStatus {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e67e22;
+}
+
+/* ------------------------------
+   FORM ROWS LAYOUT (FIXED)
+------------------------------ */
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size:1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Special case: One label with two equal-width inputs */
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
+
+.form-group.single-label-dual-input input[type="text"]:first-of-type {
+    width: 100%;
+}
+
+.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
+    width: 100%;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 30px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* Special handling for the "to-account-row" - all items in one line */
+.to-account-row {
+    display: grid;
+    grid-template-columns: 120px 110px 120px 140px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.to-account-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.to-account-row #cmbtotype {
+    width: 100%;
+}
+
+.to-account-row #txttoaccid {
+    width: 100%;
+}
+
+.to-account-row #txttoaccname {
+    width: 100%;
+}
+
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
+}
+
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+/* Hide scrollbars (but allow scrolling) */
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+/* ------------------------------
+   ERROR LABELS
+------------------------------ */
+
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
+
+/* ------------------------------
+   APPROVAL TABLE
+------------------------------ */
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.form-row label {
+    min-width: 120px;
+    text-align: right;
+}
+
+.form-row input {
+    flex: 1;
+}
+
+.single-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+.single-row label {
+    min-width: 120px;
+}
+
 </style>
 <script type="text/javascript">
       $(document).ready(function () {  
@@ -209,31 +503,31 @@ color:red;
 
 </head>
 <body onload="setValues();" >
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class=" hidden-scrollbar homeContent" data-type="background">
 <form id="frmFinancier" action="saveActionFinancier" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/> 
-<div style="width:1053px;">
+<div style="100%;">
 <fieldset>
     <legend>Financier Master</legend>
-<table width="1043">
-  <tr>
-    <td width="89"><div align="right">Date</div></td>
-    <td width="196"><div id="findate" name="findate" value='<s:property value="findate"/>'></div></td><input type="hidden" name="hidfindate" id="hidfindate" value='<s:property value="hidfindate"/>'>
-    <td colspan="2">&nbsp;</td>
-    <td width="97"><div align="right">Doc No</div></td>
-    <td width="313"><input type="text" name="docno" id="docno"  value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td><div align="right">Financier Code</div></td>
-    <td><input type="text" name="finid" id="finid" value='<s:property value="finid"/>'></td>
-    <td colspan="2">&nbsp;</td>
-    <td width="97"><div align="right">Name</div></td>
-    <td width="313"><input type="text" name="finname"  id="finname" value='<s:property value="finname"/>'></td>
-  </tr>
-  <tr>
-  <td align="right">Account</td><td align="left"><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' style="width:99%;" ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" placeholder="Press F3 to Search" > </td></tr>
-  
-</table>
+<div class="section-block">
+<div class="form-group dual-input">
+    <label>Date</label>
+    <div id="findate" name="findate" value='<s:property value="findate"/>'></div>
+    <input type="hidden" name="hidfindate" id="hidfindate" value='<s:property value="hidfindate"/>'>
+    <label>Doc No</label>
+    <input type="text" name="docno" id="docno"  value='<s:property value="docno"/>' readonly tabindex="-1">
+  </div>
+  <div class="form-group dual-input">
+    <label>Financier Code</label>
+    <input type="text" name="finid" id="finid" value='<s:property value="finid"/>'>
+    <label>Name</label>
+    <input type="text" name="finname"  id="finname" value='<s:property value="finname"/>'>
+  </div>
+  <div class="form-group ">
+  <label>Account</label>
+  <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>'  ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" placeholder="Press F3 to Search" > 
+  </div>
+</div>
 <input type="hidden" id="txtaccno" name="txtaccno" value='<s:property value="txtaccno"/>'> 
 <input type="hidden" id="mode" name="mode"/>
 				        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>

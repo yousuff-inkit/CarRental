@@ -9,130 +9,154 @@
 <title>GatewayERP(i)</title>
 
     <style>
+    <style>
+/* no inner scrollbars */
 .hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
+    overflow: visible;   /* was auto */
+    height: auto;        /* was 530px */
 }
+
+/* base typography */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-size: 13px;
     color: #222;
     margin: 0;
-    padding: 32px 0;
+    padding: 24px 0;
     min-height: 100vh;
     box-sizing: border-box;
 }
+
+/* main card – wider so grid fills page */
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 10px;
-    max-width: 1200px;
+    border-radius: 14px;
+    padding: 12px 18px;
+    max-width: 1400px;      /* adjust to 1600 or remove if you want true full width */
     margin: 0 auto;
 }
 
-/* header strip (top area) */
+/* header strip */
 .receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0 24px;
-    font-size: 2vh;
+    display: block;
+    margin-bottom: 14px;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 13px;
 }
+
 .receipt-header label {
     font-weight: 500;
     color: #333;
-    margin-right: 8px;
+    margin-right: 6px;
 }
+
 .receipt-header input[type="text"] {
     border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
     width: 120px;
     background: #fff;
     transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 4px 12px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    font-size: 12px;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
 
-/* generic sections (for reuse) */
+/* optional generic sections */
 .section-row {
     display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
+    gap: 16px;
+    margin-bottom: 18px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
     border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    padding: 14px 12px;
+    box-shadow: 0 1px 6px rgba(160,177,217,0.05);
 }
+
 .section-block h2 {
-    font-size: 1.09em;
+    font-size: 14px;
     font-weight: 500;
-    margin: 0 0 16px 0;
+    margin: 0 0 10px 0;
     color: #253858;
 }
+
 .section-block .form-group {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 8px;
 }
+
 .section-block label {
     min-width: 110px;
     text-align: right;
     font-weight: 500;
     color: #253858;
+    font-size: 12px;
 }
+
 .section-block input[type="text"],
 .section-block select {
     flex: 1;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
+    border-radius: 4px;
+    padding: 3px 6px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 12px;
 }
+
 .section-block input[type="text"]:focus,
 .section-block select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-/* tables */
+/* table “card” */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
+    margin-bottom: 14px;
+    padding-inline: 10px;
+    padding-block: 10px;
     border-radius: 8px;
     background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    box-shadow: 0 1px 6px rgba(160,177,217,0.05);
 }
+
 .table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
     margin: 0 0 10px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #253858;
+    font-size: 13px;
+    font-weight: 600;
 }
+
+/* full‑width grid table */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -140,45 +164,54 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
 }
+
 .cr-table th,
 .cr-table td {
-    padding: 9px 10px;
+    padding: 6px 8px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 12px;
+    vertical-align: middle;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-/* primary button look */
+/* avoid wrapping small headers */
+.cr-table td,
+.cr-table th,
+.cr-table label {
+    white-space: nowrap;
+}
+
+/* primary button */
 .myButton {
     background: #007bff;
     color: #fff;
     border: none;
-    padding: 6px 16px;
+    padding: 4px 12px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 12px;
 }
+
 .myButton:hover {
     background: #0056b3;
 }
-.table-section h3 {
-    margin: 0 0 14px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;  /* blue vertical bar */
-    color: #253858;
-    font-size: 1.03rem;
-    font-weight: 600;
-}
+</style>
+    
 
+    
 </style>
 <script type="text/javascript">
       
@@ -297,42 +330,44 @@ body {
         <div class="table-section" style="width: 100%;">
             <h3>User Role Info</h3>
 
-           <table class="cr-table" width="100%">
-    <tr>
-        <!-- Role -->
-        <td align="right" style="width:8%;">Role</td>
-        <td style="width:22%;">
-            <input type="text" id="txtrolename" name="txtrolename"
-                   style="width:90%;"
-                   value='<s:property value="txtrolename"/>'/>
-        </td>
+            <table class="cr-table" width="100%">
+                <tr>
+                    <!-- Role -->
+                    <td align="right" style="width:8%;">Role</td>
+                    <td style="width:22%;">
+                        <input type="text" id="txtrolename" name="txtrolename"
+                               style="width:100%;"
+                               value='<s:property value="txtrolename"/>'/>
+                    </td>
 
-        <!-- Email -->
-        <td align="right" style="width:8%;">Email</td>
-        <td style="width:32%;">
-            <input type="text" id="txtemail" name="txtemail"
-                   placeholder="someone@example.com"
-                   style="width:90%;"
-                   value='<s:property value="txtemail"/>'/>
-        </td>
+                    <!-- Email -->
+                    <td align="right" style="width:8%;">Email</td>
+                    <td style="width:32%;">
+                        <input type="text" id="txtemail" name="txtemail"
+                               placeholder="someone@example.com"
+                               style="width:100%;"
+                               value='<s:property value="txtemail"/>'/>
+                    </td>
 
-        <!-- Doc No in one line -->
-        <td align="right" style="width:8%;">Doc No.</td>
-        <td style="width:22%;">
-            <input type="text" id="docno" name="txtuserroledocno"
-                   style="width:60%;"
-                   value='<s:property value="txtuserroledocno"/>'
-                   tabindex="-1"/>
-        </td>
-    </tr>
-</table>
-           
+                    <!-- Doc No -->
+                    <td align="right" style="width:8%;">Doc No.</td>
+                    <td style="width:22%;">
+                        <input type="text" id="docno" name="txtuserroledocno"
+                               style="width:100%;"
+                               value='<s:property value="txtuserroledocno"/>'
+                               tabindex="-1"/>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <br/>
 
-        <div class="cr-table" id="userRoleDiv">
-            <jsp:include page="userRoleGrid.jsp"></jsp:include>
+        <!-- FULL-WIDTH GRID WRAPPER -->
+        <div class="table-section" style="width:100%; padding-top:0;">
+            <div class="cr-table" id="userRoleDiv" style="width:100%;">
+                <jsp:include page="userRoleGrid.jsp"></jsp:include>
+            </div>
         </div>
 
         <input type="hidden" id="mode" name="mode"/>
@@ -351,5 +386,6 @@ body {
 
 </div>
 </body>
+
 
 </html>
