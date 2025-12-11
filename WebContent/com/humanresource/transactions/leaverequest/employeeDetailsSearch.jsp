@@ -35,6 +35,60 @@
 		}
 
 	</script>
+	<style>
+	/* 700 weight + no wrap */
+#search td,
+#search label {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1A2734;
+}
+
+/* Input Fields UI */
+#search input[type="text"] {
+    padding: 6px 8px;
+    height: 28px;
+    border: 1px solid #b8c6d8;
+    border-radius: 5px;
+    font-weight: 600;
+    background: #fff;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Table cell spacing */
+#search td {
+    padding: 6px 8px;
+    vertical-align: middle;
+}
+
+/* Premium Small Button */
+.myButton {
+    background:#4FA8FF;       /* premium sky blue */
+    color:#fff;
+    border:none;
+    padding:4px 12px;
+    border-radius:6px;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    transition:0.2s ease-in-out;
+}
+
+.myButton:hover {
+    background:#2F7FD4;
+}
+
+/* Make table stable */
+#search table {
+    width:100%;
+    table-layout: fixed;
+}
+	
+	</style>
+	
+	
 <body>
 <div id=search>
 <table width="100%">

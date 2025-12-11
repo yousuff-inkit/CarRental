@@ -75,6 +75,88 @@
 		}
 
 	</script>
+	<style>
+	
+	/* Bold labels + No wrap */
+#search td,
+#search label {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1A2734;
+}
+
+/* Input & Select UI */
+#search input[type="text"],
+#search select {
+    width: 100%;
+    padding: 6px 8px;
+    height: 28px;
+    border: 1px solid #b8c6d8;
+    border-radius: 5px;
+    background: #fff;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+
+/* Date div UI */
+#txtdoj {
+    border: 1px solid #b8c6d8 !important;
+    background: #fff !important;
+    border-radius: 5px;
+    padding: 4px 6px;
+}
+
+/* Cell spacing */
+#search td {
+    padding: 6px 8px;
+    vertical-align: middle;
+}
+
+/* Premium Sky-Blue Button */
+.myButton {
+    background:#4FA8FF;         /* premium sky-blue */
+    color:#fff;
+    border:none;
+    padding:4px 12px;
+    border-radius:6px;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    transition:0.2s ease-in-out;
+}
+
+.myButton:hover {
+    background:#2F7FD4;         /* darker premium blue */
+}
+	
+	
+	/* --- STYLING ALL DROPDOWNS (SELECT BOXES) --- */
+select {
+    width: 100% !important;          /* make it fill the cell neatly */
+    padding: 4px 10px;               /* make dropdown taller */
+    height: 28px !important;         /* uniform height */
+    border: 1px solid #b8c6d8;       /* clean border */
+    border-radius: 6px;              /* modern rounded look */
+    background-color: #fff;          /* remove any pink */
+    font-weight: 600;                /* bold text */
+    color: #222;                     /* clean dark text */
+    box-sizing: border-box;
+}
+
+/* Dropdown on focus (blue border) */
+select:focus {
+    border-color: #007bff !important;
+    outline: none;
+}
+
+/* Improve dropdown option spacing */
+select option {
+    padding: 8px 12px !important;     /* Top/Bottom 8px, Left/Right 12px */
+    font-size: 14px;                  /* Clean readable size */
+    line-height: 1.6;                 /* Extra breathing room */
+}
+	</style>
 <body>
 <div id=search>
 <table width="100%">
