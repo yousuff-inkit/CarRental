@@ -498,6 +498,16 @@ body {
     border-bottom: none;
 }
 
+
+label,
+.cr-table td label,
+.cr-table th,
+.cr-table td,
+td,
+th {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
 </style>
 
 </head>

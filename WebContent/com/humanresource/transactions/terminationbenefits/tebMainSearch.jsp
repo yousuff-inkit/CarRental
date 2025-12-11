@@ -31,6 +31,67 @@
 		}
 
 	</script>
+	<style>
+	
+	/* Bold Labels + No Wrap */
+#search td,
+#search label {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1A2734;
+}
+
+/* Input Boxes */
+#search input[type="text"] {
+    width: 100%;
+    padding: 6px 8px;
+    height: 26px;
+    border: 1px solid #b8c6d8;
+    border-radius: 5px;
+    font-weight: 600;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+/* Date div UI */
+#tebdate {
+    border: 1px solid #b8c6d8 !important;
+    background: #fff !important;
+    border-radius: 5px;
+    padding: 4px 6px;
+}
+
+/* Cell Spacing */
+#search td {
+    padding: 5px 6px;
+    vertical-align: middle;
+}
+
+/* Premium Sky Blue Small Button */
+.myButton {
+    background:#4FA8FF;               /* premium sky blue */
+    color: #fff;
+    border: none;
+    padding: 4px 12px;                /* small size */
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.myButton:hover {
+    background:#2F7FD4;               /* darker sky blue */
+}
+
+/* Fix table width so layout doesn’t break */
+#search table {
+    width: 100%;
+    table-layout: fixed;
+}
+	
+	</style>
 <body>
 <div id=search>
 <table width="100%">
