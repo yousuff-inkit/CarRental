@@ -7,114 +7,241 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
+<title>GatewayERP(i) - Model Master</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (Adopted)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
 
-}
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        text-align: left !important; 
+        /* Allow internal scrolling if content is too tall */
+        max-height: calc(100vh - 64px); 
+        overflow-y: auto; 
+    }
+    
+    /* ------------------------------
+       HEADER & TITLE FIXES
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM & SECTIONS
+    ------------------------------ */
+    .section-block {
+        background: #f6f8fa;
+        border-radius: 12px;
+        padding: 20px; 
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        margin-bottom: 30px;
+    }
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+    }
+
+
+    .form-row {
+        display: grid;
+        /* Layout: Label | Input | Label | Input */
+        grid-template-columns: 120px 1fr 120px 1fr;
+        gap: 15px 30px;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    
+    .form-row.date-docno {
+        /* Specific layout for the top row (Date, Doc No) */
+        grid-template-columns: 120px 180px 1fr 120px 180px 1fr; /* Add spacers */
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS
+    ------------------------------ */
+    input[type="text"], select {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+    
+    form label.error {
+        color:red;
+        font-weight:bold;
+        font-size: 12px;
+    }
+    
+    /* JQWigets/Grid Styling */
+    #jqxModelSearch1 {
+        margin-top: 20px;
+        width: 100% !important; 
+    }
+    .jqx-grid-cell {
+        font-size: 13px !important;
+    }
+    
+    /* JQ Date Picker size fix */
+    .jqx-datetimeinput-container .jqx-datetimeinput {
+        height: 32px !important;
+        width: 100% !important;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* ------------------------------
+       UTILITY STYLES
+    ------------------------------ */
+    fieldset {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
 </style>
 <script type="text/javascript">
-      $(document).ready(function () {          
-    	  $("#modeldate").jqxDateTimeInput({ width : '125px', height : '15px', formatString : "dd.MM.yyyy" });  
-     
-    	    document.getElementById("formdet").innerText="Model(MOD)";
+      $(document).ready(function () {          
+    	  $("#modeldate").jqxDateTimeInput({ width: '100%', height: '32px' ,formatString : "dd.MM.yyyy" }); // Adjusted size for new layout
+     
+    	    document.getElementById("formdet").innerText="Model(MOD)";
 			document.getElementById("formdetail").value="Model";
 			document.getElementById("formdetailcode").value="MOD";
 			window.parent.formCode.value="MOD";
 			window.parent.formName.value="Model";
-          var data= '<%=cma.searchDetails() %>';
-              
-              var num = 0; 
-              var source =
-              {
-                  datatype: "json",
-                  datafields: [
-                            	{name : 'DOC_NO' , type: 'int' },
-       						{name : 'vtype', type: 'String'  },
-                            	{name : 'date', type: 'date'  },
-                            	{name : 'brand_name',type:'String'},
-                            	{name : 'brandid',type:'String'}
-                   ],
-                   localdata: data,
-                  
-                  
-                  pager: function (pagenum, pagesize, oldpagenum) {
-                      // callback called when a page or page size is changed.
-                  }
-              };
-              
-              var dataAdapter = new $.jqx.dataAdapter(source,
-              		 {
-                  		loadError: function (xhr, status, error) {
-  	                    alert(error);    
-  	                    }
-  		            }		
-              );
-      
+          var data= '<%=cma.searchDetails() %>';
+              
+              var num = 0; 
+              var source =
+              {
+                  datatype: "json",
+                  datafields: [
+                            	{name : 'DOC_NO' , type: 'int' },
+       						{name : 'vtype', type: 'String'  },
+                            	{name : 'date', type: 'date'  },
+                            	{name : 'brand_name',type:'String'},
+                            	{name : 'brandid',type:'String'}
+                   ],
+                   localdata: data,
+                  
+                  
+                  pager: function (pagenum, pagesize, oldpagenum) {
+                      // callback called when a page or page size is changed.
+                  }
+              };
+              
+              var dataAdapter = new $.jqx.dataAdapter(source,
+              		 {
+                  		loadError: function (xhr, status, error) {
+  	                    alert(error);    
+  	                    }
+  		            }		
+              );
+      
 
 
-              $("#jqxModelSearch1").jqxGrid(
-                      {
-                      	width: '70%',
-                          height: 350,
-                          source: dataAdapter,
-                          showfilterrow: true,
-                          filterable: true,
-                          selectionmode: 'multiplecellsextended',
-                        //  pagermode: 'default',
-                          sortable: true,
-                          //pageable: true,
-                          altrows:true,
-                          //Add row method
-                          columns: [
-          					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '20%' },
-          					{ text: 'Brand ID',columntype: 'textbox', filtertype: 'input', datafield: 'brandid', width: '30%' },
-          					{ text: 'Model',columntype: 'textbox', filtertype: 'input', datafield: 'vtype', width: '30%' },
-          					{ text: 'Date',columntype: 'textbox',filtertype: 'input',datafield:'date',width: '20%',cellsformat:'dd.MM.yyyy'},
-          					{ text: 'Brand',columntype: 'textbox', filtertype: 'input', datafield: 'brand_name', width: '30%' },
+              $("#jqxModelSearch1").jqxGrid(
+                      {
+                      	width: '100%',
+                          height: 350,
+                          source: dataAdapter,
+                          showfilterrow: true,
+                          filterable: true,
+                          selectionmode: 'multiplecellsextended',
+                          sortable: true,
+                          altrows:true,
+                          columns: [
+          					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '20%' },
+          					{ text: 'Brand ID',columntype: 'textbox', filtertype: 'input', datafield: 'brandid', width: '30%', hidden: true },
+          					{ text: 'Model',columntype: 'textbox', filtertype: 'input', datafield: 'vtype', width: '30%' },
+          					{ text: 'Date',columntype: 'textbox',filtertype: 'input',datafield:'date',width: '20%',cellsformat:'dd.MM.yyyy'},
+          					{ text: 'Brand',columntype: 'textbox', filtertype: 'input', datafield: 'brand_name', width: '30%' },
 
-          	              ]
-                      });
+          	              ]
+                      });
 
-              $('#jqxModelSearch1').on('rowdoubleclick', function (event) 
-              		{
-  		            	var rowindex1=event.args.rowindex;
-  		                document.getElementById("docno").value= $('#jqxModelSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
-  		                document.getElementById("model").value = $("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "vtype");
-  		              $('#frmModel select').attr('disabled', false);
-  		    		$('#modeldate').jqxDateTimeInput({disabled: false});
-  		                $("#modeldate").jqxDateTimeInput('val',$("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
-  		               // $('#brandid').val($("#jqxModelSearch").jqxGrid('getcellvalue', rowindex1, "brandid")) ;
-  		                $('#brand').val($("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "brandid")) ;
-  		              $('#frmModel select').attr('disabled', true);
-  		    		$('#modeldate').jqxDateTimeInput({disabled: true});
-              		 }); 
-              $("#jqxModelSearch1").jqxGrid('hidecolumn', 'brandid'); 
-              //$("#jqxModelSearch").jqxGrid('hidecolumn', 'brandid'); 
+              $('#jqxModelSearch1').on('rowdoubleclick', function (event) 
+              		{
+  		            	var rowindex1=event.args.rowindex;
+  		                document.getElementById("docno").value= $('#jqxModelSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
+  		                document.getElementById("model").value = $("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "vtype");
+  		              $('#frmModel select').attr('disabled', false);
+  		    		$('#modeldate').jqxDateTimeInput({disabled: false});
+  		                $("#modeldate").jqxDateTimeInput('val',$("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
+  		                $('#brand').val($("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "brandid")) ;
+  		              $('#frmModel select').attr('disabled', true);
+  		    		$('#modeldate').jqxDateTimeInput({disabled: true});
+              		 }); 
+              $("#jqxModelSearch1").jqxGrid('hidecolumn', 'brandid'); 
 
-          });
-    
-      function funSearchLoad(){
-			changeContent('modelSearch.jsp', $('#window')); 
+          });
+    
+      function funSearchLoad(){
+			changeContent('modelSearch.jsp', $('#window')); 
 		 }
 
 	function funReadOnly() {
 		$('#frmModel input').attr('readonly', true);
 		$('#frmModel select').attr('disabled', true);
 		$('#modeldate').jqxDateTimeInput({disabled: true});
-		/* $('#jqxDateTimeInput').jqxDateTimeInput({ disabled: true}); */
-		
 	}
 	function funRemoveReadOnly() {
 		$('#frmModel input').attr('readonly', false);
 		$('#frmModel select').attr('disabled', false);
 		$('#modeldate').jqxDateTimeInput({disabled: false});
 		$('#docno').attr('readonly', true);
-		
-
 	}
 
 	function getBrand() {
@@ -143,31 +270,31 @@ color:red;
 		document.getElementById("brand").focus();
 	}
 	 $(function(){
-	        $('#frmModel').validate({
-	                 rules: {
-	                 brand:{
-	                	 required:true
-	                 },
-	                 model:{
-	                	 required:true,
-	                	 maxlength:20
-	                 }
-	                 },
-	                 messages: {
-	                  brand:{
-	                	  required:" *"
-	                  },
-	                  model:{
-	                	  required:" *",
-	                	  maxlength:"max 20 chars"
-	                  }
-	                 }
-	        });});
-	     function funNotify(){
-	    	
-	    		return 1;
-		} 
-	     
+	        $('#frmModel').validate({
+	                 rules: {
+	                 brand:{
+	                	 required:true
+	                 },
+	                 model:{
+	                	 required:true,
+	                	 maxlength:20
+	                 }
+	                 },
+	                 messages: {
+	                  brand:{
+	                	  required:" *"
+	                  },
+	                  model:{
+	                	  required:" *",
+	                	  maxlength:"max 20 chars"
+	                  }
+	                 }
+	        });});
+	     function funNotify(){
+	    	
+	    		return 1;
+		} 
+	     
 	function setValues() {
 		//$('#brand').val($('#brandid').val());
 if ($('#brandid').val() != null) {
@@ -175,49 +302,51 @@ if ($('#brandid').val() != null) {
 			$('#brand').val($('#brandid').val());
 }
 if($('#msg').val()!=""){
-	   $.messager.alert('Message',$('#msg').val());
-	  }
+	   $.messager.alert('Message',$('#msg').val());
+	  }
 	}
 	
 	 function funExcelBtn(){
-		  $("#jqxModelSearch1").jqxGrid('exportdata', 'xls', 'Model');
-	  }
+		  $("#jqxModelSearch1").jqxGrid('exportdata', 'xls', 'Model');
+	  }
 </script>
 </head>
-<body onLoad="getBrand();setValues();"><div id="mainBG" class="homeContent" data-type="background">
-<form id="frmModel" action="saveActionModel"  autocomplete="off">
-<jsp:include page="../../../../header.jsp" /><br/> 
-<fieldset><legend>Model Details</legend>
-<input type="text" id="brandid" name="brandid" value='<s:property value="brandid"/>' hidden="true">
-<table width="100%">
-<tr>
-  <td width="14%"><div align="right">Date</div></td>
-  <td width="12%"><div id="modeldate" name="modeldate" value='<s:property value="modeldate"/>'></div></td>
-  <td width="23%"><div align="right">Doc No</div></td>
-  <td width="51%"><input type="text" name="docno" value='<s:property value="docno"/>' id="docno" readonly="readonly"  tabindex="-1"></td>
-</tr>
-<tr><td><div align="right">Brand</div></td>
-<td> 
-<!-- <option value="">--Select--</option> -->
- <select name="brand" id="brand" style="width:100%;">
-</select></td><td><div align="right">Model</div></td><td><input type="text" name="model" id="model" value='<s:property value="model"/>'></td></tr>
-</table> 
-</fieldset>
-										        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-
-<input type="hidden" id="mode" name="mode"/>
-<input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>    
+<body onLoad="getBrand();setValues();">
+<div id="mainBG" class="homeContent" data-type="background">
+<form id="frmModel" action="saveActionModel"  autocomplete="off">
+<jsp:include page="../../../../header.jsp" />
+    
+    <div class="section-block">
+        <h2>Model Details</h2>
+        
+        <div class="form-row date-docno">
+            <label>Date</label>
+            <div class="jqx-datetimeinput-container">
+                <div id="modeldate" name="modeldate" value='<s:property value="modeldate"/>'></div>
+            </div>
+            <div style="grid-column: 3 / 4;"></div> <label>Doc No</label>
+            <input type="text" name="docno" value='<s:property value="docno"/>' id="docno" readonly="readonly" tabindex="-1">
+        </div>
+        
+        <div class="form-row">
+            <label>Brand</label>
+            <select name="brand" id="brand" style="width:100%;"></select>
+            
+            <label>Model</label>
+            <input type="text" name="model" id="model" value='<s:property value="model"/>'>
+        </div>
+        
+        <input type="hidden" id="brandid" name="brandid" value='<s:property value="brandid"/>'>
+        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+        <input type="hidden" id="mode" name="mode"/>
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+    </div>
 </form>
-<br/>
-<div id="jqxModelSearch1"></div>
-<%-- <div id="window">
-	<div id="windowHeader" class="windowHead">
-		<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Search</span>
-	</div>
-	<div id="windowContent" class="windowCont" style="overflow: hidden;">
-		<jsp:include page="modelSearch.jsp"></jsp:include>
-	</div></div> --%>
-	
+
+<div style="padding: 0 20px;">
+    <div id="jqxModelSearch1"></div>
+</div>
+
 </div>
 </body>
 </html>
