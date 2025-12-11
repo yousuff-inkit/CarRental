@@ -53,51 +53,98 @@
 		}
  
 	</script> 
+<style type="text/css">
+/* Master UI Styles (with added button styling for visual consistency) */
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
+
+/* Bold labels - This rule is kept for inputs aligned right, but we will use inline styles for reliability */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Bold text inside inputs */
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  max-width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+  /* Added Master Button Appearance: Using a common blue/grey theme for high visibility */
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+/* Button Hover/Active Effects */
+.myButton:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
 <body bgcolor="#E0ECF8">
 <div id=search>
 <table width="100%" >
   <tr >
-   <td>
-   <table width="100%" >
-  <tr>
- 
-     <td align="left" width="8%">Doc NO</td>
-    <td align="left" width="10%" width=><input type="text" name="sdocno" id="sdocno" value='<s:property value="sdocno"/>'>
-
-    <td align="right">Asset Id</td>
-    
-    <td align="left" width="20%"><input type="text" name="assetidss" id="assetidss" style="width:96.5%;" value='<s:property value="assetidss"/>'></td>
-    <td align="right">Asset Name</td>
-    <td align="left" colspan="3"><input type="text" id="assetnamess" name="assetnamess" style="width:96.5%;"  value='<s:property value="assetnamess"/>'></td>
-    
-    
+    <td>
+      <table width="100%" >
+        <tr>
+          <td align="left" width="8%" style="font-weight: 700; font-size: 14px; color: #222;">Doc NO</td>
+          <td align="left" width="10%" width=><input type="text" name="sdocno" id="sdocno" value='<s:property value="sdocno"/>'>
+          
+          <td align="right" style="font-weight: 700; font-size: 14px; color: #222;">Asset Id</td>
+          
+          <td align="left" width="20%"><input type="text" name="assetidss" id="assetidss" style="width:96.5%;" value='<s:property value="assetidss"/>'></td>
+          
+          <td align="right" style="font-weight: 700; font-size: 14px; color: #222;">Asset Name</td>
+          <td align="left" colspan="3"><input type="text" id="assetnamess" name="assetnamess" style="width:96.5%;"  value='<s:property value="assetnamess"/>'></td>
+          
+        </tr>
+      </table>
+    </td>
   </tr>
-  </table>
-  </td>
-  </tr>
   <tr>
-  <td>
-
- <table width="100%">
-   <tr>
-    <td align="right"  width="8%">Asset Group</td>
-    <td align="left" width="53%"><input type="text" name="assetgroupss" id="assetgroupss"  style="width:89.5%;" value='<s:property value="assetgroupss"/>'></td>
-   <td colspan="2" align="center"><input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-    <tr>
-    </table>
-  
-
+    <td>
+      <table width="100%">
+        <tr>
+          <td align="right"  width="8%" style="font-weight: 700; font-size: 14px; color: #222;">Asset Group</td>
+          <td align="left" width="53%"><input type="text" name="assetgroupss" id="assetgroupss"  style="width:89.5%;" value='<s:property value="assetgroupss"/>'></td>
+          
+          <td colspan="2" align="center"><input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
+        <tr>
+      </table>
+      
+    </td>
+  </tr>
   <tr>
     <td colspan="8" align="right">
-    
-    <div id="srefreshdiv">
-      
-   <jsp:include  page="submasterSearch.jsp"></jsp:include> 
-   
-   </div>
+      <div id="srefreshdiv">
+        <jsp:include page="submasterSearch.jsp" />
+      </div>
     </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>

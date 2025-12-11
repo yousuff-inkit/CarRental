@@ -7,37 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
-<style>
-html,body {
-	overflow: hidden;
-}
 
-#whole {
-	width: 100%;
-}
-
-#header {
-	text-align: left;
-	height: 4.5%;
-	width: 15%;
-	padding: 0px;
-}
-
-#nav {
-	line-height: 30px;
-	height: 90.5%;
-	width: 9%;
-	float: left;
-	position: absolute;
-}
-
-#comiframe {
-	float: right;
-	width: 98.5%;
-	height: 98%;
-	color: #E0ECF8;
-}
-</style>
 <%@page import="com.controlcentre.masters.vehiclemaster.leasecdw.*" %>
 <%ClsLeaseCDWDAO cdwdao=new ClsLeaseCDWDAO(); %>
 <script type="text/javascript">
@@ -54,35 +24,151 @@ html,body {
 			$('#leasecdwdiv').hide();
 		}
 	});
+	document.addEventListener("DOMContentLoaded", function () {
+		  const buttons = document.querySelectorAll(".myButton");
+
+		  buttons.forEach(btn => {
+		    btn.addEventListener("click", function () {
+		      // Remove active from all buttons
+		      buttons.forEach(b => b.classList.remove("active"));
+
+		      // Add active to clicked button
+		      this.classList.add("active");
+		    });
+		  });
+
+		  // ✅ Auto-highlight first button on page load
+		  if (buttons.length > 0) {
+		    buttons[0].classList.add("active");
+		  }
+		});
 	</script>
+
+<style type="text/css">
+/* Add spacing for page title */
+#header {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+#header h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Navigation container */
+#nav {
+  width: 100%;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  background: #f8fafc;
+  position: relative;   /* ✅ FIXED */
+  float: none;          /* ✅ FIXED */
+  height: auto;         /* ✅ FIXED */
+}
+
+
+/* Flexbox container for buttons */
+.nav-buttons {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);  /* ✅ 8 equal buttons per row */
+  gap: 10px;
+  width: 100%;
+}
+
+/* Individual button wrapper */
+.nav-item {
+  display: flex;
+}
+
+/* Button styling */
+.myButton {
+  font-weight: 700;
+  font-size: 13px;
+  width: 130px;
+  height: 38px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-align: center;
+}
+.myButton.active {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.4);
+  transform: translateY(-1px);
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.myButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+/* Iframe container */
+#comiframe {
+  width: 100%;
+  height: calc(100vh - 120px);  /* ✅ Dynamic height */
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+
+#comiframe iframe {
+  display: block;
+  width: 100%;
+  border: none;
+}
+</style>
+
+
 </head>
 <body >
+<div id="nav" >
+  <div class="nav-buttons">
+    <div class="nav-item"><input type="button" name="btnbrand" class="myButton" value="Brand" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/brand.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnmodel" class="myButton" value="Model" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/model.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnauthority" class="myButton" value="Authority" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/authority.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnplatecode" class="myButton" value="Plate Code" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/plateCode.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btngroup" class="myButton" value="Group" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/group.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btndealer" class="myButton" value="Dealer" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/dealer.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnfinance" class="myButton" value="Financier" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/financier.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btninsurance" class="myButton" value="Insurance" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/insurance.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btncolor" class="myButton" value="Color" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/color.jsp";'></div>
+    <!-- <div class="nav-item"><input type="button" name="btnvehicle" class="myButton" value="Vehicle" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehicle/vehicle2.jsp";'></div> -->
+    <div class="nav-item"><input type="button" name="btnunit" class="myButton" value="Unit" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/unit.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnspecs" class="myButton" value="Specification" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/specification.jsp";'></div>
+    <div class="nav-item"><input type="button" id="btnproject" name="btnproject" class="myButton" value="Project" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/project.jsp";'></div>
+    <div class="nav-item"><input type="button" id="btnleasecdw" name="btnleasecdw" class="myButton" value="Lease CDW" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/leasecdw.jsp";'></div>
+    <div class="nav-item"><input type="button" id="btnsecuritypass" name="btnsecuritypass" class="myButton" value="Security Pass" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/securityPass.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnyom" class="myButton" value="Yom" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/yom.jsp";'></div>
+    <div class="nav-item"><input type="button" name="btnvehtype" class="myButton" value="Vehicle Type" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/vehType.jsp";'></div>
+  </div>
+</div>
+
 <div id="mainBG" class="homeContent" data-type="background">
-<div id="header">
+
+<div >
 	<h3>Vehicle Master</h3>
 </div>
-<div id="nav">
-<table >
-		<tr><td><input type="button" name="btnbrand" class="myButton" value="Brand" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/brand.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnmodel" class="myButton" value="Model" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/model.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnauthority" class="myButton" value="Authority" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/authority.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnplatecode" class="myButton" value="Plate Code" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/plateCode.jsp";'></td></tr>
-		<tr><td><input type="button" name="btngroup" class="myButton" value="Group" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/group.jsp";'></td></tr>
-		<tr><td><input type="button" name="btndealer" class="myButton" value="Dealer" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/dealer.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnfinance" class="myButton" value="Financier" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/financier.jsp";'></td></tr>
-		<tr><td><input type="button" name="btninsurance" class="myButton" value="Insurance" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/insurance.jsp";'></td></tr>
-		<tr><td><input type="button" name="btncolor" class="myButton" value="Color" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/color.jsp";'></td></tr>
-		<!-- <tr><td><input type="button" name="btnvehicle" class="myButton" value="Vehicle" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehicle/vehicle2.jsp";'></td></tr> -->
-		<tr><td><input type="button" name="btnunit" class="myButton" value="Unit" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/unit.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnspecs" class="myButton" value="Specification" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/specification.jsp";'></td></tr>
-		<tr><td><input type="button" id="btnproject" name="btnproject" class="myButton" value="Project" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/project.jsp";'></td></tr>
-		<div id="leasecdwdiv">
-		<tr><td><input type="button" id="btnleasecdw" name="btnleasecdw" class="myButton" value="Lease CDW" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/leasecdw.jsp";'></td></tr>
-		<tr><td><input type="button" id="btnsecuritypass" name="btnsecuritypass" class="myButton" value="Security Pass" style="width:90px; text-align: center;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/securityPass.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnyom" class="myButton" value="Yom" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/yom.jsp";'></td></tr>
-		<tr><td><input type="button" name="btnvehtype" class="myButton" value="Vehicle Type" style="width:90px;" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/vehType.jsp";'></td></tr>
-		</div> 
-</table>
+
 <input type="hidden" id="formName" name="formName"  value='000'/>
 <input type="hidden" id="formCode" name="formCode"  value='veh'/>
 <input type="hidden" id="branchid" name="branchid"  value=''/>

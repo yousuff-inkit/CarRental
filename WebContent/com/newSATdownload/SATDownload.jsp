@@ -779,40 +779,224 @@
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-.gw-animate-opacity{
-	animation:opac 0.8s;
-}
-@keyframes opac{
-	from{
-		opacity:0;
-	}
-	to{
-		opacity:1;
-	}
-}
-.gw-text-green{
-	color:#4CAF50;
-}
-.gw-container:after,.gw-container-after{
-	content: "";
-	display: table;
-	clear:both;
-}
-.gw-container{
-	padding:0.01em 16px;
-}
-.gw-green{
-	color:#fff;
-	background-color:#4CAF50;
-}
-.gw-light-grey{
-	color:#000;
-	background-color:#f1f1f1;
-}
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: block;
+        padding: 0 0 0 5px;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.triple-input {
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
+    }
+
+    .full-width-block {
+        flex: 1 1 100%;
+    }
+
+    .section-block h2, .section-block legend {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+    }
+
+    .section-block legend {
+        border: none;
+        padding-left: 0;
+    }
+    
+    .nested-fieldset {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        background: #fff;
+    }
+    
+    .nested-fieldset legend {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        padding: 0 5px;
+        margin-bottom: 10px;
+    }
+
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+    font: Tahoma;
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+    
+    .section-block .form-group label {
+        min-width: 110px; /* Custom width for main sections */
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 600px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+    
+    .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    /* Progress bar styles */
+    .gw-container {
+        padding: 10px 16px;
+    }
+    .gw-light-grey {
+        background-color: #e4e6eb; /* Light gray for progress bar track */
+        border-radius: 6px;
+    }
+    .gw-green {
+        color: #fff;
+        background-color: #007bff; /* Use theme blue for progress */
+        height: 24px;
+        border-radius: 6px;
+        text-align: center;
+        line-height: 24px;
+        transition: width 0.5s ease-in-out;
+    }
+    #gwprogresstext {
+        text-align: center;
+        margin-top: 10px;
+        font-weight: 500;
+    }
+    
+    .radio-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 500;
+    }
+    .radio-group {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
 </style>
 
 </head>
@@ -821,247 +1005,264 @@
 <form id="frmnewSATdownload" action="newSATdownload" method="post" autocomplete="off">
 <jsp:include page="../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar'>
-<table width="100%">
-<tr>
-<td width="50%">
-<fieldset><legend>Salik</legend>
-<table width="100%" id="salik" border="0">
-  <tr>
-    <td width="11%" align="left"><input type="radio" id="radio_salik" name="category" value="salik" onchange="fundisable();">Site</td>
-    <td width="20%"><input type="hidden" id="hiddencategory" name="hiddencategory" value='<s:property value="hiddencategory"/>'></td>
-    <td width="13%" align="right">Site</td>
-    <td width="19%"><select id="cmbsaliksite" name="cmbsaliksite" style="width:95%;" value='<s:property value="cmbsaliksite"/>'>
-    <option value="DXB">DXB</option>
-	<option value="AUH">AUH</option>
-	</select>
-    <input type="hidden" id="hidcmbsaliksite" name="hidcmbsaliksite" value='<s:property value="hidcmbsaliksite"/>'/></td>
-    <td colspan="2" align="center"><input type="checkbox" id="chck_salikautomatic" name="chck_salikautomatic" value="salikautomatic" onchange="fundisable();">&nbsp;Automatic</td>
-  </tr>
-  <tr>
-    <td colspan="6">
-    <fieldset> 
-<table width="100%" >
-  <tr>
-    <td align="right" width="10%">Time-Period</td>
-    <td width="26%"><select id="cmbtype" name="cmbtype" style="width:95%;" value='<s:property value="cmbtype"/>' onchange="fundisable();">
-    <option value="lhrs">Last 24 Hours</option>
-    <option value="ldays">Last 7 Days</option>
-    <option value="l30d">Last 30 Days</option>
-    <option value="customdates">Custom Dates</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/> </td>
-    <td width="8%" align="right">Start Date</td>
-    <td width="23%"><div id="jqxStartDate" name="jqxStartDate" value='<s:property value="jqxStartDate"/>'></div>
-    <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/></td>
-    <td width="9%" align="right">End Date</td>
-    <td width="24%"><div id="jqxEndDate" name="jqxEndDate" value='<s:property value="jqxEndDate"/>'></div>
-    <input type="hidden" id="hidjqxEndDate" name="hidjqxEndDate" value='<s:property value="hidjqxEndDate"/>'/></td>
-  </tr>
-  <tr>
-   <td width="10%" align="right">Username</td>
-    <td colspan="5"><input type="text" id="txtusername" name="txtusername" style="width:60%;" value='<s:property value="txtusername"/>' onkeydown="getUname(event);" readonly placeholder="Press F3 to Search" />
-    <!-- <input type="checkbox" id="chck_salikpdata" name="chck_salikpdata"  value="salikpdata" onchange="fundisable();">Inquiry by Fleet --></td>
-   
-   </tr>
-</table>
- </fieldset>
-    </td>
-  </tr>
-  <tr>
-    <td align="right" width="18%">Fleet No.</td>
-    <td colspan="2"><input type="text" id="txtsalikfleetno" name="txtsalikfleetno" style="width:95%;" value='<s:property value="txtsalikfleetno"/>'  onkeydown="getvehinfo(event);" readonly placeholder="Press F3 to Search" /></td>
-    <td  align="right" colspan="2">Reg No.</td>
-    <td width="28%"><input type="text" id="txtxslregno" name="txtxslregno" style="width:95%;" readonly value='<s:property value="txtxslregno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Fleet Name</td>
-    <td colspan="2"><input type="text" id="txtsalfleetnme" name="txtsalfleetnme" style="width:95%;" readonly value='<s:property value="txtsalfleetnme"/>'/></td>
-    <td align="right" colspan="2">Plate Code</td>
-    <td width="28%"><input type="text" id="txtsalplcode" name="txtsalplcode" style="width:95%;" readonly value='<s:property value="txtsalplcode"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Salik Tag</td>
-    <td colspan="2"><input type="text" id="txtsaliktagno" name="txtsaliktagno" style="width:95%;" readonly onkeydown="getPlateNo(event);" value='<s:property value="txtsaliktagno"/>'/></td>
-  	  	<td colspan="2"><input type="file" name="file" id="file"></td>
-  	<td><button type="button" id="btnfileupload" name="btnfileupload" class="myButton">Upload</button></td>
-  	
-  </tr>
-  <tr>
-  	<td colspan="6">
-  		<fieldset><legend>Advanced Options</legend>
-  			<table style="width:100%;">
-  				<tr>
-  					<td align="right" width="10%">Start Position</td>
-  					<td><input type="text" name="salikcounter" id="salikcounter" value='<s:property value="salikcounter"/>' onKeyPress="javascript:return isNumber (event,id)"></td>
-  					<td align="right" width="30%">Month</td>
-  					<td>
-  						<select id="cmbmonthname" name="cmbmonthname" style="width:95%;">
-  							<option value="">--Select--</option>
-  							<option value="January">January</option>
-  							<option value="February">February</option>
-  							<option value="March">March</option>
-  							<option value="April">April</option>
-  							<option value="May">May</option>
-  							<option value="June">June</option>
-  							<option value="July">July</option>
-  							<option value="August">August</option>
-  							<option value="September">September</option>
-  							<option value="October">October</option>
-  							<option value="November">November</option>
-  							<option value="December">December</option>
-  						</select>
-  						<input type="hidden" name="hidcmbmonthname" id="hidcmbmonthname">
-  					</td>
-  				</tr>
-  			</table>
-  		</fieldset>
-  	</td>
-</table>
-</fieldset>
-</td>
+<div class='hidden-scrollbar'>
+<div class="section-row">
 
-<td width="50%">
-<fieldset><legend>Traffic</legend>
-<table width="100%" id="traffic">
-  <tr>
-    <td width="11%"><input type="radio" id="radio_traffic" name="category" value="traffic" onchange="fundisable();">Traffic</td>
+    <div class="section-block">
+<h2>Salik</h2>
+
+        <div class="form-group dual-input">
+            <label></label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" id="radio_salik" name="category" value="salik" onchange="fundisable();">Site
+                </label>
+                <input type="hidden" id="hiddencategory" name="hiddencategory" value='<s:property value="hiddencategory"/>'>
+            </div>
+            
+            <label>Site</label>
+            <div class="radio-group">
+                <select id="cmbsaliksite" name="cmbsaliksite" style="width:70%;" value='<s:property value="cmbsaliksite"/>'>
+                    <option value="DXB">DXB</option>
+                    <option value="AUH">AUH</option>
+                </select>
+                <input type="hidden" id="hidcmbsaliksite" name="hidcmbsaliksite" value='<s:property value="hidcmbsaliksite"/>'/>
+                <label class="radio-label" style="width: auto;">
+                    <input type="checkbox" id="chck_salikautomatic" name="chck_salikautomatic" value="salikautomatic" onchange="fundisable();">Automatic
+                </label>
+            </div>
+        </div>
+
+        <div class="nested-fieldset">
+            <h2>Time Period Selection</h2>
+            <div class="form-group dual-input">
+                <label>Time-Period</label>
+                <select id="cmbtype" name="cmbtype" value='<s:property value="cmbtype"/>' onchange="fundisable();">
+                    <option value="lhrs">Last 24 Hours</option>
+                    <option value="ldays">Last 7 Days</option>
+                    <option value="l30d">Last 30 Days</option>
+                    <option value="customdates">Custom Dates</option>
+                </select>
+                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
+                
+                <label>Start Date</label>
+                <div>
+                    <div id="jqxStartDate" name="jqxStartDate" value='<s:property value="jqxStartDate"/>'></div>
+                    <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/>
+                </div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>End Date</label>
+                <div>
+                    <div id="jqxEndDate" name="jqxEndDate" value='<s:property value="jqxEndDate"/>'></div>
+                    <input type="hidden" id="hidjqxEndDate" name="hidjqxEndDate" value='<s:property value="hidjqxEndDate"/>'/>
+                </div>
+                
+                <label>Username</label>
+                <input type="text" id="txtusername" name="txtusername" value='<s:property value="txtusername"/>' onkeydown="getUname(event);" readonly placeholder="Press F3 to Search" />
+            </div>
+        </div>
+        
+        <div class="form-group dual-input">
+            <label>Fleet No.</label>
+            <input type="text" id="txtsalikfleetno" name="txtsalikfleetno" value='<s:property value="txtsalikfleetno"/>' onkeydown="getvehinfo(event);" readonly placeholder="Press F3 to Search" />
+            
+            <label>Reg No.</label>
+            <input type="text" id="txtxslregno" name="txtxslregno" readonly value='<s:property value="txtxslregno"/>'/>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Fleet Name</label>
+            <input type="text" id="txtsalfleetnme" name="txtsalfleetnme" readonly value='<s:property value="txtsalfleetnme"/>'/>
+            
+            <label>Plate Code</label>
+            <input type="text" id="txtsalplcode" name="txtsalplcode" readonly value='<s:property value="txtsalplcode"/>'/>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Salik Tag</label>
+            <input type="text" id="txtsaliktagno" name="txtsaliktagno" readonly onkeydown="getPlateNo(event);" value='<s:property value="txtsaliktagno"/>'/>
+            
+            <label>File Upload</label>
+            <div class="radio-group" style="justify-content: space-between;">
+                <input type="file" name="file" id="file" style="width: 150px;">
+                <button type="button" id="btnfileupload" name="btnfileupload" class="myButton" style="width: auto;">Upload</button>
+            </div>
+        </div>
+        
+        <div class="nested-fieldset">
+            <h2>Advanced Options</h2>
+            <div class="form-group dual-input">
+                <label>Start Position</label>
+                <input type="text" name="salikcounter" id="salikcounter" value='<s:property value="salikcounter"/>' onKeyPress="javascript:return isNumber (event,id)">
+                
+                <label>Month</label>
+                <div>
+                    <select id="cmbmonthname" name="cmbmonthname">
+                        <option value="">--Select--</option>
+                        <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+                        <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+                        <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+                        <option value="October">October</option><option value="November">November</option><option value="December">December</option>
+                    </select>
+                    <input type="hidden" name="hidcmbmonthname" id="hidcmbmonthname">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>Traffic</h2>
+
+        <div class="form-group dual-input">
+            <label></label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" id="radio_traffic" name="category" value="traffic" onchange="fundisable();">Traffic
+                </label>
+            </div>
+            
+            <label>Site</label>
+            <div class="radio-group">
+                <select id="cmbtrafficsite" name="cmbtrafficsite" style="width:50%;" onchange="fundisable();" value='<s:property value="cmbtrafficsite"/>' >
+                    <option value="AUH">AUH</option><option value="DXB">DXB</option>
+                </select>
+                <input type="hidden" id="hidcmbtrafficsite" name="hidcmbtrafficsite" value='<s:property value="hidcmbtrafficsite"/>'/>
+                <label class="radio-label" style="width: auto;">
+                    <input type="checkbox" id="chck_trafficautomatic" name="chck_trafficautomatic" value="trafficautomatic" onchange="fundisable();">Automatic
+                </label>
+            </div>
+        </div>
+
+        <div class="nested-fieldset">
+            <div class="form-group dual-input">
+                <label class="radio-label">
+                    <input type="checkbox" id="chck_trafficfileno" name="chck_trafficfileno" value="trafficfileno" onchange="fundisable();">&nbsp;Traffic File No.
+                </label>
+                <label>Traffic File No.</label>
+                <input type="text" id="txttrafficplateno" name="txttrafficplateno" placeholder="Press F3 to Search" onkeydown="getFilename(event);" readonly value='<s:property value="txttrafficplateno"/>'/>
+            </div>
+            
+            <div class="form-group">
+                <label>Year</label>
+                <select name="cmbyear" id="cmbyear">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group triple-input" style="grid-template-columns: 120px auto 120px 1fr;">
+            <label></label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="checkbox" name="chkblackpoints" id="chkblackpoints" onchange="funBlackPoints();">Black Points
+                </label>
+                <input type="hidden" name="hidchkblackpoints" id="hidchkblackpoints" value='<s:property value="hidchkblackpoints"/>'>
+                <label class="radio-label">
+                    <input type="checkbox" id="chck_trafficpdata" name="chck_trafficpdata" value="trafficpdata" onchange="fundisable();">Inquiry by plate data
+                </label>
+            </div>
+            
+            <label>Go To Page</label>
+            <input type="text" id="gotopage" name="gotopage" value='<s:property value="gotopage"/>' />
+        </div>
+        
+        <div class="nested-fieldset">
+            <h2>Plate Details</h2>
+            <div class="form-group dual-input">
+                <label>Plate No.</label>
+                <input type="text" id="txttrafficpno" name="txttrafficpno" placeholder="Press F3 to Search" onkeydown="getPlateNo(event);" value='<s:property value="txttrafficpno"/>'/>
+                
+                <label>Plate Source</label>
+                <input type="text" id="txttrafficpsource" name="txttrafficpsource" placeholder="Press F3 to Search" onkeydown="getSource(event);" readonly value='<s:property value="txttrafficpsource"/>'/>
+            </div>
+            
+            <div class="form-group dual-input">
+                <label>Plate Color</label>
+                <input type="text" id="txttrafficpcolor" name="txttrafficpcolor" placeholder="Press F3 to Search" onkeydown="getColor(event);" readonly value='<s:property value="txttrafficpcolor"/>'/>
+                
+                <label>Plate Type</label>
+                <input type="text" id="txttrafficptype" name="txttrafficptype" readonly value='<s:property value="txttrafficptype"/>'/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="full-width-block" style="margin-top: 20px;">
+    <div class="gw-container">
+        <div class="gw-light-grey">
+            <div id="gwProgressBar" class="gw-container gw-green" style="height:24px;width:0%;"></div>
+        </div>
+        <p id="gwprogresstext">Added <span id="itemcount" name="itemcount"><s:property value="itemcount"/></span> of <span id="itemtotalcount" name="itemtotalcount"><s:property value="itemtotalcount"/></span> <span id="itemtype" name="itemtotalcount"><s:property value="itemtype"/></span></p>
+    </div>
+
+    <div class="button-group">
+        <button class="myButton" type="button" id="btnGo" name="btnGo" onClick="getBrowser();" >Download Now !!!</button>
+        <button class="myButton" type="button" id="btnclientside" name="btnclientside" onclick="funCheckClientSide();">Update Chrome Driver</button>
+    </div>
     
-    <td width="25%" align="right">Site</td>
-    <td width="30%"><select id="cmbtrafficsite" name="cmbtrafficsite" style="width:40%;" onchange="fundisable();" value='<s:property value="cmbtrafficsite"/>' >
-    <option value="AUH">AUH</option><option value="DXB">DXB</option></select></select>
-    <input type="hidden" id="hidcmbtrafficsite" name="hidcmbtrafficsite" value='<s:property value="hidcmbtrafficsite"/>'/> </td>
-    <td width="30%" align="center" colspan="2"><input type="checkbox" id="chck_trafficautomatic" name="chck_trafficautomatic" value="trafficautomatic" onchange="fundisable();">&nbsp;Automatic</td>
-  </tr>
-  <tr>
-    <td colspan="5">
-    <fieldset>
-  <table width="100%">
- <tr>
-    <td align="center" colspan="2"><input type="checkbox" id="chck_trafficfileno" name="chck_trafficfileno"  value="trafficfileno" onchange="fundisable();">&nbsp;Traffic File No.</td>
-    <td width="15%" align="right">Traffic File  No.</td>
-    <td width="43%"><input type="text" id="txttrafficplateno" name="txttrafficplateno" style="width:60%;" placeholder="Press F3 to Search" onkeydown="getFilename(event);" readonly value='<s:property value="txttrafficplateno"/>'/></td>
-	<td>Year</td>
-	<td>
-		<select name="cmbyear" id="cmbyear">
-			<option value="">--Select--</option>
-		</select>
-	</td>
-    </tr>
-</table>
+    <div style="text-align: center; margin-top: 20px;">
+        <div id="loadcaptcha"><jsp:include page="captcha.jsp"></jsp:include></div>
+    </div>
 
-<table width="100%">
-<tr>
-<td><input type="hidden" name="hidchkblackpoints" id="hidchkblackpoints" value='<s:property value="hidchkblackpoints"/>'><input type="checkbox" name="chkblackpoints" id="chkblackpoints" onchange="funBlackPoints();">Black Points</td>
-<td colspan="2" align="left"><input type="checkbox" id="chck_trafficpdata" name="chck_trafficpdata"  value="trafficpdata" onchange="fundisable();">Inquiry by plate data</td>
-<td colspan="2" align="left">Go To Page<input type="text" id="gotopage" name="gotopage"  value='<s:property value="gotopage"/>' ></td></tr>
-</table>
-<fieldset>
-<table width="100%">
-  <tr>
-  
-    <td width="18%" align="right">Plate No.</td>
-    <td width="24%"><input type="text" id="txttrafficpno" name="txttrafficpno" placeholder="Press F3 to Search" onkeydown="getPlateNo(event);"   style="width:70%;" value='<s:property value="txttrafficpno"/>'/></td>
-    <td width="11%" align="right">Plate Source</td>
-    <td width="47%"><input type="text" id="txttrafficpsource" name="txttrafficpsource" placeholder="Press F3 to Search" onkeydown="getSource(event);"  readonly style="width:40%;" value='<s:property value="txttrafficpsource"/>'/></td>
-    </tr>
-  
-    <tr>
-    <td align="right">Plate Color</td>
-    <td><input type="text" id="txttrafficpcolor" name="txttrafficpcolor" style="width:70%;" placeholder="Press F3 to Search" onkeydown="getColor(event);" readonly value='<s:property value="txttrafficpcolor"/>'/></td>
-    <td align="right">Plate Type</td>
-    <td><input type="text" id="txttrafficptype" name="txttrafficptype" style="width:50%;"  readonly value='<s:property value="txttrafficptype"/>'/></td>
-  </tr>
-</table>
-
-</fieldset>
-</fieldset>
-</td></tr>
-</table><br/>
-<br><br><br><br><br><br>
-</fieldset>
-</td></tr>
-</table>
-
-<table width="99%" border="0">
-<tr>
-	<td colspan="2">
-		<div class="gw-container">
-			<div class="gw-light-grey">
-				<div id="gwProgressBar" class="gw-container gw-green" style="height:24px;width:0%;"></div>
-			</div>
-			<p id="gwprogresstext">Added <span id="itemcount" name="itemcount"><s:property value="itemcount"/></span> of <span id="itemtotalcount" name="itemtotalcount"><s:property value="itemtotalcount"/></span> <span id="itemtype" name="itemtotalcount"><s:property value="itemtype"/></span></p>	
-		</div>
-		
-	</td>
-</tr>
-
-<tr>
-    <td colspan="2" align="center">
-    	<button class="myButton" type="button"  id="btnGo" name="btnGo" onClick="getBrowser();" >Download Now !!!</button>
-    	<button class="myButton" type="button"  id="btnclientside" name="btnclientside" onclick="funCheckClientSide();">Update Chrome Driver</button>
-    </td>
-</tr>
-<tr>
-    <td colspan="2" align="center">
-    	<div id="loadcaptcha"><jsp:include page="captcha.jsp"></jsp:include></div> 
-	</td>
-</tr>
-<tr>
-    <td colspan="2" align="center"><div id="loadsalikdata"><jsp:include page="SATloadDetails.jsp"></jsp:include></div>
-		<div id="loadtrafficdata"><jsp:include page="SATTrafficloadDetails.jsp"></jsp:include></div></td>
-</tr>
-</table>
-
+    <div style="text-align: center; margin-top: 20px;">
+        <div id="loadsalikdata"><jsp:include page="SATloadDetails.jsp"></jsp:include></div>
+        <div id="loadtrafficdata"><jsp:include page="SATTrafficloadDetails.jsp"></jsp:include></div>
+    </div>
+</div>
 
 
 <input type="hidden" id="docs" name="docs" value='<s:property value="docs"/>'/>
-<input type="hidden"  id="captcha" name="captcha"  value='<s:property value="captcha"/>'/>
-<input type="hidden"  id="captchacount" name="captchacount"  value='<s:property value="captchacount"/>'/>
-<input type="hidden" id="iscaptcha" name="iscaptcha"  value='<s:property value="iscaptcha"/>'/>
-<input type="hidden" id="iscaptchaloaded" name="iscaptchaloaded"  value='<s:property value="iscaptchaloaded"/>'/>
-<input type="hidden" id="captchapath" name="captchapath"  value='<s:property value="captchapath"/>'/>
-<input type="hidden"  id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden"  id="txtsalikregno" name="txtsalikregno"  value='<s:property value="txtsalikregno"/>'/>
-<input type="hidden"  id="txttrafficpsourceid" name="txttrafficpsourceid"  value='<s:property value="txttrafficpsourceid"/>'/>
-<input type="hidden"  id="txttrafficpcolorid" name="txttrafficpcolorid"  value='<s:property value="txttrafficpcolorid"/>'/>
-<input type="hidden"  id="txttrafficptypeid" name="txttrafficptypeid"  value='<s:property value="txttrafficptypeid"/>'/>
-<input type="hidden"  id="browserstatus" name="browserstatus"  value='<s:property value="browserstatus"/>'/>
-<input type="hidden"  id="browsermsg" name="browsermsg"  value='<s:property value="browsermsg"/>'/>
+<input type="hidden" id="captcha" name="captcha" value='<s:property value="captcha"/>'/>
+<input type="hidden" id="captchacount" name="captchacount" value='<s:property value="captchacount"/>'/>
+<input type="hidden" id="iscaptcha" name="iscaptcha" value='<s:property value="iscaptcha"/>'/>
+<input type="hidden" id="iscaptchaloaded" name="iscaptchaloaded" value='<s:property value="iscaptchaloaded"/>'/>
+<input type="hidden" id="captchapath" name="captchapath" value='<s:property value="captchapath"/>'/>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+<input type="hidden" id="txtsalikregno" name="txtsalikregno" value='<s:property value="txtsalikregno"/>'/>
+<input type="hidden" id="txttrafficpsourceid" name="txttrafficpsourceid" value='<s:property value="txttrafficpsourceid"/>'/>
+<input type="hidden" id="txttrafficpcolorid" name="txttrafficpcolorid" value='<s:property value="txttrafficpcolorid"/>'/>
+<input type="hidden" id="txttrafficptypeid" name="txttrafficptypeid" value='<s:property value="txttrafficptypeid"/>'/>
+<input type="hidden" id="browserstatus" name="browserstatus" value='<s:property value="browserstatus"/>'/>
+<input type="hidden" id="browsermsg" name="browsermsg" value='<s:property value="browsermsg"/>'/>
+
 </div>
 </form>
-	
+
 <div id="flash"></div>
 <div id="display"></div>
 <div id="unameWindow">
-   <div></div><div></div>
+   <div></div><div></div>
 </div>
- 
+
 <div id="filenameWindow">
-   <div></div><div></div>
-</div> 
+   <div></div><div></div>
+</div>
 
 <div id="sourceWindow">
-   <div></div><div></div>
+   <div></div><div></div>
 </div>
 
 <div id="colorWindow">
 	<div></div><div></div>
-</div> 				 				
+</div>
 
 <div id="fleetWindow">
-    <div></div><div></div>
+    <div></div><div></div>
 </div>
 
 <div id="vehinfowindow">
-   <div></div><div></div>
+   <div></div><div></div>
 </div>
 
 <div id="platenoWindow">
 	<div></div><div></div>
-</div>				
+</div>
 
 <div class="modal"></div>
-	
+
 </div>
 </body>
 </html>

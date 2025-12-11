@@ -398,7 +398,6 @@
   height: 530px;
 }
 
-
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -408,15 +407,16 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
 }
+
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
     padding: 10px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
+/* ------- HEADER ------- */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
@@ -426,11 +426,13 @@ body {
     padding: 0px 24px;
     font-size: 2vh;
 }
+
 .receipt-header label {
     font-weight: 500;
     color: #333;
     margin-right: 8px;
 }
+
 .receipt-header input[type="text"] {
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -438,12 +440,13 @@ body {
     font-size: 1rem;
     width: 120px;
     background: #fff;
-    transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
     background: #007bff;
     color: #fff;
@@ -452,11 +455,12 @@ body {
     padding: 6px 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
+
 #txtStatus {
     font-size: 1rem;
     font-weight: 600;
@@ -464,11 +468,13 @@ body {
     margin-left: 12px;
 }
 
+/* ------- SECTIONS ------- */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
@@ -505,7 +511,6 @@ body {
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
-    transition: border-color 0.2s;
 }
 
 .section-block input[type="text"]:focus,
@@ -514,18 +519,20 @@ body {
     outline: none;
 }
 
-
+/* ------- TABLE SECTION ------- */
 .table-section {
     margin-bottom: 18px;
     padding-inline: 1.04em;
     padding-block: 1.04em;
     border-radius: 8px;
 }
+
 .table-section h3 {
     color: #253858;
     font-size: 1.04em;
     font-weight: 600;
 }
+
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -534,22 +541,31 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
+
+.cr-table th,
+.cr-table td {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
     font-size: 1em;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
 
+/* ------------------------------
+   EXTRA RULES YOU ADDED
+   1. MAKE ALL LABEL / TH / TD BOLD
+   2. FORCE SINGLE LINE (NO WRAP)
+--------------------------------*/
 label,
 .cr-table td label,
 .cr-table th,
