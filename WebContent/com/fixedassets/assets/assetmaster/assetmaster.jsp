@@ -6,162 +6,181 @@
 	<title>GatewayERP(i)</title>
 	 <jsp:include page="../../../../includes.jsp"></jsp:include> 
 	 <style>
-	 .container {
-        height: 100%;
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px; /* Increased padding slightly for better look */
+        max-width: 1450px; /* Increased max width to accommodate dual columns better */
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    
+    /* Ensure the include content starts aligned */
+    .receipt-header {
+        display: block;
+        padding: 0 0 0 5px;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+    
+    .form-group.checkbox-group {
+        grid-template-columns: 120px 1fr;
+        align-items: center;
     }
 
 
-     .hidden-scrollbar {
-         overflow: auto;
-         height: 530px;
-     }
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
 
-     body {
-         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-         color: #222;
-         margin: 0;
-         padding: 32px 0;
-         min-height: 100vh;
-         box-sizing: border-box;
-     }
-     #mainBG {
-         background: #fff;
-         border-radius: 16px;
-         /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-         padding: 10px;
-         max-width: 1200px;
-         margin: 0 auto;
-     }
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
+    }
 
-     .receipt-header {
-         display: flex;
-         flex-wrap: wrap;
-         align-items: center;
-         margin-bottom: 16px;
-         border-radius: 12px;
-         padding: 0px 24px;
-         font-size: 2vh;
-     }
-     .receipt-header label {
-         font-weight: 500;
-         color: #333;
-         margin-right: 8px;
-     }
-     .receipt-header input[type="text"] {
-         border: 1px solid #d1d5db;
-         border-radius: 6px;
-         padding: 6px 10px;
-         font-size: 1rem;
-         width: 120px;
-         background: #fff;
-         transition: border-color 0.2s;
-     }
-     .receipt-header input[type="text"]:focus {
-         border-color: #007bff;
-         outline: none;
-     }
-     .receipt-header button {
-         background: #007bff;
-         color: #fff;
-         border: none;
-         border-radius: 6px;
-         padding: 6px 16px;
-         font-weight: 500;
-         cursor: pointer;
-         transition: background 0.2s;
-     }
-     .receipt-header button:hover {
-         background: #0056b3;
-     }
-     #txtStatus {
-         font-size: 1rem;
-         font-weight: 600;
-         color: #e67e22;
-         margin-left: 12px;
-     }
+    .full-width-block {
+        flex: 1 1 100%;
+    }
 
-     .section-row {
-         display: flex;
-         gap: 26px;
-         margin-bottom: 24px;
-     }
-     .section-block {
-         flex: 1;
-         background: #f6f8fa;
-         border-radius: 10px;
-         padding: 20px 18px;
-         box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-     }
-
-     .section-block h2 {
-         font-size: 1.09em;
-         font-weight: 500;
-         margin: 0 0 16px 0;
-         color: #253858;
-     }
-
-     .section-block .form-group {
-         display: flex;
-         align-items: center;
-         gap: 16px;
-         margin-bottom: 12px;
-     }
-
-     .section-block label {
-         min-width: 110px;
-         text-align: right;
-         font-weight: 500;
-         color: #253858;
-     }
-
-     .section-block input[type="text"],
-     .section-block select {
-         flex: 1;
-         border: 1px solid #d1d5db;
-         border-radius: 6px;
-         padding: 6px 10px;
-         background: #fff;
-         transition: border-color 0.2s;
-     }
-
-     .section-block input[type="text"]:focus,
-     .section-block select:focus {
-         border-color: #007bff;
-         outline: none;
-     }
+    .section-block h2, .section-block h3, .fieldset-legend-replacement {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+        border-radius: 0; /* Ensure straight line */
+    }
+    
+    .fieldset-legend-replacement {
+        background: none;
+        padding: 0 0 0 10px;
+        margin-bottom: 10px;
+    }
 
 
-     .table-section {
-         margin-bottom: 18px;
-     }
-     .table-section h3 {
-         color: #253858;
-         font-size: 1.04em;
-         font-weight: 600;
-     }
-     .cr-table {
-         width: 100%;
-         border-collapse: collapse;
-         background: #f9fafb;
-         border-radius: 8px;
-         overflow: hidden;
-         box-shadow: 0 0 0 1px #eef0f6;
-     }
-     .cr-table th, .cr-table td {
-         padding: 9px 10px;
-         border-bottom: 1px solid #e4e7ec;
-         text-align: left;
-         font-size: 1em;
-     }
-     .cr-table th {
-         background: #eef0f6;
-         color: #354B6A;
-         font-weight: 600;
-     }
-     .cr-table tr:last-child td {
-         border-bottom: none;
-     }
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], input[type="email"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font : Tahoma;
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 16px;
+    }
+    
+    /* Specific styling for the checkbox/label inside Depr section */
+    .checkbox-label {
+        text-align: left !important;
+        padding-left: 10px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .checkbox-label input[type="checkbox"] {
+        width: auto !important;
+        height: auto !important;
+        margin: 0;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS
+    ------------------------------ */
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { 
+        overflow: auto; 
+        height: 530px; 
+        padding: 0;
+    }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+
 </style>
 </head>
 
@@ -1303,7 +1322,7 @@ function fundisgrid()
 </script>
 
 <body onload="setValues();getAssetgp();getloc();">
-<div id="mainBG" class="homeContent" data-type="background"> 
+<div id="mainBG" class="homeContent" data-type="background"> 
 <form id="frmassetmastrer" action="saveAssetmaster" autocomplete="OFF" >
 
 
@@ -1311,264 +1330,208 @@ function fundisgrid()
 
 <div class="hidden-scrollbar receipt-header">
 
-<h3>Asset Master</h3>
-
-<table class="cr-table" width="100%"   > <!-- masterdate hidmasterdate assetname -->
-<tr>                       <!-- refno docno assetid remarks assetGroup -->
-<td width="7%"  align="right">Date</td><td width="14%" align="left"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
-<input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/>
-
-</td>
-                     
- <td width="5%" align="right">Ref No</td><td width="45%" align="left"><input type="text" id="refno" name="refno" value='<s:property value="refno"/>'/></td>
-  <td width="5%" align="right">Doc No</td><td width="11%" align="left"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>'/></td>   
-      <td width="5%" align="right">&nbsp;</td><td width="7%" align="left">&nbsp;</td>                  
-                  
-</tr>
-<tr>
- <td align="right">Asset Id</td><td align="left"><input type="text" id="assetid" name="assetid" value='<s:property value="assetid"/>'/></td>
-                     
- <td align="right">Name</td><td align="left"><input name="assetname" type="text" id="assetname" value='<s:property value="assetname"/>' style="width:60%;"  /></td>   <td>&nbsp;</td>         
-   <td>&nbsp;</td> 
-   <td>&nbsp;</td> 
-   <td>&nbsp;</td>                
-</tr>
-<tr>
-<td align="right" >Remarks</td><td align="left" colspan="3"><input type="text" id="remarks" name="remarks" value='<s:property value="remarks"/>'  style="width:72%;"  /></td>
-     <td>&nbsp;</td>         
-  <td>&nbsp;</td> 
-   <td>&nbsp;</td> 
-    <td>&nbsp;</td>                     
- </tr>
-
- 
- <tr>
-<td  align="right" >Asset Group</td><td align="left"><select style="width:70%;" id="assetGroup" name="assetGroup" value='<s:property value="assetGroup"/>' > <option value="">--Select--</option>
-
- </select>
- 
- <input type="hidden"  name="assetGroupval"    id="assetGroupval"  value='<s:property value="assetGroupval"/>'  style="width:60%;" />
- 
- 
- </td>
- 
- 
-  <td align="right" >Location</td><td align="left"><select style="width:40%;" id="location" name="location" value='<s:property value="location"/>' > <option value="">--Select--</option>
-
- </select></td>
-  <td>&nbsp;<input type="hidden"  name="locationval"    id="locationval"  value='<s:property value="locationval"/>'  style="width:60%;" /></td> 
-   <td>&nbsp;</td> 
-    <td >&nbsp;</td>  
-       <td width="1%">&nbsp;</td>                    
- </tr>
- 
- 
-</table>
-
-
-<h3>Purchase</h3>
-<table class="cr-table"  width="100%" >
-<tr>
-<td width="45%">
-
-<table width="100%"  > 
-                     
-<tr>
-<td width="14%" align="right">Supplier</td><td width="11%" align="left"><input type="text" id="supplieraccId" placeholder="Press F3 To Search" name="supplieraccId"  value='<s:property value="supplieraccId"/>' onkeydown="getaccountdetails(event)"/></td>
-<td align="left" colspan="3"><input name="supplieraccName" type="text" id="supplieraccName" style="width:80%;" value='<s:property value="supplieraccName"/>' size="50"  />
-
-<input name="supaccdocno" type="hidden" id="supaccdocno" style="width:80%;" value='<s:property value="supaccdocno"/>' />
-<input name="supcmbcurrency" type="hidden" id="supcmbcurrency" style="width:80%;" value='<s:property value="supcmbcurrency"/>' />
-<input name="suprate" type="hidden" id="suprate" style="width:80%;" value='<s:property value="suprate"/>' />
-<input name="suphidcurrencytype" type="hidden" id="suphidcurrencytype" style="width:80%;" value='<s:property value="suphidcurrencytype"/>' />
-
-
-</td>  
-
-</tr>
-<tr>
- 
-
-
-<td align="right">Purchase Ref No</td>
-<td  align="left"><input type="text" id="purchrefno" name="purchrefno" value='<s:property value="purchrefno"/>'/></td>
-<td  align="right"   width="14%">Purchase Date</td><td>
-<div id='purchasedate' name='purchasedate' value='<s:property value="purchasedate"/>'></div>
-<input type="hidden" id="hidpurchasedate" name="hidpurchasedate" value='<s:property value="hidpurchasedate"/>'/>
-
-</td>
-</tr>
-
-<tr>
-<td align="right">No Of items</td> 
-<td  align="left"><input type="text" id="noofitems" name="noofitems" value='<s:property value="noofitems"/>' onkeypress="javascript:return isNumber (event);" /></td>
-<td  align="right"   width="19%">Total Purchase Value</td><td>
-<input name="totalpuchvalue" type="text" id="totalpuchvalue" style="width:50%;text-align: right;" value='<s:property value="totalpuchvalue"/>' size="50" onblur="funRoundAmt(this.value,this.id);funchkaccum();" onkeypress="javascript:return isNumber (event);"  /></td>
-</tr>
-<tr>
-
-
-
-<td align="right">WNTY Exp Date</td> 
-<td  align="left"><div id='warexpdate' name='warexpdate' value='<s:property value="warexpdate"/>'></div> 
-
-<input type="hidden" id="hidwarexpdate" name="hidwarexpdate" value='<s:property value="hidwarexpdate"/>'/>
-</td>
-<td  align="right"   width="16%">WNTY DocNo</td><td>
-<input  type="text"  name="wntydocno" id="wntydocno" style="width:50%;" value='<s:property value="wntydocno"/>' size="50"  /></td>
-
-</tr>
-<tr><td colspan="2"> &nbsp;</td></tr>
-<tr><td colspan="2"> &nbsp;</td></tr>  
-
-</table>
-
-</td>
-<td width="50%">
- <table width="100%" >
-<tr>
-<td width="100%" align="left"><input type="checkbox" id="subgriddis" name="subgriddis"  onchange="fundisgrid();" >Sub Details
-<input  type="hidden"  name="subgriddisval" id="subgriddisval" style="width:50%;" value='<s:property value="subgriddisval"/>'   />
-
-
-</td>
- </tr>
- 
-  <tr>
-<td width="100%" rowspan="3" ><div id="subdetail" hidden="true">
-<jsp:include page="subdetails.jsp"></jsp:include></div>
-<div id="freespace" class="container"><br><br><br><br><br><br><br><br></div>
-</tr>
-<!--  </tr>  -->
-
-
-
-
-</table> 
-</td>
-
-
-<td width="5%">
-</td>
-</tr>
-</table>
-
-
-
-
-
-<h3>Depreciation</h3>
-<table class="cr-table" width="100%"  >
-<tr>
-<td width="47%">
-
-<table width="100%"   > 
-
-<tr>
-<td width="100%" align="left" colspan="6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Opening 
-<input type="checkbox" id="opening" name="opening"  onchange="funopening()" >
-<input type="hidden" id="openingval" name="openingval" value='<s:property value="openingval"/>'/>
-
-</td>
- </tr>
- 
- 
-
-
-<tr> 
-<td width="14%" align="right">Accum.Depr</td><td width="11%" align="left"><input type="text" id="accumdepr"  style="text-align: right;" name="accumdepr" value='<s:property value="accumdepr"/>' onblur="funRoundAmt(this.value,this.id);funchktotal();" onkeypress="javascript:return isNumber (event);" /></td>
-<td align="right" >Life Time (Year)</td><td align="left"  ><input name="lifetimeyear" type="text" id="lifetimeyear" style="width:100%;text-align: right;" value='<s:property value="lifetimeyear"/>'  onblur="funRoundAmt(this.value,this.id);funcalculatedep();" onkeypress="javascript:return isNumber (event);"  /></td>  
-<td align="right">Depr %</td> 
-<td  align="left"><input type="text" id="depper" name="depper"  style="text-align: right;" value='<s:property value="depper"/>'  onblur="funRoundAmt(this.value,this.id);funcalcuyear();" onkeypress="javascript:return isNumber (event);" /></td>
-</tr>
-<%-- <tr>
-
-<td align="right">Depr %</td>
-<td  align="left"><input type="text" id="depper" name="depper" value='<s:property value="depper"/>'/></td>
-<td  align="right"   width="16%">&nbsp;</td><td>
-&nbsp;</td>
-</tr> --%>
-
-<tr>
-<td align="right">Notes</td>
-<td  align="left" colspan="5"><input type="text" id="depnotes"   style="width:95%;" name="depnotes" value='<s:property value="depnotes"/>'/></td>
-
-</tr>
-
-
-
-</table>
-
-
-</td>
-
-<td width="48%">     
-<table width="100%">  
-                   
-<tr>
-<td width="14%" align="right">Fixed Asset</td><td width="11%" align="left"><input type="text" id="fixedassetaccId" placeholder="Press F3 To Search" name="fixedassetaccId" value='<s:property value="fixedassetaccId"/>' onkeydown="getaccountdetails1(1)"/></td>
-<td align="left" colspan="3"><input name="fixedassetaccName" type="text" id="fixedassetaccName" style="width:72%;" value='<s:property value="fixedassetaccName"/>'   />
-<input name="fixaccDocno" type="hidden" id="fixaccDocno" style="width:72%;" value='<s:property value="fixaccDocno"/>'   />
-<input name="fixaccCurrid" type="hidden" id="fixaccCurrid" style="width:72%;" value='<s:property value="fixaccCurrid"/>'   /> 
-<input name="fixaccRate" type="hidden" id="fixaccRate" style="width:72%;" value='<s:property value="fixaccRate"/>'   />
-<input name="fixaccType" type="hidden" id="fixaccType" style="width:72%;" value='<s:property value="fixaccType"/>'   />
-</td>      
-</tr>
-<tr>
-<td width="14%" align="right">Accu.Depr</td><td width="11%" align="left"><input type="text" id="accdepraccId" placeholder="Press F3 To Search" name="accdepraccId" value='<s:property value="accdepraccId"/>' onkeydown="getaccountdetails1(2)"/></td>
-<td align="left" colspan="3"><input name="accdepraccName" type="text" id="accdepraccName" style="width:72%;" value='<s:property value="accdepraccName"/>'    />
-
-<input name="accdepraccDocno" type="hidden" id="accdepraccDocno" style="width:72%;" value='<s:property value="accdepraccDocno"/>'   />
-<input name="accdepraccCurrid" type="hidden" id="accdepraccCurrid" style="width:72%;" value='<s:property value="accdepraccCurrid"/>'   />
-<input name="accdepraccRate" type="hidden" id="accdepraccRate" style="width:72%;" value='<s:property value="accdepraccRate"/>'   />
-<input name="accdepraccType" type="hidden" id="accdepraccType" style="width:72%;" value='<s:property value="accdepraccType"/>'   />
-
-</td>  
-</tr>
-<tr>
-<td width="14%" align="right">Depreciation</td><td width="11%" align="left"><input type="text" id="depraccId" placeholder="Press F3 To Search" name="depraccId" value='<s:property value="depraccId"/>' onkeydown="getaccountdetails1(3)"/></td>
-<td align="left" colspan="3"><input name="depraccName" type="text" id="depraccName" style="width:72%;" value='<s:property value="depraccName"/>'   />
-
-
-<input name="depracDocno" type="hidden" id="depracDocno" style="width:72%;" value='<s:property value="depracDocno"/>'   />
-<input name="depracCurrid" type="hidden" id="depracCurrid" style="width:72%;" value='<s:property value="depracCurrid"/>'   />
-<input name="depracRate" type="hidden" id="depracRate" style="width:72%;" value='<s:property value="depracRate"/>'   />
-<input name="depracType" type="hidden" id="depracType" style="width:72%;" value='<s:property value="depracType"/>'   />
-
-</td>  
-
-</tr>
-</table> 
-</td> 
-<td width="5%">&nbsp;
-</td>
-</tr>
-
-</table>
-
-<input type="hidden" id="masteredit" name="masteredit" value='<s:property value="masteredit"/>' />  <!-- only master edit  -->
-
-<input type="hidden" id="srno" name="srno" value='<s:property value="srno"/>' /> 
-
-
-<input type="hidden" id="gridval" name="gridval" value='<s:property value="gridval"/>' /> 
-
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' /> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-  <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-
-
-
-
+    <div class="section-block full-width-block">
+        <h3 class="fieldset-legend-replacement">Asset Master</h3>
+
+        <div class="form-group dual-input">
+            <label>Date</label>
+            <div>
+                <div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
+            </div>
+            <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/>
+
+            <label>Ref No</label>
+            <input type="text" id="refno" name="refno" value='<s:property value="refno"/>'/>
+        </div>
+        
+        <div class="form-group dual-input">
+            <label>Asset Id</label>
+            <input type="text" id="assetid" name="assetid" value='<s:property value="assetid"/>'/>
+            
+            <label>Doc No</label>
+            <input type="text" id="docno" name="docno" value='<s:property value="docno"/>'/>
+        </div>
+        
+        <div class="form-group">
+            <label>Name</label>
+            <input name="assetname" type="text" id="assetname" value='<s:property value="assetname"/>'/>
+        </div>
+
+        <div class="form-group">
+            <label>Remarks</label>
+            <input type="text" id="remarks" name="remarks" value='<s:property value="remarks"/>'/>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Asset Group</label>
+            <select id="assetGroup" name="assetGroup" value='<s:property value="assetGroup"/>' > 
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" name="assetGroupval" id="assetGroupval" value='<s:property value="assetGroupval"/>'/>
+            
+            <label>Location</label>
+            <select id="location" name="location" value='<s:property value="location"/>' > 
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" name="locationval" id="locationval" value='<s:property value="locationval"/>'/>
+        </div>
+    </div>
+
+
+    <div class="section-row">
+        
+        <div class="section-block">
+            <h3 class="fieldset-legend-replacement">Purchase</h3>
+            
+            <div class="form-group single-label-dual-input">
+                <label>Supplier</label>
+                <input type="text" id="supplieraccId" placeholder="Press F3 To Search" name="supplieraccId" value='<s:property value="supplieraccId"/>' onkeydown="getaccountdetails(event)"/>
+                <input name="supplieraccName" type="text" id="supplieraccName" value='<s:property value="supplieraccName"/>' readonly/>
+                <input name="supaccdocno" type="hidden" id="supaccdocno" value='<s:property value="supaccdocno"/>' />
+                <input name="supcmbcurrency" type="hidden" id="supcmbcurrency" value='<s:property value="supcmbcurrency"/>' />
+                <input name="suprate" type="hidden" id="suprate" value='<s:property value="suprate"/>' />
+                <input name="suphidcurrencytype" type="hidden" id="suphidcurrencytype" value='<s:property value="suphidcurrencytype"/>' />
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Purchase Ref No</label>
+                <input type="text" id="purchrefno" name="purchrefno" value='<s:property value="purchrefno"/>'/>
+                
+                <label>Purchase Date</label>
+                <div>
+                    <div id='purchasedate' name='purchasedate' value='<s:property value="purchasedate"/>'></div>
+                </div>
+                <input type="hidden" id="hidpurchasedate" name="hidpurchasedate" value='<s:property value="hidpurchasedate"/>'/>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>No Of items</label>
+                <input type="text" id="noofitems" name="noofitems" value='<s:property value="noofitems"/>' onkeypress="javascript:return isNumber (event);" />
+                
+                <label>Total Purchase Value</label>
+                <input name="totalpuchvalue" type="text" id="totalpuchvalue" style="text-align: right;" value='<s:property value="totalpuchvalue"/>' onblur="funRoundAmt(this.value,this.id);funchkaccum();" onkeypress="javascript:return isNumber (event);" />
+            </div>
+
+            <div class="form-group dual-input">
+                <label>WNTY Exp Date</label>
+                <div>
+                    <div id='warexpdate' name='warexpdate' value='<s:property value="warexpdate"/>'></div> 
+                </div>
+                <input type="hidden" id="hidwarexpdate" name="hidwarexpdate" value='<s:property value="hidwarexpdate"/>'/>
+                
+                <label>WNTY DocNo</label>
+                <input type="text" name="wntydocno" id="wntydocno" value='<s:property value="wntydocno"/>'/>
+            </div>
+            
+            <div style="height: 24px;"></div> 
+
+        </div>
+
+        <div class="section-block">
+            <div class="form-group" style="grid-template-columns: 1fr;">
+                 <label class="checkbox-label" for="subgriddis" style="min-width: 0;">
+                    <input type="checkbox" id="subgriddis" name="subgriddis" onchange="fundisgrid();">Sub Details
+                 </label>
+                <input type="hidden" name="subgriddisval" id="subgriddisval" value='<s:property value="subgriddisval"/>'/>
+            </div>
+            
+            <div id="subdetail" hidden="true">
+                <jsp:include page="subdetails.jsp"></jsp:include>
+            </div>
+            <div id="freespace" class="container" style="min-height: 180px;"></div>
+        </div>
+    </div>
+
+
+    <div class="section-row">
+
+        <div class="section-block">
+            <h3 class="fieldset-legend-replacement">Depreciation</h3>
+            
+            <div class="form-group">
+                <div style="grid-column: 1 / span 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 10px;">
+                    <label class="checkbox-label" for="opening" style="min-width: 0; padding-right: 15px;">
+                        Opening 
+                        <input type="checkbox" id="opening" name="opening" onchange="funopening()">
+                    </label>
+                    <input type="hidden" id="openingval" name="openingval" value='<s:property value="openingval"/>'/>
+                </div>
+            </div>
+
+            <div class="form-group dual-input">
+                <label>Accum.Depr</label>
+                <input type="text" id="accumdepr" style="text-align: right;" name="accumdepr" value='<s:property value="accumdepr"/>' onblur="funRoundAmt(this.value,this.id);funchktotal();" onkeypress="javascript:return isNumber (event);" />
+
+                <label>Life Time (Year)</label>
+                <input name="lifetimeyear" type="text" id="lifetimeyear" style="text-align: right;" value='<s:property value="lifetimeyear"/>' onblur="funRoundAmt(this.value,this.id);funcalculatedep();" onkeypress="javascript:return isNumber (event);" />
+            </div>
+            
+            <div class="form-group">
+                <label>Depr %</label>
+                <input type="text" id="depper" name="depper" style="text-align: right;" value='<s:property value="depper"/>' onblur="funRoundAmt(this.value,this.id);funcalcuyear();" onkeypress="javascript:return isNumber (event);" />
+            </div>
+
+
+            <div class="form-group">
+                <label>Notes</label>
+                <input type="text" id="depnotes" name="depnotes" value='<s:property value="depnotes"/>'/>
+            </div>
+
+        </div>
+
+        <div class="section-block">
+            <h3 class="fieldset-legend-replacement">Depreciation Accounts</h3>
+            
+            <div class="form-group single-label-dual-input">
+                <label>Fixed Asset</label>
+                <input type="text" id="fixedassetaccId" placeholder="Press F3 To Search" name="fixedassetaccId" value='<s:property value="fixedassetaccId"/>' onkeydown="getaccountdetails1(1)"/>
+                <input name="fixedassetaccName" type="text" id="fixedassetaccName" value='<s:property value="fixedassetaccName"/>' readonly/>
+                <input name="fixaccDocno" type="hidden" id="fixaccDocno" value='<s:property value="fixaccDocno"/>'/>
+                <input name="fixaccCurrid" type="hidden" id="fixaccCurrid" value='<s:property value="fixaccCurrid"/>'/> 
+                <input name="fixaccRate" type="hidden" id="fixaccRate" value='<s:property value="fixaccRate"/>'/>
+                <input name="fixaccType" type="hidden" id="fixaccType" value='<s:property value="fixaccType"/>'/>
+            </div>
+
+            <div class="form-group single-label-dual-input">
+                <label>Accu.Depr</label>
+                <input type="text" id="accdepraccId" placeholder="Press F3 To Search" name="accdepraccId" value='<s:property value="accdepraccId"/>' onkeydown="getaccountdetails1(2)"/>
+                <input name="accdepraccName" type="text" id="accdepraccName" value='<s:property value="accdepraccName"/>' readonly/>
+                <input name="accdepraccDocno" type="hidden" id="accdepraccDocno" value='<s:property value="accdepraccDocno"/>'/>
+                <input name="accdepraccCurrid" type="hidden" id="accdepraccCurrid" value='<s:property value="accdepraccCurrid"/>'/>
+                <input name="accdepraccRate" type="hidden" id="accdepraccRate" value='<s:property value="accdepraccRate"/>'/>
+                <input name="accdepraccType" type="hidden" id="accdepraccType" value='<s:property value="accdepraccType"/>'/>
+            </div>
+
+            <div class="form-group single-label-dual-input">
+                <label>Depreciation</label>
+                <input type="text" id="depraccId" placeholder="Press F3 To Search" name="depraccId" value='<s:property value="depraccId"/>' onkeydown="getaccountdetails1(3)"/>
+                <input name="depraccName" type="text" id="depraccName" value='<s:property value="depraccName"/>' readonly/>
+                <input name="depracDocno" type="hidden" id="depracDocno" value='<s:property value="depracDocno"/>'/>
+                <input name="depracCurrid" type="hidden" id="depracCurrid" value='<s:property value="depracCurrid"/>'/>
+                <input name="depracRate" type="hidden" id="depracRate" value='<s:property value="depracRate"/>'/>
+                <input name="depracType" type="hidden" id="depracType" value='<s:property value="depracType"/>'/>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="display: none;">
+        <input type="hidden" id="masteredit" name="masteredit" value='<s:property value="masteredit"/>' />
+        <input type="hidden" id="srno" name="srno" value='<s:property value="srno"/>' />
+        <input type="hidden" id="gridval" name="gridval" value='<s:property value="gridval"/>' />
+        <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
+        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    </div>
+
+</div>
+</form>
 
 <div id="accountDetailsWindow">
 	<div></div></div>
 	<div id="fixaccountDetailsWindow">
 	<div></div></div>
 
-</div>
-</form>
 </div>
 </body>
 </html>

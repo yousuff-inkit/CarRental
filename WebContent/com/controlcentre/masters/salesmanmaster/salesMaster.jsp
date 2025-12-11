@@ -27,23 +27,28 @@
         #nav table td {
             padding: 0 12px;
         }
+/* Applying the preferred myButton style to the new buttons */
+   input[type="button"].myButton {
+    font-size: 12px;
+    font: Tahoma;
+    padding: 10px 5px;
+    border-radius: 8px;
+    border: none;
+    background: #4a90e2;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    /* Reduced margin-right to tighten up horizontal spacing */
+    margin-right: 5px; 
+    outline: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    /* Set a fixed width for visual consistency like the image */
+    width: 150px; 
+}
 
-        input[type="button"].myButton {
-            font-size: 1rem; /* Reduced from 1.2rem */
-            padding: 10px 20px; /* Adjusted padding */
-            border-radius: 8px;
-            border: none;
-            background: #4a90e2;
-            color: #fff;
-            font-weight: 500;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            margin-right: 10px;
-            outline: none;
-            transition: background 0.2s;
-            white-space: nowrap; /* 👈 Prevents text from breaking */
-            overflow: hidden; /* 👈 Avoids overflow */
-            text-overflow: ellipsis; /* 👈 Optional: adds "..." if still too long */
-        }
 
 
         input[type="button"].myButton:hover {

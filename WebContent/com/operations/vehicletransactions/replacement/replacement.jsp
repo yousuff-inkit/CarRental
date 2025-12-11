@@ -190,7 +190,17 @@ font:  14px Tahoma;
     border-radius: 4px;
 }
 
-</style><script type="text/javascript">
+#formdet {
+    display: block;
+    text-align: left !important;
+    width: 100%;
+    margin-left: 0;
+
+
+</style>
+
+
+<script type="text/javascript">
      /*	Words Used for representing different types of vehicle movement
 	  Collect Details => oncollect
 	  In Details => incollect
