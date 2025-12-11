@@ -1234,15 +1234,15 @@
 <div id="flash"></div>
 <div id="display"></div>
 <div id="unameWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="filenameWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="sourceWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="colorWindow">
@@ -1250,11 +1250,11 @@
 </div>
 
 <div id="fleetWindow">
-    <div></div><div></div>
+� <div></div><div></div>
 </div>
 
 <div id="vehinfowindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="platenoWindow">
