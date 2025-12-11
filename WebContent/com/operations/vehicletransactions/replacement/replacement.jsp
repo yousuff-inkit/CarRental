@@ -57,8 +57,8 @@ select:focus {
 }
 
 label {
-font: 16px Tahoma;
-    font-weight: 600;
+font:  14px Tahoma;
+
     color: #253858;
     white-space: nowrap;
     line-height: 32px; /* Aligns with input heights */

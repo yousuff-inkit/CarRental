@@ -10,129 +10,77 @@
 <link href="../../../../css/myButton.css" rel="stylesheet" type="text/css"/>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-
-
-
-#whole
-{
-width:100%;
-}
-#header
-{
-background-color: #E0ECF8;
-color:black;
-text-align:left;
-height:7%;
-width:3%
-padding:0px;
+/* --- Master UI Styles (Revised Spacing) --- */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 18px;
+    background: #f7f9fc;
+    color: #222;
+    margin: 0;
+    padding: 0;
 }
 
-
-#nav
-{
-   line-height:30px;
-    background-color: #E0ECF8; 
-    height:50%;
-    width:100%;
-    /*float:left;*/
-    /*position:absolute;*/
-    
- /*    background-color:	#ffc0cb; */
-    
-    
+#nav {
+    /* Add padding below the navigation bar for separation */
+    margin-bottom: 20px; 
 }
 
-#comiframe
-{
-/*float:center;*/
-width:100%;
-height:95%;
-color:#eeeeee;
+#nav table {
+    background: #fff;
+    border-radius: 8px;
+    /* Add slight margin/padding around the table */
+    padding: 5px; 
+}
 
+#nav table td {
+    /* Increase vertical padding to space out buttons rows */
+    padding: 10px 12px; 
 }
- 
- /*   .myButtons {
-	  -moz-box-shadow: 0px -2px 14px -7px #276873;
-	-webkit-box-shadow: 0px -2px 14px -7px #276873;  
-	box-shadow: 0px -2px 14px -7px #276873;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
-	background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
-	background-color:#599bb3;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Verdana;
-	font-size:10px;
-	padding:5px 10px;
-	text-decoration:none;
-	   text-shadow:0px 1px 13px #3d768a;  
+
+/* Applying the preferred myButton style to the new buttons */
+input[type="button"].myButton {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #4a90e2;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    /* Reduced margin-right to tighten up horizontal spacing */
+    margin-right: 5px; 
+    outline: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    /* Set a fixed width for visual consistency like the image */
+    width: 150px; 
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
-	background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
-	background-color:#408c99;
+
+
+input[type="button"].myButton:hover {
+    background: #357ab8;
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
-} 
-      */
- 
- 
-    .myButtons {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
-	background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
-	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
-	background-color:#599bb3;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
-	border-radius:4px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Verdana;
-	font-size:10px;
-	padding:4px 8px;
-	text-decoration:none;
+
+input[type="text"], input[type="hidden"], select {
+    background: #fff;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    border: 1px solid #bcdffb;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    color: #222;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
-	background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
-	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
-	background-color:#408c99;
+
+label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #222;
+    margin-bottom: 4px;
+    display: block;
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
-} 
- 
-  /*   #ss
-{
-background-color:	#ffc0cb;
-}
-   
-  */
+/* Remaining HR setup specific styles are implicitly removed/overwritten */
 
 </style>
 <script type="text/javascript">
@@ -181,36 +129,44 @@ background-color:	#ffc0cb;
 <div id="nav"> 
 <br>
  
-<table width="60%" id="ss">  
-<tr><td align="center"><input type="button"   class="myButtons" value="GENERAL" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/hrsetupgeneral/hrsetupgeneralmaster.jsp";'></td></tr>
+<body>
+<div id="mainBG" class="homeContent" data-type="background">
+<h3>HR Setup</h3> 
 
-<tr><td align="center"><input type="button"   class="myButtons" value="DESIGNATION" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/designation.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="DEPARTMENT" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/department.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="PAYROLL CATEGORY" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/payrollcategory.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="DOCUMENT" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/document.jsp";'></td></tr>
-<tr><td align="center"><input type="button"  class="myButtons" value="LEAVE" style="width:180px;outline:none;"  onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leave.jsp";'></td></tr>
 
-<tr><td align="center"><input type="button"   class="myButtons" value="ALLOWANCES" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/allowances.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="STATUTORY DEDUCTIONS" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/statutorydeductions.jsp";'></td></tr>
- <tr><td align="center"><input type="button"   class="myButtons" value="AGENT" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/agent.jsp";'></td></tr>
- <tr><td align="center"><input type="button"   class="myButtons" value="LEAVE SETUP" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leavesetup/leavesetupmaster.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="COMPANY SETUP" id="btncompanysetup" name="btncompanysetup" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/companysetup/companysetup.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="BANK DETAILS" id="btnbankdetails" name="btnbankdetails" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/bankdetails/bankdetails.jsp";'></td></tr>
-<tr><td align="center"><input type="button"   class="myButtons" value="TERMINATION SETUP" id="btnterminationsetup" name="btnterminationsetup" style="width:180px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/terminationsetup/terminationsetupmaster.jsp";'></td></tr>
-
+<div id="nav">
+<table id="ss"> 
+<tr>
+<td><input type="button" class="myButton" value="GENERAL" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/hrsetupgeneral/hrsetupgeneralmaster.jsp";'></td>
+<td><input type="button" class="myButton" value="DESIGNATION" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/designation.jsp";'></td>
+<td><input type="button" class="myButton" value="DEPARTMENT" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/department.jsp";'></td>
+<td><input type="button" class="myButton" value="PAYROLL CATEGORY" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/payrollcategory.jsp";'></td>
+<td><input type="button" class="myButton" value="DOCUMENT" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/document.jsp";'></td>
+<td><input type="button" class="myButton" value="LEAVE" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leave.jsp";'></td>
+</tr>
+<tr>
+<td><input type="button" class="myButton" value="ALLOWANCES" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/allowances.jsp";'></td>
+<td><input type="button" class="myButton" value="STATUTORY DEDUCTIONS" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/statutorydeductions.jsp";'></td>
+<td><input type="button" class="myButton" value="AGENT" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/agent.jsp";'></td>
+<td><input type="button" class="myButton" value="LEAVE SETUP" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/leavesetup/leavesetupmaster.jsp";'></td>
+<td><input type="button" class="myButton" value="COMPANY SETUP" id="btncompanysetup" name="btncompanysetup" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/companysetup/companysetup.jsp";'></td>
+<td><input type="button" class="myButton" value="BANK DETAILS" id="btnbankdetails" name="btnbankdetails" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/bankdetails/bankdetails.jsp";'></td>
+</tr>
+<tr>
+<td><input type="button" class="myButton" value="TERMINATION SETUP" id="btnterminationsetup" name="btnterminationsetup" style="outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/humanresource/setup/hrsetup/terminationsetup/terminationsetupmaster.jsp";'></td>
+<td></td><td></td><td></td><td></td><td></td>
+</tr>
 </table>
 </div>
-<div id="comiframe">
-	<iframe width="97%" height="100%" id="iframe2" align="right" frameborder="0" marginwidth="97%" scrolling="no" src="<%=contextPath%>/com/humanresource/setup/hrsetup/hrsetupgeneral/hrsetupgeneralmaster.jsp";></iframe>
-</div>
+
 <input type="hidden" id="formName" name="formName"  value='000'/>
 <input type="hidden" id="formCode" name="formCode"  value='HRM'/>
 <input type="hidden" id="branchid" name="branchid"  value=''/>
+<input type="hidden" id="mode" name="mode"  />
 
-
-<input type="hidden" id="mode" name="mode"   />
-
-
+<div id="comiframe">
+	<iframe width="100%" height="100%" id="iframe2" align="right" frameborder="0" marginwidth="100%" scrolling="no" src="<%=contextPath%>/com/humanresource/setup/hrsetup/hrsetupgeneral/hrsetupgeneralmaster.jsp"></iframe>
+</div>
 
 </div>
 </body>
