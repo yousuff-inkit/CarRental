@@ -13,20 +13,24 @@
     overflow: auto;
     height: 530px;
 }
+
+/* page background */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI','Roboto','Arial',sans-serif;
     color: #222;
     margin: 0;
-    padding: 32px 0;
+    padding: 24px 0;
     min-height: 100vh;
     box-sizing: border-box;
 }
+
+/* WIDER main card */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 10px;
-    max-width: 1200px;
+    padding: 18px 28px;
+    max-width: 1600px;          /* was 1200px */
     margin: 0 auto;
 }
 
@@ -35,10 +39,10 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     border-radius: 12px;
-    padding: 0 24px;
-    font-size: 2vh;
+    padding: 0 10px;            /* less side padding so content uses width */
+    font-size: 14px;
 }
 .receipt-header label {
     font-weight: 500;
@@ -49,8 +53,8 @@ body {
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
+    font-size: 14px;
+    width: 150px;
     background: #fff;
     transition: border-color 0.2s;
 }
@@ -63,7 +67,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 6px 18px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
@@ -75,7 +79,7 @@ body {
 /* optional generic blocks */
 .section-row {
     display: flex;
-    gap: 26px;
+    gap: 28px;
     margin-bottom: 24px;
 }
 .section-block {
@@ -86,7 +90,7 @@ body {
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 .section-block h2 {
-    font-size: 1.09em;
+    font-size: 1.1em;
     font-weight: 500;
     margin: 0 0 16px;
     color: #253858;
@@ -98,7 +102,7 @@ body {
     margin-bottom: 12px;
 }
 .section-block label {
-    min-width: 110px;
+    min-width: 120px;
     text-align: right;
     font-weight: 500;
     color: #253858;
@@ -120,23 +124,23 @@ body {
 
 /* section cards */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
     background: #f6f8fa;
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 .table-section h3 {
     margin: 0 0 14px;
     padding-left: 10px;
-    border-left: 4px solid #007bff; /* blue bar like Booking/User Master */
+    border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 1.04em;
+    font-size: 14px;
     font-weight: 600;
 }
 
-/* tables */
+/* tables – use full new width */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -144,13 +148,14 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
 }
 .cr-table th,
 .cr-table td {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 14px;
 }
 .cr-table th {
     background: #eef0f6;
@@ -166,15 +171,17 @@ body {
     background: #007bff;
     color: #fff;
     border: none;
-    padding: 6px 16px;
+    padding: 6px 18px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 13px;
 }
 .myButton:hover {
     background: #0056b3;
 }
 </style>
+
 
 <script type="text/javascript">
       

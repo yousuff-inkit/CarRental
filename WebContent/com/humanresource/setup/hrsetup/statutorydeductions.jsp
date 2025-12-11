@@ -10,12 +10,98 @@ String contextPath=request.getContextPath();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+/* background */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: 14px;
+}
 
+/* main white card */
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 28px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* section wrapper */
+.table-section {
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+.table-section h3 {
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* table layout */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
+}
+.cr-table td {
+    padding: 6px 8px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.cr-table td[align="right"] {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #333;
+}
+
+/* unified inputs/selects */
+.cr-table input[type="text"],
+.cr-table select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    height: 30px;
+    font-size: 13px;
+    box-sizing: border-box;
+    background: #fff;
+}
+.cr-table input[type="text"]:focus,
+.cr-table select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* jqx date cell */
+#statudate {
+    width: 100%;
+}
+
+/* grid under form */
+#deductiongrid {
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px #eef0f6;
 }
 </style>
+
 <%@page import="com.humanresource.setup.hrsetup.statutorydeductions.ClsStatutorydeductionsDAO"%>
 <% ClsStatutorydeductionsDAO showDAO = new ClsStatutorydeductionsDAO(); %>  
 <script type="text/javascript">
@@ -183,47 +269,93 @@ color:red;
 </script>   
  
 </head>
-<body onLoad="setValues();" > 
+<body onload="setValues();">
+
+<div id="mainBG" class="homeContent" data-type="background">
 
 <form id="frmstatudeduction" action="savestatuDeduction" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/>
- 
-<fieldset><legend>Statutory Deductions Details</legend>
-<table width="100%" >
-	<tr><td width="10%" align="right">Date</td> 
-		<td width="15%" align="left"><div id="statudate" name="statudate" value='<s:property value="statudate"/>'> </div></td>
-	  	<td width="12%" align="right">Statutory Deductions</td>
-	  	<td width="34%"><input type="text" name="satudeduction" id="satudeduction" style="width:100%;" placeholder="Statutory Deductions" value='<s:property value="satudeduction"/>'></td>
-		<td width="10%" align="right">Doc No</td>
-		<td width="10%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1"></td>
-		<td  width="9%" >&nbsp;</td>
-	</tr> 
-	<tr><td align="right">Account</td>
-		<td  colspan="4" ><input type="text" name="acno" id="acno" readonly="readonly"   placeholder="Press F3 To Search"  onKeyDown="getaccountdetails(event);"   value='<s:property value="acno"/>' > 
-		&nbsp;<input type="text" name="accname" id="accname" style="width:50%;" readonly="readonly" value='<s:property value="accname"/>' >&nbsp;&nbsp;Type&nbsp;
-		<select name="type" id="type"  style="width:12%;"   value='<s:property value="type"/>'  >
-		    <option value="0">Amount</option><option value="1">Percentage</option></select></td></tr>
-	<tr><td align="right">Remarks</td>
-		<td colspan="4"><input type="text" name="remarks" id="remarks"  style="width:85.8%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table>
-	 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
-<input type="hidden" name="accdocno" id="accdocno" value='<s:property value="accdocno"/>' >
-<input type="hidden" name="hidtype" id="hidtype" value='<s:property value="hidtype"/>' >
-	
-</fieldset> 
+
+<div class="table-section" style="width:100%;">
+    <h3>Statutory Deductions Details</h3>
+
+    <table class="cr-table">
+        <tr>
+            <td align="right" style="width:10%;">Date</td> 
+            <td style="width:18%;">
+                <div id="statudate" name="statudate"
+                     value='<s:property value="statudate"/>'></div>
+            </td>
+
+            <td align="right" style="width:16%;">Statutory Deductions</td>
+            <td style="width:36%;">
+                <input type="text" name="satudeduction" id="satudeduction"
+                       placeholder="Statutory Deductions"
+                       value='<s:property value="satudeduction"/>'>
+            </td>
+
+            <td align="right" style="width:8%;">Doc No</td>
+            <td style="width:12%;">
+                <input type="text" name="docno" id="docno"
+                       value='<s:property value="docno"/>'
+                       readonly="readonly" tabindex="-1">
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right">Account</td>
+            <td colspan="5">
+                <input type="text" name="acno" id="acno"
+                       readonly="readonly"
+                       placeholder="Press F3 To Search"
+                       onkeydown="getaccountdetails(event);"
+                       value='<s:property value="acno"/>'>
+                &nbsp;
+                <input type="text" name="accname" id="accname"
+                       style="width:50%;"
+                       readonly="readonly"
+                       value='<s:property value="accname"/>'>
+                &nbsp;&nbsp;Type&nbsp;
+                <select name="type" id="type" style="width:12%;"
+                        value='<s:property value="type"/>'>
+                    <option value="0">Amount</option>
+                    <option value="1">Percentage</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right">Remarks</td>
+            <td colspan="5">
+                <input type="text" name="remarks" id="remarks"
+                       placeholder="Remarks"
+                       value='<s:property value="remarks"/>'>
+            </td>
+        </tr>
+    </table>
+
+    <input type="hidden" id="mode" name="mode"
+           value='<s:property value="mode"/>' />
+    <input type="hidden" id="msg" name="msg"
+           value='<s:property value="msg"/>'/> 
+    <input type="hidden" name="deleted" id="deleted"
+           value='<s:property value="deleted"/>'/> 
+    <input type="hidden" id="datehidden" name="datehidden"
+           value='<s:property value="datehidden"/>'/> 
+    <input type="hidden" name="accdocno" id="accdocno"
+           value='<s:property value="accdocno"/>' >
+    <input type="hidden" name="hidtype" id="hidtype"
+           value='<s:property value="hidtype"/>' >
+</div>
 </form>
 
-<table width="100%">
-    <tr><td><div id="deductiongrid"></div></td></tr>
-</table><br/>
-		 
-<div id="accountSearchwindow">
-	   <div></div>
-</div>	
+<div id="deductiongrid"></div><br/>
 
+<div id="accountSearchwindow">
+   <div></div>
+</div>
+
+</div>
 </body>
+
 </html>

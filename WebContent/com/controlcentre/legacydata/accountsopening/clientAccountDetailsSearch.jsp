@@ -9,6 +9,17 @@
 <title>GatewayERP(i)</title>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
+<style>
+/* make left-side texts like 'Account No', 'Currency', etc. bold */
+#search table td[align="right"] {
+    font-weight: 800;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-size: 12px;
+    color: #333;
+}
+</style>
+
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$("#txtaccperiod").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});

@@ -8,11 +8,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-  color:red;
-  font-weight:bold;
+/* scroll area if you need it later */
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+/* background */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* main card like User Master */
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 28px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* section card */
+.table-section {
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+.table-section h3 {
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* blue bar */
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* grid/table layout for fields */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
+}
+.cr-table td {
+    padding: 6px 8px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.cr-table td[align="right"] {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #333;
+}
+
+/* unified textboxes */
+.cr-table input[type="text"] {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    height: 30px;
+    font-size: 13px;
+    box-sizing: border-box;
+    background: #fff;
+}
+.cr-table input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* jqx date cell */
+#leavedate {
+    width: 100%;
+}
+
+/* grid under form */
+#leavegrid {
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px #eef0f6;
 }
 </style>
+
 
 <%@page import="com.humanresource.setup.hrsetup.leave.ClsLeaveDAO"%>
 <% ClsLeaveDAO showDAO = new ClsLeaveDAO(); %>  
@@ -151,41 +242,78 @@ form label.error {
 </script>   
  
 </head>
-<body onLoad="setValues();" >        
+<body onload="setValues();">
+<div id="mainBG" class="homeContent" data-type="background">
 
 <form id="frmleave" action="saveLeave" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" /> <br/>
- 
-<fieldset><legend>Leave Details</legend>
-<table width="100%">
-	<tr><td width="10%" align="right">Date</td>  
-    <td width="15%" align="left"><div id="leavedate" name="leavedate" value='<s:property value="leavedate"/>'></div></td>
-	<td width="6%" align="right">Leave</td>
-	<td width="34%"><input type="text" name="leave" id="leave" style="width:97%;" placeholder="Leave" value='<s:property value="leave"/>'></td>
-	<td width="6%" align="right">Abbreviation</td>
-	<td width="10%" ><input type="text" name="abbreviation" id="abbreviation" style="width:100%;" placeholder="Press F3 to Search" onkeydown="getAbbrevation(event);" readonly="readonly" value='<s:property value="abbreviation"/>'></td>
-	<td width="10%" align="right">Doc No</td>
-	<td width="10%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1"></td>
-	<td  width="9%" >&nbsp;</td></tr> 
-	<tr><td align="right">Remarks</td>
-	<td colspan="5"><input type="text" name="remarks" id="remarks" style="width:100%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table>
-	 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+    <jsp:include page="../../../../header.jsp" /> <br/>
 
-</fieldset> 
+    <div class="hidden-scrollbar">
+
+        <div class="table-section" style="width:100%;">
+            <h3>Leave Details</h3>
+
+            <table class="cr-table">
+                <tr>
+                    <td align="right" style="width:10%;">Date</td>
+                    <td style="width:18%;">
+                        <div id="leavedate" name="leavedate"
+                             value='<s:property value="leavedate"/>'></div>
+                    </td>
+
+                    <td align="right" style="width:8%;">Leave</td>
+                    <td style="width:32%;">
+                        <input type="text" name="leave" id="leave"
+                               placeholder="Leave"
+                               value='<s:property value="leave"/>'>
+                    </td>
+
+                    <td align="right" style="width:12%;">Abbreviation</td>
+                    <td style="width:14%;">
+                        <input type="text" name="abbreviation" id="abbreviation"
+                               placeholder="Press F3 to Search"
+                               onkeydown="getAbbrevation(event);"
+                               readonly="readonly"
+                               value='<s:property value="abbreviation"/>'>
+                    </td>
+
+                    <td align="right" style="width:8%;">Doc No</td>
+                    <td style="width:16%;">
+                        <input type="text" name="docno" id="docno"
+                               value='<s:property value="docno"/>'
+                               readonly="readonly" tabindex="-1">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Remarks</td>
+                    <td colspan="7">
+                        <input type="text" name="remarks" id="remarks"
+                               placeholder="Remarks"
+                               value='<s:property value="remarks"/>'>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <input type="hidden" id="mode" name="mode"
+               value='<s:property value="mode"/>' />
+        <input type="hidden" id="msg" name="msg"
+               value='<s:property value="msg"/>'/> 
+        <input type="hidden" name="deleted" id="deleted"
+               value='<s:property value="deleted"/>'/> 
+        <input type="hidden" id="datehidden" name="datehidden"
+               value='<s:property value="datehidden"/>'/> 
+
+        <div id="leavegrid"></div><br/>
+    </div>
 </form>
 
-<table width="100%">
-    <tr><td><div id="leavegrid"></div></td></tr>
-</table><br/>
-		 
 <div id="abbrevationDetailsWindow">
-	<div></div>
-</div> 	
+    <div></div>
+</div> 
 
+</div>
 </body>
+
 </html>

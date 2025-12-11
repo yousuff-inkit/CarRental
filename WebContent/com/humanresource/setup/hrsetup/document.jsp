@@ -8,12 +8,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-  color:red;
-  font-weight:bold;
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
 
+/* background */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* main card */
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 28px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* section card like User Master */
+.table-section {
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+.table-section h3 {
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;  /* blue bar */
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* grid/table layout for fields */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
+}
+.cr-table td {
+    padding: 6px 8px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.cr-table td[align="right"] {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #333;
+}
+
+/* unified inputs */
+.cr-table input[type="text"] {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    height: 30px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+.cr-table input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* jqx date container */
+#documentdate {
+    width: 100%;
+}
+
+/* grid below */
+#documentgrid {
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px #eef0f6;
 }
 </style>
+
  
 <%@page import="com.humanresource.setup.hrsetup.document.ClsDocumentDAO"%>
 <% ClsDocumentDAO showDAO = new ClsDocumentDAO(); %>
@@ -120,35 +208,63 @@ form label.error {
 </script>   
  
 </head>
-<body onLoad="setValues();" > 
+<body onload="setValues();">
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmdocument" action="saveDocument" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" /><br/>
- 
-<fieldset><legend>Document Details</legend> 
-<table width="100%">
-	<tr><td width="10%" align="right">Date</td> 
-	<td width="15%" align="left"><div id="documentdate" name="documentdate" value='<s:property value="documentdate"/>'></div></td>
-	<td width="12%" align="right">Document</td>
-	<td width="34%"><input type="text" name="document" id="document" style="width:100%;" placeholder="Document" value='<s:property value="document"/>'></td>
-    <td width="10%" align="right">Doc No</td>
-	<td width="10%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1"></td>
-	<td  width="9%">&nbsp;</td>
-	</tr> 
-	<tr><td align="right">Remarks</td>
-	<td colspan="4"><input type="text" name="remarks" id="remarks" style="width:85.8%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table>
-	 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+    <jsp:include page="../../../../header.jsp" /><br/>
 
-</fieldset> 
+    <div class="hidden-scrollbar">
+
+        <div class="table-section" style="width:100%;">
+            <h3>Document Details</h3>
+
+            <table class="cr-table">
+                <tr>
+                    <td align="right" style="width:10%;">Date</td>
+                    <td style="width:20%;">
+                        <div id="documentdate" name="documentdate"
+                             value='<s:property value="documentdate"/>'></div>
+                    </td>
+
+                    <td align="right" style="width:10%;">Document</td>
+                    <td style="width:40%;">
+                        <input type="text" name="document" id="document"
+                               placeholder="Document"
+                               value='<s:property value="document"/>'>
+                    </td>
+
+                    <td align="right" style="width:10%;">Doc No</td>
+                    <td style="width:20%;">
+                        <input type="text" name="docno" id="docno"
+                               value='<s:property value="docno"/>'
+                               readonly="readonly" tabindex="-1">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Remarks</td>
+                    <td colspan="5">
+                        <input type="text" name="remarks" id="remarks"
+                               placeholder="Remarks"
+                               value='<s:property value="remarks"/>'>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <input type="hidden" id="mode" name="mode"
+               value='<s:property value="mode"/>' />
+        <input type="hidden" id="msg" name="msg"
+               value='<s:property value="msg"/>'/>
+        <input type="hidden" name="deleted" id="deleted"
+               value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="datehidden" name="datehidden"
+               value='<s:property value="datehidden"/>'/>
+
+        <div id="documentgrid"></div><br/>
+    </div>
 </form>
-		 
-<table width="100%">
-    <tr><td><div id="documentgrid"></div></td></tr>
-</table><br/>	
-
+</div>
 </body>
+
 </html>
