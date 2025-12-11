@@ -157,7 +157,7 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
             }
             .first{
                 width: 40%;
-                padding-top: 10%;    
+                padding-top: 17%;
             }
             .second{
                 width: 60%;
@@ -404,7 +404,7 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
         <div class="login-container img-rounded animated slideInRight" style="animation-delay: 1s;">
             <div class="first">
                 <div class="header-image">
-                    <img src="icons/gwinnobanner.png" alt="" class="img-responsive animated flipInX" style="animation-delay: 1.5s;">
+                    <img src="icons/ink_new_logo_2025.png" alt="" class="img-responsive animated flipInX" style="animation-delay: 1.5s;">
                 </div>
                 <div class="container-fluid login-control-container">
                 	<form method="post" action="login" autocomplete="off">

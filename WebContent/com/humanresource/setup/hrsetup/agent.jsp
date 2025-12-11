@@ -8,11 +8,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
- color:red;
- font-weight:bold;
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
 
-}
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: block; /* Content container for the whole form body */
+        padding: 0 0 0 5px;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
+    }
+
+    .full-width-block {
+        flex: 1 1 100%;
+    }
+
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff; /* Blue vertical line */
+        color: #333;
+        display: block;
+    }
+    
+    .section-block legend {
+        /* Apply h2 styling to legend, as per request */
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px; 
+        padding-left: 10px;
+        border-left: 4px solid #007bff; /* Blue vertical line */
+        color: #333;
+        display: block;
+        border: none;
+    }
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], input[type="email"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 14px;
+    }
+    
+    form label.error {
+        color:red;
+        font-weight:bold;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+    
 </style>
 
 <%@page import="com.humanresource.setup.hrsetup.agent.ClsAgentDAO"%>
@@ -126,32 +279,45 @@ form label.error {
  
 </head>
 <body onLoad="setValues();" >
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmagent" action="saveAgent" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/>
- 
-<fieldset><legend>Agent Details</legend>  
-<table width="100%"  >
-	<tr><td width="10%"  align="right">Date</td> 
-	<td width="15%" align="left"><div id="agentdate" name="agentdate" value='<s:property value="agentdate"/>'> </div></td>
-	<td width="12%" align="right">Agent</td>
-	<td width="34%"><input type="text" name="agent" id="agent" style="width:100%;" placeholder="Agent" value='<s:property value="agent"/>'></td>
-	<td width="10%" align="right">Doc No</td>
-	<td width="10%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1"></td>
-	<td  width="9%" >&nbsp;</td></tr> 
-	<tr><td align="right">Remarks</td>
-	<td colspan="4"><input type="text" name="remarks" id="remarks"  style="width:85.8%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table> 
 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
-</fieldset> 
+<div class="section-block full-width-block">
+    <legend>Agent Details</legend>
+
+    <div class="form-group dual-input">
+        <label>Date</label>
+        <div>
+            <div id="agentdate" name="agentdate" value='<s:property value="agentdate"/>'> </div>
+        </div>
+
+        <label>Doc No</label>
+        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
+    </div>
+
+    <div class="form-group">
+        <label>Agent Name</label>
+        <input type="text" name="agent" id="agent" placeholder="Agent" value='<s:property value="agent"/>'>
+    </div>
+
+    <div class="form-group">
+        <label>Remarks</label>
+        <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>' >
+    </div>
+
+    <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
+</div>
+
 </form>
 
-<table width="100%">
-    <tr><td><div id="agentgrid"></div></td></tr>
-</table><br/>
+<div class="section-block full-width-block" style="padding: 0; background: transparent; box-shadow: none;">
+    <div id="agentgrid"></div>
+</div><br/>
 
+</div>
 </body>
 </html>
