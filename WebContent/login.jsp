@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/mystyle.css">
-<link rel="shortcut icon" href="<%=contextPath+"/"%>gatelogo.ico" > 
-<title>Gateway ERP(Integrated) Copyright &#169; 2017 GW INNOVATIONS Pvt Ltd</title>
+<link rel="shortcut icon" href="<%=contextPath+"/"%>icons/ink_new_logo_2025.png" >
+<title>INK IT Business Solutions</title>
 <%-- <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script> --%>
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/easyui.css">
@@ -741,15 +741,15 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
     			        	 $("select#company").html(optionscmp);
     			        	 if(items[2].trim()==''){
     					        	$('#msgexpiry').hide();
-    							} else {
-    								$('#msgexpiry').text(items[2]);
-    								//$.messager.alert('Warning',items[2]);
-    								Swal.fire({
-    									icon:'warning',
-    									type: 'Warning',
-    									title: 'AMC Expired',
-    									text: items[2]
-    								});
+    							// `} else {
+    							// 	$('#msgexpiry').text(items[2]);
+    							// 	//$.messager.alert('Warning',items[2]);
+    							// 	Swal.fire({
+    							// 		icon:'warning',
+    							// 		type: 'Warning',
+    							// 		title: 'AMC Expired',
+    							// 		text: items[2]
+    							// 	});`
     							}
     			        	}
     				}
