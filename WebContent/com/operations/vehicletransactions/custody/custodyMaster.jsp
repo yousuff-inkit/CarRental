@@ -1946,10 +1946,11 @@ win.focus();
 </div>
 </form>
 <div id="collectionwindow">
-   <div ></div>
+
+�<div ></div>
 </div>
 .<div id="agmtnowindow">
-   <div ></div>
+<div ></div>
 </div>
 </div>
 
