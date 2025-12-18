@@ -10,21 +10,24 @@
 <title>GatewayERP(i)</title>
  <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>  --%> 
 <style type="text/css">
+/* Master UI Styles */
 /* Table spacing */
 table {
   border-collapse: separate;
-  border-spacing: 15px 18px; /* Increased gap between cells */
+  border-spacing: 15px 18px; /* Standard master gap */
 }
 
 /* Bold labels */
 td[align="right"] {
-  font-weight: 700;
+  font-family: Tahoma, Arial, sans-serif;
   font-size: 14px;
+  font-weight: 700;
   color: #222;
 }
 
 /* Bold text inside inputs and selects */
 input[type="text"], select {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
@@ -35,14 +38,29 @@ input[type="text"], select {
 
 /* Bold text in date fields (applied to the div) */
 #searchdate {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
   font-size: 14px;
 }
 
-/* Bold button text */
+/* Master Button Appearance */
 .myButton {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 700;
   font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+/* Button Hover Effects */
+.myButton:hover {
+  background-color: #45a049;
 }
 
 /* Additional spacing for rows */
@@ -50,7 +68,6 @@ tr {
   line-height: 1.8;
 }
 </style>
-
 
 	<script type="text/javascript">
 	$(document).ready(function () {
@@ -138,7 +155,7 @@ function getGroup() {
  
 	</script>
 <body bgcolor="#E0ECF8">
-<div id=search>
+<div id="search">
   <table width="100%" >
     <tr>
       <td width="12%" align="right">Doc No</td>

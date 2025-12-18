@@ -29,27 +29,101 @@
 		}
 
 	</script>
-<body>
-<div id=search>
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Standard master gap */
+}
+
+/* Bold labels */
+td[align="right"] {
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs */
+input[type="text"] {
+  font-family: Tahoma, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Bold text in date fields (applied to the div) */
+#vdpdate {
+  font-family: Tahoma, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+/* Button Hover Effects */
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
+<div id="search">
 <table width="100%">
   <tr>
     <td width="6%" align="right">Date</td>
-    <td width="14%"><div id="vdpdate" name="vdpdate"  value='<s:property value="vdpdate"/>'></div>
-        <input type="hidden" name="hidvdpdate" id="hidvdpdate" value='<s:property value="hidvdpdate"/>'></td>
+    <td width="14%">
+      <div id="vdpdate" name="vdpdate" value='<s:property value="vdpdate"/>'></div>
+      <input type="hidden" name="hidvdpdate" id="hidvdpdate" value='<s:property value="hidvdpdate"/>'>
+    </td>
     <td width="21%" align="right">Doc No</td>
-    <td width="32%"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="32%">
+      <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
+    </td>
+    <td width="27%" align="center">
+      <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+    </td>
   </tr>
   <tr>
     <td align="right">Name</td>
-    <td colspan="2"><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'></td>
+    <td colspan="2">
+      <input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'>
+    </td>
     <td align="right">Total</td>
-    <td><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
+    <td>
+      <input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'>
+    </td>
   </tr>
   <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="vdpMainSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="5">
+      <div id="refreshdiv">
+        <jsp:include page="vdpMainSearchGrid.jsp" />
+      </div>
+    </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>
