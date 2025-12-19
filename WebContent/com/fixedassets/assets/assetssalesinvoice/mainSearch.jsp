@@ -46,38 +46,115 @@
 		}
  
 	</script>
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 12px; /* Standardized master gap */
+}
+
+/* Section Header with Blue Vertical Line */
+.section-header {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  padding-left: 10px;
+  margin: 10px 0;
+}
+
+/* Bold labels */
+td[align="right"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects */
+input[type="text"], select {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Date field styling */
+#msearchdate {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Clean background and row spacing */
+tr {
+  line-height: 1.6;
+}
+</style>
+
 <body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="9%" align="right">Doc No</td>
-    <td width="15%" align="left"><input type="text" name="msearchdocno" id="msearchdocno" ></td>
-    <td width="10%" align="right">Date</td>
-    <td width="17%" align="left"><div id="msearchdate" ></div></td>
-    <td width="10%" align="right">Type</td>
-    <td width="29%" align="left"><select name="msearchcmbtype" id="msearchcmbtype">
-      <option value="">--Select--</option>
-      <option value="S">Sale</option>
-      <option value="L">Total Loss</option>
-    </select></td>
-    <td width="10%" rowspan="2" align="center"><input type="button" name="searchbtn" id="searchbtn" class="myButton" value="Search"  onclick="mainSearch();"></td>
-  </tr>
-  <tr>
-    <td align="right">Client</td>
-    <td align="left"><input type="text" name="msearchclient" id="msearchclient"></td>
-    <td align="right">A/c No</td>
-    <td align="left"><input type="text" name="msearchacno" id="msearchacno"></td>
-    <td align="right">Mobile</td>
-    <td align="left"><input type="text" name="msearchmobile" id="msearchmobile"></td>
+<div id="search">
+ 
+
+  <table width="100%">
+    <tr>
+      <td width="9%" align="right">Doc No</td>
+      <td width="15%" align="left"><input type="text" name="msearchdocno" id="msearchdocno"></td>
+      <td width="10%" align="right">Date</td>
+      <td width="17%" align="left"><div id="msearchdate"></div></td>
+      <td width="10%" align="right">Type</td>
+      <td width="29%" align="left">
+        <select name="msearchcmbtype" id="msearchcmbtype">
+          <option value="">--Select--</option>
+          <option value="S">Sale</option>
+          <option value="L">Total Loss</option>
+        </select>
+      </td>
+      <td width="10%" rowspan="2" align="center">
+        <input type="button" name="searchbtn" id="searchbtn" class="myButton" value="Search" onclick="mainSearch();">
+      </td>
     </tr>
-  <tr>
-    <td colspan="7" align="right"><div id="srefreshdiv"><jsp:include page="assetSalesSearch.jsp"></jsp:include></div></td>
+    <tr>
+      <td align="right">Client</td>
+      <td align="left"><input type="text" name="msearchclient" id="msearchclient"></td>
+      <td align="right">A/c No</td>
+      <td align="left"><input type="text" name="msearchacno" id="msearchacno"></td>
+      <td align="right">Mobile</td>
+      <td align="left"><input type="text" name="msearchmobile" id="msearchmobile"></td>
     </tr>
-
-</table>
-
-
-
-  </div>
+    <tr>
+      <td colspan="7" align="right">
+        <div id="srefreshdiv">
+          <jsp:include page="assetSalesSearch.jsp" />
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>
