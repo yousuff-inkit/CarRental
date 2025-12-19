@@ -849,6 +849,16 @@ body {
     border-bottom: none;
 }
 
+label,
+.cr-table td label,
+.cr-table th,
+.cr-table td,
+td,
+th {
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+}
+
 </style>
 
 </head>
@@ -859,7 +869,7 @@ body {
 
 <div  class='hidden-scrollbar receipt-header'>
 
-<div class="table-section" style="background-color: #EBDEF0; width: 100%;">
+<div class="table-section" style="background-color: #E8F1FF; width: 100%;">
 <table class="cr-table" width="100%">
   <tr>
     <td width="6%" align="right">Date</td>
@@ -895,7 +905,7 @@ body {
 <table class="cr-table" width="100%">
 <tr>
 <td width="50%">
-<div class="table-section" style="background-color: #ECF8E0;">
+<div class="table-section" style="background-color: #E8F1FF;">
 <h3><font style="font-family: comic sans ms;font-weight: bold;">Leave Disbursement</font></h3>
 <table class="" width="100%">
   <tr>
@@ -929,7 +939,7 @@ body {
 </td>
 
 <td width="50%">
-<div class="table-section" style="background-color: #F8E0F7; ">
+<div class="table-section" style="background-color: #E8F1FF; ">
 <h3><font style="font-family: comic sans ms;font-weight: bold;">Travel Disbursement</font></h3>
 <table class="cr-table" width="100%">
   <tr>

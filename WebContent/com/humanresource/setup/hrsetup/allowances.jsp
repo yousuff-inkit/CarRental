@@ -8,12 +8,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+/* background */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: 14px;
+}
 
+/* main card */
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 28px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* section wrapper */
+.table-section {
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+.table-section h3 {
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* table layout */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
+}
+.cr-table td {
+    padding: 6px 8px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.cr-table td[align="right"] {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #333;
+}
+
+/* unified inputs */
+.cr-table input[type="text"] {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    height: 30px;
+    font-size: 13px;
+    box-sizing: border-box;
+    background: #fff;
+}
+.cr-table input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* date cell */
+#allowancedate {
+    width: 100%;
+}
+
+/* grid under form */
+#allowancegrid {
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px #eef0f6;
 }
 </style>
+
 
 <%@page import="com.humanresource.setup.hrsetup.allowances.ClsAllowancesDAO"%>
 <% ClsAllowancesDAO showDAO = new ClsAllowancesDAO(); %>  
@@ -179,45 +263,91 @@ color:red;
 </script>   
  
 </head>
-<body onLoad="setValues();" > 
+<body onload="setValues();">
+<div id="mainBG" class="homeContent" data-type="background">
 
 <form id="frmallowance" action="saveAllowance" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/>
- 
-<fieldset><legend>Allowance Details</legend>
-<table width="100%">
-		<tr><td width="7%"  align="right">Date</td>  
-		<td width="12%" align="left"><div id="allowancedate" name="allowancedate" value='<s:property value="allowancedate"/>'> </div></td>
-	  	<td width="9%" align="right">Allowance</td>
-	  	<td width="14%"><input type="text" name="allowancecode" id="allowancecode" style="width:100%;" placeholder="Allowance Code" value='<s:property value="allowancecode"/>'></td>
-        <td  width="5%" align="right">Name</td>
-        <td  width="31%"><input type="text" name="allowance" id="allowance" style="width:99%;" placeholder="Allowance Name" value='<s:property value="allowance"/>'></td>
-		<td width="8%" align="right">Doc No</td>
-		<td width="14%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
-	</tr> 
-	<tr><td align="right">Account</td> 
-		<td  colspan="7" ><input type="text" name="acno" id="acno" readonly   placeholder="Press F3 To Search"  onKeyDown="getaccountdetails(event);"  value='<s:property value="acno"/>' > 
-		&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="accname" id="accname" style="width:61%;" readonly value='<s:property value="accname"/>' ></td></tr>
-	<tr><td align="right">Remarks</td>
-		<td colspan="7"><input type="text" name="remarks" id="remarks"  style="width:76%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table>
-	 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
-<input type="hidden" name="accdocno" id="accdocno"       value='<s:property value="accdocno"/>' >
-	
-</fieldset> 
+
+<div class="table-section" style="width:100%;">
+    <h3>Allowance Details</h3>
+
+    <table class="cr-table">
+        <tr>
+            <td align="right" style="width:8%;">Date</td>
+            <td style="width:16%;">
+                <div id="allowancedate" name="allowancedate"
+                     value='<s:property value="allowancedate"/>'></div>
+            </td>
+
+            <td align="right" style="width:10%;">Allowance</td>
+            <td style="width:20%;">
+                <input type="text" name="allowancecode" id="allowancecode"
+                       placeholder="Allowance Code"
+                       value='<s:property value="allowancecode"/>'>
+            </td>
+
+            <td align="right" style="width:8%;">Name</td>
+            <td style="width:24%;">
+                <input type="text" name="allowance" id="allowance"
+                       placeholder="Allowance Name"
+                       value='<s:property value="allowance"/>'>
+            </td>
+
+            <td align="right" style="width:8%;">Doc No</td>
+            <td style="width:16%;">
+                <input type="text" name="docno" id="docno"
+                       value='<s:property value="docno"/>'
+                       readonly tabindex="-1">
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right">Account</td>
+            <td colspan="7">
+                <input type="text" name="acno" id="acno"
+                       placeholder="Press F3 To Search"
+                       readonly
+                       onkeydown="getaccountdetails(event);"
+                       value='<s:property value="acno"/>'>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="accname" id="accname"
+                       style="width:61%;"
+                       readonly
+                       value='<s:property value="accname"/>'>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right">Remarks</td>
+            <td colspan="7">
+                <input type="text" name="remarks" id="remarks"
+                       placeholder="Remarks"
+                       value='<s:property value="remarks"/>'>
+            </td>
+        </tr>
+    </table>
+
+    <input type="hidden" id="mode" name="mode"
+           value='<s:property value="mode"/>' />
+    <input type="hidden" id="msg" name="msg"
+           value='<s:property value="msg"/>'/> 
+    <input type="hidden" name="deleted" id="deleted"
+           value='<s:property value="deleted"/>'/> 
+    <input type="hidden" id="datehidden" name="datehidden"
+           value='<s:property value="datehidden"/>'/> 
+    <input type="hidden" name="accdocno" id="accdocno"
+           value='<s:property value="accdocno"/>' >
+</div>
 </form>
 
-<table width="100%">
-    <tr><td><div id="allowancegrid"></div></td></tr>
-</table><br/>
-		 
-  <div id="accountSearchwindow">
-	   <div ></div>
-	</div>	
+<div id="allowancegrid"></div><br/>
 
+<div id="accountSearchwindow">
+    <div></div>
+</div>
+
+</div>
 </body>
+
 </html>

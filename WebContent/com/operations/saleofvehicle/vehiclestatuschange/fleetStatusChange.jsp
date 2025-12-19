@@ -216,6 +216,172 @@ function setValues()
 	}
 </script>
 </head>
+<style>
+    /* ------------------------------
+       GLOBAL STYLES & LAYOUT (From Master)
+    ------------------------------ */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        color: #222;
+        margin: 0;
+        padding: 32px 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    #mainBG {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        max-width: 1450px;
+        margin: auto;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        /* FORCE HEADER LEFT ALIGNMENT */
+        text-align: left !important;
+    }
+
+    /* ------------------------------
+       HEADER FIXES (Title & Buttons) (From Master)
+    ------------------------------ */
+    center {
+        text-align: left !important;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #formdet {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: block;
+        text-align: left !important;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ------------------------------
+       GRID SYSTEM (FORM LAYOUT) (From Master)
+    ------------------------------ */
+    .receipt-header {
+        display: block; /* Header block container */
+        padding: 0 0 0 5px;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group.dual-input {
+        grid-template-columns: 120px 1fr 120px 1fr;
+    }
+
+    .form-group.single-label-dual-input {
+        grid-template-columns: 120px 1fr 1fr;
+    }
+    
+    .form-group.three-field-input {
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    }
+
+    .section-row {
+        display: flex;
+        gap: 26px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .section-block {
+        flex: 1;
+        background: #f6f8fa; /* Uniform background color */
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        min-width: 45%;
+    }
+
+    .full-width-block {
+        flex: 1 1 100%;
+    }
+
+    .section-block h2, .section-block h3, .fieldset-legend-replacement {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
+        display: block;
+        border-radius: 0; /* Ensure straight line */
+    }
+    
+    .fieldset-legend-replacement {
+        background: none;
+        padding: 0 0 0 10px;
+        margin-bottom: 10px;
+    }
+
+
+    /* ------------------------------
+       INPUTS & CONTROLS (From Master)
+    ------------------------------ */
+    input[type="text"], input[type="email"], select, textarea {
+        height: 32px !important;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        transition: border-color 0.2s;
+        font-size: 14px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+    
+    textarea {
+        height: 80px !important; /* Larger for Reason field */
+        padding: 10px;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    input[readonly], textarea[readonly] {
+        background-color: #f3f4f6;
+        color: #6b7280;
+    }
+
+    label {
+        font : Tahoma;
+        font-weight: 600;
+        color: #253858;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 16px;
+    }
+
+    /* ------------------------------
+       TABLES & UTILS (From Master)
+    ------------------------------ */
+    .myButton {
+        background: #007bff; border: none; padding: 6px 16px; color: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+    }
+    .myButton:hover { background: #0056b3; }
+
+    /* SCROLLBAR FIX (Not used in this small form, but kept for consistency) */
+    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+
+</style>
+
 <body onload="funReadOnly();setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmFleetStatusChange" action="saveActionFleetStatusChange" autocomplete="off">
@@ -224,63 +390,65 @@ function setValues()
 			window.parent.formCode.value="VSC";
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
-<fieldset><legend>Fleet Status Change Info</legend>
-<table width="100%">
-  <tr>
-    <td width="8%" align="right">Date</td>
-    <td width="8%" align="left"><div id="fleetstatusdate" name="fleetstatusdate" value='<s:property value="fleetstatusdate"/>'></div></td>
+	<br/> 
+
+    <div class="section-block full-width-block">
+        <h3 class="fieldset-legend-replacement">Fleet Status Change Info</h3>
+
+        <div class="form-group three-field-input">
+            <label>Date</label>
+            <div>
+                <div id="fleetstatusdate" name="fleetstatusdate" value='<s:property value="fleetstatusdate"/>'></div>
+            </div>
+            <input type="hidden" name="hidfleetstatusdate" id="hidfleetstatusdate" value='<s:property value="hidfleetstatusdate"/>'>
+
+            <label>Time</label>
+            <div>
+                <div id="fleetstatustime" name="fleetstatustime" value='<s:property value="fleetstatustime"/>'></div>
+            </div>
+            <input type="hidden" name="hidfleetstatustime" id="hidfleetstatustime" value='<s:property value="hidfleetstatustime"/>'>
+
+            <label>Doc No</label>
+            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
+        </div>
+
+        <div class="form-group single-label-dual-input">
+            <label>Fleet</label>
+            <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' readonly onkeydown="getFleet(event);">
+            <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' readonly>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Current Status</label>
+            <input type="text" name="currentstatus" id="currentstatus" value='<s:property value="currentstatus"/>' readonly>
+            <input type="hidden" name="hidcurrentstatus" id="hidcurrentstatus" value='<s:property value="hidcurrentstatus"/>'>
+
+            <label>Change to Status</label>
+            <select name="cmbchangestatus" id="cmbchangestatus" >
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" name="hidcmbchangestatus" id="hidcmbchangestatus" value='<s:property value="hidcmbchangestatus"/>' readonly>
+        </div>
+
+        <div class="form-group" style="grid-template-columns: 120px 1fr;">
+            <label style="align-self: flex-start; padding-top: 10px;">Reason</label>
+            <textarea id="reason" name="reason" ><s:property value="reason"/>
+            </textarea>
+        </div>
+        
+    </div>
+
     <input type="hidden" name="hidcmbsalesman" id="hidcmbsalesman" value='<s:property value="hidcmbsalesman"/>'>
-    <td width="9%" align="right">Time</td>
-    <td width="9%" align="left"><div id="fleetstatustime" name="fleetstatustime" value='<s:property value="fleetstatustime"/>'></div></td>
-    <input type="hidden" name="hidfleetstatusdate" id="hidfleetstatusdate" value='<s:property value="hidfleetstatusdate"/>'>
-    <td width="11%" align="right">&nbsp;</td>
-    <td width="5%" align="right">Doc No</td>
-    <input type="hidden" name="hidfleetstatustime" id="hidfleetstatustime" value='<s:property value="hidfleetstatustime"/>'>
-    <td width="8%" align="left"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly></td>
-    <td colspan="3" align="left">&nbsp;</td>
-  </tr>
-  
-  <tr>
-    <td align="right">Fleet</td>
-    <td align="left"><input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' readonly onkeydown="getFleet(event);"> </td>
-    <td colspan="5" align="left"><input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' style="width:99.5%;" readonly></td>
-    <td width="34%" align="left">&nbsp;</td>
-    <td width="8%" colspan="2" align="left">&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">Current Status</td>
-    <td align="left"><input type="text" name="currentstatus" id="currentstatus" value='<s:property value="currentstatus"/>' readonly></td>
-    <td align="right">Change to Status</td>
-    <td align="left"><select name="cmbchangestatus" id="cmbchangestatus" ><option value="">--Select--</option></select></td>
-    <input type="hidden" name="hidcmbchangestatus" id="hidcmbchangestatus" value='<s:property value="hidcmbchangestatus"/>' readonly>
-    <td align="left">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td colspan="2" align="left">&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">Reason</td>
-    <td colspan="6" align="left"> 
-      <textarea id="reason" name="reason" style="resize:none;width:99.5%;" ><s:property value="reason"/>
-      </textarea>
-    </td>
-    <input type="hidden" name="hidcurrentstatus" id="hidcurrentstatus" value='<s:property value="hidcurrentstatus"/>'>
     <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
     <input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
-     <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-      <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-      <div id="hiddate" name="hiddate" hidden="true"></div>
-      <div id="hidtime" name="hidtime" hidden="true"></div>
-    <td align="left">&nbsp;</td>
-    <td colspan="2" align="left">&nbsp;</td>
-  </tr>
-</table>
-</fieldset>
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+    <div id="hiddate" name="hiddate" hidden="true"></div>
+    <div id="hidtime" name="hidtime" hidden="true"></div>
+    
 </form>
 <div id="fleetwindow">
-   <div ></div>
+   <div ></div>
 </div>
 </div>
 </body>

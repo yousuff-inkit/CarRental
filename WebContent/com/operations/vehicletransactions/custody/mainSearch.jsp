@@ -46,53 +46,116 @@
 		}
  
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table >
-   <tr>
-    <td align="right" width="">Name</td>
-    <td align="left" width="53%"><input type="text" name="searchclient" id="searchclient"  style="width:96.5%;" value='<s:property value="searchclient"/>'></td>
-    <td align="right">Type</td>
-    <td align="left"><select name="cmbsearchrtype" id="cmbsearchrtype"><option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option></select></td>
-      <td align="right">Date</td>
-    <td align="left"><div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div></td>
-    <tr>
-    </table>
-    </td>
-  </tr>
- 
-		
-  <table >
-  <tr>
- 
-     <td align="left" width="">Agmt NO</td>
-    <td align="left" width=><input type="text" name="searchagmtno" id="searchagmtno" value='<s:property value="searchagmtno"/>'>
-    <td width="4%"></td>
-    <td align="right">Fleet NO</td>
-    
-    <td align="left" width="20%"><input type="text" name="searchfleetno" id="searchfleetno" style="width:96.5%;" value='<s:property value="searchfleetno"/>'></td>
-    <td align="right">Doc No</td>
-    <td align="left"><input type="text" id="searchdocno" name="searchdocno" value='<s:property value="searchdocno"/>'></td>
-    
-    <td colspan="2" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-  </tr>
-  </table>
-  </td>
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="srefreshdiv">
-      
-   <jsp:include  page="subMainSearch.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
+/* Bold labels */
+td[align="right"] {
+font: 14px Tahoma;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects */
+input[type="text"], select {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box; 
+}
+
+/* Bold text in date fields (applied to the div) */
+#searchdate {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Bold button text and visual styling */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+
+/* Original file's specific style */
+.hidden-scrollbar {
+    overflow: auto;
+    height: 600px;
+}
+
+</style>
+
+<body bgcolor="#E0ECF8">
+<div id="search">
+  <table width="100%">
+    <tr>
+      <td align="right" width="10%">Name</td>
+      <td align="left" width="30%">
+        <input type="text" name="searchclient" id="searchclient" style="width:96.5%;" value='<s:property value="searchclient"/>'>
+      </td>
+      <td align="right" width="10%">Type</td>
+      <td align="left" width="20%">
+        <select name="cmbsearchrtype" id="cmbsearchrtype">
+          <option value="">--Select--</option>
+          <option value="RAG">Rental</option>
+          <option value="LAG">Lease</option>
+        </select>
+      </td>
+      <td align="right" width="10%">Date</td>
+      <td align="left" width="20%">
+        <div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="left" style="font-weight: 700; font-size: 14px; color: #222;">Agmt NO</td>
+      <td align="left">
+        <input type="text" name="searchagmtno" id="searchagmtno" value='<s:property value="searchagmtno"/>'>
+      </td>
+      <td align="right">Fleet NO</td>
+      <td align="left">
+        <input type="text" name="searchfleetno" id="searchfleetno" style="width:96.5%;" value='<s:property value="searchfleetno"/>'>
+      </td>
+      <td align="right">Doc No</td>
+      <td align="left">
+        <input type="text" id="searchdocno" name="searchdocno" value='<s:property value="searchdocno"/>'>
+      </td>
+      <td align="center">
+        <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="7">
+        <div id="srefreshdiv">
+          <jsp:include page="subMainSearch.jsp" />
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

@@ -99,42 +99,80 @@ function getGroup() {
 		}
  
 	</script>
+<style type="text/css">
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
+
+/* Bold labels */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects */
+input[type="text"], select {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Bold text in date fields (applied to the div) */
+#searchdate {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
 <body bgcolor="#E0ECF8">
 <div id=search>
   <table width="100%" >
     <tr>
-    <td width="12%" align="right">Doc No</td>
-    <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
-    <td width="7%" align="right">Date</td>
-    <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
-    <td width="13%" align="right">Color</td>
-    <td width="15%" align="left"><select name="searchcolor" id="searchcolor" ><option value="">--Select--</option></select></td>
-    <td width="12%" align="right">&nbsp;</td>
-    <td width="14%" align="left">&nbsp;</td>
+      <td width="12%" align="right">Doc No</td>
+      <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
+      <td width="7%" align="right">Date</td>
+      <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
+      <td width="13%" align="right">Color</td>
+      <td width="15%" align="left"><select name="searchcolor" id="searchcolor" ><option value="">--Select--</option></select></td>
+      <td width="12%" align="right">&nbsp;</td>
+      <td width="14%" align="left">&nbsp;</td>
     </tr>
 
-  <tr>
-    <td align="right">Fleet No</td>
-    <td align="left"><input type="text" name="searchfleetno" id="searchfleetno" ></td>
-    <td align="right">Reg No</td>
-    <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
-    <td align="right">Group</td>
-    <td align="left"><select name="searchgroup" id="searchgroup" ><option value="">--Select--</option></select></td>
-    <td align="right">&nbsp;</td>
-    <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
-  </tr>
-  <tr>
-  <td colspan="8">
-   <div id="srefreshdiv">
-      
-   <jsp:include  page="fleetSearch.jsp"></jsp:include> 
-   
-  </div>
-  </td>
-  </tr>
- </table>
-
-   
+    <tr>
+      <td align="right">Fleet No</td>
+      <td align="left"><input type="text" name="searchfleetno" id="searchfleetno" ></td>
+      <td align="right">Reg No</td>
+      <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
+      <td align="right">Group</td>
+      <td align="left"><select name="searchgroup" id="searchgroup" ><option value="">--Select--</option></select></td>
+      <td align="right">&nbsp;</td>
+      <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
+    </tr>
+    <tr>
+      <td colspan="8">
+        <div id="srefreshdiv">
+          <jsp:include page="fleetSearch.jsp" /> 
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
 </body>
 </html>

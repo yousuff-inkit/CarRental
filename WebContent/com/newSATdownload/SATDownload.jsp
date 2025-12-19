@@ -929,7 +929,7 @@
     }
 
     label {
-    font: 16px Tahoma;
+    font: Tahoma;
         font-weight: 600;
         color: #253858;
         white-space: nowrap;
@@ -1009,7 +1009,7 @@
 <div class="section-row">
 
     <div class="section-block">
-        <legend>Salik</legend>
+<h2>Salik</h2>
 
         <div class="form-group dual-input">
             <label></label>
@@ -1034,7 +1034,7 @@
         </div>
 
         <div class="nested-fieldset">
-            <legend>Time Period Selection</legend>
+            <h2>Time Period Selection</h2>
             <div class="form-group dual-input">
                 <label>Time-Period</label>
                 <select id="cmbtype" name="cmbtype" value='<s:property value="cmbtype"/>' onchange="fundisable();">
@@ -1092,7 +1092,7 @@
         </div>
         
         <div class="nested-fieldset">
-            <legend>Advanced Options</legend>
+            <h2>Advanced Options</h2>
             <div class="form-group dual-input">
                 <label>Start Position</label>
                 <input type="text" name="salikcounter" id="salikcounter" value='<s:property value="salikcounter"/>' onKeyPress="javascript:return isNumber (event,id)">
@@ -1113,7 +1113,7 @@
     </div>
 
     <div class="section-block">
-        <legend>Traffic</legend>
+        <h2>Traffic</h2>
 
         <div class="form-group dual-input">
             <label></label>
@@ -1169,7 +1169,7 @@
         </div>
         
         <div class="nested-fieldset">
-            <legend>Plate Details</legend>
+            <h2>Plate Details</h2>
             <div class="form-group dual-input">
                 <label>Plate No.</label>
                 <input type="text" id="txttrafficpno" name="txttrafficpno" placeholder="Press F3 to Search" onkeydown="getPlateNo(event);" value='<s:property value="txttrafficpno"/>'/>
@@ -1234,15 +1234,15 @@
 <div id="flash"></div>
 <div id="display"></div>
 <div id="unameWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="filenameWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="sourceWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="colorWindow">
@@ -1250,11 +1250,11 @@
 </div>
 
 <div id="fleetWindow">
-    <div></div><div></div>
+� <div></div><div></div>
 </div>
 
 <div id="vehinfowindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="platenoWindow">

@@ -51,40 +51,90 @@
 		}
  
 	</script>
+<style type="text/css">
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
+
+/* Bold labels */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects */
+input[type="text"], select {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  /* Applying full width and box-sizing for general inputs */
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box; 
+}
+
+/* Specific styling for the Name input to ensure it respects the 99% width while having bold text */
+#searchname {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 99%; /* Original width retained */
+  box-sizing: border-box; 
+}
+
+/* Bold text in date fields (applied to the div) */
+#searchdate {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
 <body bgcolor="#E0ECF8">
 <div id=search>
   <table width="100%" >
     <tr>
-    <td width="12%" align="right">Doc No</td>
-    <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
-    <td width="7%" align="right">Date</td>
-    <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
-    <td width="13%" align="right">Mobile</td>
-    <td width="15%" align="left"><input type="text" name="searchmobile" id="searchmobile" ></td>
-    <td width="12%" align="right">&nbsp;</td>
-    <td width="14%" align="left">&nbsp;</td>
+      <td width="12%" align="right">Doc No</td>
+      <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
+      <td width="7%" align="right">Date</td>
+      <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
+      <td width="13%" align="right">Mobile</td>
+      <td width="15%" align="left"><input type="text" name="searchmobile" id="searchmobile" ></td>
+      <td width="12%" align="right">&nbsp;</td>
+      <td width="14%" align="left">&nbsp;</td>
     </tr>
 
-  <tr>
-    <td align="right">Name</td>
-    <td colspan="3" align="left"><input type="text" name="searchname" id="searchname" style="width:99%;"></td>
-    <td align="right">A/c No</td>
-    <td align="left"><input type="text" name="searchacno" id="searchacno"></td>
-    <td align="right">&nbsp;</td>
-    <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
-  </tr>
-  <tr>
-  <td colspan="8">
-   <div id="srefreshdiv">
-      
-   <jsp:include page="clientSearch.jsp"></jsp:include> 
-   
-  </div>
-  </td>
-  </tr>
- </table>
+    <tr>
+      <td align="right">Name</td>
+      <td colspan="3" align="left"><input type="text" name="searchname" id="searchname" style="width:99%;"></td>
+      <td align="right">A/c No</td>
+      <td align="left"><input type="text" name="searchacno" id="searchacno"></td>
+      <td align="right">&nbsp;</td>
+      <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
+    </tr>
+    <tr>
+      <td colspan="8">
+        <div id="srefreshdiv">
+          <jsp:include page="clientSearch.jsp" />
+        </div>
+      </td>
+    </tr>
+  </table>
 
-   
+
 </div>
 </body>
 </html>

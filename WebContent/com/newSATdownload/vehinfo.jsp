@@ -36,50 +36,112 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table >
-   <tr>
-    <td align="right" width="6%">Fleet</td> 
-    <td align="left" ><input type="text" name="fleetno" id="fleetno"  style="width:90%;" value='<s:property value="fleetno"/>'></td>
-    <td align="right" width="14%">Reg No</td>
-    <td align="left"><input type="text" name="regno" id="regno" value='<s:property value="regno"/>'></td>
-    
-   <td align="right"  width="14%">Name</td>
-    <td align="left"  width="30%"><input type="text" name="flname" style="width:90%;" id="flname" value='<s:property value="flname"/>'></td>
-    
-    <tr>
-    </table>
-    </td>
-  </tr>
-  <tr>
-  <td>
-  <table >
-  <tr>
-   <td align="right" width="6%">SALIK TAG</td>
-    <td align="left" ><input type="text" name="stag"  style="width:90%;" id="stag" value='<s:property value="stag"/>'>
-    <td align="right" width="14%">PLATE CODE</td>
-    <td align="left"><input type="text" name="plcode" id="plcode" value='<s:property value="plcode"/>'></td>
-    <td align="right"  width="14%">&nbsp;</td>
-    <td align="left"  width="30%"><input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onclick="loadSearchs();"></td>
-  </tr>
-  </table>
-  </td>
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Consistent master gap */
+}
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdivs">
-      
-   <jsp:include  page="subperfleetSearch.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
+/* Bold labels */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Bold text inside inputs */
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box; 
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Button Hover Effects */
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
+<div id="search">
+  <table width="100%">
+    <tr>
+      <td>
+        <table width="100%">
+          <tr>
+            <td align="right" width="10%">Fleet</td> 
+            <td align="left" width="23%">
+              <input type="text" name="fleetno" id="fleetno" style="width:90%;" value='<s:property value="fleetno"/>'>
+            </td>
+            <td align="right" width="10%">Reg No</td>
+            <td align="left" width="23%">
+              <input type="text" name="regno" id="regno" value='<s:property value="regno"/>'>
+            </td>
+            <td align="right" width="10%">Name</td>
+            <td align="left" width="24%">
+              <input type="text" name="flname" style="width:90%;" id="flname" value='<s:property value="flname"/>'>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <table width="100%">
+          <tr>
+            <td align="right" width="10%">SALIK TAG</td>
+            <td align="left" width="23%">
+              <input type="text" name="stag" style="width:90%;" id="stag" value='<s:property value="stag"/>'>
+            </td>
+            <td align="right" width="10%">PLATE CODE</td>
+            <td align="left" width="23%">
+              <input type="text" name="plcode" id="plcode" value='<s:property value="plcode"/>'>
+            </td>
+            <td align="right" width="10%">&nbsp;</td>
+            <td align="left" width="24%">
+              <input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search" onclick="loadSearchs();">
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="8">
+        <div id="refreshdivs">
+          <jsp:include page="subperfleetSearch.jsp" />
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

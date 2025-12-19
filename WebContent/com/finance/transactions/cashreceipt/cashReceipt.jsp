@@ -1145,29 +1145,29 @@ select:-webkit-autofill {
 <%--</td>--%>
 <%--</tr></table>--%>
 
-    <div class="table-section">
-        <h3>Apply invoices</h3>
-        <table class="cr-table">
-            <tr>
-                <th>Date</th>
-                <th>Dec Type</th>
-                <th>Date</th>
-                <th>Remarks</th>
-                <th>Amount</th>
-                <th>Applying</th>
-                <th>Balance</th>
-            </tr>
-            <tr>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-            </tr>
-        </table>
-    </div>
+<%--    <div class="table-section">--%>
+<%--        <h3>Apply invoices</h3>--%>
+<%--        <table class="cr-table">--%>
+<%--            <tr>--%>
+<%--                <th>Date</th>--%>
+<%--                <th>Dec Type</th>--%>
+<%--                <th>Date</th>--%>
+<%--                <th>Remarks</th>--%>
+<%--                <th>Amount</th>--%>
+<%--                <th>Applying</th>--%>
+<%--                <th>Balance</th>--%>
+<%--            </tr>--%>
+<%--            <tr>--%>
+<%--                <td>...</td>--%>
+<%--                <td>...</td>--%>
+<%--                <td>...</td>--%>
+<%--                <td>...</td>--%>
+<%--                <td>...</td>--%>
+<%--                <td>...</td>--%>
+<%--                <td>...</td>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
+<%--    </div>--%>
     <!-- Modern Apply Invoices Section -->
     <div class="table-section">
         <h3>Apply Invoices</h3>

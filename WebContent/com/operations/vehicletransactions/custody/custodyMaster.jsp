@@ -108,7 +108,7 @@
 
     .section-block h2, .section-block legend {
         font-size: 1.1rem;
-        font-weight: 600;
+
         margin: 0 0 20px;
         padding-left: 10px;
         border-left: 4px solid #007bff;
@@ -1751,10 +1751,10 @@ win.focus();
 
     <div class="section-row">
         <div class="section-block" id="collection">
-            <legend>
+            <h2>
                 <input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();">
                 <b>Collection Details</b>
-            </legend>
+            </h2>
 
             <div class="form-group">
                 <label>Driver</label>
@@ -1784,7 +1784,7 @@ win.focus();
         </div>
 
         <div class="section-block" id="collectfield">
-            <legend><b>Branch In</b></legend>
+            <h2><b>Branch In</b></h2>
 
             <div class="form-group dual-input">
                 <label>Branch</label>
@@ -1819,7 +1819,7 @@ win.focus();
 
     <div class="section-row">
         <div class="section-block" id="branchout">
-            <legend><b>Branch Out</b></legend>
+            <h2><b>Branch Out</b></h2>
 
             <div class="form-group dual-input">
                 <label>Date</label>
@@ -1861,10 +1861,10 @@ win.focus();
 
 
         <div class="section-block" id="deliveryfield">
-            <legend>
+            <h2>
                 <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
                 <label for="chkdelivery"><b>Delivery</b></label>
-            </legend>
+            </h2>
 
             <div class="form-group">
                 <label>Driver</label>
@@ -1946,10 +1946,11 @@ win.focus();
 </div>
 </form>
 <div id="collectionwindow">
-   <div ></div>
+
+�<div ></div>
 </div>
 .<div id="agmtnowindow">
-   <div ></div>
+<div ></div>
 </div>
 </div>
 

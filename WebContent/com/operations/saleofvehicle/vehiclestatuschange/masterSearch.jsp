@@ -27,27 +27,83 @@
 		}
 
 	</script>
-	<body bgcolor="#E0ECF8">
-		<div id=search>
-  			<table width="100%" border="0">
-    			<tr>
-    				<td width="12%" align="right">Doc No</td>
-    				<td width="14%" align="left"><input type="text" name="msearchdocno" id="msearchdocno"></td>
-    				<td width="7%" align="right">Date</td>
-    				<td width="13%" align="left"><div id="msearchdate" name="msearchdate"></div></td>
-    				<td width="13%" align="right">Fleet No</td>
-    				<td width="15%" align="left"><input type="text" name="msearchfleetno" id="msearchfleetno"></td></tr>
-				<tr>
-    				<td align="right">Fleet Name</td>
-    				<td align="left" colspan="4"><input type="text" name="msearchflname" id="msearchflname" style="width:98%;" ></td>
-    				<td align="center"><input type="button" name="btnmastersearch" id="btnmastersearch" class="myButton" value="Search" onClick="mainloadSearch();"></td>
-				</tr>
-  				<tr>
-  					<td colspan="6">
-   						<div id="msearchdiv"><jsp:include  page="masterSearchGrid.jsp"></jsp:include></div>
-   					</td>
-  				</tr>
-	 		</table>
-		</div>
-	</body>
+	<style type="text/css">
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
+
+/* Bold labels */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects */
+input[type="text"], select {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  /* Applying full width and box-sizing for general inputs */
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box; 
+}
+
+/* Specific styling for the Fleet Name input to ensure it respects the 98% width while having bold text */
+#msearchflname {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 98%; /* Original width retained */
+  box-sizing: border-box; 
+}
+
+
+/* Bold text in date fields (applied to the div) */
+#msearchdate {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
+    <div id=search>
+        <table width="100%" border="0">
+            <tr>
+                <td width="12%" align="right">Doc No</td>
+                <td width="14%" align="left"><input type="text" name="msearchdocno" id="msearchdocno"></td>
+                <td width="7%" align="right">Date</td>
+                <td width="13%" align="left"><div id="msearchdate" name="msearchdate"></div></td>
+                <td width="13%" align="right">Fleet No</td>
+                <td width="15%" align="left"><input type="text" name="msearchfleetno" id="msearchfleetno"></td>
+            </tr>
+            <tr>
+                <td align="right">Fleet Name</td>
+                <td align="left" colspan="4"><input type="text" name="msearchflname" id="msearchflname" style="width:98%;"></td>
+                <td align="center"><input type="button" name="btnmastersearch" id="btnmastersearch" class="myButton" value="Search" onClick="mainloadSearch();"></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <div id="msearchdiv">
+                        <jsp:include page="masterSearchGrid.jsp" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
 </html>

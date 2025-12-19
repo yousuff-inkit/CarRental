@@ -45,6 +45,44 @@
 </script>
 <body>
 <div id=search>
+<style type="text/css">
+/* Table spacing */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Increased gap between cells */
+}
+
+/* Bold labels */
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Bold text inside inputs */
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  /* Resetting width to use inline styles for width, but applying padding/font */
+  max-width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
+<div id=search>
 <table width="100%">
   <tr>
     <td width="10%" align="right">Account No</td>
@@ -64,7 +102,11 @@
     <td align="center"><input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search"  onclick="loadClientAccountSearch();"></td>
   </tr>
   <tr>
-    <td colspan="6"><div id="refreshClientAccountDiv"><jsp:include page="accountDetailsSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="6">
+        <div id="refreshClientAccountDiv">
+            <jsp:include page="accountDetailsSearchGrid.jsp" />
+        </div>
+    </td>
   </tr>
 </table>
 </div>
