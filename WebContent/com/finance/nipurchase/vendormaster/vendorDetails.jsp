@@ -400,11 +400,11 @@
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmVendorMasterDetails" action="saveVendorMasterDetails" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
    
-<div class='hidden-scrollbar'>
+<div class=''>
 <%-- <fieldset>
 <table width="100%">
   <tr>

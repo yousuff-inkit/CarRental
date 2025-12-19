@@ -8,12 +8,12 @@
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
+/* Error Label */
 form label.error {
-color:red;
-  font-weight:bold;
-
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
 }
-
 
 .hidden-scrollbar {
     overflow: auto;
@@ -28,16 +28,19 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 15px; /* Increased base font size */
+    font-weight: 500; /* Made text semi-bold */
 }
+
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
     padding: 10px;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
+/* Receipt Header - Larger & Bold */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
@@ -45,51 +48,63 @@ body {
     margin-bottom: 16px;
     border-radius: 12px;
     padding: 0px 24px;
-    font-size: 2vh;
+    font-size: 16px; /* Increased from 2vh */
+    font-weight: 600; /* Made bold */
 }
+
 .receipt-header label {
-    font-weight: 500;
+    font-weight: 700; /* Extra bold for labels */
     color: #333;
     margin-right: 8px;
+    font-size: 16px; /* Increased */
 }
+
 .receipt-header input[type="text"] {
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
+    padding: 8px 12px; /* Increased padding */
+    font-size: 15px; /* Increased */
+    font-weight: 600; /* Made bold */
     width: 120px;
     background: #fff;
     transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
+    padding: 8px 18px; /* Increased padding */
+    font-weight: 700; /* Extra bold */
+    font-size: 15px; /* Increased */
     cursor: pointer;
     transition: background 0.2s;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
+
 #txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.7rem; /* Increased */
+    font-weight: 700; /* Extra bold */
     color: #e67e22;
     margin-left: 12px;
 }
 
+/* Section Styling - Larger & Bold */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
@@ -99,8 +114,8 @@ body {
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
+    font-size: 1.3em; /* Increased */
+    font-weight: 700; /* Extra bold */
     margin: 0 0 16px 0;
     color: #253858;
 }
@@ -115,7 +130,8 @@ body {
 .section-block label {
     min-width: 110px;
     text-align: right;
-    font-weight: 500;
+    font-weight: 700; /* Extra bold */
+    font-size: 15px; /* Increased */
     color: #253858;
 }
 
@@ -124,7 +140,9 @@ body {
     flex: 1;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 8px 12px; /* Increased padding */
+    font-size: 15px; /* Increased */
+    font-weight: 600; /* Made bold */
     background: #fff;
     transition: border-color 0.2s;
 }
@@ -135,15 +153,18 @@ body {
     outline: none;
 }
 
-
+/* Table Section - Larger & Bold */
 .table-section {
     margin-bottom: 18px;
 }
+
 .table-section h3 {
     color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+    font-size: 1.3em; /* Increased */
+    font-weight: 700; /* Extra bold */
 }
+
+/* Table Styling - Larger & Bold Text */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -152,19 +173,170 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+
+.cr-table th, 
+.cr-table td {
+    padding: 12px 14px; /* Increased padding */
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 15px; /* Increased */
+    font-weight: 600; /* Made bold */
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
-    font-weight: 600;
+    font-weight: 700; /* Extra bold for headers */
+    font-size: 16px; /* Larger headers */
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
+}
+
+/* Input fields in table - Larger & Bold */
+.cr-table input[type="text"],
+.cr-table input[type="number"],
+.cr-table select {
+    font-size: 15px; /* Increased */
+    font-weight: 600; /* Made bold */
+    padding: 8px 10px; /* Increased padding */
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+/* Labels in table - Bold */
+.cr-table label {
+    font-weight: 700; /* Extra bold */
+    font-size: 15px; /* Increased */
+}
+
+/* Additional input styling for better visibility */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    font-size: 15px !important; /* Increased */
+    font-weight: 600 !important; /* Made bold */
+    color: #222 !important;
+}
+
+/* Placeholder text */
+input::placeholder {
+    font-weight: 500; /* Semi-bold placeholder */
+    color: #666;
+}
+
+/* Select dropdown options */
+select option {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px;
+}
+
+/* Checkbox labels */
+input[type="checkbox"] + label {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Error message styling */
+#errormsg {
+    font-size: 16px;
+    font-weight: 700;
+    color: red;
+}
+
+/* Form detail text */
+#formdet {
+    font-size: 16px;
+    font-weight: 700;
+}
+/* ============================================ */
+/* GLOBAL FONT WEIGHT INCREASE - ADD THIS AT THE END OF YOUR STYLE TAG */
+/* ============================================ */
+
+/* Make all text bolder */
+* {
+    font-weight: 700 !important; /* Extra bold for everything */
+}
+
+/* Specific overrides for better control */
+body,
+div,
+span,
+p,
+label,
+td,
+th,
+input,
+select,
+textarea,
+button,
+option {
+    font-weight: 700 !important; /* Extra bold */
+}
+
+/* Table text - Extra bold */
+.cr-table td,
+.cr-table th,
+.cr-table label,
+.cr-table input,
+.cr-table select {
+    font-weight: 700 !important;
+}
+
+/* Form inputs - Extra bold */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    font-weight: 700 !important;
+}
+
+/* All labels - Extra bold */
+label {
+    font-weight: 700 !important;
+}
+
+/* Headers - Extra bold */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700 !important;
+}
+
+/* Buttons - Extra bold */
+button,
+input[type="button"],
+input[type="submit"] {
+    font-weight: 700 !important;
+}
+
+/* Dropdown options - Extra bold */
+select option {
+    font-weight: 700 !important;
+}
+
+/* Placeholder text - Bold */
+input::placeholder,
+textarea::placeholder {
+    font-weight: 700 !important;
+}
+.cr-table td input[type="text"],
+.cr-table td select {
+    vertical-align: middle;
+   
+}
+
+/* Ensure labels are vertically centered */
+.cr-table td[align="right"] {
+    vertical-align: middle;
+    padding-right: 8px;
+}
+
+.cr-table td[align="left"] {
+    vertical-align: middle;
+    padding-left: 4px;
 }
 </style>
 <script type="text/javascript">
@@ -988,11 +1160,11 @@ function getProdType(event){
 <body onLoad="setValues();" >
 
 
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmNipurchase" action="saveActionNipurchase" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" />    
 	<br/>
-    <div class="hidden-scrollbar receipt-header">
+    <div class="receipt-header">
 	<div class="table-section">
 <table class="cr-table" width="100%"   >
 
@@ -1010,8 +1182,9 @@ function getProdType(event){
     </select></td>
     <td align="right" width="5%" >Ref No</td> 
     <td align="left" width="15%" > <input type="text" name="refno" id="refno" placeholder="Press F3 To Search" style="width:95%;" value='<s:property value="refno"/>' onKeyDown="getrefnosearch(event);"> </td>
-   
-   
+  
+   </tr>
+   <tr>
     <td  align="right" width="4%"> Inv NO</td><td  align="left" width="1%"> <input type="text" id="invno" name="invno" onblur="funchkinv();" value='<s:property value="invno"/>'></td>
     
     
@@ -1042,27 +1215,34 @@ function getProdType(event){
     <td width="13%" align="right">Doc No </td><td width="13%"><input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly"></td>
   </tr>
  
-  <tr>
+ <tr>
    
-    <td width="3.1%" align="right">Vendor</td>
-    <td colspan="5" width="14%" align="left"> 
+    <td width="4%" align="right" style="vertical-align: middle;">Vendor</td>
+    <td colspan="1" width="10%" align="left" style="vertical-align: middle; padding: 8px 4px;"> 
       <input type="hidden" name="acctype" id="acctype" value='<s:property value="acctype"/>'>
  
-    <input type="text" name="nipuraccid" id="nipuraccid" value='<s:property value="nipuraccid"/>' placeholder="Press F3 To Search"  style="width:20%;" onKeyDown="getaccountdetails(event);" >  
-      <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>'  style="width:77.5%;"></td>
+    <input type="text" name="nipuraccid" id="nipuraccid" value='<s:property value="nipuraccid"/>' placeholder="Press F3 To Search"  style="width:80%; vertical-align: middle;" onKeyDown="getaccountdetails(event);" >  
+      <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>'  style="width:80%; vertical-align: middle;">
+    </td>
      
-    <td align="right" width="3%">Curr</td>
-    <td width="6%" align="left"><select name="cmbcurr" id="cmbcurr" style="width:100%;pointer-events:none;" tabindex="-1"  value='<s:property value="cmbcurr"/>' onchange="getRatevalue1(this.value,$('#nipurchasedate').val());">
-      <option value="-1" >--Select--</option>
-    </select>    </td>   
+    <td align="right" width="4%" style="vertical-align: middle;">Curr</td>
+    <td width="8%" align="left" style="vertical-align: middle; padding: 8px 4px;">
+        <select name="cmbcurr" id="cmbcurr" style="width:100%; pointer-events:none; vertical-align: middle;" tabindex="-1"  value='<s:property value="cmbcurr"/>' onchange="getRatevalue1(this.value,$('#nipurchasedate').val());">
+            <option value="-1" >--Select--</option>
+        </select>
+    </td>   
 
-    <td width="15%" align="right">Rate &nbsp; <input type="text" style="width:70%;"   name="currate" id="currate"  value='<s:property value="currate"/>'></td>
+    <td width="4%" align="right" style="vertical-align: middle;">Rate</td>
+    <td width="10%" align="left" style="vertical-align: middle; padding: 8px 4px;">
+        <input type="text" style="width:95%; vertical-align: middle;"   name="currate" id="currate"  value='<s:property value="currate"/>'>
+    </td>
  
    <input type="hidden" name="refslno" id="refslno"  value='<s:property value="refslno"/>' >    
-        <td align="left" colspan="2" > <label id="billtype">Bill Type</label> &nbsp;<input type="text" id="txtproducttype" name="txtproducttype"
-											style="width: 68%;" placeholder="Press F3 for Search"  onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>' /> </td>
-
-<!--  <td width="3.1%" align="right">  &nbsp;</td> <td width="3.1%" align="right">  &nbsp;</td> -->
+   
+   <td align="right" width="6%" style="vertical-align: middle;"><label id="billtype">Bill Type</label></td>
+   <td align="left" colspan="1" width="15%" style="vertical-align: middle; padding: 8px 4px;">
+       <input type="text" id="txtproducttype" name="txtproducttype" style="width: 55%; vertical-align: middle;" placeholder="Press F3 for Search"  onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>' />
+   </td>
  
   </tr>
  

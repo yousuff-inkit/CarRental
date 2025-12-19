@@ -455,12 +455,9 @@ function funExcelBtn(){
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -468,179 +465,308 @@ body {
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 100vh;
+    min-height: 130vh;
     box-sizing: border-box;
 }
+
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
 }
-.receipt-header input[type="text"]:focus {
+
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
+
+label {
     font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
     color: #253858;
+    white-space: nowrap;
+    font-size: 15px;
 }
 
-.section-block .form-group {
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
+
+.receipt-header {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+/* ------------------------------
+   UNCLEARED CHEQUE FORM ROWS
+------------------------------ */
+
+/* Date Range + Action Buttons Row - First Line */
+.form-group.date-actions-row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 15px;
+    padding: 10px 0;
     margin-bottom: 12px;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
+.form-group.date-actions-row label {
+    font-weight: 600;
     color: #253858;
+    white-space: nowrap;
+    min-width: 140px;
+    text-align: right;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
+.form-group.date-actions-row .date-wrapper {
+    flex: 0 0 220px;
+}
+
+.form-group.date-actions-row .date-wrapper > div {
+    width: 100%;
+}
+
+.form-group.date-actions-row .button-group {
+    display: flex;
+    gap: 80px;
+    margin-left: auto;
+     margin-right: auto;
+}
+
+/* Type + Posting Row - Second Line */
+.form-group.type-posting-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    margin-bottom: 12px;
+}
+
+.form-group.type-posting-row label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: right;
+}
+
+.form-group.type-posting-row select {
+    width: 180px;
+    padding: 6px 10px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+    font-size: 14px;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
+.form-group.type-posting-row .date-wrapper {
+    flex: 0 0 220px;
 }
 
+.form-group.type-posting-row .date-wrapper > div {
+    width: 100%;
+}
 
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
+
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+    background: #fff;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    box-shadow: 0 0 0 1px #e5e7eb;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
 }
+
 .cr-table th {
     background: #eef0f6;
-    color: #354B6A;
     font-weight: 600;
+    color: #354B6A;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 8px 20px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+button:active, .myButton:active {
+    transform: translateY(1px);
+}
+
+/* ------------------------------
+   RESPONSIVE DESIGN
+------------------------------ */
+
+@media (max-width: 1200px) {
+    .form-group.date-actions-row {
+        flex-wrap: wrap;
+    }
+    
+    .form-group.date-actions-row .button-group {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-group.date-actions-row label,
+    .form-group.type-posting-row label {
+        min-width: auto;
+    }
+    
+    .form-group.date-actions-row .date-wrapper,
+    .form-group.type-posting-row .date-wrapper {
+        flex: 1 1 auto;
+        min-width: 150px;
+    }
+    
+    .form-group.type-posting-row select {
+        width: 100%;
+        min-width: 120px;
+    }
 }
 </style>
 
 </head>
 <body onload="setValues();headerbtndisable();">
-<div id="mainBG" class="homeContent" data-type="background" >
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background" >
 <form id="frmUnclearedChequeProcessing" action="saveUnclearedChequeProcessing" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div  class=' receipt-header'>
 
-<div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="3%" align="right"><!-- Date --> &nbsp;</td>
-    <td width="12%"><div id="jqxUnclearedChequeProcessingDate" hidden="true" name="jqxUnclearedChequeProcessingDate" value='<s:property value="jqxUnclearedChequeProcessingDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeProcessingDate" name="hidjqxUnclearedChequeProcessingDate" value='<s:property value="hidjqxUnclearedChequeProcessingDate"/>'/></td>
-    <td width="14%" align="right">Uncleared P.D.C From</td>
-    <td width="8%"><div id="jqxUnclearedChequeProcessFromDate" name="jqxUnclearedChequeProcessFromDate" value='<s:property value="jqxUnclearedChequeProcessFromDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeProcessFromDate" name="hidjqxUnclearedChequeProcessFromDate" value='<s:property value="hidjqxUnclearedChequeProcessFromDate"/>'/></td>
-    <td width="7%" align="right">P.D.C. Upto</td>
-    <td width="9%"><div id="jqxUnclearedChequeProcessToDate" name="jqxUnclearedChequeProcessToDate" value='<s:property value="jqxUnclearedChequeProcessToDate"/>'></div>
-    <input type="hidden" id="hidjqxUnclearedChequeProcessToDate" name="hidjqxUnclearedChequeProcessToDate" value='<s:property value="hidjqxUnclearedChequeProcessToDate"/>'/></td>
-    <td width="3%" align="right">Type</td>
-    <td width="9%"><select id="cmbtype" name="cmbtype" style="width:80%;" value='<s:property value="cmbtype"/>'>
-    <option value="">--Select--</option><option value="UCP">Payment</option><option value="UCR">Receipt</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
-    <td width="6%" align="right">Posting</td>
-    <td width="13%"><div id="postingDate" name="postingDate" onchange="datechange();" onblur="datechange();" value='<s:property value="postingDate"/>'></div>
-    <input type="hidden" id="hidpostingDate" name="hidpostingDate" value='<s:property value="hidpostingDate"/>'/></td>
-    <td width="16%" align="left"><button class="myButton" type="button" id="btnUnclearedChequeSearch" name="btnUnclearedChequeSearch" onclick="funloadgrid();">View</button></td>
-    <td width="16%" align="left"><button class="myButton" type="button" id="btnsavemaster" name="btnsavemaster">Save Changes</button></td>
-  </tr>
-</table>
+ <div class="form-group date-actions-row">
+        <label for="jqxUnclearedChequeProcessFromDate">Uncleared P.D.C From</label>
+        <div class="date-wrapper">
+            <div id="jqxUnclearedChequeProcessFromDate" 
+                 name="jqxUnclearedChequeProcessFromDate" 
+                 value='<s:property value="jqxUnclearedChequeProcessFromDate"/>'></div>
+            <input type="hidden" 
+                   id="hidjqxUnclearedChequeProcessFromDate" 
+                   name="hidjqxUnclearedChequeProcessFromDate" 
+                   value='<s:property value="hidjqxUnclearedChequeProcessFromDate"/>'/>
+        </div>
+
+        <label for="jqxUnclearedChequeProcessToDate">P.D.C. Upto</label>
+        <div class="date-wrapper">
+            <div id="jqxUnclearedChequeProcessToDate" 
+                 name="jqxUnclearedChequeProcessToDate" 
+                 value='<s:property value="jqxUnclearedChequeProcessToDate"/>'></div>
+            <input type="hidden" 
+                   id="hidjqxUnclearedChequeProcessToDate" 
+                   name="hidjqxUnclearedChequeProcessToDate" 
+                   value='<s:property value="hidjqxUnclearedChequeProcessToDate"/>'/>
+        </div>
+
+        <div class="button-group">
+            <button class="myButton" type="button" 
+                    id="btnUnclearedChequeSearch" 
+                    name="btnUnclearedChequeSearch" 
+                    onclick="funloadgrid();">
+                View
+            </button>
+            <button class="myButton" type="button" 
+                    id="btnsavemaster" 
+                    name="btnsavemaster">
+                Save Changes
+            </button>
+        </div>
+
+        <!-- Hidden Date (not displayed) -->
+        <div class="date-wrapper" style="display:none;">
+            <div id="jqxUnclearedChequeProcessingDate" 
+                 name="jqxUnclearedChequeProcessingDate" 
+                 value='<s:property value="jqxUnclearedChequeProcessingDate"/>'></div>
+            <input type="hidden" 
+                   id="hidjqxUnclearedChequeProcessingDate" 
+                   name="hidjqxUnclearedChequeProcessingDate" 
+                   value='<s:property value="hidjqxUnclearedChequeProcessingDate"/>'/>
+        </div>
+    </div>
+
+    <!-- Row 2: Type + Posting Date -->
+    <div class="form-group type-posting-row">
+        <label for="cmbtype">Type</label>
+        <select id="cmbtype" name="cmbtype" value='<s:property value="cmbtype"/>'>
+            <option value="">--Select--</option>
+            <option value="UCP">Payment</option>
+            <option value="UCR">Receipt</option>
+        </select>
+        <input type="hidden" id="hidcmbtype" name="hidcmbtype" 
+               value='<s:property value="hidcmbtype"/>'/>
+
+        <label for="postingDate" style="margin-left:190px;">Posting</label>
+        <div class="date-wrapper">
+            <div id="postingDate" name="postingDate" 
+                 onchange="datechange();" 
+                 onblur="datechange();" 
+                 value='<s:property value="postingDate"/>'></div>
+            <input type="hidden" id="hidpostingDate" name="hidpostingDate" 
+                   value='<s:property value="hidpostingDate"/>'/>
+        </div>
+    </div>
+
 </div>
 
 <div class="cr-table" id="unclearedChequeProcessingDiv"><center><jsp:include page="unclearedChequeProcessingGrid.jsp"></jsp:include></center></div><br/>

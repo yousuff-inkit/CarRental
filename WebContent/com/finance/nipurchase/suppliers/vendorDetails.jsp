@@ -476,15 +476,110 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+.cr-table td[align="right"] {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ===== PREMIUM SELECT DROPDOWN ===== */
+.section-block select,
+.cr-table select,
+select {
+    font-weight: 700;
+    white-space: nowrap;
+
+    height: 32px;
+    padding: 4px 10px;
+
+    border-radius: 8px;
+    border: 1px solid #cfd6e4;
+
+    background: #ffffff;
+    color: #253858;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover */
+.section-block select:hover,
+.cr-table select:hover,
+select:hover {
+    border-color: #7aa7ff;
+}
+
+/* Focus */
+.section-block select:focus,
+.cr-table select:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.15);
+}
+
+/* Disabled */
+select:disabled {
+    background: #f1f3f6;
+    color: #9aa3b2;
+    cursor: not-allowed;
+}
+
+/* Option text */
+select option {
+    font-weight: 600;
+}
+
+
+/* ===== SELECT FIX ===== */
+select {
+    width: 100%;
+    height: 34px;
+    padding: 4px 10px;
+
+    font-weight: 700;
+    font-size: 13px;
+
+    border-radius: 8px;
+    border: 1px solid #cfd6e4;
+    background: #ffffff;
+    color: #253858;
+
+    box-sizing: border-box;
+}
+
+/* Dropdown options spacing */
+select option {
+    padding: 8px 12px;      /* spacing inside option */
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 32px;
+}
+
+/* Fix first placeholder option */
+select option[value=""] {
+    color: #9aa3b2;
+    font-weight: 600;
+}
+
+/* Hover / focus */
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.15);
+}
+
 </style>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmVendorDetails" action="saveVendorDetails" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
    
-<div class='hidden-scrollbar receipt-header'>
+<div class=' receipt-header'>
 
     <div class="table-section">
 <table class="cr-table" width="100%">
