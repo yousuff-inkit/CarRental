@@ -60,6 +60,7 @@
 table {
   border-collapse: separate;
   border-spacing: 15px 18px; /* Increased gap between cells */
+   background-color: #FFFFFF;
 }
 
 /* Bold labels - This rule is kept, but supplemented by inline styles for reliability */
@@ -111,7 +112,7 @@ tr {
 }
 </style>
 
-<body bgcolor="#E0ECF8">
+<body bgcolor="#FFFFFF">
 <div id=search>
 <table width="100%" >
   <tr>
