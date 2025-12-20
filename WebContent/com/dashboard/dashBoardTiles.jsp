@@ -1,150 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Tiles</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body { background:#f5f6fa; font-family: "Helvetica Neue", Arial, sans-serif; padding:20px; }
-        .tiles-row { margin-bottom:20px; }
-        .tile {
-            background:#fff;
-            border-radius:6px;
-            box-shadow:0 1px 3px rgba(0,0,0,0.08);
-            padding:18px;
-            text-align:left;
-            min-height:110px;
-            display:flex;
-            align-items:center;
-        }
-        .tile .icon {
-            width:64px;
-            height:64px;
-            border-radius:8px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:24px;
-            margin-right:16px;
-            color:#fff;
-        }
-        .tile .content { flex:1; }
-        .tile .label { font-size:13px; color:#888; }
-        .tile .value { font-size:26px; font-weight:600; margin-top:4px; }
-        .tile .meta { font-size:12px; color:#999; margin-top:6px; }
-        .bg-blue { background:#3b82f6; }
-        .bg-green { background:#10b981; }
-        .bg-orange { background:#f59e0b; }
-        .bg-red { background:#ef4444; }
-        .bg-purple { background:#7c3aed; }
-        .tile a.details { color:#666; font-size:12px; text-decoration:none; }
-        @media (max-width:767px){
-            .tile { padding:12px; }
-            .tile .icon { width:52px; height:52px; font-size:20px; margin-right:12px; }
-        }
-    </style>
-</head>
-<body>
-<div class="container-fluid">
-    <h3 class="m-b-15">Dashboard — Tiles</h3>
+<%@ page import="java.util.List" %>
+<%@ page import="com.dashboard.dto.TileBean" %>
+<%@ page import="com.dashboard.ClsDashBoardDAO" %>
 
-    <div class="row tiles-row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-blue"><i class="fas fa-car"></i></div>
-                <div class="content">
-                    <div class="label">Live Fleets</div>
-                    <div class="value">120</div>
-                    <div class="meta">Updated: 29-08-2019 14:03</div>
-                </div>
-            </div>
-        </div>
+<%
+    /* FETCH DYNAMIC DATA */
+    ClsDashBoardDAO tileDao = new ClsDashBoardDAO();
+    String cPath = request.getContextPath();
+    List<TileBean> financeTiles = tileDao.getFinanceTiles(cPath);
+%>
 
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-green"><i class="fas fa-chart-line"></i></div>
-                <div class="content">
-                    <div class="label">Monthly Additions</div>
-                    <div class="value">35</div>
-                    <div class="meta">This month</div>
-                </div>
-            </div>
-        </div>
+<style>
+    .dashboard-tile-container { display: flex; flex-wrap: wrap; gap: 15px; padding: 10px 15px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .dashboard-tile { background: #fff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 15px 20px; display: flex; align-items: center; width: calc(25% - 15px); min-width: 220px; box-sizing: border-box; cursor: pointer; border: 1px solid #e0e0e0; transition: all 0.2s; text-decoration: none !important; margin-bottom: 10px; }
+    .dashboard-tile:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-color: #ccc; }
+    .tile-icon-box { width: 45px; height: 45px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 15px; color: #fff; flex-shrink: 0; }
+    .tile-green { background-color: #10b981; } .tile-red { background-color: #ef4444; } .tile-blue { background-color: #3b82f6; } .tile-orange { background-color: #f59e0b; } .tile-purple { background-color: #7c3aed; } .tile-teal { background-color: #008080; } .tile-indigo { background-color: #4b0082; }
+    .tile-content { flex: 1; }
+    .tile-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 2px; }
+    .tile-desc { font-size: 11px; color: #999; }
+    .tile-arrow { color: #ccc; font-size: 12px; }
+    @media (max-width: 1000px) { .dashboard-tile { width: calc(50% - 15px); } }
+    @media (max-width: 600px) { .dashboard-tile { width: 100%; } }
+</style>
 
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-orange"><i class="fas fa-shopping-cart"></i></div>
-                <div class="content">
-                    <div class="label">Sales</div>
-                    <div class="value">50</div>
-                    <div class="meta">This month</div>
+<div style="padding: 0 15px;">
+    <h3 style="margin: 15px 0 15px 0px; color:#333; font-weight:normal; font-size: 18px;">Finance Operations</h3>
+    
+    <div class="dashboard-tile-container">
+        <% 
+        if(financeTiles != null && !financeTiles.isEmpty()) {
+            for(TileBean t : financeTiles) { 
+        %>
+            <a href="javascript:void(0);" 
+               onclick="openTabLocal('<%= t.getTitle() %>', '<%= t.getUrl() %>')" 
+               class="dashboard-tile">
+               
+                <div class="tile-icon-box <%= t.getColorClass() %>">
+                    <i class="<%= t.getIcon() %>"></i>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-red"><i class="fas fa-exclamation-triangle"></i></div>
-                <div class="content">
-                    <div class="label">Alerts</div>
-                    <div class="value">3</div>
-                    <div class="meta">High priority</div>
+                <div class="tile-content">
+                    <div class="tile-title"><%= t.getTitle() %></div>
+                    <div class="tile-desc">Click to Open</div>
                 </div>
-            </div>
-        </div>
+                <div class="tile-arrow">
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </a>
+        <% 
+            } 
+        } else {
+        %>
+            <div style="color: #888; padding: 10px;">No Finance Modules found in Database.</div>
+        <% } %>
     </div>
-
-    <div class="row tiles-row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-purple"><i class="fas fa-users"></i></div>
-                <div class="content">
-                    <div class="label">Active Users</div>
-                    <div class="value">24</div>
-                    <div class="meta">Last 24 hrs</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-blue"><i class="fas fa-tachometer-alt"></i></div>
-                <div class="content">
-                    <div class="label">System Load</div>
-                    <div class="value">68%</div>
-                    <div class="meta">Average</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-green"><i class="fas fa-map-marked-alt"></i></div>
-                <div class="content">
-                    <div class="label">Regions Active</div>
-                    <div class="value">8</div>
-                    <div class="meta">Global</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="tile">
-                <div class="icon bg-orange"><i class="fas fa-layer-group"></i></div>
-                <div class="content">
-                    <div class="label">Models Tracked</div>
-                    <div class="value">42</div>
-                    <div class="meta">Catalog</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
+<script type="text/javascript">
+    function openTabLocal(title, url) {
+        console.log("Tile Clicked: " + title);
+        
+        // 1. Access the Parent Window's jQuery ($) and Tab Container (#tt)
+        // We use window.parent because this tile is inside an iframe
+        var tabContainer = window.parent.$('#tt');
+
+        if (tabContainer.length > 0) {
+            // 2. Check if Tab Exists
+            if (tabContainer.tabs('exists', title)) {
+                tabContainer.tabs('select', title);
+            } else {
+                // 3. Create New Tab
+                var content = '<iframe scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
+                tabContainer.tabs('add', {
+                    title: title,
+                    content: content,
+                    closable: true
+                });
+            }
+        } else {
+            console.error("Tab container #tt not found in parent.");
+            // Fallback: Open in same window if tabs fail
+            window.parent.location.href = url;
+        }
+    }
+</script>
