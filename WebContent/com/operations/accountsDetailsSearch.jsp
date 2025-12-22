@@ -33,20 +33,20 @@
 </script>
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing */
+
 table {
   border-collapse: separate;
-  border-spacing: 15px 18px; /* Increased gap between cells */
+  border-spacing: 15px 18px; 
 }
 
-/* Bold labels */
+
 td[align="right"] {
   font-weight: 700;
   font-size: 14px;
   color: #222;
 }
 
-/* Bold text inside inputs */
+
 input[type="text"] {
   font-weight: 600;
   font-size: 14px;

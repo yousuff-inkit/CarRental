@@ -11,13 +11,13 @@
  <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>  --%> 
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing */
+
 table {
   border-collapse: separate;
   border-spacing: 15px 18px; /* Standard master gap */
 }
 
-/* Bold labels */
+
 td[align="right"] {
   font-family: Tahoma, Arial, sans-serif;
   font-size: 14px;
@@ -25,7 +25,7 @@ td[align="right"] {
   color: #222;
 }
 
-/* Bold text inside inputs and selects */
+
 input[type="text"], select {
   font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
@@ -36,7 +36,7 @@ input[type="text"], select {
   box-sizing: border-box; /* Include padding in width */
 }
 
-/* Bold text in date fields (applied to the div) */
+
 #searchdate {
   font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;

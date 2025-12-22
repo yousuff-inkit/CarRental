@@ -9,8 +9,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
-<style>
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+
+
+table {
+  border-collapse: separate;
+   border-spacing: 6px 8px;    
+}
+
+
+td[align="right"] {
+  font-weight: 300;
+  font-size: 14px;
+  color: #222;
+}
+
+
+input[type="text"] {
+  font-weight: 300;
+  font-size: 14px;
+  padding: 4px 6px;
+  width: 95%;               /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box;   /* Include padding in width */
+}
+
+
+#bankdate, #chqdate {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.2;
+}
+
 </style>
 	<script type="text/javascript">
 

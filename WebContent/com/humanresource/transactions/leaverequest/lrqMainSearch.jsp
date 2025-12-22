@@ -61,7 +61,7 @@
     padding: 4px 6px;
 }
 
-/* Table spacing */
+
 #search td {
     padding: 4px 6px;
     vertical-align: middle;
