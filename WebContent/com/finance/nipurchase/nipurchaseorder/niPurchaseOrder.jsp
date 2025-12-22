@@ -281,7 +281,7 @@ div, span, p, td, th {
 }
 /* Add this CSS at the end of your <style> section */
 
-
+/* Consistent table spacing */
 .receipt-header table {
     margin-bottom: 2px;
 }

@@ -240,233 +240,194 @@ function funPrintBtn() {
 
 </script>
 
-    <style>
-        .container {
-            height: 100%;
-        }
+   <style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
 
-        .hidden-scrollbar {
-            overflow: auto;
-            height: 530px;
-        }
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            color: #222;
-            margin: 0;
-            padding: 32px 0;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-        #mainBG {
-            background: #fff;
-            border-radius: 16px;
-            /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-            padding: 10px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+/* ------------------------------
+    COMMON UI ELEMENTS
+------------------------------ */
 
-        .receipt-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 16px;
-            border-radius: 12px;
-            padding: 0px 24px;
-            font-size: 2vh;
-        }
-        .receipt-header label {
-            font-weight: 500;
-            color: #333;
-            margin-right: 8px;
-        }
-        .receipt-header input[type="text"] {
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 1rem;
-            width: 120px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
-        .receipt-header input[type="text"]:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .receipt-header button {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .receipt-header button:hover {
-            background: #0056b3;
-        }
-        #txtStatus {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #e67e22;
-            margin-left: 12px;
-        }
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
 
-        .section-row {
-            display: flex;
-            gap: 26px;
-            margin-bottom: 24px;
-        }
-        .section-block {
-            flex: 1;
-            background: #f6f8fa;
-            border-radius: 10px;
-            padding: 20px 18px;
-            box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-        }
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
-        .section-block h2 {
-            font-size: 1.09em;
-            font-weight: 500;
-            margin: 0 0 16px 0;
-            color: #253858;
-        }
+label {
+    font: 14px Tahoma;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px; 
+    text-align: right; 
+}
 
-        .section-block .form-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
+/* ------------------------------
+    CARD ROWS LAYOUT (MASTER UI)
+------------------------------ */
 
-        .section-block label {
-            min-width: 110px;
-            text-align: right;
-            font-weight: 500;
-            color: #253858;
-        }
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
 
-        .section-block input[type="text"],
-        .section-block select {
-            flex: 1;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 6px 10px;
-            background: #fff;
-            transition: border-color 0.2s;
-        }
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* Blue line accent */
+}
 
-        .section-block input[type="text"]:focus,
-        .section-block select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+/* Standardized grid for form fields */
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
+    gap: 15px 25px;
+    align-items: center;
+}
 
+.input-group {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
 
-        .table-section {
-            margin-bottom: 18px;
-        }
-        .table-section h3 {
-            color: #253858;
-            font-size: 1.04em;
-            font-weight: 600;
-        }
-        .cr-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #f9fafb;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 0 1px #eef0f6;
-        }
-        .cr-table th, .cr-table td {
-            padding: 9px 10px;
-            border-bottom: 1px solid #e4e7ec;
-            text-align: left;
-            font-size: 1em;
-        }
-        .cr-table th {
-            background: #eef0f6;
-            color: #354B6A;
-            font-weight: 600;
-        }
-        .cr-table tr:last-child td {
-            border-bottom: none;
-        }
-    </style>
+/* SCROLLING FIX */
+.hidden-scrollbar {
+    overflow-y: visible !important; 
+    max-height: none !important; 
+    min-height: 1px; 
+    padding-right: 5px; 
+}
+
+/* Grid container styling */
+.grid-container {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e4e7ec;
+    overflow: hidden;
+}
+</style>
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmAssetSalesInvoice" action="saveActionAssetSalesInvoice" autocomplete="off" >
+<form id="frmAssetSalesInvoice" action="saveActionAssetSalesInvoice" autocomplete="off">
 
-	<jsp:include page="../../../../header.jsp" />
-	<br/> 
-<div class="hidden-scrollbar receipt-header">
+    <jsp:include page="../../../../header.jsp" />
+    <br/> 
 
-<table class="cr-table" width="100%" >
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="8%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-    <td width="30%">&nbsp;</td>
-    <td width="5%">&nbsp;</td>
-    <td width="6%">&nbsp;</td>
-    <td width="10%" align="right">Doc No</td>
-    <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1"  readonly></td>
-    <td width="27%" align="left">&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">Client</td>
-    <td align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);"></td>
-    <td colspan="3" align="left"><input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' style="width:99%;" readonly></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td al align="right">Description</td>
-    <td colspan="2" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' style="width:97.5%;"></td>
-    <td align="left">Type</td>
-    <td align="left"><select name="cmbtype" id="cmbtype" >
-      <option value="">--Select--</option>
-      <option value="S">Sale</option>
-      <option value="L">Total Loss</option>
-    </select></td>
-    <td align="center"><input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate"></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td  align="right">&nbsp;</td>
-    <td class="cr-table" colspan="6" align="left"><div class="cr-table" id="assetInvoicediv"><jsp:include page="assetInvoiceGrid.jsp"></jsp:include></div></td>
+    <div class='hidden-scrollbar' style="padding: 10px;">
+        
+        <div class="section-block" style="margin-bottom: 20px;">
+            <h2>Asset Sales Invoice Information</h2>
+            
+            <div class="agmt-info-grid">
+                <label for="date">Date</label>
+                <div>
+                    <div id="date" name="date" value='<s:property value="date"/>'></div>
+                    <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
+                </div>
 
-    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden=true></div>
-    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden=true></div>
-    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-    <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-    <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
-    <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
-    <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-     <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
-     <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
-     <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
-     <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1"  readonly>
-  </tr>
-</table>
+                <label for="vocno">Doc No</label>
+                <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1" readonly>
 
-</div>
+                <label></label><div></div>
+
+                <label for="client">Client</label>
+                <div style="grid-column: span 5;">
+                    <div class="input-group">
+                        <input type="text" name="client" id="client" style="width: 20% !important;" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
+                        <input type="text" name="clientname" id="clientname" style="width: 80% !important;" value='<s:property value="clientname"/>' readonly>
+                    </div>
+                </div>
+
+                <label for="description">Description</label>
+                <div style="grid-column: span 3;">
+                    <input type="text" name="description" id="description" value='<s:property value="description"/>'>
+                </div>
+
+                <label for="cmbtype">Type</label>
+                <div class="input-group">
+                    <select name="cmbtype" id="cmbtype">
+                        <option value="">--Select--</option>
+                        <option value="S">Sale</option>
+                        <option value="L">Total Loss</option>
+                    </select>
+                    <input type="button" name="btncalculate" id="btncalculate" class="myButton" style="width: auto; padding: 0 15px;" onclick="funCalculate();" value="Calculate">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <h2>Invoice Details</h2>
+            <div class="grid-container">
+                <div id="assetInvoicediv">
+                    <jsp:include page="assetInvoiceGrid.jsp"></jsp:include>
+                </div>
+            </div>
+        </div>
+
+        <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden="true"></div>
+        <div id="todate" name="todate" value='<s:property value="todate"/>' hidden="true"></div>
+        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+        <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+        <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
+        <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+        <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
+        <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
+        <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
+        <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly>
+    </div>
 </form>
-<div id=clientwindow>
-   <div ></div>
+
+<div id="clientwindow">
+    <div></div>
 </div>
 <div id="assetwindow">
-   <div ></div>
+    <div></div>
 </div>
+
 </div>
 </body>
 </html>

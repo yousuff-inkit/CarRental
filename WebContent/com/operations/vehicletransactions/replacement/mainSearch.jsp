@@ -111,7 +111,7 @@ tr {
 }
 </style>
 
-<body bgcolor="#E0ECF8">
+<body bgcolor="#FFFFFF">
 <div id=search>
 <table width="100%" >
   <tr>
