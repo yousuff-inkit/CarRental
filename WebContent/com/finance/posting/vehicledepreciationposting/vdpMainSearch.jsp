@@ -31,13 +31,13 @@
 	</script>
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing */
+
 table {
   border-collapse: separate;
   border-spacing: 15px 18px; /* Standard master gap */
 }
 
-/* Bold labels */
+
 td[align="right"] {
   font-family: Tahoma, Arial, sans-serif;
   font-size: 14px;
@@ -45,7 +45,7 @@ td[align="right"] {
   color: #222;
 }
 
-/* Bold text inside inputs */
+
 input[type="text"] {
   font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
@@ -56,7 +56,7 @@ input[type="text"] {
   box-sizing: border-box; /* Include padding in width */
 }
 
-/* Bold text in date fields (applied to the div) */
+
 #vdpdate {
   font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;

@@ -52,7 +52,7 @@
     box-sizing: border-box;
 }
 
-/* Table spacing */
+
 #search td {
     padding: 6px 8px;
     vertical-align: middle;

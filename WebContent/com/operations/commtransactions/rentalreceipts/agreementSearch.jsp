@@ -17,7 +17,7 @@ table {
   border-spacing: 15px 18px; /* Standard master gap */
 }
 
-/* Bold labels - Overriding the previous 10px Tahoma style */
+
 td[align="right"], td[align="left"] label, .textdetail {
   font-weight: 700 !important;
   font-size: 14px !important;
@@ -26,7 +26,7 @@ td[align="right"], td[align="left"] label, .textdetail {
   background-color: transparent !important; /* Matches body bg */
 }
 
-/* Bold text inside inputs */
+
 input[type="text"] {
   font-weight: 600;
   font-size: 14px;

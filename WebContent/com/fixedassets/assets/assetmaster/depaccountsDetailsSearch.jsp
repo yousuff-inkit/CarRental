@@ -27,13 +27,13 @@ function loadAccountSearch() {
 </script>
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing */
+
 table {
   border-collapse: separate;
-  border-spacing: 15px 18px; /* Increased gap between cells */
+  border-spacing: 15px 18px; 
 }
 
-/* Bold labels - This targets only the align="right" cells */
+
 td[align="right"] {
   font-weight: 700;
   font-size: 14px; /* Default master font size */
@@ -48,7 +48,7 @@ td[align="right"][style*="font-size:9px"] {
   /* font-size: 9px; is preserved by the inline style in the HTML */
 }
 
-/* Bold text inside inputs */
+
 input[type="text"] {
   font-weight: 600;
   font-size: 14px;

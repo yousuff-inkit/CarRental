@@ -33,7 +33,7 @@
 	</script>
 	<style>
 	
-	/* Bold Labels + No Wrap */
+	
 #search td,
 #search label {
     font-weight: 700 !important;

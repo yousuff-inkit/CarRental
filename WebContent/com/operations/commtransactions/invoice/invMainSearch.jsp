@@ -59,13 +59,13 @@
 	</script>
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing */
+
 table {
   border-collapse: separate;
   border-spacing: 15px 18px; /* Standard master gap */
 }
 
-/* Bold labels */
+
 td[align="right"] {
   font-weight: 700;
   font-size: 14px;
@@ -73,7 +73,7 @@ td[align="right"] {
   font-family: Tahoma, Arial, sans-serif;
 }
 
-/* Bold text inside inputs and selects */
+
 input[type="text"], select {
   font-weight: 600;
   font-size: 14px;
@@ -84,7 +84,7 @@ input[type="text"], select {
   font-family: Tahoma, Arial, sans-serif;
 }
 
-/* Bold text in date fields (applied to the div) */
+
 #searchdate {
   font-weight: 600;
   font-size: 14px;
