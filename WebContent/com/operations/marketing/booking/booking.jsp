@@ -12,7 +12,7 @@
 <style>
 .hidden-scrollbar {
   overflow: auto;
-  height: 530px;
+  height: 100vh;
 }
 .icons {
 	width: 3em;
