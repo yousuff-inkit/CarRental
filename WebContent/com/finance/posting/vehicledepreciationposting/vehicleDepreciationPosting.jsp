@@ -336,9 +336,18 @@ body {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1450px;
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+#formdet {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1f2937;
+    display: block;
+    text-align: left;
+    /* margin-bottom: 18px; */
 }
 
 /* ------------------------------
@@ -355,6 +364,7 @@ input[type="text"], select {
     font-size: 14px;
     box-sizing: border-box;
     width: 100%;
+    
 }
 
 input[type="text"]:focus,
