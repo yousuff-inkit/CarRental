@@ -27,7 +27,7 @@
         background: #fff;
         border-radius: 16px;
         padding: 20px;
-        max-width: 1450px;
+        max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
         /* FORCE HEADER LEFT ALIGNMENT */
@@ -170,7 +170,7 @@
     .doc-group { display: flex; gap: 5px; }
     
     /* SCROLLBAR FIX */
-    .hidden-scrollbar { overflow: auto; height: 530px; }
+    .hidden-scrollbar { overflow: auto; height: 100vh; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
     
     #validrate, #validrate1 { color: red; font-size: 12px; }
