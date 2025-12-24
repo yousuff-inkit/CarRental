@@ -55,10 +55,27 @@
 
 
 <div style="padding: 0 15px;">
+
+
 <div class="banner">
     <div class="welcome-text">
         <span class="user">Welcome</span>
         <span class="user1">${sessionScope.USERNAME}</span>
+        <h2 class="user" id="greeting"></h2>
+        <script>
+    const hour = new Date().getHours();
+    let message = "";
+
+    if (hour < 12) {
+        message = "Good Morning";
+    } else if (hour < 18) {
+        message = "Good Afternoon ";
+    } else {
+        message = "Good Evening";
+    }
+
+    document.getElementById("greeting").innerText = message;
+</script>
     </div>
 </div>
 
