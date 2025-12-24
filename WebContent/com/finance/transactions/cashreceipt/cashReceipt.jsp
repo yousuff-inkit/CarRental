@@ -16,19 +16,19 @@
 		 $("#jqxCashReceiptDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 
-		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } ,  showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsToWindow').jqxWindow('close');  
 		 
-		 $('#accountDetailsFromWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#accountDetailsFromWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsFromWindow').jqxWindow('close');
 		 
-		 $('#cashReceiptGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#cashReceiptGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , showCloseButton: true, keyboardCloseKey: 27});
 		 $('#cashReceiptGridWindow').jqxWindow('close');
 		 
-		 $('#costTypeSearchGridWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Type Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#costTypeSearchGridWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Type Search',position: { x: 420, y: 87 } , showCloseButton: true, keyboardCloseKey: 27});
  		 $('#costTypeSearchGridWindow').jqxWindow('close');
  		 
- 		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+ 		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 }  , showCloseButton: true, keyboardCloseKey: 27});
 		 $('#costCodeSearchWindow').jqxWindow('close');
 		 
 		 $('#jqxCashReceiptDate').on('change', function (event) {
@@ -701,15 +701,15 @@ body {
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 130vh;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1450px;
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
@@ -913,7 +913,7 @@ label {
 
 .hidden-scrollbar {
     overflow: auto;
-    height: 530px;
+    height: 100vh;
 }
 
 /* Hide scrollbars (but allow scrolling) */
@@ -962,6 +962,15 @@ button:hover, .myButton:hover {
 
 #approval-table tr:nth-child(even) {
     background: #f9fafb;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 </style>
 
@@ -1163,7 +1172,7 @@ button:hover, .myButton:hover {
     <div class="table-section">
         <h3>Apply Invoices</h3>
         <div id="jqxApplyInvoicing1">
-            <center><jsp:include page="applyCashReceiptInvoicingGrid.jsp"></jsp:include></center>
+            <jsp:include page="applyCashReceiptInvoicingGrid.jsp"></jsp:include>
         </div>
         <table class="cr-table">
             <tr>

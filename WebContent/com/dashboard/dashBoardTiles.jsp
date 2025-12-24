@@ -13,6 +13,8 @@
     ClsDashBoardDAO tileDao = new ClsDashBoardDAO();
     String cPath = request.getContextPath();
     List<TileBean> tiles = tileDao.getDashboardTiles(cPath, selectedModule);
+    List<TileBean> financeTiles = tileDao.getFinanceTiles(cPath);
+    String contextPath=request.getContextPath();
 %>
 
 <style>
@@ -54,6 +56,35 @@
     .tile-arrow { color: #ccc; font-size: 12px; }
     @media (max-width: 1000px) { .dashboard-tile { width: calc(50% - 15px); } }
     @media (max-width: 600px) { .dashboard-tile { width: 100%; } }
+   .banner {
+       background-image: url("<%= contextPath %>/icons/banner_image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 150px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+
+    position: relative;
+}
+
+.welcome-text {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* Improves readability */
+}
+
+.user {
+    margin-right: 6px;
+}
+
+.user1 {
+    color: #ffd700;  /* Gold highlight for username */
+}
+    
 </style>
 
 <div class="tile-nav-container">
@@ -72,6 +103,34 @@
 </div>
 
 <div style="padding: 0 15px;">
+
+<div style="padding: 0 15px;">
+
+
+<div class="banner">
+    <div class="welcome-text">
+        <span class="user">Welcome</span>
+        <span class="user1">${sessionScope.USERNAME}</span>
+        <h2 class="user" id="greeting"></h2>
+        <script>
+    const hour = new Date().getHours();
+    let message = "";
+
+    if (hour < 12) {
+        message = "Good Morning";
+    } else if (hour < 18) {
+        message = "Good Afternoon ";
+    } else {
+        message = "Good Evening";
+    }
+
+    document.getElementById("greeting").innerText = message;
+</script>
+    </div>
+</div>
+
+    <h3 style="margin: 15px 0 15px 0px; color:#333; font-weight:normal; font-size: 18px;">Finance Operations</h3>
+    
     <div class="dashboard-tile-container">
         <% if(tiles != null && !tiles.isEmpty()) {
             for(TileBean t : tiles) { %>

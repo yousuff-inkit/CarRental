@@ -10,7 +10,7 @@
  <style>
  .hidden-scrollbar {
     overflow: auto;
-    height: 530px;
+    height: 100vh;
 }
  </style>
 <script type="text/javascript">

@@ -599,7 +599,7 @@ x.send();
 </tr>
 </table></div>
 
-<div class="table-section" style="background-color: #E8F1FF;
+<div class="table-section" style="background-color: #f6f8fa;
  width: 100%;">
 <h3><b><i>Effect In</i></b></h3>
 <table class="cr-table" width="100%" >

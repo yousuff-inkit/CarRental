@@ -70,6 +70,9 @@
     opacity: 0;
   }
 }
+html, body {
+    overflow: visible !important;
+}
             body{
                 width: 100%;
                 height: 100%;
@@ -85,6 +88,13 @@
                 width: 100%;
                 height: 100%;    
             }
+            .outer-container{
+    		min-height: 100vh;
+   			 display: flex;
+    		justify-content: center;   /* horizontal center */
+   			 align-items: center;       /* vertical center */
+}
+            
             .vertical-login{
                 
                 position: absolute;
@@ -137,24 +147,121 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
             
             }
             .login-container{
-                width: 60%;
-                height: 600px;
-                background-color: #fff;
-                box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-                position: absolute;
-                display: block;
-                z-index: 999;
-                top: 20px;
-                right: 20px;
-                float: right;
-                animation-delay: 0.2s;
-
-            }
+            width:400px;
+max-width: 90%;   
+    margin: 0 auto; 
+         min-width: 380px;
+    height: 600px;
+    background-color: #fff;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30),
+                0 15px 12px rgba(0,0,0,0.22);
+    z-index: 999;
+}
             .login-container .first,.login-container .second{
                 height: 100%;
                 float: left;
 
             }
+            .login-container .form-control{
+    font-size: 15px !important;
+    height: 44px;
+    line-height: 44px;
+}
+.login-container .input-group-addon{
+    height: 44px;
+}
+.login-container .input-group-addon i{
+    font-size: 18px;
+}
+			.login-container {
+    width: 550px !important;
+    max-width: 95% !important;
+    min-width: 500px !important;
+    height: 500px !important;
+}
+
+/* Increase logo size */
+.first .header-image img {
+    width: 85% !important;
+    max-width: 200px !important;
+    margin-bottom: 30px !important;
+}
+
+/* Increase company dropdown size */
+.login-container select#company {
+    font-size: 18px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 10px 15px !important;
+}
+
+/* Increase input field sizes */
+.login-container .form-control {
+    font-size: 18px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 10px 15px !important;
+}
+
+/* Increase icon size in input groups */
+.login-container .input-group-addon {
+    height: 50px !important;
+    padding: 10px 15px !important;
+}
+
+.login-container .input-group-addon i {
+    font-size: 22px !important;
+}
+
+/* Increase label/placeholder text visibility */
+.login-container input::placeholder {
+    font-size: 16px !important;
+    opacity: 0.7 !important;
+}
+
+/* Increase forgot password link size */
+.forgotpwd-container a {
+    font-size: 15px !important;
+}
+
+/* Increase login button size */
+.btnlogin {
+    font-size: 16px !important;
+    padding: 12px 25px !important;
+    height: 50px !important;
+}
+
+/* Adjust spacing between elements */
+.rowgap {
+    margin-bottom: 25px !important;
+}
+
+/* Increase first column width for better proportion */
+.first {
+    width: 100% !important;
+    padding-top: 8% !important;
+}
+
+/* Hide second column if it's causing layout issues */
+.second {
+    display: none !important;
+}
+
+/* Adjust login control container padding */
+.login-control-container {
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+    margin-top: 20px !important;
+}
+
+/* Increase error message text size */
+#msgexpiry {
+    font-size: 16px !important;
+}
+			
+
             .first{
                 width: 40%;
                 padding-top: 17%;
@@ -230,10 +337,14 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
             }
             .input-group-addon{
                 background-color: #fff;
+                height:10px;
             }
             .input-group-addon i{
                 color: #C8C8C8;
             }
+            .form-control {
+    width: 100%;
+}
             
             .btnlogin:hover,.btnlogin:active,.btnlogin:focus{
                 background-color: #fff;
@@ -342,6 +453,95 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
             .btnwizardclose-container a i{
             	color:#000;
             }
+            .first .header-image img {
+    width: 100% !important;
+   padding-left:200px;
+    margin-bottom: 20px !important;
+	
+    
+}
+.login-container {
+    width: 550px !important;
+    max-width: 95% !important;
+    min-width: 500px !important;
+    height: 500px !important;
+}
+
+.first .header-image {
+    text-align: center !important;
+    padding: 0 !important;
+    margin-bottom: 15px !important;
+}
+
+.first .header-image img {
+    width: 280px !important;
+    max-width: 280px !important;
+    float: none !important;
+    display: inline-block !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+.login-container select#company {
+    font-size: 18px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 10px 15px !important;
+}
+
+.login-container .form-control {
+    font-size: 18px !important;
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 10px 15px !important;
+}
+
+.login-container .input-group-addon {
+    height: 50px !important;
+    padding: 10px 15px !important;
+}
+
+.login-container .input-group-addon i {
+    font-size: 22px !important;
+}
+
+.login-container input::placeholder {
+    font-size: 16px !important;
+    opacity: 0.7 !important;
+}
+
+.forgotpwd-container a {
+    font-size: 15px !important;
+}
+
+.btnlogin {
+    font-size: 16px !important;
+    padding: 12px 25px !important;
+    height: 50px !important;
+}
+
+.rowgap {
+    margin-bottom: 20px !important;
+}
+
+.first {
+    width: 100% !important;
+    padding-top: 5% !important;
+}
+
+.second {
+    display: none !important;
+}
+
+.login-control-container {
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+    margin-top: 10px !important;
+}
+
+#msgexpiry {
+    font-size: 16px !important;
+}
         </style>
 </head>
 <%-- <body background="icons/car.jpg" style="overflow:hidden;background-repeat: no-repeat;" autocomplete="off" onload="getComp();"> 
@@ -371,14 +571,14 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
 	</div> --%>
 <body  autocomplete="off" onload="getComp();">	
 	<div class="outer-container">
-            <div class="block-login">
+           <%-- <div class="block-login">
                 <h2></h2>
             </div>
             <div class="vertical-login">
                 <span class="login-text"></span>
                 <span class="login-line"></span>
-            </div>
-            <div class="bg-svg">
+            </div>--%> 
+           <%--<div class="bg-svg">
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -398,9 +598,8 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
 </svg>
 
 
-            </div>
-        </div>  
-
+            </div> --%> 
+        
         <div class="login-container img-rounded animated slideInRight" style="animation-delay: 1s;">
             <div class="first">
                 <div class="header-image">
@@ -448,10 +647,11 @@ text-shadow: -1px 5px 5px #d8d8d8, 2px 2px 1px #C8C8C8;
 	                </form>
                 </div>
             </div>
-            <div class="second">
+           <%-- <div class="second">
                 <div class="header-image">
                     <img src="icons/gateway_logo.gif" alt="" class="img-responsive">
-                </div>
+                </div> --%> 
+            </div>
             </div>
         </div>
         <div class="wizard-container img-rounded">

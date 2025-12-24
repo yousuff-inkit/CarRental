@@ -284,7 +284,7 @@
 <style>
 .hidden-scrollbar {
   overflow: auto;
-  height: 530px;
+  height: 100vh;
 }
 
 
@@ -491,7 +491,7 @@ th,
 <div class="table-section" style="width: 100%;">
 <table class="cr-table" width="99%">
 <tr><td  width="50%">
-<div style="background-color: #E8F1FF;
+<div style="background-color: #f6f8fa;
 ">
 <table  width="99%">
   <tr>

@@ -57,38 +57,118 @@
 	}
  
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
+<style type="text/css">
+/* Master UI Styles */
 
-<table width="100%" >
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Standard master gap */
+}
+
+
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+
+input[type="text"], select {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box; 
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+
+#searchdate {
+  font-weight: 600;
+  font-size: 14px;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Button Hover Effects */
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Checkbox Label Styling */
+td[align="center"] {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
+<div id="search">
+
+<table width="100%">
   <tr>
     <td width="6%" align="right">Client</td>
-    <td width="24%" align="left"><input type="text" name="searchclient" id="searchclient"  style="width:96.5%;" value='<s:property value="searchclient"/>'></td>
+    <td width="24%" align="left">
+        <input type="text" name="searchclient" id="searchclient" style="width:96.5%;" value='<s:property value="searchclient"/>'>
+    </td>
     <td width="15%" align="right">Ref Type</td>
-    <td width="15%" align="left"><select name="searchcmbagmttype" id="searchcmbagmttype"  style="width:99%;"><option value="">--Select--</option>
-    <option value="RAG">Rental</option><option value="LAG">Lease</option></select></td>
+    <td width="15%" align="left">
+        <select name="searchcmbagmttype" id="searchcmbagmttype" style="width:99%;">
+            <option value="">--Select--</option>
+            <option value="RAG">Rental</option>
+            <option value="LAG">Lease</option>
+        </select>
+    </td>
     <td width="16%" align="right">Agmt No</td>
-    <td width="24%" align="left"><input type="text" name="searchagmtno" id="searchagmtno"  value='<s:property value="searchagmtno"/>'></td>
+    <td width="24%" align="left">
+        <input type="text" name="searchagmtno" id="searchagmtno" value='<s:property value="searchagmtno"/>'>
+    </td>
   </tr>
   <tr>
     <td align="right">Date</td>
     <td align="left"><div id="searchdate" name="searchdate"></div></td>
     <td align="right">Doc No</td>
-    <td align="left"><input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'></td>
-    <td align="center"><input type="checkbox" name="chkdeletedinv" id="chkdeletedinv" onchange="funChangeDeletedInv();">&nbsp;Deleted Invoices</td>
-    <td align="left"><input type="button" name="btninvsearch" id="btninvsearch" class="myButton" value="Search"  onClick="mainloadSearch();"></td>
-    
+    <td align="left">
+        <input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'>
+    </td>
+    <td align="center">
+        <input type="checkbox" name="chkdeletedinv" id="chkdeletedinv" onchange="funChangeDeletedInv();">&nbsp;Deleted Invoices
+    </td>
+    <td align="left">
+        <input type="button" name="btninvsearch" id="btninvsearch" class="myButton" value="Search" onClick="mainloadSearch();">
+    </td>
   </tr>
   <tr>
     <td colspan="6" align="right"> 
-    <div id="srefreshdiv">
-      
-   <jsp:include  page="subMainSearch.jsp"></jsp:include> 
-   
-   </div></td>
-    </tr>
+      <div id="srefreshdiv">
+        <jsp:include page="subMainSearch.jsp" />
+      </div>
+    </td>
+  </tr>
 </table>
-	
-  </div>
+    
+</div>
 </body>
-</html>

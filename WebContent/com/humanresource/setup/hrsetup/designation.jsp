@@ -127,35 +127,144 @@ color:red;
 </script>  
  
 </head>
-<body onLoad="setValues();" >
+<style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
 
-<form id="frmdesignation" action="saveDesignation" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" /><br/>
- 
-<fieldset><legend>Designation Details</legend> 
-<table width="100%">
-	<tr><td width="10%"  align="right">Date</td>
-	<td width="15%" align="left"><div id="desigdate" name="desigdate" value='<s:property value="desigdate"/>'></div></td>
-  	<td width="12%" align="right">Designation</td>
-  	<td width="34%"><input type="text" name="designation" id="designation" style="width:100%;" placeholder="Designation" value='<s:property value="designation"/>'></td>
-	<td width="10%" align="right">Doc No</td>
-	<td width="10%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1"></td>
-	<td  width="9%" >&nbsp;</td></tr> 
-	<tr><td align="right">Remarks</td>
-	<td colspan="4"><input type="text" name="remarks" id="remarks"  style="width:85.8%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table> 
-	 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
-	
-</fieldset> 
-</form>
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
 
-<table width="100%">
-    <tr><td><div id="designationgrid"></div></td></tr>
-</table><br/>
-		
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 14px 'Segoe UI';
+    font-weight: 500;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.trans-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 2fr auto 1fr;
+    gap: 12px 15px;
+    align-items: center;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 20px;
+    align-items: center;
+}
+
+.hidden-scrollbar {
+    overflow-y: visible !important;
+    max-height: none !important;
+    padding: 10px;
+}
+</style>
+
+<body onLoad="setValues();">
+
+<div id="mainBG" class="homeContent" data-type="background">
+    <jsp:include page="../../../../header.jsp" />
+    <br/>
+
+    <form id="frmdesignation" action="saveDesignation" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            <div class="section-block">
+                <h2>Designation Details</h2>
+                
+                <div class="trans-info-grid">
+                    <label>Date</label>
+                    <div id="desigdate" name="desigdate" value='<s:property value="desigdate"/>'></div>
+                    
+                    <label>Designation</label>
+                    <input type="text" name="designation" id="designation" placeholder="Enter Designation" value='<s:property value="designation"/>'>
+                    
+                    <label>Doc No</label>
+                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
+                </div>
+
+                <div class="agmt-info-grid" style="margin-top: 15px;">
+                    <label>Remarks</label>
+                    <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>'>
+                </div>
+            </div>
+
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/> 
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
+            <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+            
+        </div>
+    </form>
+
+    <div class="section-block">
+        <h2>View Designations</h2>
+        <div id="designationgrid" style="width: 100%;"></div>
+    </div>
+
+</div>
+
 </body>
 </html>

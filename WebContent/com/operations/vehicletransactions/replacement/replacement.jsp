@@ -29,7 +29,7 @@ body {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1450px;
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
@@ -195,7 +195,21 @@ font:  14px Tahoma;
     text-align: left !important;
     width: 100%;
     margin-left: 0;
+    
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
 
+button:hover, .myButton:hover {
+    background: #007bff;
+}
 
 </style>
 

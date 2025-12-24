@@ -607,160 +607,411 @@ function getBranch() {
   }
 </script>
 <style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+    COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 14px Tahoma;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px; 
+    text-align: right; 
+}
+
+/* ------------------------------
+    CARD ROWS LAYOUT (MASTER UI)
+------------------------------ */
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* Blue line accent */
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 20px;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
+    gap: 15px 25px;
+    align-items: center;
+}
+
+.in-out-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr; 
+    gap: 12px 16px;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
+
+/* SCROLLING FIX */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow-y: visible !important; 
+    max-height: none !important; 
+    min-height: 1px; 
+    padding-right: 5px; 
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+</head>
+<style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+    COMMON UI ELEMENTS
+------------------------------ */
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 16px Segoe UI;
+    font-weight: 500;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px; 
+}
+
+/* ------------------------------
+    CARD ROWS LAYOUT
+------------------------------ */
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 20px;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr; 
+    gap: 12px 25px;
+    align-items: center;
+}
+
+.trans-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr;
+    gap: 12px 15px;
+    align-items: center;
+}
+
+.hidden-scrollbar {
+    overflow-y: visible !important; 
+    max-height: none !important; 
+    min-height: 1px; 
+    padding: 10px; 
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 </style>
 
-</head>
 <body onload="setValues();getBranch();getCardTypes();getPayTypes();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmRentalRefund" action="saveRentalRefund" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+    <br>
 
-<div  class='hidden-scrollbar'>
-<table width="100%">
-  <tr>
-    <td width="3%" height="42" align="right">Date</td>
-    <td width="20%"><div id="jqxRentalRefundDate" name="jqxRentalRefundDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxRentalRefundDate"/>'></div>
-    <input type="hidden" id="hidjqxRentalRefundDate" name="hidjqxRentalRefundDate" value='<s:property value="hidjqxRentalRefundDate"/>'/></td>
-    <td width="10%" align="right">Doc Type</td>
-    <td width="20%"><input type="text" id="txtdoctype" name="txtdoctype" style="width:50%;" value='<s:property value="txtdoctype"/>' tabindex="-1"/></td>
-    <td width="7%" align="right">Doc No.</td>
-    <td width="21%"><input type="text" id="docno" name="txtrentalrefunddocno" style="width:50%;" value='<s:property value="txtrentalrefunddocno"/>' tabindex="-1"/></td>
-    <td width="5%" align="right">Receipt No.</td>
-    <td width="14%"><input type="text" id="txtsrno" name="txtsrno" style="width:60%;" value='<s:property value="txtsrno"/>' tabindex="-1"/></td>
-  </tr>
-</table>
-<table width="100%">
-<tr>
-<td width="50%">
-<fieldset>
-<table width="100%">
-  <tr>
-    <td colspan="2" align="center"><input type="checkbox" id="chckib" name="chckib" onclick="funCheck();">&nbsp;Inter-Branch
-    <input type="hidden" id="hidchckib" name="hidchckib" value='<s:property value="hidchckib"/>'/></td>
-    <td width="22%" align="right">Branch</td>
-    <td colspan="2"><select id="cmbbranch" name="cmbbranch" style="width:65%;" onchange="funIBDateInPeriod($('#jqxRentalRefundDate').val(),this.value);" value='<s:property value="cmbbranch"/>'>
-      <option value=""></option></select>
-    <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/></td>
-  </tr>
-  <tr>
-    <td width="7%" align="right">Client</td>
-    <td width="26%"><input type="text" id="txtclientid" name="txtclientid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtclientid"/>' onkeydown="getClient(event);"/></td>
-    <td colspan="3"><input type="text" id="txtclientname" name="txtclientname" style="width:75%;" value='<s:property value="txtclientname"/>'/>
-     <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/>
-     <input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Agreement</td>
-    <td><select id="cmbratype" name="cmbratype" style="width:50%;" value='<s:property value="cmbratype"/>'>
-      <option value="RAG">Rental</option><option value="LAG">Lease</option></select>
-      <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/></td>
-    <td><input type="text" id="txtagreementvocher" name="txtagreementvocher" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtagreementvocher"/>' onkeydown="getAgreement(event);"/>
-    <input type="hidden" id="txtagreement" name="txtagreement" value='<s:property value="txtagreement"/>'/></td>
-   <td width="13%" align="right">Paid As</td>
-    <td width="32%"><select id="cmbpayedas" name="cmbpayedas" style="width:50%;" onchange="applyDisable();" value='<s:property value="cmbpayedas"/>'>
-    <option value="1">Security</option><option value="2">On Account</option></select>
-    <input type="hidden" id="hidcmbpayedas" name="hidcmbpayedas" value='<s:property value="hidcmbpayedas"/>'/>
-    <input type="hidden" id="txtsecurityacno" name="txtsecurityacno" value='<s:property value="txtsecurityacno"/>'/></td>
-  </tr>
-</table>
-</fieldset>
-</td>
+    <form id="frmRentalRefund" action="saveRentalRefund" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            <div class="section-block">
+                <h2>General Information</h2>
+                <div class="trans-info-grid">
+                    <label>Date</label>
+                    <div id="jqxRentalRefundDate" name="jqxRentalRefundDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxRentalRefundDate"/>'></div>
+                    
+                    <label>Doc Type</label>
+                    <input type="text" id="txtdoctype" name="txtdoctype" value='<s:property value="txtdoctype"/>' tabindex="-1"/>
+                    
+                    <label>Doc No.</label>
+                    <input type="text" id="docno" name="txtrentalrefunddocno" value='<s:property value="txtrentalrefunddocno"/>' tabindex="-1"/>
 
-<td width="50%">
-<fieldset>
-<table width="100%">  
-  <tr>
-    <td width="7%" align="right">Pay Type</td>
-    <td width="16%"><select id="cmbpaytype" name="cmbpaytype" style="width:95%;" value='<s:property value="cmbpaytype"/>' onchange="bankAccountSearch();funchequedate();getAccounts(this.value);">
-    <%--   <option value="1">Cash</option><option value="2">Cheque/Online</option><option value="3">Paid to Card</option><option value="4">Paid to Card</option><option value="3">Paid to Card</option>--%></select> 
-      <input type="hidden" id="hidcmbpaytype" name="hidcmbpaytype" value='<s:property value="hidcmbpaytype"/>'/></td>
-    <td width="11%" align="right">Account</td>
-    <td width="15%"><input type="text" id="txtaccid" name="txtaccid" style="width:95%;" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);" /></td>
-    <td colspan="3"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txttranno" name="txttranno" value='<s:property value="txttranno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="center"><button type="button" class="icon" id="btnCardSearch" title="Search Card" onclick="funCardSearch();">
-							<img alt="Search Card" src="<%=contextPath%>/icons/cardsearch.png">
-						</button></td>
-                         <td colspan="2" align="center">Card Type&nbsp;
-                           <select id="cmbcardtype" name="cmbcardtype" style="width:50%;" onchange="funclearchequecardno();" value='<s:property value="cmbcardtype"/>'>
-                           <%-- <option value="">--Select--</option><option value="1">Visa</option><option value="2">Master</option></select> --%>
-                           <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcardtype" name="hidcmbcardtype" value='<s:property value="hidcmbcardtype"/>'/></td>
-    <td align="right">Chq/Card No/Online</td>
-    <td width="24%"><input type="text" id="txtchequeno" name="txtchequeno" style="width:100%;" value='<s:property value="txtchequeno"/>'/></td>
-   
-    <td width="4%" align="right">Date</td>
-    <td width="23%"><div id="jqxReferenceDate" name="jqxReferenceDate" value='<s:property value="jqxReferenceDate"/>'></div>
-    <input type="hidden" id="hidjqxReferenceDate" name="hidjqxReferenceDate" value='<s:property value="hidjqxReferenceDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Description</td>
-    <td colspan="6"><input type="text" id="txtdescription" name="txtdescription" style="width:95%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-</table></fieldset>
-</td>
-</tr></table>
-<fieldset><legend>Security Details</legend>
-<div id="jqxSecurityGrid"><center><jsp:include page="securityGrid.jsp"></jsp:include></center></div>
-</fieldset><br/>
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="7%" align="right">Amount</td>
-    <td width="14%"><input type="text" id="txtamount" name="txtamount" style="width:70%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/></td>
-    <td width="6%" align="right">Deduction</td>
-    <td width="12%"><input type="text" id="txtdeduction" name="txtdeduction" style="width:70%;text-align: right;" onblur="funRoundAmt(this.value,this.id);getNetTotal();" value='<s:property value="txtdeduction"/>'/></td>
-    <td width="5%" align="right">Add. Amount</td>
-    <td width="12%"><input type="text" id="txtaddamount" name="txtaddamount" style="width:70%;text-align: right;" value='<s:property value="txtaddamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/></td>
-    <td width="8%" align="right">Net Amount</td>
-    <td width="14%"><input type="text" id="txtnetamount" name="txtnetamount" style="width:70%;text-align: right;" value='<s:property value="txtnetamount"/>' tabindex="-1"/></td>
-    <td width="8%" align="right">On Account Amount</td>
-    <td width="15%"><input type="text" id="txtonaccountamount" name="txtonaccountamount" style="width:75%;text-align: right;" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtonaccountamount"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Description</td>
-    <td colspan="5"><input type="text" id="txtdescriptions" name="txtdescriptions" style="width:93%;" value='<s:property value="txtdescriptions"/>'/></td>
-    <td align="right">Paid To</td>
-    <td colspan="5"><input type="text" id="txtpaidto" name="txtpaidto" style="width:90%;" value='<s:property value="txtpaidto"/>'/></td>
-  </tr>
-</table>
-</fieldset>
+                    <label>Receipt No.</label>
+                    <input type="text" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>' tabindex="-1"/>
+                </div>
+            </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" name="txtvalidation" id="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="txtibvalidation" name="txtibvalidation" value='<s:property value="txtibvalidation"/>'/>
-<input type="hidden" id="applylength" name="applylength"/>
-<input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
-<input type="hidden" id="cnrdocno" name="cnrdocno"  value='<s:property value="cnrdocno"/>'/>
+            <div class="section-row">
+                <div class="section-block">
+                    <h2>Agreement Details</h2>
+                    <div class="agmt-info-grid">
+                        <div class="checkbox-group" style="grid-column: span 2;">
+                            <input type="checkbox" id="chckib" name="chckib" onclick="funCheck();">
+                            <label for="chckib">Inter-Branch</label>
+                        </div>
+
+                        <label>Branch</label>
+                        <select id="cmbbranch" name="cmbbranch" onchange="funIBDateInPeriod($('#jqxRentalRefundDate').val(),this.value);" value='<s:property value="cmbbranch"/>'>
+                            <option value=""></option>
+                        </select>
+
+                        <label>Client</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="txtclientid" name="txtclientid" style="width: 40% !important;" placeholder="F3" value='<s:property value="txtclientid"/>' onkeydown="getClient(event);"/>
+                            <input type="text" id="txtclientname" name="txtclientname" value='<s:property value="txtclientname"/>'/>
+                        </div>
+
+                        <label>Agreement</label>
+                        <div style="display: flex; gap: 8px;">
+                            <select id="cmbratype" name="cmbratype" style="width: 40% !important;" value='<s:property value="cmbratype"/>'>
+                                <option value="RAG">Rental</option>
+                                <option value="LAG">Lease</option>
+                            </select>
+                            <input type="text" id="txtagreementvocher" name="txtagreementvocher" placeholder="F3" value='<s:property value="txtagreementvocher"/>' onkeydown="getAgreement(event);"/>
+                        </div>
+
+                        <label>Paid As</label>
+                        <select id="cmbpayedas" name="cmbpayedas" value='<s:property value="cmbpayedas"/>' onchange="applyDisable();">
+                            <option value="1">Security</option>
+                            <option value="2">On Account</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h2>Payment Details</h2>
+                    <div class="agmt-info-grid">
+                        <label>Pay Type</label>
+                        <select id="cmbpaytype" name="cmbpaytype" value='<s:property value="cmbpaytype"/>' onchange="bankAccountSearch();funchequedate();getAccounts(this.value);"></select>
+
+                        <label>Account</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="txtaccid" name="txtaccid" style="width: 40% !important;" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);" />
+                            <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>'/>
+                        </div>
+
+                        <label>Card Type</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button type="button" class="icon" id="btnCardSearch" title="Search Card" onclick="funCardSearch();">
+                                <img alt="Search Card" src="<%=contextPath%>/icons/cardsearch.png" height="20">
+                            </button>
+                            <select id="cmbcardtype" name="cmbcardtype" onchange="funclearchequecardno();" value='<s:property value="cmbcardtype"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+
+                        <label>Chq/Card/Online No</label>
+                        <input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>'/>
+
+                        <label>Ref. Date</label>
+                        <div id="jqxReferenceDate" name="jqxReferenceDate" value='<s:property value="jqxReferenceDate"/>'></div>
+
+                        <label>Description</label>
+                        <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Security Details</h2>
+                <div id="jqxSecurityGrid" style="width: 100%;">
+                    <jsp:include page="securityGrid.jsp"></jsp:include>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Refund Summary</h2>
+                <div class="trans-info-grid">
+                    <label>Amount</label>
+                    <input type="text" id="txtamount" name="txtamount" style="text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/>
+                    
+                    <label>Deduction</label>
+                    <input type="text" id="txtdeduction" name="txtdeduction" style="text-align: right;" onblur="funRoundAmt(this.value,this.id);getNetTotal();" value='<s:property value="txtdeduction"/>'/>
+                    
+                    <label>Add. Amount</label>
+                    <input type="text" id="txtaddamount" name="txtaddamount" style="text-align: right;" value='<s:property value="txtaddamount"/>' onblur="funRoundAmt(this.value,this.id);getNetTotal();"/>
+
+                    <label>Net Amount</label>
+                    <input type="text" id="txtnetamount" name="txtnetamount" style="text-align: right;" value='<s:property value="txtnetamount"/>' tabindex="-1"/>
+                    
+                    <label>On Acc. Amt</label>
+                    <input type="text" id="txtonaccountamount" name="txtonaccountamount" style="text-align: right;" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtonaccountamount"/>'/>
+                </div>
+
+                <div class="agmt-info-grid" style="margin-top: 15px;">
+                    <label>Description</label>
+                    <input type="text" id="txtdescriptions" name="txtdescriptions" value='<s:property value="txtdescriptions"/>'/>
+                    
+                    <label>Paid To</label>
+                    <input type="text" id="txtpaidto" name="txtpaidto" value='<s:property value="txtpaidto"/>'/>
+                </div>
+            </div>
+
+            <input type="hidden" id="hidjqxRentalRefundDate" name="hidjqxRentalRefundDate" value='<s:property value="hidjqxRentalRefundDate"/>'/>
+            <input type="hidden" id="hidchckib" name="hidchckib" value='<s:property value="hidchckib"/>'/>
+            <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/>
+            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/>
+            <input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'/>
+            <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/>
+            <input type="hidden" id="txtagreement" name="txtagreement" value='<s:property value="txtagreement"/>'/>
+            <input type="hidden" id="hidcmbpayedas" name="hidcmbpayedas" value='<s:property value="hidcmbpayedas"/>'/>
+            <input type="hidden" id="txtsecurityacno" name="txtsecurityacno" value='<s:property value="txtsecurityacno"/>'/>
+            <input type="hidden" id="hidcmbpaytype" name="hidcmbpaytype" value='<s:property value="hidcmbpaytype"/>'/>
+            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+            <input type="hidden" id="txttranno" name="txttranno" value='<s:property value="txttranno"/>'/>
+            <input type="hidden" id="hidcmbcardtype" name="hidcmbcardtype" value='<s:property value="hidcmbcardtype"/>'/>
+            <input type="hidden" id="hidjqxReferenceDate" name="hidjqxReferenceDate" value='<s:property value="hidjqxReferenceDate"/>'/>
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
+            <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+            <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+            <input type="hidden" name="txtvalidation" id="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+            <input type="hidden" id="txtibvalidation" name="txtibvalidation" value='<s:property value="txtibvalidation"/>'/>
+            <input type="hidden" id="applylength" name="applylength"/>
+            <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
+            <input type="hidden" id="cnrdocno" name="cnrdocno" value='<s:property value="cnrdocno"/>'/>
+        </div>
+    </form>
+
+    <div id="agreementDetailsWindow"><div></div><div></div></div>  
+    <div id="clientDetailsWindow"><div></div><div></div></div> 
+    <div id="accountDetailsWindow"><div></div><div></div></div>
+    <div id="cardDetailsWindow"><div></div><div></div></div> 
+    <div id="printWindow"><div></div><div></div></div> 
 </div>
-</form>
-<div id="agreementDetailsWindow">
-	<div></div><div></div>
-</div>  
-<div id="clientDetailsWindow">
-	<div></div><div></div>
-</div> 
-<div id="accountDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="cardDetailsWindow">
-	<div></div><div></div>
-</div> 
-<div id="printWindow">
-	<div></div><div></div>
-</div> 
-</div>
+
 </body>
 </html>

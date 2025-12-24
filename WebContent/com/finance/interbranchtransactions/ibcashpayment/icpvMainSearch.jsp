@@ -29,8 +29,51 @@
 		}
 
 	</script>
+<style type="text/css">
+
+
+.searchPop table {
+  border-collapse: separate;
+   border-spacing: 6px 8px;    
+}
+
+
+.searchPop td[align="right"] {
+  font-weight: 300;
+  font-size: 14px;
+  color: #222;
+}
+
+
+.searchPop input[type="text"] {
+  font-weight: 300;
+  font-size: 14px;
+  padding: 4px 6px;
+  width: 95%;               /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box;   /* Include padding in width */
+}
+
+
+.searchPop #bankdate, #chqdate {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+
+.searchPop .myButton {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+
+.searchPop tr {
+  line-height: 1.2;
+}
+
+</style>
 <body>
-<div id=search>
+<div id=search class="searchPop">
 <table width="100%">
   <tr>
     <td width="6%" align="right">Date</td>

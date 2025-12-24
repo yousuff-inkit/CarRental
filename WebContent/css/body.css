@@ -41,14 +41,14 @@ legend {
     font-size:10px;
 }
 input:focus{
-background-color: #FFD6FF;
+background-color:#ffffff;
 }
 select:focus{
- background-color: #FFD6FF;
+ background-color:#ffffff;
  
 }
 textarea:focus{
- background-color: #FFD6FF;
+ background-color:#ffffff;
 }
 
 form label.error {
@@ -57,7 +57,7 @@ form label.error {
 }
 
 #search {
-    background-color: #E0ECF8;
+    background-color: #FFFFFF;
     font-size: 9px;
 }
 
