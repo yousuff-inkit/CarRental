@@ -610,7 +610,7 @@ select option {
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
 <div  class='hidden-scrollbar receipt-header'>
-<div class="table-section" style="background-color: #E8F1FF; width: 100%;">
+<div class="table-section" style="background-color: #f6f8fa; width: 100%;">
 <table class="cr-table" width="100%">
   <tr>
     <td width="8%" align="right">Date</td>

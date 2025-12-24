@@ -1569,391 +1569,515 @@
 </script>
 
 <style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 14px 'Segoe UI';
+    font-weight: 500;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.trans-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 12px 15px;
+    align-items: center;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    gap: 12px 20px;
+    align-items: center;
+}
+
+.service-charge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    align-items: center;
+}
+
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow-y: visible !important;
+    max-height: none !important;
+    padding: 10px;
+}
+
+/* Tabs Styling */
+#tabs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 5px;
+    border-bottom: 2px solid #007bff;
+    margin-bottom: 20px;
+}
+
+#tabs li a {
+    display: block;
+    padding: 10px 20px;
+    background: #e9ecef;
+    text-decoration: none;
+    color: #495057;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+}
+
+#tabs li a.current {
+    background: #007bff;
+    color: #fff;
+}
+
+/* Table styling for Tab 2 Communication Grid */
+.table1 {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table1 th, .table1 td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    text-align: left;
+}
+
+.table1 thead th {
+    background: #f1f3f5;
+    color: #333;
 }
 </style>
-
 </head>
 <body onload="setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmClientMaster" action="saveClientMaster" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>   
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+    <br>
 
-<div class='hidden-scrollbar'>
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="11%"><div id="jqxClientDate" name="jqxClientDate" onchange="getContractDate();" value='<s:property value="jqxClientDate"/>'></div>
-    <input type="hidden" id="hidjqxClientDate" name="hidjqxClientDate" value='<s:property value="hidjqxClientDate"/>'/></td>
-    <td width="7%" align="right">Code</td>
-    <td width="7%"><input type="text" id="txtcode" name="txtcode" style="width:50%;" tabindex="-1" value='<s:property value="txtcode"/>'/></td>
-    <td width="4%" align="right">Name</td>
-    <td colspan="3"><input type="text" id="txtclient_name" name="txtclient_name" onfocus="getCurrencyIds();" style="width:97%;" value='<s:property value="txtclient_name"/>'/></td>
-    <td width="7%"><select id="cmbsalutation" name="cmbsalutation" style="width:75%;" value='<s:property value="cmbsalutation"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbsalutation" name="hidcmbsalutation" value='<s:property value="hidcmbsalutation"/>'/></td>
-    <td width="8%" align="right">Currency</td>
-    <td width="11%"><select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/></td>
-    <td width="5%" align="right">Doc No</td>
-    <td width="10%"><input type="text" id="docno" name="txtclientdocno" style="width:75%;" tabindex="-1" value='<s:property value="txtclientdocno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Category</td>
-    <td><select id="cmbcategory" name="cmbcategory" style="width:90%;" onchange="getCategoryAccountGroup(this.value);funCreditCardValidate();"  value='<s:property value="cmbcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/></td>
-    <td align="right"><label id="lblsalesman"><label>Salesman</td>
-    <td colspan="3"><select id="cmbsalesman" name="cmbsalesman" value='<s:property value="cmbsalesman"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbsalesman" name="hidcmbsalesman" value='<s:property value="hidcmbsalesman"/>'/></td>
-    <td width="12%" align="left"><input type="checkbox" id="chcknontaxableentity" name="chcknontaxableentity" style="display: none;" value="" onchange="nontaxableentitycheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label id="lblnontaxableentity">Taxable Entity</label>
-                                 <input type="hidden" id="hidchcknontaxableentity" name="hidchcknontaxableentity" value='<s:property value="hidchcknontaxableentity"/>'/></td>
-    <td width="5%" align="left"><input type="checkbox" id="chckadvance" name="chckadvance" value="" onchange="advancecheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Advance
-                                 <input type="hidden" id="hidchckadvance" name="hidchckadvance" value='<s:property value="hidchckadvance"/>'/></td>
-    <td colspan="2" align="right">Invoicing Method</td>
-    <td><select id="cmbinvoicing_method" name="cmbinvoicing_method" value='<s:property value="cmbinvoicing_method"/>'>
-      <option value="">--Select--</option>
-      <option value="1">Month End</option>
-      <option value="2">Period</option></select>
-      <input type="hidden" id="hidcmbinvoicing_method" name="hidcmbinvoicing_method" value='<s:property value="hidcmbinvoicing_method"/>'/></td>
-    <td align="right">Knowledge Fee</td>
-    <td><select id="cmbdel_charges" name="cmbdel_charges" value='<s:property value="cmbdel_charges"/>'>
-      <option value="">--Select--</option>
-      <option value=1>Yes</option>
-      <option value=0>No</option></select>
-      <input type="hidden" id="hidcmbdel_charges" name="hidcmbdel_charges" value='<s:property value="hidcmbdel_charges"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right"><label id="lbltaxableentity">Tax</label></td>
-    <td><select id="cmbtax" name="cmbtax" style="width:90%;" onchange="taxcheck();" value='<s:property value="cmbtax"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbtax" name="hidcmbtax" value='<s:property value="hidcmbtax"/>'/></td>
-    <td align="right"><label id="lbltrnnoentity">TRN No.</label></td>
-    <td colspan="10"><input type="text" id="txtregisteredtrnno" name="txtregisteredtrnno" style="width:22%;" value='<s:property value="txtregisteredtrnno"/>'/></td>
-  </tr>
-</table>
-</fieldset>
-<table width="100%" border="0">
-<tr><td width="40%">
-<fieldset><legend>Account Info</legend>
-<table width="100%">
-  <tr>
-    <td width="15%" align="right">Account Group</td>
-    <td width="16%"  colspan="3"><select id="cmbgroup1" name="cmbgroup1" style="width:80%;" value='<s:property value="cmbgroup1"/>'>
-      <option value="">--Select--</option></select>
-       <input type="hidden" id="hidcmbgroup1" name="hidcmbgroup1" value='<s:property value="hidcmbgroup1"/>'/></td>
-   <td align="right">Account</td>
-    <td width="33%"><input type="text" id="txtaccount" name="txtaccount" style="width:50%;" tabindex="-1" value='<s:property value="txtaccount"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Credit Period-Min(Days)</td>
-    <td><input type="text" id="txtcredit_period_min" name="txtcredit_period_min" style="width:70%;text-align: right;" value='<s:property value="txtcredit_period_min"/>'/></td>
-    <td width="8%" align="right">Max(Days)</td>
-    <td width="19%"><input type="text" id="txtcredit_period_max" name="txtcredit_period_max" style="width:50%;text-align: right;" value='<s:property value="txtcredit_period_max"/>'/></td>
-    <td width="9%" align="right">Credit Limit</td>
-    <td><input type="text" id="txtcredit_limit" name="txtcredit_limit" style="width:50%;text-align: right;" value='<s:property value="txtcredit_limit"/>'/></td>
-  </tr>
-</table>
-</fieldset></td>
-<td width="60%" style="vertical-align:top;">
+    <form id="frmClientMaster" action="saveClientMaster" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            <div class="section-block">
+                <h2>General Information</h2>
+                <div class="trans-info-grid">
+                    <label>Date</label>
+                    <div id="jqxClientDate" name="jqxClientDate" onchange="getContractDate();" value='<s:property value="jqxClientDate"/>'></div>
+                    
+                    <label>Code</label>
+                    <input type="text" id="txtcode" name="txtcode" tabindex="-1" value='<s:property value="txtcode"/>'/>
 
-<div id="singleServiceChargeDiv">
-<fieldset>
-<legend>Service Charge</legend>
-<table width="100%" border="0">
-	<tr>
-  		<td>
-  			<input type="checkbox" id="chckdefault" name="chckdefault" value="" onchange="defaultcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Default
+                    <label>Name</label>
+                    <div style="display: flex; gap: 8px; grid-column: span 3;">
+                        <select id="cmbsalutation" name="cmbsalutation" style="width: 100px !important;" value='<s:property value="cmbsalutation"/>'>
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="text" id="txtclient_name" name="txtclient_name" onfocus="getCurrencyIds();" value='<s:property value="txtclient_name"/>'/>
+                    </div>
+
+                    <label>Currency</label>
+                    <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                    
+                    <label>Doc No</label>
+                    <input type="text" id="docno" name="txtclientdocno" tabindex="-1" value='<s:property value="txtclientdocno"/>'/>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Category & Invoicing</h2>
+                <div class="trans-info-grid">
+                    <label>Category</label>
+                    <select id="cmbcategory" name="cmbcategory" onchange="getCategoryAccountGroup(this.value);funCreditCardValidate();" value='<s:property value="cmbcategory"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+
+                    <label id="lblsalesman">Salesman</label>
+                    <select id="cmbsalesman" name="cmbsalesman" value='<s:property value="cmbsalesman"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+
+                    <label>Invoicing</label>
+                    <select id="cmbinvoicing_method" name="cmbinvoicing_method" value='<s:property value="cmbinvoicing_method"/>'>
+                        <option value="">--Select--</option>
+                        <option value="1">Month End</option>
+                        <option value="2">Period</option>
+                    </select>
+
+                    <label>Knowledge Fee</label>
+                    <select id="cmbdel_charges" name="cmbdel_charges" value='<s:property value="cmbdel_charges"/>'>
+                        <option value="">--Select--</option>
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
+                    </select>
+
+                    <label id="lbltaxableentity">Tax</label>
+                    <select id="cmbtax" name="cmbtax" onchange="taxcheck();" value='<s:property value="cmbtax"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+
+                    <label id="lbltrnnoentity">TRN No.</label>
+                    <input type="text" id="txtregisteredtrnno" name="txtregisteredtrnno" value='<s:property value="txtregisteredtrnno"/>'/>
+
+                    <div style="grid-column: span 2; display: flex; gap: 15px;">
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" id="chcknontaxableentity" name="chcknontaxableentity" onchange="nontaxableentitycheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                            <label id="lblnontaxableentity">Taxable Entity</label>
+                        </span>
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" id="chckadvance" name="chckadvance" onchange="advancecheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                            <label>Advance</label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-row">
+                <div class="section-block">
+                    <h2>Account Info</h2>
+                    <div class="agmt-info-grid">
+                        <label>Account Group</label>
+                        <select id="cmbgroup1" name="cmbgroup1" value='<s:property value="cmbgroup1"/>'>
+                            <option value="">--Select--</option>
+                        </select>
+
+                        <label>Account</label>
+                        <input type="text" id="txtaccount" name="txtaccount" tabindex="-1" value='<s:property value="txtaccount"/>'/>
+
+                        <label>Credit Min (Days)</label>
+                        <input type="text" id="txtcredit_period_min" name="txtcredit_period_min" style="text-align: right;" value='<s:property value="txtcredit_period_min"/>'/>
+
+                        <label>Max (Days)</label>
+                        <input type="text" id="txtcredit_period_max" name="txtcredit_period_max" style="text-align: right;" value='<s:property value="txtcredit_period_max"/>'/>
+
+                        <label>Credit Limit</label>
+                        <input type="text" id="txtcredit_limit" name="txtcredit_limit" style="text-align: right;" value='<s:property value="txtcredit_limit"/>'/>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h2>Service Charge</h2>
+                    <div id="singleServiceChargeDiv">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                            <input type="checkbox" id="chckdefault" name="chckdefault" onchange="defaultcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)"> 
+                            <label>Default</label>
+                            <input type="checkbox" id="chksalikpercent" name="chksalikpercent" onchange="funChangeSalikPercent();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                            <label>Percentage Mode</label>
+                        </div>
+                        
+                        <div class="trans-info-grid">
+                            <label>DARB</label>
+                            <input type="text" id="txtsalikauh" name="txtsalikauh" style="text-align: right;" value='<s:property value="txtsalikauh"/>'/>
+                            
+                            <label>Salik DXB</label>
+                            <input type="text" id="txtsalik" name="txtsalik" style="text-align: right;" value='<s:property value="txtsalik"/>'/>
+                            
+                            <label>Traffic</label>
+                            <input type="text" id="txttraffic" name="txttraffic" style="text-align: right;" value='<s:property value="txttraffic"/>'/>
+                            
+                            <label>Parking</label>
+                            <input type="text" id="txtparking" name="txtparking" style="text-align: right;" value='<s:property value="txtparking"/>'/>
+                        </div>
+
+                        <div class="trans-info-grid" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc;">
+                            <label style="font-size: 11px;">DARB %</label>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <input type="checkbox" id="chksalikauhpercent" name="chksalikauhpercent" onchange="funChangeSalikDARBPercent();">
+                                <input type="text" id="salikauhpercent" name="salikauhpercent" style="text-align: right;" value='<s:property value="salikauhpercent"/>'/>
+                            </div>
+
+                            <label style="font-size: 11px;">Salik %</label>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <input type="checkbox" id="chksalikdxbpercent" name="chksalikdxbpercent" onchange="funChangeSalikDXBPercent();">
+                                <input type="text" id="salikpercent" name="salikpercent" style="text-align: right;" value='<s:property value="salikpercent"/>'/>
+                            </div>
+
+                            <label style="font-size: 11px;">Traffic %</label>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <input type="checkbox" id="chktrafficpercent" name="chktrafficpercent" onchange="funChangeSalikTRAFPercent();">
+                                <input type="text" id="trafficpercent" name="trafficpercent" style="text-align: right;" value='<s:property value="trafficpercent"/>'/>
+                            </div>
+
+                            <label style="font-size: 11px;">Parking %</label>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <input type="checkbox" id="chkparkingpercent" name="chkparkingpercent" onchange="funChangeSalikPARKFPercent();">
+                                <input type="text" id="parkingpercent" name="parkingpercent" style="text-align: right;" value='<s:property value="parkingpercent"/>'/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="separateServiceChargeDiv" hidden="true">
+                         <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="chckseparatesrvcdefault" name="chckseparatesrvcdefault" onchange="defaultseparateservicecheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                            <label>Use Separate Grid</label>
+                         </div>
+                         <div id="separateServiceChargeGridDiv"><jsp:include page="separateServiceChargesGrid.jsp"></jsp:include></div>
+                    </div>
+                </div>
+            </div>
+
+            <ul id="tabs">
+                <li><a href="#" name="tab1" class="current">Driver Details</a></li>
+                <li><a href="#" name="tab2">Know Your Customer</a></li>
+                <li><a href="#" name="tab3">Banking Details</a></li>
+                <li><a href="#" name="tab4">Others</a></li>
+            </ul>
+
+            <div id="content">
+                <div id="tab1">
+                    <div class="section-block">
+                        <div id="jqxDriver1"> <jsp:include page="driver.jsp"></jsp:include></div>
+                    </div>
+                </div>
+
+                <div id="tab2">
+                    <div class="section-block">
+                        <h2>Communication & Address Details</h2>
+                        <table class="table1">
+                            <thead>
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Communication</th>
+                                    <th>Office</th>
+                                    <th>Residence</th>
+                                    <th>Home</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Address 1</strong></td>
+                                    <td><input type="text" id="txtpersonal_add1" name="txtpersonal_add1" value='<s:property value="txtpersonal_add1"/>'/></td>
+                                    <td><input type="text" id="txtoffice_add1" name="txtoffice_add1" value='<s:property value="txtoffice_add1"/>'/></td>
+                                    <td><input type="text" id="txtresidence_add1" name="txtresidence_add1" value='<s:property value="txtresidence_add1"/>'/></td>
+                                    <td><input type="text" id="txthome_add1" name="txthome_add1" value='<s:property value="txthome_add1"/>'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address 2</strong></td>
+                                    <td><input type="text" id="txtpersonal_add2" name="txtpersonal_add2" value='<s:property value="txtpersonal_add2"/>'/></td>
+                                    <td><input type="text" id="txtoffice_add2" name="txtoffice_add2" value='<s:property value="txtoffice_add2"/>'/></td>
+                                    <td><input type="text" id="txtresidence_add2" name="txtresidence_add2" value='<s:property value="txtresidence_add2"/>'/></td>
+                                    <td><input type="text" id="txthome_add2" name="txthome_add2" value='<s:property value="txthome_add2"/>'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Telephone</strong></td>
+                                    <td><input type="text" id="txtpersonal_tel1" name="txtpersonal_tel1" value='<s:property value="txtpersonal_tel1"/>'/></td>
+                                    <td><input type="text" id="txtoffice_tel1" name="txtoffice_tel1" value='<s:property value="txtoffice_tel1"/>'/></td>
+                                    <td><input type="text" id="txtresidence_tel1" name="txtresidence_tel1" value='<s:property value="txtresidence_tel1"/>'/></td>
+                                    <td><input type="text" id="txthome_tel1" name="txthome_tel1" value='<s:property value="txthome_tel1"/>'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Mobile</strong></td>
+                                    <td><input type="text" id="personal_tel2" name="personal_tel2" onblur="mobileValid(this.value);getMobileNoAlreadyExists(this.value,$('#docno').val(),$('#mode').val());" value='<s:property value="personal_tel2"/>'/></td>
+                                    <td><input type="text" id="office_tel2" name="office_tel2" onblur="mobileValid(this.value);" value='<s:property value="office_tel2"/>'/></td>
+                                    <td><input type="text" id="residence_tel2" name="residence_tel2" onblur="mobileValid(this.value);" value='<s:property value="residence_tel2"/>'/></td>
+                                    <td><input type="text" id="home_tel2" name="home_tel2" onblur="mobileValid(this.value);" value='<s:property value="home_tel2"/>'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email</strong></td>
+                                    <td><input type="text" id="txtpersonal_email" name="txtpersonal_email" placeholder="someone@example.com" value='<s:property value="txtpersonal_email"/>'/></td>
+                                    <td><input type="text" id="txtoffice_email" name="txtoffice_email" placeholder="someone@example.com" value='<s:property value="txtoffice_email"/>'/></td>
+                                    <td><input type="text" id="txtresidence_email" name="txtresidence_email" placeholder="someone@example.com" value='<s:property value="txtresidence_email"/>'/></td>
+                                    <td><input type="text" id="txthome_email" name="txthome_email" placeholder="someone@example.com" value='<s:property value="txthome_email"/>'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Makani No.</strong></td>
+                                    <td><input type="text" id="txtpersonal_extn_no" name="txtpersonal_extn_no" value='<s:property value="txtpersonal_extn_no"/>'/></td>
+                                    <td><input type="text" id="txtoffice_extn_no" name="txtoffice_extn_no" value='<s:property value="txtoffice_extn_no"/>'/></td>
+                                    <td><input type="text" id="txtresidence_extn_no" name="txtresidence_extn_no" value='<s:property value="txtresidence_extn_no"/>'/></td>
+                                    <td><input type="text" id="txthome_extn_no" name="txthome_extn_no" value='<s:property value="txthome_extn_no"/>'/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab3">
+                    <div class="section-block">
+                        <h2>Credit Card Details</h2>
+                        <div id="creditCardDetailsDiv"> <jsp:include page="creditCardDetailsGrid.jsp"></jsp:include></div>
+                    </div>
+                </div>
+
+                <div id="tab4">
+                    <div class="section-row">
+                        <div class="section-block">
+                            <h2 id="refid">Reference Details</h2>
+                            <div id="jqxReferenceDetails1"><jsp:include page="referenceDetails.jsp"></jsp:include></div><br/>
+                            <div id="jqxReferenceDetails2"><jsp:include page="referenceDetailsnew.jsp"></jsp:include></div>
+                        </div>
+
+                        <div class="section-block">
+                            <h2>Sponsor / Company</h2>
+                            <div class="agmt-info-grid">
+                                <label>Name</label>
+                                <input type="text" id="txtname" name="txtname" value='<s:property value="txtname"/>'/>
+
+                                <label>Address</label>
+                                <input type="text" id="txtaddress" name="txtaddress" value='<s:property value="txtaddress"/>'/>
+
+                                <label>Telephone</label>
+                                <input type="text" id="txttelephone" name="txttelephone" value='<s:property value="txttelephone"/>'/>
+
+                                <label>ID</label>
+                                <input type="text" id="txtid" name="txtid" value='<s:property value="txtid"/>'/>
+
+                                <label>Nationality</label>
+                                <select id="cmbnationality" name="cmbnationality" value='<s:property value="cmbnationality"/>'>
+                                    <option value="">--Select--</option>
+                                </select>
+
+                                <label>Security</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" id="txtsecurity" name="txtsecurity" value='<s:property value="txtsecurity"/>'/>
+                                    <input type="text" id="txtsecurity1" name="txtsecurity1" value='<s:property value="txtsecurity1"/>'/>
+                                </div>
+
+                                <label>Job Title</label>
+                                <input type="text" id="txtjobtitle" name="txtjobtitle" value='<s:property value="txtjobtitle"/>'/>
+
+                                <label>Joining Date</label>
+                                <div id="dateOfJoining" name="dateOfJoining" value='<s:property value="dateOfJoining"/>'></div>
+                                
+                                <label>Bank Name</label>
+                                <input type="text" id="txtbankname" name="txtbankname" value='<s:property value="txtbankname"/>'/>
+                            </div>
+
+                            <div id="contractDiv" hidden="true" style="margin-top: 20px;">
+                                <h2 style="font-size: 0.9rem; border-left-color: #ffc107;">Trade License Details</h2>
+                                <div class="agmt-info-grid">
+                                    <label>License No.</label>
+                                    <input type="text" id="txtcontractno" name="txtcontractno" value='<s:property value="txtcontractno"/>'/>
+                                    
+                                    <label>License Date</label>
+                                    <div id="jqxContractDate" name="jqxContractDate" value='<s:property value="jqxContractDate"/>'></div>
+                                    
+                                    <label>Remarks</label>
+                                    <input type="text" id="txtcontractremarks" name="txtcontractremarks" value='<s:property value="txtcontractremarks"/>'/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <input type="hidden" id="hidjqxClientDate" name="hidjqxClientDate" value='<s:property value="hidjqxClientDate"/>'/>
+            <input type="hidden" id="hidcmbsalutation" name="hidcmbsalutation" value='<s:property value="hidcmbsalutation"/>'/>
+            <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+            <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/>
+            <input type="hidden" id="hidcmbsalesman" name="hidcmbsalesman" value='<s:property value="hidcmbsalesman"/>'/>
+            <input type="hidden" id="hidcmbinvoicing_method" name="hidcmbinvoicing_method" value='<s:property value="hidcmbinvoicing_method"/>'/>
+            <input type="hidden" id="hidcmbdel_charges" name="hidcmbdel_charges" value='<s:property value="hidcmbdel_charges"/>'/>
+            <input type="hidden" id="hidcmbtax" name="hidcmbtax" value='<s:property value="hidcmbtax"/>'/>
+            <input type="hidden" id="hidchcknontaxableentity" name="hidchcknontaxableentity" value='<s:property value="hidchcknontaxableentity"/>'/>
+            <input type="hidden" id="hidchckadvance" name="hidchckadvance" value='<s:property value="hidchckadvance"/>'/>
+            <input type="hidden" id="hidcmbgroup1" name="hidcmbgroup1" value='<s:property value="hidcmbgroup1"/>'/>
             <input type="hidden" id="hidchckdefault" name="hidchckdefault" value='<s:property value="hidchckdefault"/>'/>
-  		</td>
-    	<td align="right">DARB</td>
-    	<td align="left"><input type="text" id="txtsalikauh" name="txtsalikauh" style="text-align: right;"  value='<s:property value="txtsalikauh"/>'/></td>
-    	<td align="right">Salik DXB</td>
-    	<td><input type="text" id="txtsalik" name="txtsalik" style="text-align: right;"  value='<s:property value="txtsalik"/>'/></td>
-    	<td align="right">Traffic</td>
-    	<td><input type="text" id="txttraffic" name="txttraffic" style="text-align: right;"  value='<s:property value="txttraffic"/>'/></td>
-    	<td align="right">Parking</td>
-    	<td><input type="text" id="txtparking" name="txtparking" style="text-align: right;"  value='<s:property value="txtparking"/>'/></td>
-  	</tr>
-  	<tr class="row-salikpercent">
-  		<td>
-  			<input type="checkbox" id="chksalikpercent" name="chksalikpercent" value="" onchange="funChangeSalikPercent();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Percentage
             <input type="hidden" id="hidchksalikpercent" name="hidchksalikpercent" value='<s:property value="hidchksalikpercent"/>'/>
-  		</td>
-    <%-- 	<td align="right"><input type="checkbox" id="chksalikauhpercent" name="chksalikauhpercent" value='<s:property value="chksalikauhpercent"/>' data-type="chksalikauhpercent">DARB %</td>
-    	<td align="left"><input type="text" id="salikauhpercent" name="salikauhpercent" style="text-align: right;"  value='<s:property value="salikauhpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chksalikdxbpercent" name="chksalikdxbpercent" value='<s:property value="chksalikdxbpercent"/>' data-type="chksalikdxbpercent">Salik DXB %</td>
-    	<td><input type="text" id="salikpercent" name="salikpercent" style="text-align: right;"  value='<s:property value="salikpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chktrafficpercent" name="chktrafficpercent" value='<s:property value="chktrafficpercent"/>' data-type="chktrafficpercent">Traffic %</td>
-    	<td><input type="text" id="trafficpercent" name="trafficpercent" style="text-align: right;"  value='<s:property value="trafficpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chkparkingpercent" name="chkparkingpercent" value='<s:property value="chkparkingpercent"/>' data-type="chkparkingpercent">Parking %</td>
-    	<td><input type="text" id="parkingpercent" name="parkingpercent" style="text-align: right;"  value='<s:property value="parkingpercent"/>'/></td>
-  	 --%>
-  	 	<td align="right"><input type="checkbox" id="chksalikauhpercent" name="chksalikauhpercent" value='<s:property value="chksalikauhpercent"/>' onchange="funChangeSalikDARBPercent();" data-type="chksalikauhpercent">DARB %</td>
-    	<td align="left"><input type="text" id="salikauhpercent" name="salikauhpercent" style="text-align: right;"  value='<s:property value="salikauhpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chksalikdxbpercent" name="chksalikdxbpercent" value='<s:property value="chksalikdxbpercent"/>' onchange="funChangeSalikDXBPercent();" data-type="chksalikdxbpercent">Salik DXB %</td>
-    	<td><input type="text" id="salikpercent" name="salikpercent" style="text-align: right;"  value='<s:property value="salikpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chktrafficpercent" name="chktrafficpercent" value='<s:property value="chktrafficpercent"/>' onchange="funChangeSalikTRAFPercent();" data-type="chktrafficpercent">Traffic %</td>
-    	<td><input type="text" id="trafficpercent" name="trafficpercent" style="text-align: right;"  value='<s:property value="trafficpercent"/>'/></td>
-    	<td align="right"><input type="checkbox" id="chkparkingpercent" name="chkparkingpercent" value='<s:property value="chkparkingpercent"/>' onchange="funChangeSalikPARKFPercent();" data-type="chkparkingpercent">Parking %</td>
-    	<td><input type="text" id="parkingpercent" name="parkingpercent" style="text-align: right;"  value='<s:property value="parkingpercent"/>'/></td>
- </tr>
-  	<input type="hidden" id="hidchksalikauhpercent" name="hidchksalikauhpercent" value='<s:property value="hidchksalikauhpercent"/>'/>
-  	<input type="hidden" id="hidchksalikdxbpercent" name="hidchksalikdxbpercent" value='<s:property value="hidchksalikdxbpercent"/>'/>
-  	<input type="hidden" id="hidchktrafficpercent" name="hidchktrafficpercent" value='<s:property value="hidchktrafficpercent"/>'/>
-  	<input type="hidden" id="hidchkparkingpercent" name="hidchkparkingpercent" value='<s:property value="hidchkparkingpercent"/>'/>
-  	
-</table>
-</fieldset>
+            <input type="hidden" id="hidchksalikauhpercent" name="hidchksalikauhpercent" value='<s:property value="hidchksalikauhpercent"/>'/>
+            <input type="hidden" id="hidchksalikdxbpercent" name="hidchksalikdxbpercent" value='<s:property value="hidchksalikdxbpercent"/>'/>
+            <input type="hidden" id="hidchktrafficpercent" name="hidchktrafficpercent" value='<s:property value="hidchktrafficpercent"/>'/>
+            <input type="hidden" id="hidchkparkingpercent" name="hidchkparkingpercent" value='<s:property value="hidchkparkingpercent"/>'/>
+            <input type="hidden" id="hidchckseparatesrvcdefault" name="hidchckseparatesrvcdefault" value='<s:property value="hidchckseparatesrvcdefault"/>'/>
+            <input type="hidden" id="hidcmbnationality" name="hidcmbnationality" value='<s:property value="hidcmbnationality"/>'/>
+            <input type="hidden" id="hiddateOfJoining" name="hiddateOfJoining" value='<s:property value="hiddateOfJoining"/>'/>
+            <input type="hidden" id="hidjqxContractDate" name="hidjqxContractDate" value='<s:property value="hidjqxContractDate"/>'/>
+            
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="idpdetailsallowed" name="idpdetailsallowed" value='<s:property value="idpdetailsallowed"/>'/>
+            <input type="hidden" id="driverdetailsverifyallowed" name="driverdetailsverifyallowed" value='<s:property value="driverdetailsverifyallowed"/>'/>
+            <input type="hidden" id="separateservicechargeallowed" name="separateservicechargeallowed" value='<s:property value="separateservicechargeallowed"/>'/>
+            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+            <input type="hidden" id="txtforcontractdiv" name="txtforcontractdiv"/>
+            <input type="hidden" id="txtmobilevalidation" name="txtmobilevalidation" value='<s:property value="txtmobilevalidation"/>'/>
+            <input type="hidden" id="txtcategoryvalidation" name="txtcategoryvalidation" value='<s:property value="txtcategoryvalidation"/>'/>
+            <input type="hidden" id="txtcategorywiseedit" name="txtcategorywiseedit" value='<s:property value="txtcategorywiseedit"/>'/>
+            <input type="hidden" id="gridlength" name="gridlength"/>
+            <input type="hidden" id="referencelength" name="referencelength"/>
+            <input type="hidden" id="referencelength1" name="referencelength1"/>
+            <input type="hidden" id="attachlength" name="attachlength1"/>
+            <input type="hidden" id="creditcardlength" name="creditcardlength"/>
+            <input type="hidden" id="separateservicechargelength" name="separateservicechargelength"/>
+            <input type="hidden" id="salesmaneditstatus" name="salesmaneditstatus"/>
+            <input type="hidden" id="creditcardstatus" name="creditcardstatus"/>
+            <input type="hidden" id="hidclientsrvchrges" name="hidclientsrvchrges" value='<s:property value="hidclientsrvchrges"/>'/>
+        </div>
+    </form>
+
+    <div id="nationalityWindow"><div></div></div>
+    <div id="stateWindow"><div></div></div>
 </div>
 
-<div id="separateServiceChargeDiv" hidden="true">
-<table width="100%">
-  <tr>
-    <td width="5%" valign="top" align="left"><input type="checkbox" id="chckseparatesrvcdefault" name="chckseparatesrvcdefault" value="" onchange="defaultseparateservicecheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-	<input type="hidden" id="hidchckseparatesrvcdefault" name="hidchckseparatesrvcdefault" value='<s:property value="hidchckseparatesrvcdefault"/>'/></td>
-    <td width="95%"><div id="separateServiceChargeGridDiv"><jsp:include page="separateServiceChargesGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-</div>
-</td>
-</tr></table>
-<br/>
-
-   <ul id="tabs">
-    <li><a href="#" name="tab1">Driver Details</a></li>
-    <li><a href="#" name="tab2">Know Your Customer</a></li>
-    <li><a href="#" name="tab3">Banking Details</a></li>
-    <li><a href="#" name="tab4">Others</a></li>
-    </ul>
-    
-<div id="content">
-<div id="tab1">
-<div style="width:100%;">
- <div id="jqxDriver1"> <jsp:include page="driver.jsp"></jsp:include></div><br/>
-
-</div>
-</div>
-
-<div id="tab2">
-<div style="width:100%;">
-<%-- <table width="100%">
-  <tr>
-    <td width="9%" align="right">Reference No.</td>
-    <td width="40%"><input type="text" id="txtref_no" name="txtref_no" style="width:30%;" tabindex="1" value='<s:property value="txtref_no"/>'/></td>
-    <td width=36% align="right">Reference Type</td>
-    <td width="15%"><input type="text" id="txtref_type" name="txtref_type" style="width:70%;" tabindex="2" value='<s:property value="txtref_type"/>'/></td>
-  </tr>
-</table><br/> --%>
-<table class="table1" style="border-collapse:collapse;" width="100%">
-                <thead>
-                    <tr> <!-- #81BEF7 -->
-                        <th></th>
-                        <th scope="col" abbr="personal" style="background: #D1D1D1;">Communication Details</th>
-                        <th scope="col" abbr="office">Office Details</th>
-                        <th scope="col" abbr="residence">Residence Details</th>
-                        <th scope="col" abbr="home">Home Details</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <th scope="row">Address 1</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_add1" name="txtpersonal_add1" style="width:80%;" tabindex="3" value='<s:property value="txtpersonal_add1"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_add1" name="txtoffice_add1" style="width:80%;" tabindex="11" value='<s:property value="txtoffice_add1"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_add1" name="txtresidence_add1" style="width:80%;" tabindex="19" value='<s:property value="txtresidence_add1"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_add1" name="txthome_add1" style="width:80%;" tabindex="27" value='<s:property value="txthome_add1"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Address 2</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_add2" name="txtpersonal_add2" style="width:80%;" tabindex="4" value='<s:property value="txtpersonal_add2"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_add2" name="txtoffice_add2" style="width:80%;" tabindex="12" value='<s:property value="txtoffice_add2"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_add2" name="txtresidence_add2" style="width:80%;" tabindex="20" value='<s:property value="txtresidence_add2"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_add2" name="txthome_add2" style="width:80%;" tabindex="28" value='<s:property value="txthome_add2"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Telephone</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_tel1" name="txtpersonal_tel1" style="width:80%;" tabindex="5" value='<s:property value="txtpersonal_tel1"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_tel1" name="txtoffice_tel1" style="width:80%;" tabindex="13" value='<s:property value="txtoffice_tel1"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_tel1" name="txtresidence_tel1" style="width:80%;" tabindex="21" value='<s:property value="txtresidence_tel1"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_tel1" name="txthome_tel1" style="width:80%;" tabindex="29" value='<s:property value="txthome_tel1"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Mobile</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="personal_tel2" name="personal_tel2" style="width:80%;" onblur="mobileValid(this.value);getMobileNoAlreadyExists(this.value,$('#docno').val(),$('#mode').val());" tabindex="6" value='<s:property value="personal_tel2"/>'/></td>
-                        <td align="left"><input type="text" id="office_tel2" name="office_tel2" style="width:80%;" onblur="mobileValid(this.value);" tabindex="14" value='<s:property value="office_tel2"/>'/></td>
-                        <td align="left"><input type="text" id="residence_tel2" name="residence_tel2" style="width:80%;" onblur="mobileValid(this.value);" tabindex="22" value='<s:property value="residence_tel2"/>'/></td>
-                        <td align="left"><input type="text" id="home_tel2" name="home_tel2" style="width:80%;" onblur="mobileValid(this.value);" tabindex="30" value='<s:property value="home_tel2"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Fax</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_fax" name="txtpersonal_fax" style="width:80%;" tabindex="7" value='<s:property value="txtpersonal_fax"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_fax" name="txtoffice_fax" style="width:80%;" tabindex="15" value='<s:property value="txtoffice_fax"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_fax" name="txtresidence_fax" style="width:80%;" tabindex="23" value='<s:property value="txtresidence_fax"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_fax" name="txthome_fax" style="width:80%;" tabindex="31" value='<s:property value="txthome_fax"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Email</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_email" name="txtpersonal_email" placeholder="someone@example.com" style="width:80%;" tabindex="8" value='<s:property value="txtpersonal_email"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_email" name="txtoffice_email" placeholder="someone@example.com" style="width:80%;" tabindex="16" value='<s:property value="txtoffice_email"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_email" name="txtresidence_email" placeholder="someone@example.com" style="width:80%;" tabindex="24" value='<s:property value="txtresidence_email"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_email" name="txthome_email" placeholder="someone@example.com" style="width:80%;" tabindex="32" value='<s:property value="txthome_email"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Contact</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_contact" name="txtpersonal_contact" style="width:80%;" tabindex="9" value='<s:property value="txtpersonal_contact"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_contact" name="txtoffice_contact" style="width:80%;" tabindex="17" value='<s:property value="txtoffice_contact"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_contact" name="txtresidence_contact" style="width:80%;" tabindex="25" value='<s:property value="txtresidence_contact"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_contact" name="txthome_contact" style="width:80%;" tabindex="33" value='<s:property value="txthome_contact"/>'/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Makani No.</th>
-                        <td align="left" style="background: #D5D5D5;"><input type="text" id="txtpersonal_extn_no" name="txtpersonal_extn_no" style="width:80%;" tabindex="10" value='<s:property value="txtpersonal_extn_no"/>'/></td>
-                        <td align="left"><input type="text" id="txtoffice_extn_no" name="txtoffice_extn_no" style="width:80%;" tabindex="18" value='<s:property value="txtoffice_extn_no"/>'/></td>
-                        <td align="left"><input type="text" id="txtresidence_extn_no" name="txtresidence_extn_no" style="width:80%;" tabindex="26" value='<s:property value="txtresidence_extn_no"/>'/></td>
-                        <td align="left"><input type="text" id="txthome_extn_no" name="txthome_extn_no" style="width:80%;" tabindex="34" value='<s:property value="txthome_extn_no"/>'/></td>
-                    </tr>
-                </tbody>
-            </table>
-
-</div>
-</div>
-
-<div id="tab3">
-	<fieldset>
-	<legend>Credit Card Details</legend>
-	<div id="creditCardDetailsDiv"> <jsp:include page="creditCardDetailsGrid.jsp"></jsp:include></div><br />
-	</fieldset>
-</div>
-
-<div id="tab4">
-<%-- <table width="100%">
-<tr><td width="70%">
-<fieldset>
-<legend>Documents Required</legend>
-<table width="100%">
-  <tr>
-    <td width="81%" align="right"><button  class="myButton" type="button" onclick="">Attach</button></td>
-    <td width="19%" align="left"><button class="myButton" type="button" onclick="">&nbsp;&nbsp;Preview</button></td>
-  </tr>
-</table>
-<div id="jqxDocumentsAttach1"> <jsp:include page="documentsAttach.jsp"></jsp:include></div><br/>
-</fieldset>
-</td>
- <td width="30%">
-<fieldset>
-<legend>Preview</legend>
-<textarea rows="16" style="width:98%;resize: none;"></textarea>
-</fieldset>
-</td> 
-</tr>
-</table> --%>
-<table width="100%">
-<tr><td width="50%">
-<fieldset>
- <legend id="refid"></legend>
- <div id="jqxReferenceDetails1"><jsp:include page="referenceDetails.jsp"></jsp:include></div><br/>
- 
- <div id="jqxReferenceDetails2"><jsp:include page="referenceDetailsnew.jsp"></jsp:include></div><br/>
-</fieldset>
-</td>
-<td width="50%">
-<fieldset>
-<legend>Sponsor/Company Details</legend>
-<table width="100%">
-  <tr>
-    <td width="11%" align="right">Name</td>
-    <td colspan="5"><input type="text" id="txtname" name="txtname" style="width:95%;" value='<s:property value="txtname"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Address</td>
-    <td colspan="5"><input type="text" id="txtaddress" name="txtaddress" style="width:95%;" value='<s:property value="txtaddress"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Telephone</td>
-    <td width="32%"><input type="text" id="txttelephone" name="txttelephone" style="width:90%;" value='<s:property value="txttelephone"/>'/></td>
-    <td width="9%" align="right">ID.</td>
-    <td width="14%"><input type="text" id="txtid" name="txtid" style="width:80%;" value='<s:property value="txtid"/>'/></td>
-    <td width="7%" align="right">Nationality</td>
-    <td width="27%"><select id="cmbnationality" name="cmbnationality" style="width:80%;" value='<s:property value="cmbnationality"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbnationality" name="hidcmbnationality" value='<s:property value="hidcmbnationality"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Security</td>
-    <td><input type="text" id="txtsecurity" name="txtsecurity" style="width:90%;" value='<s:property value="txtsecurity"/>'/></td>
-    <td colspan="4"><input type="text" id="txtsecurity1" name="txtsecurity1" style="width:90%;" value='<s:property value="txtsecurity1"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Job Title</td>
-    <td colspan="2"><input type="text" id="txtjobtitle" name="txtjobtitle" style="width:100%;" value='<s:property value="txtjobtitle"/>'/></td>
-    <td colspan="2" align="right">Date of Joining</td>
-    <td><div id="dateOfJoining" name="dateOfJoining" value='<s:property value="dateOfJoining"/>'></div>
-    <input type="hidden" id="hiddateOfJoining" name="hiddateOfJoining" value='<s:property value="hiddateOfJoining"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Bank Name</td>
-    <td colspan="5"><input type="text" id="txtbankname" name="txtbankname" style="width:95%;" value='<s:property value="txtbankname"/>'/></td>
-  </tr>
-</table>
-</fieldset>
-<div id="sponsorDiv"><br/><br/><br/><br/><br/><br/><br/><br/></div>
-<div id="contractDiv" hidden="true">
-<fieldset><legend>Trade Licence Details</legend>
-<table width="100%">
-  <tr>
-    <td width="14%" align="right">Trade Licence No.</td>
-    <td width="33%"><input type="text" id="txtcontractno" name="txtcontractno" style="width:90%;" value='<s:property value="txtcontractno"/>'/></td>
-    <td width="17%" align="right">Trade Licence Date</td>
-    <td width="36%"><div id="jqxContractDate" name="jqxContractDate" value='<s:property value="jqxContractDate"/>'></div>
-    <input type="hidden" id="hidjqxContractDate" name="hidjqxContractDate" value='<s:property value="hidjqxContractDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Remarks</td>
-    <td colspan="3"><input type="text" id="txtcontractremarks" name="txtcontractremarks" style="width:83%;" value='<s:property value="txtcontractremarks"/>'/></td>
-  </tr>
-</table>
-</fieldset>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div> 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="idpdetailsallowed" name="idpdetailsallowed"  value='<s:property value="idpdetailsallowed"/>'/>
-<input type="hidden" id="driverdetailsverifyallowed" name="driverdetailsverifyallowed"  value='<s:property value="driverdetailsverifyallowed"/>'/>
-<input type="hidden" id="separateservicechargeallowed" name="separateservicechargeallowed"  value='<s:property value="separateservicechargeallowed"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="txtforcontractdiv" name="txtforcontractdiv"/>
-<input type="hidden" id="txtmobilevalidation" name="txtmobilevalidation" value='<s:property value="txtmobilevalidation"/>'/>
-<input type="hidden" id="txtcategoryvalidation" name="txtcategoryvalidation" value='<s:property value="txtcategoryvalidation"/>'/>
-<input type="hidden" id="txtcategorywiseedit" name="txtcategorywiseedit" value='<s:property value="txtcategorywiseedit"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="referencelength" name="referencelength"/>
-<input type="hidden" id="referencelength1" name="referencelength1"/>
-<input type="hidden" id="attachlength" name="attachlength1"/>
-<input type="hidden" id="creditcardlength" name="creditcardlength"/>
-<input type="hidden" id="separateservicechargelength" name="separateservicechargelength"/>
-<input type="hidden" id="salesmaneditstatus" name="salesmaneditstatus"/>
-<input type="hidden" id="creditcardstatus" name="creditcardstatus"/>
-<input type="hidden" id="hidclientsrvchrges" name="hidclientsrvchrges" value='<s:property value="hidclientsrvchrges"/>'/>
-
-</div>
-</form>
-<div id="nationalityWindow">
-   <div></div>
-</div>
-<div id="stateWindow">
-   <div></div>
-</div>
-</div>
 </body>
 </html>

@@ -306,78 +306,150 @@ function funSearchLoad(){
  
 </script>
 </head>
+<style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+    COMMON UI ELEMENTS
+------------------------------ */
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 16px Segoe UI;
+    font-weight: 500;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px; 
+}
+
+/* ------------------------------
+    CARD ROWS LAYOUT
+------------------------------ */
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
+    gap: 12px 25px;
+    align-items: center;
+}
+
+.hidden-scrollbar {
+    overflow-y: visible !important; 
+    max-height: none !important; 
+    min-height: 1px; 
+    padding: 10px; 
+}
+</style>
+
 <body onload="setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmsalic" action="saveSalik" method="post" autocomplete="off" >
+    <jsp:include page="../../../../header.jsp" />
+    <br/>
 
-<jsp:include page="../../../../header.jsp" /><br/>
-<fieldset>
- <table width="100%" >
-  <tr>
-  <td width="20%" align="right">Entry</td>
-  <td width="10%" align="left">
-  <select name="entry" id="entry" style="width:50%;"  value='<s:property value="entry"/>' onchange="gridchange()">
-      <option value="traffic">Traffic</option>
-       <option value="salik">Salik</option>
-    </select>
-  </td>
-   
-  <td width="4%" align="right" > 
-Date
-  </td> 
-    <td width="5%" align="left"><div id="tsDate" name="tsDate" value='<s:property value="tsDate"/>'></div>
-    
-    <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
-    </td>
-  
-  <td width="4%" align="right"> Doc NO </td>
- 
-  
-    <td width="5%" align="left"><input type="text" name="traficdocno" id="traficdocno"  tabindex="-1" value='<s:property value="traficdocno"/>'></td>
- 
-   
- <td width="30%"></td>
-    </tr>
-      
-</table> 
+    <form id="frmsalic" action="saveSalik" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            <div class="section-block">
+                <h2>Entry Details</h2>
+                <div class="agmt-info-grid">
+                    <label>Entry Type</label>
+                    <select name="entry" id="entry" value='<s:property value="entry"/>' onchange="gridchange()">
+                        <option value="traffic">Traffic</option>
+                        <option value="salik">Salik</option>
+                    </select>
 
-</fieldset>
-<br>
-<fieldset>
- 
-<div id="trafficdiv"  ><jsp:include page="traficGrid.jsp"></jsp:include></div> 
+                    <label>Date</label>
+                    <div id="tsDate" name="tsDate" value='<s:property value="tsDate"/>'></div>
 
+                    <label>Doc No.</label>
+                    <input type="text" name="traficdocno" id="traficdocno" tabindex="-1" value='<s:property value="traficdocno"/>'>
+                    
+                    <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
+                </div>
+            </div>
 
-<div id="salikdiv" hidden="true"><jsp:include page="salikmainGrid.jsp"></jsp:include></div> 
+            <div class="section-block">
+                <h2>Record Information</h2>
+                
+                <div id="trafficdiv">
+                    <jsp:include page="traficGrid.jsp"></jsp:include>
+                </div> 
 
+                <div id="salikdiv" hidden="true">
+                    <jsp:include page="salikmainGrid.jsp"></jsp:include>
+                </div>
+            </div>
 
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+            <input type="hidden" id="entryval" name="entryval" value='<s:property value="entryval"/>'>
+            <input type="hidden" id="salickgridlenght" name="salickgridlenght" value='<s:property value="salickgridlenght"/>'>
+            <input type="hidden" id="trafficgridlenght" name="trafficgridlenght" value='<s:property value="trafficgridlenght"/>'>
+        </div>
+    </form>
 
-
-</fieldset> 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
-<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
-
-<input type="hidden" id="entryval" name="entryval" value='<s:property value="entryval"/>'>
-
-<input type="hidden" id="salickgridlenght" name="salickgridlenght" value='<s:property value="salickgridlenght"/>'>
-<input type="hidden" id="trafficgridlenght" name="trafficgridlenght" value='<s:property value="trafficgridlenght"/>'>
-
-</form>
-
-
-<div id="salickfleetsearchwindow">   <div ></div>
-</div>
-
-
-
-
-<div id="tafficfleetsearchwindow">    <div ></div></div>
-
-
+    <div id="salickfleetsearchwindow"><div></div></div>
+    <div id="tafficfleetsearchwindow"><div></div></div>
 
 </div>
- 
-	
+
 </body>
 </html>

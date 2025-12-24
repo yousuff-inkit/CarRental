@@ -569,7 +569,7 @@ th,
 </tr>
 </table>
 </div>
-<div class="table-section" style="background-color: #E8F1FF;">
+<div class="table-section" style="background-color: #f6f8fa;">
 <h3>Employee Details</h3>
 <table class="cr-table" width="100%">
   <tr>
