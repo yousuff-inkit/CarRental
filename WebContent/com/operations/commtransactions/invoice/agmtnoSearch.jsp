@@ -9,7 +9,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
   <%-- <jsp:include page="../../../../../includes.jsp"></jsp:include> --%>  
-<style>
+<style type="text/css">
+/* Master UI Styles */
+
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; /* Standard master gap */
+}
+
+
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box; 
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+
+#agmtsearchdate {
+  font-weight: 600;
+  font-size: 14px;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #4CAF50; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Button Hover Effects */
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+
+/* Original file's specific style */
 .hidden-scrollbar {
     overflow: auto;
     height: 600px;
@@ -46,8 +105,8 @@
 
 	</script>
 <body>
-<div id=search>
-<table width="100%" >
+<div id="search">
+<table width="100%">
   <tr>
     <td align="right">Doc No</td>
     <td align="left"><input type="text" name="agmtdocnosearch" id="agmtdocnosearch" value='<s:property value="agmtdocnosearch"/>'></td>
@@ -62,14 +121,22 @@
     <td align="right">Client</td>
     <td align="left"><input type="text" name="agmtclientsearch" id="agmtclientsearch" value='<s:property value="agmtclientsearch"/>'></td>
     <td align="right">Date</td>
-    <td align="left"><div id="agmtsearchdate" name="agmtsearchdate" value='<s:property value="agmtsearchdate"/>'></div>
-</td><input type="hidden" name="hidagmtsearchdate" id="hidagmtsearchdate" value='<s:property value="hidagmtsearchdate"/>'>
+    <td align="left">
+        <div id="agmtsearchdate" name="agmtsearchdate" value='<s:property value="agmtsearchdate"/>'></div>
+    </td>
+    <input type="hidden" name="hidagmtsearchdate" id="hidagmtsearchdate" value='<s:property value="hidagmtsearchdate"/>'>
     <td align="right">Mobile</td>
     <td align="left"><input type="text" name="agmtmobilesearch" id="agmtmobilesearch" value='<s:property value="agmtmobilesearch"/>'></td>
-    <td colspan="2" align="center"><input type="button" name="btnagmtrasearch" id="btnagmtrasearch" class="myButton" value="Search"  onclick="loadagmtSearch();"></td>
+    <td colspan="2" align="center">
+        <input type="button" name="btnagmtrasearch" id="btnagmtrasearch" class="myButton" value="Search" onclick="loadagmtSearch();">
+    </td>
   </tr>
   <tr>
-    <td colspan="8" align="right"><div id="agmtloadAgmtSearch"><jsp:include page="gridAgmtSearch.jsp"></jsp:include></div></td>
+    <td colspan="8" align="right">
+        <div id="agmtloadAgmtSearch">
+            <jsp:include page="gridAgmtSearch.jsp" />
+        </div>
+    </td>
   </tr>
 </table>
 </div>

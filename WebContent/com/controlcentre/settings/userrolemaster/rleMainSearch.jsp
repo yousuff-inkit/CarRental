@@ -42,7 +42,7 @@
     font-size: 12px;
 }
 
-/* bold labels like other popups */
+
 #search table.cr-search-table td[align="right"] {
     font-weight: 800;
     color: #333;

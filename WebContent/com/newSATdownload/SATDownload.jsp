@@ -796,7 +796,7 @@
         background: #fff;
         border-radius: 16px;
         padding: 20px;
-        max-width: 1450px;
+        max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
         /* FORCE HEADER LEFT ALIGNMENT */
@@ -1234,15 +1234,15 @@
 <div id="flash"></div>
 <div id="display"></div>
 <div id="unameWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="filenameWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="sourceWindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="colorWindow">
@@ -1250,11 +1250,11 @@
 </div>
 
 <div id="fleetWindow">
-    <div></div><div></div>
+� <div></div><div></div>
 </div>
 
 <div id="vehinfowindow">
-   <div></div><div></div>
+�<div></div><div></div>
 </div>
 
 <div id="platenoWindow">

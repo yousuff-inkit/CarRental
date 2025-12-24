@@ -55,20 +55,20 @@
 	</script> 
 <style type="text/css">
 /* Master UI Styles (with added button styling for visual consistency) */
-/* Table spacing */
+
 table {
   border-collapse: separate;
-  border-spacing: 15px 18px; /* Increased gap between cells */
+  border-spacing: 15px 18px; 
 }
 
-/* Bold labels - This rule is kept for inputs aligned right, but we will use inline styles for reliability */
+
 td[align="right"] {
   font-weight: 700;
   font-size: 14px;
   color: #222;
 }
 
-/* Bold text inside inputs */
+
 input[type="text"] {
   font-weight: 600;
   font-size: 14px;

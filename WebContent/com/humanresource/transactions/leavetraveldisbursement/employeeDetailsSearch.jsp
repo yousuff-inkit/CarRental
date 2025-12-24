@@ -77,7 +77,7 @@
 	</script>
 	<style>
 	
-	/* Bold labels + No wrap */
+	
 #search td,
 #search label {
     font-weight: 700 !important;

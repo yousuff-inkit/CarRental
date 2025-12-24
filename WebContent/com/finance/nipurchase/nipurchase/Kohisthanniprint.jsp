@@ -29,6 +29,10 @@
    border-top: 1px solid #e1e2df  ;
     
     }
+    li{
+    	font_size:1.2rem;
+    	margin-bottom: 15px;
+    }
 
 </style> 
   <%-- <style type="text/css">

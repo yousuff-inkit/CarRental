@@ -24,7 +24,7 @@
   color: #222;
 }
 
-/* Table spacing + cleaner layout */
+
 #search table {
   width: 100%;
   border-collapse: separate;

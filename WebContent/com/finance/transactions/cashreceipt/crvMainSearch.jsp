@@ -32,21 +32,21 @@
 	</script>
 
 <style type="text/css">
-<style type="text/css">
-/* Table spacing */
+
+
 table {
   border-collapse: separate;
-  border-spacing: 15px 18px;  /* Increased gap between cells */
+  border-spacing: 15px 18px;  
 }
 
-/* Bold labels */
+
 td[align="right"] {
   font-weight: 700;
   font-size: 14px;
   color: #222;
 }
 
-/* Bold text inside inputs */
+
 input[type="text"] {
   font-weight: 600;
   font-size: 14px;
@@ -56,7 +56,7 @@ input[type="text"] {
   box-sizing: border-box;   /* Include padding in width */
 }
 
-/* Bold text in date fields */
+
 #bankdate, #chqdate {
   font-weight: 600;
   font-size: 14px;
@@ -72,7 +72,7 @@ input[type="text"] {
 tr {
   line-height: 1.8;
 }
-</style>
+
 </style>
 <body>
 <div id=search>

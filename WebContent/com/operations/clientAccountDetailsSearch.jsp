@@ -40,6 +40,57 @@
 	}
 
 </script>
+<style type="text/css">
+/* Master UI Styles */
+
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px; 
+}
+
+
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  /* Resetting width to use inline styles for width, but applying padding/font */
+  max-width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Bold button text */
+.myButton {
+  font-weight: 700;
+  font-size: 14px;
+  /* Visual Button Appearance for consistency */
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+/* Button Hover/Active Effects */
+.myButton:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
+
 <body>
 <div id=search>
 <table width="100%">
@@ -61,7 +112,11 @@
     <td align="center"><input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search"  onclick="loadClientAccountSearch();"></td>
   </tr>
   <tr>
-    <td colspan="6"><div id="refreshClientAccountDiv"><jsp:include page="clientAccountDetailsSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="6">
+      <div id="refreshClientAccountDiv">
+        <jsp:include page="clientAccountDetailsSearchGrid.jsp" />
+      </div>
+    </td>
   </tr>
 </table>
 </div>

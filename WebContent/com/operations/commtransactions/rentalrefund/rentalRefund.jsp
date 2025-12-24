@@ -607,12 +607,127 @@ function getBranch() {
   }
 </script>
 <style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+    COMMON UI ELEMENTS
+------------------------------ */
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 14px Tahoma;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px; 
+    text-align: right; 
+}
+
+/* ------------------------------
+    CARD ROWS LAYOUT (MASTER UI)
+------------------------------ */
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* Blue line accent */
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 20px;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
+    gap: 15px 25px;
+    align-items: center;
+}
+
+.in-out-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr; 
+    gap: 12px 16px;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
+
+/* SCROLLING FIX */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow-y: visible !important; 
+    max-height: none !important; 
+    min-height: 1px; 
+    padding-right: 5px; 
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
-
 </head>
 <style>
 /* ------------------------------
