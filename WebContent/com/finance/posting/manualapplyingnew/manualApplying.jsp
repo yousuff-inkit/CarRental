@@ -312,14 +312,10 @@
 	x.send();
 	}
 </script>
-
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -329,217 +325,188 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
 }
+
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 20px;
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
 .section-block {
-    flex: 1;
     background: #f6f8fa;
     border-radius: 10px;
     padding: 20px 18px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    margin-bottom: 24px;
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
     margin: 0 0 16px 0;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-}
-
-.section-block .form-group {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
+input[type="text"], select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
+    background: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+
+.cr-table td {
+    padding: 10px;
     border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+    font-size: 14px;
+    color: #333;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+
+.cr-table td[align="right"] {
+    font-weight: 700;
+    color: #253858;
+    white-space: nowrap;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+.icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 </style>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmManualApplyingnew" action="saveManualApplyingNew" method="post" autocomplete="off">  
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div class='hidden-scrollbar'>
+    
+    <div class="section-block">
+        <h2>Manual Applying Search</h2>
+        <table class="cr-table" width="100%">
+          <tr>
+            <td width="5%" align="right">Account</td>
+            <td width="10%">
+                <select id="cmbacctype" name="cmbacctype" onchange="clearAccountInfo();" value='<s:property value="cmbacctype"/>'>
+                    <option value="AP">AP</option>
+                    <option value="AR">AR</option>
+                </select>
+            </td>
+            <td width="15%">
+                <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" readonly value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
+            </td>
+            <td width="25%">
+                <input type="text" id="txtaccname" name="txtaccname" readonly value='<s:property value="txtaccname"/>'/>
+            </td>
+            <td width="20%" align="right">
+                <input type="file" id="fileexcelimport" name="file" style="font-size: 11px;"/>
+            </td>
+            <td width="5%" align="center">
+                <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
+                    <img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png" height="24">  
+                </button>
+            </td>
+            <td width="10%" align="center">
+                <button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadappliedgrid();">Submit</button>
+            </td>
+          </tr>
+        </table>
+    </div>
 
+    <div class="section-block">
+        <h2>Unapplied Transactions</h2>
+        <div id="jqxManualAppliedGrid" style="width: 100%;">
+            <jsp:include page="appliedInvoicingGrid.jsp"></jsp:include>
+        </div>
+    </div>
 
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Account</td>
-    <td width="6%"><select id="cmbacctype" name="cmbacctype" style="width:70%;" onchange="clearAccountInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="AP">AP</option><option value="AR">AR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:80%;" placeholder="Press F3 to Search" readonly value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td width="30%"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" readonly value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-			<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">  
-	</button></td>
-    <td width="45%" align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadappliedgrid();">Submit</button></td>
-  </tr>
-</table>
+    <div class="section-block">
+        <h2>Outstanding Invoices</h2>
+        <div id="jqxManualApplingGrid" style="width: 100%;">
+            <jsp:include page="applyInvoicingGrid.jsp"></jsp:include>
+        </div>
+    </div>
 
-    <br/>
-<h3>Unapplied</h3>
-<div class="cr-table" id="jqxManualAppliedGrid"><jsp:include page="appliedInvoicingGrid.jsp"></jsp:include></div>
-<h3>Outstanding</h3>
-<div class="cr-table" id="jqxManualApplingGrid"><jsp:include page="applyInvoicingGrid.jsp"></jsp:include></div><br/>
- <table width="100%">
-  <tr>
-    <td width="3%" align="right">Doc No</td>
-    <td width="6%"><input type="text" id="txtgriddocno" name="txtgriddocno" style="width:70%;" readonly value='<s:property value="txtgriddocno"/>' tabindex="-1"/></td>
-    <td width="3%" align="right">Doc Type</td>
-    <td width="6%"><input type="text" id="txtdoctype" name="txtdoctype" style="width:60%;" readonly value='<s:property value="txtdoctype"/>' tabindex="-1"/></td>
-    <td width="5%" align="right">Amount</td>
-    <td width="6%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoiceamt"/>' tabindex="-1"/>
-    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/></td>
-    <td width="5%" align="right">Applying</td>
-    <td width="6%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/></td>
-    <td width="3%" align="right">Balance</td>
-    <td width="6%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="width:70%;text-align: right;" readonly value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/></td>
-    <td width="7%" align="center"><button class="myButton" type="button" id="btnUpdate" name="btnUpdate" onkeydown="funUpdateChanges();" onclick="funUpdateChanges();">Update</button></td>
-  </tr>
-</table>
+    <div class="section-block">
+        <h2>Applying Summary</h2>
+        <table class="cr-table" width="100%">
+          <tr>
+            <td width="5%" align="right">Doc No</td>
+            <td width="10%"><input type="text" id="txtgriddocno" name="txtgriddocno" readonly value='<s:property value="txtgriddocno"/>' tabindex="-1"/></td>
+            
+            <td width="5%" align="right">Type</td>
+            <td width="10%"><input type="text" id="txtdoctype" name="txtdoctype" readonly value='<s:property value="txtdoctype"/>' tabindex="-1"/></td>
+            
+            <td width="5%" align="right">Amount</td>
+            <td width="10%"><input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="text-align: right;" readonly value='<s:property value="txtapplyinvoiceamt"/>' tabindex="-1"/></td>
+            
+            <td width="5%" align="right">Applying</td>
+            <td width="10%"><input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="text-align: right;" readonly value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/></td>
+            
+            <td width="5%" align="right">Balance</td>
+            <td width="10%"><input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="text-align: right;" readonly value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/></td>
+            
+            <td width="10%" align="center">
+                <button class="myButton" type="button" id="btnUpdate" name="btnUpdate" onkeydown="funUpdateChanges();" onclick="funUpdateChanges();">Update</button>
+            </td>
+          </tr>
+        </table>
+    </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-
-<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
-<input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="chkstatus" name="chkstatus" value='<s:property value="chkstatus"/>'/>
-<input type="hidden" id="txtoutamount" name="txtoutamount" value='<s:property value="txtoutamount"/>'/>
-<input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="exceldocno" name="exceldocno"/>  
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
+    <input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/>
+    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+    <input type="hidden" id="chkstatus" name="chkstatus" value='<s:property value="chkstatus"/>'/>
+    <input type="hidden" id="txtoutamount" name="txtoutamount" value='<s:property value="txtoutamount"/>'/>
+    <input type="hidden" id="txtacno" name="txtacno" value='<s:property value="txtacno"/>'/>
+    <input type="hidden" id="gridlength" name="gridlength"/>
+    <input type="hidden" id="exceldocno" name="exceldocno"/>  
+    <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
 </div>
 </form>
-	
-<div id="cashPaymentGridWindow">
-	<div></div><div></div>
-</div>  
-				
-<div id="accountDetailsToWindow">
-	<div></div><div></div>
-</div>  
-	
+    
+<div id="cashPaymentGridWindow"><div></div><div></div></div>              
+<div id="accountDetailsToWindow"><div></div><div></div></div>  
+    
 </div>
 </body>
 </html>

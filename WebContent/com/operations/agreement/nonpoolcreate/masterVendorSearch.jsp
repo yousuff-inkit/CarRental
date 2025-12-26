@@ -51,40 +51,109 @@
 		}
  
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-  <table width="100%" >
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 15px; /* Standardized master gap */
+}
+
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td[align="right"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs with Grey Borders */
+input[type="text"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; 
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Grey border as requested */
+  border: 1px solid #bdc3c7; 
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+/* Focus state for inputs */
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Date field styling for div */
+#vndsearchdate {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Blue Button Color */
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: none; /* Removed hover transition */
+}
+
+/* No color change on hover */
+.myButton:hover {
+  background-color: #007bff; 
+  cursor: pointer;
+}
+
+/* Row spacing */
+tr {
+  line-height: 1.6;
+}
+</style>
+
+<body bgcolor="#FFFFFF">
+<div id="search">
+  <table width="100%">
     <tr>
-    <td width="12%" align="right">Doc No</td>
-    <td width="14%" align="left"><input type="text" name="vndsearchdocno" id="vndsearchdocno"></td>
-    <td width="7%" align="right">Date</td>
-    <td width="13%" align="left"><div id="vndsearchdate" name="vndsearchdate"></div></td>
-    <td width="13%" align="right">Mobile</td>
-    <td width="15%" align="left"><input type="text" name="vndsearchmobile" id="vndsearchmobile" ></td>
-    <td width="12%" align="right">&nbsp;</td>
-    <td width="14%" align="left">&nbsp;</td>
+      <td width="12%" align="right">Doc No</td>
+      <td width="14%" align="left"><input type="text" name="vndsearchdocno" id="vndsearchdocno"></td>
+      <td width="7%" align="right">Date</td>
+      <td width="13%" align="left"><div id="vndsearchdate" name="vndsearchdate"></div></td>
+      <td width="13%" align="right">Mobile</td>
+      <td width="15%" align="left"><input type="text" name="vndsearchmobile" id="vndsearchmobile"></td>
+      <td width="12%" align="right">&nbsp;</td>
+      <td width="14%" align="left">&nbsp;</td>
     </tr>
 
-  <tr>
-    <td align="right">Name</td>
-    <td colspan="3" align="left"><input type="text" name="vndsearchname" id="vndsearchname" style="width:99%;"></td>
-    <td align="right">A/c No</td>
-    <td align="left"><input type="text" name="vndsearchacno" id="vndsearchacno"></td>
-    <td align="right">&nbsp;</td>
-    <td align="center"><input type="button" name="btnSearchvnd" id="btnSearchvnd" class="myButton" value="Search" onClick="mainloadSearchvnd();"></td>
-  </tr>
-  <tr>
-  <td colspan="8">
-   <div id="srefreshdivvendor">
-      
-   <jsp:include  page="vendorSearch.jsp"></jsp:include> 
-   
-  </div>
-  </td>
-  </tr>
- </table>
-
-   
+    <tr>
+      <td align="right">Name</td>
+      <td colspan="3" align="left"><input type="text" name="vndsearchname" id="vndsearchname" style="width:99%;"></td>
+      <td align="right">A/c No</td>
+      <td align="left"><input type="text" name="vndsearchacno" id="vndsearchacno"></td>
+      <td align="right">&nbsp;</td>
+      <td align="center">
+        <input type="button" name="btnSearchvnd" id="btnSearchvnd" class="myButton" value="Search" onClick="mainloadSearchvnd();">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="8">
+        <div id="srefreshdivvendor">
+          <jsp:include page="vendorSearch.jsp" /> 
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
 </body>
 </html>

@@ -42,6 +42,21 @@ input[type="text"] {
 
 /* Bold button text */
 .myButton {
+  font-weight: 700;
+  font-size: 14px;
+  /* Visual Button Appearance for consistency */
+  background-color: #007bff; /* blue background */
+  color: white; /* White text */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+/* Bold button text */
+.myButton {
   font-weight: 300;
   font-size: 14px;
 }

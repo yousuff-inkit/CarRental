@@ -721,7 +721,7 @@
 	}
 }
 .gw-text-green{
-	color:#4CAF50;
+	color:#007bff;
 }
 .gw-container:after,.gw-container-after{
 	content: "";
@@ -733,7 +733,7 @@
 }
 .gw-green{
 	color:#fff;
-	background-color:#4CAF50;
+	background-color:#007bff;
 }
 .gw-light-grey{
 	color:#000;
