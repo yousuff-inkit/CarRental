@@ -40,7 +40,7 @@ input[type="text"] {
 .myButton {
   font-weight: 700;
   font-size: 14px;
-  background-color: #4CAF50;
+  background-color: #007bff;
   color: white;
   padding: 10px 20px;
   border: none;

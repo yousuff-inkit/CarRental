@@ -10,8 +10,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-/* ---------- Master UI + Cost Master overrides ---------- */
-
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -26,156 +27,72 @@ body {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* header / top row */
+/* Header Row */
 .receipt-header {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 18px;
-    padding: 12px 18px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: #f8f9fa;
     border-radius: 10px;
-    background: transparent;
-}
-
-.receipt-header .left,
-.receipt-header .right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .receipt-header label {
     font-weight: 600;
     color: #253858;
-    white-space: nowrap;
+    margin-right: 10px;
 }
 
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 14px;
-    background: #fff;
-    transition: border-color 0.2s;
-    width: 140px;
-}
-
-.receipt-header .date-box {
-    min-width: 220px;
-}
-
-/* global small helpers */
-form label.error { color:red; font-weight:bold; }
-
-/* layout for the three sections */
+/* Section Blocks */
 .section-row {
     display: flex;
-    gap: 18px;
-    margin-bottom: 22px;
+    gap: 20px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
 }
 
 .section-block {
-    flex: 1 1 32%;
-    min-width: 260px;
+    flex: 1;
+    min-width: 300px;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
 .section-block h2 {
-    font-size: 1.02rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin: 0 0 12px 0;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-    padding-left: 6px;
-    border-left: 3px solid #007bff;
-}
-
-/* form rows inside sections */
-.form-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
 }
 
-.form-row label {
-    min-width: 110px;
-    text-align: right;
+/* Form Layouts */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.form-group label {
     font-weight: 600;
     color: #253858;
-}
-
-.form-row .field {
-    flex: 1;
-}
-
-.form-row input[type="text"],
-.form-row select {
-    width: 100%;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 7px 10px;
-    background: #fff;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-.form-row input[type="text"]:focus,
-.form-row select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* smaller inline pair for dropdown + name (sub/transaction) */
-.inline-pair {
-    display: flex;
-    gap: 8px;
-}
-.inline-pair select { flex: 0 0 45%; }
-.inline-pair input[type="text"] { flex: 1 1 auto; }
-
-/* tables */
-.table-section { margin-top: 14px; }
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
     font-size: 14px;
 }
-.cr-table th { background: #eef0f6; font-weight: 600; color: #354B6A; }
 
-/* hidden scrollbar utility (kept as original) */
-.hidden-scrollbar { overflow: auto; max-height: 520px; }
-.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
-
-/* responsiveness */
-@media (max-width: 920px) {
-    .section-block { flex-basis: 100%; }
-    .receipt-header input[type="text"] { width: 120px; }
-}
-/* ---------- MASTER TEXTBOX STYLE (MATCH EXACT UI) ---------- */
-
-input[type="text"],
-select {
+input[type="text"], select {
     height: 32px !important;
-    width: 100%;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
@@ -183,29 +100,44 @@ select {
     transition: border-color 0.2s;
     font-size: 14px;
     box-sizing: border-box;
+    width: 100%;
 }
 
-input[type="text"]:focus,
-select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-/* Inline dropdown + text fields */
-.inline-pair select,
-.inline-pair input[type="text"] {
-    height: 32px !important;
-}
-#transSection .form-row input[type="text"] {
-    width: 100% !important;
-    max-width: 290px !important;   /* SAME as Main section */
+.inline-pair {
+    display: flex;
+    gap: 8px;
 }
 
-#transSection .form-row select {
-    width: 100% !important;
-    max-width: 290px !important;
+.radio-container {
+    display: flex;
+    gap: 20px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eef0f6;
 }
 
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.radio-item label {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
 </style>
 <script type="text/javascript">
 
@@ -879,130 +811,105 @@ function funExcelBtn(){
     <br/>
 
     <form id="frmCostmaster" action="saveCostmaster" method="post" autocomplete="off">
-        <!-- TOP HEADER ROW: Date | Doc No -->
+        
         <div class="receipt-header">
-            <div class="left date-box">
-                <label for="date_costmaster">Date</label>
-                <div id="date_costmaster" name="date_costmaster" style="display:inline-block; margin-left:8px;" value='<s:property value="date_costmaster"/>'></div>
+            <div style="display: flex; align-items: center;">
+                <label>Date</label>
+                <div id="date_costmaster" name="date_costmaster" value='<s:property value="date_costmaster"/>'></div>
             </div>
-
-            <div class="right" style="margin-left:auto;">
-                <label for="docno">Doc No.</label>
-                <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' />
+            <div style="display: flex; align-items: center;">
+                <label>Doc No.</label>
+                <input type="text" id="docno" name="docno" style="width: 150px;" value='<s:property value="docno"/>' />
             </div>
         </div>
 
-        <!-- RADIO OPTIONS (kept for behaviour) -->
-        <div style="margin-bottom:12px; display:flex; gap:14px; align-items:center;">
-            <div>
+        <div class="radio-container">
+            <div class="radio-item">
                 <input type="radio" id="category1" name="category" value="mainaccount" onchange="fundisable();" checked>
-                <label for="category1">Main</label>
+                <label for="category1">Main Account</label>
             </div>
-            <div>
+            <div class="radio-item">
                 <input type="radio" id="category2" name="category" value="subaccount" onchange="fundisable();">
-                <label for="category2">Sub</label>
+                <label for="category2">Sub Account</label>
             </div>
-            <div>
+            <div class="radio-item">
                 <input type="radio" id="category3" name="category" value="transaction" onchange="fundisable();">
                 <label for="category3">Transaction</label>
             </div>
-            <div style="margin-left:12px; color:#666; font-size:13px;">(All three sections visible — radio controls behavior/validation)</div>
+            <div style="margin-left: auto; font-style: italic; color: #666; font-size: 12px;">
+                *Selection controls behavior and validation
+            </div>
         </div>
 
-        <!-- 3 sections row -->
-        <div class="section-row">
-            <!-- MAIN SECTION -->
-            <div class="section-block" id="mainSection">
-                <h2>Main</h2>
-
-                <div class="form-row">
-                    <label for="mainaccgroup">Cost Group</label>
-                    <div class="field">
-                        <select name="mainaccgroup" id="mainaccgroup" value='<s:property value="mainaccgroup"/>' onchange="funclear1();" >
+        <div class="hidden-scrollbar">
+            <div class="section-row">
+                
+                <div class="section-block" id="mainSection">
+                    <h2>Main Account</h2>
+                    <div class="form-group">
+                        <label>Cost Group</label>
+                        <select name="mainaccgroup" id="mainaccgroup" value='<s:property value="mainaccgroup"/>' onchange="funclear1();">
                             <option value="-1">--Select--</option>
-                            <!-- options preserved from server side -->
                         </select>
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <label for="mainacccode">Cost Code</label>
-                    <div class="field">
+                    <div class="form-group">
+                        <label>Cost Code</label>
                         <input type="text" id="mainacccode" name="mainacccode" value='<s:property value="mainacccode"/>' onblur="maincheck(this.value)" />
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <label for="mainacconame">Cost Name</label>
-                    <div class="field">
+                    <div class="form-group">
+                        <label>Cost Name</label>
                         <input type="text" id="mainacconame" name="mainacconame" value='<s:property value="mainacconame"/>' onblur="dismassge()" />
                         <input type="hidden" name="main_account" id="main_account" value='<s:property value="main_account"/>' />
                     </div>
                 </div>
-            </div>
 
-            <!-- SUB SECTION -->
-            <div class="section-block" id="subSection">
-                <h2>Sub</h2>
-
-                <div class="form-row">
-                    <label for="subaccgroup">Main Cost Group</label>
-                    <div class="field inline-pair">
-                        <select name="subaccgroup" id="subaccgroup" value='<s:property value="subaccgroup"/>' onChange="getAcgroup(this.value,1);" onfocus="funclear2();" >
-                            <option value="-1">--Select--</option>
-                        </select>
-                        <input type="text" id="subaccgpname" name="subaccgpname" value='<s:property value="subaccgpname"/>' placeholder="Group Name" />
+                <div class="section-block" id="subSection">
+                    <h2>Sub Account</h2>
+                    <div class="form-group">
+                        <label>Main Cost Group</label>
+                        <div class="inline-pair">
+                            <select name="subaccgroup" id="subaccgroup" value='<s:property value="subaccgroup"/>' onChange="getAcgroup(this.value,1);" onfocus="funclear2();">
+                                <option value="-1">--Select--</option>
+                            </select>
+                            <input type="text" id="subaccgpname" name="subaccgpname" value='<s:property value="subaccgpname"/>' placeholder="Group Name" />
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <label for="subacccode">Cost Code</label>
-                    <div class="field">
+                    <div class="form-group">
+                        <label>Cost Code</label>
                         <input type="text" id="subacccode" name="subacccode" value='<s:property value="subacccode"/>' onblur="subcheck(this.value)" />
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <label for="subaccname">Cost Name</label>
-                    <div class="field">
+                    <div class="form-group">
+                        <label>Cost Name</label>
                         <input type="text" id="subaccname" name="subaccname" value='<s:property value="subaccname"/>' onblur="dismassge()" />
                         <input type="hidden" name="sub_account" id="sub_account" value='<s:property value="sub_account"/>' />
                     </div>
                 </div>
-            </div>
 
-            <!-- TRANSACTION SECTION -->
-            <div class="section-block" id="transSection">
-                <h2>Transaction</h2>
-
-                <div class="form-row">
-                    <label for="tansaccgroup">Main Cost Group</label>
-                    <div class="field inline-pair">
-                        <select id="tansaccgroup" name="tansaccgroup" onChange="getAcgroup(this.value,2);" onfocus="funclear3();" >
-                            <option value="-1">--Select--</option>
-                        </select>
-                        <input type="text" id="transcaccgpname" name="transcaccgpname" value='<s:property value="transcaccgpname"/>' placeholder="Group Name" />
+                <div class="section-block" id="transSection">
+                    <h2>Transaction</h2>
+                    <div class="form-group">
+                        <label>Main Cost Group</label>
+                        <div class="inline-pair">
+                            <select id="tansaccgroup" name="tansaccgroup" onChange="getAcgroup(this.value,2);" onfocus="funclear3();">
+                                <option value="-1">--Select--</option>
+                            </select>
+                            <input type="text" id="transcaccgpname" name="transcaccgpname" value='<s:property value="transcaccgpname"/>' placeholder="Group Name" />
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <label for="transacccode">Cost Code</label>
-                    <div class="field">
+                    <div class="form-group">
+                        <label>Cost Code</label>
                         <input type="text" id="transacccode" name="transacccode" value='<s:property value="transacccode"/>' onblur="trancheck(this.value)" />
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <label for="transaccname">Cost Name</label>
-                    <div class="field">
+                    <div class="form-group">
+                        <label>Cost Name</label>
                         <input type="text" id="transaccname" name="transaccname" value='<s:property value="transaccname"/>' onblur="dismassge()" />
                         <input type="hidden" name="tran_account" id="tran_account" value='<s:property value="tran_account"/>' />
                     </div>
                 </div>
+
             </div>
         </div>
 
-        <!-- Hidden fields (preserved) -->
         <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
         <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
         <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>' />
@@ -1019,10 +926,8 @@ function funExcelBtn(){
     </form>
 </div>
 
-<!-- Keep any windows/popups you used previously (preserved placeholders) -->
 <div id="costTypeSearchGridWindow"><div></div><div></div></div>
 <div id="costCodeSearchWindow"><div></div><div></div></div>
 
 </body>
-  </html>
-  
+</html>

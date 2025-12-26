@@ -70,7 +70,7 @@ input[type="text"] {
   font-weight: 700;
   font-size: 14px;
   /* Visual Button Appearance for consistency */
-  background-color: #4CAF50; /* Green background */
+  background-color: #007bff; /* Green background */
   color: white; /* White text */
   padding: 10px 20px;
   border: none;

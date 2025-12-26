@@ -1,4 +1,4 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,171 +10,108 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 100vh;
-}
-.icons {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
-}
-.iconss {
-	width: 4em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
-}
-
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+	color: #222;
+	margin: 0;
+	padding: 32px 0;
+	min-height: 100vh;
+	box-sizing: border-box;
 }
+
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
+	background: #fff;
+	border-radius: 16px;
+	padding: 20px;
+	max-width: 100%; /* Master UI requirement */
+	margin: 0 auto;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
 .section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+	background: #f6f8fa;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 8px rgba(160, 177, 217, 0.1);
+	margin-bottom: 20px;
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin: 0 0 16px 0;
+	padding-left: 10px;
+	border-left: 4px solid #007bff;
+	color: #253858;
+	display: flex;
+	align-items: center;
 }
 
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+input[type="text"], select, input[type="email"], textarea {
+	height: 32px !important;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	padding: 4px 10px;
+	background: #fff;
+	transition: border-color 0.2s;
+	font-size: 14px;
+	box-sizing: border-box;
+	width: 100%;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
+textarea {
+	height: auto !important;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+input[type="text"]:focus, select:focus {
+	border-color: #007bff;
+	outline: none;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
+/* ------------------------------
+    TABLES & GRIDS (CR-TABLE)
+------------------------------ */
 .cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.cr-table td {
+	padding: 8px 10px;
+	border-bottom: 1px solid #e4e7ec;
+	font-size: 14px;
+	color: #333;
+	vertical-align: middle;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+
+.cr-table td[align="right"] {
+	font-weight: 600;
+	color: #253858;
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+.hidden-scrollbar {
+	overflow: auto;
+	height: 100vh;
+}
+
+.icon, .icons, .iconss {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	padding: 0;
+	transition: transform 0.2s;
+}
+
+.icon:hover, .icons:hover, .iconss:hover {
+	transform: scale(1.1);
 }
 </style>
 <script type="text/javascript">   
@@ -1654,305 +1591,351 @@ if(document.getElementById("advance_chkval").value==1)
  	</script>
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
-<form id="frmBooking" action="saveBooking" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+	<div id="mainBG" class="homeContent" data-type="background">
+		<form id="frmBooking" action="saveBooking" autocomplete="off">
+			<jsp:include page="../../../../header.jsp"></jsp:include><br />
 
-<div class='hidden-scrollbar receipt-header'>
-<div class="table-section" style="width: 100%;">
-<h3>Booking Info</h3>
- 
-<table class="cr-table" width="100%" >
-       
-  <tr>
-    <td width="5.8%" align="right">Date</td>
-    <td colspan="5" width="20%"><div id='jqxBookingDate' name='jqxBookingDate' value='<s:property value="jqxBookingDate"/>'></div>
-                  <div hidden='true' id='todate' name='todate' value='<s:property value="todate"/>'></div>
-    <input type="hidden" id="hidjqxBookingDate" name="hidjqxBookingDate" value='<s:property value="hidjqxBookingDate"/>'/></td>
-                      <td align="right"width="10%">Ref Type</td>
-    <td width="15%"><select id="cmbreftype" name="cmbreftype" style="width:70%;" value='<s:property value="cmbreftype"/>' onchange="fundisrefno();">
-   <option value="DIR">Direct</option>
-    <option value="QOT">Quotation</option>
-    <option value="ONL">Online</option></select></td>
-    <td width="11.8%" align="right">Ref No</td>   
-    <td width="8%"><input type="text" id="bookrefno" name="bookrefno" placeholder="Press F3 to Search" value='<s:property value="bookrefno"/>' onKeyDown="getqutrefno(event);"/></td>
-    
-      
-    <td width="15%" align="center">User Name: <font style="font-size: 12px;color:#0000ff;"><label id="setusername"></label></font>&nbsp;</td>
-    <td width="28%">Doc No&nbsp;<input type="text" id="docno" style="width:70%;" name="bookingdocno" tabindex="-1" value='<s:property value="bookingdocno"/>'/></td>
-  </tr>
-  </table>
-  <table class="cr-table" width="100%"  >
-  <tr>
-    <td align="right" width="2.4%">Client</td> 
-    <td colspan="7" width="32%">
-      <input type="text" id="bookclientno" name="bookclientno" placeholder="Press F3 to Search" value='<s:property value="bookclientno"/>' onkeydown="getclientdetails(event);"/>
-      <input type="text" id="bookclientname" name="bookclientname" style="width:83.9%;" value='<s:property value="bookclientname"/>'/></td>
-  <td align="right" width="1%">MOB</td>
-    <td width="10%"><input type="text" id="bookcontactno" name="bookcontactno" value='<s:property value="bookcontactno"/>'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class='hidden-scrollbar receipt-header'>
 
-    <label id="rentalnumber" style="font-size: 13px;font-family: Tahoma; color:#6000FC"> </label><label id="rentalnumberval" style="font-size: 13px;font-family: Tahoma; color:#a52a2a"> </label>
-    </td>
-   <td width="2%"></td>
-  
-  </tr>
-  </table>
-     <table class="cr-table" width="100%"  >
-    <tr>  
-    <td  width="74%">
-    
-     <table width="100%" >
-    <tr>                                                      
-<td align="right" width="7%">Sales Agent</td>    
-     <td width="5%" >  <input type="text" id="booksalesAgent" name="booksalesAgent" placeholder="Press F3 to Search" value='<s:property value="booksalesAgent"/>' onkeydown="getsalagentdetails(event);"/></td>
-    
-     <td align="right"  width="15%">Attention To</td>
-     <td  width="35%" ><input type="text" id="bookattention" name="bookattention" style="width:62.5%;" value='<s:property value="bookattention"/>'/></td>
- <td align="right"  width="5%">Email</td>
-     <td  width="50%" colspan="2" ><input type="email" style="width:84.5%;" id="bookemail" name="bookemail" value='<s:property value="bookemail"/>' /></td>
- <td></td> 
-  </tr>
-</table>
-    <table width="100%" >
-    <tr>
-        <td align="right" width="6.5%">Guest Details</td>
-     <td colspan="1"><input type="text" id="guestremark" name="guestremark" style="resize:none;width:94.5%;" value='<s:property value="guestremark"/>'>
-   
-     </td>
-    
-     
-                                 
-  </tr>                    
-</table>
+				<div class="section-block">
+					<h2>Booking Info</h2>
+					<table class="cr-table">
+						<tr>
+							<td width="6%" align="right">Date</td>
+							<td width="15%">
+								<div id='jqxBookingDate' name='jqxBookingDate'
+									value='<s:property value="jqxBookingDate"/>'></div>
+								<div hidden='true' id='todate' name='todate'
+									value='<s:property value="todate"/>'></div>
+							</td>
+							<td width="8%" align="right">Ref Type</td>
+							<td width="12%"><select id="cmbreftype" name="cmbreftype"
+								value='<s:property value="cmbreftype"/>'
+								onchange="fundisrefno();">
+									<option value="DIR">Direct</option>
+									<option value="QOT">Quotation</option>
+									<option value="ONL">Online</option>
+							</select></td>
+							<td width="8%" align="right">Ref No</td>
+							<td width="12%"><input type="text" id="bookrefno"
+								name="bookrefno" placeholder="Press F3 to Search"
+								value='<s:property value="bookrefno"/>'
+								onKeyDown="getqutrefno(event);" /></td>
+							<td align="center">User: <span
+								style="color: #0000ff; font-weight: bold;"><label
+									id="setusername"></label></span>
+							</td>
+							<td width="20%" align="right">Doc No <input type="text"
+								id="docno" style="width: 120px; display: inline-block;"
+								name="bookingdocno" tabindex="-1"
+								value='<s:property value="bookingdocno"/>' />
+							</td>
+						</tr>
+						<tr>
+							<td align="right">Client</td>
+							<td colspan="3">
+								<div style="display: flex; gap: 8px;">
+									<input type="text" id="bookclientno" name="bookclientno"
+										placeholder="Press F3 to Search" style="width: 100px;"
+										value='<s:property value="bookclientno"/>'
+										onkeydown="getclientdetails(event);" /> <input type="text"
+										id="bookclientname" name="bookclientname"
+										value='<s:property value="bookclientname"/>' />
+								</div>
+							</td>
+							<td align="right">MOB</td>
+							<td colspan="2">
+								<div style="display: flex; align-items: center; gap: 15px;">
+									<input type="text" id="bookcontactno" name="bookcontactno"
+										value='<s:property value="bookcontactno"/>' /> <label
+										id="rentalnumber" style="color: #6000FC; white-space: nowrap;"></label>
+									<label id="rentalnumberval"
+										style="color: #a52a2a; font-weight: bold;"></label>
+								</div>
+							</td>
+							<td align="center">
+								<button type="button" title="Enquiry" class="iconss"
+									id="enqbutton">
+									<img alt="Enquiry" src="<%=contextPath%>/icons/openenquiry.png"
+										height="32">
+								</button>
+								<button type="button" title="Client Review" class="icons"
+									id="clientreview">
+									<img alt="Client Review"
+										src="<%=contextPath%>/icons/openclientreview.png" height="32">
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table width="100%">
+									<tr>
+										<td align="right" width="10%">Sales Agent</td>
+										<td width="15%"><input type="text" id="booksalesAgent"
+											name="booksalesAgent" placeholder="Press F3 to Search"
+											value='<s:property value="booksalesAgent"/>'
+											onkeydown="getsalagentdetails(event);" /></td>
+										<td align="right" width="12%">Attention To</td>
+										<td width="25%"><input type="text" id="bookattention"
+											name="bookattention"
+											value='<s:property value="bookattention"/>' /></td>
+										<td align="right" width="8%">Email</td>
+										<td><input type="email" id="bookemail" name="bookemail"
+											value='<s:property value="bookemail"/>' /></td>
+									</tr>
+									<tr>
+										<td align="right" style="padding-top: 8px;">Guest Details</td>
+										<td colspan="5" style="padding-top: 8px;"><input
+											type="text" id="guestremark" name="guestremark"
+											value='<s:property value="guestremark"/>'></td>
+									</tr>
+								</table>
+							</td>
+							<td colspan="2"><textarea id="clientdetails"
+									style="width: 100%; height: 60px; font-size: 11px;"
+									name="clientdetails" readonly><s:property
+										value="clientdetails" /></textarea></td>
+						</tr>
+					</table>
+				</div>
 
-</td>
-<td  width="16%" rowspan="3">
- <textarea id="clientdetails" style="resize:none;width:99%;height:60px; font: 10px Tahoma;" name="clientdetails"  readonly="readonly"  ><s:property value="clientdetails" ></s:property></textarea>
-</td>
+				<div class="section-block">
+					<h2>Vehicle Info</h2>
+					<table class="cr-table">
+						<tr>
+							<td width="6%" align="right">Sl NO / Fleet</td>
+							<td width="18%">
+								<div style="display: flex; gap: 4px;">
+									<input type="text" id="bookslno" name="bookslno"
+										placeholder="Press F3 to search" value='<s:property value="bookslno"/>'
+										onfocus="searchslno();" onKeyDown="getslno(event);" /> <input
+										type="text" id="fleetno" name="fleetno" placeholder="Press F3 to Search"										value='<s:property value="fleetno"/>'
+										onKeyDown="getfleet(event);" />
+								</div>
+							</td>
+							<td align="right" width="5%">Brand</td>
+							<td><input type="text" id="bookbrand" name="bookbrand"
+								placeholder="Press F3 to search" value='<s:property value="bookbrand"/>'
+								onkeydown="getbranddetails(event);" /></td>
+							<td align="right" width="5%">Model</td>
+							<td><input type="text" id="bookmodel" name="bookmodel"
+								placeholder="Press F3 to search" value='<s:property value="bookmodel"/>'
+								onkeydown="getmodeldetails(event);" onfocus="searchmodel();" /></td>
+							<td align="right" width="5%">Color</td>
+							<td><input type="text" id="bookcolor" name="bookcolor"
+								placeholder="Press F3 to search" value='<s:property value="bookcolor"/>'
+								onkeydown="getcolordetails(event);" /></td>
+							<td align="right" width="5%">Group</td>
+							<td><input type="text" id="bookgroup" name="bookgroup"
+								placeholder="Press F3 to search" value='<s:property value="bookgroup"/>'
+								onkeydown="getgroupdetails(event);" /></td>
+						</tr>
+						<tr>
+							<td align="right">From / Time</td>
+							<td>
+								<div style="display: flex; gap: 4px;">
+									<div id='jqxVehicleFromDate' name='jqxVehicleFromDate'></div>
+									<div id='jqxVehicleFromTime' name='jqxVehicleFromTime'></div>
+								</div>
+							</td>
+							<td align="right">To / Time</td>
+							<td>
+								<div style="display: flex; gap: 4px;">
+									<div id='jqxVehicleToDate' name='jqxVehicleToDate'></div>
+									<div id='jqxVehicleToTime' name='jqxVehicleToTime'></div>
+								</div>
+							</td>
+							<td colspan="4" align="center">
+								<div
+									style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+									<label><input type="checkbox" id="delivery_chk"
+										name="delivery_chk" onclick="fundelchk()"> Delivery</label> <label><input
+										type="checkbox" id="chauffeur_chk" name="chauffeur_chk"
+										onclick="funchafchk()"> Chauffeur</label>
+								</div>
+							</td>
+							<td align="right">Del Charge</td>
+							<td><input type="text" id="delcharge" name="delcharge"
+								style="text-align: right;"
+								value='<s:property value="delcharge"/>'
+								onblur="funRoundAmt(this.value,this.id);"
+								onkeypress="javascript:return isNumber(event);" /></td>
+						</tr>
+						<tr>
+							<td align="right">Del Loc</td>
+							<td><input type="text" id="dellocation" name="dellocation"
+								value='<s:property value="dellocation"/>' /></td>
+							<td align="right">Remarks</td>
+							<td colspan="7"><input type="text" id="bookremark"
+								name="bookremark" value='<s:property value="dellocation"/>' /></td>
+						</tr>
+					</table>
+				</div>
 
-<td width="8.7%">
-   
-<button type="button"  title="Enquiry"  class="iconss" id="enqbutton"  value='<s:property value="enqbutton"/>'>
-					 <img alt="Enquiry" src="<%=contextPath%>/icons/openenquiry.png"> 
-					</button>&nbsp;
-					<button type="button"  title="Client Review"  class="icons" id="clientreview"  value='<s:property value="clientreview"/>'>
-					 <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png"> 
-					</button>
+				<div class="section-block">
+					<h2>Tariff Info</h2>
+					<div style="display: flex; gap: 20px;">
+						<div
+							style="width: 220px; padding: 10px; background: #fff; border-radius: 8px; border: 1px solid #eef0f6;">
+							<div
+								style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
+								<button type="button" title="Search Tariff" class="icon"
+									id="ratariffbutton">
+									<img alt="tariffSearch"
+										src="<%=contextPath%>/icons/tariffsearch.png" height="28">
+								</button>
+								<button type="button" title="Search User" class="icon"
+									id="searchuser">
+									<img alt="Search User"
+										src="<%=contextPath%>/icons/searchusers.png" height="28">
+								</button>
+							</div>
+							<div style="margin-bottom: 8px;">
+								<label style="font-size: 11px;">DOC NO</label> <input
+									type="text" id="tarifdoc" name="tarifdoc"
+									value='<s:property value="tarifdoc"/>'>
+							</div>
+							<div style="margin-bottom: 8px;">
+								<label style="font-size: 11px;">Ins. Excess</label> <input
+									type="text" id="excessinsur" name="excessinsur"
+									style="text-align: right;"
+									value='<s:property value="excessinsur"/>'
+									onblur="funRoundAmt(this.value,this.id);">
+							</div>
+							<div
+								style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+								<input type="checkbox" id="advance_chk" name="advance_chk"
+									value="0"
+									onclick="$(this).attr('value', this.checked ? 1 : 0);advchk()">
+								<label style="font-size: 11px; margin: 0;">Advance</label>
+							</div>
+							<div>
+								<label style="font-size: 11px;">Invoice</label> <select
+									name="invoice" id="invoice" onchange="errormsgdis()">
+									<option value="1">Month End</option>
+									<option value="2">Period</option>
+								</select>
+							</div>
+						</div>
+						<div style="flex: 1;">
+							<div id="tariffDivId">
+								<jsp:include page="bookingrentalgrid.jsp"></jsp:include>
+							</div>
+						</div>
+					</div>
+				</div>
 
-</td>
-</tr>
-</table>
+				<div class="section-block">
+					<h2>Payment Details</h2>
+					<div id="bookpaymentId">
+						<jsp:include page="bookpaymentdetailsgrid.jsp"></jsp:include>
+					</div>
+				</div>
 
-</div>
-<div class="table-section" style="width: 100%;"><h3>Vehicle Info</h3>
- <table class="cr-table" width="100%" >
-  <tr>                        
-  <td  align="right"   width="4.5%">Sl NO</td>  
-      <td><input type="text" id="bookslno" name="bookslno" placeholder="Press F3 to Search"  value='<s:property value="bookslno"/>' onfocus="searchslno();" onKeyDown="getslno(event);"/></td>
-       <td  align="right"   width="4.1%">Fleet</td>  
-      <td><input type="text" id="fleetno" name="fleetno" placeholder="Press F3 to Search"  value='<s:property value="fleetno"/>'  onKeyDown="getfleet(event);"/></td>
-       
-    <td  align="right"  width="4%" >Brand</td>
-    <td>
-      <input type="text" id="bookbrand" name="bookbrand"  value='<s:property value="bookbrand"/>' placeholder="Press F3 to Search"  onkeydown="getbranddetails(event);"/></td> 
-    <td align="right">Model</td>
-    <td>
-      <input type="text" id="bookmodel" name="bookmodel"  value='<s:property value="bookmodel"/>' placeholder="Press F3 to Search"  onkeydown="getmodeldetails(event);" onfocus="searchmodel();" /></td>    <!-- onkeydown="getmodeldetails(event);" onfocus="searchmodel();" -->                     
-    <td align="right">Color</td>
-    <td >
-      <input type="text" id="bookcolor" name="bookcolor" value='<s:property value="bookcolor"/>' placeholder="Press F3 to Search"  onkeydown="getcolordetails(event);"/></td> <!--onkeydown="getcolordetails(event);" -->
-    <td  align="right">Group</td>
-    <td><input type="text" id="bookgroup" name="bookgroup"  value='<s:property value="bookgroup"/>' placeholder="Press F3 to Search"  onkeydown="getgroupdetails(event);"/></td><!--onkeydown="getgroupdetails(event);"-->
-    <td align="right">&nbsp;</td>
-    <td>
+				<div style="display: none;">
+					<input type="hidden" id="hidjqxBookingDate"
+						name="hidjqxBookingDate"
+						value='<s:property value="hidjqxBookingDate"/>' /> <input
+						type="hidden" id="masterdoc_no" name="masterdoc_no"
+						value='<s:property value="masterdoc_no"/>' /> <input type="hidden"
+						id="refqouteno" name="refqouteno"
+						value='<s:property value="refqouteno"/>' /> <input type="hidden"
+						id="mode" name="mode" value='<s:property value="mode"/>' /> <input
+						type="hidden" name="deleted" id="deleted"
+						value='<s:property value="deleted"/>' /> <input type="hidden"
+						id="bookbrandid" name="bookbrandid"
+						value='<s:property value="bookbrandid"/>' /> <input type="hidden"
+						id="bookmodelid" name="bookmodelid"
+						value='<s:property value="bookmodelid"/>' /> <input type="hidden"
+						id="bookcolorid" name="bookcolorid"
+						value='<s:property value="bookcolorid"/>' /> <input type="hidden"
+						id="bookgroupid" name="bookgroupid"
+						value='<s:property value="bookgroupid"/>' /> <input type="hidden"
+						id="delivery_chkval" name="delivery_chkval"
+						value='<s:property value="delivery_chkval"/>' /> <input
+						type="hidden" id="chauffeur_chkval" name="chauffeur_chkval"
+						value='<s:property value="chauffeur_chkval"/>' /> <input
+						type="hidden" id="booksalesAgentid" name="booksalesAgentid"
+						value='<s:property value="booksalesAgentid"/>' /> <input
+						type="hidden" id="msg" name="msg"
+						value='<s:property value="msg"/>' /> <input type="hidden"
+						id="tarifgridlength" name="tarifgridlength"
+						value='<s:property value="tarifgridlength"/>' /> <input
+						type="hidden" id="paymentgridlength" name="paymentgridlength"
+						value='<s:property value="paymentgridlength"/>' /> <input
+						type="hidden" id="reftypeval" name="reftypeval"
+						value='<s:property value="reftypeval"/>' /> <input type="hidden"
+						id="hidjqxVehicleFromDate" name="hidjqxVehicleFromDate"
+						value='<s:property value="hidjqxVehicleFromDate"/>' /> <input
+						type="hidden" id="hidjqxVehicleFromTime"
+						name="hidjqxVehicleFromTime"
+						value='<s:property value="hidjqxVehicleFromTime"/>' /> <input
+						type="hidden" id="hidjqxVehicleToDate" name="hidjqxVehicleToDate"
+						value='<s:property value="hidjqxVehicleToDate"/>' /> <input
+						type="hidden" id="hidjqxVehicleToTime" name="hidjqxVehicleToTime"
+						value='<s:property value="hidjqxVehicleToTime"/>' /> <input
+						type="hidden" id="clientacno" name="clientacno"
+						value='<s:property value="clientacno"/>' /> <input type="hidden"
+						id="clientname" name="clientname"
+						value='<s:property value="clientname"/>' /> <input type="hidden"
+						id="rentaltype" name="rentaltype"
+						value='<s:property value="rentaltype"/>' /> <input type="hidden"
+						name="normalinsu" id="normalinsu"
+						value='<s:property value="normalinsu"/>' /> <input type="hidden"
+						name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>' />
+					<input type="hidden" name="supercdwinsu" id="supercdwinsu"
+						value='<s:property value="supercdwinsu"/>' /> <input
+						type="hidden" name="invoval" id="invoval"
+						value='<s:property value="invoval"/>' /> <input type="hidden"
+						name="advance_chkval" id="advance_chkval"
+						value='<s:property value="advance_chkval"/>' /> <input
+						type="hidden" name="vehloc" id="vehloc"
+						value='<s:property value="vehloc"/>' /> <input type="hidden"
+						name="ranos" id="ranos" value='<s:property value="ranos"/>' /> <input
+						type="hidden" name="codenos" id="codenos"
+						value='<s:property value="codenos"/>' /> <input type="hidden"
+						name="setusernametxt" id="setusernametxt"
+						value='<s:property value="setusernametxt"/>' />
+				</div>
+			</div>
+		</form>
+		<div id="fleetwindow">
+			<div></div>
+		</div>
+		<div id="bookqutSearch">
+			<div></div>
+		</div>
+		<div id="bookqutslnosearch">
+			<div></div>
+		</div>
+		<div id="bookclientsearch">
+			<div></div>
+		</div>
+		<div id="brandsearchwndows">
+			<div></div>
+		</div>
+		<div id="modelsearchwndows">
+			<div></div>
+		</div>
+		<div id="colorsearchwndows">
+			<div></div>
+		</div>
+		<div id="groupsearchwndows">
+			<div></div>
+		</div>
+		<div id="rentalsearchwndows">
+			<div></div>
+		</div>
+		<div id="Salesagentinfowindow">
+			<div></div>
+		</div>
+		<div id="tariffinbtnwindow">
+			<div></div>
+		</div>
+		<div id="usersearchwindow">
+			<div></div>
+		</div>
 
-
- 
-
-
-      <input type="hidden" id="renttype" name="renttype" placeholder="Press F3 to Search" value='<s:property value="renttype"/>' /></td><!--onkeydown="getrentaltypedetails(event);"-->
-  
-  
-  
-  </tr>
-       
-       
-       
-  <tr>                           
- 
-    <td align="right"  >From</td>
-    <td><div id='jqxVehicleFromDate' name='jqxVehicleFromDate' value='<s:property value="jqxVehicleFromDate"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleFromDate" name="hidjqxVehicleFromDate" value='<s:property value="hidjqxVehicleFromDate"/>'/>
-       </td> <td align="right" >Time</td><td  ><div id='jqxVehicleFromTime' name='jqxVehicleFromTime' value='<s:property value="jqxVehicleFromTime"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleFromTime" name="hidjqxVehicleFromTime" value='<s:property value="hidjqxVehicleFromTime"/>'/></td>
-    <td align="right"  >To</td>
-    <td ><div id='jqxVehicleToDate' name='jqxVehicleToDate' value='<s:property value="jqxVehicleToDate"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleToDate" name="hidjqxVehicleToDate" value='<s:property value="hidjqxVehicleToDate"/>'/>
-        </td> <td align="right"  >Time</td><td ><div id='jqxVehicleToTime' name='jqxVehicleToTime' value='<s:property value="jqxVehicleToTime"/>'></div>
-                   <input type="hidden" id="hidjqxVehicleToTime" name="hidjqxVehicleToTime" value='<s:property value="hidjqxVehicleToTime"/>'/></td>
-   <%--   <td align="right" >Ins.Excess</td><td><input type="text" id="insuexcess" name="insuexcess" style="text-align: right;"  value='<s:property value="insuexcess"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);" /></td> --%>
-    <td  colspan="2">
-      	Delivery<input type="checkbox" id="delivery_chk"  name="delivery_chk" onclick="fundelchk()">
-      	&nbsp;&nbsp;&nbsp;&nbsp;
-    Chauffeur<input type="checkbox" id="chauffeur_chk"  name="chauffeur_chk"  onclick="funchafchk()" ></td>
-    <td align="right">Del Charge</td><td><input type="text" id="delcharge" name="delcharge" style="text-align: right;" value='<s:property value="delcharge"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);"/></td>
-<td colspan="1">&nbsp;</td>
-
-</tr>
-
-  <tr>
-  
-    <td align="right" >Del Location</td>
-    <td width="10%">
-      	<input type="text" id="dellocation" name="dellocation" value='<s:property value="dellocation"/>'/></td>
-      	<td align="right" >Remarks</td>
-    <td colspan="7"><input type="text" id="bookremark" name="bookremark" style="resize:none;width:98.3%;" value='<s:property value="dellocation"/>'/>  </td>
-     </tr>
- 
-</table>
-</div>
- 
-<div class="table-section" style="width: 100%;">
-     <h3>Tariff Info</h3>
-<table class="cr-table" width="100%" id="tariff">
-<tr>
-<td width="10%">         
-
-<table >
-<tr><td colspan="2" align="center"><button type="button"  title="Search Tariff"  class="icon" id="ratariffbutton"  value='<s:property value="ratariffbutton"/>'>
-					 <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png"> 
-					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button"  title="Search User"  class="icon" id="searchuser"  value='<s:property value="searchuser"/>'>
-					 <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png"> 
-					</button></td></tr>
-<tr><td width="4%">DOCNO</td><td width="1%"><input type="text" id="tarifdoc"  name="tarifdoc"   value='<s:property value="tarifdoc"/>' >
-</td></tr>
-<tr><td width="4%">Ins.Excess</td><td width="1%"><input type="text" id="excessinsur"  name="excessinsur" style="text-align: right;"  value='<s:property value="excessinsur"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);" ></td></tr>
-<tr><td width="4%">Advance</td><td><input type="checkbox" id="advance_chk"  name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0);advchk()"  > </td></tr>
-<tr><td width="4%">Invoice</td><td><select name="invoice" id="invoice" style="width:100%;"  value='<s:property value="invoice"/>'  onchange="errormsgdis()">
-  <option value="1">Month End</option> 
-  <option value="2">Period</option>
-  
-</select></td></tr> 
-
-</table>
-</td>
-<td width="90%">
-<table width="100%">
-<tr><td>
-        <div id="tariffDivId">
-  			 <jsp:include  page="bookingrentalgrid.jsp"></jsp:include> 
-  		 </div> 
-</td>
-  </tr>
-</table>
-</td></tr>    </table>
-                            
-<%-- <table width="100%"> 
-  <tr>
-     <td colspan="2"> <div id="booktarifDivId"><jsp:include page="booktarifGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table> --%>
-</div>
- <br>   
-<div class="table-section" style="width: 100%;">
-<table class="cr-table" width="100%">
-  <tr>
-    <td colspan="2"><div class="cr-table" id="bookpaymentId"><jsp:include page="bookpaymentdetailsgrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-<input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>'/> 
-<input type="hidden" id="refqouteno"   name="refqouteno"   value='<s:property value="refqouteno"/>'/>
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
- <input type="hidden" id="bookbrandid" name="bookbrandid" value='<s:property value="bookbrandid"/>'/> 
- <input type="hidden" id="bookmodelid" name="bookmodelid" value='<s:property value="bookmodelid"/>'/>
- <input type="hidden" id="bookcolorid" name="bookcolorid" value='<s:property value="bookcolorid"/>'/>
- <input type="hidden" id="bookgroupid" name="bookgroupid" value='<s:property value="bookgroupid"/>'/>
- 
- <input type="hidden" id="delivery_chkval" name="delivery_chkval" value='<s:property value="delivery_chkval"/>'/>
- <input type="hidden" id="chauffeur_chkval" name="chauffeur_chkval" value='<s:property value="chauffeur_chkval"/>'/>
- 
-  <input type="hidden" id="booksalesAgentid" name="booksalesAgentid" value='<s:property value="booksalesAgentid"/>'/>
-     <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>  
-     
-      <input type="hidden" id="tarifgridlength" name="tarifgridlength" value='<s:property value="tarifgridlength"/>'/>
-      <input type="hidden" id="paymentgridlength" name="paymentgridlength" value='<s:property value="paymentgridlength"/>'/>
-      
-   <input type="hidden" id="reftypeval" name="reftypeval" value='<s:property value="reftypeval"/>'/>
-          
-<%--            <input type="hidden" id="tarifdoc" name="tarifdoc" value='<s:property value="tarifdoc"/>'/> --%>
-         
-           <input type="hidden" id="clientacno" name="clientacno" value='<s:property value="clientacno"/>'/>
-           <input type="hidden" id="clientname" name="clientname" value='<s:property value="clientname"/>'/>
-           <input type="hidden" id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'/>
-             
-             
-  
-             
-             
-            <%--   //<input type="hidden" name="insuexcess" id="insuexcess" value='<s:property value="insuexcess"/>'  />  --%>
-        
-             
-      <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>'  /> 
-      <input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>'  /> 
-      <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>'  />   <!-- set ex.insu by ratedescription grid cdw super cdw click else normal value set in quary -->
-        
-             <input type="hidden" name="invoval" id="invoval" value='<s:property value="invoval"/>'  />
- 
-     
-         <input type="hidden" name="advance_chkval" id="advance_chkval" value='<s:property value="advance_chkval"/>'  />  
-       <input type="hidden" name="vehloc" id="vehloc" value='<s:property value="vehloc"/>'  /> 
-          <input type="hidden" name="ranos" id="ranos" value='<s:property value="ranos"/>'  /> 
-        
-         <input type="hidden" name="codenos" id="codenos" value='<s:property value="codenos"/>'  />  
-               <input type="hidden" name="setusernametxt" id="setusernametxt" value='<s:property value="setusernametxt"/>'  />  
-  
-</div>
- <br> 
-  <br> 
-   <br> 
-</div>
-</form>
-<div id="fleetwindow">
-<div></div>
-</div>
-<div id="bookqutSearch">
-<div></div>
-</div>
-<div id="bookqutslnosearch">
-<div></div>
-</div>
-<div id="bookclientsearch">
-<div></div>
-</div>
-<div id="brandsearchwndows">
-   <div ></div>
-</div>
-<div id="modelsearchwndows">
-   <div ></div>
-</div>
-<div id="colorsearchwndows">
-   <div ></div>
-</div>
-<div id="groupsearchwndows">
-   <div ></div>
-</div>
-<div id="rentalsearchwndows">
-   <div ></div>
-</div>
-<div id="Salesagentinfowindow">
-   <div ></div>
-</div>
-
-<div id="tariffinbtnwindow">
-   <div ></div>
-</div>
-
-<div id="usersearchwindow">
-   <div ></div>
-</div>
-
-</div>
+	</div>
 </body>
 </html>

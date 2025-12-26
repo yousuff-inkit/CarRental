@@ -81,7 +81,7 @@ input[type="text"], select {
 .myButton {
   font-weight: 700;
   font-size: 14px;
-  background-color: #4CAF50; /* Master green */
+  background-color: #077bff;
   color: white;
   padding: 10px 20px;
   border: none;

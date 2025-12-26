@@ -81,7 +81,7 @@ input[type="text"]:focus {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 700;
   font-size: 14px;
-  background-color: #4CAF50; /* Master green */
+  background-color: #007bff; /* Master green */
   color: white;
   padding: 10px 20px;
   border: none;

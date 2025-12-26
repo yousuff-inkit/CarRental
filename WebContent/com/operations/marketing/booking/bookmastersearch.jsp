@@ -45,49 +45,121 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 15px; /* Standardized master gap */
+}
+
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td[align="right"], td {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects with Grey Borders */
+input[type="text"], select {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Grey border as requested */
+  border: 1px solid #bdc3c7; 
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+/* Focus state for inputs */
+input[type="text"]:focus, select:focus {
+  border-color: #95a5a6;
+  outline: none;
+}
+
+/* Date field styling for div */
+#bookdates {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Master blue base */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+/* Updated Hover: Blue instead of Green */
+.myButton:hover {
+  background-color: #0056b3; 
+}
+
+/* Row spacing */
+tr {
+  line-height: 1.6;
+}
+</style>
+
+<body bgcolor="#FFFFFF">
+<div id="search">
+<table width="100%">
   <tr>
-   <td>                         
-   <table>
-   <tr>
-   <td align="right">Docno</td>
-    <td align="left" width="2%"><input type="text" name="qutdocno" id="qutdocno"  value='<s:property value="qutdocno"/>'></td>
-    <td align="right" width="7%">Name</td>
-    <td align="left" width="70%" ><input type="text" name="clientnames" id="clientnames"  style="width:96.5%;" value='<s:property value="clientnames"/>'></td>
-    <td align="right" >MOB</td>
-      <td align="left" width="28%"><input type="text" name="clmob" id="clmob" value='<s:property value="clmob"/>'></td>
-      </tr>
+    <td>                         
+      <table width="100%">
+        <tr>
+          <td align="right" width="8%">Docno</td>
+          <td align="left" width="12%"><input type="text" name="qutdocno" id="qutdocno" value='<s:property value="qutdocno"/>'></td>
+          <td align="right" width="7%">Name</td>
+          <td align="left" width="40%"><input type="text" name="clientnames" id="clientnames" style="width:96.5%;" value='<s:property value="clientnames"/>'></td>
+          <td align="right" width="8%">MOB</td>
+          <td align="left" width="25%"><input type="text" name="clmob" id="clmob" value='<s:property value="clmob"/>'></td>
+        </tr>
       </table>
-      <table  >
+      
+      <table width="100%">
         <tr> 
-        <td width="4%">Date </td>
-    <td align="left" width="2%" ><div id="bookdates" name="bookdates"  value='<s:property value="bookdates"/>'></div></td>
-    <td width="6%" align="right" >RefType</td><td ><select  name="quttype" id="quttype" style="width:30%;"  value='<s:property value="quttype"/>' >
-  <option value="">--select--</option>
-   <option value="DIR">Direct</option>
-    <option value="QOT">Quotation</option>
-    <option value="ONL">Online</option>
-   </select> &nbsp;&nbsp;Reg NO&nbsp;
-     <input type="text" name="regno" id="regno" style="width:24%;" value='<s:property value="regno"/>'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <input type="button" name="qutbtnrasearch" id="qutbtnrasearch" class="myButton" value="Search"  onclick="bookloadSearch()"></td>
-    <tr>
-    </table>
+          <td width="8%" align="right">Date</td>
+          <td align="left" width="12%"><div id="bookdates" name="bookdates" value='<s:property value="bookdates"/>'></div></td>
+          <td width="7%" align="right">RefType</td>
+          <td align="left">
+            <select name="quttype" id="quttype" style="width:25%;" value='<s:property value="quttype"/>'>
+              <option value="">--select--</option>
+              <option value="DIR">Direct</option>
+              <option value="QOT">Quotation</option>
+              <option value="ONL">Online</option>
+            </select>
+            &nbsp;&nbsp;Reg NO&nbsp;
+            <input type="text" name="regno" id="regno" style="width:20%;" value='<s:property value="regno"/>'>
+            &nbsp;&nbsp;
+            <input type="button" name="qutbtnrasearch" id="qutbtnrasearch" class="myButton" value="Search" onclick="bookloadSearch()">
+          </td>
+        </tr>
+      </table>
     </td>
-</tr>
+  </tr>
 
   <tr>
-    <td colspan="8" align="right">
-    
-    <div id="qutrediv">
-      
-   <jsp:include  page="bookingsubsearch.jsp"></jsp:include> 
-   
-   </div>
+    <td colspan="8">
+      <div id="qutrediv">
+        <jsp:include page="bookingsubsearch.jsp" /> 
+      </div>
     </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>

@@ -82,7 +82,7 @@ input[type="text"] {
   font-weight: 700;
   font-size: 14px;
   /* Added Master Button Appearance: Using a common blue/grey theme for high visibility */
-  background-color: #4CAF50; /* Green background */
+  background-color: #007bff; /* Green background */
   color: white; /* White text */
   padding: 10px 20px;
   border: none;
