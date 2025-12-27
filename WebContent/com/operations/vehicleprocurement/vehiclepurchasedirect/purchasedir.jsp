@@ -189,9 +189,11 @@
        TABLES & UTILS
     ------------------------------ */
     .hidden-scrollbar {
-        overflow: auto;
-        height: 530px;
-    }
+    overflow: auto;
+    height: auto !important;
+    max-height: none !important;
+}
+
     .hidden-scrollbar::-webkit-scrollbar {
         width: 0px;
     }
@@ -207,6 +209,15 @@
         font-weight:bold;
         font-size: 12px;
     }
+    
+    #accountSearchwindow,
+#fleetwindow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+    
 </style>
 
 <script type="text/javascript">

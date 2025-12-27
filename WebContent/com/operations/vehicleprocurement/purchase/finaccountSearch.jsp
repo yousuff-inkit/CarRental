@@ -31,22 +31,91 @@
 	}
 
 </script>
-<body>
-<div id=search>
-<table width="100%" >
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 15px; /* Standardized master gap */
+}
+
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td[align="right"], td[align="left"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs with Grey Borders */
+input[type="text"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Grey border as requested */
+  border: 1px solid #bdc3c7; 
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+/* Focus state for inputs */
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Blue Button Color */
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: none; /* No hover transition */
+}
+
+/* No color change on hover */
+.myButton:hover {
+  background-color: #007bff; 
+  cursor: pointer;
+}
+
+/* Row spacing */
+tr {
+  line-height: 1.6;
+}
+</style>
+
+<body bgcolor="#FFFFFF">
+<div id="search">
+<table width="100%">
   <tr>
     <td width="10%" align="right">Account No</td>
-    <td width="12%"><input type="text" name="txtaccountsno1" id="txtaccountsno1" style="width:85%;" value='<s:property value="txtaccountsno1"/>'></td>
-   <td align="left" width="68%"colspan="2">Account Name&nbsp;<input type="text" name="txtaccountsname1" id="txtaccountsname1" style="width:70%;" value='<s:property value="txtaccountsname1"/>'></td>
-    
-    <td width="10%"  align="center"><input type="button" name="btnAccountSearch1" id="btnAccountSearch1" class="myButton" value="Search"  onclick="loadAccountSearch();"></td>
+    <td width="12%">
+      <input type="text" name="txtaccountsno1" id="txtaccountsno1" style="width:85%;" value='<s:property value="txtaccountsno1"/>'>
+    </td>
+    <td align="left" width="68%" colspan="2">
+      Account Name&nbsp;
+      <input type="text" name="txtaccountsname1" id="txtaccountsname1" style="width:70%;" value='<s:property value="txtaccountsname1"/>'>
+    </td>
+    <td width="10%" align="center">
+      <input type="button" name="btnAccountSearch1" id="btnAccountSearch1" class="myButton" value="Search" onclick="loadAccountSearch();">
+    </td>
   </tr>
-<%--   <tr>
-    <td align="right">Account Name</td>
-    <td colspan="3"><input type="text" name="txtaccountsname1" id="txtaccountsname1" style="width:80%;" value='<s:property value="txtaccountsname1"/>'></td>
-  </tr> --%>
   <tr>
-    <td colspan="5"><div id="findiv"><jsp:include page="finaccsubsearch.jsp"></jsp:include></div></td>
+    <td colspan="5">
+      <div id="findiv">
+        <jsp:include page="finaccsubsearch.jsp" />
+      </div>
+    </td>
   </tr>
 </table>
 </div>
