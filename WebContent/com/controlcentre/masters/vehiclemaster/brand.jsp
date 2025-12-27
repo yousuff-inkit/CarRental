@@ -71,6 +71,14 @@ String contextPath=request.getContextPath();
         box-shadow: 0 1px 8px rgba(160,177,217,0.1);
         margin-bottom: 30px;
     }
+    
+    .section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* Blue line accent */
+}
 
     .form-row {
         display: grid;
