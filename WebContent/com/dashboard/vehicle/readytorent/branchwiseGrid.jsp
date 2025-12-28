@@ -21,6 +21,14 @@ String check=request.getParameter("check")==null?"":request.getParameter("check"
 	    {
 	      background-color: #E0F8F1;
 	    } */
+	    .jqx-grid-statusbar {
+    text-align: left !important;
+}
+
+.jqx-grid-statusbar div {
+    text-align: left !important;
+    float: left !important;
+}
 </style>
 
  <script type="text/javascript">
@@ -33,11 +41,15 @@ String check=request.getParameter("check")==null?"":request.getParameter("check"
  	          data = '<%=rentdao.getBranchwiseData(check)%>';  
  	          // alert(data);
  	    }else{
- 	     data = '[{"columns":[{"text":"Sr No.","datafield":"id","cellsAlign":"center","align":"center","width":"5%","cellclassname":""},{"text":"Ref No.","datafield":"refno","cellsAlign":"center","align":"center","width":"10%","cellclassname":""},{"text":"Description","datafield":"description","cellsAlign":"left","align":"left","cellclassname":""},{"text":"Branch","datafield":"branch0","cellsAlign":"right","align":"right","width":"10%","cellsFormat":"d2","cellclassname":""}]},{"rows":[{"id":"1","refno":"","description":"","branch0":""}]}]';
+ 	     data = '[{"columns":[{"text":"Sr No.","datafield":"id","cellsAlign":"left","align":"left","width":"5%","cellclassname":""},{"text":"Ref No.","datafield":"refno","cellsAlign":"left","left":"center","width":"10%","cellclassname":""},{"text":"Description","datafield":"description","cellsAlign":"left","align":"left","cellclassname":""},{"text":"Branch","datafield":"branch0","cellsAlign":"left","align":"left","width":"10%","cellsFormat":"d2","cellclassname":""}]},{"rows":[{"id":"1","refno":"","description":"","branch0":""}]}]';
 
  	    }        
  	    	var obj = $.parseJSON(data);
             var columns = obj[0].columns;
+            columns.forEach(function (col) {
+                col.align = 'left';       // header alignment
+                col.cellsAlign = 'left'; // cell alignment
+            });
            // var columngroups = obj[1].columngroups; 
             var rows = obj[1].rows;
  			

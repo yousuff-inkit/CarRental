@@ -14,70 +14,197 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="../../../../css/body.css"/>
         <style>
-            body {
-            background: #f4f6fb;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-            #mainBG {
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.09);
-            padding: 2rem 1.5rem;
-            margin: 2rem auto;
-            max-width: 700px;
-        }
-            .section-title {
-            font - size: 1.2rem;
-            font-weight: 700;
-            color: #0d6efd;
-            margin-bottom: 1rem;
-            letter-spacing: 0.5px;
-        }
-            .form-label {
-            font - weight: 500;
-            color: #495057;
-            margin-bottom: 0.25rem;
-        }
-            .form-select, .form-control {
-            border - radius: 0.4rem;
-            min-height: 2.2rem;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            box-shadow: none;
-            transition: border-color 0.2s;
-        }
-            .form-select:focus, .form-control:focus {
-            border - color: #0d6efd;
-            box-shadow: 0 0 0 0.1rem rgba(13,110,253,.15);
-        }
-            .btn-icon {
-            background: #0d6efd;
-            color: #fff;
-            border: none;
-            border-radius: 0.3rem;
-            padding: 0.4rem 0.7rem;
-            margin-right: 0.5rem;
-            transition: background 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-            .btn-icon:hover {
-            background: #0b5ed7;
-        }
-            #branchlabel {
-            font - weight: 500;
-            color: #495057;
-        }
-            hr {
-            border - top: 2px solid #dc3545;
-            opacity: 1;
-            margin: 1rem 0;
-        }
-            @media (max-width: 768px) {
-            #mainBG {padding: 1rem 0.5rem;}
-        }
-        </style>
+/* Scoped styles using .dashboard-header-wrapper class */
+.dashboard-header-wrapper {
+    --shadow-light: #ffffff;
+    --shadow-dark: #d0d0d0;
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --bg-grey: #e8e8e8;
+    --bg-grey-light: #f0f0f0;
+    font-family: 'Poppins', sans-serif;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+}
+
+/* Custom Scrollbar */
+.dashboard-header-wrapper::-webkit-scrollbar {
+    width: 10px;
+}
+
+.dashboard-header-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.dashboard-header-wrapper::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+    border-radius: 10px;
+}
+
+.dashboard-header-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #909090;
+}
+
+/* Header Container */
+.dashboard-header-wrapper .header-container {
+    padding: 15px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.8),
+                4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Labels */
+.dashboard-header-wrapper #lbldetail {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.dashboard-header-wrapper #lbldetailname {
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--secondary-color);
+}
+
+.dashboard-header-wrapper .separator {
+    font-size: 22px;
+    font-weight: 500;
+    color: #7f8c8d;
+}
+
+/* Button Grid */
+.dashboard-header-wrapper .btn-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 90px);
+    justify-content: center;
+    column-gap: 8px;
+    row-gap: 4px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* Modern Grey Buttons */
+.dashboard-header-wrapper .nbtn {
+    min-width: 90px;
+    padding: 5px 8px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    border: 1px solid #e0e0e0;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 10px;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.9),
+                4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header-wrapper .nbtn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, #ffffff, #eeeeee);
+    box-shadow: -6px -6px 14px rgba(255, 255, 255, 1),
+                6px 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-header-wrapper .nbtn:active {
+    transform: translateY(0);
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
+                inset 2px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-header-wrapper .nbtn img {
+    width: 10px;
+    height: 10px;
+    filter: none;
+    opacity: 0.8;
+}
+
+.dashboard-header-wrapper .nbtn svg {
+    width: 10px;
+    height: 10px;
+}
+
+/* Branch Section */
+.dashboard-header-wrapper .branch-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+.dashboard-header-wrapper .branch-label-wrapper {
+    min-width: 80px;
+    text-align: right;
+}
+
+.dashboard-header-wrapper #branchlabel {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.dashboard-header-wrapper .branch-select-wrapper {
+    flex: 1;
+    max-width: 70%;
+}
+
+/* Styled Select Dropdown */
+.dashboard-header-wrapper .styled-select {
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    padding: 12px 16px;
+    width: 100%;
+    border-radius: 14px;
+    box-shadow: inset -4px -4px 10px rgba(255, 255, 255, 0.8),
+                inset 4px 4px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.dashboard-header-wrapper .styled-select select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--primary-color);
+    outline: none;
+    cursor: pointer;
+}
+
+.dashboard-header-wrapper .styled-select select option {
+    background: #ffffff;
+    color: var(--primary-color);
+    padding: 8px;
+}
+
+/* Submit Section */
+.dashboard-header-wrapper .submit-section {
+    padding: 5px 10px;
+}
+
+.dashboard-header-wrapper .submit-container {
+    display: flex;
+    
+    max-width: 70%;
+    margin-left: 55px;
+}
+
+.dashboard-header-wrapper #btnSubmit {
+    max-width: 120px;
+    padding: 4px 6px;
+}</style>
         <script type="text/javascript">
             $(document).ready(function () {
 
@@ -540,56 +667,69 @@
         </script>
 </head>
 <body onclick="getformbranch();">
-<div id="mainBG" class="container">
-    <div class="text-center mb-3">
-        <span class="section-title" id="lbldetail">&nbsp;&nbsp;</span>
-        <span class="section-title" id="lbldetailname"></span>
-        <hr>
+<div class="dashboard-header-wrapper">
+    <!-- ===== HEADER ===== -->
+    <div class="header-container">
+        <label id="lbldetail"></label>
+        <span class="separator"> - </span>
+        <label id="lbldetailname"></label>
     </div>
-    <div class="d-flex justify-content-center mb-3 flex-wrap gap-2">
-        <button type="button" class="btn-icon" id="btnGuideline" title="Guideline" onclick="funGuideline();">
-            <img alt="Guideline" src="<%=contextPath%>/icons/guidelinedb.png" style="height:24px;">
+
+    <!-- ===== BUTTON GRID ===== -->
+    <div class="btn-grid">
+        <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
+            <img src="<%=contextPath%>/icons/guidelinedb.png" alt=""> Guideline
         </button>
-        <button type="button" class="btn-icon" id="btnSendingEmail" title="Send Email" onclick="funSendingEmail();">
-            <img alt="Send Email" src="<%=contextPath%>/icons/sendemail.png" style="height:24px;">
+
+        <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
+            <img src="<%=contextPath%>/icons/sendemail.png" alt=""> Email
         </button>
-        <button type="button" class="btn-icon" id="btnExcel" title="Export current Document to Excel"
-                onclick="funExportBtn();">
-            <img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png" style="height:24px;">
+
+        <button type="button" class="nbtn" id="btnExcel" onclick="funExportBtn();">
+            <img src="<%=contextPath%>/icons/excel_new.png" alt=""> Export
         </button>
-        <button type="button" class="btn-icon" id="btnCalculate" title="Calculate" onclick="funCalculate();">
-            <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png" style="height:24px;">
-        </button>
-        <button type="button" class="btn-icon" id="btnSubmit" title="Submit" onclick="funreload(event)">
-            <img alt="Submit" src="<%=contextPath%>/icons/submit_new.png" style="height:24px;">
+
+        <button type="button" class="nbtn" id="btnCalculate" onclick="funCalculate();">
+            <img src="<%=contextPath%>/icons/calculate_new.png" alt=""> Calculate
         </button>
     </div>
-    <form>
-        <div class="row align-items-center mb-3">
-            <div class="col-4 text-end">
-                <label class="form-label" id="branchlabel">Branch</label>
-            </div>
-            <div class="col-8">
-                <select id="cmbbranch" name="cmbbranch" class="form-select" value='<s:property value="cmbbranch"/>'
-                        onchange="funMclose(this.value);getformbranch();">
+
+    <!-- ===== BRANCH SECTION ===== -->
+    <div class="branch-section">
+        <div class="branch-label-wrapper">
+            <label id="branchlabel">Branch</label>
+        </div>
+
+        <div class="branch-select-wrapper">
+            <div class="styled-select" id="branchdiv">
+                <select id="cmbbranch" name="cmbbranch" onchange="funMclose(this.value);getformbranch();">
                     <option value="">--Select--</option>
                 </select>
-                <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/>
             </div>
         </div>
-        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'/>
-        <input type="hidden" name="detail" id="detail" value="<s:property value="detail"/>"/>
-        <input type="hidden" name="detailname" id="detailname" value="<s:property value="detailname"/>"/>
-        <input type="hidden" name="txtdetailpermissiondocno" id="txtdetailpermissiondocno"
-               value="<s:property value="txtdetailpermissiondocno"/>"/>
-        <input type="hidden" name="txtallbrch" id="txtallbrch" value="<s:property value="txtallbrch"/>"/>
-    </form>
-    <div id="windowattach">
-        <div></div>
     </div>
-    <div id="windowguideline">
-        <div></div>
+
+    <!-- ===== SUBMIT BUTTON ===== -->
+    <div class="submit-section">
+        <div class="submit-container">
+            <button type="button" class="nbtn" id="btnSubmit" onclick="funreload(event);">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M5 12l5 5V7l-5 5zm6-5v10l8-5-8-5z"/>
+                </svg>
+                Submit
+            </button>
+        </div>
     </div>
+
+    <!-- ===== REMAINING HIDDEN FIELDS & WINDOWS ===== -->
+    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" name="detail" id="detail" value="<s:property value="detail"/>" />
+    <input type="hidden" name="detailname" id="detailname" value="<s:property value="detailname"/>" />
+    <input type="hidden" name="txtdetailpermissiondocno" id="txtdetailpermissiondocno" value="<s:property value="txtdetailpermissiondocno"/>" />
+    <input type="hidden" name="txtallbrch" id="txtallbrch" value="<s:property value="txtallbrch"/>" />
+
+    <div id="windowattach"><div></div></div>
+    <div id="windowguideline"><div></div></div>
 </div>
 </body>
 </html>

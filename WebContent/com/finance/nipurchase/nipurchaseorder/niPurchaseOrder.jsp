@@ -8,424 +8,145 @@
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-form label.error {
-    color: red;
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 100vh;
-}
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 10px;
-    max-width: 1400px;
+/* Modern Purchase Order Form Layout */
+.purchase-order-wrapper {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-width: 100%;
     margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.receipt-header label {
-    font-weight: 700;
-    color: #333;
-    margin-right: 8px;
-    font-size: 16px;
-}
-
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 15px;
-    font-weight: 700;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 18px;
-    font-weight: 700;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.receipt-header button:hover {
-    background: #0056b3;
-}
-
-#txtStatus {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #e67e22;
-    margin-left: 12px;
+    padding: 20px;
 }
 
 .section-row {
     display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .section-block {
     flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: -2px -2px 8px rgba(255, 255, 255, 0.8),
+                2px 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .section-block h2 {
-    font-size: 1.3em;
-    font-weight: 700;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 700;
-    font-size: 15px;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 15px;
-    font-weight: 700;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.table-section {
-    margin-bottom: 18px;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.3em;
-    font-weight: 700;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-
-.cr-table th, 
-.cr-table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 700;
-    vertical-align: middle;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 700;
     font-size: 16px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0 0 16px 0;
+    padding-bottom: 10px;
+    padding-left: 12px;  
+    position : relative;
+    border-bottom: 2px solid #e2e8f0;
+}
+.section-block h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    height: 100%;
+    width: 4px;
+    background-color: #007bff;       /* blue line */
+    border-radius: 2px;
 }
 
-.cr-table tr:last-child td {
-    border-bottom: none;
+/* Form Groups */
+.form-group {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
 }
 
-.cr-table input[type="text"],
-.cr-table input[type="number"],
-.cr-table select {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    padding: 8px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    box-sizing: border-box;
-    vertical-align: middle;
-}
-
-.cr-table label {
-    font-weight: 700 !important;
-    font-size: 15px !important;
-}
-
-* {
-    font-weight: 700 !important;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    color: #222 !important;
-}
-
-label {
-    font-weight: 700 !important;
-    font-size: 15px !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700 !important;
-}
-
-button,
-input[type="button"],
-input[type="submit"] {
-    font-weight: 700 !important;
-    font-size: 15px !important;
-}
-
-select option {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    padding: 8px;
-}
-
-input::placeholder,
-textarea::placeholder {
-    font-weight: 600 !important;
-    color: #666;
-}
-
-input[type="checkbox"] + label {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-}
-
-#errormsg {
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    color: red;
-}
-
-#formdet {
-    font-size: 16px !important;
-    font-weight: 700 !important;
-}
-
-div, span, p, td, th {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-}
-
-.cr-table td[align="right"] {
-    vertical-align: middle;
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: right;
     padding-right: 8px;
-}
-
-.cr-table td[align="left"] {
-    vertical-align: middle;
-    padding-left: 4px;
-}
-/* Add this CSS at the end of your <style> section */
-
-/* Consistent table spacing */
-.receipt-header table {
-    margin-bottom: 2px;
-}
-
-/* Ensure all labels have consistent width and alignment */
-.cr-table td[align="right"] {
-    vertical-align: middle !important;
-    padding-right: 10px !important;
     white-space: nowrap;
-    min-width: 80px;
 }
 
-/* Ensure all input fields have consistent alignment */
-.cr-table td[align="left"] {
-    vertical-align: middle !important;
-    padding-left: 5px !important;
+.form-group input[type="text"],
+.form-group select {
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2c3e50;
+    background: white;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    width: auto;  /* Allow manual width control */
+    max-width: 100%;  /* Don't exceed container */
 }
 
-/* Fix input field alignment */
-.cr-table input[type="text"],
-.cr-table select {
-    vertical-align: middle !important;
-    margin: 0 !important;
-    display: inline-block;
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-/* Remove any extra spacing from divs */
-.cr-table div {
-    display: inline-block;
-    vertical-align: middle;
+.form-group input[readonly] {
+    background: #f8f9fa;
+    cursor: not-allowed;
 }
 
-/* Consistent row height */
-.cr-table tr {
-    height: 40px;
+/* Triple Input in One Row - Date, Ref No, Doc No */
+.form-group.triple-input {
+    grid-template-columns: auto 1fr auto 1fr auto 1fr;
 }
 
-/* Fix for date picker divs */
-#nipurchaseorderdate,
-#deliverydate {
-    display: inline-block !important;
-    vertical-align: middle !important;
+/* Vendor Row - Label + 2 Inputs */
+.form-group.vendor-row {
+    grid-template-columns: auto 0.25fr 1fr;
 }
 
-/* Label alignment */
-.cr-table label {
-    vertical-align: middle !important;
-    display: inline-block;
-    margin: 0 !important;
+/* Dual Input in Same Row - Curr & Rate */
+.form-group.dual-input {
+    grid-template-columns: auto 1fr auto 1fr;
 }
 
-/* Remove default spacing from table cells */
-.cr-table td {
-    padding: 8px 10px !important;
-}
-
-/* Ensure consistent spacing between tables */
-.receipt-header > table + table {
-    margin-top: 2px;
-}
-.cr-table input[type="text"],
-.cr-table input[type="number"],
-.cr-table select {
-    height: 35px !important;
-    padding: 10px 12px !important;
-    line-height: 1.5 !important;
-}
-
-/* Increase height for all input fields globally */
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-    height: 35px !important;
-    padding: 10px 12px !important;
-    line-height: 1.5 !important;
-}
-
-/* Adjust row height to accommodate taller inputs */
-.cr-table tr {
-    height: 50px !important;
-}
-
-/* Ensure date picker has same height */
-.jqx-input {
-    height: 35px !important;
-    line-height: 35px !important;
-}
-/* Add this CSS - Specific styling ONLY for date fields */
-
-/* Create a specific class for date container cells */
+/* Date Field Cell */
 .date-field-cell {
-    vertical-align: middle !important;
-    padding: 8px 10px !important;
+    position: relative;
 }
 
-/* Style ONLY the date picker divs by their specific IDs */
-#nipurchaseorderdate,
-#deliverydate {
-    height: 35px !important;
-    line-height: 35px !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    width: 125px !important;
+.date-field-cell > div {
+    width: 100%;
 }
 
-/* Style jqx date input components */
-#nipurchaseorderdate .jqx-input,
-#deliverydate .jqx-input,
-#nipurchaseorderdate .jqx-widget-content,
-#deliverydate .jqx-widget-content {
-    height: 35px !important;
-    line-height: 35px !important;
-    border: 1px solid #d1d5db !important;
-    border-radius: 4px !important;
-    background: #fff !important;
+/* Full Width Input */
+.form-group.full-width {
+    grid-template-columns: auto 1fr;
 }
 
-/* Style the input field inside date pickers */
-#nipurchaseorderdate input,
-#deliverydate input {
+/* Responsive */
+@media (max-width: 1200px) {
+    .form-group.triple-input {
+        grid-template-columns: auto 1fr auto 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-group,
+    .form-group.dual-input,
+    .form-group.triple-input,
+    .form-group.vendor-row {
+        grid-template-columns: 1fr;
+    }
     
-    font-weight: 500 !important;
-    color: #222 !important;
-    height: 33px !important;
-    line-height: 33px !important;
-    padding: 0 5px !important;
+    .form-group label {
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 4px;
+    }
 }
-
-/* Style the calendar button */
-#nipurchaseorderdate .jqx-action-button,
-#deliverydate .jqx-action-button {
-    height: 35px !important;
-    line-height: 35px !important;
-}
-
-/* Style the calendar icon */
-#nipurchaseorderdate .jqx-icon-calendar,
-#deliverydate .jqx-icon-calendar {
-    line-height: 35px !important;
-}
-
 </style>
 
 <script type="text/javascript">
@@ -820,88 +541,75 @@ function getCurrencyIds(){
 	<br/>
 
     <div class=' receipt-header'>
-<table class="cr-table" width="100%">
-  <tr>
-   <td width="5%" align="right" style="vertical-align: middle;">Date</td> 
-    <td width="10%" align="left" class="date-field-cell">
-      <div id="nipurchaseorderdate" name="nipurchaseorderdate" value='<s:property value="nipurchaseorderdate"/>'></div>
-      <input type="hidden" name="hidnipurchaseorderdate" id="hidnipurchaseorderdate" value='<s:property value="hidnipurchaseorderdate"/>'>
-    </td>
-    <td width="6%" align="right" style="vertical-align: middle;">Ref No</td>
-    <td width="25%" align="left" style="vertical-align: middle;">
-      <input type="text" name="refno" id="refno" value='<s:property value="refno"/>' style="width: 95%;">
-    </td>
-    <td width="6%" align="right" style="vertical-align: middle;">Doc No</td>
-    <td width="15%" align="left" style="vertical-align: middle;">
-      <input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly" style="width: 95%;">
-    </td>
-  </tr>
-</table>
-
-<!-- Row 2: Vendor, Curr, Rate -->
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right" style="vertical-align: middle;">Vendor</td>
-    <td width="35%" align="left" style="vertical-align: middle;"> 
-      <input type="hidden" name="acctype" id="acctype" value='<s:property value="acctype"/>'>
-      <input type="text" name="puraccid" id="puraccid" placeholder="Press F3 To Search" value='<s:property value="puraccid"/>' style="width:20%; vertical-align: middle;" onKeyDown="getaccountdetails(event);">  
-      <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>' style="width:78%; vertical-align: middle;">
-    </td>
-    <td width="5%" align="right" style="vertical-align: middle;">Curr</td>
-    <td width="10%" align="left" style="vertical-align: middle;">
-      <select name="cmbcurr" id="cmbcurr" style="width:95%; vertical-align: middle;" value='<s:property value="cmbcurr"/>' onload="getRatevalue(this.value);">
-        <option value="-1">--Select--</option>
-      </select>
-    </td>
-    <td width="5%" align="right" style="vertical-align: middle;">Rate</td>
-    <td width="10%" align="left" style="vertical-align: middle;">
-      <input type="text" name="currate" id="currate" value='<s:property value="currate"/>' style="width: 95%; vertical-align: middle;">
-    </td>
-    <td width="30%" align="left"></td>
-  </tr>
-</table>
-
-<!-- Row 3: Del Date, Del Terms, Bill Type -->
-<table class="cr-table" width="100%">
-  <tr>
-   <td width="5%" align="right" style="vertical-align: middle;">Del Date</td>
-    <td width="10%" align="left" class="date-field-cell">
-      <div id="deliverydate" name="deliverydate" value='<s:property value="deliverydate"/>'></div>
-      <input type="hidden" name="hiddeliverydate" id="hiddeliverydate" value='<s:property value="hiddeliverydate"/>'>
-    </td>
-
-    <td width="6%" align="right" style="vertical-align: middle;">Del Terms</td>
-    <td width="40%" align="left" style="vertical-align: middle;">
-      <input type="text" name="delterms" id="delterms" value='<s:property value="delterms"/>' style="width:95%; vertical-align: middle;">
-    </td>
-    <td width="6%" align="right" style="vertical-align: middle;">
-      <label id="billtype">Bill Type</label>
-    </td>
-    <td width="25%" align="left" style="vertical-align: middle;">
-      <input type="text" id="txtproducttype" name="txtproducttype" style="width: 95%; vertical-align: middle;" placeholder="Press F3 for Search" onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>'/>
-    </td>
-  </tr>
-</table>
-
-<!-- Row 4: Pay Terms -->
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right" style="vertical-align: middle;">Pay Terms</td>
-    <td width="95%" align="left" style="vertical-align: middle;">
-      <input type="text" name="payterms" id="payterms" value='<s:property value="payterms"/>' style="width:97%; vertical-align: middle;">
-    </td>
-  </tr>
-</table>
-
-<!-- Row 5: Description -->
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right" style="vertical-align: middle;">Description</td>
-    <td width="95%" align="left" style="vertical-align: middle;">
-      <input type="text" name="purdesc" id="purdesc" value='<s:property value="purdesc"/>' style="width:97%; vertical-align: middle;">
-    </td>
-  </tr>
-</table>
+<div class="purchase-order-wrapper">
+    <!-- Single Section with All Fields -->
+    <div class="section-row">
+        <div class="section-block">
+            <h2>Purchase Order Details</h2>
+            
+            <!-- Row 1: Date, Ref No, Doc No -->
+            <div class="form-group triple-input">
+                <label for="nipurchaseorderdate">Date</label>
+                <div class="date-field-cell">
+                    <div id="nipurchaseorderdate" name="nipurchaseorderdate" value='<s:property value="nipurchaseorderdate"/>'></div>
+                    <input type="hidden" name="hidnipurchaseorderdate" id="hidnipurchaseorderdate" value='<s:property value="hidnipurchaseorderdate"/>'>
+                </div>
+                
+                <label for="refno">Ref No</label>
+                <input type="text" name="refno" id="refno" value='<s:property value="refno"/>' style="width: 80%;">
+                
+                <label for="docno">Doc No</label>
+                <input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly" style="width: 80%;">
+            </div>
+            
+            <!-- Row 2: Vendor (with 2 inputs) -->
+            <div class="form-group vendor-row">
+                <label for="puraccid">Vendor</label>
+                <input type="hidden" name="acctype" id="acctype" value='<s:property value="acctype"/>'>
+                <input type="text" name="puraccid" id="puraccid" placeholder="Press F3 To Search" value='<s:property value="puraccid"/>' onKeyDown="getaccountdetails(event);" style="width: 80%;">
+                <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>' style="width: 92%;">
+            </div>
+            
+            <!-- Row 3: Curr, Rate -->
+            <div class="form-group dual-input">
+                <label for="cmbcurr">Curr</label>
+                <select name="cmbcurr" id="cmbcurr" value='<s:property value="cmbcurr"/>' onload="getRatevalue(this.value);" style="width: 50%;">
+                    <option value="-1">--Select--</option>
+                </select>
+                
+                <label for="currate" style="margin-left:-10px;">Rate</label>
+                <input type="text" name="currate" id="currate" value='<s:property value="currate"/>' style="width: 87%;">
+            </div>
+            
+            <!-- Row 4: Del Date, Del Terms, Bill Type -->
+            <div class="form-group triple-input">
+                <label for="deliverydate">Del Date</label>
+                <div class="date-field-cell">
+                    <div id="deliverydate" name="deliverydate" value='<s:property value="deliverydate"/>'></div>
+                    <input type="hidden" name="hiddeliverydate" id="hiddeliverydate" value='<s:property value="hiddeliverydate"/>'>
+                </div>
+                
+                <label for="delterms">Del Terms</label>
+                <input type="text" name="delterms" id="delterms" value='<s:property value="delterms"/>' style="width: 80%;">
+                
+                <label id="billtype">Bill Type</label>
+                <input type="text" id="txtproducttype" name="txtproducttype" placeholder="Press F3 for Search" onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>' style="width: 78%;"/>
+            </div>
+            
+            <!-- Row 5: Pay Terms -->
+            <div class="form-group full-width">
+                <label for="payterms">Pay Terms</label>
+                <input type="text" name="payterms" id="payterms" value='<s:property value="payterms"/>' style="width: 93%;">
+            </div>
+            
+            <!-- Row 6: Description -->
+            <div class="form-group full-width">
+                <label for="purdesc">Description</label>
+                <input type="text" name="purdesc" id="purdesc" value='<s:property value="purdesc"/>' style="width: 93%;">
+            </div>
+        </div>
+    </div>
+</div>
 
 
  <br>
