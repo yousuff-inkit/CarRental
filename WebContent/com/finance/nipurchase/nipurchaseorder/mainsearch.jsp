@@ -12,59 +12,106 @@
 	<style type="text/css">
 
 
-table {
-  border-collapse: separate;
-   border-spacing: 6px 8px;    
+/* ===== Scoped styles ONLY for this search page ===== */
+#search table {
+    border-collapse: separate;
+    border-spacing: 8px 8px;
+    width: 100%;
 }
 
-
-td[align="right"] {
-  font-weight: 300;
-  font-size: 14px;
-  color: #222;
+/* Labels */
+#search td[align="right"] {
+    font-weight: 550;
+    font-size: 15px;
+    color: #1f2937;
+    white-space: nowrap;
 }
 
-
-input[type="text"] {
-  font-weight: 300;
-  font-size: 14px;
-  padding: 4px 6px;
-  width: 95%;               /* Prevent overflow */
-  max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
+/* Text Inputs */
+#search input[type="text"] {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 6px 10px;
+    height: 32px;
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
-
-#bankdate, #chqdate {
-  font-weight: 300;
-  font-size: 14px;
+/* Date picker container */
+#search #datess {
+    height: 36px;
 }
 
-/* Bold button text */
-.myButton {
-  font-weight: 700;
-  font-size: 14px;
-  /* Visual Button Appearance for consistency */
-  background-color: #007bff; /* blue background */
-  color: white; /* White text */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
+/* jqx Date Input text */
+#search #datess input {
+    font-size: 15px;
+    height: 34px;
 }
 
-/* Bold button text */
-.myButton {
-  font-weight: 300;
-  font-size: 14px;
+/* Button */
+#search .myButton {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 18px;
+    height: 38px;
+    border-radius: 6px;
+    border: 1px solid #2563eb;
+    background-color: #2563eb;
+    color: #ffffff;
+    cursor: pointer;
 }
 
-/* Additional spacing for rows */
-tr {
-  line-height: 1.2;
+#search .myButton:hover {
+    background-color: #1d4ed8;
 }
+
+/* Row spacing */
+#search tr {
+    line-height: 1.2;
+}
+
+/* Result container spacing */
+#search #refreshdivs {
+    margin-top: 14px;
+}
+
+/* ===== Blue Search Button (scoped) ===== */
+#search .myButton {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 20px;
+    height: 38px;
+    border-radius: 6px;
+
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff;
+    border: 1px solid #1d4ed8;
+
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover effect */
+#search .myButton:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+
+/* Active (click) effect */
+#search .myButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+/* Focus (keyboard accessibility) */
+#search .myButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+}
+
 
 </style>
 	<script type="text/javascript">

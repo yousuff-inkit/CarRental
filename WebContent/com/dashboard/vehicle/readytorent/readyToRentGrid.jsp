@@ -8,11 +8,11 @@ String barchval = request.getParameter("barchval")==null?"NA":request.getParamet
 <style type="text/css">
 	.yellowClass
     {
-       background-color: #ffc0cb; 
+       background-color: #fff; 
     }
     .redClass
     {
-       background-color: #F1948A; 
+       background-color: #fff; 
     }
 </style>
 <script type="text/javascript">
@@ -38,6 +38,19 @@ else
 	ssss;
 	 aa=1;
 	} 
+//===== UNIVERSAL SEARCH SUPPORT =====
+var originalFleetData = [];
+
+try {
+    // ssss comes from JSP as a STRING → convert to real JS array
+    originalFleetData = typeof ssss === "string"
+        ? JSON.parse(ssss)
+        : ssss;
+} catch (e) {
+    console.error("Invalid JSON data from server", e);
+    originalFleetData = [];
+}
+
 $(document).ready(function () {
    
 
@@ -80,14 +93,14 @@ $(document).ready(function () {
 
 
 						],
-				    localdata: ssss,
+						localdata: originalFleetData,
         
         
         pager: function (pagenum, pagesize, oldpagenum) {
             // callback called when a page or page size is changed.
         }
     };
-
+	
     var dataAdapter = new $.jqx.dataAdapter(source,
     		 {
         		loadError: function (xhr, status, error) {
@@ -124,13 +137,13 @@ $(document).ready(function () {
         height: 500,
         source: dataAdapter,
         showaggregates:true,
-        filtermode:'excel',
-        filterable: true,
-    	showfilterrow: true,
-        sortable:true,
+        
+        filterable: false,
+    	showfilterrow: false,
+        sortable:false,
         selectionmode: 'singlerow',
         pagermode: 'default',
-        showfilterrow: true,
+        showfilterrow: false,
         columnsresize: true,
 
         columns: [
@@ -143,34 +156,34 @@ $(document).ready(function () {
                           }  
                           },
                
-						{ text: 'Avail. Br', datafield: 'branchname',cellclassname: cellclassname /*,  width: '8%'   */,pinned: true},
-						{ text: 'Location', datafield: 'loc_name' ,cellclassname: cellclassname/* , width: '8%' */,pinned: true},
-						{ text: 'Group', datafield: 'gname' ,cellclassname: cellclassname/* , width: '5%' */,pinned: true },
-						{ text: 'Fleet', datafield: 'fleet_no' ,cellclassname: cellclassname/* , width: '5%' */,pinned: true  },
-						{ text: 'Fleet Name', datafield: 'flname' ,cellclassname: cellclassname/* , width: '15%'  */,pinned: true},
-						{ text: 'Type', datafield: 'empid',cellclassname: cellclassname /* , width: '4%' */,pinned: true },
-						{ text: 'User Name', datafield: 'empname' ,cellclassname: cellclassname , width: '12%',pinned: true  },
-						{ text: 'Garage', datafield: 'grname' ,cellclassname: cellclassname/* , width: '4%' */,pinned: true },
-						{ text: 'YOM', datafield: 'yom' ,cellclassname: cellclassname , width: '3%' ,pinned: true},
-						{ text: 'Color', datafield: 'color' ,cellclassname: cellclassname/* , width: '5%' */ ,pinned: true  },
-						{ text: 'Reg No', datafield: 'reg_no' ,cellclassname: cellclassname/* , width: '6%' */  ,pinned: true },
-						{ text: 'Vehicle Number', datafield: 'vehiclenum' ,cellclassname: cellclassname, width: '7%'},
-						{ text: 'Authority', datafield: 'authority' ,cellclassname: cellclassname/* , width: '6%' */   },
-						{ text: 'Plate Code', datafield: 'platecode' ,cellclassname: cellclassname/* , width: '6%' */   },
-						{ text: 'Last TRN Date', datafield: 'dates' ,cellclassname: cellclassname,cellsformat:'dd.MM.yyyy', width: '7%'   },
+						{ text: 'Avail. Br', datafield: 'branchname',cellclassname: cellclassname ,  width: 80  ,pinned: true},
+						{ text: 'Location', datafield: 'loc_name' ,cellclassname: cellclassname , width: 70 ,pinned: true},
+						{ text: 'Group', datafield: 'gname' ,cellclassname: cellclassname , width: 50 ,pinned: true },
+						{ text: 'Fleet', datafield: 'fleet_no' ,cellclassname: cellclassname , width: 50 ,pinned: true  },
+						{ text: 'Fleet Name', datafield: 'flname' ,cellclassname: cellclassname , width: 85,pinned: true},
+						{ text: 'Type', datafield: 'empid',cellclassname: cellclassname  , width: 50 ,pinned: true },
+						{ text: 'User Name', datafield: 'empname' ,cellclassname: cellclassname , width: 50,pinned: true  },
+						{ text: 'Garage', datafield: 'grname' ,cellclassname: cellclassname , width: 70,pinned: true },
+						{ text: 'YOM', datafield: 'yom' ,cellclassname: cellclassname , width: 50 ,pinned: true},
+						{ text: 'Color', datafield: 'color' ,cellclassname: cellclassname , width: 50  ,pinned: true  },
+						{ text: 'Reg No', datafield: 'reg_no' ,cellclassname: cellclassname , width: 50   ,pinned: true },
+						{ text: 'Vehicle Number', datafield: 'vehiclenum' ,cellclassname: cellclassname, width: 80},
+						{ text: 'Authority', datafield: 'authority' ,cellclassname: cellclassname , width: 70    },
+						{ text: 'Plate Code', datafield: 'platecode' ,cellclassname: cellclassname ,width: 50 },
+						{ text: 'Last TRN Date', datafield: 'dates' ,cellclassname: cellclassname,cellsformat:'dd.MM.yyyy', width: 70},
 
-						{ text: 'Cur. KM', datafield: 'cur_km' ,cellclassname: cellclassname/* , width: '8%' */  },
-						{ text: 'Due Serv.', datafield: 'srvc_km' ,cellclassname: cellclassname /* , width: '8%' */ },
-						{ text: 'Fuel  ', datafield: 'c_fuel' ,cellclassname: cellclassname/* , width: '9%' */  },
-						{ text: 'Rent Type', datafield: 'renttype' ,cellclassname: cellclassname /* , width: '5%'  */ },
-						{ text: 'Chassis Number', datafield: 'ch_no' ,cellclassname: cellclassname, width: '7%'},
+						{ text: 'Cur. KM', datafield: 'cur_km' ,cellclassname: cellclassname , width: 50   },
+						{ text: 'Due Serv.', datafield: 'srvc_km' ,cellclassname: cellclassname  , width: 50},
+						{ text: 'Fuel  ', datafield: 'c_fuel' ,cellclassname: cellclassname, width: 50},
+						{ text: 'Rent Type', datafield: 'renttype' ,cellclassname: cellclassname  , width: 50},
+						{ text: 'Chassis Number', datafield: 'ch_no' ,cellclassname: cellclassname, width: 100},
 						{ text: 'days', datafield: 'days'/* , width: '10%' */,hidden:true},
 						{ text: 'Mov Doc No', datafield: 'movdocno',hidden:true},
 						{ text: 'Out Time Diff', datafield: 'outtimediff',hidden:true},
 						{ text: 'Mov Rdocno', datafield: 'movrdocno',hidden:true},
 						{ text: 'Mov Rdtype', datafield: 'movrdtype',hidden:true},
-						{ text: 'Idle Days', datafield: 'idledays' ,cellclassname: cellclassname , width: '5%'},
-						{ text: 'Remarks', datafield: 'remarks' ,cellclassname: cellclassname , width: '10%'}
+						{ text: 'Idle Days', datafield: 'idledays' ,cellclassname: cellclassname , width: 50},
+						{ text: 'Remarks', datafield: 'remarks' ,cellclassname: cellclassname , width: 150}
 						
 						]
     
