@@ -491,83 +491,188 @@
 </script>
 
 <style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 1450px;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font: 14px 'Segoe UI';
+    font-weight: 500;
+    color: #253858;
+    white-space: nowrap;
+    line-height: 32px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.trans-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1.5fr auto 1fr auto 1fr;
+    gap: 12px 15px;
+    align-items: center;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 3fr auto 1fr;
+    gap: 12px 20px;
+    align-items: center;
+}
+
 .hidden-scrollbar {
-  overflow: auto;
-  height: 100vh;
+    overflow: auto;
+    height: 530px;
+}
+
+.icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.myButton {
+    padding: 5px 15px;
+    cursor: pointer;
 }
 </style>
-
 </head>
+
 <body onload="setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmIbJournalVoucher" action="saveIbJournalVoucher" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+    <br>
 
-<div  class='hidden-scrollbar'>
+    <form id="frmIbJournalVoucher" action="saveIbJournalVoucher" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            <div class="section-block">
+                <h2>Voucher Information</h2>
+                <div class="trans-info-grid">
+                    <label>Date</label>
+                    <div id="jqxIbJournalVouchersDate" name="jqxIbJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxIbJournalVouchersDate"/>'></div>
+                    
+                    <label>Import Data</label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="file" id="fileexcelimport" name="file" style="font-size: 11px;"/>
+                        <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
+                            <img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png" height="24">
+                        </button>
+                    </div>
 
-<table width="99%">
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="15%"><div id="jqxIbJournalVouchersDate" name="jqxIbJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxIbJournalVouchersDate"/>'></div>
-    <input type="hidden" id="hidjqxIbJournalVouchersDate" name="hidjqxIbJournalVouchersDate" value='<s:property value="hidjqxIbJournalVouchersDate"/>'/></td>
-    <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
-						</button></td>
-    <td width="13%" align="center"><button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-    <td width="6%" align="right">Doc No</td>
-    <td width="21%"><input type="text" id="docno" name="txtibjournalvouchersdocno" style="width:50%;" value='<s:property value="txtibjournalvouchersdocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Ref. No.</td>
-    <td><input type="text" id="txtrefno" name="txtrefno" style="width:62%;" onblur="fungridfocus();" value='<s:property value="txtrefno"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:80%;"  value='<s:property value="txtdescription"/>'/></td>
-	<td align="left"><i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="lblformposted"/></label></b></i></td>
-  </tr>
-  <tr>
-    <td colspan="7"><div id="jqxJournalVoucherGrid"><jsp:include page="ibJournalVoucherGrid.jsp"></jsp:include></div></td>
-  </tr>
-  <tr>
-    <td align="right">Dr. Total</td>
-    <td><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:65%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td colspan="4" align="right">Cr. Total</td>
-    <td><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-  </tr>
-</table>
+                    <label>Actions</label>
+                    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
-<input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
-<input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
-<input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
-<input type="hidden" id="txtexcelbranchvalidation" name="txtexcelbranchvalidation" value='<s:property value="txtexcelbranchvalidation"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-</div>
-</form>
+                    <label>Doc No</label>
+                    <input type="text" id="docno" name="txtibjournalvouchersdocno" value='<s:property value="txtibjournalvouchersdocno"/>' tabindex="-1"/>
+                </div>
 
-<div id="ibJournalVoucherGridWindow">
-	<div></div><div></div>
-</div>
+                <div class="agmt-info-grid" style="margin-top: 15px;">
+                    <label>Ref. No.</label>
+                    <input type="text" id="txtrefno" name="txtrefno" onblur="fungridfocus();" value='<s:property value="txtrefno"/>'/>
 
-<div id="branchSearchWindow">
-				<div></div><div></div>
-</div>
+                    <label>Description</label>
+                    <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
 
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
+                    <label id="lblformposted" name="lblformposted" style="font-size: 13px; font-weight: bold; color:#6000FC; font-style: italic;">
+                        <s:property value="lblformposted"/>
+                    </label>
+                </div>
+            </div>
 
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
+            <div class="section-block">
+                <h2>Voucher Details</h2>
+                <div id="jqxJournalVoucherGrid" style="width: 100%;">
+                    <jsp:include page="ibJournalVoucherGrid.jsp"></jsp:include>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2>Summary</h2>
+                <div class="trans-info-grid">
+                    <label>Dr. Total</label>
+                    <input type="text" id="txtdrtotal" name="txtdrtotal" style="text-align: right; font-weight: bold;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
+                    
+                    <span></span><span></span> <label>Cr. Total</label>
+                    <input type="text" id="txtcrtotal" name="txtcrtotal" style="text-align: right; font-weight: bold;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+                </div>
+            </div>
+
+            <input type="hidden" id="hidjqxIbJournalVouchersDate" name="hidjqxIbJournalVouchersDate" value='<s:property value="hidjqxIbJournalVouchersDate"/>'/>
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="gridlength" name="gridlength"/>
+            <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+            <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+            <input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
+            <input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
+            <input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
+            <input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
+            <input type="hidden" id="txtexcelbranchvalidation" name="txtexcelbranchvalidation" value='<s:property value="txtexcelbranchvalidation"/>'/>
+            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+        </div>
+    </form>
+
+    <div id="ibJournalVoucherGridWindow"><div></div><div></div></div>
+    <div id="branchSearchWindow"><div></div><div></div></div>
+    <div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+    <div id="costCodeSearchWindow"><div></div><div></div></div> 
 
 </div>
 </body>
-</html>

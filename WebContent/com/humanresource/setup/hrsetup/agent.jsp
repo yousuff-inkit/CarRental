@@ -27,7 +27,7 @@
         background: #fff;
         border-radius: 16px;
         padding: 20px;
-        max-width: 1450px;
+        max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
         /* FORCE HEADER LEFT ALIGNMENT */
@@ -98,27 +98,19 @@
         flex: 1 1 100%;
     }
 
-    .section-block h2, .section-block legend {
-        /* Common styling for headings and legends */
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff; /* Blue vertical line */
-        color: #333;
-        display: block;
-    }
+
+       
+  .section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* Blue line accent */
+}
     
     .section-block legend {
         /* Ensure legend specific properties are maintained/cleaned up */
         border: none; /* Remove default legend border */
-    }
-
-    /* ------------------------------
-� � � �INPUTS & CONTROLS (From Master)
-� � ------------------------------ */
-        /* Apply h2 styling to legend, as per request */
         font-size: 1.1rem;
         font-weight: 600;
         margin: 0 0 20px; 

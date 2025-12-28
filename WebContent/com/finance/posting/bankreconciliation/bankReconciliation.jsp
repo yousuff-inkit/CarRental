@@ -299,12 +299,9 @@
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -314,224 +311,188 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
 }
+
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 20px;
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
 .section-block {
-    flex: 1;
     background: #f6f8fa;
     border-radius: 10px;
     padding: 20px 18px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    margin-bottom: 24px;
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
     margin: 0 0 16px 0;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-}
-
-.section-block .form-group {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
+input[type="text"], select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
+    background: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+
+.cr-table td {
+    padding: 10px;
     border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
+    font-size: 14px;
+    color: #333;
 }
 
-/* Make only the LEFT labels in this section bold */
-.table-section .cr-table td[align="right"] {
-    font-weight: 700 !important;
-    color: #1f2937; /* optional: makes it look cleaner */
+.cr-table td[align="right"] {
+    font-weight: 700;
+    color: #253858;
+    white-space: nowrap;
 }
 
+.hidden-scrollbar {
+    overflow: auto;
+    height: 530px;
+}
+
+/* Custom button alignment */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
 </style>
-
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmBankReconciliation" action="saveBankReconciliation" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="13%"><div id="jqxBankReconciliationDate" name="jqxBankReconciliationDate" onchange="datechange();" value='<s:property value="jqxBankReconciliationDate"/>'></div>
-    <input type="hidden" id="hidjqxBankReconciliationDate" name="hidjqxBankReconciliationDate" value='<s:property value="hidjqxBankReconciliationDate"/>'/></td>
-    <td width="10%" align="right">Branch</td>
-    <td width="20%"><select id="cmbbranch" name="cmbbranch" style="width:50%;" value='<s:property value="cmbbranch"/>'>
-    <option></option></select>
-    <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/></td>
-    <td width="12%" align="right">Currency</td>
-    <td width="14%"><select id="cmbcurrency" name="cmbcurrency" style="width:50%;" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value);">
-      <option></option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-      <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
-      <input type="hidden" id="txtrate" name="txtrate" value='<s:property value="txtrate"/>'/>
-      <i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 1px;font-family: Tahoma; color:#E0ECF8"><s:property value="lblformposted"/></label></b></i></td>
-    <td width="14%" align="right">Doc No</td>
-    <td width="12%"><input type="text" id="docno" name="txtbankreconciliationdocno" style="width:70%;" value='<s:property value="txtbankreconciliationdocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td><input type="text" id="txtaccid" name="txtaccid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td colspan="2"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="2"><input type="text" id="txtdescription" name="txtdescription" style="width:90%;" value='<s:property value="txtdescription"/>'/></td>
-    <td align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="getLastReconcileDate($('#jqxBankReconciliationDate').val(),$('#txtdocno').val());">Submit</button></td>
-  </tr>
-</table></div>
+<div class='hidden-scrollbar'>
+    
+    <div class="section-block">
+        <h2>Reconciliation Header</h2>
+        <table class="cr-table">
+          <tr>
+            <td width="8%" align="right">Date</td>
+            <td width="15%">
+                <div id="jqxBankReconciliationDate" name="jqxBankReconciliationDate" onchange="datechange();" value='<s:property value="jqxBankReconciliationDate"/>'></div>
+            </td>
+            <td width="8%" align="right">Branch</td>
+            <td width="18%">
+                <select id="cmbbranch" name="cmbbranch" value='<s:property value="cmbbranch"/>'>
+                    <option></option>
+                </select>
+            </td>
+            <td width="8%" align="right">Currency</td>
+            <td width="18%">
+                <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value);">
+                    <option></option>
+                </select>
+            </td>
+            <td width="8%" align="right">Doc No</td>
+            <td width="17%">
+                <input type="text" id="docno" name="txtbankreconciliationdocno" value='<s:property value="txtbankreconciliationdocno"/>' tabindex="-1"/>
+            </td>
+          </tr>
+          <tr>
+            <td align="right">Account</td>
+            <td>
+                <input type="text" id="txtaccid" name="txtaccid" placeholder="F3 for Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
+            </td>
+            <td colspan="2">
+                <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>'/>
+            </td>
+            <td align="right">Description</td>
+            <td colspan="2">
+                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+            </td>
+            <td align="center">
+                <button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="getLastReconcileDate($('#jqxBankReconciliationDate').val(),$('#txtdocno').val());">Submit</button>
+            </td>
+          </tr>
+        </table>
+    </div>
 
-    <h3>Applying</h3>
-    <div class="cr-table" id="jqxBankReconciliationGrid"><jsp:include page="bankReconciliationGrid.jsp"></jsp:include></div>
+    <div class="section-block">
+        <h2>Applying Invoices</h2>
+        <div id="jqxBankReconciliationGrid">
+            <jsp:include page="bankReconciliationGrid.jsp"></jsp:include>
+        </div>
+    </div>
 
+    <div class="section-block">
+        <h2>Balance Summary</h2>
+        <table class="cr-table">
+          <tr>
+            <td width="12%" align="right">Book Balance</td>
+            <td><input type="text" id="txtbookbalance" name="txtbookbalance" style="text-align: right;" value='<s:property value="txtbookbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);" /></td>
+            
+            <td width="15%" align="right">Uncleared Payments</td>
+            <td><input type="text" id="txtunclrpayments" name="txtunclrpayments" style="text-align: right;" value='<s:property value="txtunclrpayments"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
+            
+            <td width="15%" align="right">Uncleared Receipts</td>
+            <td><input type="text" id="txtunclrreceipts" name="txtunclrreceipts" style="text-align: right;" value='<s:property value="txtunclrreceipts"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
+            
+            <td width="12%" align="right">Bank St. Balance</td>
+            <td><input type="text" id="txtbankbalance" name="txtbankbalance" style="text-align: right;" value='<s:property value="txtbankbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
+          </tr>
+        </table>
+    </div>
 
-<div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td align="right">Book Balance</td>
-    <td><input type="text" id="txtbookbalance" name="txtbookbalance" style="text-align: right;" value='<s:property value="txtbookbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);" /></td>
-    <td align="right">Uncleared Payments(+ve)</td>
-    <td><input type="text" id="txtunclrpayments" name="txtunclrpayments" style="text-align: right;" value='<s:property value="txtunclrpayments"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-    <td align="right">Uncleared Receipts(-ve)</td>
-    <td><input type="text" id="txtunclrreceipts" name="txtunclrreceipts" style="text-align: right;" value='<s:property value="txtunclrreceipts"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-    <td align="right">Bank St. Balance</td>
-    <td><input type="text" id="txtbankbalance" name="txtbankbalance" style="text-align: right;" value='<s:property value="txtbankbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-  </tr>
-</table>
-</div>
-
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txttrno" name="txttrno"  value='<s:property value="txttrno"/>'/>
-<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" name="txtchkgridload" id="txtchkgridload" value='<s:property value="txtchkgridload"/>'>
+    <input type="hidden" id="hidjqxBankReconciliationDate" name="hidjqxBankReconciliationDate" value='<s:property value="hidjqxBankReconciliationDate"/>'/>
+    <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/>
+    <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+    <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+    <input type="hidden" id="txtrate" name="txtrate" value='<s:property value="txtrate"/>'/>
+    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+    <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
+    <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+    <input type="hidden" id="gridlength" name="gridlength"/>
+    <input type="hidden" name="txtchkgridload" id="txtchkgridload" value='<s:property value="txtchkgridload"/>'>
+    <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+    <div style="display:none">
+        <label id="lblformposted" name="lblformposted"><s:property value="lblformposted"/></label>
+    </div>
 
 </div>
 </form>
-	
+    
 <div id="accountDetailsFromWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>  
 
 </div>

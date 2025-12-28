@@ -21,6 +21,7 @@
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 
 <style>
+
     /* ------------------------------
        GLOBAL STYLES & LAYOUT (Adopted from Credit Note)
     ------------------------------ */

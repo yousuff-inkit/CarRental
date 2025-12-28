@@ -1198,7 +1198,7 @@ body {
     transition: 0.2s ease-in-out;
 }
 
-/* Hover — darker blue */
+/* Hover â darker blue */
 .myButtons:hover,
 .myProcessCalcButton:hover,
 .mySaveButton:hover,
@@ -1219,6 +1219,57 @@ body {
 label, td, th {
     font-weight: 700 !important;
     white-space: nowrap !important;
+}
+
+
+/* ===== SEARCH FORM – PREMIUM UI ===== */
+
+#search td,
+#search label {
+    font-weight: 700 !important;
+    white-space: nowrap;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1A2734;
+}
+
+/* Input fields */
+#search input[type="text"] {
+    height: 28px;
+    padding: 6px 8px;
+    border: 1px solid #b8c6d8;
+    border-radius: 5px;
+    font-weight: 600;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+/* Table spacing */
+#search td {
+    padding: 6px 8px;
+    vertical-align: middle;
+}
+
+/* Premium sky-blue small button */
+.myButton {
+    background: #4FA8FF;
+    color: #ffffff;
+    border: none;
+    padding: 4px 14px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.myButton:hover {
+    background: #2F7FD4;
+}
+
+/* Keep layout stable */
+#search table {
+    width: 100%;
+    table-layout: fixed;
 }
 
 

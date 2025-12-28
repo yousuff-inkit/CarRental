@@ -869,7 +869,7 @@ th {
 
 <div  class='hidden-scrollbar receipt-header'>
 
-<div class="table-section" style="background-color: #E8F1FF; width: 100%;">
+<div class="table-section" style="background-color: #f6f8fa; width: 100%;">
 <table class="cr-table" width="100%">
   <tr>
     <td width="6%" align="right">Date</td>
@@ -905,7 +905,7 @@ th {
 <table class="cr-table" width="100%">
 <tr>
 <td width="50%">
-<div class="table-section" style="background-color: #E8F1FF;">
+<div class="table-section" style="background-color: #f6f8fa;">
 <h3><font style="font-family: comic sans ms;font-weight: bold;">Leave Disbursement</font></h3>
 <table class="" width="100%">
   <tr>
@@ -939,7 +939,7 @@ th {
 </td>
 
 <td width="50%">
-<div class="table-section" style="background-color: #E8F1FF; ">
+<div class="table-section" style="background-color: #f6f8fa; ">
 <h3><font style="font-family: comic sans ms;font-weight: bold;">Travel Disbursement</font></h3>
 <table class="cr-table" width="100%">
   <tr>

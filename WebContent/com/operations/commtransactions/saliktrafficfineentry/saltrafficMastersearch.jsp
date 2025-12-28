@@ -38,43 +38,104 @@
 		}
 
 	</script>
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 12px; /* Standardized master gap */
+}
+
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td[align="right"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Bold text inside inputs and selects */
+input[type="text"], select {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%; /* Standardized width */
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Date field styling (applied to the div) */
+#searchdate {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Master green */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Row spacing */
+tr {
+  line-height: 1.8;
+}
+</style>
+
 <body bgcolor="#E0ECF8">
-<div id=search>
+<div id="search">
 <table width="100%" >
   <tr>
-   <td>                         
-   <table>
+   <td>                        
+   <table width="100%">
    <tr>
-   <td align="right">Docno</td>
-    <td align="left" width="2%"><input type="text" name="msdocno" id="msdocno"  value='<s:property value="msdocno"/>'></td>
-    <td align="right" >Date</td>
-    <td align="left" width="20%" ><div id="searchdate" name="searchdate"  value='<s:property value="searchdate"/>'></div></td>
-    <td align="right" >Type</td>
-      <td align="left" width="20%"><select  name="enqtype" id="enqtype" style="width:70%;"  value='<s:property value="enqtype"/>' >
-    <option value="traffic">Traffic</option>
-       <option value="salik">Salik</option>
-   </select>
-   </td>
-   <td>
-    <input type="button" name="mainsearchbtn" id="mainsearchbtn" class="myButton" value="Search"  onclick="loadSearch1()">
-   </td>
-      </tr>
-       
-    </table>
+    <td align="right">Doc no</td>
+    <td align="left" width="15%"><input type="text" name="msdocno" id="msdocno" value='<s:property value="msdocno"/>'></td>
+    
+    <td align="right">Date</td>
+    <td align="left" width="20%"><div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div></td>
+    
+    <td align="right">Type</td>
+    <td align="left" width="20%">
+      <select name="enqtype" id="enqtype" style="width:100%;" value='<s:property value="enqtype"/>'>
+        <option value="traffic">Traffic</option>
+        <option value="salik">Salik</option>
+      </select>
     </td>
+    
+    <td align="left">
+     <input type="button" name="mainsearchbtn" id="mainsearchbtn" class="myButton" value="Search" onclick="loadSearch1()">
+    </td>
+   </tr>
+   </table>
+   </td>
 </tr>
 
   <tr>
-    <td colspan="8" align="right">
-    
+    <td colspan="8">
     <div id="refreshdivmas">
-      
-   <jsp:include  page="subMastersearch.jsp"></jsp:include> 
-   
-   </div>
+      <jsp:include page="subMastersearch.jsp" /> 
+    </div>
     </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>

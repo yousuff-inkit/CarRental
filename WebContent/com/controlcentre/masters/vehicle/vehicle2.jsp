@@ -11,20 +11,6 @@
 
 <jsp:include page="tab.css" />
 <jsp:include page="tab.jsp" />
-<style>
-form label.error {
-color:red;
-  font-weight:bold;
-
-}
-  .sep {
-        border-bottom:1px solid black;
-    }
-    .alignright{
-    
-    text-align:
-    }
-</style>
 <script type="text/javascript">
 	
 	$(document).ready(function() {
@@ -1144,571 +1130,315 @@ function funGetConfigs(){
  <link href="../../../../css/body.css" rel="stylesheet" type="text/css">
  <jsp:include page="../../../../includes.jsp"></jsp:include>
  </head>
+<style>
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%; /* As requested */
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    text-align: left !important;
+}
+
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #333;
+    display: block;
+}
+
+input[type="text"], select, textarea {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: 530px;
+    overflow-x: hidden;
+}
+
+.myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.myButton:hover { background: #0056b3; }
+
+form label.error { color:red; font-weight:bold; }
+
+/* Standardize the tab navigation */
+#tabs {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 20px 0 0 0;
+    border-bottom: 2px solid #007bff;
+}
+#tabs li a {
+    display: block;
+    padding: 10px 20px;
+    background: #eef2f7;
+    text-decoration: none;
+    color: #253858;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+}
+</style>
+
 <body onLoad="setValues();">
-	
-	<br/> 
-	<div id="mainBG" class="homeContent" data-type="background"> 
-		<form id="frmVehicle" action="saveVehicle" method="post" autocomplete="off">
-		<jsp:include page="../../../../header.jsp" />
-				<fieldset><legend>Vehicle Details</legend>
-				<table width="100%" cellspacing="0">
-					<tr>
-						<td width="68" height="24" id="f" style="text-align: right"><div
-								align="right">Fleet No</div></td>
-						<td colspan="5">
-							<input type="text" name="fleetno" id="fleetno" readonly tabindex="-1" 
-							style="width: 20%;" value='<s:property value="fleetno"/>'> 
-							<input type="text" name="fleetname" id="fleetname" readonly tabindex="-1"
-							style="width: 75.5%;" value='<s:property value="fleetname"/>'></td>
-						<td align="right">Date</td>
-						<td colspan="2" align="left"><div id='jqxDate1'
-								name='jqxDate1' value='<s:property value="jqxDate1"/>'></div>
-                        </td><input
-							type="hidden" id="hidjqxDate1" name="hidjqxDate1"
-							value='<s:property value="hidjqxDate1"/>' />
-						<td align="left">&nbsp;</td>
-						<td width="64" align="right">Doc No</td>
-						<td width="168" align="left"><input type="text"
-							name="docno" id="docno"  readonly="readonly" value='<s:property value="docno"/>' tabindex="-1"></td>
-						
-					</tr>
-					<tr>
-					  <td height="24" align="right">Authority</td>
-					  <td><select name="cmbauthority" id="cmbauthority"
-							value='<s:property value="cmbauthority"/>' style="width:81%;" onchange="getPlateCode(this.value);">
-                        <option value="">--Select--</option>
-                      </select>
-				      </td><input type="hidden" id="hidcmbauthority" name="hidcmbauthority"
-							value='<s:property value="hidcmbauthority"/>' />
-					  <td align="right">Plate Code</td>
-					  <td><select name="cmbplate" id="cmbplate"
-							value='<s:property value="cmbplate"/>' style="width:75%;">
-                        <option>--select--</option>
-                      </select>
-				      <input type="hidden" id="hidcmbplate" name="hidcmbplate"
-							value='<s:property value="hidcmbplate"/>' /></td>
-					  <td align="right">Reg No</td>
-					  <td width="146" align="left"><input type="text" name="regno" id="regno"
-							style="width:89%;" value='<s:property value="regno"/>' autocomplete="off" ></td>
-							<!-- onblur="checkRegNo();" -->
-					  <td align="right">Group</td>
-					  <td align="left"><select name="cmbgroup"
-							id="cmbgroup" value='<s:property value="cmbgroup"/>' style="width:74%;" onchange="getLevel(this.value);">
-                        <option>--Select--</option>
-                      </select>
-				      </td><input type="hidden" id="hidcmbgroup" name="hidcmbgroup"
-							value='<s:property value="hidcmbgroup"/>' />
-					  <td align="right">Level</td>
-					  <td align="left"><input type="text" name="group_name" id="group_name" value='<s:property value="group_name"/>' tabindex="-1"></td>
-					  <td align="right">&nbsp;</td>
-					  <td align="left">&nbsp;</td>
-				  </tr>
-					<tr>
-						<td height="24" align="right"><span style="text-align: right">Brand</span></td>
-						<td width="142"><select name="cmbbrand" id="cmbbrand" value='<s:property value="cmbbrand"/>' style="width:81%;" onchange="getModel(this.value);">
-                          <option>--Select--</option>
-                        </select>
-					  </td><input type="hidden" id="hidcmbbrand" name="hidcmbbrand" value='<s:property value="hidcmbbrand"/>'/>
-						<td width="66" align="right">Model</td>
-						<td width="128"><select name="cmbmodel" id="cmbmodel" value='<s:property value="cmbmodel"/>' style="width:75%;" onchange="getFleetName();">
-                          <option>--Select--</option>
-                        </select>
-					  <input type="hidden" id="hidcmbmodel" name="hidcmbmodel"
-							value='<s:property value="hidcmbmodel"/>' /></td>
-						<td width="70" align="right">YoM</td>
-						<td align="left"><select name="cmbyom" id="cmbyom" value='<s:property value="cmbyom"/>' style="width:91%;">
-                          <option>--Select--</option>
-                        </select>
-					  </td><input type="hidden" id="hidcmbyom" name="hidcmbyom"
-							value='<s:property value="hidcmbyom"/>' />
-						<td width="70" align="right">Salik Tag</td>
-						<td width="166" align="left"><input type="text" id="salik_tag" name="salik_tag"   value='<s:property value="salik_tag"/>' /></td>
-						<td width="39" align="right">TC No</td>
-						<td width="123" align="left"><input type="text" id="tcno" name="tcno"  value='<s:property value="tcno"/>' onkeydown="getTcno(event);"/></td>
-						<td align="right">&nbsp;</td>
-					    <td align="left">&nbsp;</td>
-					</tr><input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
-					
-				</table>
-<br />
+<div id="mainBG" class="homeContent" data-type="background">
+    <form id="frmVehicle" action="saveVehicle" method="post" autocomplete="off">
+        <jsp:include page="../../../../header.jsp" />
+        <br/>
 
-				<ul id="tabs">
-					<li><a href="#" name="tab1" id="inductiontab">Induction</a></li>
-					<li><a href="#" name="tab2" id="servtab">Services And Other Details</a></li>
-					<li><a href="#" name="tab3" id="spectab">Specifications</a>
-					  
-					
-					<input type="text" id="deal_no" name="deal_no" value='<s:property value="deal_no"/>' hidden="true"/>
-					
-					<input type="text" id="interest_amt"  name="interest_amt" value='<s:property value="interest_amt"/>' hidden="true"/>
-			
-					<input type="text" id="down_payment" name="down_payment" value='<s:property value="down_payment"/>' hidden="true"/>
-					
-					<input type="text" id="no_installments" name="no_installments"
-													 value='<s:property value="no_installments"/>' hidden="true"/>
-			
-														<span style="text-align: right"></span>
-														<input type="text" id="installment_amt" name="installment_amt" value='<s:property value="installment_amt"/>' hidden="true"/>
-														
-														<input type="text" id="insured_amt" name="insured_amt"  hidden="true" value='<s:property value="insured_amt"/>'/>
- 
-					<select name="purchase" id="purchase"  hidden="true"  value='<s:property value="purchase"/>' style="width:89%;">
-					  <option>--Select--</option>
-					  <option value="Cash" selected>Cash</option>
-					  <option value="Credit">Credit</option>
-					  </select>
-					
-					<input type="text" id="premium_perc" name="premium_perc"  hidden="true" value='<s:property value="premium_perc"/>' />
-					
-					<input type="text" id="premium_amt" name="premium_amt"  hidden="true" value='<s:property value="premium_amt"/>' />
-					</li>
-				</ul>
-				<!-- <iframe  width=1100px height=400px align='center' id='page' ></iframe> -->
-				<div id="content">
-					<div id="tab1">
-						<table width="100%">
-							<tr>
-									<td width="25%">
-                                    <fieldset><legend>Info</legend>
-									  <table width="100%" >
-									    <tr>
-									      <td align="right">&nbsp;Registered Date</td>
-									      <td align="left"><div id='jqxFinRegDate'
-														name='jqxFinRegDate' value='<s:property value="jqxFinRegDate"/>'></div></td>
-									      <input type="hidden" name="hiddealer" id="hiddealer" value='<s:property value="hiddealer"/>'>
-								        </tr>
-									    <tr>
-									      <td align="right">&nbsp;Reg. Expiry</td>
-									      <td align="left"><div id='jqxOtherRegExp' name='jqxOtherRegExp'
-														value='<s:property value="jqxOtherRegExp"/>'></div></td>
-								        </tr>
-									    <tr>
-									      <td align="right">Insurance Expiry</td>
-									      <td align="left"><div id='jqxOtherInsExp' name='jqxOtherInsExp'
-														value='<s:property value="jqxOtherInsExp"/>'></div></td>
-									        <input type="hidden" name="hidpurchase" id="hidpurchase" value='<s:property value="hidpurchase"/>'>
-								        </tr>
-									    <tr>
-									      <td align="right">Purchase Cost</td>
-									      <td align="left"><input type="text" name="purchase_cost"  id="purchase_cost" value='<s:property value="purchase_cost"/>' style="text-align:right;" onblur="getTotal();" required/></td>
-								        </tr>
-									    <tr>
-									      <td align="right">Additions</td>
-									      <td align="left"><input type="text" id="additions" name="additions" value='<s:property value="additions"/>' style="text-align:right;" onblur="getTotal();"/></td>
-								        </tr>
-									    <tr>
-									      <td align="right">Total</td>
-									      <td align="left"><input type="text" id="total" name="total" value='<s:property value="total"/>'  style="text-align:right;" readonly/></td>
-								        </tr>
-									    <tr>
-									      <td align="right">&nbsp;Depr %</td>
-									      <td align="left"><input type="text" id="depr_perc" name="depr_perc" value='<s:property value="depr_perc"/>' style="text-align:right;" onblur="depr_percent(this.value);"/></td>
-								        </tr>
-									    <tr>
-									      <td align="right">&nbsp;Accu. Dep.</td>
-									      <td align="left"><input type="text" id="accu_dep" name="accu_dep" value='<s:property value="accu_dep"/>' style="text-align:right;" /></td>
-								        </tr>
-									    <tr>
-									      <td align="right">&nbsp;CostTran No</td>
-									      <td align="left"><input type="text" id="tran_no" readonly name="tran_no" value='<s:property value="tran_no"/>'  tabindex="-1"/></td>
-								        </tr>
-									    <tr>
-									      <td align="right">Insur Membership</td>
-									      <td align="left"><input type="text" name="insurmember" id="insurmember" value='<s:property value="insurmember"/>' /></td>
-								        </tr>
-									    <tr>
-									      <td align="right">Tracking ID</td>
-									      <td align="left"><input type="text" name="trackid" id="trackid" value='<s:property value="trackid"/>' /></td>
-								        </tr>
-								      </table>
-                                      <br />
-										<br />
-										<br /><br /><br />
-										
-										
-										
-                                      </fieldset>
-								</td>
-								<td width="25%"> 
-									<fieldset>
-									  <legend>Other Info</legend>
-										<table width="99%">
-											<tr>
-											  <td align="right">Dealer</td>
-											  <td align="left"><input type="text" name="dealer" id="dealer" value='<s:property value="dealer"/>' onDblClick="funSearchdblclick();" onKeyDown="getDealer(event);" placeholder="Press F3 to Search"></td>
-										  </tr>
-											<tr>
-											  <td align="right">LPO No</td>
-											  <td><input type="text" id="lpo_no" name="lpo_no" value='<s:property value="lpo_no"/>'/></td>
-										  </tr>
-											<tr>
-											  <td align="right">Purchase Invoice</td>
-											  <td><input type="text" id="purchase_invoice" name="purchase_invoice" value='<s:property value="purchase_invoice"/>'/></td>
-										  </tr>
-											<tr>
-											  <td align="right">Purchase Date</td>
-											  <td><div id='jqxPurchaseDate' name='jqxPurchaseDate'
-														value='<s:property value="jqxPurchaseDate"/>'></div></td>
-										  </tr>
-											<tr>
-												<td align="right">Financer</td>
-												<td>
-														<input type="text" name="financier" id="financier" value='<s:property value="financier"/>' ondblclick="funFinSearchdblclick();" onkeydown="getFin(event);" placeholder="Press F3 to Search">
-												</select> <input type="hidden" id="hidfinancier" name="hidfinancier"
-													value='<s:property value="hidfinancier"/>' /></td>
-											</tr>
-											<tr>
-												<td align="right">Release Date</td>
-												<td align="left"><div id='jqxFinRelDate' name='jqxFinRelDate'  
-														value='<s:property value="jqxFinRelDate"/>'></div></td>
-											</tr>
-											<tr>
-												<td align="right">Insurance Type</td>
-												<td><select name="cmbinsurance_type"
-													id="cmbinsurance_type" value='<s:property value="cmbinsurance_type"/>' style="width:54%;">
-													<option value="">--Select--</option>
-												  <option value="Comprehensive">Comprehensive</option>
-												  <option value="3rdParty">3rd Party</option>
-											    </select></td>
-											</tr>
-											<tr>
-												<td align="right">&nbsp;&nbsp;Insurance Comp</td>
-												<td><input type="text" id="insurance_comp" name="insurance_comp" placeholder="Press F3 to Search" 
-													 value='<s:property value="insurance_comp"/>' ondblclick="funInsurSearchdblclick();" onkeydown="getInsurance(event);"/></td>
-											</tr>
-											<tr>
-												<td width="41%" align="right">Policy No</td>
-												<td width="59%"><input type="text" id="policy_no" name="policy_no" value='<s:property value="policy_no"/>' onblur="getservtab();" /></td><input type="hidden" id="hidjqxFinRegDate" name="hidjqxFinRegDate"
-													value='<s:property value="hidjqxFinRegDate"/>' />
-											</tr>
-											<tr>
-											  <td align="right">File No</td>
-											  <td><input type="text" name="fileno" id="fileno" value='<s:property value="fileno"/>' /></td>
-										  </tr>
-										  <tr>
-											  <td align="right">Mortgaged To</td>
-											  <td><input type="text" name="mortgaged" id="mortgaged" value='<s:property value="mortgaged"/>' placeholder="Press F3 to Search" readonly onkeydown="getMortgaged(event);"/></td>
-                                              <input type="hidden" name="hidmortgaged" id="hidmortgaged" value='<s:property value="hidmortgaged"/>'/>
-										  </tr>
-                                            
-										</table>
-									
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-										
-                                       
-                                        
-                                        
-                                        
-									</fieldset>
-								</td>
-<input type="hidden" name="hidinsurance_comp" id="hidinsurance_comp" 
-													 value='<s:property value="hidinsurance_comp"/>'>
-                                                     <input
-													type="hidden" id="hidjqxFinRelDate" name="hidjqxFinRelDate"
-													value='<s:property value="hidjqxFinRelDate"/>' /><input type="hidden" id="hidcmbinsurance_type"
-													name="hidcmbinsurance_type"
-													value='<s:property value="hidcmbinsurance_type"/>' /><input
-													type="hidden" id="hidjqxOtherRegExp" name="hidjqxOtherRegExp"
-													value='<s:property value="hidjqxOtherRegExp"/>' />
-                                                    <input
-													type="hidden" id="hidjqxOtherInsExp" name="hidjqxOtherInsExp"
-													value='<s:property value="hidjqxOtherInsExp"/>' />
-								<td width="25%">
-                                <fieldset id="releaseid"><legend>Fleet Release Info</legend>
-								  <table width="100%">
-								    <tr>
-								      <td colspan="3" align="center"><input type="button" name="releasesave" id="releasesave" class="myButton" value="Save" onClick="funRelease();"><input type="button" name="btnrelease" id="btnrelease" class="myButton"  value="Release" onClick="funEnable();"></td>
-							        </tr>
-								    <tr>
-								      <td width="36%" align="right">Fleet No</td>
-								      <td colspan="2" align="left"><input type="text" name="releasefleet" id="releasefleet" value='<s:property value="releasefleet"/>'></td>
-							        </tr>
-								    <tr>
-								      <td align="right">Branch</td>
-								      <td colspan="2" align="left"><select name="cmbrlsbranch"  id="cmbrlsbranch" value='<s:property value="cmbrlsbranch"/>' onChange="getLocation(this.value);" style="width:50.5%;"  >
-								        <option value="">--Select--</option>
-								        </select>
-                                      <input type="hidden" name="hidcmbrlsbranch" id="hidcmbrlsbranch" value='<s:property value="hidcmbrlsbranch"/>' ></td>
-							        </tr>
-								    <tr>
-								      <td align="right">Location</td>
-								      <td colspan="2" align="left"><select name="cmbrlsloc" id="cmbrlsloc" value='<s:property value="cmbrlsloc"/>' style="width:50%;" >
-								        <option value="">--Select--</option>
-								        </select>
-							          <input type="hidden" name="hidcmbrlsloc" id="hidcmbrlsloc" value='<s:property value="hidcmbrlsloc"/>'></td>
-							        </tr>
-								    <tr>
-								      <td align="right">Rental Status</td>
-								      <td colspan="2" align="left"><select name="cmbrentalstatus" id="cmbrentalstatus" value='<s:property value="cmbrentalstatus"/>' style="width:50%;">
- 										<option value="R" >Rental</option>
-								        <option value="L">Lease</option>
-								        <option value="LM">Limousine</option>
-								        <option value="A">All</option>
-								        </select>
-                                      <input type="hidden"  name="hidcmbrentalstatus" id="hidcmbrentalstatus" value='<s:property value="hidcmbrentalstatus"/>'></td>
-							        </tr>
-								    <tr>
-								      <td align="right">Date</td>
-								      <td colspan="2" align="left"><div id="releasedate" name="releasedate" value='<s:property value="releasedate"/>'> </td>
-                                      <input type="hidden" name="hidreleasedate" id="hidreleasedate" value='<s:property value="hidreleasedate"/>'>
-							        </tr>
-								    <tr>
-								      <td align="right">Time</td>
-								      <td colspan="2" align="left"><div id="releasetime" name="releasetime" value='<s:property value="releasetime"/>'></td>
-							        </tr>
-								    <tr>
-								      <td align="right">KM</td>
-								      <td width="32%" align="left"><input type="text" name="releasekm" id="releasekm" value='<s:property value="releasekm"/>' tabindex="-1" readonly></td>
-								      <td width="32%" align="left">&nbsp;</td>
-							        </tr>
-								    <tr>
-								      <td align="right">Fuel</td>
-								      <td align="left"><input type="text" name="releasefuel" id="releasefuel" value='<s:property value="releasefuel"/>' tabindex="-1" readonly></td>
-								      <td align="left">&nbsp;</td>
-							        </tr>
-								    <tr>
-								      <td align="right">Op. Status</td>
-								      <td align="left"><input type="text"
-							name="opstatus" id="opstatus"  value='IN' tabindex="-1" disabled="true"></td>
-								      <td align="left">&nbsp;</td>
-							        </tr>
-								    <tr>
-								      <td align="right">Ast status</td>
-								      <td align="left"><input type="text"
-							name="aststatus" id="aststatus"  style="align: left;" value='<s:property value="aststatus"/>'  tabindex="-1" ></td>
-								      <td align="left">&nbsp;</td>
-							        </tr>
-								    <tr>
-								      <td colspan="3" align="right"><div id="fleetwarning" align="center" style="color:red;font-weight:bold;">All fields are Mandatory</div></td>
-							        </tr>
-								    
-						          </table>
-                                  <br /><br /><br /><br />
-										
-										
-                                </fieldset>
-                                </td>
-							</tr>
-						</table>
-					</div>
+        <div class='hidden-scrollbar'>
+            <div class="section-block">
+                <h2>Vehicle Details</h2>
+                <table width="100%" cellspacing="10">
+                    <tr>
+                        <td width="8%" align="right"><label>Fleet No</label></td>
+                        <td width="40%">
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" name="fleetno" id="fleetno" readonly tabindex="-1" style="width: 25%;" value='<s:property value="fleetno"/>'> 
+                                <input type="text" name="fleetname" id="fleetname" readonly tabindex="-1" value='<s:property value="fleetname"/>'>
+                            </div>
+                        </td>
+                        <td width="5%" align="right"><label>Date</label></td>
+                        <td width="15%">
+                            <div id='jqxDate1' name='jqxDate1' value='<s:property value="jqxDate1"/>'></div>
+                            <input type="hidden" id="hidjqxDate1" name="hidjqxDate1" value='<s:property value="hidjqxDate1"/>' />
+                        </td>
+                        <td width="8%" align="right"><label>Doc No</label></td>
+                        <td width="15%">
+                            <input type="text" name="docno" id="docno" readonly="readonly" value='<s:property value="docno"/>' tabindex="-1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right"><label>Authority</label></td>
+                        <td>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <select name="cmbauthority" id="cmbauthority" onchange="getPlateCode(this.value);" style="width:40%;">
+                                    <option value="">--Select--</option>
+                                </select>
+                                <label>Plate Code</label>
+                                <select name="cmbplate" id="cmbplate" style="width:40%;">
+                                    <option>--select--</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td align="right"><label>Reg No</label></td>
+                        <td><input type="text" name="regno" id="regno" value='<s:property value="regno"/>'></td>
+                        <td align="right"><label>Group</label></td>
+                        <td><select name="cmbgroup" id="cmbgroup" onchange="getLevel(this.value);"><option>--Select--</option></select></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><label>Brand</label></td>
+                        <td>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <select name="cmbbrand" id="cmbbrand" onchange="getModel(this.value);" style="width:40%;"><option>--Select--</option></select>
+                                <label>Model</label>
+                                <select name="cmbmodel" id="cmbmodel" onchange="getFleetName();" style="width:40%;"><option>--Select--</option></select>
+                            </div>
+                        </td>
+                        <td align="right"><label>YoM</label></td>
+                        <td><select name="cmbyom" id="cmbyom"><option>--Select--</option></select></td>
+                        <td align="right"><label>Salik Tag</label></td>
+                        <td><input type="text" id="salik_tag" name="salik_tag" value='<s:property value="salik_tag"/>' /></td>
+                    </tr>
+                    <tr>
+                        <td align="right"><label>Level</label></td>
+                        <td><input type="text" name="group_name" id="group_name" value='<s:property value="group_name"/>' readonly tabindex="-1"></td>
+                        <td align="right"><label>TC No</label></td>
+                        <td><input type="text" id="tcno" name="tcno" value='<s:property value="tcno"/>' onkeydown="getTcno(event);"/></td>
+                        <td colspan="2"></td>
+                    </tr>
+                </table>
+            </div>
 
-					<div id="tab2">
-						<table width="100%">
-							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Vehicle Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="7%" height="28" align="right">Engine No</td>
-												<td width="10%" align="left"><input type="text"
-													id="engine_no" name="engine_no" value='<s:property value="engine_no"/>'style="text-transform:uppercase;"/></td>
-												<td width="5%" align="right" >Chasis No</td>
-												<td width="10%" align="left"><input type="text"
-													id="chasis_no" name="chasis_no" value='<s:property value="chasis_no"/>' style="text-transform:uppercase;"/></td>
-												<td width="5%" align="right">VIN</td>
-											  <td width="11%" ><input type="text"
-													name="vin" id="vin" value='<s:property value="vin"/>' /></td>
-												<td width="9%" align="right">Fuel Type</td>
-												<td width="8%" align="left"><select name="cmbfueltype" id="cmbfueltype" >
-												  <option value="">--Select--</option>
-												  <option value="P">Petrol</option>
-												  <option value="D">Diesel</option>
-												  <option value="E">Electric</option>
-											    </select></td>
-												<td width="10%" align="right">Fuel Tank Capacity</td>
-												<td width="10%" align="left"><input type="text" name="fuelcapacity" id="fuelcapacity" value='<s:property value="fuelcapacity"/>'/></td>
-												<td width="3%" align="right">Color</td>
-												<td width="12%" align="left"><select
-													name="cmbveh_color" id="cmbveh_color" value='<s:property value="cmbveh_color"/>'>
-														<option>--Select--</option>
-												</select> </td>
-												<input type="hidden" name="hidcmbveh_color" id="hidcmbveh_color" value='<s:property value="hidcmbveh_color"/>'>
-											</tr>
-										</table>
-									</fieldset>
-								</td>
-							</tr>
+            <ul id="tabs">
+                <li><a href="#" name="tab1" id="inductiontab">Induction</a></li>
+                <li><a href="#" name="tab2" id="servtab">Services & Others</a></li>
+                <li><a href="#" name="tab3" id="spectab">Specifications</a></li>
+            </ul>
 
-							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Warranty Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="9%" height="28" align="right">Warranty
-													Period</td>
-												<td width="9%" align="left"><input type="text"
-													id="warranty_period" name="warranty_period" value='<s:property value="warranty_period"/>' onblur="getWarrantyDate(this.value);"/></td>
-												<td width="7%" align="right">From Date</td>
-												<td width="8%" align="left"><div id='jqxWrntyFrmDate'
-														name='jqxWrntyFrmDate'
-														value='<s:property value="jqxWrntyFrmDate"/>'></div>
-														 </td><input
-													type="hidden" id="hidjqxWrntyFrmDate" name="hidjqxWrntyFrmDate"
-													value='<s:property value="hidjqxWrntyFrmDate"/>' />
-												<td width="9%" align="right">To Date</td>
-												<td width="12%" align="left"><div id='jqxWrntyToDate'
-														name='jqxWrntyToDate'
-														value='<s:property value="jqxWrntyToDate"/>'></div> 
-														</td><input
-													type="hidden" id="hidjqxWrntyToDate" name="hidjqxWrntyToDate"
-													value='<s:property value="hidjqxWrntyToDate"/>' />
-												<td width="8%" align="right">Warranty KM</td>
-												<td width="38%" align="left"><input type="text"
-													name="warranty_km" id="warranty_km"  value='<s:property value="warranty_km"/>' style="text-align:right;"/></td>
-											</tr>
-										</table>
-									</fieldset>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="8" align="right"></td>
-							</tr>
+            <div id="content">
+                <div id="tab1">
+                    <div style="display: flex; gap: 20px; margin-top: 15px;">
+                        <div class="section-block" style="flex: 1;">
+                            <h2>Purchase Info</h2>
+                            <table width="100%" cellspacing="8">
+                                <tr><td align="right">Registered Date</td><td><div id='jqxFinRegDate'></div></td></tr>
+                                <tr><td align="right">Reg. Expiry</td><td><div id='jqxOtherRegExp'></div></td></tr>
+                                <tr><td align="right">Insurance Expiry</td><td><div id='jqxOtherInsExp'></div></td></tr>
+                                <tr><td align="right">Purchase Cost</td><td><input type="text" name="purchase_cost" id="purchase_cost" style="text-align:right;" onblur="getTotal();" value='<s:property value="purchase_cost"/>'/></td></tr>
+                                <tr><td align="right">Additions</td><td><input type="text" id="additions" name="additions" style="text-align:right;" onblur="getTotal();" value='<s:property value="additions"/>'/></td></tr>
+                                <tr><td align="right">Total</td><td><input type="text" id="total" name="total" style="text-align:right;" readonly value='<s:property value="total"/>'/></td></tr>
+                                <tr><td align="right">Depr %</td><td><input type="text" id="depr_perc" name="depr_perc" style="text-align:right;" onblur="depr_percent(this.value);" value='<s:property value="depr_perc"/>'/></td></tr>
+                                <tr><td align="right">Accu. Dep.</td><td><input type="text" id="accu_dep" name="accu_dep" style="text-align:right;" value='<s:property value="accu_dep"/>'/></td></tr>
+                                <tr><td align="right">CostTran No</td><td><input type="text" id="tran_no" readonly tabindex="-1" value='<s:property value="tran_no"/>'/></td></tr>
+                            </table>
+                        </div>
 
-							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Service Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="106" height="28" align="right">Service Duration (KM)</td>
-												<td width="116" align="left"><input type="text"
-													id="service_km" name="service_km" value='<s:property value="service_km"/>' style="text-align:right;"/></td>
-												<td width="79" align="right">Last Srvc. Date</td>
-												<td width="130" align="left">
-														<div id='jqxLstSrvcDate'
-														name='jqxLstSrvcDate'
-														value='<s:property value="jqxLstSrvcDate"/>'></div> 
-														</td><input type="hidden" id="hidjqxLstSrvcDate" name="hidjqxLstSrvcDate"
-													value='<s:property value="hidjqxLstSrvcDate"/>' />
-												<td width="105" align="right"><label id="lbllastsrvkm">Last Service KM</label></td>
-												<td width="400" align="left"><input type="text"
-													id="last_srvc_km" name="last_srvc_km" value='<s:property value="last_srvc_km"/>' style="text-align:right;"/></td>
-												<td width="109" align="right">&nbsp;</td>
-												<td width="185" align="left">&nbsp;</td>
-											</tr>
-										</table>
-									</fieldset>
-								</td>
-							</tr>
+                        <div class="section-block" style="flex: 1;">
+                            <h2>Registration & Insurance</h2>
+                            <table width="100%" cellspacing="8">
+                                <tr><td align="right">Dealer</td><td><input type="text" name="dealer" id="dealer" placeholder="F3 Search" onKeyDown="getDealer(event);" value='<s:property value="dealer"/>'></td></tr>
+                                <tr><td align="right">LPO No</td><td><input type="text" id="lpo_no" name="lpo_no" value='<s:property value="lpo_no"/>'/></td></tr>
+                                <tr><td align="right">Invoice No</td><td><input type="text" id="purchase_invoice" name="purchase_invoice" value='<s:property value="purchase_invoice"/>'/></td></tr>
+                                <tr><td align="right">Purchase Date</td><td><div id='jqxPurchaseDate'></div></td></tr>
+                                <tr><td align="right">Financer</td><td><input type="text" name="financier" id="financier" placeholder="F3 Search" onkeydown="getFin(event);" value='<s:property value="financier"/>'></td></tr>
+                                <tr><td align="right">Release Date</td><td><div id='jqxFinRelDate'></div></td></tr>
+                                <tr><td align="right">Insurance Type</td><td><select name="cmbinsurance_type" id="cmbinsurance_type"><option value="">--Select--</option><option value="Comprehensive">Comprehensive</option><option value="3rdParty">3rd Party</option></select></td></tr>
+                                <tr><td align="right">Insurance Comp</td><td><input type="text" id="insurance_comp" placeholder="F3 Search" onkeydown="getInsurance(event);" value='<s:property value="insurance_comp"/>'/></td></tr>
+                                <tr><td align="right">Policy No</td><td><input type="text" id="policy_no" name="policy_no" onblur="getservtab();" value='<s:property value="policy_no"/>'/></td></tr>
+                                <tr><td align="right">Mortgaged To</td><td><input type="text" name="mortgaged" id="mortgaged" placeholder="F3 Search" readonly onkeydown="getMortgaged(event);" value='<s:property value="mortgaged"/>'/></td></tr>
+                            </table>
+                        </div>
 
-							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset>
-									  <legend>Release Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="107" height="30" align="right">Current KM</td>
-												<td width="149" align="left"><input type="text"
-													id="current_km" name="current_km" value='<s:property value="current_km"/>' style="text-align:right;"/></td>
-												<td width="45" align="right">Fuel</td>
-												<td width="139" align="left"><select name="cmbfuel" 
-													id="cmbfuel" value='<s:property value="cmbfuel"/>'><option value=0.000>Level 0/8</option><option value=0.125 selected>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-											    </select>
-											    <input type="hidden" id="hidcmbfuel" name="hidcmbfuel"
-													value='<s:property value="hidcmbfuel"/>' /></td><input type="hidden" name="hidcmbfueltype" id="hidcmbfueltype" value='<s:property value="hidcmbfueltype"/>' />
-											  <td width="88" align="right">Avail. Br.</td>
-											<td width="134" align="left"><select
-													name="cmbavail_br1" id="cmbavail_br1" value='<s:property value="cmbavail_br1"/>'>
-											  </select>
-											  <input type="hidden" id="hidcmbavail_br1" name="hidcmbavail_br1"
-													value='<s:property value="hidcmbavail_br1"/>' />
-											  <input type="hidden" id="tcno2" name="tcno2" style="width: 275px;" value='<s:property value="tcno2"/>'/></td>
-											  <td width="251" align="right">Calibration Km</td>
-											<td width="503" align="left"><input type="text" name="calibrationkm" id="calibrationkm" value='<s:property value="calibrationkm"/>' style="text-align:right;"  onblur="getspectab();"></td>
-											<td width="172" align="left"><select name="branded" id="branded" value='<s:property value="branded"/>' hidden="true">
-														
-													<option value="Y" selected>Y</option>
-													<option value="N">N</option>
-											  </select>
-											  <input type="hidden" id="hidbranded" name="hidbranded"
-													value='<s:property value="hidbranded"/>' />
-											  </td>
-											  <input type="hidden" name="hidreleasetime" id="hidreleasetime" value='<s:property value="hidreleasetime"/>'>
-												<%-- <td width="9%" align="right">Rent Type</td>
-												<td width="15%" align="left"><select
-													name="cmbrent_type" id="cmbrent_type" value='<s:property value="cmbrent_type"/>'>
-														<option>--Select--</option>
-												</select> <input type="hidden" id="hidcmbrent_type" name="hidcmbrent_type"
-													value='<s:property value="hidcmbrent_type"/>' /></td> --%>
-											</tr>
-										</table>
-									</fieldset>
-								</td>
-							</tr>
-						</table>
-					</div>
+                        <div class="section-block" style="flex: 1;" id="releaseid">
+                            <h2>Fleet Release Info</h2>
+                            <div style="text-align: center; margin-bottom: 15px; display: flex; gap: 5px; justify-content: center;">
+                                <input type="button" class="myButton" value="Save" onClick="funRelease();">
+                                <input type="button" class="myButton" value="Release" onClick="funEnable();">
+                            </div>
+                            <table width="100%" cellspacing="5">
+                                <tr><td align="right">Fleet No</td><td><input type="text" name="releasefleet" id="releasefleet" value='<s:property value="releasefleet"/>'></td></tr>
+                                <tr><td align="right">Branch</td><td><select name="cmbrlsbranch" id="cmbrlsbranch" onChange="getLocation(this.value);"><option value="">--Select--</option></select></td></tr>
+                                <tr><td align="right">Location</td><td><select name="cmbrlsloc" id="cmbrlsloc"><option value="">--Select--</option></select></td></tr>
+                                <tr><td align="right">KM / Fuel</td>
+                                    <td>
+                                        <div style="display: flex; gap: 4px;">
+                                            <input type="text" name="releasekm" id="releasekm" readonly value='<s:property value="releasekm"/>'>
+                                            <input type="text" name="releasefuel" id="releasefuel" readonly value='<s:property value="releasefuel"/>'>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr><td align="right">Op Status</td><td><input type="text" value="IN" disabled></td></tr>
+                                <tr><td align="right">Ast Status</td><td><input type="text" name="aststatus" id="aststatus" value='<s:property value="aststatus"/>'></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-					<div id="tab3"><table width="100%" >
-					<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-  <tr><input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-  <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-  
-    <td><div id="specdiv"><center><jsp:include page="specificationGrid.jsp"></jsp:include></center></div></td>
-    </tr>
-</table>
+                <div id="tab2">
+                    <div class="section-block" style="margin-top: 15px;">
+                        <h2>Technical Specifications</h2>
+                        <table width="100%" cellspacing="10">
+                            <tr>
+                                <td align="right">Engine No</td><td><input type="text" id="engine_no" name="engine_no" value='<s:property value="engine_no"/>'/></td>
+                                <td align="right">Chasis No</td><td><input type="text" id="chasis_no" name="chasis_no" value='<s:property value="chasis_no"/>'/></td>
+                                <td align="right">Fuel Type</td><td><select name="cmbfueltype" id="cmbfueltype"><option value="">--Select--</option><option value="P">Petrol</option></select></td>
+                                <td align="right">Color</td><td><select name="cmbveh_color" id="cmbveh_color"><option>--Select--</option></select></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="display: flex; gap: 20px;">
+                        <div class="section-block" style="flex: 1;">
+                            <h2>Warranty & Service</h2>
+                            <table width="100%" cellspacing="8">
+                                <tr><td align="right">Warranty Period</td><td><input type="text" id="warranty_period" onblur="getWarrantyDate(this.value);" value='<s:property value="warranty_period"/>'/></td></tr>
+                                <tr><td align="right">Service KM</td><td><input type="text" id="service_km" style="text-align:right;" value='<s:property value="service_km"/>'/></td></tr>
+                                <tr><td align="right">Last Srvc Date</td><td><div id='jqxLstSrvcDate'></div></td></tr>
+                                <tr><td align="right">Last Srvc KM</td><td><input type="text" id="last_srvc_km" style="text-align:right;" value='<s:property value="last_srvc_km"/>'/></td></tr>
+                            </table>
+                        </div>
+                        <div class="section-block" style="flex: 1;">
+                            <h2>Current Status</h2>
+                            <table width="100%" cellspacing="8">
+                                <tr><td align="right">Current KM</td><td><input type="text" id="current_km" style="text-align:right;" value='<s:property value="current_km"/>'/></td></tr>
+                                <tr><td align="right">Fuel Level</td><td><select name="cmbfuel" id="cmbfuel"><option value=1.000>Level 8/8</option></select></td></tr>
+                                <tr><td align="right">Available Br.</td><td><select name="cmbavail_br1" id="cmbavail_br1"></select></td></tr>
+                                <tr><td align="right">Calibration Km</td><td><input type="text" id="calibrationkm" onblur="getspectab();" value='<s:property value="calibrationkm"/>'/></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-						
-						
-					</div>
+                <div id="tab3">
+                    <div class="section-block" style="margin-top: 15px;">
+                        <h2>Vehicle Specifications</h2>
+                        <div id="specdiv">
+                            <center><jsp:include page="specificationGrid.jsp"></jsp:include></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				</div>
-			</fieldset>
-			<input type="hidden" name="defaultdeprconfig" id="defaultdeprconfig">
-			<input type="hidden" name="defaultdeprpercent" id="defaultdeprpercent">
-		  
-		</form>
-<br/>
-<div id="dealerWindow">
-				<div></div><div></div>
-				</div>
-				<div id="tcnowindow">
-				<div></div><div></div>
-				</div>
-<div id="financierWindow">
-				<div></div><div></div>
-				</div>
-<div id="insuranceWindow">
-				<div></div><div></div>
-				</div>
-				<div id="specwindow">
-				<div></div>
-				</div>
-<div id="releaseWindow">
-				<div></div><div style="background-color:#E0ECF8;"></div>
-				
-				</div>
-<%-- <div id="window">
-	<div id="windowHeader" class="windowHead">
-		<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Search</span>
-	</div>
-	<div id="windowContent" class="windowCont" style="overflow: hidden;">
-		<jsp:include page="vehicleSearch.jsp"></jsp:include>
-	</div></div>
-<div id="accountWindow">
-	<div class="windowsHead">
-	<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Dealer
-	</span>
-	</div>
-	<div class="windowsCont">
-	<jsp:include page="../../../search/masterssearch/dealerMSearch.jsp"></jsp:include>
-	</div>
-	 </div>  
-	 <div id="financierWindow">
-	<div class="windowsHead">
-	<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Financier
-	</span>
-	</div>
-	<div class="windowsCont">
-	<jsp:include page="../../../search/masterssearch/financierMSearch.jsp"></jsp:include>
-	</div>
-	 </div> --%>
-	</div>
-</body>
-</html>
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
+            <input type="hidden" id="hidcmbauthority" name="hidcmbauthority" value='<s:property value="hidcmbauthority"/>' />
+            <input type="hidden" id="hidcmbplate" name="hidcmbplate" value='<s:property value="hidcmbplate"/>' />
+            <input type="hidden" id="hidcmbgroup" name="hidcmbgroup" value='<s:property value="hidcmbgroup"/>' />
+            <input type="hidden" id="hidcmbbrand" name="hidcmbbrand" value='<s:property value="hidcmbbrand"/>'/>
+            <input type="hidden" id="hidcmbmodel" name="hidcmbmodel" value='<s:property value="hidcmbmodel"/>' />
+            <input type="hidden" id="hidcmbyom" name="hidcmbyom" value='<s:property value="hidcmbyom"/>' />
+            <input type="hidden" id="hidjqxWrntyFrmDate" name="hidjqxWrntyFrmDate" value='<s:property value="hidjqxWrntyFrmDate"/>' />
+            <input type="hidden" id="hidjqxWrntyToDate" name="hidjqxWrntyToDate" value='<s:property value="hidjqxWrntyToDate"/>' />
+            <input type="hidden" id="hidjqxLstSrvcDate" name="hidjqxLstSrvcDate" value='<s:property value="hidjqxLstSrvcDate"/>' />
+            <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+        </div>
+    </form>
+
+    <div id="dealerWindow"><div></div><div></div></div>
+    <div id="tcnowindow"><div></div><div></div></div>
+    <div id="financierWindow"><div></div><div></div></div>
+    <div id="insuranceWindow"><div></div><div></div></div>
+    <div id="specwindow"><div></div></div>
+    <div id="releaseWindow"><div></div><div style="background-color:#E0ECF8;"></div></div>
+</div>
+</body></html>
