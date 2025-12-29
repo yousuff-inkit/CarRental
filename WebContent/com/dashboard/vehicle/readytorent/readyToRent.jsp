@@ -209,7 +209,7 @@
     padding: 12px;
     box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
                 2px 2px 6px rgba(0, 0, 0, 0.08);
-    height: 200px;
+    height: 300px;
 }
 
 .fleet-status-wrapper .chart-container > div {
@@ -1015,16 +1015,16 @@ function funExportBtn()
     <div id="chart">
         <div class="chart-grid">
             <div class="chart-container">
-                <div id='fleetStatus1' style="width: 100%; height: 250px;"></div>
+                <div id='fleetStatus1' style="width: 100%; height: 350px;"></div>
             </div>
             <div class="chart-container">
-                <div id='thr1' style="width: 100%; height: 250px;"></div>
+                <div id='thr1' style="width: 100%; height: 350px;"></div>
             </div>
             <div class="chart-container">
-                <div id='sec1' style="width: 100%; height: 250px;"></div>
+                <div id='sec1' style="width: 100%; height: 350px;"></div>
             </div>
             <div class="chart-container">
-                <div id='four1' style="width: 100%; height: 250px;"></div>
+                <div id='four1' style="width: 100%; height: 350px;"></div>
             </div>
         </div>
     </div>
