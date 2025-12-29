@@ -158,7 +158,7 @@
 
 .dashboard-header-wrapper .branch-select-wrapper {
     flex: 1;
-    max-width: 70%;
+    max-width: 69%;
 }
 
 /* Styled Select Dropdown */
@@ -399,364 +399,273 @@
                     return;
                 }
 
-        row = row.slice(0, -1);
-        
-        //append Label row with line break
-        CSV += row + '\r\n';
-    }
-    
-    //1st loop is to extract each row
-    for (var i = 0; i < arrData.length; i++) {
-        var row = "";
-        
-        //2nd loop will extract each column and convert it in string comma-seprated
-        for (var index in arrData[i]) {
-            row += '"' + arrData[i][index] + '",';
-        }
+                var fileName = "";
+                fileName += ReportTitle.replace(/ /g, "_");
 
-        row.slice(0, row.length - 1);
-        
-        //add a line break after each row
-        CSV += row + '\r\n';
-    }
+                var uri = 'data:text/csv;charset=utf-8,' + escape(SIF);
+                var link = document.createElement("a");
+                link.href = uri;
 
-    if (CSV == '') {        
-        alert("Invalid data");
-        return;
-    }   
-    
-    //Generate a file name
-    var fileName = "";
-    //this will remove the blank-spaces from the title and replace it with an underscore
-    fileName += ReportTitle.replace(/ /g,"_");   
-    
-	 // newly added 
-    var temp = CSV;
-    blob = new Blob([temp],{type: 'text/csv'});
-    var bigcsv= window.webkitURL.createObjectURL(blob);
-   
-	
-    //Initialize file format you want csv or xls
-  //  var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-    
-    // Now the little tricky part.
-    // you can use either>> window.open(uri);
-    // but this will not work in some browsers
-    // or you will not get the correct file extension    
-    
-    //this trick will generate a temp <a /> tag
-    var link = document.createElement("a");    
-     //  link.href = uri;
-      link.href = bigcsv;
-    
-    //set the visibility hidden so it will not effect on your web-layout
-    link.style = "visibility:hidden";
-    link.download = fileName + ".csv";
-    
-    //this part will append the anchor tag and remove it after automatic click
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+                link.style = "visibility:hidden";
+                link.download = fileName + ".sif";
 
-function JSONToSIFCon(JSONData,ReportTitle, ShowLabel) {
-    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-    
-    var SIF = '';    
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
 
-    for (var i = 0; i < arrData.length; i++) {
-    	
-    	var row = "";
-        
-        for (var index in arrData[i]) {
-            row += '' + arrData[i][index] + ',';
-        }
+            function funDateInPeriodNew(value) {
+                //Date Validation Method without Future date Validation
+                var styear = new Date(window.parent.txtaccountperiodfrom.value);
+                var edyear = new Date(window.parent.txtaccountperiodto.value);
+                var mclose = new Date(window.parent.monthclosed.value);
+                mclose.setHours(0, 0, 0, 0);
+                edyear.setHours(0, 0, 0, 0);
+                styear.setHours(0, 0, 0, 0);
+                var currentDate = new Date(new Date());
+                if (value < styear || value > edyear) {
+                    $.messager.alert('Warning', "Transaction prior or after Account Period is not valid.");
+                    $('#txtvalidation').val(1);
+                    return 0;
+                }
 
-        row.slice(0, row.length - 1);
-        
-        SIF += row.slice(0, -1) + '\r\n';
-    
-    }
+                if (value <= mclose) {
+                    $.messager.alert('Warning', "Closing Done, Transaction Restricted. ");
+                    $('#txtvalidation').val(1);
+                    return 0;
+                }
 
-    if (SIF == '') {        
-        alert("Invalid data");
-        return;
-    }   
-    
-    var fileName = "";
-    fileName += ReportTitle.replace(/ /g,"_");   
-    
-    var uri = 'data:text/csv;charset=utf-8,' + escape(SIF);
-    var link = document.createElement("a");    
-    link.href = uri;
-    
-    link.style = "visibility:hidden";
-    link.download = fileName + ".sif";
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+                $('#txtvalidation').val(0);
+                return 1;
+            }
 
- function funDateInPeriodNew(value){
-	//Date Validation Method without Future date Validation
-    var styear = new Date(window.parent.txtaccountperiodfrom.value);
-    var edyear = new Date(window.parent.txtaccountperiodto.value);
-    var mclose = new Date(window.parent.monthclosed.value);
-    mclose.setHours(0,0,0,0);
-    edyear.setHours(0,0,0,0);
-    styear.setHours(0,0,0,0);
-    var currentDate = new Date(new Date());
-    if(value<styear || value>edyear){
-    	$.messager.alert('Warning',"Transaction prior or after Account Period is not valid.");
-     $('#txtvalidation').val(1);
-     return 0;
-    }
-    
-    if(value<=mclose){
-    	$.messager.alert('Warning',"Closing Done, Transaction Restricted. ");
-     $('#txtvalidation').val(1);
-     return 0;
-    }
-    
-    $('#txtvalidation').val(0);
-     return 1;
- }
- 
- function funIBDateInPeriod(date,branch){
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				 items = items.split('***');
-			     var monthCloseDate = items[0];
-			     var monthClose = items[1];
-			     var Date = items[2].trim();
-			   
-			   if(parseInt(monthClose)==1){
-				 $.messager.alert('Message','Closing Done on '+Date+' For Inter-Branch, Transaction Restricted. ','warning');
-				 $('#txtibvalidation').val(1);$('#txtibbranchid').val('');$('#txtibbranch').val('');
-				 
-				 if (document.getElementById("txtibbranch").value == "") {
-				        $('#txtibbranch').attr('placeholder', 'Press F3 to Search'); 
-				  }
-				 
-				 return 0;
-		   }
-			   
-			 $('#txtibvalidation').val(0);
-		     return 1;
-	   }
-	}
-	x.open("GET", "<%=contextPath%>/com/dashboard/getIBMonthClose.jsp?date="+date+"&branch="+branch, true);
-	x.send();
-}
+            function funIBDateInPeriod(date, branch) {
+                var x = new XMLHttpRequest();
+                x.onreadystatechange = function () {
+                    if (x.readyState == 4 && x.status == 200) {
+                        var items = x.responseText;
+                        items = items.split('***');
+                        var monthCloseDate = items[0];
+                        var monthClose = items[1];
+                        var Date = items[2].trim();
 
-function funChkHeaderButton() {
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.trim();
-			items = items.split('##');
-			    
-			    var email  = items[0].split(",");
-				var excel  = items[1].split(",");
+                        if (parseInt(monthClose) == 1) {
+                            $.messager.alert('Message', 'Closing Done on ' + Date + ' For Inter-Branch, Transaction Restricted. ', 'warning');
+                            $('#txtibvalidation').val(1);
+                            $('#txtibbranchid').val('');
+                            $('#txtibbranch').val('');
 
-					if(parseInt(email)==0)	{
-						$("#btnSendingEmail").attr('disabled', true );
-	     			} else {
-	   		    		 $("#btnSendingEmail").attr('disabled', false );
-	    		    }
+                            if (document.getElementById("txtibbranch").value == "") {
+                                $('#txtibbranch').attr('placeholder', 'Press F3 to Search');
+                            }
 
-					if(parseInt(excel)==0) {
-		        		$("#btnExcel").attr('disabled', true );
-	     			} else {
-	     				$("#btnExcel").attr('disabled', false );
-	     			}
-					
-			
-		 } else {}
-	}
-	
-	x.open("GET","<%=contextPath%>/com/dashboard/chkheaderbuttons.jsp?docno="+$('#txtdetailpermissiondocno').val().trim(),true);
-	x.send();
+                            return 0;
+                        }
 
-}
+                        $('#txtibvalidation').val(0);
+                        return 1;
+                    }
+                }
+                x.open("GET", "<%=contextPath%>/com/dashboard/getIBMonthClose.jsp?date=" + date + "&branch=" + branch, true);
+                x.send();
+            }
 
-	function getMessengerCount() {
-		var x=new XMLHttpRequest();
-		var msgcnt;
-		var user;
-		x.onreadystatechange=function(){
-			
-			if (x.readyState==4 && x.status==200)
-				{
-				
-					items= x.responseText;
-				
-					items=items.trim().split('####');
-					user=items[0];
-					msgcnt=items[1];
-		
-						if(msgcnt>0){
-							window.parent.document.getElementById("iconnm").style.display = 'none';
-							window.parent.document.getElementById("iconym").style.display = 'inline-block';
-						}
-						else{
-							window.parent.document.getElementById("iconym").style.display = 'none';
-							window.parent.document.getElementById("iconnm").style.display = 'inline-block';
-		
-						}
-					
-				    
-				}
-			else
-				{
-				}
-		}
-		x.open("GET",<%=contextPath+"/"%>+"com/messenger/getMsgCount.jsp",true);
-		x.send();
-	}
-	
-	function changeDashBoardAttachContent(url) {
-		$.get(url).done(function (data) {
-			    $('#windowattach').jqxWindow('open');
-				$('#windowattach').jqxWindow('setContent',data);
-				$('#windowattach').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function changeDashBoardGuidelineContent(url) {
-		 $('#windowguideline').jqxWindow('focus'); 
-		 $.get(url).done(function (data) {
-		 $('#windowguideline').jqxWindow('setContent', data);
-	}); 
-	}
+            function funChkHeaderButton() {
+                var x = new XMLHttpRequest();
+                x.onreadystatechange = function () {
+                    if (x.readyState == 4 && x.status == 200) {
+                        var items = x.responseText.trim();
+                        items = items.split('##');
 
-function getBranch() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-			//alert(items);
-				items = items.split('####');
-				
-				var branchIdItems  = items[0].split(",");
-				var branchItems = items[1].split(",");
-				var perm = items[2];
-				var optionsbranch;
+                        var email = items[0].split(",");
+                        var excel = items[1].split(",");
+
+                        if (parseInt(email) == 0) {
+                            $("#btnSendingEmail").attr('disabled', true);
+                        } else {
+                            $("#btnSendingEmail").attr('disabled', false);
+                        }
+
+                        if (parseInt(excel) == 0) {
+                            $("#btnExcel").attr('disabled', true);
+                        } else {
+                            $("#btnExcel").attr('disabled', false);
+                        }
+
+
+                    } else {
+                    }
+                }
+
+                x.open("GET", "<%=contextPath%>/com/dashboard/chkheaderbuttons.jsp?docno=" + $('#txtdetailpermissiondocno').val().trim(), true);
+                x.send();
+
+            }
+
+            function getMessengerCount() {
+                var x = new XMLHttpRequest();
+                var msgcnt;
+                var user;
+                x.onreadystatechange = function () {
+
+                    if (x.readyState == 4 && x.status == 200) {
+
+                        items = x.responseText;
+
+                        items = items.trim().split('####');
+                        user = items[0];
+                        msgcnt = items[1];
+
+                        if (msgcnt > 0) {
+                            window.parent.document.getElementById("iconnm").style.display = 'none';
+                            window.parent.document.getElementById("iconym").style.display = 'inline-block';
+                        } else {
+                            window.parent.document.getElementById("iconym").style.display = 'none';
+                            window.parent.document.getElementById("iconnm").style.display = 'inline-block';
+
+                        }
+
+
+                    } else {
+                    }
+                }
+                x.open("GET", <%=contextPath+"/"%>+"com/messenger/getMsgCount.jsp", true);
+                x.send();
+            }
+
+            function changeDashBoardAttachContent(url) {
+                $.get(url).done(function (data) {
+                    $('#windowattach').jqxWindow('open');
+                    $('#windowattach').jqxWindow('setContent', data);
+                    $('#windowattach').jqxWindow('bringToFront');
+                });
+            }
+
+            function changeDashBoardGuidelineContent(url) {
+                $('#windowguideline').jqxWindow('focus');
+                $.get(url).done(function (data) {
+                    $('#windowguideline').jqxWindow('setContent', data);
+                });
+            }
+
+            function getBranch() {
+                var x = new XMLHttpRequest();
+                x.onreadystatechange = function () {
+                    if (x.readyState == 4 && x.status == 200) {
+                        var items = x.responseText;
+                        //alert(items);
+                        items = items.split('####');
+
+                        var branchIdItems = items[0].split(",");
+                        var branchItems = items[1].split(",");
+                        var perm = items[2];
+                        var optionsbranch;
 //				alert($('#txtallbrch').val()+"===="+$('#txtallbrch').val()==99);
-				if(perm==0 || $('#txtallbrch').val()==99){
-				 optionsbranch = '<option value="a" selected>All</option>';
-				}
-				else{
-					
-				}
-				for (var i = 0; i < branchItems.length; i++) {
-					optionsbranch += '<option value="' + branchIdItems[i].trim() + '">'
-							+ branchItems[i] + '</option>';
-				}
-				$("select#cmbbranch").html(optionsbranch);
-				/* if ($('#hidcmbbranch').val() != null) {
-					$('#cmbbranch').val($('#hidcmbbranch').val());
-				} */
-			} else {
-				//alert("Error");
-			}
-		}
-		x.open("GET","<%=contextPath%>/com/dashboard/getBranch.jsp", true);
-		x.send();
-	}
-function funRoundAmt(value,id){
-    var res=parseFloat(value).toFixed(window.parent.amtdec.value);
-    var res1=(res=='NaN'?"0":res);
-    document.getElementById(id).value=res1;  
-   }
-   
- function funRoundRate(value,id){
-    var res=parseFloat(value).toFixed(window.parent.curdec.value);
-    var res1=(res=='NaN'?"0":res);
-   document.getElementById(id).value=res1;  
- }
- 
- function funGuideline() {
-		
-	 $('#windowguideline').jqxWindow('setContent', '');
-	 $('#windowguideline').jqxWindow('open'); 
-	
-	 changeDashBoardGuidelineContent("<%=contextPath%>/com/dashboard/viewDashBoardGuideline.action?formDetail="+document.getElementById("lbldetail").innerText+"&formDetailName="+document.getElementById("lbldetailname").innerText);
-}
+                        if (perm == 0 || $('#txtallbrch').val() == 99) {
+                            optionsbranch = '<option value="a" selected>All</option>';
+                        } else {
 
-function funMclose(value){
+                        }
+                        for (var i = 0; i < branchItems.length; i++) {
+                            optionsbranch += '<option value="' + branchIdItems[i].trim() + '">'
+                                + branchItems[i] + '</option>';
+                        }
+                        $("select#cmbbranch").html(optionsbranch);
+                        /* if ($('#hidcmbbranch').val() != null) {
+                            $('#cmbbranch').val($('#hidcmbbranch').val());
+                        } */
+                    } else {
+                        //alert("Error");
+                    }
+                }
+                x.open("GET", "<%=contextPath%>/com/dashboard/getBranch.jsp", true);
+                x.send();
+            }
 
- if(value=="a"){
-		window.parent.monthclosed.value=window.parent.txtaccountperiodfrom.value;
-		return 0;
-	}
+            function funRoundAmt(value, id) {
+                var res = parseFloat(value).toFixed(window.parent.amtdec.value);
+                var res1 = (res == 'NaN' ? "0" : res);
+                document.getElementById(id).value = res1;
+            }
 
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText.trim();
-				if(items!='null'){
-					
-					window.parent.monthclosed.value=items;
-				}
-				else{
-					
-					
+            function funRoundRate(value, id) {
+                var res = parseFloat(value).toFixed(window.parent.curdec.value);
+                var res1 = (res == 'NaN' ? "0" : res);
+                document.getElementById(id).value = res1;
+            }
 
-window.parent.monthclosed.value=window.parent.txtaccountperiodfrom.value;	
-				}
+            function funGuideline() {
 
-			} else {
-				//alert("Error");
-			}
-		}
-		x.open("GET","<%=contextPath%>/com/dashboard/getMclose.jsp?branch="+value, true);
-		x.send();
- }
- 
- function getformbranch(){
-	$('#cmbbranch').attr('disabled',false);
-	var branchval=document.getElementById('cmbbranch').value;
-	if($('#cmbbranch').val()!=null && $('#cmbbranch').val()!='a'){
-		window.parent.branchid.value=$('#cmbbranch').val();	
-	}
-	
-	var x=new XMLHttpRequest();
-	x.onreadystatechange=function(){
-	if (x.readyState==4 && x.status==200)
-		{
-		 	var items= x.responseText.trim();
-		 	if(parseInt(items)==0)
-	 		{
-	 		 
-	 		
-	 		// $.messager.alert('Message','Your Secure Session Has Expired ,Please Login Again.....!','warning');
-	 		$.messager.confirm('Confirm', 'Your Secure Session Has Expired ,Please Login Again.....!', function(r){
-				if (r){
-					window.parent.location.href=<%=contextPath+"/"%>+"login.jsp";
-				}
-			});
-	 		
-	 		
-	 		 /* window.history.back(); */
-	 		 				 		 
-	 		Exit();
-	 		return 0;
-	 		}
-     }
-	}
-      x.open("GET", "<%=contextPath%>/com/dashboard/sessionset.jsp?sessionbrch="+branchval,true);
-     x.send();
-  
-   }
- 
-</script>
+                $('#windowguideline').jqxWindow('setContent', '');
+                $('#windowguideline').jqxWindow('open');
 
+                changeDashBoardGuidelineContent("<%=contextPath%>/com/dashboard/viewDashBoardGuideline.action?formDetail=" + document.getElementById("lbldetail").innerText + "&formDetailName=" + document.getElementById("lbldetailname").innerText);
+            }
+
+            function funMclose(value) {
+
+                if (value == "a") {
+                    window.parent.monthclosed.value = window.parent.txtaccountperiodfrom.value;
+                    return 0;
+                }
+
+                var x = new XMLHttpRequest();
+                x.onreadystatechange = function () {
+                    if (x.readyState == 4 && x.status == 200) {
+                        var items = x.responseText.trim();
+                        if (items != 'null') {
+
+                            window.parent.monthclosed.value = items;
+                        } else {
+
+
+                            window.parent.monthclosed.value = window.parent.txtaccountperiodfrom.value;
+                        }
+
+                    } else {
+                        //alert("Error");
+                    }
+                }
+                x.open("GET", "<%=contextPath%>/com/dashboard/getMclose.jsp?branch=" + value, true);
+                x.send();
+            }
+
+            function getformbranch() {
+                $('#cmbbranch').attr('disabled', false);
+                var branchval = document.getElementById('cmbbranch').value;
+                if ($('#cmbbranch').val() != null && $('#cmbbranch').val() != 'a') {
+                    window.parent.branchid.value = $('#cmbbranch').val();
+                }
+
+                var x = new XMLHttpRequest();
+                x.onreadystatechange = function () {
+                    if (x.readyState == 4 && x.status == 200) {
+                        var items = x.responseText.trim();
+                        if (parseInt(items) == 0) {
+
+
+                            // $.messager.alert('Message','Your Secure Session Has Expired ,Please Login Again.....!','warning');
+                            $.messager.confirm('Confirm', 'Your Secure Session Has Expired ,Please Login Again.....!', function (r) {
+                                if (r) {
+                                    window.parent.location.href = <%=contextPath+"/"%>+"login.jsp";
+                                }
+                            });
+
+
+                            /* window.history.back(); */
+
+                            Exit();
+                            return 0;
+                        }
+                    }
+                }
+                x.open("GET", "<%=contextPath%>/com/dashboard/sessionset.jsp?sessionbrch=" + branchval, true);
+                x.send();
+
+            }
+
+        </script>
 </head>
-<!-- getMessengerCount(); -->
 <body onclick="getformbranch();">
 <div class="dashboard-header-wrapper">
     <!-- ===== HEADER ===== -->
@@ -823,4 +732,3 @@ window.parent.monthclosed.value=window.parent.txtaccountperiodfrom.value;
     <div id="windowguideline"><div></div></div>
 </div>
 </body>
-</html>
