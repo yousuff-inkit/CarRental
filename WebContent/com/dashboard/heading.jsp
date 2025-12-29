@@ -158,7 +158,7 @@
 
 .dashboard-header-wrapper .branch-select-wrapper {
     flex: 1;
-    max-width: 70%;
+    max-width: 69%;
 }
 
 /* Styled Select Dropdown */
