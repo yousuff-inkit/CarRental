@@ -7,8 +7,8 @@
 	 <jsp:include page="../../../../includes.jsp"></jsp:include> 
 	 <style>
     /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
+Â  Â  Â  Â GLOBAL STYLES & LAYOUT (From Master)
+Â  Â  ------------------------------ */
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -31,8 +31,8 @@
     }
 
     /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
+Â  Â  Â  Â HEADER FIXES (Title & Buttons) (From Master)
+Â  Â  ------------------------------ */
     center {
         text-align: left !important;
         display: block;
@@ -57,8 +57,8 @@
     }
 
     /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
+Â  Â  Â  Â GRID SYSTEM (FORM LAYOUT) (From Master)
+Â  Â  ------------------------------ */
     .form-group {
         display: grid;
         grid-template-columns: 120px 1fr;
@@ -120,8 +120,8 @@
 
 
     /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
+Â  Â  Â  Â INPUTS & CONTROLS (From Master)
+Â  Â  ------------------------------ */
     input[type="text"], input[type="email"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -170,8 +170,8 @@
     }
 
     /* ------------------------------
-       TABLES & UTILS
-    ------------------------------ */
+Â  Â  Â  Â TABLES & UTILS
+Â  Â  ------------------------------ */
 
     /* SCROLLBAR FIX */
     .hidden-scrollbar { 
@@ -1322,7 +1322,7 @@ function fundisgrid()
 </script>
 
 <body onload="setValues();getAssetgp();getloc();">
-<div id="mainBG" class="homeContent" data-type="background"> 
+<div id="mainBG" class="homeContent" data-type="background">Â 
 <form id="frmassetmastrer" action="saveAssetmaster" autocomplete="OFF" >
 
 
@@ -1415,7 +1415,7 @@ function fundisgrid()
             <div class="form-group dual-input">
                 <label>WNTY Exp Date</label>
                 <div>
-                    <div id='warexpdate' name='warexpdate' value='<s:property value="warexpdate"/>'></div> 
+                    <div id='warexpdate' name='warexpdate' value='<s:property value="warexpdate"/>'></div>Â 
                 </div>
                 <input type="hidden" id="hidwarexpdate" name="hidwarexpdate" value='<s:property value="hidwarexpdate"/>'/>
                 
@@ -1451,7 +1451,7 @@ function fundisgrid()
             <div class="form-group">
                 <div style="grid-column: 1 / span 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 10px;">
                     <label class="checkbox-label" for="opening" style="min-width: 0; padding-right: 15px;">
-                        Opening 
+                        OpeningÂ 
                         <input type="checkbox" id="opening" name="opening" onchange="funopening()">
                     </label>
                     <input type="hidden" id="openingval" name="openingval" value='<s:property value="openingval"/>'/>
@@ -1487,7 +1487,7 @@ function fundisgrid()
                 <input type="text" id="fixedassetaccId" placeholder="Press F3 To Search" name="fixedassetaccId" value='<s:property value="fixedassetaccId"/>' onkeydown="getaccountdetails1(1)"/>
                 <input name="fixedassetaccName" type="text" id="fixedassetaccName" value='<s:property value="fixedassetaccName"/>' readonly/>
                 <input name="fixaccDocno" type="hidden" id="fixaccDocno" value='<s:property value="fixaccDocno"/>'/>
-                <input name="fixaccCurrid" type="hidden" id="fixaccCurrid" value='<s:property value="fixaccCurrid"/>'/> 
+                <input name="fixaccCurrid" type="hidden" id="fixaccCurrid" value='<s:property value="fixaccCurrid"/>'/>Â 
                 <input name="fixaccRate" type="hidden" id="fixaccRate" value='<s:property value="fixaccRate"/>'/>
                 <input name="fixaccType" type="hidden" id="fixaccType" value='<s:property value="fixaccType"/>'/>
             </div>

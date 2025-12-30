@@ -8,168 +8,155 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style type="text/css">
-form label.error {
-	color: red;
-	font-weight: bold;
-}
-.center {
-  margin-left: auto;
-  margin-right: auto;
+/* ===== GLOBAL ===== */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: 14px;           /* base font */ [web:41][web:60]
 }
 
 .hidden-scrollbar {
     overflow: auto;
     height: 530px;
 }
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
+
+/* main card */
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    border-radius: 12px;
+    padding: 18px 22px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
+/* ===== CARD / SECTION ===== */
 .table-section {
+    width: 100%;
     margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    padding: 18px 18px 10px;
+    border-radius: 12px;
+    background: #f9fafc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
+
 .table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
+    color: #1f3c88;
+    font-size: 15px;
     font-weight: 600;
+    margin: 0 0 12px 0;
+    padding-left: 10px;
+    border-left: 3px solid #2f80ed;
 }
+
+/* ===== TABLE BASE ===== */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+    background: #fff;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;       /* stable column widths */ [web:46][web:55]
+    font-size: 14px;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.cr-table td {
+    padding: 4px 8px 10px;
+    vertical-align: middle;
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+/* ===== LABEL CELLS (all rows) ===== */
+/* add class="um-label" on all label <td> in HTML */
+.table-section .cr-table td.um-label {
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #253858;
+    white-space: nowrap;
+    padding: 10px 12px 4px 18px;
+}
+
+/* non‑label cells (input/select side) */
+.table-section .cr-table td:not(.um-label) {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* ===== INPUTS & SELECTS – SAME SIZE ===== */
+input[type="text"],
+input[type="password"],
+select {
+    height: 36px;
+    border: 1px solid #cfd6e0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: #f9fafc;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box; [web:29]
+    transition: border-color 0.2s;
+}
+
+/* full-width controls inside table cells */
+.cr-table input[type="text"],
+.cr-table input[type="password"],
+.cr-table select {
+    width: 100%;
+}
+
+/* first-row main fields visually fill columns */
+#txtuser,
+#txtusername,
+#site {
+    width: 100%;
+}
+
+/* second/third row fields medium width */
+#tcno,
+#txtperiod,
+#remarks,
+#sqno {
+    width: 70%;
+}
+
+/* Doc No small box on right */
+#docno {
+    width: 140px;
+}
+
+/* focus + readonly */
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: #2f80ed;
+    outline: none;
+}
+
+input[readonly],
+input[tabindex="-1"] {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+/* ===== CHECKBOXES ===== */
+#captch,
+#rta {
+    width: auto;
+    height: auto;
+    margin-left: 6px;
+}
+
+
 </style>
 <script type="text/javascript">
     /*  $(document).ready(function () { 
@@ -600,99 +587,130 @@ function funClickChk(){
   </script>
 </head>
 <body onload="setValues();">
-	<div id="mainBG" class="homeContent" data-type="background">
+    <div id="mainBG" class="homeContent" data-type="background">
 
-		<form id="frmSatMaster" action="satMastersAction" autocomplete="off">
-			<jsp:include page="../../../../header.jsp"></jsp:include>
+        <form id="frmSatMaster" action="satMastersAction" autocomplete="off">
+            <jsp:include page="../../../../header.jsp"></jsp:include>
             <div class="hidden-scrollbar receipt-header">
-			<div class="table-section" style="width: 100%;">
-				<h3>User Master Info</h3>
-				<table class="cr-table" width="100%">
-				<tr>
-				<td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td colspan="5"></td><td align="right">Doc No <input type="text" id="docno" name="docno" 
-							tabindex="-1;" value='<s:property value="docno"/>'>
-						</td></tr>
-					<tr>
-						<td style="margin-right: 10px;padding: 0px;width:60px;">User Name</td>
-						<td colspan="3"> <input type="text" id="txtuser" name="username"
-							 placeholder="Enter User Name" value='<s:property value="username"/>'
-							onblur="checkUserid()">
-						</td>
+                <div class="table-section" style="width: 100%;">
+                    <h3>User Master Info</h3>
+                    <table class="cr-table" width="100%">
+                        <tr>
+                            <td colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td colspan="5"></td>
+                            <td class="um-label" align="right">
+                                Doc No
+                                <input type="text" id="docno" name="docno"
+                                       tabindex="-1;" value='<s:property value="docno"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="um-label">User Name</td>
+                            <td colspan="3">
+                                <input type="text" id="txtuser" name="username"
+                                       placeholder="Enter User Name"
+                                       value='<s:property value="username"/>'
+                                       onblur="checkUserid()">
+                            </td>
 
-						<td style="margin-right: 10px;padding: 0px;width:60px;">Password</td><td colspan="3"><input type="password" id="txtusername"
-							name="password" placeholder="Enter Password" 
-							value='<s:property value="password"/>'>
-						</td>
-						<td style="margin-right: 10px;padding: 0px;width:60px;">Site</td><td colspan="3"><select
-							id="site" name="site" style="width: 45%;"  value='<s:property value="site"/>'>
-								<option value="">--Select--</option>
-								<option value="DXB">DXB</option>
-								<option value="AUH">AUH</option>
-						</select> <input type="hidden" id="hidsite" name="hidsite"  value='<s:property value="hidsite"/>'>
-						</td>
-						
-						
-					</tr>
-					<tr>
-						<td >TC no</td><td colspan="3"> <input type="text" id="tcno" name="tcno" style="width: 43%;"
-							placeholder="TC number" value='<s:property value="tcno"/>'>
-						</td>
+                            <td class="um-label">Password</td>
+                            <td colspan="3">
+                                <input type="password" id="txtusername" name="password"
+                                       placeholder="Enter Password"
+                                       value='<s:property value="password"/>'>
+                            </td>
 
+                            <td class="um-label">Site</td>
+                            <td colspan="3">
+                                <select id="site" name="site" value='<s:property value="site"/>'>
+                                    <option value="">--Select--</option>
+                                    <option value="DXB">DXB</option>
+                                    <option value="AUH">AUH</option>
+                                </select>
+                                <input type="hidden" id="hidsite" name="hidsite"
+                                       value='<s:property value="hidsite"/>'>
+                            </td>
+                        </tr>
 
-						<td >Time Period</td><td colspan="3"> <input type="text" id="txtperiod" name="timeperiod"
-							style="width: 43%;" placeholder="Time Period" value='<s:property value="timeperiod"/>'>
-						</td>
-						<td>Remarks</td><td colspan="3"><select
-							id="remarks" name="remarks" style="width: 45%;" value='<s:property value="remarks"/>'>
-								<option value="">--Select--</option>
-								<option value="Traffic Fines">Traffic Fines</option>
-								<option value="Salik">Salik</option>
-						</select> <input type="hidden" id="hidremrk" name="hidremrk" value='<s:property value="hidremrk"/>'>
+                        <tr>
+                            <td class="um-label">TC no</td>
+                            <td colspan="3">
+                                <input type="text" id="tcno" name="tcno"
+                                       placeholder="TC number"
+                                       value='<s:property value="tcno"/>'>
+                            </td>
 
-						</td>
-					</tr>
-					<tr>
-						<td>IsCaptch</td>
-						<td colspan="3"><input type="checkbox" id="captch"
-							placeholder="" name="captch" onclick="funClickChk()"> <input
-							type="hidden" id="hidCaptcha" name="hidCaptcha" value='<s:property value="hidCaptcha"/>'>RTA<input
-							type="checkbox" id="rta" placeholder="RTA type" name="rta"
-							onclick="fucntionRtaChk()"><input type="hidden"
-							id="hidRta" name="hidRta" value='<s:property value="hidRta"/>'></td>
-						<td>Sq Number</td>
-						<td colspan="3"><input type="text" id="sqno"
-							placeholder="Sequence number" name="sqno" style="width: 43%;"
-							value='<s:property value="sqno"/>'>
-						</td>
-						
-					</tr>
+                            <td class="um-label">Time Period</td>
+                            <td colspan="3">
+                                <input type="text" id="txtperiod" name="timeperiod"
+                                       placeholder="Time Period"
+                                       value='<s:property value="timeperiod"/>'>
+                            </td>
 
-				</table>
-				<br />
-			</div>
-			<br />
-			<!-- Here is the head -->
-			<input type="hidden" id="mode" name="mode"
-				value='<s:property value="mode"/>' /> 
-				<input type="hidden"name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-			<input type="hidden" id="msg" name="msg"
-				value='<s:property value="msg"/>' /> <input type="hidden"
-				id="useridchk" name="useridchk"
-				value='<s:property value="useridchk"/>' /> <input type="hidden"
-				id="usernamechk" name="usernamechk"
-				value='<s:property value="usernamechk"/>' /> <input type="hidden"
-				id="langval" name="langval" value='<s:property value="langval"/>' />
-			<input type="hidden" id="permissionval" name="permissionval"
-				value='<s:property value="permissionval"/>' /> <input type="hidden"
-				id="existusermaster" name="existusermaster"
-				value='<s:property value="existusermaster"/>' />
-			<%--   <input type="hidden" id="hidelevels" name="hidelevels" value='<s:property value="hidelevels"/>'/>
- --%>  </div>
-		</form>
-		<div id="roleDetailsWindow">
-			<div></div>
-		</div>
-	</div>
+                            <td class="um-label">Remarks</td>
+                            <td colspan="3">
+                                <select id="remarks" name="remarks"
+                                        value='<s:property value="remarks"/>'>
+                                    <option value="">--Select--</option>
+                                    <option value="Traffic Fines">Traffic Fines</option>
+                                    <option value="Salik">Salik</option>
+                                </select>
+                                <input type="hidden" id="hidremrk" name="hidremrk"
+                                       value='<s:property value="hidremrk"/>'>
+                            </td>
+                        </tr>
 
+                        <tr>
+                            <td class="um-label">IsCaptch</td>
+                            <td colspan="3">
+                                <input type="checkbox" id="captch" name="captch"
+                                       onclick="funClickChk()">
+                                <input type="hidden" id="hidCaptcha" name="hidCaptcha"
+                                       value='<s:property value="hidCaptcha"/>'>
+                                RTA
+                                <input type="checkbox" id="rta" name="rta"
+                                       onclick="fucntionRtaChk()">
+                                <input type="hidden" id="hidRta" name="hidRta"
+                                       value='<s:property value="hidRta"/>'>
+                            </td>
+
+                            <td class="um-label">Sq Number</td>
+                            <td colspan="3">
+                                <input type="text" id="sqno" name="sqno"
+                                       placeholder="Sequence number"
+                                       value='<s:property value="sqno"/>'>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <br />
+                </div>
+                <br />
+
+                <!-- Hidden fields -->
+                <input type="hidden" id="mode" name="mode"
+                       value='<s:property value="mode"/>' />
+                <input type="hidden" name="deleted" id="deleted"
+                       value='<s:property value="deleted"/>' />
+                <input type="hidden" id="msg" name="msg"
+                       value='<s:property value="msg"/>' />
+                <input type="hidden" id="useridchk" name="useridchk"
+                       value='<s:property value="useridchk"/>' />
+                <input type="hidden" id="usernamechk" name="usernamechk"
+                       value='<s:property value="usernamechk"/>' />
+                <input type="hidden" id="langval" name="langval"
+                       value='<s:property value="langval"/>' />
+                <input type="hidden" id="permissionval" name="permissionval"
+                       value='<s:property value="permissionval"/>' />
+                <input type="hidden" id="existusermaster" name="existusermaster"
+                       value='<s:property value="existusermaster"/>' />
+            </div>
+        </form>
+
+        <div id="roleDetailsWindow">
+            <div></div>
+        </div>
+    </div>
 </body>
+
 </html>
