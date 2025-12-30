@@ -177,243 +177,313 @@
 </script>
 
 <style>
+
+
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow: auto;
+    height: 530px;
 }
 
-/* background + base font */
+
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 13px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
-    padding: 24px 0;
+    padding: 32px 0;
     min-height: 100vh;
-    box-sizing: border-box;
+    box-sizing: border-box; [web:29]
 }
 
-/* WIDER main card */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 12px 24px;
-    max-width: 1500px;          /* wider than before */
-    margin: 0 auto;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    text-align: left !important;
 }
 
-/* header strip */
+/* Header include alignment */
 .receipt-header {
     display: block;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0 8px;             /* less side padding so content uses width */
-    font-size: 13px;
+    padding: 0 0 0 5px;
 }
 
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 12px;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-size: 12px;
-}
-
-.receipt-header button:hover {
-    background: #0056b3;
-}
-
-#txtStatus {
-    font-size: 13px;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-/* generic blocks (unchanged) */
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
 
 .section-block {
-    flex: 1;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 18px;
 }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #333;
 }
 
-.section-block .form-group {
+.section-row {
     display: flex;
+    flex-wrap: wrap;
+    gap: 18px 26px;
+}
+
+/* Each label + control block */
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 260px; /* 120 label + fixed 260 input */
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 6px;
+    min-width: 320px;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
+
+.form-group label {
+    font-family: Tahoma, 'Segoe UI', sans-serif;
+    font-weight: 600;
     color: #253858;
+    white-space: nowrap;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 16px;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
+
+.form-group input[type="text"],
+.form-group select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 260px; /* consistent width for all inputs */
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
+
+input[type="text"],
+select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-/* table sections */
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+
+input[readonly],
+input[tabindex="-1"] {
+    background-color: #f3f4f6;
+    color: #6b7280;
 }
 
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
+
+.section-block.totals-block .form-group input[type="text"] {
+    height: 32px !important;
+    font-size: 14px;
     font-weight: 600;
+    text-align: right;
 }
 
-/* tables fill width */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+
+#jqxAppliedAccountsGrid {
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-    table-layout: fixed;
+    background: #fff;
 }
 
-.cr-table th,
-.cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+#jqxAppliedAccountsGrid .jqx-grid-header {
+    background: #f1f4f9;
+    border-bottom: 1px solid #dbe1ea;
 }
 
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+#jqxAppliedAccountsGrid .jqx-grid-column-header {
+    font-size: 14px;
     font-weight: 600;
+    color: #354B6A;
+    padding: 8px 6px;
 }
 
-.cr-table tr:last-child td {
-    border-bottom: none;
+#jqxAppliedAccountsGrid .jqx-grid-cell {
+    font-size: 14px;
+    padding: 7px 6px;
+    border-bottom: 1px solid #e4e7ec;
 }
+
+#jqxAppliedAccountsGrid .jqx-grid-cell-selected {
+    background-color: #e8f0ff !important;
+}
+
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: 530px; 
+    padding: 0;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+
+
 </style>
 
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+
+<div id="mainBG" class="homeContent">
+
 <form id="frmAccountsOpening" action="saveAccountsOpening" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
-<div class="table-section" style="width: 100%;">
-<table class="cr-table" width="100%">
-  <tr>
-    <td align="right">Account</td>
-    <td><select id="cmbacctype" name="cmbacctype" style="width:50%;" onchange="clearAccountInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="BANK">Bank</option><option value="GL">GL</option><option value="AR">AR</option><option value="AP">AP</option><option value="HR">HR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td colspan="6"><input type="text" id="txtaccname" name="txtaccname" style="width:75%;" tabindex="-1" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="6%" align="right">Currency</td>
-    <td width="9%"><input type="text" id="txtaccountcurrency" name="txtaccountcurrency" readonly="readonly" style="width:60%;" value='<s:property value="txtaccountcurrency"/>' tabindex="-1"/>
-    <input type="hidden" id="txtaccountcurrencyid" name="txtaccountcurrencyid" value='<s:property value="txtaccountcurrencyid"/>'/>
-    <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/></td>
-    <td width="5%" align="right">Rate</td>
-    <td width="16%"><input type="text" id="txtrate" name="txtrate" style="width:40%;text-align: right;" value='<s:property value="txtrate"/>'/></td>
-  </tr>
-</table></div>
-<div class="table-section" style="width: 100%;"><h3>Opening Invoice/Cheque/Other Details</h3>
-<div class="cr-table" id="jqxAppliedAccountsGrid"><jsp:include page="accountsInvoiceGrid.jsp"></jsp:include></div>
-</div><br/>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="8%" align="right">Debit Total</td>
-    <td width="15%"><input type="text" id="txtdebittotal" name="txtdebittotal" style="width:60%;text-align: right;" value='<s:property value="txtdebittotal"/>' tabindex="-1"/>
-    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/></td>
-    <td width="10%" align="right">Credit Total</td>
-    <td width="19%"><input type="text" id="txtcredittotal" name="txtcredittotal" style="width:50%;text-align: right;" value='<s:property value="txtcredittotal"/>' tabindex="-1"/></td>
-    <td width="8%" align="right">Net Total</td>
-    <td width="16%"><input type="text" id="txtnettotal" name="txtnettotal" style="width:60%;text-align: right;" value='<s:property value="txtnettotal"/>' tabindex="-1"/></td>
-    <td width="10%" align="right">Base Amount</td>
-    <td width="14%"><input type="text" id="txtbaseamount" name="txtbaseamount" style="width:70%;text-align: right;" value='<s:property value="txtbaseamount"/>' tabindex="-1"/></td>
-  </tr>
-</table>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txttrno" name="txttrno"  value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="applylength" name="applylength"/>
-<input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
-</div>
+    <!-- ================= ACCOUNT DETAILS ================= -->
+    <div class="section-block">
+
+        <div class="section-title">Account Details</div>
+
+        <div class="section-row">
+
+            <div class="form-group">
+                <label>Account</label>
+                <select id="cmbacctype" name="cmbacctype" onchange="clearAccountInfo();">
+                    <option value="BANK">Bank</option>
+                    <option value="GL">GL</option>
+                    <option value="AR">AR</option>
+                    <option value="AP">AP</option>
+                    <option value="HR">HR</option>
+                </select>
+                <input type="hidden" id="hidcmbacctype" name="hidcmbacctype"
+                       value='<s:property value="hidcmbacctype"/>'/>
+            </div>
+
+            <div class="form-group">
+                <label>Account ID</label>
+                <input type="text" id="txtaccid" name="txtaccid"
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="txtaccid"/>' 
+                       onkeydown="getAcc(event);"/>
+            </div>
+
+            <div class="form-group">
+                <label>Account Name</label>
+                <input type="text" id="txtaccname" name="txtaccname"
+                       tabindex="-1"
+                       value='<s:property value="txtaccname"/>'/>
+                <input type="hidden" id="txtdocno" name="txtdocno"
+                       value='<s:property value="txtdocno"/>'/>
+            </div>
+
+            <div class="form-group">
+                <label>Currency</label>
+                <input type="text" id="txtaccountcurrency" name="txtaccountcurrency"
+                       readonly
+                       value='<s:property value="txtaccountcurrency"/>'/>
+                <input type="hidden" id="txtaccountcurrencyid" name="txtaccountcurrencyid"
+                       value='<s:property value="txtaccountcurrencyid"/>'/>
+                <input type="hidden" id="hidcurrencytype" name="hidcurrencytype"
+                       value='<s:property value="hidcurrencytype"/>'/>
+            </div>
+
+            <div class="form-group">
+                <label>Rate</label>
+                <input type="text" id="txtrate" name="txtrate"
+                       style="text-align:right;"
+                       value='<s:property value="txtrate"/>'/>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= OPENING DETAILS GRID ================= -->
+    <div class="section-block">
+
+        <div class="section-title">Opening Invoice / Cheque / Other Details</div>
+
+        <div id="jqxAppliedAccountsGrid">
+            <jsp:include page="accountsInvoiceGrid.jsp"></jsp:include>
+        </div>
+
+    </div>
+
+    <!-- ================= TOTALS ================= -->
+    <div class="section-block totals-block">
+
+        <div class="section-title">Totals</div>
+
+        <div class="section-row">
+
+            <div class="form-group">
+                <label>Debit Total</label>
+                <input type="text" id="txtdebittotal" name="txtdebittotal"
+                       tabindex="-1"
+                       style="text-align:right;"
+                       value='<s:property value="txtdebittotal"/>'/>
+                <input type="hidden" id="txtvalidation" name="txtvalidation"
+                       value='<s:property value="txtvalidation"/>'/>
+            </div>
+
+            <div class="form-group">
+                <label>Credit Total</label>
+                <input type="text" id="txtcredittotal" name="txtcredittotal"
+                       tabindex="-1"
+                       style="text-align:right;"
+                       value='<s:property value="txtcredittotal"/>'/>
+            </div>
+
+            <div class="form-group">
+                <label>Net Total</label>
+                <input type="text" id="txtnettotal" name="txtnettotal"
+                       tabindex="-1"
+                       style="text-align:right;"
+                       value='<s:property value="txtnettotal"/>'/>
+            </div>
+
+            <div class="form-group">
+                <label>Base Amount</label>
+                <input type="text" id="txtbaseamount" name="txtbaseamount"
+                       tabindex="-1"
+                       style="text-align:right;"
+                       value='<s:property value="txtbaseamount"/>'/>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= HIDDEN FIELDS ================= -->
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+    <input type="hidden" id="gridlength" name="gridlength"/>
+    <input type="hidden" id="applylength" name="applylength"/>
+    <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
+
 </form>
-	
-<div id="accountDetailsWindow">
-	<div></div><div></div>
-</div>  
 
-<div id="openingBalanceGridWindow">
-	<div></div><div></div>
-</div> 	
+<!-- ================= POPUP WINDOWS ================= -->
+<div id="accountDetailsWindow"><div></div><div></div></div>
+<div id="openingBalanceGridWindow"><div></div><div></div></div>
+
 </div>
+
 </body>
+
 </html>

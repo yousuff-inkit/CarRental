@@ -328,12 +328,13 @@
 </script>  
 
     <style>
+/* Scroll area */
 .hidden-scrollbar {
     overflow: auto;
     height: 530px;
 }
 
-/* wider page + same font */
+/* GLOBAL – same as master */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -341,72 +342,81 @@ body {
     margin: 0;
     padding: 24px 0;
     min-height: 100vh;
-    box-sizing: border-box;
+    box-sizing: border-box; /* consistent sizing model */ [web:29]
+    font-size: 14px;        /* base font size */ [web:41][web:60]
 }
 
-/* wider main card */
+/* main card */
 #mainBG {
     background: #fff;
     border-radius: 16px;
     padding: 12px 24px;
-    max-width: 1500px;        /* was 1200px */
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* header area */
+/* header from include */
 .receipt-header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
     margin-bottom: 16px;
     border-radius: 12px;
-    padding: 0 8px;           /* less side padding so content uses width */
-    font-size: 2vh;
+    padding: 0 8px;
+    font-size: 14px;
 }
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
+
+/* generic labels */
+label,
+.table-section td[align="right"] {
+    font-family: Tahoma, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+    font-size: 16px;
 }
-.receipt-header input[type="text"] {
+
+/* UNIFIED INPUT / SELECT SIZE (applies everywhere) */
+input[type="text"],
+select {
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
 }
-.receipt-header input[type="text"]:focus {
+
+/* inside table cells keep normal width but same height/look */
+table.cr-table input[type="text"],
+table.cr-table select {
+    width: 100%;
+}
+
+/* focus state */
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+
+/* readonly look */
+input[readonly],
+input[tabindex="-1"] {
+    background-color: #f3f4f6;
+    color: #6b7280;
 }
 
-/* generic sections */
+/* generic sections (wrapper for tables) */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
@@ -414,53 +424,27 @@ body {
     padding: 20px 18px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
 
-/* table sections */
+/* table section (Year Close Details card) */
 .table-section {
     margin-bottom: 18px;
     padding-inline: 1.04em;
     padding-block: 1.04em;
-    border-radius: 8px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
 
-/* tables now use full new width */
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05em;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* TABLE – full width, same font */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -468,23 +452,58 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
-    table-layout: fixed;      /* spread columns across wider card */
+    table-layout: fixed;  /* stable column widths at full width */ [web:46][web:55]
+    font-size: 14px;
 }
+
 .cr-table th,
 .cr-table td {
-    padding: 9px 10px;
+    padding: 8px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
+
+/* submit button in table */
+.myButton,
+.table-section button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 18px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.myButton:hover,
+.table-section button:hover {
+    background: #0056b3;
+}
+
+/* grid containers below (yearEndCloseDiv etc.) */
+#yearEndCloseDiv,
+#yearEndCloseGroupDiv {
+    margin-top: 6px;
+}
+
+/* keep included grids framed similarly */
+#yearEndCloseDiv .cr-table,
+#yearEndCloseGroupDiv .cr-table {
+    width: 100%;
+}
+
 </style>
     
 </head>
