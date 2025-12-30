@@ -45,138 +45,123 @@
 		}
 
 	</script>
-		<style type="text/css">
-
-
-.searchPop table {
+	<style type="text/css">
+/* Master UI Styles */
+table {
   border-collapse: separate;
-  border-spacing: 15px 18px;  
+  border-spacing: 15px 12px; /* Standardized master gap */
 }
 
-
-.searchPop td[align="right"] {
-  font-weight: 300;
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td[align="right"] {
+  font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
+  font-weight: 700;
   color: #222;
+  white-space: nowrap;
 }
 
-
-.searchPop input[type="text"] {
-  font-weight: 300;
-  font-size: 13px;
-  padding: 8px 12px;
-  width: 95%;               /* Prevent overflow */
+/* Bold text inside inputs and selects with Grey Borders */
+input[type="text"], select {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 10px;
   max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
-}
-
-
-.searchPop #bankdate, #chqdate {
-  font-weight: 300;
-  font-size: 13px;
-}
-
-/* Bold button text */
-.searchPop .myButton {
-  font-weight: 300;
-  font-size: 13px;
-}
-
-/* Additional spacing for rows */
-.searchPop table {
-  border-collapse: separate;
-  /* Reduced vertical spacing (8px) while keeping horizontal gap (15px) */
-  border-spacing: 15px 8px; 
-}
-
-/* Increased font size for labels */
-.searchPop td[align="right"] {
-  font-weight: 300;
-  font-size: 13px; /* Larger font */
-  color: #222;
-  white-space: nowrap; /* Prevents labels from breaking into two lines */
-}
-
-/* Larger font and better padding for inputs */
-.searchPop input[type="text"], select {
-  font-weight: 300;
-  font-size: 12px; /* Larger font */
-  padding: 16px 10px; /* Comfortable padding without being too tall */
   box-sizing: border-box;
+  border: 1px solid #bdc3c7; /* Grey border */
+  border-radius: 4px;
+  background-color: #ffffff;
 }
 
-/* Specifically adjust the jqxDateTimeInput size to match */
-.searchPop #datess {
-  font-size: 16px !important;
+/* Focus state for inputs */
+input[type="text"]:focus, select:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-/* Bold and large button */
-.searchPop .myButton {
-  font-weight: 300;
-  font-size: 13px;
-  padding: 5px 15px;
+/* Specifically adjust jqxDateTimeInput styling */
+#datess {
+  font-family: Tahoma, Geneva, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Blue Button Color */
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: none;
+}
+
+/* No color change on hover as requested */
+.myButton:hover {
+  background-color: #007bff; 
   cursor: pointer;
 }
 
-/* This removes the extra padding browsers sometimes add to table cells */
-.searchPop td {
-  padding: 2px 0px;
+/* Row spacing */
+tr {
+  line-height: 1.6;
 }
-
 </style>
-<body bgcolor="#E0ECF8">
-<div id=search class="searchPop"> 
-<table width="100%" >
-  <tr >
-   <td>
-   <table width="100%"   >
-   <tr>
-   
+
+<body bgcolor="#FFFFFF">
+<div id="search">
+<table width="100%">
+  <tr>
     <td align="right" width="6%">Doc No</td>
-    <td align="left" width="20%"><input type="text" name="docnoss" id="docnoss"  style="width:90%;" value='<s:property value="docnoss"/>'></td>
+    <td width="20%"><input type="text" name="docnoss" id="docnoss" style="width:100%;" value='<s:property value="docnoss"/>'></td>
+    
     <td align="right" width="8%">Account</td>
-    <td align="left"><input type="text" name="accountss" id="accountss" style="width:100%;"  value='<s:property value="accountss"/>'></td>
+    <td width="20%"><input type="text" name="accountss" id="accountss" style="width:100%;" value='<s:property value="accountss"/>'></td>
     
-   <td align="right"  width="10%">Account Name</td>
-    <td align="left"  width="30%"><input type="text" name="accnamess" style="width:90%;" id="accnamess" value='<s:property value="accnamess"/>'></td>
+    <td align="right" width="10%">Account Name</td>
+    <td width="30%"><input type="text" name="accnamess" id="accnamess" style="width:100%;" value='<s:property value="accnamess"/>'></td>
+  </tr>
+
+  <tr>
+    <td align="right">Date</td>
+    <td><div id="datess" name="datess" value='<s:property value="datess"/>'></div></td>
     
-    <tr>
+    <td align="right">Description</td>
+    <td><input type="text" name="description" id="description" style="width:100%;" value='<s:property value="description"/>'></td>
     
+    <td align="right">Type</td>
+    <td>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="60%">
+            <select name="reftypess" id="reftypess" style="width:100%;" value='<s:property value="reftypess"/>'>
+              <option value="">--select--</option>
+              <option value="DIR">DIR</option>
+              <option value="NPO">NPO</option>
+            </select>
+          </td>
+          <td width="40%" align="right">
+            <input type="button" name="searchs" id="searchs" class="myButton" value="Search" onclick="loadSearchs()">
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
-  <tr>
-  <td>
-  <!-- <table width="100%"> -->
-        <tr> 
-        <td align="right" width="6%">Date </td>
-    <td align="left" width="20%"><div id="datess" name="datess"  value='<s:property value="datess"/>'></div></td>
-   
-    <td align="right" width="10%">Description</td><td  width="100%"><input type="text" name="description" style="width:100%;" id="description" value='<s:property value="description"/>'></td>
-   
-    <td align="right" width="8%">Type</td><td  width="10%"><select  name="reftypess" id="reftypess" style="width:100%;"  value='<s:property value="reftypess"/>' >
-  <option value="">--select--</option>
-  <option value="DIR" >DIR</option>
-      <option value="NPO" >NPO</option>
-   </select> &nbsp; <input type="button" name="searchs" id="searchs" class="myButton" value="Search"  onclick="loadSearchs()"> </td>
-   
-   </tr>
-  
-    </table>
-  </td>
-
-
 
   <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdivs">
-      
-   <jsp:include  page="submasterSearch.jsp"></jsp:include> 
-   
-   </div>
+    <td colspan="6">
+      <div id="refreshdivs">
+        <jsp:include page="submasterSearch.jsp" />
+      </div>
     </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>
