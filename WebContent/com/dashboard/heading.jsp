@@ -13,198 +13,110 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="../../../../css/body.css"/>
-        <style>
-/* Scoped styles using .dashboard-header-wrapper class */
+<style>
 .dashboard-header-wrapper {
-    --shadow-light: #ffffff;
-    --shadow-dark: #d0d0d0;
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
-    --accent-color: #3498db;
-    --bg-grey: #e8e8e8;
-    --bg-grey-light: #f0f0f0;
-    font-family: 'Poppins', sans-serif;
-    max-height: 600px;
+    --primary: #2563eb;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    
+    font-family: 'Inter', 'Poppins', sans-serif;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     overflow-y: auto;
-    padding: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
 }
 
-/* Custom Scrollbar */
-.dashboard-header-wrapper::-webkit-scrollbar {
-    width: 10px;
-}
-
-.dashboard-header-wrapper::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.dashboard-header-wrapper::-webkit-scrollbar-thumb {
-    background: #b0b0b0;
-    border-radius: 10px;
-}
-
-.dashboard-header-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #909090;
-}
-
-/* Header Container */
+/* Removed the white box and border from Heading */
 .dashboard-header-wrapper .header-container {
-    padding: 15px;
+    padding: 5px 0;
+    background: transparent; 
+    border: none;
+    box-shadow: none;
+    margin-bottom: 5px; /* Minimal padding to buttons */
     text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
-    margin-bottom: 20px;
-    box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.8),
-                4px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Labels */
 .dashboard-header-wrapper #lbldetail {
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
 }
 
-.dashboard-header-wrapper #lbldetailname {
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--secondary-color);
-}
-
-.dashboard-header-wrapper .separator {
-    font-size: 22px;
-    font-weight: 500;
-    color: #7f8c8d;
-}
-
-/* Button Grid */
+/* One-line Button Row */
 .dashboard-header-wrapper .btn-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 90px);
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    column-gap: 8px;
-    row-gap: 4px;
-    width: 100%;
-    margin: 20px 0;
+    gap: 8px;
+    margin: 5px 0; 
 }
 
-/* Modern Grey Buttons */
 .dashboard-header-wrapper .nbtn {
-    min-width: 90px;
-    padding: 5px 8px;
-    border-radius: 12px;
-    background: linear-gradient(145deg, #ffffff, #f5f5f5);
-    border: 1px solid #e0e0e0;
-    color: var(--primary-color);
+    flex: 1;
+    max-width: 110px;
+    height: 36px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: var(--text-main);
+    font-size: 11px;
     font-weight: 600;
-    font-size: 10px;
-    font-family: "Poppins", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.9),
-                4px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
 }
 
-.dashboard-header-wrapper .nbtn:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(145deg, #ffffff, #eeeeee);
-    box-shadow: -6px -6px 14px rgba(255, 255, 255, 1),
-                6px 6px 14px rgba(0, 0, 0, 0.15);
+.dashboard-header-wrapper .btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
 }
 
-.dashboard-header-wrapper .nbtn:active {
-    transform: translateY(0);
-    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.7),
-                inset 2px 2px 6px rgba(0, 0, 0, 0.15);
+/* Email Button Fix: Force Clickable */
+#btnSendingEmail {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
-.dashboard-header-wrapper .nbtn img {
-    width: 10px;
-    height: 10px;
-    filter: none;
-    opacity: 0.8;
-}
-
-.dashboard-header-wrapper .nbtn svg {
-    width: 10px;
-    height: 10px;
-}
-
-/* Branch Section */
+/* Removed white box from Branch Section */
 .dashboard-header-wrapper .branch-section {
+    background: transparent; 
+    border: none;
+    padding: 5px 0;
+    margin-bottom: 10px; 
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin: 20px 0;
-    padding: 0 20px;
+    gap: 12px;
 }
 
-.dashboard-header-wrapper .branch-label-wrapper {
-    min-width: 80px;
-    text-align: right;
-}
-
-.dashboard-header-wrapper #branchlabel {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.dashboard-header-wrapper .branch-select-wrapper {
-    flex: 1;
-    max-width: 69%;
-}
-
-/* Styled Select Dropdown */
 .dashboard-header-wrapper .styled-select {
-    background: linear-gradient(145deg, #ffffff, #f5f5f5);
-    padding: 12px 16px;
-    width: 100%;
-    border-radius: 14px;
-    box-shadow: inset -4px -4px 10px rgba(255, 255, 255, 0.8),
-                inset 4px 4px 10px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e0e0e0;
+    width: 200px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 4px 8px;
 }
 
 .dashboard-header-wrapper .styled-select select {
-    width: 100%;
     border: none;
-    background: transparent;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--primary-color);
+    width: 100%;
+    font-size: 13px;
     outline: none;
-    cursor: pointer;
 }
-
-.dashboard-header-wrapper .styled-select select option {
-    background: #ffffff;
-    color: var(--primary-color);
-    padding: 8px;
+#btnGuideline svg, 
+#btnCalculate svg {
+    width: 15px;  
+    height: 15px; 
+    stroke-width: 2.5px; 
 }
-
-/* Submit Section */
-.dashboard-header-wrapper .submit-section {
-    padding: 5px 10px;
+#btnSubmit {
+    margin: 0 auto;
 }
-
-.dashboard-header-wrapper .submit-container {
-    display: flex;
-    
-    max-width: 70%;
-    margin-left: 55px;
-}
-
-.dashboard-header-wrapper #btnSubmit {
-    max-width: 120px;
-    padding: 4px 6px;
-}</style>
+</style>
         <script type="text/javascript">
             $(document).ready(function () {
 
@@ -264,6 +176,7 @@
 
                 funChkHeaderButton();
             });
+            
 
             function funDateInPeriod(value) {
                 var styear = new Date(window.parent.txtaccountperiodfrom.value);
@@ -676,23 +589,29 @@
     </div>
 
     <!-- ===== BUTTON GRID ===== -->
-    <div class="btn-grid">
-        <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
-            <img src="<%=contextPath%>/icons/guidelinedb.png" alt=""> Guideline
-        </button>
+   <div class="btn-grid">
+    <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20m10-10H2"/></svg>
+        Guideline
+    </button>
 
-        <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
-            <img src="<%=contextPath%>/icons/sendemail.png" alt=""> Email
-        </button>
+    <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+    </button>
 
-        <button type="button" class="nbtn" id="btnExcel" onclick="funExportBtn();">
-            <img src="<%=contextPath%>/icons/excel_new.png" alt=""> Export
-        </button>
+    <button type="button" class="nbtn" id="btnExcel" onclick="funExportBtn();">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        Export
+    </button>
 
-        <button type="button" class="nbtn" id="btnCalculate" onclick="funCalculate();">
-            <img src="<%=contextPath%>/icons/calculate_new.png" alt=""> Calculate
-        </button>
-    </div>
+    <button type="button" class="nbtn" id="btnCalculate" onclick="funCalculate();">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+        Calculate
+    </button>
+    
+    
+</div>
 
     <!-- ===== BRANCH SECTION ===== -->
     <div class="branch-section">
@@ -710,16 +629,10 @@
     </div>
 
     <!-- ===== SUBMIT BUTTON ===== -->
-    <div class="submit-section">
-        <div class="submit-container">
-            <button type="button" class="nbtn" id="btnSubmit" onclick="funreload(event);">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M5 12l5 5V7l-5 5zm6-5v10l8-5-8-5z"/>
-                </svg>
-                Submit
-            </button>
-        </div>
-    </div>
+   <button type="button" class="nbtn btn-primary" id="btnSubmit" onclick="funreload(event);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Submit
+    </button>
 
     <!-- ===== REMAINING HIDDEN FIELDS & WINDOWS ===== -->
     <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'/>
