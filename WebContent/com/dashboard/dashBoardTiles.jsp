@@ -1,265 +1,300 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List" %>
-<%@ page import="com.dashboard.dto.TileBean" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.connection.ClsConnection" %>
 <%@ page import="com.dashboard.ClsDashBoardDAO" %>
+<%@ page import="com.dashboard.ClsDashBoardBean" %>
 <%@ page import="net.sf.json.JSONArray" %>
 
 <%
-    // --- 1. AJAX LISTENER (Background Server) ---
+    // ========================================================================
+    // 1. DEFINE SVG ICONS
+    // ========================================================================
+    String svgBank      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M11.5 1L2 6v2h19V6l-9.5-5zM4 8v10h3V8H4zm5 0v10h3V8H9zm5 0v10h3V8h-3zM2 20v2h19v-2H2z'/></svg>";
+    String svgCard      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z'/></svg>";
+    String svgCash      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z'/></svg>";
+    String svgFile      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg>";
+    String svgCar       = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/></svg>";
+    String svgUser      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+    String svgHandshake = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M15.42 8.78l-3.23-2.91c-.48-.43-1.22-.38-1.65.11L10.3 6.22 8.5 4.6c-.39-.35-1-.35-1.39 0l-5.66 5.1c-.39.35-.39.91 0 1.26l.99.89-1.87 1.68c-.39.35-.39.91 0 1.26l2.83 2.55c.39.35 1.01.35 1.4 0l1.87-1.68.99.89c.39.35 1.01.35 1.4 0l6.36-5.72c.43-.49.38-1.23-.11-1.65z'/></svg>";
+    String svgCalendar  = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'/></svg>";
+    String svgWrench    = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z'/></svg>";
+    String svgBuilding  = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/></svg>";
+
+    // Mapping icons
+    Map<String, String> iconMap = new HashMap<String, String>();
+    iconMap.put("Accounts Master", svgBuilding);
+    iconMap.put("Bank Payments", svgCard);
+    iconMap.put("Bank Receipts", svgBank);
+    iconMap.put("Cash Payments", svgCash);
+    iconMap.put("IB Bank Payment", svgCard);
+    iconMap.put("IB Bank Receipt", svgBank);
+    iconMap.put("Booking", svgCalendar);
+    iconMap.put("Client", svgUser);
+    iconMap.put("Movement", svgCar);
+    iconMap.put("Maintenance Update", svgWrench);
+    iconMap.put("Rental Agreement Create", svgHandshake);
+
+    // Ajax handling
     String ajaxId = request.getParameter("ajaxId");
-    
     if(ajaxId != null && !ajaxId.trim().isEmpty()) {
         out.clear(); 
         try {
             ClsDashBoardDAO dao = new ClsDashBoardDAO();
             JSONArray jsonResult = dao.detailSearch(ajaxId, session);
-            
-            if(jsonResult == null || jsonResult.isEmpty()) {
-                out.print("[]");
-            } else {
-                out.print(jsonResult.toString());
-            }
-        } catch (Exception e) {
-            out.print("[]");
-        }
+            out.print((jsonResult == null || jsonResult.isEmpty()) ? "[]" : jsonResult.toString());
+        } catch (Exception e) { out.print("[]"); }
         return; 
-    }
-
-    // --- 2. NORMAL PAGE LOAD ---
-    String selectedModule = request.getParameter("module");
-    if(selectedModule == null || selectedModule.trim().isEmpty()){
-        selectedModule = "Finance";
     }
 
     ClsDashBoardDAO tileDao = new ClsDashBoardDAO();
     String cPath = request.getContextPath();
-    List<TileBean> tiles = tileDao.getDashboardTiles(cPath, selectedModule);
-    
-    // Bottom Lists
+    String selectedModule = request.getParameter("module");
+    if(selectedModule == null || selectedModule.trim().isEmpty()){ selectedModule = "Finance"; }
+    String roleId = (session.getAttribute("ROLEID") != null) ? session.getAttribute("ROLEID").toString() : "0";
+
+    List<ClsDashBoardBean> tileList = new ArrayList<ClsDashBoardBean>();
+    Connection conn = null; Statement stmt = null; ResultSet rs = null;
+
+    try {
+        ClsConnection clsCon = new ClsConnection();
+        conn = clsCon.getMyConnection();
+        stmt = conn.createStatement();
+        String searchTerm = selectedModule;
+        if(selectedModule.equalsIgnoreCase("Finance")) searchTerm = "Fin";
+        else if(selectedModule.equalsIgnoreCase("Operation")) searchTerm = "Oper";
+        else if(selectedModule.equalsIgnoreCase("Fleet")) searchTerm = "Fleet";
+        else if(selectedModule.equalsIgnoreCase("Human")) searchTerm = "Hum";
+        else if(selectedModule.equalsIgnoreCase("Asset")) searchTerm = "Asset";
+        else if(selectedModule.equalsIgnoreCase("Control")) searchTerm = "Control";
+
+        String sql = "SELECT DISTINCT m3.menu_name, m3.func FROM my_menu m1 " + 
+                     "JOIN my_menu m2 ON m2.pmenu = m1.mno JOIN my_menu m3 ON m3.pmenu = m2.mno " + 
+                     "LEFT JOIN my_powr p ON p.mno = m3.mno " + 
+                     "WHERE (m1.menu_name LIKE '%" + searchTerm + "%' OR m1.doc_type LIKE '%" + searchTerm + "%') " + 
+                     "AND m3.GATE != 'N' AND m3.func IS NOT NULL AND m3.func <> '' " + 
+                     "AND p.roleid = '" + roleId + "' AND (p.add1<>0 OR p.edit<>0 OR p.del<>0 OR p.print<>0 OR p.attach<>0 OR p.excel<>0 OR p.view<>0) " + 
+                     "ORDER BY m3.menu_name";
+        
+        rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            String title = rs.getString("menu_name");
+            String dbLink = rs.getString("func");
+            String fullUrl = "#";
+            if(dbLink != null && !dbLink.trim().equals("")) {
+                 if(!dbLink.startsWith("/")) fullUrl = cPath + "/" + dbLink;
+                 else fullUrl = cPath + dbLink;
+                 fullUrl += (fullUrl.contains("?") ? "&" : "?") + "menuname=" + title.replace(" ", "%20");
+            }
+            String icon = iconMap.get(title.trim());
+            if(icon == null) { icon = svgFile; }
+            ClsDashBoardBean bean = new ClsDashBoardBean();
+            bean.setTxttitle(title); bean.setTxtdescription(fullUrl); bean.setMsg(icon); 
+            tileList.add(bean);
+        }
+    } catch(Exception e) { e.printStackTrace(); } 
+    finally { if(rs!=null) rs.close(); if(stmt!=null) stmt.close(); if(conn!=null) conn.close(); }
+
     JSONArray jsonArray = tileDao.masterSearch(session);
     String gridData = (jsonArray != null) ? jsonArray.toString() : "[]";
-
     JSONArray detailArray = tileDao.detail(session);
     String detailData = (detailArray != null) ? detailArray.toString() : "[]";
 %>
 
-<script type="text/javascript" src="<%= cPath %>/scripts/jquery-1.11.1.min.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="<%= cPath %>/scripts/jquery-1.11.1.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body, html { height: 100vh; margin: 0; padding: 0; overflow: hidden; font-family: "Segoe UI", Roboto, sans-serif; background-color: #f4f6f9; }
+        
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
 
-<style>
-    /* === GLOBAL STYLES === */
-    body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 0; }
-    
-    /* === BANNER STYLES (FIXED) === */
-    .banner { 
-        background-image: url("<%= cPath %>/icons/banner_image.png"); 
-        background-size: cover; 
-        background-position: center; 
-        height: 130px; 
-        display: flex; 
-        align-items: center; /* Vertically Centers content */
-        padding: 0 40px; 
-        margin: 15px; 
-        border-radius: 6px; 
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        position: relative;
-    }
-    
-    /* Dark overlay to make text readable on any image */
-    .banner::before {
-        content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0, 0, 0, 0.2); /* Slight dark tint */
-        border-radius: 6px;
-    }
+        .page-container { display: flex; flex-direction: column; height: 100%; width: 100%; }
 
-    .banner-content { z-index: 2; position: relative; }
+        .banner { flex: 0 0 100px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .banner::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.2); border-radius: 8px; }
+        .banner-content { z-index: 2; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .welcome-main { font-size: 22px; font-weight: 700; }
 
-    .welcome-main { 
-        font-size: 26px; 
-        font-weight: 700; 
-        color: #ffffff; 
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
-        margin-bottom: 4px;
-        letter-spacing: 0.5px;
-    }
-    
-    .user-highlight { color: #ffd700; } /* Gold Color for Name */
+        .dashboard-grid { flex: 1; display: grid; grid-template-columns: 1fr 1.6fr; grid-template-rows: 1fr 1fr; gap: 12px; padding: 0 15px 12px 15px; overflow: hidden; }
+        .grid-box { background: #fff; border-radius: 6px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
-    .greeting-sub { 
-        font-size: 16px; 
-        color: #f0f0f0; 
-        font-weight: 500; 
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
-        opacity: 0.95;
-    }
+        .header-bar { flex: 0 0 auto; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .header-title { font-weight: 700; color: #444; font-size: 13px; }
 
-    /* === LAYOUT === */
-    .dashboard-grid { display: grid; grid-template-columns: 1fr 1.6fr; grid-template-rows: auto auto; gap: 20px; padding: 0 15px 40px 15px; }
-    .grid-box { background: #ffffff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 10px; min-height: 350px; border: 1px solid #e0e0e0; position: relative; }
+        /* THE ANIMATED EXPANDING SEARCH BAR */
+        .header-search input { 
+            padding: 4px 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 15px; 
+            outline: none; 
+            width: 110px; 
+            font-size: 11px; 
+            transition: all 0.4s ease-in-out; 
+            background-color: #f9f9f9;
+        }
+        .header-search input:focus { 
+            width: 180px; 
+            border-color: #007bff; 
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.2);
+        }
 
-    /* === TILES === */
-    .grid-box.tile-section { padding: 10px; background: #fff; min-height: auto; }
-    .tile-nav-container { display: flex; justify-content: space-between; align-items: center; background-color: #f5f5f5; padding: 8px 10px; border-bottom: 1px solid #ddd; margin-bottom: 10px; border-radius: 4px; overflow-x: auto; }
-    .tile-nav-links a { text-decoration: none; color: #555; font-weight: bold; padding: 6px 10px; border-radius: 4px; font-size: 12px; margin-right: 5px; transition: all 0.2s; }
-    .tile-nav-links a:hover { background-color: #e0e0e0; color: #000; }
-    .tile-nav-links a.active { background-color: #007bff; color: white; }
-    .tile-search-box input { padding: 6px 10px 6px 25px; border: 1px solid #ccc; border-radius: 20px; outline: none; width: 140px; font-size: 12px; }
-    .tile-search-box i { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #888; font-size: 11px; }
+        /* NAVIGATION BAR */
+        .tile-nav-container { background: #f8f9fa; border-bottom: 1px solid #eee; padding: 6px 12px; }
+        .tile-nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+        .tile-nav-links a { font-size: 11px; font-weight: 700; color: #666; text-decoration: none; padding: 6px 12px; border-radius: 4px; white-space: nowrap; transition: 0.2s; border: 1px solid transparent; }
+        .tile-nav-links a:hover { background: #fff; border-color: #ddd; color: #000; }
+        .tile-nav-links a.active { background: #007bff; color: #fff; border-color: #007bff; }
 
-    .dashboard-tile-container { display: flex; flex-wrap: wrap; gap: 12px; padding: 5px; max-height: 280px; overflow-y: auto; border-bottom: 1px solid #eee; }
-    .dashboard-tile { background: #fff; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); padding: 10px 15px; display: flex; align-items: center; width: calc(33.33% - 8px); min-width: 180px; cursor: pointer; border: 1px solid #e0e0e0; margin-bottom: 5px; height: 60px; text-decoration: none !important; }
-    .dashboard-tile:hover { transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.1); border-color: #ccc; }
-    .tile-icon-box { width: 36px; height: 36px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: #fff; }
-    
-    /* Colors */
-    .tile-green { background-color: #10b981; } .tile-red { background-color: #ef4444; } .tile-blue { background-color: #3b82f6; } 
-    .tile-orange { background-color: #f59e0b; } .tile-purple { background-color: #7c3aed; } .tile-teal { background-color: #008080; } .tile-indigo { background-color: #4b0082; }
-    
-    .tile-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 0px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tile-desc { font-size: 10px; color: #999; }
-    .tile-arrow { color: #ccc; font-size: 10px; margin-left: auto; }
+        .scrollable-content { flex: 1; overflow-y: auto; padding: 12px; }
 
-    /* === LISTS === */
-    .app-list-container { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px; max-height: 320px; overflow-y: auto; }
-    .app-tile { background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid #3b82f6; border-radius: 4px; padding: 12px; width: calc(50% - 6px); cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
-    .app-tile:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    .app-tile.active-selection { background-color: #eff6ff; border-color: #3b82f6; box-shadow: inset 0 0 0 1px #3b82f6; }
-    .app-name { font-size: 12px; font-weight: 600; color: #444; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .app-icon { color: #ccc; font-size: 10px; }
-    .app-tile.flagged { border-left-color: #ef4444; } .app-tile.flagged .app-name { color: #b91c1c; }
-    .placeholder-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #999; font-weight: bold; }
-</style>
+        .dashboard-tile-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; }
+        .dashboard-tile { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 95px; transition: 0.2s; cursor: pointer; text-decoration: none !important; }
+        .dashboard-tile:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,0,0,0.05); border-color: #007bff; }
+        .tile-icon-box { width: 28px; height: 28px; margin-bottom: 8px; }
+        .tile-icon-box svg { width: 100%; height: 100%; }
+        .tile-title { font-size: 10.5px; font-weight: 600; text-align: center; color: #555; }
 
-<div style="padding: 0 15px;">
+        .app-tile { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-bottom: 1px solid #f9f9f9; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
+        .app-tile:hover { background-color: #f8faff; transform: translateX(3px); color: #007bff; }
+        .app-tile.active-selection { border-left-color: #007bff; background-color: #f0f7ff; color: #007bff; font-weight: 700; }
+        .app-name { font-size: 11.5px; }
+
+        .empty-label { margin: auto; color: #bbb; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
     <div class="banner">
         <div class="banner-content">
-            <div class="welcome-main">
-                Welcome <span class="user-highlight">${sessionScope.USERNAME}</span>
+            <div class="welcome-main">Welcome ${sessionScope.USERNAME}</div>
+            <div id="greeting" style="font-size: 14px; opacity: 0.9;"></div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="grid-box"><span class="empty-label">Top Left Box (Empty)</span></div>
+
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title">Module Tiles</div>
+                <div class="header-search"><input type="text" onkeyup="filterTiles(this)" placeholder="Search..."></div>
             </div>
-            <div class="greeting-sub" id="greeting"></div>
-        </div>
-    </div>
-    
-    <script>
-        var h = new Date().getHours();
-        var g = "";
-        if (h < 12) { g = "Good Morning"; }
-        else if (h < 18) { g = "Good Afternoon"; }
-        else { g = "Good Evening"; }
-        document.getElementById("greeting").innerText = g;
-    </script>
-</div>
-
-<div class="dashboard-grid">
-    <div class="grid-box"><span class="placeholder-label">Top Left Box (Empty)</span></div>
-
-    <div class="grid-box tile-section">
-        <div class="tile-nav-container">
-            <div class="tile-nav-links">
-                <a href="?module=Finance" class="<%= selectedModule.contains("Finance") ? "active" : "" %>">Finance</a>
-                <a href="?module=Operation" class="<%= selectedModule.contains("Operation") ? "active" : "" %>">Operations</a>
-                <a href="?module=Fleet" class="<%= selectedModule.contains("Fleet") ? "active" : "" %>">Fleet Mgmt</a>
-                <a href="?module=Asset" class="<%= selectedModule.contains("Asset") ? "active" : "" %>">Fixed Assets</a>
-                <a href="?module=Human" class="<%= selectedModule.contains("Human") ? "active" : "" %>">Human Resource</a>
-                <a href="?module=Control" class="<%= selectedModule.contains("Control") ? "active" : "" %>">Control Centre</a>
+            
+            <div class="tile-nav-container">
+                <div class="tile-nav-links">
+                    <a href="?module=Finance" class="<%= selectedModule.contains("Finance") ? "active" : "" %>">Finance</a>
+                    <a href="?module=Operation" class="<%= selectedModule.contains("Operation") ? "active" : "" %>">Operations</a>
+                    <a href="?module=Fleet" class="<%= selectedModule.contains("Fleet") ? "active" : "" %>">Fleet Mgmt</a>
+                    <a href="?module=Asset" class="<%= selectedModule.contains("Asset") ? "active" : "" %>">Fixed Assets</a>
+                    <a href="?module=Human" class="<%= selectedModule.contains("Human") ? "active" : "" %>">Human Resource</a>
+                    <a href="?module=Control" class="<%= selectedModule.contains("Control") ? "active" : "" %>">Control Centre</a>
+                </div>
             </div>
-            <div class="tile-search-box"><i class="fa fa-search"></i><input type="text" id="tileSearchInput" onkeyup="filterTilesLocal()" placeholder="Search..."></div>
+            
+            <div class="scrollable-content">
+                <div class="dashboard-tile-container">
+                    <% for(ClsDashBoardBean t : tileList) { %>
+                        <a href="javascript:void(0);" onclick="openParentMenu('<%= t.getTxttitle() %>')" class="dashboard-tile">
+                            <div class="tile-icon-box"><%= t.getMsg() %></div>
+                            <div class="tile-title"><%= t.getTxttitle() %></div>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
         </div>
 
-        <div class="dashboard-tile-container">
-            <% if(tiles != null && !tiles.isEmpty()) { for(TileBean t : tiles) { %>
-                <a href="javascript:void(0);" onclick="openTabLocal('<%= t.getTitle() %>', '<%= t.getUrl() %>')" class="dashboard-tile">
-                    <div class="tile-icon-box <%= t.getColorClass() %>"><i class="<%= t.getIcon() %>"></i></div>
-                    <div class="tile-content"><div class="tile-title"><%= t.getTitle() %></div><div class="tile-desc">Click to Open</div></div>
-                    <div class="tile-arrow"><i class="fa fa-chevron-right"></i></div>
-                </a>
-            <% } } else { %> <div style="color: #888; padding: 10px;">No forms found for <b><%= selectedModule %></b>.</div> <% } %>
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title">Application List</div>
+                <div class="header-search"><input type="text" onkeyup="filterList(this, 'appListContainer')" placeholder="Filter..."></div>
+            </div>
+            <div id="appListContainer" class="scrollable-content"></div>
         </div>
-    </div>
 
-    <div class="grid-box" style="padding: 0;">
-        <div style="padding:10px 15px; font-weight:bold; color:#555; background:#f9f9f9; border-bottom:1px solid #eee;">Application List</div>
-        <div id="appListContainer" class="app-list-container"></div>
-    </div>
-
-    <div class="grid-box" style="padding: 0;">
-        <div style="padding:10px 15px; font-weight:bold; color:#555; background:#f9f9f9; border-bottom:1px solid #eee;">Status & Updates</div>
-        <div id="detailListContainer" class="app-list-container"></div>
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title">Status & Updates</div>
+                <div class="header-search"><input type="text" onkeyup="filterList(this, 'detailListContainer')" placeholder="Filter..."></div>
+            </div>
+            <div id="detailListContainer" class="scrollable-content"></div>
+        </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    var appData = <%= gridData %>; 
-    var initialDetails = <%= detailData %>; 
+    var appData = <%= gridData %>;
+    var initialDetails = <%= detailData %>;
 
     $(document).ready(function () {
-        $("#tileSearchInput").on("keyup", filterTilesLocal);
+        var h = new Date().getHours();
+        $("#greeting").text((h < 12) ? "Good Morning" : (h < 18) ? "Good Afternoon" : "Good Evening");
 
         var leftContainer = $("#appListContainer");
-        if (!appData || appData.length === 0) {
-            leftContainer.html("<div style='padding:10px; color:#999;'>No applications found.</div>");
-        } else {
-            $.each(appData, function(index, item) {
-                var isFlagged = (item.flag == 1) ? "flagged" : "";
-                var html = '<div class="app-tile ' + isFlagged + '" onclick="openAppDetail(' + index + ', this)">';
-                html += '   <div class="app-name">' + item.description + '</div>';
-                html += '   <div class="app-icon"><i class="fa fa-chevron-right"></i></div>';
-                html += '</div>';
+        if (appData.length === 0) { leftContainer.html("<div class='empty-label'>No apps</div>"); }
+        else {
+            $.each(appData, function(i, item) {
+                var html = '<div class="app-tile" onclick="openAppDetail(' + i + ', this)">' +
+                           '<div class="app-name">' + item.description + '</div>' +
+                           '<div style="font-size:16px; opacity:0.3;">&#8250;</div></div>';
                 leftContainer.append(html);
             });
         }
         renderRightPanel(initialDetails);
     });
 
-    function openAppDetail(index, element) {
+    function filterTiles(el) {
+        var val = el.value.toUpperCase().replace(/\s+/g, '');
+        $(".dashboard-tile").each(function() {
+            var txt = $(this).find(".tile-title").text().toUpperCase().replace(/\s+/g, '');
+            $(this).toggle(txt.indexOf(val) > -1);
+        });
+    }
+
+    function filterList(el, cont) {
+        var val = el.value.toUpperCase().replace(/\s+/g, '');
+        $("#" + cont + " .app-tile").each(function() {
+            var txt = $(this).find(".app-name").text().toUpperCase().replace(/\s+/g, '');
+            $(this).toggle(txt.indexOf(val) > -1);
+        });
+    }
+
+    function openParentMenu(title) { if(window.parent && window.parent.geturl) window.parent.geturl(title); }
+
+    function openAppDetail(index, el) {
         var item = appData[index];
         $(".app-tile").removeClass("active-selection");
-        $(element).addClass("active-selection");
-        $("#detailListContainer").html("<div style='padding:20px; color:#666;'>Loading options...</div>");
-
+        $(el).addClass("active-selection");
+        $("#detailListContainer").html("<div class='empty-label'>Loading...</div>");
         $.ajax({
             url: window.location.href, type: "POST", data: { ajaxId: item.doc_no }, dataType: "json",
-            success: function(data) { renderRightPanel(data); },
-            error: function(xhr) { 
-                try { renderRightPanel($.parseJSON(xhr.responseText.trim())); } 
-                catch(e) { $("#detailListContainer").html("<div style='color:red; padding:10px;'>Error loading data.</div>"); }
-            }
+            success: renderRightPanel
         });
     }
 
     function renderRightPanel(data) {
-        var rightContainer = $("#detailListContainer");
-        rightContainer.empty();
-        if (!data || data.length === 0) { rightContainer.html("<div style='padding:10px; color:#999;'>No options available.</div>"); return; }
-        $.each(data, function(index, item) {
-            var desc = (item.description || "").replace(/'/g, "\\'");
-            var path = (item.path || "").replace(/'/g, "\\'");
-            var html = '<div class="app-tile" onclick="openDetailLink(\'' + desc + '\', \'' + path + '\', \'' + (item.doc_no||0) + '\', \'' + (item.value||0) + '\')">';
-            html += '   <div class="app-name">' + (item.description||"") + '</div>';
-            html += '   <div class="app-icon"><i class="fa fa-arrow-right"></i></div></div>';
-            rightContainer.append(html);
+        var cont = $("#detailListContainer").empty();
+        if (!data || data.length === 0) { cont.html("<div class='empty-label' style='font-size:12px;'>Select an application</div>"); return; }
+        $.each(data, function(i, item) {
+            var html = '<div class="app-tile" onclick="openDetailLink(\'' + item.description + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + item.value + '\')">' +
+                       '<div class="app-name">' + item.description + '</div><div style="font-size:16px; opacity:0.3;">&#8250;</div></div>';
+            cont.append(html);
         });
     }
 
     function openDetailLink(title, path, docno, value) {
-        if (title && title.trim() === 'Movement UpdateNew') { path = "MovementUpdateView.jsp"; }
         var fullUrl = "<%= cPath %>/" + path + "?name=" + title + "&docno=" + docno + "&value=" + value;
-        openTabLocal(title, fullUrl);
-    }
-
-    function filterTilesLocal() {
-        var input = document.getElementById("tileSearchInput").value.toUpperCase();
-        var tiles = document.getElementsByClassName("dashboard-tile");
-        for (var i = 0; i < tiles.length; i++) {
-            var titleDiv = tiles[i].querySelector(".tile-title");
-            if(titleDiv) tiles[i].style.display = (titleDiv.innerText.toUpperCase().indexOf(input) > -1) ? "flex" : "none";
-        }
-    }
-    
-    function openTabLocal(title, url) {
-        var tabContainer = window.parent.$('#tt');
-        if (tabContainer.length > 0) {
-            if (tabContainer.tabs('exists', title)) { tabContainer.tabs('select', title); } 
-            else { tabContainer.tabs('add', { title: title, content: '<iframe scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>', closable: true }); }
-        } else { window.parent.location.href = url; }
+        var tt = window.parent.$('#tt');
+        if (tt.length > 0) {
+            if (tt.tabs('exists', title)) tt.tabs('select', title);
+            else tt.tabs('add', { title: title, content: '<iframe scrolling="auto" frameborder="0" src="' + fullUrl + '" style="width:100%;height:100%;"></iframe>', closable: true });
+        } else window.parent.location.href = fullUrl;
     }
 </script>
+</body>
+</html>
