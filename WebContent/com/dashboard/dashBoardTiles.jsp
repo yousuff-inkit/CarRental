@@ -165,6 +165,73 @@
         .app-name { font-size: 11.5px; }
 
         .empty-label { margin: auto; color: #bbb; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+   
+   
+   
+   
+   /* Announcement Specific Styles */
+.ann-item {
+    display: flex;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.ann-item:last-of-type {
+    border-bottom: none;
+}
+
+.ann-img-box img {
+    width: 100px; /* Fixed width for consistency */
+    height: 70px;
+    border-radius: 4px;
+    object-fit: cover;
+    display: block;
+}
+
+.ann-body {
+    flex: 1;
+}
+
+.ann-body h4 {
+    margin: 0 0 4px 0;
+    font-size: 12.5px;
+    color: #333;
+    font-weight: 700;
+}
+
+.ann-body p {
+    margin: 0;
+    font-size: 11px;
+    color: #666;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Truncates text after 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ann-link {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.ann-footer {
+    padding: 12px 0;
+    text-align: center;
+}
+
+.ann-footer a {
+    font-size: 12px;
+    font-weight: 700;
+    color: #007bff;
+    text-decoration: none;
+}
+   
     </style>
 </head>
 <body>
@@ -178,7 +245,59 @@
     </div>
 
     <div class="dashboard-grid">
-        <div class="grid-box"><span class="empty-label">Top Left Box (Empty)</span></div>
+        <div class="grid-box">
+  <div class="header-bar">
+    <div class="header-title" style="display: flex; align-items: center; gap: 12px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.54 8.46002C16.4774 9.39764 17.004 10.6692 17.004 11.995C17.004 13.3208 16.4774 14.5924 15.54 15.53" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.07 4.93005C20.9447 6.80528 21.9979 9.34842 21.9979 12.0001C21.9979 14.6517 20.9447 17.1948 19.07 19.0701" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 14px; font-weight: 700; color: #444;">Announcements</span>
+            <span style="font-size: 11px; color: #999; font-weight: normal;">4 items</span>
+        </div>
+    </div>
+</div>
+
+    <div class="scrollable-content" style="padding: 0 15px;">
+        
+        <div class="ann-item">
+            <div class="ann-img-box">
+                <img src="<%=request.getContextPath()%>/com/dashboard/pics/1.jfif" alt="Town Hall">
+            </div>
+            <div class="ann-body">
+                <h4>Belonging & Diversity Town Hall</h4>
+                <p>Listen to our Chief Diversity Officer, the Executive Committee and members...</p>
+            </div>
+        </div>
+
+        <div class="ann-item">
+            <div class="ann-img-box">
+                <img src="<%=request.getContextPath()%>/com/dashboard/pics/2.jfif" alt="Referral">
+            </div>
+            <div class="ann-body">
+                <h4>Good People Know Good People</h4>
+                <p>Our best and most powerful asset are our people. Refer a candidate today!</p>
+                <a href="#" class="ann-link">Refer a Candidate</a>
+            </div>
+        </div>
+
+        <div class="ann-item">
+            <div class="ann-img-box">
+                <img src="<%=request.getContextPath()%>/com/dashboard/pics/3.jfif" alt="Picnic">
+            </div>
+            <div class="ann-body">
+                <h4>Company Picnic!</h4>
+                <p>You and your family are cordially invited to attend the annual company picnic.</p>
+            </div>
+        </div>
+
+        <div class="ann-footer">
+            <a href="#">View More</a>
+        </div>
+    </div>
+</div>
 
         <div class="grid-box">
             <div class="header-bar">
@@ -296,5 +415,6 @@
         } else window.parent.location.href = fullUrl;
     }
 </script>
+
 </body>
 </html>
