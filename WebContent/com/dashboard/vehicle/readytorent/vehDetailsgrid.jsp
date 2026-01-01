@@ -82,7 +82,7 @@ $(document).ready(function () {
     $("#vehdetails").jqxGrid(
     {
         width: '90%',
-        height: 250,
+        height: 350,
         source: dataAdapter,
         rowsheight:20,
         showaggregates:true,

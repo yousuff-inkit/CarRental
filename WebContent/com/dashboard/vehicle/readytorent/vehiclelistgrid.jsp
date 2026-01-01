@@ -199,7 +199,7 @@
 					  },
 				
 					  { text: 'Avail. Br', datafield: 'branchname',  width: '8%'  ,pinned: true},
-						{ text: 'Location', datafield: 'loc_name', width: '8%' ,pinned: true},
+						{ text: 'Location', datafield: 'loc_name', width: '10%' ,pinned: true},
 					     { text: 'Fleet NO', editable: false,datafield: 'fleet_no', width: '6%' },      
 					     { text: 'Authority ',editable: false, datafield: 'authname', width: '10%' }, 
 					     { text: 'Reg_NO',editable: false, datafield: 'reg_no', width: '6%' }, 
