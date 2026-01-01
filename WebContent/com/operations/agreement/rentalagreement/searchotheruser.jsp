@@ -95,38 +95,102 @@ String odate=request.getParameter("odate");
 	
 	
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 12px; /* Standardized master gap */
+}
+
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td[align="right"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  white-space: nowrap;
+}
+
+/* Bold text inside inputs with Grey Borders */
+input[type="text"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600; /* Font weight 600 as requested */
+  font-size: 14px;
+  padding: 8px 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Grey border */
+  border: 1px solid #bdc3c7; 
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+/* Focus state for inputs */
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Blue Button Color */
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: none; /* No hover transition */
+}
+
+/* No color change on hover */
+.myButton:hover {
+  background-color: #007bff; 
+  cursor: pointer;
+}
+
+/* Row spacing */
+tr {
+  line-height: 1.6;
+}
+</style>
+
+<body bgcolor="#FFFFFF">
+<div id="search">
+<table width="100%">
   <tr>
     <td colspan="8" align="right">
-    
-    <div>
-      
-   <jsp:include  page="userinfos.jsp"></jsp:include> 
-   
-   </div>
+      <div>
+        <jsp:include page="userinfos.jsp"></jsp:include> 
+      </div>
     </td>
   </tr>
-  <tr >
-   <td>
-   <table>
-    <tr><td width="6%" align="right">Name</td><td width="20%" align="left"><input type="text" style="width:99%;" name="usernames" id="usernames" readonly="readonly"></td><td width="7%" align="right">Description</td><td width="60%" align="left"><input type="text" style="width:99%;" name="userdesc" id="userdesc"></td>
-    
-    <td width="7%"><input type="button" name="updateuser" id="updateuser" class="myButton"  value="Submit" onclick="funuserupdates()"></td></tr>
-    
-    </table> 
-
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <td width="6%" align="right">Name</td>
+          <td width="20%" align="left">
+            <input type="text" style="width:99%;" name="usernames" id="usernames" readonly="readonly">
+          </td>
+          <td width="7%" align="right">Description</td>
+          <td width="60%" align="left">
+            <input type="text" style="width:99%;" name="userdesc" id="userdesc">
+          </td>
+          <td width="7%">
+            <input type="button" name="updateuser" id="updateuser" class="myButton" value="Submit" onclick="funuserupdates()">
+          </td>
+        </tr>
+      </table> 
     </td>
   </tr>
-  
-
 </table>
-<input type="hidden" style="width:99%;" name="userdoc" id="userdoc" readonly="readonly">
-  </div>
+
+<input type="hidden" name="userdoc" id="userdoc" value='<s:property value="userdoc"/>'>
+</div>
 </body>
 </html>
-  
-
-   
-    
