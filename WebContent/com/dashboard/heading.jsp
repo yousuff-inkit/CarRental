@@ -31,15 +31,14 @@
     background: transparent; 
     border: none;
     box-shadow: none;
-    margin-bottom: 5px; /* Minimal padding to buttons */
+    margin-bottom: 5px; 
     text-align: center;
-}
-
-.dashboard-header-wrapper #lbldetail {
-    font-size: 18px;
+     font-size: 18px;
     font-weight: 700;
     color: var(--text-main);
 }
+
+
 
 /* One-line Button Row */
 .dashboard-header-wrapper .btn-grid {
@@ -116,6 +115,62 @@
 #btnSubmit {
     margin: 0 auto;
 }
+/* ===== BLUE ICON STYLE (copied from dashboard) ===== */
+.nbtn svg {
+    width: 16px;
+    height: 16px;
+    stroke: #005c97;      /* SAME blue as dashboard */
+    fill: none;
+    stroke-width: 2;
+}
+
+/* Solid-fill icons (if any) */
+.nbtn svg path[fill] {
+    fill: #005c97;
+}
+
+/* Hover effect (optional but recommended) */
+.nbtn:hover svg {
+    stroke: #2563eb;
+}
+/* ===== BUTTON HOVER EFFECT ===== */
+.dashboard-header-wrapper .nbtn {
+    border: 1.5px solid #e2e8f0;          /* default border */
+    transition: 
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Hover state */
+.dashboard-header-wrapper .nbtn:hover {
+    border-color: #2563eb;                /* BLUE border */
+    transform: scale(1.08);               /* increase size */
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+    z-index: 2;                           /* stay above neighbours */
+}
+/* Wrapper controls height */
+.dashboard-header-wrapper .styled-select {
+    height: 36px;                
+    padding: 0 8px;              
+    display: flex;
+    align-items: center;          
+}
+
+/* Select fills wrapper */
+.dashboard-header-wrapper .styled-select select {
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-size: 13px;
+    padding: 0;                   
+    background: transparent;
+    outline: none;
+    box-sizing: border-box;
+}
+
+
+
 </style>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -630,8 +685,7 @@
 
     <!-- ===== SUBMIT BUTTON ===== -->
    <button type="button" class="nbtn btn-primary" id="btnSubmit" onclick="funreload(event);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Submit
+                Submit
     </button>
 
     <!-- ===== REMAINING HIDDEN FIELDS & WINDOWS ===== -->

@@ -134,7 +134,7 @@ $(document).ready(function () {
     $("#jqxFleetGrid").jqxGrid(
     {
         width: '100%',
-        height: 500,
+        height: 600,
         source: dataAdapter,
         showaggregates:true,
         
@@ -157,15 +157,15 @@ $(document).ready(function () {
                           },
                
 						{ text: 'Avail. Br', datafield: 'branchname',cellclassname: cellclassname ,  width: 80  ,pinned: true},
-						{ text: 'Location', datafield: 'loc_name' ,cellclassname: cellclassname , width: 70 ,pinned: true},
-						{ text: 'Group', datafield: 'gname' ,cellclassname: cellclassname , width: 50 ,pinned: true },
+						{ text: 'Location', datafield: 'loc_name' ,cellclassname: cellclassname , width: 90 ,pinned: true},
+						{ text: 'Group', datafield: 'gname' ,cellclassname: cellclassname , width: 80 ,pinned: true },
 						{ text: 'Fleet', datafield: 'fleet_no' ,cellclassname: cellclassname , width: 50 ,pinned: true  },
-						{ text: 'Fleet Name', datafield: 'flname' ,cellclassname: cellclassname , width: 85,pinned: true},
+						{ text: 'Fleet Name', datafield: 'flname' ,cellclassname: cellclassname , width: 105,pinned: true},
 						{ text: 'Type', datafield: 'empid',cellclassname: cellclassname  , width: 50 ,pinned: true },
 						{ text: 'User Name', datafield: 'empname' ,cellclassname: cellclassname , width: 50,pinned: true  },
-						{ text: 'Garage', datafield: 'grname' ,cellclassname: cellclassname , width: 70,pinned: true },
+						{ text: 'Garage', datafield: 'grname' ,cellclassname: cellclassname , width: 100,pinned: true },
 						{ text: 'YOM', datafield: 'yom' ,cellclassname: cellclassname , width: 50 ,pinned: true},
-						{ text: 'Color', datafield: 'color' ,cellclassname: cellclassname , width: 50  ,pinned: true  },
+						{ text: 'Color', datafield: 'color' ,cellclassname: cellclassname , width: 80  ,pinned: true  },
 						{ text: 'Reg No', datafield: 'reg_no' ,cellclassname: cellclassname , width: 50   ,pinned: true },
 						{ text: 'Vehicle Number', datafield: 'vehiclenum' ,cellclassname: cellclassname, width: 80},
 						{ text: 'Authority', datafield: 'authority' ,cellclassname: cellclassname , width: 70    },

@@ -85,7 +85,7 @@ String check=request.getParameter("check")==null?"":request.getParameter("check"
             $("#branchwiseGrid").jqxGrid(
             {
                 width: '99.5%',
-                height: 515,
+                height: 600,
                 source: dataAdapter,
                 columnsresize: true,
                 columns: columns,

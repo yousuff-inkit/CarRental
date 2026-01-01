@@ -26,7 +26,7 @@
     font-family: 'Poppins', sans-serif;
     background: #ffffff;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     padding: 12px;
     overflow: hidden;
     box-sizing: border-box;
@@ -76,7 +76,9 @@
     max-width: 450px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
-    padding: 14px;
+    padding: 12px;
+    padding-left:12px;
+    padding-right:12px;
     box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
                 2px 2px 6px rgba(0, 0, 0, 0.08);
     overflow-y: auto;
@@ -148,6 +150,8 @@
 .fleet-status-wrapper .sidebar .grid-container {
     padding: 12px;
     margin: 12px 0;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .fleet-status-wrapper .sidebar .grid-container table {
@@ -156,10 +160,11 @@
     table-layout: fixed;
     font-size: 11px;
     max-height:50px;
+    margin:0;
 }
 
 .fleet-status-wrapper .sidebar .grid-container table td {
-    padding: 4px;
+
     word-wrap: break-word;
 }
 
@@ -249,6 +254,7 @@
     background: white;
     transition: all 0.3s ease;
     font-family: 'Poppins', sans-serif;
+  
 }
 
 .fleet-status-wrapper .universal-search-input:focus {
@@ -291,7 +297,7 @@
 
 .hidden-scrollbar {
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     overflow: hidden;
     box-sizing: border-box;
 }
