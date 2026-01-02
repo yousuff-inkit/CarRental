@@ -9,142 +9,47 @@
 <title>GatewayERP(i)</title>
 
     <style>
-    <style>
 /* no inner scrollbars */
 .hidden-scrollbar {
-    overflow: visible;   /* was auto */
-    height: auto;        /* was 530px */
+    overflow: visible;
+    height: auto;
 }
 
-/* base typography */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+html, body {
+    background: #ffffff;                
     font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 13px;
-    color: #222;
+    font-size: 12px;                     
+    color: #333;
     margin: 0;
-    padding: 24px 0;
-    min-height: 100vh;
+    padding: 0;
     box-sizing: border-box;
 }
 
-/* main card – wider so grid fills page */
+/* kill any blue/other window background if present */
+.windowCont,
+#mainBG.homeContent {
+    background: #ffffff !important;
+}
+
+/* 2. main content area – flat like master */
 #mainBG {
-    background: #fff;
-    border-radius: 14px;
-    padding: 12px 18px;
-    max-width: 1400px;      /* adjust to 1600 or remove if you want true full width */
-    margin: 0 auto;
-}
-
-/* header strip */
-.receipt-header {
-    display: block;
-    margin-bottom: 14px;
-    border-radius: 10px;
-    padding: 0 12px;
-    font-size: 13px;
-}
-
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 6px;
-}
-
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    padding: 3px 6px;
-    font-size: 12px;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-size: 12px;
-}
-
-.receipt-header button:hover {
-    background: #0056b3;
-}
-
-/* optional generic sections */
-.section-row {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 18px;
-}
-
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 14px 12px;
-    box-shadow: 0 1px 6px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0 0 10px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-    font-size: 12px;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    padding: 3px 6px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 12px;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* table “card” */
-.table-section {
-    margin-bottom: 14px;
-    padding-inline: 10px;
-    padding-block: 10px;
+    background: #ffffff;
     border-radius: 8px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 6px rgba(160,177,217,0.05);
+    padding: 16px 18px;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-shadow: none;                    /* master has almost no card shadow */
+}
+
+/* 3. headings / section blocks same feel */
+.table-section {
+    margin-bottom: 16px;
+    padding: 14px 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: none;
+    border: 1px solid #e5e7eb;          /* light border like master card edge */
 }
 
 .table-section h3 {
@@ -156,29 +61,78 @@ body {
     font-weight: 600;
 }
 
-/* full‑width grid table */
+/* 4. labels and inputs – same size/shape as master forms */
+.section-block {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px 12px 4px;
+    box-shadow: none;
+    border: 1px solid #e5e7eb;
+}
+
+.section-block .form-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.section-block label {
+    min-width: 120px;
+    text-align: right;
+    font-weight: 500;
+    color: #445;
+    font-size: 12px;
+}
+
+/* shared input style (match master text boxes) */
+.section-block input[type="text"],
+.section-block select,
+.cr-table input[type="text"],
+.cr-table select {
+    flex: 1;
+    border: 1px solid #d3d7de;
+    border-radius: 4px;
+    padding: 4px 6px;
+    background: #fdfdfd;
+    font-size: 12px;
+    height: 26px;
+    box-sizing: border-box;
+}
+
+.section-block input[type="text"]:focus,
+.section-block select:focus,
+.cr-table input[type="text"]:focus,
+.cr-table select:focus {
+    border-color: #7aa7ff;
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(122,167,255,0.35);
+}
+
+/* 5. grid table – keep subtle like master */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    border: 1px solid #e5e7eb;
     table-layout: fixed;
 }
 
 .cr-table th,
 .cr-table td {
     padding: 6px 8px;
-    border-bottom: 1px solid #e4e7ec;
+    border-bottom: 1px solid #e5e7eb;
     text-align: left;
     font-size: 12px;
     vertical-align: middle;
 }
 
 .cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+    background: #f3f4f6;
+    color: #354b6a;
     font-weight: 600;
 }
 
@@ -186,32 +140,31 @@ body {
     border-bottom: none;
 }
 
-/* avoid wrapping small headers */
+/* prevent wrapping of small headers */
 .cr-table td,
 .cr-table th,
 .cr-table label {
     white-space: nowrap;
 }
 
-/* primary button */
-.myButton {
+/* 6. primary button like master */
+.myButton,
+.receipt-header button {
     background: #007bff;
     color: #fff;
     border: none;
-    padding: 4px 12px;
-    border-radius: 6px;
+    padding: 4px 14px;
+    border-radius: 14px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 12px;
 }
 
-.myButton:hover {
+.myButton:hover,
+.receipt-header button:hover {
     background: #0056b3;
 }
-</style>
-    
 
-    
 </style>
 <script type="text/javascript">
       
