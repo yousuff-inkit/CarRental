@@ -10,11 +10,118 @@ String contextPath=request.getContextPath();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
-
+/* ------------------------------
+   MASTER UI – SCROLL AREA
+------------------------------ */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: 550px; /* master standard */
+    padding: 10px;
 }
+
+/* ------------------------------
+   MASTER UI – BACKGROUND
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0; /* master spacing */
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* ------------------------------
+   MASTER UI – MAIN CARD
+------------------------------ */
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px; /* master padding */
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* ------------------------------
+   MASTER UI – SECTION BLOCK
+------------------------------ */
+.table-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.table-section h3 {
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* ------------------------------
+   MASTER UI – TABLE GRID
+------------------------------ */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    font-size: 13px;
+    vertical-align: middle;
+    font-weight: 500;
+    
+}
+
+.cr-table th {
+    background: #eef0f6;
+    color: #354B6A;
+    font-weight: 600;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   MASTER UI – INPUTS
+------------------------------ */
+.cr-table input[type="text"],
+.cr-table select {
+    width: 100%;
+    height: 32px; /* master input height */
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    background: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.cr-table input[type="text"]:focus,
+.cr-table select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
 </style>
 
 <%@page import="com.humanresource.setup.hrsetup.department.ClsDepartmentDAO"%>
@@ -124,35 +231,65 @@ color:red;
 </script>   
  
 </head>
-<body onLoad="setValues();" >
+<body onload="setValues();">
+<div id="mainBG" class="homeContent">
 
 <form id="frmdepartment" action="saveDepartment" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" /><br/>
- 
-<fieldset><legend>Department Details</legend> 
-<table width="100%">
-	<tr><td  width="10%" align="right">Date</td>
-	<td  width="15%" align="left"><div id="deptdate" name="deptdate" value='<s:property value="deptdate"/>'> </div></td>
-  	<td   width="12%" align="right">Department</td>
-  	<td width="34%"><input type="text" name="department" id="department" style="width:100%;" placeholder="Department" value='<s:property value="department"/>'></td>
-	<td  width="10%" align="right">Doc No</td>
-	<td  width="10%"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1"></td>
-	<td  width="9%" >&nbsp;</td></tr> 
-	<tr><td align="right">Remarks</td>
-	<td colspan="4"><input type="text" name="remarks" id="remarks"  style="width:85.8%;" placeholder="Remarks" value='<s:property value="remarks"/>' ></td></tr>
-</table>
-	 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-<input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+    <jsp:include page="../../../../header.jsp" /><br/>
 
-</fieldset> 
+    <!-- master UI section card -->
+    <div class="table-section">
+        <h3>Department Details</h3>
+
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="10%" align="right">Date</td>
+                <td width="15%" align="left">
+                    <div id="deptdate" name="deptdate" value='<s:property value="deptdate"/>'></div>
+                </td>
+
+                <td width="12%" align="right">Department</td>
+                <td width="34%">
+                    <input type="text" name="department" id="department"
+                           style="width:100%;" placeholder="Department"
+                           value='<s:property value="department"/>'>
+                </td>
+
+                <td width="10%" align="right">Doc No</td>
+                <td width="10%">
+                    <input type="text" name="docno" id="docno"
+                           value='<s:property value="docno"/>'
+                           readonly="readonly" tabindex="-1">
+                </td>
+                <td width="9%">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td align="right">Remarks</td>
+                <td colspan="4">
+                    <input type="text" name="remarks" id="remarks"
+                           style="width:100%;" placeholder="Remarks"
+                           value='<s:property value="remarks"/>'>
+                </td>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+        </table>
+
+        <!-- hidden fields -->
+        <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
+        <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+    </div>
 </form>
 
-<table width="100%">
-    <tr><td><div id="departmentgrid"></div></td></tr>
-</table><br/>
+<!-- grid below in its own master card if you want -->
+<div class="table-section">
+    <h3>Department List</h3>
+    <div id="departmentgrid"></div>
+</div>
 
+</div><!-- /#mainBG -->
 </body>
+
 </html>
