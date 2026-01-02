@@ -134,7 +134,7 @@ $(document).ready(function () {
     $("#jqxFleetGrid").jqxGrid(
     {
         width: '100%',
-        height: 600,
+        height: 525,
         source: dataAdapter,
         showaggregates:true,
         
