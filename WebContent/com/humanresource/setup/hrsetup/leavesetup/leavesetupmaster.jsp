@@ -62,6 +62,7 @@ label {
     line-height: 32px; /* Aligns with input heights */
     padding: 0px 8px 0px 0px; 
     text-align: right; 
+    font-weight: 500;
 }
 
 /* ------------------------------

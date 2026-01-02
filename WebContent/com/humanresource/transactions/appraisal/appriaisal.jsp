@@ -421,13 +421,19 @@ color:red;
 	}
 </script>
 <style>
+/* ==============================
+   MASTER SCROLL AREA
+============================== */
 .hidden-scrollbar {
-  /* // overflow: auto; */
-    height: 530px;
+    height: 550px;
+    overflow-y: auto;
     overflow-x: hidden;
+    padding: 10px;
 }
 
-
+/* ==============================
+   MASTER BACKGROUND
+============================== */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -436,80 +442,98 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 14px;
 }
+
+/* ==============================
+   MAIN CARD
+============================== */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 20px;
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
+/* ==============================
+   RECEIPT HEADER
+============================== */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
     margin-bottom: 16px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 24px;
 }
+
 .receipt-header label {
     font-weight: 500;
     color: #333;
-    margin-right: 8px;
 }
+
 .receipt-header input[type="text"] {
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
+    font-size: 14px;
     width: 120px;
     background: #fff;
-    transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
+    height: 32px;
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 0 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
+
 #txtStatus {
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 600;
     color: #e67e22;
-    margin-left: 12px;
 }
 
+/* ==============================
+   SECTION BLOCKS
+============================== */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
 }
 
@@ -530,31 +554,42 @@ body {
 .section-block input[type="text"],
 .section-block select {
     flex: 1;
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
-    transition: border-color 0.2s;
 }
 
-.section-block input[type="text"]:focus,
+.section-block input:focus,
 .section-block select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-
+/* ==============================
+   TABLE SECTION
+============================== */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
+
 .table-section h3 {
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 1.04em;
+    font-size: 15px;
     font-weight: 600;
 }
+
+/* ==============================
+   TABLE GRID
+============================== */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -563,224 +598,315 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+
+.cr-table th,
+.cr-table td {
+    padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 500;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-label,
-.cr-table td label,
-.cr-table th,
-.cr-table td {
-    font-weight: 700 !important;
-}
-
-/* --- FORCE SINGLE-LINE TEXT (NO WRAP) --- */
-label,
-td,
-th,
-.cr-table td,
-.cr-table th {
-    white-space: nowrap !important;
-}
-
-
-
-/* ❌ Remove Chrome autofill yellow/pink background */
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;  /* set background to white */
-    box-shadow: 0 0 0 1000px #fff inset !important;
-    -webkit-text-fill-color: #222 !important; /* text color */
-}
-
-/* Also remove blue border Chrome applies */
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
-}
-
-
-select {
-    width: 100% !important;          /* make it fill the cell neatly */
-    padding: 4px 10px;               /* make dropdown taller */
-    height: 28px !important;         /* uniform height */
-    border: 1px solid #b8c6d8;       /* clean border */
-    border-radius: 6px;              /* modern rounded look */
-    background-color: #fff;          /* remove any pink */
-    font-weight: 600;                /* bold text */
-    color: #222;                     /* clean dark text */
+/* ==============================
+   TABLE INPUTS & DROPDOWNS
+============================== */
+.cr-table input[type="text"],
+.cr-table select {
+    width: 100%;
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    background: #fff;
     box-sizing: border-box;
 }
 
-/* Dropdown on focus (blue border) */
-select:focus {
-    border-color: #007bff !important;
+.cr-table input:focus,
+.cr-table select:focus {
+    border-color: #007bff;
     outline: none;
 }
 
-
-/* Improve dropdown option spacing */
+/* ==============================
+   DROPDOWN OPTIONS
+============================== */
 select option {
-    padding: 8px 12px !important;     /* Top/Bottom 8px, Left/Right 12px */
-    font-size: 14px;                  /* Clean readable size */
-    line-height: 1.6;                 /* Extra breathing room */
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-/* Improve the select box itself */
-select {
-    padding: 4px 10px !important;
-    height: 28px !important;
-    font-weight: 600;
-    border-radius: 6px;
+/* ==============================
+   CHROME AUTOFILL FIX
+============================== */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: #222 !important;
 }
-
 
 </style>  
 </head>
-<body onload="setValues();getYear();getDepartment();getDesignation();getPayrollCategory();" onmouseover="editstatus();">
+<body onload="setValues();getYear();getDepartment();getDesignation();getPayrollCategory();"
+      onmouseover="editstatus();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmappraisal" action="saveAppraisal" autocomplete="OFF" >
 
-<jsp:include page="../../../../header.jsp"></jsp:include><br/> 
-<div class='hidden-scrollbar receipt-header'>
+<form id="frmappraisal" action="saveAppraisal" autocomplete="OFF">
 
-<table class="cr-table" width="100%">
- <tr>
- <td width="11%" align="right">Date</td> 
- <td width="8%" align="left"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
-                     <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/></td>
- <td width="5%" align="right">Year</td>
- <td width="8%" align="left"><select id="cmbyear" name="cmbyear" style="width:80%;" value='<s:property value="cmbyear"/>' onchange="clearmsg();"> 
- <option value="">--Select--</option></select>
- <input type="hidden" id="hidcmbyear" name="hidcmbyear"  value='<s:property value="hidcmbyear"/>'/> 
- </td>
- <td width="4%" align="right">Month</td>
- <td width="11%" align="left"><select id="cmbmonth" name="cmbmonth" style="width:98%;"  value='<s:property value="cmbmonth"/>' onchange="clearmsg();">
-      <option value="">--Select--</option><option value="1">January</option><option value="2">February</option><option value="3">March</option>
-      <option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option>
-      <option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option>
-      <option value="12">December</option></select>
-      <input type="hidden" id="hidcmbmonth" name="hidcmbmonth"  value='<s:property value="hidcmbmonth"/>'/>
- </td>                   
- <td width="12%" align="right">Last Payroll Created On</td>
- <td width="17%" align="left"><div id='leastpaydate' name='leastpaydate' value='<s:property value="leastpaydate"/>'></div>
- <input type="hidden" id="hidleastpaydate" name="hidleastpaydate" value='<s:property value="hidleastpaydate"/>'/></td>
- <td width="10%" align="right">Doc No</td>
- <td width="14%" align="left"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>                                          
- </tr>
- </table>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
 
-    <div class="table-section">
-<table class="cr-table" width="81%" >
- <tr>
- <td width="59%">
+    <!-- ===============================
+         SCROLLABLE CONTENT
+    ================================ -->
+    <div class="hidden-scrollbar">
 
+        <!-- ===============================
+             HEADER DETAILS
+        ================================ -->
+        <div class="table-section">
+            <h3>Appraisal Details</h3>
 
- <h3>Employee Details</h3>
- <table width="100%">
- <tr>
- <td width="21%" align="right">Employee ID</td>
- <td width="30%" align="left"><input type="text" id="empid" name="empid" placeholder="Press F3 to Search" style="width:90%;" onkeydown="getEmployee(event);" value='<s:property value="empid"/>'/>
- <input type="hidden" id="empdocno" name="empdocno" style="width:90%;" value='<s:property value="empdocno"/>'/>
- </td>
- <td width="18%" align="right">&nbsp;</td>
- <td width="31%" align="left">&nbsp;</td>
- </tr>
-<tr>
- <td width="21%" align="right">Name</td>
- <td  align="left" colspan="3"><input type="text" id="empname" name="empname" placeholder="Name" style="width:87.5%;"  value='<s:property value="empname"/>'/></td>
-</tr>
-<tr>
- <td width="21%" align="right">Date Of Join</td>    
- <td width="30%" align="left"><div id='joindate' name='joindate' value='<s:property value="joindate"/>'></div>
- <input type="hidden" id="hidjoindate" name="hidjoindate" value='<s:property value="hidjoindate"/>'/></td>
- <td width="18%" align="right">Prve.Appraisal</td>
- <td width="31%" align="left"><div id='prevappdate' name='prevappdate' value='<s:property value="prevappdate"/>'></div>
- <input type="hidden" id="hidprevappdate" name="hidprevappdate" value='<s:property value="hidprevappdate"/>'/></td>
-</tr>
-<tr>
- <td width="21%" align="right">Department</td>
- <td width="30%" align="left"><input type="text" id="deprtment" style="width:90%;" name="deprtment" placeholder="Department" value='<s:property value="deprtment"/>'/>
- <input type="hidden" id="hiddeprtment" style="width:90%;" name="hiddeprtment" value='<s:property value="hiddeprtment"/>'/> </td>
- <td width="18%" align="right">Designation</td>
- <td width="31%" align="left"><input type="text" id="designation"   name="designation" placeholder="Designation" value='<s:property value="designation"/>'/>
- <input type="hidden" id="hiddesignation" style="width:90%;" name="hiddesignation" value='<s:property value="hiddesignation"/>'/></td>
-</tr>
-<tr>
- <td width="21%" align="right">Payroll Category</td>
- <td width="30%" align="left"><input type="text" id="category" style="width:90%;" name="category" placeholder="Payroll Category" value='<s:property value="category"/>'/>
- <input type="hidden" id="hidcategory" style="width:90%;" name="hidcategory" value='<s:property value="hidcategory"/>'/>
- </td>
-</tr>
-</table>
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Date</td>
+                    <td>
+                        <div id="masterdate" name="masterdate"
+                             value='<s:property value="masterdate"/>'></div>
+                        <input type="hidden" id="hidmasterdate" name="hidmasterdate"
+                               value='<s:property value="hidmasterdate"/>' />
+                    </td>
 
-</td>
-<td width="41%">
-<legend><input type="checkbox" name="change" id="change" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" onchange="checkchange();">
-<input type="hidden" name="hidchange" id="hidchange" value='<s:property value="hidchange"/>'>Changes In Employee Details</legend> 
-<table width="100%">
-<tr> <td width="27%" align="right">Department</td>
-<td width="73%"><select id="cmbdept" name="cmbdept" style="width:60%;" value='<s:property value="cmbdept"/>'>  
- <option value="">--Select--</option></select> 
- <input type="hidden" id="hidcmbdept" name="hidcmbdept" style="width:60%;" value='<s:property value="hidcmbdept"/>'>
-</td>
-</tr>
-<tr>
-<td width="27%" align="right">Designation</td>
-<td width="73%"><select id="cmbdesignation" name="cmbdesignation" style="width:60%;" value='<s:property value="cmbdesignation"/>'>
- <option value="">--Select--</option></select>
- <input type="hidden" id="hidcmbdesignation" name="hidcmbdesignation" style="width:60%;" value='<s:property value="hidcmbdesignation"/>'></td>
-</tr>
-<tr>
- <td width="27%" align="right">Payroll Category</td>
- <td><select id="cmbcategory" name="cmbcategory" style="width:60%;" value='<s:property value="cmbcategory"/>'>
- <option value="">--Select--</option></select>
- <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" style="width:60%;" value='<s:property value="hidcmbcategory"/>'>
-</tr>
-</table>
-<br><br><br><br> 
+                    <td align="right">Year</td>
+                    <td>
+                        <select id="cmbyear" name="cmbyear"
+                                value='<s:property value="cmbyear"/>'
+                                onchange="clearmsg();">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbyear" name="hidcmbyear"
+                               value='<s:property value="hidcmbyear"/>' />
+                    </td>
 
-</td>
-</tr>
-</table>
-    </div>
-<table class="cr-table" width="100%">
-<tr>
-<td width="10.5%" align="right">Description</td>
-<td width="89.5%" colspan="4" align="left"><input type="text" id="desc" name="desc" placeholder="Description" style="width:67.2%;" value='<s:property value="desc"/>'/></td>
-</tr>
-</table><br>
+                    <td align="right">Month</td>
+                    <td>
+                        <select id="cmbmonth" name="cmbmonth"
+                                value='<s:property value="cmbmonth"/>'
+                                onchange="clearmsg();">
+                            <option value="">--Select--</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <input type="hidden" id="hidcmbmonth" name="hidcmbmonth"
+                               value='<s:property value="hidcmbmonth"/>' />
+                    </td>
 
+                    <td align="right">Last Payroll</td>
+                    <td>
+                        <div id="leastpaydate" name="leastpaydate"
+                             value='<s:property value="leastpaydate"/>'></div>
+                        <input type="hidden" id="hidleastpaydate" name="hidleastpaydate"
+                               value='<s:property value="hidleastpaydate"/>' />
+                    </td>
 
-<h3>Monthly Salary</h3>
-<div class="cr-table" id="comdiv"><jsp:include page="compensationGrid.jsp"></jsp:include></div>
+                    <td align="right">Doc No</td>
+                    <td>
+                        <input type="text" id="docno" name="docno" tabindex="-1"
+                               value='<s:property value="docno"/>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
 
+        <!-- ===============================
+             EMPLOYEE DETAILS
+        ================================ -->
+        <div class="table-section">
+            <h3>Employee Details</h3>
 
-<input type="hidden" id="compensationGridlength" name="compensationGridlength" value='<s:property value="compensationGridlength"/>' />
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation"  value='<s:property value="txtvalidation"/>'/>
-</div>    
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Employee ID</td>
+                    <td>
+                        <input type="text" id="empid" name="empid"
+                               placeholder="Press F3 to Search"
+                               onkeydown="getEmployee(event);"
+                               value='<s:property value="empid"/>' />
+                        <input type="hidden" id="empdocno" name="empdocno"
+                               value='<s:property value="empdocno"/>' />
+                    </td>
+
+                    <td align="right">Name</td>
+                    <td colspan="3">
+                        <input type="text" id="empname" name="empname"
+                               value='<s:property value="empname"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Date of Join</td>
+                    <td>
+                        <div id="joindate" name="joindate"
+                             value='<s:property value="joindate"/>'></div>
+                        <input type="hidden" id="hidjoindate" name="hidjoindate"
+                               value='<s:property value="hidjoindate"/>' />
+                    </td>
+
+                    <td align="right">Prev. Appraisal</td>
+                    <td>
+                        <div id="prevappdate" name="prevappdate"
+                             value='<s:property value="prevappdate"/>'></div>
+                        <input type="hidden" id="hidprevappdate" name="hidprevappdate"
+                               value='<s:property value="hidprevappdate"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Department</td>
+                    <td>
+                        <input type="text" id="deprtment" name="deprtment"
+                               value='<s:property value="deprtment"/>' />
+                        <input type="hidden" id="hiddeprtment" name="hiddeprtment"
+                               value='<s:property value="hiddeprtment"/>' />
+                    </td>
+
+                    <td align="right">Designation</td>
+                    <td>
+                        <input type="text" id="designation" name="designation"
+                               value='<s:property value="designation"/>' />
+                        <input type="hidden" id="hiddesignation" name="hiddesignation"
+                               value='<s:property value="hiddesignation"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Payroll Category</td>
+                    <td>
+                        <input type="text" id="category" name="category"
+                               value='<s:property value="category"/>' />
+                        <input type="hidden" id="hidcategory" name="hidcategory"
+                               value='<s:property value="hidcategory"/>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===============================
+             CHANGES SECTION
+        ================================ -->
+        <div class="table-section">
+            <h3>
+                <input type="checkbox" id="change" name="change"
+                       value="0"
+                       onclick="$(this).attr('value', this.checked ? 1 : 0)"
+                       onchange="checkchange();" />
+                Changes in Employee Details
+            </h3>
+
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Department</td>
+                    <td>
+                        <select id="cmbdept" name="cmbdept">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbdept" name="hidcmbdept"
+                               value='<s:property value="hidcmbdept"/>' />
+                    </td>
+
+                    <td align="right">Designation</td>
+                    <td>
+                        <select id="cmbdesignation" name="cmbdesignation">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbdesignation"
+                               name="hidcmbdesignation"
+                               value='<s:property value="hidcmbdesignation"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Payroll Category</td>
+                    <td>
+                        <select id="cmbcategory" name="cmbcategory">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbcategory"
+                               name="hidcmbcategory"
+                               value='<s:property value="hidcmbcategory"/>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===============================
+             DESCRIPTION
+        ================================ -->
+        <div class="table-section">
+            <h3>Description</h3>
+            <input type="text" id="desc" name="desc"
+                   value='<s:property value="desc"/>' />
+        </div>
+
+        <!-- ===============================
+             MONTHLY SALARY
+        ================================ -->
+        <div class="table-section">
+            <h3>Monthly Salary</h3>
+            <div class="cr-table" id="comdiv">
+                <jsp:include page="compensationGrid.jsp"></jsp:include>
+            </div>
+        </div>
+
+        <!-- ===============================
+             HIDDEN FIELDS
+        ================================ -->
+        <input type="hidden" id="compensationGridlength"
+               name="compensationGridlength"
+               value='<s:property value="compensationGridlength"/>' />
+        <input type="hidden" id="mode" name="mode"
+               value='<s:property value="mode"/>' />
+        <input type="hidden" id="deleted" name="deleted"
+               value='<s:property value="deleted"/>' />
+        <input type="hidden" id="msg" name="msg"
+               value='<s:property value="msg"/>' />
+        <input type="hidden" id="txtvalidation" name="txtvalidation"
+               value='<s:property value="txtvalidation"/>' />
+
+    </div><!-- /.hidden-scrollbar -->
+
 </form>
-    
-<div id="empsearchwndow">
-   <div></div>
-</div>
- 
-</div>
+
+<div id="empsearchwndow"><div></div></div>
+
+</div><!-- /#mainBG -->
+
 </body>
+
 </html>

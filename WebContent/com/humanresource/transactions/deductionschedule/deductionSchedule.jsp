@@ -282,13 +282,19 @@
 </script>
 
 <style>
+/* ==============================
+   MASTER SCROLL AREA
+============================== */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 100vh;
+    max-height: calc(100vh - 140px); /* header + padding safe */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
 }
 
-
-
+/* ==============================
+   BACKGROUND
+============================== */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -297,88 +303,92 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 14px;
 }
+
+/* ==============================
+   MAIN CARD
+============================== */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 20px;
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
+/* ==============================
+   RECEIPT HEADER
+============================== */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
     margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 24px;
 }
+
 .receipt-header label {
     font-weight: 500;
     color: #333;
-    margin-right: 8px;
 }
+
 .receipt-header input[type="text"] {
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
+    font-size: 14px;
     width: 120px;
     background: #fff;
-    transition: border-color 0.2s;
 }
-.receipt-header input[type="text"]:focus {
+
+.receipt-header input:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
+    height: 32px;
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 0 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
 
+/* ==============================
+   SECTION BLOCKS
+============================== */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
 }
 
 .section-block label {
@@ -388,34 +398,37 @@ body {
     color: #253858;
 }
 
-.section-block input[type="text"],
+.section-block input,
 .section-block select {
-    flex: 1;
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
+/* ==============================
+   TABLE SECTION
+============================== */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
+
 .table-section h3 {
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 1.04em;
+    font-size: 15px;
     font-weight: 600;
 }
+
+/* ==============================
+   TABLE GRID
+============================== */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -424,130 +437,265 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+
+.cr-table th,
+.cr-table td {
+    padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 500;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-/* --- MAKE ALL LABELS, TH, TD TEXT BOLD --- */
-label,
-.cr-table td label,
-.cr-table th,
-.cr-table td {
-    font-weight: 700 !important;
+/* ==============================
+   INPUTS IN TABLE
+============================== */
+.cr-table input,
+.cr-table select {
+    height: 32px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+/* ==============================
+   MASTER INPUT SIZE FIX
+============================== */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select {
+    height: 32px !important;        /* 🔑 lock height */
+    padding: 4px 10px !important;  /* reduce bulk */
+    font-size: 14px !important;
+    line-height: 1.2;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
-/* --- FORCE SINGLE-LINE TEXT (NO WRAP) --- */
-label,
-td,
-th,
-.cr-table td,
-.cr-table th {
-    white-space: nowrap !important;
-}
 
 </style>
 
 </head>
 <body onload="setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmDeductionSchedule" action="saveDeductionSchedule" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>   
 
-<div class='hidden-scrollbar receipt-header'>
-<div style="width: 100%;" class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="20%"><div id="deductionScheduleDate" name="deductionScheduleDate" value='<s:property value="deductionScheduleDate"/>'></div>
-    <input type="hidden" id="hiddeductionScheduleDate" name="hiddeductionScheduleDate" value='<s:property value="hiddeductionScheduleDate"/>'/></td>
-    <td width="19%" align="right">Ref. No.</td>
-    <td width="20%"><input type="text" id="txtemployeerefno" name="txtemployeerefno" placeholder="Ref. No." style="width:50%;" value='<s:property value="txtemployeerefno"/>'/></td>
-    <td width="17%" align="right">Doc No </td>
-    <td width="19%"><input type="text" id="docno" name="txtdeductionscheduledocno" style="width:70%;" tabindex="-1" value='<s:property value="txtdeductionscheduledocno"/>'/></td>
-  </tr>
-</table>
-</div>
-<div style="width: 100%;" class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="5%" align="right">Employee</td>
-    <td width="95%"><input type="text" id="txtemployeedetails" name="txtemployeedetails" placeholder="Press F3 to Search" style="width:94%;" onkeydown="getEmployeeDetails(event);" value='<s:property value="txtemployeedetails"/>'/>
-    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
-  </tr>
-</table>
-</div><br/>
+<form id="frmDeductionSchedule"
+      action="saveDeductionSchedule"
+      method="post"
+      autocomplete="off">
 
-<div class="table-section" style="width: 100%;">
-<table class="cr-table" width="99%">
-<tr><td  width="50%">
-<div style="background-color: #f6f8fa;
-">
-<table  width="99%">
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td width="10%" align="right">Amount</td>
-    <td width="90%"><input type="text" id="txtamount" name="txtamount" placeholder="Amount" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funInstAmount();" value='<s:property value="txtamount"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Inst. Nos</td>
-    <td><input type="text" id="txtinstnos" name="txtinstnos" placeholder="Inst. Nos" style="width:10%;" onblur="funInstAmount();" value='<s:property value="txtinstnos"/>'/>
-    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	<input type="checkbox" id="allowinstamt" name="allowinstamt"  onblur="funInstAmount();" onchange="this.checked?$('#txtinstcustomamt').prop('disabled',false): $('#txtinstcustomamt').prop('disabled',true);">
-    	<span>Inst. Amount</span>
-    	<input type="text" id="txtinstcustomamt" name="txtinstcustomamt" placeholder="Inst. Amount" style="width:30%;text-align: right;" onblur="funRoundAmt(this.value,this.id);funInstAmount();" value='<s:property value="txtinstcustomamt"/>'/>
-    <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/>
-    <input type="hidden" id="txtinstamttotal" name="txtinstamttotal" value='<s:property value="txtinstamttotal"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Start Date</td>
-    <td><div id="startDate" name="startDate" value='<s:property value="startDate"/>'></div>
-    <input type="hidden" id="hidstartDate" name="hidstartDate" value='<s:property value="hidstartDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Description</td>
-    <td><input type="text" id="txtdescription" name="txtdescription" placeholder="Description" style="width:85%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" align="center"><button class="myButton" type="button" id="btnDistributionSubmit" name="btnDistributionSubmit" onclick="deductionGridLoading();">Submit</button></td>
-  </tr>
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-</table>
-</div>
-</td>
-<td  width="60%">
-<div class="cr-table" id="deductionScheduleDiv"><jsp:include page="deductionScheduleGrid.jsp"></jsp:include></div>
-</td></tr></table>
-</div>
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="hidsaldate" name="hidsaldate"/>
-</div>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+
+    <!-- ===============================
+         SCROLLABLE CONTENT
+    ================================ -->
+    <div class="hidden-scrollbar">
+
+        <!-- ===============================
+             HEADER DETAILS
+        ================================ -->
+        <div class="table-section">
+            <h3>Deduction Schedule</h3>
+
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Date</td>
+                    <td>
+                        <div id="deductionScheduleDate"
+                             name="deductionScheduleDate"
+                             value='<s:property value="deductionScheduleDate"/>'></div>
+                        <input type="hidden"
+                               id="hiddeductionScheduleDate"
+                               name="hiddeductionScheduleDate"
+                               value='<s:property value="hiddeductionScheduleDate"/>' />
+                    </td>
+
+                    <td align="right">Ref. No.</td>
+                    <td>
+                        <input type="text"
+                               id="txtemployeerefno"
+                               name="txtemployeerefno"
+                               placeholder="Ref. No."
+                               value='<s:property value="txtemployeerefno"/>' />
+                    </td>
+
+                    <td align="right">Doc No</td>
+                    <td>
+                        <input type="text"
+                               id="docno"
+                               name="txtdeductionscheduledocno"
+                               tabindex="-1"
+                               value='<s:property value="txtdeductionscheduledocno"/>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===============================
+             EMPLOYEE DETAILS
+        ================================ -->
+        <div class="table-section">
+            <h3>Employee</h3>
+
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Employee</td>
+                    <td>
+                        <input type="text"
+                               id="txtemployeedetails"
+                               name="txtemployeedetails"
+                               placeholder="Press F3 to Search"
+                               onkeydown="getEmployeeDetails(event);"
+                               value='<s:property value="txtemployeedetails"/>' />
+                        <input type="hidden"
+                               id="txtemployeedocno"
+                               name="txtemployeedocno"
+                               value='<s:property value="txtemployeedocno"/>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===============================
+             DEDUCTION DETAILS + GRID
+        ================================ -->
+        <div class="table-section">
+
+            <div class="section-row">
+
+                <!-- LEFT : FORM -->
+                <div class="section-block">
+
+                    <h3>Deduction Details</h3>
+
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text"
+                               id="txtamount"
+                               name="txtamount"
+                               placeholder="Amount"
+                               style="text-align:right"
+                               onblur="funRoundAmt(this.value,this.id);funInstAmount();"
+                               value='<s:property value="txtamount"/>' />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Inst. Nos</label>
+                        <input type="text"
+                               id="txtinstnos"
+                               name="txtinstnos"
+                               placeholder="Inst. Nos"
+                               onblur="funInstAmount();"
+                               value='<s:property value="txtinstnos"/>' />
+                    </div>
+
+                    <div class="form-group">
+                        <label></label>
+                        <input type="checkbox"
+                               id="allowinstamt"
+                               name="allowinstamt"
+                               onchange="this.checked ?
+                                   $('#txtinstcustomamt').prop('disabled',false) :
+                                   $('#txtinstcustomamt').prop('disabled',true);" />
+                        <span>Inst. Amount</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label></label>
+                        <input type="text"
+                               id="txtinstcustomamt"
+                               name="txtinstcustomamt"
+                               placeholder="Inst. Amount"
+                               style="text-align:right"
+                               disabled
+                               onblur="funRoundAmt(this.value,this.id);funInstAmount();"
+                               value='<s:property value="txtinstcustomamt"/>' />
+                        <input type="hidden"
+                               id="txtinstamt"
+                               name="txtinstamt"
+                               value='<s:property value="txtinstamt"/>' />
+                        <input type="hidden"
+                               id="txtinstamttotal"
+                               name="txtinstamttotal"
+                               value='<s:property value="txtinstamttotal"/>' />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <div id="startDate"
+                             name="startDate"
+                             value='<s:property value="startDate"/>'></div>
+                        <input type="hidden"
+                               id="hidstartDate"
+                               name="hidstartDate"
+                               value='<s:property value="hidstartDate"/>' />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text"
+                               id="txtdescription"
+                               name="txtdescription"
+                               placeholder="Description"
+                               value='<s:property value="txtdescription"/>' />
+                    </div>
+
+                    <div style="text-align:center; margin-top:16px;">
+                        <button type="button"
+                                class="myButton"
+                                id="btnDistributionSubmit"
+                                onclick="deductionGridLoading();">
+                            Submit
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT : GRID -->
+                <div class="section-block">
+                    <h3>Schedule</h3>
+                    <div class="cr-table" id="deductionScheduleDiv">
+                        <jsp:include page="deductionScheduleGrid.jsp"></jsp:include>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===============================
+             HIDDEN FIELDS
+        ================================ -->
+        <input type="hidden" id="mode" name="mode" />
+        <input type="hidden" id="deleted" name="deleted"
+               value='<s:property value="deleted"/>' />
+        <input type="hidden" id="msg" name="msg"
+               value='<s:property value="msg"/>' />
+        <input type="hidden" id="txtvalidation" name="txtvalidation"
+               value='<s:property value="txtvalidation"/>' />
+        <input type="hidden" id="gridlength" name="gridlength" />
+        <input type="hidden" id="hidsaldate" name="hidsaldate" />
+
+    </div><!-- /.hidden-scrollbar -->
+
 </form>
-<div id="employeeDetailsWindow">
-   <div></div>
-</div>
 
-</div>
+<div id="employeeDetailsWindow"><div></div></div>
+
+</div><!-- /#mainBG -->
+
 </body>
+
 </html>
