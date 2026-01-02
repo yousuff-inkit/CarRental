@@ -107,131 +107,52 @@
     <script type="text/javascript" src="<%= cPath %>/scripts/jquery-1.11.1.min.js"></script>
     <style>
         * { box-sizing: border-box; }
-        body, html { height: 100vh; margin: 0; padding: 0; overflow: hidden; font-family: "Segoe UI", Roboto, sans-serif; background-color: #f4f6f9; }
-        
+        body, html { height: 100vh; margin: 0; padding: 0; overflow: hidden; font-family: "Segoe UI", sans-serif; background-color: #f4f6f9; }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
-
         .page-container { display: flex; flex-direction: column; height: 100%; width: 100%; }
-
         .banner { flex: 0 0 100px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .banner::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.2); border-radius: 8px; }
         .banner-content { z-index: 2; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
         .welcome-main { font-size: 22px; font-weight: 700; }
-
         .dashboard-grid { flex: 1; display: grid; grid-template-columns: 1fr 1.6fr; grid-template-rows: 1fr 1fr; gap: 12px; padding: 0 15px 12px 15px; overflow: hidden; }
         .grid-box { background: #fff; border-radius: 6px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-
+        
         .header-bar { flex: 0 0 auto; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .header-title { font-weight: 700; color: #444; font-size: 13px; }
-
-        /* THE ANIMATED EXPANDING SEARCH BAR */
-        .header-search input { 
-            padding: 4px 10px; 
-            border: 1px solid #ddd; 
-            border-radius: 15px; 
-            outline: none; 
-            width: 110px; 
-            font-size: 11px; 
-            transition: all 0.4s ease-in-out; 
-            background-color: #f9f9f9;
-        }
-        .header-search input:focus { 
-            width: 180px; 
-            border-color: #007bff; 
-            background-color: #fff;
-            box-shadow: 0 0 5px rgba(0,123,255,0.2);
-        }
-
-        /* NAVIGATION BAR */
+        
+        .header-search input { padding: 4px 10px; border: 1px solid #ddd; border-radius: 15px; outline: none; width: 110px; font-size: 11px; transition: all 0.4s ease-in-out; background-color: #f9f9f9; }
+        .header-search input:focus { width: 180px; border-color: #007bff; background-color: #fff; box-shadow: 0 0 5px rgba(0,123,255,0.2); }
+        
         .tile-nav-container { background: #f8f9fa; border-bottom: 1px solid #eee; padding: 6px 12px; }
         .tile-nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
         .tile-nav-links a { font-size: 11px; font-weight: 700; color: #666; text-decoration: none; padding: 6px 12px; border-radius: 4px; white-space: nowrap; transition: 0.2s; border: 1px solid transparent; }
         .tile-nav-links a:hover { background: #fff; border-color: #ddd; color: #000; }
         .tile-nav-links a.active { background: #007bff; color: #fff; border-color: #007bff; }
-
+        
         .scrollable-content { flex: 1; overflow-y: auto; padding: 12px; }
-
         .dashboard-tile-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; }
         .dashboard-tile { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 95px; transition: 0.2s; cursor: pointer; text-decoration: none !important; }
         .dashboard-tile:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,0,0,0.05); border-color: #007bff; }
         .tile-icon-box { width: 28px; height: 28px; margin-bottom: 8px; }
         .tile-icon-box svg { width: 100%; height: 100%; }
         .tile-title { font-size: 10.5px; font-weight: 600; text-align: center; color: #555; }
-
+        
         .app-tile { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-bottom: 1px solid #f9f9f9; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
         .app-tile:hover { background-color: #f8faff; transform: translateX(3px); color: #007bff; }
         .app-tile.active-selection { border-left-color: #007bff; background-color: #f0f7ff; color: #007bff; font-weight: 700; }
         .app-name { font-size: 11.5px; }
 
-        .empty-label { margin: auto; color: #bbb; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-   
-   
-   
-   
-   /* Announcement Specific Styles */
-.ann-item {
-    display: flex;
-    gap: 12px;
-    padding: 15px 0;
-    border-bottom: 1px solid #f2f2f2;
-}
-
-.ann-item:last-of-type {
-    border-bottom: none;
-}
-
-.ann-img-box img {
-    width: 100px; /* Fixed width for consistency */
-    height: 70px;
-    border-radius: 4px;
-    object-fit: cover;
-    display: block;
-}
-
-.ann-body {
-    flex: 1;
-}
-
-.ann-body h4 {
-    margin: 0 0 4px 0;
-    font-size: 12.5px;
-    color: #333;
-    font-weight: 700;
-}
-
-.ann-body p {
-    margin: 0;
-    font-size: 11px;
-    color: #666;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Truncates text after 2 lines */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.ann-link {
-    display: inline-block;
-    margin-top: 5px;
-    font-size: 11px;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.ann-footer {
-    padding: 12px 0;
-    text-align: center;
-}
-
-.ann-footer a {
-    font-size: 12px;
-    font-weight: 700;
-    color: #007bff;
-    text-decoration: none;
-}
-   
+        /* Announcement Specific Styles */
+        .ann-item { display: flex; gap: 12px; padding: 15px 0; border-bottom: 1px solid #f2f2f2; }
+        .ann-item:last-of-type { border-bottom: none; }
+        .ann-img-box img { width: 100px; height: 70px; border-radius: 4px; object-fit: cover; display: block; }
+        .ann-body { flex: 1; }
+        .ann-body h4 { margin: 0 0 4px 0; font-size: 12.5px; color: #333; font-weight: 700; }
+        .ann-body p { margin: 0; font-size: 11px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .ann-link { display: inline-block; margin-top: 5px; font-size: 11px; color: #007bff; text-decoration: none; font-weight: 700; }
+        .ann-footer { padding: 12px 0; text-align: center; }
+        .ann-footer a { font-size: 12px; font-weight: 700; color: #007bff; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -246,65 +167,53 @@
 
     <div class="dashboard-grid">
         <div class="grid-box">
-  <div class="header-bar">
-    <div class="header-title" style="display: flex; align-items: center; gap: 12px;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M15.54 8.46002C16.4774 9.39764 17.004 10.6692 17.004 11.995C17.004 13.3208 16.4774 14.5924 15.54 15.53" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M19.07 4.93005C20.9447 6.80528 21.9979 9.34842 21.9979 12.0001C21.9979 14.6517 20.9447 17.1948 19.07 19.0701" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div style="display: flex; flex-direction: column;">
-            <span style="font-size: 14px; font-weight: 700; color: #444;">Announcements</span>
-            <span style="font-size: 11px; color: #999; font-weight: normal;">4 items</span>
-        </div>
-    </div>
-</div>
-
-    <div class="scrollable-content" style="padding: 0 15px;">
-        
-        <div class="ann-item">
-            <div class="ann-img-box">
-                <img src="<%=request.getContextPath()%>/com/dashboard/pics/1.jfif" alt="Town Hall">
+            <div class="header-bar">
+                <div class="header-title" style="display: flex; align-items: center; gap: 12px;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15.54 8.46002C16.4774 9.39764 17.004 10.6692 17.004 11.995C17.004 13.3208 16.4774 14.5924 15.54 15.53" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93005C20.9447 6.80528 21.9979 9.34842 21.9979 12.0001C21.9979 14.6517 20.9447 17.1948 19.07 19.0701" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div style="display: flex; flex-direction: column;">
+                        <span style="font-size: 14px; font-weight: 700; color: #444;">Announcements</span>
+                        <span style="font-size: 11px; color: #999; font-weight: normal;">4 items</span>
+                    </div>
+                </div>
             </div>
-            <div class="ann-body">
-                <h4>Belonging & Diversity Town Hall</h4>
-                <p>Listen to our Chief Diversity Officer, the Executive Committee and members...</p>
-            </div>
-        </div>
-
-        <div class="ann-item">
-            <div class="ann-img-box">
-                <img src="<%=request.getContextPath()%>/com/dashboard/pics/2.jfif" alt="Referral">
-            </div>
-            <div class="ann-body">
-                <h4>Good People Know Good People</h4>
-                <p>Our best and most powerful asset are our people. Refer a candidate today!</p>
-                <a href="#" class="ann-link">Refer a Candidate</a>
-            </div>
-        </div>
-
-        <div class="ann-item">
-            <div class="ann-img-box">
-                <img src="<%=request.getContextPath()%>/com/dashboard/pics/3.jfif" alt="Picnic">
-            </div>
-            <div class="ann-body">
-                <h4>Company Picnic!</h4>
-                <p>You and your family are cordially invited to attend the annual company picnic.</p>
+            <div class="scrollable-content" style="padding: 0 15px;">
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/1.jfif" alt="Town Hall"></div>
+                    <div class="ann-body">
+                        <h4>Belonging & Diversity Town Hall</h4>
+                        <p>Listen to our Chief Diversity Officer, the Executive Committee and members...</p>
+                    </div>
+                </div>
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/2.jfif" alt="Referral"></div>
+                    <div class="ann-body">
+                        <h4>Good People Know Good People</h4>
+                        <p>Our best and most powerful asset are our people. Refer a candidate today!</p>
+                        <a href="#" class="ann-link">Refer a Candidate</a>
+                    </div>
+                </div>
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/3.jfif" alt="Picnic"></div>
+                    <div class="ann-body">
+                        <h4>Company Picnic!</h4>
+                        <p>You and your family are cordially invited to attend the annual company picnic.</p>
+                    </div>
+                </div>
+                <div class="ann-footer">
+                    <a href="#">View More</a>
+                </div>
             </div>
         </div>
-
-        <div class="ann-footer">
-            <a href="#">View More</a>
-        </div>
-    </div>
-</div>
 
         <div class="grid-box">
             <div class="header-bar">
                 <div class="header-title">Module Tiles</div>
                 <div class="header-search"><input type="text" onkeyup="filterTiles(this)" placeholder="Search..."></div>
             </div>
-            
             <div class="tile-nav-container">
                 <div class="tile-nav-links">
                     <a href="?module=Finance" class="<%= selectedModule.contains("Finance") ? "active" : "" %>">Finance</a>
@@ -315,7 +224,6 @@
                     <a href="?module=Control" class="<%= selectedModule.contains("Control") ? "active" : "" %>">Control Centre</a>
                 </div>
             </div>
-            
             <div class="scrollable-content">
                 <div class="dashboard-tile-container">
                     <% for(ClsDashBoardBean t : tileList) { %>
@@ -349,21 +257,19 @@
 <script type="text/javascript">
     var appData = <%= gridData %>;
     var initialDetails = <%= detailData %>;
+    var currentModuleDesc = '<%=selectedModule%>'; 
 
     $(document).ready(function () {
         var h = new Date().getHours();
         $("#greeting").text((h < 12) ? "Good Morning" : (h < 18) ? "Good Afternoon" : "Good Evening");
 
         var leftContainer = $("#appListContainer");
-        if (appData.length === 0) { leftContainer.html("<div class='empty-label'>No apps</div>"); }
-        else {
-            $.each(appData, function(i, item) {
-                var html = '<div class="app-tile" onclick="openAppDetail(' + i + ', this)">' +
-                           '<div class="app-name">' + item.description + '</div>' +
-                           '<div style="font-size:16px; opacity:0.3;">&#8250;</div></div>';
-                leftContainer.append(html);
-            });
-        }
+        $.each(appData, function(i, item) {
+            var html = '<div class="app-tile" onclick="openAppDetail(' + i + ', this)">' +
+                       '<div class="app-name">' + item.description + '</div>' +
+                       '<div style="font-size:16px; opacity:0.3;">&#8250;</div></div>';
+            leftContainer.append(html);
+        });
         renderRightPanel(initialDetails);
     });
 
@@ -389,32 +295,46 @@
         var item = appData[index];
         $(".app-tile").removeClass("active-selection");
         $(el).addClass("active-selection");
-        $("#detailListContainer").html("<div class='empty-label'>Loading...</div>");
+        $("#detailListContainer").html("<div style='padding:20px; font-style:italic; color:#999;'>Loading...</div>");
         $.ajax({
             url: window.location.href, type: "POST", data: { ajaxId: item.doc_no }, dataType: "json",
-            success: renderRightPanel
+            success: function(response) {
+                renderRightPanel(response, item.description); 
+            }
         });
     }
 
-    function renderRightPanel(data) {
+    function renderRightPanel(data, parentDesc) {
         var cont = $("#detailListContainer").empty();
-        if (!data || data.length === 0) { cont.html("<div class='empty-label' style='font-size:12px;'>Select an application</div>"); return; }
+        if (!data || data.length === 0) return;
         $.each(data, function(i, item) {
-            var html = '<div class="app-tile" onclick="openDetailLink(\'' + item.description + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + item.value + '\')">' +
-                       '<div class="app-name">' + item.description + '</div><div style="font-size:16px; opacity:0.3;">&#8250;</div></div>';
+            var detName = item.description;
+            var path = item.path;
+            var docno = item.doc_no;
+            var safeDetName = detName.replace(/'/g, "\\'");
+            var safeParentDesc = (parentDesc || currentModuleDesc).replace(/'/g, "\\'");
+
+            var html = '<div class="app-tile" onclick="openDetailLink(\'' + safeDetName + '\', \'' + path + '\', \'' + docno + '\', \'' + safeParentDesc + '\')">' +
+                       '<div class="app-name">' + detName + '</div><div style="font-size:16px; opacity:0.3;">&#8250;</div></div>';
             cont.append(html);
         });
     }
 
-    function openDetailLink(title, path, docno, value) {
-        var fullUrl = "<%= cPath %>/" + path + "?name=" + title + "&docno=" + docno + "&value=" + value;
-        var tt = window.parent.$('#tt');
-        if (tt.length > 0) {
-            if (tt.tabs('exists', title)) tt.tabs('select', title);
-            else tt.tabs('add', { title: title, content: '<iframe scrolling="auto" frameborder="0" src="' + fullUrl + '" style="width:100%;height:100%;"></iframe>', closable: true });
-        } else window.parent.location.href = fullUrl;
+    function openDetailLink(detName, path, docno, mainDesc) {
+        var url = window.location.href;
+        var reurl = url.split("com/");
+        var fullUrl = reurl[0] + "" + path + "?name=" + encodeURIComponent(detName) + "&main=" + encodeURIComponent(mainDesc) + "&docno=" + docno;
+        
+        if (typeof top.addTab === 'function') {
+            top.addTab(detName, fullUrl);
+        } else {
+            window.parent.$('#tt').tabs('add', {
+                title: detName,
+                content: '<iframe scrolling="auto" frameborder="0" src="' + fullUrl + '" style="width:100%;height:100%;"></iframe>',
+                closable: true
+            });
+        }
     }
 </script>
-
 </body>
 </html>
