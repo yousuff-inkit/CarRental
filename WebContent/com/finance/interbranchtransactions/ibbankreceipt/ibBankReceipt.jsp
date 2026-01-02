@@ -703,13 +703,197 @@
 	  }
 	  
 </script>
-
 <style>
+/* ================= SCROLL ================= */
 .hidden-scrollbar {
-   overflow: auto;
-   height: 530px;
+    overflow: auto;
+    height: 530px;
 }
+
+/* ================= PAGE BASE ================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ================= MAIN CARD ================= */
+#mainBG {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* ================= TABLE ================= */
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 6px 8px;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+/* ================= INPUTS ================= */
+input[type="text"],
+select {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* ================= FIELDSET ================= */
+fieldset {
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+legend {
+    font-weight: 700;
+    color: #253858;
+    padding: 0 6px;
+}
+
+/* ================= BUTTON ================= */
+.myButton {
+    background: #4FA8FF;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.myButton:hover {
+    background: #2F7FD4;
+}
+/* ================= MASTER UI INPUT SIZE ================= */
+
+/* Text inputs */
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    height: 34px;                 /* bigger height */
+    padding: 6px 10px;            /* comfortable padding */
+    font-size: 14px;              /* master UI font */
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #b8c6d8;
+    box-sizing: border-box;
+}
+
+/* Dropdowns */
+select {
+    height: 34px;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #b8c6d8;
+    background-color: #ffffff;
+}
+
+/* Focus effect */
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Readonly / disabled */
+input[readonly],
+input:disabled {
+    background-color: #f4f6f8;
+    color: #444;
+    cursor: not-allowed;
+}
+
+/* Date divs (jqx date inputs look like inputs) */
+div[id^="jqx"],
+div[id*="Date"] {
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    border-radius: 6px;
+}
+/* ================= SAFE MASTER UI INPUT SIZE ================= */
+
+/* NORMAL INPUTS */
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    height: 32px;                 /* safe height */
+    padding: 4px 8px;             /* does NOT block typing */
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #b8c6d8;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* DROPDOWNS */
+select {
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #b8c6d8;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* FOCUS (typing must work) */
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* READONLY / DISABLED */
+input[readonly],
+input:disabled {
+    background-color: #f4f6f8;
+    color: #444;
+    cursor: not-allowed;
+}
+
+/* ================= JQX DATE INPUT FIX ================= */
+/* DO NOT touch inner jqx input – only wrapper height */
+.jqx-datetimeinput,
+.jqx-widget {
+    min-height: 32px;
+    border-radius: 6px;
+}
+
+/* IMPORTANT: DO NOT APPLY display:flex TO DATE DIVS */
+/* (this was breaking typing) */
+
 </style>
+
 
 </head>
 <body onload="setValues();getBranch();">
