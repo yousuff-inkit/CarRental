@@ -30,6 +30,46 @@ form label.error {
 #holidayot {
   text-transform: uppercase;
 }
+/* common section header style with blue line + padding */
+.table-section h3,
+.section-block h2,
+h3.section-title,
+h2.section-title {
+    margin: 0 0 10px;
+    padding: 6px 10px;                 /* padding around text */
+    border-left: 4px solid #007bff;    /* blue line */
+    color: #253858;
+    font-size: 13px;
+    font-weight: 600;
+    background: #ffffff;               /* white strip behind text */
+    border-radius: 4px 0 0 4px;        /* rounded near the blue line */
+    
+    /* full‑width header bar with blue line and padding */
+.page-header,
+.table-section-header {
+    width: 100%;
+    background: #ffffff;              /* bar background (or #f8f9fb) */
+    border-bottom: 1px solid #e5e7eb; /* thin divider like other pages */
+    padding: 6px 16px;                /* top/bottom + left/right padding */
+    box-sizing: border-box;
+}
+
+/* text and blue line inside header bar */
+.page-header h2,
+.page-header h3,
+.table-section-header h2,
+.table-section-header h3 {
+    margin: 0;
+    padding-left: 10px;               /* space between line and text */
+    border-left: 4px solid #007bff;   /* blue line */
+    color: #253858;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+    
+}
+
 
 </style>
 <script type="text/javascript">
