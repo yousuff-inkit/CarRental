@@ -489,11 +489,11 @@
 
 	  
 </script>
-
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+
+/* =========================
+   GLOBAL MASTER UI
+========================= */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -506,77 +506,96 @@ body {
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 20px;
-    max-width: 1450px;
+    padding: 24px;
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-input[type="text"], select {
-    height: 32px !important;
+/* =========================
+   INPUTS – MASTER SIZE
+========================= */
+input[type="text"],
+select,
+input[type="file"] {
+    height: 36px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
-    transition: border-color 0.2s;
     font-size: 14px;
-    box-sizing: border-box;
     width: 100%;
+    box-sizing: border-box;
 }
 
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
 
+/* =========================
+   LABELS
+========================= */
 label {
-    font: 14px 'Segoe UI';
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     color: #253858;
+    text-align: right;
     white-space: nowrap;
-    line-height: 32px;
 }
 
+/* =========================
+   SECTION BLOCK
+========================= */
 .section-block {
-    flex: 1;
-    min-width: 0;
     background: #f6f8fa;
     border-radius: 12px;
     padding: 20px;
+    margin-bottom: 22px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
 }
 
 .section-block h2 {
     font-size: 1.1rem;
     font-weight: 600;
-    margin: 0 0 20px;
+    margin-bottom: 18px;
     padding-left: 10px;
     border-left: 4px solid #007bff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.trans-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1.5fr auto 1fr auto 1fr;
-    gap: 12px 15px;
-    align-items: center;
-}
-
+/* =========================
+   GRID – FIXED ALIGNMENT
+========================= */
+.trans-info-grid,
 .agmt-info-grid {
     display: grid;
-    grid-template-columns: auto 1fr auto 3fr auto 1fr;
-    gap: 12px 20px;
+    grid-template-columns: 140px 1fr 140px 1fr;
+    column-gap: 16px;
+    row-gap: 14px;
     align-items: center;
 }
 
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
+/* jqx date input container */
+.trans-info-grid > div[id^="jqx"],
+.agmt-info-grid > div[id^="jqx"] {
+    height: 36px;
+    display: flex;
+    align-items: center;
 }
 
+/* =========================
+   FILE INPUT + ICON
+========================= */
+.file-upload {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* =========================
+   ICON BUTTONS
+========================= */
 .icon {
     background: none;
     border: none;
@@ -584,9 +603,33 @@ label {
     padding: 0;
 }
 
+.icon img {
+    height: 24px;
+}
+
+/* =========================
+   NORMAL BUTTON
+========================= */
 .myButton {
-    padding: 5px 15px;
+    background: #4FA8FF;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 600;
     cursor: pointer;
+}
+
+.myButton:hover {
+    background: #2F7FD4;
+}
+
+/* =========================
+   SCROLL AREA
+========================= */
+.hidden-scrollbar {
+    overflow: auto;
+    max-height: 530px;
 }
 </style>
 </head>
@@ -599,80 +642,145 @@ label {
 
     <form id="frmIbJournalVoucher" action="saveIbJournalVoucher" method="post" autocomplete="off">
         <div class="hidden-scrollbar">
-            
+
+            <!-- ================= Voucher Information ================= -->
             <div class="section-block">
                 <h2>Voucher Information</h2>
+
                 <div class="trans-info-grid">
+                    <!-- Date -->
                     <label>Date</label>
-                    <div id="jqxIbJournalVouchersDate" name="jqxIbJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxIbJournalVouchersDate"/>'></div>
-                    
-                    <label>Import Data</label>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <input type="file" id="fileexcelimport" name="file" style="font-size: 11px;"/>
-                        <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-                            <img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png" height="24">
+                    <div id="jqxIbJournalVouchersDate"
+                         name="jqxIbJournalVouchersDate"
+                         onchange="datechange();"
+                         onblur="datechange();"
+                         value='<s:property value="jqxIbJournalVouchersDate"/>'>
+                    </div>
+
+                    <!-- Doc No -->
+                    <label>Doc No</label>
+                    <input type="text"
+                           id="docno"
+                           name="txtibjournalvouchersdocno"
+                           value='<s:property value="txtibjournalvouchersdocno"/>'
+                           tabindex="-1"/>
+
+                    <!-- Import -->
+                    <label>Import Excel</label>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <input type="file" id="fileexcelimport" name="file"/>
+                        <button class="icon"
+                                id="btnsearch"
+                                type="button"
+                                title="Import Excel"
+                                onclick="return upload();">
+                            <img src="<%=contextPath%>/icons/import_excel.png" height="22">
                         </button>
                     </div>
 
-                    <label>Actions</label>
-                    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
-
-                    <label>Doc No</label>
-                    <input type="text" id="docno" name="txtibjournalvouchersdocno" value='<s:property value="txtibjournalvouchersdocno"/>' tabindex="-1"/>
+                    <!-- Action -->
+                    <label>Action</label>
+                    <button class="myButton"
+                            type="button"
+                            id="btnvaluechange"
+                            onclick="funwarningopen();">
+                        Value Change
+                    </button>
                 </div>
 
-                <div class="agmt-info-grid" style="margin-top: 15px;">
+                <!-- ================= Reference / Description ================= -->
+                <div class="agmt-info-grid" style="margin-top:15px;">
                     <label>Ref. No.</label>
-                    <input type="text" id="txtrefno" name="txtrefno" onblur="fungridfocus();" value='<s:property value="txtrefno"/>'/>
+                    <input type="text"
+                           id="txtrefno"
+                           name="txtrefno"
+                           value='<s:property value="txtrefno"/>'
+                           onblur="fungridfocus();"/>
 
                     <label>Description</label>
-                    <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+                    <input type="text"
+                           id="txtdescription"
+                           name="txtdescription"
+                           value='<s:property value="txtdescription"/>'/>
+                </div>
 
-                    <label id="lblformposted" name="lblformposted" style="font-size: 13px; font-weight: bold; color:#6000FC; font-style: italic;">
+                <!-- Posted Status -->
+                <div style="margin-top:10px; padding-left:140px;">
+                    <span id="lblformposted"
+                          name="lblformposted"
+                          style="font-size:13px; font-weight:700; color:#6000FC; font-style:italic;">
                         <s:property value="lblformposted"/>
-                    </label>
+                    </span>
                 </div>
             </div>
 
+            <!-- ================= Voucher Details ================= -->
             <div class="section-block">
                 <h2>Voucher Details</h2>
-                <div id="jqxJournalVoucherGrid" style="width: 100%;">
+                <div id="jqxJournalVoucherGrid" style="width:100%;">
                     <jsp:include page="ibJournalVoucherGrid.jsp"></jsp:include>
                 </div>
             </div>
 
+            <!-- ================= Summary ================= -->
             <div class="section-block">
                 <h2>Summary</h2>
+
                 <div class="trans-info-grid">
                     <label>Dr. Total</label>
-                    <input type="text" id="txtdrtotal" name="txtdrtotal" style="text-align: right; font-weight: bold;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
-                    
-                    <span></span><span></span> <label>Cr. Total</label>
-                    <input type="text" id="txtcrtotal" name="txtcrtotal" style="text-align: right; font-weight: bold;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+                    <input type="text"
+                           id="txtdrtotal"
+                           name="txtdrtotal"
+                           value='<s:property value="txtdrtotal"/>'
+                           tabindex="-1"
+                           style="text-align:right; font-weight:700;"/>
+
+                    <label>Cr. Total</label>
+                    <input type="text"
+                           id="txtcrtotal"
+                           name="txtcrtotal"
+                           value='<s:property value="txtcrtotal"/>'
+                           tabindex="-1"
+                           style="text-align:right; font-weight:700;"/>
                 </div>
             </div>
 
-            <input type="hidden" id="hidjqxIbJournalVouchersDate" name="hidjqxIbJournalVouchersDate" value='<s:property value="hidjqxIbJournalVouchersDate"/>'/>
+            <!-- ================= Hidden Fields ================= -->
+            <input type="hidden" id="hidjqxIbJournalVouchersDate" name="hidjqxIbJournalVouchersDate"
+                   value='<s:property value="hidjqxIbJournalVouchersDate"/>'/>
             <input type="hidden" id="mode" name="mode"/>
             <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
             <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
             <input type="hidden" id="gridlength" name="gridlength"/>
-            <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-            <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-            <input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
-            <input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
-            <input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
-            <input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
-            <input type="hidden" id="txtexcelbranchvalidation" name="txtexcelbranchvalidation" value='<s:property value="txtexcelbranchvalidation"/>'/>
-            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+
+            <div hidden id="maindate" name="maindate"
+                 value='<s:property value="maindate"/>'></div>
+            <input type="hidden" id="hidmaindate" name="hidmaindate"
+                   value='<s:property value="hidmaindate"/>'/>
+
+            <input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation"
+                   value='<s:property value="txtexceltypevalidation"/>'/>
+            <input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation"
+                   value='<s:property value="txtexcelaccvalidation"/>'/>
+            <input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation"
+                   value='<s:property value="txtexcelgrtypevalidation"/>'/>
+            <input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation"
+                   value='<s:property value="txtexcelcostvalidation"/>'/>
+            <input type="hidden" id="txtexcelbranchvalidation" name="txtexcelbranchvalidation"
+                   value='<s:property value="txtexcelbranchvalidation"/>'/>
+
+            <input type="hidden" id="txttrno" name="txttrno"
+                   value='<s:property value="txttrno"/>'/>
+            <input type="hidden" id="txtvalidation" name="txtvalidation"
+                   value='<s:property value="txtvalidation"/>'/>
         </div>
     </form>
 
+    <!-- ================= Windows ================= -->
     <div id="ibJournalVoucherGridWindow"><div></div><div></div></div>
     <div id="branchSearchWindow"><div></div><div></div></div>
-    <div id="costTypeSearchGridWindow"><div></div><div></div></div> 
-    <div id="costCodeSearchWindow"><div></div><div></div></div> 
+    <div id="costTypeSearchGridWindow"><div></div><div></div></div>
+    <div id="costCodeSearchWindow"><div></div><div></div></div>
 
 </div>
 </body>
