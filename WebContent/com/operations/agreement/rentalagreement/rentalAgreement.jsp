@@ -3081,10 +3081,10 @@ html, body {
 
 </head>
 <body onload="setValues();">
-	<div id="mainBG" class="homeContent" data-type="background">
+	<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
 		<form id="frmRentalAgreement" action="saveRentalAgreement" name="rentalform" method="post"  autocomplete="off">
 			<jsp:include page="../../../../header.jsp"></jsp:include><br/> 
-				<div class='hidden-scrollbar'>
+				<div class=''>
 			   		<table  width="100%" id="vehicle">
 			   		<tr>
 			   		<td width="100%" valign="top"> 
