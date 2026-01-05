@@ -70,13 +70,13 @@
 }
 
 .fleet-status-wrapper .sidebar {
-    flex: 0 0 400px;
-    min-width: 450px;
-    max-width: 450px;
+    flex: 0 0 300px;
+    min-width: 300px;
+    max-width: 300px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     padding: 12px;
-    padding-left:12px;
+    padding-left:1px;
     padding-right:12px;
     box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
                 2px 2px 6px rgba(0, 0, 0, 0.08);
@@ -88,15 +88,16 @@
 
 
 .fleet-status-wrapper .main-content {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 12px;
     padding: 14px;
   	overflow-y: auto;
     overflow-x: visible;   
-    min-height: calc(100vh - 40px);
-  
+    min-height: calc(100vh - 20px);
+  	margin-left:-15px;
+  	margin-right:-15px;
     box-sizing: border-box;
 }
 
@@ -338,25 +339,25 @@
 /* Responsive adjustments */
 @media (max-width: 1400px) {
     .fleet-status-wrapper .sidebar {
-        flex: 0 0 400px;
-        min-width: 400px;
-        max-width: 400px;
+        flex: 0 0 280px;
+        min-width: 280px;
+        max-width: 280px;
     }
 }
 
 @media (max-width: 1200px) {
     .fleet-status-wrapper .sidebar {
-        flex: 0 0 400px;
-        min-width: 400px;
-        max-width: 400px;
+        flex: 0 0 260px;
+        min-width: 260px;
+        max-width: 260px;
     }
 }
 
 @media (max-width: 1024px) {
     .fleet-status-wrapper .sidebar {
-        flex: 0 0 400px;
-        min-width: 300px;
-        max-width: 400px;
+        flex: 0 0 240px;
+        min-width: 240px;
+        max-width: 240px;
     }
 }
 

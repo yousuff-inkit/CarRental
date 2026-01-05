@@ -693,15 +693,101 @@
 	 }
 	  
 	  function funPrintBtn() {
-			
-		  if (($("#mode").val() == "view") && $("#docno").val()!="") {
-				BankPrintContent('printVoucherWindow.jsp');
-			  }
-			else {
-					$.messager.alert('Message','Select a Document....!','warning');
-					return;
-				}
-      }
+		    if (($("#mode").val() == "view") && $("#docno").val()!="") {
+		        BankPrintContent('printVoucherWindow.jsp');
+		    }
+		    else {
+		        $.messager.alert('Message','Select a Document....!','warning');
+		        return;
+		    }
+		}
+
+	  function commonAutoPrint(printUrl) {
+		    var win = window.open(
+		        printUrl,
+		        "_blank",
+		        "top=120,left=200,width=1020,height=650,scrollbars=yes"
+		    );
+
+		    if (!win) {
+		        $.messager.alert(
+		            'Popup Blocked',
+		            'Please allow popups to print documents.',
+		            'warning'
+		        );
+		        return;
+		    }
+
+		    setTimeout(function () {
+		        win.focus();
+		        win.print();
+		        win.onafterprint = function () {
+		            win.close();
+		        };
+		    }, 700);
+		}
+	  function openCommonPrintDialog(config) {
+
+		    $.messager.dialog({
+		        title: 'Print Options',
+		        width: 360,
+		        height: 210,
+		        modal: true,
+		        content:
+		            '<div style="padding:15px;text-align:center;font-weight:600;">' +
+		            'Choose Print Type' +
+		            '</div>',
+		        buttons: [
+		            {
+		                text: 'With Header',
+		                handler: function () {
+		                    commonAutoPrint(
+		                        config.baseUrl +
+		                        config.printAction +
+		                        "?docno=" + config.docno +
+		                        "&branch=" + config.branch +
+		                        "&header=1"
+		                    );
+		                    $('.messager-window').window('close');
+		                }
+		            },
+		            {
+		                text: 'Without Header',
+		                handler: function () {
+		                    commonAutoPrint(
+		                        config.baseUrl +
+		                        config.printAction +
+		                        "?docno=" + config.docno +
+		                        "&branch=" + config.branch +
+		                        "&header=0"
+		                    );
+		                    $('.messager-window').window('close');
+		                }
+		            },
+		            {
+		                text: 'Cheque',
+		                handler: function () {
+		                    commonAutoPrint(
+		                        config.baseUrl +
+		                        config.chequeAction +
+		                        "?docno=" + config.docno +
+		                        "&branch=" + config.branch
+		                    );
+		                    $('.messager-window').window('close');
+		                }
+		            },
+		            {
+		                text: 'Cancel',
+		                handler: function () {
+		                    $('.messager-window').window('close');
+		                }
+		            }
+		        ]
+		    });
+		}
+
+
+	  
 	  
 	  function clearClientInfo(){
 		  $("#txttodocno").val('');$("#txttoaccid").val('');$("#txttoaccname").val('');$("#txtapplyinvoiceapply").val(0.00);
