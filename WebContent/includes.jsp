@@ -61,5 +61,20 @@
 	<script type="text/javascript" src="<%=contextPath%>/js/jqxgrid.export.js"></script> 
 	 <script type="text/javascript" src="<%=contextPath%>/js/jqxinput.js"></script>
 	 <script type="text/javascript" src="<%=contextPath%>/js/exportExcel.js"></script>
+	 
+	 
+	 
+	 <script>
+$(function () {
+    $('input[placeholder^="Press F3" i]').each(function () {
+
+        // add title only if not already set
+        if (!this.title || this.title.trim() === "") {
+            this.title = "Double click on this to search";
+        }
+    });
+});
+</script>
+	 
 </head> 
 </html>
