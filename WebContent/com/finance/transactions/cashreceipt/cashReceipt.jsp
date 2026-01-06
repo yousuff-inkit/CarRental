@@ -13,9 +13,36 @@
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
 		 
-		 $("#jqxCashReceiptDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 
+		 $("#jqxCashReceiptDate").jqxDateTimeInput({ width: '164px', height: 34 , formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '164px', height: 34 , formatString:"dd.MM.yyyy"});
+		// 🔥 REMOVE jqx inline margin (FINAL FIX)
+		 $("#inputjqxCashReceiptDate").css("margin-top", "0px");
+		 $("#inputmaindate").css("margin-top", "0px");
+		 $("#jqxCashReceiptDate").jqxDateTimeInput({
+			    width: '164px',
+			    height: 34,
+			    formatString: "dd.MM.yyyy",
+			    theme: 'energyblue'
+			});
+
+			/* force internal alignment AFTER render */
+			setTimeout(function () {
+			    $("#jqxCashReceiptDate")
+			        .find("input")
+			        .css({
+			            "margin-top": "0px",
+			            "line-height": "34px"
+			        });
+
+			    $("#jqxCashReceiptDate")
+			        .find(".jqx-action-button")
+			        .css({
+			            "top": "0px",
+			            "height": "34px"
+			        });
+			}, 0);
+
+
 		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } ,  showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsToWindow').jqxWindow('close');  
 		 
@@ -972,6 +999,15 @@ select:-webkit-autofill {
     -webkit-text-fill-color: #253858 !important;
     transition: background-color 5000s ease-in-out 0s;
 }
+/* Align jqxDateTimeInput with normal textboxes */
+.jqx-datetimeinput,
+.jqx-datetimeinput .jqx-input-content {
+    height: 34px !important;
+    line-height: 34px !important;
+    box-sizing: border-box;
+}
+
+
 </style>
 
 

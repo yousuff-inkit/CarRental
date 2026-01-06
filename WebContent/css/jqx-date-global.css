@@ -249,5 +249,43 @@ td input[type="text"] {
     justify-content: center !important;
     padding-top: 8px !important;   /* 👈 THIS moves icon DOWN */
 }
+/* ================================
+   GLOBAL JQX INPUT & DROPDOWN SIZE
+   ================================ */
+
+/* jqx textbox & date input */
+.jqx-input,
+.jqx-datetimeinput,
+.jqx-datetimeinput input {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    box-sizing: border-box;
+}
+
+/* jqx dropdown container */
+.jqx-dropdownlist {
+    height: 34px !important;
+}
+
+/* jqx dropdown visible content */
+.jqx-dropdownlist-content {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    padding-left: 10px !important;
+}
+
+/* jqx dropdown arrow button */
+.jqx-dropdownlist-arrow {
+    height: 34px !important;
+}
+
+/* jqx list items inside dropdown */
+.jqx-listitem-element {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+}
 
 

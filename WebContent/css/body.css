@@ -30,11 +30,16 @@ legend {
   font: 13px  Tahoma;
   
   }
-  input[type="text"] {
-  	width:'40%';
-    height:15px;
-    font-size:10px;
+/* ===== Standard text input ===== */
+input[type="text"] {
+    width: 40%;
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    padding: 0 10px !important;
+    box-sizing: border-box;
 }
+
   input[type="date"] {
     width:'40%';
     height:8px;
@@ -61,12 +66,20 @@ form label.error {
     font-size: 9px;
 }
 
-
-select{
-	width:'60%';
-	height:20px;
-    font-size:9px;
+/* ===== Standard dropdown ===== */
+select {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    padding: 0 10px !important;
+    box-sizing: border-box;
 }
+
+
+.form-group select {
+    width: 100%;
+}
+
 option{
 	height:12px;
     font-size:9px;
@@ -80,6 +93,89 @@ input[type="email"] {
 label.mandatory{
  color: #FF0000;
 }
+/* =====================================================
+   OVERRIDE legacy input heights for header fields
+   ===================================================== */
+
+/* Header row: override tiny legacy input height */
+table tr td input[type="text"],
+table tr td select {
+    height: 36px !important;
+    font-size: 13px !important;
+}
+
+/* jqx DateTimeInput in header row */
+table tr td .jqx-datetimeinput {
+    height: 36px !important;
+    margin-top: 0 !important;
+}
+
+/* Align header labels vertically with inputs */
+table tr td[align="right"] {
+    padding-top: 0 !important;
+    line-height: 36px !important;
+}
+/* =====================================================
+   jqx DropDownList – global size standardization
+   ===================================================== */
+
+.jqx-dropdownlist {
+    height: 34px !important;
+    font-size: 14px !important;
+}
+
+.jqx-dropdownlist-content {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+}
+
+.jqx-dropdownlist-arrow {
+    height: 34px !important;
+}
+
+.jqx-listitem-element {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !;
+}
+/* ================================
+   GLOBAL INPUT & SELECT FIX
+   (Overrides legacy JSP styles)
+   ================================ */
+
+/* Normal text inputs */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+}
+
+/* Fix table-based inputs */
+table input[type="text"],
+table select {
+    height: 34px !important;
+    line-height: 34px !important;
+}
+
+/* Dropdown option spacing */
+select option {
+    font-size: 14px !important;
+    padding: 6px 10px;
+}
+/* FIX: Search / Primary buttons visibility */
+
+
+
+.jqx-window button {
+    background-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
 
 
 input[placeholder^="Press F3" i] {
