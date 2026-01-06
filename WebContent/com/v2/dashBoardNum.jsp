@@ -35,26 +35,24 @@
 <link rel="stylesheet" href="../../vendors/datatables/dataTables.bootstrap.min.css"/>
 <link rel="stylesheet" type="text/css" href="../../vendors/daterangepicker/daterangepicker.css" />
 <style type="text/css">
-	/* @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
-	@import url(https://fonts.googleapis.com/css?family=Teko:700); */
 	@font-face {
 		font-family: Poppins-Regular;
-	  	src: url('fonts/poppins/Poppins-Regular.ttf'); 
+		src: url('fonts/poppins/Poppins-Regular.ttf'); 
 	}
 	
 	@font-face {
-	  	font-family: Poppins-Medium;
-	  	src: url('fonts/poppins/Poppins-Medium.ttf'); 
+		font-family: Poppins-Medium;
+		src: url('fonts/poppins/Poppins-Medium.ttf'); 
 	}
 	
 	@font-face {
-	  	font-family: Montserrat-Medium;
-	  	src: url('fonts/montserrat/Montserrat-Medium.ttf'); 
+		font-family: Montserrat-Medium;
+		src: url('fonts/montserrat/Montserrat-Medium.ttf'); 
 	}
 	
 	@font-face {
-	  	font-family: Montserrat-SemiBold;
-	  	src: url('fonts/montserrat/Montserrat-SemiBold.ttf'); 
+		font-family: Montserrat-SemiBold;
+		src: url('fonts/montserrat/Montserrat-SemiBold.ttf'); 
 	}
 	* {
 		margin: 0px; 
@@ -85,8 +83,78 @@
 	    width:100%;
 	    overflow:auto;
 		height:100%;
-		background-color: #F7F7F7;
 	}
+    
+    /* --- NEW ACTION BAR STYLES --- */
+    .dashboard-action-bar {
+        width: 100%;
+        background-color: #ffffff;
+        padding: 10px 20px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        border: 1px solid #e0e0e0;
+    }
+
+    .home-dropdown-new {
+        position: relative;
+        display: inline-block;
+    }
+
+    .btn-switch-main {
+        background-color: #4652ba;
+        color: #ffffff;
+        padding: 8px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s;
+    }
+
+    .btn-switch-main:hover {
+        background-color: #4652ba;
+    }
+
+    .dropdown-menu-new {
+        display: none;
+        position: absolute;
+        background-color: #ffffff;
+        min-width: 240px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        border-radius: 4px;
+        top: 40px;
+        left: 0;
+        z-index: 1000;
+        border: 1px solid #ddd;
+    }
+
+    .dropdown-menu-new a {
+        color: #333;
+        padding: 12px 16px;
+        text-decoration: none !important;
+        display: block;
+        border-bottom: 1px solid #4652ba;
+    }
+
+    .dropdown-menu-new a:hover {
+        background-color: #f8f9ff;
+    }
+
+    .home-dropdown-new:hover .dropdown-menu-new {
+        display: block;
+    }
+
+    .menu-item-title { font-weight: 700; display: block; font-size: 13px; color: #212529; }
+    .menu-item-desc { font-size: 11px; color: #888; }
+    /* --- END NEW STYLES --- */
+
 	.sidebar{
 		position:absolute;
 		z-index:999999;
@@ -111,7 +179,7 @@
 	}
 	.page-loader button,.page-loader button:hover,.page-loader button:active,.page-loader button:focus{
 		background-color: #5867dd;
-    	border-color: #5867dd;
+	 	border-color: #5867dd;
 		color:#fff;
 		margin:0 auto;
 		position:absolute;
@@ -129,7 +197,6 @@
         outline:0;
     }
     .card-container{
-        background-color: var(--white);
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         border-radius: 8px;
         margin-bottom: 15px;
@@ -189,7 +256,7 @@
         fill: #464A4F;
     }
     .custom-badge1.badge{
-   		margin-left: 10px;
+		margin-left: 10px;
     	border-radius: 3px;
     	background-color: darkblue;
     }
@@ -209,7 +276,7 @@
     	cursor:pointer;
     }
     .panel-loader{
-   		position: absolute;
+		position: absolute;
     	width: 100%;
     	height: 100%;
     	z-index: 99;
@@ -222,8 +289,8 @@
     	color:#fff;
     }
     .no-padding {
-   		padding: 0;
-   		margin: 0 !important;
+		padding: 0;
+		margin: 0 !important;
 	}
 	.p-15{
 		padding:15px;
@@ -234,20 +301,51 @@
 	<div class="page-loader">
 		<button type="button" class="btn btn-brand"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Loading</button>
 	</div>
-	<!-- <div class="sidebar animated slideOutLeft">
-		
-	</div> -->
+
 	<div class="container-fluid">
-		<div class="panel panel-default admin-cover animated fadeInDown m-t-10">
-	  		<div class="panel-body">
-	  			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-	  				<p style="margin-bottom:0;" class="fs-12"><strong>Hi <span style="text-transform:capitalize;" class="user-text"></span></strong>, Your Analytics are all set</p>	
-	  			</div>
-	    		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-	    			<p style="margin-bottom:0;" class="fs-12 pull-right last-updated">Last Updated on</p>	
-	    		</div>
-	  		</div>
+        <div class="panel panel-default admin-cover animated fadeInDown m-t-10">
+	 		<div class="panel-body">
+	 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	 				<p style="margin-bottom:0;" class="fs-12"><strong>Hi <span style="text-transform:capitalize;" class="user-text">Admin</span></strong>, Your Analytics are all set</p>	
+	 			</div>
+	 	 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	 	 			<p style="margin-bottom:0;" class="fs-12 pull-right last-updated">Last Updated on 06-01-2026 05:00</p>	
+	 	 		</div>
+	 		</div>
 		</div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-action-bar animated fadeInDown">
+                    <div class="home-dropdown-new">
+                        <button type="button" class="btn-switch-main">
+                            <i class="fa fa-exchange"></i> Switch Dashboard <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-menu-new">
+                           <a href="/CarRental/com/dashboard/dashBoardTiles.jsp">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="fa fa-th-large" style="font-size: 18px; color: #666;"></i>
+                                    <div>
+                                        <span class="menu-item-title">Standard View</span>
+                                        <span class="menu-item-desc">Tile Dashboard</span>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <a href="javascript:void(0);" style="background-color: #f4f5fd; pointer-events: none;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <i class="fa fa-dashboard" style="font-size: 18px; color: #5867dd;"></i>
+                                    <div>
+                                        <span class="menu-item-title" style="color: #5867dd;">My Dashboard</span>
+                                        <span class="menu-item-desc">Current Layout</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		
 		<div class="row">
 	        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
@@ -257,7 +355,7 @@
 	                </div>
 	                <div class="card-footer">
 	                    <ul class="list-group">
-	                        <li class="list-group-item p-r-8 p-l-8">Occupancy on Total<span class="badge"><span class="counter">0</span>%</span><span class="badge countervalue">0</span></li>
+	                        <li class="list-group-item p-r-8 p-l-8">Occupancy on Total<span class="badge"><span class="counter">76.03</span>%</span><span class="badge countervalue">628</span></li>
 	                    </ul>
 	                </div>
 	            </div>
@@ -269,11 +367,14 @@
 	                </div>
 	                <div class="card-footer">
 	                    <ul class="list-group">
-	                        <li class="list-group-item p-r-8 p-l-8">Occupancy on Available<span class="badge"><span class="counter">0</span>%</span><span class="badge countervalue">0</span></li>
+	                        <li class="list-group-item p-r-8 p-l-8">Occupancy on Available<span class="badge"><span class="counter">81.56</span>%</span><span class="badge countervalue">628</span></li>
 	                    </ul>
 	                </div>
 	            </div>
 	        </div>
+	    </div>
+    </div>
+    
 	        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 	            <div class="card-container">
 	                <div class="card-body text-center">

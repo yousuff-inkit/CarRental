@@ -21,37 +21,156 @@
  <% String aprstatus = request.getParameter("aprstatus")==null?"0":request.getParameter("aprstatus");%>
  <% String isfirstappr = request.getParameter("isfirstappr")==null?"0":request.getParameter("isfirstappr"); %>
  
- <style type="text/css">
-    .redClass
-    {
-        background-color: #FFEBEB;
-    }
-    
-    .yellowClass
-    {
-        background-color: #FFFFD1;
-    }
-    
-    .greyClass
-    {
-        background-color: #D8D8D8;
-    }
-        
-    .icon {
-		width: 2.5em;
-		height: 3em;
-		border: none;
-		background-color: #E0ECF8;
-    }
-     
-     select.list1
-{
-    background-color: #99CCFF;
-    font-size: 130%;
-}
-        
-</style>
+ 
+<style>
+        :root {
+            --primary-color: #2563eb;
+            --border-color: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-gray: #f8fafc;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            min-height: 550px;
+            overflow: visible !important; /* Ensures dropdown isn't cut off */
+        }
+
+        /* Left Section (40%) */
+        .input-section {
+            flex: 0 0 40%;
+            padding: 30px;
+            border-right: 1px solid var(--border-color);
+            background-color: var(--bg-gray);
+            box-sizing: border-box;
+        }
+
+        /* Right Section (60%) */
+        .display-section {
+            flex: 0 0 60%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* Form Elements */
+        .form-row { margin-bottom: 20px; }
+        .field-label { display: block; font-weight: 500; margin-bottom: 8px; }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* FIX: Dropdown Visibility */
+        .status-container {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .modern-select {
+            appearance: none;
+            background-color: #ffffff;
+            width: 220px;
+            /* Critical Fix: specific height + line-height normal to stop clipping */
+            height: 45px;
+            line-height: 1.2; 
+            padding: 0 35px 0 15px; 
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 18px;
+        }
+
+
+/* Also update the options inside the dropdown */
+.modern-select option {
+    font-size: 16px; 
+    padding: 10px;
+}
+        /* RESTORE: Grid Headers (User, Submit Time, Remarks) */
+        .grid-container {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            flex-grow: 1;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .grid-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grid-table th {
+            background-color: #f1f5f9;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 14px;
+        }
+    </style>
 
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -317,50 +436,51 @@
 	
 	
 <body>
-<div id=search>
- <table width="100%">
- <tr>
-    <td>
-     <div id="masdiv"><table width="100%">
-    <tr>
-    <td width="21%" align="right"><b>Date:</b></td>
-    <td width="15%"><input type="text" name="apprdate" id="apprdate" style="width:90%" readonly value='<s:property value="apprdate"/>'></td>
-    <td width="64%"><input type="text" name="apprtime" id="apprtime" style="width:30%" readonly value='<s:property value="apprtime"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="3"><textarea maxlength="540" id="apprdesc" style="height:85px;width:98%;font: 10px Tahoma;resize:none"  name="apprdesc" ><s:property value="apprdesc" ></s:property></textarea></td>
-  </tr>
-  <tr>
-  
-    <td colspan="2"><div id="optdiv"><table width="100%">
-  <tr>
-    <td align="right"><b>Status</b></td>
-    <td><select name="optname"  class="list1" id="optname"  onchange="getStat(this.value);"></select></td>
-  </tr>
-</table></div></td>
-    <td colspan="2" align="left"><button class="myButton" type="button" id="btnSend" name="btnSend" onClick="saveApprlevel()">SUBMIT</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  </tr>
-</table></div>
-</td>
-  </tr>
-  <tr>
-    <td align="center"><div id="refreshdiv"><div id="jqxApprovalGrid"></div></div>
-    <input type="hidden" id="optid"/>
-    <input type="hidden" id="hidtype"/>
-    <input type="hidden" id="hidocno"/>
-    <input type="hidden" id="hiuserid"/>
-    <input type="hidden" id="hibrchid"/>
-    <input type="hidden" id="apprlevel"/>
-    <input type="hidden" id="minapprl"/>
-    <input type="hidden" id="apprlist"/></td>
-  </tr>
-</table>
- 
- 
- 
- </div>
- 
-  
+
+<div class="container">
+    <div class="input-section">
+        <h2 class="section-title">Entry Details</h2>
+        <div class="form-row">
+            <span class="field-label">Date & Time</span>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" value="6/1/2026" readonly style="flex: 2;">
+                <input type="text" value="5:10" readonly style="flex: 1;">
+            </div>
+        </div>
+        <div class="form-row">
+            <span class="field-label">Remarks / Description</span>
+            <textarea placeholder="Enter remarks here..."></textarea>
+        </div>
+        <button class="btn-submit">SUBMIT APPROVAL</button>
+    </div>
+
+    <div class="display-section">
+        <h2 class="section-title">Status & Records</h2>
+        
+        <div class="status-container">
+            <span class="field-label" style="margin:0">Current Status:</span>
+            <select class="modern-select">
+                <option>Approved</option>
+                <option>Rejected</option>
+                <option>Returned</option>
+            </select>
+        </div>
+
+        <div class="grid-container">
+            <table class="grid-table">
+                <thead>
+                    <tr>
+                        <th width="20%">User</th>
+                        <th width="30%">Submit Time</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="no-data">No data to display in approval history</div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>
