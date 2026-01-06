@@ -8,18 +8,9 @@
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-/* Error Label */
-form label.error {
-    color: red;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 100vh;
-}
-
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -28,315 +19,120 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
-    font-size: 15px; /* Increased base font size */
-    font-weight: 500; /* Made text semi-bold */
+    font-size: 15px;
+    font-weight: 700 !important; /* Global Boldness */
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 10px;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 20px;
+    max-width: 100% !important; /* Force 100% width */
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    text-align: left !important;
 }
-
-/* Receipt Header - Larger & Bold */
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 16px; /* Increased from 2vh */
-    font-weight: 600; /* Made bold */
-}
-
-.receipt-header label {
-    font-weight: 700; /* Extra bold for labels */
-    color: #333;
-    margin-right: 8px;
-    font-size: 16px; /* Increased */
-}
-
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 8px 12px; /* Increased padding */
-    font-size: 15px; /* Increased */
-    font-weight: 600; /* Made bold */
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 18px; /* Increased padding */
-    font-weight: 700; /* Extra bold */
-    font-size: 15px; /* Increased */
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.receipt-header button:hover {
-    background: #0056b3;
-}
-
-#txtStatus {
-    font-size: 1.7rem; /* Increased */
-    font-weight: 700; /* Extra bold */
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-/* Section Styling - Larger & Bold */
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.3em; /* Increased */
-    font-weight: 700; /* Extra bold */
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 700; /* Extra bold */
-    font-size: 15px; /* Increased */
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 8px 12px; /* Increased padding */
-    font-size: 15px; /* Increased */
-    font-weight: 600; /* Made bold */
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Table Section - Larger & Bold */
-.table-section {
-    margin-bottom: 18px;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.3em; /* Increased */
-    font-weight: 700; /* Extra bold */
-}
-
-/* Table Styling - Larger & Bold Text */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-
-.cr-table th, 
-.cr-table td {
-    padding: 12px 14px; /* Increased padding */
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 15px; /* Increased */
-    font-weight: 600; /* Made bold */
-}
-
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 700; /* Extra bold for headers */
-    font-size: 16px; /* Larger headers */
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* Input fields in table - Larger & Bold */
-.cr-table input[type="text"],
-.cr-table input[type="number"],
-.cr-table select {
-    font-size: 15px; /* Increased */
-    font-weight: 600; /* Made bold */
-    padding: 8px 10px; /* Increased padding */
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-}
-
-/* Labels in table - Bold */
-.cr-table label {
-    font-weight: 700; /* Extra bold */
-    font-size: 15px; /* Increased */
-}
-
-/* Additional input styling for better visibility */
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-    font-size: 15px !important; /* Increased */
-    font-weight: 600 !important; /* Made bold */
-    color: #222 !important;
-}
-
-/* Placeholder text */
-input::placeholder {
-    font-weight: 500; /* Semi-bold placeholder */
-    color: #666;
-}
-
-/* Select dropdown options */
-select option {
-    font-size: 15px;
-    font-weight: 600;
-    padding: 8px;
-}
-
-/* Checkbox labels */
-input[type="checkbox"] + label {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-/* Error message styling */
-#errormsg {
-    font-size: 16px;
-    font-weight: 700;
-    color: red;
-}
-
-/* Form detail text */
-#formdet {
-    font-size: 16px;
-    font-weight: 700;
-}
-/* ============================================ */
-/* GLOBAL FONT WEIGHT INCREASE - ADD THIS AT THE END OF YOUR STYLE TAG */
-/* ============================================ */
 
 /* Make all text bolder */
 * {
-    font-weight: 700 !important; /* Extra bold for everything */
-}
-
-/* Specific overrides for better control */
-body,
-div,
-span,
-p,
-label,
-td,
-th,
-input,
-select,
-textarea,
-button,
-option {
-    font-weight: 700 !important; /* Extra bold */
-}
-
-/* Table text - Extra bold */
-.cr-table td,
-.cr-table th,
-.cr-table label,
-.cr-table input,
-.cr-table select {
     font-weight: 700 !important;
 }
 
-/* Form inputs - Extra bold */
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
-    font-weight: 700 !important;
+/* ------------------------------
+    SECTION BLOCKS & HEADERS
+------------------------------ */
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
 }
 
-/* All labels - Extra bold */
+/* Blue vertical line for headers */
+.section-block h2 {
+    font-size: 1.3rem;
+    font-weight: 700 !important;
+    margin: 0 0 20px;
+    padding-left: 12px;
+    border-left: 5px solid #007bff;
+    color: #253858;
+    display: flex;
+    align-items: center;
+}
+
+/* ------------------------------
+    INPUTS & CONTROLS
+------------------------------ */
+input[type="text"], select, textarea, input[type="email"] {
+    height: 38px !important; /* Increased height for bold text */
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 15px !important;
+    box-sizing: border-box;
+    width: 100%;
+    color: #222 !important;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
 label {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
+    color: #253858;
+    white-space: nowrap;
+    font-size: 15px;
 }
 
-/* Headers - Extra bold */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700 !important;
+/* ------------------------------
+    TABLES & GRIDS (UNTOUCHED LOGIC)
+------------------------------ */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* Buttons - Extra bold */
-button,
-input[type="button"],
-input[type="submit"] {
-    font-weight: 700 !important;
-}
-
-/* Dropdown options - Extra bold */
-select option {
-    font-weight: 700 !important;
-}
-
-/* Placeholder text - Bold */
-input::placeholder,
-textarea::placeholder {
-    font-weight: 700 !important;
-}
-.cr-table td input[type="text"],
-.cr-table td select {
+.cr-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e4e7ec;
+    font-size: 15px;
     vertical-align: middle;
-   
 }
 
-/* Ensure labels are vertically centered */
 .cr-table td[align="right"] {
-    vertical-align: middle;
-    padding-right: 8px;
+    font-weight: 700 !important;
+    text-align: right;
 }
 
-.cr-table td[align="left"] {
-    vertical-align: middle;
-    padding-left: 4px;
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Hidden Scrollbar Utility */
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* JQX Widget Overrides */
+.jqx-datetimeinput {
+    height: 38px !important;
+    width: 100% !important;
+}
+
+/* Error Message */
+form label.error {
+    color: red !important;
+    font-size: 14px;
 }
 </style>
 <script type="text/javascript">
@@ -1132,211 +928,190 @@ function getProdType(event){
 				/*    function diserror(){
 					   document.getElementById("errormsg").innerText="";
 				   } */
-				    function funPrintBtn(){
-				 	   if (($("#mode").val() == "view") && $("#masterdoc_no").val()!="") {
-				 	  
-				 	   var url=document.URL;
+				    
+				   function funPrintBtn(){
 
-				        var reurl=url.split("saveActionNipurchase");
-				        
-				        $("#docno").prop("disabled", false);                
-				        var dtype=$('#formdetailcode').val();
-						 var brhid=<%= session.getAttribute("BRANCHID").toString()%>
-				  
-				var win= window.open(reurl[0]+"printniphs?docno="+document.getElementById("masterdoc_no").value+"&dtype="+dtype+"&brhid="+brhid,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-				     
-				win.focus();
-				 	   } 
-				 	  
-				 	   else {
-					    	      $.messager.alert('Message','Select a Document....!','warning');
-					    	      return false;
-					    	     }
-					    	
-				 	}
+					    if ($("#mode").val() !== "view" || $("#masterdoc_no").val() === "") {
+					        $.messager.alert('Message','Select a Document....!','warning');
+					        return false;
+					    }
+
+					    var baseUrl = document.URL.split("saveActionNipurchase")[0];
+					    var dtype   = $('#formdetailcode').val();
+					    var brhid   = <%= session.getAttribute("BRANCHID").toString() %>;
+
+					    var printUrl =
+					        baseUrl +
+					        "printniphs" +
+					        "?docno=" + $("#masterdoc_no").val() +
+					        "&dtype=" + dtype +
+					        "&brhid=" + brhid;
+
+					    openAndPrint(printUrl);
+					}
+
+				   function openAndPrint(url) {
+
+					    var win = window.open(
+					        url,
+					        "_blank",
+					        "top=250,left=310,width=900,height=800,scrollbars=yes"
+					    );
+
+					    if (win) {
+					        setTimeout(function () {
+					            win.focus();
+					            win.print();
+					            win.onafterprint = function () {
+					                win.close();
+					            };
+					        }, 700);
+					    } else {
+					        $.messager.alert('Message','Popup blocked by browser','warning');
+					    }
+					}
+
 						   
 </script>
 </head>
-<body onLoad="setValues();" >
-
+<body onLoad="setValues();">
 
 <div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmNipurchase" action="saveActionNipurchase" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" />    
-	<br/>
-    <div class="receipt-header">
-	<div class="table-section">
-<table class="cr-table" width="100%"   >
+<jsp:include page="../../../../header.jsp" /> 
+    <br/>
 
-  <tr>
-    <td width="4%" align="right">Date</td>
-    <td width="8%" align="left"><div id="nipurchasedate" name="nipurchasedate" value='<s:property value="nipurchasedate"/>'></div>
-    
-    <input type="hidden" name="hidnipurchasedate" id="hidnipurchasedate" value='<s:property value="hidnipurchasedate"/>'>
-    </td>
-<td align="right" width="10%" >Ref Type</td>
-    <td align="left" width="10%" >
-    <select name="nireftype" id="nireftype" style="width:99%;"  value='<s:property value="nireftype"/>' onchange="funrefdisslno()">
-      <option value="DIR" >DIR</option>
-      <option value="NPO" >NPO</option>
-    </select></td>
-    <td align="right" width="5%" >Ref No</td> 
-    <td align="left" width="15%" > <input type="text" name="refno" id="refno" placeholder="Press F3 To Search" style="width:95%;" value='<s:property value="refno"/>' onKeyDown="getrefnosearch(event);"> </td>
-  
-   </tr>
-   <tr>
-    <td  align="right" width="4%"> Inv NO</td><td  align="left" width="1%"> <input type="text" id="invno" name="invno" onblur="funchkinv();" value='<s:property value="invno"/>'></td>
-    
-    
-    
-    <%-- <td  align="right" width="10%">
-    
-    <label id="billname">Type</label> &nbsp;
-    <select id="cmbbilltype" name="cmbbilltype" onchange="gettaxaccounts()" value='<s:property value="cmbbilltype"/>'>
-      <option value="1" selected>ST</option>
-      <option value="2">RCM</option>
-      </select>
-    </td> --%>
-    <td align="right" width="10%" >Type</td>
-    <td align="left" width="10%" >
-    <select name="cmbbilltype" id="cmbbilltype" style="width:99%;"  value='<s:property value="cmbbilltype"/>'>
-      <option value="1" >VAT</option>
-      <option value="2" >RCM</option>
-    </select></td>
-    
-    <input type="hidden" id="hidcmbbilltype" name="hidcmbbilltype" value='<s:property value="hidcmbbilltype"/>'/>
-    
-    
-    
-    
-<td  align="right" width="10%"> Inv Date</td><td  align="left" width="14%"> <div id="invDate" name="invDate"  value='<s:property value="invDate"/>'></div>
-<input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'> </td>
-   
-    <td width="13%" align="right">Doc No </td><td width="13%"><input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly"></td>
-  </tr>
- 
- <tr>
-   
-    <td width="4%" align="right" style="vertical-align: middle;">Vendor</td>
-    <td colspan="1" width="10%" align="left" style="vertical-align: middle; padding: 8px 4px;"> 
-      <input type="hidden" name="acctype" id="acctype" value='<s:property value="acctype"/>'>
- 
-    <input type="text" name="nipuraccid" id="nipuraccid" value='<s:property value="nipuraccid"/>' placeholder="Press F3 To Search"  style="width:80%; vertical-align: middle;" onKeyDown="getaccountdetails(event);" >  
-      <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>'  style="width:80%; vertical-align: middle;">
-    </td>
-     
-    <td align="right" width="4%" style="vertical-align: middle;">Curr</td>
-    <td width="8%" align="left" style="vertical-align: middle; padding: 8px 4px;">
-        <select name="cmbcurr" id="cmbcurr" style="width:100%; pointer-events:none; vertical-align: middle;" tabindex="-1"  value='<s:property value="cmbcurr"/>' onchange="getRatevalue1(this.value,$('#nipurchasedate').val());">
-            <option value="-1" >--Select--</option>
-        </select>
-    </td>   
-
-    <td width="4%" align="right" style="vertical-align: middle;">Rate</td>
-    <td width="10%" align="left" style="vertical-align: middle; padding: 8px 4px;">
-        <input type="text" style="width:95%; vertical-align: middle;"   name="currate" id="currate"  value='<s:property value="currate"/>'>
-    </td>
- 
-   <input type="hidden" name="refslno" id="refslno"  value='<s:property value="refslno"/>' >    
-   
-   <td align="right" width="6%" style="vertical-align: middle;"><label id="billtype">Bill Type</label></td>
-   <td align="left" colspan="1" width="15%" style="vertical-align: middle; padding: 8px 4px;">
-       <input type="text" id="txtproducttype" name="txtproducttype" style="width: 55%; vertical-align: middle;" placeholder="Press F3 for Search"  onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>' />
-   </td>
- 
-  </tr>
- 
-  <tr>
- 
-    <td align="right" width="6%" >Del Date</td>
-    <td align="left"width="3%" ><div id="deliverydate" name="deliverydate" value='<s:property value="deliverydate"/>'></div>
-    <input type="hidden" name="hiddeliverydate" id="hiddeliverydate" value='<s:property value="hiddeliverydate"/>'></td>
- 
- <td>&nbsp;<div id="interdiv" hidden="true"><input type="checkbox" name="interstate" id="interstate" value="interstate"  value='<s:property value="interstate"/>' onclick="$(this).attr('value', this.checked ? 1 : 0);" >Interstate</div></td>
-    <td align="right" width="5%" >Del Terms</td>
-    <td colspan="7" align="left" width="56%" ><input type="text" name="delterms" id="delterms" value='<s:property value="delterms"/>' style="width:96%;"></td>
- 
-     
-  </tr> 
-  <tr>
-  <td align="right"  width="4.7%">Pay Terms</td>
-    <td colspan="10"  width="94%" align="left"><input type="text" name="payterms" id="payterms" value='<s:property value="payterms"/>' style="width:97.3%;"></td>
-    </tr>
-    <tr>
-    <td align="right"  width="4.7%">Description</td>
-    <td colspan="10"  width="94%" align="left"><input type="text" name="purdesc" id="purdesc" value='<s:property value="purdesc"/>' style="width:97.3%;"></td></tr>
-    
-</table>
+    <div class="section-block">
+        <h2>Purchase Information</h2>
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="8%" align="right"><label>Date</label></td>
+                <td width="15%">
+                    <div id="nipurchasedate" name="nipurchasedate" value='<s:property value="nipurchasedate"/>'></div>
+                    <input type="hidden" name="hidnipurchasedate" id="hidnipurchasedate" value='<s:property value="hidnipurchasedate"/>'>
+                </td>
+                <td align="right" width="10%"><label>Ref Type</label></td>
+                <td width="15%">
+                    <select name="nireftype" id="nireftype" value='<s:property value="nireftype"/>' onchange="funrefdisslno()">
+                        <option value="DIR">DIR</option>
+                        <option value="NPO">NPO</option>
+                    </select>
+                </td>
+                <td align="right" width="8%"><label>Ref No</label></td>
+                <td>
+                    <input type="text" name="refno" id="refno" placeholder="Press F3 To Search" value='<s:property value="refno"/>' onKeyDown="getrefnosearch(event);">
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><label>Inv NO</label></td>
+                <td><input type="text" id="invno" name="invno" onblur="funchkinv();" value='<s:property value="invno"/>'></td>
+                <td align="right"><label>Type</label></td>
+                <td>
+                    <select name="cmbbilltype" id="cmbbilltype" value='<s:property value="cmbbilltype"/>'>
+                        <option value="1">VAT</option>
+                        <option value="2">RCM</option>
+                    </select>
+                    <input type="hidden" id="hidcmbbilltype" name="hidcmbbilltype" value='<s:property value="hidcmbbilltype"/>'/>
+                </td>
+                <td align="right"><label>Inv Date</label></td>
+                <td>
+                    <div id="invDate" name="invDate" value='<s:property value="invDate"/>'></div>
+                    <input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><label>Doc No</label></td>
+                <td><input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly"></td>
+                <td colspan="4"></td>
+            </tr>
+        </table>
     </div>
-    
- 
 
- <br>
+    <div class="section-block">
+        <h2>Vendor & Financials</h2>
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="8%" align="right"><label>Vendor</label></td>
+                <td width="40%">
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" name="nipuraccid" id="nipuraccid" value='<s:property value="nipuraccid"/>' placeholder="Press F3" style="width:30%;" onKeyDown="getaccountdetails(event);" >  
+                        <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>'>
+                    </div>
+                    <input type="hidden" name="acctype" id="acctype" value='<s:property value="acctype"/>'>
+                </td>
+                <td align="right" width="8%"><label>Curr / Rate</label></td>
+                <td width="25%">
+                    <div style="display: flex; gap: 8px;">
+                        <select name="cmbcurr" id="cmbcurr" style="pointer-events:none;" tabindex="-1" value='<s:property value="cmbcurr"/>' onchange="getRatevalue1(this.value,$('#nipurchasedate').val());">
+                            <option value="-1">--Select--</option>
+                        </select>
+                        <input type="text" name="currate" id="currate" value='<s:property value="currate"/>' style="width: 100px;">
+                    </div>
+                </td>
+                <td align="right" width="8%"><label>Bill Type</label></td>
+                <td>
+                    <input type="text" id="txtproducttype" name="txtproducttype" placeholder="Press F3" onKeyDown="getProdType(event);" value='<s:property value="txtproducttype"/>' />
+                </td>
+            </tr>
+        </table>
+    </div>
 
- 
-    <div class="cr-table" id="nipurdetails" ><jsp:include page="descgridDetails.jsp"></jsp:include></div>
-     
+    <div class="section-block">
+        <h2>Terms & Logistics</h2>
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="10%" align="right"><label>Del Date</label></td>
+                <td width="15%">
+                    <div id="deliverydate" name="deliverydate" value='<s:property value="deliverydate"/>'></div>
+                    <input type="hidden" name="hiddeliverydate" id="hiddeliverydate" value='<s:property value="hiddeliverydate"/>'>
+                </td>
+                <td width="10%" align="right"><label>Del Terms</label></td>
+                <td><input type="text" name="delterms" id="delterms" value='<s:property value="delterms"/>'></td>
+            </tr>
+            <tr>
+                <td align="right"><label>Pay Terms</label></td>
+                <td colspan="3"><input type="text" name="payterms" id="payterms" value='<s:property value="payterms"/>'></td>
+            </tr>
+            <tr>
+                <td align="right"><label>Description</label></td>
+                <td colspan="3"><input type="text" name="purdesc" id="purdesc" value='<s:property value="purdesc"/>'></td>
+            </tr>
+        </table>
+    </div>
 
-<input type="hidden" id="masterdoc_no" name="masterdoc_no"  value='<s:property value="masterdoc_no"/>'/>
-<input type="hidden" id="ordermasterdoc_no" name="ordermasterdoc_no"  value='<s:property value="ordermasterdoc_no"/>'/>
-     <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-     <input type="hidden" id="mode" name="mode"  value='<s:property value="mode"/>'/>   
-     <input type="hidden" id="nettotal" name="nettotal"  value='<s:property value="nettotal"/>'/>
-     <input type="hidden" id="rowval" name="rowval"  value='<s:property value="rowval"/>'/>   <!-- for refno  slno set grid -->
-               <input type="hidden" id="accdocno" name="accdocno"  value='<s:property value="accdocno"/>'/>  
-              <input type="hidden" id="descgridlenght" name="descgridlenght"  value='<s:property value="descgridlenght"/>'/>    
-         <input type="hidden" id="cmbcurrval" name="cmbcurrval"  value='<s:property value="cmbcurrval"/>'/>    
-          <input type="hidden" id="acctypeval" name="acctypeval"  value='<s:property value="acctypeval"/>'/>  
-           <input type="hidden" id="reftypeval" name="reftypeval"  value='<s:property value="reftypeval"/>'/>  
-            <input type="hidden" id="validates" name="validates"  value='<s:property value="validates"/>'/> 
-           
-           <input type="hidden" id="deleted" name="deleted"  value='<s:property value="deleted"/>'/>
-           
-            <input type="hidden" id="acctypegrid" name="acctypegrid"  value='<s:property value="acctypegrid"/>'/>
-           
-            <input type="hidden" id="nidescdetailslenght" name="nidescdetailslenght"  value='<s:property value="nidescdetailslenght"/>'/>  
-            <input type="hidden" id="costgropename" name="costgropename"  value='<s:property value="costgropename"/>'/>
-            
-             <input type="hidden" id="tarannumber" name="tarannumber"  value='<s:property value="tarannumber"/>'/>
-             <input type="hidden" id="hidinterstate" name="hidinterstate"  value='<s:property value="hidinterstate"/>'/>
-             
-             
-                  <input type="hidden" id="taxpers" name="taxpers"  value='<s:property value="taxpers"/>'/>
-                   <input type="hidden" id="taxaccount" name="taxaccount"  value='<s:property value="taxaccount"/>'/>
-                     <input type="hidden" id="hideproducttype" name="hideproducttype"  value='<s:property value="hideproducttype"/>'/>
-            
-           
-        
-            
-            
+    <div class="section-block">
+        <h2>Item Details</h2>
+        <div id="nipurdetails">
+            <jsp:include page="descgridDetails.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <div style="display:none;">
+        <input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>'/>
+        <input type="hidden" id="ordermasterdoc_no" name="ordermasterdoc_no" value='<s:property value="ordermasterdoc_no"/>'/>
+        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+        <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>   
+        <input type="hidden" id="nettotal" name="nettotal" value='<s:property value="nettotal"/>'/>
+        <input type="hidden" id="rowval" name="rowval" value='<s:property value="rowval"/>'/>
+        <input type="hidden" id="accdocno" name="accdocno" value='<s:property value="accdocno"/>'/>  
+        <input type="hidden" id="descgridlenght" name="descgridlenght" value='<s:property value="descgridlenght"/>'/>    
+        <input type="hidden" id="cmbcurrval" name="cmbcurrval" value='<s:property value="cmbcurrval"/>'/>    
+        <input type="hidden" id="acctypeval" name="acctypeval" value='<s:property value="acctypeval"/>'/>  
+        <input type="hidden" id="reftypeval" name="reftypeval" value='<s:property value="reftypeval"/>'/>  
+        <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="taxpers" name="taxpers" value='<s:property value="taxpers"/>'/>
+        <input type="hidden" id="taxaccount" name="taxaccount" value='<s:property value="taxaccount"/>'/>
+        <input type="hidden" id="refslno" name="refslno" value='<s:property value="refslno"/>' >
     </div>
 </form>
-  <div id="accountSearchwindow">
-	   <div></div>
-	</div>
-	 <div id="accounttypeSearchwindow">
-	   <div></div>
-	</div>
-	<div id="costtpesearchwndow">
-	   <div></div>
-	</div>
-	 <div id="costcodesearchwndow">
-	   <div></div>
-	</div> 
-		 <div id="refnosearchwindow">
-	   <div></div>
-	</div> 
-		 <div id=nipurchslnosearch>
-	   <div></div>
-	</div> 
-	
-	
-			
-		<div id="typesearchwindow">
-			<div></div>
-			 
-		</div>
-	
+
+    <div id="accountSearchwindow"><div></div></div>
+    <div id="accounttypeSearchwindow"><div></div></div>
+    <div id="costtpesearchwndow"><div></div></div>
+    <div id="costcodesearchwndow"><div></div></div> 
+    <div id="refnosearchwindow"><div></div></div> 
+    <div id="nipurchslnosearch"><div></div></div> 
+    <div id="typesearchwindow"><div></div></div>
 </div>
 </body>
 </html>

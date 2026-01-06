@@ -693,15 +693,19 @@
 	 }
 	  
 	  function funPrintBtn() {
-			
-		  if (($("#mode").val() == "view") && $("#docno").val()!="") {
-				BankPrintContent('printVoucherWindow.jsp');
-			  }
-			else {
-					$.messager.alert('Message','Select a Document....!','warning');
-					return;
-				}
-      }
+		    if (($("#mode").val() == "view") && $("#docno").val()!="") {
+		        BankPrintContent('printVoucherWindow.jsp');
+		    }
+		    else {
+		        $.messager.alert('Message','Select a Document....!','warning');
+		        return;
+		    }
+		}
+
+	 
+
+
+	  
 	  
 	  function clearClientInfo(){
 		  $("#txttodocno").val('');$("#txttoaccid").val('');$("#txttoaccname").val('');$("#txtapplyinvoiceapply").val(0.00);

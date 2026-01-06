@@ -72,39 +72,108 @@
 		}
  
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
- <table width="100%" >
+<style type="text/css">
+/* Master UI Styles */
+/* Table spacing and layout */
+table {
+  border-collapse: separate;
+  border-spacing: 15px 12px; /* Standardized master gap */
+}
+
+/* Bold labels - Standardized to Master UI 14px Tahoma */
+td {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  white-space: nowrap;
+}
+
+/* Bold text inside inputs and selects with Grey Borders */
+input[type="text"], select {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600; /* Font weight 600 as requested */
+  font-size: 14px;
+  padding: 8px 10px;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Grey border */
+  border: 1px solid #bdc3c7; 
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+/* Focus state for inputs */
+input[type="text"]:focus, select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Specifically adjust jqxDateTimeInput styling if used */
+#msearchdate {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Master Button Appearance */
+.myButton {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #007bff; /* Blue Button Color */
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: none; /* No hover transition */
+}
+
+/* No color change on hover */
+.myButton:hover {
+  background-color: #007bff; 
+  cursor: pointer;
+}
+
+/* Row spacing */
+tr {
+  line-height: 1.6;
+}
+</style>
+
+<body bgcolor="#FFFFFF">
+<div id="search">
+ <table width="100%">
   <tr>
     <td width="9%">Doc No</td>
-    <td width="24%"><input type="text" name="msearchdocno" id="msearchdocno"></td>
+    <td width="24%"><input type="text" name="msearchdocno" id="msearchdocno" style="width:95%;"></td>
     <td width="10%">Ref Type</td>
     <td width="24%"><select name="cmbsearchrtype" id="cmbsearchrtype" style="width:84%;"><option value="">--Select--</option></select></td>
     <td width="8%">Status</td>
     <td width="14%"><select name="cmbsearchstatus" id="cmbsearchstatus" style="width:99%;"><option value="">--Select--</option>
     <option value=1>IN</option><option value=0>OUT</option></select></td>
-    <td width="11%" rowspan="2"><input type="button" name="btnmainSearchExt" id="btnmainSearchExt" class="myButton" value="Search" onclick="masterloadSearch();"></td>
+    <td width="11%" rowspan="2" align="center">
+        <input type="button" name="btnmainSearchExt" id="btnmainSearchExt" class="myButton" value="Search" onclick="masterloadSearch();">
+    </td>
   </tr>
   <tr>
     <td>Date</td>
     <td><div id="msearchdate" name="msearchdate"></div></td>
     <td>Fleet No</td>
-    <td><input type="text" name="msearchfleetno" id="msearchfleetno" ></td>
+    <td><input type="text" name="msearchfleetno" id="msearchfleetno" style="width:84%;"></td>
     <td>Reg No</td>
-    <td><input type="text" name="msearchregno" id="msearchregno"></td>
-    </tr>
+    <td><input type="text" name="msearchregno" id="msearchregno" style="width:99%;"></td>
+  </tr>
   <tr>
   <td colspan="7">
-   <div id="mainrefreshdiv">
-      
-   <jsp:include  page="subMainSearch.jsp"></jsp:include> 
-   
-  </div>
+    <div id="mainrefreshdiv">
+      <jsp:include page="subMainSearch.jsp" />
+    </div>
   </td>
   </tr>
  </table>
-
-   
 </div>
 </body>
 </html>

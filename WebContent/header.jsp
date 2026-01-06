@@ -592,7 +592,27 @@ $(document).ready(function () {
 			
  			 getBrchCurr();		
  			
-	$("#mode").val("view");		funReadOnly();
+	$("#mode").val("view");		funReadOnly(); initViewButtons();
+	
+	function initViewButtons() {
+	    $("#btnSave").hide();
+	    $("#btnCancel").hide();
+	    $("#btnStart").hide();   
+
+	    $("#btnCreate").show();
+	    $("#btnEdit").show();
+	    $("#btnDelete").show();
+	    $("#btnSearch").show();
+	    $("#btnPrint").show();
+	    $("#btnExcel").show();
+	    $("#btnSendmail").show();
+	    $("#btnApproval").show();
+	    $("#btnAttach").show();
+	    $("#btnCosting").show();
+	    $("#btnTerms").show();
+	    $("#btnGuideLine").show();
+	}
+
 	
 	if(!($("#msg").val()=="Successfully Saved" || $("#msg").val().trim()=="" || $("#msg").val()=="Updated Successfully" || $("#msg").val()=="Successfully Deleted" || $("#msg").val()=="Not Deleted" || $("#msg").val()=="Successfully Released" ) ) {
 	//	if($('#msg').val()=="Not Updated" || $('#msg').val()=="Not Saved" ) {

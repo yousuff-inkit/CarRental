@@ -176,3 +176,78 @@ select option {
     color: #ffffff !important;
 }
 
+
+
+input[placeholder^="Press F3" i] {
+    padding-right: 40px !important;                 /* text stays clear */
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important; /* stick icon to end */
+    background-size: 16px 16px !important;
+    background-origin: padding-box !important;        /* <<< KEY FIX */
+
+    background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE1LjUgMTRoLS43OWwtLjI4LS4yN2E2LjUgNi41IDAgMSAwLS43MS43MWwuMjcuMjh2Ljc5bDUsNC45OUwyMC40OSAxOWwtNC45OS01em0tNiAwQTQuNSA0LjUgMCAxIDEgMTQgOS41IDQuNSA0LjUgMCAwIDEgOS41IDE0eiIvPjwvc3ZnPg==") !important;
+}
+
+
+/* Show tooltip on hover (CSS-only) */
+input[placeholder^="Press F3" i]:hover::after {
+    content: "Double click on this to search";
+    position: absolute;
+    right: 0;
+    top: -26px;
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Tooltip arrow */
+input[placeholder^="Press F3" i]:hover::before {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: -8px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Ensure container can render tooltip */
+.form-group {
+    position: relative;
+}
+
+/* Tooltip bubble */
+.form-group:hover input[placeholder^="Press F3" i] ~ .f3-tip,
+.form-group:focus-within input[placeholder^="Press F3" i] ~ .f3-tip {
+    opacity: 1;
+    visibility: visible;
+}
+.f3-tip {
+    position: absolute;
+    top: -26px;
+    right: 10px;
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .15s ease;
+}
+.f3-tip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+

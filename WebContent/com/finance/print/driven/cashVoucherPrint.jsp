@@ -322,12 +322,29 @@ hr {
 		else{
 			 $("#secdiv").prop("hidden", true);
 			}
-		}
-
+		setTimeout(function() {
+	        window.print();
+	    }, 800)
+	   }
+	function autoPrint() {
+	    // Wait for all content to load, including images
+	    if (document.readyState === 'complete') {
+	        setTimeout(function () {
+	            window.print();
+	        }, 1000); // Increased timeout to 1 second
+	    } else {
+	        window.addEventListener('load', function() {
+	            setTimeout(function () {
+	                window.print();
+	            }, 1000);
+	        });
+	    }
+	}
+	
 </script>
 
 </head>
-<body bgcolor="white" style="font-size:10px;" onload="hidedata();">
+<body bgcolor="white" style="font-size:10px;" onload="hidedata(); setTimeout(function(){ window.print(); }, 1200);">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmCashVoucherPrint" action="cashVoucherPrint" method="post" autocomplete="off" target="_blank">
 
@@ -335,7 +352,7 @@ hr {
 <div id="headerdiv" hidden="true" >
 <jsp:include page="../../../common/printDrivenHeader.jsp"></jsp:include>
 </div>
-<div id="withoutHeaderDiv" hidden="true" style="height: 100px;" >
+<div id="withoutHeaderDiv" hidden="true" style="height: 100px;" onload="hidedata();">
 <br/><br/>
 <center><b><font size="5"><label id="lblprintname" name="lblprintname"><s:property value="lblprintname"/></label></font></b></center>
 </div>

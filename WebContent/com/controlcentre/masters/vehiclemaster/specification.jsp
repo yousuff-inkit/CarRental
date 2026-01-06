@@ -11,32 +11,30 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
 /* ------------------------------
-   GLOBAL STYLES
+    GLOBAL STYLES (MASTER CRV UI)
 ------------------------------ */
-
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 130vh;
     box-sizing: border-box;
+    overflow-y: auto !important;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1450px;
+    max-width: 100%; /* Matches Master UI requirement */
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
 /* ------------------------------
-   COMMON UI ELEMENTS
+    COMMON UI ELEMENTS
 ------------------------------ */
-
 input[type="text"], select {
     height: 32px !important;
     border: 1px solid #d1d5db;
@@ -46,102 +44,26 @@ input[type="text"], select {
     transition: border-color 0.2s;
     font-size: 14px;
     box-sizing: border-box;
+    width: 100%;
 }
 
-input[type="text"]:focus,
-select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
 label {
-    font-weight: 700;
+    font: 16px Segoe UI;
+    font-weight: 500;
     color: #253858;
     white-space: nowrap;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px; 
 }
 
 /* ------------------------------
-   HEADER SECTION
+    CARD ROWS LAYOUT
 ------------------------------ */
-
-.receipt-header {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-    padding: 0 10px 10px;
-}
-
-.receipt-header table {
-    width: 100%;
-}
-
-.receipt-header td {
-    padding: 6px 4px;
-    vertical-align: middle;
-}
-
-#txtStatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #e67e22;
-}
-
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
-
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    text-align: right;
-    padding-right: 8px;
-    font-size:1rem;
-}
-
-.form-group input[type="text"],
-.form-group select {
-    width: 100%;
-}
-
-/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
-.form-group.dual-input {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Special case: One label with two equal-width inputs */
-.form-group.single-label-dual-input {
-    grid-template-columns: 120px 1fr 1fr;
-}
-
-.form-group.single-label-dual-input input[type="text"]:first-of-type {
-    width: 100%;
-}
-
-.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
-    width: 100%;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 30px;
-}
-
 .section-block {
     flex: 1;
     min-width: 0;
@@ -149,6 +71,7 @@ label {
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
 }
 
 .section-block h2 {
@@ -156,131 +79,41 @@ label {
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
-    border-left: 4px solid #007bff;
-}
-
-/* Special handling for the "to-account-row" - all items in one line */
-.to-account-row {
-    display: grid;
-    grid-template-columns: 120px 110px 120px 140px 1fr;
+    border-left: 4px solid #007bff; /* Blue vertical line from Master UI */
+    display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 10px;
 }
 
-.to-account-row label {
-    text-align: right;
-    padding-right: 8px;
+/* Grid for the Specification Info */
+.spec-info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr; 
+    gap: 12px 25px;
+    align-items: center;
 }
 
-.to-account-row #cmbtotype {
-    width: 100%;
+.details-full-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 25px;
+    align-items: center;
+    margin-top: 12px;
 }
-
-.to-account-row #txttoaccid {
-    width: 100%;
-}
-
-.to-account-row #txttoaccname {
-    width: 100%;
-}
-
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
-
-.table-section {
-    margin: 20px 0;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
 
 .hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
-/* Hide scrollbars (but allow scrolling) */
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
+    overflow-y: visible !important; 
+    max-height: none !important; 
+    min-height: 1px; 
+    padding: 10px; 
 }
 
 /* ------------------------------
-   BUTTONS
+    TABLES & DYNAMIC GRIDS (Preserved)
 ------------------------------ */
-
-button, .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-button:hover, .myButton:hover {
-    background: #0056b3;
-}
-
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
-
-#validrate,
-#validrate1 {
-    color: red;
-    font-size: 12px;
-    grid-column: 2 / -1;
-}
-
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
-
-#approval-table td {
-    font-size: 14px;
-    padding: 8px;
-}
-
-#approval-table tr:nth-child(even) {
-    background: #f9fafb;
+.grid-container-table {
+    width: 100%;
+    margin-top: 10px;
 }
 </style>
 <script type="text/javascript">
@@ -326,34 +159,45 @@ function funExcelBtn(){
 </head>
 <body onload="setValues();">
 
-<div>
-<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background"> 
-<form id="frmSpecification" action="saveSpecification" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" /><br/> 
-<fieldset><legend>Specification Info</legend>
-<div class="section-block">
-  <div class="form-group dual-input">
-   <label>Name</label>
-    <input type="text" name="specname" id="specname" value='<s:property value="specname"/>' placeholder="Spec Name" />
-   <label>Doc No</label> 
-    <input type="text" name="docno" tabindex="-1" readonly id="docno" value='<s:property value="docno"/>'/>
-  </div>
-  <div class="form-group">
-    <label>Details</label>
-    <input type="text" name="specdetails" id="specdetails" style="width:100%;" value='<s:property value="specdetails"/>' placeholder="Spec Details"/>
-    </div>
-</div>
-</fieldset>
-<table  width="100%">
-<tr>
-    <td ><jsp:include page="specGrid.jsp"></jsp:include></td>
-    </tr>
-</table>
-										        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<div id="mainBG" class="homeContent" data-type="background">
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+    <br>
 
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+    <form id="frmSpecification" action="saveSpecification" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            <div class="section-block">
+                <h2>Specification Info</h2>
+                
+                <div class="spec-info-grid">
+                    <label>Name</label>
+                    <input type="text" name="specname" id="specname" value='<s:property value="specname"/>' placeholder="Spec Name" />
+                    
+                    <label>Doc No</label> 
+                    <input type="text" name="docno" tabindex="-1" readonly id="docno" value='<s:property value="docno"/>'/>
+                </div>
+
+                <div class="details-full-row">
+                    <label>Details</label>
+                    <input type="text" name="specdetails" id="specdetails" value='<s:property value="specdetails"/>' placeholder="Spec Details"/>
+                </div>
+            </div>
+
+            <div class="grid-container-table">
+                <table width="100%">
+                    <tr>
+                        <td><jsp:include page="specGrid.jsp"></jsp:include></td>
+                    </tr>
+                </table>
+            </div>
+
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            
+        </div>
+    </form>
 </div>
-</div>
+
 </body>
 </html>
