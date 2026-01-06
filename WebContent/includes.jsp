@@ -8,6 +8,10 @@
 <link href="<%=contextPath%>/css/myButton.css" media="screen" rel="stylesheet" type="text/css" /> 
 <link href="<%=contextPath%>/css/jqx.mobile.css" media="screen" rel="stylesheet" type="text/css" /> 
 <link href="<%=contextPath%>/css/jqx.energyblue.css" media="screen" rel="stylesheet" type="text/css" />  
+<link rel="stylesheet" type="text/css"
+      href="<%=contextPath%>/css/jqx-date-global.css" />
+
+
     <script type="text/javascript" src="<%=contextPath%>/js/jquery-1.11.1.min.js"></script> 
 	<script type="text/javascript" src="<%=contextPath%>/js/jqx-10.1.6/jqxcore.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/js/demos.js"></script>

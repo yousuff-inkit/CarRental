@@ -1,0 +1,253 @@
+/* =====================================================
+   FORCE jqx DateTimeInput to match normal input height
+   ===================================================== */
+
+/* 1. Disable jqx mobile compact sizing */
+.jqx-widget,
+.jqx-input,
+.jqx-datetimeinput,
+.jqx-input-content {
+    font-size: 14px !important;
+}
+
+/* 2. Outer date container */
+.jqx-datetimeinput {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    box-sizing: border-box !important;
+}
+
+/* 3. ACTUAL input inside jqx (this is the key) */
+.jqx-datetimeinput input,
+.jqx-datetimeinput .jqx-input {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    line-height: 36px !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+}
+/* ===== jqx DateTimeInput FINAL alignment fix ===== */
+
+/* Outer container */
+.jqx-datetimeinput {
+    height: 36px !important;
+    box-sizing: border-box;
+}
+
+/* Actual input inside jqx */
+.jqx-datetimeinput input,
+.jqx-datetimeinput .jqx-input {
+    height: 36px !important;
+    line-height: 36px !important;
+    padding: 0 10px !important;
+    box-sizing: border-box;
+}
+
+/* Calendar icon – align like textbox suffix, NOT center */
+.jqx-datetimeinput .jqx-icon-calendar {
+    height: 36px !important;
+    line-height: 36px !important;
+    top: 0 !important;          /* 🔥 THIS FIXES IT */
+    transform: none !important; /* 🔥 REMOVE centering */
+    margin-top: 0 !important;
+}
+
+
+/* Final alignment fix for jqx date inside table rows */
+.jqx-datetimeinput {
+    vertical-align: middle !important;
+}
+
+/* When jqx date is inside table cells */
+td .jqx-datetimeinput {
+    margin-top: 2px;   /* subtle optical alignment */
+}
+/* Fix label alignment in table-based header rows */
+tr td:first-child,
+tr td:nth-child(4),
+tr td:nth-child(7) {
+    padding-top: 6px;   /* align label text with input center */
+}
+/* ================================
+   FORCE header (Date row) alignment
+   to match Cash section exactly
+   ================================ */
+
+/* Make table cells behave like form rows */
+tr td {
+    vertical-align: middle !important;
+}
+
+/* Align labels in header row */
+tr td[align="right"] {
+    padding-top: 6px !important;   /* MATCH Cash label position */
+    font-weight: 500;
+}
+
+/* Align jqx date input to same baseline as Cash inputs */
+td .jqx-datetimeinput {
+    margin-top: 4px !important;    /* THIS is the key */
+}
+
+/* Align normal inputs in header row too */
+td input[type="text"] {
+    margin-top: 4px !important;
+}/* ==== FORCE remove jqx inline margin on date input ==== */
+.jqx-datetimeinput input {
+    margin-top: 0 !important;
+}
+/* ================================
+   FINAL calendar icon alignment
+   ================================ */
+
+/* Make the right action button full height */
+.jqx-datetimeinput .jqx-action-button {
+    height: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Center the calendar icon perfectly */
+.jqx-datetimeinput .jqx-icon-calendar {
+    margin: 0 !important;
+    position: static !important;
+}
+/* ===== FINAL calendar icon vertical centering ===== */
+
+/* Ensure the action button takes full height */
+.jqx-datetimeinput .jqx-action-button {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Center the calendar icon */
+.jqx-datetimeinput .jqx-icon-calendar {
+    margin: 0 !important;
+    position: static !important;
+}
+/* ===== FINAL calendar icon vertical centering ===== */
+
+.jqx-datetimeinput .jqx-action-button {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.jqx-datetimeinput .jqx-icon-calendar {
+    margin: 0 !important;
+    position: static !important;
+}
+/* ===== FINAL FINAL jqx calendar alignment ===== */
+
+/* Force the right-side button to fully match input height */
+.jqx-datetimeinput .jqx-action-button {
+    height: 100% !important;
+    padding: 0 !important;          /* 🔥 THIS WAS MISSING */
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure icon itself has no offset */
+.jqx-datetimeinput .jqx-icon-calendar {
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+}
+/* optical alignment for jqx calendar icon */
+.jqx-datetimeinput .jqx-icon-calendar {
+    margin-top: 1px !important;
+}
+/* ===== FINAL jqx calendar alignment (CORRECT) ===== */
+
+.jqx-datetimeinput .jqx-action-button {
+    height: 100% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+/* ===== FINAL jqx calendar icon FIX ===== */
+
+.jqx-datetimeinput .jqx-action-button {
+    height: 36px !important;
+    line-height: 36px !important;
+    padding: 0 !important;
+}
+
+.jqx-datetimeinput .jqx-icon-calendar {
+    line-height: 36px !important;
+    vertical-align: middle !important;
+}
+/* ===== FINAL jqx DateTimeInput alignment FIX ===== */
+
+/* Reset jqx inline margin */
+.jqx-datetimeinput input.jqx-input-content {
+    margin-top: 0 !important;
+}
+
+/* Ensure consistent height */
+.jqx-datetimeinput,
+.jqx-datetimeinput input {
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+/* Center calendar button properly */
+.jqx-datetimeinput .jqx-action-button {
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+/* ===== jqx DateTimeInput: PERFECT icon centering ===== */
+
+/* normalize input */
+.jqx-datetimeinput,
+.jqx-datetimeinput input.jqx-input-content {
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+/* center the calendar button */
+.jqx-datetimeinput .jqx-action-button {
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+/* center the icon glyph itself */
+.jqx-datetimeinput .jqx-icon-calendar {
+    line-height: 36px !important;
+    vertical-align: middle !important;
+}
+/* ===== FINAL visual centering for jqx calendar icon ===== */
+
+.jqx-datetimeinput .jqx-action-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.jqx-datetimeinput .jqx-icon-calendar {
+    position: relative !important;
+    top: 2px !important;   /* 👈 THIS is the key */
+}
+/* ===== FINAL jqx calendar vertical adjustment ===== */
+
+.jqx-datetimeinput .jqx-action-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 8px !important;   /* 👈 THIS moves icon DOWN */
+}
+
+
