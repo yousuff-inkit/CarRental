@@ -928,28 +928,49 @@ function getProdType(event){
 				/*    function diserror(){
 					   document.getElementById("errormsg").innerText="";
 				   } */
-				    function funPrintBtn(){
-				 	   if (($("#mode").val() == "view") && $("#masterdoc_no").val()!="") {
-				 	  
-				 	   var url=document.URL;
+				    
+				   function funPrintBtn(){
 
-				        var reurl=url.split("saveActionNipurchase");
-				        
-				        $("#docno").prop("disabled", false);                
-				        var dtype=$('#formdetailcode').val();
-						 var brhid=<%= session.getAttribute("BRANCHID").toString()%>
-				  
-				var win= window.open(reurl[0]+"printniphs?docno="+document.getElementById("masterdoc_no").value+"&dtype="+dtype+"&brhid="+brhid,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-				     
-				win.focus();
-				 	   } 
-				 	  
-				 	   else {
-					    	      $.messager.alert('Message','Select a Document....!','warning');
-					    	      return false;
-					    	     }
-					    	
-				 	}
+					    if ($("#mode").val() !== "view" || $("#masterdoc_no").val() === "") {
+					        $.messager.alert('Message','Select a Document....!','warning');
+					        return false;
+					    }
+
+					    var baseUrl = document.URL.split("saveActionNipurchase")[0];
+					    var dtype   = $('#formdetailcode').val();
+					    var brhid   = <%= session.getAttribute("BRANCHID").toString() %>;
+
+					    var printUrl =
+					        baseUrl +
+					        "printniphs" +
+					        "?docno=" + $("#masterdoc_no").val() +
+					        "&dtype=" + dtype +
+					        "&brhid=" + brhid;
+
+					    openAndPrint(printUrl);
+					}
+
+				   function openAndPrint(url) {
+
+					    var win = window.open(
+					        url,
+					        "_blank",
+					        "top=250,left=310,width=900,height=800,scrollbars=yes"
+					    );
+
+					    if (win) {
+					        setTimeout(function () {
+					            win.focus();
+					            win.print();
+					            win.onafterprint = function () {
+					                win.close();
+					            };
+					        }, 700);
+					    } else {
+					        $.messager.alert('Message','Popup blocked by browser','warning');
+					    }
+					}
+
 						   
 </script>
 </head>

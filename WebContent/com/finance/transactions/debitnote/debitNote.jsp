@@ -383,28 +383,47 @@
 			           }
 			       
 			       function funPrintBtn() {
-						
-						if (($("#mode").val() == "view") && $("#docno").val()!="") {
-					        var url=document.URL;
-					        var reurl=url.split("saveDebitNote");
-					        $("#docno").prop("disabled", false);  
-					     
-					        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
-								if (r){
-									 var win= window.open(reurl[0]+"printDebitNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-								     win.focus();
-								 }
-								else{
-									var win= window.open(reurl[0]+"printDebitNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-								    win.focus();
-								}
-							   });
-					     }
-					    else {
-							$.messager.alert('Message','Select a Document....!','warning');
-							return;
-						}
-			      }
+
+			    	    if ($("#mode").val() !== "view" || $("#docno").val() === "") {
+			    	        $.messager.alert('Message','Select a Document....!','warning');
+			    	        return;
+			    	    }
+
+			    	    var baseUrl = document.URL.split("saveDebitNote")[0];
+
+			    	    $.messager.confirm('Confirm', 'Do you want to have header?', function (r) {
+
+			    	        var printUrl =
+			    	            baseUrl +
+			    	            "printDebitNote" +
+			    	            "?docno=" + $("#docno").val() +
+			    	            "&branch=" + $("#brchName").val() +
+			    	            "&header=" + (r ? 1 : 0);
+
+			    	        openAndPrint(printUrl);
+			    	    });
+			    	}
+			       function openAndPrint(url) {
+
+			    	    var win = window.open(
+			    	        url,
+			    	        "_blank",
+			    	        "top=150,left=250,width=1020,height=600,scrollbars=yes"
+			    	    );
+
+			    	    if (win) {
+			    	        setTimeout(function () {
+			    	            win.focus();
+			    	            win.print();
+			    	            win.onafterprint = function () {
+			    	                win.close();
+			    	            };
+			    	        }, 700);
+			    	    } else {
+			    	        $.messager.alert('Message','Popup blocked by browser','warning');
+			    	    }
+			    	}
+
 	
 			       function clearClientInfo(){
 				 		  $("#txtdocno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
