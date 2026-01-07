@@ -449,9 +449,9 @@
         </div>
         <div class="form-row">
             <span class="field-label">Remarks / Description</span>
-            <textarea placeholder="Enter remarks here..."></textarea>
+            <textarea id="apprdesc" name="apprdesc" placeholder="Enter remarks here..."></textarea>
         </div>
-        <button class="btn-submit">SUBMIT APPROVAL</button>
+        <button class="btn-submit" type="button" id="btnSend" name="btnSend" onClick="saveApprlevel()">SUBMIT APPROVAL</button>
     </div>
 
     <div class="display-section">
