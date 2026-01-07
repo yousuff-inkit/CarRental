@@ -187,11 +187,22 @@ public class ClsExeFolio {
 				join=rs.getString("join1");
 			}
 
-
-			String  cpsql="Select 'View' as btnclick,date(now()) tdate,time(now()) ttime,t.doc_no doc_no,t.dtype doctype,br.doc_no branch,"
-					+ "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime,"
-					+ "u.user_name submitedby,m.func as path,m.menu_name as name,m.doc_type as dtype "+select+" from my_exeb t  inner join my_brch br on t.brhId=br.doc_no left join "
-					+ "my_user u on t.suby=u.doc_no left join my_menu m on(m.doc_type=t.dtype) "+join+"  where    t.approved=0 and t.apprlevel!=0 and  t.userId='"+session.getAttribute("USERID").toString()+"'"+xsql+" order by t.sub_Date desc";   
+			String cpsql = "Select 'View' as btnclick, t.approved, date(now()) tdate, time(now()) ttime, "
+				    + "t.doc_no doc_no, t.dtype doctype, br.doc_no branch, "
+				    + "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime, "
+				    + "u.user_name submitedby, m.func as path, m.menu_name as name, m.doc_type as dtype " + select 
+				    + " from my_exeb t "
+				    + " inner join my_brch br on t.brhId=br.doc_no "
+				    + " left join my_user u on t.suby=u.doc_no "
+				    + " left join my_menu m on(m.doc_type=t.dtype) " + join 
+				    + " where t.approved=0 and t.apprlevel!=0 "
+				    + " and t.userId='" + session.getAttribute("USERID").toString() + "'" + xsql 
+				    + " order by t.sub_Date desc";
+// old query without status(t.approved)
+//			String  cpsql="Select 'View' as btnclick,date(now()) tdate,time(now()) ttime,t.doc_no doc_no,t.dtype doctype,br.doc_no branch,"
+//					+ "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime,"
+//					+ "u.user_name submitedby,m.func as path,m.menu_name as name,m.doc_type as dtype "+select+" from my_exeb t  inner join my_brch br on t.brhId=br.doc_no left join "
+//					+ "my_user u on t.suby=u.doc_no left join my_menu m on(m.doc_type=t.dtype) "+join+"  where    t.approved=0 and t.apprlevel!=0 and  t.userId='"+session.getAttribute("USERID").toString()+"'"+xsql+" order by t.sub_Date desc";   
             //System.out.println("===== "+cpsql);    
 
 			ResultSet resultSet = cpstmt.executeQuery(cpsql);
