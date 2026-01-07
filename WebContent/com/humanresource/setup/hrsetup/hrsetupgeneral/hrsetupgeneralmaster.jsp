@@ -8,30 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>GatewayERP(i)</title>
  <jsp:include page="../../../../../includes.jsp"></jsp:include> 
-<style>
-form label.error {
-  color:red;
-  font-weight:bold;
 
-}
 
-#convformula {
-  text-transform: uppercase;
-}
-
-#normalrate {
-  text-transform: uppercase;
-}
-
-#ot {
-  text-transform: uppercase;
-}
-
-#holidayot {
-  text-transform: uppercase;
-}
-
-</style>
 <script type="text/javascript">
 
  $(document).ready(function () {
@@ -476,39 +454,43 @@ form label.error {
 </script>
 
 <style>
-.hidden-scrollbar {  
+/* scroll area */
+.hidden-scrollbar {
     height: 530px;
     overflow-x: hidden;
-    
+    overflow-y: auto;
 }
 
-
+/* background + base typography (master) */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
     color: #222;
     margin: 0;
-    padding: 32px 0;
+    padding: 24px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 14px;
 }
+
+/* main card (master) */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 18px 28px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
+/* page header strip */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 24px;
+    font-size: 14px;
 }
 .receipt-header label {
     font-weight: 500;
@@ -518,8 +500,8 @@ body {
 .receipt-header input[type="text"] {
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
+    padding: 4px 8px;
+    font-size: 13px;
     width: 120px;
     background: #fff;
     transition: border-color 0.2s;
@@ -533,7 +515,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 4px 12px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
@@ -542,71 +524,79 @@ body {
     background: #0056b3;
 }
 #txtStatus {
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 600;
     color: #e67e22;
     margin-left: 12px;
 }
 
+/* section card like User Master (master) */
+.table-section {
+    margin-bottom: 20px;
+    padding-inline: 14px;
+    padding-block: 14px;
+    border-radius: 10px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+}
+.table-section h3 {
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;  /* blue bar */
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* optional generic blocks – match master card look */
 .section-row {
     display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 .section-block {
     flex: 1;
     background: #f6f8fa;
     border-radius: 10px;
-    padding: 20px 18px;
+    padding: 16px 14px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
 }
-
 .section-block h2 {
-    font-size: 1.09em;
+    font-size: 14px;
     font-weight: 500;
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
     color: #253858;
 }
-
 .section-block .form-group {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 10px;
 }
-
 .section-block label {
     min-width: 110px;
     text-align: right;
     font-weight: 500;
     color: #253858;
+    font-size: 13px;
 }
-
 .section-block input[type="text"],
 .section-block select {
     flex: 1;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 4px 8px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 13px;
 }
-
 .section-block input[type="text"]:focus,
 .section-block select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
+/* grid/table layout for fields (master) */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -614,12 +604,15 @@ body {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
+    table-layout: fixed;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+.cr-table th,
+.cr-table td {
+    padding: 8px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 13px;
+    vertical-align: middle;
 }
 .cr-table th {
     background: #eef0f6;
@@ -629,7 +622,58 @@ body {
 .cr-table tr:last-child td {
     border-bottom: none;
 }
-</style>  
+.cr-table td[align="right"] {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #333;
+}
+
+/* unified inputs in tables (master) */
+.cr-table input[type="text"],
+.cr-table select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    height: 30px;
+    font-size: 13px;
+    box-sizing: border-box;
+    background: #fff;
+}
+.cr-table input[type="text"]:focus,
+.cr-table select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+/* blue line and padding for all section headings */
+.table-section h3,
+.section-block h2,
+h3.section-title,
+h2.section-title {
+    margin: 0 0 12px;
+    padding: 4px 10px;               /* space around text */
+    border-left: 4px solid #007bff;  /* blue line */
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+}
+/* master UI heading with blue line */
+.table-section h3,
+.section-block h2,
+h3.section-title,
+h2.section-title {
+    margin: 0 0 12px;
+    padding: 4px 10px;               /* padding around the text */
+    border-left: 4px solid #007bff;  /* blue line */
+    color: #253858;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+}
+
+</style>
+
+ 
 
 </head>
 <body onload="termConfig();setValues();">

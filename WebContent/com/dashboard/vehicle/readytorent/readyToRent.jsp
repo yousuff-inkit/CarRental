@@ -69,15 +69,14 @@
     
 }
 
-/* Sidebar - Fixed Width - INCREASED MORE */
 .fleet-status-wrapper .sidebar {
-    flex: 0 0 400px;
-    min-width: 450px;
-    max-width: 450px;
+    flex: 0 0 300px;
+    min-width: 300px;
+    max-width: 300px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     padding: 12px;
-    padding-left:12px;
+    padding-left:1px;
     padding-right:12px;
     box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
                 2px 2px 6px rgba(0, 0, 0, 0.08);
@@ -89,16 +88,16 @@
 
 
 .fleet-status-wrapper .main-content {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 12px;
     padding: 14px;
   	overflow-y: auto;
     overflow-x: visible;   
-    min-height: calc(100vh - 40px);
-    box-shadow: -2px -2px 8px rgba(255, 255, 255, 0.8),
-                2px 2px 8px rgba(0, 0, 0, 0.08);
+    min-height: calc(100vh - 20px);
+  	margin-left:-15px;
+  	margin-right:-15px;
     box-sizing: border-box;
 }
 
@@ -136,22 +135,27 @@
 
 
 .fleet-status-wrapper .grid-container {
-    background: rgba(255, 255, 255, 0.9);
+ background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 12px;
     margin: 6px 0;
-    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
-                2px 2px 6px rgba(0, 0, 0, 0.08);
+  
     max-width: 100%;
     overflow: visible;
 }
 
 
 .fleet-status-wrapper .sidebar .grid-container {
-    padding: 12px;
-    margin: 12px 0;
+      padding: 12px;
+    margin: 12px auto; 
     padding-left: 10px;
     padding-right: 10px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+ 
 }
 
 .fleet-status-wrapper .sidebar .grid-container table {
@@ -160,15 +164,26 @@
     table-layout: fixed;
     font-size: 11px;
     max-height:50px;
-    margin:0;
+    margin:0 auto;
 }
 
 .fleet-status-wrapper .sidebar .grid-container table td {
 
     word-wrap: break-word;
 }
+.fleet-status-wrapper .sidebar #Readygrid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
-
+.fleet-status-wrapper .sidebar #Readygrid > * {
+    margin: 0 auto;
+}
+.fleet-status-wrapper .sidebar .jqx-grid {
+    margin: 0 auto !important;
+}
 .fleet-status-wrapper .myButton {
     width: 100%;
     padding: 8px 12px;
@@ -257,6 +272,7 @@
   
 }
 
+
 .fleet-status-wrapper .universal-search-input:focus {
     outline: none;
     border-color: #3498db;
@@ -323,25 +339,25 @@
 /* Responsive adjustments */
 @media (max-width: 1400px) {
     .fleet-status-wrapper .sidebar {
-        flex: 0 0 400px;
-        min-width: 400px;
-        max-width: 400px;
+        flex: 0 0 280px;
+        min-width: 280px;
+        max-width: 280px;
     }
 }
 
 @media (max-width: 1200px) {
     .fleet-status-wrapper .sidebar {
-        flex: 0 0 400px;
-        min-width: 400px;
-        max-width: 400px;
+        flex: 0 0 260px;
+        min-width: 260px;
+        max-width: 260px;
     }
 }
 
 @media (max-width: 1024px) {
     .fleet-status-wrapper .sidebar {
-        flex: 0 0 400px;
-        min-width: 300px;
-        max-width: 400px;
+        flex: 0 0 240px;
+        min-width: 240px;
+        max-width: 240px;
     }
 }
 
@@ -373,7 +389,91 @@
     overflow-y: auto !important;
 }
 
+/* Updated CSS for taller search bar - Replace your existing search bar styles */
 
+.fleet-status-wrapper .compact-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.fleet-status-wrapper .search-input-wrapper {
+    flex: 1;
+    position: relative;
+    max-width: 350px;
+}
+
+.fleet-status-wrapper .search-icon-inline {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+}
+
+.fleet-status-wrapper .universal-search-input {
+    width: 100%;
+    padding: 12px 40px 12px 40px; /* Increased from 8px to 12px */
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px; /* Increased from 13px to 14px */
+    font-weight: 500;
+    color: var(--primary-color);
+    background: white;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    height: 44px; /* Added explicit height */
+    box-sizing: border-box;
+}
+
+.fleet-status-wrapper .universal-search-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.fleet-status-wrapper .clear-search-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 6px 10px; 
+    background: transparent;
+    color: #94a3b8;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px; 
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    height: 32px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fleet-status-wrapper .clear-search-btn:hover {
+    background: #fee;
+    color: #e74c3c;
+}
+
+.fleet-status-wrapper .search-results-badge {
+    padding: 8px 14px; 
+    background: linear-gradient(135deg, #e8f4fd, #d4e9f7);
+    color: #3498db;
+    border-radius: 6px;
+    font-size: 13px; 
+    font-weight: 600;
+    white-space: nowrap;
+    height: 44px; 
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
 
 </style>
 

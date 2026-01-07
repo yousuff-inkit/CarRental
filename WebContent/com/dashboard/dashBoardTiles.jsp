@@ -165,22 +165,115 @@
         .ann-body { flex: 1; }
         .ann-body h4 { margin: 0 0 4px 0; font-size: 13px; color: #333; font-weight: 700; }
         .ann-body p { margin: 0; font-size: 11px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .ann-link { display: inline-block; margin-top: 5px; font-size: 11px; color: #007bff; text-decoration: none; font-weight: 700; }
+        .ann-footer { padding: 12px 0; text-align: center; }
+        .ann-footer a { font-size: 12px; font-weight: 700; color: #007bff; text-decoration: none; }
         
-        .tile-nav-container { background: #f8f9fa; border-bottom: 1px solid #eee; padding: 6px 12px; }
-        .tile-nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
-        .tile-nav-links a { font-size: 11px; font-weight: 700; color: #666; text-decoration: none; padding: 6px 12px; border-radius: 4px; white-space: nowrap; transition: 0.2s; }
-        .tile-nav-links a.active { background: #007bff; color: #fff; }
+        
+        /* Dropdown Container */
+.home-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+    z-index: 1000;
+}
+
+/* The Button */
+.dropbtn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropbtn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    top: 40px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-content a:last-child { border-bottom: none; }
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
+
+/* Show the dropdown on hover */
+.home-dropdown:hover .dropdown-content { display: block; }
+
+
     </style>
 </head>
 <body>
 
 <div class="page-container">
-    <div class="banner">
-        <div class="banner-content">
+<div class="banner">
+    <div class="banner-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+        <div>
             <div class="welcome-main">Welcome ${sessionScope.USERNAME}</div>
             <div id="greeting"></div>
         </div>
+
+        <div class="home-dropdown">
+            <button class="dropbtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Switch Dashboard</span>
+                <span style="font-size: 10px; margin-left: 8px;">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="<%= cPath %>/com/dashboard/dashBoardTiles.jsp">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <div>
+                            <strong>Standard View</strong><br>
+                            <small style="color: #888;">Tile Dashboard</small>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="<%= cPath %>/com/v2/dashBoardnew.jsp">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2"><path d="M3 3h18v18H3z"></path><path d="M21 9H3"></path><path d="M21 15H3"></path><path d="M12 3v18"></path></svg>
+                        <div>
+                            <stron>My Dashboard</strong><br>
+                            <small style="color: #888;">New Home Layout</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
+</div>
 
     <div class="dashboard-grid">
         <div class="grid-box">

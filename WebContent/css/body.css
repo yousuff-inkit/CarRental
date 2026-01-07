@@ -30,11 +30,16 @@ legend {
   font: 13px  Tahoma;
   
   }
-  input[type="text"] {
-  	width:'40%';
-    height:15px;
-    font-size:10px;
+/* ===== Standard text input ===== */
+input[type="text"] {
+    width: 40%;
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    padding: 0 10px !important;
+    box-sizing: border-box;
 }
+
   input[type="date"] {
     width:'40%';
     height:8px;
@@ -61,12 +66,20 @@ form label.error {
     font-size: 9px;
 }
 
-
-select{
-	width:'60%';
-	height:20px;
-    font-size:9px;
+/* ===== Standard dropdown ===== */
+select {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    padding: 0 10px !important;
+    box-sizing: border-box;
 }
+
+
+.form-group select {
+    width: 100%;
+}
+
 option{
 	height:12px;
     font-size:9px;
@@ -80,3 +93,263 @@ input[type="email"] {
 label.mandatory{
  color: #FF0000;
 }
+/* =====================================================
+   OVERRIDE legacy input heights for header fields
+   ===================================================== */
+
+/* Header row: override tiny legacy input height */
+table tr td input[type="text"],
+table tr td select {
+    height: 36px !important;
+    font-size: 13px !important;
+}
+
+/* jqx DateTimeInput in header row */
+table tr td .jqx-datetimeinput {
+    height: 36px !important;
+    margin-top: 0 !important;
+}
+
+/* Align header labels vertically with inputs */
+table tr td[align="right"] {
+    padding-top: 0 !important;
+    line-height: 36px !important;
+}
+/* =====================================================
+   jqx DropDownList – global size standardization
+   ===================================================== */
+
+.jqx-dropdownlist {
+    height: 34px !important;
+    font-size: 14px !important;
+}
+
+.jqx-dropdownlist-content {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+}
+
+.jqx-dropdownlist-arrow {
+    height: 34px !important;
+}
+
+.jqx-listitem-element {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !;
+}
+/* ================================
+   GLOBAL INPUT & SELECT FIX
+   (Overrides legacy JSP styles)
+   ================================ */
+
+/* Normal text inputs */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    height: 34px !important;
+    line-height: 34px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+}
+
+/* Fix table-based inputs */
+table input[type="text"],
+table select {
+    height: 34px !important;
+    line-height: 34px !important;
+}
+
+/* Dropdown option spacing */
+select option {
+    font-size: 14px !important;
+    padding: 6px 10px;
+}
+/* FIX: Search / Primary buttons visibility */
+
+
+
+.jqx-window button {
+    background-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
+
+
+input[placeholder^="Press F3" i] {
+    padding-right: 40px !important;                 /* text stays clear */
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important; /* stick icon to end */
+    background-size: 16px 16px !important;
+    background-origin: padding-box !important;        /* <<< KEY FIX */
+
+    background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjNjY2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE1LjUgMTRoLS43OWwtLjI4LS4yN2E2LjUgNi41IDAgMSAwLS43MS43MWwuMjcuMjh2Ljc5bDUsNC45OUwyMC40OSAxOWwtNC45OS01em0tNiAwQTQuNSA0LjUgMCAxIDEgMTQgOS41IDQuNSA0LjUgMCAwIDEgOS41IDE0eiIvPjwvc3ZnPg==") !important;
+}
+
+
+/* Show tooltip on hover (CSS-only) */
+input[placeholder^="Press F3" i]:hover::after {
+    content: "Double click on this to search";
+    position: absolute;
+    right: 0;
+    top: -26px;
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Tooltip arrow */
+input[placeholder^="Press F3" i]:hover::before {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: -8px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Ensure container can render tooltip */
+.form-group {
+    position: relative;
+}
+
+/* Tooltip bubble */
+.form-group:hover input[placeholder^="Press F3" i] ~ .f3-tip,
+.form-group:focus-within input[placeholder^="Press F3" i] ~ .f3-tip {
+    opacity: 1;
+    visibility: visible;
+}
+.f3-tip {
+    position: absolute;
+    top: -26px;
+    right: 10px;
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .15s ease;
+}
+.f3-tip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+#pageLoader {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    font-family: Tahoma;
+    font-size: 12px;
+}
+
+/* spinner */
+#pageLoader .spinner {
+    width: 36px;
+    height: 36px;
+    border: 4px solid #cccccc;
+    border-top-color: #3366ff;
+    border-radius: 50%;
+    animation: spin .9s linear infinite;
+    margin-bottom: 6px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.popup-loader {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.popup-loader .spinner {
+    width: 30px;
+    height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #3366ff;
+    border-radius: 50%;
+    animation: spin .9s linear infinite;
+    margin-bottom: 6px;
+}
+
+/* ensure popup is the positioning parent */
+#window .jqx-window-content {
+    position: relative;
+}
+
+.loader-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #333;
+}
+
+/* CLASSIC HOURGLASS ICON */
+.hourglass {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #3366ff;
+    border-radius: 4px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.hourglass::before,
+.hourglass::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    right: 3px;
+    height: 6px;
+    background: #3366ff;
+    border-radius: 2px;
+    animation: sandFlow 1.2s infinite linear;
+}
+
+/* top sand */
+.hourglass::before {
+    top: 2px;
+    transform-origin: bottom;
+}
+
+/* bottom sand */
+.hourglass::after {
+    bottom: 2px;
+    transform-origin: top;
+    animation-delay: .6s;
+}
+
+@keyframes sandFlow {
+    0%   { transform: scaleY(1); }
+    50%  { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
+}
+

@@ -10,16 +10,19 @@
 
 <script type="text/javascript" src="../../../../js/ajaxfileupload.js"></script> 
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
 
+form label.error {
+    color: red;
+    font-weight: 600;
 }
+
 
 .hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
+    overflow-y: auto;
+    height: 550px;
+    padding: 10px;
 }
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -29,80 +32,98 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 14px;
 }
+
+/* ------------------------------
+   MAIN CARD
+------------------------------ */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
+    padding: 20px;
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
+/* ------------------------------
+   RECEIPT HEADER
+------------------------------ */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
     margin-bottom: 16px;
     border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 24px;
 }
+
 .receipt-header label {
     font-weight: 500;
     color: #333;
-    margin-right: 8px;
 }
+
 .receipt-header input[type="text"] {
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
+    font-size: 14px;
     width: 120px;
     background: #fff;
-    transition: border-color 0.2s;
 }
+
 .receipt-header input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
 }
+
 .receipt-header button {
+    height: 32px;
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 6px 16px;
+    padding: 0 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s;
 }
+
 .receipt-header button:hover {
     background: #0056b3;
 }
+
 #txtStatus {
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 600;
     color: #e67e22;
-    margin-left: 12px;
 }
 
+/* ------------------------------
+   SECTION LAYOUT
+------------------------------ */
 .section-row {
     display: flex;
     gap: 26px;
     margin-bottom: 24px;
 }
+
 .section-block {
     flex: 1;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
 }
 
@@ -123,11 +144,11 @@ body {
 .section-block input[type="text"],
 .section-block select {
     flex: 1;
+    height: 32px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
     background: #fff;
-    transition: border-color 0.2s;
 }
 
 .section-block input[type="text"]:focus,
@@ -136,18 +157,29 @@ body {
     outline: none;
 }
 
-
+/* ------------------------------
+   TABLE SECTION
+------------------------------ */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
+
 .table-section h3 {
+    margin: 0 0 16px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 1.04em;
+    font-size: 15px;
     font-weight: 600;
 }
+
+/* ------------------------------
+   TABLE GRID
+------------------------------ */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -156,72 +188,56 @@ body {
     overflow: hidden;
     box-shadow: 0 0 0 1px #eef0f6;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
+
+.cr-table th,
+.cr-table td {
+    padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
 }
+
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
     font-weight: 600;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-/* Make all text bold */
-body, body * {
-    font-weight: 700 !important;
-}
-
-/* Prevent wrapping everywhere */
-.cr-table td,
-.cr-table th,
-.cr-table label,
-.cr-table div,
-.cr-table input,
+/* ------------------------------
+   TABLE INPUTS & DROPDOWNS
+------------------------------ */
+.cr-table input[type="text"],
 .cr-table select {
-    white-space: nowrap !important;
-}
-
-
-
-/* Improve dropdown option spacing */
-select option {
-    padding: 8px 12px !important;     /* Top/Bottom 8px, Left/Right 12px */
-    font-size: 14px;                  /* Clean readable size */
-    line-height: 1.6;                 /* Extra breathing room */
-}
-
-/* Improve the select box itself */
-select {
-    padding: 6px 10px !important;
-    height: 34px !important;
-    font-weight: 600;
+    width: 100%;
+    height: 32px;
+    border: 1px solid #d1d5db;
     border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    background: #fff;
 }
 
-
-/* --- STYLING ALL DROPDOWNS (SELECT BOXES) --- */
-select {
-    width: 100% !important;          /* make it fill the cell neatly */
-    padding: 4px 10px;               /* make dropdown taller */
-    height: 28px !important;         /* uniform height */
-    border: 1px solid #b8c6d8;       /* clean border */
-    border-radius: 6px;              /* modern rounded look */
-    background-color: #fff;          /* remove any pink */
-    font-weight: 600;                /* bold text */
-    color: #222;                     /* clean dark text */
-    box-sizing: border-box;
-}
-
-/* Dropdown on focus (blue border) */
-select:focus {
-    border-color: #007bff !important;
+.cr-table input[type="text"]:focus,
+.cr-table select:focus {
+    border-color: #007bff;
     outline: none;
 }
+
+/* ------------------------------
+   DROPDOWN OPTIONS
+------------------------------ */
+select option {
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -578,83 +594,167 @@ x.send();
 </script>
 </head>
 <body onload="setValues();getYear();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmalw" action="saveAddDeduct" autocomplete="OFF" >
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-    <div class="hidden-scrollbar receipt-header">
+<form id="frmalw" action="saveAddDeduct" autocomplete="OFF">
 
+    <jsp:include page="../../../../header.jsp"></jsp:include>
+
+    <!-- ===============================
+         SCROLLABLE CONTENT AREA
+    ================================ -->
+    <div class="hidden-scrollbar">
+
+        <!-- ===============================
+             RECEIPT HEADER (TOP STRIP)
+        ================================ -->
+        <div class="receipt-header">
+            <!-- (Keep empty or status items here if needed later) -->
+        </div>
+
+        <!-- ===============================
+             ADD / DEDUCT DETAILS
+        ================================ -->
         <div class="table-section">
+            <h3>Add / Deduct Details</h3>
 
-<table class="cr-table" width="100%">
-<tr>
- <td width="10%" align="right">Date</td>
- <td width="20%" align="left"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
-                     <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/></td>
- <td width="10%" align="right">Ref No</td>
- <td width="10%" align="left"> <input type="text" id="refno" name="refno" placeholder="Ref No" value='<s:property value="refno"/>'/></td>
- <td width="20%">&nbsp;</td>          
- <td width="10%" align="right">Doc No</td>
- <td width="20%" align="left"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>                                          
-</tr>
-</table></div>
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Date</td>
+                    <td>
+                        <div id="masterdate" name="masterdate"
+                             value='<s:property value="masterdate"/>'></div>
+                        <input type="hidden" id="hidmasterdate" name="hidmasterdate"
+                               value='<s:property value="hidmasterdate"/>' />
+                    </td>
 
-<div class="table-section" style="background-color: #f6f8fa;
- width: 100%;">
-<h3><b><i>Effect In</i></b></h3>
-<table class="cr-table" width="100%" >
-<tr>
- <td width="9%" align="right">Year</td>
- <td width="21%" align="left"><select id="cmbyear" name="cmbyear" style="width:50%;" value='<s:property value="cmbyear"/>' onchange="clearmsg();">
- <option value="">--Select--</option></select>
- <input type="hidden"  id="hidcmbyear" name="hidcmbyear"  value='<s:property value="hidcmbyear"/>'></td>
- <td width="10%" align="right">Month</td>
- <td width="10%" align="left"><select id="cmbmonth" name="cmbmonth" style="width:98%;"  value='<s:property value="cmbmonth"/>' onchange="clearmsg();">
-      <option value="">--Select--</option><option value="1">January</option><option value="2">February</option><option value="3">March</option>
-      <option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option>
-      <option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option>
-      <option value="12">December</option></select>
-      <input type="hidden" id="hidcmbmonth" name="hidcmbmonth"  value='<s:property value="hidcmbmonth"/>'/></td>
- <td width="20%"><input type="file" id="fileexcelimport" name="file" style="width:75%;" >      
-         </td>          
- <td width="10%" align="right"><button class="myButton" type="button" id="btnimport" name="btnimport" onclick="excelimport();">Excel Import</button></td>
- <td width="20%" align="left">&nbsp;</td>                     
-</tr>
-<tr>
- <td width="9%" align="right">Description</td>
- <td align="left" colspan="4">
-      <input type="text" id="desc" name="desc" placeholder="Description" style="width:90%;" value='<s:property value="desc"/>'/>
- </td>
- <td width="10%" align="right">&nbsp;</td>
- <td width="20%" align="left">&nbsp;</td> 
-</tr>
-</table>
-</div><br>
+                    <td align="right">Ref No</td>
+                    <td>
+                        <input type="text" id="refno" name="refno"
+                               placeholder="Ref No"
+                               value='<s:property value="refno"/>' />
+                    </td>
 
-<div class="cr-table" id="desdet" ><jsp:include page="empdetails.jsp"></jsp:include></div>
+                    <td></td>
 
- 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' /> 
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="descdetailsGridlenght" name="descdetailsGridlenght"  value='<s:property value="descdetailsGridlenght"/>'/>
+                    <td align="right">Doc No</td>
+                    <td>
+                        <input type="text" id="docno" name="docno"
+                               tabindex="-1"
+                               value='<s:property value="docno"/>' />
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    </div>
+        <!-- ===============================
+             EFFECT IN
+        ================================ -->
+        <div class="table-section">
+            <h3>Effect In</h3>
+
+            <table class="cr-table">
+                <tr>
+                    <td align="right">Year</td>
+                    <td>
+                        <select id="cmbyear" name="cmbyear"
+                                value='<s:property value="cmbyear"/>'
+                                onchange="clearmsg();">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbyear" name="hidcmbyear"
+                               value='<s:property value="hidcmbyear"/>' />
+                    </td>
+
+                    <td align="right">Month</td>
+                    <td>
+                        <select id="cmbmonth" name="cmbmonth"
+                                value='<s:property value="cmbmonth"/>'
+                                onchange="clearmsg();">
+                            <option value="">--Select--</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <input type="hidden" id="hidcmbmonth" name="hidcmbmonth"
+                               value='<s:property value="hidcmbmonth"/>' />
+                    </td>
+
+                    <td>
+                        <input type="file" id="fileexcelimport" name="file" />
+                    </td>
+
+                    <td>
+                        <button type="button" id="btnimport"
+                                onclick="excelimport();">
+                            Excel Import
+                        </button>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td align="right">Description</td>
+                    <td colspan="4">
+                        <input type="text" id="desc" name="desc"
+                               placeholder="Description"
+                               value='<s:property value="desc"/>' />
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===============================
+             EMPLOYEE DETAILS
+        ================================ -->
+        <div class="table-section">
+            <h3>Employee Details</h3>
+
+            <div class="cr-table" id="desdet">
+                <jsp:include page="empdetails.jsp"></jsp:include>
+            </div>
+        </div>
+
+        <!-- ===============================
+             HIDDEN FIELDS
+        ================================ -->
+        <input type="hidden" id="mode" name="mode"
+               value='<s:property value="mode"/>' />
+        <input type="hidden" id="deleted" name="deleted"
+               value='<s:property value="deleted"/>' />
+        <input type="hidden" id="msg" name="msg"
+               value='<s:property value="msg"/>' />
+        <input type="hidden" id="descdetailsGridlenght"
+               name="descdetailsGridlenght"
+               value='<s:property value="descdetailsGridlenght"/>' />
+
+    </div><!-- /.hidden-scrollbar -->
+
 </form>
 
-<div id="empsearchwndow">
-   <div></div>
-</div>
-<div id="accountDetailsWindow">
-   <div></div>
-</div>
-<div id="costTypeSearchGridWindow">
-	<div></div>
-</div> 
-<div id="costCodeSearchWindow">
-	<div></div>
-</div> 
+<!-- ===============================
+     POPUP / SEARCH WINDOWS
+=============================== -->
+<div id="empsearchwndow"><div></div></div>
+<div id="accountDetailsWindow"><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div></div>
+<div id="costCodeSearchWindow"><div></div></div>
 
-</div>
+</div><!-- /#mainBG -->
+
 </body>
+
 </html>

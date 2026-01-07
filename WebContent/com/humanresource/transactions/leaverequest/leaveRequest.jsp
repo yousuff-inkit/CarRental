@@ -393,11 +393,18 @@
 </script>
 
 <style>
+/* ===============================
+   SCROLL AREA
+=============================== */
 .hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
+    overflow-y: auto;
+    height: 530px;
+    padding: 10px;
 }
 
+/* ===============================
+   PAGE BASE
+=============================== */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -406,69 +413,63 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
+/* ===============================
+   MAIN CARD
+=============================== */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 10px;
-    max-width: 1200px;
+    padding: 20px;
+    max-width: 100%;
     margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------- HEADER ------- */
+/* ===============================
+   HEADER STRIP
+=============================== */
 .receipt-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
     margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
+    padding: 0 24px;
 }
 
 .receipt-header label {
-    font-weight: 500;
+    font-weight: 600;
     color: #333;
-    margin-right: 8px;
 }
 
-.receipt-header input[type="text"] {
+/* ===============================
+   GLOBAL INPUT / SELECT SIZE
+=============================== */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select {
+    height: 32px !important;
+    padding: 4px 10px !important;
+    font-size: 14px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
     background: #fff;
+    box-sizing: border-box;
 }
 
-.receipt-header input[type="text"]:focus {
+input:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.receipt-header button:hover {
-    background: #0056b3;
-}
-
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-/* ------- SECTIONS ------- */
+/* ===============================
+   SECTION LAYOUT
+=============================== */
 .section-row {
     display: flex;
     gap: 26px;
@@ -478,61 +479,55 @@ body {
 .section-block {
     flex: 1;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
+/* ===============================
+   🔵 BLUE HEADING ACCENT
+=============================== */
+.table-section h3,
+.section-block h2,
+.section-block h3 {
+    margin: 0 0 16px;
+    padding-left: 8px;
+    border-left: 4px solid #007bff;
+    font-size: 15px;
+    font-weight: 700;
     color: #253858;
 }
 
-.section-block .form-group {
+/* ===============================
+   FORM GROUPS
+=============================== */
+.form-group {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 12px;
 }
 
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
+label {
+    font-weight: 700;
     color: #253858;
+    white-space: nowrap;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* ------- TABLE SECTION ------- */
+/* ===============================
+   TABLE SECTION
+=============================== */
 .table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f6f8fa;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-
+/* ===============================
+   TABLE GRID
+=============================== */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -544,63 +539,111 @@ body {
 
 .cr-table th,
 .cr-table td {
-    padding: 9px 10px;
+    padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 1em;
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-weight: 700;
 }
 
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
-    font-weight: 600;
 }
 
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-
-/* ------------------------------
-   EXTRA RULES YOU ADDED
-   1. MAKE ALL LABEL / TH / TD BOLD
-   2. FORCE SINGLE LINE (NO WRAP)
---------------------------------*/
-label,
-.cr-table td label,
-.cr-table th,
-.cr-table td,
-td,
-th {
-    font-weight: 700 !important;
-    white-space: nowrap !important;
+/* ===============================
+   PREMIUM SMALL BUTTONS
+=============================== */
+.myButtons,
+.myProcessCalcButton,
+.mySaveButton,
+.myConfirmButton,
+.myButton,
+#btnProcess,
+#btnPayrollprocessPrint,
+#btnSavePayRoll,
+#btnConfirmed,
+#btnView,
+#btnPayrollPrint,
+#btnPayrollEmail,
+#clear,
+#clearPrint {
+    background: #4FA8FF !important;
+    color: #fff !important;
+    border: none !important;
+    height: 28px !important;
+    padding: 4px 10px !important;
+    min-width: 60px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    transition: 0.2s ease-in-out;
 }
 
-	/* --- STYLING ALL DROPDOWNS (SELECT BOXES) --- */
-select {
-    width: 100% !important;          /* make it fill the cell neatly */
-    padding: 4px 10px;               /* make dropdown taller */
-    height: 28px !important;         /* uniform height */
-    border: 1px solid #b8c6d8;       /* clean border */
-    border-radius: 6px;              /* modern rounded look */
-    background-color: #fff;          /* remove any pink */
-    font-weight: 600;                /* bold text */
-    color: #222;                     /* clean dark text */
-    box-sizing: border-box;
+.myButtons:hover,
+.myButton:hover {
+    background: #2F7FD4 !important;
 }
 
-/* Dropdown on focus (blue border) */
-select:focus {
-    border-color: #007bff !important;
-    outline: none;
+/* ===============================
+   SEARCH FORM
+=============================== */
+#search td,
+#search label {
+    font-weight: 700;
+    white-space: nowrap;
+    color: #1A2734;
 }
 
-/* Improve dropdown option spacing */
+#search input[type="text"] {
+    height: 28px;
+    padding: 4px 8px;
+    font-size: 13px;
+}
+
+#search td {
+    padding: 6px 8px;
+}
+
+#search table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* ===============================
+   DATE PICKER HEIGHT FIX
+=============================== */
+.jqx-datetimeinput,
+.jqx-input,
+.jqx-datetimeinput input,
+#masterdate,
+#startDate,
+#terminationDate,
+#payrollDate,
+#notifyDate,
+#joiningDate,
+#appraisalDate {
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 14px !important;
+}
+
+/* ===============================
+   DROPDOWN OPTIONS
+=============================== */
 select option {
-    padding: 8px 12px !important;     /* Top/Bottom 8px, Left/Right 12px */
-    font-size: 14px;                  /* Clean readable size */
-    line-height: 1.6;                 /* Extra breathing room */
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.6;
 }
+
 </style>
 
 </head>

@@ -1,92 +1,183 @@
-<% String contextPath=request.getContextPath();%>
-<!DOCTYPE>
+<% String contextPath = request.getContextPath(); %>
+<!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <title>GatewayERP(i)</title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/main.css" rel="stylesheet" type="text/css" />
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="<%=contextPath%>/css/myButton.css" rel="stylesheet" type="text/css"/>
+
+<link href="<%=contextPath%>/css/main.css" rel="stylesheet" />
+<link href="<%=contextPath%>/css/body.css" rel="stylesheet" />
+<link href="<%=contextPath%>/css/myButton.css" rel="stylesheet" />
 
 <jsp:include page="../../../includes.jsp"></jsp:include>
 
 <style>
-#whole
-{
-width:100%;
+/* ---------------- RESET ---------------- */
+html, body {
+    height: 100%;
+    margin: 0;
 }
-#header
-{
-background-color: #E0ECF8;
-color:black;
-text-align:left;
-height:7%;
-width:3%
-padding:0px;
+
+/* ---------------- PAGE LAYOUT ---------------- */
+#whole {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
-#nav
-{
-   line-height:30px;
+
+/* ---------------- LEFT NAV ---------------- */
+#nav {
+    width: 190px;
     background-color: #E0ECF8;
-    height:90.5%;
-    width:5%;
-    float:left;
-    position:absolute;
-    
-    
+    padding: 16px 10px;
+    box-sizing: border-box;
+    border-right: 1px solid #c9d9ee;
 }
 
-#comiframe
-{
-float:right;
-width:98.5%;
-height:98%;
-color:#eeeeee;
+#nav table {
+    width: 100%;
+}
 
+/* -------- BLUE PREMIUM BUTTONS -------- */
+#nav input[type="button"] {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px 0;
+
+    background: linear-gradient(135deg, #4FA8FF, #2F7FD4);
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(79,168,255,0.35);
+}
+
+/* Hover */
+#nav input[type="button"]:hover {
+    background: linear-gradient(135deg, #2F7FD4, #1F63B8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(47,127,212,0.45);
+}
+
+/* Active click */
+#nav input[type="button"]:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(47,127,212,0.35);
+}
+
+/* Active menu */
+#nav input[type="button"].active {
+    background: linear-gradient(135deg, #1F63B8, #154A8A);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+
+/* ---------------- RIGHT CONTENT ---------------- */
+#content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------------- HEADER ---------------- */
+#content h3 {
+    margin: 14px 18px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    font-size: 16px;
+    font-weight: 600;
+    color: #253858;
+}
+
+/* ---------------- IFRAME AREA ---------------- */
+#iframeWrapper {
+    flex: 1;
+    padding: 12px 18px;
+    box-sizing: border-box;
+}
+
+#iframe2 {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #ffffff;
+    border-radius: 12px;
 }
 </style>
-<script type="text/javascript">
-	
-	$(document).ready(function() {
-		//document.getElementById("btnproject").disabled="true";
-		$('#branchid').val(window.parent.branchid.value); 
-	});
-	</script>
-</head>
-<body>
-<div id="mainBG" class="homeContent" data-type="background">
-<h3>Fixed Asset Master</h3>
 
+<script>
+$(document).ready(function () {
+    if (window.parent && window.parent.branchid) {
+        $('#branchid').val(window.parent.branchid.value);
+    }
+});
 
-<div id="nav">
-<table >
-<tr><td><input type="button" name="btnfgm" class="myButton" value="Group Master" style="width:100px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/fixedassets/masters/groupMaster.jsp";'></td></tr>
-<tr><td><input type="button" name="btnflm" class="myButton" value="Loc. Master" style="width:100px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/fixedassets/masters/locationMaster.jsp";'></td></tr>
-<%-- <tr><td><input type="button" name="btnrentalagent" class="myButton" value="Rental Agent" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/rentalAgent.jsp";'></td></tr>
-<tr><td><input type="button" name="btndriver" class="myButton" value="Driver" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/driver.jsp";'></td></tr>
-<tr><td><input type="button" name="btncheckin" class="myButton" value="Check In" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/checkin.jsp";'></td></tr>
-<tr><td><input type="button" name="btnstaff" class="myButton" value="Staff" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/staff.jsp";'></td></tr>
- --%></table>
-</div>
-<input type="hidden" id="formName" name="formName"  value='000'/>
-<input type="hidden" id="formCode" name="formCode"  value='SAP'/> 
-<input type="hidden" id="branchid" name="branchid"  value=''/>
-<input type="hidden" id="mode" name="mode"  />
-<div id="comiframe">
-	<iframe width="100%" height="100%" id="iframe2" align="right" frameborder="0" marginwidth="100%" scrolling="no" src="<%=contextPath%>/com/fixedassets/masters/groupMaster.jsp"></iframe>
-</div>
-<!-- <script>
-function resizeIframeToFitContent(iframe) {
-    // This function resizes an IFrame object
-    // to fit its content.
-    // The IFrame tag must have a unique ID attribute.
-    iframe.height = document.frames[iframe.iframe2]
-                    .document.body.scrollHeight;
+/* Active button highlight */
+function setActive(btn, url) {
+    document.querySelectorAll('#nav input[type="button"]').forEach(b => {
+        b.classList.remove('active');
+    });
+    btn.classList.add('active');
+    document.getElementById("iframe2").src = url;
 }
-</script> -->
+</script>
+
+</head>
+
+<body>
+
+<div id="whole">
+
+    <!-- LEFT MENU -->
+    <div id="nav">
+        <table>
+            <tr>
+                <td>
+                    <input type="button"
+                           class="active"
+                           value="Group Master"
+                           onclick="setActive(this,'<%=contextPath%>/com/fixedassets/masters/groupMaster.jsp');">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button"
+                           value="Location Master"
+                           onclick="setActive(this,'<%=contextPath%>/com/fixedassets/masters/locationMaster.jsp');">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div id="content">
+
+        <h3>Fixed Asset Master</h3>
+
+        <!-- hidden fields -->
+        <input type="hidden" id="formName" name="formName" value="000"/>
+        <input type="hidden" id="formCode" name="formCode" value="SAP"/>
+        <input type="hidden" id="branchid" name="branchid" value=""/>
+        <input type="hidden" id="mode" name="mode"/>
+
+        <div id="iframeWrapper">
+            <iframe id="iframe2"
+                    src="<%=contextPath%>/com/fixedassets/masters/groupMaster.jsp">
+            </iframe>
+        </div>
+
+    </div>
 
 </div>
+
 </body>
 </html>

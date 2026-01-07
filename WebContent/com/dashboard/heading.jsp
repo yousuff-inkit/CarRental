@@ -45,13 +45,13 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     margin: 5px 0; 
 }
 
 .dashboard-header-wrapper .nbtn {
-    flex: 1;
-    max-width: 110px;
+    flex: 0 0 auto;
+    max-width: 90px;
     height: 36px;
     border-radius: 8px;
     background: #ffffff;
@@ -73,14 +73,13 @@
     border: none;
 }
 
-/* Email Button Fix: Force Clickable */
+
 #btnSendingEmail {
     opacity: 1 !important;
     cursor: pointer !important;
     pointer-events: auto !important;
 }
 
-/* Removed white box from Branch Section */
 .dashboard-header-wrapper .branch-section {
     background: transparent; 
     border: none;
@@ -135,7 +134,7 @@
 }
 /* ===== BUTTON HOVER EFFECT ===== */
 .dashboard-header-wrapper .nbtn {
-    border: 1.5px solid #e2e8f0;          /* default border */
+    border: 1.5px solid #e2e8f0;        
     transition: 
         transform 0.2s ease,
         border-color 0.2s ease,
@@ -644,11 +643,11 @@
     </div>
 
     <!-- ===== BUTTON GRID ===== -->
-   <div class="btn-grid">
-    <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
+    <div class="btn-grid">
+   <!-- <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20m10-10H2"/></svg>
         Guideline
-    </button>
+    </button> -->
 
     <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>

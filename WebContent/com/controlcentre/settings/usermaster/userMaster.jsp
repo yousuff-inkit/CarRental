@@ -9,21 +9,34 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style type="text/css">
 form label.error {
-    color: red;
-    font-weight: bold;
+    color: #e53935;
+    font-weight: 600;
+    font-size: 12px;
 }
 
 /* scroll area */
 .hidden-scrollbar {
     overflow: auto;
-    height: 530px;
+    max-height: 530px;
+    scrollbar-width: thin;
+    scrollbar-color: #c4c9d6 transparent;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.hidden-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+    background: #c4c9d6;
+    border-radius: 4px;
 }
 
 /* background */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    color: #222;
+    background: #f4f5f7;   /* same plain background as other pages */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    color: #111827;
     margin: 0;
     padding: 24px 0;
     min-height: 100vh;
@@ -31,105 +44,228 @@ body {
     font-size: 14px;
 }
 
+
+
 /* wider main card */
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 18px 28px;
-    max-width: 1600px;          /* was 1200px */
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 20px 28px;
+    max-width: 100%;
     margin: 0 auto;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.10),
+        0 0 0 1px rgba(148, 163, 184, 0.25);
 }
 
 /* top header strip */
 .receipt-header {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 18px;
+    padding: 10px 14px;
     border-radius: 12px;
-    padding: 0 6px;
-    font-size: 14px;
+    background: linear-gradient(135deg, #0f172a);
+    color: #e5e7eb;
+    font-size: 13px;
+}
+.receipt-header h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
 }
 #txtStatus {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: #e67e22;
+    color: #fde68a;
     margin-left: 12px;
 }
 
 /* table sections */
 .table-section {
     margin-bottom: 20px;
-    padding-inline: 14px;
-    padding-block: 14px;
-    border-radius: 10px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    padding: 16px 16px 12px;
+    border-radius: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
 }
 .table-section h3 {
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #253858;
-    font-size: 14px;
+    border-left: 3px solid #2563eb;
+    color: #0f172a;
+    font-size: 13px;
     font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
-/* data tables – full width across wider card */
+/* data tables – master style */
 .cr-table {
     width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    box-shadow:
+        0 1px 0 rgba(148, 163, 184, 0.35),
+        0 0 0 1px #e5e7eb;
     table-layout: fixed;
+}
+.cr-table thead {
+    background: linear-gradient(180deg, #f9fafb 0%, #edf2ff 100%);
 }
 .cr-table th,
 .cr-table td {
     padding: 8px 10px;
-    border-bottom: 1px solid #e4e7ec;
+    border-bottom: 1px solid #e5e7eb;
     text-align: left;
     font-size: 13px;
     vertical-align: middle;
 }
 .cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
+    color: #475569;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.cr-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+.cr-table tbody tr:hover {
+    background: #eef2ff;
 }
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-/* unified input/select styling inside table */
+/* labels / right-aligned cells */
+.cr-table td[align="right"] {
+    white-space: nowrap;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+/* unified input/select styling */
 .cr-table input[type="text"],
 .cr-table input[type="password"],
 .cr-table input[type="email"],
 .cr-table select {
-    width: 100%;                 /* all same width */
-    border: 1px solid #d1d5db;
+    width: 100%;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
     padding: 4px 8px;
     height: 30px;
     font-size: 13px;
     box-sizing: border-box;
-    background: #fff;
-    transition: border-color 0.2s;
+    background: #ffffff;
+    color: #111827;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+.cr-table input[type="text"]::placeholder,
+.cr-table input[type="password"]::placeholder,
+.cr-table input[type="email"]::placeholder {
+    color: #9ca3af;
+    font-size: 12px;
 }
 .cr-table input[type="text"]:focus,
 .cr-table input[type="password"]:focus,
 .cr-table input[type="email"]:focus,
 .cr-table select:focus {
-    border-color: #007bff;
+    border-color: #2563eb;
     outline: none;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.45);
+    background: #f9fafb;
 }
 
-/* prevent label wrap */
-.cr-table td[align="right"] {
-    white-space: nowrap;
-    font-weight: 500;
-    color: #333;
+/* subtle disabled state */
+.cr-table input[disabled],
+.cr-table select[disabled] {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
 }
+
+/* responsive tweaks */
+@media (max-width: 992px) {
+    #mainBG {
+        padding: 16px 18px;
+    }
+    .table-section {
+        padding-inline: 10px;
+    }
+}
+@media (max-width: 768px) {
+    body {
+        padding: 12px 0;
+    }
+    #mainBG {
+        border-radius: 0;
+        box-shadow: none;
+        max-width: 100%;
+    }
+    .cr-table th,
+    .cr-table td {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+/* force page background plain */
+html, body {
+    background: #f4f5f7 !important;
+}
+
+/* any big wrapper behind the cards */
+#mainBG,
+.pageBG,
+.contentBG,
+.bodyBG {
+    background: #f4f5f7 !important;   /* same light color */
+}
+
+/* white cards stay white */
+#mainBG .table-section,
+#mainBG .cr-table {
+    background: #ffffff;
+}
+/* force everything behind the cards to be plain */
+html, body {
+    background: #f4f5f7 !important;
+}
+
+/* outer wrapper that is showing blue */
+body > form,
+body > div {
+    background: #f4f5f7 !important;
+    background-image: none !important;
+}
+
+/* the white card stays white */
+#mainBG {
+    background: #ffffff !important;
+}
+/* override old blue background */
+.windowCont {
+    background: #f4f5f7 !important;      /* or whatever plain color other pages use */
+    background-image: none !important;
+}
+#mainBG.homeContent {
+    background: #f4f5f7 !important;
+    background-image: none !important;
+}
+/* kill the old blue window background */
+.windowCont {
+    background: #f4f5f7 !important;       /* plain light background */
+    background-image: none !important;
+}
+
+/* if the blue is applied directly on mainBG too */
+#mainBG.homeContent[data-type="background"] {
+    background: #f4f5f7 !important;
+    background-image: none !important;
+}
+
 </style>
 
 
