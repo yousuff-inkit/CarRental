@@ -169,65 +169,69 @@
         .ann-footer { padding: 12px 0; text-align: center; }
         .ann-footer a { font-size: 12px; font-weight: 700; color: #007bff; text-decoration: none; }
         
-        
         /* Dropdown Container */
-.home-dropdown {
-    position: relative;
-    display: inline-block;
-    margin-left: 20px;
-    z-index: 1000;
-}
+        .home-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+            z-index: 1000;
+        }
 
-/* The Button */
-.dropbtn {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        /* The Button */
+        .dropbtn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.dropbtn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
+        .dropbtn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    border-radius: 4px;
-    top: 40px;
-}
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            top: 40px;
+        }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    font-size: 13px;
-    border-bottom: 1px solid #eee;
-}
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+        }
 
-.dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:last-child { border-bottom: none; }
 
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-    color: #007bff;
-}
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #007bff;
+        }
 
-/* Show the dropdown on hover */
-.home-dropdown:hover .dropdown-content { display: block; }
+        /* Show the dropdown on hover */
+        .home-dropdown:hover .dropdown-content { display: block; }
 
+        /* ADDED: Styles for the module navigation tabs (was missing in your snippet) */
+        .tile-nav-container { background: #f8f9fa; border-bottom: 1px solid #eee; padding: 6px 12px; }
+        .tile-nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+        .tile-nav-links a { font-size: 11px; font-weight: 700; color: #666; text-decoration: none; padding: 6px 12px; border-radius: 4px; white-space: nowrap; transition: 0.2s; }
+        .tile-nav-links a.active { background: #007bff; color: #fff; }
 
     </style>
 </head>
@@ -265,7 +269,7 @@
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2"><path d="M3 3h18v18H3z"></path><path d="M21 9H3"></path><path d="M21 15H3"></path><path d="M12 3v18"></path></svg>
                         <div>
-                            <stron>My Dashboard</strong><br>
+                            <strong>My Dashboard</strong><br>
                             <small style="color: #888;">New Home Layout</small>
                         </div>
                     </div>
@@ -372,7 +376,14 @@
                        '<div style="font-size:18px; opacity:0.3;">&#8250;</div></div>';
             leftContainer.append(html);
         });
-        renderRightPanel(initialDetails);
+        
+        // FIXED LOGIC: Auto-select the first item on load if data exists
+        if(appData.length > 0) {
+            var firstTile = leftContainer.find(".app-tile").first();
+            openAppDetail(0, firstTile);
+        } else {
+            renderRightPanel(initialDetails);
+        }
     });
 
     function filterTiles(el) {
@@ -410,16 +421,19 @@
         $.each(data, function(i, item) {
             var safeDetName = item.description.replace(/'/g, "\\'");
             var safeParentDesc = (parentDesc || currentModuleDesc).replace(/'/g, "\\'");
-            var html = '<div class="app-tile" onclick="openDetailLink(\'' + safeDetName + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + safeParentDesc + '\')">' +
+            // FIXED: Added item.value to arguments
+            var html = '<div class="app-tile" onclick="openDetailLink(\'' + safeDetName + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + safeParentDesc + '\', \'' + item.value + '\')">' +
                        '<div class="app-name">' + item.description + '</div><div style="font-size:18px; opacity:0.3;">&#8250;</div></div>';
             cont.append(html);
         });
     }
 
-    function openDetailLink(detName, path, docno, mainDesc) {
+    // FIXED: Added 'val' parameter
+    function openDetailLink(detName, path, docno, mainDesc, val) {
         var url = window.location.href;
         var reurl = url.split("com/");
-        var fullUrl = reurl[0] + "" + path + "?name=" + encodeURIComponent(detName) + "&main=" + encodeURIComponent(mainDesc) + "&docno=" + docno;
+        // FIXED: Added '&value=' + val to the URL
+        var fullUrl = reurl[0] + "" + path + "?name=" + encodeURIComponent(detName) + "&main=" + encodeURIComponent(mainDesc) + "&docno=" + docno + "&value=" + val;
         if (typeof top.addTab === 'function') {
             top.addTab(detName, fullUrl);
         } else {
