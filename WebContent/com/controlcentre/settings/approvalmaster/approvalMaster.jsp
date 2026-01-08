@@ -17,11 +17,7 @@ String contextPath=request.getContextPath();
 <%-- <jsp:include page="tab.css"/>
 <jsp:include page="tab.jsp" /> --%>
 
-To make this screen “big” like your other wide layouts, only the container and header paddings need changes.
 
-Use this updated style:
-
-```css
 <style>
 .icon {
     width: 2.5em;
@@ -210,7 +206,7 @@ body {
     background: #0056b3;
 }
 </style>
-```
+
 
 <script type="text/javascript">
 $(document).ready(function () {
