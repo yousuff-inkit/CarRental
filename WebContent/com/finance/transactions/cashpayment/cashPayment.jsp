@@ -607,31 +607,45 @@
            }
           }
 	  
-	  function funPrintBtn() {
-				
-			if (($("#mode").val() == "view") && $("#docno").val()!="") {
-				
-				 var url=document.URL;
-			     var reurl=url.split("saveCashPayment");
-			     $("#docno").prop("disabled", false);
-				
-					   $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
-						if (r){
-							 var win= window.open(reurl[0]+"printCashPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-						     win.focus();
-						 }
-						else{
-							var win= window.open(reurl[0]+"printCashPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-						    win.focus();
-						}
-					   });
-		     }
-		    else {
-				$.messager.alert('Message','Select a Document....!','warning');
-				return;
+	
+		  function funPrintBtn() {
+			    if (($("#mode").val() == "view") && $("#docno").val()!="") {
+
+			        var url = document.URL;
+			        var reurl = url.split("saveCashPayment");
+			        $("#docno").prop("disabled", false);
+
+			        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
+
+			            var printUrl =
+			                reurl[0] + "printCashPayment?docno=" +
+			                document.getElementById("docno").value +
+			                "&branch=" + document.getElementById("brchName").value +
+			                "&header=" + (r ? 1 : 0);
+
+			            var win = window.open(
+			                printUrl,
+			                "_blank",
+			                "top=150,left=250,width=1020,height=500,scrollbars=yes"
+			            );
+
+			            if (win) {
+			                // 🔑 THIS is the critical line
+			                setTimeout(function () {
+			                    win.focus();
+			                    win.print();
+			                    win.onafterprint = function () {
+			                        win.close();
+			                    };
+			                }, 700);
+			            }
+			        });
+
+			    } else {
+			        $.messager.alert('Message','Select a Document....!','warning');
+			    }
 			}
-	    }
-	  
+
 	  function clearClientInfo(){
 		  $("#txttodocno").val('');$("#txttoaccid").val('');$("#txttoaccname").val('');$("#txtapplyinvoiceapply").val(0.00);
 		  $("#jqxApplyInvoicing").jqxGrid('clear');

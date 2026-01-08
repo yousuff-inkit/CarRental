@@ -26,12 +26,14 @@
 							{name : 'doc_no', type: 'string' },
 							{name : 'voc_no', type: 'string' },
 							{name : 'submitedby', type: 'string' },
+							{ name: 'approved', type: 'number' },
 							{name : 'btnclick', type: 'String'  },
 							{name : 'path', type: 'String'  },
 							{name : 'name', type: 'String'  },
 							{name : 'refname', type: 'String'  },
 							{name : 'desc1', type: 'String'  },
 							{name : 'doc_type', type: 'String'  },
+							
 							
                         ],
                 		    localdata: ependata1, 
@@ -79,12 +81,24 @@
 						      }  
 							},                          
 							{ text: 'Branch', datafield: 'branch', width: '5%' },
+							{ 
+						        text: 'Status', datafield: 'approved', width: '10%',
+						        cellsrenderer: function (row, column, value) {
+						            if (value == 1) {
+						                return '<div style="margin:4px; color: orange;"><b>Pending</b></div>';
+						            } else if (value == 3) {
+						                return '<div style="margin:4px; color: green;"><b>Approved</b></div>';
+						            } else {
+						                return '<div style="margin:4px; color: red;"><b>Rejected</b></div>';
+						            }
+						        }
+						    },
 							{ text: 'DateTime', datafield: 'subdatetime', width: '15%' },
 							{ text: 'Doc Type', datafield: 'doctype', width: '7%' },
 							{ text: 'Doc No', datafield: 'doc_no', width: '7%' },    
 							{ text: 'Submitted By', datafield: 'submitedby', width: '15%' },
-							{ text: 'Client', datafield: 'refname', width: '15%' },
-							{ text: 'Description', datafield: 'desc1'},
+							{ text: 'Client',hidden:true, datafield: 'refname', width: '15%' },
+							{ text: 'Description',hidden:true, datafield: 'desc1'},
 							{ text: 'Path',hidden:true, datafield: 'path', width: '20%' },
 							{ text: 'name', datafield: 'name', width: '20%',hidden:true },
 							{ text: 'dtype',hidden:true, datafield: 'dtype', width: '20%' },   

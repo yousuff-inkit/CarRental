@@ -1,273 +1,445 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.dashboard.dto.TileBean" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.connection.ClsConnection" %>
 <%@ page import="com.dashboard.ClsDashBoardDAO" %>
+<%@ page import="com.dashboard.ClsDashBoardBean" %>
+<%@ page import="net.sf.json.JSONArray" %>
 
 <%
-    // 1. Get current module
-    String selectedModule = request.getParameter("module");
-    if(selectedModule == null || selectedModule.trim().isEmpty()){
-        selectedModule = "Finance";
+    // ========================================================================
+    // 1. DEFINE SVG ICONS (STRICTLY PRESERVED)
+    // ========================================================================
+    String svgBank      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M11.5 1L2 6v2h19V6l-9.5-5zM4 8v10h3V8H4zm5 0v10h3V8H9zm5 0v10h3V8h-3zM2 20v2h19v-2H2z'/></svg>";
+    String svgCard      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z'/></svg>";
+    String svgCash      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z'/></svg>";
+    String svgFile      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg>";
+    String svgCar       = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z'/></svg>";
+    String svgUser      = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+    String svgHandshake = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M15.42 8.78l-3.23-2.91c-.48-.43-1.22-.38-1.65.11L10.3 6.22 8.5 4.6c-.39-.35-1-.35-1.39 0l-5.66 5.1c-.39.35-.39.91 0 1.26l.99.89-1.87 1.68c-.39.35-.39.91 0 1.26l2.83 2.55c.39.35 1.01.35 1.4 0l1.87-1.68.99.89c.39.35 1.01.35 1.4 0l6.36-5.72c.43-.49.38-1.23-.11-1.65z'/></svg>";
+    String svgCalendar  = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'/></svg>";
+    String svgWrench    = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z'/></svg>";
+    String svgBuilding  = "<svg viewBox='0 0 24 24'><path fill='#005c97' d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/></svg>";
+
+    // Mapping icons
+    Map<String, String> iconMap = new HashMap<String, String>();
+    iconMap.put("Accounts Master", svgBuilding);
+    iconMap.put("Bank Payments", svgCard);
+    iconMap.put("Bank Receipts", svgBank);
+    iconMap.put("Cash Payments", svgCash);
+    iconMap.put("IB Bank Payment", svgCard);
+    iconMap.put("IB Bank Receipt", svgBank);
+    iconMap.put("Booking", svgCalendar);
+    iconMap.put("Client", svgUser);
+    iconMap.put("Movement", svgCar);
+    iconMap.put("Maintenance Update", svgWrench);
+    iconMap.put("Rental Agreement Create", svgHandshake);
+
+    // Ajax handling logic
+    String ajaxId = request.getParameter("ajaxId");
+    if(ajaxId != null && !ajaxId.trim().isEmpty()) {
+        out.clear(); 
+        try {
+            ClsDashBoardDAO dao = new ClsDashBoardDAO();
+            JSONArray jsonResult = dao.detailSearch(ajaxId, session);
+            out.print((jsonResult == null || jsonResult.isEmpty()) ? "[]" : jsonResult.toString());
+        } catch (Exception e) { out.print("[]"); }
+        return; 
     }
 
-    // 2. Fetch data
     ClsDashBoardDAO tileDao = new ClsDashBoardDAO();
     String cPath = request.getContextPath();
-    List<TileBean> tiles = tileDao.getDashboardTiles(cPath, selectedModule);
+    String selectedModule = request.getParameter("module");
+    if(selectedModule == null || selectedModule.trim().isEmpty()){ selectedModule = "Finance"; }
+    String roleId = (session.getAttribute("ROLEID") != null) ? session.getAttribute("ROLEID").toString() : "0";
+
+    List<ClsDashBoardBean> tileList = new ArrayList<ClsDashBoardBean>();
+    Connection conn = null; Statement stmt = null; ResultSet rs = null;
+
+    try {
+        ClsConnection clsCon = new ClsConnection();
+        conn = clsCon.getMyConnection();
+        stmt = conn.createStatement();
+        String searchTerm = selectedModule;
+        if(selectedModule.equalsIgnoreCase("Finance")) searchTerm = "Fin";
+        else if(selectedModule.equalsIgnoreCase("Operation")) searchTerm = "Oper";
+        else if(selectedModule.equalsIgnoreCase("Fleet")) searchTerm = "Fleet";
+        else if(selectedModule.equalsIgnoreCase("Human")) searchTerm = "Hum";
+        else if(selectedModule.equalsIgnoreCase("Asset")) searchTerm = "Asset";
+        else if(selectedModule.equalsIgnoreCase("Control")) searchTerm = "Control";
+
+        String sql = "SELECT DISTINCT m3.menu_name, m3.func FROM my_menu m1 " + 
+                     "JOIN my_menu m2 ON m2.pmenu = m1.mno JOIN my_menu m3 ON m3.pmenu = m2.mno " + 
+                     "LEFT JOIN my_powr p ON p.mno = m3.mno " + 
+                     "WHERE (m1.menu_name LIKE '%" + searchTerm + "%' OR m1.doc_type LIKE '%" + searchTerm + "%') " + 
+                     "AND m3.GATE != 'N' AND m3.func IS NOT NULL AND m3.func <> '' " + 
+                     "AND p.roleid = '" + roleId + "' AND (p.add1<>0 OR p.edit<>0 OR p.del<>0 OR p.print<>0 OR p.attach<>0 OR p.excel<>0 OR p.view<>0) " + 
+                     "ORDER BY m3.menu_name";
+        
+        rs = stmt.executeQuery(sql);
+        while(rs.next()) {
+            String title = rs.getString("menu_name");
+            String dbLink = rs.getString("func");
+            String fullUrl = "#";
+            if(dbLink != null && !dbLink.trim().equals("")) {
+                 if(!dbLink.startsWith("/")) fullUrl = cPath + "/" + dbLink;
+                 else fullUrl = cPath + dbLink;
+                 fullUrl += (fullUrl.contains("?") ? "&" : "?") + "menuname=" + title.replace(" ", "%20");
+            }
+            String icon = iconMap.get(title.trim());
+            if(icon == null) { icon = svgFile; }
+            ClsDashBoardBean bean = new ClsDashBoardBean();
+            bean.setTxttitle(title); bean.setTxtdescription(fullUrl); bean.setMsg(icon); 
+            tileList.add(bean);
+        }
+    } catch(Exception e) { e.printStackTrace(); } 
+    finally { if(rs!=null) rs.close(); if(stmt!=null) stmt.close(); if(conn!=null) conn.close(); }
+
+    JSONArray jsonArray = tileDao.masterSearch(session);
+    String gridData = (jsonArray != null) ? jsonArray.toString() : "[]";
+    JSONArray detailArray = tileDao.detail(session);
+    String detailData = (detailArray != null) ? detailArray.toString() : "[]";
 %>
 
-<style>
-    /* === GLOBAL FONTS === */
-    body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 0; }
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="<%= cPath %>/scripts/jquery-1.11.1.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        /* ENABLE WHOLE DASHBOARD SCROLLING */
+        body, html { min-height: 100vh; margin: 0; padding: 0; overflow-y: auto; font-family: "Segoe UI", Roboto, sans-serif; background-color: #f4f6f9; }
+        
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
 
-    /* === 1. BANNER === */
-    .banner {
-        background-image: url("<%= cPath %>/icons/banner_image.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 140px;
-        display: flex;
-        align-items: center;
-        padding-left: 30px;
-        margin: 15px;
-        border-radius: 4px;
-        position: relative;
-    }
-    .welcome-text { color: white; font-size: 22px; font-weight: 600; text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); }
-    .user { margin-right: 6px; }
-    .user1 { color: #ffd700; }
+        /* ADDED BOTTOM PADDING TO ENSURE FULL VIEWABILITY */
+        .page-container { display: flex; flex-direction: column; width: 100%; min-height: 100vh; padding-bottom: 50px; }
 
-    /* === 2. 4-BOX GRID LAYOUT === */
-    .dashboard-grid {
-        display: grid;
-        /* Columns: Left (Empty) takes 1 part, Right (Tiles) takes 1.6 parts (Wider to fit Nav) */
-        grid-template-columns: 1fr 1.6fr; 
-        grid-template-rows: auto auto;    
-        gap: 20px;
-        padding: 0 15px 40px 15px;
-    }
+        /* BANNER INCREASED HEIGHT */
+        .banner { flex: 0 0 140px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .banner::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.2); border-radius: 8px; }
+        .banner-content { z-index: 2; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        
+        /* GREETINGS SAME FONT SIZE */
+        .welcome-main, #greeting { font-size: 26px; font-weight: 700; margin: 2px 0; }
 
-    /* Common Empty Box Style */
-    .grid-box {
-        background: #ffffff;
-        border-radius: 4px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        padding: 10px;
-        min-height: 350px; 
-        border: 1px dashed #ccc; 
-        position: relative;
-    }
+        /* LAYOUT STRUCTURE */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 15px; padding: 0 15px; margin-bottom: 15px; }
+        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; padding: 0 15px; }
 
-    /* Top Right Box (Tile Section) - Solid Border */
-    .grid-box.tile-section {
-        border: 1px solid #e0e0e0;
-        border-style: solid;
-        padding: 10px; 
-        background: #fff;
-        min-height: auto;
-    }
+        .grid-box { background: #fff; border-radius: 6px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
-    .placeholder-label {
-        position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        color: #999;
-        font-weight: bold;
-    }
+        .header-bar { flex: 0 0 auto; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+        .header-title { font-weight: 700; color: #444; font-size: 16px; text-transform: uppercase; }
 
-    /* === 3. NAVIGATION BAR (FIXED FOR ONE LINE) === */
-    .tile-nav-container {
-        display: flex;
-        justify-content: space-between; /* Links left, Search right */
-        align-items: center;
-        background-color: #f5f5f5;
-        padding: 8px 10px;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 10px;
-        border-radius: 4px;
-        white-space: nowrap; /* Forces content to stay on one line */
-        overflow-x: auto; /* Adds scroll if screen is extremely small */
-    }
-    
-    .tile-nav-links {
-        display: flex;
-        gap: 4px; /* Tighter gap */
-        align-items: center;
-    }
+        /* EXPANDING SEARCH UI WITH BLUE HOVER */
+        .header-search input { 
+            padding: 6px 12px; border: 1px solid #ddd; border-radius: 15px; outline: none; width: 130px; font-size: 13px; 
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s; background-color: #f9f9f9; 
+        }
+        .header-search input:hover { border-color: #007bff; }
+        .header-search input:focus { 
+            width: 220px; border-color: #007bff; background-color: #fff; 
+            box-shadow: 0 0 8px rgba(0,123,255,0.2); 
+        }
 
-    .tile-nav-links a {
-        text-decoration: none;
-        color: #555;
-        font-weight: bold;
-        padding: 6px 10px; /* Reduced padding slightly */
-        margin-right: 0;
-        border-radius: 4px;
-        font-size: 12px; /* Smaller font ensures "Human Resource" fits */
-        transition: all 0.3s;
-        white-space: nowrap; 
-    }
-    .tile-nav-links a:hover { background-color: #e0e0e0; color: #000; }
-    .tile-nav-links a.active { background-color: #007bff; color: white; }
+        /* FIXED HEIGHT FOR 4 ROWS DISPLAY (48px per row * 4 = 192px) */
+        .scrollable-content { flex: 1; overflow-y: auto; padding: 0; max-height: 192px; min-height: 192px; }
+        .top-scrollable { max-height: 350px; min-height: 350px; padding: 12px; }
 
-    /* Compact Search Box */
-    .tile-search-box { position: relative; margin-left: 10px; flex-shrink: 0; }
-    .tile-search-box input {
-        padding: 6px 10px 6px 25px;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        outline: none;
-        width: 140px; /* Reduced width to fit line */
-        font-size: 12px;
-    }
-    .tile-search-box i {
-        position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #888; font-size: 11px;
-    }
+        .dashboard-tile-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 12px; }
+        .dashboard-tile { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 95px; transition: 0.2s; cursor: pointer; text-decoration: none !important; }
+        .dashboard-tile:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,0,0,0.05); border-color: #007bff; }
+        .tile-icon-box { width: 28px; height: 28px; margin-bottom: 8px; }
+        .tile-icon-box svg { width: 100%; height: 100%; }
+        .tile-title { font-size: 11px; font-weight: 600; text-align: center; color: #555; }
 
-    /* === 4. TILE GRID (YOUR STYLE) === */
-    .dashboard-tile-container { 
-        display: flex; 
-        flex-wrap: wrap; 
-        gap: 12px; 
-        padding: 5px; 
-        max-height: 280px; 
-        overflow-y: auto;  
-        border-bottom: 1px solid #eee;
-    }
-    
-    .dashboard-tile-container::-webkit-scrollbar { width: 6px; }
-    .dashboard-tile-container::-webkit-scrollbar-track { background: #f1f1f1; }
-    .dashboard-tile-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .app-tile { display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 48px; border-bottom: 1px solid #f9f9f9; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
+        .app-tile:hover { background-color: #f8faff; transform: translateX(3px); color: #007bff; }
+        .app-tile.active-selection { border-left-color: #007bff; background-color: #f0f7ff; color: #007bff; font-weight: 700; }
+        .app-name { font-size: 14px; }
 
-    /* Your Original Tile Style */
-    .dashboard-tile { 
-        background: #fff; 
-        border-radius: 4px; 
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
-        padding: 10px 15px; 
-        display: flex; 
-        align-items: center; 
-        /* 3 Tiles Per Row in the layout */
-        width: calc(33.33% - 8px); 
-        min-width: 180px; 
-        box-sizing: border-box; 
-        cursor: pointer; 
-        border: 1px solid #e0e0e0; 
-        transition: all 0.2s; 
-        text-decoration: none !important; 
-        margin-bottom: 5px; 
-        height: 60px; 
-    }
-    .dashboard-tile:hover { transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.1); border-color: #ccc; }
-    
-    .tile-icon-box { width: 36px; height: 36px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 12px; color: #fff; flex-shrink: 0; }
-    .tile-green { background-color: #10b981; } .tile-red { background-color: #ef4444; } .tile-blue { background-color: #3b82f6; }
-    .tile-orange { background-color: #f59e0b; } .tile-purple { background-color: #7c3aed; } .tile-teal { background-color: #008080; } .tile-indigo { background-color: #4b0082; }
-    
-    .tile-content { flex: 1; overflow: hidden; }
-    .tile-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 0px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tile-desc { font-size: 10px; color: #999; }
-    .tile-arrow { color: #ccc; font-size: 10px; }
+        .ann-item { display: flex; gap: 12px; padding: 15px 0; border-bottom: 1px solid #f2f2f2; }
+        .ann-img-box img { width: 100px; height: 70px; border-radius: 4px; object-fit: cover; display: block; }
+        .ann-body { flex: 1; }
+        .ann-body h4 { margin: 0 0 4px 0; font-size: 13px; color: #333; font-weight: 700; }
+        .ann-body p { margin: 0; font-size: 11px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .ann-link { display: inline-block; margin-top: 5px; font-size: 11px; color: #007bff; text-decoration: none; font-weight: 700; }
+        .ann-footer { padding: 12px 0; text-align: center; }
+        .ann-footer a { font-size: 12px; font-weight: 700; color: #007bff; text-decoration: none; }
+        
+        /* Dropdown Container */
+        .home-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+            z-index: 1000;
+        }
 
-    @media (max-width: 1200px) { 
-        .dashboard-grid { grid-template-columns: 1fr; } /* Stack columns */
-        .dashboard-tile { width: calc(50% - 8px); }
-    }
-</style>
+        /* The Button */
+        .dropbtn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-<div style="padding: 0 15px;">
-    <div class="banner">
-        <div class="welcome-text">
-            <span class="user">Welcome</span>
-            <span class="user1">${sessionScope.USERNAME}</span>
-            <h2 class="user" id="greeting" style="margin: 5px 0 0 0; font-size: 18px; font-weight: normal;"></h2>
-            <script>
-                const h = new Date().getHours();
-                document.getElementById("greeting").innerText = (h<12?"Good Morning":(h<18?"Good Afternoon":"Good Evening"));
-            </script>
+        .dropbtn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            top: 40px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a:last-child { border-bottom: none; }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #007bff;
+        }
+
+        /* Show the dropdown on hover */
+        .home-dropdown:hover .dropdown-content { display: block; }
+
+        /* ADDED: Styles for the module navigation tabs (was missing in your snippet) */
+        .tile-nav-container { background: #f8f9fa; border-bottom: 1px solid #eee; padding: 6px 12px; }
+        .tile-nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+        .tile-nav-links a { font-size: 11px; font-weight: 700; color: #666; text-decoration: none; padding: 6px 12px; border-radius: 4px; white-space: nowrap; transition: 0.2s; }
+        .tile-nav-links a.active { background: #007bff; color: #fff; }
+
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+<div class="banner">
+    <div class="banner-content" style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
+        <div>
+            <div class="welcome-main">Welcome ${sessionScope.USERNAME}</div>
+            <div id="greeting"></div>
+        </div>
+
+        <div class="home-dropdown">
+            <button class="dropbtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Switch Dashboard</span>
+                <span style="font-size: 10px; margin-left: 8px;">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="<%= cPath %>/com/dashboard/dashBoardTiles.jsp">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <div>
+                            <strong>Standard View</strong><br>
+                            <small style="color: #888;">Tile Dashboard</small>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="<%= cPath %>/com/v2/dashBoardnew.jsp">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2"><path d="M3 3h18v18H3z"></path><path d="M21 9H3"></path><path d="M21 15H3"></path><path d="M12 3v18"></path></svg>
+                        <div>
+                            <strong>My Dashboard</strong><br>
+                            <small style="color: #888;">New Home Layout</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="dashboard-grid">
-
-    <div class="grid-box">
-        <span class="placeholder-label">Top Left Box (Empty)</span>
-    </div>
-
-    <div class="grid-box tile-section">
-        
-        <div class="tile-nav-container">
-            <div class="tile-nav-links">
-                <a href="?module=Finance" class="<%= selectedModule.contains("Finance") ? "active" : "" %>">Finance</a>
-                <a href="?module=Operation" class="<%= selectedModule.contains("Operation") ? "active" : "" %>">Operations</a>
-                <a href="?module=Fleet" class="<%= selectedModule.contains("Fleet") ? "active" : "" %>">Fleet Mgmt</a>
-                <a href="?module=Asset" class="<%= selectedModule.contains("Asset") ? "active" : "" %>">Fixed Assets</a>
-                <a href="?module=Human" class="<%= selectedModule.contains("Human") ? "active" : "" %>">Human Resource</a>
-                <a href="?module=Control" class="<%= selectedModule.contains("Control") ? "active" : "" %>">Control Centre</a>
-            </div>
-            <div class="tile-search-box">
-                <i class="fa fa-search"></i>
-                <input type="text" id="tileSearchInput" onkeyup="filterTilesLocal()" placeholder="Search...">
-            </div>
-        </div>
-
-        <div class="dashboard-tile-container">
-            <% if(tiles != null && !tiles.isEmpty()) {
-                for(TileBean t : tiles) { %>
-                <a href="javascript:void(0);" onclick="openTabLocal('<%= t.getTitle() %>', '<%= t.getUrl() %>')" class="dashboard-tile">
-                    <div class="tile-icon-box <%= t.getColorClass() %>"><i class="<%= t.getIcon() %>"></i></div>
-                    <div class="tile-content">
-                        <div class="tile-title"><%= t.getTitle() %></div>
-                        <div class="tile-desc">Click to Open</div>
-                    </div>
-                    <div class="tile-arrow"><i class="fa fa-chevron-right"></i></div>
-                </a>
-            <% } } else { %>
-                <div style="color: #888; padding: 10px;">
-                    No forms found for <b><%= selectedModule %></b>.
+    <div class="dashboard-grid">
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title" style="display: flex; align-items: center; gap: 12px;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.54 8.46002C16.4774 9.39764 17.004 10.6692 17.004 11.995C17.004 13.3208 16.4774 14.5924 15.54 15.53" stroke="#0056b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span style="font-size: 14px; font-weight: 700; color: #444;">Announcements</span>
                 </div>
-            <% } %>
+            </div>
+            <div class="scrollable-content top-scrollable">
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/1.jfif" alt="img"></div>
+                    <div class="ann-body"><h4>Belonging & Diversity Town Hall</h4><p>Listen to our Chief Diversity Officer...</p></div>
+                </div>
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/2.jfif" alt="img"></div>
+                    <div class="ann-body"><h4>Good People Know Good People</h4><p>Refer a candidate today!</p></div>
+                </div>
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/3.jfif" alt="img"></div>
+                    <div class="ann-body"><h4>Company Picnic!</h4><p>You and your family are cordially invited...</p></div>
+                </div>
+                <div class="ann-item">
+                    <div class="ann-img-box"><img src="<%=request.getContextPath()%>/com/dashboard/pics/1.jfif" alt="img"></div>
+                    <div class="ann-body"><h4>Policy Updates</h4><p>Important updates regarding safety protocols.</p></div>
+                </div>
+                <div class="ann-footer" style="text-align:center; padding:10px;"><a href="#" style="color:#007bff; font-weight:700; font-size:12px;">View More</a></div>
+            </div>
+        </div>
+
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title">Module Tiles</div>
+                <div class="header-search"><input type="text" onkeyup="filterTiles(this)" placeholder="Search..."></div>
+            </div>
+            <div class="tile-nav-container">
+                <div class="tile-nav-links">
+                    <a href="?module=Finance" class="<%= selectedModule.contains("Finance") ? "active" : "" %>">Finance</a>
+                    <a href="?module=Operation" class="<%= selectedModule.contains("Operation") ? "active" : "" %>">Operations</a>
+                    <a href="?module=Fleet" class="<%= selectedModule.contains("Fleet") ? "active" : "" %>">Fleet Mgmt</a>
+                    <a href="?module=Asset" class="<%= selectedModule.contains("Asset") ? "active" : "" %>">Fixed Assets</a>
+                    <a href="?module=Human" class="<%= selectedModule.contains("Human") ? "active" : "" %>">Human Resource</a>
+                    <a href="?module=Control" class="<%= selectedModule.contains("Control") ? "active" : "" %>">Control Centre</a>
+                </div>
+            </div>
+            <div class="scrollable-content top-scrollable">
+                <div class="dashboard-tile-container">
+                    <% for(ClsDashBoardBean t : tileList) { %>
+                        <a href="javascript:void(0);" onclick="openParentMenu('<%= t.getTxttitle() %>')" class="dashboard-tile">
+                            <div class="tile-icon-box"><%= t.getMsg() %></div>
+                            <div class="tile-title"><%= t.getTxttitle() %></div>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="grid-box">
-        <span class="placeholder-label">Bottom Left Box (Empty)</span>
-    </div>
+    <div class="bottom-grid">
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title">Application List</div>
+                <div class="header-search"><input type="text" onkeyup="filterList(this, 'appListContainer')" placeholder="Search..."></div>
+            </div>
+            <div id="appListContainer" class="scrollable-content"></div>
+        </div>
 
-    <div class="grid-box">
-        <span class="placeholder-label">Bottom Right Box (Empty)</span>
-    </div>
+        <div class="grid-box">
+            <div class="header-bar">
+                <div class="header-title">Status & Updates</div>
+                <div class="header-search"><input type="text" onkeyup="filterList(this, 'detailListContainer')" placeholder="Search..."></div>
+            </div>
+            <div id="detailListContainer" class="scrollable-content"></div>
+        </div>
 
+        <div class="grid-box">
+            <div class="header-bar"><div class="header-title">Performance</div></div>
+            <div class="scrollable-content"><div style="text-align:center; padding-top:40px; color:#bbb; font-weight:600;">SUMMARY</div></div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
-    function filterTilesLocal() {
-        var input = document.getElementById("tileSearchInput");
-        var filter = input.value.toUpperCase();
-        var tiles = document.getElementsByClassName("dashboard-tile");
-        for (var i = 0; i < tiles.length; i++) {
-            var titleDiv = tiles[i].querySelector(".tile-title");
-            if (titleDiv) {
-                var txtValue = titleDiv.textContent || titleDiv.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tiles[i].style.display = "flex";
-                } else {
-                    tiles[i].style.display = "none";
-                }
-            }
-        }
-    }
-    function openTabLocal(title, url) {
-        var tabContainer = window.parent.$('#tt');
-        if (tabContainer.length > 0) {
-            if (tabContainer.tabs('exists', title)) {
-                tabContainer.tabs('select', title);
-            } else {
-                var content = '<iframe scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
-                tabContainer.tabs('add', { title: title, content: content, closable: true });
-            }
+    var appData = <%= gridData %>;
+    var initialDetails = <%= detailData %>;
+    var currentModuleDesc = '<%=selectedModule%>'; 
+
+    $(document).ready(function () {
+        var h = new Date().getHours();
+        $("#greeting").text((h < 12) ? "Good Morning" : (h < 18) ? "Good Afternoon" : "Good Evening");
+
+        var leftContainer = $("#appListContainer");
+        $.each(appData, function(i, item) {
+            var html = '<div class="app-tile" onclick="openAppDetail(' + i + ', this)">' +
+                       '<div class="app-name">' + item.description + '</div>' +
+                       '<div style="font-size:18px; opacity:0.3;">&#8250;</div></div>';
+            leftContainer.append(html);
+        });
+        
+        // FIXED LOGIC: Auto-select the first item on load if data exists
+        if(appData.length > 0) {
+            var firstTile = leftContainer.find(".app-tile").first();
+            openAppDetail(0, firstTile);
         } else {
-            window.parent.location.href = url;
+            renderRightPanel(initialDetails);
+        }
+    });
+
+    function filterTiles(el) {
+        var val = el.value.toUpperCase().replace(/\s+/g, '');
+        $(".dashboard-tile").each(function() {
+            var txt = $(this).find(".tile-title").text().toUpperCase().replace(/\s+/g, '');
+            $(this).toggle(txt.indexOf(val) > -1);
+        });
+    }
+
+    function filterList(el, cont) {
+        var val = el.value.toUpperCase().replace(/\s+/g, '');
+        $("#" + cont + " .app-tile").each(function() {
+            var txt = $(this).find(".app-name").text().toUpperCase().replace(/\s+/g, '');
+            $(this).toggle(txt.indexOf(val) > -1);
+        });
+    }
+
+    function openParentMenu(title) { if(window.parent && window.parent.geturl) window.parent.geturl(title); }
+
+    function openAppDetail(index, el) {
+        var item = appData[index];
+        $(".app-tile").removeClass("active-selection");
+        $(el).addClass("active-selection");
+        $("#detailListContainer").html("<div style='padding:20px; color:#999;'>Loading...</div>");
+        $.ajax({
+            url: window.location.href, type: "POST", data: { ajaxId: item.doc_no }, dataType: "json",
+            success: function(response) { renderRightPanel(response, item.description); }
+        });
+    }
+
+    function renderRightPanel(data, parentDesc) {
+        var cont = $("#detailListContainer").empty();
+        if (!data || data.length === 0) { cont.html("<div class='empty-label'>Select an app</div>"); return; }
+        $.each(data, function(i, item) {
+            var safeDetName = item.description.replace(/'/g, "\\'");
+            var safeParentDesc = (parentDesc || currentModuleDesc).replace(/'/g, "\\'");
+            // FIXED: Added item.value to arguments
+            var html = '<div class="app-tile" onclick="openDetailLink(\'' + safeDetName + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + safeParentDesc + '\', \'' + item.value + '\')">' +
+                       '<div class="app-name">' + item.description + '</div><div style="font-size:18px; opacity:0.3;">&#8250;</div></div>';
+            cont.append(html);
+        });
+    }
+
+    // FIXED: Added 'val' parameter
+    function openDetailLink(detName, path, docno, mainDesc, val) {
+        var url = window.location.href;
+        var reurl = url.split("com/");
+        // FIXED: Added '&value=' + val to the URL
+        var fullUrl = reurl[0] + "" + path + "?name=" + encodeURIComponent(detName) + "&main=" + encodeURIComponent(mainDesc) + "&docno=" + docno + "&value=" + val;
+        if (typeof top.addTab === 'function') {
+            top.addTab(detName, fullUrl);
+        } else {
+            window.parent.$('#tt').tabs('add', { title: detName, content: '<iframe scrolling="auto" frameborder="0" src="' + fullUrl + '" style="width:100%;height:100%;"></iframe>', closable: true });
         }
     }
 </script>
+</body>
+</html>

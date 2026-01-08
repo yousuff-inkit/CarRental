@@ -124,6 +124,15 @@ form label.error {
     font-weight:bold;
     font-size: 12px;
 }
+
+
+#formdet {
+    text-align: left !important;
+    display: block;
+}
+
+
+
 </style>
 <script type="text/javascript">
       $(document).ready(function () {          

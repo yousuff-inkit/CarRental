@@ -65,5 +65,103 @@
 	<script type="text/javascript" src="<%=contextPath%>/js/jqxgrid.export.js"></script> 
 	 <script type="text/javascript" src="<%=contextPath%>/js/jqxinput.js"></script>
 	 <script type="text/javascript" src="<%=contextPath%>/js/exportExcel.js"></script>
+	 
+	 
+	 
+	 <script>
+$(function () {
+    $('input[placeholder^="Press F3" i]').each(function () {
+
+        // add title only if not already set
+        if (!this.title || this.title.trim() === "") {
+            this.title = "Double click on this to search";
+        }
+    });
+});
+</script>
+	 
+	 
+<!-- Fullscreen page loader (used only for page actions) -->
+<script>
+function showLoader() {
+    var loader = document.getElementById("pageLoader");
+    if (loader) loader.style.display = "flex";
+}
+
+function hideLoader() {
+    var loader = document.getElementById("pageLoader");
+    if (loader) loader.style.display = "none";
+}
+</script>
+
+
+<!-- HIDE fullscreen loader when any jqxGrid finishes loading -->
+<script>
+if (window.$ && $.jqx) {
+    $(document).on("bindingcomplete", ".jqx-grid", function () {
+        hideLoader();
+    });
+}
+</script>
+
+
+<!-- =============== POPUP LOADER (ONLY INSIDE #window) =============== -->
+
+<script>
+// create popup loader if not exists
+function attachPopupLoader() {
+
+    if ($("#window .popup-loader").length === 0) {
+
+        $("#window .jqx-window-content").append(`
+            <div class="popup-loader">
+                <div class="spinner"></div>
+                <div class="loader-text">
+                <div class="hourglass">
+                </div>
+                
+                <span>Loading Please wait</span>
+            </div>
+            </div>
+        `);
+    }
+}
+</script>
+
+
+<script>
+function showPopupLoader() {
+    attachPopupLoader();
+    $("#window .popup-loader").css("display", "flex");
+}
+
+function hidePopupLoader() {
+    $("#window .popup-loader").hide();
+}
+</script>
+
+
+<!-- Show popup loader ONLY when popup Search button is clicked -->
+<script>
+$(document).on("click", "#window button, #window input[type='button']", function () {
+
+    var text = ($(this).text() || $(this).val() || "")
+        .trim().toLowerCase();
+
+    if (text === "search") {
+        showPopupLoader();   // ✅ popup loader (NOT fullscreen)
+    }
+});
+</script>
+
+
+<!-- Hide popup loader after grid loads -->
+<script>
+$(document).on("bindingcomplete", "#window .jqx-grid", function () {
+    hidePopupLoader();
+});
+</script>
+
+	 
 </head> 
 </html>

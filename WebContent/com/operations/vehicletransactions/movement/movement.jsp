@@ -10,141 +10,311 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-    /* ------------------------------
-        GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
 
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%; /* As requested */
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        text-align: left !important;
-    }
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 130vh;
+    box-sizing: border-box;
+}
 
-    /* ------------------------------
-        GRID SYSTEM (FORM LAYOUT)
-    ------------------------------ */
-    .receipt-header {
-        display: block; 
-        padding: 0 0 0 5px;
-    }
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
 
-    .form-group {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
 
-    .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
-    }
+input[type="text"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
 
-    .form-group.triple-input {
-        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
-    }
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-    }
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+}
 
-    .section-row.two-column {
-        display: flex;
-        gap: 20px;
-        flex-wrap: nowrap; /* Side-by-side layout */
-    }
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
 
-    .section-row.two-column .section-block {
-        flex: 1;
-        min-width: 0;
-    }
+.receipt-header {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
 
-    .section-block {
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        margin-bottom: 20px;
-    }
+.section_row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-    .section-block h2, .section-block h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff; /* Blue vertical line */
-        color: #333;
-        display: block;
-    }
+/* ------------------------------
+   FORM ROWS LAYOUT
+------------------------------ */
 
-    /* ------------------------------
-        INPUTS & CONTROLS
-    ------------------------------ */
-    input[type="text"], select, textarea {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
 
-    input[type="text"]:focus, select:focus, textarea:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size: 1rem;
+}
 
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 14px;
-    }
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
 
-    /* ------------------------------
-        TABLES & UTILS
-    ------------------------------ */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
+/* Dual input rows (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
 
-    .hidden-scrollbar { overflow: auto; height: 100vh; }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
 
-    .picker-cell {
-        height: 32px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        background: #fff;
-        padding: 0 4px;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-    }
-    .picker-cell > div { width: 100%; height: 100%; }
+/* Date/Ref/Doc row - 3 pairs */
+.form-group.date-ref-doc-row {
+    grid-template-columns: 80px 200px 80px 1fr 80px 200px;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-group.date-ref-doc-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.form-group.date-ref-doc-row .date-wrapper,
+.form-group.date-ref-doc-row .ref-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group.date-ref-doc-row #jqxDebitNoteDate {
+    flex: 1;
+}
+
+.form-group.date-ref-doc-row #txtrefno {
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-group.date-ref-doc-row .myButton {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+
+.form-group.date-ref-doc {
+    grid-template-columns: 80px 200px 80px 1fr 80px 200px;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-group.date-ref-doc label {
+    text-align: right;
+    padding-right: 8px;
+}
+/* Type/AccID/AccName row */
+.form-group.type-acc-row {
+    grid-template-columns: 120px 120px 120px 200px 1fr;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-group.type-acc-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.form-group.dateout-row {
+    grid-template-columns: 80px 200px 60px 150px 50px 120px 60px 570px;
+    align-items: center;
+    gap: 14px;
+}
+
+.form-group.dateout-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Full width description row */
+.form-row.full-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.form-row.full-row label {
+    text-align: right;
+    padding-right: 8px;
+    font-weight: 600;
+    color: #253858;
+}
+
+/* ------------------------------
+   TABLE SECTIONS
+------------------------------ */
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
+}
+
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* ------------------------------
+   BUTTONS
+------------------------------ */
+
+button, .myButton {
+    background: #007bff;
+    border: none;
+    padding: 6px 16px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    font-size: 13px;
+}
+
+button:hover, .myButton:hover {
+    background: #0056b3;
+}
+
+/* ------------------------------
+   ERROR LABELS
+------------------------------ */
+
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
+
+/* ------------------------------
+   APPROVAL TABLE
+------------------------------ */
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
+}
+html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+}
+h2 {
+    position: relative;
+    padding-left: 16px;        /* space for vertical line */
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #253858;
+    margin: 0 0 20px 0;
+}
+
+/* vertical blurred line */
+h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    height: 70%;
+    width: 3px;
+    background: #007bff; 
+    border-radius: 4px;
+    filter: blur(0.6px);
+}
 
 </style>
 
@@ -2079,258 +2249,330 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 	   	 }
  	
 </script>
+
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
-<form id="frmMovement" action="saveMovement" autocomplete="off">
-    <jsp:include page="../../../../header.jsp" />
-    <br/>
-
-    <div class="hidden-scrollbar receipt-header">
-
-        <div class="section-row two-column">
-
-            <div class="section-block">
-                <h2>Vehicle Movement Opening Info</h2>
-
-                <div class="form-group dual-input" style="grid-template-columns: 100px 1.2fr 100px 1.2fr;">
-                    <label>Date</label>
-                    <div class="picker-cell">
-                        <div id="date" name="date" value='<s:property value="date"/>'></div>
-                    </div>
-
-                    <label>Doc No</label>
-                    <input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>' readonly/>
-                </div>
-
-                <div class="form-group">
-                    <label>Fleet No</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="F3 to Search" style="width: 40%;"/>
-                        <input type="text" id="txtfleetname" name="txtfleetname" value='<s:property value="txtfleetname"/>' readonly="readonly"/>
-                    </div>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Branch</label>
-                    <select name="cmbbranch" id="cmbbranch" onchange="getLocation(this.value);">
-                        <option value="">--Select--</option>
-                    </select>
-
-                    <label>Location</label>
-                    <select name="cmblocation" id="cmblocation">
-                        <option value="">--Select--</option>
-                    </select>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Date Out</label>
-                    <div class="picker-cell">
-                        <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
-                    </div>
-
-                    <label>Time</label>
-                    <div class="picker-cell">
-                        <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
-                    </div>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>KM</label>
-                    <input type="text" id="outkm" name="outkm" value='<s:property value="outkm"/>'/>
-
-                    <label>Fuel</label>
-                    <select id="cmboutfuel" name="cmboutfuel" value='<s:property value="cmboutfuel"/>'>
-                        <option value="">-Select-</option>
-                        <option value="1.000">Level 8/8</option>
-                        <option value="0.000">Level 0/8</option>
-                    </select>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Movement Type</label>
-                    <select id="cmbstatus" name="cmbstatus" onchange="checkStaff();" value='<s:property value="cmbstatus"/>'>
-                        <option value="">-Select-</option>
-                    </select>
-
-                    <label>Staff/Garage</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" name="staff" id="staff" value='<s:property value="staff"/>' onkeydown="getStaff(event,1);" placeholder="F3 Search"/>
-                        <input type="text" name="garage" id="garage" value='<s:property value="garage"/>' onkeydown="getGarage(event);" placeholder="Select Garage"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Driver</label>
-                    <input type="text" id="driver" name="driver" value='<s:property value="driver"/>' onkeydown="getDriver(event,1);" readonly placeholder="F3 to Search"/>
-                </div>
-
-                <div class="form-group">
-                    <label>Remarks</label>
-                    <input type="text" id="outremarks" name="outremarks" value='<s:property value="outremarks"/>'/>
-                </div>
-
-                <div class="form-group">
-                    <label>User</label>
-                    <input type="text" id="outuser" name="outuser" style="text-transform:uppercase;" value='<s:property value="outuser"/>' />
-                </div>
-            </div>
-
-            <div class="section-block">
-                <h3>Vehicle Movement Closing Info</h3>
-
-                <div class="form-group dual-input">
-                    <label>Branch</label>
-                    <select name="cmbclosebranch" id="cmbclosebranch" onchange="getCloseLocation(this.value);">
-                        <option value="">--Select--</option>
-                    </select>
-
-                    <label>Location</label>
-                    <select name="cmbcloselocation" id="cmbcloselocation">
-                        <option value="">--Select--</option>
-                    </select>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Date</label>
-                    <div class="picker-cell">
-                        <div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div>
-                    </div>
-
-                    <label>Time</label>
-                    <div class="picker-cell">
-                        <div id="closetime" name="closetime" value='<s:property value="closetime"/>'></div>
-                    </div>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>KM</label>
-                    <input type="text" id="closekm" name="closekm" value='<s:property value="closekm"/>' onblur="getTotalkm();"/>
-
-                    <label>Fuel</label>
-                    <select id="cmbclosefuel" name="cmbclosefuel" value='<s:property value="cmbclosefuel"/>'>
-                        <option value="">-Select-</option>
-                        <option value="1.000">Level 8/8</option>
-                        <option value="0.000">Level 0/8</option>
-                    </select>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Driver</label>
-                    <input type="text" name="closedriver" id="closedriver" onkeydown="getDriver(event,2);" value='<s:property value="closedriver"/>' readonly/>
-
-                    <label>Staff</label>
-                    <input type="text" name="closestaff" id="closestaff" value='<s:property value="closestaff"/>' onkeydown="getStaff(event,2);" readonly/>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Accidents</label>
-                    <select name="cmbaccidents" id="cmbaccidents" onchange="getAccidents();">
-                        <option value="">--Select--</option>
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
-
-                    <label>Total KM</label>
-                    <input type="text" id="totalkm" name="totalkm" value='<s:property value="totalkm"/>'/>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>Details</label>
-                    <input type="text" name="accdetails" id="accdetails" value='<s:property value="accdetails"/>'/>
-
-                    <label>Fines</label>
-                    <input type="text" name="accfines" id="accfines" value='<s:property value="accfines"/>'/>
-                </div>
-
-                <div class="form-group dual-input">
-                    <label>User</label>
-                    <input type="text" id="closeuser" name="closeuser" value='<s:property value="closeuser"/>' readonly/>
-
-                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <input type="button" name="btnclose" id="btnclose" class="myButton" value="Close" onclick="closeMov();">
-                        <input type="button" name="btnclosesave" id="btnclosesave" class="myButton" value="Save" onclick="closeSave();">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Remarks</label>
-                    <input type="text" id="closeremarks" name="closeremarks" value='<s:property value="closeremarks"/>'/>
-                </div>
-            </div>
-
-        </div> <div class="section-row">
-            <div class="section-block" id="deliveryfield">
-                <h2>Delivery Info</h2>
-                <div class="form-group dual-input">
-                    <label>Date</label>
-                    <div class="picker-cell"><div id="garagedeldate" name="garagedeldate" value='<s:property value="garagedeldate"/>'></div></div>
-                    <label>Time</label>
-                    <div class="picker-cell"><div id="garagedeliverytime" name="garagedeliverytime" value='<s:property value="garagedeliverytime"/>'></div></div>
-                </div>
-                <div class="form-group dual-input">
-                    <label>KM</label>
-                    <input type="text" name="garagedeliverykm" id="garagedeliverykm" value='<s:property value="garagedeliverykm"/>'>
-                    <label>Fuel</label>
-                    <select name="cmbgaragedeliveryfuel" id="cmbgaragedeliveryfuel">
-                        <option value="">--Select--</option>
-                        <option value="1.000">Level 8/8</option>
-                    </select>
-                </div>
-                <div style="text-align: right;">
-                    <button type="button" name="btndeliveryupdate" id="btndeliveryupdate" class="myButton" onclick="funDeliveryUpdate();">Update</button>
-                    <button type="button" name="btndeliverysave" id="btndeliverysave" class="myButton" onclick="funDeliverySave();" hidden="true">Save</button>
-                </div>
-            </div>
-
-            <div class="section-block" id="collectionfield">
-                <h2>Collection Info</h2>
-                <div class="form-group dual-input">
-                    <label>Date</label>
-                    <div class="picker-cell"><div id="garagecollectdate" name="garagecollectdate" value='<s:property value="garagecollectdate"/>'></div></div>
-                    <label>Time</label>
-                    <div class="picker-cell"><div id="garagecollecttime" name="garagecollecttime" value='<s:property value="garagecollecttime"/>'></div></div>
-                </div>
-                <div class="form-group dual-input">
-                    <label>KM</label>
-                    <input type="text" name="garagecollectkm" id="garagecollectkm" value='<s:property value="garagecollectkm"/>'>
-                    <label>Fuel</label>
-                    <select name="cmbgaragecollectfuel" id="cmbgaragecollectfuel">
-                        <option value="">--Select--</option>
-                        <option value="1.000">Level 8/8</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div style="display:none;">
-            <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
-            <input type="hidden" id="hiddateout" name="hiddateout" value='<s:property value="hiddateout"/>'/>
-            <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
-            <input type="hidden" id="hidclosedate" name="hidclosedate" value='<s:property value="hidclosedate"/>'/>
-            <input type="hidden" id="hidclosetime" name="hidclosetime" value='<s:property value="hidclosetime"/>'/>
-            <input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>'/>
-            <input type="hidden" id="hidcmbstatus" name="hidcmbstatus" value='<s:property value="hidcmbstatus"/>'/>
-            <input type="hidden" name="hidstaff" id="hidstaff" value='<s:property value="hidstaff"/>'/>
-            <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
-            <input type="hidden" name="hidgarage" id="hidgarage" value='<s:property value="hidgarage"/>'/>
-            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
-            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
-            <input type="hidden" name="hidcmbclosebranch" id="hidcmbclosebranch" value='<s:property value="hidcmbclosebranch"/>'>
-            <input type="hidden" name="hidcmbcloselocation" id="hidcmbcloselocation" value='<s:property value="hidcmbcloselocation"/>'/>
-            <input type="checkbox" name="chkgaragedelivery" id="chkgaragedelivery" hidden="true">
-            <input type="checkbox" name="chkgaragecollect" id="chkgaragecollect" hidden="true">
-        </div>
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
+<form id="frmMovement" action="saveMovement" autocomplete="off" >
+	<script>
+			window.parent.formName.value="Movement";
+			window.parent.formCode.value="MOV";
+	</script>
+	<jsp:include page="../../../../header.jsp" />
+	<br/> 
+<div class='receipt-header'>
+<div class = "section_row">
+<h2>Vehicle Movement Opening Info</h2>
+<div class="form-group type-acc-row" style="margin-left:-45px">
+  
+    <label>Date</label>
+    <div id='date' name='date' value='<s:property value="date"/>'></div>               
+    <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
+    <label style="margin-left:90px;">Fleet No</label>
+    <input type="text" id="txtfleetno" name="txtfleetno" style="width:150%; margin-left:50px;" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search"/>
+    <input type="text" id="txtfleetname" name="txtfleetname" style="width:81%;margin-left:150px;" value='<s:property value="txtfleetname"/>'readonly="readonly"/>
     </div>
-</form>
+    <div class="form-group date-ref-doc" >
+    <label>Doc No</label>
+    <input type="text" id="docno" name="docno"  tabindex="-1" style="width:61%;" value='<s:property value="docno"/>' readonly/>
+    <label>Branch</label>
+    <select name="cmbbranch" id="cmbbranch" style="width:42%;" onchange="getLocation(this.value);">
+      <option value="">--Select--</option>
+    </select>
+<input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>'/>
+    <label >Location</label>
+    <select name="cmblocation" id="cmblocation" style="width:92%; ">
+      <option value="">--Select--</option>
+    </select>
+    <input type="hidden" id="hiddateout" name="hiddateout" value='<s:property value="hiddateout"/>'/>
+    </div>
+	<div class="form-group dateout-row">
+    <label>Date Out</label>
+    <div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div>
+    <label>Time</label>
+    <div id='timeout' name='timeout' value='<s:property value="timeout"/>'></div>
+    <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
+    <label>KM</label>
+    <input type="text" id="outkm" name="outkm" style="width:70%;"value='<s:property value="outkm"/>'/>
+    <label style="margin-left:60px;">Fuel</label>
+    <select id="cmboutfuel" name="cmboutfuel" style="width:97%; margin-left:50px;" value='<s:property value="cmboutfuel"/>'>
+      <option value="">-Select-</option>
+      <option value=0.000>Level 0/8</option>
+      <option value=0.125>Level 1/8</option>
+      <option value=0.250>Level 2/8</option>
+      <option value=0.375>Level 3/8</option>
+      <option value=0.500>Level 4/8</option>
+      <option value=0.625>Level 5/8</option>
+      <option value=0.750>Level 6/8</option>
+      <option value=0.875>Level 7/8</option>
+      <option value=1.000>Level 8/8</option>
+    </select>
+    </div>
+    <div class="form-group dual-input" >
+       <label>Movement Type</label> 
+    <select id="cmbstatus" name="cmbstatus"  style="width:100%;" onchange="checkStaff();" value='<s:property value="cmbstatus"/>' >
+              <option value="">-Select-</option></select>
+              
+              <input type="hidden" id="hidcmbstatus" name="hidcmbstatus" value='<s:property value="hidcmbstatus"/>'/>
+    <input type="text" name="staff" id="staff" value='<s:property value="staff"/>' onKeyDown="getStaff(event,1);" placeholder="Press F3 to Search"/>
+     <input type="text" name="garage" id="garage" value='<s:property value="garage"/>' onKeyDown="getGarage(event);" placeholder="Select Garage"/>
+        <input type="hidden" name="hidgarage" id="hidgarage" value='<s:property value="hidgarage"/>'/>
+    <label>Driver</label>
+    <input type="text" id="driver" name="driver" style="width:97%;" value='<s:property value="driver"/>' onKeyDown="getDriver(event,1);" readonly placeholder="Press F3 to Search"/>
+      <input type="checkbox" name="chkgaragedelivery" id="chkgaragedelivery" onChange="checkGarageDelivery();" hidden="true"></td>
+    <input type="hidden" name="hidstaff" id="hidstaff" value='<s:property value="hidstaff"/>'/>
+    <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
+     </div>
+     <div class="form-group dual-input">
+    <label>Remarks</label>
+    <input type="text" id="outremarks" name="outremarks" style="width:100%;" value='<s:property value="outremarks"/>'/>
+    <label>User</label>
+    <input type="text" id="outuser" name="outuser" style="width:98%;text-transform:uppercase;" value='<s:property value="outuser"/>' />
+    <input type="hidden" name="outuserid" id="outuserid" value='<s:property value="outuserid"/>'/>
+    </div>
 
-<div id="fleetwindow"><div></div></div>
-<div id="maintenancewindow"><div></div></div>
-<div id="driverwindow"><div></div></div>
-<div id="staffwindow"><div></div></div>
-<div id="garagewindow"><div></div></div>
+    
+<fieldset>
+<table width="100%" >
+  <tr>
+    <td width="50%"><fieldset id="deliveryfield"><legend><b>Delivery Info</b></legend><table width="100%" >
+      <tr>
+        <td width="4%" align="right">Date </td>
+        <td width="16%" align="left"><div id="garagedeldate" name="garagedeldate" value='<s:property value="garagedeldate"/>'></div>
+</td>
+        <td width="4%" align="right">Time</td>
+        <td width="16%" align="left"><div id="garagedeliverytime" name="garagedeliverytime" value='<s:property value="garagedeliverytime"/>'></div>
+</td>
+        <td width="5%" align="right">KM</td>
+        <td width="17%" align="left"><input type="text" name="garagedeliverykm" id="garagedeliverykm" value='<s:property value="garagedeliverykm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+        <td width="6%" align="right">Fuel</td>
+        <td width="19%" align="left"><select name="cmbgaragedeliveryfuel" id="cmbgaragedeliveryfuel">
+          <option value="">--Select--</option><option value=0.000>Level 0/8</option>
+       <option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+        </select></td>
+        <td width="19%" align="center"><button type="button" name="btndeliveryupdate" id="btndeliveryupdate" class="myButton" onclick="funDeliveryUpdate();">Update</button>
+        <button type="button" name="btndeliverysave" id="btndeliverysave" class="myButton" onclick="funDeliverySave();" hidden="true">Save</button>
+        </td>
+      </tr>
+    </table></fieldset></td>
+    
+    <td width="50%"><fieldset id="collectionfield"><legend><b>Collection Info</b></legend><table width="100%">
+      <tr>
+        <td width="4%" align="left"><input type="checkbox" name="chkgaragecollect" id="chkgaragecollect" onchange="checkGarageCollection();" hidden="true">
+          <!--Collection--></td>
+        <td width="6%" align="right">Date</td>
+        <td width="15%" align="left"><div id="garagecollectdate" name="garagecollectdate" value='<s:property value="garagecollectdate"/>'></div>
+</td>
+        <td width="7%" align="right">Time</td>
+        <td width="16%" align="left"><div id="garagecollecttime" name="garagecollecttime" value='<s:property value="garagecollecttime"/>'></div>
+</td>
+        <td width="7%" align="right">KM</td>
+        <td width="16%" align="left"><input type="text" name="garagecollectkm" id="garagecollectkm" value='<s:property value="garagecollectkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+        <td width="5%" align="right">Fuel</td>
+        <td width="24%" align="left"><select name="cmbgaragecollectfuel" id="cmbgaragecollectfuel">
+          <option value="">--Select--</option><option value=0.000>Level 0/8</option>
+        <option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+        </select></td>
+      </tr>
+    </table></fieldset></td>
+  </tr>
+</table>
+</fieldset>
+</div>
+<div class="section_row">
+      <h2>Vehicle Movement Closing Info</h2>
+
+        <div class="form-group dateout-row" >
+    <label>Branch</label>
+    <select name="cmbclosebranch" id="cmbclosebranch" style="width:97%;" onchange="getCloseLocation(this.value);">
+      <option value="">--Select--</option>
+    </select>
+    <input type="hidden" name="hidcmbcloselocation" id="hidcmbcloselocation" value='<s:property value="hidcmbcloselocation"/>'/>
+    <label>Location</label>
+    <select name="cmbcloselocation" id="cmbcloselocation" style="width:97%;">
+      <option value="">--Select--</option>
+    </select></td>
+      <input type="hidden" id="hidclosedate" name="hidclosedate" value='<s:property value="hidclosedate"/>'/>
+    <label>Date</label>
+    <div id='closedate' name='closedate' value='<s:property value="closedate"/>'></div></td>
+    <label>Time</label>
+    <div id='closetime' name='closetime' value='<s:property value="closetime"/>'></div></td>
+    </div>
+	<div class="form-group date-ref-doc-row" >
+    <label>KM</label>
+    <input type="text" id="closekm" name="closekm"  value='<s:property value="closekm"/>' onKeyPress="javascript:return isNumber (event,id)" onBlur="getTotalkm();"/></td>
+    <label>Fuel</label>
+      <input type="hidden" id="hidclosetime" name="hidclosetime" value='<s:property value="hidclosetime"/>'/>
+    <td width="8%" align="right"><select id="cmbclosefuel" name="cmbclosefuel" style="width:98%;" value='<s:property value="cmbclosefuel"/>'>
+      <option value="">-Select-</option>
+      <option value=0.000>Level 0/8</option>
+      <option value=0.125>Level 1/8</option>
+      <option value=0.250>Level 2/8</option>
+      <option value=0.375>Level 3/8</option>
+      <option value=0.500>Level 4/8</option>
+      <option value=0.625>Level 5/8</option>
+      <option value=0.750>Level 6/8</option>
+      <option value=0.875>Level 7/8</option>
+      <option value=1.000>Level 8/8</option>
+    </select></td>
+    <label>Driver</label>
+    <input type="text" name="closedriver" id="closedriver" onKeyDown="getDriver(event,2);" value='<s:property value="closedriver"/>' style="width:100%;"  readonly/></td>
+      <input type="hidden" id="hidcmbclosefuel" name="hidcmbclosefuel" value='<s:property value="hidcmbclosefuel"/>'/>
+    </div>
+    <div class="form-group date-ref-doc-row" >
+    <label>Staff</label>
+    <input type="text" name="closestaff" id="closestaff" value='<s:property value="closestaff"/>' onKeyDown="getStaff(event,2);"  readonly/></td>
+    <input type="hidden" name="hidclosestaff" id="hidclosestaff" value='<s:property value="hidclosestaff"/>'/>
+    <input type="hidden" name="hidcmbaccidents" id="hidcmbaccidents" value='<s:property value="hidcmbaccidents"/>'/>
+   
+<label>Accidents</label>
+<select name="cmbaccidents" id="cmbaccidents" onChange="getAccidents();" style="width:97%;">
+      <option value="">--Select--</option>
+      <option value=1>Yes</option>
+      <option value=0>No</option>
+    </select></td>
+    <input type="hidden" name="hidaccidents" id="hidaccidents" value='<s:property value="hidaccidents"/>'/>
+    <label>Details</label>
+    <td colspan="5" align="left"><input type="text" name="accdetails" id="accdetails" style="width:99%;" value='<s:property value="accdetails"/>'/></td>
+    </div>
+	<div class="form-group date-ref-doc-row" >
+
+    <label>Fines</label>
+    <input type="text" name="accfines" id="accfines" value='<s:property value="accfines"/>'/>
+    <label>User</label>
+    <input type="text" id="closeuser" name="closeuser" style="width:100%;text-transform:uppercase;" value='<s:property value="closeuser"/>' readonly  /></td>
+    <label>Total KM</label>
+    <input type="text" id="totalkm" name="totalkm"  value='<s:property value="totalkm"/>'/>
+   </div>
+ 	<div class="form-group dual-input" style="margin-left:-50px;">
+   
+    <label>Remarks</label>
+    <input type="text" id="closeremarks" name="closeremarks" style="width:100%;" value='<s:property value="closeremarks"/>'/>
+  	<input type="button" name="btnclose" id="btnclose" class="myButton" value="Close" onclick="closeMov();">
+    <input type="button" name="btnclosesave" id="btnclosesave" class="myButton" value="Save" onclick="closeSave();">
+   
+      <input type="hidden" id="hidclosedriver" name="hidclosedriver" value='<s:property value="hidclosedriver"/>'/>
+      <input type="hidden" id="hidcloseuser" name="hidcloseuser" value='<s:property value="hidcloseuser"/>'/>
+  </div>
+    </div>
+    </div>
+    
+<br/>
+  <!--<div id='jqxExpander'>
+  <div>Accidents/Maintenance Details</div>
+  <div>
+  <table width="100%" style="background: #E0ECF8;">
+  <tr>
+    <td><input type="checkbox" name="chkaccident" id="chkaccident" unchecked onchange="changeAcc();"></td>
+    <td><input type="checkbox" name="chkmaintenance" id="chkmaintenance"  unchecked onchange="changeMaintenance();"></td>
+  </tr>
+  <tr>
+    <td width="50%"><div id="accdiv"><fieldset id="fieldsetacc">
+      <legend>Accidents Info</legend>
+      <table width="100%">
+  <tr>
+    <td width="13%" align="right">Date</td>
+    <td width="25%" align="left"><div id='accdate' name='accdate' value='<s:property value="accdate"/>'></div>
+                    </td>
+                    <input type="hidden" id="hidaccdate" name="hidaccdate" value='<s:property value="hidaccdate"/>'/>
+    <td align="right">Time</td>
+    <td align="left"><div id='acctime' name='acctime' value='<s:property value="acctime"/>'></div>
+                   </td>
+                   <input type="hidden" id="hidacctime" name="hidacctime" value='<s:property value="hidacctime"/>'/>
+  </tr>
+  <tr>
+    <td align="right">Type</td>
+    <td align="left"><select id="cmbacctype" name="cmbacctype" style="width:80%" value='<s:property value="cmbacctype"/>'>
+            <option vaue="">-Select-</option><option value="Third Party">Third Party</option><option value="Own Claim">Own Claim</option></select>
+            </td>
+            <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+    <td width="15%" align="right">PRCS</td>
+    <td width="47%" align="left"><select id="cmbprcs" name="cmbprcs" style="width:30%" value='<s:property value="cmbprcs"/>'>
+            <option vaue="-1">-Select-</option><option value=1>Yes</option><option value=0>No</option></select>
+            </td>
+            <input type="hidden" id="hidcmbprcs" name="hidcmbprcs" value='<s:property value="hidcmbprcs"/>'/>
+  </tr>
+  <tr>
+     <td align="right">Collected</td>
+    <td align="left"><div id='collectdate' name='collectdate' value='<s:property value="collectdate"/>'></div>
+        </td><input type="hidden" id="hidcollectdate" name="hidcollectdate" value='<s:property value="hidcollectdate"/>'/>
+    <td colspan="2"><button type="button" class="icon" id="btnUpdate" title="Update" onclick="">
+							<img alt="search" src="../../../../icons/update.png"></button></td>
+  </tr>
+  <tr>
+    <td align="right">Place</td>
+    <td align="left"><input type="text" name="accplace" id="accplace" value='<s:property value="accplace"/>'/></td>
+    <td align="right">Fines</td>
+    <td align="left"><input type="text" id="fines" name="fines" style="width:30%" value='<s:property value="fines"/>'/></td>
+  </tr>
+  <tr>
+    <td align="right">Details</td>
+    <td colspan="3" align="left"><textarea id="details" name="details" style="width:62.5%;resize: none;" value='<s:property value="details"/>'></textarea></td>
+  </tr>
+</table>
+      </fieldset></div>
+    </td>
+    <td width="50%"><table width="100%">
+  <tr>
+    <td width="100%" height="100%"><div id="maintdiv"><jsp:include page="maintenanceGrid.jsp"></jsp:include></div></td>
+  </tr>
+  <div id="maintenancewarning" align="center" style="color:red;font-weight:bold;">Please Select a Valid Type</div>
+</table></td>
+
+  </tr>
+</table></div></div>-->
+<br/>
+ <!--<div id='jqxExpander1'>
+ <div>Overview</div>
+ <div style="background: #E0ECF8;">
+ <br/>
+ <center><jsp:include page="movementGrid.jsp"></jsp:include></center>
+ <br/>
+</div></div>-->
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="hidden" id="extramsg" name="extramsg" value='<s:property value="extramsg"/>'>
+
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
+<input type="text" name="delete" id="delete" value='<s:property value="delete"/>' hidden="true"/>
+<input type="hidden" name="hidchkgaragedelivery" id="hidchkgaragedelivery" value='<s:property value="hidchkgaragedelivery"/>' >
+<input type="hidden" name="hidgaragedeliverydate" id="hidgaragedeliverydate" value='<s:property value="hidgaragedeliverydate"/>'>
+<input type="hidden" name="hidgaragedeliverytime" id="hidgaragedeliverytime" value='<s:property value="hidgaragedeliverytime"/>'>
+<input type="hidden" name="hidchkgaragecollect" id="hidchkgaragecollect"  value='<s:property value="hidchkgaragecollect"/>' >
+<input type="hidden" name="hidcmbgaragecollectfuel" id="hidcmbgaragecollectfuel" value='<s:property value="hidcmbgaragecollectfuel"/>' >
+<input type="hidden" name="hidcmbgaragedeliveryfuel" id="hidcmbgaragedeliveryfuel" value='<s:property value="hidcmbgaragedeliveryfuel"/>' >
+<input type="hidden" name="hidgaragecollectdate" id="hidgaragecollectdate" value='<s:property value="hidgaragecollectdate"/>'>
+<input type="hidden" name="hidgaragecollecttime" id="hidgaragecollecttime" value='<s:property value="hidgaragecollecttime"/>'>
+<div id="dateouthidden" name="dateouthidden" hidden="true"></div>
+<div id="timeouthidden" name="timeouthidden" hidden="true"></div>
+<div id="hiddelivery" name="hiddelivery" hidden="true"></div>
+<div id="hidcollect" name="hidcollect" hidden="true"></div>
+<input type="hidden" name="movtempstatus" id="movtempstatus" value='<s:property value="movtempstatus"/>'>
+<input type="hidden" name="clstatus" id="clstatus" value='<s:property value="clstatus"/>'>
+<input type="hidden" name="deliverystatus" id="deliverystatus" value='<s:property value="deliverystatus"/>'>
+<input type="hidden" name="hidcmbbranch" id="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'>
+<input type="hidden" name="hidcmbclosebranch" id="hidcmbclosebranch" value='<s:property value="hidcmbclosebranch"/>'>
+<input type="hidden" name="vehtrancode" id="vehtrancode" value='<s:property value="vehtrancode"/>'>
+<input type="hidden" name="riderconfig" id="riderconfig" value='<s:property value="riderconfig"/>'>
+</div>
+<div id="fleetwindow">
+   <div ></div>
+</div>
+<div id="maintenancewindow">
+   <div ></div>
+</div>
+<div id="driverwindow">			
+   <div ></div>
+</div>
+<div id="staffwindow">
+   <div ></div>
+</div>
+<div id="garagewindow">
+   <div ></div>
+</div>
 <div id="errormsg"></div>
-
+</form>
 </div>
 </body>
 </html>
