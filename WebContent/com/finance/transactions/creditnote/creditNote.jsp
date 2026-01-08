@@ -167,11 +167,7 @@
         color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
     }
     
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
+    
 
     .doc-group { display: flex; gap: 5px; }
     .hidden-scrollbar { overflow: auto; height: 100vh; }

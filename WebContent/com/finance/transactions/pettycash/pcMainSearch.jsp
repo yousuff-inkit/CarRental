@@ -29,6 +29,52 @@
 		}
 
 	</script>
+	<style type="text/css">
+
+table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+}
+
+
+td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+}
+
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;               /* Prevent overflow */
+  max-width: 100%;
+  box-sizing: border-box;   /* Include padding in width */
+}
+
+
+#bankdate, #chqdate {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+#btnsearch{
+  background-color: #2f80ed;   /* clean blue */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border: 1px solid #2f80ed;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 90px;
+}
+/* Additional spacing for rows */
+tr {
+  line-height: 1.8;
+}
+</style>
 <body>
 <div id=search>
 <table width="100%">
