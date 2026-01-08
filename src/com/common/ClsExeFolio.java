@@ -160,7 +160,7 @@ public class ClsExeFolio {
 		ClsCommon ClsCommon=new ClsCommon();
 		Connection conn =null;
 		try {
-
+			String userid = session.getAttribute("USERID").toString();
 			String xsql="",select="",join="";
 			if(flag==1)
 				xsql=" and date(t.sub_Date)=date(now()) and t.approved=0  ";
@@ -186,18 +186,38 @@ public class ClsExeFolio {
 				select=rs.getString("select1");
 				join=rs.getString("join1");
 			}
+			
 
-			String cpsql = "Select 'View' as btnclick, t.approved, date(now()) tdate, time(now()) ttime, "
-				    + "t.doc_no doc_no, t.dtype doctype, br.doc_no branch, "
-				    + "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime, "
-				    + "u.user_name submitedby, m.func as path, m.menu_name as name, m.doc_type as dtype " + select 
-				    + " from my_exeb t "
-				    + " inner join my_brch br on t.brhId=br.doc_no "
-				    + " left join my_user u on t.suby=u.doc_no "
-				    + " left join my_menu m on(m.doc_type=t.dtype) " + join 
-				    + " where t.approved=0 and t.apprlevel!=0 "
-				    + " and t.userId='" + session.getAttribute("USERID").toString() + "'" + xsql 
-				    + " order by t.sub_Date desc";
+			String cpsql = "SELECT "
+			    + "'View' as btnclick, "
+			    + "m.apprStatus as approved, "
+			    + "date(now()) tdate, "
+			    + "time(now()) ttime, "
+			    + "m.doc_no as doc_no, "
+			    + "m.dtype as doctype, "
+			    + "m.brhId as branch, "
+			    + "CONVERT(concat(day(m.apprDate),'/',month(m.apprDate),'/',year(m.apprDate),' ', time(m.apprDate)), CHAR(50)) as subdatetime, "
+			    + "u.user_name as submitedby, "
+			    + "mn.func as path, "     // This is the variable path1 in your JSP
+			    + "mn.menu_name as name, "// This is the variable name in your JSP
+			    + "m.dtype as dtype "     // Duplicate for safety as JSP uses doctype and dtype
+			    + "FROM my_exdet m "
+			    + "LEFT JOIN my_user u ON m.userId = u.doc_no "
+			    + "LEFT JOIN my_menu mn ON m.dtype = mn.doc_type "
+			    + "WHERE m.userId = '" + userid + "' "
+			    + "ORDER BY m.apprDate DESC";
+
+//			String cpsql = "Select 'View' as btnclick, t.approved, date(now()) tdate, time(now()) ttime, "
+//				    + "t.doc_no doc_no, t.dtype doctype, br.doc_no branch, "
+//				    + "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime, "
+//				    + "u.user_name submitedby, m.func as path, m.menu_name as name, m.doc_type as dtype " + select 
+//				    + " from my_exeb t "
+//				    + " inner join my_brch br on t.brhId=br.doc_no "
+//				    + " left join my_user u on t.suby=u.doc_no "
+//				    + " left join my_menu m on(m.doc_type=t.dtype) " + join 
+//				    + " where t.approved=0 and t.apprlevel!=0 "
+//				    + " and t.userId='" + session.getAttribute("USERID").toString() + "'" + xsql 
+//				    + " order by t.sub_Date desc";
 // old query without status(t.approved)
 //			String  cpsql="Select 'View' as btnclick,date(now()) tdate,time(now()) ttime,t.doc_no doc_no,t.dtype doctype,br.doc_no branch,"
 //					+ "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime,"

@@ -84,9 +84,9 @@
 							{ 
 						        text: 'Status', datafield: 'approved', width: '10%',
 						        cellsrenderer: function (row, column, value) {
-						            if (value == 0) {
+						            if (value == 1) {
 						                return '<div style="margin:4px; color: orange;"><b>Pending</b></div>';
-						            } else if (value == 1) {
+						            } else if (value == 3) {
 						                return '<div style="margin:4px; color: green;"><b>Approved</b></div>';
 						            } else {
 						                return '<div style="margin:4px; color: red;"><b>Rejected</b></div>';
