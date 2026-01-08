@@ -139,12 +139,7 @@ table tr td[align="right"] {
     line-height: 34px !important;
     font-size: 14px !;
 }
-/* ================================
-   GLOBAL INPUT & SELECT FIX
-   (Overrides legacy JSP styles)
-   ================================ */
 
-/* Normal text inputs */
 input[type="text"],
 input[type="number"],
 input[type="email"],
@@ -167,6 +162,7 @@ select option {
     font-size: 14px !important;
     padding: 6px 10px;
 }
+<<<<<<< Updated upstream
 /* FIX: Search / Primary buttons visibility */
 
 
@@ -353,3 +349,5 @@ input[placeholder^="Press F3" i]:hover::before {
     100% { transform: scaleY(1); }
 }
 
+=======
+>>>>>>> Stashed changes

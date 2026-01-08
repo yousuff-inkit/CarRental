@@ -895,7 +895,6 @@ label {
     overflow: auto;
     height: 100vh;
 }
-
 /* Hide scrollbars (but allow scrolling) */
 .hidden-scrollbar::-webkit-scrollbar {
     width: 0px;

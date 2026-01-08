@@ -38,7 +38,6 @@ input[type="text"] {
   font-size: 14px;
 }
 
-/* Bold button text */
 #btnsearch{
   background-color: #2f80ed;   /* clean blue */
   color: #ffffff;

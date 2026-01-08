@@ -51,7 +51,7 @@ input[type="text"] {
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
-  width: 95%;               /* Prevent overflow */
+  width: 95%;               
   max-width: 100%;
   box-sizing: border-box;   /* Include padding in width */
 }

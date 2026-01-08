@@ -794,9 +794,7 @@ label {
     color: #e67e22;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
+
 
 .form-group {
     display: grid;
