@@ -48,6 +48,18 @@ input[type="text"] {
 /* Additional spacing for rows */
 tr {
   line-height: 1.8;
+  
+}
+#btnsearch{
+  background-color: #2f80ed;   /* clean blue */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border: 1px solid #2f80ed;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 90px;
 }
 </style>
 	<script type="text/javascript">
