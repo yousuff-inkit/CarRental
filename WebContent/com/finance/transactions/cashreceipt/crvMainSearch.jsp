@@ -51,7 +51,7 @@ input[type="text"] {
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
-  width: 95%;               /* Prevent overflow */
+  width: 95%;               
   max-width: 100%;
   box-sizing: border-box;   /* Include padding in width */
 }
@@ -62,16 +62,23 @@ input[type="text"] {
   font-size: 14px;
 }
 
-/* Bold button text */
-.myButton {
-  font-weight: 700;
-  font-size: 14px;
-}
 
 /* Additional spacing for rows */
 tr {
   line-height: 1.8;
 }
+#btnsearch{
+   background-color: #2f80ed;   /* clean blue */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border: 1px solid #2f80ed;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 90px;   
+}
+
 
 </style>
 <body>
@@ -83,7 +90,8 @@ tr {
         <input type="hidden" name="hidreceiptdate" id="hidreceiptdate" value='<s:property value="hidreceiptdate"/>'></td>
     <td width="21%" align="right">Doc No</td>
     <td width="32%"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" 
+       value="Search" onclick="loadSearch(); return false;"></td>
   </tr>
   <tr>
     <td align="right">Name</td>

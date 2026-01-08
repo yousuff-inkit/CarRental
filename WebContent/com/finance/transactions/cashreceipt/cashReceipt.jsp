@@ -794,9 +794,7 @@ label {
     color: #e67e22;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
+
 
 .form-group {
     display: grid;
@@ -952,20 +950,6 @@ label {
    BUTTONS
 ------------------------------ */
 
-button, .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-button:hover, .myButton:hover {
-    background: #0056b3;
-}
 
 /* ------------------------------
    ERROR LABELS
