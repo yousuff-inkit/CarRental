@@ -21,156 +21,136 @@
  <% String aprstatus = request.getParameter("aprstatus")==null?"0":request.getParameter("aprstatus");%>
  <% String isfirstappr = request.getParameter("isfirstappr")==null?"0":request.getParameter("isfirstappr"); %>
  
- 
-<style>
-        :root {
-            --primary-color: #2563eb;
-            --border-color: #e2e8f0;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --bg-gray: #f8fafc;
-        }
+ <style type="text/css">
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 20px;
+        color: #2d3436;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f5f9;
-            margin: 0;
-            padding: 20px;
-            font-size: 16px;
-        }
+    /* Original functional classes preserved */
+    .redClass { background-color: #FFEBEB; }
+    .yellowClass { background-color: #FFFFD1; }
+    .greyClass { background-color: #D8D8D8; }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            display: flex;
-            min-height: 550px;
-            overflow: visible !important; /* Ensures dropdown isn't cut off */
-        }
+    .main-container {
+        display: flex;
+        gap: 20px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
 
-        /* Left Section (40%) */
-        .input-section {
-            flex: 0 0 40%;
-            padding: 30px;
-            border-right: 1px solid var(--border-color);
-            background-color: var(--bg-gray);
-            box-sizing: border-box;
-        }
+    /* Left Section - 40% */
+    .left-section {
+        flex: 0 0 40%;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-        /* Right Section (60%) */
-        .display-section {
-            flex: 0 0 60%;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
+    /* Right Section - 60% */
+    .right-section {
+        flex: 1;
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        min-height: 600px;
+    }
 
-        .section-title {
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
+    .header-label {
+        font-size: 20px;
+        font-weight: 700;
+        color: #4530f6;
+        margin-bottom: 5px;
+        border-bottom: 2px solid #f1f2f6;
+        padding-bottom: 10px;
+    }
 
-        /* Form Elements */
-        .form-row { margin-bottom: 20px; }
-        .field-label { display: block; font-weight: 500; margin-bottom: 8px; }
-        
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
+    .field-label {
+        font-weight: 600;
+        font-size: 16px;
+        color: #2d3436;
+        margin-bottom: 5px;
+        display: block;
+    }
 
-        .btn-submit {
-            width: 100%;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    /* Input & Textarea Styling */
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border: 2px solid #dfe6e9;
+        border-radius: 8px;
+        box-sizing: border-box;
+        background-color: #f9f9f9;
+    }
 
-        /* FIX: Dropdown Visibility */
-        .status-container {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-        }
+    textarea {
+        height: 150px !important;
+        resize: none;
+        background-color: #ffffff;
+    }
 
-        .modern-select {
-            appearance: none;
-            background-color: #ffffff;
-            width: 220px;
-            /* Critical Fix: specific height + line-height normal to stop clipping */
-            height: 45px;
-            line-height: 1.2; 
-            padding: 0 35px 0 15px; 
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 18px;
-        }
-
-
-/* Also update the options inside the dropdown */
-.modern-select option {
-    font-size: 16px; 
-    padding: 10px;
+   /* Update this specific section in your <style> tag */
+select.list1 {
+    width: 100%;
+    padding: 10px 15px !important; /* Reduced vertical padding */
+    font-size: 20px !important; 
+    font-weight: 600;
+    border: 2px solid #0984e3;
+    border-radius: 8px;
+    background-color: #ffffff !important;
+    color: #2d3436 !important; /* High contrast black/grey text */
+    cursor: pointer;
+    height: auto !important; /* Ensures the box grows to fit the text */
+    line-height: 1.5 !important; /* Centers the text vertically */
+    display: block !important;
 }
-        /* RESTORE: Grid Headers (User, Submit Time, Remarks) */
-        .grid-container {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            flex-grow: 1;
-            background: #fff;
-            overflow: hidden;
-        }
 
-        .grid-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+select.list1 option {
+    font-size: 18px !important;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #2d3436;
+}
 
-        .grid-table th {
-            background-color: #f1f5f9;
-            color: var(--text-muted);
-            font-size: 13px;
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-        }
+    .btn-row {
+        text-align: right;
+        margin-top: 10px;
+    }
 
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 14px;
-        }
-    </style>
+    .myButton {
+        background-color: #4530f6;
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        font-size: 20px;
+        font-weight: 700;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover {
+        background-color: #074b83;
+    }
+
+    .flex-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    #jqxApprovalGrid {
+        width: 100% !important;
+    }
+</style>
 
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -437,50 +417,64 @@
 	
 <body>
 
-<div class="container">
-    <div class="input-section">
-        <h2 class="section-title">Entry Details</h2>
-        <div class="form-row">
-            <span class="field-label">Date & Time</span>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" value="6/1/2026" readonly style="flex: 2;">
-                <input type="text" value="5:10" readonly style="flex: 1;">
+<div id="search">
+    <div class="main-container">
+        
+        <div class="left-section">
+            <div class="header-label">Approval Details</div>
+            
+            <div class="flex-row">
+                <div style="flex: 1;">
+                    <label class="field-label">Date</label>
+                    <input type="text" name="apprdate" id="apprdate" readonly value='<s:property value="apprdate"/>'>
+                </div>
+                <div style="flex: 1;">
+                    <label class="field-label">Time</label>
+                    <input type="text" name="apprtime" id="apprtime" readonly value='<s:property value="apprtime"/>'>
+                </div>
+            </div>
+
+            <div>
+                <label class="field-label">Remarks / Description</label>
+                <textarea maxlength="540" id="apprdesc" name="apprdesc"><s:property value="apprdesc" ></s:property></textarea>
+            </div>
+
+            <div>
+                <label class="field-label">Status</label>
+                <select name="optname" class="list1" id="optname" onchange="getStat(this.value);">
+                    <option value="">-- Choose Status --</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Returned">Returned</option>
+                </select>
+            </div>
+
+            <div class="btn-row">
+                <button class="myButton" type="button" id="btnSend" name="btnSend" onClick="saveApprlevel()">SUBMIT</button>
             </div>
         </div>
-        <div class="form-row">
-            <span class="field-label">Remarks / Description</span>
-            <textarea id="apprdesc" name="apprdesc" placeholder="Enter remarks here..."></textarea>
-        </div>
-        <button class="btn-submit" type="button" id="btnSend" name="btnSend" onClick="saveApprlevel()">SUBMIT APPROVAL</button>
-    </div>
 
-    <div class="display-section">
-        <h2 class="section-title">Status & Records</h2>
-        
-        <div class="status-container">
-            <span class="field-label" style="margin:0">Current Status:</span>
-            <select class="modern-select">
-                <option>Approved</option>
-                <option>Rejected</option>
-                <option>Returned</option>
-            </select>
+        <div class="right-section">
+            <div class="header-label">Approval Queue / History</div>
+            <div id="refreshdiv">
+                <div id="jqxApprovalGrid"></div>
+            </div>
         </div>
 
-        <div class="grid-container">
-            <table class="grid-table">
-                <thead>
-                    <tr>
-                        <th width="20%">User</th>
-                        <th width="30%">Submit Time</th>
-                        <th>Remarks</th>
-                    </tr>
-                </thead>
-            </table>
-            <div class="no-data">No data to display in approval history</div>
-        </div>
     </div>
+
+    <input type="hidden" id="optid"/>
+    <input type="hidden" id="hidtype"/>
+    <input type="hidden" id="hidocno"/>
+    <input type="hidden" id="hiuserid"/>
+    <input type="hidden" id="hibrchid"/>
+    <input type="hidden" id="apprlevel"/>
+    <input type="hidden" id="minapprl"/>
+    <input type="hidden" id="apprlist"/>
 </div>
 
-</body>
 
+
+</body>
 </html>
+
