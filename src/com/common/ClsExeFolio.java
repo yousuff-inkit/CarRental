@@ -155,87 +155,69 @@ public class ClsExeFolio {
 	}
 
 
-	public  JSONArray exefolioDataGridload(int flag,HttpSession session) throws SQLException {
-		JSONArray RESULTDATA=new JSONArray();
-		ClsCommon ClsCommon=new ClsCommon();
-		Connection conn =null;
-		try {
-			String userid = session.getAttribute("USERID").toString();
-			String xsql="",select="",join="";
-			if(flag==1)
-				xsql=" and date(t.sub_Date)=date(now()) and t.approved=0  ";
-			else if(flag==2)
-				xsql=" and date(t.sub_Date)!=date(now()) and t.approved=0 ";  //pending
-			else if(flag==3)
-				xsql="and t.approved=0";
+	public JSONArray exefolioDataGridload(int flag, HttpSession session) throws SQLException {
+	    JSONArray RESULTDATA = new JSONArray();
+	    ClsCommon ClsCommon = new ClsCommon();
+	    Connection conn = null;
+	    try {
+	        
+	        String userid = session.getAttribute("USERID").toString();
 
+	        String xsql = "", select = "", join = "";
+	        
+	        
+	        if (flag == 1)
+	            xsql = " and date(m.apprDate)=date(now()) ";
+	        else if (flag == 2)
+	            xsql = " and date(m.apprDate)!=date(now()) ";
 
-			conn = ClsConnection.getMyConnection();
-			Statement cpstmt = conn.createStatement();
+	        conn = ClsConnection.getMyConnection();
+	        Statement cpstmt = conn.createStatement();
 
+	        
+	        String sqlqry = "select coalesce(wt.select1,'') as select1, coalesce(wt.join1,'') join1 "
+	                      + "from win_tbldet wt where wt.dtype in (select distinct dtype from my_exdet where userId='" + userid + "') limit 1";
 
-			String sqlqry="select coalesce(select1,'') as select1 ,coalesce(join1,'') join1 from my_exeb t  inner join my_brch br on t.brhId=br.doc_no left join "
-					+ "my_user u on t.userid=u.doc_no left join my_menu m on(m.doc_type=t.dtype) left join win_tbldet wt on(wt.dtype=t.dtype)  "
-					+ "where   t.approved=0 and t.apprlevel!=0 and  t.userId='"+session.getAttribute("USERID").toString()+"'"+xsql;
+	        ResultSet rs = cpstmt.executeQuery(sqlqry);
+	        if (rs.next()) {
+	            select = rs.getString("select1");
+	            join = rs.getString("join1");
+	        }
 
+	        
+	        String cpsql = "Select 'View' as btnclick, "
+	                + "date(now()) tdate, "
+	                + "time(now()) ttime, "
+	                + "m.doc_no as doc_no, "
+	                + "m.dtype as doctype, "
+	                + "br.doc_no as branch, "
+	                + "CONVERT(concat(day(m.apprDate),'/',month(m.apprDate),'/',year(m.apprDate),' ', time(m.apprDate)), CHAR(50)) as subdatetime, "
+	                + "u.user_name as submitedby, "
+	                + "mn.func as path, "
+	                + "mn.menu_name as name, "
+	                + "mn.doc_type as dtype, "
+	                + "m.apprStatus as approved " 
+	                + select
+	                + " from my_exdet m "
+	                + " inner join my_brch br on m.brhId=br.doc_no "
+	                + " left join my_user u on m.userId=u.doc_no "
+	                + " left join my_menu mn on(mn.doc_type=m.dtype) "
+	                + join 
+	                + " where m.userId='" + userid + "' " 
+	                + " and m.apprStatus != 8 " // Exclude archived records
+	                + xsql
+	                + " order by m.apprDate desc";
 
-			ResultSet rs=cpstmt.executeQuery(sqlqry);
+	        ResultSet resultSet = cpstmt.executeQuery(cpsql);
+	        RESULTDATA = ClsCommon.convertToJSON(resultSet);
+	        cpstmt.close();
 
-			while(rs.next()){
-
-				select=rs.getString("select1");
-				join=rs.getString("join1");
-			}
-			
-
-			String cpsql = "SELECT "
-			    + "'View' as btnclick, "
-			    + "m.apprStatus as approved, "
-			    + "date(now()) tdate, "
-			    + "time(now()) ttime, "
-			    + "m.doc_no as doc_no, "
-			    + "m.dtype as doctype, "
-			    + "m.brhId as branch, "
-			    + "CONVERT(concat(day(m.apprDate),'/',month(m.apprDate),'/',year(m.apprDate),' ', time(m.apprDate)), CHAR(50)) as subdatetime, "
-			    + "u.user_name as submitedby, "
-			    + "mn.func as path, "     // This is the variable path1 in your JSP
-			    + "mn.menu_name as name, "// This is the variable name in your JSP
-			    + "m.dtype as dtype "     // Duplicate for safety as JSP uses doctype and dtype
-			    + "FROM my_exdet m "
-			    + "LEFT JOIN my_user u ON m.userId = u.doc_no "
-			    + "LEFT JOIN my_menu mn ON m.dtype = mn.doc_type "
-			    + "WHERE m.userId = '" + userid + "' "
-			    + "ORDER BY m.apprDate DESC";
-
-//			String cpsql = "Select 'View' as btnclick, t.approved, date(now()) tdate, time(now()) ttime, "
-//				    + "t.doc_no doc_no, t.dtype doctype, br.doc_no branch, "
-//				    + "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime, "
-//				    + "u.user_name submitedby, m.func as path, m.menu_name as name, m.doc_type as dtype " + select 
-//				    + " from my_exeb t "
-//				    + " inner join my_brch br on t.brhId=br.doc_no "
-//				    + " left join my_user u on t.suby=u.doc_no "
-//				    + " left join my_menu m on(m.doc_type=t.dtype) " + join 
-//				    + " where t.approved=0 and t.apprlevel!=0 "
-//				    + " and t.userId='" + session.getAttribute("USERID").toString() + "'" + xsql 
-//				    + " order by t.sub_Date desc";
-// old query without status(t.approved)
-//			String  cpsql="Select 'View' as btnclick,date(now()) tdate,time(now()) ttime,t.doc_no doc_no,t.dtype doctype,br.doc_no branch,"
-//					+ "CONVERT(concat(day(t.sub_Date),'/',month(t.sub_Date),'/',year(t.sub_Date),' ', time(t.sub_Date)),CHAR(50)) subdatetime,"
-//					+ "u.user_name submitedby,m.func as path,m.menu_name as name,m.doc_type as dtype "+select+" from my_exeb t  inner join my_brch br on t.brhId=br.doc_no left join "
-//					+ "my_user u on t.suby=u.doc_no left join my_menu m on(m.doc_type=t.dtype) "+join+"  where    t.approved=0 and t.apprlevel!=0 and  t.userId='"+session.getAttribute("USERID").toString()+"'"+xsql+" order by t.sub_Date desc";   
-            //System.out.println("===== "+cpsql);    
-
-			ResultSet resultSet = cpstmt.executeQuery(cpsql);
-			RESULTDATA=ClsCommon.convertToJSON(resultSet);
-			cpstmt.close();
-			//conn.close();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			conn.close();
-		}
-		return RESULTDATA;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (conn != null) conn.close();
+	    }
+	    return RESULTDATA;
 	}
 
 /*funDtype();
