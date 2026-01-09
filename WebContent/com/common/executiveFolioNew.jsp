@@ -1,5 +1,58 @@
 <%@page import="com.common.ClsExeFolio" %>
-<% ClsExeFolio cef = new ClsExeFolio(); %>
+<%@page import="java.sql.*" %>
+<%@page import="java.util.*" %>
+<%@page import="com.connection.ClsConnection" %>
+
+<% 
+    // --- BACKEND LOGIC (KEPT EXACTLY AS PROVIDED) ---
+    ClsExeFolio cef = new ClsExeFolio(); 
+    
+    Map<String, int[]> docStats = new TreeMap<String, int[]>();
+
+    Connection conn = null; 
+    PreparedStatement ps = null; 
+    ResultSet rs = null;
+
+    try {
+        Object uidObj = session.getAttribute("USERID");
+        String userId = (uidObj != null) ? uidObj.toString() : "0"; 
+
+        ClsConnection clsCon = new ClsConnection();
+        conn = clsCon.getMyConnection();
+        
+        String sql = "SELECT dtype, apprStatus, COUNT(*) as cnt FROM my_exdet WHERE userId = ? GROUP BY dtype, apprStatus"; 
+        
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, userId);
+        rs = ps.executeQuery();
+        
+        while(rs.next()){
+            String rawType = rs.getString("dtype");
+            int status = rs.getInt("apprStatus");
+            int count = rs.getInt("cnt");
+            
+            if(rawType != null) {
+                String docType = rawType.trim().toUpperCase();
+                
+                if(!docStats.containsKey(docType)) {
+                    docStats.put(docType, new int[]{0, 0, 0}); 
+                }
+                
+                int[] counts = docStats.get(docType);
+                
+                if (status == 1) counts[0] += count; 
+                else if (status == 3) counts[1] += count; 
+                else counts[2] += count; 
+            }
+        }
+    } catch(Exception e) {
+        e.printStackTrace();
+    } finally {
+        if(rs!=null) try{ rs.close(); } catch(Exception e){}
+        if(ps!=null) try{ ps.close(); } catch(Exception e){}
+        if(conn!=null) try{ conn.close(); } catch(Exception e){}
+    }
+%>
 
 <!DOCTYPE html>
 <% String contextPath=request.getContextPath();%>
@@ -14,116 +67,76 @@
     <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
     <style>
-        /* 1. Base Setup: Fix body height to 100% and hide default scroll to prevent double bars */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7f6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* We will scroll the wrapper instead */
+        /* MAIN LAYOUT */
+        html, body { height: 100%; margin: 0; padding: 0; background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+        .main-container { height: 100vh; display: flex; flex-direction: column; padding: 5px; gap: 5px; box-sizing: border-box; }
+
+        /* HEADER */
+        .page-header { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; background-color: #fff; padding: 5px 15px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-left: 4px solid #007bff; }
+        .page-header h2 { margin: 0; font-size: 16px; color: #2c3e50; font-weight: 700; text-transform: uppercase; }
+
+        /* TOP SECTION */
+        .top-section { display: flex; gap: 5px; height: 180px; flex-shrink: 0; }
+
+        /* LEFT PANE: Stats Table */
+        .stats-pane { 
+            flex: 0 0 350px; 
+            background: #fff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+            overflow-y: auto; /* Scrollbar for left pane */
+            border-top: 3px solid #007bff; 
         }
 
-        /* 2. Scroll Wrapper: This is the window that scrolls */
-        .scroll-wrapper {
-            height: 100%;
-            overflow-y: auto; /* Forces the vertical scrollbar */
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box; /* Ensures padding doesn't add to width */
+        /* RIGHT PANE: Grid Container */
+        .grid-pane { 
+            flex: 1; 
+            background: #fff; 
+            border-radius: 4px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+            padding: 0; 
+            
+            /* UPDATED: Changed from hidden to auto to force scrollbars if content is large */
+            overflow: auto; 
+            position: relative; /* Helps grid calculate size relative to this container */
+            
+            border-top: 3px solid #28a745; 
         }
 
-        /* 3. Main Layout Container */
-        .main-container {
-            max-width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding-bottom: 50px; /* Extra space at bottom for comfortable scrolling */
-        }
+        /* BOTTOM PANE: Form */
+        .form-pane { flex: 1; background: #fff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 0; border: 1px solid #e0e0e0; overflow: hidden; }
 
-        /* Header Section */
-        .page-header {
-            display: flex;
-            align-items: center;
-            background-color: #fff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-bottom: 3px solid #007bff;
-            flex-shrink: 0; /* Prevents header from shrinking */
-        }
-
-        .page-header h2 {
-            margin: 0 0 0 15px;
-            font-size: 22px;
-            color: #2c3e50;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        /* Reload Button */
-        #btnReload {
-            background-color: #eef2f7;
-            border: 1px solid #dce1e6;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            outline: none;
-        }
-
-        #btnReload:hover {
-            background-color: #dbe4ef;
-            transform: rotate(15deg);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* Content Card Styling */
-        .content-card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            /* Allow height to grow with content */
-            height: auto; 
-            min-height: 200px;
-        }
-
-        /* Iframe Container */
-        .iframe-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            padding: 10px;
-            height: 600px; /* Fixed height for iframe area */
-            flex-shrink: 0;
-        }
-
-        #folio {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* Utility */
-        .redClass { color: #d9534f; }
+        /* TABLE STYLING */
+        .stats-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: center; }
         
-        /* Loader Overlay */
-        #overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 999;
+        .stats-table th { 
+            height: 30px; 
+            background-color: #f1f3f4; 
+            color: #444; 
+            padding: 0 10px; 
+            border-bottom: 1px solid #ccc; 
+            border-right: 1px solid #ddd;
+            position: sticky; top: 0; 
+            font-weight: bold; 
+            z-index: 1; 
+            vertical-align: middle;
         }
-        #PleaseWait {
-            position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); z-index: 1000;
-        }
+        
+        .stats-table td { padding: 4px 2px; border-bottom: 1px solid #f1f1f1; color: #555; }
+        .stats-table th:first-child, .stats-table td:first-child { text-align: left; padding-left: 10px; }
+
+        /* Badges */
+        .badge { padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 10px; display: inline-block; min-width: 15px; }
+        .badge-pend { background: #fff3cd; color: #856404; } 
+        .badge-appr { background: #d4edda; color: #155724; } 
+        .badge-rej { background: #f8d7da; color: #721c24; } 
+        .badge-zero { color: #ccc; }
+
+        /* UTILITY */
+        #folio { width: 100%; height: 100%; border: none; display: block; }
+        /* Ensure the included grid div takes full height */
+        #approvalData { width: 100%; height: 100%; min-height: 100%; } 
+        #btnReload { background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; padding: 3px 6px; cursor: pointer; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 999; }
+        #PleaseWait { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; }
     </style>
 
     <script type="text/javascript">
@@ -134,50 +147,85 @@
 
         function funload(){
             $("#overlay, #PleaseWait").show();
-            var path = "";
-            $("#folio").attr("src", path);
+            $("#folio").attr("src", "");
             $("#approvalDataGrid").load("approvalDataGridNew.jsp", function() {
-                 // Optional: hide loader here if needed
+                 location.reload(); 
             });
         }
     </script>
 </head>
 <body>
 
-    <div class="scroll-wrapper">
+    <div class="main-container">
         
-        <div class="main-container">
-
-            <header class="page-header">
-                <button type="button" id="btnReload" title="Reload Data" onclick="funload();">
-                    <img alt="Reload" src="<%=contextPath%>/icons/icon-reload.png" style="width: 20px; height: 20px;">
-                </button>
+        <header class="page-header">
+            <div class="header-left">
                 <h2>Executive Management Folio</h2>
-            </header>
+            </div>
+            <div class="header-right">
+                <button id="btnReload" title="Reload Data" onclick="funload();">
+                    <img src="<%=contextPath%>/icons/icon-reload.png" style="width: 14px; height: 14px; vertical-align: middle;">
+                </button>
+            </div>
+        </header>
 
-            <section class="content-card" id="approvalData">
-                <jsp:include page="approvalDataNew.jsp"></jsp:include>
-            </section>
-
-            <div style="display:none;">
-                <input type="hidden" id="formData" />
-                <input type="hidden" id="branchid" />
-                <input type="hidden" id="mode" />
-                <input type="hidden" id="backdateallowed" name="backdateallowed" value='<s:property value="backdateallowed"/>' />
-                <input type="hidden" id="pdcascdcdateallowed" name="pdcascdcdateallowed" value='<s:property value="pdcascdcdateallowed"/>' />
-                <input type="hidden" id="monthclosed" name="monthclosed" value='<s:property value="monthclosed"/>' />
-                <input type="hidden" id="taxdateval" name="taxdateval" value='<s:property value="taxdateval"/>' />
-                <input type="hidden" name="formcurrencytype" id="formcurrencytype" value='<s:property value="formcurrencytype"/>' />
-                <input type="hidden" id="curdec" name="curdec" value='<s:property value="curdec"/>' />
-                <input type="hidden" id="amtdec" name="amtdec" value='<s:property value="amtdec"/>' />
-                <input type="hidden" id="chkexportdata" name="chkexportdata" value='<s:property value="chkexportdata"/>' />
+        <div class="top-section">
+            
+            <div class="stats-pane">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th width="25%">Type</th>
+                            <th width="25%">Pending</th>
+                            <th width="25%">Approved</th>
+                            <th width="25%">Rejected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                           for(Map.Entry<String, int[]> entry : docStats.entrySet()) { 
+                               String typeName = entry.getKey();
+                               int[] counts = entry.getValue(); 
+                        %>
+                        <tr>
+                            <td><strong><%= typeName %></strong></td>
+                            
+                            <td><span class="<%= counts[0] > 0 ? "badge badge-pend" : "badge-zero" %>"><%= counts[0] %></span></td>
+                            <td><span class="<%= counts[1] > 0 ? "badge badge-appr" : "badge-zero" %>"><%= counts[1] %></span></td>
+                            <td><span class="<%= counts[2] > 0 ? "badge badge-rej" : "badge-zero" %>"><%= counts[2] %></span></td>
+                        </tr>
+                        <% } 
+                           if(docStats.isEmpty()) { 
+                        %>
+                            <tr><td colspan="4" style="padding:10px;">No Data Found</td></tr>
+                        <% } %>
+                    </tbody>
+                </table>
             </div>
 
-            <section class="iframe-container">
-                <iframe id="folio" scrolling="yes"></iframe>
-            </section>
-
+            <div class="grid-pane" id="approvalData">
+                <jsp:include page="approvalDataNew.jsp"></jsp:include>
+            </div>
         </div>
+
+        <div class="form-pane">
+            <iframe id="folio" name="folio" scrolling="yes" src=""></iframe>
+        </div>
+
+        <div style="display:none;">
+            <input type="hidden" id="formData" />
+            <input type="hidden" id="branchid" />
+            <input type="hidden" id="mode" />
+            <input type="hidden" id="backdateallowed" name="backdateallowed" value='<s:property value="backdateallowed"/>' />
+            <input type="hidden" id="pdcascdcdateallowed" name="pdcascdcdateallowed" value='<s:property value="pdcascdcdateallowed"/>' />
+            <input type="hidden" id="monthclosed" name="monthclosed" value='<s:property value="monthclosed"/>' />
+            <input type="hidden" id="taxdateval" name="taxdateval" value='<s:property value="taxdateval"/>' />
+            <input type="hidden" name="formcurrencytype" id="formcurrencytype" value='<s:property value="formcurrencytype"/>' />
+            <input type="hidden" id="curdec" name="curdec" value='<s:property value="curdec"/>' />
+            <input type="hidden" id="amtdec" name="amtdec" value='<s:property value="amtdec"/>' />
+            <input type="hidden" id="chkexportdata" name="chkexportdata" value='<s:property value="chkexportdata"/>' />
+        </div>
+
     </div>
 
 </body>
