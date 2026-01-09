@@ -158,6 +158,61 @@ $(document).on("bindingcomplete", "#window .jqx-grid", function () {
 });
 </script>
 
-	 
+
+
+
+
+
+
+
+
+
+
+<script>
+function attachAccountPopupLoader() {
+
+    if ($("#search #accountPopupLoader").length === 0) {
+
+        $("#search").css("position", "relative");
+
+        $("#search").append(`
+            <div id="accountPopupLoader" class="popup-loader">
+                <div class="spinner"></div>
+                <div class="loader-text">
+                <div class="hourglass"></div>
+                <span>Loading Please wait</span>
+                </div>
+            </div>
+        `);
+    }
+}
+</script>
+
+<script>
+function showAccountPopupLoader() {
+    attachAccountPopupLoader();
+    $("#accountPopupLoader").css("display", "flex");
+}
+
+function hideAccountPopupLoader() {
+    $("#accountPopupLoader").hide();
+}
+</script>
+
+
+<script>
+$(document).on("click", "#btnAccountSearch", function () {
+    showAccountPopupLoader();
+});
+</script>
+
+
+<script>
+$(document).on("bindingcomplete", "#jqxAccountsSearch", function () {
+    hideAccountPopupLoader();
+});
+</script>
+
+
 </head> 
 </html>
