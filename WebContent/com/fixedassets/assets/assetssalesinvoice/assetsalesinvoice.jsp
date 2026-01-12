@@ -346,6 +346,20 @@ label {
     border: 1px solid #e4e7ec;
     overflow: hidden;
 }
+
+#HeadIcons {
+    height: auto;           /* FIX */
+    display: flex;
+    align-items: center;    /* vertical center */
+}
+#formdet {
+    margin-left: 0;         /* remove -8px */
+    width: auto;
+
+    text-align: left;
+    line-height: normal;
+}
+
 </style>
 </head>
 <body onload="setValues();">
