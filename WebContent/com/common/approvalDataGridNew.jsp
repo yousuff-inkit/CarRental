@@ -123,8 +123,12 @@
                     text: 'Status', datafield: 'approved', width: '10%',
                     cellsrenderer: function (row, column, value) {
                         if (value == 1) return '<span style="color:orange; font-weight:bold;">Pending</span>';
-                        else if (value == 3) return '<span style="color:green; font-weight:bold;">Approved</span>';
-                        else return '<span style="color:red; font-weight:bold;">Rejected</span>';
+                        else if (value == 3)
+                            return '<span style="color:green; font-weight:bold;">Approved</span>';
+                        else if (value == 4)
+                            return '<span style="color:red; font-weight:bold;">Rejected</span>';
+                        else
+                            return '<span style="color:yellow;">Returned</span>';
                     }
                 },
                 { text: 'Date', datafield: 'subdatetime', width: '12%', cellsformat: 'dd/MM/yyyy', filtertype: 'date' },
@@ -150,17 +154,27 @@
             var filtergroupDate = new $.jqx.filter();
             
             if (statusVal != "All") {
-                if(statusVal == "Rejected") {
+
+                if (statusVal == "Returned") {
+                    
                     var f1 = filtergroupStatus.createfilter('numericfilter', 1, 'not_equal');
                     var f2 = filtergroupStatus.createfilter('numericfilter', 3, 'not_equal');
-                    filtergroupStatus.addfilter(0, f1); 
-                    filtergroupStatus.addfilter(0, f2); 
-                } else {
+                    var f3 = filtergroupStatus.createfilter('numericfilter', 4, 'not_equal');
+
+                    filtergroupStatus.addfilter(0, f1);
+                    filtergroupStatus.addfilter(0, f2);
+                    filtergroupStatus.addfilter(0, f3);
+                }
+                else {
+                    
                     var filter = filtergroupStatus.createfilter('numericfilter', parseInt(statusVal), 'equal');
                     filtergroupStatus.addfilter(1, filter);
                 }
+
                 $("#jqxapprovalDataGrid").jqxGrid('addfilter', 'approved', filtergroupStatus);
             }
+
+
             if(dateFrom || dateTo) {
                 if(dateFrom) {
                     dateFrom.setHours(0,0,0,0);
@@ -216,7 +230,8 @@
             <option value="All">Show All</option>
             <option value="1">Pending</option>
             <option value="3">Approved</option>
-            <option value="Rejected">Rejected</option>
+            <option value="4">Rejected</option>
+            <option value="Returned">Returned</option>
         </select>
     </div>
 
