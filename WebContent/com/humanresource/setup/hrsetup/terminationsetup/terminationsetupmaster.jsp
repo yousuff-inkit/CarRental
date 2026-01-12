@@ -248,6 +248,24 @@ form label.error {
     width: 100%;
     margin-top: 20px;
 }
+/* Header title fix ONLY for this page */
+#formdet {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1F2937;
+
+    margin: 0;
+    padding: 0;
+
+    text-align: left;
+    line-height: normal;
+}
+.HeadIcons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* important */
+}
+
 </style>
 
  

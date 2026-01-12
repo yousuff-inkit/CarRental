@@ -80,3 +80,16 @@ input[type="email"] {
 label.mandatory{
  color: #FF0000;
 }
+/* ===== Page Header Fix (GLOBAL) ===== */
+#HeadIcons {
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+
+#HeadIcons > label {
+    text-align: left;
+    line-height: normal;
+    margin-left: 0;
+    width: auto;
+}

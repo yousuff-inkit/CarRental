@@ -631,6 +631,31 @@ label {
     overflow: auto;
     max-height: 530px;
 }
+/* ===== FIX PAGE HEADER INSIDE EASYUI TABS ===== */
+
+/* allow tab containers to grow */
+.tabs,
+.tabs-header,
+.tabs-wrap,
+.tabs-panels {
+    height: auto !important;
+}
+
+/* header row */
+.HeadIcons {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 36px !important;   /* key fix */
+}
+
+/* header title */
+.HeadIcons label {
+    line-height: normal !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+}
+
 </style>
 </head>
 

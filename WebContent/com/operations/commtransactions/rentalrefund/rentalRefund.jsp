@@ -727,6 +727,8 @@ label {
     align-items: center;
     justify-content: center;
 }
+
+
 </style>
 </head>
 <style>
@@ -747,7 +749,7 @@ body {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1450px;
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
@@ -844,6 +846,43 @@ label {
     cursor: pointer;
     padding: 0;
 }
+/* ===== COMMON PAGE HEADER ALIGNMENT FIX ===== */
+#HeadIcons {
+    display: flex;
+    align-items: center;   /* vertical alignment */
+    height: auto;
+}
+
+#HeadIcons > label {
+    text-align: left;      /* override global label */
+    line-height: normal;
+    margin: 0;
+    padding: 0 8px;
+    width: auto;
+}
+/* ===== FIX HEADER INSIDE TABS ===== */
+.tabs {
+    height: auto !important;
+}
+
+.tabs-header,
+.tabs-wrap,
+.tabs-panels {
+    height: auto !important;
+}
+
+.HeadIcons {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 36px;   /* important */
+}
+
+.HeadIcons label {
+    line-height: normal !important;
+    text-align: left !important;
+}
+
+
 </style>
 
 <body onload="setValues();getBranch();getCardTypes();getPayTypes();">
