@@ -882,7 +882,7 @@ input:disabled {
 }
 
 /* ================= JQX DATE INPUT FIX ================= */
-/* DO NOT touch inner jqx input – only wrapper height */
+/* DO NOT touch inner jqx input â only wrapper height */
 .jqx-datetimeinput,
 .jqx-widget {
     min-height: 32px;

@@ -93,3 +93,80 @@ label.mandatory{
     margin-left: 0;
     width: auto;
 }
+/* ===== COMMON PAGE HEADER ALIGNMENT FIX ===== */
+.HeadIcons {
+    display: flex !important;
+    align-items: center !important;
+    height: auto !important;
+}
+
+.HeadIcons > label {
+    text-align: left !important;
+    line-height: normal !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    width: auto !important;
+}
+
+/* ===============================
+   Blue Search Button
+   =============================== */
+.myButton {
+    height: 34px;
+    min-width: 100px;
+    background: linear-gradient(to bottom, #4a90e2, #357abd);
+    border: 1px solid #2f5f9e;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0 16px;
+}
+
+.myButton:hover {
+    background: linear-gradient(to bottom, #357abd, #2c5fa3);
+}
+
+.myButton:active {
+    background: linear-gradient(to bottom, #2c5fa3, #244f8a);
+}
+input.myButton {
+    background: linear-gradient(to bottom, #4a90e2, #357abd) !important;
+    color: #fff !important;
+}
+/* FORCE blue Search button */
+input#btnAccountSearch.myButton {
+    background: linear-gradient(to bottom, #4a90e2, #357abd) !important;
+    border: 1px solid #2f5f9e !important;
+    color: #ffffff !important;
+    height: 34px !important;
+    padding: 0 16px !important;
+    border-radius: 4px !important;
+    font-weight: 600;
+    cursor: pointer;
+}
+/* ===== FORCE BLUE SEARCH BUTTON (EASYUI OVERRIDE) ===== */
+input[type="button"]#btnAccountSearch.myButton {
+    background-color: #4a90e2 !important;
+    background-image: none !important;
+    border: 1px solid #2f5f9e !important;
+    color: #ffffff !important;
+    height: 34px !important;
+    padding: 0 18px !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+
+/* Hover */
+input[type="button"]#btnAccountSearch.myButton:hover {
+    background-color: #357abd !important;
+}
+
+/* Active */
+input[type="button"]#btnAccountSearch.myButton:active {
+    background-color: #2c5fa3 !important;
+}
+
