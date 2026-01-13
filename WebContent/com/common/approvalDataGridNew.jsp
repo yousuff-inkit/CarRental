@@ -108,7 +108,7 @@
             editable: false,    
             selectionmode: 'singlerow',   
             filterable: true,
-            showfilterrow: true,  
+            showfilterrow: false,  
             columnsresize: true,
             sortable: true, 
             enabletooltips: true, 

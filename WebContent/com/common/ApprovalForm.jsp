@@ -126,7 +126,7 @@ select.list1 option {
         margin-top: 10px;
     }
 
-    .myButton {
+    .my {
         background-color: #4530f6;
         color: white;
         border: none;
@@ -138,7 +138,7 @@ select.list1 option {
         transition: background 0.2s;
     }
 
-    .myButton:hover {
+    .my:hover {
         background-color: #074b83;
     }
 
@@ -150,17 +150,34 @@ select.list1 option {
     #jqxApprovalGrid {
         width: 100% !important;
     }
+.approval-locked #btn {
+    display: none !important;
+}
+
+.approval-locked select,
+.approval-locked textarea {
+    pointer-events: none;
+    background-color: #f0f0f0 !important;
+    opacity: 0.7;
+}
+
+
+    
 </style>
 
 	<script type="text/javascript">
 	$(document).ready(function(){
-		getStatOpt();
-		funcurdate();
-	 	
-		var data4='<%=cef.approvalGridload(session,dtype,brch,docNo)%>';
-		//alert("===data4===="+data4);
-		Check(data4);
-			});	
+	    getStatOpt();
+	    funcurdate();
+	    
+	    var data4='<%=cef.approvalGridload(session,dtype,brch,docNo)%>';
+	    Check(data4);
+	    
+	  
+	    var aprstatus = '<%=aprstatus%>';
+	    console.log("Page loaded - aprstatus from JSP:", aprstatus); 
+	    lockApprovalUI(aprstatus);
+	});
 	
 	function Check(data4){
 		   
@@ -305,52 +322,62 @@ select.list1 option {
      getapprlevel();
 	}
 	
-	function gridLoad(){
-		var aprstatus='<%=aprstatus%>';
-		var isfirstappr='<%=isfirstappr%>';
-		var apprlevel=document.getElementById('apprlevel').value;
-		
-		  if((parseInt(isfirstappr)==0)){
-			$('#optdiv').hide();
-		} 
-		  
-		  if((parseInt(aprstatus)==0)){
-			  $('#masdiv').hide();
-			} 
-		
+	
+	function lockApprovalUI(aprstatus) {
+	    // Trim whitespace and convert to string for consistent comparison
+	    var status = String(aprstatus).trim();
+	    
+	    console.log("lockApprovalUI - Original:", aprstatus, "Cleaned:", status, "Type:", typeof status);
+	    
+	    // Check if status is 3 or 4
+	    if (status === "3" || status === "4") {
+	        console.log("✓ Status is 3 or 4 - HIDING button and disabling fields");
+	        document.body.classList.add("approval-locked");
+	        $("#btn").hide();
+	        $("#apprdesc").prop("disabled", true);
+	        $("#optname").prop("disabled", true);
+	    } else {
+	        console.log("✗ Status is NOT 3 or 4 - SHOWING button and enabling fields");
+	        document.body.classList.remove("approval-locked");
+	        $("#btn").show();
+	        $("#apprdesc").prop("disabled", false);
+	        $("#optname").prop("disabled", false);
+	    }
 	}
+
+
+
+
+
 	
 	function getapprlevel(){
-		
-		var docno=document.getElementById('hidocno').value;
-		var dtype=document.getElementById('hidtype').value;
-		var brch='<%=session.getAttribute("BRANCHID")%>';
-		var usrid='<%=session.getAttribute("USERID")%>';
-		var isfirstappr='<%=isfirstappr%>';
-		
-		var x=new XMLHttpRequest();
-		x.onreadystatechange=function(){
-		if (x.readyState==4 && x.status==200)
-			{
-			 	var items= x.responseText;
-			 	items = items.split('####');
-			 		var apprlevel = items[1];
-			 		var minapprl= items[2];
-			 		var apprlist= items[3];
-			 		document.getElementById('apprlevel').value=apprlevel;
-			 		document.getElementById('minapprl').value=minapprl;
-			 		document.getElementById('apprlist').value=apprlist;
-			 		gridLoad();
-			 		//alert("===apprlevel===="+apprlevel);
-					
-				}
-		       else
-			  {}
-	     }
-	      x.open("GET", <%=contextPath+"/"%>+"com/common/getApprLevel.jsp?docno="+docno+"&dtype="+dtype+"&brch="+brch+"&usrid="+usrid+"&isfirstappr="+isfirstappr,true);
-	     x.send();
+	    var docno=document.getElementById('hidocno').value;
+	    var dtype=document.getElementById('hidtype').value;
+	    var brch='<%=request.getParameter("brch")%>';
+	    var usrid='<%=session.getAttribute("USERID")%>';
+	    var isfirstappr='<%=isfirstappr%>';
 	    
-	   }
+	    var x=new XMLHttpRequest();
+	    x.onreadystatechange=function(){
+	        if (x.readyState==4 && x.status==200) {
+	            var items = x.responseText.split('####');
+	            var apprlevel = items[1];
+	            var minapprl  = items[2];
+	            var apprlist  = items[3];
+	            var aprstatus = items[4];
+	            
+	            $("#apprlevel").val(apprlevel);
+	            $("#minapprl").val(minapprl);
+	            $("#apprlist").val(apprlist);
+	            $("#hidAprStatus").val(aprstatus);
+	            lockApprovalUI(aprstatus);	
+	        }
+	    }
+	    x.open("GET", "<%=contextPath+"/"%>com/common/getApprLevel.jsp?docno="+docno+"&dtype="+dtype+"&brch="+brch+"&usrid="+usrid+"&isfirstappr="+isfirstappr,true);
+	    x.send();
+	}
+	
+
 	
 	function getStat(c){
 			
@@ -450,7 +477,7 @@ select.list1 option {
             </div>
 
             <div class="btn-row">
-                <button class="myButton" type="button" id="btnSend" name="btnSend" onClick="saveApprlevel()">SUBMIT</button>
+                <button class="my" type="button" id="btn" name="btnSend" onClick="saveApprlevel()">SUBMIT</button>
             </div>
         </div>
 
@@ -471,10 +498,13 @@ select.list1 option {
     <input type="hidden" id="apprlevel"/>
     <input type="hidden" id="minapprl"/>
     <input type="hidden" id="apprlist"/>
+    <input type="hidden" id="hidAprStatus"/>
+    
 </div>
 
 
 
 </body>
+
 </html>
 
