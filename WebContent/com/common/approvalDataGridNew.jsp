@@ -103,7 +103,7 @@
         
         $("#jqxapprovalDataGrid").jqxGrid({
             width: '100%',   
-            height: '100%', /* Fills the container div exactly */
+            height: '100%', 
             source: dataAdapter,
             editable: false,    
             selectionmode: 'singlerow',   

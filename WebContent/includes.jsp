@@ -2,7 +2,6 @@
 <% String contextPath=request.getContextPath();%>
 <head>
 
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/css/jqx-10.1.6/jqx.base.css" rel="stylesheet"  type="text/css" />
 <link href="<%=contextPath%>/css/table.css" rel="stylesheet" type="text/css" />
 <link href="<%=contextPath%>/css/myButton.css" media="screen" rel="stylesheet" type="text/css" /> 
@@ -66,6 +65,7 @@
 	 <script type="text/javascript" src="<%=contextPath%>/js/jqxinput.js"></script>
 	 <script type="text/javascript" src="<%=contextPath%>/js/exportExcel.js"></script>
 	 
+	 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 	 
 	 
 	 <script>
@@ -78,11 +78,11 @@ $(function () {
         }
     });
 });
-</script>
+
 	 
 	 
 <!-- Fullscreen page loader (used only for page actions) -->
-<script>
+
 function showLoader() {
     var loader = document.getElementById("pageLoader");
     if (loader) loader.style.display = "flex";
@@ -92,44 +92,42 @@ function hideLoader() {
     var loader = document.getElementById("pageLoader");
     if (loader) loader.style.display = "none";
 }
-</script>
+
 
 
 <!-- HIDE fullscreen loader when any jqxGrid finishes loading -->
-<script>
+
 if (window.$ && $.jqx) {
     $(document).on("bindingcomplete", ".jqx-grid", function () {
         hideLoader();
     });
 }
-</script>
+
 
 
 <!-- =============== POPUP LOADER (ONLY INSIDE #window) =============== -->
 
-<script>
+
 // create popup loader if not exists
 function attachPopupLoader() {
-
     if ($("#window .popup-loader").length === 0) {
-
+        // ADD THIS LINE
+$("#window .popup-loader").css("display", "flex");
         $("#window .jqx-window-content").append(`
             <div class="popup-loader">
                 <div class="spinner"></div>
                 <div class="loader-text">
-                <div class="hourglass">
+                    <div class="hourglass"></div>
+                    <span>Loading Please wait</span>
                 </div>
-                
-                <span>Loading Please wait</span>
-            </div>
             </div>
         `);
     }
 }
-</script>
 
 
-<script>
+
+
 function showPopupLoader() {
     attachPopupLoader();
     $("#window .popup-loader").css("display", "flex");
@@ -138,25 +136,29 @@ function showPopupLoader() {
 function hidePopupLoader() {
     $("#window .popup-loader").hide();
 }
-</script>
+
 
 
 <!-- Show popup loader ONLY when popup Search button is clicked -->
-<script>
+
 $(document).on("click", "#window button, #window input[type='button']", function () {
 
     var text = ($(this).text() || $(this).val() || "")
         .trim().toLowerCase();
 
     if (text === "search") {
-        showPopupLoader();   // ✅ popup loader (NOT fullscreen)
+        showPopupLoader();   
     }
 });
-</script>
 
+function showAccountPopupLoader() {
+    attachAccountPopupLoader();
+    
+    $("#accountPopupLoader").css("display", "flex");
+}
 
 <!-- Hide popup loader after grid loads -->
-<script>
+
 $(document).on("bindingcomplete", "#window .jqx-grid", function () {
     hidePopupLoader();
 });

@@ -1,111 +1,5 @@
-.validate{
-	border:0.1rem solid red !important;
-    border-radius:0.2rem;
-}
-.validate.validate-success{
-	border:0.1rem solid green !important;
-}
-.validate-next{
-	border:0.1rem solid blue ;
-    border-radius:0.2rem;
-}
-
-body {
-	font: 10px Tahoma;
-	color: #404040;
-	background: #E0ECF8;
-	overflow:hidden;
-}
-fieldset 
-{
- border:1px solid #BDBDBD; 
-}
-
-legend {
-  padding: 0.2em 0.5em;
-  color: #404040;
-  font-size: 8pt;
-  font-weight:bold;
-  text-align: left;
-  font: 13px  Tahoma;
-  
-  }
-  input[type="text"] {
-  	width:'40%';
-    height:15px;
-    font-size:10px;
-}
-  input[type="date"] {
-    width:'40%';
-    height:8px;
-    font-size:10px;
-}
-input:focus{
-background-color: #FFD6FF;
-}
-select:focus{
- background-color: #FFD6FF;
- 
-}
-textarea:focus{
- background-color: #FFD6FF;
-}
-
-form label.error {
-	color:red;
-	font-weight:bold;
-}
-
-#search {
-    background-color: #FFFFFF;
-    font-size: 9px;
-}
-
-
-select{
-	width:'60%';
-	height:20px;
-    font-size:9px;
-}
-option{
-	height:12px;
-    font-size:9px;
-}
-input[type="email"] {
-	width:'70%';
-    height:15px;
-    font-size:10px;
-}
-
-label.mandatory{
- color: #FF0000;
-}
-/* ===== Page Header Fix (GLOBAL) ===== */
-#HeadIcons {
-    display: flex;
-    align-items: center;
-    height: auto;
-}
-
-#HeadIcons > label {
-    text-align: left;
-    line-height: normal;
-    margin-left: 0;
-    width: auto;
-}
-/* ===== COMMON PAGE HEADER ALIGNMENT FIX ===== */
-.HeadIcons {
-    display: flex !important;
-    align-items: center !important;
-    height: auto !important;
-}
-
-.HeadIcons > label {
-    text-align: left !important;
-    line-height: normal !important;
-    margin: 0 !important;
-    padding: 0 8px !important;
-    width: auto !important;
+#mainBG{
+	 max-width: 1450px;
 }
 
 /* ===============================
@@ -170,3 +64,54 @@ input[type="button"]#btnAccountSearch.myButton:active {
     background-color: #2c5fa3 !important;
 }
 
+
+
+
+
+#window .jqx-window-content, 
+#search {
+    position: relative !important;
+    overflow: hidden;
+}
+
+.popup-loader {
+    position: absolute !important; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8) !important; 
+    z-index: 10000 !important; 
+    
+    display: none; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2f80ed; 
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.hourglass {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2f80ed;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 2s linear infinite;
+    margin-bottom: 5px;
+}
