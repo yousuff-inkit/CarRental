@@ -111,7 +111,7 @@ if (window.$ && $.jqx) {
 // create popup loader if not exists
 function attachPopupLoader() {
     if ($("#window .popup-loader").length === 0) {
-        // ADD THIS LINE
+        
 $("#window .popup-loader").css("display", "flex");
         $("#window .jqx-window-content").append(`
             <div class="popup-loader">
