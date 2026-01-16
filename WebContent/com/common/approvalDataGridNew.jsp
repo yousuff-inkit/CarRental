@@ -8,7 +8,11 @@
 %>
 
 <style>
-    /* NOTE: html/body styles removed here because they exist in main.jsp */
+    .jqx-datetimeinput-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+    
 
     .filter-container {
         height: 30px; 
@@ -78,8 +82,10 @@
     $(document).ready(function () {      
         ependata1='<%=cef.exefolioDataGridload(flag,session)%>';
         
+        $("#txtFromDate, #txtToDate").jqxDateTimeInput({ disabled: true });
         $("#txtFromDate").jqxDateTimeInput({ width: '100px', height: '22px', formatString: 'dd/MM/yyyy', value: null });
         $("#txtToDate").jqxDateTimeInput({ width: '100px', height: '22px', formatString: 'dd/MM/yyyy', value: null });
+
         
         var source = {
             datatype: "json",
@@ -143,16 +149,27 @@
             ]  
         });
         
-        $("#overlay, #PleaseWait").hide();        
+        setTimeout(function () {
+            applyLastNDays(30);
+        }, 100);
+        
+        $("#overlay, #PleaseWait").hide();   
+        
+       
         
         window.applyCustomFilter = function() {
             $("#jqxapprovalDataGrid").jqxGrid('clearfilters');
+            var range = $("#cmbDateRange").val();
             var statusVal = $("#cmbStatus").val();
             var dateFrom = $("#txtFromDate").jqxDateTimeInput('getDate');
             var dateTo = $("#txtToDate").jqxDateTimeInput('getDate');
             var filtergroupStatus = new $.jqx.filter();
             var filtergroupDate = new $.jqx.filter();
             
+            if (range !== "custom") {
+                dateFrom = $("#txtFromDate").jqxDateTimeInput('getDate');
+                dateTo   = $("#txtToDate").jqxDateTimeInput('getDate');
+            }
             if (statusVal != "All") {
 
                 if (statusVal == "Returned") {
@@ -191,12 +208,19 @@
             $("#jqxapprovalDataGrid").jqxGrid('applyfilters');
         }
 
-        window.clearCustomFilter = function() {
+        window.clearCustomFilter = function () {
             $("#cmbStatus").val("All");
+            $("#cmbDateRange").val("30");
+
+            $("#txtFromDate").jqxDateTimeInput({ disabled: true });
+            $("#txtToDate").jqxDateTimeInput({ disabled: true });
+
             $("#txtFromDate").jqxDateTimeInput('val', null);
             $("#txtToDate").jqxDateTimeInput('val', null);
+
             $("#jqxapprovalDataGrid").jqxGrid('clearfilters');
-        }
+        };
+
 
         $("#jqxapprovalDataGrid").on('rowdoubleclick', function (event) {
             var rowindextemp = event.args.rowindex;
@@ -221,6 +245,33 @@
             $("#folio").attr("src",reurl[0]+""+path);        
         });    
     });  
+    
+    function onDateRangeChange() {
+        var val = $("#cmbDateRange").val();
+
+        if (val === "custom") {
+            $("#txtFromDate, #txtToDate").jqxDateTimeInput({ disabled: false });
+            $("#txtFromDate").jqxDateTimeInput('val', null);
+            $("#txtToDate").jqxDateTimeInput('val', null);
+        } else {
+            $("#txtFromDate, #txtToDate").jqxDateTimeInput({ disabled: true });
+            applyLastNDays(parseInt(val));
+        }
+    }
+    function applyLastNDays(days) {
+        var today = new Date();
+        var fromDate = new Date();
+        fromDate.setDate(today.getDate() - days);
+
+        fromDate.setHours(0,0,0,0);
+        today.setHours(23,59,59,999);
+
+        $("#txtFromDate").jqxDateTimeInput('setDate', fromDate);
+        $("#txtToDate").jqxDateTimeInput('setDate', today);
+
+        applyCustomFilter();
+    }
+
 </script>
 
 <div class="filter-container">
@@ -234,7 +285,15 @@
             <option value="Returned">Returned</option>
         </select>
     </div>
-
+	<div class="filter-group" style="margin-left:15px;">
+    <span class="filter-label">Date:</span>
+    <select id="cmbDateRange" class="custom-select" onchange="onDateRangeChange()">
+        <option value="30">Last 30 Days</option>
+        <option value="45">Last 45 Days</option>
+        <option value="custom">Custom</option>
+    </select>
+</div>
+	
     <div class="filter-group" style="margin-left:15px;">
         <span class="filter-label">From:</span>
         <div id="txtFromDate"></div>
