@@ -163,7 +163,40 @@ select.list1 option {
 			});	
 	
 	function Check(data4){
-		   
+		function Check(data4){
+
+		    // ===== FIXED VISIBILITY LOGIC =====
+
+		    // 1. ALWAYS SHOW FIRST (important)
+		    document.getElementById("apprdesc").closest("div").style.display = "";
+		    document.getElementById("optname").closest("div").style.display = "";
+		    document.getElementById("btnSend").closest("div").style.display = "";
+
+		    // 2. If no data, it is PENDING → keep showing
+		    if (!data4 || data4.trim() === "") {
+		        // pending case, do nothing
+		    } else {
+		        try {
+		            var rows = JSON.parse(data4);
+
+		            for (var i = 0; i < rows.length; i++) {
+		                if (rows[i].apprstatus === "3") { // Approved
+		                    document.getElementById("apprdesc").closest("div").style.display = "none";
+		                    document.getElementById("optname").closest("div").style.display = "none";
+		                    document.getElementById("btnSend").closest("div").style.display = "none";
+		                    break;
+		                }
+		            }
+		        } catch (e) {
+		            // parsing failed → treat as pending
+		        }
+		    }
+
+		    // ===== END FIXED LOGIC =====
+
+
+		    // ---- DO NOT TOUCH BELOW THIS ----
+
 		
 		  var source =
           {

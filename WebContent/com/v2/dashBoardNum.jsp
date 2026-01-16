@@ -347,59 +347,80 @@
             </div>
         </div>
 		
-		<div class="row">
-	        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-	            <div class="card-container">
-	                <div class="card-body text-center">
-	                    <div id="gauge1" class='chart-gauge'></div>
-	                </div>
-	                <div class="card-footer">
-	                    <ul class="list-group">
-	                        <li class="list-group-item p-r-8 p-l-8">Occupancy on Total<span class="badge"><span class="counter">76.03</span>%</span><span class="badge countervalue">628</span></li>
-	                    </ul>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-	            <div class="card-container">
-	                <div class="card-body text-center">
-	                    <div id="gauge2" class='chart-gauge'></div>
-	                </div>
-	                <div class="card-footer">
-	                    <ul class="list-group">
-	                        <li class="list-group-item p-r-8 p-l-8">Occupancy on Available<span class="badge"><span class="counter">81.56</span>%</span><span class="badge countervalue">628</span></li>
-	                    </ul>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+		<!-- ================= GAUGE SECTION START ================= -->
+<div class="row">
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="card-container">
+            <div class="card-body text-center">
+                <div id="gauge1" class="chart-gauge"></div>
+            </div>
+            <div class="card-footer">
+                <ul class="list-group">
+                    <li class="list-group-item p-r-8 p-l-8">
+                        Occupancy on Total
+                        <span class="badge"><span class="counter">76.03</span>%</span>
+                        <span class="badge countervalue">628</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    
-	        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-	            <div class="card-container">
-	                <div class="card-body text-center">
-	                    <div id="gauge3" class='chart-gauge'></div>
-	                </div>
-	                <div class="card-footer">
-	                    <ul class="list-group">
-	                        <li class="list-group-item p-r-8 p-l-8">In Garage<span class="badge"><span class="counter">0</span>%</span><span class="badge countervalue">0</span></li>
-	                    </ul>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-	            <div class="card-container">
-	                <div class="card-body text-center">
-	                    <div id="gauge4" class='chart-gauge'></div>
-	                </div>
-	                <div class="card-footer">
-	                    <ul class="list-group">
-	                        <li class="list-group-item p-r-8 p-l-8">Need Service<span class="badge"><span class="counter">0</span>%</span><span class="badge countervalue">0</span></li>
-	                    </ul>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="card-container">
+            <div class="card-body text-center">
+                <div id="gauge2" class="chart-gauge"></div>
+            </div>
+            <div class="card-footer">
+                <ul class="list-group">
+                    <li class="list-group-item p-r-8 p-l-8">
+                        Occupancy on Available
+                        <span class="badge"><span class="counter">81.56</span>%</span>
+                        <span class="badge countervalue">628</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="card-container">
+            <div class="card-body text-center">
+                <div id="gauge3" class="chart-gauge"></div>
+            </div>
+            <div class="card-footer">
+                <ul class="list-group">
+                    <li class="list-group-item p-r-8 p-l-8">
+                        In Garage
+                        <span class="badge"><span class="counter">0</span>%</span>
+                        <span class="badge countervalue">0</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+        <div class="card-container">
+            <div class="card-body text-center">
+                <div id="gauge4" class="chart-gauge"></div>
+            </div>
+            <div class="card-footer">
+                <ul class="list-group">
+                    <li class="list-group-item p-r-8 p-l-8">
+                        Need Service
+                        <span class="badge"><span class="counter">0</span>%</span>
+                        <span class="badge countervalue">0</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ================= GAUGE SECTION END ================= -->
+
 		<!--<div class="row">
             <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                 <div class="card-container">
