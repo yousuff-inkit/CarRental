@@ -930,16 +930,16 @@ body {
 </table>
     </div>
 
-<div class="table-section" style="background: #E8DEF7;">
+<div class="table-section" style="background: #e4e7ed;">
 <h3><b><i>Personal Details</i></b></h3>
-<table class="cr-table" width="99.5%" style="background: #E8DEF7;">
-   <tr style="background: #E8DEF7;">
+<table class="cr-table" width="99.5%" style="background:#e4e7ed;">
+   <tr style="background: #e4e7ed;">
     <td align="right">Permanent Address</td>
     <td colspan="5" align="left"><input type="text" id="txtpermanentaddress" name="txtpermanentaddress" placeholder="Permanent Address" style="width:100%;" value='<s:property value="txtpermanentaddress"/>'/></td>
     <td align="right">Present Address</td>
     <td colspan="5" align="left"><input type="text" id="txtpresentaddress" name="txtpresentaddress" placeholder="Present Address" style="width:100%;" value='<s:property value="txtpresentaddress"/>'/></td>
   </tr>
-  <tr style="background: #E8DEF7;">
+  <tr style="background: #e4e7ed;">
     <td align="right">Mobile</td>
     <td><input type="text" id="txtpermanentmobile" name="txtpermanentmobile" placeholder="Permanent Mobile" style="width:100%;" value='<s:property value="txtpermanentmobile"/>'/></td>
     <td align="right">Email</td>
@@ -949,7 +949,7 @@ body {
     <td align="right">Email</td>
     <td colspan="3"><input type="text" id="txtpresentemail" name="txtpresentemail" placeholder="Present Email ID" style="width:100%;" value='<s:property value="txtpresentemail"/>'/></td>
   </tr>
-  <tr style="background: #E8DEF7;">
+  <tr style="background: #e4e7ed;">
     <td width="7%" align="right">City</td>
     <td width="9%"><input type="text" id="txtempcity" name="txtempcity" placeholder="City" style="width:100%;" value='<s:property value="txtempcity"/>'/></td>
     <td width="7%" align="right">State</td>
@@ -964,7 +964,7 @@ body {
     <td width="7%" align="right">Nearest Airport</td>
     <td width="9%"><input type="text" id="txtempnearestairport" name="txtempnearestairport" placeholder="Nearest Airport" style="width:100%;" value='<s:property value="txtempnearestairport"/>'/></td>
   </tr>
-  <tr style="background: #E8DEF7;">
+  <tr style="background: #e4e7ed;">
     <td align="right">Place of Birth</td>
     <td><input type="text" id="txtempplaceofbirth" name="txtempplaceofbirth" placeholder="Place of Birth" style="width:100%;" value='<s:property value="txtempplaceofbirth"/>'/></td>
     <td align="right">Date of Birth</td>
@@ -985,7 +985,7 @@ body {
       <option value="">--Select--</option><option value="SINGLE">Single</option><option value="MARRIED">Married</option></select>
       <input type="hidden" id="hidcmbempmaritalstatus" name="hidcmbempmaritalstatus" value='<s:property value="hidcmbempmaritalstatus"/>'/></td>
   </tr>
-  <tr style="background: #E8DEF7;">
+  <tr style="background: #e4e7ed;">
     <td align="right">Father's Name</td>
     <td><input type="text" id="txtempfathername" name="txtempfathername" placeholder="Father's Name" style="width:100%;" value='<s:property value="txtempfathername"/>'/></td>
     <td align="right">Mother's Name</td>
@@ -998,7 +998,7 @@ body {
 </table>
 </div>
 
-<div class="table-section" style="background: #DEF3F7;">
+<div class="table-section" style="background: #e4e7ed;">
 <h3><b><i>Bank Details</i></b></h3>
 <table class="cr-table" width="99%">
   <tr>
@@ -1018,12 +1018,12 @@ body {
 </table>
 </div>
 
-<div class="table-section" style="background: #ECF8E0; width:100%; ">
+<div class="table-section" style="background:#e4e7ed; width:100%; ">
 <h3><b><i>Monthly Salary</i></b></h3>
 <div class="cr-table" id="compensationDiv"><jsp:include page="compensationGrid.jsp"></jsp:include></div><br/>
 </div>
 
-<div class="table-section" style="background: #F8E0F7; width:100%; ">
+<div class="table-section" style="background: #e4e7ed; width:100%; ">
 <h3><b><i>Documents</i></b></h3>
 <div class="cr-table" id="documentsDiv"><jsp:include page="documentsGrid.jsp"></jsp:include></div><br/>
 </div>
