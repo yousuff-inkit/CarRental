@@ -10,20 +10,20 @@
 <title>GatewayERP(i)</title>
 <style type="text/css">
 
-table {
+#search table {
   border-collapse: separate;
   border-spacing: 15px 18px;  
 }
 
 
-td[align="right"] {
+#search td[align="right"] {
   font-weight: 700;
   font-size: 14px;
   color: #222;
 }
 
 
-input[type="text"] {
+#search input[type="text"] {
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
