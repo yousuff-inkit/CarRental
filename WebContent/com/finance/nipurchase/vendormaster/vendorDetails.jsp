@@ -392,6 +392,7 @@
 </script>
 
 <style>
+
 .hidden-scrollbar {
   overflow: auto;
   height: 100vh;
@@ -437,7 +438,7 @@
     <td width="7%" align="right">Code</td>
     <td width="20%"><input type="text" id="txtcode" name="txtcode" style="width:60%;" tabindex="-1" value='<s:property value="txtcode"/>'/></td>
     <td width="5%" align="right">Name</td>
-    <td width="25%"><input type="text" id="txtvendorname" name="txtvendorname" style="width:100%;" value='<s:property value="txtvendorname"/>'/></td>
+    <td width="24%"><input type="text" id="txtvendorname" name="txtvendorname" style="width:100%;" value='<s:property value="txtvendorname"/>'/></td>
     <td width="6%" align="right">Doc No</td>
     <td width="17%"><input type="text" id="docno" name="txtvendordocno" style="width:75%;" tabindex="-1" value='<s:property value="txtvendordocno"/>'/></td>
   </tr>

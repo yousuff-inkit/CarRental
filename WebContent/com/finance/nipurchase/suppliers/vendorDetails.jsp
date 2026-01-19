@@ -344,7 +344,7 @@ body {
     border-radius: 16px;
     /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
     padding: 10px;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -354,7 +354,8 @@ body {
     align-items: center;
     margin-bottom: 16px;
     border-radius: 12px;
-    padding: 0px 24px;
+    padding: 0px 15px;
+    min-width:100%
     font-size: 2vh;
 }
 .receipt-header label {
@@ -448,6 +449,7 @@ body {
 
 .table-section {
     margin-bottom: 18px;
+    width:100%;
 }
 .table-section h3 {
     color: #253858;
@@ -581,18 +583,18 @@ select:focus {
    
 <div class=' receipt-header'>
 
-    <div class="table-section">
+    <div class="table-section" width="100%">
 <table class="cr-table" width="100%">
   <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="15%"><div id="jqxVendorDate" name="jqxVendorDate" value='<s:property value="jqxVendorDate"/>'></div>
+    <td width="8%" align="right">Date</td>
+    <td width="18%"><div id="jqxVendorDate" name="jqxVendorDate" value='<s:property value="jqxVendorDate"/>'></div>
     <input type="hidden" id="hidjqxVendorDate" name="hidjqxVendorDate" value='<s:property value="hidjqxVendorDate"/>'/></td>
-    <td width="7%" align="right">Code</td>
+    <td width="10%" align="right">Code</td>
     <td width="20%"><input type="text" id="txtcode" name="txtcode" style="width:60%;" tabindex="-1" value='<s:property value="txtcode"/>'/></td>
     <td width="5%" align="right">Name</td>
-    <td width="25%"><input type="text" id="txtvendorname" name="txtvendorname" style="width:100%;" value='<s:property value="txtvendorname"/>'/></td>
+    <td width="25%"><input type="text" id="txtvendorname" name="txtvendorname" style="width:90%;" value='<s:property value="txtvendorname"/>'/></td>
     <td width="6%" align="right">Doc No</td>
-    <td width="17%"><input type="text" id="docno" name="txtvendordocno" style="width:75%;" tabindex="-1" value='<s:property value="txtvendordocno"/>'/></td>
+    <td width="20%"><input type="text" id="docno" name="txtvendordocno" style="width:75%;" tabindex="-1" value='<s:property value="txtvendordocno"/>'/></td>
   </tr>
   <tr>
     <td align="right">Currency</td>

@@ -6,15 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<style>
-body{
-background: #E0ECF8 !important;
-}
-</style>
+
 <script>
 $(document).ready(function(e) {
 $("#searchdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});    
-$("body").css("background","#E0ECF8");
+
 });
 function loadsearch(){
 	<%-- var branch='<%=request.getParameter("branch")==null?"":request.getParameter("branch")%>'; --%>
@@ -29,7 +25,7 @@ function loadsearch(){
 </script>
 
 </head>
-<body style="background-color:#E0ECF8;">
+<body >
 <table width="100%">
   <tr>
     <td width="8%" align="right">Date</td>

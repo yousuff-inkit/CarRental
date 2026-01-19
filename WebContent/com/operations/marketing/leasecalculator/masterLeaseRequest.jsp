@@ -38,7 +38,7 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
+<body >
 <div id=search>
   <table width="100%">
     <tr>

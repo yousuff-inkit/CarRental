@@ -10,7 +10,7 @@
 <title>GatewayERP(i)</title>
 <style type="text/css">
 
-table {
+#search table {
   border-collapse: separate;
   border-spacing: 15px 18px;  
 }
