@@ -454,14 +454,21 @@
 </script>
 
 <style>
+
 /* scroll area */
+
 .hidden-scrollbar {
+
     height: 530px;
+
     overflow-x: hidden;
+
     overflow-y: auto;
+
 }
 
 /* background + base typography (master) */
+
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI','Roboto','Arial',sans-serif;
@@ -471,335 +478,661 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
     font-size: 14px;
+    overflow-y: auto !important; /* Forces the main window to handle scrolling */
 }
+
+
 
 /* main card (master) */
+
 #mainBG {
+
     background: #fff;
+
     border-radius: 16px;
+
     padding: 18px 28px;
+
     max-width: 100%;
+
     margin: 0 auto;
+
 }
+
+
 
 /* page header strip */
+
 .receipt-header {
+
     display: flex;
+
     flex-wrap: wrap;
+
     align-items: center;
+
     margin-bottom: 20px;
+
     border-radius: 12px;
+
     padding: 0 24px;
+
     font-size: 14px;
+
 }
+
 .receipt-header label {
+
     font-weight: 500;
+
     color: #333;
+
     margin-right: 8px;
+
 }
+
 .receipt-header input[type="text"] {
+
     border: 1px solid #d1d5db;
+
     border-radius: 6px;
+
     padding: 4px 8px;
+
     font-size: 13px;
+
     width: 120px;
+
     background: #fff;
+
     transition: border-color 0.2s;
+
 }
+
 .receipt-header input[type="text"]:focus {
+
     border-color: #007bff;
+
     outline: none;
+
 }
+
 .receipt-header button {
+
     background: #007bff;
+
     color: #fff;
+
     border: none;
+
     border-radius: 6px;
+
     padding: 4px 12px;
+
     font-weight: 500;
+
     cursor: pointer;
+
     transition: background 0.2s;
+
 }
+
 .receipt-header button:hover {
+
     background: #0056b3;
+
 }
+
 #txtStatus {
+
     font-size: 14px;
+
     font-weight: 600;
+
     color: #e67e22;
+
     margin-left: 12px;
+
 }
+
+
 
 /* section card like User Master (master) */
+
 .table-section {
+
     margin-bottom: 20px;
+
     padding-inline: 14px;
+
     padding-block: 14px;
+
     border-radius: 10px;
+
     background: #f6f8fa;
+
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+
 }
+
 .table-section h3 {
+
     margin: 0 0 12px;
+
     padding-left: 10px;
+
     border-left: 4px solid #007bff;  /* blue bar */
+
     color: #253858;
+
     font-size: 15px;
+
     font-weight: 600;
+
 }
+
+
 
 /* optional generic blocks – match master card look */
+
 .section-row {
+
     display: flex;
+
     gap: 20px;
+
     margin-bottom: 20px;
+
 }
+
 .section-block {
+
     flex: 1;
+
     background: #f6f8fa;
+
     border-radius: 10px;
+
     padding: 16px 14px;
+
     box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+
 }
+
 .section-block h2 {
+
     font-size: 14px;
+
     font-weight: 500;
+
     margin: 0 0 12px 0;
+
     color: #253858;
+
 }
+
 .section-block .form-group {
+
     display: flex;
+
     align-items: center;
+
     gap: 12px;
+
     margin-bottom: 10px;
+
 }
+
 .section-block label {
+
     min-width: 110px;
+
     text-align: right;
+
     font-weight: 500;
+
     color: #253858;
+
     font-size: 13px;
+
 }
+
 .section-block input[type="text"],
+
 .section-block select {
+
     flex: 1;
+
     border: 1px solid #d1d5db;
+
     border-radius: 6px;
+
     padding: 4px 8px;
+
     background: #fff;
+
     transition: border-color 0.2s;
+
     font-size: 13px;
+
 }
+
 .section-block input[type="text"]:focus,
+
 .section-block select:focus {
+
     border-color: #007bff;
+
     outline: none;
+
 }
+
+
 
 /* grid/table layout for fields (master) */
+
 .cr-table {
+
     width: 100%;
+
     border-collapse: collapse;
+
     background: #f9fafb;
+
     border-radius: 8px;
+
     overflow: hidden;
+
     box-shadow: 0 0 0 1px #eef0f6;
+
     table-layout: fixed;
+
 }
+
 .cr-table th,
+
 .cr-table td {
+
     padding: 8px 10px;
+
     border-bottom: 1px solid #e4e7ec;
+
     text-align: left;
+
     font-size: 13px;
+
     vertical-align: middle;
+
 }
+
 .cr-table th {
+
     background: #eef0f6;
+
     color: #354B6A;
+
     font-weight: 600;
+
 }
+
 .cr-table tr:last-child td {
+
     border-bottom: none;
+
 }
+
 .cr-table td[align="right"] {
+
     white-space: nowrap;
+
     font-weight: 500;
+
     color: #333;
+
 }
+
+
 
 /* unified inputs in tables (master) */
+
 .cr-table input[type="text"],
+
 .cr-table select {
+
     width: 100%;
+
     border: 1px solid #d1d5db;
+
     border-radius: 6px;
+
     padding: 4px 8px;
+
     height: 30px;
+
     font-size: 13px;
+
     box-sizing: border-box;
+
     background: #fff;
+
 }
+
 .cr-table input[type="text"]:focus,
+
 .cr-table select:focus {
+
     border-color: #007bff;
+
     outline: none;
+
 }
+
 /* blue line and padding for all section headings */
+
 .table-section h3,
+
 .section-block h2,
+
 h3.section-title,
+
 h2.section-title {
+
     margin: 0 0 12px;
+
     padding: 4px 10px;               /* space around text */
+
     border-left: 4px solid #007bff;  /* blue line */
+
     color: #253858;
+
     font-size: 15px;
+
     font-weight: 600;
+
 }
+
 /* master UI heading with blue line */
+
 .table-section h3,
+
 .section-block h2,
+
 h3.section-title,
+
 h2.section-title {
+
     margin: 0 0 12px;
+
     padding: 4px 10px;               /* padding around the text */
+
     border-left: 4px solid #007bff;  /* blue line */
+
     color: #253858;
+
     font-size: 15px;
+
     font-weight: 600;
+
     background: transparent;
+
 }
+
+
 
 </style>
-
  
 
 </head>
 <body onload="termConfig();setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
+
 <form id="frmhrsetups" action="saveHrsetup" autocomplete="OFF" >
 
+
+
 <jsp:include page="../../../../../header.jsp"></jsp:include><br/>
+
 <div class='hidden-scrollbar receipt-header'>
 
+
+
 <h3>For Days in Year</h3>
+
 <div class="table-section">
+
 <table class="cr-table" width="99%"  >
+
   <tr>
+
     <td width="13%" align="right">Date</td>  
+
     <td width="12%"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
+
                      <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/></td>
+
     <td colspan="5">&nbsp;</td>
+
     <td width="4%" align="right">Doc No</td>
+
     <td width="9%"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>
+
   </tr>
+
   <tr>
+
     <td align="right">Valid From</td> 
+
     <td><div id='validfromdate' name='validfromdate' value='<s:property value="validfromdate"/>'></div>
+
                      <input type="hidden" id="hidvalidfromdate" name="hidvalidfromdate" value='<s:property value="hidvalidfromdate"/>'/></td>
+
     <td width="10%" align="right">Last Revised On</td>
+
     <td width="11%"><div id='lastreviseddate' name='lastreviseddate' value='<s:property value="lastreviseddate"/>'></div>
+
                      <input type="hidden" id="hidlastreviseddate" name="hidlastreviseddate" value='<s:property value="hidlastreviseddate"/>'/></td>
+
     <td width="9%" align="right">PayRoll Category</td>
+
     <td width="14%"><select name="cmbcategory" id="cmbcategory" style="width:99%;"  value='<s:property value="cmbcategory"/>'><option value="">-- select -- </option></select></td>
-    <td width="11%" align="right">Working Hours/Day</td>
-    <td width="8%"><div id='workingtime' name='workingtime'  style="width:80%;"  value='<s:property value="workingtime"/>' ></div>
-       <input type="hidden" id="hidworkingtime" name="hidworkingtime" value='<s:property value="hidworkingtime"/>'/></td>
+
+   <td width="14%" align="right">Working Hours/Day</td>
+<td width="11%">
+    <div id='workingtime' name='workingtime' style="width:100% !important; min-width:110px;" value='<s:property value="workingtime"/>'></div>
+    <input type="hidden" id="hidworkingtime" name="hidworkingtime" value='<s:property value="hidworkingtime"/>'/>
+</td>
+
     <td colspan="2" rowspan="3">&nbsp;</td>
+
   </tr>
+
   <tr>
+
   <td align="right">Annual Leave:Leave ID</td>
+
     <td><select name="leaveid" id="leaveid" style="width:99%;"  value='<s:property value="leaveid"/>'><option value="">-- select --</option></select>
+
   </td>
+
     <td align="right">Weekly Off</td>
+
     <td colspan="3"><fieldset>
+
   <input type="checkbox" id="mon" name="mon"  value="0"  onclick="$(this).attr('value', this.checked ? 1 : 0)"  > Mon
+
   <input type="checkbox" id="tue" name="tue"    value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Tue
+
   <input type="checkbox" id="wed" name="wed"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Wed
+
   <input type="checkbox" id="thu" name="thu"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Thu
+
   <input type="checkbox" id="fri" name="fri"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Fri
+
   <input type="checkbox" id="sat" name="sat"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sat
+
   <input type="checkbox" id="sun" name="sun"  value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sun
+
   </fieldset></td>
+
     <td colspan="2" align="left"> 
+
     <input type="checkbox" id="carryforward" name="carryforward"  value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" >Carry Forward</td>
+
   </tr>
+
   <tr>
+
     <td align="right">Eligible Days</td>
+
     <td><input type="text" id="eligibledays" name="eligibledays"   onkeypress="javascript:return isNumber (event)"  value='<s:property value="eligibledays"/>' ></td>
+
     <td align="right">In a Year</td>
+
     <td colspan="5"><input type="text" id="forworkingdays" name="forworkingdays"  onkeypress="javascript:return isNumber (event)"  value='<s:property value="forworkingdays"/>' ></td>
+
   </tr>
+
 </table>
+
 </div>
+
  <table class="cr-table" width="100%">
+
  <tr>
+
  <td height="234" width="55%">
+
   <h3>Terminal Benefits</h3>
+
    <table class="hideterm cr-table" id="fs1" width="100%">
+
    <tr>
+
    <td width="65%">
-   	<div class="cr-table" id="termibeni"> <jsp:include page="terminationbenefitcondtiongrid.jsp"></jsp:include></div>
+
+    <div class="cr-table" id="termibeni"> <jsp:include page="terminationbenefitcondtiongrid.jsp"></jsp:include></div>
+
  </td>
+
  <td width="35%">
+
     <h3>Termination Details</h3>
+
    <div class="cr-table" id="trimi"> <jsp:include page="terminationdetailsgrid.jsp"></jsp:include></div>
 
+
+
  <h3>Resignation Details</h3>
+
    <div class="cr-table" id="resig"> <jsp:include page="resignationdetailsgrid.jsp"></jsp:include></div>
 
+
+
   </td>
+
  </tr>
+
  </table>
 
 
 
+
+
+
+
        <td  width="45%">
+
     <div id="fs2" >
-	<h3>Salary Calculation Formula (Hrs)</h3>
+
+<h3>Salary Calculation Formula (Hrs)</h3>
+
     <table class="cr-table" width="100%">
-    	<tr><td width="37%" align="right">Conversion Formula Month To Day</td><td align="left"><input type="text" id="convformula" readonly="readonly"   placeholder="Press F3 To Search" name="convformula" Style="width:99%;" value='<s:property value="convformula"/>' onkeydown="getconfor(event);"></td> </tr>
-    	<tr><td  width="37%" align="right">Rate per Hour</td><td align="left" ><input type="text" id="normalrate" name="normalrate" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="normalrate"/>' onkeydown="getnr(event);" > </td> </tr>
-    	<tr><td  width="37%" align="right"> OT</td><td  align="left"><input type="text" id="ot" name="ot" Style="width:99%;" readonly="readonly"   placeholder="Press F3 To Search" value='<s:property value="ot"/>'  onkeydown="getot(event);" > </td> </tr>
-    	<tr><td width="37%" align="right">Holiday OT</td><td  align="left"><input type="text" id="holidayot" name="holidayot" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="holidayot"/>'  onkeydown="getholyot(event);"> </td> </tr>
+
+    <tr><td width="37%" align="right">Conversion Formula Month To Day</td><td align="left"><input type="text" id="convformula" readonly="readonly"   placeholder="Press F3 To Search" name="convformula" Style="width:99%;" value='<s:property value="convformula"/>' onkeydown="getconfor(event);"></td> </tr>
+
+    <tr><td  width="37%" align="right">Rate per Hour</td><td align="left" ><input type="text" id="normalrate" name="normalrate" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="normalrate"/>' onkeydown="getnr(event);" > </td> </tr>
+
+    <tr><td  width="37%" align="right"> OT</td><td  align="left"><input type="text" id="ot" name="ot" Style="width:99%;" readonly="readonly"   placeholder="Press F3 To Search" value='<s:property value="ot"/>'  onkeydown="getot(event);" > </td> </tr>
+
+    <tr><td width="37%" align="right">Holiday OT</td><td  align="left"><input type="text" id="holidayot" name="holidayot" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="holidayot"/>'  onkeydown="getholyot(event);"> </td> </tr>
+
     </table></div>
+
     <div id="fs3"><h3>Account Setup</h3>
-      	<div class="cr-table" id="accset"> <jsp:include page="accountsetupgrid.jsp"></jsp:include></div>
+
+      <div class="cr-table" id="accset"> <jsp:include page="accountsetupgrid.jsp"></jsp:include></div>
+
     </div>
+
    </td>
+
    </tr>
+
   </table>
 
+
+
  </div>
+
  
+
 <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
+
 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+
 <input type="hidden" id="hidcatval" name="hidcatval"  value='<s:property value="hidcatval"/>'/>
+
 <input type="hidden" id="hidleaveid" name="hidleaveid"  value='<s:property value="hidleaveid"/>'/>
+
 <input type="hidden" id="hidweakoff" name="hidweakoff"  value='<s:property value="hidweakoff"/>'/>
+
 <input type="hidden" id="hidcarryforward" name="hidcarryforward"  value='<s:property value="hidcarryforward"/>'/>
+
 <input type="hidden" id="benigridlength" name="benigridlength"  value='<s:property value="benigridlength"/>'/>
+
 <input type="hidden" id="trmigridlength" name="trmigridlength"  value='<s:property value="trmigridlength"/>'/>
+
 <input type="hidden" id="resiggridlength" name="resiggridlength"  value='<s:property value="resiggridlength"/>'/>
+
 <input type="hidden" id="accountsetupgridlength" name="accountsetupgridlength"  value='<s:property value="accountsetupgridlength"/>'/>
+
 </form>
 
+
+
 <div id="formulawindow">
+
    <div></div>
+
 </div>
+
+
 
 <div id="accountSearchwindow">
-	   <div></div>
-</div>	
-<div id="costTypeSearchGridWindow">
-	<div></div>
-</div> 
-<div id="costCodeSearchWindow">
-	<div></div>
-</div> 
+
+   <div></div>
 
 </div>
+
+<div id="costTypeSearchGridWindow">
+
+<div></div>
+
+</div> 
+
+<div id="costCodeSearchWindow">
+
+<div></div>
+
+</div> 
+
+
+
+</div>
+
 </body>
+
 </html>
