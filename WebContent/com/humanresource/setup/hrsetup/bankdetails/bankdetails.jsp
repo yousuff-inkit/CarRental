@@ -369,15 +369,17 @@ form label.error {
                     <input type="text" name="brchname" id="brchname" placeholder="Press F3 to Search" value='<s:property value="brchname"/>'>
                 </div>
                 
+                <label for="docno">Doc No</label>
+                <div>
+                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
+                </div>
+                
                 <label for="ifsccode">IFSC Code</label>
                 <div>
                     <input type="text" name="ifsccode" id="ifsccode" placeholder="Press F3 to Search" value='<s:property value="ifsccode"/>'>
                 </div>
 
-                <label for="docno">Doc No</label>
-                <div>
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
-                </div>
+               
 
                 <label for="remarks">Remarks</label>
                 <div style="grid-column: span 3;"> 

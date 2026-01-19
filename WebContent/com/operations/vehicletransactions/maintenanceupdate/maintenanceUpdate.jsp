@@ -926,19 +926,20 @@ button:hover, .myButton:hover {
 							value='<s:property value="date_accountmaster"/>'></div>
 						<input type="hidden" id="hidmaintainceDate"
 							name="hidmaintainceDate"
-							value='<s:property value="hidmaintainceDate"/>'> <label>Fleet
-							No</label> <input type="text" id="mtfleetno" name="mtfleetno"
-							style="width: 85%;" placeholder="Press F3 To Search"
-							value='<s:property value="mtfleetno"/>'
-							onkeydown="getfleet(event)">
+							value='<s:property value="hidmaintainceDate"/>'> 
+						<label>Doc No</label> <input type="text" id="docno" name="docno" tabindex="-1"
+							value='<s:property value="docno"/>'>	
+						
 					</div>
 
 					<div class="form-group dual-input">
 						<label>Name</label> <input type="text" id="mtflname"
 							style="width: 90%;" tabindex="-1" name="mtflname"
-							value='<s:property value="mtflname"/>'> <label>Doc
-							No</label> <input type="text" id="docno" name="docno" tabindex="-1"
-							value='<s:property value="docno"/>'>
+							value='<s:property value="mtflname"/>'> 
+							<label>Fleet No</label> <input type="text" id="mtfleetno" name="mtfleetno"
+							style="width: 85%;" placeholder="Press F3 To Search"
+							value='<s:property value="mtfleetno"/>'
+							onkeydown="getfleet(event)">
 
 					</div>
 

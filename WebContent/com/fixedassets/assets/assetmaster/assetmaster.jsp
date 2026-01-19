@@ -1340,17 +1340,19 @@ function fundisgrid()
             </div>
             <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/>
 
-            <label>Ref No</label>
-            <input type="text" id="refno" name="refno" value='<s:property value="refno"/>'/>
+            
+               <label>Doc No</label>
+            <input type="text" id="docno" name="docno" value='<s:property value="docno"/>'/>
         </div>
         
         <div class="form-group dual-input">
             <label>Asset Id</label>
             <input type="text" id="assetid" name="assetid" value='<s:property value="assetid"/>'/>
             
-            <label>Doc No</label>
-            <input type="text" id="docno" name="docno" value='<s:property value="docno"/>'/>
+          <label>Ref No</label>
+            <input type="text" id="refno" name="refno" value='<s:property value="refno"/>'/>
         </div>
+        
         
         <div class="form-group">
             <label>Name</label>
