@@ -1024,11 +1024,13 @@ function funSendmail()
         <label>Doc Type</label>
         <input type="text" id="txtdoctype" name="txtdoctype" value='<s:property value="txtdoctype"/>' tabindex="-1" readonly/>
 
-        <label>Doc No.</label>
-        <input type="text" id="docno" name="txtrentalreceiptdocno" value='<s:property value="txtrentalreceiptdocno"/>' tabindex="-1" readonly/>
-
+       
         <label>Receipt No.</label>
         <input type="text" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>' tabindex="-1" readonly/>
+        
+        <label>Doc No.</label>
+        <input type="text" id="docno" name="txtrentalreceiptdocno" value='<s:property value="txtrentalreceiptdocno"/>' tabindex="-1" readonly/>
+        
     </div>
 
     <div class="section-row">

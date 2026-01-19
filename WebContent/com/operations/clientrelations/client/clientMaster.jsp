@@ -1736,21 +1736,34 @@ label {
                     <label>Code</label>
                     <input type="text" id="txtcode" name="txtcode" tabindex="-1" value='<s:property value="txtcode"/>'/>
 
-                    <label>Name</label>
-                    <div style="display: flex; gap: 8px; grid-column: span 3;">
-                        <select id="cmbsalutation" name="cmbsalutation" style="width: 100px !important;" value='<s:property value="cmbsalutation"/>'>
-                            <option value="">--Select--</option>
-                        </select>
-                        <input type="text" id="txtclient_name" name="txtclient_name" onfocus="getCurrencyIds();" value='<s:property value="txtclient_name"/>'/>
+                    <label style="grid-column: -3;">Doc No</label>
+                    <input type="text"
+                     id="docno"
+                     name="txtclientdocno"
+                     tabindex="-1"
+                     style="grid-column: -2 / -1;"
+                     value='<s:property value="txtclientdocno"/>'/>
+                    
+                    <label style="grid-column: 1;">Name</label>
+                    <div style="display: flex; gap: 8px; grid-column: 2 / -1;">
+                    <select id="cmbsalutation" name="cmbsalutation"
+                    style="width: 100px !important;"
+                    value='<s:property value="cmbsalutation"/>'>
+                    <option value="">--Select--</option>
+                    </select>
+
+                    <input type="text" id="txtclient_name" name="txtclient_name"
+                    onfocus="getCurrencyIds();"
+                    value='<s:property value="txtclient_name"/>'/>
                     </div>
+                    
 
                     <label>Currency</label>
                     <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>'>
                         <option value="">--Select--</option>
                     </select>
                     
-                    <label>Doc No</label>
-                    <input type="text" id="docno" name="txtclientdocno" tabindex="-1" value='<s:property value="txtclientdocno"/>'/>
+                    
                 </div>
             </div>
 

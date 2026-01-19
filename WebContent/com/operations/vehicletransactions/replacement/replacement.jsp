@@ -1642,12 +1642,11 @@ function dateenable(){
                 </select>
             </div>
             
-            <label for="cmbagmtbranch">Branch</label>
+             <label for="docno">Doc No</label>
             <div>
-                <select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>'><option value="">--Select--</option></select>
-                <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>' >
+                <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/>
             </div>
-
+             
             <label for="refvocno">Ref No</label>
             <div style="grid-column: span 1;">
                 <div class="input-group">
@@ -1664,10 +1663,12 @@ function dateenable(){
                 <input type="hidden" id="hidreftime" name="hidreftime" value='<s:property value="hidreftime"/>'/>
             </div>
             
-            <label for="docno">Doc No</label>
+            <label for="cmbagmtbranch">Branch</label>
             <div>
-                <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/>
+                <select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>'><option value="">--Select--</option></select>
+                <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>' >
             </div>
+
 
             <label for="txtfleetno">Fleet No</label>
             <div style="grid-column: span 1;">
