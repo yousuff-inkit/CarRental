@@ -25,7 +25,7 @@
     overflow-y: auto;
 }
 
-/* Removed the white box and border from Heading */
+
 .dashboard-header-wrapper .header-container {
     padding: 5px 0;
     background: transparent; 
@@ -92,7 +92,7 @@
 }
 
 .dashboard-header-wrapper .styled-select {
-    width: 200px;
+    width: 150px;
     background: #ffffff;
     border: 1px solid #cbd5e1;
     border-radius: 6px;
@@ -118,7 +118,7 @@
 .nbtn svg {
     width: 16px;
     height: 16px;
-    stroke: #005c97;      /* SAME blue as dashboard */
+    stroke: #005c97;      
     fill: none;
     stroke-width: 2;
 }
@@ -141,14 +141,14 @@
         box-shadow 0.2s ease;
 }
 
-/* Hover state */
+
 .dashboard-header-wrapper .nbtn:hover {
-    border-color: #2563eb;                /* BLUE border */
-    transform: scale(1.08);               /* increase size */
+    border-color: #2563eb;                
+    transform: scale(1.08);               
     box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
-    z-index: 2;                           /* stay above neighbours */
+    z-index: 2;                           
 }
-/* Wrapper controls height */
+
 .dashboard-header-wrapper .styled-select {
     height: 36px;                
     padding: 0 8px;              
@@ -156,7 +156,7 @@
     align-items: center;          
 }
 
-/* Select fills wrapper */
+
 .dashboard-header-wrapper .styled-select select {
     height: 100%;
     width: 100%;

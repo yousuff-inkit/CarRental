@@ -1540,9 +1540,10 @@
             $("#attendanceGridID").jqxGrid(
             {
             	width: '100%',
-                height: 660,
+                height: 700,
                 source: dataAdapter,
                 editable: true,
+                columnsresize: true,
                 selectionmode: 'singlecell',
                 localization: {thousandsSeparator: ""},
                 
@@ -1554,9 +1555,9 @@
                                   return "<center><div style='margin:4px;'>" + (value + 1) + "</div></center>";
                               }    
 							},
-							 { text: 'Doc No', pinned: true, datafield: 'employeedocno', editable: false, width: '5%', cellclassname: 'whiteClass'},
-							{ text: 'Emp. ID', pinned: true, datafield: 'employeeid', editable: false, cellclassname: 'whiteClass', width: '7%' },
-							{ text: 'Emp. Name', pinned: true, datafield: 'employeename', editable: false, cellclassname: 'whiteClass', width: '17%' },			
+							 { text: 'Doc No', pinned: true, datafield: 'employeedocno', editable: false, width: '3%', cellclassname: 'whiteClass'},
+							{ text: 'Emp. ID', pinned: true, datafield: 'employeeid', editable: false, cellclassname: 'whiteClass', width: '3%' },
+							{ text: 'Emp. Name', pinned: true, datafield: 'employeename', editable: false,resizable: true, cellclassname: 'whiteClass', width: '10%' },			
 							{ text: '1', datafield: 'date1', editable: false,  width: '2%', cellclassname: cellclassname, cellsalign: 'center', align: 'center'  },
 							{ text: '2', datafield: 'date2', editable: false,  width: '2%', cellclassname: cellclassname1, cellsalign: 'center', align: 'center' },
 							{ text: '3', datafield: 'date3', editable: false,  width: '2%', cellclassname: cellclassname2, cellsalign: 'center', align: 'center' },
