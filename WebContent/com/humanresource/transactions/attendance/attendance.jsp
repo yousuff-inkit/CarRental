@@ -12,13 +12,112 @@
 
 <style type="text/css">
 
-#left-panel{
-	border:1px solid #000;
-	border-radius:10px;
-	padding-left:10px;
-	padding-right:2px;
-	
+
+
+#left-panel {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 14px 10px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
 }
+
+#left-panel td {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    padding: 4px 6px;
+}
+
+
+#left-panel input[type="text"],
+#left-panel select {
+    width: 100%;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 4px 8px;
+    font-size: 12px;
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+#left-panel input[type="text"]:focus,
+#left-panel select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    outline: none;
+}
+
+
+#left-panel input[type="radio"],
+#left-panel input[type="checkbox"] {
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+
+
+
+.myButtonses,
+.myButtons,
+.myButtonReCheck {
+    height: 34px;
+    min-width: 72px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    padding: 0 14px;
+    transition: all 0.2s ease;
+}
+
+
+.myButtonses {
+    background: #fff;
+    color: #2563eb;
+    box-shadow: 3px 6px 6px rgba(37, 99, 235, 0.35);
+}
+
+.myButtonses:hover {
+    
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    transform: scale(1.05);
+}
+
+
+.myButtons {
+    background: #fff;
+    color: #64748b;
+	box-shadow: 3px 6px 6px rgba(37, 99, 235, 0.35);
+    
+}
+
+.myButtons:hover {
+    background: #fff;
+    transform: scale(1.05);
+}
+
+
+.myButtonReCheck {
+    background: #fff;
+    color: #16a34a;
+    border-radius: 999px;
+}
+
+.myButtonReCheck:hover {
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+    transform: scale(1.05);
+}
+
+
+#left-panel table tr td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
 #rdovertime,
 label[for="rdovertime"],
 #overtime {
@@ -45,123 +144,13 @@ margin: 0;
     line-height: normal;
     background-color:#fff;
     border-radius:20px;
+    height:100px;
 }
 body{
 	font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
-}
 
-.myButtonses {
- background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
- background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
- background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
- background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
- background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
- background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
- filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
- background-color:#599bb3;
- -moz-border-radius:4px;
- -webkit-border-radius:4px;
- border-radius:4px;
- display:inline-block;
- cursor:pointer;
- color:#ffffff;
- font-family:Verdana;
- font-size:10px;
- padding:4px 8px;
- text-decoration:none;
-}
-.myButtonses:hover {
- background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
- background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
- background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
- background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
- background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
- background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
- filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
- background-color:#408c99;
-}
-.myButtonses:active {
- position:relative;
- top:1px;
-}
-.myButtonReCheck {
-	-moz-box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
-	background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
-	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
-	background-color:#44c767;
-	-moz-border-radius:42px;
-	-webkit-border-radius:42px;
-	border-radius:42px;
-	border:6px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:10px;
-	font-weight:bold;
-	padding:3px 8px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-}
-.myButtonReCheck:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cbf2a), color-stop(1, #44c767));
-	background:-moz-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
-	background:-webkit-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
-	background:-o-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
-	background:-ms-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
-	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cbf2a', endColorstr='#44c767',GradientType=0);
-	background-color:#5cbf2a;
-}
-.myButtonReCheck:active {
-	position:relative;
-	top:1px;
-}
 </style>
 
 <script type="text/javascript">
@@ -226,7 +215,8 @@ body{
 		x.onreadystatechange=function(){
 		if (x.readyState==4 && x.status==200)
 			{
-				var items=x.responseText.trim();
+			 
+			var items=x.responseText.trim();
 				
 				if(items>0){
 					var path=document.getElementById("fileexcelimport").value;
@@ -404,6 +394,7 @@ body{
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
+				
 				var items = x.responseText;
 				items = items.split('####');
 				var yearItems = items[0].split(",");
@@ -431,6 +422,7 @@ body{
     	var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
+				$("#overlay, #PleaseWait").hide();	
 				var items = x.responseText;
 				items = items.split('####');
 				var daysItems = items[0].split(",");
@@ -1382,6 +1374,12 @@ body{
 		x.open("GET","updateData.jsp?year="+year+"&month="+month+"&emptotalleavesarray="+emptotalleavesarray+"&emptotalleavesgridlength="+emptotalleavesgridlength,true);
 		x.send();
 		}
+		function onYearChange() {
+			$("#overlay, #PleaseWait").show();
+			funClearYearInfo();
+		    getDay();
+		    
+		}
 	 
 </script>
 
@@ -1395,19 +1393,19 @@ body{
 <jsp:include page="../../../../header.jsp"></jsp:include>
 </div>
 <div class='hidden-scrollbar'>
-<table width="99%">
+<table width="99%" style="margin-top:10px;">
   <tr>
     <td width="20%" style="background-color: #fff;" id="left-panel">
-<table width="99%" style="margin-top:-60px;">
+<table width="99%"  >
   <tr>
-    <td width="29%" align="left" >Year</td>
-    <td width="71%"><select id="cmbyear" name="cmbyear" style="width:80%;" onchange="funClearYearInfo();getDay();" value='<s:property value="cmbyear"/>'>
+    <td width="29%" align="center" >Year</td>
+    <td width="71%"><select id="cmbyear" name="cmbyear" onchange="onYearChange();" value='<s:property value="cmbyear"/>'>
       <option value="">--Select--</option></select>
       <input type="hidden" id="hidcmbyear" name="hidcmbyear" value='<s:property value="hidcmbyear"/>'/></td>
   </tr>
   <tr>
-    <td align="left">Month</td>
-    <td><select id="cmbmonth" name="cmbmonth" style="width:80%;" onchange="funClearMonthInfo();getDay();getHolidaysOfMonth($('#cmbyear').val(),this.value);" value='<s:property value="cmbmonth"/>'>
+    <td align="center">Month</td>
+    <td><select id="cmbmonth" name="cmbmonth" onchange="funClearMonthInfo();getDay();getHolidaysOfMonth($('#cmbyear').val(),this.value);" value='<s:property value="cmbmonth"/>'>
       <option value="">--Select--</option><option value="01">January</option><option value="02">February</option><option value="03">March</option>
       <option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option>
       <option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option>
@@ -1415,34 +1413,32 @@ body{
       <input type="hidden" id="hidcmbmonth" name="hidcmbmonth" value='<s:property value="hidcmbmonth"/>'/></td>
   </tr>
   <tr>
-    <td align="left">Day</td>
-    <td><select id="cmbday" name="cmbday" style="width:80%;" value='<s:property value="cmbday"/>'>
+    <td align="center">Day</td>
+    <td><select id="cmbday" name="cmbday" value='<s:property value="cmbday"/>'>
       <option value="">--Select--</option></select>
       <input type="hidden" id="hidcmbday" name="hidcmbday" value='<s:property value="hidcmbday"/>'/></td>
   </tr>
   <tr>
-    <td align="left">Department</td>
-    <td><select id="cmbempdepartment" name="cmbempdepartment" style="width:80%;" value='<s:property value="cmbempdepartment"/>'>
+    <td align="center">Department</td>
+    <td><select id="cmbempdepartment" name="cmbempdepartment" value='<s:property value="cmbempdepartment"/>'>
       <option value="">--Select--</option></select>
       <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/></td>
   </tr>
   <tr>
-    <td align="left">Category</td>
-    <td><select id="cmbempcategory" name="cmbempcategory" style="width:80%;" value='<s:property value="cmbempcategory"/>'>
+    <td align="center">Category</td>
+    <td><select id="cmbempcategory" name="cmbempcategory" value='<s:property value="cmbempcategory"/>'>
       <option value="">--Select--</option></select>
       <input type="hidden" id="hidcmbempcategory" name="hidcmbempcategory" value='<s:property value="hidcmbempcategory"/>'/></td>
   </tr>
   <tr>
-    <td align="left">Employee</td>
-    <td><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
+    <td align="center">Employee</td>
+    <td><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:90%;"placeholder="Double click to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
     <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
   </tr>
    <tr>
-    <td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:95%;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td>
+    <td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:75%;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td>
   </tr>
-  <tr>
-    <td colspan="2">&nbsp;</td>
-    </tr>
+ 
   <tr>
     <td  align="left"><input type="radio" id="rdholiday" name="rdo" value="rdholiday" onclick="radioClick();"><label for="rdholiday">Holiday</label></td>
     <td><select id="cmbholiday" name="cmbholiday" style="width:80%; margin-left:30px;" onchange="newValueSet();getNewGridValue(this.value);" value='<s:property value="cmbholiday"/>'>
@@ -1467,9 +1463,7 @@ body{
 	
 	</td>
     </tr>
-    <tr>
-    <td colspan="2">&nbsp;</td>
-    </tr>
+   
   <tr>
     <td><input type="radio" id="rdovertime" name="rdo" value="rdovertime" onclick="radioClick();"><label for="rdovertime">Over Time</label></td>
     <td><div id="overtime" name="overtime" onchange="newValueSet();" value='<s:property value="overtime"/>'></div>
@@ -1500,13 +1494,14 @@ body{
 </table>
 <table>
 
-       <tr> <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
+       <tr>
+        <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
+    	<td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
 							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
 						</button></td></tr>
 						
-						<tr>
-    <td colspan="2">&nbsp;</td>
+	<tr>
+    	<td colspan="2">&nbsp;</td>
     </tr></table>
 
     </td>

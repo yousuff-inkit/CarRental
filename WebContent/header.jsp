@@ -333,7 +333,27 @@ input:-webkit-autofill:focus {
     margin-top: 2px !important;
     padding-top: 2px !important;
 }
+.action-bar {
+    display: flex;
+    flex-wrap: nowrap; 
+    align-items: center; 
+    gap: 10px;
+    padding: 0.4% 2%;
+    min-height: 40px; 
+}
 
+#errormsg, #savemsg {
+    white-space: nowrap; 
+    overflow: visible;         
+    text-overflow: clip;       
+    flex-shrink: 0;
+    max-width: 400px; 
+}
+
+
+#errormsg {
+    animation: blink 1s infinite alternate;
+}
 
 html, body {
     padding: 0 !important;
@@ -568,8 +588,13 @@ $(document).ready(function () {
 			});
 		});
 		
-		if(errorstatus){
-			return false
+		
+		if (errorstatus) {
+		    $('#errormsg').text(value.label + ' ' + subvalue.msg).show();
+		    $('#savemsg').hide();
+		    return false;
+		} else {
+		    $('#errormsg').hide();
 		}
 			
 	   $.messager.confirm('Confirm', 'Do you want to save changes?', function(r){
@@ -725,7 +750,10 @@ $(document).ready(function () {
 		 document.getElementById("errormsg").innerText="";         document.getElementById("savemsg").innerText="";
 		 $("#brchName").show(); $("#brchNames").hide();  $('#brchNames').attr('readonly', true ); $("#brchNames").val($("#brchName option:selected").text());
 		 $("#currency").show();  $("#currencys").hide(); $('#currencys').attr('readonly', true ); $("#currencys").val($("#currency option:selected").text());
-		}
+		 document.getElementById("errormsg").innerText = "";
+		    document.getElementById("savemsg").innerText = "";
+		    $('#errormsg, #savemsg').hide();	
+	 }
 	 else{
 		 return;
 		 //alert("close form");   
@@ -1918,6 +1946,9 @@ function setapprbrch(branchval){
     <svg viewBox="0 0 20 20"><path d="M7 13.5V6a3 3 0 1 1 6 0v7.5a4.5 4.5 0 1 1-9 0V7h2v6.5a2.5 2.5 0 1 0 5 0V6a1 1 0 1 0-2 0v7.5"/></svg>
     Attach
 </button>
+
+<span id="savemsg" style="display:none; align-self:center; margin-left:15px; color:#22c55e; font-weight:bold; font-size:13px;"></span>
+<span id="errormsg" style="display:none; align-self:center; margin-left:15px; color:#e11d48; font-weight:bold; font-size:13px;"></span>
 
 </div>
 
