@@ -116,7 +116,7 @@
 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 <button type="button" class="icon" id="btnSubmit" title="Load" onclick="funLoadData();">
-							<img alt="Load" src="<%=contextPath%>/icons/submit_new.png">
+							<img alt="Load" src="<%=contextPath%>/icons/icon-reload.png">
 						</button>&nbsp;&nbsp;&nbsp;&nbsp;
 	<table width="100%">
 		<tr>
