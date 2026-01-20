@@ -14,10 +14,147 @@ String dtype=  session.getAttribute("Code").toString();
 	<title>GatewayERP(i)</title>
  <jsp:include page="../../../../includes.jsp"></jsp:include> 
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
+/* ------------------------------
+    GLOBAL STYLES (From Master)
+------------------------------ */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100%;
+    box-sizing: border-box;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    /* Ensure internal scrolling works without visible bars */
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#mainBG::-webkit-scrollbar {
+    display: none;
+}
+
+/* ------------------------------
+    COMMON UI ELEMENTS
+------------------------------ */
+input[type="text"], input[type="email"], select {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* ------------------------------
+    HEADER SECTION (Date, User, DocNo)
+------------------------------ */
+.receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-display {
+    font-size: 14px;
+    background: #eef2f7;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: #354B6A;
+}
+
+/* ------------------------------
+    FORM LAYOUT
+------------------------------ */
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #253858;
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+}
+
+/* Dual input for Mobile/Email row */
+.form-group.split-row {
+    grid-template-columns: 140px 1fr 100px 1fr;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    padding: 5px 0;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 </style>
 
@@ -700,65 +837,83 @@ win.focus();
 <form id="frmLeasePriceRequest" action="saveLeasePriceRequest" autocomplete="OFF" >
 
  <jsp:include page="../../../../header.jsp"></jsp:include><br/>
- <fieldset>
-<legend>Lease Price Request</legend>          <!-- EnquiryDate, docno,cmbclientb,txtclientname,txtaddress -->
-<table width="100%" >                        
-  <tr>
-    <td width="11%" align="right">Date</td>
-    <td colspan="3"><div id='EnquiryDate' name='EnquiryDate' value='<s:property value="EnquiryDate"/>'></div>
-                     </td>
-                     <input type="hidden" id="hidEnquiryDate" name="hidEnquiryDate" value='<s:property value="hidEnquiryDate"/>'/>
-   <%--  <td width="32%" align="right">User Name</td>
-    <td width="33%"><input type="text" id="enquserName" name="enquserName" tabindex="-1" value="<%=session.getAttribute("USERNAME")%>"/></td> --%>
-    <td width="22%" align="right">User Name : <label ><font size="2PX"><%=session.getAttribute("USERNAME")%></font></label></td>
-    <td width="0%" align="right">&nbsp;</td>
-    <td width="10%" align="right">Doc No</td>
-    <td width="21%"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>' onfoucs="disfields();"/></td>
-  </tr>
-   <tr>
-    <td align="right">&nbsp;</td>
-
-    <td colspan="3"><input type="radio" id="r2" name="client" value='<s:property value="1"/>' >Client</td>
-    <td colspan="4"><input type="radio" id="r1" name="genaral" value='<s:property value="0"/>'  ><label id="client">General</label>&nbsp;
+ <div id="mainBG" class="hidden-scrollbar">
     
-    </td>
-  </tr>      
-   <tr>
-     <td align="right">Enquiry Source</td>
-     <td colspan="6"><input type="text" name="enqsrc" id="enqsrc" value='<s:property value="enqsrc"/>' style="width:40%;" onkeydown="getEnqsrc(event);"></td>
-<input type="hidden" name="hidenqsrc" id="hidenqsrc" value='<s:property value="hidenqsrc"/>'>     
-     <td>&nbsp;</td>
-   </tr>
-   <tr>
-    <td align="right">Client</td>     
-    <td colspan="6"><input type="text" id="cmbclient" name="cmbclient" placeholder="Press F3 To Search" value='<s:property value="cmbclient"/>' onKeyDown="getclinfo(event);" onfocus="disfields();">
-		
-		<input type="text" id="txtclientname" name="txtclientname" style="width: 40%;" value='<s:property value="txtclientname"/>' onfocus="reqdata();disfields();"></td>
-    <td><button type="button" id="btnnewclient"  class="myButton" onclick="text();">Create new Client</button>
-    &nbsp;&nbsp;
-    <button type="button" id="btnleasecalc" class="myButton" onClick="funCreateLeaseCalc();">Create Lease Calculator</button>
-    </td>
-  </tr>
-   <tr>
-     <td align="right">Address</td>
-     <td colspan="6"><input type="text" id="txtaddress" name="txtaddress" style="width:70%;" value='<s:property value="txtaddress"/>' onfocus="reqdata();disfields();"></td>
-     <td>&nbsp;</td>
-   </tr>
-   <tr>
-     <td align="right">MOB</td>
-     <td width="18%"><input type="text" id="txtmobile" name="txtmobile" style="width:68.7%;" value='<s:property value="txtmobile"/>' onfocus="reqdata();disfields();"></td>
-     <td width="9%">Email</td>
-     <td colspan="4"><input type="email" id="txtemail" name="txtemail" style="width: 50%;" value='<s:property value="txtemail"/>' onfocus="reqdata();disfields();"></td>
-     <td>&nbsp;</td>
-   </tr>
-   <tr>
-     <td align="right">Remarks</td>
-     <td colspan="6"><input type="text" id="txtRemarks" name="txtRemarks" style="width:69.9%;" value='<s:property value="txtRemarks"/>'onfocus="reqdata();disfields();"></td>
-     <td>&nbsp;</td>
-   </tr>
- 
- </table>
-</fieldset>           
+    <div class="receipt-header">
+        <div class="header-left">
+            <label>Date</label>
+            <div id='EnquiryDate' name='EnquiryDate' value='<s:property value="EnquiryDate"/>'></div>
+            <input type="hidden" id="hidEnquiryDate" name="hidEnquiryDate" value='<s:property value="hidEnquiryDate"/>'/>
+            
+            <div class="user-display">
+                <b>User:</b> <%=session.getAttribute("USERNAME")%>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <label>Doc No</label>
+            <input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>' onfoucs="disfields();" style="width: 150px;"/>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>Lease Price Request</h2>
+        
+        <div class="form-group">
+            <label>Type</label>
+            <div class="radio-group">
+                <span>
+                    <input type="radio" id="r2" name="client" value='<s:property value="1"/>'> 
+                    <label for="r2" style="font-weight: normal;">Client</label>
+                </span>
+                <span>
+                    <input type="radio" id="r1" name="genaral" value='<s:property value="0"/>'> 
+                    <label id="client" style="font-weight: normal;">General</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="enqsrc">Enquiry Source</label>
+            <div>
+                <input type="text" name="enqsrc" id="enqsrc" value='<s:property value="enqsrc"/>' style="width: 40%;" onkeydown="getEnqsrc(event);">
+                <input type="hidden" name="hidenqsrc" id="hidenqsrc" value='<s:property value="hidenqsrc"/>'>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cmbclient">Client</label>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="cmbclient" name="cmbclient" placeholder="Press F3 To Search" value='<s:property value="cmbclient"/>' onKeyDown="getclinfo(event);" onfocus="disfields();" style="width: 30%;">
+                <input type="text" id="txtclientname" name="txtclientname" style="width: 50%;" value='<s:property value="txtclientname"/>' onfocus="reqdata();disfields();">
+                
+                <div class="button-container">
+                    <button type="button" id="btnnewclient" class="myButton" onclick="text();">New Client</button>
+                    <button type="button" id="btnleasecalc" class="myButton" onClick="funCreateLeaseCalc();">Lease Calculator</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="txtaddress">Address</label>
+            <input type="text" id="txtaddress" name="txtaddress" style="width: 80%;" value='<s:property value="txtaddress"/>' onfocus="reqdata();disfields();">
+        </div>
+
+        <div class="form-group split-row">
+            <label for="txtmobile">Mobile</label>
+            <input type="text" id="txtmobile" name="txtmobile" value='<s:property value="txtmobile"/>' onfocus="reqdata();disfields();">
+            
+            <label for="txtemail">Email</label>
+            <input type="email" id="txtemail" name="txtemail" value='<s:property value="txtemail"/>' onfocus="reqdata();disfields();">
+        </div>
+
+        <div class="form-group">
+            <label for="txtRemarks">Remarks</label>
+            <input type="text" id="txtRemarks" name="txtRemarks" style="width: 80%;" value='<s:property value="txtRemarks"/>' onfocus="reqdata();disfields();">
+        </div>
+    </div>
+
+    </div>
 <br/>
 <fieldset>
 <div id="enqdiv">
