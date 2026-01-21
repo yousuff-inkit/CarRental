@@ -459,7 +459,7 @@
 
 .hidden-scrollbar {
 
-    height: 530px;
+    height: 80vh;
 
     overflow-x: hidden;
 
@@ -539,7 +539,7 @@ body {
 
     padding: 4px 8px;
 
-    font-size: 13px;
+    font-size: 14px;
 
     width: 120px;
 
@@ -788,7 +788,7 @@ body {
     font-weight: 500;
 
     color: #333;
-
+font:Tahoma 14px;
 }
 
 
@@ -877,7 +877,26 @@ h2.section-title {
 
 }
 
+/* Specifically target the docno to force a smaller width */
+#mainBG #docno {
+    width: 100px !important;
+    max-width: 100px !important;
+    flex: none !important;
+    display: inline-block !important;
+}
 
+/* Ensure the container doesn't force it to stretch */
+.compact-cell {
+    width: auto !important;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.right-align-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 
 </style>
  
@@ -897,104 +916,80 @@ h2.section-title {
 
 
 
-<h3>For Days in Year</h3>
+<div class="section-block" style="margin-bottom: 20px;">
+    <div class="agmt-info-grid" style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px 25px; align-items: center;">
+        
+        <label for="masterdate">Date</label>
+        <div class="compact-cell">
+            <div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
+            <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/>
+        </div>
+
+        <label for="docno" style="text-align: right;">Doc No</label>
+        <div class="right-align-container">
+            <input type="text" id="docno" name="docno" tabindex="-1" readonly 
+                   value='<s:property value="docno"/>' />
+        </div>
+
+    </div>
+</div>
 
 <div class="table-section">
-
-<table class="cr-table" width="99%"  >
-
-  <tr>
-
-    <td width="13%" align="right">Date</td>  
-
-    <td width="12%"><div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
-
-                     <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/></td>
-
-    <td colspan="5">&nbsp;</td>
-
-    <td width="4%" align="right">Doc No</td>
-
-    <td width="9%"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>
-
-  </tr>
-
-  <tr>
-
-    <td align="right">Valid From</td> 
-
-    <td><div id='validfromdate' name='validfromdate' value='<s:property value="validfromdate"/>'></div>
-
-                     <input type="hidden" id="hidvalidfromdate" name="hidvalidfromdate" value='<s:property value="hidvalidfromdate"/>'/></td>
-
-    <td width="10%" align="right">Last Revised On</td>
-
-    <td width="11%"><div id='lastreviseddate' name='lastreviseddate' value='<s:property value="lastreviseddate"/>'></div>
-
-                     <input type="hidden" id="hidlastreviseddate" name="hidlastreviseddate" value='<s:property value="hidlastreviseddate"/>'/></td>
-
-    <td width="9%" align="right">PayRoll Category</td>
-
-    <td width="14%"><select name="cmbcategory" id="cmbcategory" style="width:99%;"  value='<s:property value="cmbcategory"/>'><option value="">-- select -- </option></select></td>
-
-   <td width="14%" align="right">Working Hours/Day</td>
-<td width="11%">
-    <div id='workingtime' name='workingtime' style="width:100% !important; min-width:110px;" value='<s:property value="workingtime"/>'></div>
-    <input type="hidden" id="hidworkingtime" name="hidworkingtime" value='<s:property value="hidworkingtime"/>'/>
-</td>
-
-    <td colspan="2" rowspan="3">&nbsp;</td>
-
-  </tr>
-
-  <tr>
-
-  <td align="right">Annual Leave:Leave ID</td>
-
-    <td><select name="leaveid" id="leaveid" style="width:99%;"  value='<s:property value="leaveid"/>'><option value="">-- select --</option></select>
-
-  </td>
-
-    <td align="right">Weekly Off</td>
-
-    <td colspan="3"><fieldset>
-
-  <input type="checkbox" id="mon" name="mon"  value="0"  onclick="$(this).attr('value', this.checked ? 1 : 0)"  > Mon
-
-  <input type="checkbox" id="tue" name="tue"    value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Tue
-
-  <input type="checkbox" id="wed" name="wed"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Wed
-
-  <input type="checkbox" id="thu" name="thu"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Thu
-
-  <input type="checkbox" id="fri" name="fri"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Fri
-
-  <input type="checkbox" id="sat" name="sat"   value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sat
-
-  <input type="checkbox" id="sun" name="sun"  value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sun
-
-  </fieldset></td>
-
-    <td colspan="2" align="left"> 
-
-    <input type="checkbox" id="carryforward" name="carryforward"  value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" >Carry Forward</td>
-
-  </tr>
-
-  <tr>
-
-    <td align="right">Eligible Days</td>
-
-    <td><input type="text" id="eligibledays" name="eligibledays"   onkeypress="javascript:return isNumber (event)"  value='<s:property value="eligibledays"/>' ></td>
-
-    <td align="right">In a Year</td>
-
-    <td colspan="5"><input type="text" id="forworkingdays" name="forworkingdays"  onkeypress="javascript:return isNumber (event)"  value='<s:property value="forworkingdays"/>' ></td>
-
-  </tr>
-
-</table>
-
+    <h3>For Days in Year</h3>
+    <table class="cr-table" width="99%">
+        <tr>
+            <td width="13%" align="right">Valid From</td> 
+            <td width="12%">
+                <div id='validfromdate' name='validfromdate' value='<s:property value="validfromdate"/>'></div>
+                <input type="hidden" id="hidvalidfromdate" name="hidvalidfromdate" value='<s:property value="hidvalidfromdate"/>'/>
+            </td>
+            <td width="10%" align="right">Last Revised On</td>
+            <td width="11%">
+                <div id='lastreviseddate' name='lastreviseddate' value='<s:property value="lastreviseddate"/>'></div>
+                <input type="hidden" id="hidlastreviseddate" name="hidlastreviseddate" value='<s:property value="hidlastreviseddate"/>'/>
+            </td>
+            <td width="9%" align="right">PayRoll Category</td>
+            <td width="14%">
+                <select name="cmbcategory" id="cmbcategory" style="width:99%;" value='<s:property value="cmbcategory"/>'>
+                    <option value="">-- select -- </option>
+                </select>
+            </td>
+            <td width="14%" align="right">Working Hours/Day</td>
+            <td width="11%">
+                <div id='workingtime' name='workingtime' style="width:100% !important; min-width:110px;" value='<s:property value="workingtime"/>'></div>
+                <input type="hidden" id="hidworkingtime" name="hidworkingtime" value='<s:property value="hidworkingtime"/>'/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Annual Leave:Leave ID</td>
+            <td>
+                <select name="leaveid" id="leaveid" style="width:99%;" value='<s:property value="leaveid"/>'>
+                    <option value="">-- select --</option>
+                </select>
+            </td>
+            <td align="right">Weekly Off</td>
+            <td colspan="3">
+                <fieldset style="border: 1px solid #d1d5db; border-radius: 6px; padding: 5px; background: #fff;">
+                    <input type="checkbox" id="mon" name="mon" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Mon
+                    <input type="checkbox" id="tue" name="tue" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Tue
+                    <input type="checkbox" id="wed" name="wed" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Wed
+                    <input type="checkbox" id="thu" name="thu" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Thu
+                    <input type="checkbox" id="fri" name="fri" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Fri
+                    <input type="checkbox" id="sat" name="sat" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sat
+                    <input type="checkbox" id="sun" name="sun" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sun
+                </fieldset>
+            </td>
+            <td colspan="2" align="left"> 
+                <input type="checkbox" id="carryforward" name="carryforward" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Carry Forward
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Eligible Days</td>
+            <td><input type="text" id="eligibledays" name="eligibledays" onkeypress="javascript:return isNumber (event)" value='<s:property value="eligibledays"/>'></td>
+            <td align="right">In a Year</td>
+            <td colspan="5"><input type="text" id="forworkingdays" name="forworkingdays" onkeypress="javascript:return isNumber (event)" value='<s:property value="forworkingdays"/>'></td>
+        </tr>
+    </table>
 </div>
 
  <table class="cr-table" width="100%">
@@ -1003,7 +998,7 @@ h2.section-title {
 
  <td height="234" width="55%">
 
-  <h3>Terminal Benefits</h3>
+  <h2>Terminal Benefits</h2>
 
    <table class="hideterm cr-table" id="fs1" width="100%">
 
@@ -1017,13 +1012,13 @@ h2.section-title {
 
  <td width="35%">
 
-    <h3>Termination Details</h3>
+    <h2>Termination Details</h2>
 
    <div class="cr-table" id="trimi"> <jsp:include page="terminationdetailsgrid.jsp"></jsp:include></div>
 
 
 
- <h3>Resignation Details</h3>
+ <h2>Resignation Details</h2>
 
    <div class="cr-table" id="resig"> <jsp:include page="resignationdetailsgrid.jsp"></jsp:include></div>
 
@@ -1045,7 +1040,7 @@ h2.section-title {
 
     <div id="fs2" >
 
-<h3>Salary Calculation Formula (Hrs)</h3>
+<h2>Salary Calculation Formula (Hrs)</h2>
 
     <table class="cr-table" width="100%">
 
