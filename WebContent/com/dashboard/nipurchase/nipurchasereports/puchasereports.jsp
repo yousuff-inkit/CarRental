@@ -15,57 +15,104 @@
 
 
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
 
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 
 </style>
 
@@ -280,65 +327,155 @@ function isNumber(evt) {
 </head>
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background">  
-<div class='hidden-scrollbar'>                               
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		<tr><td  width="20%">&nbsp;</td><td  width="80%">&nbsp;</td></tr>
- 
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                    
-                    
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
- 
-	 	<tr ><td align="right"  > <label class="branch">DOC NO</label> </td><td align="left">
-	 	 <input type="text" id="fromdocno" name="fromdocno" style="width:40%;height:20px;" placeholder="From"  value='<s:property value="fromdocno"/>' onkeypress="javascript:return isNumber (event);" />&nbsp;-&nbsp;<input type="text" id="todocno" placeholder="To"  name="todocno" style="width:40%;height:20px;" value='<s:property value="todocno"/>' onkeypress="javascript:return isNumber (event);"/> </td></tr>
-	<tr ><td align="right"  > <label class="branch">Amount</label> </td><td align="left">
-	 	 <input type="text" id="fromamount" name="fromamount" style="width:40%;height:20px;text-align:right;" placeholder="From"  value='<s:property value="fromamount"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);" />&nbsp;-&nbsp;<input type="text" id="toamount" placeholder="To"  name="toamount" style="width:40%;height:20px;text-align:right;" value='<s:property value="toamount"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);" /> </td></tr>
-   <tr><td align="right"><label class="branch">Vendor</label></td>
-	<td align="left"><input type="text" id="acno" name="acno" style="width:88%;height:20px;" placeholder="Press F3 To search" readonly="readonly" value='<s:property value="acno"/>' tabindex="-1" onkeydown="getacc(event);"/></td></tr> 
-	<tr><td>&nbsp;</td> 
-	<td><input type="text" id="accname" name="accname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="accname"/>' tabindex="-1"/>
-     </td></tr>
- 
- 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
-   <tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">
-<!--  <tr><td colspan="2">&nbsp;</td></tr -->
+<div class="hidden-scrollbar">
 
-	<tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height: 100px;"></div></td>
-	</tr>	
-	</table>
-	</fieldset>
-	
-	<input type="hidden" id="accdocno" name="accdocno" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="accdocno"/>' tabindex="-1"/>
-	
-	 
+<table width="100%">
+<tr>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED – WILL APPEAR) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">From</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Doc No</td>
+        <td>
+            <input type="text"
+                   id="fromdocno"
+                   name="fromdocno"
+                   class="master-input half-input"
+                   placeholder="From"
+                   value='<s:property value="fromdocno"/>'
+                   onkeypress="return isNumber(event);">
+            <span style="padding:0 6px;">-</span>
+            <input type="text"
+                   id="todocno"
+                   name="todocno"
+                   class="master-input half-input"
+                   placeholder="To"
+                   value='<s:property value="todocno"/>'
+                   onkeypress="return isNumber(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Amount</td>
+        <td>
+            <input type="text"
+                   id="fromamount"
+                   name="fromamount"
+                   class="master-input half-input text-right"
+                   placeholder="From"
+                   value='<s:property value="fromamount"/>'
+                   onblur="funRoundAmt(this.value,this.id);"
+                   onkeypress="return isNumber(event);">
+            <span style="padding:0 6px;">-</span>
+            <input type="text"
+                   id="toamount"
+                   name="toamount"
+                   class="master-input half-input text-right"
+                   placeholder="To"
+                   value='<s:property value="toamount"/>'
+                   onblur="funRoundAmt(this.value,this.id);"
+                   onkeypress="return isNumber(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Vendor</td>
+        <td>
+            <input type="text"
+                   id="acno"
+                   name="acno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 To Search"
+                   value='<s:property value="acno"/>'
+                   tabindex="-1"
+                   onkeydown="getacc(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <input type="text"
+                   id="accname"
+                   name="accname"
+                   class="master-input"
+                   readonly
+                   tabindex="-1"
+                   value='<s:property value="accname"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    class="btn-submit"
+                    onclick="funClearInfo();">Clear</button>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <div id="paychaaaaa" style="width:100%; height:100px;"></div>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
+<input type="hidden"
+       id="accdocno"
+       name="accdocno"
+       value='<s:property value="accdocno"/>'>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="listdiv"><jsp:include page="puchasereportGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ===== RIGHT GRID ===== -->
+<td width="80%" valign="top">
+<table width="100%">
+<tr>
+    <td>
+        <div id="listdiv">
+            <jsp:include page="puchasereportGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+</table>
+</td>
+
 </tr>
 </table>
 
 </div>
- 
-<div id="accountDetailsWindow">
-	<div></div> 
-</div>
 
+<div id="accountDetailsWindow">
+    <div></div>
+</div>
 
 </div>
 </body>
+
 </html>

@@ -10,43 +10,104 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 </style>
 
 <script type="text/javascript">
@@ -384,100 +445,220 @@ function funExportBtn(){
 </head>
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmloanrestructuring" action="saveloanrestructuring" method="post" autocomplete="off"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<form id="frmloanrestructuring"
+      action="saveloanrestructuring"
+      method="post"
+      autocomplete="off">
+
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" rowspan="2" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<tr><td colspan="2"><jsp:include page="../../heading.jsp"></jsp:include></td></tr>
-    <tr><td width="35%" align="right"><label class="branch">From Date</label></td>
-	<td width="65%" align="left"><div id="fromdate" name="fromdate"></div></td></tr> 
-	<tr>
-	  <td align="right"><label class="branch">To Date</label></td>
-	  <td><div id="todate" name="todate"></div></td>
-	</tr>
-	<tr><td align="right"><label class="branch">Purchase Docno</label></td>
-	  <td><input type="text" name="purchasedocno" id="purchasedocno" placeholder="Press F3 to Search" readonly onKeyDown="getPurchaseDoc(event);" style="height:18px;">
-	  <input type="hidden" name="hidpurchasedocno" id="hidpurchasedocno"></td>
-	</tr>
-	<tr>   
-	  <td align="right"><label class="branch" >Vendor</label></td>
-	  <td><input type="text" name="vendor" id="vendor" placeholder="Press F3 to Search" readonly onKeyDown="getPurchaseDoc(event);" style="height:18px;"></td>
-	</tr>
-	<tr><td align="right"><label class="branch">Deal No</label></td>
-	  <td><input type="text" id="dealno" name="dealno" placeholder="Press F3 to Search" readonly onKeyDown="getPurchaseDoc(event);" style="height:18px;"></td>
-	</tr>
-		<tr><td align="right"><label class="branch">Total Loan Amt</label></td>
-	  <td><input type="text" id="total" name="total" style="height:18px;"></td>
-	</tr>  
-	 <tr><td align="right"><label class="branch">Balance Loan A/c</label></td>
-	  <td><input type="text" id="balanceloanacno" name="balanceloanacno" style="height:18px;" placeholder="Press F3 to Search" readonly onkeydown="getBalanceLoanAcno(event);">
-	  <input type="hidden" id="hidbalanceloanacno" name="hidbalanceloanacno" style="height:18px;" ></td>
-	</tr> 
-	<tr>
-	  <td align="right"><label class="branch">Balance Amt</label></td>
-	  <td><input type="text" id="balanceloanamt" name="balanceloanamt" style="height:18px;" readonly ></td>
-	</tr>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" rowspan="2" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED – WILL APPEAR) -->
     <tr>
-      <td align="right"><label class="branch">Vehicle to Remove</label></td>
-      <td>
-      <textarea name="vehicleremove" id="vehicleremove" readonly style="margin-bottom:10px;resize:none;" rows="5"></textarea></td></tr>
-      <tr><td colspan="2" align="center">
-      <button type="button" class="myButtons" id="btnaddfleet" onclick="funAddFleet();">Search Fleet</button>&nbsp;
-      <button type="button" class="myButtons" id="btnremovefleet" onclick="funClearFleet();">Clear Fleet</button>
-      </td>
+        <td colspan="2">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </td>
     </tr>
-    <input type="hidden" name="hidvehicleremove" id="hidvehicleremove">
-	<tr><td align="right"><label class="branch">Posting Date</label></td>
-	  <td align="left"><div id="postingdate" name="postingdate" value='<s:property value="postingdate"/>'></div></td>
-	</tr>
-<!--     <tr><td colspan="2">&nbsp;</td></tr>  -->
-    
-	
-	<tr><td colspan="2" align="center"><button type="button" id="btnedit" name="btnedit" class="myButton" onClick="funEdit();">Edit</button>
-	<button type="button" id="btnsave" name="btnsave" class="myButton" onClick="funSave();">Save</button></td></tr> 
-	
-	<tr><td colspan="2">&nbsp;</td></tr>
-<tr><td colspan="2">&nbsp;</td></tr>
-<tr><td colspan="2">&nbsp;</td></tr>
-	
-	</table>
-	</fieldset>
+
+    <tr>
+        <td class="label-cell">From Date</td>
+        <td><div id="fromdate" name="fromdate"></div></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To Date</td>
+        <td><div id="todate" name="todate"></div></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Purchase Doc No</td>
+        <td>
+            <input type="text"
+                   id="purchasedocno"
+                   name="purchasedocno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getPurchaseDoc(event);">
+            <input type="hidden"
+                   id="hidpurchasedocno"
+                   name="hidpurchasedocno">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Vendor</td>
+        <td>
+            <input type="text"
+                   id="vendor"
+                   name="vendor"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getPurchaseDoc(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Deal No</td>
+        <td>
+            <input type="text"
+                   id="dealno"
+                   name="dealno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getPurchaseDoc(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Total Loan Amt</td>
+        <td>
+            <input type="text"
+                   id="total"
+                   name="total"
+                   class="master-input">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Balance Loan A/c</td>
+        <td>
+            <input type="text"
+                   id="balanceloanacno"
+                   name="balanceloanacno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getBalanceLoanAcno(event);">
+            <input type="hidden"
+                   id="hidbalanceloanacno"
+                   name="hidbalanceloanacno">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Balance Amt</td>
+        <td>
+            <input type="text"
+                   id="balanceloanamt"
+                   name="balanceloanamt"
+                   class="master-input"
+                   readonly>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Vehicle to Remove</td>
+        <td>
+            <textarea id="vehicleremove"
+                      name="vehicleremove"
+                      class="master-textarea"
+                      readonly></textarea>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    class="btn-submit"
+                    id="btnaddfleet"
+                    onclick="funAddFleet();">
+                Search Fleet
+            </button>
+
+            <button type="button"
+                    class="btn-submit"
+                    id="btnremovefleet"
+                    onclick="funClearFleet();">
+                Clear Fleet
+            </button>
+        </td>
+    </tr>
+
+    <input type="hidden" id="hidvehicleremove" name="hidvehicleremove">
+
+    <tr>
+        <td class="label-cell">Posting Date</td>
+        <td>
+            <div id="postingdate"
+                 name="postingdate"
+                 value='<s:property value="postingdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    id="btnedit"
+                    class="btn-submit"
+                    onclick="funEdit();">Edit</button>
+
+            <button type="button"
+                    id="btnsave"
+                    class="btn-submit"
+                    onclick="funSave();">Save</button>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%" height="255">
-	<table width="100%">
-		<tr>
-			 <td><div id="mortgagediv"><jsp:include page="mortgageGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-</tr>
+
+<!-- ===== RIGHT GRID ===== -->
+<td width="80%" valign="top">
+<table width="100%">
 <tr>
-  <td><div id="deletediv"><jsp:include page="deleteGrid.jsp"></jsp:include></div></td>
+    <td>
+        <div id="mortgagediv">
+            <jsp:include page="mortgageGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+    <div id="deletediv">
+        <jsp:include page="deleteGrid.jsp"></jsp:include>
+    </div>
+</td>
+</tr>
+
 </table>
 </div>
 
-<div id="purchasewindow">
-   <div ></div>
-</div>
-<div id="balanceloanacwindow">
-   <div ></div>
-</div>
-<div id="vehiclewindow">
-   <div ></div>
-</div>
+<!-- ===== WINDOWS & HIDDEN FIELDS (UNCHANGED) ===== -->
+<div id="purchasewindow"><div></div></div>
+<div id="balanceloanacwindow"><div></div></div>
+<div id="vehiclewindow"><div></div></div>
+
 <div id="currentdate" name="currentdate" hidden="true"></div>
-<input type="hidden" name="tempmode" id="tempmode">
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>    
-<input type="hidden" name="hidvehicle" id="hidvehicle" value='<s:property value="hidvehicle"/>' />
-<input type="hidden" name="vehicle" id="vehicle">
-<input type="hidden" id="gridlength" name="gridlength" value='<s:property value="gridlength"/>' />
-<input type="hidden" id="dltgridlength" name="dltgridlength" value='<s:property value="dltgridlength"/>' />
-<input type="hidden" id="hidprincipalsum" name="hidprincipalsum" value='<s:property value="hidprincipalsum"/>' />
-<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>' />
+
+<input type="hidden" id="tempmode" name="tempmode">
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+<input type="hidden" id="hidvehicle" name="hidvehicle" value='<s:property value="hidvehicle"/>'>
+<input type="hidden" id="vehicle" name="vehicle">
+<input type="hidden" id="gridlength" name="gridlength" value='<s:property value="gridlength"/>'>
+<input type="hidden" id="dltgridlength" name="dltgridlength" value='<s:property value="dltgridlength"/>'>
+<input type="hidden" id="hidprincipalsum" name="hidprincipalsum" value='<s:property value="hidprincipalsum"/>'>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+
 </form>
-</div> 
+</div>
 </body>
+
 </html>
