@@ -9,19 +9,104 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 </style>
 
 <script type="text/javascript">
@@ -116,60 +201,123 @@ worksheetName:"Trial Balance"
 </script>
 </head>
 <body onload="getBranch();disableprint();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Period</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>  
-	<tr><td colspan="2"><input type="checkbox" id="chckincludingzero" name="chckincludingzero" value="" onchange="includingzerocheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" /> 
-      <input type="hidden" id="hidchckincludingzero" name="hidchckincludingzero" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidchckincludingzero"/>'/></td></tr> 
-	 <tr><td align="right"><label class="branch">Type</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:40%;" value='<s:property value="cmbtype"/>'>
-    <option value="">All</option><option value="AP">AP</option><option value="AR">AR</option><option value="GL">GL</option>
-    <option value="HR">HR</option></select></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2" align="center"><button type="button" class="myButton" id="btnprint" onclick="funPrint();">Print</button></td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>	
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	</table>
-	</fieldset>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (DO NOT CHANGE) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">Period</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <input type="checkbox"
+                   id="chckincludingzero"
+                   name="chckincludingzero"
+                   onchange="includingzerocheck();"
+                   onclick="$(this).attr('value', this.checked ? 1 : 0)">
+            <label class="branch">Including Zero</label>
+
+            <input type="hidden"
+                   id="hidchckincludingzero"
+                   name="hidchckincludingzero"
+                   value='<s:property value="hidchckincludingzero"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="cmbtype"
+                    name="cmbtype"
+                    class="master-input"
+                    value='<s:property value="cmbtype"/>'>
+                <option value="">All</option>
+                <option value="AP">AP</option>
+                <option value="AR">AR</option>
+                <option value="GL">GL</option>
+                <option value="HR">HR</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    class="myButton"
+                    id="btnprint"
+                    onclick="funPrint();">
+                Print
+            </button>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="trialBalanceDiv"><jsp:include page="trialBalanceGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ===== RIGHT PANEL ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="trialBalanceDiv">
+            <jsp:include page="trialBalanceGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
+<!-- ===== FOOT TOTAL ===== -->
 <div id="trialDiv" hidden="true">
 <table width="100%">
 <tr>
-        <td width="98%" align="right"><input type="text" class="textbox" id="txtnetamount" name="txtnetamount" style="width:80%;text-align: right;" value='<s:property value="txtnetamount"/>'/></td>
-        <td width="2%">&nbsp;</td>
+    <td align="right">
+        <input type="text"
+               class="textbox"
+               id="txtnetamount"
+               name="txtnetamount"
+               style="text-align:right;"
+               value='<s:property value="txtnetamount"/>'>
+    </td>
 </tr>
 </table>
 </div>
+
 </div>
 </div>
 </body>
+
 </html>

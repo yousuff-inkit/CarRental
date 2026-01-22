@@ -13,9 +13,104 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-.tabheight{
-height:190px;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -333,120 +428,189 @@ function agmtSearchContent(url) {
  </script>
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-		<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 
-	 <tr><td  align="right" ><label class="branch">Upto Date</label></td><td align="left"><div id='drvuptodate' name='drvuptodate' value='<s:property value="drvuptodate"/>'></div>
-                    <input type="hidden" id="hiddrvuptodate" name="hiddrvuptodate" value='<s:property value="hiddrvuptodate"/>'/></td></tr>
-  
-  
-  
-  <tr> <td  align="right"><label class="branch">Type</label></td><td align="left">
- <select name="type" id="type" style="width:80%;" name="type"  value='<s:property value="type"/>'>
-     <option value="1" >Delivery</option>
-     <option value="2">Collection</option>
-     <option value="3">Replacement</option>
-     <option value="4">Movement</option>
-  </select></td></tr>
-  
-  
-  
-  <tr> <td>
-     <input type="hidden" name="doc_no" id="doc_no" value='<s:property value="doc_no"/>' >
-     <input type="hidden" name="voc_no" id="voc_no"  value='<s:property value="voc_no"/>' >
-     <input type="hidden" name="hidtype" id="hidtype" value='<s:property value="hidtype"/>' >
-     <input type="hidden" name="fleet_no" id="fleet_no" value='<s:property value="fleet_no"/>' >
-     <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>' >
-     <input type="hidden" name="drid" id="drid" value='<s:property value="drid"/>' >
-     <input type="hidden" name="drvid" id="drvid" value='<s:property value="drvid"/>' >
-      <input type="hidden" name="deldrvid" id="deldrvid" value='<s:property value="deldrvid"/>' >
-      <input type="hidden" name="agmtno" id="agmtno" value='<s:property value="agmtno"/>' >
-        <input type="hidden" name="hidbrhid" id="hidbrhid" value='<s:property value="hidbrhid"/>' >
-    
-      </td> </tr>
- 	
-	<tr> <td  align="right" class="ptypehide"><label class="branch">Process type</label></td><td align="left" class="ptypehide">
- <select name="type" id="processtype" style="width:80%;" name="type"  value='<s:property value="processtype"/>'>
-     <option value="1" >Delivery</option>
-     <option value="2">Collection</option>
-  </select></td></tr>
-	<tr>
-   <td align="right"><label class="branch">Driver</label></td>
-   <td><input type="hidden" name="drids" id="drids" >
- <input type="text" name="drnames" id="drnames"  placeholder="Press F3 to Search"  style="width:80%;height:30%" onkeydown="getDrid(event);" ></td>
- </tr>
-  <tr><td colspan="2">&nbsp;</td></tr>
-	
-	
-   <tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()">
- </td></tr>
- 	<tr><td colspan="2">&nbsp;</td></tr>
- 	
-  
-  <tr>
-  <td colspan="2" >
-<fieldset><legend>Delivery Details</legend>
-  <table width="100%">
- 
-   <tr> <td  align="right"><label class="branch">Type</label></td><td align="left">
- <select name="type" id="agmttype" style="width:80%;" name="agmttype"  value='<s:property value="agmttype"/>'>
-     <option value="RAG" >Rental</option>
-     <option value="LAG">Lease</option>
-  </select></td></tr>
- 	<tr>
-   <td align="right"><label class="branch">Doc No</label></td>
-   <td><input type="hidden" name="docnos" id="docnos" >
- <input type="text" name="docnoos" id="docnoos"  placeholder="Press F3 to Search"  style="width:80%;height:30%" onkeydown="getAgmtno(event);" ></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Driver</label></td>
-   <td><input type="hidden" name="dlvdrv" id="dlvdrv" >
- <input type="text" name="dlvdrvs" id="dlvdrvs"  placeholder="Press F3 to Search"  style="width:80%;height:30%" onkeydown="getdelDrid(event);" ></td>
- </tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-  <tr><td  align="center" colspan="2"><input type="Button" name="deldriverUpdate" id="deldriverUpdate" class="myButton" value="Update" onclick="fundelupdate()">
- </td></tr>
- 	<tr><td colspan="2">&nbsp;</td></tr>
- 	</table>
-</fieldset>
-</td></tr>
 
-<tr class="tabheight"><td >&nbsp;</td></tr>     
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
 
-       
-  </table>
-  
-   </fieldset>
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td class="label-cell">Upto Date</td>
+                <td>
+                    <div id="drvuptodate" name="drvuptodate"
+                         value='<s:property value="drvuptodate"/>'></div>
+                    <input type="hidden" id="hiddrvuptodate" name="hiddrvuptodate"
+                           value='<s:property value="hiddrvuptodate"/>'/>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Type</td>
+                <td>
+                    <select id="type" name="type" style="width:100%;"
+                            value='<s:property value="type"/>'>
+                        <option value="1">Delivery</option>
+                        <option value="2">Collection</option>
+                        <option value="3">Replacement</option>
+                        <option value="4">Movement</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!-- HIDDEN FIELDS -->
+            <tr><td colspan="2">
+                <input type="hidden" id="doc_no" name="doc_no" value='<s:property value="doc_no"/>'>
+                <input type="hidden" id="voc_no" name="voc_no" value='<s:property value="voc_no"/>'>
+                <input type="hidden" id="hidtype" name="hidtype" value='<s:property value="hidtype"/>'>
+                <input type="hidden" id="fleet_no" name="fleet_no" value='<s:property value="fleet_no"/>'>
+                <input type="hidden" id="cldocno" name="cldocno" value='<s:property value="cldocno"/>'>
+                <input type="hidden" id="drid" name="drid" value='<s:property value="drid"/>'>
+                <input type="hidden" id="drvid" name="drvid" value='<s:property value="drvid"/>'>
+                <input type="hidden" id="deldrvid" name="deldrvid" value='<s:property value="deldrvid"/>'>
+                <input type="hidden" id="agmtno" name="agmtno" value='<s:property value="agmtno"/>'>
+                <input type="hidden" id="hidbrhid" name="hidbrhid" value='<s:property value="hidbrhid"/>'>
+            </td></tr>
+
+            <tr class="ptypehide">
+                <td class="label-cell">Process Type</td>
+                <td>
+                    <select id="processtype" name="processtype" style="width:100%;"
+                            value='<s:property value="processtype"/>'>
+                        <option value="1">Delivery</option>
+                        <option value="2">Collection</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Driver</td>
+                <td>
+                    <input type="hidden" id="drids" name="drids">
+                    <input type="text" id="drnames" name="drnames"
+                           placeholder="Press F3 to Search"
+                           onkeydown="getDrid(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="button"
+                            id="driverUpdate"
+                            class="myButton"
+                            onclick="funupdate();">
+                        Update
+                    </button>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- DELIVERY DETAILS -->
+        <div class="filter-card">
+        <fieldset>
+            <legend>Delivery Details</legend>
+
+            <table class="filter-table">
+
+                <tr>
+                    <td class="label-cell">Type</td>
+                    <td>
+                        <select id="agmttype" name="agmttype" style="width:100%;"
+                                value='<s:property value="agmttype"/>'>
+                            <option value="RAG">Rental</option>
+                            <option value="LAG">Lease</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Doc No</td>
+                    <td>
+                        <input type="hidden" id="docnos" name="docnos">
+                        <input type="text" id="docnoos" name="docnoos"
+                               placeholder="Press F3 to Search"
+                               onkeydown="getAgmtno(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Driver</td>
+                    <td>
+                        <input type="hidden" id="dlvdrv" name="dlvdrv">
+                        <input type="text" id="dlvdrvs" name="dlvdrvs"
+                               placeholder="Press F3 to Search"
+                               onkeydown="getdelDrid(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <button type="button"
+                                id="deldriverUpdate"
+                                class="myButton"
+                                onclick="fundelupdate();">
+                            Update
+                        </button>
+                    </td>
+                </tr>
+
+            </table>
+        </fieldset>
+        </div>
+
+    </div>
+</div>
+</div>
 
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			  <td><div id="drvupdiv"><jsp:include page="driverupdateGrid.jsp"></jsp:include></div></td> 
-			  </tr>
-			 
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="drvupdiv">
+            <jsp:include page="driverupdateGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
-</div>
-<div id="dridwindow">
-<div></div>
-</div>
-<div id="deldridwindow">
-<div></div>
-</div>
-<div id="agmtnowindow">
-<div></div>
+
+<div id="dridwindow"><div></div></div>
+<div id="deldridwindow"><div></div></div>
+<div id="agmtnowindow"><div></div></div>
+
 </div>
 </body>
+
   
   

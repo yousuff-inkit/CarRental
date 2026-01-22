@@ -11,57 +11,136 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
 
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+/* ===== FIX LEFT PANEL SCROLL ISSUE ===== */
+
+/* Allow page to calculate height correctly */
+html, body {
+    height: 100%;
+}
+
+/* Main container must not block scrolling */
+#mainBG {
+    height: 100%;
+}
+
+/* Left sidebar container */
+.scrollable-left {
+    max-height: calc(100vh - 90px); /* adjust if header height differs */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 6px; /* avoids scrollbar overlap */
+}
+
+/* Smooth scrollbar (optional but nice) */
+.scrollable-left::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-left::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+
+.scrollable-left::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -541,108 +620,289 @@
 </script>
 </head>
 <body onload="getBranch();getCardTypes();getPayTypes();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td align="right"><label class="branch">Up To</label></td>
-    <td align="left"><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td></tr> 
-	<tr><td align="right"><label class="branch">Closed Before</label></td>
-    <td align="left"><input type="text" id="txtagreementcloseddays" name="txtagreementcloseddays" style="width:65%;height:20px;" placeholder="Agreement Closed Days" onkeypress="javascript:return isNumber(event)" value='<s:property value="txtagreementcloseddays"/>'/></td></tr>
-	<tr><td align="right"><label class="branch">Client</label></td>
-	<td align="left"><input type="text" id="txtclientaccount" name="txtclientaccount" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtclientaccount"/>' onkeydown="getClient(event);"/>
-	<button type="button" class="icon" id="btnchngagmt" title="Change Agreement" onclick="funChangeAgreement();">
-							<img alt="Change Agreement" src="<%=contextPath%>/icons/add_new.png"></button>
-    <input type="hidden" id="hiddocno" name="hiddocno" style="width:40%;height:10px;" readonly="readonly" value='<s:property value="hiddocno"/>'/></td></tr>
-	<tr><td>&nbsp;</td>
-	<td><input type="text" id="txtclientname" name="txtclientname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="txtclientname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/></td></tr>
-     <tr><td colspan="2" align="center"><textarea id="clientinfo" style="height:60px;width:200px;font: 10px Tahoma;resize:none" name="clientinfo"  readonly="readonly"><s:property value="clientinfo" ></s:property></textarea></td></tr>
-    <tr><td align="right"><label class="branch">Date</label></td>
-    <td align="left"><div id="date" name="date" value='<s:property value="date"/>'></div>
-    <input type="hidden" id="hiddate" name="hiddate" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hiddate"/>'/></td></tr>
-     <tr><td align="right"><label class="branch">Branch</label></td>
-     <td align="left"><input type="text" id="txtibbranch" name="txtibbranch" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtibbranch"/>' onkeydown="getIbBranch(event);"/>
-     <input type="hidden" id="txtibbranchid" name="txtibbranchid" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtibbranchid"/>'/>
-     <input type="checkbox" id="chckibbranch" name="chckibbranch" value="" onchange="ibbranchcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" />
-     <input type="hidden" id="hidchckibbranch" name="hidchckibbranch" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidchckibbranch"/>'/></td></tr>
-	<tr><td align="right"><label class="branch">Type</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:50%;" onchange="bankAccountSearch();getAccounts(this.value,$('#date').val());" value='<s:property value="cmbtype"/>'>
-    <!--<option value="">--Select--</option> <option value="1">Cash</option><option value="2">Cheque/Online</option><option value="3">Paid to Card</option> --></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidcmbtype"/>'/></td></tr>
-    <tr><td align="right"><label class="branch">Account</label></td>
-	<td align="left"><input type="text" id="txttypeaccid" name="txttypeaccid" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txttypeaccid"/>' onkeydown="getAccType(event);" tabindex="-1"/></td></tr>
-	<tr><td>&nbsp;</td>
-	<td><input type="text" id="txttypeaccname" name="txttypeaccname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="txttypeaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txttypedocno" name="txttypedocno" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txttypedocno"/>'/>
-    <input type="hidden" id="txttypeatype" name="txttypeatype" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txttypeatype"/>'/>
-    <input type="hidden" id="txttypecurid" name="txttypecurid" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txttypecurid"/>'/>
-    <input type="hidden" id="txttyperate" name="txttyperate" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txttyperate"/>'/>
-    <input type="hidden" id="txttypetype" name="txttypetype" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txttypetype"/>'/></td></tr>
-    <tr><td align="right"><label class="branch">Card Type</label></td>
-	<td align="left"><select id="cmbcardtype" name="cmbcardtype" style="width:50%;" value='<s:property value="cmbcardtype"/>'>
-    <option value="">--Select--</option></select>&nbsp;&nbsp;<button type="button" class="icon" id="btnCardSearch" title="Search Card" onclick="funCardSearch();">
-							<img alt="Search Card" src="<%=contextPath%>/icons/cardsearch.png"></button>
-    <input type="hidden" id="hidcmbcardtype" name="hidcmbcardtype" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidcmbcardtype"/>'/></td></tr>
-    <tr><td align="right"><label class="branch">Cheque/Card No.</label></td>
-    <td align="left"><input type="text" id="txtchequeno" name="txtchequeno" style="width:60%;height:20px;" value='<s:property value="txtchequeno"/>'/></td></tr>
-    <tr><td align="right"><label class="branch">Cheque/Card Date</label></td>
-    <td align="left"><div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
-    <input type="hidden" id="hidchqdate" name="hidchqdate" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidchqdate"/>'/></td></tr>
-    <tr><td align="right"><label class="branch">Remarks</label></td>
-	<td align="left"><input type="text" id="txtremarks" name="txtremarks" style="width:100%;height:20px;" value='<s:property value="txtremarks"/>'/></td></tr> 
-    <tr><td colspan="2"><button class="myButton" type="button" id="btnRefund" name="btnRefund" onclick="funRefund(event);">Refund</button>
-    <input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">
-	<button class="myButton" type="button" id="btnRelease" name="btnRelease" onclick="funRelease(event);">Release</button></td></tr>
-    <tr><td colspan="2"><input type="hidden" id="txtclientdocno" name="txtclientdocno" style="width:60%;height:20px;" value='<s:property value="txtclientdocno"/>'/>
-    <input type="hidden" id="txtclaccount" name="txtclaccount" style="width:60%;height:20px;" value='<s:property value="txtclaccount"/>'/>
-    <input type="hidden" id="txtclname" name="txtclname" style="width:60%;height:20px;" value='<s:property value="txtclname"/>'/>
-    <input type="hidden" id="txtrano" name="txtrano" style="width:60%;height:20px;" value='<s:property value="txtrano"/>'/>
-    <input type="hidden" id="txtrtype" name="txtrtype" style="width:60%;height:20px;" value='<s:property value="txtrtype"/>'/>
-    <input type="hidden" id="txtmainbrhid" name="txtmainbrhid" style="width:60%;height:20px;" value='<s:property value="txtmainbrhid"/>'/>
-    <input type="hidden" id="txtsecurityamount" name="txtsecurityamount" style="width:60%;height:20px;" value='<s:property value="txtsecurityamount"/>'/>
-    <input type="hidden" id="txtbalanceamount" name="txtbalanceamount" style="width:60%;height:20px;" value='<s:property value="txtbalanceamount"/>'/>
-    <input type="hidden" id="txtibvalidation" name="txtibvalidation" style="width:60%;height:20px;" value='<s:property value="txtibvalidation"/>'/>
-    <input type="hidden" id="txthidtype" name="txthidtype" style="width:60%;height:20px;" value='<s:property value="txthidtype"/>'/>
-    <input type="hidden" id="txthidtrno" name="txthidtrno" style="width:60%;height:20px;" value='<s:property value="txthidtrno"/>'/>
-    <input type="hidden" id="txthidvoc" name="txthidvoc" style="width:60%;height:20px;" value='<s:property value="txthidvoc"/>'/></td></tr>
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 
 <table width="100%">
-		<tr>
-			 <td><div id="refundableDiv"><jsp:include page="refundGrid.jsp"></jsp:include></div></td>
-		</tr>
+<tr>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">Up To</td>
+        <td><div id="uptodate" name="uptodate"
+             value='<s:property value="uptodate"/>'></div></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Closed Before</td>
+        <td>
+            <input type="text"
+                   id="txtagreementcloseddays"
+                   name="txtagreementcloseddays"
+                   class="master-input"
+                   placeholder="Agreement Closed Days"
+                   onkeypress="javascript:return isNumber(event)"
+                   value='<s:property value="txtagreementcloseddays"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Client</td>
+        <td>
+            <div style="display:flex;gap:6px;align-items:center;">
+                <input type="text"
+                       id="txtclientaccount"
+                       name="txtclientaccount"
+                       class="master-input"
+                       readonly
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="txtclientaccount"/>'
+                       onkeydown="getClient(event);">
+
+                <button type="button"
+                        class="btn-icon"
+                        title="Change Agreement"
+                        onclick="funChangeAgreement();">
+                    <img src="<%=contextPath%>/icons/add_new.png" alt="">
+                </button>
+            </div>
+
+            <input type="hidden" id="hiddocno" name="hiddocno"
+                   value='<s:property value="hiddocno"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <input type="text"
+                   id="txtclientname"
+                   name="txtclientname"
+                   class="master-input"
+                   readonly
+                   value='<s:property value="txtclientname"/>'
+                   tabindex="-1">
+
+            <input type="hidden" id="txtcldocno" name="txtcldocno"
+                   value='<s:property value="txtcldocno"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <textarea id="clientinfo"
+                      class="master-textarea"
+                      readonly><s:property value="clientinfo"/></textarea>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Date</td>
+        <td>
+            <div id="date" name="date"
+                 value='<s:property value="date"/>'></div>
+            <input type="hidden" id="hiddate" name="hiddate"
+                   value='<s:property value="hiddate"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Branch</td>
+        <td>
+            <div style="display:flex;gap:6px;align-items:center;">
+                <input type="text"
+                       id="txtibbranch"
+                       name="txtibbranch"
+                       class="master-input"
+                       readonly
+                       placeholder="Press F3 to Search"
+                       value='<s:property value="txtibbranch"/>'
+                       onkeydown="getIbBranch(event);">
+
+                <input type="checkbox"
+                       id="chckibbranch"
+                       name="chckibbranch"
+                       onchange="ibbranchcheck();"
+                       onclick="$(this).attr('value', this.checked ? 1 : 0)">
+            </div>
+
+            <input type="hidden" id="txtibbranchid" name="txtibbranchid"
+                   value='<s:property value="txtibbranchid"/>'>
+            <input type="hidden" id="hidchckibbranch" name="hidchckibbranch"
+                   value='<s:property value="hidchckibbranch"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="cmbtype"
+                    name="cmbtype"
+                    class="master-input"
+                    onchange="bankAccountSearch();getAccounts(this.value,$('#date').val());"
+                    value='<s:property value="cmbtype"/>'>
+            </select>
+
+            <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+                   value='<s:property value="hidcmbtype"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Account</td>
+        <td>
+            <input type="text"
+                   id="txttypeaccid"
+                   name="txttypeaccid"
+                   class="master-input"
+                   readonly
+                   value='<s:property value="txttypeaccid"/>'
+                   onkeydown="getAccType(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <input type="text"
+                   id="txttypeaccname"
+                   name="txttypeaccname"
+                   class="master-input"
+                   readonly
+                   value='<s:property value="txttypeaccname"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Card Type</td>
+        <td>
+            <div style="display:flex;gap:6px;align-items:center;">
+                <select id="cmbcardtype"
+                        name="cmbcardtype"
+                        class="master-input"
+                        value='<s:property value="cmbcardtype"/>'>
+                    <option value="">--Select--</option>
+                </select>
+
+                <button type="button"
+                        class="btn-icon"
+                        onclick="funCardSearch();">
+                    <img src="<%=contextPath%>/icons/cardsearch.png" alt="">
+                </button>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Cheque/Card No.</td>
+        <td><input type="text"
+                   id="txtchequeno"
+                   name="txtchequeno"
+                   class="master-input"
+                   value='<s:property value="txtchequeno"/>'></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Cheque/Card Date</td>
+        <td>
+            <div id="chqdate" name="chqdate"
+                 value='<s:property value="chqdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Remarks</td>
+        <td><input type="text"
+                   id="txtremarks"
+                   name="txtremarks"
+                   class="master-input"
+                   value='<s:property value="txtremarks"/>'></td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button class="btn-submit"
+                    type="button"
+                    id="btnRefund"
+                    onclick="funRefund(event);">Refund</button>
+
+            <button class="btn-submit"
+                    type="button"
+                    id="clear"
+                    onclick="funClearInfo();">Clear</button>
+
+            <button class="btn-submit"
+                    type="button"
+                    id="btnRelease"
+                    onclick="funRelease(event);">Release</button>
+        </td>
+    </tr>
+
+    <!-- HIDDEN FIELDS (UNCHANGED) -->
+    <tr><td colspan="2">
+        <input type="hidden" id="txtclientdocno" name="txtclientdocno">
+        <input type="hidden" id="txtclaccount" name="txtclaccount">
+        <input type="hidden" id="txtclname" name="txtclname">
+        <input type="hidden" id="txtrano" name="txtrano">
+        <input type="hidden" id="txtrtype" name="txtrtype">
+        <input type="hidden" id="txtmainbrhid" name="txtmainbrhid">
+        <input type="hidden" id="txtsecurityamount" name="txtsecurityamount">
+        <input type="hidden" id="txtbalanceamount" name="txtbalanceamount">
+        <input type="hidden" id="txtibvalidation" name="txtibvalidation">
+        <input type="hidden" id="txthidtype" name="txthidtype">
+        <input type="hidden" id="txthidtrno" name="txthidtrno">
+        <input type="hidden" id="txthidvoc" name="txthidvoc">
+    </td></tr>
+
 </table>
+</fieldset>
+
+</td>
+
+<!-- ===== RIGHT PANEL ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="refundableDiv">
+            <jsp:include page="refundGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
 <table width="100%">
-	<tr>
-		<td width="92%" align="right" style="font-family: Myriad Pro;font-size: 12px;font-weight: bold;">Net Balance :&nbsp;</td>
-        <td width="8%" align="left"><input type="text" class="textbox" id="txtnetamount" name="txtnetamount" style="width:80%;text-align: right;" value='<s:property value="txtnetamount"/>'/></td>
-	</tr>
+<tr>
+    <td align="right" style="font-weight:bold;">Net Balance :</td>
+    <td><input type="text"
+               id="txtnetamount"
+               class="textbox"
+               style="text-align:right;"
+               value='<s:property value="txtnetamount"/>'></td>
+</tr>
 </table>
+
+</td>
+</tr>
+</table>
+
 </div>
 
-<div id="accountDetailsWindow">
-	<div></div><div></div>
+<div id="accountDetailsWindow"><div></div><div></div></div>
+<div id="branchSearchWindow"><div></div><div></div></div>
+<div id="cardDetailsWindow"><div></div><div></div></div>
+<div id="agmtDetailsWindow"><div></div><div></div></div>
+
 </div>
-<div id="branchSearchWindow">
-	<div></div><div></div>
-</div>
-<div id="cardDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="agmtDetailsWindow">
-	<div></div><div></div>
-</div>
-</div> 
 </body>
+
 </html>

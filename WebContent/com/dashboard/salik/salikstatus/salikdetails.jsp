@@ -108,6 +108,17 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.scrollable-left {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.inner-fieldset {
+    border: none;
+    padding: 6px 0;
+}
+
 </style>
 
 <script type="text/javascript">

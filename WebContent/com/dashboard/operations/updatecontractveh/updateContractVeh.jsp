@@ -10,47 +10,104 @@
 <title>GatewayERP(i)</title>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
- 
-select{
-    height:15px;
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
 }
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -234,74 +291,162 @@ function funExportBtn(){
 </head>
 <body onload="getBranch();setValues();">
 <form id="frmUpdateContract" method="post">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
-<td width="23%" align="center">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
 
- <tr>
-   <td width="37%" align="right"><label class="branch">From Date</label></td><td width="63%"><div id="fromdate"></div></td></tr>
- <tr>
-   <td align="right"><label class="branch">To Date</label></td>
-   <td><div id="todate"></div></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Agreement Type</label></td>
-   <td><select name="agmttype" id="agmttype" style="width:68%;" ><option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option></select></td>
- </tr>
-  <tr>
-   <td align="right"><label class="branch">Agreement No</label></td>
-   <td><input type="text" name="hidagmtno" id="hidagmtno" placeholder="Press F3 to Search" onkeydown="getAgmtno(event);" readonly style="height:17px;"></td>
- </tr>
-  <tr>
-   <td align="right"><label class="branch">Client</label></td>
-   <td><input type="text" name="client" id="client"  placeholder="Press F3 to Search" onkeydown="getClient(event);" readonly style="height:17px;"></td>
- </tr>
- <input type="hidden" name="hidclient" id="hidclient">
-<tr ><td colspan="2"><textarea id="agmtdetails" name="agmtdetails" readonly style="resize:none;" rows="15" cols="35"></textarea></td></tr>
-<tr >
-	<td colspan="2" style="border-top:2px solid #DCDDDE;">
-	<center>
-	<input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">&nbsp;&nbsp;
-	<input type="button" name="btnupdate" id="btnupdate" value="Update" class="myButtons" onclick="funUpdateData();">
-	</center>
-    </td>
-	</tr>
-<tr colspan="2"><td>&nbsp;</td></tr>
-	
-		
-	</table>
-	</fieldset>
+<!-- ================= LEFT PANEL ================= -->
+<td width="23%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+            <table class="filter-table">
+
+                <tr>
+                    <td class="label-cell">From Date</td>
+                    <td>
+                        <div id="fromdate"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">To Date</td>
+                    <td>
+                        <div id="todate"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Agreement Type</td>
+                    <td>
+                        <select name="agmttype" id="agmttype">
+                            <option value="">--Select--</option>
+                            <option value="RAG">Rental</option>
+                            <option value="LAG">Lease</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Agreement No</td>
+                    <td>
+                        <input type="text"
+                               name="hidagmtno"
+                               id="hidagmtno"
+                               placeholder="Press F3 to Search"
+                               readonly
+                               onkeydown="getAgmtno(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Client</td>
+                    <td>
+                        <input type="text"
+                               name="client"
+                               id="client"
+                               placeholder="Press F3 to Search"
+                               readonly
+                               onkeydown="getClient(event);">
+                    </td>
+                </tr>
+
+                <input type="hidden" name="hidclient" id="hidclient">
+
+                <tr>
+                    <td colspan="2">
+                        <textarea id="agmtdetails"
+                                  name="agmtdetails"
+                                  rows="8"
+                                  readonly></textarea>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- MASTER BUTTON ROW -->
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <button type="button"
+                    class="btn-submit"
+                    id="btnclear"
+                    onclick="funClearData();">
+                Clear
+            </button>
+
+            <button type="button"
+                    class="btn-submit"
+                    id="btnupdate"
+                    onclick="funUpdateData();">
+                Update
+            </button>
+        </div>
+
+    </div>
+
+</div>
+</div>
+
 </td>
-<td width="77%">
-	<table width="100%">
-		<tr>
-			 <td> <div id="contractdiv"><jsp:include page="UpdateContractGrid.jsp"></jsp:include></div>
-			 <%-- <div id="distributiondiv"  hidden="true"><jsp:include page="salesMonthwiseGrid.jsp"></jsp:include></div> --%>
-			 
-			 
-			 </td>
-			  <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-			  <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-			  <input type="hidden" name="hidofleet" id="hidofleet">
-			  <input type="hidden" name="hidfleetreg" id="hidfleetreg">
-				<input type="hidden" name="agmtno" id="agmtno">
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="77%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="contractdiv">
+            <jsp:include page="UpdateContractGrid.jsp"></jsp:include>
+        </div>
+
+        <%-- 
+        <div id="distributiondiv" hidden="true">
+            <jsp:include page="salesMonthwiseGrid.jsp"></jsp:include>
+        </div> 
+        --%>
+    </td>
+
+    <!-- HIDDEN FIELDS -->
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+    <input type="hidden" name="hidofleet" id="hidofleet">
+    <input type="hidden" name="hidfleetreg" id="hidfleetreg">
+    <input type="hidden" name="agmtno" id="agmtno">
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
+
 <div id="clientsearchwindow">
-<div></div>
+    <div></div>
 </div>
+
 <div id="agmtnowindow">
-<div></div>
+    <div></div>
 </div>
+
 </div>
 </form>
 </body>
+
 </html>
