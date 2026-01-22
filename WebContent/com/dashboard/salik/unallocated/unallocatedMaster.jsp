@@ -97,19 +97,10 @@ input[type="text"], select {
 }
 
 /* Page height fix */
-html, body {
+html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
-}
-
-#mainBG {
-    height: 100%;
-}
-
-.hidden-scrollbar {
-    height: 100%;
-    overflow-y: auto;   /* ✅ allow vertical scroll */
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 td[width="80%"] {
@@ -117,101 +108,16 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
-.sidebar-fixed-top {
-    min-height: 60px;   /* ensures visibility */
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-    background: #fff;
-}
-/* ===== PAGE-SPECIFIC FIX FOR HEADING VISIBILITY ===== */
-
-/* allow vertical scroll for this page only */
-#mainBG .hidden-scrollbar {
-    overflow-y: auto !important;
+.scrollable-left {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
-/* ensure sidebar top is visible */
-#mainBG .sidebar-fixed-top {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: #ffffff;
+.inner-fieldset {
+    border: none;
+    padding: 6px 0;
 }
-
-/* prevent table layout from clipping top content */
-#mainBG table[width="100%"] {
-    height: auto !important;
-}
-/* ===== ABSOLUTE REQUIRED FIX ===== */
-
-/* give height reference */
-.master-container {
-    height: 100%;
-}
-
-/* sidebar must fill parent */
-.sidebar-filters {
-    height: 100%;
-}
-
-/* heading area must not collapse */
-.sidebar-fixed-top {
-    flex-shrink: 0;
-    background: #ffffff;
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* scroll ONLY the content */
-.sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-}
-
-/* IMPORTANT: allow page to show top content */
-.hidden-scrollbar {
-    overflow-y: visible !important;
-}
-/* ===== CRITICAL FIX: DO NOT TOUCH heading.jsp ===== */
-
-/* remove clipping caused by parent containers */
-#mainBG,
-#mainBG .hidden-scrollbar,
-#mainBG table,
-#mainBG tr,
-#mainBG td {
-    overflow: visible !important;
-}
-
-/* give height reference for flex layout */
-#mainBG .master-container {
-    height: 100%;
-}
-
-/* sidebar must be a proper flex column */
-#mainBG .sidebar-filters {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-/* heading area must be visible */
-#mainBG .sidebar-fixed-top {
-    flex-shrink: 0;
-    display: block;
-    min-height: 60px;
-    background: #ffffff;
-    padding: 12px 20px;
-    border-bottom: 1px solid #e1e8ed;
-}
-
-/* scroll only filter section */
-#mainBG .sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-}
-
 
 </style>
 
@@ -638,141 +544,217 @@ function funreload(event)
 </script>
 </head>
 <body onload="hiddenbrh();getAllocateBranch();dis();">
-<div id="mainBG" class="homeContent">
+<div id="mainBG" class="homeContent" data-type="background"> 
 <div class="hidden-scrollbar">
 
 <table width="100%">
 <tr>
 
-<!-- ===== LEFT SIDEBAR ===== -->
+<!-- ===== LEFT PANEL ===== -->
 <td width="20%" valign="top">
 
-<div class="master-container">
-<div class="sidebar-filters">
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
 
-    <!-- FIXED HEADING (ALWAYS VISIBLE) -->
-    <div class="sidebar-fixed-top">
-        <jsp:include page="../../heading.jsp"></jsp:include>
+    <!-- HEADING (UNCHANGED – WILL APPEAR) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
 
-        <div class="salikallocatecount" style="animation: blink 1s linear infinite;" hidden>
-            <strong>Total Saliks Allocated:</strong>
-            <span class="currentsalikallocated"></span>
-        </div>
-    </div>
+    <tr>
+        <td colspan="2">
+            <div class="salikallocatecount" style="animation: blink 1s linear infinite;" hidden>
+                <label><b>Total Saliks Allocated:</b>
+                    <span class="currentsalikallocated"></span>
+                </label>
+            </div>
+        </td>
+    </tr>
 
-    <!-- SCROLLABLE CONTENT -->
-    <div class="sidebar-scroll-content">
+    <tr>
+        <td colspan="2">
+            <input type="checkbox"
+                   id="Chkfromdate"
+                   name="Chkfromdate"
+                   onchange="funchange()">
+        </td>
+    </tr>
 
-        <!-- FILTERS -->
-        <div class="filter-card">
-            <table class="filter-table">
+    <tr>
+        <td class="label-cell">Reg No</td>
+        <td>
+            <input type="text"
+                   id="regno"
+                   name="regno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 To Search"
+                   value='<s:property value="regno"/>'
+                   onkeydown="getregno(event);">
+        </td>
+    </tr>
 
-                <tr>
-                    <td class="label-cell">Reg No</td>
-                    <td>
-                        <input type="text" id="regno" readonly
-                               onkeydown="getregno(event);"
-                               placeholder="F3 to Search">
-                    </td>
-                </tr>
+    <tr>
+        <td class="label-cell">Tag No</td>
+        <td>
+            <input type="text"
+                   id="tagno"
+                   name="tagno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 To Search"
+                   value='<s:property value="tagno"/>'
+                   onkeydown="gettagno(event);">
+        </td>
+    </tr>
 
-                <tr>
-                    <td class="label-cell">Tag No</td>
-                    <td>
-                        <input type="text" id="tagno" readonly
-                               onkeydown="gettagno(event);"
-                               placeholder="F3 to Search">
-                    </td>
-                </tr>
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="cmbsaliktype"
+                    name="cmbsaliktype"
+                    class="master-input">
+                <option value="">--Select--</option>
+                <option value="SAL">Salik</option>
+                <option value="PAR">Parking</option>
+            </select>
+        </td>
+    </tr>
 
-                <tr>
-                    <td class="label-cell">Type</td>
-                    <td>
-                        <select id="cmbsaliktype">
-                            <option value="">--Select--</option>
-                            <option value="SAL">Salik</option>
-                            <option value="PAR">Parking</option>
-                        </select>
-                    </td>
-                </tr>
+    <tr>
+        <td class="label-cell">From Date</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
 
-                <tr>
-                    <td class="label-cell">From</td>
-                    <td><div id="fromdate"></div></td>
-                </tr>
+    <tr>
+        <td class="label-cell">Up To</td>
+        <td>
+            <div id="uptodate" name="uptodate"
+                 value='<s:property value="uptodate"/>'></div>
+        </td>
+    </tr>
 
-                <tr>
-                    <td class="label-cell">Up To</td>
-                    <td><div id="uptodate"></div></td>
-                </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    id="driverUpdate"
+                    class="btn-submit"
+                    onclick="funallocate()">Allocate</button>
 
-            </table>
-        </div>
+            <button type="button"
+                    id="clear"
+                    class="btn-submit"
+                    onclick="funcleardata()">Clear</button>
+        </td>
+    </tr>
 
-        <button class="btn-submit" type="button" onclick="funallocate()">Allocate</button>
-        <button class="btn-submit" type="button" onclick="funcleardata()">Clear</button>
+    <!-- ===== MANUAL ALLOCATE ===== -->
+    <tr>
+        <td colspan="2">
+            <fieldset class="inner-fieldset">
+                <legend><b>Manual Allocate</b></legend>
 
-        <!-- MANUAL ALLOCATE -->
-        <div class="filter-card">
-            <strong>Manual Allocate</strong>
+                <table width="100%" class="filter-table">
 
-            <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Salik Tag</td>
+                        <td>
+                            <input type="text"
+                                   id="saliktag"
+                                   name="saliktag"
+                                   class="master-input"
+                                   readonly
+                                   value='<s:property value="saliktag"/>'>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="label-cell">Salik Tag</td>
-                    <td><input type="text" id="saliktag" readonly></td>
-                </tr>
+                    <tr>
+                        <td class="label-cell">Fleet No</td>
+                        <td>
+                            <input type="text"
+                                   id="fleet_no"
+                                   name="fleet_no"
+                                   class="master-input"
+                                   readonly
+                                   placeholder="Press F3 To Search"
+                                   value='<s:property value="fleet_no"/>'
+                                   onkeydown="getfleet(event);">
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="label-cell">Fleet No</td>
-                    <td>
-                        <input type="text" id="fleet_no" readonly
-                               onkeydown="getfleet(event);">
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="trftype"
+                                    class="master-input"
+                                    onchange="cleardatas()">
+                                <option value="RAG">Rental</option>
+                                <option value="LAG">Lease</option>
+                                <option value="STF">Staff</option>
+                                <option value="DRV">Driver</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="label-cell">Type</td>
-                    <td>
-                        <select id="trftype" onchange="cleardatas()">
-                            <option value="RAG">Rental</option>
-                            <option value="LAG">Lease</option>
-                            <option value="STF">Staff</option>
-                            <option value="DRV">Driver</option>
-                        </select>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="label-cell">Branch</td>
+                        <td>
+                            <select id="cmballocatebranch"
+                                    name="cmballocatebranch"
+                                    class="master-input"
+                                    value='<s:property value="cmballocatebranch"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="label-cell">Branch</td>
-                    <td>
-                        <select id="cmballocatebranch"></select>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="label-cell">Convict</td>
+                        <td>
+                            <input type="text"
+                                   id="typesearch"
+                                   name="typesearch"
+                                   class="master-input"
+                                   readonly
+                                   placeholder="Press F3 To Search"
+                                   value='<s:property value="typesearch"/>'
+                                   onkeydown="gettypessearch(event)">
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="label-cell">Convict</td>
-                    <td>
-                        <input type="text" id="typesearch" readonly
-                               onkeydown="gettypessearch(event)">
-                    </td>
-                </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button type="button"
+                                    id="allocates"
+                                    class="btn-submit"
+                                    onclick="funoneallocate()">Manual</button>
+                        </td>
+                    </tr>
 
-            </table>
+                </table>
+            </fieldset>
+        </td>
+    </tr>
 
-            <button class="btn-submit" type="button" onclick="funoneallocate()">
-                Manual Allocate
-            </button>
-        </div>
+    <!-- HIDDEN FIELDS (UNCHANGED) -->
+    <tr><td colspan="2">
+        <input type="hidden" id="gridlength" name="gridlength">
+        <input type="hidden" id="rentaldoc" name="rentaldoc">
+        <input type="hidden" id="leasedoc" name="leasedoc">
+        <input type="hidden" id="drdoc" name="drdoc">
+        <input type="hidden" id="staffdoc" name="staffdoc">
+        <input type="hidden" id="hidchkdate" name="hidchkdate">
+    </td></tr>
 
-    </div>
-</div>
-</div>
+</table>
+</fieldset>
 
 </td>
 
 <!-- ===== RIGHT GRID ===== -->
 <td width="80%" valign="top">
+<form action="">
 <table width="100%">
 <tr>
     <td>
@@ -782,12 +764,21 @@ function funreload(event)
     </td>
 </tr>
 </table>
+</form>
 </td>
 
 </tr>
 </table>
 
 </div>
+
+<!-- ===== POPUPS (UNCHANGED) ===== -->
+<div id="regwindow"><div></div></div>
+<div id="tagwindow"><div></div></div>
+<div id="fleetwindow"><div></div></div>
+<div id="commonwindow"><div></div></div>
+<div id="commonwindow1"><div></div></div>
+
 </div>
 </body>
 

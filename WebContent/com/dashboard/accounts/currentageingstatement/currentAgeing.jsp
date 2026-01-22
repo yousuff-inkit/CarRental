@@ -8,7 +8,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+  
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 
@@ -452,73 +550,191 @@
 </script>
 </head>
 <body onload="getBranch();getSalesPerson();getCategory();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Up To</label></td>
-     <td align="left"><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td></tr> 
-	<tr><td align="right"><label class="branch">Type</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:40%;" onchange="clearAccountInfo();getCategory();" value='<s:property value="cmbtype"/>'>
-    <option value="" >--Select--</option><option value="AR" selected>AR</option><option value="AP">AP</option></select></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td align="right"><label class="branch">Account</label></td>
-	<td align="left"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/></td></tr> 
-	<tr><td>&nbsp;</td>
-	<td><input type="text" id="txtaccname" name="txtaccname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>'/></td></tr> 
-	<tr><td align="right"><label class="branch">Sales Person</label></td>
-	<td><select id="cmbsalesperson" name="cmbsalesperson" style="width:100%;" value='<s:property value="cmbsalesperson"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbsalesperson" name="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>'/></td></tr>
-	<tr><td align="right"><label class="branch">Category</label></td>
-	<td><select id="cmbcategory" name="cmbcategory" style="width:100%;" value='<s:property value="cmbcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/></td></tr>
-	<tr><td align="right"><label class="branch">Level 1</label></td>
-	<td align="left"><input type="text" id="txtlevel1from" name="txtlevel1from" style="width:20%;height:20px;text-align: center;" readonly="readonly" value='0'/>&nbsp;-&nbsp;
-	<input type="text" id="txtlevel1to" name="txtlevel1to" style="width:20%;height:20px;text-align: center;" onblur="changelevel1();" value='30'/></td></tr>
-	<tr><td align="right"><label class="branch">Level 2</label></td>
-	<td align="left"><input type="text" id="txtlevel2from" name="txtlevel2from" style="width:20%;height:20px;text-align: center;" readonly="readonly" value='31'/>&nbsp;-&nbsp;
-	<input type="text" id="txtlevel2to" name="txtlevel2to" style="width:20%;height:20px;text-align: center;" onblur="changelevel2();" value='60'/></td></tr>
-	<tr><td align="right"><label class="branch">Level 3</label></td>
-	<td align="left"><input type="text" id="txtlevel3from" name="txtlevel3from" style="width:20%;height:20px;text-align: center;" readonly="readonly" value='61'/>&nbsp;-&nbsp;
-	<input type="text" id="txtlevel3to" name="txtlevel3to" style="width:20%;height:20px;text-align: center;" onblur="changelevel3();" value='90'/></td></tr>
-	<tr><td align="right"><label class="branch">Level 4</label></td>
-	<td align="left"><input type="text" id="txtlevel4from" name="txtlevel4from" style="width:20%;height:20px;text-align: center;" readonly="readonly" value='91'/>&nbsp;-&nbsp;
-	<input type="text" id="txtlevel4to" name="txtlevel4to" style="width:20%;height:20px;text-align: center;" onblur="changelevel4();" value='120'/></td></tr>
-	<tr><td align="right"><label class="branch">Level 5</label></td>
-	<td align="left"><input type="text" id="txtlevel5from" name="txtlevel5from" style="width:20%;height:20px;text-align: center;" value='121'/>&nbsp;>=</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2"><center><button class="myButton" type="button" id="btnprint" name="btnprint" onclick="funPrint();">Print</button></center></td></tr>
-	<tr><td colspan="2"><center><button class="myButton" type="button" id="btnIndividual" name="btnIndividual" onclick="funOutStandingStatement();">Outstanding Statement</button></center></td></tr>
-	<tr><td colspan="2"><input type="hidden" id="txtacountno" name="txtacountno" style="width:100%;height:20px;" value='<s:property value="txtacountno"/>'/>
-	<input type="hidden" id="txtbranch" name="txtbranch" style="width:100%;height:20px;" value='<s:property value="txtbranch"/>'/></td></tr>
-	</table>
-	</fieldset>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+            <table class="filter-table">
+
+                <tr>
+                    <td class="label-cell">Up To</td>
+                    <td>
+                        <div id="uptodate" name="uptodate"
+                             value='<s:property value="uptodate"/>'></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Type</td>
+                    <td>
+                        <select id="cmbtype" name="cmbtype"
+                                onchange="clearAccountInfo();getCategory();">
+                            <option value="">--Select--</option>
+                            <option value="AR" selected>AR</option>
+                            <option value="AP">AP</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Account</td>
+                    <td>
+                        <input type="text"
+                               id="txtaccid"
+                               name="txtaccid"
+                               placeholder="Press F3 to Search"
+                               value='<s:property value="txtaccid"/>'
+                               readonly="readonly"
+                               onkeydown="getAccType(event);" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="text"
+                               id="txtaccname"
+                               name="txtaccname"
+                               readonly="readonly"
+                               value='<s:property value="txtaccname"/>'
+                               tabindex="-1" />
+                        <input type="hidden" id="txtdocno" name="txtdocno"
+                               value='<s:property value="txtdocno"/>' />
+                        <input type="hidden" id="txtaccemail" name="txtaccemail"
+                               value='<s:property value="txtaccemail"/>' />
+                        <input type="hidden" id="txtacountno" name="txtacountno"
+                               value='<s:property value="txtacountno"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Sales Person</td>
+                    <td>
+                        <select id="cmbsalesperson" name="cmbsalesperson">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbsalesperson"
+                               name="hidcmbsalesperson"
+                               value='<s:property value="hidcmbsalesperson"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Category</td>
+                    <td>
+                        <select id="cmbcategory" name="cmbcategory">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbcategory"
+                               name="hidcmbcategory"
+                               value='<s:property value="hidcmbcategory"/>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Level 1</td>
+                    <td class="level-row">
+                        <input type="text" id="txtlevel1from" class="level-input" readonly value="0"/>
+                        <span>-</span>
+                        <input type="text" id="txtlevel1to" class="level-input" onblur="changelevel1();" value="30"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Level 2</td>
+                    <td class="level-row">
+                        <input type="text" id="txtlevel2from" class="level-input" readonly value="31"/>
+                        <span>-</span>
+                        <input type="text" id="txtlevel2to" class="level-input" onblur="changelevel2();" value="60"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Level 3</td>
+                    <td class="level-row">
+                        <input type="text" id="txtlevel3from" class="level-input" readonly value="61"/>
+                        <span>-</span>
+                        <input type="text" id="txtlevel3to" class="level-input" onblur="changelevel3();" value="90"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Level 4</td>
+                    <td class="level-row">
+                        <input type="text" id="txtlevel4from" class="level-input" readonly value="91"/>
+                        <span>-</span>
+                        <input type="text" id="txtlevel4to" class="level-input" onblur="changelevel4();" value="120"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Level 5</td>
+                    <td class="level-row">
+                        <input type="text" id="txtlevel5from" class="level-input" value="121"/>
+                        <span style="font-weight:bold;">&ge;</span>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- MASTER STYLE BUTTONS -->
+        <button class="btn-submit" type="button" onclick="funPrint();">
+            Print
+        </button>
+
+        <button class="btn-submit" type="button" onclick="funOutStandingStatement();">
+            Outstanding Statement
+        </button>
+
+    </div>
+</div>
+</div>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="currentAgeingDiv"><jsp:include page="currentAgeingGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+<table width="100%">
+<tr>
+    <td>
+        <div id="currentAgeingDiv">
+            <jsp:include page="currentAgeingGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+</table>
+</td>
+
 </tr>
 </table>
 
 </div>
 
 <div id="accountDetailsWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
-</div> 
+
+</div>
 </body>
+
 </html>

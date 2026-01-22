@@ -9,56 +9,104 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -192,67 +240,168 @@
 </script>
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Period</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>  
-	<tr><td colspan="2"><input type="checkbox" id="chckincludingzero" name="chckincludingzero" value="" onchange="includingzerocheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" /> 
-      <input type="hidden" id="hidchckincludingzero" name="hidchckincludingzero" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidchckincludingzero"/>'/></td></tr> 
-	 <tr><td align="right"><label class="branch">Type</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:40%;" value='<s:property value="cmbtype"/>'>
-    <option value="">--Select--</option><option value="AP">AP</option><option value="AR">AR</option><option value="GL">GL</option>
-    <option value="HR">HR</option></select></td></tr>
-	<tr><td align="right"><label class="branch">Account</label></td>
-	<td align="left"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccTypeFrom(event);"/></td></tr>
-	<tr><td>&nbsp;</td>
-	<td><input type="text" id="txtaccname" name="txtaccname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">
-	<button class="myButton" type="button" id="btnPrintAccount" name="btnPrintAccount" onclick="funPrintMainAccountStatement(event);">Print</button></td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>	
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	</table>
-	</fieldset>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">Period</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <input type="checkbox"
+                   id="chckincludingzero"
+                   name="chckincludingzero"
+                   onchange="includingzerocheck();"
+                   onclick="$(this).attr('value', this.checked ? 1 : 0)">
+            <label class="branch">Including Zero</label>
+
+            <input type="hidden"
+                   id="hidchckincludingzero"
+                   name="hidchckincludingzero"
+                   value='<s:property value="hidchckincludingzero"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="cmbtype"
+                    name="cmbtype"
+                    class="master-input"
+                    value='<s:property value="cmbtype"/>'>
+                <option value="">--Select--</option>
+                <option value="AP">AP</option>
+                <option value="AR">AR</option>
+                <option value="GL">GL</option>
+                <option value="HR">HR</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Account</td>
+        <td>
+            <input type="text"
+                   id="txtaccid"
+                   name="txtaccid"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   value='<s:property value="txtaccid"/>'
+                   onkeydown="getAccTypeFrom(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <input type="text"
+                   id="txtaccname"
+                   name="txtaccname"
+                   class="master-input"
+                   readonly
+                   value='<s:property value="txtaccname"/>'
+                   tabindex="-1">
+
+            <input type="hidden"
+                   id="txtdocno"
+                   name="txtdocno"
+                   value='<s:property value="txtdocno"/>'>
+        </td>
+    </tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <!-- ✅ FIXED BUTTONS -->
+    <tr>
+        <td colspan="2" align="center">
+
+            <button type="button"
+                    class="myButton"
+                    id="clear"
+                    onclick="funClearInfo();">
+                Clear
+            </button>
+
+            <button type="button"
+                    class="myButton"
+                    id="btnPrintAccount"
+                    onclick="funPrintMainAccountStatement(event);">
+                Print
+            </button>
+
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="mainAccountStatementDiv"><jsp:include page="mainAccountStatementGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ===== RIGHT PANEL ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="mainAccountStatementDiv">
+            <jsp:include page="mainAccountStatementGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
+<!-- HIDDEN TOTAL -->
 <div id="trialDiv" hidden="true">
 <table width="100%">
 <tr>
-        <td width="98%" align="right"><input type="hidden" class="textbox" id="txtnetamount" name="txtnetamount" style="width:80%;text-align: right;" value='<s:property value="txtnetamount"/>'/></td>
-        <td width="2%">&nbsp;</td>
+    <td align="right">
+        <input type="hidden"
+               id="txtnetamount"
+               name="txtnetamount"
+               value='<s:property value="txtnetamount"/>'>
+    </td>
 </tr>
 </table>
 </div>
+
 </div>
 
 <div id="accountDetailsWindow">
-	<div></div>
+    <div></div>
 </div>
+
 </div>
 </body>
+
 </html>

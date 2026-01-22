@@ -11,43 +11,109 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+.scrollable-left {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
 </style>
 
 
@@ -261,68 +327,157 @@
 </head>
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td colspan="2">&nbsp;</td></tr>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED – WILL APPEAR) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
     <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>
-	<tr><td align="right"><label class="branch">Type</label></td>
-     <td align="left"><select id="emptype" name="emptype"   onchange="empchange();" value='<s:property value="emptype"/>'>
-     <option value="">--Select--</option><option value="STF">Staff</option><option value="DRV">Driver</option>
-     </select></td></tr>
-	<tr><td align="right"><label class="branch">Employee</label></td>
-	<td align="left"><input type="text" id="txtempname" name="txtempname" style="width:100%;height:20px;" readonly="readonly" placeholder="Press F3 to Search"  onkeydown="getEmployee(event);" value='<s:property value="txtempname"/>'/>
-	<input type="hidden" id="txtempid" name="txtempid" style="width:100%;height:20px;" value='<s:property value="txtempid"/>'/></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><textarea id="vehinfo" style="height:80px;width:200px;font: 10px Tahoma;resize:none" name="vehinfo"  readonly="readonly"  ><s:property value="vehinfo" ></s:property></textarea></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td align="right"><label class="branch">Posting</label></td>
-    <td align="left"><div id="date" name="date" onchange="datechange();" value='<s:property value="date"/>'></div></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearData();">
-	<button class="myButton" type="button" id="btnupdate" name="btnupdate" onclick="funUpdate(event);">Update</button></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2"><input type="hidden" id="txttrafficaccount" name="txttrafficaccount" style="width:100%;height:20px;" value='<s:property value="txttrafficaccount"/>'/>
-    <input type="hidden" id="txtexpenseaccount" name="txtexpenseaccount" style="width:100%;height:20px;" value='<s:property value="txtexpenseaccount"/>'/>
-    <input type="hidden" id="txtrano" name="txtrano" style="width:100%;height:20px;" value='<s:property value="txtrano"/>'/>
-    <input type="hidden" id="txtfleetno" name="txtfleetno" style="width:100%;height:20px;" value='<s:property value="txtfleetno"/>'/>
-    <input type="hidden" id="txtticketno" name="txtticketno" style="width:100%;height:20px;" value='<s:property value="txtticketno"/>'/>
-    <input type="hidden" id="txtamount" name="txtamount" style="width:100%;height:20px;" value='<s:property value="txtamount"/>'/>
-    <input type="hidden" id="txtamountcount" name="txtamountcount" style="width:100%;height:20px;" value='<s:property value="txtamountcount"/>'/>
-    <input type="hidden" id="txtmainbranch" name="txtmainbranch" style="width:100%;height:20px;" value='<s:property value="txtmainbranch"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" style="width:100%;height:20px;" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txtsrno" name="txtsrno" style="width:100%;height:20px;" value='<s:property value="txtsrno"/>'/>
-    <input type="hidden" id="txtemployeeid" name="txtemployeeid" style="width:100%;height:20px;" value='<s:property value="txtemployeeid"/>'/>
-    <input type="hidden" id="txtplatecode" name="txtplatecode" style="width:100%;height:20px;" value='<s:property value="txtplatecode"/>'/> 
-    <input type="hidden" id="txtregno" name="txtregno" style="width:100%;height:20px;" value='<s:property value="txtregno"/>'/>
-    <input type="hidden" id="txttdate" name="txttdate" style="width:100%;height:20px;" value='<s:property value="txttdate"/>'/> 
-    <input type="hidden" id="txtttime" name="txtttime" style="width:100%;height:20px;" value='<s:property value="txtttime"/>'/></td></tr>
-	</table>
-	</fieldset>
+        <td class="label-cell">From</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="emptype"
+                    name="emptype"
+                    class="master-input"
+                    onchange="empchange();"
+                    value='<s:property value="emptype"/>'>
+                <option value="">--Select--</option>
+                <option value="STF">Staff</option>
+                <option value="DRV">Driver</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Employee</td>
+        <td>
+            <input type="text"
+                   id="txtempname"
+                   name="txtempname"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   onkeydown="getEmployee(event);"
+                   value='<s:property value="txtempname"/>'>
+            <input type="hidden"
+                   id="txtempid"
+                   name="txtempid"
+                   value='<s:property value="txtempid"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <textarea id="vehinfo"
+                      name="vehinfo"
+                      class="master-textarea"
+                      readonly>
+                <s:property value="vehinfo"/>
+            </textarea>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Posting</td>
+        <td>
+            <div id="date"
+                 name="date"
+                 onchange="datechange();"
+                 value='<s:property value="date"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    id="clear"
+                    class="btn-submit"
+                    onclick="funClearData();">
+                Clear
+            </button>
+
+            <button type="button"
+                    id="btnupdate"
+                    class="btn-submit"
+                    onclick="funUpdate(event);">
+                Update
+            </button>
+        </td>
+    </tr>
+
+    <!-- HIDDEN FIELDS (UNCHANGED) -->
+    <tr>
+        <td colspan="2">
+            <input type="hidden" id="txttrafficaccount" name="txttrafficaccount" value='<s:property value="txttrafficaccount"/>'>
+            <input type="hidden" id="txtexpenseaccount" name="txtexpenseaccount" value='<s:property value="txtexpenseaccount"/>'>
+            <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'>
+            <input type="hidden" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>'>
+            <input type="hidden" id="txtticketno" name="txtticketno" value='<s:property value="txtticketno"/>'>
+            <input type="hidden" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>'>
+            <input type="hidden" id="txtamountcount" name="txtamountcount" value='<s:property value="txtamountcount"/>'>
+            <input type="hidden" id="txtmainbranch" name="txtmainbranch" value='<s:property value="txtmainbranch"/>'>
+            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'>
+            <input type="hidden" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>'>
+            <input type="hidden" id="txtemployeeid" name="txtemployeeid" value='<s:property value="txtemployeeid"/>'>
+            <input type="hidden" id="txtplatecode" name="txtplatecode" value='<s:property value="txtplatecode"/>'>
+            <input type="hidden" id="txtregno" name="txtregno" value='<s:property value="txtregno"/>'>
+            <input type="hidden" id="txttdate" name="txttdate" value='<s:property value="txttdate"/>'>
+            <input type="hidden" id="txtttime" name="txtttime" value='<s:property value="txtttime"/>'>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="staffAllocatedDiv"><jsp:include page="staffAllocatedTrafficGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ===== RIGHT GRID ===== -->
+<td width="80%" valign="top">
+<table width="100%">
+<tr>
+    <td>
+        <div id="staffAllocatedDiv">
+            <jsp:include page="staffAllocatedTrafficGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+</td>
+
+</tr>
+</table>
+
 </div>
+
 <div id="employeeDetailsWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
+
 </div> 
 </body>
+
 </html>

@@ -11,17 +11,103 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
-
-
-
-
-<style type="text/css">
-.tabheight{
-height:180px;
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
 
-</style>
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
 
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
 
 <script type="text/javascript">
 
@@ -317,71 +403,146 @@ function funsetaval()
 	 </script>
 </head>
 <body onload="getBranch()">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
-<td width="20%">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
 
-	<!--  <tr><td colspan="2">&nbsp;</td></tr> -->
-<!--  <tr><td colspan="2" align="center"><label class="branch">Detail</label><input type="checkbox" id="det_chk"  name="det_chk" value="0"   onclick="funsetaval()" >
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>  -->
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-                     <tr><td colspan="2"></td></tr>
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">From</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+
+    <tr>
+        <td>
+            <input type="checkbox"
+                   id="Unallocated"
+                   name="Unallocated"
+                   onchange="funsetaval();">
+        </td>
+        <td class="branch">Unallocated</td>
+    </tr>
+
+    <!-- TYPE (NO GREEN FIELDSET LINES) -->
+    <tr>
+        <td colspan="2">
+            <div class="filter-card" style="margin-top:10px;">
+
+                <div style="font-weight:600;color:#1a3a5f;margin-bottom:6px;">
+                    Type
+                </div>
+
+                <table width="100%">
                     <tr>
-                  <td><input type="checkbox" name="Unallocated" id="Unallocated" onChange="funsetaval();" ></td>
-                <td ><span class="branch">Unallocated</span></td>
-                </tr>
-     <tr><td colspan="2"></td></tr>
-                    <tr><td colspan="2">
-         <fieldset><legend><b><label class="branch">Type</label></b></legend>
-	   <table width="100%">
-       <tr>
-       <td width="52%" align="center"><input type="radio" id="rdtraffic" name="rdcategory" onchange="funtypechange();"  value="rdtraffic"><label for="rdtraffic" class="branch" id="lbltraffic">Traffic</label></td>
-       <td width="48%" align="center"><input type="radio" id="rdsalik" name="rdcategory"  onchange="funtypechange();"  value="rdsalik"><label for="rdsalik" class="branch">Salik</label></td>
-       </tr>
-       <tr><td>
-        <input type="hidden" id="chktypes" name="chktypes" />
-         <input type="hidden" id="chkdatails" name="chkdatails" value='<s:property value="chkdatails"/>'>
-           
-    </td></tr>
-       </table>
-	  </fieldset>
-	
-	</td></tr>
-	<tr colspan="3"><td >&nbsp;</td></tr>
-	<tr colspan="3"><td >&nbsp;</td></tr>
-	<tr><td colspan="2" align="center">
-	<button class="myButton" type="button" id="btnunallocate" name="btnunallocate" onclick="funUnallocate(event);">Unallocate</button>
-	 <button class="myButton" type="button" id="btninvoiced" name="btninvoiced" onclick="funInvoice(event);">Mark as Invoiced</button></td></tr>
-	  
-<tr class="tabheight"><td >&nbsp;</td></tr>
+                        <td align="center">
+                            <input type="radio"
+                                   id="rdtraffic"
+                                   name="rdcategory"
+                                   value="rdtraffic"
+                                   onchange="funtypechange();">
+                            <label for="rdtraffic"
+                                   class="branch"
+                                   id="lbltraffic">Traffic</label>
+                        </td>
 
-	</table>
-	</fieldset>
-	</td>
-	<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="uasalikGridDiv"><jsp:include page="salikGrid.jsp"></jsp:include></div></td>
-		</tr>
-		<tr>
-			 <td><div id="uatrafficGridDiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+                        <td align="center">
+                            <input type="radio"
+                                   id="rdsalik"
+                                   name="rdcategory"
+                                   value="rdsalik"
+                                   onchange="funtypechange();">
+                            <label for="rdsalik"
+                                   class="branch">Salik</label>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- HIDDEN FIELDS (UNCHANGED) -->
+                <input type="hidden" id="chktypes" name="chktypes">
+                <input type="hidden"
+                       id="chkdatails"
+                       name="chkdatails"
+                       value='<s:property value="chkdatails"/>'>
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button class="btn-submit"
+                    type="button"
+                    id="btnunallocate"
+                    onclick="funUnallocate(event);">
+                Unallocate
+            </button>
+
+            <button class="btn-submit"
+                    type="button"
+                    id="btninvoiced"
+                    onclick="funInvoice(event);">
+                Mark as Invoiced
+            </button>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-	</tr>
+
+<!-- ===== RIGHT PANEL ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="uasalikGridDiv">
+            <jsp:include page="salikGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <div id="uatrafficGridDiv">
+            <jsp:include page="trafficGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+</table>
+
+</td>
+</tr>
 </table>
 
 </div>
 </div>
-
 </body>
+
 </html>

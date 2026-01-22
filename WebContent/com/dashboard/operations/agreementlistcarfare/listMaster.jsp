@@ -10,7 +10,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
@@ -395,109 +493,192 @@ else if (document.getElementById('inchk').checked) {
 </script>
 </head>
 <body onload="getBranch();getrentaltype();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr><td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="chk"  checked="checked" id="outchk" value="out" onchange="funchkval()"><label class="branch">Out Date</label>&nbsp;&nbsp;&nbsp;<input type="radio" name="chk" id="inchk" value="in" onchange="funchkval()"><label class="branch">In Date</label></td></tr>
-	 
-	
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-     
-	
-	 <tr><td align="right"><label class="branch">Status</label></td><td align="left"><select id="status" name="status" style="height:20px;width:70%;" value='<s:property value="status"/>'>
-    <option value="" selected>All</option>  
-       <option value=0>Open</option>
-    <option value=1>Close</option>  
-    <option value=2>Cancel</option> 
-	 </select></td></tr> 
- <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="clientname"/>'></td></tr> 
- 
- <tr><td align="right"><label class="branch">Category</label></td><td align="left"><input type="text" name="catname" id="catname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclcat(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="catname"/>'></td></tr>
- 
-  <tr><td align="right"><label class="branch">Fleet</label></td><td align="left"><input type="text" name="fleet" id="fleet"  placeholder="Press F3 TO Search" readonly="readonly"    onkeydown="getfleet(event)" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="fleet"/>' ></td></tr> 
-   <tr><td align="right"><label class="branch">Group</label></td><td align="left"><input type="text" name="group" id="group" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getgroup(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="group"/>' ></td></tr> 
-    <tr><td align="right"><label class="branch">Brand</label></td><td align="left"><input type="text" name="brand" id="brand" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getbrand(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="brand"/>' ></td></tr> 
-     <tr><td align="right"><label class="branch">Model</label></td><td align="left"><input type="text" name="model" id="model" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getmodel(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="model"/>' ></td></tr> 
-      <tr><td align="right"><label class="branch">Type</label></td><td align="left">
-       <select id="rentaltype" name="rentaltype" style="height:20px;width:70%;" value='<s:property value="rentaltype"/>'>
-   
-     
-	 </select> </td></tr> 
-	 <tr><td colspan="2"></td></tr>
-	 <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funcleardata()"></td></tr>
-      <tr><td colspan="2"></td></tr>
-     <tr><td colspan="2" ><tr><td colspan="2">
-<fieldset>
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
 <table width="100%">
-	<tr><td align="right" width="40%"><label class="branch">Rental</label></td><td align="left"><input type="text" name="rt" id="rt" readonly="readonly" style="height:18px;width:45%;background-color: #FFEBEB;border:0; "  ></td></tr>
-	<tr><td align="right" width="40%"><label class="branch">Lease</label></td><td align="left"><input type="text" name="lt" id="lt" readonly="readonly" style="height:18px;width:45%; border:0;border-color:white;"  ></td></tr>
-</table>
-</fieldset>
-</td></tr>
-	<!-- <tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height: 100px;"></div></td> 
-	</tr>	 -->
-	<tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr>
-	<tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr>
-	</td></tr><tr><td colspan="2"></td></tr><tr><td colspan="2"></td></tr>
-		</table>
-		
-	</fieldset>
-	 
-		<input type="hidden" name="outchks" id="outchks"  style="height:20px;width:70%;" value='<s:property value="outchks"/>'>
-			<input type="hidden" name="inchks" id="inchks"  style="height:20px;width:70%;" value='<s:property value="inchks"/>'>
-			
-	<input type="hidden" name="cldocno" id="cldocno"  style="height:20px;width:70%;" value='<s:property value="cldocno"/>'>
-	<input type="hidden" name="groupdoc" id="groupdoc"  style="height:20px;width:70%;" value='<s:property value="groupdoc"/>'>
-	<input type="hidden" name="brandid" id="brandid"  style="height:20px;width:70%;" value='<s:property value="brandid"/>'>
-	<input type="hidden" name="modelid" id="modelid"  style="height:20px;width:70%;" value='<s:property value="modelid"/>'>
-	
-	<input type="hidden" name="catid" id="catid"  style="height:20px;width:70%;" value='<s:property value="catid"/>'>
-	
-	
+<tr>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTERS -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td colspan="2">
+                    <input type="radio" name="chk" id="outchk" value="out" checked onchange="funchkval()">
+                    <label class="branch">Out Date</label>
+                    &nbsp;&nbsp;
+                    <input type="radio" name="chk" id="inchk" value="in" onchange="funchkval()">
+                    <label class="branch">In Date</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">From</td>
+                <td><div id="fromdate" name="fromdate"></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">To</td>
+                <td><div id="todate" name="todate"></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Status</td>
+                <td>
+                    <select id="status" name="status">
+                        <option value="">All</option>
+                        <option value="0">Open</option>
+                        <option value="1">Close</option>
+                        <option value="2">Cancel</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Client</td>
+                <td>
+                    <input type="text" id="clientname" name="clientname"
+                           readonly placeholder="Press F3 to Search"
+                           onkeydown="getclinfo(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Category</td>
+                <td>
+                    <input type="text" id="catname" name="catname"
+                           readonly placeholder="Press F3 to Search"
+                           onkeydown="getclcat(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Fleet</td>
+                <td>
+                    <input type="text" id="fleet" name="fleet"
+                           readonly placeholder="Press F3 to Search"
+                           onkeydown="getfleet(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Group</td>
+                <td>
+                    <input type="text" id="group" name="group"
+                           readonly placeholder="Press F3 to Search"
+                           onkeydown="getgroup(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Brand</td>
+                <td>
+                    <input type="text" id="brand" name="brand"
+                           readonly placeholder="Press F3 to Search"
+                           onkeydown="getbrand(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Model</td>
+                <td>
+                    <input type="text" id="model" name="model"
+                           readonly placeholder="Press F3 to Search"
+                           onkeydown="getmodel(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Type</td>
+                <td>
+                    <select id="rentaltype" name="rentaltype"></select>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- SUMMARY CARD -->
+        <div class="filter-card">
+            <table class="filter-table">
+                <tr>
+                    <td class="label-cell">Rental</td>
+                    <td><input type="text" id="rt" readonly></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">Lease</td>
+                    <td><input type="text" id="lt" readonly></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ACTION -->
+        <button class="btn-submit" type="button" onclick="funcleardata();">
+            Clear
+        </button>
+
+    </div>
+</div>
+</div>
+
+<!-- HIDDEN FIELDS -->
+<input type="hidden" id="outchks" name="outchks">
+<input type="hidden" id="inchks" name="inchks">
+<input type="hidden" id="cldocno" name="cldocno">
+<input type="hidden" id="groupdoc" name="groupdoc">
+<input type="hidden" id="brandid" name="brandid">
+<input type="hidden" id="modelid" name="modelid">
+<input type="hidden" id="catid" name="catid">
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="detlist"><jsp:include page="detailsGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="detlist">
+            <jsp:include page="detailsGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+</table>
+
+</td>
+
 </tr>
 </table>
 
 </div>
 
-<div id="catwindow">
-   <div ></div>
-</div>
+<!-- SEARCH WINDOWS -->
+<div id="catwindow"><div></div></div>
+<div id="clientwindow"><div></div></div>
+<div id="fleetwindow"><div></div></div>
+<div id="groupwindow"><div></div></div>
+<div id="brandwindow"><div></div></div>
+<div id="modelwindow"><div></div></div>
 
-<div id="clientwindow">
-   <div ></div>
-</div>
-<div id="fleetwindow">
-   <div ></div>
-</div>
-<div id="groupwindow">
-   <div ></div>
-</div>
-<div id="brandwindow">
-   <div ></div>
-</div>
-<div id="modelwindow">
-   <div ></div>
-</div>
 </div>
 </body>
+
 </html>
 	 

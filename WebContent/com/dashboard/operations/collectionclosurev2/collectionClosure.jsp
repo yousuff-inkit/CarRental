@@ -11,18 +11,100 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
 }
 </style>
 
@@ -171,69 +253,164 @@
 
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-    <tr><td colspan="2">&nbsp;</td></tr>
-    <tr>
-	 <td align="right"><label class="branch">Period</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr> 
-	 <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 To Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:65%;" value='<s:property value="clientname"/>'>
-	  <input type="hidden" id="cldocno" name="cldocno" value='<s:property value="cldocno"/>'/></td></tr> 
-	<tr>
-    <td align="right"><label class="branch">Paid As</label></td>   
-    <td><select id="cmbpayedas" name="cmbpayedas" style="width:65%;" value='<s:property value="cmbpayedas"/>' >
-      <option value="">--Select--</option> <option value="1">On Account</option><option value="2">Advance</option><option value="3">Security</option></select>
-    <input type="hidden" id="hidcmbpayedas" name="hidcmbpayedas" value='<s:property value="hidcmbpayedas"/>'/></td>
-  </tr>
-	<tr><td align="right"><label class="branch">Status</label></td>
-	<td align="left"><select id="cmbstat" name="cmbstat" style="width:65%;"  value='<s:property value="cmbstat"/>'>
-    <option value="">--Select--</option>  
-    <option value="1">Posted</option>
-    <option value="2">Not Posted</option>    
-    <input type="hidden" id="hidcmbstat" name="hidcmbstat" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="hidcmbstat"/>'/></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><button class="myButton" type="button" id="btnPrintCollectionClosure" name="btnPrintCollectionClosure" onclick="funPrintCollectionClosure(event);">Print</button></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	</table>
-	</fieldset>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+            <table class="filter-table">
+
+                <tr>
+                    <td class="label-cell">Period</td>
+                    <td>
+                        <div id="fromdate"
+                             name="fromdate"
+                             value='<s:property value="fromdate"/>'>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">To</td>
+                    <td>
+                        <div id="todate"
+                             name="todate"
+                             value='<s:property value="todate"/>'>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Client</td>
+                    <td>
+                        <input type="text"
+                               id="clientname"
+                               name="clientname"
+                               placeholder="Press F3 To Search"
+                               readonly="readonly"
+                               onkeydown="getclinfo(event);"
+                               value='<s:property value="clientname"/>'>
+
+                        <input type="hidden"
+                               id="cldocno"
+                               name="cldocno"
+                               value='<s:property value="cldocno"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Paid As</td>
+                    <td>
+                        <select id="cmbpayedas"
+                                name="cmbpayedas">
+                            <option value="">--Select--</option>
+                            <option value="1">On Account</option>
+                            <option value="2">Advance</option>
+                            <option value="3">Security</option>
+                        </select>
+
+                        <input type="hidden"
+                               id="hidcmbpayedas"
+                               name="hidcmbpayedas"
+                               value='<s:property value="hidcmbpayedas"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Status</td>
+                    <td>
+                        <select id="cmbstat"
+                                name="cmbstat">
+                            <option value="">--Select--</option>
+                            <option value="1">Posted</option>
+                            <option value="2">Not Posted</option>
+                        </select>
+
+                        <input type="hidden"
+                               id="hidcmbstat"
+                               name="hidcmbstat"
+                               value='<s:property value="hidcmbstat"/>'>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- MASTER BUTTON -->
+        <button class="btn-submit"
+                type="button"
+                id="btnPrintCollectionClosure"
+                onclick="funPrintCollectionClosure(event);">
+            Print
+        </button>
+
+    </div>
+
+</div>
+</div>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="collectionClosureDiv"><jsp:include page="collectionClosureGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="collectionClosureDiv">
+            <jsp:include page="collectionClosureGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
 
 <table width="100%">
 <tr>
-		<td width="92%" align="right" style="font-family: Myriad Pro;font-size: 12px;font-weight: bold;">Net Amount :&nbsp;</td>
-        <td width="8%" align="left"><input type="text" class="textbox" id="txtnetamount" name="txtnetamount" style="width:80%;text-align: right;" value='<s:property value="txtnetamount"/>'/></td>
+    <td width="92%" align="right"
+        style="font-family: Myriad Pro;font-size:12px;font-weight:bold;">
+        Net Amount :
+    </td>
+    <td width="8%" align="left">
+        <input type="text"
+               class="textbox"
+               id="txtnetamount"
+               name="txtnetamount"
+               style="width:80%;text-align:right;"
+               value='<s:property value="txtnetamount"/>'>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
+
 <div id="clientwindow">
-   <div></div>
+    <div></div>
 </div>
-</div> 
+
+</div>
 </body>
+
 </html>
