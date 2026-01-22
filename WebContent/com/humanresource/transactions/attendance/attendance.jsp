@@ -1260,8 +1260,8 @@
 	background-color:#6c7c7c;
 }
 .myButtonses {
-    background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
-    background-color:#599bb3;
+    background:linear-gradient(to bottom, #007bff 5%, #007bff 100%);
+    background-color:#007bff;
     border-radius:4px;
     display:inline-block;
     cursor:pointer;
