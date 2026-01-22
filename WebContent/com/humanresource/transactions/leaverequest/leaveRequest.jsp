@@ -164,6 +164,7 @@
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
 				var items = x.responseText;
+				console.log("Leave Type Data Received:", items);
 				items = items.split('####');
 				var leavetypeItems = items[0].split(",");
 				var leavetypeIdItems = items[1].split(",");
@@ -648,11 +649,11 @@ select option {
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background" >
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background" >
 <form id="frmLeaveRequest" action="saveLeaveRequests" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div  class=' receipt-header'>
 <div class="table-section" style="background-color: #f6f8fa; width: 100%;">
 <table class="cr-table" width="100%">
   <tr>

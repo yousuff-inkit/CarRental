@@ -13,6 +13,22 @@
 <style type="text/css">
 
 
+.hidden-scrollbar {
+    height: 530px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    -webkit-overflow-scrolling: touch;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none; 
+}
+
+.hidden-scrollbar {
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+}
 
 #left-panel {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
@@ -140,7 +156,7 @@ label[for="rdovertime"] {
 
 #ahead{
 margin: 0;
-    padding: 0;
+    padding-left:30px;
     line-height: normal;
     background-color:#fff;
     border-radius:20px;
@@ -1387,7 +1403,7 @@ body{
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="homeContent " data-type="background">
 <form id="frmEmployeeAttendance" action="saveEmployeeAttendance" method="post" autocomplete="off">
 <div id="ahead">
 <jsp:include page="../../../../header.jsp"></jsp:include>
@@ -1436,7 +1452,7 @@ body{
     <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
   </tr>
    <tr>
-    <td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:75%;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td>
+    <td colspan="2" ><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:90%; margin-left:10px;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td>
   </tr>
  
   <tr>
