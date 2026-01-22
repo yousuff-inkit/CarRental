@@ -10,43 +10,137 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+/* ===== FIX LEFT PANEL SCROLL ISSUE ===== */
+
+/* Allow page to calculate height correctly */
+html, body {
+    height: 100%;
+}
+
+/* Main container must not block scrolling */
+#mainBG {
+    height: 100%;
+}
+
+/* Left sidebar container */
+.scrollable-left {
+    max-height: calc(100vh - 90px); /* adjust if header height differs */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 6px; /* avoids scrollbar overlap */
+}
+
+/* Smooth scrollbar (optional but nice) */
+.scrollable-left::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-left::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+
+.scrollable-left::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
 </style>
 <script type="text/javascript">
 
@@ -235,49 +329,145 @@
 
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background" style="height:100vh;">
+<div class="hidden-scrollbar" style="height:100%;">
+
+<table width="100%" height="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><input type="radio" id="rdlinking" name="rdo" onchange="funClearRadioInfo();" value="rdlinking"><label for="rdlinking" class="branch">Linking</label>&nbsp;&nbsp;&nbsp;&nbsp;
-	    <input type="radio" id="rddelete" name="rdo" onchange="funClearRadioInfo();" value="rddelete"><label for="rddelete" class="branch">Remove Linking</label></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td align="right"><label class="branch">User</label></td>
-	<td align="left"><input type="text" id="txtusername" name="txtusername" style="width:100%;height:20px;" placeholder="Press F3 to Search" readonly="readonly" onkeydown="getUserDetails(event);" value='<s:property value="txtusername"/>'/>
-    <input type="hidden" id="txtuserdocno" name="txtuserdocno" value='<s:property value="txtuserdocno"/>'/></td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><textarea id="txtsalesmaninfo" style="height:80px;width:200px;font: 10px Tahoma;resize:none" name="txtsalesmaninfo"  readonly="readonly"><s:property value="txtsalesmaninfo" ></s:property></textarea></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><button class="myButton" type="button" id="btnlinking" name="btnlinking" onclick="funLinking(event);">Linking</button>&nbsp;&nbsp;&nbsp;&nbsp;
-		<button class="myButton" type="button" id="btnremovelinking" name="btnremovelinking" onclick="funRemoveLinking(event);">Remove Linking</button></td></tr>
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();"></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2"><input type="hidden" name="txtsalesmanid" id="txtsalesmanid" style="height:20px;width:70%;" value='<s:property value="txtsalesmanid"/>'></td></tr> 
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="rentalUserLinkDiv"><jsp:include page="rentalUserLinkGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-</tr>
-</table>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top" style="height:100%;">
+
+<div class="master-container" style="height:100%;">
+<div class="sidebar-filters" style="height:100%;display:flex;flex-direction:column;">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE BODY -->
+    <div class="sidebar-scroll-content"
+         style="flex:1;overflow-y:auto;padding-bottom:20px;">
+
+        <!-- FILTERS -->
+        <div class="filter-card">
+        <table class="filter-table" width="100%">
+
+            <tr>
+                <td colspan="2" align="center" style="padding:8px 0;">
+                    <input type="radio" id="rdlinking" name="rdo"
+                           onchange="funClearRadioInfo();">
+                    <label class="branch" for="rdlinking">Linking</label>
+                    &nbsp;&nbsp;
+                    <input type="radio" id="rddelete" name="rdo"
+                           onchange="funClearRadioInfo();">
+                    <label class="branch" for="rddelete">Remove Linking</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">User</td>
+                <td>
+                    <input type="text"
+                           id="txtusername"
+                           name="txtusername"
+                           placeholder="Press F3 to Search"
+                           readonly
+                           style="width:100%;box-sizing:border-box;"
+                           onkeydown="getUserDetails(event);"
+                           value='<s:property value="txtusername"/>'>
+                    <input type="hidden"
+                           id="txtuserdocno"
+                           name="txtuserdocno"
+                           value='<s:property value="txtuserdocno"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <textarea id="txtsalesmaninfo"
+                              readonly
+                              style="
+                                width:100%;
+                                height:90px;
+                                resize:none;
+                                font:10px Tahoma;
+                                box-sizing:border-box;
+                              ">
+<s:property value="txtsalesmaninfo"/>
+                    </textarea>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="filter-card" style="text-align:center;">
+            <button type="button" class="btn-submit"
+                    onclick="funLinking(event);">
+                Linking
+            </button>
+
+            &nbsp;&nbsp;
+
+            <button type="button" class="btn-submit"
+                    onclick="funRemoveLinking(event);">
+                Remove Linking
+            </button>
+        </div>
+
+        <!-- CLEAR BUTTON (KEPT ✅) -->
+        <div class="filter-card" style="text-align:center;">
+            <button type="button" class="btn-submit"
+                    onclick="funClearInfo();">
+                Clear
+            </button>
+        </div>
+
+        <input type="hidden"
+               id="txtsalesmanid"
+               name="txtsalesmanid"
+               value='<s:property value="txtsalesmanid"/>'>
+
+    </div>
+</div>
 </div>
 
-<div id="userDetailsWindow">
-<div></div>
+</td>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top" style="height:100%;">
+
+<table width="100%" height="100%">
+<tr>
+    <td style="vertical-align:top;">
+        <div id="rentalUserLinkDiv" style="height:100%;">
+            <jsp:include page="rentalUserLinkGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+</table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
-</div> 
+
+<!-- POPUP -->
+<div id="userDetailsWindow">
+    <div></div>
+</div>
+
+</div>
 </body>
+
+
+
 </html>

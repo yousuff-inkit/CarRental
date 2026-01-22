@@ -8,7 +8,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" /> 
+ <style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+ 
 
 <script type="text/javascript">
 
@@ -174,67 +272,139 @@ function funClearRadioInfo() {
 
 </head>
 <body onload="funReadOnly();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	
-		
-	<tr><td colspan="2"><jsp:include page="../../heading.jsp"></jsp:include></td></tr>
-	<tr>
-		<td colspan="2" align="center"><input type="radio" id="rduserrole" name="rdo" onchange="funClearRadioInfo();" value="rduserrole"><label for="rduserrole" class="branch">User Role Detail</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="rduserlist" name="rdo" onchange="funClearRadioInfo();" value="rduserlist"><label for="rduserlist" class="branch">View User List</label></td>	
-	</tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td  align="right" width="25%" ><label class="branch">User Role</label></td>
-    <td align="left">
-   		<input type="text" id="txtrolename" name="txtrolename" placeholder="Press F3 to Search" style="width:90%;height:20px;" ondblclick="funSearchdblclick();" onkeydown="getRole(event);" value='<s:property value="txtrolename"/>'/>
-		<input type="hidden" id="txtroleid" name="txtroleid" value='<s:property value="txtroleid"/>'/>
-    </td></tr>
-                    
-                     <tr><td  align="right" ><label class="branch">User Name</label></td><td align="left">
-                     <input type="text" id="txtusername" name="txtusername" placeholder="Press F3 to Search" style="width:90%;height:20px;" ondblclick="funNamedblclick();" onkeydown="getName(event);" value='<s:property value="txtusername"/>'/>
-  <input type="hidden" id="txtrolleid" name="txtrolleid" value='<s:property value="txtrolleid"/>'/>
-                    </td></tr>
-    
-    <tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	</table>
-	</fieldset>
-</td>
-<td width="80%" style="vertical-align: top;">
-	<table width="100%">
-		<tr>
-			 <td><div id="userrolGriddiv"><jsp:include page="userRoleGrid.jsp"></jsp:include></div></td> 
-		</tr>
-		<tr>
-		<td><div id="userroldetailsGriddiv"><jsp:include page="userRoledetailsGrid.jsp"></jsp:include></div></td> 
-		</tr>
-	</table>
-	<div id="userlistgrid"><jsp:include page="userlistgrid.jsp"></jsp:include></div>
-</tr>
-</table>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="radio"
+                           id="rduserrole"
+                           name="rdo"
+                           value="rduserrole"
+                           onchange="funClearRadioInfo();">
+                    <label for="rduserrole" class="branch">
+                        User Role Detail
+                    </label>
+
+                    &nbsp;&nbsp;&nbsp;
+
+                    <input type="radio"
+                           id="rduserlist"
+                           name="rdo"
+                           value="rduserlist"
+                           onchange="funClearRadioInfo();">
+                    <label for="rduserlist" class="branch">
+                        View User List
+                    </label>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">User Role</td>
+                <td>
+                    <input type="text"
+                           id="txtrolename"
+                           name="txtrolename"
+                           placeholder="Press F3 to Search"
+                           value='<s:property value="txtrolename"/>'
+                           ondblclick="funSearchdblclick();"
+                           onkeydown="getRole(event);">
+
+                    <input type="hidden"
+                           id="txtroleid"
+                           name="txtroleid"
+                           value='<s:property value="txtroleid"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">User Name</td>
+                <td>
+                    <input type="text"
+                           id="txtusername"
+                           name="txtusername"
+                           placeholder="Press F3 to Search"
+                           value='<s:property value="txtusername"/>'
+                           ondblclick="funNamedblclick();"
+                           onkeydown="getName(event);">
+
+                    <input type="hidden"
+                           id="txtrolleid"
+                           name="txtrolleid"
+                           value='<s:property value="txtrolleid"/>'>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+    </div>
+</div>
 </div>
 
-<div id="userRoleDetailsWindow">
-	<div></div>
-	
+</td>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="userrolGriddiv">
+            <jsp:include page="userRoleGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <div id="userroldetailsGriddiv">
+            <jsp:include page="userRoledetailsGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+</table>
+
+<div id="userlistgrid">
+    <jsp:include page="userlistgrid.jsp"></jsp:include>
 </div>
-</div> 
+
+</td>
+
+</tr>
+</table>
+
+</div>
+
+<!-- POPUP -->
+<div id="userRoleDetailsWindow">
+    <div></div>
+</div>
+
+</div>
 </body>
+
 </html>
