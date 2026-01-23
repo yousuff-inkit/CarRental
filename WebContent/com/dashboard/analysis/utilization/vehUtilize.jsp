@@ -12,43 +12,136 @@
 <title>GatewayERP(i)</title>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
-}
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
-}
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
-}
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
-}
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important; /* Force all font black */
+    }
+
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards - Stripping legacy green/blue backgrounds */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* HARD RESET: Force black fonts and remove unwanted backgrounds */
+    .filter-card *, 
+    fieldset, 
+    legend, 
+    .branch, 
+    td, 
+    tr, 
+    label, 
+    span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 95px;
+    }
+
+    /* Input, Select & Textarea Styling */
+    input[type="text"], select, textarea {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Scrollbar Kill */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px;
+    }
+
+    /* Buttons Modernized */
+    .myButtons {
+        background-color: #6c7c7c;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #ffffff !important; /* Button text remains white for contrast */
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 15px;
+        width: auto;
+        transition: background 0.2s;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .myButtons:hover {
+        background-color: #31b0d5;
+    }
+
+    .btn-full {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
 </style>
 
 <script type="text/javascript">
@@ -380,89 +473,112 @@ function funreload(event)
 <form id="frmSalesInvoiceList" method="post">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%">
-<tr>
-<td width="23%" align="center">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
- <tr>
-   <td width="37%" align="right"><label class="branch">From Date</label></td><td width="63%"><div id="fromdate"></div></td></tr>
- <tr>
-   <td align="right"><label class="branch">To Date</label></td>
-   <td><div id="todate"></div></td>
- </tr>
- <tr>
-   <td align="center" colspan="2">
-   <!-- <input type="checkbox" name="chkdetail" id="chkdetail" onchange="setDetail();" hidden="true"><label for="chkdetail" class="branch" hidden="true">Detail</label>&nbsp;&nbsp; -->
-   <input type="radio" name="duration" id="rdohours" value="days"><label class="branch" for="rdohours">Hours</label>&nbsp;&nbsp;
-   <input type="radio" name="duration" id="rdodays" value="days"><label class="branch" for="rdodays">Days</label>
-   </td>
- </tr>
-<tr>
-  <td align="right"><label class="branch">Grouping 1</label></td>
-  <td align="left"><select name="grpby1" id="grpby1">
-    <option value="">--Select--</option>
-  
-    <option value="brand">Brand</option>
-    <option value="model">Model</option>
-    <option value="group">Group</option>
-    <option value="yom">YOM</option>
-    </select>
-    </td>
-    </tr>
-<tr >
-	  <td align="right"><label class="branch">Search By</label></td>
-	  <td  align="left"><select name="searchby" id="searchby">
-	<option value="">--Select--</option>
-	
-    <option value="brand">Brand</option>
-    <option value="model">Model</option>
-    <option value="group">Group</option>
-    <option value="yom">YOM</option>
-    <option value="fleet">Fleet</option>
-    </select>&nbsp;&nbsp;<button type="button" name="btnadditem" id="additem" class="myButtons" onClick="setSearch();">+</button>&nbsp;&nbsp;<button  type="button" name="btnremoveitem" id="btnremoveitem" class="myButtons" onclick="setRemove();">-</button></td>
-	  </tr>
-	<tr >
-	  <td colspan="2"
-      align="right" ><textarea id="searchdetails" name="searchdetails" style="resize:none;font: 10px Tahoma;" rows="18" cols="50" readonly></textarea>
-      
-      </td>
-	  </tr>
- 	
-	<tr>
-	<td colspan="2" style="border-top:2px solid #DCDDDE;">
-	 
-	<center><input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();"></center>
-   
-    </td>
-	</tr>
-	<tr><td colspan="2">&nbsp;</td></tr>	
-	</table>
-	</fieldset>
-</td>
-<td width="77%">
-	<table width="100%">
-		<tr>
-			 <td> <div id="vehutilizediv"> <jsp:include page="vehUtilizeGrid.jsp"></jsp:include> </div> 		
-			 </td>
-			   <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-			  <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-			  <input type="hidden" name="hidgroup" id="hidgroup">
-			  <input type="hidden" name="hidmodel" id="hidmodel">
-			  <input type="hidden" name="hidyom" id="hidyom">
-			  <input type="hidden" name="hidbrand" id="hidbrand">
-			  <input type="hidden" name="group" id="group">
-			  <input type="hidden" name="model" id="model">
-			  <input type="hidden" name="yom" id="yom">
-			  <input type="hidden" name="brand" id="brand">
-			  <input type="hidden" name="hidfleet" id="hidfleet">
-			  <input type="hidden" name="fleet" id="fleet">
-		</tr>
-	</table>
-</tr>
-</table>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From Date</td>
+                        <td><div id="fromdate"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To Date</td>
+                        <td><div id="todate"></div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <div style="display: flex; justify-content: center; gap: 20px; padding: 5px 0;">
+                    <span>
+                        <input type="radio" name="duration" id="rdohours" value="hours">
+                        <label class="branch" for="rdohours">Hours</label>
+                    </span>
+                    <span>
+                        <input type="radio" name="duration" id="rdodays" value="days" checked>
+                        <label class="branch" for="rdodays">Days</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Grouping 1</td>
+                        <td>
+                            <select name="grpby1" id="grpby1">
+                                <option value="">--Select--</option>
+                                <option value="brand">Brand</option>
+                                <option value="model">Model</option>
+                                <option value="group">Group</option>
+                                <option value="yom">YOM</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Search By</td>
+                        <td>
+                            <select name="searchby" id="searchby">
+                                <option value="">--Select--</option>
+                                <option value="brand">Brand</option>
+                                <option value="model">Model</option>
+                                <option value="group">Group</option>
+                                <option value="yom">YOM</option>
+                                <option value="fleet">Fleet</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding-top: 10px;">
+                            <button type="button" id="additem" class="myButtons" onClick="setSearch();">+</button>
+                            <button type="button" id="btnremoveitem" class="myButtons" onclick="setRemove();">-</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding-top: 10px;">
+                            <textarea id="searchdetails" name="searchdetails" rows="10" readonly style="resize:none; font-size: 11px;"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="padding: 5px;">
+                <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons btn-full" onclick="funClearData();">
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="vehutilizediv">
+                <jsp:include page="vehUtilizeGrid.jsp"></jsp:include>
+            </div>
+            
+            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+            <input type="hidden" name="hidgroup" id="hidgroup">
+            <input type="hidden" name="hidmodel" id="hidmodel">
+            <input type="hidden" name="hidyom" id="hidyom">
+            <input type="hidden" name="hidbrand" id="hidbrand">
+            <input type="hidden" name="group" id="group">
+            <input type="hidden" name="model" id="model">
+            <input type="hidden" name="yom" id="yom">
+            <input type="hidden" name="brand" id="brand">
+            <input type="hidden" name="hidfleet" id="hidfleet">
+            <input type="hidden" name="fleet" id="fleet">
+        </div>
+    </div>
+</div>
 </div>
 
 </div>
