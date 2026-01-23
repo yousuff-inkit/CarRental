@@ -10,49 +10,157 @@
 <title>GatewayERP(i)</title>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
-}
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
-}
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
-}
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
-}
- 
-select{
-    height:15px;
-}
-</style>
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important; /* Force all font black */
+    }
 
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards - Stripping legacy backgrounds */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* HARD RESET: Force black fonts and remove unwanted green backgrounds */
+    .filter-card *, 
+    fieldset, 
+    legend, 
+    .branch, 
+    td, 
+    tr, 
+    label, 
+    span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 95px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Scrollbar Kill */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px 20px 80px 20px;
+    }
+
+    /* Sticky Footer for Net Total */
+    .totals-bar {
+        background: #ffffff;
+        border-top: 2px solid #2563eb;
+        padding: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Buttons Modernized */
+    .myButtons {
+        background-color: #6c7c7c;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #ffffff !important; /* White for contrast */
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 15px;
+        transition: background 0.2s;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .myButtons:hover {
+        background-color: #31b0d5;
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
+    
+    fieldset {
+        border: 1px solid #ccd6e0 !important;
+        margin-bottom: 20px !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    legend {
+        font-weight: bold;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+</style>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -129,56 +237,74 @@ function funClearData(){
 <form id="frmReplaceList" method="post">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%">
-<tr>
-<td width="23%" align="center">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
- <tr>
-   <td width="37%" align="right"><label class="branch">From Date</label></td><td width="63%"><div id="fromdate"></div></td></tr>
- <tr>
-   <td align="right"><label class="branch">To Date</label></td>
-   <td><div id="todate"></div></td>
- </tr>
- <!-- 
- <tr >
-	<td colspan="2" style="border-top:2px solid #DCDDDE;">
-	<div style="text-align:center;">
-	<input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">&nbsp;&nbsp;
-	<input type="button" name="btnrepprint" id="btnrepprint" value="Print" class="myButtons" onclick="funPrintData();">
-	</div>
-    </td>
-	</tr> -->
-<tr ><td colspan="2"><!-- <textarea id="agmtdetails" name="agmtdetails" readonly style="resize:none;" rows="10" cols="35"></textarea> -->
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From Date</td>
+                        <td><div id="fromdate"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To Date</td>
+                        <td><div id="todate"></div></td>
+                    </tr>
+                </table>
+            </div>
 
-</td></tr>
+            <div style="height: 100px;"></div>
 
-<tr colspan="2"><td>&nbsp;</td></tr>
-	
-		
-	</table>
-	</fieldset>
-</td>
-<td width="77%">
-	<table width="100%">
-		<tr>
-			 <td><fieldset><legend>Output Tax</legend><div id="vatoutputdiv"><jsp:include page="vatOutputGrid.jsp"></jsp:include></div></fieldset>
-			 <fieldset><legend>Input Tax</legend><div id="vatinputdiv"><jsp:include page="vatInputGrid.jsp"></jsp:include></div></fieldset>
-			 <div style="text-align:right;margin-right:30px;"><label class="branch" style="background-color:transparent;font-weight:bold;">Net Total</label>&nbsp;&nbsp;<input type="text" name="nettotal" id="nettotal"  value='<s:property value="nettotal"/>' style="text-align:right;height:18px;" readonly onKeyPress="javascript:return isNumber (event,id)" onBlur="funRoundAmt(value,id);"></div>
-			 </td>
-			  <input type="hidden" name="totalinput" id="totalinput" value='<s:property value="totalinput"/>'>
-			  <input type="hidden" name="totaloutput" id="totaloutput" value='<s:property value="totaloutput"/>'>
-			  <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-			  <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-			  <input type="hidden" name="printdocno" id="printdocno" value='<s:property value="printdocno"/>'>
-		
-		</tr>
-	</table>
-</tr>
-</table>
+            <div style="padding: 10px 5px; text-align: center; display: flex; flex-direction: column; gap: 10px;">
+                <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">
+                <input type="button" name="btnrepprint" id="btnrepprint" value="Print" class="myButtons" onclick="funPrintData();">
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <fieldset>
+                <legend>Output Tax</legend>
+                <div id="vatoutputdiv">
+                    <jsp:include page="vatOutputGrid.jsp"></jsp:include>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Input Tax</legend>
+                <div id="vatinputdiv">
+                    <jsp:include page="vatInputGrid.jsp"></jsp:include>
+                </div>
+            </fieldset>
+
+            <input type="hidden" name="totalinput" id="totalinput" value='<s:property value="totalinput"/>'>
+            <input type="hidden" name="totaloutput" id="totaloutput" value='<s:property value="totaloutput"/>'>
+            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+            <input type="hidden" name="printdocno" id="printdocno" value='<s:property value="printdocno"/>'>
+        </div>
+
+        <div class="totals-bar">
+            <table width="100%">
+                <tr>
+                    <td align="right" style="font-size: 13px; font-weight: bold; color: black;">Net Total :&nbsp;</td>
+                    <td width="180px">
+                        <input type="text" name="nettotal" id="nettotal" readonly 
+                               style="text-align: right; font-weight: bold; color: black; border: 1px solid #ccd6e0; border-radius: 4px; height: 30px;" 
+                               value='<s:property value="nettotal"/>' 
+                               onKeyPress="javascript:return isNumber (event,id)" 
+                               onBlur="funRoundAmt(value,id);">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 </div>
 <div id="clientsearchwindow">
 <div></div>
