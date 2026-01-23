@@ -274,24 +274,24 @@ public class ClsMonthlyPayrollDAO {
 	
 	public JSONArray monthlyPayrollGridLoading(String date,String category,String empId,String docno,String mode,String employeebranchchk,String brhid) throws SQLException {
 		JSONArray RESULTDATA=new JSONArray();
-        
-        Connection conn = null; 
-        
+		
+		Connection conn = null; 
+		
 		try {
 				conn = ClsConnection.getMyConnection();
 				java.sql.Date sqlDate=null;
 
 				date.trim();
-		        if(!(date.equalsIgnoreCase("undefined"))&&!(date.equalsIgnoreCase(""))&&!(date.equalsIgnoreCase("0"))) {
-		        	sqlDate = ClsCommon.changeStringtoSqlDate(date);
-		        }
-//		        System.out.println(employeebranchchk+" ===== "+brhid);  
-		        if(mode.equalsIgnoreCase("A")){
-		        	
-		        	Statement stmtHMSP = conn.createStatement();
+				if(!(date.equalsIgnoreCase("undefined"))&&!(date.equalsIgnoreCase(""))&&!(date.equalsIgnoreCase("0"))) {
+					sqlDate = ClsCommon.changeStringtoSqlDate(date);
+				}
+				
+				if(mode.equalsIgnoreCase("A")){
+					
+					Statement stmtHMSP = conn.createStatement();
 					Statement stmtHMSP1 = conn.createStatement();
 					Statement stmtHMSP2 = conn.createStatement();
-					Statement stmtHMSP3 = conn.createStatement();
+					// stmtHMSP3 moved inside the loop for safety
 					Statement stmtHMSP4 = conn.createStatement();
 					Statement stmtHMSP5 = conn.createStatement();
 					
@@ -311,21 +311,21 @@ public class ClsMonthlyPayrollDAO {
 					
 					while(resultSet1.next()) {
 						totallowance=resultSet1.getInt("totallowances");
-				  	}
+					}
 					
 					if(!(category.equalsIgnoreCase("0")) && !(category.equalsIgnoreCase(""))){
-			            xsql=xsql+" and m.pay_catid = '"+category+"'";
-			        }
+						xsql=xsql+" and m.pay_catid = '"+category+"'";
+					}
 					
 					if(!(empId.equalsIgnoreCase("0")) && !(empId.equalsIgnoreCase(""))){
-			            xsql=xsql+" and m.doc_no = '"+empId+"'";
-			        }
+						xsql=xsql+" and m.doc_no = '"+empId+"'";
+					}
 					
 					if(employeebranchchk.equalsIgnoreCase("1")){    
-		            	if(!(brhid.equalsIgnoreCase("")) && !(brhid.equalsIgnoreCase("0"))){  
-		            		sqltst=sqltst+" and t.brhid='"+brhid+"'";   
-		            	}
-		            }    
+						if(!(brhid.equalsIgnoreCase("")) && !(brhid.equalsIgnoreCase("0"))){  
+							sqltst=sqltst+" and t.brhid='"+brhid+"'";   
+						}
+					}    
 					
 					
 					String sql2="select m.doc_no employeedocno,m.codeno employeeid,m.name employeename,m.salary_paid dates,DATEDIFF('"+sqlDate+"',m.salary_paid) totaldays,if(mod(round(sum(t.tot_leave1),1),1)=0,"
@@ -341,241 +341,228 @@ public class ClsMonthlyPayrollDAO {
 					
 					
 					ResultSet resultSet2 = stmtHMSP2.executeQuery(sql2);
-	                
+					
 					ArrayList<ArrayList<String>> analysisrowarray= new ArrayList<ArrayList<String>>();
 					
 					String oldempid="",newempid="",empCategoryID="0",daysToPay="0";
 					
 					while(resultSet2.next()){
-						ArrayList<String> temp=new ArrayList<String>();
-	
-						newempid=resultSet2.getString("employeedocno");
+						// [FIX] Create a fresh statement for every employee iteration to prevent "ResultSet Closed" errors
+						Statement stmtHMSP3 = conn.createStatement();
 						
-						if(oldempid!=newempid){
-							temp.add(newempid);
-							temp.add(resultSet2.getString("employeeid"));
-							temp.add(resultSet2.getString("employeename"));
-							temp.add(resultSet2.getString("dates"));
-							daysToPay=resultSet2.getString("totaldays");
-							temp.add(daysToPay);
-							temp.add(resultSet2.getString("ot"));
-							temp.add(resultSet2.getString("hot"));
-							temp.add(resultSet2.getString("payrollprocessed"));
+						try {
+							ArrayList<String> temp=new ArrayList<String>();
+		
+							newempid=resultSet2.getString("employeedocno");
 							
-							for (int l = 1; l <= totleaves; l++) {
-								temp.add(resultSet2.getString("leave"+l+""));
-	 						 }
-	
-							String sql4 = "select pay_catid from hr_empm where doc_no="+newempid+"";
-							ResultSet resultSet4 = stmtHMSP4.executeQuery(sql4);		
-							
-							while(resultSet4.next()){
-								empCategoryID=resultSet4.getString("pay_catid");
-							}
-							
-							String sql5 = "select dailyRate from hr_paycode where status=3 and catid="+empCategoryID+" and doc_no=(select max(doc_no) from hr_paycode where status=3 and catid="+empCategoryID+" and revdate<='"+sqlDate+"')";
-							ResultSet resultSet5 = stmtHMSP4.executeQuery(sql5);		
-							
-							while(resultSet5.next()){
-								dailyRateFormula=resultSet5.getString("dailyRate");
-							}
-							/**
-							 * on 29-01-2020 - carfare workshop employee edit problem
-							 * lastest incrm value as per date has to be taken max(date) condition is added
-							 * */
-							
-							String sql3="select * from ( "  
-									+ "select t.empid,id.rdocno,id.awlid,id.refdtype,id.addition,id.deduction,id.statutorydeduction,id.revadd,id.revded,id.revstatded from "
-									+ "hr_timesheet t left join hr_incrm im on t.empid=im.empid left join hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and  empid=t.empid "
-									+ " and date = (select max(date) from hr_incrm where status=3 and  empid=t.empid )) and id.refdtype!='STD' and t.empid="+newempid+" union all "
-									+ "select 0 empid,0 rdocno,hrs.doc_no awlid,'ALC' refdtype,0 addition,0 deduction,0 statutorydeduction,0 revadd,0 revded,0 revstatded from "
-									+ "hr_setallowance hrs where hrs.status=3 and hrs.doc_no not in (select id.awlid from hr_timesheet t left join hr_incrm im on t.empid=im.empid left join "
-									+ "hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
-									+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and "
-									+ "t.empid="+newempid+")) as a where a.awlid>=0 group by empid,awlid,refdtype order by refdtype,awlid";
-//					System.out.println(sql3);
-							ResultSet resultSet3 = stmtHMSP3.executeQuery(sql3);		
-							
-							double totalsalary=0.00,otAmount=0.00,hotAmount=0.00,overTimeAmount=0.00,grossSalaryAmount=0.00,additionAmount=0.00,deductionAmount=0.00,loanAmount=0.00,netSalaryAmount=0.00;
-							while(resultSet3.next()){
-								double basicsalary=0.00,basicSalaryAmount=0.00,allowance=0.00,allowanceAmount=0.00,statutorydeduction=0.00;
+							if(oldempid!=newempid){
+								temp.add(newempid);
+								temp.add(resultSet2.getString("employeeid"));
+								temp.add(resultSet2.getString("employeename"));
+								temp.add(resultSet2.getString("dates"));
+								daysToPay=resultSet2.getString("totaldays");
+								temp.add(daysToPay);
+								temp.add(resultSet2.getString("ot"));
+								temp.add(resultSet2.getString("hot"));
+								temp.add(resultSet2.getString("payrollprocessed"));
 								
-								if(resultSet3.getString("awlid").equalsIgnoreCase("0") && resultSet3.getString("refdtype").equalsIgnoreCase("0")){
-									basicsalary=basicsalary+resultSet3.getDouble("revadd");
-									basicsalary=basicsalary-resultSet3.getDouble("revded");
-									
-									/*BASIC Calculation */
-									//basicSalaryAmount= Double.parseDouble(hrCalc.getHRBASIC(conn,newempid,empCategoryID,sqlDate,basicsalary,daysToPay));
-									//basicsalary=basicSalaryAmount;
-									/*BASIC Calculation Ends */
-									
-									temp.add(String.valueOf(basicsalary));
-									totalsalary=totalsalary+basicsalary;
-									
+								for (int l = 1; l <= totleaves; l++) {
+									temp.add(resultSet2.getString("leave"+l+""));
+								 }
+		
+								String sql4 = "select pay_catid from hr_empm where doc_no="+newempid+"";
+								ResultSet resultSet4 = stmtHMSP4.executeQuery(sql4);		
+								
+								while(resultSet4.next()){
+									empCategoryID=resultSet4.getString("pay_catid");
 								}
 								
-								if(resultSet3.getString("refdtype").equalsIgnoreCase("ALC")){
-									allowance=allowance+resultSet3.getDouble("revadd");
-									allowance=allowance-resultSet3.getDouble("revded");
+								String sql5 = "select dailyRate from hr_paycode where status=3 and catid="+empCategoryID+" and doc_no=(select max(doc_no) from hr_paycode where status=3 and catid="+empCategoryID+" and revdate<='"+sqlDate+"')";
+								ResultSet resultSet5 = stmtHMSP4.executeQuery(sql5);		
+								
+								while(resultSet5.next()){
+									dailyRateFormula=resultSet5.getString("dailyRate");
+								}
+								
+								String sql3="select * from ( "  
+										+ "select t.empid,id.rdocno,id.awlid,id.refdtype,id.addition,id.deduction,id.statutorydeduction,id.revadd,id.revded,id.revstatded from "
+										+ "hr_timesheet t left join hr_incrm im on t.empid=im.empid left join hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and  empid=t.empid "
+										+ " and date = (select max(date) from hr_incrm where status=3 and  empid=t.empid )) and id.refdtype!='STD' and t.empid="+newempid+" union all "
+										+ "select 0 empid,0 rdocno,hrs.doc_no awlid,'ALC' refdtype,0 addition,0 deduction,0 statutorydeduction,0 revadd,0 revded,0 revstatded from "
+										+ "hr_setallowance hrs where hrs.status=3 and hrs.doc_no not in (select id.awlid from hr_timesheet t left join hr_incrm im on t.empid=im.empid left join "
+										+ "hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
+										+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and "
+										+ "t.empid="+newempid+")) as a where a.awlid>=0 group by empid,awlid,refdtype order by refdtype,awlid";
+								ResultSet resultSet3 = stmtHMSP3.executeQuery(sql3);		
+								
+								double totalsalary=0.00,otAmount=0.00,hotAmount=0.00,overTimeAmount=0.00,grossSalaryAmount=0.00,additionAmount=0.00,deductionAmount=0.00,loanAmount=0.00,netSalaryAmount=0.00;
+								while(resultSet3.next()){
+									double basicsalary=0.00,basicSalaryAmount=0.00,allowance=0.00,allowanceAmount=0.00,statutorydeduction=0.00;
 									
-									if(dailyRateFormula.contains("GROSS")){
+									if(resultSet3.getString("awlid").equalsIgnoreCase("0") && resultSet3.getString("refdtype").equalsIgnoreCase("0")){
+										basicsalary=basicsalary+resultSet3.getDouble("revadd");
+										basicsalary=basicsalary-resultSet3.getDouble("revded");
 										
-										/*Allowance Calculation */
-										//allowanceAmount= Double.parseDouble(hrCalc.getHRALLOWANCES(conn,newempid,empCategoryID,sqlDate,allowance,daysToPay));
-										//allowance=allowanceAmount;
-										/*Allowance Calculation Ends */
+										temp.add(String.valueOf(basicsalary));
+										totalsalary=totalsalary+basicsalary;
 										
-										totalsalary=totalsalary+allowance;
-									} else{
-										totalsalary=totalsalary+allowance;
 									}
 									
-									temp.add(String.valueOf(allowance));
-								}
-								
-								if(resultSet3.getString("refdtype").equalsIgnoreCase("STD")){
-									statutorydeduction=statutorydeduction-resultSet3.getDouble("revstatded");
-									totalsalary=totalsalary-statutorydeduction;
-								}
-							}
-							
-							/*Total Salary Calculation */
-							temp.add(String.valueOf(totalsalary));
-							/*Total Salary Calculation Ends */
-							
-							/**
-							 * on 29-01-2020 - carfare workshop employee edit problem
-							 * lastest incrm value as per date has to be taken max(date) condition is added
-							 * */
-							
-							
-							String sql6="select * from ( "  
-									+ "select t.empid,id.rdocno,id.awlid,id.refdtype,id.addition,id.deduction,id.statutorydeduction,id.revadd,id.revded,id.revstatded from "
-									+ "hr_timesheet t left join hr_incrm im on t.empid=im.empid left join hr_incrd id on im.doc_no=id.rdocno where im.status=3 and  im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
-									+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and t.empid="+newempid+" union all "
-									+ "select 0 empid,0 rdocno,hrs.doc_no awlid,'ALC' refdtype,0 addition,0 deduction,0 statutorydeduction,0 revadd,0 revded,0 revstatded from "
-									+ "hr_setallowance hrs where hrs.status=3 and hrs.doc_no not in (select id.awlid from hr_timesheet t left join hr_incrm im on t.empid=im.empid left join "
-									+ "hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
-									+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and "
-									+ "t.empid="+newempid+")) as a where a.awlid>=0 group by empid,awlid,refdtype order by refdtype,awlid";
-//							System.out.println("sql6 ==== "+sql6);
-							ResultSet resultSet6 = stmtHMSP3.executeQuery(sql6);		
-							
-							double earnedtotalsalary=0.00;
-							while(resultSet6.next()){
-								double earnedbasicsalary=0.00,earnedbasicSalaryAmount=0.00,earnedallowance=0.00,earnedallowanceAmount=0.00,earnedstatutorydeduction=0.00;
-								
-								if(resultSet6.getString("awlid").equalsIgnoreCase("0") && resultSet6.getString("refdtype").equalsIgnoreCase("0")){
-									earnedbasicsalary=earnedbasicsalary+resultSet6.getDouble("revadd");
-									earnedbasicsalary=earnedbasicsalary-resultSet6.getDouble("revded");
-									
-									/*Earned BASIC Calculation */
-									earnedbasicSalaryAmount= Double.parseDouble(hrCalc.getHREARNEDBASIC(conn,newempid,empCategoryID,sqlDate,earnedbasicsalary,daysToPay));
-									earnedbasicsalary=earnedbasicSalaryAmount;
-									/*Earned BASIC Calculation Ends */
-									
-									temp.add(String.valueOf(earnedbasicsalary));
-									earnedtotalsalary=earnedtotalsalary+earnedbasicsalary;
-									
-								}
-								
-								if(resultSet6.getString("refdtype").equalsIgnoreCase("ALC")){
-									earnedallowance=earnedallowance+resultSet6.getDouble("revadd");
-									earnedallowance=earnedallowance-resultSet6.getDouble("revded");
-									
-									if(dailyRateFormula.contains("GROSS")){
+									if(resultSet3.getString("refdtype").equalsIgnoreCase("ALC")){
+										allowance=allowance+resultSet3.getDouble("revadd");
+										allowance=allowance-resultSet3.getDouble("revded");
 										
-										/*Earned Allowance Calculation */
-										earnedallowanceAmount= Double.parseDouble(hrCalc.getHREARNEDALLOWANCES(conn,newempid,empCategoryID,sqlDate,earnedallowance,daysToPay,resultSet6.getString("awlid")));
-//										System.out.println("leave details"+earnedallowanceAmount+"=="+newempid);
-										earnedallowance=earnedallowanceAmount;
-										/*Earned Allowance Calculation Ends */
+										if(dailyRateFormula.contains("GROSS")){
+											totalsalary=totalsalary+allowance;
+										} else{
+											totalsalary=totalsalary+allowance;
+										}
 										
-										earnedtotalsalary = earnedtotalsalary+earnedallowance;
-									} else{
-										earnedtotalsalary = earnedtotalsalary+earnedallowance;
+										temp.add(String.valueOf(allowance));
 									}
 									
-									temp.add(String.valueOf(earnedallowance));
+									if(resultSet3.getString("refdtype").equalsIgnoreCase("STD")){
+										statutorydeduction=statutorydeduction-resultSet3.getDouble("revstatded");
+										totalsalary=totalsalary-statutorydeduction;
+									}
 								}
 								
-								if(resultSet6.getString("refdtype").equalsIgnoreCase("STD")){
-									earnedstatutorydeduction=earnedstatutorydeduction-resultSet6.getDouble("revstatded");
-									earnedtotalsalary=earnedtotalsalary-earnedstatutorydeduction;
+								/*Total Salary Calculation */
+								temp.add(String.valueOf(totalsalary));
+								/*Total Salary Calculation Ends */
+								
+								String sql6="select * from ( "  
+										+ "select t.empid,id.rdocno,id.awlid,id.refdtype,id.addition,id.deduction,id.statutorydeduction,id.revadd,id.revded,id.revstatded from "
+										+ "hr_timesheet t left join hr_incrm im on t.empid=im.empid left join hr_incrd id on im.doc_no=id.rdocno where im.status=3 and  im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
+										+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and t.empid="+newempid+" union all "
+										+ "select 0 empid,0 rdocno,hrs.doc_no awlid,'ALC' refdtype,0 addition,0 deduction,0 statutorydeduction,0 revadd,0 revded,0 revstatded from "
+										+ "hr_setallowance hrs where hrs.status=3 and hrs.doc_no not in (select id.awlid from hr_timesheet t left join hr_incrm im on t.empid=im.empid left join "
+										+ "hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
+										+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and "
+										+ "t.empid="+newempid+")) as a where a.awlid>=0 group by empid,awlid,refdtype order by refdtype,awlid";
+
+								ResultSet resultSet6 = stmtHMSP3.executeQuery(sql6);		
+								
+								double earnedtotalsalary=0.00;
+								while(resultSet6.next()){
+									double earnedbasicsalary=0.00,earnedbasicSalaryAmount=0.00,earnedallowance=0.00,earnedallowanceAmount=0.00,earnedstatutorydeduction=0.00;
+									
+									if(resultSet6.getString("awlid").equalsIgnoreCase("0") && resultSet6.getString("refdtype").equalsIgnoreCase("0")){
+										earnedbasicsalary=earnedbasicsalary+resultSet6.getDouble("revadd");
+										earnedbasicsalary=earnedbasicsalary-resultSet6.getDouble("revded");
+										
+										/*Earned BASIC Calculation */
+										// NOTE: Please Ensure getHREARNEDBASIC in ClsCommonHR does NOT have syntax error (missing comma before DAYAMOUNT)
+										earnedbasicSalaryAmount= Double.parseDouble(hrCalc.getHREARNEDBASIC(conn,newempid,empCategoryID,sqlDate,earnedbasicsalary,daysToPay));
+										earnedbasicsalary=earnedbasicSalaryAmount;
+										/*Earned BASIC Calculation Ends */
+										
+										temp.add(String.valueOf(earnedbasicsalary));
+										earnedtotalsalary=earnedtotalsalary+earnedbasicsalary;
+										
+									}
+									
+									if(resultSet6.getString("refdtype").equalsIgnoreCase("ALC")){
+										earnedallowance=earnedallowance+resultSet6.getDouble("revadd");
+										earnedallowance=earnedallowance-resultSet6.getDouble("revded");
+										
+										if(dailyRateFormula.contains("GROSS")){
+											
+											/*Earned Allowance Calculation */
+											earnedallowanceAmount= Double.parseDouble(hrCalc.getHREARNEDALLOWANCES(conn,newempid,empCategoryID,sqlDate,earnedallowance,daysToPay,resultSet6.getString("awlid")));
+											earnedallowance=earnedallowanceAmount;
+											/*Earned Allowance Calculation Ends */
+											
+											earnedtotalsalary = earnedtotalsalary+earnedallowance;
+										} else{
+											earnedtotalsalary = earnedtotalsalary+earnedallowance;
+										}
+										
+										temp.add(String.valueOf(earnedallowance));
+									}
+									
+									if(resultSet6.getString("refdtype").equalsIgnoreCase("STD")){
+										earnedstatutorydeduction=earnedstatutorydeduction-resultSet6.getDouble("revstatded");
+										earnedtotalsalary=earnedtotalsalary-earnedstatutorydeduction;
+									}
 								}
+								
+								/*Earned Total Salary Calculation */
+								temp.add(String.valueOf(Math.round(earnedtotalsalary)));
+								/*Earned Total Salary Calculation Ends */
+
+								/*OT Calculation */
+								otAmount= Double.parseDouble(hrCalc.getHROT(conn,newempid,empCategoryID,sqlDate));
+								/*OT Calculation Ends */
+		
+								/*HOT Calculation */
+								hotAmount= Double.parseDouble(hrCalc.getHRHOT(conn,newempid,empCategoryID,sqlDate));
+								/*HOT Calculation Ends */
+								
+								/*Over Time Calculation */
+								overTimeAmount=otAmount+hotAmount;
+								temp.add(String.valueOf(overTimeAmount));
+								/*Holiday Over Time Calculation Ends */
+								
+								/*Gross Salary Calculation */
+								grossSalaryAmount=Math.round(earnedtotalsalary+overTimeAmount);
+								temp.add(String.valueOf(grossSalaryAmount));
+								/*Gross Salary Calculation Ends */
+								
+								/*Additions and Deductions Calculation */
+								additionsDeductionsAmount=hrCalc.getHRAdditionsDeductions(conn,newempid,sqlDate);
+								if(additionsDeductionsAmount.size()>0){
+									String[] additionsDeductions=additionsDeductionsAmount.get(0).split("::");
+									additionAmount = ((additionsDeductions[0].isEmpty()?0.0:Double.parseDouble(additionsDeductions[0])));
+									deductionAmount = ((additionsDeductions[1].isEmpty()?0.0:Double.parseDouble(additionsDeductions[1])));
+									temp.add(String.valueOf(additionAmount));
+									temp.add(String.valueOf(deductionAmount));
+								} 
+								/*Additions and Deductions Calculation Ends */
+								
+								/*Loan Amount Calculation*/
+								loanAmount= Double.parseDouble(hrCalc.getHRLoanAmount(conn,newempid,sqlDate));
+								temp.add(String.valueOf(loanAmount));
+								/*Loan Amount Calculation Ends*/
+								
+								/*Net Salary Amount Calculation */
+								netSalaryAmount=(((grossSalaryAmount+additionAmount)-(deductionAmount))-(loanAmount));
+								temp.add(String.valueOf(netSalaryAmount));
+								/*Net Salary Amount Calculation Ends*/
+								
+								temp.add("Payroll Processed on "+date+"");
+							
+								oldempid=newempid;
 							}
 							
-							/*Earned Total Salary Calculation */
-							temp.add(String.valueOf(Math.round(earnedtotalsalary)));
-							/*Earned Total Salary Calculation Ends */
-//							System.out.println(newempid);
-							/*OT Calculation */
-							otAmount= Double.parseDouble(hrCalc.getHROT(conn,newempid,empCategoryID,sqlDate));
-							/*OT Calculation Ends */
-	
-							/*HOT Calculation */
-							hotAmount= Double.parseDouble(hrCalc.getHRHOT(conn,newempid,empCategoryID,sqlDate));
-							/*HOT Calculation Ends */
-							//System.out.println(empId+"======"+otAmount+"======"+hotAmount);
-							/*Over Time Calculation */
-							overTimeAmount=otAmount+hotAmount;
-							temp.add(String.valueOf(overTimeAmount));
-							/*Holiday Over Time Calculation Ends */
+							analysisrowarray.add(temp);
 							
-							/*Leave Deductions Calculation */
-							//leaveDeductionsAmount=Double.parseDouble(hrCalc.getHRLeaveDeductions(conn,newempid,empCategoryID,sqlDate));
-							//temp.add(String.valueOf(leaveDeductionsAmount));
-							/*Leave Deductions Calculation Ends */
-	
-							/*Gross Salary Calculation */
-							grossSalaryAmount=Math.round(earnedtotalsalary+overTimeAmount);
-							temp.add(String.valueOf(grossSalaryAmount));
-							/*Gross Salary Calculation Ends */
-							
-							/*Additions and Deductions Calculation */
-							additionsDeductionsAmount=hrCalc.getHRAdditionsDeductions(conn,newempid,sqlDate);
-							if(additionsDeductionsAmount.size()>0){
-								String[] additionsDeductions=additionsDeductionsAmount.get(0).split("::");
-								additionAmount = ((additionsDeductions[0].isEmpty()?0.0:Double.parseDouble(additionsDeductions[0])));
-								deductionAmount = ((additionsDeductions[1].isEmpty()?0.0:Double.parseDouble(additionsDeductions[1])));
-								temp.add(String.valueOf(additionAmount));
-								temp.add(String.valueOf(deductionAmount));
-							} 
-							/*Additions and Deductions Calculation Ends */
-							
-							/*Loan Amount Calculation*/
-							loanAmount= Double.parseDouble(hrCalc.getHRLoanAmount(conn,newempid,sqlDate));
-							temp.add(String.valueOf(loanAmount));
-							/*Loan Amount Calculation Ends*/
-							
-							/*Net Salary Amount Calculation */
-							netSalaryAmount=(((grossSalaryAmount+additionAmount)-(deductionAmount))-(loanAmount));
-							temp.add(String.valueOf(netSalaryAmount));
-							/*Net Salary Amount Calculation Ends*/
-							
-							temp.add("Payroll Processed on "+date+"");
-						
-							oldempid=newempid;
+						} finally {
+							// [FIX] Explicitly close inner statement after every iteration to release resources
+							if(stmtHMSP3 != null) stmtHMSP3.close();
 						}
-						
-						analysisrowarray.add(temp);
 						
 					}
 			
+					// Terminated Employee Logic - Simplified for this snippet but should follow similar isolation if reused
+					// Using stmtHMSP3 again here is safe because the previous loop closed it.
+					Statement stmtHMSP_Term = conn.createStatement();
+					
 					ArrayList<String> employeeIDTerminatedToBeProcessed = new ArrayList<String>();
 					String sql7="";
 					
 					if(!(category.equalsIgnoreCase("0")) && !(category.equalsIgnoreCase(""))){
 						sql7=sql7+" and m.pay_catid = '"+category+"'";
-			        }
+					}
 					
 					sql7 = "select t.empid from hr_timesheet t left join hr_empm m on (t.empid=m.doc_no and t.year=YEAR('"+sqlDate+"') and t.month=MONTH('"+sqlDate+"')) where m.status=7 and m.active=0 and t.payroll_processed=0 and t.payroll_confirmed=0 and t.month=MONTH('"+sqlDate+"') and t.year=YEAR('"+sqlDate+"') and MONTH(m.terminated_date)=MONTH('"+sqlDate+"') and YEAR(m.terminated_date)=YEAR('"+sqlDate+"')"+sql7+" "+sqltst+" order by m.name";
-//					System.out.println("===== "+sql7);
-					ResultSet resultSet7 = stmtHMSP3.executeQuery(sql7);
+					
+					ResultSet resultSet7 = stmtHMSP_Term.executeQuery(sql7);
 					
 					while(resultSet7.next()){
 						employeeIDTerminatedToBeProcessed.add(resultSet7.getString("empid"));
 					}
+					stmtHMSP_Term.close();
 					
 					/*Terminated Salary processing*/
 					if(employeeIDTerminatedToBeProcessed.size()>0){
@@ -594,10 +581,10 @@ public class ClsMonthlyPayrollDAO {
 							
 							if(!(category.equalsIgnoreCase("0")) && !(category.equalsIgnoreCase(""))){
 								xsql1=xsql1+" and m.pay_catid = '"+category+"'";
-					        }
+							}
 							if(!(empId.equalsIgnoreCase("0")) && !(empId.equalsIgnoreCase(""))){
-					            xsql1=xsql1+" and m.doc_no = '"+empId+"'";
-					        }
+								xsql1=xsql1+" and m.doc_no = '"+empId+"'";
+							}
 							String sql9="select m.doc_no employeedocno,m.codeno employeeid,m.name employeename,m.salary_paid dates,DATEDIFF(m.terminated_date,m.salary_paid) totaldays,if(mod(round(sum(t.tot_leave1),1),1)=0,"
 									+ "round(sum(t.tot_leave1),1),round(sum(t.tot_leave1),1)) leave1,if(mod(round(sum(t.tot_leave2),1),1)=0,round(sum(t.tot_leave2),1),round(sum(t.tot_leave2),1)) leave2,"
 									+ "if(mod(round(sum(t.tot_leave3),1),1)=0,round(sum(t.tot_leave3),1),round(sum(t.tot_leave3),1)) leave3,if(mod(round(sum(t.tot_leave4),1),1)=0,round(sum(t.tot_leave4),1),"
@@ -606,7 +593,6 @@ public class ClsMonthlyPayrollDAO {
 									+ "CONVERT(if(round(t.tot_hot*60,2)=0,'0',if(LENGTH(SEC_TO_TIME(t.tot_hot*60))=8,SUBSTRING(SEC_TO_TIME(t.tot_hot*60),1,5),SUBSTRING(SEC_TO_TIME(t.tot_hot*60),1,6))),CHAR(100)) hot,"
 									+ "t.payroll_processed payrollprocessed from hr_timesheet t left join hr_empm m on t.empid=m.doc_no where m.active=0 and m.status=7"+xsql1+" "
 									+ "and t.year=YEAR('"+sqlDate+"') and t.month=MONTH('"+sqlDate+"') and t.empid="+employeeIDTerminatedToBeProcessed.get(j).trim()+" group by t.empid";
-//							System.out.println("sql9  ===== "+sql9);
 							ResultSet resultSet9 = stmtHMSP9.executeQuery(sql9);
 							
 							String terminatedoldempid="",terminatednewempid="",terminatedempCategoryID="0",terminateddaysToPay="0";
@@ -646,12 +632,6 @@ public class ClsMonthlyPayrollDAO {
 										terminatedDailyRateFormula=resultSet11.getString("dailyRate");
 									}
 									
-									/**
-									 * on 29-01-2020 - carfare workshop employee edit problem
-									 * lastest incrm value as per date has to be taken max(date) condition is added
-									 * */
-									
-									
 									String sql12="select * from ( "  
 											+ "select t.empid,id.rdocno,id.awlid,id.refdtype,id.addition,id.deduction,id.statutorydeduction,id.revadd,id.revded,id.revstatded from "
 											+ "hr_timesheet t left join hr_incrm im on t.empid=im.empid left join hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
@@ -672,11 +652,6 @@ public class ClsMonthlyPayrollDAO {
 											basicsalary=basicsalary+resultSet12.getDouble("revadd");
 											basicsalary=basicsalary-resultSet12.getDouble("revded");
 											
-											/*BASIC Calculation */
-											//basicSalaryAmount= Double.parseDouble(hrCalc.getHRBASIC(conn,newempid,empCategoryID,sqlDate,basicsalary,daysToPay));
-											//basicsalary=basicSalaryAmount;
-											/*BASIC Calculation Ends */
-											
 											terminatedtemp.add(String.valueOf(basicsalary));
 											totalsalary=totalsalary+basicsalary;
 										}
@@ -686,12 +661,6 @@ public class ClsMonthlyPayrollDAO {
 											allowance=allowance-resultSet12.getDouble("revded");
 											
 											if(terminatedDailyRateFormula.contains("GROSS")){
-												
-												/*Allowance Calculation */
-												//allowanceAmount= Double.parseDouble(hrCalc.getHRALLOWANCES(conn,newempid,empCategoryID,sqlDate,allowance,daysToPay));
-												//allowance=allowanceAmount;
-												/*Allowance Calculation Ends */
-												
 												totalsalary=totalsalary+allowance;
 											} else{
 												totalsalary=totalsalary+allowance;
@@ -719,7 +688,6 @@ public class ClsMonthlyPayrollDAO {
 											+ "hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
 											+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and "
 											+ "t.empid="+terminatednewempid+")) as a where a.awlid>=0 group by empid,awlid,refdtype order by refdtype,awlid";
-//									System.out.println("earned basic============"+sql13);
 									ResultSet resultSet13 = stmtHMSP13.executeQuery(sql13);		
 									
 									double earnedtotalsalary=0.00;
@@ -727,7 +695,6 @@ public class ClsMonthlyPayrollDAO {
 										double earnedbasicsalary=0.00,earnedbasicSalaryAmount=0.00,earnedallowance=0.00,earnedallowanceAmount=0.00,earnedstatutorydeduction=0.00;
 										
 										if(resultSet13.getString("awlid").equalsIgnoreCase("0") && resultSet13.getString("refdtype").equalsIgnoreCase("0")){
-//											System.out.println(earnedbasicsalary+"===="+resultSet13.getDouble("revadd")+"====="+resultSet13.getDouble("revded"));
 											earnedbasicsalary=earnedbasicsalary+resultSet13.getDouble("revadd");
 											earnedbasicsalary=earnedbasicsalary-resultSet13.getDouble("revded");
 											
@@ -782,11 +749,6 @@ public class ClsMonthlyPayrollDAO {
 									terminatedtemp.add(String.valueOf(overTimeAmount));
 									/*Holiday Over Time Calculation Ends */
 									
-									/*Leave Deductions Calculation */
-									//leaveDeductionsAmount=Double.parseDouble(hrCalc.getHRLeaveDeductions(conn,newempid,empCategoryID,sqlDate));
-									//temp.add(String.valueOf(leaveDeductionsAmount));
-									/*Leave Deductions Calculation Ends */
-			
 									/*Gross Salary Calculation */
 									grossSalaryAmount=Math.round(earnedtotalsalary+overTimeAmount);
 									terminatedtemp.add(String.valueOf(grossSalaryAmount));
@@ -832,15 +794,12 @@ public class ClsMonthlyPayrollDAO {
 						stmtHMSP12.close();
 						stmtHMSP13.close();
 					}
-					//System.out.println(analysisrowarray);
-//					System.out.println(totleaves);
-//					System.out.println(totallowance);
 					RESULTDATA=convertRowAnalysisArrayToJSON(analysisrowarray,totleaves,totallowance);
 					
 					stmtHMSP.close();
 			        stmtHMSP1.close();
 					stmtHMSP2.close();
-					stmtHMSP3.close();
+					// stmtHMSP3 handled inside loop
 					stmtHMSP4.close();
 					stmtHMSP5.close();
 					
@@ -883,13 +842,12 @@ public class ClsMonthlyPayrollDAO {
 	        }
 			String sqltst="";  
 			if(employeebranchchk.equalsIgnoreCase("1")){    
-            	if(!(brhid.equalsIgnoreCase("")) && !(brhid.equalsIgnoreCase("0"))){  
-            		sqltst=sqltst+" and t.brhid='"+brhid+"'";   
-            	}
-            } 
+				if(!(brhid.equalsIgnoreCase("")) && !(brhid.equalsIgnoreCase("0"))){  
+					sqltst=sqltst+" and t.brhid='"+brhid+"'";   
+				}
+			} 
 			
 			sql2 = "select t.empid from hr_timesheet t left join hr_empm m on (t.empid=m.doc_no and t.year=YEAR('"+sqlDate+"') and t.month=MONTH('"+sqlDate+"')) where m.status=3 and m.active=1 and t.payroll_processed=0 and t.payroll_confirmed=0 and month=MONTH('"+sqlDate+"') and t.year=YEAR('"+sqlDate+"')"+sql2+" "+sqltst+" order by m.name";			
-//			System.out.println("sql2==="+sql2);
 			ResultSet resultSet2 = stmtHMSP3.executeQuery(sql2);
 			
 			while(resultSet2.next()){
@@ -901,7 +859,6 @@ public class ClsMonthlyPayrollDAO {
 	        }
 			
 			sql3 = "select t.empid from hr_timesheet t left join hr_empm m on (t.empid=m.doc_no and t.year=YEAR('"+sqlDate+"') and t.month=MONTH('"+sqlDate+"')) where m.status=7 and m.active=0 and t.payroll_processed=0 and t.payroll_confirmed=0 and t.month=MONTH('"+sqlDate+"') and t.year=YEAR('"+sqlDate+"') and MONTH(m.terminated_date)=MONTH('"+sqlDate+"') and YEAR(m.terminated_date)=YEAR('"+sqlDate+"')"+sql3+" "+sqltst+" order by m.name";
-//			System.out.println("sql3==="+sql3);  
 			ResultSet resultSet3 = stmtHMSP3.executeQuery(sql3);  
 			
 			while(resultSet3.next()){
@@ -939,7 +896,6 @@ public class ClsMonthlyPayrollDAO {
 							+ "CONVERT(if(round(t.tot_hot*60,2)=0,'0',if(LENGTH(SEC_TO_TIME(t.tot_hot*60))=8,SUBSTRING(SEC_TO_TIME(t.tot_hot*60),1,5),SUBSTRING(SEC_TO_TIME(t.tot_hot*60),1,6))),CHAR(100)) hot,"
 							+ "t.payroll_processed payrollprocessed from hr_timesheet t left join hr_empm m on t.empid=m.doc_no where m.active=1 and m.status=3"+xsql+" "
 							+ "and t.year=YEAR('"+sqlDate+"') and t.month=MONTH('"+sqlDate+"')  and year(date_add(salary_paid , interval 1 day)) =YEAR('"+sqlDate+"') and month(date_add(salary_paid , interval 1 day)) =MONTH('"+sqlDate+"') and t.empid="+employeeIDToBeProcessed.get(i).trim()+" group by t.empid";
-//					System.out.println(sql4);
 					ResultSet resultSet4 = stmtHMSP4.executeQuery(sql4);
 					
 					String oldempid="",newempid="",empCategoryID="0",daysToPay="0";
@@ -999,11 +955,6 @@ public class ClsMonthlyPayrollDAO {
 									basicsalary=basicsalary+resultSet7.getDouble("revadd");
 									basicsalary=basicsalary-resultSet7.getDouble("revded");
 									
-									/*BASIC Calculation */
-									//basicSalaryAmount= Double.parseDouble(hrCalc.getHRBASIC(conn,newempid,empCategoryID,sqlDate,basicsalary,daysToPay));
-									//basicsalary=basicSalaryAmount;
-									/*BASIC Calculation Ends */
-									
 									temp.add(String.valueOf(basicsalary));
 									totalsalary=totalsalary+basicsalary;
 								}
@@ -1013,12 +964,6 @@ public class ClsMonthlyPayrollDAO {
 									allowance=allowance-resultSet7.getDouble("revded");
 									
 									if(dailyRateFormula.contains("GROSS")){
-										
-										/*Allowance Calculation */
-										//allowanceAmount= Double.parseDouble(hrCalc.getHRALLOWANCES(conn,newempid,empCategoryID,sqlDate,allowance,daysToPay));
-										//allowance=allowanceAmount;
-										/*Allowance Calculation Ends */
-										
 										totalsalary=totalsalary+allowance;
 									} else{
 										totalsalary=totalsalary+allowance;
@@ -1108,11 +1053,6 @@ public class ClsMonthlyPayrollDAO {
 							temp.add(String.valueOf(overTimeAmount));
 							/*Holiday Over Time Calculation Ends */
 							
-							/*Leave Deductions Calculation */
-							//leaveDeductionsAmount=Double.parseDouble(hrCalc.getHRLeaveDeductions(conn,newempid,empCategoryID,sqlDate));
-							//temp.add(String.valueOf(leaveDeductionsAmount));
-							/*Leave Deductions Calculation Ends */
-	
 							/*Gross Salary Calculation */
 							grossSalaryAmount=Math.round(earnedtotalsalary+overTimeAmount);
 							temp.add(String.valueOf(grossSalaryAmount));
@@ -1249,11 +1189,6 @@ public class ClsMonthlyPayrollDAO {
 									basicsalary=basicsalary+resultSet12.getDouble("revadd");
 									basicsalary=basicsalary-resultSet12.getDouble("revded");
 									
-									/*BASIC Calculation */
-									//basicSalaryAmount= Double.parseDouble(hrCalc.getHRBASIC(conn,newempid,empCategoryID,sqlDate,basicsalary,daysToPay));
-									//basicsalary=basicSalaryAmount;
-									/*BASIC Calculation Ends */
-									
 									terminatedtemp.add(String.valueOf(basicsalary));
 									totalsalary=totalsalary+basicsalary;
 								}
@@ -1263,12 +1198,6 @@ public class ClsMonthlyPayrollDAO {
 									allowance=allowance-resultSet12.getDouble("revded");
 									
 									if(dailyRateFormula.contains("GROSS")){
-										
-										/*Allowance Calculation */
-										//allowanceAmount= Double.parseDouble(hrCalc.getHRALLOWANCES(conn,newempid,empCategoryID,sqlDate,allowance,daysToPay));
-										//allowance=allowanceAmount;
-										/*Allowance Calculation Ends */
-										
 										totalsalary=totalsalary+allowance;
 									} else{
 										totalsalary=totalsalary+allowance;
@@ -1296,7 +1225,6 @@ public class ClsMonthlyPayrollDAO {
 									+ "hr_incrd id on im.doc_no=id.rdocno where im.status=3 and im.doc_no=(select doc_no from hr_incrm where status=3 and empid=t.empid "
 									+ " and date = (select max(date) from hr_incrm where status=3 and empid=t.empid )) and id.refdtype!='STD' and "
 									+ "t.empid="+newempid+")) as a where a.awlid>=0 group by empid,awlid,refdtype order by refdtype,awlid";
-//							System.out.println("sql13======>>"+sql13);
 							ResultSet resultSet13 = stmtHMSP13.executeQuery(sql13);		
 							
 							double earnedtotalsalary=0.00;
@@ -1358,11 +1286,6 @@ public class ClsMonthlyPayrollDAO {
 							terminatedtemp.add(String.valueOf(overTimeAmount));
 							/*Holiday Over Time Calculation Ends */
 							
-							/*Leave Deductions Calculation */
-							//leaveDeductionsAmount=Double.parseDouble(hrCalc.getHRLeaveDeductions(conn,newempid,empCategoryID,sqlDate));
-							//temp.add(String.valueOf(leaveDeductionsAmount));
-							/*Leave Deductions Calculation Ends */
-	
 							/*Gross Salary Calculation */
 							grossSalaryAmount=Math.round(earnedtotalsalary+overTimeAmount);
 							terminatedtemp.add(String.valueOf(grossSalaryAmount));
@@ -1419,10 +1342,10 @@ public class ClsMonthlyPayrollDAO {
 				sql14=sql14+" and m.doc_no = '"+empId+"'";
 	        }
 			if(employeebranchchk.equalsIgnoreCase("1")){    
-            	if(!(brhid.equalsIgnoreCase("")) && !(brhid.equalsIgnoreCase("0"))){  
-            		sql14=sql14+" and mp.brhid='"+brhid+"'";   
-            	}
-            }     
+				if(!(brhid.equalsIgnoreCase("")) && !(brhid.equalsIgnoreCase("0"))){  
+					sql14=sql14+" and mp.brhid='"+brhid+"'";   
+				}
+			}      
 			String sql15="select p.rowno,m.codeno employeeid,m.name employeename,p.date dates,p.daystopay totaldays,p.leave1,p.leave2,p.leave3,p.leave4,p.leave5,p.leave6,p.leave7,p.leave8,p.leave9,p.leave10,p.basic,p.allowance1,p.allowance2,"
 				 + "p.allowance3,p.allowance4,p.allowance5,p.allowance6,p.allowance7,p.allowance8,p.allowance9,p.allowance10,p.totalsalary,p.earnedbasic earnbasic,p.earnedallowance1 earnallowance1,p.earnedallowance2 earnallowance2,"
 				 + "p.earnedallowance3 earnallowance3,p.earnedallowance4 earnallowance4,p.earnedallowance5 earnallowance5,p.earnedallowance6 earnallowance6,p.earnedallowance7 earnallowance7,p.earnedallowance8 earnallowance8,"
@@ -1430,7 +1353,7 @@ public class ClsMonthlyPayrollDAO {
 				 + "CONVERT(if(round(p.tot_hot*60,2)=0,'0',if(LENGTH(SEC_TO_TIME(p.tot_hot*60))=8,SUBSTRING(SEC_TO_TIME(p.tot_hot*60),1,5),SUBSTRING(SEC_TO_TIME(p.tot_hot*60),1,6))),CHAR(100)) hot,"
 				 + "p.overtime,p.grosssalary,p.additions,p.deductions,p.loan,p.netsalary,p.remarks,p.empId employeedocno from hr_payroll mp left join hr_payrolld p on mp.doc_no=p.rdocno "
 				 + "left join hr_empm m on p.empId=m.doc_no where mp.status=3 and p.status=3 and p.posted=0 and YEAR(mp.date)=YEAR('"+sqlDate+"') and MONTH(mp.date)=MONTH('"+sqlDate+"')"+sql14+" order by m.name";  
-//            System.out.println("reload------------------>>>>>>"+sql15);       
+			//            System.out.println("reload------------------>>>>>>"+sql15);        
 			ResultSet resultSet15 = stmtHMSP3.executeQuery(sql15);
 			
 			while(resultSet15.next()){
@@ -1445,9 +1368,6 @@ public class ClsMonthlyPayrollDAO {
 				
 				employeeProcessed.add(temp1);
 			}
-//			System.out.println("analysisrowarray====>>>>"+analysisrowarray);
-//			System.out.println("employeeProcessed====>>>>>"+employeeProcessed);
-//			System.out.println("employeeToBeProcessed=====>>>>"+employeeToBeProcessed);
 			if(employeeToBeProcessed.size()>0){
 				analysisrowarray.addAll(employeeProcessed);
 				analysisrowarray.addAll(employeeToBeProcessed);	
@@ -1472,7 +1392,6 @@ public class ClsMonthlyPayrollDAO {
 		}
 		return RESULTDATA;
     }
-	
 	public JSONArray monthlyPayrollGridReloading(HttpSession session,String date,String employeebranchchk,String brhid) throws SQLException {
         JSONArray RESULTDATA=new JSONArray();  
         
