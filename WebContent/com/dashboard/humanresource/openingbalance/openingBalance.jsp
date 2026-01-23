@@ -10,80 +10,104 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" /> 
 
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
 
-.mySaveButton {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811));
-	background:-moz-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:-webkit-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:-o-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:-ms-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811',GradientType=0);
-	background-color:#77d42a;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #268a16;
-	display:inline-block;
-	cursor:pointer;
-	font-family:Verdana;
-	font-size:10px;
-	font-weight:bold;
-	padding:4px 8px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #aade7c;
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.mySaveButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
-	background:-moz-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:-webkit-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:-o-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:-ms-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a',GradientType=0);
-	background-color:#5cb811;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.mySaveButton:active {
-	position:relative;
-	top:1px;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -251,59 +275,167 @@
 </script>
 </head>
 <body onload="getBranch();setValues();getPayrollCategory();getDepartment();">
-<form id="frmDashboardOpening" action="saveDashboardOpening" method="post">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
 
-	 <tr><td colspan="2">&nbsp;</td></tr>		
-	 <tr><td align="right"><label class="branch">Category</label></td>
-	 <td align="left"><select id="cmbempcategory" style="width:80%;" name="cmbempcategory"  value='<s:property value="cmbempcategory"/>'></select>
-	 <input type="hidden" id="hidcmbempcategory" name="hidcmbempcategory" value='<s:property value="hidcmbempcategory"/>'/></td></tr>
-	 <tr><td align="right"><label class="branch">Department</label></td>
-	 <td align="left"><select id="cmbdepartment" style="width:80%;" name="cmbdepartment"  value='<s:property value="cmbdepartment"/>'></select>
-	 <input type="hidden" id="hidcmbdepartment" name="hidcmbdepartment" value='<s:property value="hidcmbdepartment"/>'/></td></tr>
-	 <tr><td align="right"><label class="branch">Employee</label></td>
-     <td align="left"><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:80%;height:20;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
-     <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td></tr>
-     <tr><td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" readonly="readonly" placeholder="Employee Name" style="width:95%;height:20;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">
-	 <input type="button" class="mySaveButton" id="btnSaveOpening" name="btnSaveOpening" value="Save" onclick="funNotify();"></td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr> 
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>
-     <tr><td colspan="2">&nbsp;</td></tr>		
-     <tr><td colspan="2">&nbsp;</td></tr>
-	 </table>
-	 </fieldset>
-</td>
-<td width="80%">
+<form id="frmDashboardOpening" action="saveDashboardOpening" method="post">
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar" style="height:100%;">
+
 <table width="100%">
-		<tr>
-			<td><div id="openingBalanceDetailsDiv"><jsp:include page="openingBalanceGrid.jsp"></jsp:include></div></td>
-		</tr>
-</table>
+<tr>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td class="label-cell">Category</td>
+                <td>
+                    <select id="cmbempcategory"
+                            name="cmbempcategory">
+                    </select>
+                    <input type="hidden"
+                           id="hidcmbempcategory"
+                           name="hidcmbempcategory"
+                           value='<s:property value="hidcmbempcategory"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Department</td>
+                <td>
+                    <select id="cmbdepartment"
+                            name="cmbdepartment">
+                    </select>
+                    <input type="hidden"
+                           id="hidcmbdepartment"
+                           name="hidcmbdepartment"
+                           value='<s:property value="hidcmbdepartment"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Employee</td>
+                <td>
+                    <input type="text"
+                           id="txtemployeeid"
+                           name="txtemployeeid"
+                           readonly
+                           placeholder="Press F3 to Search"
+                           value='<s:property value="txtemployeeid"/>'
+                           onkeydown="getEmployeeId(event);">
+
+                    <input type="hidden"
+                           id="txtemployeedocno"
+                           name="txtemployeedocno"
+                           value='<s:property value="txtemployeedocno"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="text"
+                           id="txtemployeename"
+                           name="txtemployeename"
+                           readonly
+                           placeholder="Employee Name"
+                           tabindex="-1"
+                           value='<s:property value="txtemployeename"/>'>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- MASTER BLUE BUTTONS -->
+        <div class="filter-card" style="text-align:center;">
+            <button type="button"
+                    onclick="funClearInfo();"
+                    style="
+                        background:linear-gradient(#2196f3,#1e88e5);
+                        border:1px solid #1565c0;
+                        color:#fff;
+                        padding:6px 22px;
+                        border-radius:4px;
+                        font-weight:bold;
+                        cursor:pointer;">
+                Clear
+            </button>
+
+            &nbsp;&nbsp;
+
+            <button type="button"
+                    onclick="funNotify();"
+                    style="
+                        background:linear-gradient(#2196f3,#1e88e5);
+                        border:1px solid #1565c0;
+                        color:#fff;
+                        padding:6px 22px;
+                        border-radius:4px;
+                        font-weight:bold;
+                        cursor:pointer;">
+                Save
+            </button>
+        </div>
+
+    </div>
+</div>
+</div>
+
+</td>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="openingBalanceDetailsDiv">
+            <jsp:include page="openingBalanceGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
-<input type="hidden" id="txtemployeeids" name="txtemployeeids" style="width:100%;height:20px;" value='<s:property value="txtemployeeids"/>'/>
-<input type="hidden" id="gridlength" name="gridlength" style="width:100%;height:20px;" value='<s:property value="gridlength"/>'/>
-<input type="hidden" name="mode" id="mode" style="width:100%;height:20px;" value='<s:property value="mode"/>'>
-<input type="hidden" name="msg" id="msg" style="width:100%;height:20px;" value='<s:property value="msg"/>'>
+
+</td>
+
+</tr>
+</table>
+
+<!-- HIDDEN FIELDS -->
+<input type="hidden" id="txtemployeeids" name="txtemployeeids"
+       value='<s:property value="txtemployeeids"/>'>
+
+<input type="hidden" id="gridlength" name="gridlength"
+       value='<s:property value="gridlength"/>'>
+
+<input type="hidden" id="mode" name="mode"
+       value='<s:property value="mode"/>'>
+
+<input type="hidden" id="msg" name="msg"
+       value='<s:property value="msg"/>'>
+
 </div>
+
 <div id="employeeDetailsWindow">
-   <div></div>
+    <div></div>
 </div>
-</div> 
+
+</div>
 </form>
 </body>
