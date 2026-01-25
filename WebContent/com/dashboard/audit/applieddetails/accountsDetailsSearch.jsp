@@ -10,9 +10,76 @@
 <title>GatewayERP(i)</title>
 
 <style type="text/css">
+
 #search {
-    background-color: #E0ECF8;
+    background-color: #ffffff;
+    padding: 8px;
 }
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+
 </style>
 
 	<script type="text/javascript">
@@ -39,24 +106,46 @@
 
 	</script>
 <body>
-<div id=search>
+<div id="search">
 <table width="100%">
   <tr>
-    <td align="right" style="font-size:9px;">Name</td>
-    <td colspan="2"><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%;height:20px;" value='<s:property value="txtpartyname"/>'></td>
-    <td width="49%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td align="right">Name</td>
+    <td colspan="2">
+        <input type="text" name="txtpartyname" id="txtpartyname"
+               value='<s:property value="txtpartyname"/>'>
+    </td>
+    <td width="49%" align="center">
+        <input type="button" name="btnsearch" id="btnsearch"
+               class="myButton" value="Search"
+               onclick="loadSearch();">
+    </td>
   </tr>
+
   <tr>
-  <td width="7%" align="right" style="font-size:9px;">Account</td>
-    <td width="26%"><input type="text" name="txtaccountno" id="txtaccountno" style="width:70%;height:20px;" value='<s:property value="txtaccountno"/>'></td>
-    <td width="18%" align="right" style="font-size:9px;">Contact No.</td>
-    <td width="49%"><input type="text" name="txtcontactno" id="txtcontactno" style="width:50%;height:20px;" value='<s:property value="txtcontactno"/>'>
-    <input type="hidden" name="txtatype" id="txtatype" value='<s:property value="txtatype"/>'></td>   
+    <td width="7%" align="right">Account</td>
+    <td width="26%">
+        <input type="text" name="txtaccountno" id="txtaccountno"
+               value='<s:property value="txtaccountno"/>'>
+    </td>
+    <td width="18%" align="right">Contact No.</td>
+    <td width="49%">
+        <input type="text" name="txtcontactno" id="txtcontactno"
+               style="width:50%;"
+               value='<s:property value="txtcontactno"/>'>
+        <input type="hidden" name="txtatype" id="txtatype"
+               value='<s:property value="txtatype"/>'>
+    </td>
   </tr>
+
   <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="accountsDetailsGrid.jsp"></jsp:include></div></td>
+    <td colspan="5">
+        <div id="refreshdiv">
+            <jsp:include page="accountsDetailsGrid.jsp"></jsp:include>
+        </div>
+    </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
+
 </html>

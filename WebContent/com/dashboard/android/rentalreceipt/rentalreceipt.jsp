@@ -12,6 +12,104 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 
 <script type="text/javascript">
 
@@ -179,90 +277,116 @@ $(document).ready(function () {
 </head>
 <body onload="getBranch();">
 <form autocomplete="off" id="rentalform">
+
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
-<td width="20%">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-	
-	 <tr><td colspan="2">&nbsp;</td></tr> 
-		 <tr>
-	<td colspan="2" ><table width="100%">
-	 <tr>
-	    <td width="17%" align="right"><label class="branch">From</label></td>
-	    <td colspan="2"><div id="fdate" name="fdate" value='<s:property value="fdate"/>'></div></td>
-	    </tr>
-	 
-	  <tr>
-	    <td align="right"><label class="branch">To</label></td>
-	    <td colspan="2"><div id="tdate" name="tdate" value='<s:property value="tdate"/>'></div></td>
-	    </tr>
-	 
-	<tr><td>&nbsp;</td></tr>
-	  <tr>
-	    <td colspan="2" align="center">
-	  
-	   <input type="button" name="btnUpdate" id="btnUpdate" value="Generate" class="myButton" onClick="updateStatus();"></td>
-	    
-	    </td>
-	      </tr>
-	      
-	     
-	      
-	      <tr><td>
-	       <input type="hidden" id="doc" name="doc"/>
-	      <input type="hidden" id="date1" name="date1"/>
-	      <input type="hidden" id="cname" name="cname"/>
-	      <input type="hidden" id="type" name="type"/>
-	      <input type="hidden" id="chkno" name="chkno"/>
-	      <input type="hidden" id="chkdate" name="chkdate"/>
-	      <input type="hidden" id="amount" name="amount"/>
-	      <input type="hidden" id="ctype" name="ctype"/>
-	      
-	      <input type="hidden" id="desc" name="desc"/>
-	     <input type="hidden" id="brno" name="brno"/>
-	      <input type="hidden" id="cldocno" name="cldocno"/>
-	      <input type="hidden" id="txtdoc" name="txtdoc"/>
-	      <input type="hidden" id="txtacno" name="txtacno"/>
-	      </td></tr>
-	      <tr><td>&nbsp;</td></tr>
-	     <tr>
-  <td colspan="2" ><textarea id="recdetails" name="recdetails" style="resize:none;width:100%;" rows="5" readonly></textarea></td>
-  </tr>   
-	 
-	  </table>
-	<br><br><br><br><br><br><br><br><br><br>
-	
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">From</td>
+        <td>
+            <div id="fdate" name="fdate"
+                 value='<s:property value="fdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="tdate" name="tdate"
+                 value='<s:property value="tdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    id="btnUpdate"
+                    class="btn-submit"
+                    onclick="updateStatus();">
+                Generate
+            </button>
+        </td>
+    </tr>
+
+    <!-- HIDDEN FIELDS (UNCHANGED) -->
+    <tr><td colspan="2">
+        <input type="hidden" id="doc" name="doc">
+        <input type="hidden" id="date1" name="date1">
+        <input type="hidden" id="cname" name="cname">
+        <input type="hidden" id="type" name="type">
+        <input type="hidden" id="chkno" name="chkno">
+        <input type="hidden" id="chkdate" name="chkdate">
+        <input type="hidden" id="amount" name="amount">
+        <input type="hidden" id="ctype" name="ctype">
+        <input type="hidden" id="desc" name="desc">
+        <input type="hidden" id="brno" name="brno">
+        <input type="hidden" id="cldocno" name="cldocno">
+        <input type="hidden" id="txtdoc" name="txtdoc">
+        <input type="hidden" id="txtacno" name="txtacno">
+    </td></tr>
+
+    <tr>
+        <td colspan="2">
+            <textarea id="recdetails"
+                      name="recdetails"
+                      class="master-textarea"
+                      rows="5"
+                      readonly></textarea>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-	</tr> 
-	<tr>
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="fleetdiv"><jsp:include page="rentalreceiptGrid.jsp"></jsp:include></div></td>
-		</tr>
-		
-		<tr>
-		<td align="left" ><div id="detaildiv"><jsp:include page="followDetailgrid.jsp"></jsp:include></div></td></tr>
-		
-	</table>
+
+<!-- ===== RIGHT GRID ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="fleetdiv">
+            <jsp:include page="rentalreceiptGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <div id="detaildiv">
+            <jsp:include page="followDetailgrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 <input type="hidden" name="docno" id="docno">
-<!-- <div id="vehiclewindow">
-<div></div>
-</div> -->
+
 </div>
 </div>
-<!-- <input type="hidden" name="hidcmbstatus" id="hidcmbstatus"> -->
+
 <label id="trncodeval" hidden="true"></label>
 <label id="statusval" hidden="true"></label>
+
 </form>
 </body>
+
 </html>

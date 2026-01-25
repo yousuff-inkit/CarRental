@@ -171,28 +171,28 @@ body{
 
 <script type="text/javascript">
       $(document).ready(function () {
-    	
+
     	  $('#btnClose').attr('disabled', true );$('#btnCreate').attr('disabled', true );$('#btnEdit').attr('disabled', true );$('#btnPrint').attr('disabled', true );
  		  $('#btnDelete').attr('disabled', true );$('#btnSearch').attr('disabled', true );$('#btnAttach').attr('disabled', true );
- 		 
+
     	  /* Time */
     	  $("#overtime").jqxDateTimeInput({ width: '30%', height: '16px', formatString:'HH:mm', showCalendarButton: false});
-    	  
+
     	  /* Searching Window */
      	 $('#employeeDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Employee Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
   		 $('#employeeDetailsWindow').jqxWindow('close');
-  		 
+
   		 $('#txtemployeeid').dblclick(function(){
   			employeeSearchContent("employeeDetailsSearch.jsp");
 		  });
-  		 
+
   		 $('#btnApply').attr('disabled', true);
 		 $('#btnApplyDelete').attr('disabled', true);
 		 document.getElementById("rdholiday").checked=true;
 	     document.getElementById("chckhalfday").checked=false;
 	     document.getElementById("hidchckhalfday").value = 0;
 		 document.getElementById("chckmarkall").checked=false;
-	     document.getElementById("hidchckmarkall").value = 0; 
+	     document.getElementById("hidchckmarkall").value = 0;
 		 $('#overtime').jqxDateTimeInput({disabled: true});
 		 $("#attendanceGridID").jqxGrid('clear');
 		 $("#attendanceGridID").jqxGrid('addrow', null, {});
@@ -200,164 +200,163 @@ body{
 		 $('#txtemployeeid').attr('readonly', true);
 		 $('#txtemployeename').attr('readonly', true);
 		 $('#txtmarkedattendance').val('0');
-		 
-    	  getDepartment();getPayrollCategory();getYear();getDay();getLeaveType();getHoliday();getAttendanceLeaveEditEnable();
-      }); 
-      
 
-  	
-      
+    	  getDepartment();getPayrollCategory();getYear();getDay();getLeaveType();getHoliday();getAttendanceLeaveEditEnable();
+      });
+
+
+
+
       function upload(){
   		//$('#txtexcelvalidation').val(1);
   		var year=$('#cmbyear').val();
-  		
+
 		var month=$('#cmbmonth').val();
-		
+
 		if($('#cmbyear').val()==''){
    		 document.getElementById("errormsg").innerText="Year is Mandatory.";
 			 return 0;
 		 }
-   	
+
    	if($('#cmbmonth').val()==''){
    		 document.getElementById("errormsg").innerText="Month is Mandatory.";
 			 return 0;
 		 }
   		getAttachDocumentNo();
-  		 
+
   	 }
-  	
+
      function getAttachDocumentNo(){
 		var x=new XMLHttpRequest();
 		x.onreadystatechange=function(){
 		if (x.readyState==4 && x.status==200)
 			{
-			 
-			var items=x.responseText.trim();
-				
+				var items=x.responseText.trim();
+
 				if(items>0){
 					var path=document.getElementById("fileexcelimport").value;
 					var fsize = $('#fileexcelimport')[0].files[0].size;
 					var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
-					if((extn=='xls') || (extn=='csv')){ 
-				        	ajaxFileUpload(items);	
-				        	
+					if((extn=='xls') || (extn=='csv')){
+				        	ajaxFileUpload(items);
+
 				     }else{
 				        	 $.messager.show({title:'Message',msg: 'File of xlsx Format is not Supported.',showType:'show',
 		                         style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-		                     }); 
+		                     });
 					            return;
-				     } 
+				     }
 				}
-				
+
 		  }
 		}
-			
+
 	x.open("GET","getAttachDocumentNo.jsp",true);
 	x.send();
 	}
-	
-	
-	function ajaxFileUpload(docNo) {  
-		
+
+
+	function ajaxFileUpload(docNo) {
+
 		if (window.File && window.FileReader && window.FileList && window.Blob)
 		    {
 		        var fsize = $('#fileexcelimport')[0].files[0].size;
-		 
+
 		        if(fsize>1048576) {
 		            $.messager.show({title:'Message',msg: fsize +' bytes too big ! Maximum Size 1 MB.',showType:'show',
                       style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                  }); 
+                  });
 		            return;
 		        }
 		    }else{
 		    	 $.messager.show({title:'Message',msg:'Please upgrade your browser, because your current browser lacks some new features we need!',showType:'show',
                             style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                        }); 
+                        });
 		        return;
 		    }
-		
-          $.ajaxFileUpload  
-          (  
-              {  
+
+          $.ajaxFileUpload
+          (
+              {
                   url:'fileAttachAction.action?formCode=ATTN&doc_no='+docNo+'&descpt=Excel Import' ,
-                  secureuri:false,  
-                  fileElementId:'fileexcelimport',    
-                  dataType: 'json', 
-                  success: function (data, status)   
-                  {  
+                  secureuri:false,
+                  fileElementId:'fileexcelimport',
+                  dataType: 'json',
+                  success: function (data, status)
+                  {
                      //alert("status--"+status)
                      if(status=='success'){
                     	// alert("test"+docNo)
                          saveExcelDataData(docNo);
                          $.messager.show({title:'Message',msg:'Successfully Uploaded',showType:'show',
                             style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                        
-         				
-                        }); 
+
+
+                        });
                          $("#overlay, #PleaseWait").show();
                       }
-                     
-                      if(typeof(data.error) != 'undefined')  
-                      {  
-                          if(data.error != '')  
-                          {  
+
+                      if(typeof(data.error) != 'undefined')
+                      {
+                          if(data.error != '')
+                          {
                               $.messager.show({title:'Message',msg: data.error,showType:'show',
   	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-  	                        }); 
-                          }else  
-                          {  
+  	                        });
+                          }else
+                          {
                               $.messager.show({title:'Message',msg: data.message,showType:'show',
 	  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	  	              	          }); 
-                          }  
-                      }  
-                  },  
-                  error: function (data, status, e){  
+	  	              	          });
+                          }
+                      }
+                  },
+                  error: function (data, status, e){
                       $.messager.alert('Message',e);
-                  }  
-              });  
-          return false;  
+                  }
+              });
+          return false;
       }
-	
+
 	function saveExcelDataData(docNo){
   		//alert("ehjk"+docNo)
-  		var x = document.getElementById("cmbday").length; 
+  		var x = document.getElementById("cmbday").length;
 		var totdays=(x-1);
-		var employeebranchchk=window.parent.employeebranchchk.value;     
-	 	var branch=document.getElementById("brchName").value;  
-     	var year=$('#cmbyear').val();  
+		var employeebranchchk=window.parent.employeebranchchk.value;
+	 	var branch=document.getElementById("brchName").value;
+     	var year=$('#cmbyear').val();
   		var x=new XMLHttpRequest();
 		x.onreadystatechange=function(){
 		if (x.readyState==4 && x.status==200)
 			{
 				var items=x.responseText.trim();
-				 	
+
 				if(items==1){
 				  	$("#attendanceDiv").load("attendanceGridMARBLELIFE.jsp?totdays="+totdays+"&year="+$('#cmbyear').val()+"&month="+$('#cmbmonth').val()+"&day="+$('#cmbday').val()+"&department="+$('#cmbempdepartment').val()+"&category="+$('#cmbempcategory').val()+"&empid="+$('#txtemployeedocno').val()+"&check=1"+'&branchid='+branch+'&employeebranchchk='+employeebranchchk);
-			    
+
 				  $.messager.alert('Message', ' Successfully Imported.', function(r){
-					    	
+
 				});
-				 
+
 			}
-				
+
 		  }
 		}
-			
+
 	x.open("GET","savedataexcel.jsp?docNo="+docNo+"&year="+$('#cmbyear').val()+"&month="+$('#cmbmonth').val(),true);
     x.send();
 	}
-	
-	
-      
+
+
+
       function employeeSearchContent(url) {
 		 	$('#employeeDetailsWindow').jqxWindow('open');
 			$.get(url).done(function (data) {
 			$('#employeeDetailsWindow').jqxWindow('setContent', data);
 			$('#employeeDetailsWindow').jqxWindow('bringToFront');
-		}); 
+		});
 		}
-      
+
       function getDepartment() {
   		var x = new XMLHttpRequest();
   		x.onreadystatechange = function() {
@@ -381,7 +380,7 @@ body{
   		x.open("GET", "getDepartment.jsp", true);
   		x.send();
   	}
-    
+
     function getPayrollCategory() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
@@ -405,12 +404,11 @@ body{
 		x.open("GET", "getPayrollCategory.jsp", true);
 		x.send();
 	}
-    
+
     function getYear() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
-				
 				var items = x.responseText;
 				items = items.split('####');
 				var yearItems = items[0].split(",");
@@ -421,7 +419,7 @@ body{
 							+ yearItems[i] + '</option>';
 				}
 				$("select#cmbyear").html(optionsyear);
-			     if ($('#hidcmbyear').val() != null) { 
+			     if ($('#hidcmbyear').val() != null) {
 					$('#cmbyear').val($('#hidcmbyear').val());
 				}
 			} else {
@@ -430,15 +428,14 @@ body{
 		x.open("GET", "getYear.jsp", true);
 		x.send();
 	}
-    
+
     function getDay() {
     	  $('#hidcmbyear').val($('#cmbyear').val());
     	  $('#hidcmbmonth').val($('#cmbmonth').val());
-      
+
     	var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
-				$("#overlay, #PleaseWait").hide();	
 				var items = x.responseText;
 				items = items.split('####');
 				var daysItems = items[0].split(",");
@@ -458,7 +455,7 @@ body{
 		x.open("GET", "getDay.jsp?year="+$('#cmbyear').val()+"&month="+$('#cmbmonth').val(), true);
 		x.send();
 	}
-    
+
     function getLeaveType() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
@@ -482,7 +479,7 @@ body{
 		x.open("GET", "getLeaveType.jsp", true);
 		x.send();
 	}
-    
+
     function getHoliday() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
@@ -506,20 +503,20 @@ body{
 		x.open("GET", "getHoliday.jsp", true);
 		x.send();
 	}
-    
+
     function getNewGridValue(a){
   		var x = new XMLHttpRequest();
   		x.onreadystatechange = function() {
   			if (x.readyState == 4 && x.status == 200) {
   				var items = x.responseText.trim();
-  				
+
   			    $('#txtselectedcelltextvalue').val(items);
   		}
   		}
   		x.open("GET", "getNewGridValue.jsp?refno="+a, true);
   		x.send();
     }
-    
+
     function getHolidaysOfMonth(year,month) {
   		var x = new XMLHttpRequest();
   		x.onreadystatechange = function() {
@@ -528,18 +525,18 @@ body{
   			    $('#txtholidaysofmonth').val(items);
   		}
   		}
-  		
+
   		x.open("GET", "getHolidaysOfMonth.jsp?year="+year+"&month="+month, true);
   		x.send();
      }
-    
+
     function getAttendanceLeaveEditEnable(){
   		var x = new XMLHttpRequest();
   		x.onreadystatechange = function() {
   			if (x.readyState == 4 && x.status == 200) {
   				var items = x.responseText;
   			    $('#txtattendanceleaveseditgrid').val(items);
-  			    
+
   			  	if(parseInt($('#txtattendanceleaveseditgrid').val())==0){
   				 	 $("#rdtotalleaves").hide();document.getElementById("rdtotalleaves1").innerText=" ";$("#btnRecheck").show();
 	  			 } else {
@@ -550,7 +547,7 @@ body{
   		x.open("GET", "getAttendanceLeaveEditEnable.jsp", true);
   		x.send();
     }
-    
+
     function getEmployeeId(event){
         var x= event.keyCode;
         if(x==114){
@@ -558,44 +555,44 @@ body{
         }
         else{}
         }
-      
-	function funReadOnly(){} 
-	
+
+	function funReadOnly(){}
+
 	function funRemoveReadOnly(){}
-	
+
 	function funSearchLoad(){}
-	
+
 	function funChkButton(){
 		/* funReset(); */
 	}
-	 
-	 function funNotify(){	
+
+	 function funNotify(){
  		 return 1;
-		} 
-	 
+		}
+
 	 function funSearchLoad(){}
-	 
+
 	 function funFocus(){
 		    document.getElementById("cmbyear").focus();
 	    }
-	 
+
 	 function setValues(){
-		 
+
 			 if($('#msg').val()!=""){
 				   $.messager.alert('Message',$('#msg').val());
 				  }
-			 
+
 			 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 			 funSetlabel();
-            
-             var indexVal = document.getElementById("docno").value;  
+
+             var indexVal = document.getElementById("docno").value;
 			 if(indexVal> 0){
-				 var employeebranchchk=window.parent.employeebranchchk.value;     
-			 	 var branch=document.getElementById("brchName").value;  
+				 var employeebranchchk=window.parent.employeebranchchk.value;
+			 	 var branch=document.getElementById("brchName").value;
 	         	 $("#attendanceDiv").load("attendanceGridMARBLELIFE.jsp?docno="+indexVal+'&branchid='+branch+'&employeebranchchk='+employeebranchchk);
-			 } 
+			 }
 		}
-	 
+
 	 function radioClick(){
 		 if(document.getElementById("rdovertime").checked==true){
 			 $('#overtime').jqxDateTimeInput({disabled: false});
@@ -606,12 +603,12 @@ body{
 			 document.getElementById("cmbleavetype").value = "";
 			 document.getElementById("chckhalfday").checked=false;
 			 document.getElementById("hidchckhalfday").value = 0;
-			 
+
 			 var overtimes = $('#overtime').val();
 			 var overtime = overtimes.split(":");
 			 var value = ((overtime[0]*60)+overtime[1]);
 			 $('#txtselectedcellvalue').val(value);
-			 
+
 		 }else if(document.getElementById("rdleavetype").checked==true){
 			 $('#cmbleavetype').attr('disabled', false);
 			 $('#chckhalfday').attr('disabled', false);
@@ -641,23 +638,23 @@ body{
 			 var settime=new Date();
 			 settime.setHours(0,0,0,0);
 			 $('#overtime').jqxDateTimeInput('setDate',settime);
-		   }	 
+		   }
 	 }
-	 
+
 	 function clearhalfdaycheck(){
 		    document.getElementById("chckhalfday").checked=false;
 			document.getElementById("hidchckhalfday").value = 0;
 	 }
-	 
+
 	 function markallcheck(){
 	 		 if(document.getElementById("chckmarkall").checked){
 	 			 document.getElementById("hidchckmarkall").value = 1;
 	 		 }
 	 		 else{
 	 			 document.getElementById("hidchckmarkall").value = 0;
-		 	} 
+		 	}
 		}
-	 
+
 	 function halfdaycheck(){
  		 if(document.getElementById("chckhalfday").checked){
  			 document.getElementById("hidchckhalfday").value = 1;
@@ -665,7 +662,7 @@ body{
  		 else{
  			 document.getElementById("hidchckhalfday").value = 0;
  		 }
- 		 
+
  		 var leavetype = $('#cmbleavetype').val();
 		 var halfday = $('#hidchckhalfday').val();
 		 var celltextvalue = ($('#txtselectedcelltextvalue').val()).charAt(0);
@@ -676,9 +673,9 @@ body{
 		 if(halfday=='1'){
 			 $('#txtselectedcellvalue').val(leavetype+"2");
 			 $('#txtselectedcelltextvalue').val(celltextvalue+"2");
-		 } 
+		 }
  	 }
-	 
+
 	 function newValueSet(){
 		 if(document.getElementById("rdovertime").checked==true){
 			 var overtimes = $('#overtime').val();
@@ -686,129 +683,129 @@ body{
 			 var value = ((parseInt(overtime[0])*60)+parseInt(overtime[1]));
 			 $('#txtselectedcellvalue').val(value);
 			 $('#txtselectedcelltextvalue').val(overtimes);
-			 
+
 		 }else if(document.getElementById("rdleavetype").checked==true){
 			 var leavetype = $('#cmbleavetype').val();
 			 var halfday = $('#hidchckhalfday').val();
-			 
+
 			 if(halfday=='0'){
 			 	$('#txtselectedcellvalue').val(leavetype);
 			 }
 			 if(halfday=='1'){
 				 $('#txtselectedcellvalue').val(leavetype+"2");
-			 } 
+			 }
 		 }else{
 			 var holiday = $('#cmbholiday').val();
 			 $('#txtselectedcellvalue').val(holiday);
-		   }	 
+		   }
 	 }
-	 
+
 	 function funViewAttendance(){
-		
+
 		 if(document.getElementById("btnView").value =="View"){
-		  
+
 			 if($('#cmbyear').val()==''){
 		    		 document.getElementById("errormsg").innerText="Year is Mandatory.";
 					 return 0;
 				 }
-		    	
+
 		    	if($('#cmbmonth').val()==''){
 		    		 document.getElementById("errormsg").innerText="Month is Mandatory.";
 					 return 0;
 				 }
-		    	
+
 		    	document.getElementById("errormsg").innerText="";
-		    	
+
 		    	$('#txtmarkedattendance').val('0');
-		    	var x = document.getElementById("cmbday").length; 
+		    	var x = document.getElementById("cmbday").length;
 		    	//alert(x);
 		    	var totdays=(x-1);
 		    	//alert(totdays);
 		    	$("#overlay, #PleaseWait").show();
-		    	var employeebranchchk=window.parent.employeebranchchk.value; 
-		    	var branch=document.getElementById("brchName").value;    
+		    	var employeebranchchk=window.parent.employeebranchchk.value;
+		    	var branch=document.getElementById("brchName").value;
 		    	$("#attendanceDiv").load("attendanceGridMARBLELIFE.jsp?totdays="+totdays+"&year="+$('#cmbyear').val()+"&month="+$('#cmbmonth').val()+"&day="+$('#cmbday').val()+"&department="+$('#cmbempdepartment').val()+"&category="+$('#cmbempcategory').val()+"&empid="+$('#txtemployeedocno').val()+"&check=1"+'&branchid='+branch+'&employeebranchchk='+employeebranchchk);
 		    	document.getElementById("btnView").value ="Mark Attendance";
 		    	$('#btnApply').attr('disabled', false);$('#btnApplyDelete').attr('disabled', false);
 		    	$("#attendanceGridID").jqxGrid({ disabled: false});
 
 		    }else if(document.getElementById("btnView").value =="Mark Attendance"){
-		    	
+
 		    	if($('#txtmonthlypayrollprocessed').val()=='1'){
 		    		 $.messager.alert('Message','Payroll Processed,Attendance cannot be Changed.','warning');
 					 return 0;
 				} else {
 					document.getElementById("errormsg").innerText="";
 					$('#attendanceGridID').jqxGrid({ editable: false});
-					
+
 					if($('#hidchckmarkall').val()=='1'){
 						var rows = $("#attendanceGridID").jqxGrid('getrows');
 						for(var i=0 ; i < rows.length ; i++){
 							$("#overlay, #PleaseWait").show();
-							$('#attendanceGridID').jqxGrid('setcellvalue', i, $('#txtselectedcellcolumn').val() ,$('#txtselectedcelltextvalue').val()); 
+							$('#attendanceGridID').jqxGrid('setcellvalue', i, $('#txtselectedcellcolumn').val() ,$('#txtselectedcelltextvalue').val());
 						}
-						
+
 						$("#overlay, #PleaseWait").hide();
-						
-					} else { 
+
+					} else {
 		    			$('#attendanceGridID').jqxGrid('setcellvalue', $('#txtselectedcellrow').val(), $('#txtselectedcellcolumn').val(),$('#txtselectedcelltextvalue').val());
-					} 
-					
+					}
+
 					if($('#txtattendanceleaveseditgrid').val().trim()=='0'){
-						$('#txtmarkedattendance').val('1');	
+						$('#txtmarkedattendance').val('1');
 					}
 				}
 		    }
-		    
+
 	 }
-	 
+
 	function  funClearInfo(){
-			
+
 			var attendanceleavesedit = document.getElementById("txtattendanceleaveseditgrid").value;
-		
+
 		 	$('input[type=text]').val('');
 		    $('select').find('option').prop("selected", false);
 			$('input[type=radio]').prop("checked", false);
 			$('input:checkbox').removeAttr('checked');
-			
-			
+
+
 			document.getElementById("txtattendanceleaveseditgrid").value=attendanceleavesedit;
 			$('#txtmarkedattendance').val('0');
 			document.getElementById("rdholiday").checked=true;
 			document.getElementById("chckhalfday").checked=false;
 			document.getElementById("hidchckhalfday").value = 0;
 			document.getElementById("chckmarkall").checked=false;
-	        document.getElementById("hidchckmarkall").value = 0; 
-			
+	        document.getElementById("hidchckmarkall").value = 0;
+
 			document.getElementById("txtrecheckemptotalleaves").value="";
 			document.getElementById("txtrecheckemptotalleavesgridlength").value="";
-		 
+
 			radioClick();
 			var settime=new Date();
 			settime.setHours(0,0,0,0);
 			$('#overtime').jqxDateTimeInput('setDate',settime);
-			
+
 			$("#attendanceGridID").jqxGrid('clear');
 			$("#attendanceGridID").jqxGrid('addrow', null, {});
 			$("#attendanceGridID").jqxGrid({ disabled: true});
-			
+
 			 if (document.getElementById("txtemployeeid").value == "") {
-			        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search'); 
+			        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search');
 			        $('#txtemployeename').attr('placeholder', 'Employee Name');
 			    }
-			 
+
 			 document.getElementById("btnView").value ="View";
 			 $('#btnApply').attr('disabled', true);
 		     $('#btnApplyDelete').attr('disabled', true);
 		     document.getElementById("savemsg").innerText="";
 		     document.getElementById("errormsg").innerText="";
 	}
-	 
+
 	 function  funClearYearInfo(){
-			
+
 		    var year = document.getElementById("cmbyear").value;
 		    var attendanceleavesedit = document.getElementById("txtattendanceleaveseditgrid").value;
-			
+
 		    $('input[type=text]').val('');
 		    $('select').find('option').prop("selected", false);
 			$('input[type=radio]').prop("checked", false);
@@ -821,38 +818,38 @@ body{
 			document.getElementById("chckhalfday").checked=false;
 			document.getElementById("hidchckhalfday").value = 0;
 			document.getElementById("chckmarkall").checked=false;
-	        document.getElementById("hidchckmarkall").value = 0; 
-			
+	        document.getElementById("hidchckmarkall").value = 0;
+
 			document.getElementById("txtrecheckemptotalleaves").value="";
 			document.getElementById("txtrecheckemptotalleavesgridlength").value="";
-			
+
 			radioClick();
 			var settime=new Date();
 			settime.setHours(0,0,0,0);
 			$('#overtime').jqxDateTimeInput('setDate',settime);
-			
+
 			$("#attendanceGridID").jqxGrid('clear');
 			$("#attendanceGridID").jqxGrid('addrow', null, {});
 			$("#attendanceGridID").jqxGrid({ disabled: true});
-			
+
 			 if (document.getElementById("txtemployeeid").value == "") {
-			        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search'); 
+			        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search');
 			        $('#txtemployeename').attr('placeholder', 'Employee Name');
 			    }
-			 
+
 			 document.getElementById("btnView").value ="View";
 			 $('#btnApply').attr('disabled', true);
 		     $('#btnApplyDelete').attr('disabled', true);
 		     document.getElementById("savemsg").innerText="";
 		     document.getElementById("errormsg").innerText="";
 	}
-	 
+
 	 function  funClearMonthInfo(){
-			
+
 		    var year = document.getElementById("cmbyear").value;
 			var month = document.getElementById("cmbmonth").value;
 			var attendanceleavesedit = document.getElementById("txtattendanceleaveseditgrid").value;
-			
+
 		    $('input[type=text]').val('');
 		    $('select').find('option').prop("selected", false);
 			$('input[type=radio]').prop("checked", false);
@@ -866,32 +863,32 @@ body{
 			document.getElementById("chckhalfday").checked=false;
 			document.getElementById("hidchckhalfday").value = 0;
 			document.getElementById("chckmarkall").checked=false;
-	        document.getElementById("hidchckmarkall").value = 0; 
-			
+	        document.getElementById("hidchckmarkall").value = 0;
+
 			document.getElementById("txtrecheckemptotalleaves").value="";
 			document.getElementById("txtrecheckemptotalleavesgridlength").value="";
-			
+
 			radioClick();
 			var settime=new Date();
 			settime.setHours(0,0,0,0);
 			$('#overtime').jqxDateTimeInput('setDate',settime);
-			
+
 			$("#attendanceGridID").jqxGrid('clear');
 			$("#attendanceGridID").jqxGrid('addrow', null, {});
 			$("#attendanceGridID").jqxGrid({ disabled: true});
-			
+
 			 if (document.getElementById("txtemployeeid").value == "") {
-			        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search'); 
+			        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search');
 			        $('#txtemployeename').attr('placeholder', 'Employee Name');
 			    }
-			 
+
 			 document.getElementById("btnView").value ="View";
 			 $('#btnApply').attr('disabled', true);
 		     $('#btnApplyDelete').attr('disabled', true);
 		     document.getElementById("savemsg").innerText="";
 		     document.getElementById("errormsg").innerText="";
 	}
-	 
+
 	 function funApplyAttendance(event){
 		    var year = $('#cmbyear').val();
 		    var month = $('#cmbmonth').val();
@@ -914,77 +911,77 @@ body{
 			var markall = $('#hidchckmarkall').val();
 			var emptotalleavesarray="";
 			var emptotalleavesgridlength="0";
-			
+
 			var funtype="1";
-			
+
 			if(document.getElementById("rdtotalleaves").checked==true){
 				funtype="3";
 			}
-			
+
 			if(cellcolumn.trim()==''){
 				 document.getElementById("errormsg").innerText="Choose a Cell.";
 				 return 0;
 			 }
-			
+
 			if(year==''){
 	    		 document.getElementById("errormsg").innerText="Year is Mandatory.";
 				 return 0;
 			 }
-	    	
+
 	    	if(month==''){
 	    		 document.getElementById("errormsg").innerText="Month is Mandatory.";
 				 return 0;
 			 }
-	    	
+
 	    	if(monthlypayrollprocessed=='1'){
 	    		 $.messager.alert('Message','Payroll Processed,Attendance cannot be Changed.','warning');
 				 return 0;
 			}
-	    	
+
 	    	if(document.getElementById("rdovertime").checked==true){
 				 if($('#overtime').val()=='00:00'){
 		    		 document.getElementById("errormsg").innerText="Enter a Valid Time.";
 					 return 0;
 				 }
-			 } 
-				 
+			 }
+
 			 if(document.getElementById("rdleavetype").checked==true){
 				 if($('#cmbleavetype').val()==''){
 		    		 document.getElementById("errormsg").innerText="Choose an Leave Type.";
 					 return 0;
 				 }
-				
+
 			 }
-			 
+
 			 if(document.getElementById("rdholiday").checked==true){
 				 if($('#cmbholiday').val()==''){
 		    		 document.getElementById("errormsg").innerText="Choose an Holiday Type.";
 					 return 0;
 				 }
 			   }
-			 
+
 			 if($('#txtattendanceleaveseditgrid').val().trim()=='0' && $('#txtmarkedattendance').val().trim()=='0'){
 				 document.getElementById("errormsg").innerText="Mark Attendance & Apply.";
 				 return 0;
 			}
-			 	
+
 	    	document.getElementById("errormsg").innerText="";
-	    	
+
 	    	var x = document.getElementById("cmbday").length;
 	    	var totdays=(x-1);
-	    	
+
 			    $.messager.confirm('Message', 'Do you want to apply changes?', function(r){
-				        
+
 			     	if(r==false)
 			     	  {
-			     		return false; 
+			     		return false;
 			     	  }
 			     	else{
-			     		
+
 			     		 if(document.getElementById("rdtotalleaves").checked==true && $('#hidchckmarkall').val()=='1'){
-			     			 
+
 			     		 	var rows = $("#attendanceGridID").jqxGrid('getrows');
-			     		 	
+
 			     		 	var i=0;var tempemptotalleaves="",tempemptotalleaves1="";
 			    	        $('#txtemptotalleavesgridlength').val(rows.length);
 			    		    for (i = 0; i < rows.length; i++) {
@@ -1000,13 +997,13 @@ body{
 			    		    emptotalleavesarray=$('#txtemptotalleaves').val();
 			    		    emptotalleavesgridlength=$('#txtemptotalleavesgridlength').val();
 			     		 }
-			     		 
+
 			     		 $("#overlay, #PleaseWait").show();
-			     		 saveAttendanceData(year,month,employee,cellcolumn,cellvalue,totdays,leave1total,leave2total,leave3total,leave4total,leave5total,leave6total,leave7total,emptotalleavesarray,emptotalleavesgridlength,overtimevalue,holidayovertimevalue,category,department,markall,funtype);	
+			     		 saveAttendanceData(year,month,employee,cellcolumn,cellvalue,totdays,leave1total,leave2total,leave3total,leave4total,leave5total,leave6total,leave7total,emptotalleavesarray,emptotalleavesgridlength,overtimevalue,holidayovertimevalue,category,department,markall,funtype);
 			     	}
 			 });
 		}
-	 
+
 	 function funDeleteAttendance(event){
 		    var year = $('#cmbyear').val();
 		    var month = $('#cmbmonth').val();
@@ -1029,212 +1026,212 @@ body{
 			var markall = $('#hidchckmarkall').val();
 			var emptotalleavesarray="";
 			var emptotalleavesgridlength="0";
-			
+
 			var funtype="2";
-			
+
 			if(document.getElementById("rdtotalleaves").checked==true){
 				funtype="3";
 			}
-			
+
 			if(document.getElementById("rdtotalleaves").checked==true){
 				 document.getElementById("errormsg").innerText="Invalid Click.";
 				 return 0;
 			}
-			
+
 			if(cellcolumn==''){
 				 document.getElementById("errormsg").innerText="Choose a Cell.";
 				 return 0;
 			 }
-			
+
 			if(year==''){
 	    		 document.getElementById("errormsg").innerText="Year is Mandatory.";
 				 return 0;
 			 }
-	    	
+
 	    	if(month==''){
 	    		 document.getElementById("errormsg").innerText="Month is Mandatory.";
 				 return 0;
 			 }
-	    	
+
 	    	if(monthlypayrollprocessed=='1'){
 	    		 $.messager.alert('Message','Payroll Processed,Attendance cannot be Changed.','warning');
 				 return 0;
 			}
-				
+
 	    	document.getElementById("errormsg").innerText="";
-	    	
+
 	    	var x = document.getElementById("cmbday").length;
 	    	var totdays=(x-1);
-	    	
+
 			    $.messager.confirm('Message', 'Do you want to apply changes?', function(r){
-				        
+
 			     	if(r==false)
 			     	  {
-			     		return false; 
+			     		return false;
 			     	  }
 			     	else{
 			     		 $("#overlay, #PleaseWait").show();
-			     		 saveAttendanceData(year,month,employee,cellcolumn,cellvalue,totdays,leave1total,leave2total,leave3total,leave4total,leave5total,leave6total,leave7total,emptotalleavesarray,emptotalleavesgridlength,overtimevalue,holidayovertimevalue,category,department,markall,funtype);	
+			     		 saveAttendanceData(year,month,employee,cellcolumn,cellvalue,totdays,leave1total,leave2total,leave3total,leave4total,leave5total,leave6total,leave7total,emptotalleavesarray,emptotalleavesgridlength,overtimevalue,holidayovertimevalue,category,department,markall,funtype);
 			     	}
 			 });
-		}	
+		}
 
 		function funReCheckAttendance(event){
 		    var year = $('#cmbyear').val();
 		    var month = $('#cmbmonth').val();
 			var monthlypayrollprocessed = $('#txtmonthlypayrollprocessed').val();
-			
+
 			if(year==''){
 	    		 document.getElementById("errormsg").innerText="Year is Mandatory.";
 				 return 0;
 			}
-	    	
+
 	    	if(month==''){
 	    		 document.getElementById("errormsg").innerText="Month is Mandatory.";
 				 return 0;
 			}
-			
+
 			var rows = $('#attendanceGridID').jqxGrid('getrows');
 	    	if(rows.length==1 && (rows[0].employeedocno=="undefined" || rows[0].employeedocno==null || rows[0].employeedocno=="")){
 				$.messager.alert('Message','View Attendance and Re-Check. ','warning');
 				return 0;
-			} 
-	    	
+			}
+
 	    	if(monthlypayrollprocessed=='1'){
 	    		 $.messager.alert('Message','Payroll Processed,Attendance cannot be Changed.','warning');
 				 return 0;
 			}
-			 	
+
 	    	document.getElementById("errormsg").innerText="";
-	    	
+
 			    $.messager.confirm('Message', 'Do you want to Re-Check Attendance?', function(r){
-				        
+
 			     	if(r==false)
 			     	  {
-			     		return false; 
+			     		return false;
 			     	  }
 			     	else{
-			     		
+
 			     		    $("#overlay, #PleaseWait").show();
 			     		    getLeavesGridTotal("2");
-			     		 
+
 			     	}
 			 });
 		}
-		
+
 		 function funExcelBtn() {
 			 JSONToCSVConNew(data, 'Attendance', true);
 			  //JSONToCSVCon(dataExcelExport, 'Attendance', true);
-			/*  $("#attendanceDiv").excelexportjs({  
-				 containerid: "attendanceDiv", 
-				 datatype: 'json', 
-				 dataset: null, 
-				 gridId: "attendanceGridID", 
-				 columns: getColumns("attendanceGridID") ,   
+			/*  $("#attendanceDiv").excelexportjs({
+				 containerid: "attendanceDiv",
+				 datatype: 'json',
+				 dataset: null,
+				 gridId: "attendanceGridID",
+				 columns: getColumns("attendanceGridID") ,
 				 worksheetName:"Attendance"
 				 }); */
-		  } 
-		  
-		 
+		  }
+
+
 			function JSONToCSVConNew(JSONData, ReportTitle, ShowLabel) {
 				// console.log(JSONData)
 				 var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-			   
-			    var CSV = '';    
+
+			    var CSV = '';
 			    //Set Report title in first row or line
-			    
+
 			    //CSV += ReportTitle + '\r\n\n';
 
 			    //This condition will generate the Label/Header
-		 	    if (ShowLabel) {     
+		 	    if (ShowLabel) {
 			        var row = "";
-			        
+
 			        //This loop will extract the label from 1st index of on array
 			        for (var index in arrData[0]) {
 			        	 if(index=="employeedocno" ||  index=="employeeid" ||index=="employeename" ||index=="year" ||index=="month" || index=="date1" || index=="date2" || index=="date3" ||  index=="date4"  ||  index=="date5" ||  index=="date6" ||  index=="date7" ||  index=="date8" ||  index=="date9" ||  index=="date10" ||  index=="date11" ||  index=="date12" ||  index=="date13" ||  index=="date14" ||  index=="date15" ||  index=="date16" ||  index=="date17" ||  index=="date18" ||  index=="date19" ||  index=="date20" ||  index=="date21" ||  index=="date22" ||  index=="date23" ||  index=="date24" ||  index=="date25" ||  index=="date26" ||  index=="date27" ||  index=="date28" ||  index=="date29" ||  index=="date30" ||  index=="date31" ){
-						        
+
 			            console.log(index)
 			            //Now convert each value to string and comma-seprated
 			            row += index + ',';
 			        }
 		  }
 			        row = row.slice(0, -1);
-			        
+
 			        //append Label row with line break
 			        CSV += row + '\r\n';
-			    } 
-			    
+			    }
+
 			    //1st loop is to extract each row
 			    var strquote = "'";
 			    for (var i = 0; i < arrData.length; i++) {
 			        var row = "";
-			        
+
 			        //2nd loop will extract each column and convert it in string comma-seprated
 			        for (var index in arrData[i]) {
 			        //	console.log(index);
 			      	 //row += strquote+'"' + arrData[i][index] + '",';
 			          if(index=="employeedocno" ||  index=="employeeid" ||index=="employeename" ||index=="year" ||index=="month" || index=="date1" || index=="date2" || index=="date3" ||  index=="date4"  ||  index=="date5" ||  index=="date6" ||  index=="date7" ||  index=="date8" ||  index=="date9" ||  index=="date10" ||  index=="date11" ||  index=="date12" ||  index=="date13" ||  index=="date14" ||  index=="date15" ||  index=="date16" ||  index=="date17" ||  index=="date18" ||  index=="date19" ||  index=="date20" ||  index=="date21" ||  index=="date22" ||  index=="date23" ||  index=="date24" ||  index=="date25" ||  index=="date26" ||  index=="date27" ||  index=="date28" ||  index=="date29" ||  index=="date30" ||  index=="date31" ){
-			        
-			        	  
+
+
 			        	  if(isNaN(arrData[i][index])){
-				            	row += arrData[i][index]+','; 
-				              	
+				            	row += arrData[i][index]+',';
+
 				            }else{
-				            	//console.log('='+arrData[i][index]);  
-				            	 row += arrData[i][index]+','; 
+				            	//console.log('='+arrData[i][index]);
+				            	 row += arrData[i][index]+',';
 				            }
 			            }else{
-			            	//row += arrData[i][index]+','; 
+			            	//row += arrData[i][index]+',';
 			            }
-			            
+
 			        }
 			       //	console.log("row------" +row);
-				     
+
 			        row.slice(0, row.length - 1);
-			        
+
 			        //add a line break after each row
 			        CSV += row + '\r\n';
 			    }
 
-			    if (CSV == '') {        
+			    if (CSV == '') {
 			        //alert("Invalid data");
 			        return;
-			    }   
-			    
+			    }
+
 			    //Generate a file name
 			    var fileName = "";
 			    //this will remove the blank-spaces from the title and replace it with an underscore
-			    fileName += ReportTitle.replace(/ /g,"_");   
-			    
-				 // newly added 
+			    fileName += ReportTitle.replace(/ /g,"_");
+
+				 // newly added
 			    var temp = CSV;
 			    blob = new Blob([temp],{type: 'text/csv'});
 			    var bigcsv= window.webkitURL.createObjectURL(blob);
-			   
-				
+
+
 			    //Initialize file format you want csv or xls
 			  //  var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-			    
+
 			    // Now the little tricky part.
 			    // you can use either>> window.open(uri);
 			    // but this will not work in some browsers
-			    // or you will not get the correct file extension    
-			    
+			    // or you will not get the correct file extension
+
 			    //this trick will generate a temp <a /> tag
-			    var link = document.createElement("a");    
+			    var link = document.createElement("a");
 			     //  link.href = uri;
 			      link.href = bigcsv;
-			    
+
 			    //set the visibility hidden so it will not effect on your web-layout
 			    link.style = "visibility:hidden";
 			    link.download = fileName + ".csv";
-			    
+
 			    //this part will append the anchor tag and remove it after automatic click
 			    document.body.appendChild(link);
 			    link.click();
 			    document.body.removeChild(link);
 			}
-		 
+
 		function saveAttendanceData(year,month,employee,cellcolumn,cellvalue,totdays,leave1total,leave2total,leave3total,leave4total,leave5total,leave6total,leave7total,emptotalleavesarray,emptotalleavesgridlength,overtimevalue,holidayovertimevalue,category,department,markall,funtype){
 			var x=new XMLHttpRequest();
 			x.onreadystatechange=function(){
@@ -1245,7 +1242,7 @@ body{
 					var employee = $('#txtselectedemployee').val(' ');
 					var cellcolumn = $('#txtselectedcellcolumn').val(' ');
 					var cellvalue = $('#txtselectedcellvalue').val(' ');
-					
+
 					document.getElementById("cmbday").value="";
 					document.getElementById("cmbempdepartment").value="";
 					document.getElementById("cmbempcategory").value="";
@@ -1254,17 +1251,17 @@ body{
 					document.getElementById("txtemployeename").value="";
 					document.getElementById("cmbholiday").value="";
 					document.getElementById("cmbleavetype").value="";
-					
+
 					document.getElementById("rdholiday").checked=true;
 					document.getElementById("chckhalfday").checked=false;
 					document.getElementById("hidchckhalfday").value = 0;
-					
+
 					document.getElementById("chckmarkall").checked=false;
-				    document.getElementById("hidchckmarkall").value = 0; 
-					
+				    document.getElementById("hidchckmarkall").value = 0;
+
 					document.getElementById("txtselectedcellrow").value="";
 					document.getElementById("txtselectedcelltextvalue").value="";
-					
+
 					document.getElementById("txtselectedcellleave1totalvalue").value="";
 					document.getElementById("txtselectedcellleave2totalvalue").value="";
 					document.getElementById("txtselectedcellleave3totalvalue").value="";
@@ -1278,41 +1275,41 @@ body{
 					document.getElementById("txtselectedcellholidayovertimevalue").value="";
 					document.getElementById("txtmonthlypayrollprocessed").value="";
 					document.getElementById("txtmarkedattendance").value="0";
-					
+
 					document.getElementById("txtrecheckemptotalleaves").value="";
 					document.getElementById("txtrecheckemptotalleavesgridlength").value="";
-					
+
 					var settime=new Date();
 					settime.setHours(0,0,0,0);
 					$('#overtime').jqxDateTimeInput('setDate',settime);
-					
+
 					$("#attendanceGridID").jqxGrid('clear');
 					$("#attendanceGridID").jqxGrid('addrow', null, {});
 					$("#attendanceGridID").jqxGrid({ disabled: true});
-					
+
 					 if (document.getElementById("txtemployeeid").value == "") {
-					        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search'); 
+					        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search');
 					        $('#txtemployeename').attr('placeholder', 'Employee Name');
 					    }
-					 
+
 					 document.getElementById("btnView").value ="View";
 					 $('#btnApply').attr('disabled', true);
 				     $('#btnApplyDelete').attr('disabled', true);
-				     
+
 				     document.getElementById("savemsg").innerText="";
 				     document.getElementById("errormsg").innerText="";
-				     
+
 					$.messager.alert('Message', '  Record Successfully Updated ', function(r){
 				  });
 					funViewAttendance();
 					radioClick();
 			  }
 			}
-																	
+
 		x.open("GET","saveData.jsp?year="+year+"&month="+month+"&employee="+employee+"&cellcolumn="+cellcolumn+"&cellvalue="+cellvalue+"&totdays="+totdays+"&leave1total="+leave1total+"&leave2total="+leave2total+"&leave3total="+leave3total+"&leave4total="+leave4total+"&leave5total="+leave5total+"&leave6total="+leave6total+"&leave7total="+leave7total+"&emptotalleavesarray="+emptotalleavesarray+"&emptotalleavesgridlength="+emptotalleavesgridlength+"&overtimevalue="+overtimevalue+"&holidayovertimevalue="+holidayovertimevalue+"&category="+category+"&department="+department+"&markall="+markall+"&funtype="+funtype,true);
 		x.send();
 		}
-		
+
 		function updateAttendanceData(year,month,emptotalleavesarray,emptotalleavesgridlength){
 			var x=new XMLHttpRequest();
 			x.onreadystatechange=function(){
@@ -1323,7 +1320,7 @@ body{
 					var employee = $('#txtselectedemployee').val(' ');
 					var cellcolumn = $('#txtselectedcellcolumn').val(' ');
 					var cellvalue = $('#txtselectedcellvalue').val(' ');
-					
+
 					document.getElementById("cmbday").value="";
 					document.getElementById("cmbempdepartment").value="";
 					document.getElementById("cmbempcategory").value="";
@@ -1332,17 +1329,17 @@ body{
 					document.getElementById("txtemployeename").value="";
 					document.getElementById("cmbholiday").value="";
 					document.getElementById("cmbleavetype").value="";
-					
+
 					document.getElementById("rdholiday").checked=true;
 					document.getElementById("chckhalfday").checked=false;
 					document.getElementById("hidchckhalfday").value = 0;
-					
+
 					document.getElementById("chckmarkall").checked=false;
-				    document.getElementById("hidchckmarkall").value = 0; 
-					
+				    document.getElementById("hidchckmarkall").value = 0;
+
 					document.getElementById("txtselectedcellrow").value="";
 					document.getElementById("txtselectedcelltextvalue").value="";
-					
+
 					document.getElementById("txtselectedcellleave1totalvalue").value="";
 					document.getElementById("txtselectedcellleave2totalvalue").value="";
 					document.getElementById("txtselectedcellleave3totalvalue").value="";
@@ -1356,58 +1353,209 @@ body{
 					document.getElementById("txtselectedcellholidayovertimevalue").value="";
 					document.getElementById("txtmonthlypayrollprocessed").value="";
 					document.getElementById("txtmarkedattendance").value="0";
-					
+
 					document.getElementById("txtrecheckemptotalleaves").value="";
 					document.getElementById("txtrecheckemptotalleavesgridlength").value="";
-					
+
 					var settime=new Date();
 					settime.setHours(0,0,0,0);
 					$('#overtime').jqxDateTimeInput('setDate',settime);
-					
+
 					$("#attendanceGridID").jqxGrid('clear');
 					$("#attendanceGridID").jqxGrid('addrow', null, {});
 					$("#attendanceGridID").jqxGrid({ disabled: true});
-					
+
 					 if (document.getElementById("txtemployeeid").value == "") {
-					        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search'); 
+					        $('#txtemployeeid').attr('placeholder', 'Press F3 to Search');
 					        $('#txtemployeename').attr('placeholder', 'Employee Name');
 					    }
-					 
+
 					 document.getElementById("btnView").value ="View";
 					 $('#btnApply').attr('disabled', true);
 				     $('#btnApplyDelete').attr('disabled', true);
-				     
+
 				     document.getElementById("savemsg").innerText="";
 				     document.getElementById("errormsg").innerText="";
-				     
+
 					$.messager.alert('Message', '  Record Successfully Re-Checked ', function(r){
 				  });
 					funViewAttendance();
 					radioClick();
 			  }
 			}
-																	
+
 		x.open("GET","updateData.jsp?year="+year+"&month="+month+"&emptotalleavesarray="+emptotalleavesarray+"&emptotalleavesgridlength="+emptotalleavesgridlength,true);
 		x.send();
 		}
-		function onYearChange() {
-			$("#overlay, #PleaseWait").show();
-			funClearYearInfo();
-		    getDay();
-		    
-		}
-	 
+
 </script>
 
+<style type="text/css">
+/* Preserving original button styles exactly as provided */
+.myButtons {
+	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d8d 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:8pt;
+	padding:3px 17px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+}
+.myButtons:hover {
+	background-color:#6c7c7c;
+}
+.myButtonses {
+    background:linear-gradient(to bottom, #007bff 5%, #007bff 100%);
+    background-color:#007bff;
+    border-radius:4px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Verdana;
+    font-size:10px;
+    padding:4px 8px;
+    text-decoration:none;
+    border: none;
+}
+.myButtonReCheck {
+	box-shadow:inset 0px 1px 0px 0px #3dc21b;
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	background-color:#44c767;
+	border-radius:42px;
+	border:6px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:10px;
+	font-weight:bold;
+	padding:3px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
 
+/* Master UI Styles */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.full-page-split {
+    display: flex;
+    gap: 20px;
+}
+
+.controls-area {
+    flex: 0 0 380px;
+}
+
+.grid-area {
+    flex: 1;
+    min-width: 0;
+}
+
+label {
+    font-weight: 600;
+    color: #253858;
+    font-size: 14px;
+}
+
+input[type="text"], select {
+    height: 30px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.radio-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-buttons-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.input-file-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e1e4e8;
+}
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 100vh;
+}
+</style>
 
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent " data-type="background">
 <form id="frmEmployeeAttendance" action="saveEmployeeAttendance" method="post" autocomplete="off">
-<div id="ahead">
-<jsp:include page="../../../../header.jsp"></jsp:include>
-</div>
+<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+
 <div class='hidden-scrollbar'>
 <table width="99%" style="margin-top:10px;">
   <tr>
@@ -1557,9 +1705,7 @@ body{
 </div>
 </form>
 
-<div id="employeeDetailsWindow">
-   <div></div>
-</div>
+<div id="employeeDetailsWindow"><div></div></div>
 </div>
 </body>
 </html>

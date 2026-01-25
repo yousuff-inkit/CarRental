@@ -10,47 +10,104 @@
 <title>GatewayERP(i)</title>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
- 
-select{
-    height:15px;
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
 }
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -270,94 +327,188 @@ function funreload(event)
 	
 </head>
 <body onload="setValues();">
+
 <form id="frmReplaceList" method="post">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
-<td width="23%" align="center">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
 
- <tr>
-   <td width="37%" align="right"><label class="branch">From Date</label></td><td width="63%"><div id="fromdate"></div></td></tr>
- <tr>
-   <td align="right"><label class="branch">To Date</label></td>
-   <td><div id="todate"></div></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Replace Status</label></td>
-   <td><select id="cmbreplacestatus" name="cmbreplacestatus" style="width:76%;"><option value="">--Select--</option><option value="0">Open</option><option value="1">Closed</option></select></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Replace Reason</label></td>
-   <td><select id="cmbreplacereason" name="cmbreplacereason" style="width:76%;"><option value="">--Select--</option></select></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Replace Type</label></td>
-   <td><select id="cmbreplacetype" name="cmbreplacetype" style="width:76%;"><option value="">--Select--</option><option value="">--Select--</option>
-   <option value="atbranch">At Branch</option><option value="collection">Collection</option></select></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Agmt Type</label></td>
-   <td><select name="cmbagmttype" id="cmbagmttype" style="width:76%;" ><option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option></select></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Agmt Branch</label></td>
-   <td><select name="cmbagmtbranch" id="cmbagmtbranch" style="width:76%;"><option value="">--Select--</option></select></td>
- </tr>
-  <tr>
-   <td align="right"><label class="branch">Agmt No</label></td>
-   <td><input type="text" name="agmtno" id="agmtno" placeholder="Press F3 to Search" onkeydown="getAgmtno(event);" readonly style="height:17px;"></td>
- </tr>
-  <tr>
-   <td align="right"><label class="branch">Rental Type</label></td>
-   <td><select name="cmbrentaltype" id="cmbrentaltype" style="width:76%;"><option value="">--Select--</option><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option></select></td>
- </tr>
- <tr>
-   <td align="right"><label class="branch">Agmt Status</label></td>
-   <td><select name="cmbagmtstatus" id="cmbagmtstatus" style="width:76%;"><option value="">--Select--</option><option value="0">Open</option><option value="1">Close</option></select></td>
- </tr>
- <tr >
-	<td colspan="2" style="border-top:2px solid #DCDDDE;">
-	<div style="text-align:center;">
-	<input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">&nbsp;&nbsp;
-	<input type="button" name="btnrepprint" id="btnrepprint" value="Print" class="myButtons" onclick="funPrintData();">
-	</div>
-    </td>
-	</tr>
-<tr ><td colspan="2"><!-- <textarea id="agmtdetails" name="agmtdetails" readonly style="resize:none;" rows="10" cols="35"></textarea> -->
-	<br><br><br><br><br><br><br><br>
+<!-- ================= LEFT PANEL ================= -->
+<td width="23%" valign="top">
 
-</td></tr>
+<div class="master-container">
+<div class="sidebar-filters">
 
-<tr colspan="2"><td>&nbsp;</td></tr>
-	
-		
-	</table>
-	</fieldset>
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td class="label-cell">From Date</td>
+                <td><div id="fromdate"></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">To Date</td>
+                <td><div id="todate"></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Replace Status</td>
+                <td>
+                    <select id="cmbreplacestatus" name="cmbreplacestatus">
+                        <option value="">--Select--</option>
+                        <option value="0">Open</option>
+                        <option value="1">Closed</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Replace Reason</td>
+                <td>
+                    <select id="cmbreplacereason" name="cmbreplacereason">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Replace Type</td>
+                <td>
+                    <select id="cmbreplacetype" name="cmbreplacetype">
+                        <option value="">--Select--</option>
+                        <option value="atbranch">At Branch</option>
+                        <option value="collection">Collection</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Agmt Type</td>
+                <td>
+                    <select name="cmbagmttype" id="cmbagmttype">
+                        <option value="">--Select--</option>
+                        <option value="RAG">Rental</option>
+                        <option value="LAG">Lease</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Agmt Branch</td>
+                <td>
+                    <select name="cmbagmtbranch" id="cmbagmtbranch">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Agmt No</td>
+                <td>
+                    <input type="text"
+                           name="agmtno"
+                           id="agmtno"
+                           placeholder="Press F3 to Search"
+                           readonly
+                           onkeydown="getAgmtno(event);">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Rental Type</td>
+                <td>
+                    <select name="cmbrentaltype" id="cmbrentaltype">
+                        <option value="">--Select--</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Agmt Status</td>
+                <td>
+                    <select name="cmbagmtstatus" id="cmbagmtstatus">
+                        <option value="">--Select--</option>
+                        <option value="0">Open</option>
+                        <option value="1">Close</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <button type="button"
+                    class="btn-submit"
+                    onclick="funClearData();">
+                Clear
+            </button>
+
+            <button type="button"
+                    class="btn-submit"
+                    onclick="funPrintData();">
+                Print
+            </button>
+        </div>
+
+    </div>
+</div>
+</div>
+
 </td>
-<td width="77%">
-	<table width="100%">
-		<tr>
-			 <td><div id="replacediv"><jsp:include page="replaceGrid.jsp"></jsp:include></div></td>
-			  <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-			  <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-			  <input type="hidden" name="printdocno" id="printdocno" value='<s:property value="printdocno"/>'>
-		
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="77%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="replacediv">
+            <jsp:include page="replaceGrid.jsp"></jsp:include>
+        </div>
+
+        <input type="hidden" name="mode" id="mode"
+               value='<s:property value="mode"/>'>
+        <input type="hidden" name="msg" id="msg"
+               value='<s:property value="msg"/>'>
+        <input type="hidden" name="printdocno" id="printdocno"
+               value='<s:property value="printdocno"/>'>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
-<div id="clientsearchwindow">
-<div></div>
+
+<!-- POPUP WINDOWS -->
+<div id="clientsearchwindow"><div></div></div>
+<div id="agmtnowindow"><div></div></div>
+
 </div>
-<div id="agmtnowindow">
-<div></div>
-</div>
-</div>
+
 </form>
 </body>
+
 </html>

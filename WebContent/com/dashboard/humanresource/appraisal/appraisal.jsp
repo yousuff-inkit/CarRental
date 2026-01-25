@@ -10,43 +10,104 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -221,72 +282,174 @@
 </script>
 </head>
 <body onload="getBranch();getYear();getDepartment();getPayrollCategory();getAllowancesType();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar" style="height:100%;">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Year</label></td>
-     <td align="left"><select name="cmbyear" id="cmbyear" style="width:40%;" onchange="funClearYearInfo();" value='<s:property value="cmbyear"/>'></select></td></tr> 
-	<tr><td align="right"><label class="branch">Month</label></td>
-	<td align="left"><select id="cmbmonth" name="cmbmonth" style="width:80%;" value='<s:property value="cmbmonth"/>'>
-     		<option value="">--Select--</option><option value="01">January</option><option value="02">February</option><option value="03">March</option>
-      		<option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option>
-     		<option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option>
-      		<option value="12">December</option></select></td></tr>
-    <tr><td align="right"><label class="branch">Department</label></td>
-	<td align="left"><select id="cmbempdepartment" name="cmbempdepartment" style="width:80%;" value='<s:property value="cmbempdepartment"/>'>
-        <option value="">--Select--</option></select></td></tr> 
-	<tr><td align="right"><label class="branch">Category</label></td>
-	<td><select id="cmbempcategory" name="cmbempcategory" style="width:80%;" value='<s:property value="cmbempcategory"/>'>
-      <option value="">--Select--</option></select></td></tr> 
-	<tr><td align="right"><label class="branch">Employee</label></td>
-	<td><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:80%;height:20;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
-       <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td></tr>
-	<tr><td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" style="width:95%;height:20;" placeholder="Employee Name" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td></tr>	
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();"></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2"><select id="cmballowancetype" hidden="true" name="cmballowancetype" style="width:80%;" value='<s:property value="cmballowancetype"/>'>
-      <option value="">--Select--</option></select>
-	 <input type="hidden" id="txtallowancetype1" name="txtallowancetype1" value='<s:property value="txtallowancetype1"/>'/>
-	 <input type="hidden" id="txtallowancetype2" name="txtallowancetype2" value='<s:property value="txtallowancetype2"/>'/>
-	 <input type="hidden" id="txtallowancetype3" name="txtallowancetype3" value='<s:property value="txtallowancetype3"/>'/>
-	 <input type="hidden" id="txtallowancetype4" name="txtallowancetype4" value='<s:property value="txtallowancetype4"/>'/>
-	 <input type="hidden" id="txtallowancetype5" name="txtallowancetype5" value='<s:property value="txtallowancetype5"/>'/>
-	 <input type="hidden" id="txtallowancetype6" name="txtallowancetype6" value='<s:property value="txtallowancetype6"/>'/>
-	 <input type="hidden" id="txtallowancetype7" name="txtallowancetype7" value='<s:property value="txtallowancetype7"/>'/>
-	 <input type="hidden" id="txtallowancetype8" name="txtallowancetype8" value='<s:property value="txtallowancetype8"/>'/>
-	 <input type="hidden" id="txtallowancetype9" name="txtallowancetype9" value='<s:property value="txtallowancetype9"/>'/>
-	 <input type="hidden" id="txtallowancetype10" name="txtallowancetype10" value='<s:property value="txtallowancetype10"/>'/>
-	 </td></tr>
-	</table>
-	</fieldset>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td class="label-cell">Year</td>
+                <td>
+                    <select id="cmbyear" name="cmbyear"
+                            onchange="funClearYearInfo();">
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Month</td>
+                <td>
+                    <select id="cmbmonth" name="cmbmonth">
+                        <option value="">--Select--</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Department</td>
+                <td>
+                    <select id="cmbempdepartment"
+                            name="cmbempdepartment">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Category</td>
+                <td>
+                    <select id="cmbempcategory"
+                            name="cmbempcategory">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Employee</td>
+                <td>
+                    <input type="text"
+                           id="txtemployeeid"
+                           name="txtemployeeid"
+                           readonly
+                           placeholder="Press F3 to Search"
+                           value='<s:property value="txtemployeeid"/>'
+                           onkeydown="getEmployeeId(event);">
+                    <input type="hidden"
+                           id="txtemployeedocno"
+                           name="txtemployeedocno"
+                           value='<s:property value="txtemployeedocno"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="text"
+                           id="txtemployeename"
+                           name="txtemployeename"
+                           readonly
+                           placeholder="Employee Name"
+                           tabindex="-1"
+                           value='<s:property value="txtemployeename"/>'>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- MASTER BLUE CLEAR BUTTON -->
+        <div class="filter-card" style="text-align:center;">
+            <button type="button"
+                    onclick="funClearInfo();"
+                    style="
+                        background:linear-gradient(#2196f3,#1e88e5);
+                        border:1px solid #1565c0;
+                        color:#fff;
+                        padding:6px 22px;
+                        border-radius:4px;
+                        font-weight:bold;
+                        cursor:pointer;">
+                Clear
+            </button>
+        </div>
+
+        <!-- HIDDEN FIELDS -->
+        <input type="hidden" id="cmballowancetype" name="cmballowancetype">
+        <input type="hidden" id="txtallowancetype1" name="txtallowancetype1" value='<s:property value="txtallowancetype1"/>'>
+        <input type="hidden" id="txtallowancetype2" name="txtallowancetype2" value='<s:property value="txtallowancetype2"/>'>
+        <input type="hidden" id="txtallowancetype3" name="txtallowancetype3" value='<s:property value="txtallowancetype3"/>'>
+        <input type="hidden" id="txtallowancetype4" name="txtallowancetype4" value='<s:property value="txtallowancetype4"/>'>
+        <input type="hidden" id="txtallowancetype5" name="txtallowancetype5" value='<s:property value="txtallowancetype5"/>'>
+        <input type="hidden" id="txtallowancetype6" name="txtallowancetype6" value='<s:property value="txtallowancetype6"/>'>
+        <input type="hidden" id="txtallowancetype7" name="txtallowancetype7" value='<s:property value="txtallowancetype7"/>'>
+        <input type="hidden" id="txtallowancetype8" name="txtallowancetype8" value='<s:property value="txtallowancetype8"/>'>
+        <input type="hidden" id="txtallowancetype9" name="txtallowancetype9" value='<s:property value="txtallowancetype9"/>'>
+        <input type="hidden" id="txtallowancetype10" name="txtallowancetype10" value='<s:property value="txtallowancetype10"/>'>
+
+    </div>
+</div>
+</div>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="appraisalDiv"><jsp:include page="appraisalGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="appraisalDiv">
+            <jsp:include page="appraisalGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
 
 <div id="employeeDetailsWindow">
-	<div></div>
+    <div></div>
 </div>
-</div> 
+
+</div>
 </body>
+
 </html>

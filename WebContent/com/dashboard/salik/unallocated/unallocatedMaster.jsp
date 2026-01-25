@@ -13,52 +13,114 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style>
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-@keyframes blink{
-	0%{opacity: 0;}
-	50%{opacity: .5;}
-	100%{opacity: 1;}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
-     
-      
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+.scrollable-left {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.inner-fieldset {
+    border: none;
+    padding: 6px 0;
+}
 
 </style>
+
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -482,135 +544,242 @@ function funreload(event)
 </script>
 </head>
 <body onload="hiddenbrh();getAllocateBranch();dis();">
-	<div id="mainBG" class="homeContent" data-type="background"> 
-		<div class='hidden-scrollbar'>
-			<table width="100%" >
-				<tr>
-					<td width="20%" valign="top">
-    					<fieldset style="background: #ECF8E0;">
-							<table width="100%">
-								<tr><td colspan="2" valign="top"><jsp:include page="../../heading.jsp"></jsp:include></td></tr>
-	  							<tr>
-	  								<td colspan="2">
-	  									<div class="salikallocatecount" style="animation: blink 1s linear infinite;" hidden="true">
-	  										<label style="font-size:1em;">Total Saliks Allocated:<span class="currentsalikallocated"></span></label>
-	  									</div>
-	  								</td>
-	  							</tr> 
- <tr><td align="right"><input type="checkbox" id="Chkfromdate" style="width:100%;" name="Chkfromdate" onchange="funchange()"></td></tr>
-    <tr><td align="right"><label class="branch">Reg No</label></td>
-	 <td align="left"><input type="text" id="regno" style="height:20px;width:70%;" name="regno" placeholder="Press F3 To Search" onfocus="this.placeholder = ''" readonly="readonly" value='<s:property value="regno"/>' onkeydown="getregno(event);" > </td></tr>
-   <tr><td align="right"><label class="branch">Tag No</label></td>
-   <td align="left"><input type="text" id="tagno" style="height:20px;width:70%;" name="tagno" placeholder="Press F3 To Search" onfocus="this.placeholder = ''" readonly="readonly" value='<s:property value="tagno"/>' onkeydown="gettagno(event);" > </td></tr>
-   <tr><td align="right"><label class="branch">Type</label></td>
-   <td align="left">
-   		<select name="cmbsaliktype" id="cmbsaliktype">
-                                        		<option value="">--Select--</option>
-                                        		<option value="SAL">Salik</option>
-                                        		<option value="PAR">Parking</option>
-                                        	</select>
-   	</td></tr>
-   <tr><td width="20%" align="right"><label class="branch">From Date</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td></tr> 
-    <tr><td width="20%" align="right"><label class="branch">Up To</label></td><td align="left"><div id='uptodate' name='uptodate' value='<s:property value="uptodate"/>'></div></td></tr> 
-     <!-- <tr><td colspan="2">&nbsp;</td></tr> 
-      <tr><td colspan="2">&nbsp;</td></tr> 
-      
-       <tr><td colspan="2">&nbsp;</td></tr> 
-        <tr><td colspan="2">&nbsp;</td></tr>  -->
-        
-   <tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="ALLOCATE" onclick="funallocate()">&nbsp;<input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funcleardata()"></td> </tr>     
-	<tr><td colspan="2">
-		<fieldset>
-			<legend>Manual Allocate</legend>
-			<table width="100%" >
-            	<tr>
-            		<td width="24%" align="right"><label class="branch">Salik Tag</label></td>
-            		<td align="left"><input type="text" id="saliktag"  readonly="readonly"   style="height:20px;"  name="saliktag" value='<s:property value="saliktag"/>'></td>
-            	</tr>
-             	<tr>
-             		<td width="20%" align="right"><label class="branch">Fleet No</label></td>
-             		<td align="left"><input type="text" id="fleet_no" placeholder="Press F3 TO Search"  readonly="readonly" onkeydown="getfleet(event);"  style="height:20px;"  name="fleet_no" value='<s:property value="fleet_no"/>'></td>
-             	</tr>
-             	<tr>
-             		<td width="20%" align="right"><label class="branch">Type</label></td>
-             		<td align="left">
-             			<select id="trftype" style="height:20px;width:86%; " onchange="cleardatas()" > 
-             				<option value="RAG">Rental</option>
-             				<option value="LAG">Lease</option>
-             				<option value="STF">Staff</option>
-             				<option value="DRV">Driver</option>
-             			</select>
-             		</td>
-             	</tr>
-    			<tr>
-    				<td width="20%" align="right"><label class="branch">Branch</label></td>
-    				<td align="left"> 
-          				<select id="cmballocatebranch" style="height:20px;width:86%; " name="cmballocatebranch"   value='<s:property value="cmballocatebranch"/>'>
-      						<option value="">--Select--</option>
-      					</select>
-      				</td>
-      			</tr>
-      			<tr>
-      				<td width="20%" align="right"><label class="branch">Convict</label></td>
-      				<td align="left"><input type="text" id="typesearch"  placeholder="Press F3 TO Search" readonly="readonly"    onkeydown="gettypessearch(event)" onclick="this.placeholder='' "  style="height:20px;"  name="typesearch" value='<s:property value="typesearch"/>'></td>
-      			</tr>
-              	<tr><td colspan="2">&nbsp;</td></tr> 
-                <tr><td  align="center" colspan="2"><input type="Button" name="allocates" id="allocates" class="myButton" value="Manual" onclick="funoneallocate()"></td></tr>  
+<div id="mainBG" class="homeContent" data-type="background"> 
+<div class="hidden-scrollbar">
 
-          <tr><td colspan="2"><input type="hidden" id="gridlength" name="gridlength"></td></tr> 
-          <tr><td colspan="2"><input type="hidden" id="rentaldoc" name="rentaldoc"></td></tr> 
-          <tr><td colspan="2"><input type="hidden" id="leasedoc" name="leasedoc"></td></tr> 
-          <tr><td colspan="2"><input type="hidden" id="drdoc" name="drdoc"></td></tr> 
-         <tr><td colspan="2"><input type="hidden" id="staffdoc" name="staffdoc"></td></tr> 
-          <tr><td colspan="2"><input type="hidden" id="hidchkdate" name="hidchkdate"></td></tr> 
-	</table>
-	
-	    
-	</fieldset>
-	</td></tr>
-<!--          <tr><td colspan="2">&nbsp;</td></tr> 
-         
+<table width="100%">
+<tr>
 
-          <tr><td colspan="2">&nbsp;</td></tr> 
-           <tr><td colspan="2">&nbsp;</td></tr> 
-            
-              <tr><td colspan="2">&nbsp;</td></tr> 
-    <tr><td colspan="2">&nbsp;</td></tr> 
-     <tr><td colspan="2">&nbsp;</td></tr> 
-      <tr><td colspan="2">&nbsp;</td></tr> 
-           
-       <tr><td colspan="2">&nbsp;</td></tr> 
-          <tr><td colspan="2">&nbsp;</td></tr>  -->
-        <tr><td colspan="2"><input type="hidden" id="gridlength" name="gridlength"></td></tr> 
- 
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
 
-	</table>
-	<div id="imgdiv" style="position:absolute; z-index: 1;top:200;right:600;"><div hidden="true" id="hidediv"><img  alt="Search User" src="<%=contextPath%>/icons/31load.gif"> </div></div>
-	</fieldset>
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED – WILL APPEAR) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td colspan="2">
+            <div class="salikallocatecount" style="animation: blink 1s linear infinite;" hidden>
+                <label><b>Total Saliks Allocated:</b>
+                    <span class="currentsalikallocated"></span>
+                </label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <input type="checkbox"
+                   id="Chkfromdate"
+                   name="Chkfromdate"
+                   onchange="funchange()">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Reg No</td>
+        <td>
+            <input type="text"
+                   id="regno"
+                   name="regno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 To Search"
+                   value='<s:property value="regno"/>'
+                   onkeydown="getregno(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Tag No</td>
+        <td>
+            <input type="text"
+                   id="tagno"
+                   name="tagno"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 To Search"
+                   value='<s:property value="tagno"/>'
+                   onkeydown="gettagno(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="cmbsaliktype"
+                    name="cmbsaliktype"
+                    class="master-input">
+                <option value="">--Select--</option>
+                <option value="SAL">Salik</option>
+                <option value="PAR">Parking</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">From Date</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Up To</td>
+        <td>
+            <div id="uptodate" name="uptodate"
+                 value='<s:property value="uptodate"/>'></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    id="driverUpdate"
+                    class="btn-submit"
+                    onclick="funallocate()">Allocate</button>
+
+            <button type="button"
+                    id="clear"
+                    class="btn-submit"
+                    onclick="funcleardata()">Clear</button>
+        </td>
+    </tr>
+
+    <!-- ===== MANUAL ALLOCATE ===== -->
+    <tr>
+        <td colspan="2">
+            <fieldset class="inner-fieldset">
+                <legend><b>Manual Allocate</b></legend>
+
+                <table width="100%" class="filter-table">
+
+                    <tr>
+                        <td class="label-cell">Salik Tag</td>
+                        <td>
+                            <input type="text"
+                                   id="saliktag"
+                                   name="saliktag"
+                                   class="master-input"
+                                   readonly
+                                   value='<s:property value="saliktag"/>'>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label-cell">Fleet No</td>
+                        <td>
+                            <input type="text"
+                                   id="fleet_no"
+                                   name="fleet_no"
+                                   class="master-input"
+                                   readonly
+                                   placeholder="Press F3 To Search"
+                                   value='<s:property value="fleet_no"/>'
+                                   onkeydown="getfleet(event);">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="trftype"
+                                    class="master-input"
+                                    onchange="cleardatas()">
+                                <option value="RAG">Rental</option>
+                                <option value="LAG">Lease</option>
+                                <option value="STF">Staff</option>
+                                <option value="DRV">Driver</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label-cell">Branch</td>
+                        <td>
+                            <select id="cmballocatebranch"
+                                    name="cmballocatebranch"
+                                    class="master-input"
+                                    value='<s:property value="cmballocatebranch"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label-cell">Convict</td>
+                        <td>
+                            <input type="text"
+                                   id="typesearch"
+                                   name="typesearch"
+                                   class="master-input"
+                                   readonly
+                                   placeholder="Press F3 To Search"
+                                   value='<s:property value="typesearch"/>'
+                                   onkeydown="gettypessearch(event)">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button type="button"
+                                    id="allocates"
+                                    class="btn-submit"
+                                    onclick="funoneallocate()">Manual</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </fieldset>
+        </td>
+    </tr>
+
+    <!-- HIDDEN FIELDS (UNCHANGED) -->
+    <tr><td colspan="2">
+        <input type="hidden" id="gridlength" name="gridlength">
+        <input type="hidden" id="rentaldoc" name="rentaldoc">
+        <input type="hidden" id="leasedoc" name="leasedoc">
+        <input type="hidden" id="drdoc" name="drdoc">
+        <input type="hidden" id="staffdoc" name="staffdoc">
+        <input type="hidden" id="hidchkdate" name="hidchkdate">
+    </td></tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
+
+<!-- ===== RIGHT GRID ===== -->
+<td width="80%" valign="top">
 <form action="">
-	<table width="100%">
-		<tr>
- <td><div id="allodiv"><jsp:include page="allocatelistGrid.jsp"></jsp:include></div></td>
- 
-		</tr>
-	</table>
-	</form>
-	</td>
+<table width="100%">
+<tr>
+    <td>
+        <div id="allodiv">
+            <jsp:include page="allocatelistGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+</form>
+</td>
+
+</tr>
+</table>
+
 </div>
-<div id="regwindow"><div></div>
-</div>
-<div id="tagwindow"><div></div>
-</div>
-<div id="fleetwindow"><div></div>
-</div>
-<div id="commonwindow"><div></div>
-</div>
-<div id="commonwindow1"><div></div>
-</div>
+
+<!-- ===== POPUPS (UNCHANGED) ===== -->
+<div id="regwindow"><div></div></div>
+<div id="tagwindow"><div></div></div>
+<div id="fleetwindow"><div></div></div>
+<div id="commonwindow"><div></div></div>
+<div id="commonwindow1"><div></div></div>
+
 </div>
 </body>
+
 </html>

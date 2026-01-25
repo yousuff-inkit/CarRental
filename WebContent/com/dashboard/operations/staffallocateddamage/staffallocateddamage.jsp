@@ -10,43 +10,104 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 </style>
 
 <script type="text/javascript">
@@ -209,67 +270,158 @@
 
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>
-	<tr><td align="right"><label class="branch">Type</label></td>
-     <td align="left"><select id="emptype" name="emptype"  value='<s:property value="emptype"/>'>
-     <option value="">--Select--</option><option value="STF">Staff</option><option value="DRV">Driver</option>
-     </select></td></tr>
-	<tr><td align="right"><label class="branch">Employee</label></td>
-	<td align="left"><input type="text" id="txtempname" name="txtempname" style="width:100%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" ondblclick="funSearchdblclick();" onkeydown="getEmployee(event);" value='<s:property value="txtempname"/>'/>
-	<input type="hidden" id="txtempid" name="txtempid" style="width:100%;height:20px;" value='<s:property value="txtempid"/>'/></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><textarea id="vehinfo" style="height:80px;width:200px;font: 10px Tahoma;resize:none" name="vehinfo"  readonly="readonly"  ><s:property value="vehinfo" ></s:property></textarea></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearData();">
-	<button class="myButton" type="button" id="btnupdate" name="btnupdate" onclick="funUpdate(event);">Update</button></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2"><input type="hidden" id="txtsalikaccount" name="txtsalikaccount" style="width:100%;height:20px;" value='<s:property value="txtsalikaccount"/>'/>
-    <input type="hidden" id="txtexpenseaccount" name="txtexpenseaccount" style="width:100%;height:20px;" value='<s:property value="txtexpenseaccount"/>'/>
-    <input type="hidden" id="txtrano" name="txtrano" style="width:100%;height:20px;" value='<s:property value="txtrano"/>'/>
-    <input type="hidden" id="txtfleetno" name="txtfleetno" style="width:100%;height:20px;" value='<s:property value="txtfleetno"/>'/>
-    <input type="hidden" id="txtamount" name="txtamount" style="width:100%;height:20px;" value='<s:property value="txtamount"/>'/>
-    <input type="hidden" id="txtamountcount" name="txtamountcount" style="width:100%;height:20px;" value='<s:property value="txtamountcount"/>'/>
-    <input type="hidden" id="txtmainbranch" name="txtmainbranch" style="width:100%;height:20px;" value='<s:property value="txtmainbranch"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" style="width:100%;height:20px;" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txtsrno" name="txtsrno" style="width:100%;height:20px;" value='<s:property value="txtsrno"/>'/>
-    <input type="hidden" id="txtemployeeid" name="txtemployeeid" style="width:100%;height:20px;" value='<s:property value="txtemployeeid"/>'/>
-    <input type="hidden" id="accfines" name="accfines" style="width:100%;height:20px;" value='<s:property value="accfines"/>'/>
-    </td></tr> 
-     <input type="hidden" id="txtdate" name="txtdate" style="width:100%;height:20px;" value='<s:property value="txtdate"/>'/></td></tr>
-	</table>
-	</fieldset>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE FILTER CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+            <table class="filter-table">
+
+                <tr>
+                    <td class="label-cell">From</td>
+                    <td>
+                        <div id="fromdate"
+                             name="fromdate"
+                             value='<s:property value="fromdate"/>'>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">To</td>
+                    <td>
+                        <div id="todate"
+                             name="todate"
+                             value='<s:property value="todate"/>'>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Type</td>
+                    <td>
+                        <select id="emptype"
+                                name="emptype"
+                                value='<s:property value="emptype"/>'>
+                            <option value="">--Select--</option>
+                            <option value="STF">Staff</option>
+                            <option value="DRV">Driver</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Employee</td>
+                    <td>
+                        <input type="text"
+                               id="txtempname"
+                               name="txtempname"
+                               placeholder="Press F3 to Search"
+                               readonly="readonly"
+                               ondblclick="funSearchdblclick();"
+                               onkeydown="getEmployee(event);"
+                               value='<s:property value="txtempname"/>'>
+
+                        <input type="hidden"
+                               id="txtempid"
+                               name="txtempid"
+                               value='<s:property value="txtempid"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <textarea id="vehinfo"
+                                  name="vehinfo"
+                                  rows="4"
+                                  readonly="readonly"><s:property value="vehinfo"/></textarea>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- MASTER BUTTON ROW -->
+        <div style="display:flex;gap:10px;justify-content:center;">
+            <button class="btn-submit"
+                    type="button"
+                    id="clear"
+                    onclick="funClearData();">
+                Clear
+            </button>
+
+            <button class="btn-submit"
+                    type="button"
+                    id="btnupdate"
+                    onclick="funUpdate(event);">
+                Update
+            </button>
+        </div>
+
+        <!-- HIDDEN FIELDS -->
+        <input type="hidden" id="txtsalikaccount" name="txtsalikaccount" value='<s:property value="txtsalikaccount"/>'>
+        <input type="hidden" id="txtexpenseaccount" name="txtexpenseaccount" value='<s:property value="txtexpenseaccount"/>'>
+        <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'>
+        <input type="hidden" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>'>
+        <input type="hidden" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>'>
+        <input type="hidden" id="txtamountcount" name="txtamountcount" value='<s:property value="txtamountcount"/>'>
+        <input type="hidden" id="txtmainbranch" name="txtmainbranch" value='<s:property value="txtmainbranch"/>'>
+        <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'>
+        <input type="hidden" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>'>
+        <input type="hidden" id="txtemployeeid" name="txtemployeeid" value='<s:property value="txtemployeeid"/>'>
+        <input type="hidden" id="accfines" name="accfines" value='<s:property value="accfines"/>'>
+        <input type="hidden" id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'>
+
+    </div>
+
+</div>
+</div>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="staffAllocatedDiv"><jsp:include page="staffallocateddamageGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="staffAllocatedDiv">
+            <jsp:include page="staffallocateddamageGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
+
 <div id="employeeDetailsWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
-</div> 
+
+</div>
 </body>
+
 </html>

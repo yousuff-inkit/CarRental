@@ -24,93 +24,146 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
-}
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
-}
-.myButtons1 {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
-}
-.myButtons1:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
-}
-.myButtons1:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
-}
-.myButtons1:focus {
-  color: #fff;
-  background-color: grey;
-}
+    /* 1. Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important; /* Force all font black */
+    }
+
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* 2. Filter Cards - Cleaned of all green/legacy colors */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* HARD RESET: Force black fonts and remove unwanted backgrounds */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 95px;
+    }
+
+    /* 3. Input & Select Styling */
+    input[type="text"], select, textarea {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* 4. RHS Visibility & Scrollbar Kill */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px 20px 80px 20px;
+    }
+
+    /* 5. Sticky Footer for Net Amount */
+    .totals-bar {
+        background: #ffffff;
+        border-top: 2px solid #2563eb;
+        padding: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* 6. Buttons */
+    .myButtons {
+        background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+        background-color: #768d87;
+        border: 1px solid #566963;
+        border-radius: 6px;
+        cursor: pointer;
+        color: #ffffff !important; /* Keep button text white for contrast */
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px;
+        width: 100%;
+        text-shadow: 0px -1px 0px #2b665e;
+        display: block;
+        text-align: center;
+    }
+
+    .myButtons1 {
+        padding: 4px 12px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 4px;
+        color: #fff !important;
+        background-color: #6c7c7c;
+        border: 1px solid transparent;
+    }
+
+    .myButtons1:hover { background-color: #31b0d5; }
+
+    .branch { font-size: 13px; font-weight: 600; }
 </style>
 
 <script type="text/javascript">
@@ -532,77 +585,118 @@
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>  
-	<tr><td align="right"><label class="branch">Grouping</label></td>
-	<td><select name="cmbgroup" id="cmbgroup"><option value="">--Select--</option><option value="clientcat">Client Category</option>
-    <option value="client">Client</option><option value="salesman">Salesman</option><!-- <option value="brand">Brand</option>
-    <option value="model">Model</option><option value="group">Group</option><option value="yom">YOM</option> -->
-    </select></td></tr>  
-    <tr><td align="right"><label class="branch">Distribution</label></td>
-    <td><select name="cmbdistribution" id="cmbdistribution">
-    <option value="">--Select--</option><option value="1">Branchwise</option><option value="2">Monthwise</option>
-    <option value="3">Quarterwise</option><option value="4">Yearwise</option><option value="5">Client Category</option>
-    <option value="6">Salesman</option><!-- <option value="7">Brand</option><option value="8">Model</option>
-    <option value="9">Group</option><option value="10">YOM</option> -->
-    </select></td></tr>
-	<tr><td colspan="2">
-	<table width="100%">
-	  <tr>
-	    <td align="right"><label class="branch">Search by</label></td>
-	    <td align="left"><select name="searchby" id="searchby"><option value="">--Select--</option>
-		<option value="client">Client</option><option value="clientcat">Client Category</option>
-		<option value="salesman">Salesman</option><!-- <option value="brand">Brand</option><option value="model">Model</option>
-		<option value="group">Group</option><option value="yom">YOM</option> --></select></td>
-	    <td><button type="button" name="btnadditem" id="additem" class="myButtons1" onClick="setSearch();">+</button></td>
-	    <td><button type="button" name="btnremoveitem" id="btnremoveitem" class="myButtons1" onclick="setRemove();">-</button></td>
-	  </tr>
-	  <tr>
-	    <td colspan="4" align="center"><textarea id="searchdetails" style="height:140px;width:230px;font: 10px Tahoma;resize:none" name="searchdetails" readonly="readonly"><s:property value="searchdetails"></s:property></textarea>
-	    </td>
-	  </tr>
-	</table></td></tr>
-	<tr><td colspan="2"><center><input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();"></center></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2"><input type="hidden" name="clientcat" id="clientcat"><input type="hidden" name="hidclientcat" id="hidclientcat">
-			  <input type="hidden" name="client" id="client"><input type="hidden" name="hidclient" id="hidclient">
-			  <input type="hidden" name="group" id="group"><input type="hidden" name="hidgroup" id="hidgroup">
-			  <input type="hidden" name="model" id="model"><input type="hidden" name="hidmodel" id="hidmodel">
-			  <input type="hidden" name="salesman" id="salesman"><input type="hidden" name="hidsalesman" id="hidsalesman">
-			  <input type="hidden" name="yom" id="yom"><input type="hidden" name="hidyom" id="hidyom">
-			  <input type="hidden" name="brand" id="brand"><input type="hidden" name="hidbrand" id="hidbrand"></td></tr>  
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="collectionDiv"><jsp:include page="collectionGrid.jsp"></jsp:include></div>
-			    <div id="analysisDiv" hidden="true"><jsp:include page="collectionAnalysisGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-	<table width="100%">
-<tr>
-		<td width="92%" align="right" style="font-family: Myriad Pro;font-size: 12px;font-weight: bold;">Net Amount :&nbsp;</td>
-        <td width="8%" align="left"><input type="text" class="textbox" id="txtnetamount" name="txtnetamount" style="width:80%;text-align: right;" value='<s:property value="txtnetamount"/>'/></td>
-</tr>
-</table>
-</tr>
-</table>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Grouping</td>
+                        <td>
+                            <select name="cmbgroup" id="cmbgroup">
+                                <option value="">--Select--</option>
+                                <option value="clientcat">Client Category</option>
+                                <option value="client">Client</option>
+                                <option value="salesman">Salesman</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Distribution</td>
+                        <td>
+                            <select name="cmbdistribution" id="cmbdistribution">
+                                <option value="">--Select--</option>
+                                <option value="1">Branchwise</option>
+                                <option value="2">Monthwise</option>
+                                <option value="3">Quarterwise</option>
+                                <option value="4">Yearwise</option>
+                                <option value="5">Client Category</option>
+                                <option value="6">Salesman</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Search by</td>
+                        <td>
+                            <select name="searchby" id="searchby">
+                                <option value="">--Select--</option>
+                                <option value="client">Client</option>
+                                <option value="clientcat">Client Category</option>
+                                <option value="salesman">Salesman</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center" style="padding-top: 5px;">
+                            <button type="button" id="additem" class="myButtons1" onClick="setSearch();">+</button>
+                            &nbsp;
+                            <button type="button" id="btnremoveitem" class="myButtons1" onclick="setRemove();">-</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding-top: 10px;">
+                            <textarea id="searchdetails" name="searchdetails" readonly="readonly" style="height:120px;"><s:property value="searchdetails"></s:property></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="padding: 0 5px;">
+                <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">
+            </div>
+
+            <input type="hidden" name="clientcat" id="clientcat"><input type="hidden" name="hidclientcat" id="hidclientcat">
+            <input type="hidden" name="client" id="client"><input type="hidden" name="hidclient" id="hidclient">
+            <input type="hidden" name="group" id="group"><input type="hidden" name="hidgroup" id="hidgroup">
+            <input type="hidden" name="model" id="model"><input type="hidden" name="hidmodel" id="hidmodel">
+            <input type="hidden" name="salesman" id="salesman"><input type="hidden" name="hidsalesman" id="hidsalesman">
+            <input type="hidden" name="yom" id="yom"><input type="hidden" name="hidyom" id="hidyom">
+            <input type="hidden" name="brand" id="brand"><input type="hidden" name="hidbrand" id="hidbrand">
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="collectionDiv"><jsp:include page="collectionGrid.jsp"></jsp:include></div>
+            <div id="analysisDiv" hidden="true"><jsp:include page="collectionAnalysisGrid.jsp"></jsp:include></div>
+        </div>
+
+        <div class="totals-bar">
+            <table width="100%">
+                <tr>
+                    <td align="right" style="font-size: 13px; font-weight: bold; color: black;">Net Amount :&nbsp;</td>
+                    <td width="150px">
+                        <input type="text" id="txtnetamount" name="txtnetamount" readonly 
+                               style="text-align: right; font-weight: bold; color: black; border: 1px solid #ccd6e0; border-radius: 4px; height: 30px;" 
+                               value='<s:property value="txtnetamount"/>'/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 </div>
 
 <div id="clientSearchWindow">

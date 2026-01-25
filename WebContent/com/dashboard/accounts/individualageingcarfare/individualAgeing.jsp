@@ -8,46 +8,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
-
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
-}
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
 
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards - Background colors removed */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    /* Force remove unwanted green/yellow backgrounds from any inherited elements */
+    .filter-card, fieldset, legend, .branch, td, tr {
+        background-color: transparent !important;
+        background: none !important;
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        color: #4e5e71;
+        font-weight: 600;
+        width: 95px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: #333;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Scrollbar Kill */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px;
+    }
+
+    /* Consistent Buttons */
+    .myButtons {
+        background: #6c7c7c !important;
+        border: 1px solid #566963 !important;
+        border-radius: 6px;
+        cursor: pointer;
+        color: #ffffff !important;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 12px !important;
+        border-radius: 6px !important;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .branch { font-size: 13px; color: #4e5e71; font-weight: 600; }
 </style>
 
 <script type="text/javascript">
@@ -239,64 +323,105 @@
 <body onload="getBranch();getSalesPerson();getCategory();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Up To</label></td>
-     <td align="left"><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td></tr> 
-	<tr><td align="right"><label class="branch">Type</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:40%;" onchange="clearAccountInfo();getCategory();" value='<s:property value="cmbtype"/>'>
-    <option value="" >--Select--</option><option value="AR" selected>AR</option><option value="AP">AP</option></select></td></tr>
-	<tr><td colspan="2">
-	  <fieldset><legend><b><label class="branch">Report Type</label></b></legend>
-	   <table width="100%">
-       <tr>
-       <td width="48%" align="center"><input type="radio" id="rdall" name="rdo" value="rdall"><label for="rdall" class="branch">All</label></td>
-       <td width="52%" align="center"><input type="radio" id="rdsummary" name="rdo" value="rdsummary"><label for="rdsummary" class="branch">Summary</label></td>
-       </tr>
-       </table>
-	  </fieldset>
-	</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td align="right"><label class="branch">Account</label></td>
-	<td align="left"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/></td></tr> 
-	<tr><td>&nbsp;</td>
-	<td><input type="text" id="txtaccname" name="txtaccname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td></tr> 
-	<tr><td align="right"><label class="branch">Sales Person</label></td>
-	<td><select id="cmbsalesperson" name="cmbsalesperson" style="width:100%;" value='<s:property value="cmbsalesperson"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbsalesperson" name="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>'/></td></tr>
-	<tr><td align="right"><label class="branch">Category</label></td>
-	<td><select id="cmbcategory" name="cmbcategory" style="width:100%;" value='<s:property value="cmbcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="1" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();"></td>
-	<td colspan="1"><center><button class="myButton" type="button" id="btnprint" name="btnprint" onclick="funPrint();">Print</button></center></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2"><input type="hidden" id="txtacountno" name="txtacountno" style="width:100%;height:20px;" value='<s:property value="txtacountno"/>'/>
-	<input type="hidden" id="txtbranch" name="txtbranch" style="width:100%;height:20px;" value='<s:property value="txtbranch"/>'/></td></tr>
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="individualAgeingDiv"><jsp:include page="individualAgeingGrid.jsp"></jsp:include></div>
-			     <div id="summaryDiv" hidden="true"><jsp:include page="summaryGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-</tr>
-</table>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Up To</td>
+                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="cmbtype" name="cmbtype" onchange="clearAccountInfo();getCategory();" value='<s:property value="cmbtype"/>'>
+                                <option value="" >--Select--</option>
+                                <option value="AR" selected>AR</option>
+                                <option value="AP">AP</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <span class="branch" style="display:block; margin-bottom:8px; text-align:center;">Report Type</span>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" align="center">
+                            <input type="radio" id="rdall" name="rdo" value="rdall">
+                            <label for="rdall" class="branch">All</label>
+                        </td>
+                        <td width="50%" align="center">
+                            <input type="radio" id="rdsummary" name="rdo" value="rdsummary">
+                            <label for="rdsummary" class="branch">Summary</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Account</td>
+                        <td>
+                            <input type="text" id="txtaccid" name="txtaccid" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1" style="margin-top:-5px;"/>
+                            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Sales Person</td>
+                        <td>
+                            <select id="cmbsalesperson" name="cmbsalesperson" value='<s:property value="cmbsalesperson"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                            <input type="hidden" id="hidcmbsalesperson" name="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Category</td>
+                        <td>
+                            <select id="cmbcategory" name="cmbcategory" value='<s:property value="cmbcategory"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                            <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="padding: 0 5px;">
+                <input type="button" class="myButtons" name="clear" id="clear" value="Clear" onclick="funClearInfo();">
+                <button class="myButton" type="button" id="btnprint" name="btnprint" onclick="funPrint();">Print</button>
+            </div>
+
+            <input type="hidden" id="txtacountno" name="txtacountno" value='<s:property value="txtacountno"/>'/>
+            <input type="hidden" id="txtbranch" name="txtbranch" value='<s:property value="txtbranch"/>'/>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="individualAgeingDiv">
+                <jsp:include page="individualAgeingGrid.jsp"></jsp:include>
+            </div>
+            <div id="summaryDiv" hidden="true">
+                <jsp:include page="summaryGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <div id="accountDetailsWindow">

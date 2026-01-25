@@ -982,51 +982,89 @@ function getProdType(event){
     <br/>
 
     <div class="section-block">
-        <h2>Purchase Information</h2>
-        <table class="cr-table" width="100%">
-            <tr>
-                <td width="8%" align="right"><label>Date</label></td>
-                <td width="15%">
-                    <div id="nipurchasedate" name="nipurchasedate" value='<s:property value="nipurchasedate"/>'></div>
-                    <input type="hidden" name="hidnipurchasedate" id="hidnipurchasedate" value='<s:property value="hidnipurchasedate"/>'>
-                </td>
-                <td align="right" width="10%"><label>Ref Type</label></td>
-                <td width="15%">
-                    <select name="nireftype" id="nireftype" value='<s:property value="nireftype"/>' onchange="funrefdisslno()">
-                        <option value="DIR">DIR</option>
-                        <option value="NPO">NPO</option>
-                    </select>
-                </td>
-                <td align="right" width="8%"><label>Ref No</label></td>
-                <td>
-                    <input type="text" name="refno" id="refno" placeholder="Press F3 To Search" value='<s:property value="refno"/>' onKeyDown="getrefnosearch(event);">
-                </td>
-            </tr>
-            <tr>
-                <td align="right"><label>Inv NO</label></td>
-                <td><input type="text" id="invno" name="invno" onblur="funchkinv();" value='<s:property value="invno"/>'></td>
-                <td align="right"><label>Type</label></td>
-                <td>
-                    <select name="cmbbilltype" id="cmbbilltype" value='<s:property value="cmbbilltype"/>'>
-                        <option value="1">VAT</option>
-                        <option value="2">RCM</option>
-                    </select>
-                    <input type="hidden" id="hidcmbbilltype" name="hidcmbbilltype" value='<s:property value="hidcmbbilltype"/>'/>
-                </td>
-                <td align="right"><label>Inv Date</label></td>
-                <td>
-                    <div id="invDate" name="invDate" value='<s:property value="invDate"/>'></div>
-                    <input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'>
-                </td>
-            </tr>
-            <tr>
-                <td align="right"><label>Doc No</label></td>
-                <td><input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly"></td>
-                <td colspan="4"></td>
-            </tr>
-        </table>
-    </div>
+    <h2>Purchase Information</h2>
 
+    <table class="cr-table" width="100%">
+
+        <!-- ROW 1 -->
+        <tr>
+            <td width="8%" align="right"><label>Date</label></td>
+            <td width="15%">
+                <div id="nipurchasedate" name="nipurchasedate"
+                     value='<s:property value="nipurchasedate"/>'></div>
+                <input type="hidden" name="hidnipurchasedate"
+                       id="hidnipurchasedate"
+                       value='<s:property value="hidnipurchasedate"/>'>
+            </td>
+
+            <td align="right" width="10%"><label>Ref Type</label></td>
+            <td width="15%">
+                <select name="nireftype" id="nireftype"
+                        value='<s:property value="nireftype"/>'
+                        onchange="funrefdisslno()">
+                    <option value="DIR">DIR</option>
+                    <option value="NPO">NPO</option>
+                </select>
+            </td>
+
+            <!-- DOC NO (SWAPPED HERE) -->
+            <td align="right" width="8%"><label>Doc No</label></td>
+            <td>
+                <input type="text" name="docno" id="docno"
+                       tabindex="-1"
+                       value='<s:property value="docno"/>'
+                       readonly="readonly">
+            </td>
+        </tr>
+
+        <!-- ROW 2 -->
+        <tr>
+            <td align="right"><label>Inv NO</label></td>
+            <td>
+                <input type="text" id="invno" name="invno"
+                       onblur="funchkinv();"
+                       value='<s:property value="invno"/>'>
+            </td>
+
+            <td align="right"><label>Type</label></td>
+            <td>
+                <select name="cmbbilltype" id="cmbbilltype"
+                        value='<s:property value="cmbbilltype"/>'>
+                    <option value="1">VAT</option>
+                    <option value="2">RCM</option>
+                </select>
+                <input type="hidden" id="hidcmbbilltype"
+                       name="hidcmbbilltype"
+                       value='<s:property value="hidcmbbilltype"/>'/>
+            </td>
+
+            <td align="right"><label>Inv Date</label></td>
+            <td>
+                <div id="invDate" name="invDate"
+                     value='<s:property value="invDate"/>'></div>
+                <input type="hidden" id="hidinvDate"
+                       name="hidinvDate"
+                       value='<s:property value="hidinvDate"/>'>
+            </td>
+        </tr>
+
+        <!-- ROW 3 -->
+        <tr>
+            <!-- REF NO (MOVED HERE) -->
+            <td align="right"><label>Ref No</label></td>
+            <td>
+                <input type="text" name="refno" id="refno"
+                       placeholder="Press F3 To Search"
+                       value='<s:property value="refno"/>'
+                       onKeyDown="getrefnosearch(event);">
+            </td>
+
+            <td colspan="4"></td>
+        </tr>
+
+    </table>
+</div>
+    
     <div class="section-block">
         <h2>Vendor & Financials</h2>
         <table class="cr-table" width="100%">

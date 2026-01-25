@@ -18,51 +18,60 @@ String nation=request.getParameter("nation")==null?"0":request.getParameter("nat
 String nationid=request.getParameter("nationid")==null?"0":request.getParameter("nationid").toString();
 String brhid=request.getParameter("brhid")==null?"0":request.getParameter("brhid").toString();
 String candidateid=request.getParameter("candidateid")==null?"0":request.getParameter("candidateid").toString();
-%> 
+%>
 
 <script type="text/javascript">
 var mod1='<%=mod%>';
-var gender='<%=gender%>';  
+var gender='<%=gender%>';
 var name='<%=name%>';
 var dob='<%=dob%>';
 var nation='<%=nation%>';
 var nationid='<%=nationid%>';
-var brhid='<%=brhid%>'; 
-var candidateid='<%=candidateid%>'; 
+var brhid='<%=brhid%>';
+var candidateid='<%=candidateid%>';
 
       $(document).ready(function () {
+    	  /* CSS Fixes for JQX Widgets to match Cash Receipt Style */
+          var dateWidgetSettings = { width: '100%', height: '32px', formatString:"dd.MM.yyyy", theme: 'energyblue' };
+          
     	  /* Date */
-    	  $("#employeeDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-    	  $("#joiningDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-    	  $("#empDateOfBirth").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+    	  $("#employeeDate").jqxDateTimeInput(dateWidgetSettings);
+    	  $("#joiningDate").jqxDateTimeInput(dateWidgetSettings);
+    	  $("#empDateOfBirth").jqxDateTimeInput(dateWidgetSettings);
     	  
+    	  // Force inline style removal/adjustments for JQX to fit grid
+          setTimeout(function () {
+              $(".jqx-datetimeinput").css({"margin": "0px", "border-color": "#d1d5db", "border-radius": "6px"});
+              $(".jqx-input-content").css({"margin-top": "0px", "line-height": "32px"});
+          }, 100);
+
     	  /* Searching Window */
     	 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
- 		 $('#accountDetailsWindow').jqxWindow('close');
- 		 
- 		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#accountDetailsWindow').jqxWindow('close');
+		
+		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#costCodeSearchWindow').jqxWindow('close');
- 		 
- 		 $('#nationalityWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Nation Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		
+		 $('#nationalityWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Nation Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#nationalityWindow').jqxWindow('close');
-		 
+		
 		 $('#printWindow').jqxWindow({width: '100%', height: '25%',  maxHeight: '25%' ,maxWidth: '50%' , title: 'Print',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		  $('#printWindow').jqxWindow('close');
- 		 
+		
 		  $('#ifsccodeWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '27%' , title: 'IFSC Code Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 	 		 $('#ifsccodeWindow').jqxWindow('close');
-	 		 
+	 		
 		    
 		    $('#brchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '30%' , title: 'Branch Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 	 		 $('#brchWindow').jqxWindow('close');
-	  		
+	 		
 	 		  $('#compWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '27%' , title: 'Company Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 		 $('#compWindow').jqxWindow('close');
-		 		 
+		 		
 			    
 			    $('#establishedCodeDetailsWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '30%' , title: 'Establishment Code Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 		 $('#establishedCodeDetailsWindow').jqxWindow('close');
-		  		
+		 		
 		 		 $('#txtbankbranchname').dblclick(function(){
 	 			brchSearchContent("branchdetailsGrid.jsp");
 			  });
@@ -83,17 +92,17 @@ var candidateid='<%=candidateid%>';
          $('#txtempaccount').dblclick(function(){
 			  accountSearchContent(<%=contextPath+"/"%>+"com/humanresource/setup/accountsDetailsSearch.jsp");
 		  });
- 		 
- 		 $('#txtcost').dblclick(function(){
- 			costCodeSearchContent(<%=contextPath+"/"%>+"com/humanresource/setup/employeemaster/costSearchGrid.jsp");
+		
+		 $('#txtcost').dblclick(function(){
+			costCodeSearchContent(<%=contextPath+"/"%>+"com/humanresource/setup/employeemaster/costSearchGrid.jsp");
 		  });
- 		 
- 		$('#txtempnationality').dblclick(function(){
- 			nationalitySearchContent("nationSearchGrid.jsp");
+		
+		$('#txtempnationality').dblclick(function(){
+			nationalitySearchContent("nationSearchGrid.jsp");
 		  });
- 		 
- 		
- 	getCostAccess();getDesignation();getDepartment();getPayrollCategory();getSalesAgent();
+		
+		
+	getCostAccess();getDesignation();getDepartment();getPayrollCategory();getSalesAgent();
       }); 
       
       
@@ -196,12 +205,12 @@ function compSearchContent(url) {
     	  if($("#mode").val() == "view"){
     		  return false
     	  }
-  	    $('#costCodeSearchWindow').jqxWindow('open');
-  		$.get(url).done(function (data) {
-  		$('#costCodeSearchWindow').jqxWindow('setContent', data);
-  		$('#costCodeSearchWindow').jqxWindow('bringToFront');
-  	}); 
-  	}
+ 	    $('#costCodeSearchWindow').jqxWindow('open');
+ 		$.get(url).done(function (data) {
+ 		$('#costCodeSearchWindow').jqxWindow('setContent', data);
+ 		$('#costCodeSearchWindow').jqxWindow('bringToFront');
+ 	}); 
+ 	}
       
       function nationalitySearchContent(url) {
     	  if($("#mode").val() == "view"){
@@ -263,52 +272,52 @@ function compSearchContent(url) {
     	}
       
       function getPayrollCategory() {
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var payrollcategoryItems = items[0].split(",");
-  				var payrollcategoryIdItems = items[1].split(",");
-  				var optionspayrollcategory = '<option value="">--Select--</option>';
-  				for (var i = 0; i < payrollcategoryItems.length; i++) {
-  					optionspayrollcategory += '<option value="' + payrollcategoryIdItems[i] + '">'
-  							+ payrollcategoryItems[i] + '</option>';
-  				}
-  				$("select#cmbpayrollcategory").html(optionspayrollcategory);
-  				if ($('#hidcmbpayrollcategory').val() != null) {
-  					$('#cmbpayrollcategory').val($('#hidcmbpayrollcategory').val());
-  				}
-  			} else {
-  			}
-  		}
-  		x.open("GET", "getPayrollCategory.jsp", true);
-  		x.send();
-  	}
+ 		var x = new XMLHttpRequest();
+ 		x.onreadystatechange = function() {
+ 			if (x.readyState == 4 && x.status == 200) {
+ 				var items = x.responseText;
+ 				items = items.split('####');
+ 				var payrollcategoryItems = items[0].split(",");
+ 				var payrollcategoryIdItems = items[1].split(",");
+ 				var optionspayrollcategory = '<option value="">--Select--</option>';
+ 				for (var i = 0; i < payrollcategoryItems.length; i++) {
+ 					optionspayrollcategory += '<option value="' + payrollcategoryIdItems[i] + '">'
+ 							+ payrollcategoryItems[i] + '</option>';
+ 				}
+ 				$("select#cmbpayrollcategory").html(optionspayrollcategory);
+ 				if ($('#hidcmbpayrollcategory').val() != null) {
+ 					$('#cmbpayrollcategory').val($('#hidcmbpayrollcategory').val());
+ 				}
+ 			} else {
+ 			}
+ 		}
+ 		x.open("GET", "getPayrollCategory.jsp", true);
+ 		x.send();
+ 	}
       
       function getSalesAgent() {
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var salesAgentItems = items[0].split(",");
-  				var salesAgentIdItems = items[1].split(",");
-  				var optionssalesagent = '<option value="">--Select--</option>';
-  				for (var i = 0; i < salesAgentItems.length; i++) {
-  					optionssalesagent += '<option value="' + salesAgentIdItems[i] + '">'
-  							+ salesAgentItems[i] + '</option>';
-  				}
-  				$("select#cmbempagentid").html(optionssalesagent);
-  				if ($('#hidcmbempagentid').val() != null) {
-  					$('#cmbempagentid').val($('#hidcmbempagentid').val());
-  				}
-  			} else {
-  			}
-  		}
-  		x.open("GET", "getSalesAgent.jsp", true);
-  		x.send();
-  	}
+ 		var x = new XMLHttpRequest();
+ 		x.onreadystatechange = function() {
+ 			if (x.readyState == 4 && x.status == 200) {
+ 				var items = x.responseText;
+ 				items = items.split('####');
+ 				var salesAgentItems = items[0].split(",");
+ 				var salesAgentIdItems = items[1].split(",");
+ 				var optionssalesagent = '<option value="">--Select--</option>';
+ 				for (var i = 0; i < salesAgentItems.length; i++) {
+ 					optionssalesagent += '<option value="' + salesAgentIdItems[i] + '">'
+ 							+ salesAgentItems[i] + '</option>';
+ 				}
+ 				$("select#cmbempagentid").html(optionssalesagent);
+ 				if ($('#hidcmbempagentid').val() != null) {
+ 					$('#cmbempagentid').val($('#hidcmbempagentid').val());
+ 				}
+ 			} else {
+ 			}
+ 		}
+ 		x.open("GET", "getSalesAgent.jsp", true);
+ 		x.send();
+ 	}
       
       function getCurrencyIds(){
 			var x=new XMLHttpRequest();
@@ -323,30 +332,30 @@ function compSearchContent(url) {
 			        var optionscurr = '';
 			        
 			     if(curcodeItems.indexOf(",")>=0){
-			        	var currencyid=curidItems.split(",");
-			        	var currencycode=curcodeItems.split(",");
-			        	multiItems.split(",");
+			         	var currencyid=curidItems.split(",");
+			         	var currencycode=curcodeItems.split(",");
+			         	multiItems.split(",");
 			       
 			       for ( var i = 0; i < currencycode.length; i++) {
-			    	   optionscurr += '<option value="' + currencyid[i] + '">' + currencycode[i] + '</option>';
-			        }
+			     	   optionscurr += '<option value="' + currencyid[i] + '">' + currencycode[i] + '</option>';
+			         }
 			      
 			         $("select#cmbcurrency").html(optionscurr);
 			         if ($('#hidcmbcurrency').val() != null && $('#hidcmbcurrency').val() != "") {
-			       		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
+			        		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
 			         } 
 					     
 				   }
 			
-			       else{
-			    	   optionscurr += '<option value="' + curidItems + '"selected>' + curcodeItems + '</option>';
-			    	   
-				    	 $("select#cmbcurrency").html(optionscurr);
+			        else{
+			     	   optionscurr += '<option value="' + curidItems + '"selected>' + curcodeItems + '</option>';
+			     	   
+				     	 $("select#cmbcurrency").html(optionscurr);
 				       
 				         if ($('#hidcmbcurrency').val() != null && $('#hidcmbcurrency').val() != "") {
-				       		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
+				        		 $('#cmbcurrency').val($('#hidcmbcurrency').val()) ;
 				         }
-				      }
+				       }
 				}
 		     }
 		      x.open("GET", "getCurrencyId.jsp",true);
@@ -381,39 +390,39 @@ function compSearchContent(url) {
 	  function getEmployeeCodeAlreadyExists(empcode,docno,mode){
 		  var retval = 1; 
 		  var x = new XMLHttpRequest();
-	  		x.onreadystatechange = function() {
-	  			if (x.readyState == 4 && x.status == 200) {
-	  				var items = x.responseText.trim();
-	  				
-	  				if(parseInt(items.trim())==1){
-	  					//document.getElementById("errormsg").innerText="Employee ID Already Exists.";
-	  					 retval = 0;
-	  				 } else { 
-	  					//document.getElementById("errormsg").innerText="";
-	  					retval = 1; 
-	  				 }
-	  		}
+	 		x.onreadystatechange = function() {
+	 			if (x.readyState == 4 && x.status == 200) {
+	 				var items = x.responseText.trim();
+	 				
+	 				if(parseInt(items.trim())==1){
+	 					//document.getElementById("errormsg").innerText="Employee ID Already Exists.";
+	 					 retval = 0;
+	 				 } else { 
+	 					//document.getElementById("errormsg").innerText="";
+	 					retval = 1; 
+	 				 }
+	 		}
 		}
 		x.open("GET", "getEmployeeCodeAlreadyExists.jsp?empcode="+empcode+"&docno="+docno+"&mode="+mode, false);
 		x.send();
 		return retval;   
-     }
+      }
   
       function getEmployeeAlreadyExists(employeename,docno,mode){
     		var retval = 1; 
-	  		var x = new XMLHttpRequest();
-	  		x.onreadystatechange = function() {
-	  			if (x.readyState == 4 && x.status == 200) {
-	  				var items = x.responseText.trim();
+	 		var x = new XMLHttpRequest();
+	 		x.onreadystatechange = function() {
+	 			if (x.readyState == 4 && x.status == 200) {
+	 				var items = x.responseText.trim();
 
 					if(parseInt(items)>0){
-	  					// document.getElementById("errormsg").innerText="Employee Already Exists.";
+	 					// document.getElementById("errormsg").innerText="Employee Already Exists.";
 						 retval = 0;
-	  				 }else{
-	  					retval = 1; 
-	  				 }
-	  			   
-	  		}
+	 				 }else{
+	 					retval = 1; 
+	 				 }
+	 			   
+	 		}
 		}
 		x.open("GET", "getEmployeeAlreadyExists.jsp?employeename="+employeename+"&docno="+docno+"&mode="+mode, false);
 		x.send();
@@ -635,7 +644,7 @@ function compSearchContent(url) {
             
              var indexVal = document.getElementById("docno").value;
 			 if(indexVal> 0){
-	         	 $("#compensationDiv").load("compensationGrid.jsp?docno="+indexVal);
+                 $("#compensationDiv").load("compensationGrid.jsp?docno="+indexVal);
 			     $("#documentsDiv").load("documentsGrid.jsp?docno="+indexVal);
 			 } 
 		}
@@ -645,14 +654,14 @@ function compSearchContent(url) {
 		}
 	 function getEmpMasterconfig(){
 		 	var x = new XMLHttpRequest();
-	  		x.onreadystatechange = function() {
-	  			if (x.readyState == 4 && x.status == 200) {
-	  				var items = x.responseText.trim();
-	  			  	document.getElementById("empprint").value=items;
-	  		}
-	  		}
-	  		x.open("GET", "getEmpMasterconfig.jsp", true);
-	  		x.send();
+	 		x.onreadystatechange = function() {
+	 			if (x.readyState == 4 && x.status == 200) {
+	 				var items = x.responseText.trim();
+	 			 	document.getElementById("empprint").value=items;
+	 		}
+	 		}
+	 		x.open("GET", "getEmpMasterconfig.jsp", true);
+	 		x.send();
 	    }
 	 function funPrintBtn(){
 		    var empprint=$('#empprint').val();
@@ -668,18 +677,18 @@ function compSearchContent(url) {
 						  
 						   var url=document.URL;
 						   //alert(url);
-				  	   var reurl=url.split("saveEmployeeMaster");
-				  	   var brhid=<%=session.getAttribute("BRANCHID").toString()%>
-				    	   var dtype=$('#formdetailcode').val();
-				  	   
+				 	    var reurl=url.split("saveEmployeeMaster");
+				 	    var brhid=<%=session.getAttribute("BRANCHID").toString()%>
+				 	        var dtype=$('#formdetailcode').val();
+				 	    
 					   var win= window.open(reurl[0]+"printEmployeeMasterJrxml?docno="+document.getElementById("docno").value+"&dtype="+dtype+"&brhid="+brhid,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");    
 					     
 					   win.focus(); 
 					   }else {
-				  	      $.messager.alert('Message','Select a Document....!','warning');
-				  	      return false;
-				  	     } 
-					    	     
+				 	       $.messager.alert('Message','Select a Document....!','warning');
+				 	       return false;
+				 	      } 
+					           
 			}
 				
 			}	
@@ -690,7 +699,7 @@ function compSearchContent(url) {
 				$.messager.alert('Message','Select a Document....!','warning');
 				return false;
 			}
-					    	
+					    
 				 	}
 	 function PrintContent(url) {
 		 
@@ -724,341 +733,461 @@ function compSearchContent(url) {
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
 
-/* background */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
-    padding: 24px 0;
-    min-height: 100vh;
+    padding: 32px 0;
     box-sizing: border-box;
-    font-size: 14px;
+    overflow-y: auto;
 }
 
-/* wider main card */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 18px 28px;
-    max-width: 1650px;          /* wider layout */
-    margin: 0 auto;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* header area */
-.receipt-header {
-    display: block;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    padding: 0 6px;
-    font-size: 14px;
-}
-#txtStatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
+/* ------------------------------
+   COMMON UI ELEMENTS
+------------------------------ */
 
-/* section wrappers */
-.table-section {
-    margin-bottom: 20px;
-    padding-inline: 14px;
-    padding-block: 14px;
-    border-radius: 10px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 10px 0;
-}
-
-/* tables – full width and aligned columns */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-    table-layout: fixed;
-}
-.cr-table th,
-.cr-table td {
-    padding: 6px 8px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 13px;
-    vertical-align: middle;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* labels inside table cells */
-.cr-table td[align="right"] {
-    white-space: nowrap;
-    font-weight: 500;
-    color: #333;
-}
-
-/* make all inputs/selects uniform inside tables */
-.cr-table input[type="text"],
-.cr-table input[type="password"],
-.cr-table input[type="email"],
-.cr-table select {
-    width: 100%;
+input[type="text"], select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 4px 8px;
-    height: 30px;
-    font-size: 13px;
-    box-sizing: border-box;
+    padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%; /* Default to 100% width within containers */
 }
-.cr-table input[type="text"]:focus,
-.cr-table input[type="password"]:focus,
-.cr-table input[type="email"]:focus,
-.cr-table select:focus {
+
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-/* ensure colored sections keep background but inputs still align */
-.table-section[style*="#E8DEF7"] .cr-table,
-.table-section[style*="#DEF3F7"] .cr-table,
-.table-section[style*="#ECF8E0"] .cr-table,
-.table-section[style*="#F8E0F7"] .cr-table {
-    background: transparent;
-    box-shadow: none;
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
 }
-</style>
 
+/* ------------------------------
+   HEADER SECTION
+------------------------------ */
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
+#lblemployeestatus {
+    font-size: 13px;
+    font-family: Tahoma;
+    color: #6000FC;
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* ------------------------------
+   FORM LAYOUTS
+------------------------------ */
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size: 1rem;
+}
+
+/* Dual Input: Label Input Label Input */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Custom Grids for complex rows in Employee Master */
+.form-group.triple-input {
+     grid-template-columns: 120px 140px 1fr 100px; /* Account code, Name, Currency */
+}
+
+.section-row {
+    display: flex;
+    flex-direction: column; /* Stack vertically for employee master as it is wide */
+    gap: 26px;
+    margin-bottom: 30px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* ------------------------------
+   TABLE SECTIONS (GRIDS)
+------------------------------ */
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 100vh;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* ------------------------------
+   JQX TWEAKS
+------------------------------ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.jqx-datetimeinput,
+.jqx-datetimeinput .jqx-input-content {
+    height: 32px !important;
+    line-height: 32px !important;
+    box-sizing: border-box;
+}
+
+</style>
 
 </head>
 <body onload="setValues();getEmpMasterconfig();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmEmployeeMaster" action="saveEmployeeMaster" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>   
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div class='hidden-scrollbar receipt-header'>
-
-    <div class="table-section">
-<table class="cr-table" width="99%">
-  <tr>
-    <td width="5%" align="right">Date</td>
-    <td width="20%"><div id="employeeDate" name="employeeDate" value='<s:property value="employeeDate"/>'></div>
-    <input type="hidden" id="hidemployeeDate" name="hidemployeeDate" value='<s:property value="hidemployeeDate"/>'/></td>
-    <td width="19%" align="right">Employee ID</td>
-    <td width="17%"><input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="Employee ID" style="width:70%;" onblur="getEmployeeCodeAlreadyExists(this.value,$('#docno').val(),$('#mode').val());" value='<s:property value="txtemployeeid"/>'/></td>
-    <td width="13%" align="center"><i><b><label id="lblemployeestatus"  name="lblemployeestatus"   style="font-size: 13px;font-family: Tahoma; color:#6000FC;text-align: right;"><s:property value="lblemployeestatus"/></label></b></i></td>
-    <td width="7%" align="right">Doc No </td>
-    <td width="19%"><input type="text" id="docno" name="txtempmasterdocno" style="width:70%;" tabindex="-1" value='<s:property value="txtempmasterdocno"/>'/></td>
-  </tr>
-</table>
-
-
-
-<table class="cr-table" width="99%">
-    <tr>
-    <td width="7%" align="right">Name</td>
-    <td><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:95%;" value='<s:property value="txtemployeename"/>'/></td>
-    <td align="right">Account </td>
-    <td width="14%"><input type="text" id="txtempaccount" name="txtempaccount" style="width:78%;" placeholder="Press F3 to Search" value='<s:property value="txtempaccount"/>' onfocus="getCurrencyIds();" onkeydown="getEmpAccount(event);"/>
-    <td colspan="6"><input type="text" id="txtempaccountname" name="txtempaccountname" placeholder="Employee Account Name" style="width:99%;" value='<s:property value="txtempaccountname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtempaccdocno" name="txtempaccdocno" value='<s:property value="txtempaccdocno"/>'/></td>
-    <td width="9%"><select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/></td>
-    <td width="5%" align="right">Date of Joining</td>
-    <td width="14%"><div id="joiningDate" name="joiningDate" value='<s:property value="joiningDate"/>'></div>
-    <input type="hidden" id="hidjoiningDate" name="hidjoiningDate" value='<s:property value="hidjoiningDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Designation</td>
-    <td width="14%"><select id="cmbempdesignation" name="cmbempdesignation" style="width:96%;" value='<s:property value="cmbempdesignation"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempdesignation" name="hidcmbempdesignation" value='<s:property value="hidcmbempdesignation"/>'/></td>
-    <td width="7%" align="right">Department</td>
-    <td colspan="2"><select id="cmbempdepartment" name="cmbempdepartment" style="width:96%;" value='<s:property value="cmbempdepartment"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/></td>
-      <td width="12%" align="right">Payroll Category</td>
-      <td colspan="3"><select id="cmbpayrollcategory" name="cmbpayrollcategory" style="width:98%;" value='<s:property value="cmbpayrollcategory"/>'>
-        <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbpayrollcategory" name="hidcmbpayrollcategory" value='<s:property value="hidcmbpayrollcategory"/>'/></td>
-      <td width="5%" align="right">Cost/Hour</td>
-       <td><input type="text" id="txtempcostperhour" name="txtempcostperhour" style="width:90%;text-align: right;" placeholder="Cost Per Hour" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtempcostperhour"/>'/></td>
-    <td align="right">Travels</td>
-    <td><input type="text" id="txtemptravels" name="txtemptravels" style="width:70%;text-align: right;" placeholder="Travels" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtemptravels"/>'/></td>
-  </tr>
-  <tr>
-     <td width="7%" align="right">Est. Code</td>
-    <td><input type="text" id="txtest_code" name="txtest_code" placeholder="Press F3 to Search" style="width:95%;" value='<s:property value="txtest_code"/>'/></td>
-    <td width="7%" align="right">Company Name</td>
-    <td><input type="text" id="txtco_name" name="txtco_name" placeholder="Press F3 to Search" style="width:95%;" value='<s:property value="txtco_name"/>'/></td>
-    <td width="7%" align="right">Qualification</td>
-    <td><input type="text" id="txtqualification" name="txtqualification" placeholder="Qualification" style="width:95%;" value='<s:property value="txtqualification"/>'/></td>
-    
-    <td width="7%" align="right" class="costdiv" hidden>Cost</td>
-    <td colspan="4" class="costdiv" hidden>
-    <input type="text" id="txtcost" name="txtcost" placeholder="Press F3 to Search" style="width:95%;" value='<s:property value="txtcost"/>' onkeydown="getCost(event);"/>
-    <input type="hidden" id="hidcostid" name="hidcostid" value='<s:property value="hidcostid"/>'/>
-    </td>
-	
-	<td width="7%" align="right" class="typediv" hidden>Type</td>
-    <td colspan="4" class="typediv" hidden>
-    <select id="cmbtype" name="cmbtype" style="width:98%;" value='<s:property value="cmbtype"/>'>
-        <option value="0">--Select--</option><option value="1">Full Time</option><option value="2">Fixed Term contractors</option><option value="3">Freelancers</option>
-	</select>
-    <input type="hidden" id="hidtype" name="hidtype" value='<s:property value="hidtype"/>'/>
-    </td>
- 
-  </tr>
-</table>
+    <div class="receipt-header">
+        <table width="100%">
+          <tr>
+            <td width="5%" align="right"><label>Date</label></td>
+            <td width="20%">
+                <div id="employeeDate" name="employeeDate" value='<s:property value="employeeDate"/>'></div>
+                <input type="hidden" id="hidemployeeDate" name="hidemployeeDate" value='<s:property value="hidemployeeDate"/>'/>
+            </td>
+            <td width="19%" align="right"><label>Employee ID</label></td>
+            <td width="17%">
+                <input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="Employee ID" onblur="getEmployeeCodeAlreadyExists(this.value,$('#docno').val(),$('#mode').val());" value='<s:property value="txtemployeeid"/>'/>
+            </td>
+            <td width="13%" align="center">
+                <label id="lblemployeestatus" name="lblemployeestatus"><s:property value="lblemployeestatus"/></label>
+            </td>
+            <td width="7%" align="right"><label>Doc No</label></td>
+            <td width="19%">
+                <input type="text" id="docno" name="txtempmasterdocno" tabindex="-1" value='<s:property value="txtempmasterdocno"/>'/>
+            </td>
+          </tr>
+        </table>
     </div>
 
-<div class="table-section" style="background: #e4e7ed;">
-<h3><b><i>Personal Details</i></b></h3>
-<table class="cr-table" width="99.5%" style="background:#e4e7ed;">
-   <tr style="background: #e4e7ed;">
-    <td align="right">Permanent Address</td>
-    <td colspan="5" align="left"><input type="text" id="txtpermanentaddress" name="txtpermanentaddress" placeholder="Permanent Address" style="width:100%;" value='<s:property value="txtpermanentaddress"/>'/></td>
-    <td align="right">Present Address</td>
-    <td colspan="5" align="left"><input type="text" id="txtpresentaddress" name="txtpresentaddress" placeholder="Present Address" style="width:100%;" value='<s:property value="txtpresentaddress"/>'/></td>
-  </tr>
-  <tr style="background: #e4e7ed;">
-    <td align="right">Mobile</td>
-    <td><input type="text" id="txtpermanentmobile" name="txtpermanentmobile" placeholder="Permanent Mobile" style="width:100%;" value='<s:property value="txtpermanentmobile"/>'/></td>
-    <td align="right">Email</td>
-    <td colspan="3"><input type="text" id="txtpermanentemail" name="txtpermanentemail" placeholder="Permanent Email ID" style="width:100%;" value='<s:property value="txtpermanentemail"/>'/></td>
-    <td align="right">Mobile</td>
-    <td><input type="text" id="txtpresentmobile" name="txtpresentmobile" placeholder="Present Mobile" style="width:100%;" value='<s:property value="txtpresentmobile"/>'/></td>
-    <td align="right">Email</td>
-    <td colspan="3"><input type="text" id="txtpresentemail" name="txtpresentemail" placeholder="Present Email ID" style="width:100%;" value='<s:property value="txtpresentemail"/>'/></td>
-  </tr>
-  <tr style="background: #e4e7ed;">
-    <td width="7%" align="right">City</td>
-    <td width="9%"><input type="text" id="txtempcity" name="txtempcity" placeholder="City" style="width:100%;" value='<s:property value="txtempcity"/>'/></td>
-    <td width="7%" align="right">State</td>
-    <td width="9%"><input type="text" id="txtempstate" name="txtempstate" placeholder="State" style="width:100%;" value='<s:property value="txtempstate"/>'/></td>
-    <td width="7%" align="right">Pincode</td>
-    <td width="9%"><input type="text" id="txtemppincode" name="txtemppincode" placeholder="Pincode" style="width:100%;" value='<s:property value="txtemppincode"/>'/></td>
-    <td width="7%" align="right">Nationality</td>
-    <td width="9%"><input type="text" id="txtempnationality" name="txtempnationality" style="width:100%;" placeholder="Press F3 to Search" value='<s:property value="txtempnationality"/>'  onkeydown="getNations(event);"/>
-    <input type="hidden" id="txtempnationalityid" name="txtempnationalityid" value='<s:property value="txtempnationalityid"/>'/></td>
-    <td width="7%" align="right">Religion</td>
-    <td width="9%"><input type="text" id="txtempreligion" name="txtempreligion" placeholder="Religion" style="width:100%;" value='<s:property value="txtempreligion"/>'/></td>
-    <td width="7%" align="right">Nearest Airport</td>
-    <td width="9%"><input type="text" id="txtempnearestairport" name="txtempnearestairport" placeholder="Nearest Airport" style="width:100%;" value='<s:property value="txtempnearestairport"/>'/></td>
-  </tr>
-  <tr style="background: #e4e7ed;">
-    <td align="right">Place of Birth</td>
-    <td><input type="text" id="txtempplaceofbirth" name="txtempplaceofbirth" placeholder="Place of Birth" style="width:100%;" value='<s:property value="txtempplaceofbirth"/>'/></td>
-    <td align="right">Date of Birth</td>
-    <td><div id="empDateOfBirth" name="empDateOfBirth" value='<s:property value="empDateOfBirth"/>'></div>
-    <input type="hidden" id="hidempDateOfBirth" name="hidempDateOfBirth" value='<s:property value="hidempDateOfBirth"/>'/></td>
-    <td align="right">Sex</td>
-    <td><select id="cmbempsex" name="cmbempsex" style="width:100%;" value='<s:property value="cmbempsex"/>'>
-      <option value="">--Select--</option><option value="M">Male</option><option value="F">Female</option></select>
-      <input type="hidden" id="hidcmbempsex" name="hidcmbempsex" value='<s:property value="hidcmbempsex"/>'/></td>
-    <td align="right">Blood Group</td>
-    <td><select id="cmbempbloodgroup" name="cmbempbloodgroup" style="width:70%;" value='<s:property value="cmbempbloodgroup"/>'>
-      <option value="">--Select--</option><option value="O +ve">O Positive</option><option value="O -ve">O Negative</option><option value="A +ve">A Positive</option>
-      <option value="A -ve">A Negative</option><option value="B +ve">B Positive</option><option value="B -ve">B Negative</option><option value="AB +ve">AB Positive</option>
-      <option value="AB -ve">AB Negative</option></select>
-      <input type="hidden" id="hidcmbempbloodgroup" name="hidcmbempbloodgroup" value='<s:property value="hidcmbempbloodgroup"/>'/></td>
-    <td align="right">Marital Status</td>
-    <td colspan="3"><select id="cmbempmaritalstatus" name="cmbempmaritalstatus" style="width:38%;" value='<s:property value="cmbempmaritalstatus"/>'>
-      <option value="">--Select--</option><option value="SINGLE">Single</option><option value="MARRIED">Married</option></select>
-      <input type="hidden" id="hidcmbempmaritalstatus" name="hidcmbempmaritalstatus" value='<s:property value="hidcmbempmaritalstatus"/>'/></td>
-  </tr>
-  <tr style="background: #e4e7ed;">
-    <td align="right">Father's Name</td>
-    <td><input type="text" id="txtempfathername" name="txtempfathername" placeholder="Father's Name" style="width:100%;" value='<s:property value="txtempfathername"/>'/></td>
-    <td align="right">Mother's Name</td>
-    <td><input type="text" id="txtempmothername" name="txtempmothername" placeholder="Mother's Name" style="width:100%;" value='<s:property value="txtempmothername"/>'/></td>
-    <td align="right">Spouse's Name</td>
-    <td><input type="text" id="txtempspousename" name="txtempspousename" placeholder="Spouse's Name" style="width:100%;" value='<s:property value="txtempspousename"/>'/></td>
-    <td align="right">Other Details</td>
-    <td colspan="5"><input type="text" id="txtempotherdetails" name="txtempotherdetails" placeholder="Other Details" style="width:100%;" value='<s:property value="txtempotherdetails"/>'/></td>
-  </tr>
-</table>
-</div>
+    <div class="section-row">
+        
+        <div class="section-block">
+            <h2>Employment Details</h2>
+            
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" value='<s:property value="txtemployeename"/>'/>
+            </div>
 
-<div class="table-section" style="background: #e4e7ed;">
-<h3><b><i>Bank Details</i></b></h3>
-<table class="cr-table" width="99%">
-  <tr>
-    <td width="6%" align="right">Agent ID</td>
-    <td width="10%"><select id="cmbempagentid" name="cmbempagentid" style="width:100%;" value='<s:property value="cmbempagentid"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempagentid" name="hidcmbempagentid" value='<s:property value="hidcmbempagentid"/>'/></td>
-    <td width="6%" align="right">Employee ID</td>
-    <td width="10%"><input type="text" id="txtbankemployeeid" name="txtbankemployeeid" placeholder="Employee ID" style="width:95%;" value='<s:property value="txtbankemployeeid"/>'/></td>
-    <td width="7%" align="right">Bank Account No.</td>
-    <td width="8%"><input type="text" id="txtbankaccountno" name="txtbankaccountno" placeholder="Bank Account No." style="width:98%;" value='<s:property value="txtbankaccountno"/>'/></td>
-  <td width="7%" align="right">Branch Name</td>
-  <td width="12%"><input type="text" id="txtbankbranchname" name="txtbankbranchname" placeholder="Press F3 to Search" style="width:100%;" value='<s:property value="txtbankbranchname"/>'/></td>
-  <td width="7%" align="right">IFSC Code</td>
-  <td width="10%"><input type="text" id="txtbankifsccode" name="txtbankifsccode" placeholder="Press F3 to Search" style="width:90%;" value='<s:property value="txtbankifsccode"/>'/></td>
-  </tr>
-</table>
-</div>
+            <div class="form-group triple-input">
+                <label>Account</label>
+                <input type="text" id="txtempaccount" name="txtempaccount" placeholder="Press F3 to Search" value='<s:property value="txtempaccount"/>' onfocus="getCurrencyIds();" onkeydown="getEmpAccount(event);"/>
+                <input type="text" id="txtempaccountname" name="txtempaccountname" placeholder="Employee Account Name" value='<s:property value="txtempaccountname"/>' tabindex="-1"/>
+                <input type="hidden" id="txtempaccdocno" name="txtempaccdocno" value='<s:property value="txtempaccdocno"/>'/>
+                <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>'>
+                    <option value="">--Select--</option>
+                </select>
+                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+            </div>
 
-<div class="table-section" style="background:#e4e7ed; width:100%; ">
-<h3><b><i>Monthly Salary</i></b></h3>
-<div class="cr-table" id="compensationDiv"><jsp:include page="compensationGrid.jsp"></jsp:include></div><br/>
-</div>
+            <div class="form-group dual-input">
+                 <label>Date of Joining</label>
+                 <div>
+                    <div id="joiningDate" name="joiningDate" value='<s:property value="joiningDate"/>'></div>
+                    <input type="hidden" id="hidjoiningDate" name="hidjoiningDate" value='<s:property value="hidjoiningDate"/>'/>
+                 </div>
+                 <label>Designation</label>
+                 <div>
+                    <select id="cmbempdesignation" name="cmbempdesignation" value='<s:property value="cmbempdesignation"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                    <input type="hidden" id="hidcmbempdesignation" name="hidcmbempdesignation" value='<s:property value="hidcmbempdesignation"/>'/>
+                 </div>
+            </div>
 
-<div class="table-section" style="background: #e4e7ed; width:100%; ">
-<h3><b><i>Documents</i></b></h3>
-<div class="cr-table" id="documentsDiv"><jsp:include page="documentsGrid.jsp"></jsp:include></div><br/>
-</div>
+            <div class="form-group dual-input">
+                <label>Department</label>
+                <div>
+                     <select id="cmbempdepartment" name="cmbempdepartment" value='<s:property value="cmbempdepartment"/>'>
+                      <option value="">--Select--</option></select>
+                      <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/>
+                </div>
+                <label>Payroll Category</label>
+                <div>
+                     <select id="cmbpayrollcategory" name="cmbpayrollcategory" value='<s:property value="cmbpayrollcategory"/>'>
+                        <option value="">--Select--</option></select>
+                      <input type="hidden" id="hidcmbpayrollcategory" name="hidcmbpayrollcategory" value='<s:property value="hidcmbpayrollcategory"/>'/>
+                </div>
+            </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="monthlysalarygridlength" name="monthlysalarygridlength"/>
-<input type="hidden" id="documentsgridlength" name="documentsgridlength"/>
-<input type="hidden" id="empprint" name="empprint"/>
-<input type="hidden" id="convertCandidate" name="convertCandidate" value='<s:property value="convertCandidate"/>'/>
+             <div class="form-group dual-input">
+                <label>Cost/Hour</label>
+                <input type="text" id="txtempcostperhour" name="txtempcostperhour" style="text-align: right;" placeholder="Cost Per Hour" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtempcostperhour"/>'/>
+                <label>Travels</label>
+                <input type="text" id="txtemptravels" name="txtemptravels" style="text-align: right;" placeholder="Travels" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="txtemptravels"/>'/>
+             </div>
 
-</div>
+             <div class="form-group dual-input">
+                <label>Est. Code</label>
+                <input type="text" id="txtest_code" name="txtest_code" placeholder="Press F3 to Search" value='<s:property value="txtest_code"/>'/>
+                <label>Company Name</label>
+                <input type="text" id="txtco_name" name="txtco_name" placeholder="Press F3 to Search" value='<s:property value="txtco_name"/>'/>
+             </div>
+             
+             <div class="form-group">
+                <label>Qualification</label>
+                <input type="text" id="txtqualification" name="txtqualification" placeholder="Qualification" value='<s:property value="txtqualification"/>'/>
+             </div>
+
+             <div class="form-group dual-input costdiv" hidden>
+                <label>Cost</label>
+                <div>
+                    <input type="text" id="txtcost" name="txtcost" placeholder="Press F3 to Search" value='<s:property value="txtcost"/>' onkeydown="getCost(event);"/>
+                    <input type="hidden" id="hidcostid" name="hidcostid" value='<s:property value="hidcostid"/>'/>
+                </div>
+                <label class="typediv" hidden>Type</label>
+                <div class="typediv" hidden>
+                    <select id="cmbtype" name="cmbtype" value='<s:property value="cmbtype"/>'>
+                        <option value="0">--Select--</option><option value="1">Full Time</option><option value="2">Fixed Term contractors</option><option value="3">Freelancers</option>
+                    </select>
+                    <input type="hidden" id="hidtype" name="hidtype" value='<s:property value="hidtype"/>'/>
+                </div>
+             </div>
+        </div>
+
+        <div class="section-block">
+             <h2>Personal Details</h2>
+             
+             <div class="form-group dual-input">
+                <label>Permanent Addr</label>
+                <input type="text" id="txtpermanentaddress" name="txtpermanentaddress" placeholder="Permanent Address" value='<s:property value="txtpermanentaddress"/>'/>
+                <label>Present Addr</label>
+                <input type="text" id="txtpresentaddress" name="txtpresentaddress" placeholder="Present Address" value='<s:property value="txtpresentaddress"/>'/>
+             </div>
+
+             <div class="form-group dual-input">
+                <label>Mobile (Perm)</label>
+                <input type="text" id="txtpermanentmobile" name="txtpermanentmobile" placeholder="Permanent Mobile" value='<s:property value="txtpermanentmobile"/>'/>
+                <label>Email (Perm)</label>
+                <input type="text" id="txtpermanentemail" name="txtpermanentemail" placeholder="Permanent Email ID" value='<s:property value="txtpermanentemail"/>'/>
+             </div>
+
+             <div class="form-group dual-input">
+                <label>Mobile (Pres)</label>
+                <input type="text" id="txtpresentmobile" name="txtpresentmobile" placeholder="Present Mobile" value='<s:property value="txtpresentmobile"/>'/>
+                <label>Email (Pres)</label>
+                <input type="text" id="txtpresentemail" name="txtpresentemail" placeholder="Present Email ID" value='<s:property value="txtpresentemail"/>'/>
+             </div>
+
+             <div class="form-group" style="grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;">
+                <label>City</label>
+                <input type="text" id="txtempcity" name="txtempcity" placeholder="City" value='<s:property value="txtempcity"/>'/>
+                <label>State</label>
+                <input type="text" id="txtempstate" name="txtempstate" placeholder="State" value='<s:property value="txtempstate"/>'/>
+                <label>Pincode</label>
+                <input type="text" id="txtemppincode" name="txtemppincode" placeholder="Pincode" value='<s:property value="txtemppincode"/>'/>
+             </div>
+
+             <div class="form-group dual-input">
+                <label>Nationality</label>
+                <div>
+                     <input type="text" id="txtempnationality" name="txtempnationality" placeholder="Press F3 to Search" value='<s:property value="txtempnationality"/>'  onkeydown="getNations(event);"/>
+                     <input type="hidden" id="txtempnationalityid" name="txtempnationalityid" value='<s:property value="txtempnationalityid"/>'/>
+                </div>
+                <label>Religion</label>
+                <input type="text" id="txtempreligion" name="txtempreligion" placeholder="Religion" value='<s:property value="txtempreligion"/>'/>
+             </div>
+
+             <div class="form-group dual-input">
+                <label>Place of Birth</label>
+                <input type="text" id="txtempplaceofbirth" name="txtempplaceofbirth" placeholder="Place of Birth" value='<s:property value="txtempplaceofbirth"/>'/>
+                <label>Date of Birth</label>
+                <div>
+                    <div id="empDateOfBirth" name="empDateOfBirth" value='<s:property value="empDateOfBirth"/>'></div>
+                    <input type="hidden" id="hidempDateOfBirth" name="hidempDateOfBirth" value='<s:property value="hidempDateOfBirth"/>'/>
+                </div>
+             </div>
+
+              <div class="form-group" style="grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;">
+                <label>Sex</label>
+                <div>
+                    <select id="cmbempsex" name="cmbempsex" value='<s:property value="cmbempsex"/>'>
+                      <option value="">--Select--</option><option value="M">Male</option><option value="F">Female</option></select>
+                      <input type="hidden" id="hidcmbempsex" name="hidcmbempsex" value='<s:property value="hidcmbempsex"/>'/>
+                </div>
+                <label>Blood Group</label>
+                <div>
+                    <select id="cmbempbloodgroup" name="cmbempbloodgroup" value='<s:property value="cmbempbloodgroup"/>'>
+                      <option value="">--Select--</option><option value="O +ve">O Positive</option><option value="O -ve">O Negative</option><option value="A +ve">A Positive</option>
+                      <option value="A -ve">A Negative</option><option value="B +ve">B Positive</option><option value="B -ve">B Negative</option><option value="AB +ve">AB Positive</option>
+                      <option value="AB -ve">AB Negative</option></select>
+                      <input type="hidden" id="hidcmbempbloodgroup" name="hidcmbempbloodgroup" value='<s:property value="hidcmbempbloodgroup"/>'/>
+                </div>
+                <label>Marital Status</label>
+                <div>
+                    <select id="cmbempmaritalstatus" name="cmbempmaritalstatus" value='<s:property value="cmbempmaritalstatus"/>'>
+                      <option value="">--Select--</option><option value="SINGLE">Single</option><option value="MARRIED">Married</option></select>
+                      <input type="hidden" id="hidcmbempmaritalstatus" name="hidcmbempmaritalstatus" value='<s:property value="hidcmbempmaritalstatus"/>'/>
+                </div>
+             </div>
+
+             <div class="form-group dual-input">
+                <label>Father's Name</label>
+                <input type="text" id="txtempfathername" name="txtempfathername" placeholder="Father's Name" value='<s:property value="txtempfathername"/>'/>
+                <label>Mother's Name</label>
+                <input type="text" id="txtempmothername" name="txtempmothername" placeholder="Mother's Name" value='<s:property value="txtempmothername"/>'/>
+             </div>
+
+             <div class="form-group dual-input">
+                <label>Spouse's Name</label>
+                <input type="text" id="txtempspousename" name="txtempspousename" placeholder="Spouse's Name" value='<s:property value="txtempspousename"/>'/>
+                <label>Other Details</label>
+                <input type="text" id="txtempotherdetails" name="txtempotherdetails" placeholder="Other Details" value='<s:property value="txtempotherdetails"/>'/>
+             </div>
+             
+              <div class="form-group dual-input">
+                <label>Nearest Airport</label>
+                <input type="text" id="txtempnearestairport" name="txtempnearestairport" placeholder="Nearest Airport" value='<s:property value="txtempnearestairport"/>'/>
+             </div>
+        </div>
+
+        <div class="section-block">
+            <h2>Bank Details</h2>
+            <div class="form-group dual-input">
+                <label>Agent ID</label>
+                <div>
+                     <select id="cmbempagentid" name="cmbempagentid" value='<s:property value="cmbempagentid"/>'>
+                      <option value="">--Select--</option></select>
+                      <input type="hidden" id="hidcmbempagentid" name="hidcmbempagentid" value='<s:property value="hidcmbempagentid"/>'/>
+                </div>
+                <label>Employee ID (Bank)</label>
+                <input type="text" id="txtbankemployeeid" name="txtbankemployeeid" placeholder="Employee ID" value='<s:property value="txtbankemployeeid"/>'/>
+            </div>
+             <div class="form-group dual-input">
+                <label>Bank Acc No.</label>
+                <input type="text" id="txtbankaccountno" name="txtbankaccountno" placeholder="Bank Account No." value='<s:property value="txtbankaccountno"/>'/>
+                <label>Branch Name</label>
+                <input type="text" id="txtbankbranchname" name="txtbankbranchname" placeholder="Press F3 to Search" value='<s:property value="txtbankbranchname"/>'/>
+             </div>
+             <div class="form-group">
+                <label>IFSC Code</label>
+                <input type="text" id="txtbankifsccode" name="txtbankifsccode" placeholder="Press F3 to Search" value='<s:property value="txtbankifsccode"/>'/>
+             </div>
+        </div>
+        
+    </div>
+
+    <div class="table-section">
+        <h3>Monthly Salary</h3>
+        <div id="compensationDiv"><jsp:include page="compensationGrid.jsp"></jsp:include></div>
+    </div>
+
+    <div class="table-section">
+        <h3>Documents</h3>
+        <div id="documentsDiv"><jsp:include page="documentsGrid.jsp"></jsp:include></div>
+    </div>
+
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+    <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+    <input type="hidden" id="monthlysalarygridlength" name="monthlysalarygridlength"/>
+    <input type="hidden" id="documentsgridlength" name="documentsgridlength"/>
+    <input type="hidden" id="empprint" name="empprint"/>
+    <input type="hidden" id="convertCandidate" name="convertCandidate" value='<s:property value="convertCandidate"/>'/>
+
 </form>
-<div id="accountDetailsWindow">
-   <div></div>
-</div>
 
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="nationalityWindow">
-   <div></div>
-</div>
+<div id="accountDetailsWindow"><div></div></div>
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
+<div id="nationalityWindow"><div></div></div>
 <div id="printWindow"><div></div></div>
-<div id="brchWindow">
-   <div></div></div>	
-<div id="ifsccodeWindow">
-   <div></div></div>
-   <div id="establishedCodeDetailsWindow">
-   <div></div></div>	
-<div id="compWindow">
-   <div></div></div>
+<div id="brchWindow"><div></div></div>    
+<div id="ifsccodeWindow"><div></div></div>
+<div id="establishedCodeDetailsWindow"><div></div></div>    
+<div id="compWindow"><div></div></div>
+
 </div>
 </body>
 </html>

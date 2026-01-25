@@ -9,43 +9,168 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+/* Remove green border only for inner report-type fieldset */
+.inner-fieldset {
+    border: none !important;
+    padding: 8px 0;
+    margin: 0;
+}
+
+.inner-fieldset legend {
+    padding: 0 6px;
+    font-weight: 600;
+}
+/* ===== USE SPACE ABOVE (reduce gaps) ===== */
+.filter-table tr td {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* tighten large gaps created by date pickers */
+.filter-table div[id$="date"] {
+    margin-bottom: 6px;
+}
+
+/* ===== REMOVE REPORT TYPE GREEN LINES ===== */
+.inner-fieldset {
+    border: none !important;
+    background: transparent !important;
+    padding: 6px 0 0 0;
+    margin: 6px 0;
+}
+
+.inner-fieldset legend {
+    padding: 0;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+/* remove any inherited green row backgrounds */
+.inner-fieldset table tr,
+.inner-fieldset table td {
+    background: transparent !important;
+}
+
+/* compact radio spacing */
+.inner-fieldset label {
+    margin-left: 4px;
+}
+/* ===== ENABLE SCROLL FOR LEFT PANEL ONLY ===== */
+td[width="20%"] fieldset {
+    max-height: calc(100vh - 120px); /* leaves space for header */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* smooth scrolling */
+td[width="20%"] fieldset::-webkit-scrollbar {
+    width: 6px;
+}
+
+td[width="20%"] fieldset::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 6px;
+}
+
+td[width="20%"] fieldset::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -203,66 +328,142 @@
 </head>
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>  
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td align="right"><label class="branch">Asset</label></td>
-	<td align="left"><input type="text" id="txtasset" name="txtasset" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtasset"/>' onkeydown="getAsset(event);"/></td></tr>
-	<tr><td align="right"><label class="branch">Group</label></td>
-	<td align="left"><input type="text" id="txtgroup" name="txtgroup" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtgroup"/>' onkeydown="getGroup(event);"/>
-		             <input type="hidden" id="txtgroupno" name="txtgroupno" style="width:60%;height:20px;" value='<s:property value="txtgroupno"/>'/></td></tr> 
-	<tr><td colspan="2">
-	  <fieldset><legend><b><label class="branch">Report Type</label></b></legend>
-	   <table width="100%">
-       <tr>
-       <td width="48%" align="center"><input type="radio" id="rdall" name="rdo" value="rdall"><label for="rdall" class="branch">All</label></td>
-       <td width="52%" align="center"><input type="radio" id="rdsold" name="rdo" value="rdsold"><label for="rdsold" class="branch">Sold</label></td>
-       </tr>
-       <tr>
-       <td colspan="2" align="center"><input type="radio" id="rdadditions" name="rdo" value="rdadditions"><label for="rdadditions" class="branch">Additions</label></td>
-       </tr>
-       </table>
-	  </fieldset>
-	</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();"></td><td align="right"><input type="button" class="myButton" name="btnPrint" id="btnPrint"  value="Print" onclick="funPrint();"></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	</table>
-	</fieldset>
+
+<!-- ===== LEFT SIDE ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr>
+        <td class="label-cell">From</td>
+        <td><div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td><div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div></td>
+    </tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr>
+        <td class="label-cell">Asset</td>
+        <td>
+            <input type="text"
+                   id="txtasset"
+                   name="txtasset"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   value='<s:property value="txtasset"/>'
+                   onkeydown="getAsset(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Group</td>
+        <td>
+            <input type="text"
+                   id="txtgroup"
+                   name="txtgroup"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 to Search"
+                   value='<s:property value="txtgroup"/>'
+                   onkeydown="getGroup(event);">
+            <input type="hidden"
+                   id="txtgroupno"
+                   name="txtgroupno"
+                   value='<s:property value="txtgroupno"/>'>
+        </td>
+    </tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <!-- REPORT TYPE (KEPT AS FIELDSET – SAFE) -->
+    <tr>
+        <td colspan="2">
+            <fieldset class="inner-fieldset">
+                <legend><label class="branch"><b>Report Type</b></label></legend>
+
+                <table width="100%">
+                    <tr>
+                        <td align="center">
+                            <input type="radio" id="rdall" name="rdo" value="rdall">
+                            <label for="rdall" class="branch">All</label>
+                        </td>
+                        <td align="center">
+                            <input type="radio" id="rdsold" name="rdo" value="rdsold">
+                            <label for="rdsold" class="branch">Sold</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="radio" id="rdadditions" name="rdo" value="rdadditions">
+                            <label for="rdadditions" class="branch">Additions</label>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </td>
+    </tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+    <tr>
+        <td align="center">
+            <button type="button"
+                    class="btn-submit"
+                    onclick="funClearInfo();">Clear</button>
+        </td>
+        <td align="center">
+            <button type="button"
+                    class="btn-submit"
+                    onclick="funPrint();">Print</button>
+        </td>
+    </tr>
+
+    <tr><td colspan="2">&nbsp;</td></tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="assetDiv"><jsp:include page="fixedAssetRegisterGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ===== RIGHT GRID ===== -->
+<td width="80%" valign="top">
+<table width="100%">
+<tr>
+    <td>
+        <div id="assetDiv">
+            <jsp:include page="fixedAssetRegisterGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+</td>
+
+</tr>
+</table>
+
 </div>
 
-<div id="assetDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="groupDetailsWindow">
-	<div></div><div></div>
-</div>
+<div id="assetDetailsWindow"><div></div><div></div></div>
+<div id="groupDetailsWindow"><div></div><div></div></div>
+
 </div>
 </body>
+
 </html>

@@ -17,23 +17,185 @@
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 
 <style type="text/css">
-.textbox {
-	border: 0;
-	height: 25px;
-	/* width: 20%; */
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-	-moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-	-webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-	-webkit-background-clip: padding-box;
-	outline: 0;
-}
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100% !important;
+    }
 
-#tabledata {
-	display: none;
-}
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    /* Fixed Top Section */
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    /* Filter Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* Scrollable Form Area */
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        color: #4e5e71;
+        font-weight: 600;
+        width: 95px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: #333;
+        box-sizing: border-box;
+        background-color: #ffffff;
+    }
+
+    .level-row { display: flex; align-items: center; gap: 6px; }
+    .level-input { width: 55px !important; text-align: center; }
+
+    /* Action Buttons (myButton style updated for Sidebar) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 12px !important;
+        border-radius: 6px !important;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 10px;
+        transition: background 0.2s;
+        display: block;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    /* RHS Visibility Fix */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 20px 100px 20px; /* Space to clear the totals bar */
+    }
+
+    .totals-bar {
+        background: #ffffff;
+        border-top: 1px solid #e1e8ed;
+        padding: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    .textbox {
+        border: 1px solid #ccd6e0;
+        height: 25px;
+        border-radius: 5px;
+        padding: 0 5px;
+        outline: 0;
+        background-color: #ffffff;
+    }
+
+    /* Global Resets */
+    html, body, #mainBG, .hidden-scrollbar {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    #tabledata { display: none; }
+    .branch { font-size: 13px; color: #4e5e71; font-weight: 600; }
+    
+    /* 1. Prevent horizontal overflow on the root and main containers */
+    html, body, .master-container, .main-content-wrapper {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+
+    /* 2. Force the grid area to handle only vertical scrolling */
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden; /* This kills the horizontal scrollbar */
+        padding: 20px 20px 140px 20px;
+    }
+
+    /* 3. Force tables to stay within their parent's width */
+    .scrollable-grid-area table, 
+    .totals-bar table {
+        table-layout: fixed; /* This prevents columns from pushing the width out */
+        width: 100% !important;
+        word-wrap: break-word;
+    }
+
+    /* 4. Ensure the totals bar doesn't cause an overflow */
+    .totals-bar {
+        width: 100%;
+        box-sizing: border-box; /* Includes padding in the width calculation */
+        overflow: hidden;
+    }
+
+    /* 5. Handle long text in cells so they don't force width expansion */
+    .scrollable-grid-area td, 
+    .totals-bar td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    
 </style>
 
 <script type="text/javascript">
@@ -633,218 +795,172 @@
 <body onload="getBranch();getSalesPerson();getCategory();">
 	<div id="mainBG" class="homeContent" data-type="background">
 		<div class='hidden-scrollbar'>
-			<table width="100%">
-				<tr>
-					<td width="20%">
-						<fieldset style="background: #ECF8E0;">
-							<table width="100%">
-								<jsp:include page="../../heading.jsp"></jsp:include>
+		<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <div class="filter-card" style="background: none !important; border: none !important;">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
+        </div>
 
-								<tr>
-									<td colspan="2">&nbsp;</td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Up To</label></td>
-									<td align="left"><div id="uptodate" name="uptodate"
-											value='<s:property value="uptodate"/>'></div></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Type</label></td>
-									<td align="left"><select id="cmbtype" name="cmbtype"
-										style="width: 40%;"
-										onchange="clearAccountInfo();getCategory();"
-										value='<s:property value="cmbtype"/>'>
-											<option value="">--Select--</option>
-											<option value="AR" selected>AR</option>
-											<option value="AP">AP</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Account</label></td>
-									<td align="left"><input type="text" id="txtaccid"
-										name="txtaccid" style="width: 60%; height: 20px;"
-										readonly="readonly" placeholder="Press F3 to Search"
-										value='<s:property value="txtaccid"/>'
-										onkeydown="getAccType(event);" /></td>
-								</tr>
-								<tr>
-									<td>&nbsp;</td>
-									<td><input type="text" id="txtaccname" name="txtaccname"
-										style="width: 100%; height: 20px;" readonly="readonly"
-										value='<s:property value="txtaccname"/>' tabindex="-1" /> <input
-										type="hidden" id="txtdocno" name="txtdocno"
-										value='<s:property value="txtdocno"/>' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Sales
-											Person</label></td>
-									<td><select id="cmbsalesperson" name="cmbsalesperson"
-										style="width: 100%;"
-										value='<s:property value="cmbsalesperson"/>'>
-											<option value="">--Select--</option>
-									</select> <input type="hidden" id="hidcmbsalesperson"
-										name="hidcmbsalesperson"
-										value='<s:property value="hidcmbsalesperson"/>' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Category</label></td>
-									<td><select id="cmbcategory" name="cmbcategory"
-										style="width: 100%;" value='<s:property value="cmbcategory"/>'>
-											<option value="">--Select--</option>
-									</select> <input type="hidden" id="hidcmbcategory" name="hidcmbcategory"
-										value='<s:property value="hidcmbcategory"/>' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Status</label></td>
-									<td align="left"><select id="cmbclientstatus"
-										style="width: 70%;" name="cmbclientstatus"
-										value='<s:property value="cmbclientstatus"/>'>
-											<option value=''>-- Select --</option>
-											<option value='0'>Active</option>
-											<option value='1'>Litigation</option>
-											<option value='2'>Dispute</option>
-											<option value='3'>Over Due</option>
-									</select> <input type="hidden" id="hidcmbclientstatus"
-										name="hidcmbclientstatus"
-										value='<s:property value="hidcmbclientstatus"/>' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Level 1</label></td>
-									<td align="left"><input type="text" id="txtlevel1from"
-										name="txtlevel1from"
-										style="width: 20%; height: 20px; text-align: center;"
-										readonly="readonly" value='0' />&nbsp;-&nbsp; <input
-										type="text" id="txtlevel1to" name="txtlevel1to"
-										style="width: 20%; height: 20px; text-align: center;"
-										onblur="changelevel1();" value='30' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Level 2</label></td>
-									<td align="left"><input type="text" id="txtlevel2from"
-										name="txtlevel2from"
-										style="width: 20%; height: 20px; text-align: center;"
-										readonly="readonly" value='31' />&nbsp;-&nbsp; <input
-										type="text" id="txtlevel2to" name="txtlevel2to"
-										style="width: 20%; height: 20px; text-align: center;"
-										onblur="changelevel2();" value='60' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Level 3</label></td>
-									<td align="left"><input type="text" id="txtlevel3from"
-										name="txtlevel3from"
-										style="width: 20%; height: 20px; text-align: center;"
-										readonly="readonly" value='61' />&nbsp;-&nbsp; <input
-										type="text" id="txtlevel3to" name="txtlevel3to"
-										style="width: 20%; height: 20px; text-align: center;"
-										onblur="changelevel3();" value='90' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Level 4</label></td>
-									<td align="left"><input type="text" id="txtlevel4from"
-										name="txtlevel4from"
-										style="width: 20%; height: 20px; text-align: center;"
-										readonly="readonly" value='91' />&nbsp;-&nbsp; <input
-										type="text" id="txtlevel4to" name="txtlevel4to"
-										style="width: 20%; height: 20px; text-align: center;"
-										onblur="changelevel4();" value='120' /></td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Level 5</label></td>
-									<td align="left"><input type="text" id="txtlevel5from"
-										name="txtlevel5from"
-										style="width: 20%; height: 20px; text-align: center;"
-										value='121' />&nbsp;>=</td>
-								</tr>
-								
-								<tr>
-									<td colspan="2" align="center">
-											<button class="myButton" type="button" id="btnIndividual"
-												name="btnIndividual" onclick="funOutStandingStatement();">Outstanding
-												Statement</button>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" align="center">
-											<button class="myButton" type="button" id="btncrrct"
-												name="btncrrct" onclick="funApplyingCrrct();">Applying Correct</button>
-										</td>
-								</tr>
-								<tr>
-									<td colspan="2" hidden="true" align="center">
-											<button class="myButton" type="button" id="btnIndividual"
-												name="btnIndividual" onclick="funauditletterprint();">Audit
-												Balance Confirmation Letter</button>
-										</td>
-								</tr>
-								<tr>
-									<td colspan="2" align="center">
-											<button class="myButton" type="button" id="btnApply"
-												name="btnApply" onclick="funAutoApply();">Auto
-												Apply</button>
-										</td>
-								</tr>
-								<tr>
-									<td colspan="2"><input type="hidden" id="txtacountno"
-										name="txtacountno" style="width: 100%; height: 20px;"
-										value='<s:property value="txtacountno"/>' /> <input
-										type="hidden" id="txtaccemail" name="txtaccemail"
-										value='<s:property value="txtaccemail"/>' /> <input
-										type="hidden" id="txtbalance" name="txtbalance"
-										value='<s:property value="txtbalance"/>' /> <input
-										type="hidden" id="txtbranch" name="txtbranch"
-										style="width: 100%; height: 20px;"
-										value='<s:property value="txtbranch"/>' /></td>
-								</tr>
-							</table>
-						</fieldset>
-					</td>
-					<td width="80%">
-						<table width="100%">
-							<tr>
-								<td><div id="ageingStatementDiv"><jsp:include
-											page="ageingStatementGrid.jsp"></jsp:include></div></td>
-							</tr>
-						</table>
-				</tr>
-			</table>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Up To</td>
+                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="cmbtype" name="cmbtype" onchange="clearAccountInfo();getCategory();" value='<s:property value="cmbtype"/>'>
+                                <option value="">--Select--</option>
+                                <option value="AR" selected>AR</option>
+                                <option value="AP">AP</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Account</td>
+                        <td>
+                            <input type="text" id="txtaccid" name="txtaccid" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1" style="margin-top:-5px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Sales Person</td>
+                        <td>
+                            <select id="cmbsalesperson" name="cmbsalesperson" value='<s:property value="cmbsalesperson"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                            <input type="hidden" id="hidcmbsalesperson" name="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Category</td>
+                        <td>
+                            <select id="cmbcategory" name="cmbcategory" value='<s:property value="cmbcategory"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                            <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Status</td>
+                        <td>
+                            <select id="cmbclientstatus" name="cmbclientstatus" value='<s:property value="cmbclientstatus"/>'>
+                                <option value=''>-- Select --</option>
+                                <option value='0'>Active</option>
+                                <option value='1'>Litigation</option>
+                                <option value='2'>Dispute</option>
+                                <option value='3'>Over Due</option>
+                            </select>
+                            <input type="hidden" id="hidcmbclientstatus" name="hidcmbclientstatus" value='<s:property value="hidcmbclientstatus"/>' />
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-			<table width="100%" >
-				<tr>
-				<td width="10%">&nbsp;</td>
-					<td width="5%" align="right"
-						style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;">Net
-						Total :&nbsp;</td>
-					<td width="10%" align="left"><input type="text"
-						class="textbox" id="txtnetbalance" name="txtnetbalance"
-						style="text-align: left;"
-						value='<s:property value="txtnetbalance"/>' /></td>
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Level 1</td>
+                        <td class="level-row">
+                            <input type="text" id="txtlevel1from" name="txtlevel1from" class="level-input" readonly value='0' />
+                            <span>-</span>
+                            <input type="text" id="txtlevel1to" name="txtlevel1to" class="level-input" onblur="changelevel1();" value='30' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Level 2</td>
+                        <td class="level-row">
+                            <input type="text" id="txtlevel2from" name="txtlevel2from" class="level-input" readonly value='31' />
+                            <span>-</span>
+                            <input type="text" id="txtlevel2to" name="txtlevel2to" class="level-input" onblur="changelevel2();" value='60' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Level 3</td>
+                        <td class="level-row">
+                            <input type="text" id="txtlevel3from" name="txtlevel3from" class="level-input" readonly value='61' />
+                            <span>-</span>
+                            <input type="text" id="txtlevel3to" name="txtlevel3to" class="level-input" onblur="changelevel3();" value='90' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Level 4</td>
+                        <td class="level-row">
+                            <input type="text" id="txtlevel4from" name="txtlevel4from" class="level-input" readonly value='91' />
+                            <span>-</span>
+                            <input type="text" id="txtlevel4to" name="txtlevel4to" class="level-input" onblur="changelevel4();" value='120' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Level 5</td>
+                        <td class="level-row">
+                            <input type="text" id="txtlevel5from" name="txtlevel5from" class="level-input" value='121' />
+                            <span style="font-weight: bold;">&ge;</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-					<td width="5%" align="right"
-						style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"><label
-						id="aedLabel">AED Total :</label></td>
-					<td width="10%" align="left"><label class="textbox" id="aedbalance" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"></label></td>
+            <button class="myButton" type="button" onclick="funOutStandingStatement();">Outstanding Statement</button>
+            <button class="myButton" type="button" onclick="funApplyingCrrct();">Applying Correct</button>
+            <button class="myButton" type="button" onclick="funAutoApply();">Auto Apply</button>
 
-					<td width="5%" align="right"
-						style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"><label
-						id="cadlabel">CAD Total :</label></td>
-					<td width="10%" align="left"><label class="textbox" id="cadbalance" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"></label></td>
+            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>' />
+            <input type="hidden" id="txtacountno" name="txtacountno" value='<s:property value="txtacountno"/>' />
+            <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>' />
+            <input type="hidden" id="txtbalance" name="txtbalance" value='<s:property value="txtbalance"/>' />
+            <input type="hidden" id="txtbranch" name="txtbranch" value='<s:property value="txtbranch"/>' />
+            <div hidden="true"><button type="button" onclick="funauditletterprint();">Audit Balance Letter</button></div>
+        </div>
+    </div>
 
-					<td width="5%" align="right"
-						style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"><label
-						id="chflabel">CHF Total :</label></td>
-					<td width="10%" align="left"><label class="textbox" id="chfbalance" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"></label></td>
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <div id="ageingStatementDiv">
+                            <jsp:include page="ageingStatementGrid.jsp"></jsp:include>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-					<td width="5%" align="right"
-						style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"><label
-						id="eurlabel">EUR Total :</label></td>
-					<td width="10%" align="left"><label class="textbox" id="eurbalance" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"></label></td>
+        <div class="totals-bar">
+            <table width="100%">
+                <tr>
+                    <td width="10%" align="right" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;">Net Total:</td>
+                    <td width="10%"><input type="text" class="textbox" id="txtnetbalance" name="txtnetbalance" readonly value='<s:property value="txtnetbalance"/>' /></td>
 
-					<td width="5%" align="right"
-						style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"><label
-						id="usdlabel">USD Total :</label></td>
-					<td width="10%" align="left"><label class="textbox" id="usdbalance" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;"></label></td>
-				</tr>
-			</table>
+                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">AED:</td>
+                    <td width="8%"><label class="textbox" id="aedbalance" style="display:block; line-height:25px;"></label></td>
+
+                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">CAD:</td>
+                    <td width="8%"><label class="textbox" id="cadbalance" style="display:block; line-height:25px;"></label></td>
+
+                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">CHF:</td>
+                    <td width="8%"><label class="textbox" id="chfbalance" style="display:block; line-height:25px;"></label></td>
+
+                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">EUR:</td>
+                    <td width="8%"><label class="textbox" id="eurbalance" style="display:block; line-height:25px;"></label></td>
+
+                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">USD:</td>
+                    <td width="8%"><label class="textbox" id="usdbalance" style="display:block; line-height:25px;"></label></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 		</div>
 
 		<div id="accountDetailsWindow">

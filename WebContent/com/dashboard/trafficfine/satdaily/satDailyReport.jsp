@@ -7,7 +7,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" /> 
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+ 
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -173,63 +271,163 @@
 </script>
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>  
-	<tr>
-		<td align="right"><label class="branch">Salik Source</label></td>
-    	<td align="left"><select name="cmbsaliksource" id="cmbsaliksource" style="width:125px;"><option value="">All</option><option value="AUH">AUH</option><option value="DXB">DXB</option></select></td>
-	</tr> 
-	<tr><td colspan="2">
-	  <fieldset><legend><b><label class="branch">Report Type</label></b></legend>
-	   <table width="100%">
-       <tr>
-       <td width="50%" align="left"><input type="radio" id="rdticketdate" name="rddatefilter" value="rdticketdate"><label for="rdticketdate" class="branch">Ticket Date</label></td>
-       <td width="50%" align="left"><input type="radio" id="rddownloaddate" name="rddatefilter" value="rddownloaddate"><label for="rddownloaddate" class="branch">Download Date</label></td>
-       </tr>
-       <tr>
-       <td width="50%" align="left"><input type="radio" id="rdsalik" name="rdcategory" onchange="fundisable();" value="rdsalik"><label for="rdsalik" class="branch">Salik</label></td>
-       <td width="50%" align="left"><input type="radio" id="rdtraffic" name="rdcategory" onchange="fundisable();" value="rdtraffic"><label for="rdtraffic" class="branch">Traffic</label></td>
-       </tr>
-       </table>
-	  </fieldset>
-	</td></tr>
-	<tr>
-		<td align="right"><label class="branch">User</label></td>
-    	<td align="left" style="width:100px;" ><input type="text" name="username" id="username" style="height:18px;" onkeydown="funGetUsername(event);">   <button style="color:#e63946;text-align:center;border:none;font-weight: bold;" onclick="clearUserName()">X</button></td>
-	</tr>
-	<tr><td colspan="2"><div id="satCountDiv"><jsp:include page="satCountGrid.jsp"></jsp:include></div></td></tr> 
-	<tr><td colspan="2"><textarea id="searchdetails" hidden="true" name="searchdetails" style="resize:none;font: 10px Tahoma;width:100%;" rows="10"  readonly></textarea></td></tr>
-	</table>
-	</fieldset>
+
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
+
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">From</td>
+        <td><div id="fromdate" name="fromdate"
+            value='<s:property value="fromdate"/>'></div></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td><div id="todate" name="todate"
+            value='<s:property value="todate"/>'></div></td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Salik Source</td>
+        <td>
+            <select id="cmbsaliksource" name="cmbsaliksource" class="master-input">
+                <option value="">All</option>
+                <option value="AUH">AUH</option>
+                <option value="DXB">DXB</option>
+            </select>
+        </td>
+    </tr>
+
+    <!-- REPORT TYPE (NO GREEN LINES) -->
+    <tr>
+        <td colspan="2">
+            <div class="filter-card" style="margin-top:10px;">
+
+                <div style="font-weight:600;color:#1a3a5f;margin-bottom:6px;">
+                    Report Type
+                </div>
+
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <input type="radio" id="rdticketdate"
+                                   name="rddatefilter"
+                                   value="rdticketdate">
+                            <label for="rdticketdate" class="branch">
+                                Ticket Date
+                            </label>
+                        </td>
+                        <td>
+                            <input type="radio" id="rddownloaddate"
+                                   name="rddatefilter"
+                                   value="rddownloaddate">
+                            <label for="rddownloaddate" class="branch">
+                                Download Date
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="radio" id="rdsalik"
+                                   name="rdcategory"
+                                   value="rdsalik"
+                                   onchange="fundisable();">
+                            <label for="rdsalik" class="branch">
+                                Salik
+                            </label>
+                        </td>
+                        <td>
+                            <input type="radio" id="rdtraffic"
+                                   name="rdcategory"
+                                   value="rdtraffic"
+                                   onchange="fundisable();">
+                            <label for="rdtraffic" class="branch">
+                                Traffic
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">User</td>
+        <td>
+            <div style="display:flex;gap:6px;align-items:center;">
+                <input type="text"
+                       id="username"
+                       name="username"
+                       class="master-input"
+                       onkeydown="funGetUsername(event);">
+                <button type="button"
+                        onclick="clearUserName()"
+                        class="btn-clear">✕</button>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <div id="satCountDiv">
+                <jsp:include page="satCountGrid.jsp"></jsp:include>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <textarea id="searchdetails"
+                      name="searchdetails"
+                      class="master-textarea"
+                      hidden
+                      readonly></textarea>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="satSalikDiv"><jsp:include page="satSalikGrid.jsp"></jsp:include></div>
-			 <div id="satTrafficDiv"><jsp:include page="satTrafficGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ===== RIGHT PANEL ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="satSalikDiv">
+            <jsp:include page="satSalikGrid.jsp"></jsp:include>
+        </div>
+
+        <div id="satTrafficDiv">
+            <jsp:include page="satTrafficGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
-<div id="userwindow">
-   <div ></div>
-</div>
+
+</td>
+</tr>
+</table>
+
+<div id="userwindow"><div></div></div>
+
 </div>
 </div>
 </body>
+
 </html>

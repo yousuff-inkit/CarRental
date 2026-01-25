@@ -10,43 +10,104 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: #31b0d5;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -340,139 +401,202 @@
 
 </head>
 <body onload="getBranch();setValues();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-	
-    <tr>
-	 <td width="35%" align="right"><label class="branch">From</label></td>
-     <td width="65%" align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>
-	<tr>
-	<td align="center" colspan="2">
-	<input type="radio" name="rdomode" id="rdocancel" checked onchange="setMode();"><label class="branch" for="rdocancel">Cancel</label>&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="rdomode" id="rdoedit" onchange="setMode();"><label class="branch" for="rdoedit">Edit</label>
-	</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="branch">Agmt Type</label></td>
-		<td align="left"><select name="cmbagmttype" id="cmbagmttype" style="width:65%;"><option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option></select></td>
-	</tr>
-	<tr>
-		<td align="right"><label class="branch">Agmt No</label></td>
-		<td align="left"><input type="hidden" name="txtagmtno" id="txtagmtno" placeholder="Press F3 to Search" readonly style="height:16px;">
-		<input type="text" name="txtagmtvocno" id="txtagmtvocno" placeholder="Press F3 to Search" readonly style="height:16px;">
-		</td>
-	</tr>
-	<tr>
-		<td align="right"><label class="branch">Fleet No</label></td>
-		<td align="left"><input type="text" name="txtfleetno" id="txtfleetno" placeholder="Press F3 to Search" readonly style="height:16px;"></td>
-	</tr>
-	<tr>
-		<td colspan="2"><fieldset>
-		<table width="243">
-		<tr>
-			<td width="53" align="right">
-				<label class="branch">Date</label>
-			</td>
-			<td width="178" align="left">
-				<div id="canceldate" name="canceldate"></div>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<label class="branch">Time</label>
-			</td>
-			<td align="left">
-				<div id="canceltime" name="canceltime"></div>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<label class="branch">KM</label>
-			</td>
-			<td align="left">
-				<input type="text" name="cancelkm" id="cancelkm" style="height:16px;">
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<label class="branch">Fuel</label>
-			</td>
-			<td align="left">
-				<select name="cmbcancelfuel" id="cmbcancelfuel"  style="width:70%;">
-					<option value="">-Select-</option>
-					<option value=0.000>Level 0/8</option>
-					<option value=0.125>Level 1/8</option>
-					<option value=0.250>Level 2/8</option>
-					<option value=0.375>Level 3/8</option>
-					<option value=0.500>Level 4/8</option>
-    				<option value=0.625>Level 5/8</option>
-    				<option value=0.750>Level 6/8</option>
-    				<option value=0.875>Level 7/8</option>
-    				<option value=1.000>Level 8/8</option>
-    			</select>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<label class="branch">Branch</label>
-			</td>
-			<td align="left">
-				<select name="cmbcancelbranch" id="cmbcancelbranch" onchange="getLocation(this.value);"  style="width:70%;"><option value="">--Select--</option></select>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<label class="branch">Location</label>
-			</td>
-			<td align="left">
-				<select name="cmbcancelloc" id="cmbcancelloc"  style="width:70%;"><option value="">--Select--</option></select>
-			</td>
-		</tr>
-		</table>
-		</fieldset></td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-			<button type="button" name="btncancelrep" id="btncancelrep" class="myButtons" onclick="funCancelRep();">Cancel Rep</button>
-			<button type="button" name="btneditrep" id="btneditrep" class="myButtons" onclick="funEditRep();">Edit Rep</button>&nbsp;&nbsp;
-			<button type="button" name="btnopenrep" id="btnopenrep" class="myButtons" onclick="funOpenRep();">Open Rep</button>&nbsp;&nbsp;
-			<button type="button" name="btnclear" id="btnclear" class="myButtons" onclick="funClearData();">Clear</button>
-			
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-		<br><br><br><br>
-		</td>
-	</tr>
-	</table>
-	</fieldset>
+
+<!-- ================= LEFT PANEL ================= -->
+<td width="20%" valign="top">
+
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- FIXED HEADER -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td class="label-cell">From</td>
+                <td><div id="fromdate" name="fromdate"
+                     value='<s:property value="fromdate"/>'></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">To</td>
+                <td><div id="todate" name="todate"
+                     value='<s:property value="todate"/>'></div></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <input type="radio" name="rdomode" id="rdocancel"
+                           checked onchange="setMode();">
+                    <label class="branch" for="rdocancel">Cancel</label>
+
+                    &nbsp;&nbsp;&nbsp;
+
+                    <input type="radio" name="rdomode" id="rdoedit"
+                           onchange="setMode();">
+                    <label class="branch" for="rdoedit">Edit</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Agmt Type</td>
+                <td>
+                    <select name="cmbagmttype" id="cmbagmttype">
+                        <option value="">--Select--</option>
+                        <option value="RAG">Rental</option>
+                        <option value="LAG">Lease</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Agmt No</td>
+                <td>
+                    <input type="hidden" name="txtagmtno" id="txtagmtno">
+                    <input type="text" name="txtagmtvocno" id="txtagmtvocno"
+                           placeholder="Press F3 to Search" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Fleet No</td>
+                <td>
+                    <input type="text" name="txtfleetno" id="txtfleetno"
+                           placeholder="Press F3 to Search" readonly>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- CANCEL DETAILS CARD -->
+        <div class="filter-card">
+        <table class="filter-table">
+
+            <tr>
+                <td class="label-cell">Date</td>
+                <td><div id="canceldate"></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Time</td>
+                <td><div id="canceltime"></div></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">KM</td>
+                <td><input type="text" id="cancelkm"></td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Fuel</td>
+                <td>
+                    <select id="cmbcancelfuel">
+                        <option value="">-Select-</option>
+                        <option value="0.000">Level 0/8</option>
+                        <option value="0.125">Level 1/8</option>
+                        <option value="0.250">Level 2/8</option>
+                        <option value="0.375">Level 3/8</option>
+                        <option value="0.500">Level 4/8</option>
+                        <option value="0.625">Level 5/8</option>
+                        <option value="0.750">Level 6/8</option>
+                        <option value="0.875">Level 7/8</option>
+                        <option value="1.000">Level 8/8</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Branch</td>
+                <td>
+                    <select id="cmbcancelbranch"
+                            onchange="getLocation(this.value);">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">Location</td>
+                <td>
+                    <select id="cmbcancelloc">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+            <button class="btn-submit" type="button" onclick="funCancelRep();">
+                Cancel Rep
+            </button>
+
+            <button class="btn-submit" type="button" onclick="funEditRep();">
+                Edit Rep
+            </button>
+
+            <button class="btn-submit" type="button" onclick="funOpenRep();">
+                Open Rep
+            </button>
+
+            <button class="btn-submit" type="button" onclick="funClearData();">
+                Clear
+            </button>
+        </div>
+
+    </div>
+</div>
+</div>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="replacediv"><jsp:include page="repCancelGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+
+<!-- ================= RIGHT PANEL ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="replacediv">
+            <jsp:include page="repCancelGrid.jsp"></jsp:include>
+        </div>
+    </td>
 </tr>
 </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
-</div> 
-<input type="hidden" name="outkm" id="outkm">
-<input type="hidden" name="outfuel" id="outfuel">
-<input type="hidden" name="outbrch" id="outbrch">
-<input type="hidden" name="outloc" id="outloc">
-<div id="outdate" hidden="true"></div>
-<div id="outtime" hidden="true"></div>
+</div>
+
+<!-- HIDDEN FIELDS -->
+<input type="hidden" id="outkm">
+<input type="hidden" id="outfuel">
+<input type="hidden" id="outbrch">
+<input type="hidden" id="outloc">
+<div id="outdate" hidden></div>
+<div id="outtime" hidden></div>
+
 </body>
+
 </html>

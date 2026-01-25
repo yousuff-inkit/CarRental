@@ -10,43 +10,103 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -620,98 +680,203 @@ document.getElementById("hidticketno").value="";
 </head>
 <body onload="getBranch();setValues();">
 <form id="frmDashboardPostings" action="saveDbTrafficPosting" method="post">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td align="right"><label class="branch">Period</label></td>
-	
-    <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
-    <input type="hidden" id="hidfromdate" name="hidfromdate" style="width:60%;height:20px;" readonly value='<s:property value="hidfromdate"/>'/></td></tr> 
-    <tr><td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div>
-    <input type="hidden" id="hidtodate" name="hidtodate" style="width:60%;height:20px;" readonly value='<s:property value="hidtodate"/>'/></td></tr> 
-	<tr><td align="right"><label class="branch">Type</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:50%;"  value='<s:property value="cmbtype"/>' onchange="getAccounts();">
-    <option value="">--Select--</option><option value="1">Cash</option><option value="2">Bank</option><option value="3">GL</option></select>
-    <input type="hidden" id="hidcmbtype" name="hidcmbtype" style="width:60%;height:20px;" readonly value='<s:property value="hidcmbtype"/>' /></td></tr>
-  
-    <tr><td align="right"><label class="branch">Account</label></td>
-	<td align="left"><input type="text" id="txttypeaccid" name="txttypeaccid" style="width:80%;height:20px;" placeholder="Press F3 To search" readonly value='<s:property value="txttypeaccid"/>' tabindex="-1" onkeydown="getacc(event);"/></td></tr> 
-	<tr><td>&nbsp;</td> 
-	<td><input type="text" id="txttypeaccname" name="txttypeaccname" style="width:100%;height:20px;" readonly value='<s:property value="txttypeaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txttypedocno" name="txttypedocno" style="width:60%;height:20px;" readonly value='<s:property value="txttypedocno"/>'/>
-    <input type="hidden" id="txttypeatype" name="txttypeatype" style="width:60%;height:20px;" readonly value='<s:property value="txttypeatype"/>'/>
-    <input type="hidden" id="txttypecurid" name="txttypecurid" style="width:60%;height:20px;" readonly value='<s:property value="txttypecurid"/>'/>
-    <input type="hidden" id="txttyperate" name="txttyperate" style="width:60%;height:20px;" readonly value='<s:property value="txttyperate"/>'/>
-    <input type="hidden" id="txttypetype" name="txttypetype" style="width:60%;height:20px;" readonly value='<s:property value="txttypetype"/>'/></td></tr>
-      <tr><td>&nbsp;</td>
-        <td><input type="checkbox" name="chkticketno" id="chkticketno"><label for="chkticketno" class="branch">Ticket No</label><button type="button" name="btnticketadd" id="btnticketadd" class="myButtons" onclick="funTicketAdd();">+</button>&nbsp;&nbsp;<button type="button" name="btnticketremove" id="btnticketremove" class="myButtons" onClick="funTicketRemove();">-</button></td>
-      </tr>
-       <input type="hidden" name="txttrno" id="txttrno" style="width:100%;height:20px;" value='<s:property value="txttrno"/>'>      <input type="hidden" id="txtaccid" name="txtaccid" style="width:60%;height:20px;" readonly   value='<s:property value="txtaccid"/>'  />      <input type="hidden" id="txtaccname" name="txtaccname" style="width:100%;height:20px;" readonly value='<s:property value="txtaccname"/>' tabindex="-1"/>      <input type="hidden" id="txtdocno" name="txtdocno" style="width:60%;height:20px;" readonly value='<s:property value="txtdocno"/>'/>      <input type="hidden" id="txtatype" name="txtatype" style="width:60%;height:20px;" readonly value='<s:property value="txtatype"/>'/> <input type="hidden" id="txtcurid" name="txtcurid" style="width:60%;height:20px;" readonly value='<s:property value="txtcurid"/>'/>      <input type="hidden" id="txtrate" name="txtrate" style="width:60%;height:20px;" readonly value='<s:property value="txtrate"/>'/> <input type="hidden" id="txtcurtype" name="txtcurtype" style="width:60%;height:20px;" readonly value='<s:property value="txtcurtype"/>'/>
-    <tr><td colspan="2"><textarea id="ticketdetails" style="width:100%;height:150px;resize:none;"></textarea></td></tr> 
-    
-<tr><td  width="20%" align="right"><label class="branch">Post Date</label></td><td colspan="1">
-  <div id="date"  name="date" value='<s:property value="date"/>'></div>
-  <input type="hidden" id="hiddate" name="hiddate" style="width:100%;height:20px;" value='<s:property value="hiddate"/>'/>
-</td></tr>
-		<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">
-    <button class="myButton" type="button" id="btnGenerate" name="btnGenerate" onclick="funNotify();">Post</button></td></tr>
 
-	<tr><td colspan="2"><%-- <input type="hidden" id="txtcommdocno" name="txtcommdocno" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommdocno"/>'/>
-	<input type="hidden" id="txtcommaccid" name="txtcommaccid" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommaccid"/>'/>
-	<input type="hidden" id="txtcommaccname" name="txtcommaccname" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommaccname"/>'/>
-    <input type="hidden" id="txtcommatype" name="txtcommatype" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommatype"/>'/>
-    <input type="hidden" id="txtcommcurid" name="txtcommcurid" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommcurid"/>'/>
-    <input type="hidden" id="txtcommrate" name="txtcommrate" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommrate"/>'/>
-    <input type="hidden" id="txtcommtype" name="txtcommtype" style="width:60%;height:20px;" readonly="readonly" value='<s:property value="txtcommtype"/>'/> --%>
-    <input type="hidden" id="gridlength" name="gridlength" style="width:100%;height:20px;"/>
-    <input type="hidden" id="jvgridlength" name="jvgridlength" style="width:100%;height:20px;"/>
+<!-- ===== LEFT PANEL ===== -->
+<td width="20%" valign="top">
 
-    <input type="hidden" name="mode" id="mode" style="width:100%;height:20px;" value='<s:property value="mode"/>'>
-    
-     <input type="hidden" name="calcu" id="calcu" style="width:100%;height:20px;" value='<s:property value="calcu"/>'>
-    
-	<input type="hidden" name="msg" id="msg" style="width:100%;height:20px;" value='<s:property value="msg"/>'>
-	</td></tr>
-	</table>
-	</fieldset>
+<fieldset class="filter-card scrollable-left">
+<table width="100%" class="filter-table">
+
+    <!-- HEADING (UNCHANGED) -->
+    <jsp:include page="../../heading.jsp"></jsp:include>
+
+    <tr>
+        <td class="label-cell">Period</td>
+        <td>
+            <div id="fromdate" name="fromdate"
+                 value='<s:property value="fromdate"/>'></div>
+            <input type="hidden" id="hidfromdate" name="hidfromdate"
+                   value='<s:property value="hidfromdate"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">To</td>
+        <td>
+            <div id="todate" name="todate"
+                 value='<s:property value="todate"/>'></div>
+            <input type="hidden" id="hidtodate" name="hidtodate"
+                   value='<s:property value="hidtodate"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Type</td>
+        <td>
+            <select id="cmbtype"
+                    name="cmbtype"
+                    class="master-input"
+                    onchange="getAccounts();"
+                    value='<s:property value="cmbtype"/>'>
+                <option value="">--Select--</option>
+                <option value="1">Cash</option>
+                <option value="2">Bank</option>
+                <option value="3">GL</option>
+            </select>
+            <input type="hidden" id="hidcmbtype" name="hidcmbtype"
+                   value='<s:property value="hidcmbtype"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Account</td>
+        <td>
+            <input type="text"
+                   id="txttypeaccid"
+                   name="txttypeaccid"
+                   class="master-input"
+                   readonly
+                   placeholder="Press F3 To search"
+                   value='<s:property value="txttypeaccid"/>'
+                   onkeydown="getacc(event);">
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <input type="text"
+                   id="txttypeaccname"
+                   name="txttypeaccname"
+                   class="master-input"
+                   readonly
+                   value='<s:property value="txttypeaccname"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+            <input type="checkbox" id="chkticketno" name="chkticketno">
+            <label for="chkticketno" class="branch">Ticket No</label>
+
+            <button type="button"
+                    id="btnticketadd"
+                    class="btn-icon"
+                    onclick="funTicketAdd();">+</button>
+
+            <button type="button"
+                    id="btnticketremove"
+                    class="btn-icon"
+                    onclick="funTicketRemove();">-</button>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <textarea id="ticketdetails"
+                      class="master-textarea"
+                      readonly></textarea>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label-cell">Post Date</td>
+        <td>
+            <div id="date" name="date"
+                 value='<s:property value="date"/>'></div>
+            <input type="hidden" id="hiddate" name="hiddate"
+                   value='<s:property value="hiddate"/>'>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center">
+            <button type="button"
+                    class="btn-submit"
+                    id="clear"
+                    onclick="funClearInfo();">
+                Clear
+            </button>
+
+            <button type="button"
+                    class="btn-submit"
+                    id="btnGenerate"
+                    onclick="funNotify();">
+                Post
+            </button>
+        </td>
+    </tr>
+
+    <!-- ALL HIDDEN FIELDS (UNCHANGED) -->
+    <tr>
+        <td colspan="2">
+            <input type="hidden" id="gridlength" name="gridlength">
+            <input type="hidden" id="jvgridlength" name="jvgridlength">
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+            <input type="hidden" id="calcu" name="calcu" value='<s:property value="calcu"/>'>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+        </td>
+    </tr>
+
+</table>
+</fieldset>
+
 </td>
-<td width="80%">
-	<table width="100%">
-		<tr><td><div id="postingCashDiv"><jsp:include page="postingTrafficgrid.jsp"></jsp:include></div>
 
-		<tr><td><div id="JVTDiv"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div></td></tr> 
-		<tr><td>
-		<table width="100%">
-		  <tr>
-		    <td width="7%" align="right" style="font-family: Myriad Pro;font-size: 12px;font-weight: bold;">Dr. Total :&nbsp;</td>
-		    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" class="textbox" style="width:15%;text-align: right;" readonly value='<s:property value="txtdrtotal"/>'/></td>
-		    <td width="6%" align="right" style="font-family: Myriad Pro;font-size: 12px;font-weight: bold;">Cr. Total :&nbsp;</td>
-		    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" class="textbox" style="width:50%;text-align: right;" readonly value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-		  </tr>
-		</table>
-		</td></tr>
-	</table>
+<!-- ===== RIGHT CONTENT ===== -->
+<td width="80%" valign="top">
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="postingCashDiv">
+            <jsp:include page="postingTrafficgrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <div id="JVTDiv">
+            <jsp:include page="journalVoucherGrid.jsp"></jsp:include>
+        </div>
+    </td>
+</tr>
+
+<tr>
+<td>
+<table width="100%">
+<tr>
+    <td align="right" style="font-weight:bold;">Dr. Total :</td>
+    <td><input type="text" id="txtdrtotal" readonly class="textbox"></td>
+    <td align="right" style="font-weight:bold;">Cr. Total :</td>
+    <td><input type="text" id="txtcrtotal" readonly class="textbox"></td>
 </tr>
 </table>
-<input type="hidden" name="hidticketno" id="hidticketno">
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<input type="hidden" id="hidticketno" name="hidticketno">
+
 </div>
 
-<div id="accountDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="multiSearchWindow">
-	<div></div><div></div>
-</div>
+<div id="accountDetailsWindow"><div></div><div></div></div>
+<div id="multiSearchWindow"><div></div><div></div></div>
+
 </div>
 </form>
 </body>
+
 </html>

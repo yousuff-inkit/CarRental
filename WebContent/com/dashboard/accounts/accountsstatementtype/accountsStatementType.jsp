@@ -12,87 +12,142 @@
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 <style type="text/css">
-.account {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	height: 28px;
-	font-family: Myriad Pro;
-	font-weight: bold;
-}
-.accname {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	font-family: comic sans ms;
-}
-.textbox {
-    border: 0;
-    height: 25px;
-    width: 20%;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -moz-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-box-shadow: 1px 1px 0 0 #E0ECF8, 5px 5px 40px 2px #E0ECF8 inset;
-    -webkit-background-clip: padding-box;
-    outline: 0;
-}
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
 
-.status {
-	color: #FD8725;
-	font-family: comic sans ms;
-	font-size: 25px;
-	font-weight: bold;
-}
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
 
-#lblclientstatus {
-  -moz-animation-duration: 1s;
-  -moz-animation-name: blink;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-direction: alternate;
-  
-  -webkit-animation-duration: 1s;
-  -webkit-animation-name: blink;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-  
-  animation-duration: 1s;
-  animation-name: blink;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
 
-@-moz-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
 
-@-webkit-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
 
-@keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
-}
+    /* HARD RESET: Removing all light-green/legacy backgrounds from every element */
+    .filter-card *, 
+    fieldset, 
+    legend, 
+    .branch, 
+    td, 
+    tr, 
+    span, 
+    label, 
+    div[name="fromdate"], 
+    div[name="todate"],
+    #lblwithoutxl,
+    #lblwithxl {
+        background-color: transparent !important;
+        background: none !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        color: #4e5e71;
+        font-weight: 600;
+        width: 85px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: #333;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Scrollbar Kill */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px 20px 80px 20px;
+    }
+
+    .totals-bar {
+        background: #ffffff;
+        border-top: 2px solid #2563eb;
+        padding: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+    }
+
+    /* Animation & Status */
+    .status { color: #FD8725; font-size: 20px; font-weight: bold; }
+    #lblclientstatus { animation: blink 1s infinite alternate; }
+    @keyframes blink { from { opacity: 1; } to { opacity: 0; } }
+
+    /* Buttons */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important;
+        border: none !important;
+        padding: 10px !important;
+        border-radius: 6px !important;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 5px;
+    }
 </style>
 	<%
 	String mod = request.getParameter("mod")==null?"":request.getParameter("mod").toString();   
@@ -487,70 +542,102 @@
 <div id="mainBG" class="homeContent" data-type="background"> 
 <form id="frmAccountStatementType" action="saveAccountStatementType" method="post" autocomplete="off">
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-		<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="3">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Period</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" onchange="getAccountFromPeriod();" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>  
-	<tr><td colspan="2">&nbsp;</td></tr> 
-    <tr><td align="right"><label class="branch">Account</label></td> 
-	<td align="left"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccTypeFrom(event);"/></td></tr> 
-	<tr><td>&nbsp;</td>
-	<td><input type="text" id="txtaccname" name="txtaccname" style="width:100%;height:20px;" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>'/></td></tr> 
-	<tr><td colspan="3" align="center">&nbsp;<label class="status" id="lblclientstatus" name="lblclientstatus"><s:property value="lblclientstatus"/></label></td></tr>
-	<tr>
-    <td align="center" width="25%"><input type="radio" id="rdbnxlshow" name="rdbnxl" onchange="funxlshowcheck();" value="Show xl" checked="checked"><label width="20%" id="lblwithoutxl" >Print</label></td>
-    <td align="center"><input type="radio" id="rdbnxlhide" name="rdbnxl" onchange="funxlshowcheck();" value="Hide xl" ><label id="lblwithxl" >With Excel</label>
-    							  <input type="hidden" id="xlstat" name="xlstat" value="0" /></td>
-    </tr>
-	<tr><td colspan="3" align="center"><input type="checkbox" id="chckopnprint" name="chckopnprint" value="" onchange="opnprintcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" /> 
-    <input type="hidden" id="hidchckopnprint" name="hidchckopnprint" value='<s:property value="hidchckopnprint"/>'/><label class="branch">OPN</label>&nbsp;&nbsp;&nbsp;
-    
-    <tr><td colspan="2" align="center"><button class="myButton" type="button" id="btnPrintAccount" name="btnPrintAccount" onclick="funPrintAccountStatement(event);">Account Statement</button></td></tr>
-    <tr><td colspan="2" align="center"><button class="myButton" type="button" id="btnPrintAccountAll" name="btnPrintAccountAll" onclick="funPrintAccountStatementAll(event);">Account Statement All</button></td></tr>
-    
-	
-	<tr><td colspan="2" align="center">&nbsp;&nbsp;&nbsp;<button class="myButton" type="button" id="btnRAPrintAccount" name="btnRAPrintAccount" style="width:63%;" onclick="funPrintRAwise(event);">RA wise Print</button></td></tr>
-    
-    <tr><td colspan="2" align="center">&nbsp;<button class="myButton" type="button" id="btnPrintAccountStmt" name="btnPrintAccountStmt" onclick="funPrintARProjectWise(event);">Project Wise Print</button></td></tr>
-	
-	
-	<tr><td colspan="2">&nbsp; <input type="hidden" id="hidbalanceinconfig" name="hidbalanceinconfig" value='<s:property value="hidbalanceinconfig"/>'/></td></tr>  
-	<tr><td colspan="2">&nbsp; <input type="hidden" id="hidacStmtgmtDetailsConfig" name="hidacStmtgmtDetailsConfig" value='<s:property value="hidacStmtgmtDetailsConfig"/>'/></td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-	    <tr><td><label class="account">Account :&nbsp;</label><label class="accname" name="lblaccountname" id="lblaccountname"></label></td></tr> 
-		<tr>
-			 <td><div id="accountsStatementDiv"><jsp:include page="accountsStatementTypeGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-</tr>
-</table>
-<table width="100%">
-<tr>
-		<td width="92%" align="right" style="font-family: Myriad Pro;font-size: 12px;font-weight: bold;">Net Amount :&nbsp;</td>
-        <td width="8%" align="left"><input type="text" class="textbox" id="txtnetamount" name="txtnetamount" style="width:80%;text-align: right;" value='<s:property value="txtnetamount"/>'/></td>
-</tr>
-</table>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Period</td>
+                        <td><div id="fromdate" name="fromdate" onchange="getAccountFromPeriod();" value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Account</td>
+                        <td><input type="text" id="txtaccid" name="txtaccid" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccTypeFrom(event);"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1" style="margin-top:-5px;"/>
+                            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                            <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>'/>
+                        </td>
+                    </tr>
+                </table>
+                <div align="center" style="margin-top:10px;">
+                    <label class="status" id="lblclientstatus"><s:property value="lblclientstatus"/></label>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <table width="100%">
+                    <tr>
+                        <td align="center">
+                            <input type="radio" id="rdbnxlshow" name="rdbnxl" onchange="funxlshowcheck();" value="Show xl" checked="checked">
+                            <label class="branch" for="rdbnxlshow" id="lblwithoutxl">Print</label>
+                        </td>
+                        <td align="center">
+                            <input type="radio" id="rdbnxlhide" name="rdbnxl" onchange="funxlshowcheck();" value="Hide xl">
+                            <label class="branch" for="rdbnxlhide" id="lblwithxl">With Excel</label>
+                            <input type="hidden" id="xlstat" name="xlstat" value="0" />
+                        </td>
+                    </tr>
+                </table>
+                <div align="center" style="margin-top:15px; border-top: 1px solid #eee; padding-top: 10px;">
+                    <input type="checkbox" id="chckopnprint" name="chckopnprint" onchange="opnprintcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" />
+                    <label class="branch" id="lblopn">OPN</label>
+                    <input type="hidden" id="hidchckopnprint" name="hidchckopnprint" value='<s:property value="hidchckopnprint"/>'/>
+                </div>
+            </div>
+
+            <button class="myButton" type="button" id="btnPrintAccount" onclick="funPrintAccountStatement(event);">Account Statement</button>
+            <button class="myButton" type="button" id="btnPrintAccountAll" onclick="funPrintAccountStatementAll(event);">Account Statement All</button>
+            <button class="myButton" type="button" id="btnRAPrintAccount" onclick="funPrintRAwise(event);">RA wise Print</button>
+            <button class="myButton" type="button" id="btnPrintAccountStmt" onclick="funPrintARProjectWise(event);">Project Wise Print</button>
+
+            <input type="hidden" id="hidbalanceinconfig" name="hidbalanceinconfig" value='<s:property value="hidbalanceinconfig"/>'/>
+            <input type="hidden" id="hidacStmtgmtDetailsConfig" name="hidacStmtgmtDetailsConfig" value='<s:property value="hidacStmtgmtDetailsConfig"/>'/>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div style="margin-bottom:15px; border-bottom: 1px solid #e1e8ed; padding-bottom: 10px;">
+                <label style="color:#1a3a5f; font-weight:bold; font-size:14px;">Account :</label>
+                <label style="color:#2563eb; font-weight:bold;" name="lblaccountname" id="lblaccountname"></label>
+            </div>
+            <div id="accountsStatementDiv">
+                <jsp:include page="accountsStatementTypeGrid.jsp"></jsp:include>
+            </div>
+        </div>
+
+        <div class="totals-bar">
+            <table width="100%">
+                <tr>
+                    <td align="right" style="font-size:13px; font-weight:bold; color:#1a3a5f;">Net Amount :&nbsp;</td>
+                    <td width="150px">
+                        <input type="text" id="txtnetamount" name="txtnetamount" readonly 
+                               style="text-align: right; font-weight: bold; color: #2563eb; background: #f8fafc !important; border: 1px solid #ccd6e0; border-radius: 4px; height: 30px;" 
+                               value='<s:property value="txtnetamount"/>'/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 
 <input type="hidden" id="txtaccountperiodfrom" name="txtaccountperiodfrom" value='<s:property value="txtaccountperiodfrom"/>'/>
 </div>

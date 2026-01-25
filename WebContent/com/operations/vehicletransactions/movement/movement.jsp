@@ -315,6 +315,37 @@ h2::before {
     border-radius: 4px;
     filter: blur(0.6px);
 }
+.type-acc-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.left-fields {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* pushes Doc No to extreme right */
+.right-docno {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#txtfleetno {
+    width: 160px;
+}
+
+#txtfleetname {
+    width: 260px;
+}
+
+.right-docno input {
+    width: 120px;
+}
 
 </style>
 
@@ -2263,29 +2294,69 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 <div class='receipt-header'>
 <div class = "section_row">
 <h2>Vehicle Movement Opening Info</h2>
-<div class="form-group type-acc-row" style="margin-left:-45px">
+<div class="form-group type-acc-row">
+
   
+    <div class="form-group type-acc-row">
+
+    <!-- Date -->
     <label>Date</label>
-    <div id='date' name='date' value='<s:property value="date"/>'></div>               
-    <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
-    <label style="margin-left:90px;">Fleet No</label>
-    <input type="text" id="txtfleetno" name="txtfleetno" style="width:150%; margin-left:50px;" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search"/>
-    <input type="text" id="txtfleetname" name="txtfleetname" style="width:81%;margin-left:150px;" value='<s:property value="txtfleetname"/>'readonly="readonly"/>
-    </div>
-    <div class="form-group date-ref-doc" >
-    <label>Doc No</label>
-    <input type="text" id="docno" name="docno"  tabindex="-1" style="width:61%;" value='<s:property value="docno"/>' readonly/>
+    <div id="date" name="date"
+         style="width:120px; display:inline-block;"
+         value='<s:property value="date"/>'></div>
+    <input type="hidden" id="hiddate" name="hiddate"
+           value='<s:property value="hiddate"/>'/>
+
+    <!-- Fleet No -->
+    <label style="margin-left:15px;">Fleet No</label>
+    <input type="text" id="txtfleetno" name="txtfleetno"
+           style="width:180px; margin-left:5px;"
+           value='<s:property value="txtfleetno"/>'
+           onkeydown="getFleet(event);"
+           readonly
+           placeholder="Press F3 to Search"/>
+
+    <!-- Fleet Name -->
+    <input type="text" id="txtfleetname" name="txtfleetname"
+           style="width:300px; margin-left:10px;"
+           value='<s:property value="txtfleetname"/>'
+           readonly />
+
+    <!-- Doc No (RIGHT SIDE) -->
+    <label style="margin-left:40px;">Doc No</label>
+    <input type="text" id="docno" name="docno"
+           style="width:120px; margin-left:5px;"
+           tabindex="-1"
+           readonly
+           value='<s:property value="docno"/>'/>
+
+</div>
+    
+    
+</div>
+   
+
+    <div class="form-group date-ref-doc">
+
     <label>Branch</label>
-    <select name="cmbbranch" id="cmbbranch" style="width:42%;" onchange="getLocation(this.value);">
-      <option value="">--Select--</option>
+    <select name="cmbbranch" id="cmbbranch" style="width:42%;"
+            onchange="getLocation(this.value);">
+        <option value="">--Select--</option>
     </select>
-<input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>'/>
-    <label >Location</label>
-    <select name="cmblocation" id="cmblocation" style="width:92%; ">
-      <option value="">--Select--</option>
+
+    <input type="hidden" name="hidcmblocation" id="hidcmblocation"
+           value='<s:property value="hidcmblocation"/>'/>
+
+    <label>Location</label>
+    <select name="cmblocation" id="cmblocation" style="width:92%;">
+        <option value="">--Select--</option>
     </select>
-    <input type="hidden" id="hiddateout" name="hiddateout" value='<s:property value="hiddateout"/>'/>
-    </div>
+
+    <input type="hidden" id="hiddateout" name="hiddateout"
+           value='<s:property value="hiddateout"/>'/>
+
+</div>
+    
 	<div class="form-group dateout-row">
     <label>Date Out</label>
     <div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div>

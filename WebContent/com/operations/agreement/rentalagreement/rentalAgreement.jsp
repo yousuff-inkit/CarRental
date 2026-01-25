@@ -3086,48 +3086,68 @@ html, body {
 			<jsp:include page="../../../../header.jsp"></jsp:include><br/> 
 				<div class=''>
 			   		<table  width="100%" id="vehicle">
-			   		<tr>
-			   		<td width="100%" valign="top"> 
-								<table width="100%" >
-  									
-  									  <tr class ="field-box">    
-    									<td width="8%" align="right"><label ><font size="3">Doc No</font></label></td>
-    									
-    									<td td width="12%" >
-    									<input type="text" id="docno" name="docno" style="width:90%;" tabindex="-1" value='<s:property value="docno"/>'/></td>
-    									<td td width="5%" align="center">
-    										<div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-        										<ul>
-	 												<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-										       	    <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-										            <li><a href="#history" onclick="account();">Account Statement</a></li>  
-										            <li><a href="#close" onclick="closing();">Closing Summary</a></li> 
-													<li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li> 
-													<li><a href="#inspchklist" onclick="funinspection();">Inspection Check List</a></li>  	
-										            <li><a href="#fueldetails" onclick="funFuelDetails();">Fuel Details</a></li>
-												</ul>
-     										</div>
-     									</td>
-   									
-   										<td width="6%" align="right"><label ><font size="3">Date</font></label></td>
-    									<td width="12%">
-    										<div id='jqxRentalDate' name='jqxRentalDate' value='<s:property value="jqxRentalDate"/>'></div>
-                   							<input type="hidden" id="hidjqxRentalDate" name="hidjqxRentalDate" value='<s:property value="hidjqxRentalDate"/>'/>
-                   						</td>
-        							
-   										<td width="7%" align="right"><label ><font size="3">Enq.Type</font></label></td>
-    									<td width="14%" >
-    										<select name="cmbenqtype" id="cmbenqtype" style="width:99%;">
-    											<option value="">--Select--</option>
-    										</select>
-    										<input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype" value='<s:property value="hidcmbenqtype"/>'>
-                   						</td>
-        							
-       									<td width="24%" align="center"><i><b><label id="rentalstatus"  name="rentalstatus"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="rentalstatus"/></label></b></i></td>
-       								</tr>
-    							</table>
-							</td>
-			   		</tr>
+			   		<tr class="field-box">
+
+    <!-- Enq.Type -->
+    <td width="7%" align="right">
+        <label><font size="3">Enq.Type</font></label>
+    </td>
+    <td width="14%">
+        <select name="cmbenqtype" id="cmbenqtype" style="width:99%;">
+            <option value="">--Select--</option>
+        </select>
+        <input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype"
+               value='<s:property value="hidcmbenqtype"/>'>
+    </td>
+
+    <!-- Date -->
+    <td width="6%" align="right">
+        <label><font size="3">Date</font></label>
+    </td>
+    <td width="12%">
+        <div id="jqxRentalDate" name="jqxRentalDate"
+             value='<s:property value="jqxRentalDate"/>'></div>
+        <input type="hidden" id="hidjqxRentalDate" name="hidjqxRentalDate"
+               value='<s:property value="hidjqxRentalDate"/>'/>
+    </td>
+
+    <!-- Status -->
+    <td width="24%" align="center">
+        <i><b>
+            <label id="rentalstatus" name="rentalstatus"
+                   style="font-size:13px;font-family:Tahoma;color:#6000FC">
+                <s:property value="rentalstatus"/>
+            </label>
+        </b></i>
+    </td>
+
+    <!-- More menu -->
+    <td width="5%" align="center">
+        <div id="jqxMenuMore" title="More" style="visibility:hidden;">
+            <ul>
+                <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+                <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+                <li><a href="#history" onclick="account();">Account Statement</a></li>
+                <li><a href="#close" onclick="closing();">Closing Summary</a></li>
+                <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>
+                <li><a href="#inspchklist" onclick="funinspection();">Inspection Check List</a></li>
+                <li><a href="#fueldetails" onclick="funFuelDetails();">Fuel Details</a></li>
+            </ul>
+        </div>
+    </td>
+
+    <!-- Doc No (RIGHT CORNER) -->
+    <td width="8%" align="right">
+        <label><font size="3">Doc No</font></label>
+    </td>
+    <td width="12%">
+        <input type="text" id="docno" name="docno"
+               style="width:90%;" tabindex="-1"
+               value='<s:property value="docno"/>'/>
+    </td>
+
+</tr>
+			   		
 			   	
       					<tr width="100%" class="field-box">        
       						<td width="100%">

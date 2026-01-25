@@ -10,8 +10,77 @@
 <title>GatewayERP(i)</title>
 
 <style type="text/css">
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
 #search {
-    background-color: #E0ECF8;
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
 }
 </style>
 
@@ -33,19 +102,37 @@
 
 </script>
 <body>
-<div id=search>
+<div id="search">
 <table width="100%">
   <tr>
-    <td width="5%" align="right" style="font-size:9px;">User</td>
-    <td width="37%"><input type="text" name="txtusersname" id="txtusersname" style="width:100%;height:20px;" value='<s:property value="txtusersname"/>'></td>
-    <td width="9%" align="right" style="font-size:9px;">Role</td>
-    <td width="33%"><input type="text" name="txtusersrole" id="txtusersrole" style="width:100%;height:20px;" value='<s:property value="txtusersrole"/>'></td>
-    <td width="16%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="5%" align="right">User</td>
+    <td width="37%">
+        <input type="text" name="txtusersname" id="txtusersname"
+               value='<s:property value="txtusersname"/>'>
+    </td>
+
+    <td width="9%" align="right">Role</td>
+    <td width="33%">
+        <input type="text" name="txtusersrole" id="txtusersrole"
+               value='<s:property value="txtusersrole"/>'>
+    </td>
+
+    <td width="16%" align="center">
+        <input type="button" name="btnsearch" id="btnsearch"
+               class="myButton" value="Search"
+               onclick="loadSearch();">
+    </td>
   </tr>
+
   <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="userDetailsSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="5">
+        <div id="refreshdiv">
+            <jsp:include page="userDetailsSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
   </tr>
 </table>
 </div>
 </body>
+
 </html>

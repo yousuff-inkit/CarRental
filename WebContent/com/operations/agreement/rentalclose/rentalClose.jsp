@@ -1717,36 +1717,62 @@ select {
 <table style="width:100%;">
 	<tr>
 		<td width="100%" valign="top"> 
-			<table style="width:100%;">
-				<tr class="field-box">
-      	
-      			<td width="6%" align="right"><label ><font size="3">Doc No</font></label></td>
-          		<td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
-          		<td width="8%" rowspan="2" align="left"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-        			<ul>
-         				<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-            			<li><a href="#documents" onclick="replacement();">Replacement</a></li>
-            			<li><a href="#history" onclick="account();">Account Statement</a></li>   
-            		 	<li><a href="#close" onclick="closing();">Closing Summary</a></li>                  
-        			</ul>
-     				</div>
-     			</td>
-      	
-      			<td align="right"><label ><font size="3">Date</font></label></td>
-          		<td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
-          		<input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
-      
-      	  		<td align="right"><label ><font size="3">Location</font></label></td>
-          		<td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
-            		<option value="">--Select--</option>
-          			</select>
-          		</td>
-          		<input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
-         		 <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
-          		<td align="left">&nbsp;</td>
-      			</tr>
-      		</table>
-      	</td>
+    <table style="width:100%;">
+        <tr class="field-box">
+
+            <!-- Date -->
+            <td align="right">
+                <label><font size="3">Date</font></label>
+            </td>
+            <td align="left">
+                <div id="closedate" name="closedate"
+                     value='<s:property value="closedate"/>'></div>
+            </td>
+            <input type="hidden" name="hidclosedate" id="hidclosedate"
+                   value='<s:property value="hidclosedate"/>'>
+
+            <!-- Location -->
+            <td align="right">
+                <label><font size="3">Location</font></label>
+            </td>
+            <td align="left">
+                <select name="cmbcloseloc" id="cmbcloseloc"
+                        style="width:100%;">
+                    <option value="">--Select--</option>
+                </select>
+            </td>
+            <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch"
+                   value='<s:property value="hidcmbagmtbranch"/>'>
+            <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc"
+                   value='<s:property value="hidcmbcloseloc"/>'>
+
+            <!-- More menu -->
+            <td width="8%" rowspan="2" align="center">
+                <div id="jqxMenuMore" title="More"
+                     style="visibility:hidden;">
+                    <ul>
+                        <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+                        <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+                        <li><a href="#history" onclick="account();">Account Statement</a></li>
+                        <li><a href="#close" onclick="closing();">Closing Summary</a></li>
+                    </ul>
+                </div>
+            </td>
+
+            <!-- Doc No (RIGHT CORNER) -->
+            <td width="6%" align="right">
+                <label><font size="3">Doc No</font></label>
+            </td>
+            <td width="8%" align="left">
+                <input type="text" name="voucherno" id="voucherno"
+                       value='<s:property value="voucherno"/>'
+                       readonly>
+            </td>
+
+        </tr>
+    </table>
+</td>
+		
   <tr class="field-box-table">
     <td colspan="2">
        	<h2>Vechile and Client Information</h2>

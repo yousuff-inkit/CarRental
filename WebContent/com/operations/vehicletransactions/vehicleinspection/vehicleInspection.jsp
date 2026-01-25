@@ -891,12 +891,9 @@
             <div id="time" name="time"  value='<s:property value="date"/>'></div>
             <input type="hidden" name="hidtime" id="hidtime" value='<s:property value="hidtime"/>'>
         </div>
-
-        <label>Type</label>
-        <select name="cmbtype" id="cmbtype">
-            <option value="">--Select--</option><option value="IN">IN</option><option value="OUT">OUT</option>
-        </select>
-        <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+        <label>Doc No</label>
+           <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+        
 
         <label>Ref Type</label>
         <select name="cmbreftype" id="cmbreftype" onchange="funResetValues();">
@@ -914,8 +911,12 @@
         </select>
         <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
 
-        <label>Doc No</label>
-        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+        <label>Type</label>
+        <select name="cmbtype" id="cmbtype">
+            <option value="">--Select--</option><option value="IN">IN</option><option value="OUT">OUT</option>
+        </select>
+        <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+        
     </div>
 
     <div class="section-block" style="margin-bottom: 20px;">

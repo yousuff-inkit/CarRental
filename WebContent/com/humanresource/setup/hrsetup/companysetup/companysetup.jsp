@@ -370,15 +370,17 @@ form label.error {
                     <input type="text" name="company" id="company" placeholder="Press F3 to Search" value='<s:property value="company"/>'>
                 </div>
                 
+                <label for="docno">Doc No</label>
+                <div>
+                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
+                </div>
+                
                 <label for="estcode">Est Code</label>
                 <div>
                     <input type="text" name="estcode" id="estcode" placeholder="Press F3 to Search" value='<s:property value="estcode"/>'>
                 </div>
 
-                <label for="docno">Doc No</label>
-                <div>
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
-                </div>
+               
 
                 <label for="remarks">Remarks</label>
                 <div style="grid-column: span 3;"> 
