@@ -11,13 +11,123 @@
 <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-.textdetail {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	font-family: Tahoma;
-	font-size: 10px;
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
 }
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+
+
 </style>
 
 	<script type="text/javascript">
@@ -34,19 +144,54 @@
  
 	</script>
 	<body bgcolor="#E0ECF8">
-		<div id=search>
-			<table width="100%" >
-	  			<tr>
-	   				<td align="left" width="6.5%"><label class="textdetail">Fleet Name</label></td>
-	    			<td align="left" width="54%"><input type="text" name="sflname" id="sflname"  style="width:96.5%;height:20px;" value='<s:property value="sflname"/>'></td>
-	    			<td align="right"><label class="textdetail">Fleet No</label></td>
-	    			<td align="left"><input type="text" name="sfleetno" id="sfleetno" style="height:20px;" value='<s:property value="sfleetno"/>'></td>
-	      			<td align="right" width="10%"><label class="textdetail">Reg No</label></td>
-	    			<td align="left"><input type="text" id="sregno" name="sregno" style="height:20px;" value='<s:property value="sregno"/>'></td>
-	    			<td align="center"><input type="button" name="btnfleetsearch" id="btnfleetsearch" value="Search" onclick="funFleetSearch();" class="myButton"></td>
-	    		<tr>
-	  			<tr><td colspan="7"><div id="fleetsearchdiv"><jsp:include  page="fleetSearchGrid.jsp"></jsp:include></div></td></tr>
-			</table>
-	  	</div>
-	</body>
+<div id="search">
+<table width="100%">
+
+  <tr>
+    <td class="label">Fleet Name</td>
+    <td class="field">
+        <input type="text"
+               name="sflname"
+               id="sflname"
+               value='<s:property value="sflname"/>'>
+    </td>
+
+    <td class="label">Fleet No</td>
+    <td class="field">
+        <input type="text"
+               name="sfleetno"
+               id="sfleetno"
+               value='<s:property value="sfleetno"/>'>
+    </td>
+
+    <td class="label">Reg No</td>
+    <td class="field">
+        <input type="text"
+               name="sregno"
+               id="sregno"
+               value='<s:property value="sregno"/>'>
+    </td>
+
+    <td class="action">
+        <input type="button"
+               name="btnfleetsearch"
+               id="btnfleetsearch"
+               class="myButton"
+               value="Search"
+               onclick="funFleetSearch();">
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="7">
+        <div id="fleetsearchdiv">
+            <jsp:include page="fleetSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
+  </tr>
+
+</table>
+</div>
+</body>
+	
 </html>

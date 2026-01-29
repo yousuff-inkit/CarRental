@@ -11,9 +11,139 @@
  <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>  --%> 
 <!-- <link href="../../../../css/body.css" media="screen" rel="stylesheet" type="text/css" /> -->
 <style>
-.branch{
-	background-color:transparent;
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
 }
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+.myButtons {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #007bff;   /* BLUE */
+    color: #ffffff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Keep same blue on hover */
+.myButtons:hover {
+    background-color: #007bff;
+}
+
 </style>
 	<script type="text/javascript">
 	$(document).ready(function () {
@@ -99,42 +229,76 @@ function getGroup() {
 		}
  
 	</script>
-<body bgcolor="#E0ECF8">
+<body bgcolor="#FFFFFF">
 <div id="search">
-  <table width="100%" >
-    <tr>
-    <td width="12%" align="right"><label class="branch">Doc No</label></td>
-    <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
-    <td width="7%" align="right"><label class="branch">Date</label></td>
-    <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
-    <td width="13%" align="right"><label class="branch">Color</label></td>
-    <td width="15%" align="left"><select name="searchcolor" id="searchcolor" ><option value="">--Select--</option></select></td>
-    <td width="12%" align="right">&nbsp;</td>
-    <td width="14%" align="left">&nbsp;</td>
-    </tr>
+<table width="100%">
 
+  <!-- ROW 1 -->
   <tr>
-    <td align="right"><label class="branch">Fleet No</label></td>
-    <td align="left"><input type="text" name="searchfleetno" id="searchfleetno" ></td>
-    <td align="right"><label class="branch">Reg No</label></td>
-    <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
-    <td align="right"><label class="branch">Group</label></td>
-    <td align="left"><select name="searchgroup" id="searchgroup" ><option value="">--Select--</option></select></td>
-    <td align="right">&nbsp;</td>
-    <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
-  </tr>
-  <tr>
-  <td colspan="8">
-   <div id="srefreshdiv">
-      
-   <jsp:include  page="fleetSearch.jsp"></jsp:include> 
-   
-  </div>
-  </td>
-  </tr>
- </table>
+    <td class="label">Doc No</td>
+    <td class="field">
+        <input type="text"
+               name="searchdocno"
+               id="searchdocno">
+    </td>
 
-   
+    <td class="label">Date</td>
+    <td class="field">
+        <div id="searchdate" name="searchdate"></div>
+    </td>
+
+    <td class="label">Color</td>
+    <td class="field">
+        <select name="searchcolor" id="searchcolor">
+            <option value="">--Select--</option>
+        </select>
+    </td>
+  </tr>
+
+  <!-- ROW 2 -->
+  <tr>
+    <td class="label">Fleet No</td>
+    <td class="field">
+        <input type="text"
+               name="searchfleetno"
+               id="searchfleetno">
+    </td>
+
+    <td class="label">Reg No</td>
+    <td class="field">
+        <input type="text"
+               name="searchregno"
+               id="searchregno">
+    </td>
+
+    <td class="label">Group</td>
+    <td class="field">
+        <select name="searchgroup" id="searchgroup">
+            <option value="">--Select--</option>
+        </select>
+    </td>
+
+    <td class="action">
+        <input type="button"
+               name="btnSearchExt"
+               id="btnSearchExt"
+               class="myButton"
+               value="Search"
+               onclick="mainloadSearch();">
+    </td>
+  </tr>
+
+  <!-- GRID -->
+  <tr>
+    <td colspan="7">
+        <div id="srefreshdiv">
+            <jsp:include page="fleetSearch.jsp"></jsp:include>
+        </div>
+    </td>
+  </tr>
+
+</table>
 </div>
 </body>
+
 </html>
