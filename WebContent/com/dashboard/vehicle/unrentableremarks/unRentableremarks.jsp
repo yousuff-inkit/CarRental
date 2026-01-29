@@ -10,7 +10,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+ 
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 
 <script type="text/javascript">
@@ -226,91 +324,140 @@ function changeClientAttachContent(url) {
 </head>
 <body onload="getBranch();getStatus();">
 <form autocomplete="off">
+
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
+
+<!-- ================= LEFT SIDEBAR (20%) ================= -->
 <td width="20%">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-	
-	<!--  <tr><td colspan="2">&nbsp;</td></tr> -->
-		 <tr>
-	<td colspan="2" ><table width="100%">
-	  <tr>
-	    <td colspan="3" align="center"><input type="button" name="btnUpdate" id="btnUpdate" value="Update" class="myButton" onClick="updateStatus();"></td>
-	    </tr>
-	  <tr>
-	    <td width="17%" align="right"><label class="branch">Fleet</label></td>
-	    <td colspan="2"><input type="text" name="fleetno" id="fleetno" readonly></td>
-	    </tr>
-	  <tr>
-	    <td align="right"><label class="branch">Status</label></td>
-	    <td colspan="2"><select name="cmbstatus" id="cmbstatus" style="width:82%;"><option value="">--Select--</option></select></td>
-	    </tr>
-	  <tr>
-	    <td align="right"><label class="branch">Date</label></td>
-	    <td colspan="2"><div id="fleetdate" name="fleetdate"></div></td>
-	    </tr>
-	  <tr>
-	    <td align="right"><label class="branch">Time</label></td>
-	    <td colspan="2"><div id="fleettime" name="fleettime"></div></td>
-	    </tr>
-	  <tr>
-	    <td colspan="2" align="center"><!-- <input type="button" name="btnvehicle" id="btnvehicle" value="Vehicle" class="myButton" onclick="getVehicle();"> -->
-	    <input type="button" name="btnattach" id="btnattach" value="Attach" class="myButton" onclick="getAttach();">
-	    </td>
-	    <td width="55%" align="center"><input type="button" name="btnmove" id="btnmove" value="Movement" class="myButton" onClick="getVehicleMov();"></td>
-	    </tr>
-	  <tr>
-	    <td colspan="3"><center><div id="hiddate" name="hiddate" hidden="true"></div><div id="hidtime" name="hidtime" hidden="true"></div></center></td>
-	    </tr>
-	    <tr>
-	 <td colspan="3" align="center" ><div id="Readygrid"><jsp:include page="subgrid.jsp"></jsp:include>
-	</div></td>
-	
-	 
-	</tr>
-	  </table>
-	<br>
-	
-	
-	<%-- <div id="Readygrid"   ><jsp:include page="vehDetailsgrid.jsp"></jsp:include>
-	</div> --%></td>
-	</tr> 
-	<tr>
+    <div class="master-container">
+        <div class="sidebar-filters">
 
+            <!-- Fixed Heading -->
+            <div class="sidebar-fixed-top">
+                <div class="filter-card">
+                    <jsp:include page="../../heading.jsp"></jsp:include>
+                </div>
+            </div>
 
-	</table>
-	</fieldset>
+            <!-- Scrollable Content -->
+            <div class="sidebar-scroll-content">
+
+                <!-- Filters -->
+                <div class="filter-card">
+                    <table class="filter-table">
+
+                        <tr>
+                            <td class="label-cell">Fleet</td>
+                            <td>
+                                <input type="text" name="fleetno" id="fleetno" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Status</td>
+                            <td>
+                                <select name="cmbstatus" id="cmbstatus">
+                                    <option value="">--Select--</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td>
+                                <div id="fleetdate" name="fleetdate"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Time</td>
+                            <td>
+                                <div id="fleettime" name="fleettime"></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="text-align:center;">
+                                <div id="hiddate" name="hiddate" hidden="true"></div>
+                                <div id="hidtime" name="hidtime" hidden="true"></div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <!-- Action Buttons -->
+                <button type="button"
+                        class="btn-submit"
+                        id="btnUpdate"
+                        onclick="updateStatus();">
+                    Update
+                </button>
+
+                <button type="button"
+                        class="btn-submit"
+                        id="btnattach"
+                        onclick="getAttach();">
+                    Attach
+                </button>
+
+                <button type="button"
+                        class="btn-submit"
+                        id="btnmove"
+                        onclick="getVehicleMov();">
+                    Movement
+                </button>
+
+                <!-- Sub Grid -->
+                <div class="filter-card">
+                    <div id="Readygrid">
+                        <jsp:include page="subgrid.jsp"></jsp:include>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </td>
+
+<!-- ================= RIGHT CONTENT (80%) ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="fleetdiv"><jsp:include page="unRentableremarksGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+    <table width="100%">
+        <tr>
+            <td>
+                <div id="fleetdiv">
+                    <jsp:include page="unRentableremarksGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</td>
+
 </tr>
 </table>
+
+<!-- Hidden Fields & Popups -->
 <div id="curdate" name="curdate" hidden="true"></div>
 <div id="fromdate" name="fromdate" hidden="true"></div>
+
 <input type="hidden" name="docno" id="docno">
-<!-- <div id="vehiclewindow">
-<div></div>
-</div> -->
-<div id="movementwindow">
-<div></div>
-</div>
-<div id="clientAttachWindow">
-   <div></div>
-</div>
-</div>
-</div>
 <input type="hidden" name="hidcmbstatus" id="hidcmbstatus">
-<input type="hidden" name="hidstatus" id="hidstatus" style="height:20px;width:20%;" value='<s:property value="hidstatus"/>' >
+<input type="hidden" name="hidstatus" id="hidstatus"
+       value='<s:property value="hidstatus"/>'>
+
 <label id="trncodeval" hidden="true"></label>
 <label id="statusval" hidden="true"></label>
+
+<div id="movementwindow"><div></div></div>
+<div id="clientAttachWindow"><div></div></div>
+
+</div>
+</div>
 </form>
 </body>
+
 </html>
