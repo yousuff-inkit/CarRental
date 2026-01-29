@@ -395,167 +395,235 @@ function disiem()
 	
 	}
 </script>
-<style>
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;   
-	top:1px;
-}
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
 
-     
-      
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
 
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 90px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButtons, .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+        text-decoration: none;
+        text-shadow: none;
+    }
+
+    .myButtons:hover, .myButton:hover { 
+        background-color: #1d4ed8 !important; 
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
 </style>
 </head>
 <body onload="getBranch();disiem()">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-     
-	
-	<%--  <tr><td align="right"><label class="branch">Status</label></td><td align="left"><select id="status" name="status" style="height:20px;width:70%;" value='<s:property value="status"/>'>
-        <option value=0>Open</option>
-   	 </select></td></tr>  --%>
-   	<tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="clientname"/>'></td></tr> 
- <tr><td align="right"><label class="branch">RA No.</label></td><td align="left"><input type="text" name="rano" id="rano"  placeholder="Press F3 TO Search" readonly="readonly"    onkeydown="getrano(event)" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="rano"/>' ></td></tr>
- <input type="hidden" name="hidrano" id="hidrano"  style="height:20px;width:70%;" value='<s:property value="hidrano"/>'>
- 
- <%-- <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="clientname"/>'></td></tr> 
-  <tr><td align="right"><label class="branch">rano</label></td><td align="left"><input type="text" name="rano" id="rano"  placeholder="Press F3 TO Search" readonly="readonly"    onkeydown="getrano(event)" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="rano"/>' ></td></tr> 
-   <tr><td align="right"><label class="branch">Group</label></td><td align="left"><input type="text" name="group" id="group" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getgroup(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="group"/>' ></td></tr> 
-    <tr><td align="right"><label class="branch">Brand</label></td><td align="left"><input type="text" name="brand" id="brand" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getbrand(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="brand"/>' ></td></tr> 
-     <tr><td align="right"><label class="branch">Model</label></td><td align="left"><input type="text" name="model" id="model" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getmodel(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="model"/>' ></td></tr> 
-    --%>
-      <tr><td align="right"><label class="branch">Type</label></td><td align="left">
-       <select id="rentaltype" name="rentaltype" style="height:20px;width:70%;" value='<s:property value="rentaltype"/>'>
-    <option value="">--Select--</option>
-    <option value="Daily">Daily</option>
-     <option value="Weekly">Weekly</option>
-     <option value="Monthly">Monthly</option>
-     
-	 </select> </td></tr> 
-	 <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr> 
-	 <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funcleardata()"></td>
-	 
-	 </tr>
-	  <tr><td colspan="2"></td></tr> 
-	
-	 <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	 <tr><td  ><label class="branch">Advance</label></td><td><input type="checkbox" id="advance_chk"  name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" > </td></tr>
- <tr><td  ><label class="branch">Invoice</label></td><td><select name="invoice" id="invoice" style="width:70%;"  value='<s:property value="invoice"/>'  >
-     <option value="">--Select--</option>
-      <option value="1">Month End</option>
-      <option value="2">Period</option></select>
-      <input type="hidden" id="hidinvoice" name="hidinvoice" value='<s:property value="hidinvoice"/>'/></td></tr>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-	    <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	    <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	  <tr><td colspan="2"></td></tr>
-	 <tr><td colspan="2" align="center"><input type="button" class="myButton" name="approve" id="approve"  value="Approve" onclick="funApprove()">
-	 <input type="button" class="myButton" name="cancel" id="cancel"  value="Cancel" onclick="funCancel()">
-	 
-	 </td>
-	 
-	 </tr>
- 
-     <%-- <tr><td colspan="2" align="center">
-					<button type="button"  title="Search User"  class="icon" id="searchuser"  onclick="getuserchange()" value='<s:property value="searchuser"/>'>
-					 <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png"> 
-					</button></td></tr> --%>
-					
-	 <tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height: 90px;"></div></td> 
-	</tr> 
-	</table>
-	</fieldset>
-	
-	  <div  hidden="true" id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div> <!-- //dudate --> 
-	   <div hidden="true"   id='jqxDaterentalout' name='jqxDaterentalout' value='<s:property value="jqxDaterentalout"/>'></div> 
-	<input type="hidden" name="docnos" id="docnos"  style="height:20px;width:70%;" value='<s:property value="docnos"/>'>  
-	<input type="hidden" name="cldocno" id="cldocno"  style="height:20px;width:70%;" value='<s:property value="cldocno"/>'>
-	
-           <input type="hidden" name="advchkval" id="advchkval" value='<s:property value="advchkval"/>'  />  
-           <input type="hidden" name="invval" id="invval" value='<s:property value="invval"/>' />
-	 <input type="hidden" id="configmethod" name="configmethod" value='<s:property value="configmethod"/>' />
-	
-	
-	<input type="hidden" id="branchid"  name="branchid" style="text-align: right;"  value='<s:property value="branchid"/>' >
-		<input type="hidden" id="brexid"  name="brexid" style="text-align: right;"  value='<s:property value="brexid"/>' >
-		<input type="hidden" id="invdate"  name="invdate" style="text-align: right;"  value='<s:property value="invdate"/>' >
-	 <input type="hidden" id="excessinsur"  name="excessinsur" style="text-align: right;"  value='<s:property value="excessinsur"/>' >
-	
-	   <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>'  />
-      <input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>'  /> 
-      <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>'  />
-	 
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="detlist"><jsp:include page="detailsGrid.jsp"></jsp:include></div></td>
-		</tr>
-		
-	
-  <tr>
-			 <td><div id="rtariffchange"><jsp:include page="rtariffdetails.jsp"></jsp:include></div></td>
-		</tr>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' " value='<s:property value="clientname"/>'></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">RA No.</td>
+                        <td>
+                            <input type="text" name="rano" id="rano" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getrano(event)" onclick="this.placeholder='' " value='<s:property value="rano"/>' >
+                            <input type="hidden" name="hidrano" id="hidrano" value='<s:property value="hidrano"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
+                                <option value="">--Select--</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                            </select> 
+                        </td>
+                    </tr>
+                </table>
+                <input type="button" class="myButtons" name="clear" id="clear" value="Clear" onclick="funcleardata()">
+            </div>
 
-		
-	</table>
-</tr>
-</table>
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Advance</td>
+                        <td><input type="checkbox" id="advance_chk" name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" ></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Invoice</td>
+                        <td>
+                            <select name="invoice" id="invoice" value='<s:property value="invoice"/>'>
+                                <option value="">--Select--</option>
+                                <option value="1">Month End</option>
+                                <option value="2">Period</option>
+                            </select>
+                            <input type="hidden" id="hidinvoice" name="hidinvoice" value='<s:property value="hidinvoice"/>'/>
+                        </td>
+                    </tr>
+                </table>
+                
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <input type="button" class="myButton" name="approve" id="approve" value="Approve" onclick="funApprove()" style="flex: 1;">
+                    <input type="button" class="myButton" name="cancel" id="cancel" value="Cancel" onclick="funCancel()" style="flex: 1;">
+                </div>
+            </div>
+
+            <div id='paychaaaaa' style="width: 100%; height: 90px; margin-top: 10px;"></div>
+
+            <div hidden="true">
+                <div id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div>
+                <div id='jqxDaterentalout' name='jqxDaterentalout' value='<s:property value="jqxDaterentalout"/>'></div>
+                <input type="hidden" name="docnos" id="docnos" value='<s:property value="docnos"/>'>  
+                <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>'>
+                <input type="hidden" name="advchkval" id="advchkval" value='<s:property value="advchkval"/>' />  
+                <input type="hidden" name="invval" id="invval" value='<s:property value="invval"/>' />
+                <input type="hidden" id="configmethod" name="configmethod" value='<s:property value="configmethod"/>' />
+                <input type="hidden" id="branchid" name="branchid" value='<s:property value="branchid"/>' >
+                <input type="hidden" id="brexid" name="brexid" value='<s:property value="brexid"/>' >
+                <input type="hidden" id="invdate" name="invdate" value='<s:property value="invdate"/>' >
+                <input type="hidden" id="excessinsur" name="excessinsur" value='<s:property value="excessinsur"/>' >
+                <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>' />
+                <input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>' />  
+                <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>' />
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="detlist">
+                <jsp:include page="detailsGrid.jsp"></jsp:include>
+            </div>
+            <div id="rtariffchange">
+                <jsp:include page="rtariffdetails.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 <div id="clientwindow">
