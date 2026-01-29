@@ -13,7 +13,124 @@
 <% String contextPath=request.getContextPath();%>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
 
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 90px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    .branch { font-size: 13px; font-weight: 600; }
+</style>
 
 
 <script type="text/javascript">
@@ -449,88 +566,99 @@ function funupdate()
 <body onload="getBranch();disitems();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-		<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-<tr><td align="right" width="3%"><label class="branch"> Checkout </td>
-           
-    <td colspan="6" width="10%" ><input type="text" id="ratariff_checkout" placeholder="Press F3 To Search "  name="ratariff_checkout" style="width:98%;" value='<s:property value="ratariff_checkout"/>'onKeyDown="getcheckout(event);"/>
-    <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid" value='<s:property value="ratariff_checkoutid"/>'/>  
-    
-    </td></tr>
-<tr><td align="right"><label class="branch">Driver</label></td><td  align="left" ><input type="text" name="del_Driver" id="del_Driver" style="height:20px;width:70%;" value='<s:property value="del_Driver"/>' readonly="readonly" onKeyDown="getchauffeur(event);">
- 
-<tr> <td  align="right"><label class="branch">KM</label></td> <td align="left"><input type="text" name="del_KM" id="del_KM"  style="height:20px;width:70%;" value='<s:property value="del_KM"/>' onblur="funchkkm()"  onkeypress="javascript:return isNumber (event)"></td></tr>
- 
-<tr> <td  align="right"><label class="branch">Fuel</label></td><td align="left">
- <select name="del_Fuel" id="del_Fuel" style="width:70%;" name="del_Fuel"  value='<s:property value="del_Fuel"/>'>
-       <option value="" selected>-Select-</option>  
-     <option value=0.000 >Level 0/8</option>
-     <option value=0.125>Level 1/8</option>
-     <option value=0.250>Level 2/8</option>
-     <option value=0.375>Level 3/8</option>
-           <option value=0.500>Level 4/8</option>
-               <option value=0.625>Level 5/8</option>
-               <option value=0.750>Level 6/8</option>
-                   <option value=0.875>Level 7/8</option>
-                   <option value=1.000>Level 8/8</option>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Checkout</td>
+                        <td>
+                            <input type="text" id="ratariff_checkout" placeholder="Press F3 To Search" name="ratariff_checkout" value='<s:property value="ratariff_checkout"/>' onKeyDown="getcheckout(event);"/>
+                            <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid" value='<s:property value="ratariff_checkoutid"/>'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Driver</td>
+                        <td>
+                            <input type="text" name="del_Driver" id="del_Driver" readonly="readonly" onKeyDown="getchauffeur(event);" value='<s:property value="del_Driver"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">KM</td>
+                        <td>
+                            <input type="text" name="del_KM" id="del_KM" value='<s:property value="del_KM"/>' onblur="funchkkm()" onkeypress="javascript:return isNumber (event)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fuel</td>
+                        <td>
+                            <select name="del_Fuel" id="del_Fuel" value='<s:property value="del_Fuel"/>'>
+                                <option value="" selected>-Select-</option>
+                                <option value="0.000">Level 0/8</option>
+                                <option value="0.125">Level 1/8</option>
+                                <option value="0.250">Level 2/8</option>
+                                <option value="0.375">Level 3/8</option>
+                                <option value="0.500">Level 4/8</option>
+                                <option value="0.625">Level 5/8</option>
+                                <option value="0.750">Level 6/8</option>
+                                <option value="0.875">Level 7/8</option>
+                                <option value="1.000">Level 8/8</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td>
+                            <div id='jqxDeliveryOut' name='jqxDeliveryOut' value='<s:property value="jqxDeliveryOut"/>'></div>
+                            <input type="hidden" id="hidjqxDeliveryOut" name="hidjqxDeliveryOut" value='<s:property value="hidjqxDeliveryOut"/>'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Time</td>
+                        <td>
+                            <div id='jqxDelTimeOut' name='jqxDelTimeOut' value='<s:property value="jqxDelTimeOut"/>'></div>
+                            <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut" value='<s:property value="hidjqxDelTimeOut"/>'/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-</select></td></tr>
+            <div style="padding: 0 5px;">
+                <input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()">
+                <input type="Button" name="attachbtns" id="attachbtns" class="myButton" value="Attach" onclick="funAttachBtn()">
+            </div>
 
- <tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='jqxDeliveryOut' name='jqxDeliveryOut' value='<s:property value="jqxDeliveryOut"/>'></div>
-                    <input type="hidden" id="hidjqxDeliveryOut" name="hidjqxDeliveryOut" value='<s:property value="hidjqxDeliveryOut"/>'/></td></tr>
-  <tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div id='jqxDelTimeOut' name='jqxDelTimeOut' value='<s:property value="jqxDelTimeOut"/>'  ></div>
-                   <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut" value='<s:property value="hidjqxDelTimeOut"/>'/></td></tr>
-                    <tr><td colspan="2">&nbsp;</td></tr>
- <tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()">
- <input type="Button" name="attachbtns" id="attachbtns" class="myButton" value="Attach" onclick="funAttachBtn()"></td> </tr>
-	  <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>	
-	 <tr><td colspan="2">&nbsp;</td></tr> 
-	 <tr><td colspan="2">&nbsp;</td></tr>   
-	  <tr><td colspan="2">&nbsp;</td></tr>          
-  </table>
-  <input type="hidden" name="rentaldoc" id="rentaldoc" style="height:20px;width:70%;" value='<s:property value="rentaldoc"/>' >
-    <input type="hidden" name="chktype" id="chktype" style="height:20px;width:70%;" value='<s:property value="chktype"/>' >
-<input type="hidden" name="rentaldate" id="rentaldate" style="height:20px;width:70%;" value='<s:property value="rentaldate"/>' >
-<input type="hidden" name="fleetno" id="fleetno" style="height:20px;width:70%;" value='<s:property value="fleetno"/>' >
-<input type="hidden" name="del_Driverid" id="del_Driverid" style="height:20px;width:70%;" value='<s:property value="del_Driverid"/>' >
-<input type="hidden" name="out_km" id="out_km" style="height:20px;width:70%;" value='<s:property value="out_km"/>' >
-<input type="hidden" name="out_fuel" id="out_fuel" style="height:20px;width:70%;" value='<s:property value="out_fuel"/>' >
+            <div style="display:none;">
+                <input type="hidden" name="rentaldoc" id="rentaldoc" value='<s:property value="rentaldoc"/>' >
+                <input type="hidden" name="chktype" id="chktype" value='<s:property value="chktype"/>' >
+                <input type="hidden" name="rentaldate" id="rentaldate" value='<s:property value="rentaldate"/>' >
+                <input type="hidden" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' >
+                <input type="hidden" name="del_Driverid" id="del_Driverid" value='<s:property value="del_Driverid"/>' >
+                <input type="hidden" name="out_km" id="out_km" value='<s:property value="out_km"/>' >
+                <input type="hidden" name="out_fuel" id="out_fuel" value='<s:property value="out_fuel"/>' >
+                <div id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div>
+                <div id='jqxTimeOut' name='jqxTimeOut' value='<s:property value="jqxTimeOut"/>'></div>
+                <input type="hidden" name="branchids" id="branchids" value='<s:property value="branchids"/>' >
+                <input type="hidden" name="group" id="group" value='<s:property value="group"/>' >
+                <input type="hidden" name="vehloca" id="vehloca" value='<s:property value="vehloca"/>' >
+                <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>' >
+            </div>
+        </div>
+    </div>
 
-<div hidden="true" id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div>
-<div hidden="true" id='jqxTimeOut' name='jqxTimeOut' value='<s:property value="jqxTimeOut"/>'></div>
-
-
-<input type="hidden" name="branchids" id="branchids" style="height:20px;width:70%;" value='<s:property value="branchids"/>' >
-<input type="hidden" name="group" id="group" style="height:20px;width:70%;" value='<s:property value="group"/>' >
-<input type="hidden" name="vehloca" id="vehloca" style="height:20px;width:70%;" value='<s:property value="vehloca"/>' >
-	<input type="hidden" name="cldocno" id="cldocno" style="height:20px;width:70%;" value='<s:property value="cldocno"/>' > 
-	 
-   </fieldset>
-
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			  <td><div id="delupdiv"><jsp:include page="delupdateGrid.jsp"></jsp:include></div></td> 
-			  </tr>
-			  <%-- <tr>
-			  <td><div hidden="true">	<jsp:include page="../../../../header.jsp"></jsp:include></div></td>
-			  
-		</tr> --%>
-	</table>
-</tr>
-</table>
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="delupdiv">
+                <jsp:include page="delupdateGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 
      
 </div>
