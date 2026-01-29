@@ -138,53 +138,182 @@ function funPrintMov(){
 
 </script>
 </head>
+
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* HARD RESET: Force black fonts and remove unwanted backgrounds */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 85px;
+    }
+
+    /* Input & Textarea Styling */
+    input[type="text"], textarea {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Dual Grid Support */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    .branch { font-size: 13px; font-weight: 600; }
+</style>
 <body onload="hiddenbrh();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" rowspan="2" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 
-	 
-	 	 <tr><td align="right"><label class="branch">Client</label></td>
-	 <td align="left"><input type="text" id="client" style="height:20px;width:61%;" name="client" placeholder="Press F3 To Search" onfocus="this.placeholder = ''" readonly value='<s:property value="client"/>' onkeydown="getClientData(event);" > </td></tr>
-	 <input type="hidden" name="hidclient" id="hidclient" value='<s:property value="hidclient"/>'/>
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-                <tr>    
-      <td colspan="2"><textarea id="clientinfo" style="height:180px;width:200px;font: 10px Tahoma;resize:none" name="clientinfo"  readonly="readonly"  ><s:property value="clientinfo" ></s:property></textarea>  </td></tr>               
-                    
-    <tr><td colspan="2">&nbsp;</td></tr>               
-  <tr><td colspan="2" align="center"><button class="myButton" type="button" id="btnPrint" name="btnPrint" onclick="funPrintMov(event);">Print</button></td></tr>                  
-                 
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-<!--  <tr><td colspan="2">&nbsp;</td></tr -->
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Fleet</td>
+                        <td>
+                            <input type="text" id="client" name="client" placeholder="Press F3 To Search" readonly value='<s:property value="client"/>' onkeydown="getClientData(event);">
+                            <input type="hidden" name="hidclient" id="hidclient" value='<s:property value="hidclient"/>'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                </table>
+            </div>
 
-	<tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height:125px;"></div></td>
-	</tr>	
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
- 			 <td height="274"><div id="vehiclediv"><jsp:include page="vehicleMovementGrid.jsp"></jsp:include></div></td>
-			 <!--<td></td>-->
-		</tr>
-	</table>
-</tr>
-<tr>
-<td><div id="vehiclesummdiv"><jsp:include page="vehicleSummaryGrid.jsp"></jsp:include></div></td>
-</tr>
-</table>
+            <div class="filter-card">
+                <textarea id="clientinfo" name="clientinfo" readonly="readonly" style="height:150px; font-size: 11px; resize:none;"><s:property value="clientinfo" ></s:property></textarea>
+            </div>
+
+            <div style="padding: 10px 5px;">
+                <button class="myButton" type="button" id="btnPrint" name="btnPrint" onclick="funPrintMov(event);">Print</button>
+            </div>
+
+            <div id='paychaaaaa' style="width: 100%; height:125px; border: 1px solid #e1e8ed; border-radius: 8px; margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="vehiclediv">
+                <jsp:include page="vehicleMovementGrid.jsp"></jsp:include>
+            </div>
+            
+            <div id="vehiclesummdiv">
+                <jsp:include page="vehicleSummaryGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 <div id="clientwindow"><div></div>

@@ -341,110 +341,246 @@
 			
 	</script>
 </head>
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* HARD RESET: Force black fonts and remove unwanted backgrounds */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 85px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    .branch { font-size: 13px; font-weight: 600; }
+    
+    fieldset {
+        border: 1px solid #ccd6e0 !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    legend {
+        font-weight: bold !important;
+        padding: 0 5px !important;
+    }
+</style>
 <body onload="hiddenbrh();disitems();">
 	<div id="mainBG" class="homeContent" data-type="background"> 
 		<div class='hidden-scrollbar'>
 			<table width="100%" >
 				<tr>
 					<td width="20%" >
-    					<fieldset style="background: #ECF8E0;">
-							<table width="100%">
-								<jsp:include page="../../heading.jsp"></jsp:include>
-	 							<tr>
-	 								<td  align="right"><label class="branch">From</label></td>
-	 								<td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
-	 							</tr>
-                     			<tr>
-                     				<td  align="right" ><label class="branch">To</label></td>
-                     				<td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
-                     			</tr>
-       	 						<tr>
-       	 							<td align="right"><label class="branch">Fleet</label></td>
-	 								<td align="left"><input type="text" id="fleetno" style="height:20px;width:61%;" name="fleetno" placeholder="Press F3 To Search" onfocus="this.placeholder = ''" readonly="readonly" value='<s:property value="fleetno"/>' onkeydown="getfleetdata(event);" > </td>
-	 							</tr>
-								<tr>
-									<td colspan="2">
-										<table width="100%"  >
-										<tr>
-											<td>
-												<div id="out" style="width: 100% ; align:left; height: 120px;  "  > 
-													<fieldset>
-														<legend>Out Details</legend> 
-														<table width="100%" >
- 															<tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div>
-  															<tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div id='timeout'  style="height:20px;width:100%;" name='timeout' value='<s:property value="timeout"/>'  ></div>
-															<tr><td  align="right"><label class="branch">KM</label></td> <td align="left"><input type="text" name="outkm" id="outkm"  style="height:20px;width:70%;" value='<s:property value="outkm"/>' onkeypress="javascript:return isNumber (event)"></td></tr>
-															<tr>
-																<td  align="right"><label class="branch">Fuel</label></td>
-																<td align="left">
- 																	<select  id="outfuel" style="width:70%;" name="outfuel"  value='<s:property value="outfuel"/>'>
-																    	<option value="" selected>-Select-</option>  
-																     	<option value=0.000 >Level 0/8</option>
-																     	<option value=0.125>Level 1/8</option>
-																     	<option value=0.250>Level 2/8</option>
-																     	<option value=0.375>Level 3/8</option>
-																     	<option value=0.500>Level 4/8</option>
-																     	<option value=0.625>Level 5/8</option>
-																     	<option value=0.750>Level 6/8</option>
-																     	<option value=0.875>Level 7/8</option>
-																     	<option value=1.000>Level 8/8</option>
-																	</select>
-																</td>
-															</tr>
-														</table>
-													</fieldset>
-												</div>
-											</td>
-										</tr>	
-										<tr> 
-											<td colspan="2">
-												<div id="in" style="width: 100% ; align:left; height: 120px;">
-													<fieldset>
-														<legend>In Details</legend>
-														<table width="100%">
-															<tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='datein' name='datein' value='<s:property value="datein"/>'></div>
-		  													<tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div id='timein' name='timein' value='<s:property value="timein"/>'  ></div>
-		                   									<tr><td  align="right"><label class="branch">KM</label></td> <td align="left"><input type="text" name="inkm" id="inkm"  style="height:20px;width:70%;" value='<s:property value="inkm"/>' onblur="inchkkm()"  onkeypress="javascript:return isNumber (event)"></td></tr>
-		 													<tr>
-		 														<td  align="right"><label class="branch">Fuel</label></td>
-		 														<td align="left">
-		 															<select  id="infuel" style="width:70%;" name="infuel"  value='<s:property value="infuel"/>'> 
-		       															<option value="" selected>-Select-</option>  
-																	    <option value=0.000 >Level 0/8</option>
-																	    <option value=0.125>Level 1/8</option>
-																	    <option value=0.250>Level 2/8</option>
-																	    <option value=0.375>Level 3/8</option>
-																	    <option value=0.500>Level 4/8</option>
-																	    <option value=0.625>Level 5/8</option>
-																	    <option value=0.750>Level 6/8</option>
-																	    <option value=0.875>Level 7/8</option>
-																	    <option value=1.000>Level 8/8</option>
-																	</select>
-																</td>
-															</tr>
-														</table>
-													</fieldset>
-	 											</div>
-										</td>
-									</tr>
-	 								<tr><td colspan="2">&nbsp;</td></tr>
-	 								<tr><td colspan="2">&nbsp;</td></tr>
-									<tr>
-										<td colspan="2" align="center"><input type="Button" name="savedata" id="savedata" class="myButton" value="Update"><!-- &nbsp;
-										<input type="Button" hidden="true" name="deletedata" id="deletedata" class="myButton" value="Delete" onclick="fundeletedata();"> --></td>
-									</tr>
-								</table>
-								<input type="hidden" name="status" id="status" style="height:20px;width:70%;" value='<s:property value="status"/>' >
-								<input type="hidden" name="dtype" id="dtype" style="height:20px;width:70%;" value='<s:property value="dtype"/>' >
-								<input type="hidden" name="vmdocno" id="vmdocno" style="height:20px;width:70%;" value='<s:property value="vmdocno"/>' >
-								<input type="hidden" name="vmrdocno" id="vmrdocno" style="height:20px;width:70%;" value='<s:property value="vmrdocno"/>' >
-								<input type="hidden" name="maxdin" id="maxdin" style="height:20px;width:70%;" value='<s:property value="maxdin"/>' >
-								<input type="hidden" name="maxtin" id="maxtin" style="height:20px;width:70%;" value='<s:property value="maxtin"/>' >
-								<input type="hidden" name="maxkm" id="maxkm" style="height:20px;width:70%;" value='<s:property value="maxkm"/>' >
-							</td>
- 						</tr> 
-					</table>
-				</fieldset>
+    					<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fleet</td>
+                        <td>
+                            <input type="text" id="fleetno" name="fleetno" placeholder="Press F3 To Search" readonly="readonly" value='<s:property value="fleetno"/>' onkeydown="getfleetdata(event);">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <fieldset>
+                    <legend>Out Details</legend>
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td><div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Time</td>
+                            <td><div id='timeout' name='timeout' value='<s:property value="timeout"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">KM</td>
+                            <td><input type="text" name="outkm" id="outkm" value='<s:property value="outkm"/>' onkeypress="javascript:return isNumber (event)"></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Fuel</td>
+                            <td>
+                                <select id="outfuel" name="outfuel" value='<s:property value="outfuel"/>'>
+                                    <option value="" selected>-Select-</option>
+                                    <option value=0.000>Level 0/8</option>
+                                    <option value=0.500>Level 4/8</option>
+                                    <option value=1.000>Level 8/8</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+
+                <fieldset>
+                    <legend>In Details</legend>
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td><div id='datein' name='datein' value='<s:property value="datein"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Time</td>
+                            <td><div id='timein' name='timein' value='<s:property value="timein"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">KM</td>
+                            <td><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onblur="inchkkm()" onkeypress="javascript:return isNumber (event)"></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Fuel</td>
+                            <td>
+                                <select id="infuel" name="infuel" value='<s:property value="infuel"/>'>
+                                    <option value="" selected>-Select-</option>
+                                    <option value=0.000>Level 0/8</option>
+                                    <option value=0.500>Level 4/8</option>
+                                    <option value=1.000>Level 8/8</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+
+            <div style="padding: 10px 5px;">
+                <input type="Button" name="savedata" id="savedata" class="myButton" value="Update">
+            </div>
+
+            <input type="hidden" name="status" id="status" value='<s:property value="status"/>'>
+            <input type="hidden" name="dtype" id="dtype" value='<s:property value="dtype"/>'>
+            <input type="hidden" name="vmdocno" id="vmdocno" value='<s:property value="vmdocno"/>'>
+            <input type="hidden" name="vmrdocno" id="vmrdocno" value='<s:property value="vmrdocno"/>'>
+            <input type="hidden" name="maxdin" id="maxdin" value='<s:property value="maxdin"/>'>
+            <input type="hidden" name="maxtin" id="maxtin" value='<s:property value="maxtin"/>'>
+            <input type="hidden" name="maxkm" id="maxkm" value='<s:property value="maxkm"/>'>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            </div>
+    </div>
+</div>
 			</td>
 			<td width="80%">
 				<table width="100%">
