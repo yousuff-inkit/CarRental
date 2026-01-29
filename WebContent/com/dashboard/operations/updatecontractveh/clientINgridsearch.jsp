@@ -10,12 +10,139 @@
 <title>GatewayERP(i)</title>
 <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <style>
-.formfont {
-	font: 10px Tahoma;
-	color: #404040;
-	background: #E0ECF8;
-	overflow:hidden;
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
 }
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+.myButtons {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #007bff;   /* BLUE */
+    color: #ffffff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Keep same blue on hover */
+.myButtons:hover {
+    background-color: #007bff;
+}
+
 </style>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
@@ -48,45 +175,89 @@
 <body bgcolor="#E0ECF8">
 <div id="search">
 <table width="100%">
-  <tr>
-    <td width="7%" align="right"><label class="formfont">Name</label></td>
-    <td colspan="5" align="left"><input type="text" name="Cl_name" id="Cl_name"  style="width:100%;height:17px;" value='<s:property value="Cl_name"/>'></td>
-    <td width="6%" align="left">&nbsp;</td>
-    <td width="14%" align="left"><input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onClick="loadSearch();"></td>
-    <td width="12%" colspan="2" align="center">&nbsp;</td>
-    </tr>
-  <tr>
-    <td align="right"><label class="formfont">License#</label></td>
-    <td width="12%" align="left"><input type="text" name="dr_Licence" id="dr_Licence" value='<s:property value="dr_Licence"/>' style="height:17px;"></td>
-    <td width="8%" align="right"><label class="formfont">Passport#</label></td>
-    <td width="17%" align="left"><input type="text" name="dr_Passport" id="dr_Passport" value='<s:property value="dr_Passport"/>' style="height:17px;"></td>
-    <td width="8%" align="right"><label class="formfont">Nationality</label></td>
-    <td width="14%" align="left"><input type="text" id="dr_Nation" name="dr_Nation" value='<s:property value="dr_Nation"/>' style="height:17px;"></td>
-    <td align="center">&nbsp;</td>
-    <td align="left"><!-- <button type="button" id="btnok_client" name="btnok" class="myButton">&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button> --></td>
-    <td width="12%" colspan="2" align="center"></td>
-    <input type="hidden" name="hiddr_DOB" id="hiddr_DOB" value='<s:property value="hiddr_DOB"/>'>
-    </tr>
-  <tr>
-    <td align="right"><span class="formfont">Mob</span></td>
-    <td align="left"><input type="text" name="Cl_mob" id="Cl_mob" value='<s:property value="Cl_mob"/>' style="height:17px;"></td>
-    <td align="right"><span class="formfont">DOB</span></td>
-    <td align="left"><div id="dr_DOB" name="dr_DOB"  value='<s:property value="dr_DOB"/>'></div></td>
-    <td align="right">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="center">&nbsp;</td>
-    <td align="center"><!-- <button type="button" id="btncancel_client" name="btncancel" class="myButton" >Cancel</button> --></td>
-    <td colspan="2" align="center"></td>
-  </tr>
-  <tr>
-    <td colspan="8">  <div id="refreshdiv">
-      
-   <jsp:include  page="clientinfo.jsp"></jsp:include> 
-   
-   </div></td>
-    </tr>
-</table>
 
-  </div>
+  <!-- ROW 1 -->
+  <tr>
+    <td class="label">Name</td>
+    <td class="field" colspan="3">
+        <input type="text"
+               name="Cl_name"
+               id="Cl_name"
+               value='<s:property value="Cl_name"/>'>
+    </td>
+
+    <td class="action">
+        <input type="button"
+               name="btnrasearch"
+               id="btnrasearch"
+               class="myButton"
+               value="Search"
+               onclick="loadSearch();">
+    </td>
+  </tr>
+
+  <!-- ROW 2 -->
+  <tr>
+    <td class="label">License #</td>
+    <td class="field">
+        <input type="text"
+               name="dr_Licence"
+               id="dr_Licence"
+               value='<s:property value="dr_Licence"/>'>
+    </td>
+
+    <td class="label">Passport #</td>
+    <td class="field">
+        <input type="text"
+               name="dr_Passport"
+               id="dr_Passport"
+               value='<s:property value="dr_Passport"/>'>
+    </td>
+
+    <td class="label">Nationality</td>
+    <td class="field">
+        <input type="text"
+               name="dr_Nation"
+               id="dr_Nation"
+               value='<s:property value="dr_Nation"/>'>
+    </td>
+  </tr>
+
+  <!-- ROW 3 -->
+  <tr>
+    <td class="label">Mob</td>
+    <td class="field">
+        <input type="text"
+               name="Cl_mob"
+               id="Cl_mob"
+               value='<s:property value="Cl_mob"/>'>
+    </td>
+
+    <td class="label">DOB</td>
+    <td class="field">
+        <div id="dr_DOB" name="dr_DOB"
+             value='<s:property value="dr_DOB"/>'></div>
+
+        <input type="hidden"
+               name="hiddr_DOB"
+               id="hiddr_DOB"
+               value='<s:property value="hiddr_DOB"/>'>
+    </td>
+
+    <td class="field" colspan="2"></td>
+  </tr>
+
+  <!-- GRID -->
+  <tr>
+    <td colspan="6">
+        <div id="refreshdiv">
+            <jsp:include page="clientinfo.jsp"></jsp:include>
+        </div>
+    </td>
+  </tr>
+
+</table>
+</div>
+
 </body>
 </html>

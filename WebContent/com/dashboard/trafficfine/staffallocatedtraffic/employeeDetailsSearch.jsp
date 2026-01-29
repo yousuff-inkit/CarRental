@@ -11,13 +11,123 @@
 <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-.textdetail {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	font-family: Tahoma;
-	font-size: 10px;
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
 }
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+
+
 </style>
 
 	<script type="text/javascript">
@@ -47,34 +157,94 @@
  
 	</script>
 <body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
+<div id="search">
+<table width="100%">
+
+  <!-- ROW 1 -->
   <tr>
-    <td align="right" width="6%"><label class="textdetail">Name</label></td>
-    <td align="left" width="40%"><input type="text" name="txtsalname" id="txtsalname"  style="width:96.5%;height:20px;" value='<s:property value="txtsalname"/>'>
-    <input type="hidden" name="txttype" id="txttype"  style="height:20px;" value='<s:property value="txttype"/>'></td>
-    <td width="4%" align="right"><label class="textdetail">Code</label></td>
-    <td align="left"><input type="text" id="txtcode" name="txtcode" style="height:20px;" value='<s:property value="txtcode"/>'> </td>
-    <td width="7%" align="right"><label class="textdetail">Mob</label></td>
-    <td colspan="2" align="left"><input type="text" name="txtmob" id="txtmob" style="height:20px;" value='<s:property value="txtmob"/>'></td>
-    </tr>
-  <tr>
-    <td align="right" width="6%"><label class="textdetail">Doc No</label></td>
-    <td align="left" width=40%><input type="text" name="txtempdocno" id="txtempdocno" style="height:20px;" value='<s:property value="txtempdocno"/>'>
-    <td align="right"><label class="textdetail">Date</label></td>
-    <td align="left" width="16%"><div id="empdate" name="empdate"  value='<s:property value="empdate"/>'></div>
-    <input type="hidden" name="hidempdate" id="hidempdate" value='<s:property value="hidempdate"/>'></td>
-    <td align="right"><label class="textdetail">L/C Exp.</label></td>
-    <td width="14%" align="left"><div id="led" name="led"  value='<s:property value="led"/>'></div>
-    <input type="hidden" name="hidled" id="hidled" value='<s:property value="hidled"/>'></td>
-    <td width="13%" colspan="2" align="center"><input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-  </tr>
-  <tr>
-    <td colspan="8" align="right">
-    <div id="refreshdiv"><jsp:include  page="employeeDetailsSearchGrid.jsp"></jsp:include></div>
+    <td class="label">Name</td>
+    <td class="field">
+        <input type="text"
+               name="txtsalname"
+               id="txtsalname"
+               value='<s:property value="txtsalname"/>'>
+
+        <input type="hidden"
+               name="txttype"
+               id="txttype"
+               value='<s:property value="txttype"/>'>
+    </td>
+
+    <td class="label">Code</td>
+    <td class="field">
+        <input type="text"
+               name="txtcode"
+               id="txtcode"
+               value='<s:property value="txtcode"/>'>
+    </td>
+
+    <td class="label">Mob</td>
+    <td class="field">
+        <input type="text"
+               name="txtmob"
+               id="txtmob"
+               value='<s:property value="txtmob"/>'>
     </td>
   </tr>
+
+  <!-- ROW 2 -->
+  <tr>
+    <td class="label">Doc No</td>
+    <td class="field">
+        <input type="text"
+               name="txtempdocno"
+               id="txtempdocno"
+               value='<s:property value="txtempdocno"/>'>
+    </td>
+
+    <td class="label">Date</td>
+    <td class="field">
+        <div id="empdate" name="empdate"
+             value='<s:property value="empdate"/>'></div>
+
+        <input type="hidden"
+               name="hidempdate"
+               id="hidempdate"
+               value='<s:property value="hidempdate"/>'>
+    </td>
+
+    <td class="label">L/C Exp.</td>
+    <td class="field">
+        <div id="led" name="led"
+             value='<s:property value="led"/>'></div>
+
+        <input type="hidden"
+               name="hidled"
+               id="hidled"
+               value='<s:property value="hidled"/>'>
+    </td>
+
+    <td class="action">
+        <input type="button"
+               name="mbtnrasearch"
+               id="mbtnrasearch"
+               class="myButton"
+               value="Search"
+               onclick="mainloadSearch();">
+    </td>
+  </tr>
+
+  <!-- GRID -->
+  <tr>
+    <td colspan="7">
+        <div id="refreshdiv">
+            <jsp:include page="employeeDetailsSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
+  </tr>
+
 </table>
-  </div>
+</div>
 </body>
+
 </html>

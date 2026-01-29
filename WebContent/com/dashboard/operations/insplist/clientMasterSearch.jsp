@@ -9,11 +9,137 @@
 <title>GatewayERP(i)</title>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-.formfont {
-	font: 10px Tahoma;
-	color: #404040;
-	background: transparent;
-	overflow:hidden;
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+.myButtons {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #007bff;   /* BLUE */
+    color: #ffffff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Keep same blue on hover */
+.myButtons:hover {
+    background-color: #007bff;
 }
 </style>
 <script type="text/javascript">
@@ -36,31 +162,70 @@ function loadClients(){
 
 </script>
 </head>
-<body >
-<div style="background-color:#E0ECF8;">
+<body>
+<div id="search" style="background-color:#FFFFFF;">
 <table width="100%">
+
+  <!-- ROW 1 -->
   <tr>
-    <td width="10%" align="right"><label class="formfont">Name</label></td>
-    <td colspan="3" align="left"><input type="text" name="clients" id="clients" style="width:99%;height:18px;"></td>
-    <td width="10%" align="right"><label class="formfont">Telephone</label></td>
-    <td width="16%" align="left"><input type="text" name="telephone" id="telephone" style="height:18px;"></td>
-    
-    <td width="13%">&nbsp;</td>
+    <td class="label">Name</td>
+    <td class="field" colspan="3">
+        <input type="text"
+               name="clients"
+               id="clients">
+    </td>
+
+    <td class="label">Telephone</td>
+    <td class="field">
+        <input type="text"
+               name="telephone"
+               id="telephone">
+    </td>
   </tr>
+
+  <!-- ROW 2 -->
   <tr>
-    <td align="right"><label class="formfont">Doc No</label></td>
-    <td width="13%" align="left"><input type="text" name="cldocno" id="cldocno" style="height:18px;"></td>
-    <td width="25%" align="right"><label class="formfont">Date</label></td>
-    <td width="13%" align="left"><div id="clientdate"></div></td>
-    <td align="right"><label class="formfont">Mobile</label></td>
-    <td align="left"><input type="text" name="mobile" id="mobile" style="height:18px;"></td>
-    
-    <td align="center"><button type="button" name="btnclientsearch" id="btnclientsearch" class="myButtons" onclick="loadClients();">Search</button></td>
+    <td class="label">Doc No</td>
+    <td class="field">
+        <input type="text"
+               name="cldocno"
+               id="cldocno">
+    </td>
+
+    <td class="label">Date</td>
+    <td class="field">
+        <div id="clientdate"></div>
+    </td>
+
+    <td class="label">Mobile</td>
+    <td class="field">
+        <input type="text"
+               name="mobile"
+               id="mobile">
+    </td>
+
+    <td class="action">
+        <button type="button"
+                name="btnclientsearch"
+                id="btnclientsearch"
+                class="myButtons"
+                onclick="loadClients();">
+            Search
+        </button>
+    </td>
   </tr>
+
+  <!-- GRID -->
   <tr>
-    <td colspan="9"><div id="clientdiv"><jsp:include page="clientSearch.jsp"></jsp:include></div></td>
+    <td colspan="7">
+        <div id="clientdiv">
+            <jsp:include page="clientSearch.jsp"></jsp:include>
+        </div>
+    </td>
   </tr>
+
 </table>
 </div>
 </body>
+
 </html>
