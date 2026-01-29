@@ -350,86 +350,160 @@ function funreload(event)
 </head>
 <body onload="getBranch();setValues();">
 <form id="frmCostUpdate" method="post" action="saveCostUpdate">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
-<td width="20%" align="center">
-    <fieldset style="background: #ECF8E0;">
-	<table width="99%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
 
- <tr>
-   <td width="37%" align="right"><label class="branch">From Date</label></td><td width="63%"><div id="fromdate"></div></td></tr>
- <tr>
-   <td align="right"><label class="branch">To Date</label></td>
-   <td><div id="todate"></div></td>
- </tr>
- 
+<!-- ================= LEFT PANEL (20%) ================= -->
+<td width="20%">
 
- 
-	<tr>
-	  <td colspan="2"  align="center">
-      <input type="radio" name="rdocosttype" id="rdomissing" onchange="setCosttype();"><label for="rdomissing" class="branch">Manual</label>
-      &nbsp;&nbsp;
-		<input type="radio" name="rdocosttype" id="rdodifference" onchange="setCosttype();"><label for="rdodifference" class="branch">Automatic</label>
-      </td>
-	  </tr>
-	<tr>
-	  <td  align="right"><label class="branch">Cost Type</label></td>
-	  <td align="left"><select name="cmbcosttype" id="cmbcosttype" onchange="funClearCosts();"><option value="">--Select--</option></select></td>
-	  </tr>
-	<tr>
-	  <td  align="right"><label class="branch">Cost Code</label></td>
-	  <td  align="left"><input type="text" name="costcode" id="costcode" placeholder="Press F3 to Search" readonly onkeydown="getCostCodeKey(event);" style="height:18px;"></td>
-	  </tr>
-	<tr>
-	  <td  align="center">&nbsp;</td>
-	  <td  align="left"><input type="text" name="costcodename" id="costcodename"  readonly style="height:18px;"></td>
-	  </tr>
-	<tr>
-	  <td colspan="2"  align="center"><button type="button" name="btncostupdate" id="btncostupdate" class="myButtons" onClick="funMissingUpdate();">Update</button></td>
-	  </tr>
-	<tr>
-	<td colspan="2" style="border-top:2px solid #DCDDDE;">
-	 
-	<center><input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">&nbsp;&nbsp;
-	<input type="button" name="btnpost" id="btnpost" value="Post" class="myButtons" onclick="funPost();">
-	</center>
-   
-    </td>
-	</tr>
-		  <tr>
-   <td colspan="2" align="right">
- <br><br><br><br><br><br><br><br><br><br><br>
-   </td>
- </tr>
-	</table>
-	</fieldset>
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- ===== FIXED HEADING ===== -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- ===== SCROLLABLE CONTENT ===== -->
+    <div class="sidebar-scroll-content">
+
+        <!-- ===== DATE RANGE ===== -->
+        <div class="filter-card">
+            <table class="filter-table">
+                <tr>
+                    <td class="label-cell">From Date</td>
+                    <td><div id="fromdate"></div></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">To Date</td>
+                    <td><div id="todate"></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===== COST MODE ===== -->
+        <div class="filter-card">
+            <table class="filter-table">
+                <tr>
+                    <td colspan="2">
+                        <input type="radio" name="rdocosttype" id="rdomissing"
+                               onchange="setCosttype();">
+                        <label for="rdomissing">Manual</label>
+                        &nbsp;&nbsp;
+                        <input type="radio" name="rdocosttype" id="rdodifference"
+                               onchange="setCosttype();">
+                        <label for="rdodifference">Automatic</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Cost Type</td>
+                    <td>
+                        <select id="cmbcosttype" name="cmbcosttype"
+                                onchange="funClearCosts();">
+                            <option value="">--Select--</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Cost Code</td>
+                    <td>
+                        <input type="text" id="costcode" name="costcode"
+                               placeholder="Press F3 to Search"
+                               readonly
+                               onkeydown="getCostCodeKey(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="text" id="costcodename"
+                               name="costcodename" readonly>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===== UPDATE ===== -->
+        <button class="btn-submit" type="button"
+                id="btncostupdate"
+                onclick="funMissingUpdate();">
+            Update
+        </button>
+
+        <!-- ===== CLEAR / POST ===== -->
+        <div class="filter-card" style="border-top:2px solid #DCDDDE;">
+            <div style="text-align:center;">
+                <button type="button" class="btn-submit"
+                        id="btnclear"
+                        onclick="funClearData();">
+                    Clear
+                </button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn-submit"
+                        id="btnpost"
+                        onclick="funPost();">
+                    Post
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
 </td>
+
+<!-- ================= RIGHT PANEL (80%) ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			 <td> <div id="costupdatediv"> <jsp:include page="costupdateGrid.jsp"></jsp:include></div>
-			 <div id="costmissingdiv" > <jsp:include page="costMissingGrid.jsp"></jsp:include> </div> 		
-			 </td>
-			 <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-			  <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-			  <input type="hidden" name="hidtrno" id="hidtrno">
-			  <input type="hidden" name="hidgridacno" id="hidgridacno">
-			  <input type="hidden" name="hidcostcode" id="hidcostcode">
-			  <input type="hidden" name="missingtrno" id="missingtrno" value='<s:property value="missingtrno"/>'>
-			  
-		</tr>
-	</table>
+
+<table width="100%">
+<tr>
+    <td>
+        <div id="costupdatediv">
+            <jsp:include page="costupdateGrid.jsp"></jsp:include>
+        </div>
+
+        <div id="costmissingdiv">
+            <jsp:include page="costMissingGrid.jsp"></jsp:include>
+        </div>
+
+        <!-- ===== HIDDEN FIELDS ===== -->
+        <input type="hidden" id="mode" name="mode"
+               value='<s:property value="mode"/>'>
+        <input type="hidden" id="msg" name="msg"
+               value='<s:property value="msg"/>'>
+        <input type="hidden" id="hidtrno" name="hidtrno">
+        <input type="hidden" id="hidgridacno" name="hidgridacno">
+        <input type="hidden" id="hidcostcode" name="hidcostcode">
+        <input type="hidden" id="missingtrno" name="missingtrno"
+               value='<s:property value="missingtrno"/>'>
+    </td>
 </tr>
 </table>
-</div>
-<div id="costCodeDetailsWindow">
-   <div ></div>
-</div>
+
+</td>
+
+</tr>
+</table>
+
 </div>
 
+<!-- ===== POPUP ===== -->
+<div id="costCodeDetailsWindow">
+    <div></div>
+</div>
+
+</div>
 </form>
 </body>
+
 </html>
