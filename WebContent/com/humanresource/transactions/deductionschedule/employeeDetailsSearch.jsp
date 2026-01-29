@@ -7,6 +7,140 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+.myButtons {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #007bff;   /* BLUE */
+    color: #ffffff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Keep same blue on hover */
+.myButtons:hover {
+    background-color: #007bff;
+}
+</style>
 <title>GatewayERP(i)</title>
 
 	<script type="text/javascript">
@@ -76,31 +210,79 @@
 
 	</script>
 <body>
-<div id=search>
+<div id="search">
 <table width="100%">
+
+  <!-- ROW 1 -->
   <tr>
-    <td width="7%" align="right">Name</td>
-    <td colspan="3"><input type="text" name="txtempname" id="txtempname" style="width:80%" value='<s:property value="txtempname"/>'></td>
-    <td width="8%" align="right">Mob</td>
-    <td colspan="2"><input type="text" name="txtmobile" id="txtmobile" value='<s:property value="txtmobile"/>'></td>
-    <td width="15%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td class="label">Name</td>
+    <td class="field-wide" colspan="3">
+        <input type="text"
+               name="txtempname"
+               id="txtempname"
+               value='<s:property value="txtempname"/>'>
+    </td>
+
+    <td class="label">Mob</td>
+    <td class="field-wide">
+        <input type="text"
+               name="txtmobile"
+               id="txtmobile"
+               value='<s:property value="txtmobile"/>'>
+    </td>
+
+    <td class="action" rowspan="2">
+        <input type="button"
+               name="btnsearch"
+               id="btnsearch"
+               class="myButton"
+               value="Search"
+               onclick="loadSearch();">
+    </td>
   </tr>
+
+  <!-- ROW 2 -->
   <tr>
-    <td align="right">Designation</td>
-    <td width="15%"><select id="employeedesignation" name="employeedesignation" style="width:96%;" value='<s:property value="employeedesignation"/>'>
-      <option value="">--Select--</option></select></td>
-    <td width="10%" align="right">Department</td>
-    <td width="19%"><select id="employeedepartment" name="employeedepartment" style="width:96%;" value='<s:property value="employeedepartment"/>'>
-      <option value="">--Select--</option></select></td>
-    <td width="8%" align="right">Emp#</td>
-    <td width="14%"><input type="text" name="txtempid" id="txtempid" value='<s:property value="txtempid"/>'></td>
-    <td width="12%" align="right">DOB</td>
-    <td><div id="txtdob" name="txtdob"  value='<s:property value="txtdob"/>'></div></td>
+    <td class="label">Designation</td>
+    <td class="field">
+        <select id="employeedesignation"
+                name="employeedesignation">
+            <option value="">--Select--</option>
+        </select>
+    </td>
+
+    <td class="label">Department</td>
+    <td class="field">
+        <select id="employeedepartment"
+                name="employeedepartment">
+            <option value="">--Select--</option>
+        </select>
+    </td>
+
+    <td class="label">Emp #</td>
+    <td class="field">
+        <input type="text"
+               name="txtempid"
+               id="txtempid"
+               value='<s:property value="txtempid"/>'>
+    </td>
+
+    <td class="label">DOB</td>
+    <td class="field">
+        <div id="txtdob"></div>
+    </td>
   </tr>
+
+  <!-- GRID -->
   <tr>
-    <td colspan="8"><div id="refreshhdiv"><jsp:include  page="employeeDetailsSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="8">
+        <div id="refreshhdiv">
+            <jsp:include page="employeeDetailsSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
   </tr>
+
 </table>
-  </div>
+</div>
 </body>
 </html>
