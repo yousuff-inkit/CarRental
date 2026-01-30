@@ -7,6 +7,140 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/* ================================
+   SEARCH POPUP – COMMON MASTER CSS
+   ================================ */
+
+#search {
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+/* Table layout */
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 15px 12px;
+}
+
+/* Labels */
+#search td[align="right"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Text inputs */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    padding: 6px 10px;
+    height: 34px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* Input focus */
+#search input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #007bff;
+    color: #ffffff;
+
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#search .myButton:hover {
+    background-color: #007bff;
+}
+
+/* Result grid spacing */
+#refreshdiv {
+    margin-top: 10px;
+}
+/* ================================
+   SEARCH POPUP – REFINED LAYOUT
+   ================================ */
+
+.search-popup {
+    padding: 14px;
+}
+
+/* Search form table */
+.search-form {
+    width: 100%;
+    border-spacing: 18px 12px;
+}
+
+/* Labels */
+.search-form .label {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Input cells */
+.search-form .field {
+    width: 28%;
+}
+
+/* Action cell */
+.search-form .action {
+    text-align: center;
+    width: 12%;
+}
+
+/* Grid wrapper */
+.search-grid {
+    margin-top: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 6px;
+}
+.myButtons {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #007bff;   /* BLUE */
+    color: #ffffff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Keep same blue on hover */
+.myButtons:hover {
+    background-color: #007bff;
+}
+</style>
 <title>GatewayERP(i)</title>
 
 	<script type="text/javascript">
@@ -31,100 +165,62 @@
 		}
 
 	</script>
-		<style>
-#search td,
-#search label {
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-}
-
-#search input[type="text"] {
-    padding: 5px 8px;
-    height: 26px;
-    border: 1px solid #b8c6d8;
-    border-radius: 5px;
-    font-weight: 600;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#search td {
-    padding: 4px 6px;
-    vertical-align: middle;
-}
-
-.myButton {
-    padding: 6px 18px;
-    font-weight: 700;
-}
-
-#dscdate {
-    border: 1px solid #b8c6d8 !important;
-    border-radius: 5px;
-    padding: 2px;
-    background: white !important;
-}
-
-#search-table {
-    width: 100%;
-    table-layout: auto;      /* natural spacing */
-}
-
-</style>
-<body>
+		<body>
 <div id="search">
+<table width="100%">
 
-<table id="search-table">
-
-<tr>
-    <td>Date</td>
-    <td>
-        <div class="row-flex">
-            <div class="col">
-                <div id="dscdate"></div>
-            </div>
-        </div>
+  <!-- ROW 1 -->
+  <tr>
+    <td class="label">Date</td>
+    <td class="field">
+        <div id="dscdate"></div>
     </td>
 
-    <td>Doc No</td>
-    <td>
-        <input type="text" id="txtdocno" name="txtdocno" class="input-box"
+    <td class="label">Doc No</td>
+    <td class="field">
+        <input type="text"
+               name="txtdocno"
+               id="txtdocno"
                value="<s:property value='txtdocno'/>">
     </td>
 
-    <td rowspan="2" align="center">
-        <button type="button" class="search-btn myButton" onclick="loadSearch();">
-            Search
-        </button>
+    <td class="action" rowspan="2">
+        <input type="button"
+               class="myButton"
+               value="Search"
+               onclick="loadSearch();">
     </td>
-</tr>
+  </tr>
 
-<tr>
-    <td>Name</td>
-    <td>
-        <input type="text" id="txtempname" name="txtempname" 
-               class="input-box" value="<s:property value='txtempname'/>">
+  <!-- ROW 2 -->
+  <tr>
+    <td class="label">Name</td>
+    <td class="field">
+        <input type="text"
+               name="txtempname"
+               id="txtempname"
+               value="<s:property value='txtempname'/>">
     </td>
 
-    <td>Amount</td>
-    <td>
-        <input type="text" id="txtamount1" name="txtamount1" 
-               class="input-box" value="<s:property value='txtamount'/>">
+    <td class="label">Amount</td>
+    <td class="field">
+        <input type="text"
+               name="txtamount1"
+               id="txtamount1"
+               value="<s:property value='txtamount'/>">
     </td>
-</tr>
+  </tr>
 
-<tr>
+  <!-- GRID -->
+  <tr>
     <td colspan="5">
         <div id="refreshdiv">
             <jsp:include page="dscMainSearchGrid.jsp"></jsp:include>
         </div>
     </td>
-</tr>
+  </tr>
 
 </table>
-
 </div>
-
 </body>
-
 </html>
