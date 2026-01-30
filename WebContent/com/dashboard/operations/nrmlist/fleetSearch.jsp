@@ -13,7 +13,8 @@ String color=request.getParameter("color")==null?"":request.getParameter("color"
 String group=request.getParameter("group")==null?"":request.getParameter("group");
 String branch=request.getParameter("branch")==null?"":request.getParameter("branch");
 String id=request.getParameter("id")==null?"":request.getParameter("id");
-%> 
+%>
+ 
 <script type="text/javascript">
 var id='<%=id%>';
 if(id=="1"){

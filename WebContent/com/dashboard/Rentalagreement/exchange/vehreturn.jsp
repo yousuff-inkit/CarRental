@@ -10,13 +10,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<style type="text/css">
-
-
-
-</style>
 <% String contextPath=request.getContextPath();%>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 
 <script type="text/javascript">
@@ -698,141 +791,214 @@ function change()
 </script>
 </head>
 <body onload="getBranch();disitems();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-		<jsp:include page="../../heading.jsp"></jsp:include>
-<!-- 		 <tr><td colspan="2"></td></tr> -->
-	 <tr><td colspan="2">
-	 <table width="100%">
-	 <tr > <td  align="right"><label class="branch">Type</label></td><td align="left">
- <select name="eorc" id="eorc" style="width:70%;" name="eorc"  value='<s:property value="eorc"/>' onchange="change()"> 
-       <option value="" selected>-Select-</option>  
-      <option value="1">Exchange</option>
-                   <option value="2">Cancel</option> 
 
+<!-- ================= LEFT PANEL (20%) ================= -->
+<td width="20%">
 
-</select></td></tr>
-</table>
-</td></tr>
-	<tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height: 150px;"><fieldset><legend ><b>In Details</b></legend> 
-	<table width="100%" id="indetailss">
-<tr><td align="right"><label class="branch">Driver</label></td><td  align="left" ><input type="text" name="indriver" id="indriver" style="height:20px;width:100%;" value='<s:property value="indriver"/>' readonly="readonly">
- 
-<tr> <td  align="right"><label class="branch">KM</label></td> <td align="left"><input type="text" name="inkm" id="inkm"  style="height:20px;width:80%;" value='<s:property value="inkm"/>' onblur="funchkkm()"   onkeypress="javascript:return isNumber (event)"></td></tr>
- 
-<tr> <td  align="right"><label class="branch">Fuel</label></td><td align="left">
- <select name="infuel" id="infuel" style="width:80%;"   value='<s:property value="infuel"/>'>
-       <option value="" selected>-Select-</option>  
-     <option value=0.000 >Level 0/8</option>
-     <option value=0.125>Level 1/8</option>
-     <option value=0.250>Level 2/8</option>
-     <option value=0.375>Level 3/8</option>
-     <option value=0.500>Level 4/8</option>
-     <option value=0.625>Level 5/8</option>
-               <option value=0.750>Level 6/8</option>
-                   <option value=0.875>Level 7/8</option> 
-                   <option value=1.000>Level 8/8</option>
+<div class="master-container">
+<div class="sidebar-filters">
 
+    <!-- ===== FIXED HEADING ===== -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
 
-</select></td></tr>
+    <!-- ===== SCROLLABLE CONTENT ===== -->
+    <div class="sidebar-scroll-content">
 
- <tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='indate' name='indate' value='<s:property value="indate"/>'></div> 
-                  </td></tr>
-  <tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div  style="width: 100% ;"  id='intime' name='intime' value='<s:property value="intime"/>'  ></div>
-                </td></tr>
-                  
-    </table>               
-      </fieldset> 
-              
-          </div></td> 
-	</tr>
-                  
-   
-<!-- ----------------------------------------------------------------------------------------------  -->            
-       <tr> 
-	<td colspan="2"><div id='ss' style="width: 100% ; align:right; height: 180px;"><fieldset><legend><b>Out Details</b></legend> 
-	<table width="100%" id="outdetailss"> 
-	 <tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='exdate' name='exdate' value='<s:property value="exdate"/>'></div> </td></tr>
-     <tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div id='extime' name='extime' value='<s:property value="extime"/>'  ></div> </td></tr>
-	 <tr> <td  align="right"><label class="branch">Fleet</label></td> <td align="left"><input type="text" name="outfleet" id="outfleet"   style="height:20px;width:70%;" readonly="readonly" placeholder="Press F3 Search" value='<s:property value="outfleet"/>'  onkeydown="getvehinfo(event)"></td></tr>          
-                   <tr><td align="right"><label class="branch">Driver</label></td><td  align="left" ><input type="text" name="outdriver"  placeholder="Press F3 Search"  id="outdriver" style="height:20px;width:100%;" value='<s:property value="outdriver"/>' readonly="readonly" onkeydown="getDriver(event)">
- 
-<tr> <td  align="right"><label class="branch">KM</label></td> <td align="left"><input type="text" name="outkm" id="outkm"  style="height:20px;width:80%;" readonly="readonly" value='<s:property value="outkm"/>' ></td></tr>
- 
-<tr> <td  align="right"><label class="branch">Fuel</label></td><td align="left">
- <select name="del_Fuel" id="outfuel" style="width:80%;" name="outfuel"  value='<s:property value="outfuel"/>'>
-      <option value="" selected>-Select-</option>  
-     <option value=0.000 >Level 0/8</option>
-     <option value=0.125>Level 1/8</option>
-     <option value=0.250>Level 2/8</option>
-     <option value=0.375>Level 3/8</option>
-     <option value=0.500>Level 4/8</option>
-     <option value=0.625>Level 5/8</option>
-     <option value=0.750>Level 6/8</option>
-     <option value=0.875>Level 7/8</option>
-     <option value=1.000>Level 8/8</option>      
- 
+        <!-- ===== TYPE ===== -->
+        <div class="filter-card">
+            <table class="filter-table">
+                <tr>
+                    <td class="label-cell">Type</td>
+                    <td>
+                        <select id="eorc" name="eorc" onchange="change()">
+                            <option value="" selected>-Select-</option>
+                            <option value="1">Exchange</option>
+                            <option value="2">Cancel</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-</select></td></tr>
+        <!-- ===== IN DETAILS ===== -->
+        <div class="filter-card">
+            <div class="card-title">In Details</div>
+            <table class="filter-table">
+                <tr>
+                    <td class="label-cell">Driver</td>
+                    <td><input type="text" id="indriver" name="indriver" readonly
+                               value='<s:property value="indriver"/>'></td>
+                </tr>
 
-           </table>              
-      </fieldset>            
-          </div></td> 
-	</tr>           
-               
-<tr><td align="right"><label class="branch">Remarks</label></td><td  align="left" ><input type="text" name="remarkss" id="remarkss" style="height:20px;width:100%;" value='<s:property value="remarkss"/>' >                  
-            
- <tr><td  align="center" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()">
- <input type="Button" name="attachbtns" id="attachbtns" class="myButton" value="Attach" onclick="funAttachBtn()"></td> </tr>
-  </table>
-   </fieldset>
+                <tr>
+                    <td class="label-cell">KM</td>
+                    <td><input type="text" id="inkm" name="inkm"
+                               value='<s:property value="inkm"/>'
+                               onblur="funchkkm()"
+                               onkeypress="return isNumber(event)"></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Fuel</td>
+                    <td>
+                        <select id="infuel" name="infuel">
+                            <option value="">-Select-</option>
+                            <option value="0.000">Level 0/8</option>
+                            <option value="0.125">Level 1/8</option>
+                            <option value="0.250">Level 2/8</option>
+                            <option value="0.375">Level 3/8</option>
+                            <option value="0.500">Level 4/8</option>
+                            <option value="0.625">Level 5/8</option>
+                            <option value="0.750">Level 6/8</option>
+                            <option value="0.875">Level 7/8</option>
+                            <option value="1.000">Level 8/8</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Date</td>
+                    <td><div id="indate" value='<s:property value="indate"/>'></div></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Time</td>
+                    <td><div id="intime" value='<s:property value="intime"/>'></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===== OUT DETAILS ===== -->
+        <div class="filter-card">
+            <div class="card-title">Out Details</div>
+            <table class="filter-table">
+
+                <tr>
+                    <td class="label-cell">Date</td>
+                    <td><div id="exdate" value='<s:property value="exdate"/>'></div></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Time</td>
+                    <td><div id="extime" value='<s:property value="extime"/>'></div></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Fleet</td>
+                    <td>
+                        <input type="text" id="outfleet" name="outfleet"
+                               readonly placeholder="Press F3 Search"
+                               onkeydown="getvehinfo(event)"
+                               value='<s:property value="outfleet"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Driver</td>
+                    <td>
+                        <input type="text" id="outdriver" name="outdriver"
+                               readonly placeholder="Press F3 Search"
+                               onkeydown="getDriver(event)"
+                               value='<s:property value="outdriver"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">KM</td>
+                    <td>
+                        <input type="text" id="outkm" name="outkm"
+                               readonly value='<s:property value="outkm"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Fuel</td>
+                    <td>
+                        <select id="outfuel" name="outfuel">
+                            <option value="">-Select-</option>
+                            <option value="0.000">Level 0/8</option>
+                            <option value="0.125">Level 1/8</option>
+                            <option value="0.250">Level 2/8</option>
+                            <option value="0.375">Level 3/8</option>
+                            <option value="0.500">Level 4/8</option>
+                            <option value="0.625">Level 5/8</option>
+                            <option value="0.750">Level 6/8</option>
+                            <option value="0.875">Level 7/8</option>
+                            <option value="1.000">Level 8/8</option>
+                        </select>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- ===== REMARKS ===== -->
+        <div class="filter-card">
+            <table class="filter-table">
+                <tr>
+                    <td class="label-cell">Remarks</td>
+                    <td><input type="text" id="remarkss" name="remarkss"
+                               value='<s:property value="remarkss"/>'></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- ===== ACTION BUTTONS ===== -->
+        <button class="btn-submit" type="button" onclick="funupdate()">Update</button>
+        <button class="btn-submit" type="button" onclick="funAttachBtn()">Attach</button>
+
+    </div>
+</div>
+</div>
 
 </td>
+
+<!-- ================= RIGHT PANEL (80%) ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			  <td><div id="delupdiv"><jsp:include page="delupdateGrid.jsp"></jsp:include></div></td> 
-			  </tr>
-			  <%-- <tr>
-			  <td><div hidden="true">	<jsp:include page="../../../../header.jsp"></jsp:include></div></td>
-			  
-		</tr> --%>
-	</table>
+    <table width="100%">
+        <tr>
+            <td>
+                <div id="delupdiv">
+                    <jsp:include page="delupdateGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</td>
+
 </tr>
 </table>
- <input type="hidden" name="rentaldoc" id="rentaldoc" style="height:20px;width:70%;" value='<s:property value="rentaldoc"/>' >
 
-<input type="hidden" name="fleetno" id="fleetno" style="height:20px;width:70%;" value='<s:property value="fleetno"/>' >       
+<!-- ===== HIDDEN FIELDS (UNCHANGED) ===== -->
+<input type="hidden" id="rentaldoc" name="rentaldoc" value='<s:property value="rentaldoc"/>'>
+<input type="hidden" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>'>
+<input type="hidden" id="out_km" name="out_km" value='<s:property value="out_km"/>'>
 
- <input type="hidden" name="out_km" id="out_km" style="height:20px;width:70%;" value='<s:property value="out_km"/>' >
-<%-- <input type="hidden" name="out_fuel" id="out_fuel" style="height:20px;width:70%;" value='<s:property value="out_fuel"/>' >  --%>
+<div hidden id="jqxDateOut" value='<s:property value="jqxDateOut"/>'></div>
+<div hidden id="jqxTimeOut" value='<s:property value="jqxTimeOut"/>'></div>
 
- <div hidden="true" id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div>
-<div hidden="true" id='jqxTimeOut' name='jqxTimeOut' value='<s:property value="jqxTimeOut"/>'></div>
+<input type="hidden" id="branchids" name="branchids" value='<s:property value="branchids"/>'>
+<input type="hidden" id="group" name="group" value='<s:property value="group"/>'>
+<input type="hidden" id="vehloca" name="vehloca" value='<s:property value="vehloca"/>'>
+<input type="hidden" id="cldocno" name="cldocno" value='<s:property value="cldocno"/>'>
+<input type="hidden" id="outdriverid" name="outdriverid" value='<s:property value="outdriverid"/>'>
+<input type="hidden" id="outloc" name="outloc" value='<s:property value="outloc"/>'>
+<input type="hidden" id="outfuelval" name="outfuelval" value='<s:property value="outfuelval"/>'>
 
+<!-- ===== WINDOWS ===== -->
+<div id="collectionwindow"><div></div></div>
+<div id="vehinfowindow"><div></div></div>
 
-<input type="hidden" name="branchids" id="branchids" style="height:20px;width:70%;" value='<s:property value="branchids"/>' > 
-<input type="hidden" name="group" id="group" style="height:20px;width:70%;" value='<s:property value="group"/>' >
-<input type="hidden" name="vehloca" id="vehloca" style="height:20px;width:70%;" value='<s:property value="vehloca"/>' >
-	<input type="hidden" name="cldocno" id="cldocno" style="height:20px;width:70%;" value='<s:property value="cldocno"/>' >  
-<!--  -->
-	
-	<input type="hidden" name="outdriverid" id="outdriverid" style="height:20px;width:70%;" value='<s:property value="outdriverid"/>' > 
-		<input type="hidden" name="outloc" id="outloc" style="height:20px;width:70%;" value='<s:property value="outloc"/>' > 
-		
-		<input type="hidden" name="outfuelval" id="outfuelval" style="height:20px;width:70%;" value='<s:property value="outfuelval"/>' > 
-<div id="collectionwindow">
-   <div ></div>
-</div>
-  <div id="vehinfowindow">
-   <div ></div>
-</div>   
 </div>
 </div>
 </body>
