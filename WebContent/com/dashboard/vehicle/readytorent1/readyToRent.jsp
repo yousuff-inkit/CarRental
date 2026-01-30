@@ -16,19 +16,104 @@
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style>
 
-.icons {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #ECF8E0;
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.iconss {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #ECF8E0;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
 }
 </style>
+
+
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -206,80 +291,126 @@ function disitems()
   
 <body onload="getBranch();disitems();">
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div class="hidden-scrollbar">
+
 <table width="100%">
 <tr>
+
+<!-- ================= LEFT PANEL (20%) ================= -->
 <td width="20%">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-	
-	<!--  <tr><td colspan="2">&nbsp;</td></tr> -->
- <tr><td colspan="2">&nbsp;</td></tr> 
-<tr><td align="right"><label class="branch">Fleet</label></td><td><input type="text" name="fleetno" id="fleetno" style="height:20px;width:60%;" readonly="readonly" value='<s:property value="fleetno"/>' ></td></tr>
-<!-- <tr><td colspan="2">&nbsp;</td></tr> -->
-<tr><td colspan="2" align="center"><input type="button" name="btnvehicle" id="btnvehicle" value="Attach" class="myButton" onclick="funClientAttach();">
-<input type="button" name="btnmove" id="btnmove" value="Movement" class="myButton" onClick="getVehicleMov();">
-</td></tr>
-<tr><td colspan="2" align="center">
+    <div class="master-container">
+        <div class="sidebar-filters">
 
-<button type="button"  title="Rental Agreement"  class="icons" id="rabutton"  value='<s:property value="rabutton"/>'> 
-					 <img alt="Rental Agreement" src="<%=contextPath%>/icons/openra.png"> 
-					</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button"  title="Booking"  class="icons" id="bookingbtn"  value='<s:property value="bookingbtn"/>'>
-					 <img alt="Booking" src="<%=contextPath%>/icons/openbk.png"> 
-					</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button"  title="Client Review"  class="icons" id="clientreview"  value='<s:property value="clientreview"/>'>
-					 <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png"> 
-					</button>
+            <!-- Fixed Heading -->
+            <div class="sidebar-fixed-top">
+                <div class="filter-card">
+                    <jsp:include page="../../heading.jsp"></jsp:include>
+                </div>
+            </div>
 
+            <!-- Scrollable Content -->
+            <div class="sidebar-scroll-content">
 
-<!-- <input type="button" name="btnclient" id="btnclient" value="Client Review" class="myButton" onClick="openclientreview();"></td> --></tr>
- <tr>
-	<td colspan="2" align="center"><div id="mastertariff"><jsp:include page="masterTariffgrid.jsp"></jsp:include>
-	</div></td>
-	</tr> 
-	<tr>
-<tr>
-	<td colspan="2" ></td> 
-	</tr> 
-	<tr>
-	</table>
-	</fieldset>
-	
-<input type="hidden" name="brach" id="brach" style="height:20px;width:60%;" readonly="readonly" value='<s:property value="brach"/>' >
-<input type="hidden" name="grp" id="grp" style="height:20px;width:60%;" readonly="readonly" value='<s:property value="grp"/>' >
+                <div class="filter-card">
+                    <table class="filter-table">
 
-<input type="hidden" name="docno" id="docno" style="height:20px;width:60%;" readonly="readonly" value='<s:property value="docno"/>' >
+                        <tr>
+                            <td class="label-cell">Fleet</td>
+                            <td>
+                                <input type="text" name="fleetno" id="fleetno"
+                                       readonly
+                                       value='<s:property value="fleetno"/>'>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <!-- ================= BLUE ACTION BUTTONS ================= -->
+                <button type="button" class="btn-submit" onclick="funClientAttach();">
+                    Attach
+                </button>
+
+                <button type="button" class="btn-submit" onclick="getVehicleMov();">
+                    Movement
+                </button>
+
+                <!-- ================= ICON BUTTONS (UNCHANGED) ================= -->
+                <div style="text-align:center; margin-top:12px;">
+                    <button type="button" title="Rental Agreement" class="icons"
+                            id="rabutton" value='<s:property value="rabutton"/>'>
+                        <img alt="Rental Agreement"
+                             src="<%=contextPath%>/icons/openra.png">
+                    </button>
+
+                    <button type="button" title="Booking" class="icons"
+                            id="bookingbtn" value='<s:property value="bookingbtn"/>'>
+                        <img alt="Booking"
+                             src="<%=contextPath%>/icons/openbk.png">
+                    </button>
+
+                    <button type="button" title="Client Review" class="icons"
+                            id="clientreview" value='<s:property value="clientreview"/>'>
+                        <img alt="Client Review"
+                             src="<%=contextPath%>/icons/openclientreview.png">
+                    </button>
+                </div>
+
+                <!-- ================= MASTER TARIFF GRID ================= -->
+                <div class="filter-card" style="margin-top:10px;">
+                    <div id="mastertariff">
+                        <jsp:include page="masterTariffgrid.jsp"></jsp:include>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden fields (unchanged) -->
+    <input type="hidden" name="brach" id="brach"
+           value='<s:property value="brach"/>'>
+    <input type="hidden" name="grp" id="grp"
+           value='<s:property value="grp"/>'>
+    <input type="hidden" name="docno" id="docno"
+           value='<s:property value="docno"/>'>
+
 </td>
+
+<!-- ================= RIGHT CONTENT (80%) ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="fleetdiv"><jsp:include page="readyToRentGrid.jsp"></jsp:include></div></td>
-			 
-			 </tr>
-			 
-			
-			 
-			 <tr>
-			 <td><div id="tariffdiv"><jsp:include page="tariffShowgrid.jsp"></jsp:include></div></td>
-			
-		</tr>
-	</table>
+    <table width="100%">
+        <tr>
+            <td>
+                <div id="fleetdiv">
+                    <jsp:include page="readyToRentGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div id="tariffdiv">
+                    <jsp:include page="tariffShowgrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</td>
+
 </tr>
 </table>
+
 </div>
 
+<!-- ================= HIDDEN VALUES & POPUPS ================= -->
 <label hidden="true" id="trncodeval"></label>
- <label  hidden="true" id="statusval"></label>
-<div id="movementwindow">
-<div></div>
-</div> 
-<div id="securitypasswindow">
-<div></div>
-</div> 
+<label hidden="true" id="statusval"></label>
+
+<div id="movementwindow"><div></div></div>
+<div id="securitypasswindow"><div></div></div>
+
 </div>
-
-
 </body>
+
 </html>

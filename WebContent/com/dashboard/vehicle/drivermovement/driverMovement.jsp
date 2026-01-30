@@ -10,7 +10,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
@@ -219,55 +317,133 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
 </head>
 <body onload="hiddenbrh();">
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" rowspan="2" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 
-	 
-	 	 <tr><td align="right"><label class="branch">Driver</label></td>
-	 <td align="left"><input type="text" id="driver" style="height:20px;width:61%;" name="driver" placeholder="Press F3 To Search" onfocus="this.placeholder = ''" readonly value='<s:property value="driver"/>' onkeydown="getDriverData(event);" > </td></tr>
-	 <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-                <tr>    
-      <td colspan="2"><textarea id="drvinfo" style="height:180px;width:200px;font: 10px Tahoma;resize:none" name="drvinfo"  readonly="readonly"  ><s:property value="drvinfo" ></s:property></textarea>  </td></tr>               
-                    
-    <tr><td colspan="2">&nbsp;</td></tr>               
-  <tr><td colspan="2" align="center"><button class="myButton" type="button" id="btnPrint" name="btnPrint" onclick="funPrintMov(event);">Print</button></td></tr>                  
-                 
 
-<!--  <tr><td colspan="2">&nbsp;</td></tr -->
+<!-- ================= LEFT SIDEBAR (20%) ================= -->
+<td width="20%">
+    <div class="master-container">
+        <div class="sidebar-filters">
 
-	<tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height:125px;"></div></td>
-	</tr>	
-	</table>
-	</fieldset>
+            <!-- Fixed Heading -->
+            <div class="sidebar-fixed-top">
+                <div class="filter-card">
+                    <jsp:include page="../../heading.jsp"></jsp:include>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="sidebar-scroll-content">
+
+                <!-- Filters -->
+                <div class="filter-card">
+                    <table class="filter-table">
+
+                        <tr>
+                            <td class="label-cell">Driver</td>
+                            <td>
+                                <input type="text"
+                                       id="driver"
+                                       name="driver"
+                                       placeholder="Press F3 To Search"
+                                       readonly
+                                       value='<s:property value="driver"/>'
+                                       onkeydown="getDriverData(event);">
+                                <input type="hidden"
+                                       name="hiddriver"
+                                       id="hiddriver"
+                                       value='<s:property value="hiddriver"/>'>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">From</td>
+                            <td>
+                                <div id="fromdate"
+                                     name="fromdate"
+                                     value='<s:property value="fromdate"/>'>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">To</td>
+                            <td>
+                                <div id="todate"
+                                     name="todate"
+                                     value='<s:property value="todate"/>'>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <textarea id="drvinfo"
+                                          name="drvinfo"
+                                          readonly
+                                          style="width:100%; height:180px; resize:none; font-size:12px;">
+<s:property value="drvinfo"/>
+                                </textarea>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <!-- Print Button -->
+                <button type="button"
+                        class="btn-submit"
+                        id="btnPrint"
+                        onclick="funPrintMov(event);">
+                    Print
+                </button>
+
+                <!-- Chart -->
+                <div class="filter-card">
+                    <div id="paychaaaaa"
+                         style="width:100%; height:125px;">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </td>
+
+<!-- ================= RIGHT CONTENT (80%) ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			 <td height="274"><div id="drvdiv"><jsp:include page="driverMovementGrid.jsp"></jsp:include></div></td>
-			 <!--<td></td>-->
-		</tr>
-	</table>
-</tr>
-<tr>
-  <td><div id="drvsummdiv"><jsp:include page="driverSummaryGrid.jsp"></jsp:include></div></td>
+    <table width="100%">
+
+        <tr>
+            <td>
+                <div id="drvdiv">
+                    <jsp:include page="driverMovementGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div id="drvsummdiv">
+                    <jsp:include page="driverSummaryGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</td>
+
 </tr>
 </table>
 
 </div>
-<div id="driverwindow"><div></div>
-</div>
+
+<!-- Popup -->
+<div id="driverwindow"><div></div></div>
+
 </div>
 </body>
+
 </html>
