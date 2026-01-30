@@ -1749,83 +1749,51 @@
                             var weekoff1 = weekoff.split(",");
                             var weekoffcount = (weekoff.match(/,/g) || []).length;
                             var checking = '0';
-                            
-                            for(var k=0; k < parseInt(weekoffcount); k++) {
-                                if(weekoff1[k] == i) {
-                                    checking = '1';
+
+                            for (var k = 0; k < parseInt(weekoffcount); k++) {
+                                if (weekoff1[k] == i) { checking = '1'; }
+                                if (checking == '1') {
+                                    var value1 = value.split(":");
+                                    var value2 = ((parseInt(value1[0]) * 60) + parseInt(value1[1]));
+                                    holidayovertime += value2;
                                     break;
                                 }
                             }
-                            
-                            if(checking == '1') {
+
+                            if (checking == '0') {
                                 var value1 = value.split(":");
-                                var value2 = ((parseInt(value1[0])*60) + parseInt(value1[1]));
-                                holidayovertime = holidayovertime + value2;
-                            } else {
-                                var value1 = value.split(":");
-                                var value2 = ((parseInt(value1[0])*60) + parseInt(value1[1]));
-                                overtime = overtime + value2;
+                                var value2 = ((parseInt(value1[0]) * 60) + parseInt(value1[1]));
+                                overtime += value2;
                             }
                         }
                     }
-                    
-                    console.log("=== FINAL CALCULATED VALUES ===");
-                    console.log("Holiday:", holiday);
-                    console.log("Total Leave (L):", leave);
-                    console.log("leave1total (Annual):", leave1total);
-                    console.log("leave2total (Paid):", leave2total);
-                    console.log("leave3total (Sick):", leave3total);
-                    console.log("leave4total (Casual):", leave4total);
-                    console.log("leave5total (Emergency):", leave5total);
-                    console.log("leave6total (Absconding):", leave6total);
-                    console.log("leave7total (Suspended):", leave7total);
-                    console.log("Overtime:", overtime);
-                    console.log("Holiday Overtime:", holidayovertime);
-                    
-                    // Check the condition
-                    var editGridValue = $('#txtattendanceleaveseditgrid').val();
-                    console.log("txtattendanceleaveseditgrid value:", editGridValue);
-                    console.log("Parsed value:", parseInt(editGridValue));
-                    console.log("Condition check (==0):", parseInt(editGridValue) == 0);
-                    
-                    // Update grid cells
+                    // --- END CALCULATION LOOP ---
+
+                    // Update Grid UI
                     $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "holiday", holiday);
                     $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leavedet", leave);
                     $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertime", overtime);
                     $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertime", holidayovertime);
                     
-                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertimes", 
-                        (((overtime - (overtime % 60)) / 60).toString() + ":" + 
-                        ((overtime % 60) < 10 ? "0" : "") + (overtime % 60).toString()));
+                    var otStr = (((overtime - (overtime % 60)) / 60).toString() + ":" + ((overtime % 60) < 10 ? "0" : "") + (overtime % 60).toString());
+                    var hotStr = (((holidayovertime - (holidayovertime % 60)) / 60).toString() + ":" + ((holidayovertime % 60) < 10 ? "0" : "") + (holidayovertime % 60).toString());
                     
-                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertimes", 
-                        (((holidayovertime - (holidayovertime % 60)) / 60).toString() + ":" + 
-                        ((holidayovertime % 60) < 10 ? "0" : "") + (holidayovertime % 60).toString()));
-                    
-                    
-                        console.log(">>> UPDATING INDIVIDUAL LEAVE COLUMNS");
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave1total", leave1total);
-                        console.log("  Set leave1total to:", leave1total);
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave2total", leave2total);
-                        console.log("  Set leave2total to:", leave2total);
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave3total", leave3total);
-                        console.log("  Set leave3total to:", leave3total);
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave4total", leave4total);
-                        console.log("  Set leave4total to:", leave4total);
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave5total", leave5total);
-                        console.log("  Set leave5total to:", leave5total);
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave6total", leave6total);
-                        console.log("  Set leave6total to:", leave6total);
-                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave7total", leave7total);
-                        console.log("  Set leave7total to:", leave7total);
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertimes", otStr);
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertimes", hotStr);
+
+                    // Only update breakdown columns if edit is allowed
                    
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave1total", leave1total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave2total", leave2total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave3total", leave3total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave4total", leave4total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave5total", leave5total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave6total", leave6total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave7total", leave7total);
                     
-                    console.log("=== END OF CALCULATION ===");
-                } else {
-                    console.log(">>> Skipped - DataField is excluded:", dataField);
                 }
-                
-                // Update hidden fields
+
+                // Update Hidden Inputs for Saving
                 $('#txtselectedcellleave1totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave1total"));
                 $('#txtselectedcellleave2totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave2total"));
                 $('#txtselectedcellleave3totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave3total"));
