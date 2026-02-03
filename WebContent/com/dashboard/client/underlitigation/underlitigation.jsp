@@ -269,62 +269,234 @@
 
 </script>
 </head>
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Card Styling */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 90px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Dual Grid Support */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    fieldset {
+        border: 1px solid #ccd6e0 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        margin-top: 10px !important;
+    }
+    legend {
+        font-weight: bold !important;
+        padding: 0 5px !important;
+        font-size: 13px !important;
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
+</style>
 <body onload="getBranch();getinfo();disitems();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%">
-	<jsp:include page="../../heading.jsp"></jsp:include>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr> <td  align="right"><label class="branch">Process</label></td><td align="left">
- <select name="cmbinfo" id="cmbinfo" style="width:70%;" name="cmbinfo"  value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()">
-       
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-</select></td></tr>
-<tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='underdate' name='underdate' value='<s:property value="underdate"/>'></div>
-	 <tr><td align="right"><label class="branch">Remarks </label></td><td align="left"><input type="text" id="remarks" style="height:20px;width:88%;" name="remarks"  value='<s:property value="remarks"/>'> </td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="UPDATE" onclick="funupdate()"></td> </tr>
-			<tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">
-	 <div>
-	 <fieldset>
-	 <legend>Change Status</legend>
-	 <table width="100%" >
-	 
-	 <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 To Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:90%;" value='<s:property value="clientname"/>'></td></tr>
-	 <tr><td align="right"><label class="branch">Status</label></td><td align="left"><select id="cmbchangestatus" style="width:70%;" name="cmbchangestatus"  value='<s:property value="cmbchangestatus"/>'>
-	 <option value=''>-- Select --</option><option value='1'>Litigation</option><option value='2'>Dispute</option><option value='3'>Over Due</option><option value='4'>Frequent Defaulter</option></select></td></tr>
-	 <tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='disputeDate' name='disputeDate' value='<s:property value="disputeDate"/>'></div></td></tr>
-	 <tr><td align="right"><label class="branch">Case No </label></td><td align="left"><input type="text" id="caseno" style="height:20px;width:70%;" name="caseno"  value='<s:property value="caseno"/>'> </td></tr>
-	 <tr><td align="right"><label class="branch">Station </label></td><td align="left"><input type="text" id="station" style="height:20px;width:70%;" name="station"  value='<s:property value="station"/>'> </td></tr>
-	  <tr><td align="right"><label class="branch">Value </label></td><td align="left"><input type="text" id="value" style="height:20px;width:70%;" name="value"  value='<s:property value="value"/>' onkeypress="javascript:return isNumber (event)" > </td></tr>
-	 <tr><td align="right" ><label class="branch">Note</label></td><td align="left"><input type="text" id="casenote" style="height:20px;width:88%;" name="casenote"  value='<s:property value="casenote"/>'> </td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td  align="center" colspan="2"><input type="Button" name="driverUpdates" id="driverUpdates" class="myButton" value="UPDATE" onclick="funupdatess()"></td> </tr>
-	 </table>
-	 </fieldset>
-	 </div>
-	</td></tr> 
-  </table>
-  </fieldset>
-    	  
-<input type="hidden" name="disdoc" id="disdoc" style="height:20px;width:70%;" value='<s:property value="disdoc"/>' >
-<input type="hidden" name="choice" id="choice" style="height:20px;width:70%;" value='<s:property value="choice"/>' >
-<input type="hidden" name="branchids" id="branchids" style="height:20px;width:70%;" value='<s:property value="branchids"/>' >
-<input type="hidden" name="rentaldoc" id="rentaldoc" style="height:20px;width:70%;" value='<s:property value="rentaldoc"/>' >
-<input type="hidden" name="cldocno" id="cldocno" style="height:20px;width:70%;" value='<s:property value="cldocno"/>' >
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr><td><div id="rtaupdiv"><jsp:include page="underlitigationGrid.jsp"></jsp:include></div></td> </tr>
-		<tr><td colspan="2" align="left" ><div id="detaildiv"><jsp:include page="followDetailgrid.jsp"></jsp:include></div></td></tr>
-	</table>
-</tr>
-</table>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Process</td>
+                        <td>
+                            <select name="cmbinfo" id="cmbinfo" value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id='underdate' name='underdate' value='<s:property value="underdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Remarks</td>
+                        <td><input type="text" id="remarks" name="remarks" value='<s:property value="remarks"/>'></td>
+                    </tr>
+                </table>
+                <input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="UPDATE" onclick="funupdate()">
+            </div>
+
+            <div class="filter-card">
+                <fieldset>
+                    <legend>Change Status</legend>
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Client</td>
+                            <td><input type="text" name="clientname" id="clientname" placeholder="Press F3 To Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' " value='<s:property value="clientname"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Status</td>
+                            <td>
+                                <select id="cmbchangestatus" name="cmbchangestatus" value='<s:property value="cmbchangestatus"/>'>
+                                    <option value=''>-- Select --</option>
+                                    <option value='1'>Litigation</option>
+                                    <option value='2'>Dispute</option>
+                                    <option value='3'>Over Due</option>
+                                    <option value='4'>Frequent Defaulter</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td><div id='disputeDate' name='disputeDate' value='<s:property value="disputeDate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Case No</td>
+                            <td><input type="text" id="caseno" name="caseno" value='<s:property value="caseno"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Station</td>
+                            <td><input type="text" id="station" name="station" value='<s:property value="station"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Value</td>
+                            <td><input type="text" id="value" name="value" value='<s:property value="value"/>' onkeypress="javascript:return isNumber (event)"></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Note</td>
+                            <td><input type="text" id="casenote" name="casenote" value='<s:property value="casenote"/>'></td>
+                        </tr>
+                    </table>
+                    <input type="Button" name="driverUpdates" id="driverUpdates" class="myButton" value="UPDATE" onclick="funupdatess()">
+                </fieldset>
+            </div>
+
+            <input type="hidden" name="disdoc" id="disdoc" value='<s:property value="disdoc"/>' >
+            <input type="hidden" name="choice" id="choice" value='<s:property value="choice"/>' >
+            <input type="hidden" name="branchids" id="branchids" value='<s:property value="branchids"/>' >
+            <input type="hidden" name="rentaldoc" id="rentaldoc" value='<s:property value="rentaldoc"/>' >
+            <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>' >
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="rtaupdiv">
+                <jsp:include page="underlitigationGrid.jsp"></jsp:include>
+            </div>
+            <div id="detaildiv">
+                <jsp:include page="followDetailgrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <div id="clientwindow">
    <div></div>

@@ -71,69 +71,190 @@ function funreload(event)
 	
 </script>
 </head>
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Card Styling */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 100px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Grid Area & Scroll Fix */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { 
+        background-color: #1d4ed8 !important; 
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
+</style>
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-		<table width="100%"  >
-			<jsp:include page="../../heading.jsp"></jsp:include>
-	 		<tr><td colspan="2">&nbsp;</td></tr>
-	  		<tr>
-				<td align="left" colspan="2">
-					<table>
-						<tr><td align="right"><label class="branch">Upto Date</label></td><td><div id="uptodate" name="uptodate"></div></td></tr>
-						<tr><td align="right"><label class="branch">Client Category</label></td>
-        					<td align="left">
-					        	<input type="text" readonly id="clientcat" name="clientcat" value='<s:property value="clientcat"/>' onkeydown="getClientCat(event);" style="height:18px;" placeholder="Press F3 to Search">
-      							<input type="hidden" readonly id="hidclientcat" name="hidclientcat" value='<s:property value="hidclientcat"/>' >
-      						</td>
-      					</tr>
-						<tr><td align="right"><label class="branch">Rental Type</label></td>
-        					<td align="left">
-					        	<select id="rentaltype" name="rentaltype"  value='<s:property value="rentaltype"/>' style="width:125px;">
-					     			<!--  <option value="">--Select--</option> -->
-					       			<option value="RAG">Rental</option>
-					        		<option value="LAG">Lease</option>
-					      		</select>
-      						</td>
-      					</tr>
-      					<tr><td align="right"><label class="branch">Rental Status</label></td>
-        					<td align="left">
-					        	<select id="rentalstatus" name="rentalstatus"  value='<s:property value="rentalstatus"/>' style="width:125px;">
-					     			<option value="">All</option>
-					       			<option value="0">Opened</option>
-					        		<option value="1">Closed</option>
-					      		</select>
-      						</td>
-      					</tr>
-      					<tr><td align="center" colspan="2"><hr></td></tr>
-      					<tr>
-      						<td align="center" colspan="2">
-      							<button type="button" id="btnclear" name="btnclear" class="myButton">Clear</button>
-      						</td>
-      					</tr>
-   					</table>
- 				</td>
-			</tr> 
-	 <tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr>
-	<td colspan="2"><div id='pieChart1' style="width: 100% ; align:right; height: 170px;"></div></td>
-	</tr>	
-	</table>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="cradfwdiv"><jsp:include page="cardfollowupGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-</tr>
-</table>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Upto Date</td>
+                        <td><div id="uptodate" name="uptodate"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client Category</td>
+                        <td>
+                            <input type="text" readonly id="clientcat" name="clientcat" value='<s:property value="clientcat"/>' onkeydown="getClientCat(event);" placeholder="Press F3 to Search">
+                            <input type="hidden" readonly id="hidclientcat" name="hidclientcat" value='<s:property value="hidclientcat"/>' >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Rental Type</td>
+                        <td>
+                            <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
+                                <option value="RAG">Rental</option>
+                                <option value="LAG">Lease</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Rental Status</td>
+                        <td>
+                            <select id="rentalstatus" name="rentalstatus" value='<s:property value="rentalstatus"/>'>
+                                <option value="">All</option>
+                                <option value="0">Opened</option>
+                                <option value="1">Closed</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                
+                <hr style="border: 0; border-top: 1px solid #e1e8ed; margin: 15px 0;">
+                
+                <div style="text-align: center;">
+                    <button type="button" id="btnclear" name="btnclear" class="myButton">Clear</button>
+                </div>
+            </div>
+
+            <div id='pieChart1' style="width: 100%; height: 170px; margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="cradfwdiv">
+                <jsp:include page="cardfollowupGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <div id="clientcatwindow">
 <div></div>
