@@ -250,147 +250,223 @@
     </script>
 
 </head>
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
 
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Card Styling */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 100px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Grid Area & Scroll Fix */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton, .clearButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover, .clearButton:hover { 
+        background-color: #1d4ed8 !important; 
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
+</style>
 <body onload="getBranch();setValues();getClientCategory();">
     <form id="frmNotInvoicedSalik" action="saveNotInvoicedSalik" method="post">
         <div id="mainBG" class="homeContent" data-type="background">
             <div class='hidden-scrollbar'>
-                <table width="100%">
-                    <tr>
-                        <td width="20%">
-                            <fieldset style="background: #ECF8E0;">
-                                <table width="100%">
-                                    <jsp:include page="../../heading.jsp"></jsp:include>
+               <div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-                                    <tr>
-                                        <td colspan="2">&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">From</label>
-                                        </td>
-                                        <td align="left">
-                                            <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">To</label>
-                                        </td>
-                                        <td align="left">
-                                            <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">Type</label>
-                                        </td>
-                                        <td align="left">
-                                        	<select name="cmbsaliktype" id="cmbsaliktype">
-                                        		<option value="">--Select--</option>
-                                        		<option value="SAL">Salik</option>
-                                        		<option value="PAR">Parking</option>
-                                        	</select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">Client</label>
-                                        </td>
-                                        <td align="left">
-                                            <input type="text" id="txtclientname" name="txtclientname" style="width:100%;height:20px;" readonly placeholder="Press F3 to Search" onkeydown="getClient(event);" value='<s:property value="txtclientname"/>' />
-                                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>' />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">Category</label>
-                                        </td>
-                                        <td align="left">
-                                        	<select name="cmbcategory" id="cmbcategory">
-                                        		<option value="">--Select--</option>
-                                        	</select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">Agmt.Type</label>
-                                        </td>
-                                        <td align="left">
-                                            <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
-                                                <option value="">--Select--</option>
-                                                <option value="RAG">Rental</option>
-                                                <option value="LAG">Lease</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">Agreement</label>
-                                        </td>
-                                        <td align="left">
-                                            <input type="text" name="agmtvocno" id="agmtvocno" value='<s:property value="agmtvocno"/>' style="width:100%;height:20px;" readonly placeholder="Press F3 to Search" onkeydown="getAgreement(event);">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <label class="branch">Tariff.Type</label>
-                                        </td>
-                                        <td>
-                                            <select name="cmbtype" id="cmbtype">
-                                                <option value="">--Select--</option>
-                                                <option value="Daily">Daily</option>
-                                                <option value="Weekly">Weekly</option>
-                                                <option value="Monthly">Monthly</option>
-                                                <option value="Lease">Lease</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="center">
-                                            <input type="button" name="btngenerate" id="btngenerate" value="Generate" class="myButton" onclick="funGenerate();">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="center">
-                                            <input type="button" class="clearButton" name="clear" id="clear" value="Clear" onclick="funClearData();">
-                                            <button class="myButton" type="button" id="btnSalikInvoicePrint" name="btnSalikInvoicePrint" onclick="funSalikInvoicePrint();">Print</button>
-                                        </td>
-                        			</tr>
-			                        <tr>
-			                            <td colspan="2">&nbsp;</td>
-			                        </tr>
-			                        <tr>
-			                            <td colspan="2">&nbsp;</td>
-			                        </tr>
-			                        <tr>
-			                            <td colspan="2">&nbsp;</td>
-			                        </tr>
-			                        <tr>
-			                            <td colspan="2">&nbsp;</td>
-			                        </tr>
-			                        <tr>
-			                            <td colspan="2">&nbsp;</td>
-			                        </tr>
-                        		</table>
-                        	</fieldset>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select name="cmbsaliktype" id="cmbsaliktype">
+                                <option value="">--Select--</option>
+                                <option value="SAL">Salik</option>
+                                <option value="PAR">Parking</option>
+                            </select>
                         </td>
-                        <td width="80%">
-                            <table width="100%">
-                                <tr>
-                                    <td>
-                                        <div id="notInvoicedDiv">
-                                            <jsp:include page="notInvoicedGrid.jsp"></jsp:include>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td>
+                            <input type="text" id="txtclientname" name="txtclientname" readonly placeholder="Press F3 to Search" onkeydown="getClient(event);" value='<s:property value="txtclientname"/>' />
+                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>' />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Category</td>
+                        <td>
+                            <select name="cmbcategory" id="cmbcategory">
+                                <option value="">--Select--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Agmt.Type</td>
+                        <td>
+                            <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
+                                <option value="">--Select--</option>
+                                <option value="RAG">Rental</option>
+                                <option value="LAG">Lease</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Agreement</td>
+                        <td>
+                            <input type="text" name="agmtvocno" id="agmtvocno" value='<s:property value="agmtvocno"/>' readonly placeholder="Press F3 to Search" onkeydown="getAgreement(event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Tariff.Type</td>
+                        <td>
+                            <select name="cmbtype" id="cmbtype">
+                                <option value="">--Select--</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Lease">Lease</option>
+                            </select>
                         </td>
                     </tr>
                 </table>
+            </div>
+
+            <div style="padding: 0 5px;">
+                <input type="button" name="btngenerate" id="btngenerate" value="Generate" class="myButton" onclick="funGenerate();">
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                    <input type="button" class="clearButton" name="clear" id="clear" value="Clear" onclick="funClearData();" style="flex: 1;">
+                    <button class="myButton" type="button" id="btnSalikInvoicePrint" name="btnSalikInvoicePrint" onclick="funSalikInvoicePrint();" style="flex: 1;">Print</button>
+                </div>
+            </div>
+            
+            <div style="height: 100px;"></div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="notInvoicedDiv">
+                <jsp:include page="notInvoicedGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
 
             <div id="clientDetailsWindow">

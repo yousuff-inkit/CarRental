@@ -12,44 +12,6 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
-<style>
-.myButtons {
-  display: inline-block;
-  margin-right:4px;
-  margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
-}
-.myButtons:hover {
-  color: #fff;
-  background-color: #31b0d5;
-}
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-}
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
-}
-
-</style>
 
 <script type="text/javascript">
 
@@ -266,65 +228,192 @@ function funExportBtn(){
 	 
 </script>
 </head>
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 90px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButtons, .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+        text-decoration: none;
+        text-shadow: none;
+    }
+
+    .myButtons:hover, .myButton:hover { 
+        background-color: #1d4ed8 !important; 
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
+
+    #Readygrid {
+        background-color: #ffffff !important;
+        border: 1px solid #e3e8ee;
+        border-radius: 8px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+</style>
 <body onload="getBranch();hiddenbrh()">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%">
-<tr>
-<td width="20%">
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-	<!--  <tr><td colspan="2">&nbsp;</td></tr> -->
-<!--  <tr><td colspan="2" align="center"><label class="branch">Detail</label><input type="checkbox" id="det_chk"  name="det_chk" value="0"   onclick="funsetaval()" >
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>  -->
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-                    <tr><td colspan="2">&nbsp;</td></tr>
-   <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 To Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:90%;" value='<s:property value="clientname"/>'></td></tr>                 
-		<tr><td colspan="2">&nbsp;</td></tr>
-		 <tr>
-	<td colspan="2" ><div id="Readygrid"><jsp:include page="subgrid.jsp"></jsp:include>
-	</div></td>
-	</tr> 
-<tr><td colspan="2">&nbsp;</td></tr>
-	
-	 <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funcleardata()">
-	 <input type="button" class="myButton" name="btnPrint" id="btnPrint"  value="Print" onclick="funPrint();"></td>
-	 </tr>
-	
-<tr><td colspan="2">&nbsp;</td></tr><tr><td colspan="2">&nbsp;</td></tr>
-	</table>
-	</fieldset>
-	<input type="hidden" name="cldocno" id="cldocno" style="height:20px;width:70%;" value='<s:property value="cldocno"/>' >
-</td>
-<td width="80%">
-<div  >
-	<table width="100%" id="grid1">
-	<tr><td ><label name="user" id="user"></label></td></tr> 
-		<tr>
-			  <td ><div  id="fleetdiv"><jsp:include page="detailsgrid.jsp"></jsp:include></div> 
-			</td></tr>
-	</table>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td>
+                            <input type="text" name="clientname" id="clientname" placeholder="Press F3 To Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' " value='<s:property value="clientname"/>'>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="Readygrid">
+                <jsp:include page="subgrid.jsp"></jsp:include>
+            </div>
+
+            <div style="padding-top: 15px;">
+                <input type="button" class="myButtons" name="clear" id="clear" value="Clear" onclick="funcleardata()">
+                <input type="button" class="myButton" name="btnPrint" id="btnPrint" value="Print" onclick="funPrint();">
+            </div>
+
+            <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>' >
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div>
+                <label name="user" id="user" style="font-weight: bold; margin-bottom: 10px; display: block;"></label>
+                <div id="fleetdiv">
+                    <jsp:include page="detailsgrid.jsp"></jsp:include>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div >
-	<!-- <table width="100%" id="chart">
-		<tr>
-			 <td width="50%">
-			<div id='fleetStatus1' style="width: 100%; height: 250px;"></div>
-			  <div id='sec1' style="width: 100%; height: 250px;"></div>
-			   </td><td>  <div id='thr1' style="width: 100%; height: 250px;"></div>
-			   <div id='four1' style="width: 100%; height: 250px;"></div></td></tr>
-	</table> -->
-</div>
-</tr>
-</table>
-  
 </div>
 <div id="clientwindow">
    <div></div>

@@ -9,12 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>GatewayERP(i)</title>
 		<%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
-		<style type="text/css">
-			.hidden-scrollbar{
-				height:82vh;
-				overflow:auto;
-			}
-		</style>
+	
 		<script type="text/javascript">
 			$(document).ready(function () {
 				document.getElementById("btninvoicesave").style.display="none";
@@ -341,88 +336,235 @@
 	 		}
 		</script>
 	</head>
+	<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Card Styling */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 100px;
+    }
+
+    /* Input Styling */
+    input[type="text"] {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Grid Area & Scroll Fix */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { 
+        background-color: #1d4ed8 !important; 
+    }
+
+    fieldset {
+        border: 1px solid #ccd6e0 !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        margin-top: 5px !important;
+    }
+    
+    legend {
+        font-weight: bold !important;
+        padding: 0 5px !important;
+        font-size: 12px !important;
+    }
+
+    .branch { font-size: 13px; font-weight: 600; }
+
+    #imgdiv {
+        position: absolute;
+        z-index: 100;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
 	<body onload="getBranch();setValues();">
 		<form id="frmDashboardRentalInvoice" action="saveDashboardRentalInvoice" method="post">
 			<div id="mainBG" class="homeContent" data-type="background"> 
 				<div class='hidden-scrollbar'>
-					<table width="100%">
-						<tr>
-							<td width="22%">
-    							<fieldset style="background: #ECF8E0;">
-									<table width="100%">
-										<jsp:include page="../../heading.jsp"></jsp:include>
-											<tr class="tr-futuredate" hidden="true"><td colspan="2"><input type="checkbox" id="chkfuturedate" name="chkfuturedate" onchange="setFutureDate();">&nbsp;<label class="branch" for="chkfuturedate">Future Date Invoicing</label></td></tr>
- 											<tr><td><label class="branch">Period Upto</label></td><td><div id="periodupto"></div></td></tr>
-											<tr><td><label class="branch">Client</label></td><td><input type="text" name="client" id="client" onkeydown="getClient(event);" readonly value='<s:property value="client"/>'></td></tr>
-											<tr>
-  												<td colspan="2" align="center"><label class="branch" for="chkall">All</label><input type="checkbox" name="chkall" id="chkall" onchange="setAll();"></td>
-  												<td width="28%" rowspan="3" align="left">&nbsp;</td>
-											</tr>
-											<tr>
-  												<td colspan="2" align="left">
-  													<fieldset>
-  														<legend>Separate Invoice</legend>
-    													<div align="center">
-      														<input type="radio" name="chksalik" id="chksalik" onChange="setSalik();">&nbsp;<label class="branch">Salik</label>&nbsp;&nbsp;
-      														<input type="radio" name="chktraffic" id="chktraffic" onchange="setTraffic();">&nbsp;<label class="branch">Traffic</label>
-      													</div>
-  													</fieldset>
-  												</td>
-  											</tr> 
- 											<tr>
-  												<td colspan="2" align="left">
-  													<fieldset>
-  														<legend>Not To Be Invoiced</legend>
-    													<div align="center">
-      														<input type="radio" name="chksalik" id="chkexsalik" onChange="setSalik();">&nbsp;<label class="branch">Salik</label>&nbsp;&nbsp;
-      														<input type="radio" name="chktraffic" id="chkextraffic" onchange="setTraffic();">&nbsp;<label class="branch">Traffic</label>
-      													</div>
-  													</fieldset>
-  												</td>
-  											</tr> 
-   											<tr>
-   												<td>
-   													<input type="hidden" name="hidchkall" id="hidchkall" value='<s:property value="hidchkall"/>'>
-													<input type="hidden" name="hidchksalik" id="hidchksalik" value='<s:property value="hidchksalik"/>'>
-													<input type="hidden" name="hidchktraffic" id="hidchktraffic" value='<s:property value="hidchktraffic"/>'>
-													<input type="hidden" name="hidchkexsalik" id="hidchkexsalik" value='<s:property value="hidchkexsalik"/>'>
-													<input type="hidden" name="hidchkextraffic" id="hidchkextraffic" value='<s:property value="hidchkextraffic"/>'>
-													<input type="hidden" name="hidclient" id="hidclient" >
-													<input type="hidden" name="hidchkfuturedate" id="hidchkfuturedate" value='<s:property value="hidchkfuturedate"/>'>
-   												</td>
-   											</tr> 
-											<tr>
-												<td colspan="2"> <div id="Readygrid" ><jsp:include page="invnoGrid.jsp"></jsp:include></div></td>
-											</tr> 
-											<tr>
-												<td colspan="2" align="center">
-													<input type="button" name="btnclear" id="btnclear" class="myButton" value="Clear" onclick="funClear();">&nbsp;
-													<input type="button" name="btninvoicesave" id="btninvoicesave" class="myButton" value="Generate" onclick="funNotify();">
-												</td>
-											</tr>
-											<tr>
-												<td colspan="2"></td>
-											</tr>	
-										</table>
-									</fieldset>
-								</td>
-								<td width="78%">
-									<table width="100%">
-										<tr>
-			 								<td>
-			 									<div id="imgdiv" style="position:absolute; z-index: 1;top:200;right:600;">
-													<img id="imgloading" alt="" src="../../../../icons/29load.gif"/>
-												</div>
-												<div id="rentalinvoicediv"><jsp:include page="rentalInvoiceGrid.jsp"></jsp:include></div>
-												<input type="hidden" name="gridlength" id="gridlength" >
-												<input type="hidden" name="invgridlength" id="invgridlength" >
-												<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-												<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-											</td>
-										</tr>
-									</table>
-								</tr>
-							</table>
+					<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr class="tr-futuredate" hidden="true">
+                        <td colspan="2">
+                            <input type="checkbox" id="chkfuturedate" name="chkfuturedate" onchange="setFutureDate();">
+                            <label class="branch" for="chkfuturedate">Future Date Invoicing</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Period Upto</td>
+                        <td><div id="periodupto"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td><input type="text" name="client" id="client" onkeydown="getClient(event);" readonly value='<s:property value="client"/>'></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center" style="padding: 5px 0;">
+                            <label class="branch" for="chkall">All</label>
+                            <input type="checkbox" name="chkall" id="chkall" onchange="setAll();">
+                        </td>
+                    </tr>
+                </table>
+
+                <fieldset>
+                    <legend>Separate Invoice</legend>
+                    <div style="display: flex; justify-content: center; gap: 15px;">
+                        <label class="branch"><input type="radio" name="chksalik" id="chksalik" onChange="setSalik();"> Salik</label>
+                        <label class="branch"><input type="radio" name="chktraffic" id="chktraffic" onchange="setTraffic();"> Traffic</label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Not To Be Invoiced</legend>
+                    <div style="display: flex; justify-content: center; gap: 15px;">
+                        <label class="branch"><input type="radio" name="chksalik" id="chkexsalik" onChange="setSalik();"> Salik</label>
+                        <label class="branch"><input type="radio" name="chktraffic" id="chkextraffic" onchange="setTraffic();"> Traffic</label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="Readygrid" style="margin-top: 10px; border: 1px solid #e3e8ee; border-radius: 8px; overflow: hidden;">
+                <jsp:include page="invnoGrid.jsp"></jsp:include>
+            </div>
+
+            <div style="margin-top: 15px; display: flex; gap: 8px;">
+                <input type="button" name="btnclear" id="btnclear" class="myButton" value="Clear" onclick="funClear();" style="flex: 1;">
+                <input type="button" name="btninvoicesave" id="btninvoicesave" class="myButton" value="Generate" onclick="funNotify();" style="flex: 1;">
+            </div>
+
+            <input type="hidden" name="hidchkall" id="hidchkall" value='<s:property value="hidchkall"/>'>
+            <input type="hidden" name="hidchksalik" id="hidchksalik" value='<s:property value="hidchksalik"/>'>
+            <input type="hidden" name="hidchktraffic" id="hidchktraffic" value='<s:property value="hidchktraffic"/>'>
+            <input type="hidden" name="hidchkexsalik" id="hidchkexsalik" value='<s:property value="hidchkexsalik"/>'>
+            <input type="hidden" name="hidchkextraffic" id="hidchkextraffic" value='<s:property value="hidchkextraffic"/>'>
+            <input type="hidden" name="hidclient" id="hidclient" >
+            <input type="hidden" name="hidchkfuturedate" id="hidchkfuturedate" value='<s:property value="hidchkfuturedate"/>'>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="imgdiv">
+                <img id="imgloading" alt="Loading..." src="../../../../icons/29load.gif"/>
+            </div>
+            
+            <div id="rentalinvoicediv">
+                <jsp:include page="rentalInvoiceGrid.jsp"></jsp:include>
+            </div>
+
+            <input type="hidden" name="gridlength" id="gridlength" >
+            <input type="hidden" name="invgridlength" id="invgridlength" >
+            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+        </div>
+    </div>
+</div>
 						</div>
 						<div id="clientwindow">
 							<div></div>
