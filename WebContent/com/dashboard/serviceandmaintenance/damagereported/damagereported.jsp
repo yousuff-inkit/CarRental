@@ -1,17 +1,112 @@
-
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <% String contextPath=request.getContextPath();%>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
@@ -73,51 +168,71 @@ function findis()
 </script>
 </head>
 <body onload="getBranch();findis()">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr>
-	
-           
-	</tr> 
-	  <tr><td  align="center" colspan="2"><input type="Button" name="attachbtn" id="attachbtn" class="myButton" value="Attach" onclick="funattachss()"></td> </tr>     
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
 
-<!--  <tr><td colspan="2">&nbsp;</td></tr -->
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="20%">
+<div class="master-container">
+<div class="sidebar-filters">
 
-	<tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height: 170px;"></div></td>
-	</tr>	
-	</table>
-	</fieldset>
+    <!-- Fixed Heading -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- Scrollable Content -->
+    <div class="sidebar-scroll-content">
+
+        <!-- Attach Action -->
+        <div class="filter-card damage-filter-card">
+            <div class="damage-actions">
+                <button type="button"
+                        id="attachbtn"
+                        class="btn-submit"
+                        onclick="funattachss();">
+                    Attach
+                </button>
+            </div>
+        </div>
+
+        <!-- Placeholder -->
+        <div class="filter-card">
+            <div id="paychaaaaa"></div>
+        </div>
+
+    </div>
+</div>
+</div>
 </td>
+
+<!-- ================= RIGHT GRID ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="damagediv"><jsp:include page="damagereportedgrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+    <div id="damagediv">
+        <jsp:include page="damagereportedgrid.jsp"></jsp:include>
+    </div>
+</td>
+
 </tr>
 </table>
- <input type="hidden" id="fleetno" name="fleetno">
- <input type="hidden" id="docno" name="docno">
+
+<!-- Hidden Fields -->
+<input type="hidden" id="fleetno" name="fleetno">
+<input type="hidden" id="docno" name="docno">
+
 </div>
+
+<!-- ATTACH WINDOW -->
 <div id="attachmaintwindow">
-<div></div>
-</div> 
+    <div></div>
+</div>
+
 </div>
 </body>
 </html>

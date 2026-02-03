@@ -9,56 +9,101 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-.account {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	height: 28px;
-	font-family: Myriad Pro;
-	font-weight: bold;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.accname {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	font-family: comic sans ms;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
-.myButtons:active {
-	position:relative;
-	top:1px;
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
 }
 </style>
 <script type="text/javascript">
@@ -204,55 +249,118 @@
 </script>
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr>
-	 <td align="right"><label class="branch">Period</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr> 
-	<tr><td align="right"><label class="branch">Review</label></td>
-	<td align="left"><select id="cmbtype" name="cmbtype" style="width:70%;" value='<s:property value="cmbtype"/>'>
-    <option value="">--Select--</option><option value="1">Accident History</option><option value="2">Service History</option></select></td></tr> 
-	 <tr>
-	 <td align="right"><label class="branch">Vehicle</label></td>
-     <td align="left"><input type="text" id="txtvehicle" name="txtvehicle" style="width:80%;height:20px;" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtvehicle"/>' ondblclick="funSearchdblclick();" onkeydown="getVehicle(event);"/>
-     <input type="hidden" id="txtfleetno" name="txtfleetno" style="width:80%;height:20px;" value='<s:property value="txtfleetno"/>'></td></tr> 
-    <tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2" align="center"><textarea id="vehinfo" style="height:195px;width:200px;font: 10px Tahoma;resize:none" name="vehinfo"  readonly="readonly"  ><s:property value="vehinfo" ></s:property></textarea></td></tr> 
-	<tr><td colspan="2"><input type="hidden" id="txtvehdocno" name="txtvehdocno" style="width:80%;height:20px;" value='<s:property value="txtvehdocno"/>'/></td></tr>
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">
-	<button class="myButton" type="button" id="btnMaintenancePrint" name="btnMaintenancePrint" onclick="funMaintenancePrint();">Print</button></td></tr>
-	</table>
-	</fieldset>
+
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="20%">
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- Fixed Heading -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- Scrollable Filters -->
+    <div class="sidebar-scroll-content">
+
+        <!-- Filters -->
+        <div class="filter-card">
+            <table class="review-filter-table">
+
+                <tr>
+                    <td class="label-cell">Period</td>
+                    <td><div id="fromdate"></div></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">To</td>
+                    <td><div id="todate"></div></td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Review</td>
+                    <td>
+                        <select id="cmbtype" name="cmbtype">
+                            <option value="">--Select--</option>
+                            <option value="1">Accident History</option>
+                            <option value="2">Service History</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Vehicle</td>
+                    <td>
+                        <input type="text"
+                               id="txtvehicle"
+                               name="txtvehicle"
+                               placeholder="Press F3 to Search"
+                               readonly
+                               ondblclick="funSearchdblclick();"
+                               onkeydown="getVehicle(event);">
+                        <input type="hidden" id="txtfleetno" name="txtfleetno">
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- Vehicle Info -->
+        <div class="filter-card">
+            <textarea id="vehinfo" name="vehinfo" readonly>
+<s:property value="vehinfo"></s:property>
+            </textarea>
+
+            <input type="hidden" id="txtvehdocno" name="txtvehdocno">
+
+            <div class="review-actions">
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funClearInfo();">
+                    Clear
+                </button>
+
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funMaintenancePrint();">
+                    Print
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
 </td>
+
+<!-- ================= RIGHT CONTENT ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="accidentHistoryDiv"><jsp:include page="accidentHistoryGrid.jsp"></jsp:include></div>
-			 <div id="serviceHistoryDiv" hidden="true"><jsp:include page="serviceHistoryGrid.jsp"></jsp:include></div></td>
-		</tr>   
-	</table>
+    <div id="accidentHistoryDiv">
+        <jsp:include page="accidentHistoryGrid.jsp"></jsp:include>
+    </div>
+
+    <div id="serviceHistoryDiv" hidden>
+        <jsp:include page="serviceHistoryGrid.jsp"></jsp:include>
+    </div>
+</td>
+
 </tr>
 </table>
+
 </div>
 
-<div id="vehicleDetailsWindow">
-	<div></div><div></div>
+<!-- POPUP WINDOWS -->
+<div id="vehicleDetailsWindow"><div></div><div></div></div>
+<div id="inspectionWindow"><div></div></div>
+
 </div>
-<div id="inspectionWindow">
-<div></div>
-</div>
-</div> 
 </body>
 </html>
