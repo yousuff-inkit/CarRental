@@ -1,16 +1,110 @@
-
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
@@ -257,50 +351,6 @@ function  funcleardata()
 
 
 </script>
-<style>
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
-}
-
-
-	
-      
-
-</style>
 <script>
 
 function funupdate()
@@ -388,90 +438,170 @@ document.getElementById("ra_no").value="0";
 </script>
 </head>
 <body onload="getBranch();getrentaltype();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
-     
-	
-	 <tr><td align="right"><label class="branch">Status</label></td><td align="left"><select id="status" name="status" style="height:20px;width:70%;" value='<s:property value="status"/>'>
-    <option value="" selected>All</option>  
-       <option value=0>Open</option>
-    <option value=1>Close</option>  
-	 </select></td></tr> 
- <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="clientname"/>'></td></tr> 
- 
- <tr><td align="right"><label class="branch">Category</label></td><td align="left"><input type="text" name="catname" id="catname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclcat(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="catname"/>'></td></tr>
- 
-  <tr><td align="right"><label class="branch">Fleet</label></td><td align="left"><input type="text" name="fleet" id="fleet"  placeholder="Press F3 TO Search" readonly="readonly"    onkeydown="getfleet(event)" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="fleet"/>' ></td></tr> 
-   <tr><td align="right"><label class="branch">Salesman</label></td><td align="left"><input type="text" name="salesman" id="salesman" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getsalesman(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="salesman"/>' ></td></tr> 
-     
-      
-      <tr><td align="right"><label class="branch">Type</label></td><td align="left">
-       <select id="rentaltype" name="rentaltype" style="height:20px;width:70%;" value='<s:property value="rentaltype"/>'>
-      </select> </td></tr> 
-	 <tr><td colspan="2"></td></tr>
-	 <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funcleardata()"></td></tr>
-     <tr><td colspan="2">
-	  <tr>
-	<td colspan="2"><div><fieldset><legend >MRA NO change</legend> 
-	<table width="100%" id="lpochange">
-<tr><td align="right"><label class="branch">MRA NO</label></td><td align="left"><input type="text" name="mrano" id="mrano"   placeholder="Enter MRA No" style="height:20px;width:70%;" value='<s:property value="mrano"/>' ></td></tr>
-<tr><input type="hidden" name="ra_no" id="ra_no"  style="height:20px;width:50%;" value='<s:property value="ra_no"/>'></tr> 
-<tr><input type="hidden" name="oldmrano" id="oldmrano"  style="height:20px;width:50%;" value='<s:property value="oldmrano"/>'></tr> 
 
-      
-      <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="update" id="update"  value="Update" onclick="funupdate()"></td></tr>
-     <tr><td colspan="2"></td></tr>                 
-    </table>               
-      </fieldset> 
-	<tr>
-	<td colspan="2"><div id='paychaaaaa' style="width: 100% ; align:right; height: 100px;"></div></td> 
-	</tr>	
-	</table>
-	</fieldset>
-		<input type="hidden" name="cldocno" id="cldocno"  style="height:20px;width:70%;" value='<s:property value="cldocno"/>'>
-	        <input type="hidden" name="salesmandoc" id="salesmandoc"  style="height:20px;width:70%;" value='<s:property value="salesmandoc"/>'>
-	         <input type="hidden" name="catid" id="catid"  style="height:20px;width:70%;" value='<s:property value="catid"/>'>	
-	           <input type="hidden" name="reftypes" id="reftypes"  style="height:20px;width:70%;" value='<s:property value="reftypes"/>'>	
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+
+<table width="100%">
+<tr>
+
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="20%">
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- Fixed Heading -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- Scrollable Filters -->
+    <div class="sidebar-scroll-content">
+
+        <!-- Date Filters -->
+        <div class="filter-card">
+            <table class="mra-filter-table">
+                <tr>
+                    <td class="label-cell">From</td>
+                    <td><div id="fromdate"></div></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">To</td>
+                    <td><div id="todate"></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Main Filters -->
+        <div class="filter-card">
+            <table class="mra-filter-table">
+
+                <tr>
+                    <td class="label-cell">Status</td>
+                    <td>
+                        <select id="status" name="status">
+                            <option value="">All</option>
+                            <option value="0">Open</option>
+                            <option value="1">Close</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Client</td>
+                    <td>
+                        <input type="text" id="clientname" name="clientname"
+                               placeholder="Press F3 To Search"
+                               readonly onkeydown="getclinfo(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Category</td>
+                    <td>
+                        <input type="text" id="catname" name="catname"
+                               placeholder="Press F3 To Search"
+                               readonly onkeydown="getclcat(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Fleet</td>
+                    <td>
+                        <input type="text" id="fleet" name="fleet"
+                               placeholder="Press F3 To Search"
+                               readonly onkeydown="getfleet(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Salesman</td>
+                    <td>
+                        <input type="text" id="salesman" name="salesman"
+                               placeholder="Press F3 To Search"
+                               readonly onkeydown="getsalesman(event);">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Type</td>
+                    <td>
+                        <select id="rentaltype" name="rentaltype"></select>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="mra-actions">
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funcleardata();">
+                    Clear
+                </button>
+            </div>
+        </div>
+
+        <!-- MRA No Change -->
+        <div class="filter-card mra-change-card">
+            <div class="mra-change-title">MRA No Change</div>
+
+            <table class="mra-filter-table">
+                <tr>
+                    <td class="label-cell">MRA No</td>
+                    <td>
+                        <input type="text" id="mrano" name="mrano"
+                               placeholder="Enter MRA No">
+                    </td>
+                </tr>
+            </table>
+
+            <div class="mra-actions">
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funupdate();">
+                    Update
+                </button>
+            </div>
+        </div>
+
+        <!-- Placeholder -->
+        <div class="filter-card">
+            <div id="paychaaaaa"></div>
+        </div>
+
+        <!-- Hidden Fields -->
+        <input type="hidden" id="ra_no" name="ra_no">
+        <input type="hidden" id="oldmrano" name="oldmrano">
+        <input type="hidden" id="cldocno" name="cldocno">
+        <input type="hidden" id="salesmandoc" name="salesmandoc">
+        <input type="hidden" id="catid" name="catid">
+        <input type="hidden" id="reftypes" name="reftypes">
+
+    </div>
+</div>
+</div>
 </td>
+
+<!-- ================= RIGHT GRID ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-		   <td><div id="detlist"><jsp:include page="detailedGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
+    <div id="detlist">
+        <jsp:include page="detailedGrid.jsp"></jsp:include>
+    </div>
+</td>
+
 </tr>
 </table>
 
 </div>
 
-<div id="catwindow">
-   <div ></div>
-</div>
+<!-- POPUP WINDOWS -->
+<div id="catwindow"><div></div></div>
+<div id="clientwindow"><div></div></div>
+<div id="fleetwindow"><div></div></div>
+<div id="salesmanwindow"><div></div></div>
 
-<div id="clientwindow">
-   <div ></div>
-</div>
-<div id="fleetwindow">
-   <div ></div>
-</div>
-<div id="salesmanwindow">
-   <div ></div>
-</div>
 </div>
 </body>
 </html>
