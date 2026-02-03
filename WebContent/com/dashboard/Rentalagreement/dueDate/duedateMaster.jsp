@@ -416,77 +416,195 @@ function setValues(){
 	}
 </script>
 </head>
+<style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
+
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 90px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 8px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    .branch { font-size: 13px; font-weight: 600; }
+</style>
 <body onload="getBranch();getinfo();disitems();setValues();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 
-	   <tr>
-	<td align="right" width="20%"><label class="branch">Up To</label></td>
-            <td align="left"><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
-	</tr>
-	 <tr><td align="right"><label class="branch">Fleet NO</label></td>
-	 <td align="left"><input type="text" id="fleetno" style="height:20px;width:70%;" name="fleetno"  value='<s:property value="fleetno"/>' readonly="readonly"> </td></tr>
-	<tr> <td  align="right"><label class="branch">Process</label></td><td align="left">
- <select name="cmbinfo" id="cmbinfo" style="width:70%;" name="cmbinfo"  value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()">
-       
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-</select></td></tr>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Up To</td>
+                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fleet NO</td>
+                        <td><input type="text" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>' readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Process</td>
+                        <td>
+                            <select name="cmbinfo" id="cmbinfo" value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id='dateDue' name='dateDue' value='<s:property value="dateDue"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Time</td>
+                        <td><div id='timeDue' name='timeDue' value='<s:property value="timeDue"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Remarks</td>
+                        <td><input type="text" id="remarks" name="remarks" value='<s:property value="remarks"/>'></td>
+                    </tr>
+                </table>
+            </div>
 
-	<tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='dateDue' name='dateDue' value='<s:property value="dateDue"/>'></div>
-                   </td></tr>
-  <tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div id='timeDue' name='timeDue' value='<s:property value="timeDue"/>'  ></div>
-                </td></tr>
-	 <tr><td align="right"><label class="branch">Remarks </label></td><td align="left"><input type="text" id="remarks" style="height:20px;width:88%;" name="remarks"  value='<s:property value="remarks"/>'> </td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="UPDATE" onclick="funupdate()"></td> </tr>
-	<tr><td  align="center" colspan="2"><input type="Button" name="driversms" id="driversms" class="myButton" value="SEND SMS" onclick="funduedatesms()"></td> </tr>
-	
-	 <tr><td colspan="2">&nbsp;</td></tr>  
- 
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>	
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>	
-	 <tr><td colspan="2">&nbsp;</td></tr>
+            <div style="padding: 0 5px;">
+                <input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="UPDATE" onclick="funupdate()">
+                <input type="Button" name="driversms" id="driversms" class="myButton" value="SEND SMS" onclick="funduedatesms()">
+            </div>
 
-	 	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>	
-	 <tr><td colspan="2">&nbsp;</td></tr>
+            <div style="display:none;">
+                <input type="hidden" name="branchids" id="branchids" value='<s:property value="branchids"/>' >
+                <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+                <input type="hidden" name="rentaldoc" id="rentaldoc" value='<s:property value="rentaldoc"/>' >
+                <div id='duegridDate' name='duegridDate' value='<s:property value="duegridDate"/>'></div>
+                <div id='duegridDate1' name='duegridDate1' value='<s:property value="duegridDate1"/>'></div>
+            </div>
+        </div>
+    </div>
 
-
-
-
-  </table>
-   <input type="hidden" name="branchids" id="branchids" style="height:20px;width:70%;" value='<s:property value="branchids"/>' >
- <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
- <input type="hidden" name="rentaldoc" id="rentaldoc" style="height:20px;width:70%;" value='<s:property value="rentaldoc"/>' >
-<div hidden="hidden" id='duegridDate' name='duegridDate' value='<s:property value="duegridDate"/>'></div>	 
-<div hidden="hidden" id='duegridDate1' name='duegridDate1' value='<s:property value="duegridDate1"/>'></div>	 
-	 
-   </fieldset>
-
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			  <td><div id="duedatediv"><jsp:include page="duedateGrid.jsp"></jsp:include></div><br>
-			  </td> 
-		</tr>
-		
-		<tr>
-		<td colspan="2" align="left" ><div id="detaildiv"><jsp:include page="detailgrid.jsp"></jsp:include></div></td></tr>
-	</table>
-</tr>
-</table>
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="duedatediv">
+                <jsp:include page="duedateGrid.jsp"></jsp:include>
+            </div>
+            <div id="detaildiv">
+                <jsp:include page="detailgrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </div>
 </body>

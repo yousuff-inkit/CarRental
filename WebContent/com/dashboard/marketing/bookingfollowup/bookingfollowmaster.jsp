@@ -12,17 +12,136 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
-
 <style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important;
+    }
 
- fieldSet {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(32,178,170);
+    .sidebar-filters {
+        width: 350px; 
+        flex: 0 0 350px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
 
- }
- 
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    /* Reset legacy styles and force black text */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 8px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 90px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 350px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    fieldset {
+        border: 1px solid #ccd6e0 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        margin-top: 10px !important;
+    }
+    legend {
+        font-weight: bold !important;
+        padding: 0 5px !important;
+        font-size: 13px !important;
+    }
 </style>
 
 <script type="text/javascript">
@@ -708,138 +827,130 @@ function isNumber(evt) {
 <body onload="getBranch();getinfo();disitems();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-		  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                    
-                    
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>  
-	<tr> <td  align="right"><label class="branch">Process</label></td><td align="left">
- <select  id="cmbinfo" style="width:70%;" name="cmbinfo"  value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()" >
-       
+<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-</select></td></tr>
-	<tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='date' name='date' value='<s:property value="date"/>'></div>
-                   </td></tr>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Process</td>
+                        <td>
+                            <select id="cmbinfo" name="cmbinfo" value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id='date' name='date' value='<s:property value="date"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Remarks</td>
+                        <td><input type="text" id="remarks" name="remarks" value='<s:property value="remarks"/>'></td>
+                    </tr>
+                </table>
+                <input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()">
+            </div>
 
-	 <tr><td align="right"><label class="branch">Remarks </label></td><td align="left"><input type="text" id="remarks" style="height:20px;width:88%;" name="remarks"  value='<s:property value="remarks"/>'> </td></tr>
-	<tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()"></td> </tr>
-	<tr>
-	<td colspan="2"><div id='cpppp' style="width: 100% ; align:left; height: 230px;">
-	<fieldset>
-	<legend>Rental Agreement Create</legend>
-	<table width="100%" >
-	<tr>
-		 <td align="right"  width="34%"><label class="branch">Fleet</label> </td> 
-          
-	 <td  width="66%"><input type="text" id="txtfleetno" name="txtfleetno" readonly placeholder="Press F3 To Search" style="height:20px;width:99%;" value='<s:property value="txtfleetno"/>' onKeyDown="getvehinfo(event);" onfocus="this.placeholder = ''" />
-  
-        </td>
-        </tr>
-        
-        <tr>
-<td colspan="2" align="center"><label class="branch">Delivery</label>
+            <div id='cpppp'>
+                <fieldset>
+                    <legend>Rental Agreement Create</legend>
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Fleet</td>
+                            <td><input type="text" id="txtfleetno" name="txtfleetno" readonly placeholder="Press F3 To Search" value='<s:property value="txtfleetno"/>' onKeyDown="getvehinfo(event);" onfocus="this.placeholder = ''" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center" style="padding: 10px 0;">
+                                <label class="branch">Delivery</label>
+                                <input type="checkbox" id="delivery_chk" name="delivery_chk" value="0" onchange="fundriverdisable()" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                                &nbsp;&nbsp;
+                                <label class="branch">Chauffeur</label>
+                                <input type="checkbox" id="radrivercheck" name="radrivercheck" value="0" onchange="funShaffurdisable()" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Del Charge</td>
+                            <td><input type="text" id="delcharge" name="delcharge" style="text-align: right;" value='<s:property value="delcharge"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);"/></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Driver</td>
+                            <td>
+                                <input type="text" readonly id="radriverlist" name="radriverlist" placeholder="Press F3 To Search" value='<s:property value="radriverlist"/>' onKeyDown="getchauffeur(event);" />
+                                <input type="hidden" id="del_chaufferid" name="del_chaufferid" value='<s:property value="del_chaufferid"/>'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Client Drv</td>
+                            <td>
+                                <input type="text" id="clientdrv" readonly name="clientdrv" placeholder="Press F3 To Search" value='<s:property value="clientdrv"/>' onKeyDown="getcldrv(event);" />
+                                <input type="hidden" id="clientdrvid" name="clientdrvid" value='<s:property value="clientdrvid"/>'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Agent</td>
+                            <td>
+                                <input type="text" id="rarenral_Agent" name="rarenral_Agent" readonly placeholder="Press F3 To Search" value='<s:property value="rarenral_Agent"/>' onKeyDown="getrentalAgent(event);" onfocus="this.placeholder = ''"/>
+                                <input type="hidden" id="tariffrenral_Agentid" name="tariffrenral_Agentid" value='<s:property value="tariffrenral_Agentid"/>'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Checkout</td>
+                            <td>
+                                <input type="text" id="ratariff_checkout" placeholder="Press F3 To Search" readonly="readonly" name="ratariff_checkout" value='<s:property value="ratariff_checkout"/>' onKeyDown="getcheckout(event);" onfocus="this.placeholder = ''"/>
+                                <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid" value='<s:property value="ratariff_checkoutid"/>'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">DateOut</td>
+                            <td><div id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">TimeOut</td>
+                            <td><div id='jqxTimeOut' name='jqxTimeOut' value='<s:property value="jqxTimeOut"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">MRA No</td>
+                            <td><input type="text" id="mrano" name="mrano" value='<s:property value="mrano"/>'/></td>
+                        </tr>
+                    </table>
+                    <input type="Button" name="rentalcreate" id="rentalcreate" class="myButton" value="Create" onclick="funrentalcreate()">
+                </fieldset>
+            </div>
 
-<input type="checkbox" id="delivery_chk"  name="delivery_chk" value="0"  onchange="fundriverdisable()"   onclick="$(this).attr('value', this.checked ? 1 : 0)" >
-<label class="branch">Chauffeur</label>
+            <input type="hidden" name="branchids" id="branchids" value='<s:property value="branchids"/>' >
+            <input type="hidden" name="rdocno" id="rdocno" value='<s:property value="rdocno"/>' >
+            <input type="hidden" name="clname" id="clname" value='<s:property value="clname"/>' >
+            <input type="hidden" name="reftype" id="reftype" value='<s:property value="reftype"/>' >
+            <input type="hidden" name="clientid" id="clientid" value='<s:property value="clientid"/>' >
+            <input type="hidden" name="delivery" id="delivery" value='<s:property value="delivery"/>' >
+            <input type="hidden" name="chuef" id="chuef" value='<s:property value="chuef"/>' >
+            <input type="hidden" name="grpid" id="grpid" value='<s:property value="grpid"/>' >
+        </div>
+    </div>
 
-<input type="checkbox"  id="radrivercheck"  name="radrivercheck" value="0" onchange="funShaffurdisable()"  onclick="$(this).attr('value', this.checked ? 1 : 0)"></td>
-</tr>
-        <tr>
-   <td align="right"><label class="branch">Del Charge</label></td><td><input type="text" id="delcharge" name="delcharge"    style="text-align: right;height:20px;width:99%;" value='<s:property value="delcharge"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);"/></td>
-
-      <tr><td align="right"><label class="branch">Driver</label></td><td><input type="text" readonly  id="radriverlist"  name="radriverlist"  style="height:20px;width:99%;" placeholder="Press F3 To Search" value='<s:property value="radriverlist"/>' onKeyDown="getchauffeur(event);" />
-      
-          <input type="hidden" id="del_chaufferid" name="del_chaufferid" value='<s:property value="del_chaufferid"/>'/>  
-      
-      </td>
-      </tr>  
-       <tr><td align="right"><label class="branch">Client Driver</label></td><td><input type="text" id="clientdrv" readonly  name="clientdrv"  style="height:20px;width:99%;" placeholder="Press F3 To Search" value='<s:property value="clientdrv"/>' onKeyDown="getcldrv(event);" />
-               <input type="hidden" id="clientdrvid" name="clientdrvid" value='<s:property value="clientdrvid"/>'/>   
-      </td>
-      </tr> 
-        <tr>
-	 <td align="right"  width="34%"><label class="branch">Rental Agent</label> </td>
-          
-	 <td  width="66%"><input type="text" id="rarenral_Agent" name="rarenral_Agent" readonly  style="height:20px;width:99%;" placeholder="Press F3 To Search"  value='<s:property value="rarenral_Agent"/>' onKeyDown="getrentalAgent(event);" onfocus="this.placeholder = ''"/>
-    <input type="hidden" id="tariffrenral_Agentid" name="tariffrenral_Agentid" style="width:95%;" value='<s:property value="tariffrenral_Agentid"/>'/>
-        </td>
-    </tr> 
-      <tr>
-   <td align="right" > <label class="branch">Checkout</label> </td>
-           
-    <td><input type="text" id="ratariff_checkout" placeholder="Press F3 To Search"  readonly="readonly"  name="ratariff_checkout" style="height:20px;width:99%;" value='<s:property value="ratariff_checkout"/>' onKeyDown="getcheckout(event);" onfocus="this.placeholder = ''"/>
-    <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid" value='<s:property value="ratariff_checkoutid"/>'/>  
-    
-    </td>
-    </tr>
-    <tr>
-
-	   <td align="right" > <label class="branch">DateOut</label> </td>
-	   	<td>
-	<div id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div> 
-</td>
-    </tr>
-    <tr>
- 
-       <td align="right" > <label class="branch">TimeOut</label> </td>
-          <td>
-    <div id='jqxTimeOut' name='jqxTimeOut'  value='<s:property value="jqxTimeOut"/>'></div>
-    </td>
-    <tr>
-      <td align="right"><label class="branch">MRA No</label></td>
-      <td align="center"><input type="text" id="mrano" name="mrano" style="height:20px;width:99%;" value='<s:property value="mrano"/>'/></td>
-    </tr>
-    <tr>
-<td colspan="2" align="center"><input type="Button" name="rentalcreate" id="rentalcreate" class="myButton" value="Create" onclick="funrentalcreate()"></td>
-</tr>
-    
-    </table>
-	</fieldset>
-		 
-	</div></td>
-	</tr>	
-	  <tr><td colspan="2">&nbsp;</td></tr>   
-		  	  <tr><td colspan="2">&nbsp;</td></tr>  
-	</table> 
-	
-	
-
-                  
-<input type="hidden" name="branchids" id="branchids" style="height:20px;width:70%;" value='<s:property value="branchids"/>' >
-<input type="hidden" name="rdocno" id="rdocno" style="height:20px;width:70%;" value='<s:property value="rdocno"/>' >
-<input type="hidden" name="clname" id="clname" style="height:20px;width:70%;" value='<s:property value="clname"/>' >
-<input type="hidden" name="reftype" id="reftype" style="height:20px;width:70%;" value='<s:property value="reftype"/>' >
-<input type="hidden" name="clientid" id="clientid" style="height:20px;width:70%;" value='<s:property value="clientid"/>' >
-
-<input type="hidden" name="delivery" id="delivery" style="height:20px;width:70%;" value='<s:property value="delivery"/>' >
-<input type="hidden" name="chuef" id="chuef" style="height:20px;width:70%;" value='<s:property value="chuef"/>' >
-<input type="hidden" name="grpid" id="grpid" style="height:20px;width:70%;" value='<s:property value="grpid"/>' >
-
-
-	</fieldset>
-	
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="bookfollowdiv"><jsp:include page="bookingfollowGrid.jsp"></jsp:include></div></td>
-		</tr>
-	
-		<tr>
-		<td   ><div id="detaildiv"><jsp:include page="detailgrid.jsp"></jsp:include></div></td></tr>
-
-	</table>
-</tr>
-</table>
-
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="bookfollowdiv">
+                <jsp:include page="bookingfollowGrid.jsp"></jsp:include>
+            </div>
+            <div id="detaildiv">
+                <jsp:include page="detailgrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <div id="vehinfowindow">
    <div ></div>

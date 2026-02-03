@@ -296,30 +296,40 @@ color:red;
 		$('#masterdate').jqxDateTimeInput('focus'); 	
 	}
 	 
-	 function getYear() {
-			var x = new XMLHttpRequest();
-			x.onreadystatechange = function() {
-				if (x.readyState == 4 && x.status == 200) {
-					var items = x.responseText;
-					items = items.split('####');
-					var yearItems = items[0].split(",");
-					var yearIdItems = items[1].split(",");
-					var optionsyear = '<option value="">--Select--</option>';
-					for (var i = 0; i < yearItems.length; i++) {
-						optionsyear += '<option value="' + yearIdItems[i] + '">'
-								+ yearItems[i] + '</option>';
-					}
-					$("select#cmbyear").html(optionsyear);
-					if ($('#hidcmbyear').val() != null) {
-						$('#cmbyear').val($('#hidcmbyear').val());
-					}
-				} else {
-				}
-			}
-			x.open("GET", "getYear.jsp", true);
-			x.send();
-		}
- 
+	function getYear() {
+	    var x = new XMLHttpRequest();
+	    x.onreadystatechange = function () {
+	        if (x.readyState === 4 && x.status === 200) {
+	            console.log(x.responseText); // DEBUG
+
+	            var items = x.responseText.trim().split('####');
+	            if (items.length < 2) return;
+
+	            var yearItems = items[0].split(",");
+	            var yearIdItems = items[1].split(",");
+
+	            var optionsyear = '<option value="">--Select--</option>';
+	            for (var i = 0; i < yearItems.length; i++) {
+	                optionsyear += '<option value="' + yearIdItems[i] + '">' +
+	                                yearItems[i] + '</option>';
+	            }
+
+	            $('#cmbyear').html(optionsyear);
+
+	            var hidVal = $('#hidcmbyear').val();
+	            if (hidVal) {
+	                $('#cmbyear').val(hidVal);
+	            }
+	        }
+	    };
+	    x.open("GET", "getYear.jsp", true);
+	    x.send();
+	}
+
+	$(document).ready(function () {
+	    getYear();
+	});
+
 	function setValues() {
 		  if(document.getElementById("hidchange").value==1) {
     		  document.getElementById("change").checked = true;

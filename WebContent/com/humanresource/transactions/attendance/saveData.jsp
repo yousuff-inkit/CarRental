@@ -66,8 +66,7 @@
      	 			
 			} else {
 			
-					sql="UPDATE hr_timesheet SET "+cellcolumn+"="+attendance+",tot_ot="+overtimevalue+",tot_hot="+holidayovertimevalue+" WHERE payroll_processed=0 and empId="+employeeId+" and year="+year+" and month="+month+"";
-					
+				sql="UPDATE hr_timesheet SET "+cellcolumn+"="+attendance+",tot_ot="+overtimevalue+",tot_hot="+holidayovertimevalue+",tot_leave1="+leave1total+",tot_leave2="+leave2total+",tot_leave3="+leave3total+",tot_leave4="+leave4total+",tot_leave5="+leave5total+",tot_leave6="+leave6total+",tot_leave7="+leave7total+" WHERE payroll_processed=0 and empId="+employeeId+" and year="+year+" and month="+month+"";					
 					//System.out.println("funtype1 update 2---"+sql);
 					val= stmt.executeUpdate(sql);
      	 	}

@@ -196,558 +196,99 @@ public class ClsCommonHR {
 	
 	public String getHREARNEDBASIC(Connection conn, String empID, String empCategoryID, Date sqlDate, Double basicSalary, String valueDaysToPay) throws SQLException {
 	    String EARNEDBASICAmount = "0";
+	    // Ensure the date is formatted correctly for MySQL to avoid 'null' errors
+	    String formattedDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(sqlDate);
+	    
+	    try (Statement stmtMain = conn.createStatement();
+	         Statement stmtCalc = conn.createStatement()) {
 
-	    try {
-	        Statement stmtEARNEDBASIC = conn.createStatement();
-	        Statement stmtEARNEDBASIC1 = conn.createStatement();
-	        Statement stmtEARNEDBASIC3 = conn.createStatement();
-
-	        ArrayList<String> leaveDetails = new ArrayList<String>();
-	        ArrayList<String> leavesTakenDetails = new ArrayList<String>();
-	        int totalleaveTypes = 0, deductionEffectedBASIC = 0;
-
-	        /*Leave Types*/
-	        String sqlEARNEDBASIC = "select doc_no leaveid,desc1 leavename from hr_setleave where status=3";
-	        ResultSet resultSetEARNEDBASIC = stmtEARNEDBASIC.executeQuery(sqlEARNEDBASIC);
-
-	        while (resultSetEARNEDBASIC.next()) {
-	            leaveDetails.add(resultSetEARNEDBASIC.getString("leaveid") + " ::" + resultSetEARNEDBASIC.getString("leavename"));
+	        // 1. Get Leave Types - Store actual IDs from the DB
+	        ArrayList<String> leaveIds = new ArrayList<>();
+	        String sqlLeaveTypes = "SELECT doc_no FROM hr_setleave WHERE status=3";
+	        try (ResultSet rs = stmtMain.executeQuery(sqlLeaveTypes)) {
+	            while (rs.next()) {
+	                leaveIds.add(rs.getString("doc_no"));
+	            }
 	        }
-	        totalleaveTypes = leaveDetails.size();
-	        /*Leave Types Ends*/
 
-	        int loop = 0, noleaveDeduction = 0;
-	        double deductionamount = 0;
-	        for (int i = 1; i <= totalleaveTypes; i++) {
-	            int carryForward = 0, leaveDeduction = 0;
+	        double totalDeductionFromLeaves = 0;
 
-	            deductionamount = 0;
+	        // 2. Process each leave type using the actual ID
+	        for (String levId : leaveIds) {
+	            int leaveDeduction = 0;
+	            double dedPerc = 0;
 
-	            ArrayList<String> openingLeavesDetails = new ArrayList<String>();
-
-	            /*Checking Carry Forward*/
-	            String sqlEARNEDBASIC1 = "select cf,ded from hr_payleavem where rdocno=(select max(doc_no) from hr_paycode where status=3 and catid=" + empCategoryID + " and revdate<='" + sqlDate + "') and levid=" + i + "";
-	            ResultSet resultSetEARNEDBASIC1 = stmtEARNEDBASIC1.executeQuery(sqlEARNEDBASIC1);
-
-	            while (resultSetEARNEDBASIC1.next()) {
-	                carryForward = resultSetEARNEDBASIC1.getInt("cf");
-	                leaveDeduction = resultSetEARNEDBASIC1.getInt("ded");
-	            }
-	            /*Checking Carry Forward Ends*/
-
-	            if (carryForward == 1) {
-	                Statement stmtEARNEDBASIC2 = conn.createStatement();
-
-	                /*Opening leaves*/
-	                String sqlEARNEDBASIC2 = "select leaveid,sum(opnleaves) opnleaves from hr_setopeningleave where status=3 and Year(date)=YEAR('" + sqlDate + "') and leaveid=" + i + " "
-	                        + "and empid=" + empID + " group by leaveid";
-	                ResultSet resultSetEARNEDBASIC2 = stmtEARNEDBASIC2.executeQuery(sqlEARNEDBASIC2);
-
-	                while (resultSetEARNEDBASIC2.next()) {
-	                    openingLeavesDetails.add(resultSetEARNEDBASIC2.getString("leaveid") + " ::" + resultSetEARNEDBASIC2.getDouble("opnleaves"));
+	            // Check Policy for this specific ID using the most recent revision date
+	            String sqlPolicy = "SELECT ded, l1ded FROM hr_payleavem WHERE rdocno=" +
+	                               "(SELECT doc_no FROM hr_paycode WHERE status=3 AND catid=" + empCategoryID + 
+	                               " AND revdate<='" + formattedDate + "' ORDER BY revdate DESC LIMIT 1) " +
+	                               "AND levid=" + levId;
+	            
+	            try (ResultSet rsPolicy = stmtMain.executeQuery(sqlPolicy)) {
+	                if (rsPolicy.next()) {
+	                    leaveDeduction = rsPolicy.getInt("ded");
+	                    dedPerc = rsPolicy.getDouble("l1ded");
 	                }
-	                /*Opening leaves Ends*/
-
-	                stmtEARNEDBASIC2.close();
 	            }
-
-	            /*Leaves Taken*/
-	            String sqlEARNEDBASIC3 = "select '" + i + "' leaveid,if(mod(round(sum(t.tot_leave" + i + "),1),1)=0,round(sum(t.tot_leave" + i + "),1),round(sum(t.tot_leave" + i + "),1)) leavestaken from hr_timesheet t "
-	                    + "left join hr_empm m on t.empid=m.doc_no where m.active=1 and m.status=3 and t.year=YEAR('" + sqlDate + "') and t.month=MONTH('" + sqlDate + "') "
-	                    + "and t.empid=" + empID + " group by t.empid";
-	            ResultSet resultSetEARNEDBASIC3 = stmtEARNEDBASIC3.executeQuery(sqlEARNEDBASIC3);
-
-	            while (resultSetEARNEDBASIC3.next()) {
-	                leavesTakenDetails.add(resultSetEARNEDBASIC3.getString("leaveid") + " ::" + resultSetEARNEDBASIC3.getDouble("leavestaken"));
-	            }
-	            /*Leaves Taken Ends*/
 
 	            if (leaveDeduction == 1) {
-
-	                Statement stmtEARNEDBASIC4 = conn.createStatement();
-	                Statement stmtEARNEDBASIC5 = conn.createStatement();
-	                Double leavesOpn = 0.00, leavesTaken = 0.00;
-	                noleaveDeduction = noleaveDeduction + 1;
-
-	                if (openingLeavesDetails.size() > 0) {
-	                    String[] opnLeaves = openingLeavesDetails.get((i - 1)).split("::");
-	                    leavesOpn = ((opnLeaves[1].isEmpty() ? 0.0 : Double.parseDouble(opnLeaves[1])));
+	                // Get Leaves Taken for THIS specific leave column
+	                double leavesTaken = 0.0;
+	                String sqlTaken = "SELECT SUM(t.tot_leave" + levId + ") as taken FROM hr_timesheet t " +
+	                                 "WHERE t.empid=" + empID + " AND t.year=YEAR('" + formattedDate + "') AND t.month=MONTH('" + formattedDate + "')";
+	                try (ResultSet rsTaken = stmtMain.executeQuery(sqlTaken)) {
+	                    if (rsTaken.next()) leavesTaken = rsTaken.getDouble("taken");
 	                }
 
-	                if (leavesTakenDetails.size() > 0) {
-	                    String[] takenLeaves = leavesTakenDetails.get((i - 1)).split("::");
-	                    leavesTaken = ((takenLeaves[1].isEmpty() ? 0.0 : Double.parseDouble(takenLeaves[1])));
-	                }
-
-	                String leaveconfig = "0", sqlLD4 = "";
-	                leaveconfig = getLeaveDeductionconfig(stmtEARNEDBASIC4);
-
-	                /*Deduction Percentage*/
-	                ArrayList<String> deductionPercDetails = new ArrayList<String>();
-	                ArrayList<String> deductionEffectDetails = new ArrayList<String>();
-
-	                /*Total Leaves Taken*/
-	                double previoustotleave = 0;
-	                Integer startMonth = 0;
-	                Integer endMonth = 0;
-	                Double totLeave = 0.00;
-
-	                /*Total Leaves Taken Ends*/
-	                int sickLeaveCalcConfig = 0;
-	                String nextlevel = "0";
-	                String prevlevel = "0";
-	                String balleave = "0";
-	                String nextded = "0";
-	                String dedection = "0";
-	                String balleave2 = "0";
-	                String getSickLeaveConfigSql = "select coalesce(method,0) method from gl_config where field_nme='sickleavecalcyearbased'";
-	                ResultSet rsgetSickLeaveConfig = stmtEARNEDBASIC3.executeQuery(getSickLeaveConfigSql);
-	                if (rsgetSickLeaveConfig.next()) {
-	                    sickLeaveCalcConfig = rsgetSickLeaveConfig.getInt("method");
-	                }
-
-	                if (sickLeaveCalcConfig == 1 && i == 3) {
-	                    startMonth = getFinancialYearDetails(conn, "financialstartmonth");
-	                    endMonth = getFinancialYearDetails(conn, "financialendmonth");
-
-	                    if (i == 3) {
-	                        String totLeaveSql = "SELECT " + i + " leaveid,IF(MOD(ROUND(SUM(t.tot_leave" + i + "),1),1)=0,ROUND(SUM(t.tot_leave" + i + "),1),ROUND(SUM(t.tot_leave" + i + "),1))-" + leavesTaken + " leavestaken FROM hr_timesheet t LEFT JOIN hr_empm m ON t.empid=m.doc_no WHERE m.active=1 AND m.status=3 AND ((t.year>=IF(MONTH('" + sqlDate + "')<=" + endMonth + ",YEAR('" + sqlDate + "')-1,YEAR('" + sqlDate + "')) AND t.month>=" + startMonth + ") OR (t.year>=IF(MONTH('" + sqlDate + "')<=" + endMonth + ",YEAR('" + sqlDate + "'),YEAR('" + sqlDate + "')-1)  AND t.month<=" + endMonth + ")) AND t.empid=" + empID;
-	                        if (empID.equalsIgnoreCase("58")) System.out.println(totLeaveSql);
-
-	                        ResultSet rsTotLeave = stmtEARNEDBASIC3.executeQuery(totLeaveSql);
-	                        if (rsTotLeave.next()) {
-	                            previoustotleave = rsTotLeave.getDouble("leavestaken");
-	                        }
+	                if (leavesTaken > 0) {
+	                    // Get Daily Rate Formula
+	                    String rawFormula = "0";
+	                    String sqlFormula = "SELECT dailyRate FROM hr_paycode WHERE status=3 AND catid=" + empCategoryID + 
+	                                      " AND revdate<='" + formattedDate + "' ORDER BY revdate DESC LIMIT 1";
+	                    try (ResultSet rsForm = stmtMain.executeQuery(sqlFormula)) {
+	                        if (rsForm.next()) rawFormula = rsForm.getString("dailyRate");
 	                    }
 
-	                    String chkl1sql = "SELECT CASE WHEN prevlevel=l1 THEN l2ded  WHEN prevlevel=l2 THEN l3ded  when prevlevel=l3 then l3ded END AS nextded,CASE WHEN prevlevel=l1 THEN l1ded  WHEN prevlevel=l2 THEN l2ded WHEN prevlevel=l3 THEN l3ded END AS dedection,CASE WHEN prevlevel=l1 THEN l2  WHEN prevlevel=l2 THEN l3 when prevlevel=l3 then l3 END AS nextlevel  , prevlevel, prevlevel-" + previoustotleave + " baleave FROM( SELECT l1,l2,l3,levid leaveid, CASE WHEN " + previoustotleave + " BETWEEN 0 AND l1 THEN l1 WHEN " + previoustotleave + " BETWEEN l1 AND l2 THEN l2 WHEN " + previoustotleave + " BETWEEN l2 AND l3 THEN l3 ELSE l3 END AS prevlevel,l1ded,l2ded,l3ded FROM hr_payleavem WHERE  rdocno=" + empCategoryID + " AND levid=" + i + ")a";
-	                    ResultSet rschkl1sql = stmtEARNEDBASIC3.executeQuery(chkl1sql);
-	                    if (rschkl1sql.next()) {
-	                        nextlevel = rschkl1sql.getString("nextlevel");
-	                        prevlevel = rschkl1sql.getString("prevlevel");
-	                        balleave = rschkl1sql.getString("baleave");
-	                        nextded = rschkl1sql.getString("nextded");
-	                        dedection = rschkl1sql.getString("dedection");
+	                    // Replace placeholders and clean brackets
+	                    String cleanFormula = rawFormula.replace("[BASIC]", String.valueOf(basicSalary))
+	                                                   .replace("[DAYS]", "(DAY(LAST_DAY('" + formattedDate + "')))")
+	                                                   .replace("[", "").replace("]", "");
+
+	                    // Calculate the daily rate value using the DB math engine
+	                    double dailyRate = 0;
+	                    try (ResultSet rsMath = stmtCalc.executeQuery("SELECT (" + cleanFormula + ")")) {
+	                        if (rsMath.next()) dailyRate = rsMath.getDouble(1);
 	                    }
 
-	                    String checkl2sql = "SELECT balleave, " + leavesTaken + "-balleave current FROM(SELECT CASE WHEN " + leavesTaken + " BETWEEN 0 AND (" + nextlevel + "-" + prevlevel + ") THEN " + leavesTaken + " ELSE " + leavesTaken + "-(" + nextlevel + "-" + prevlevel + ") END AS balleave)a";
-	                    ResultSet rschkl2sql = stmtEARNEDBASIC3.executeQuery(checkl2sql);
-	                    if (rschkl2sql.next()) {
-	                        balleave2 = rschkl2sql.getString("current");
-	                    }
+	                    totalDeductionFromLeaves += (leavesTaken * dailyRate * (dedPerc / 100));
 	                }
-
-	                if (leaveconfig.equals("1")) {
-	                    if (sickLeaveCalcConfig == 1 && i == 3) {
-	                        sqlLD4 = "select levid leaveid,CASE WHEN (l3=0 and l2=0) then  (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ") WHEN  (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ")  between 0 and l1  then (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ") WHEN  (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ") between 0 and l2 then (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ")-l1 "
-	                                + "WHEN (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ") between 0 and l3  then (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ")-l2  END as totalLeaves,CASE WHEN (l3=0 and l2=0) then  l1ded WHEN  (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ")  between 0 and l1  then l1ded WHEN  (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ") between 0 and l2 then l2ded "
-	                                + "WHEN (" + leavesOpn + "+" + leavesTaken + "+" + previoustotleave + ") between 0 and l3  then if(l3=0,l2ded,l3ded) WHEN   11>=l3  then if(l3=0,l2ded,l3ded) END AS deductionPerc from hr_payleavem where rdocno=" + empCategoryID + " and levid=" + i + "";
-
-	                    } else {
-	                        sqlLD4 = "select levid leaveid,CASE WHEN (l3=0 and l2=0) then  (" + leavesOpn + "+" + leavesTaken + ") WHEN  (" + leavesOpn + "+" + leavesTaken + ")  between 0 and l1  then (" + leavesOpn + "+" + leavesTaken + ") WHEN  (" + leavesOpn + "+" + leavesTaken + ") between 0 and l2 then (" + leavesOpn + "+" + leavesTaken + ")-l1 "
-	                                + "WHEN (" + leavesOpn + "+" + leavesTaken + ") between 0 and l3  then (" + leavesOpn + "+" + leavesTaken + ")-l2  END as totalLeaves,CASE WHEN (l3=0 and l2=0) then  l1ded WHEN  (" + leavesOpn + "+" + leavesTaken + ")  between 0 and l1  then l1ded WHEN  (" + leavesOpn + "+" + leavesTaken + ") between 0 and l2 then l2ded "
-	                                + "WHEN (" + leavesOpn + "+" + leavesTaken + ") between 0 and l3  then if(l3=0,l2ded,l3ded) WHEN   11>=l3  then if(l3=0,l2ded,l3ded) END AS deductionPerc from hr_payleavem where rdocno=" + empCategoryID + " and levid=" + i + "";
-	                    }
-	                } else {
-	                    sqlLD4 = "select levid leaveid,(" + leavesOpn + "+" + leavesTaken + ") totalLeaves,CASE WHEN (l3=0 and l2=0) then  l1ded WHEN  (" + leavesOpn + "+" + leavesTaken + ")  between 0 and l1  then l1ded WHEN  (" + leavesOpn + "+" + leavesTaken + ") between 0 and l2 then l2ded "
-	                            + "WHEN (" + leavesOpn + "+" + leavesTaken + ") between 0 and l3  then if(l3=0,l2ded,l3ded) WHEN   11>=l3  then if(l3=0,l2ded,l3ded) END AS deductionPerc from hr_payleavem where rdocno=" + empCategoryID + " and levid=" + i + "";
-	                }
-
-	                ResultSet resultSetEARNEDBASIC4 = stmtEARNEDBASIC4.executeQuery(sqlLD4);
-
-	                while (resultSetEARNEDBASIC4.next()) {
-	                    deductionPercDetails.add(resultSetEARNEDBASIC4.getString("leaveid") + " ::" + resultSetEARNEDBASIC4.getDouble("deductionPerc") + " :: " + resultSetEARNEDBASIC4.getString("totalLeaves"));
-	                }
-	                if (deductionPercDetails.size() <= 0) deductionPercDetails.add(0 + " ::" + 0 + " :: " + 0);
-	                /*Deduction Percentage Ends*/
-
-	                /*Deduction Percentage Effects*/
-	                String sqlEARNEDBASIC5 = "select d.levid leaveid,d.alwid from hr_payleaved d where d.status=3 and d.alwid=0 and d.rdocno=(select max(doc_no) from hr_paycode where status=3 and catid=" + empCategoryID + " and revdate<='" + sqlDate + "') and d.levid=" + i + "";
-	                ResultSet resultSetEARNEDBASIC5 = stmtEARNEDBASIC5.executeQuery(sqlEARNEDBASIC5);
-
-	                while (resultSetEARNEDBASIC5.next()) {
-	                    deductionEffectDetails.add(resultSetEARNEDBASIC5.getString("leaveid") + " ::" + resultSetEARNEDBASIC5.getString("alwid"));
-	                }
-	                /*Deduction Percentage Effects Ends*/
-
-	                /*Leave Deduction Calculation*/
-	                if (deductionEffectDetails.size() > 0) {
-
-	                    for (int l = 0; l < deductionEffectDetails.size(); l++) {
-
-	                        Statement stmtHRConfigDays = conn.createStatement();
-	                        Statement stmtEARNEDBASIC6 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC7 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC8 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC9 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC10 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC11 = conn.createStatement();
-
-	                        String[] deductionEffectsDetails = deductionEffectDetails.get(l).split("::");
-
-	                        if (deductionEffectsDetails[1].trim().equalsIgnoreCase("0")) {
-
-	                            String[] deductionPercentageDetails = deductionPercDetails.get(0).split("::");
-
-	                            String dailyRateFormula = "", valueDAYS = "0", valueYEARS = "1", valueHRS = "0", valueNH = "0", valueBASIC = "0", valueGROSS = "0", valueOfConfig = "0", valueRound = "0";
-	                            double value1Round = 100.00, basicSalaryCalculated = 0.00;
-
-	                            String sqlDailyRateFormula = "select dailyRate,if(((((SUBSTRING_INDEX(whrs,':',1))*60)+(SUBSTRING_INDEX(whrs,':',-1))))=0,0,(((SUBSTRING_INDEX(whrs,':',1))*60)+(SUBSTRING_INDEX(whrs,':',-1)))) whrs from hr_paycode where status=3 and catid=" + empCategoryID + " and doc_no=(select max(doc_no) from hr_paycode where status=3 and catid=" + empCategoryID + " and revdate<='" + sqlDate + "')";
-	                            ResultSet resultSetDailyRateFormula = stmtEARNEDBASIC6.executeQuery(sqlDailyRateFormula);
-
-	                            while (resultSetDailyRateFormula.next()) {
-	                                dailyRateFormula = resultSetDailyRateFormula.getString("dailyRate");
-	                                valueHRS = resultSetDailyRateFormula.getString("whrs");
-	                            }
-
-	                            valueBASIC = String.valueOf(basicSalary);
-	                            valueGROSS = String.valueOf(basicSalary);
-
-	                            /*Select Current Month Days*/
-	                            if (dailyRateFormula.contains("[DAYS]")) {
-
-	                                String sqlEARNEDBASIC9 = "select DAY(Last_DAY('" + sqlDate + "')) daysofmnth";
-	                                ResultSet resultSetEARNEDBASIC9 = stmtEARNEDBASIC9.executeQuery(sqlEARNEDBASIC9);
-
-	                                while (resultSetEARNEDBASIC9.next()) {
-	                                    valueDAYS = resultSetEARNEDBASIC9.getString("daysofmnth");
-	                                }
-
-	                            }
-	                            /*Select Current Month Days Ends*/
-
-	                            /*Select Current Years*/
-	                            if (dailyRateFormula.contains("[YEARS]")) {
-
-	                                String sqlEARNEDBASIC10 = "select YEAR('" + sqlDate + "') mnthyear";
-	                                ResultSet resultSetEARNEDBASIC10 = stmtEARNEDBASIC10.executeQuery(sqlEARNEDBASIC10);
-
-	                                while (resultSetEARNEDBASIC10.next()) {
-	                                    valueYEARS = resultSetEARNEDBASIC10.getString("mnthyear");
-	                                }
-	                            }
-	                            /*Select Current Years Ends*/
-
-	                            /*Daily Rate Formula*/
-	                            dailyRateFormula = dailyRateFormula.replaceAll("DAYS", valueDAYS);
-	                            dailyRateFormula = dailyRateFormula.replaceAll("YEARS", valueYEARS);
-	                            dailyRateFormula = dailyRateFormula.replaceAll("HRS", valueHRS);
-	                            dailyRateFormula = dailyRateFormula.replaceAll("NH", valueNH);
-	                            dailyRateFormula = dailyRateFormula.replaceAll("BASIC", valueBASIC);
-	                            dailyRateFormula = dailyRateFormula.replaceAll("GROSS", valueGROSS);
-	                            /*Daily Rate Formula Ends*/
-
-	                            String sqlDailyRateFormula1 = "select REPLACE( REPLACE ('" + dailyRateFormula + "','[',''),']','') dailyRateValue";
-	                            ResultSet resultSetDailyRateFormula1 = stmtEARNEDBASIC7.executeQuery(sqlDailyRateFormula1);
-
-	                            while (resultSetDailyRateFormula1.next()) {
-	                                dailyRateFormula = resultSetDailyRateFormula1.getString("dailyRateValue");
-	                            }
-
-	                            String configDays = "select method from gl_config where field_nme='HRMonthlyPayrollCalc'";
-	                            ResultSet resultSetConfig = stmtHRConfigDays.executeQuery(configDays);
-
-	                            while (resultSetConfig.next()) {
-	                                valueOfConfig = resultSetConfig.getString("method");
-	                            }
-
-	                            if (valueOfConfig.equalsIgnoreCase("1")) {
-	                                valueRound = "2";
-	                                value1Round = 100.00;
-	                            } else {
-	                                valueRound = "0";
-	                            }
-
-	                            // [FIX] Added explicit AS alias and ensured comma exists to prevent MySQL syntax error
-	                            String sqlDailyRateFormula2 = "select round(" + dailyRateFormula + ",4) AS DAYAMOUNT";
-	                            ResultSet resultSetDailyRateFormula2 = stmtEARNEDBASIC8.executeQuery(sqlDailyRateFormula2);
-
-	                            while (resultSetDailyRateFormula2.next()) {
-	                                dailyRateFormula = resultSetDailyRateFormula2.getString("DAYAMOUNT");
-	                            }
-
-	                            String sqlEARNEDBASIC11 = "select round(" + valueDaysToPay + "*(" + dailyRateFormula + ")," + valueRound + ") BASIC";
-	                            ResultSet resultSetEARNEDBASIC11 = stmtEARNEDBASIC11.executeQuery(sqlEARNEDBASIC11);
-
-	                            while (resultSetEARNEDBASIC11.next()) {
-	                                basicSalaryCalculated = resultSetEARNEDBASIC11.getDouble("BASIC");
-	                            }
-
-	                            if (sickLeaveCalcConfig == 1 && i == 3) {
-	                                deductionamount = (Double.parseDouble(balleave) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(dedection) / 100)) + (Double.parseDouble(balleave2) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(nextded) / 100));
-	                            }
-
-
-	                            if (Double.parseDouble(EARNEDBASICAmount) == 0 && loop == 0) {
-	                                if (valueOfConfig.equalsIgnoreCase("1")) {
-	                                    EARNEDBASICAmount = Double.parseDouble(String.valueOf(Math.round((basicSalaryCalculated - deductionamount - ((Double.parseDouble(deductionPercentageDetails[2]) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100)))) * value1Round) / value1Round)) <= 0 ? "0" : String.valueOf(Math.round((basicSalaryCalculated - deductionamount - ((Double.parseDouble(deductionPercentageDetails[2]) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100)))) * value1Round) / value1Round);
-	                                } else {
-	                                    EARNEDBASICAmount = Double.parseDouble(String.valueOf(Math.round(basicSalaryCalculated - deductionamount - ((Double.parseDouble(deductionPercentageDetails[2]) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100)))))) <= 0 ? "0" : String.valueOf(Math.round(basicSalaryCalculated - deductionamount - ((Double.parseDouble(deductionPercentageDetails[2]) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100)))));
-	                                }
-	                                loop = 1;
-	                            } else {
-	                                if (valueOfConfig.equalsIgnoreCase("1")) {
-	                                    EARNEDBASICAmount = Double.parseDouble(String.valueOf(Math.round((Double.parseDouble(EARNEDBASICAmount) - deductionamount - (Double.parseDouble(deductionPercentageDetails.length > 0 ? deductionPercentageDetails[2] : "0") * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100))) * value1Round) / value1Round)) <= 0 ? "0" : String.valueOf(Math.round((Double.parseDouble(EARNEDBASICAmount) - deductionamount - (Double.parseDouble(deductionPercentageDetails.length > 0 ? deductionPercentageDetails[2] : "0") * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100))) * value1Round) / value1Round);
-	                                } else {
-	                                    EARNEDBASICAmount = Double.parseDouble(String.valueOf(Math.round(Double.parseDouble(EARNEDBASICAmount) - deductionamount - (Double.parseDouble(deductionPercentageDetails[2]) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100))))) <= 0 ? "0" : String.valueOf(Math.round(Double.parseDouble(EARNEDBASICAmount) - deductionamount - (Double.parseDouble(deductionPercentageDetails[2]) * Double.parseDouble(dailyRateFormula) * (Double.parseDouble(deductionPercentageDetails[1]) / 100))));
-	                                }
-	                            }
-
-	                        }
-	                        System.out.println("Earned Basic Amount" + EARNEDBASICAmount);
-
-	                        deductionEffectedBASIC = deductionEffectedBASIC + 1;
-
-	                        stmtHRConfigDays.close();
-	                        stmtEARNEDBASIC6.close();
-	                        stmtEARNEDBASIC7.close();
-	                        stmtEARNEDBASIC8.close();
-	                        stmtEARNEDBASIC9.close();
-	                        stmtEARNEDBASIC10.close();
-	                        stmtEARNEDBASIC11.close();
-	                    }
-	                } else {
-	                    if (i == 1) {
-
-	                        Statement stmtHRConfigDays1 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC12 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC13 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC14 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC15 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC16 = conn.createStatement();
-	                        Statement stmtEARNEDBASIC17 = conn.createStatement();
-
-	                        String dailyRateFormula = "", valueDAYS = "0", valueYEARS = "1", valueHRS = "0", valueNH = "0", valueBASIC = "0", valueGROSS = "0", valueOfConfig = "0", valueRound = "0";
-	                        double value1Round = 100.00, basicSalaryCalculated = 0.00;
-
-	                        String sqlDailyRateFormula = "select dailyRate,if(((((SUBSTRING_INDEX(whrs,':',1))*60)+(SUBSTRING_INDEX(whrs,':',-1))))=0,0,(((SUBSTRING_INDEX(whrs,':',1))*60)+(SUBSTRING_INDEX(whrs,':',-1)))) whrs from hr_paycode where status=3 and catid=" + empCategoryID + " and doc_no=(select max(doc_no) from hr_paycode where status=3 and catid=" + empCategoryID + " and revdate<='" + sqlDate + "')";
-	                        ResultSet resultSetDailyRateFormula = stmtEARNEDBASIC12.executeQuery(sqlDailyRateFormula);
-
-	                        while (resultSetDailyRateFormula.next()) {
-	                            dailyRateFormula = resultSetDailyRateFormula.getString("dailyRate");
-	                            valueHRS = resultSetDailyRateFormula.getString("whrs");
-	                        }
-
-	                        valueBASIC = String.valueOf(basicSalary);
-	                        valueGROSS = String.valueOf(basicSalary);
-
-	                        /*Select Current Month Days*/
-	                        if (dailyRateFormula.contains("[DAYS]")) {
-
-	                            String sqlEARNEDBASIC9 = "select DAY(Last_DAY('" + sqlDate + "')) daysofmnth";
-	                            ResultSet resultSetEARNEDBASIC9 = stmtEARNEDBASIC15.executeQuery(sqlEARNEDBASIC9);
-
-	                            while (resultSetEARNEDBASIC9.next()) {
-	                                valueDAYS = resultSetEARNEDBASIC9.getString("daysofmnth");
-	                            }
-	                        }
-	                        /*Select Current Month Days Ends*/
-
-	                        /*Select Current Years*/
-	                        if (dailyRateFormula.contains("[YEARS]")) {
-
-	                            String sqlEARNEDBASIC10 = "select YEAR('" + sqlDate + "') mnthyear";
-	                            ResultSet resultSetEARNEDBASIC10 = stmtEARNEDBASIC16.executeQuery(sqlEARNEDBASIC10);
-
-	                            while (resultSetEARNEDBASIC10.next()) {
-	                                valueYEARS = resultSetEARNEDBASIC10.getString("mnthyear");
-	                            }
-	                        }
-	                        /*Select Current Years Ends*/
-
-	                        /*Daily Rate Formula*/
-	                        dailyRateFormula = dailyRateFormula.replaceAll("DAYS", valueDAYS);
-	                        dailyRateFormula = dailyRateFormula.replaceAll("YEARS", valueYEARS);
-	                        dailyRateFormula = dailyRateFormula.replaceAll("HRS", valueHRS);
-	                        dailyRateFormula = dailyRateFormula.replaceAll("NH", valueNH);
-	                        dailyRateFormula = dailyRateFormula.replaceAll("BASIC", valueBASIC);
-	                        dailyRateFormula = dailyRateFormula.replaceAll("GROSS", valueGROSS);
-	                        /*Daily Rate Formula Ends*/
-
-	                        String sqlDailyRateFormula1 = "select REPLACE( REPLACE ('" + dailyRateFormula + "','[',''),']','') dailyRateValue";
-	                        ResultSet resultSetDailyRateFormula1 = stmtEARNEDBASIC13.executeQuery(sqlDailyRateFormula1);
-
-	                        while (resultSetDailyRateFormula1.next()) {
-	                            dailyRateFormula = resultSetDailyRateFormula1.getString("dailyRateValue");
-	                        }
-
-	                        String configDays = "select method from gl_config where field_nme='HRMonthlyPayrollCalc'";
-	                        ResultSet resultSetConfig = stmtHRConfigDays1.executeQuery(configDays);
-
-	                        while (resultSetConfig.next()) {
-	                            valueOfConfig = resultSetConfig.getString("method");
-	                        }
-
-	                        if (valueOfConfig.equalsIgnoreCase("1")) {
-	                            valueRound = "2";
-	                            value1Round = 100.00;
-	                        } else {
-	                            valueRound = "0";
-	                        }
-
-	                        // [FIX] Added explicit AS alias and ensured comma exists
-	                        String sqlDailyRateFormula2 = "select round(" + dailyRateFormula + ",4) AS DAYAMOUNT";
-	                        ResultSet resultSetDailyRateFormula2 = stmtEARNEDBASIC14.executeQuery(sqlDailyRateFormula2);
-
-	                        while (resultSetDailyRateFormula2.next()) {
-	                            dailyRateFormula = resultSetDailyRateFormula2.getString("DAYAMOUNT");
-	                        }
-
-	                        String sqlEARNEDBASIC11 = "select round(" + valueDaysToPay + "*(" + dailyRateFormula + ")," + valueRound + ") BASIC";
-	                        ResultSet resultSetEARNEDBASIC11 = stmtEARNEDBASIC17.executeQuery(sqlEARNEDBASIC11);
-
-	                        while (resultSetEARNEDBASIC11.next()) {
-	                            basicSalaryCalculated = resultSetEARNEDBASIC11.getDouble("BASIC");
-	                        }
-
-	                        if (deductionEffectedBASIC > 0) {
-	                            basicSalaryCalculated = Double.parseDouble(EARNEDBASICAmount);
-	                        }
-
-	                        if (valueOfConfig.equalsIgnoreCase("1")) {
-	                            EARNEDBASICAmount = String.valueOf(Math.round((basicSalaryCalculated) * value1Round) / value1Round);
-	                        } else {
-	                            EARNEDBASICAmount = String.valueOf(Math.round((basicSalaryCalculated)));
-	                        }
-
-	                        stmtHRConfigDays1.close();
-	                        stmtEARNEDBASIC12.close();
-	                        stmtEARNEDBASIC13.close();
-	                        stmtEARNEDBASIC14.close();
-	                        stmtEARNEDBASIC15.close();
-	                        stmtEARNEDBASIC16.close();
-	                        stmtEARNEDBASIC17.close();
-
-	                    }
-	                }
-	                /*Leave Deduction Calculation Ends*/
-
-	                stmtEARNEDBASIC4.close();
-	                stmtEARNEDBASIC5.close();
 	            }
 	        }
 
-	        if (noleaveDeduction == 0) {
-
-	            Statement stmtHRConfigDays = conn.createStatement();
-	            Statement stmtEARNEDBASIC6 = conn.createStatement();
-	            Statement stmtEARNEDBASIC7 = conn.createStatement();
-	            Statement stmtEARNEDBASIC8 = conn.createStatement();
-	            Statement stmtEARNEDBASIC9 = conn.createStatement();
-	            Statement stmtEARNEDBASIC10 = conn.createStatement();
-	            Statement stmtEARNEDBASIC11 = conn.createStatement();
-
-	            String dailyRateFormula = "", valueDAYS = "0", valueYEARS = "1", valueHRS = "0", valueNH = "0", valueBASIC = "0", valueGROSS = "0", valueOfConfig = "0", valueRound = "0";
-	            double value1Round = 100.00, basicSalaryCalculated = 0.0;
-
-	            String sqlDailyRateFormula = "select dailyRate,if(((((SUBSTRING_INDEX(whrs,':',1))*60)+(SUBSTRING_INDEX(whrs,':',-1))))=0,0,(((SUBSTRING_INDEX(whrs,':',1))*60)+(SUBSTRING_INDEX(whrs,':',-1)))) whrs from hr_paycode where status=3 and catid=" + empCategoryID + " and doc_no=(select max(doc_no) from hr_paycode where status=3 and catid=" + empCategoryID + " and revdate<='" + sqlDate + "')";
-	            ResultSet resultSetDailyRateFormula = stmtEARNEDBASIC6.executeQuery(sqlDailyRateFormula);
-
-	            while (resultSetDailyRateFormula.next()) {
-	                dailyRateFormula = resultSetDailyRateFormula.getString("dailyRate");
-	                valueHRS = resultSetDailyRateFormula.getString("whrs");
-	            }
-
-	            valueBASIC = String.valueOf(basicSalary);
-	            valueGROSS = String.valueOf(basicSalary);
-
-	            /*Select Current Month Days*/
-	            if (dailyRateFormula.contains("[DAYS]")) {
-
-	                String sqlEARNEDBASIC9 = "select DAY(Last_DAY('" + sqlDate + "')) daysofmnth";
-	                ResultSet resultSetEARNEDBASIC9 = stmtEARNEDBASIC9.executeQuery(sqlEARNEDBASIC9);
-
-	                while (resultSetEARNEDBASIC9.next()) {
-	                    valueDAYS = resultSetEARNEDBASIC9.getString("daysofmnth");
-	                }
-	            }
-	            /*Select Current Month Days Ends*/
-
-	            /*Select Current Years*/
-	            if (dailyRateFormula.contains("[YEARS]")) {
-
-	                String sqlEARNEDBASIC10 = "select YEAR('" + sqlDate + "') mnthyear";
-	                ResultSet resultSetEARNEDBASIC10 = stmtEARNEDBASIC10.executeQuery(sqlEARNEDBASIC10);
-
-	                while (resultSetEARNEDBASIC10.next()) {
-	                    valueYEARS = resultSetEARNEDBASIC10.getString("mnthyear");
-	                }
-	            }
-	            /*Select Current Years Ends*/
-
-	            /*Daily Rate Formula*/
-	            dailyRateFormula = dailyRateFormula.replaceAll("DAYS", valueDAYS);
-	            dailyRateFormula = dailyRateFormula.replaceAll("YEARS", valueYEARS);
-	            dailyRateFormula = dailyRateFormula.replaceAll("HRS", valueHRS);
-	            dailyRateFormula = dailyRateFormula.replaceAll("NH", valueNH);
-	            dailyRateFormula = dailyRateFormula.replaceAll("BASIC", valueBASIC);
-	            dailyRateFormula = dailyRateFormula.replaceAll("GROSS", valueGROSS);
-	            /*Daily Rate Formula Ends*/
-
-	            String sqlDailyRateFormula1 = "select REPLACE( REPLACE ('" + dailyRateFormula + "','[',''),']','') dailyRateValue";
-	            ResultSet resultSetDailyRateFormula1 = stmtEARNEDBASIC7.executeQuery(sqlDailyRateFormula1);
-
-	            while (resultSetDailyRateFormula1.next()) {
-	                dailyRateFormula = resultSetDailyRateFormula1.getString("dailyRateValue");
-	            }
-
-	            String configDays = "select method from gl_config where field_nme='HRMonthlyPayrollCalc'";
-	            ResultSet resultSetConfig = stmtHRConfigDays.executeQuery(configDays);
-
-	            while (resultSetConfig.next()) {
-	                valueOfConfig = resultSetConfig.getString("method");
-	            }
-
-	            if (valueOfConfig.equalsIgnoreCase("1")) {
-	                valueRound = "2";
-	                value1Round = 100.00;
-	            } else {
-	                valueRound = "0";
-	            }
-
-	            // [FIX] Added explicit AS alias and ensured comma exists
-	            String sqlDailyRateFormula2 = "select round(" + dailyRateFormula + ",4) AS DAYAMOUNT";
-	            ResultSet resultSetDailyRateFormula2 = stmtEARNEDBASIC8.executeQuery(sqlDailyRateFormula2);
-
-	            while (resultSetDailyRateFormula2.next()) {
-	                dailyRateFormula = resultSetDailyRateFormula2.getString("DAYAMOUNT");
-	            }
-
-	            String sqlEARNEDBASIC11 = "select round(" + valueDaysToPay + "*(" + dailyRateFormula + ")," + valueRound + ") BASIC";
-	            ResultSet resultSetEARNEDBASIC11 = stmtEARNEDBASIC11.executeQuery(sqlEARNEDBASIC11);
-
-	            while (resultSetEARNEDBASIC11.next()) {
-	                basicSalaryCalculated = resultSetEARNEDBASIC11.getDouble("BASIC");
-	            }
-
-	            if (deductionEffectedBASIC > 0) {
-	                basicSalaryCalculated = Double.parseDouble(EARNEDBASICAmount);
-	            }
-
-	            if (valueOfConfig.equalsIgnoreCase("1")) {
-	                EARNEDBASICAmount = String.valueOf(Math.round((basicSalaryCalculated) * value1Round) / value1Round);
-	            } else {
-	                EARNEDBASICAmount = String.valueOf(Math.round((basicSalaryCalculated)));
-	            }
-
-	            stmtHRConfigDays.close();
-	            stmtEARNEDBASIC6.close();
-	            stmtEARNEDBASIC7.close();
-	            stmtEARNEDBASIC8.close();
-	            stmtEARNEDBASIC9.close();
-	            stmtEARNEDBASIC10.close();
-	            stmtEARNEDBASIC11.close();
+	        // 3. Final Earned Basic Calculation
+	        // Calculate the base monthly factor (Basic / Actual Days in Month)
+	        double daysInMonth = 30; 
+	        try (ResultSet rsDays = stmtMain.executeQuery("SELECT DAY(LAST_DAY('" + formattedDate + "'))")) {
+	            if (rsDays.next()) daysInMonth = rsDays.getDouble(1);
 	        }
 
-	        stmtEARNEDBASIC.close();
-	        stmtEARNEDBASIC1.close();
-	        stmtEARNEDBASIC3.close();
+	        double daysToPayFactor = Double.parseDouble(valueDaysToPay);
+	        double earnedBeforeDeduction = (basicSalary / daysInMonth) * daysToPayFactor;
+	        double finalAmount = earnedBeforeDeduction - totalDeductionFromLeaves;
+
+	        // Rounding logic from config
+	        int roundDigits = 0;
+	        String configSql = "SELECT method FROM gl_config WHERE field_nme='HRMonthlyPayrollCalc'";
+	        try (ResultSet rsConf = stmtMain.executeQuery(configSql)) {
+	            if (rsConf.next() && "1".equals(rsConf.getString("method"))) roundDigits = 2;
+	        }
+
+	        EARNEDBASICAmount = String.format("%." + roundDigits + "f", Math.max(0, finalAmount));
+
 	    } catch (Exception e) {
-	        // [FIX] Do NOT close the shared connection here! 
-	        // conn.close(); 
 	        e.printStackTrace();
-	        return EARNEDBASICAmount;
 	    }
+	    
 	    return EARNEDBASICAmount;
 	}
 	public String getHREARNEDALLOWANCES(Connection conn,String empID,String empCategoryID,Date sqlDate,Double allowance,String valueDaysToPay,String allowanceID) throws SQLException {

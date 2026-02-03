@@ -1646,103 +1646,165 @@
 						],
             });
         
-         	 $("#attendanceGridID").on('cellvaluechanged', function (event){
-         		var dataField = event.args.datafield;
-         		var rowIndex=event.args.rowindex;
+            $("#attendanceGridID").on('cellvaluechanged', function (event){
+                var dataField = event.args.datafield;
+                var rowIndex = event.args.rowindex;
                 
-                if(dataField!='employeeid' || dataField!='employeename' || dataField!='days' || dataField!='holiday' || dataField!='leave1total' || dataField!='leave2total' || dataField!='leave3total' || dataField!='leave4total' || dataField!='leave5total' || dataField!='leave6total' || dataField!='leave7total') {
+                console.log("=== Cell Value Changed ===");
+                console.log("DataField:", dataField);
+                console.log("RowIndex:", rowIndex);
                 
-                var holiday=0,leave=0,leave1total=0,leave2total=0,leave3total=0,leave4total=0,leave5total=0,leave6total=0,leave7total=0,overtime=0,holidayovertime=0;
-                var totdays = $('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "days");
-                for(var i=1;i<=parseInt(totdays);i++)
-         		{
-                	var value = $('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "date"+i+"");
-                	
-                	if(value=='H' || value=='LH'){
-                		holiday=holiday+1;
-                	}
-                	if(value=='A' || value=='S' || value=='C' || value=='T' || value=='M' || value=='U' || value=='N'){
-                		leave=leave+1;
-                	}
-                	if(value=='A2' || value=='S2' || value=='C2' || value=='T2' || value=='M2' || value=='U2' || value=='N2'){
-                		leave=leave+(0.5);
-                	}
-                	if(value=='A'){leave1total=leave1total+1;} 
-                	if(value=='C'){leave2total=leave2total+1;}
-                	if(value=='S'){leave3total=leave3total+1;}
-                	if(value=='U'){leave4total=leave4total+1;}
-                	if(value=='M'){leave5total=leave5total+1;}
-                	if(value=='T'){leave6total=leave6total+1;}
-                	if(value=='N'){leave7total=leave7total+1;}
-                	if(value=='A2'){leave1total=leave1total+(0.5);} 
-                	if(value=='C2'){leave2total=leave2total+(0.5);}
-                	if(value=='S2'){leave3total=leave3total+(0.5);}
-                	if(value=='U2'){leave4total=leave4total+(0.5);}
-                	if(value=='M2'){leave5total=leave5total+(0.5);}
-                	if(value=='T2'){leave6total=leave6total+(0.5);}
-                	if(value=='N2'){leave7total=leave7total+(0.5);}
-                	
-                	if(value.indexOf(':')>0) { 
-                		
-                		var weekoff = $('#txtholidaysofmonth').val();
-                		var weekoff1 = weekoff.split(",");
-                		var weekoffcount = (weekoff.match(/,/g) || []).length;
-                		var checking='0';
-                		
-                		for(var k=0;k<parseInt(weekoffcount);k++) {
-	                	
-                			if(weekoff1[k]==i){
-                				checking='1';
-	                		} 
-	                		
-	                		if(checking=='1'){
-	                			
-	                			var value1 = value.split(":");
-		                		var value2 = ((parseInt(value1[0])*60)+parseInt(value1[1]));
-		                		holidayovertime=holidayovertime+value2;
-		                		break;
-	                		} 
-		         		}
-                		
-                		if(checking=='0'){
-                			var value1 = value.split(":");
-	                		var value2 = ((parseInt(value1[0])*60)+parseInt(value1[1]));
-	                		overtime=overtime+value2;
-                		} 
+                if(dataField!='employeeid' && dataField!='employeename' && dataField!='days' && dataField!='holiday' && dataField!='leave1total' && dataField!='leave2total' && dataField!='leave3total' && dataField!='leave4total' && dataField!='leave5total' && dataField!='leave6total' && dataField!='leave7total') {
+                
+                    console.log(">>> Entering calculation block");
+                    
+                    var holiday=0, leave=0, leave1total=0, leave2total=0, leave3total=0, leave4total=0, leave5total=0, leave6total=0, leave7total=0, overtime=0, holidayovertime=0;
+                    var totdays = $('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "days");
+                    
+                    console.log("Total days:", totdays);
+                    
+                    for(var i=1; i<=parseInt(totdays); i++) {
+                        var value = $('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "date"+i+"");
+                        
+                        console.log("Day", i, "- Value:", value);
+                        
+                        if (!value) continue;
+
+                        // HOLIDAY TRACKING
+                        if (value == 'H' || value == 'LH') {
+                            holiday++;
+                            console.log("  -> Holiday found, count:", holiday);
+                        }
+
+                        // TOTAL LEAVE COUNTER
+                        if (['A', 'S', 'C', 'U', 'M', 'T', 'N'].indexOf(value) !== -1) { 
+                            leave += 1;
+                            console.log("  -> Full day leave, total:", leave);
+                        }
+                        if (['A2', 'S2', 'C2', 'U2', 'M2', 'T2', 'N2'].indexOf(value) !== -1) { 
+                            leave += 0.5;
+                            console.log("  -> Half day leave, total:", leave);
+                        }
+
+                        // INDIVIDUAL LEAVE TRACKING
+                        if (value == 'A') { 
+                            leave1total += 1;
+                            console.log("  -> Annual Leave (A), total:", leave1total);
+                        } else if (value == 'A2') { 
+                            leave1total += 0.5;
+                            console.log("  -> Annual Leave Half (A2), total:", leave1total);
+                        }
+                        
+                        if (value == 'C') { 
+                            leave2total += 1;
+                            console.log("  -> Paid Leave (C), total:", leave2total);
+                        } else if (value == 'C2') { 
+                            leave2total += 0.5;
+                            console.log("  -> Paid Leave Half (C2), total:", leave2total);
+                        }
+                        
+                        if (value == 'S') { 
+                            leave3total += 1;
+                            console.log("  -> Sick Leave (S), total:", leave3total);
+                        } else if (value == 'S2') { 
+                            leave3total += 0.5;
+                            console.log("  -> Sick Leave Half (S2), total:", leave3total);
+                        }
+                        
+                        if (value == 'U') { 
+                            leave4total += 1;
+                            console.log("  -> Casual Leave (U), total:", leave4total);
+                        } else if (value == 'U2') { 
+                            leave4total += 0.5;
+                            console.log("  -> Casual Leave Half (U2), total:", leave4total);
+                        }
+                        
+                        if (value == 'M') { 
+                            leave5total += 1;
+                            console.log("  -> Emergency Leave (M), total:", leave5total);
+                        } else if (value == 'M2') { 
+                            leave5total += 0.5;
+                            console.log("  -> Emergency Leave Half (M2), total:", leave5total);
+                        }
+                        
+                        if (value == 'T') { 
+                            leave6total += 1;
+                            console.log("  -> Absconding (T), total:", leave6total);
+                        } else if (value == 'T2') { 
+                            leave6total += 0.5;
+                            console.log("  -> Absconding Half (T2), total:", leave6total);
+                        }
+                        
+                        if (value == 'N') { 
+                            leave7total += 1;
+                            console.log("  -> Suspended (N), total:", leave7total);
+                        } else if (value == 'N2') { 
+                            leave7total += 0.5;
+                            console.log("  -> Suspended Half (N2), total:", leave7total);
+                        }
+                        
+                        // Overtime handling (unchanged)
+                        if(value.indexOf(':') > 0) { 
+                            var weekoff = $('#txtholidaysofmonth').val();
+                            var weekoff1 = weekoff.split(",");
+                            var weekoffcount = (weekoff.match(/,/g) || []).length;
+                            var checking = '0';
+
+                            for (var k = 0; k < parseInt(weekoffcount); k++) {
+                                if (weekoff1[k] == i) { checking = '1'; }
+                                if (checking == '1') {
+                                    var value1 = value.split(":");
+                                    var value2 = ((parseInt(value1[0]) * 60) + parseInt(value1[1]));
+                                    holidayovertime += value2;
+                                    break;
+                                }
+                            }
+
+                            if (checking == '0') {
+                                var value1 = value.split(":");
+                                var value2 = ((parseInt(value1[0]) * 60) + parseInt(value1[1]));
+                                overtime += value2;
+                            }
+                        }
                     }
-                	
-         		}
-                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "holiday",holiday);
-                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leavedet",leave);
-                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertime",overtime);
-                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertime",holidayovertime);                
-                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertimes", (((overtime-(overtime % 60))/60).toString() + ":" + ((overtime % 60)<10?"0":"") + (overtime % 60).toString()));
-                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertimes", (((holidayovertime-(holidayovertime % 60))/60).toString() + ":" + ((holidayovertime % 60)<10?"0":"") + (holidayovertime % 60).toString()));
-                
-                	if(parseInt($('#txtattendanceleaveseditgrid').val())==0){
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave1total",leave1total);
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave2total",leave2total);
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave3total",leave3total);
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave4total",leave4total);
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave5total",leave5total);
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave6total",leave6total);
-		                $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave7total",leave7total);
-	                }
-	                
+                    // --- END CALCULATION LOOP ---
+
+                    // Update Grid UI
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "holiday", holiday);
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leavedet", leave);
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertime", overtime);
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertime", holidayovertime);
+                    
+                    var otStr = (((overtime - (overtime % 60)) / 60).toString() + ":" + ((overtime % 60) < 10 ? "0" : "") + (overtime % 60).toString());
+                    var hotStr = (((holidayovertime - (holidayovertime % 60)) / 60).toString() + ":" + ((holidayovertime % 60) < 10 ? "0" : "") + (holidayovertime % 60).toString());
+                    
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalovertimes", otStr);
+                    $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "totalholidayovertimes", hotStr);
+
+                    // Only update breakdown columns if edit is allowed
+                   
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave1total", leave1total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave2total", leave2total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave3total", leave3total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave4total", leave4total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave5total", leave5total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave6total", leave6total);
+                        $('#attendanceGridID').jqxGrid('setcellvalue', rowIndex, "leave7total", leave7total);
+                    
                 }
-                
-                   $('#txtselectedcellleave1totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave1total"));
-                   $('#txtselectedcellleave2totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave2total"));
-	   			   $('#txtselectedcellleave3totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave3total"));
-	   			   $('#txtselectedcellleave4totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave4total"));
-	   			   $('#txtselectedcellleave5totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave5total"));
-	   			   $('#txtselectedcellleave6totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave6total"));
-	   			   $('#txtselectedcellleave7totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave7total"));
-	   			   $('#txtselectedcellovertimevalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "totalovertime"));
-	   			   $('#txtselectedcellholidayovertimevalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "totalholidayovertime"));
-	   			   $('#txtmonthlypayrollprocessed').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "payroll_processed"));
-               
-             });
+
+                // Update Hidden Inputs for Saving
+                $('#txtselectedcellleave1totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave1total"));
+                $('#txtselectedcellleave2totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave2total"));
+                $('#txtselectedcellleave3totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave3total"));
+                $('#txtselectedcellleave4totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave4total"));
+                $('#txtselectedcellleave5totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave5total"));
+                $('#txtselectedcellleave6totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave6total"));
+                $('#txtselectedcellleave7totalvalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "leave7total"));
+                $('#txtselectedcellovertimevalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "totalovertime"));
+                $('#txtselectedcellholidayovertimevalue').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "totalholidayovertime"));
+                $('#txtmonthlypayrollprocessed').val($('#attendanceGridID').jqxGrid('getcellvalue', rowIndex, "payroll_processed"));
+            });
       	
 	        $("#attendanceGridID").on("cellclick", function (event) {
 	         			   

@@ -196,7 +196,133 @@ function disitems()
 			
 </script>
 </head>
-  
+  <style type="text/css">
+    /* Layout & Sidebar Structure */
+    .master-container {
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, sans-serif !important;
+        background-color: #f4f7f9;
+        width: 100%;
+        height: 100vh !important;
+        overflow: hidden !important;
+        color: black !important; /* Force all font black */
+    }
+
+    .sidebar-filters {
+        width: 330px; 
+        flex: 0 0 330px;
+        background-color: #ffffff;
+        border-right: 1px solid #e1e8ed;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        height: 100vh !important;
+    }
+
+    .sidebar-fixed-top {
+        padding: 20px 20px 15px 20px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f4f8;
+        flex-shrink: 0;
+    }
+
+    .sidebar-scroll-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 20px 25px 20px;
+    }
+
+    /* Cleaned Cards - Stripping legacy backgrounds */
+    .filter-card {
+        background-color: #f8fafc !important;
+        border: 1px solid #e3e8ee !important;
+        border-radius: 12px !important;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* HARD RESET: Force black fonts and remove unwanted backgrounds */
+    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
+        background-color: transparent !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .filter-table { 
+        width: 100%; 
+        border-spacing: 0 10px; 
+    }
+
+    .label-cell {
+        text-align: right;
+        padding-right: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        width: 85px;
+    }
+
+    /* Input & Select Styling */
+    input[type="text"], select {
+        width: 100%;
+        border: 1px solid #ccd6e0;
+        border-radius: 6px;
+        padding: 7px 10px;
+        font-size: 13px;
+        color: black !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* RHS Visibility & Scrollbar Kill */
+    .main-content-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        max-width: calc(100vw - 330px);
+        overflow: hidden !important; 
+        position: relative;
+        background-color: #ffffff;
+    }
+
+    .scrollable-grid-area {
+        flex: 1;
+        overflow-y: auto !important;
+        overflow-x: hidden !important; 
+        padding: 20px;
+    }
+
+    /* FINALIZED BUTTONS (#2563eb) */
+    .myButton {
+        background-color: #2563eb !important;
+        color: #ffffff !important; 
+        border: none !important;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 15px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        transition: background 0.2s;
+    }
+
+    .myButton:hover { background-color: #1d4ed8 !important; }
+
+    .branch { font-size: 13px; font-weight: 600; }
+
+    /* Chart Container Styling */
+    #pieChart1 {
+        background-color: #ffffff !important;
+        border-radius: 8px;
+        border: 1px solid #e3e8ee;
+        margin-top: 20px;
+    }
+</style>
 <body onload="getBranch();disitems();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
@@ -204,43 +330,56 @@ function disitems()
 <tr>
 <td width="20%">
     <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-	
-	<!--  <tr><td colspan="2">&nbsp;</td></tr> --> 
- <tr><td colspan="2">&nbsp;</td></tr> 
-<tr><td align="right"><label class="branch">Fleet</label></td><td><input type="text" name="fleetno" id="fleetno" style="height:20px;width:60%;" readonly="readonly" value='<s:property value="fleetno"/>' ></td></tr>
-<tr> <td  align="right"><label class="branch">RentType</label></td><td align="left">
-<select name="rentaltype" id="rentaltype" style="width:60%;" value='<s:property value="rentaltype"/>' onchange="funsamechk()">
-  <option value="" selected>--Select--</option>
-  <option value="R" selected>Rental</option>
-		     <option value="L">Lease</option>
-		     <option value="LM">Limousine</option>
-		     <option value="A">All</option>
-</select></td></tr> 
- <tr><td colspan="2" ></td></tr> 
-<tr><td colspan="2" align="center"><input type="button" name="btnupdate" id="btnupdate" value="Update" class="myButton" onclick="funupdate();"></td></tr>
- <tr><td colspan="2" ></td></tr> 
- <tr><td colspan="2" ></td></tr> 
-  <tr><td colspan="2" ></td></tr> 
-   <tr><td colspan="2" ></td></tr> 
-<tr><td colspan="2" align="center"><input type="button" name="btnvehicle" id="btnvehicle" value="Attach" class="myButton" onclick="funClientAttach();">
-<input type="button" name="btnmove" id="btnmove" value="Movement" class="myButton" onClick="getVehicleMov();"></td></tr>
+	<div class="master-container">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
- <tr><td colspan="2" ></td></tr>  <tr><td colspan="2" ></td></tr>  <tr><td colspan="2" ></td></tr>  <tr><td colspan="2" ></td></tr> 
- <tr><td colspan="2" ></td></tr> 
- <tr><td colspan="2" ></td></tr> 
- <tr><td colspan="2" ></td></tr> 
- <tr><td colspan="2" ></td></tr> 
-  <tr><td colspan="2" ></td></tr> 
-   <tr><td colspan="2" ></td></tr> 
-    <tr><td colspan="2" ></td></tr> 
-     <tr><td colspan="2" ></td></tr> 
-     
-<tr>
-	<td colspan="2"><div id='pieChart1' style="width: 100% ; align:right; height: 170px;"></div></td>
-	</tr>
-	</table>
+        <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Fleet</td>
+                        <td>
+                            <input type="text" name="fleetno" id="fleetno" readonly="readonly" value='<s:property value="fleetno"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">RentType</td>
+                        <td>
+                            <select name="rentaltype" id="rentaltype" onchange="funsamechk()">
+                                <option value="">--Select--</option>
+                                <option value="R" selected>Rental</option>
+                                <option value="L">Lease</option>
+                                <option value="LM">Limousine</option>
+                                <option value="A">All</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="padding: 10px 5px;">
+                <input type="button" name="btnupdate" id="btnupdate" value="Update" class="myButton" onclick="funupdate();">
+                
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+                    <input type="button" name="btnvehicle" id="btnvehicle" value="Attach" class="myButton" onclick="funClientAttach();" style="flex: 1;">
+                    <input type="button" name="btnmove" id="btnmove" value="Movement" class="myButton" onClick="getVehicleMov();" style="flex: 1;">
+                </div>
+            </div>
+
+            <div id='pieChart1' style="width: 100%; height: 170px;"></div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            <div id="mainGridDiv">
+                </div>
+        </div>
+    </div>
+</div>
 	</fieldset>
 	
 <input type="hidden" name="brach" id="brach" style="height:20px;width:60%;" readonly="readonly" value='<s:property value="brach"/>' >
