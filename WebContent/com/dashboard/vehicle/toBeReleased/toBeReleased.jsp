@@ -1,7 +1,6 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
  <% String contextPath=request.getContextPath();%> 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,8 +106,78 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+/* ================= RELEASE DASHBOARD – FILTER SIDEBAR ================= */
+
+.release-filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.release-filter-table .label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 13px;
+    color: #4e5e71;
+    font-weight: 600;
+    width: 90px;
+}
+
+/* Inputs & selects */
+.release-filter-table input[type="text"],
+.release-filter-table select {
+    width: 100%;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+/* jqx date/time containers */
+.release-filter-table div[id^="dashrelease"] {
+    width: 100%;
+}
+
+/* Readonly / disabled look */
+.release-filter-table input[readonly],
+.release-filter-table input:disabled {
+    background-color: #f3f6f9;
+    color: #555;
+}
+
+/* Warning text */
+#dashfleetwarning {
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Action buttons */
+.release-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.release-actions .btn-submit {
+    width: auto;
+    min-width: 120px;
+    padding: 10px 16px;
+}
+
+/* Vehicle / Attach buttons */
+.release-secondary-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 5px;
+}
 </style>
-  
+ 
 <script type="text/javascript">
 $(document).ready(function () {
 	
@@ -373,84 +442,62 @@ function changeClientAttachContent(url) {
 <body onload="getBranch();setValues();">
 <form id="frmReleaseDashBoard" action="saveReleaseDashBoard">
 
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
 
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL (20%) ================= -->
+<!-- ================= LEFT SIDEBAR ================= -->
 <td width="20%">
-
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- ===== FIXED HEADING ===== -->
+    <!-- Fixed Heading -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- ===== SCROLLABLE FILTER CONTENT ===== -->
+    <!-- Scrollable Filters -->
     <div class="sidebar-scroll-content">
         <div class="filter-card">
 
-            <table class="filter-table">
+            <table class="release-filter-table">
 
                 <tr>
                     <td class="label-cell">Fleet No</td>
-                    <td>
-                        <input type="text"
-                               name="dashreleasefleet"
-                               id="dashreleasefleet"
-                               value='<s:property value="dashreleasefleet"/>'>
-                    </td>
+                    <td><input type="text" id="dashreleasefleet" name="dashreleasefleet"
+                               value='<s:property value="dashreleasefleet"/>'></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Branch</td>
                     <td>
-                        <select id="dashcmbrlsbranch"
-                                name="dashcmbrlsbranch"
-                                onchange="getLocation(this.value);">
-                            <option value="">--Select--</option>
-                        </select>
-                        <input type="hidden"
-                               id="dashhidcmbrlsbranch"
-                               name="dashhidcmbrlsbranch"
-                               value='<s:property value="dashhidcmbrlsbranch"/>'>
+                        <select id="dashcmbrlsbranch" name="dashcmbrlsbranch"
+                                onchange="getLocation(this.value);"></select>
+                        <input type="hidden" id="dashhidcmbrlsbranch" name="dashhidcmbrlsbranch">
                     </td>
                 </tr>
-
-                <input type="hidden" name="hidclient" id="hidclient">
 
                 <tr>
                     <td class="label-cell">Location</td>
                     <td>
-                        <select id="dashcmbrlsloc" name="dashcmbrlsloc">
-                            <option value="">--Select--</option>
-                        </select>
-                        <input type="hidden"
-                               id="dashhidcmbrlsloc"
-                               name="dashhidcmbrlsloc"
-                               value='<s:property value="dashhidcmbrlsloc"/>'>
+                        <select id="dashcmbrlsloc" name="dashcmbrlsloc"></select>
+                        <input type="hidden" id="dashhidcmbrlsloc" name="dashhidcmbrlsloc">
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="label-cell">Rental Status</td>
+                    <td class="label-cell">Rental</td>
                     <td>
                         <select id="dashcmbrentalstatus" name="dashcmbrentalstatus">
-                            <option value="R" selected>Rental</option>
+                            <option value="R">Rental</option>
                             <option value="L">Lease</option>
                             <option value="LM">Limousine</option>
                             <option value="A">All</option>
                         </select>
-                        <input type="hidden"
-                               id="dashhidcmbrentalstatus"
-                               name="dashhidcmbrentalstatus"
-                               value='<s:property value="dashhidcmbrentalstatus"/>'>
                     </td>
                 </tr>
 
@@ -466,91 +513,70 @@ function changeClientAttachContent(url) {
 
                 <tr>
                     <td class="label-cell">KM</td>
-                    <td>
-                        <input type="text"
-                               id="dashreleasekm"
-                               name="dashreleasekm"
-                               readonly
-                               tabindex="-1"
-                               value='<s:property value="dashreleasekm"/>'>
-                    </td>
+                    <td><input type="text" id="dashreleasekm" readonly></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Fuel</td>
                     <td>
-                        <select id="dashreleasefuel" name="dashreleasefuel">
-                            <option value="0.000" selected>Level 0/8</option>
+                        <select id="dashreleasefuel">
+                            <option value="">--Select--</option>
+                            <option value="0">Level 0/8</option>
                             <option value="0.125">Level 1/8</option>
-                            <option value="0.250">Level 2/8</option>
+                            <option value="0.25">Level 2/8</option>
                             <option value="0.375">Level 3/8</option>
-                            <option value="0.500">Level 4/8</option>
+                            <option value="0.5">Level 4/8</option>
                             <option value="0.625">Level 5/8</option>
-                            <option value="0.750">Level 6/8</option>
+                            <option value="0.75">Level 6/8</option>
                             <option value="0.875">Level 7/8</option>
-                            <option value="1.000">Level 8/8</option>
+                            <option value="1">Level 8/8</option>
                         </select>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Op. Status</td>
-                    <td>
-                        <input type="text"
-                               id="dashopstatus"
-                               name="dashopstatus"
-                               value="IN"
-                               disabled
-                               tabindex="-1">
-                    </td>
+                    <td><input type="text" value="IN" disabled></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Ast Status</td>
-                    <td>
-                        <input type="text"
-                               id="dashaststatus"
-                               name="dashaststatus"
-                               readonly
-                               tabindex="-1"
-                               value='<s:property value="dashaststatus"/>'>
-                    </td>
+                    <td><input type="text" id="dashaststatus" readonly></td>
                 </tr>
 
                 <tr>
-                    <td colspan="2" style="text-align:center;color:red;font:10px Tahoma;font-weight:bold;">
-                        All fields are Mandatory
+                    <td colspan="2">
+                        <div id="dashfleetwarning">All fields are Mandatory</div>
                     </td>
                 </tr>
 
             </table>
+
+            <div class="release-secondary-actions">
+                <button type="button" class="btn-submit" id="btnvehicle" onclick="getVehicle()">Vehicle</button>
+                <button type="button" class="btn-submit" id="btnattach" onclick="getAttach()">Attach</button>
+            </div>
+
+            <div class="release-actions">
+                <button type="button" class="btn-submit" id="dashbtnrelease"
+                        onclick="funReleaseClick()">Release</button>
+            </div>
+
         </div>
-
-        <!-- ===== ACTION BUTTONS ===== -->
-        <button class="btn-submit" type="button" onclick="getVehicle();">Vehicle</button>
-        <button class="btn-submit" type="button" onclick="getAttach();">Attach</button>
-        <button class="btn-submit" type="button" onclick="funReleaseClick();">Release</button>
-
     </div>
-</div>
-</div>
 
+</div>
+</div>
 </td>
 
-<!-- ================= RIGHT PANEL (80%) ================= -->
+<!-- ================= RIGHT GRID ================= -->
 <td width="80%">
-    <table width="100%">
-        <tr>
-            <td>
-                <div id="releasediv">
-                    <jsp:include page="toBeReleasedGrid.jsp"></jsp:include>
-                </div>
+    <div id="releasediv">
+        <jsp:include page="toBeReleasedGrid.jsp"></jsp:include>
+    </div>
 
-                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-                <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
-            </td>
-        </tr>
-    </table>
+    <input type="hidden" id="mode" name="mode">
+    <input type="hidden" id="docno" name="docno">
 </td>
 
 </tr>
@@ -564,5 +590,4 @@ function changeClientAttachContent(url) {
 </div>
 </form>
 </body>
-
 </html>
