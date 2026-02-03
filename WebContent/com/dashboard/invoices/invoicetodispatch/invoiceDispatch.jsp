@@ -12,41 +12,103 @@
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 <style type="text/css">
-.myButtons {
-  display: inline-block;
-  margin-right:4px;
-  margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
 }
-.myButtons:hover {
-  color: #fff;
-  background-color: #31b0d5;
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
 }
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -460,115 +522,201 @@ function funSendingEmail() {
 
 </head>
 <body onload="getBranch();">
-	<div id="mainBG" class="homeContent" data-type="background"> 
-		<div class='hidden-scrollbar'>
-			<table width="100%" >
-				<tr>
-					<td width="20%" >
-    					<fieldset style="background: #ECF8E0;">
-							<table width="100%"  >
-								<jsp:include page="../../heading.jsp"></jsp:include>
-    							<tr>
-	 								<td align="right"><label class="branch">From</label></td>
-     								<td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-     							</tr> 
-								<tr>
-									<td align="right"><label class="branch">To</label></td>
-    								<td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<fieldset><legend>Mail Settings</legend>
-											<div style="text-align:center;"><input type="radio" name="chkmailtype" id="chkclientwise" value="CRM" checked><label class="branch" for="chkclientwise">Client Wise</label>
-											<input type="radio" name="chkmailtype" id="chkagmtwise" value="AGMT"><label class="branch" for="chkagmtwise">Agreement Wise</label></div>
-											<div style="text-align:center;"><input type="radio" name="chkmailtype" id="chksaperate" value="SEP"><label class="branch" for="chksaperate">Saperate</label></div>
-										</fieldset>
-									</td>
-								</tr>
-								<tr>
-									<td align="right"><label class="branch">Client</label></td>
-									<td align="left">
-										<input type="text" id="txtclientname" name="txtclientname" style="width:100%;height:20px;" readonly="readonly" placeholder="Press F3 to Search"  onkeydown="getClient(event);" value='<s:property value="txtclientname"/>'/>
-    									<input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/>
-    								</td>
-    							</tr>
-    							<tr><td colspan="2"><textarea id="clienthtml" style="width:100%;height:70px;font:10px Tahoma !important;"></textarea></td></tr>
-    							<tr>
-    								<td align="right"><label class="branch">Category</label></td>
-									<td align="left">
-										<select id="cmbcategory" name="cmbcategory">
-											<option value="">--Select--</option>
-										</select>
-									</td>
-								</tr>
-    							<tr>
-    								<td align="right"><label class="branch">Inv Type</label></td>
-									<td align="left">
-										<select id="cmbinvtype" name="cmbinvtype">
-											<option value="">--Select--</option>
-											<option value="rental">Rental</option>
-											<option value="lease">Lease</option>
-											<option value="traffic">Traffic</option>
-											<option value="salik">Salik</option>
-											<option value="damage">Damage</option>
-											<option value="extrasrvc">Extra Services</option>
-											<option value="extrakm">Extra KM</option>
-										</select>
-									</td>
-								</tr>
-    							<tr>
-    								<td align="right"><label class="branch">Status</label></td>
-     								<td align="left">
-     									<select id="clstatuss" name="clstatuss"  value='<s:property value="clstatuss"/>'>
-     										<option value="">--Select--</option>
-     										<option value=0>Open</option>
-     										<option value=1>Close</option>
-     									</select>
-     								</td>
-     							</tr>
-								<tr>
-									<td align="right"><label class="branch">Agmt Type</label></td>
-     								<td align="left">
-     									<select id="rentaltype" name="rentaltype" onchange="clearagno()" value='<s:property value="rentaltype"/>'>
-     										<option value="">--Select--</option>
-     										<option value="RAG">Rental</option>
-     										<option value="LAG">Lease</option>
-     									</select>
-     								</td>
-     							</tr>
-								<tr>
-									<td align="right"><label class="branch">Agreement</label></td>
-									<td align="left"><input type="text" id="agmtvocno" name="agmtvocno" style="width:100%;height:20px;" readonly="readonly" onfocus="chktype()" placeholder="Press F3 to Search"  onkeydown="getAgreement(event);" value='<s:property value="agmtvocno"/>'/></td>
-								</tr>
-								<tr>
-									<td colspan="2" align="center">
-										<input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearData();">
-										<input type="button" class="myButtons" name="print" id="print"  value="Print" onclick="funPrintData();">
-										<input type="button" class="myButtons" name="dispatch" id="dispatch"  value="Dispatch" onclick="funDispatchData();">
-										<!-- 	<button class="myButton" type="button" id="btnSalikInvoicePrint" name="btnSalikInvoicePrint" onclick="funSalikInvoicePrint();">Print</button> -->
-									</td>
-								</tr> 
-							</table>
-						</fieldset>
-					</td>
-					<td width="80%">
-						<table width="100%">
-							<tr>
-			 					<td><div id="notInvoicedDiv"><jsp:include page="rentalInvoiceGrid.jsp"></jsp:include></div></td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="clientDetailsWindow">
-			<div></div><div></div>
-		</div>
-		<div id="agreementDetailsWindow">
-			<div></div><div></div>
-		</div>
-		<input type="hidden" name="printdocno" id="printdocno">
-		<input type="hidden" id="txtagreementno" name="txtagreementno" style="width:100%;height:20px;" readonly="readonly" onfocus="chktype()" placeholder="Press F3 to Search" ondblclick="funSearchdblclick();" onkeydown="getAgreement(event);" value='<s:property value="txtagreementno"/>'/>
-	</div> 
+
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+
+<table width="100%">
+<tr>
+
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="20%">
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <!-- Fixed Heading -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
+
+    <!-- Scrollable Filters -->
+    <div class="sidebar-scroll-content">
+
+        <!-- Date -->
+        <div class="filter-card">
+            <table class="dispatch-filter-table">
+                <tr>
+                    <td class="label-cell">From</td>
+                    <td><div id="fromdate"></div></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">To</td>
+                    <td><div id="todate"></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Mail Settings -->
+        <div class="filter-card">
+            <div class="mail-type-group">
+                <div class="mail-type-row">
+                    <input type="radio" name="chkmailtype" id="chkclientwise" value="CRM" checked>
+                    <label class="branch" for="chkclientwise">Client Wise</label>
+
+                    <input type="radio" name="chkmailtype" id="chkagmtwise" value="AGMT">
+                    <label class="branch" for="chkagmtwise">Agreement Wise</label>
+                </div>
+
+                <div class="mail-type-row">
+                    <input type="radio" name="chkmailtype" id="chksaperate" value="SEP">
+                    <label class="branch" for="chksaperate">Separate</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-card">
+            <table class="dispatch-filter-table">
+
+                <tr>
+                    <td class="label-cell">Client</td>
+                    <td>
+                        <input type="text"
+                               id="txtclientname"
+                               name="txtclientname"
+                               readonly
+                               placeholder="Press F3 to Search"
+                               onkeydown="getClient(event);"
+                               value='<s:property value="txtclientname"/>'>
+                        <input type="hidden"
+                               id="txtcldocno"
+                               name="txtcldocno"
+                               value='<s:property value="txtcldocno"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <textarea id="clienthtml"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Category</td>
+                    <td>
+                        <select id="cmbcategory" name="cmbcategory">
+                            <option value="">--Select--</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Inv Type</td>
+                    <td>
+                        <select id="cmbinvtype" name="cmbinvtype">
+                            <option value="">--Select--</option>
+                            <option value="rental">Rental</option>
+                            <option value="lease">Lease</option>
+                            <option value="traffic">Traffic</option>
+                            <option value="salik">Salik</option>
+                            <option value="damage">Damage</option>
+                            <option value="extrasrvc">Extra Services</option>
+                            <option value="extrakm">Extra KM</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Status</td>
+                    <td>
+                        <select id="clstatuss" name="clstatuss">
+                            <option value="">--Select--</option>
+                            <option value="0">Open</option>
+                            <option value="1">Close</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Agmt Type</td>
+                    <td>
+                        <select id="rentaltype"
+                                name="rentaltype"
+                                onchange="clearagno();">
+                            <option value="">--Select--</option>
+                            <option value="RAG">Rental</option>
+                            <option value="LAG">Lease</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Agreement</td>
+                    <td>
+                        <input type="text"
+                               id="agmtvocno"
+                               name="agmtvocno"
+                               readonly
+                               placeholder="Press F3 to Search"
+                               onkeydown="getAgreement(event);"
+                               value='<s:property value="agmtvocno"/>'>
+                    </td>
+                </tr>
+
+            </table>
+
+            <!-- Actions -->
+            <div class="dispatch-actions">
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funClearData();">
+                    Clear
+                </button>
+
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funPrintData();">
+                    Print
+                </button>
+
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funDispatchData();">
+                    Dispatch
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden -->
+        <input type="hidden" id="printdocno" name="printdocno">
+        <input type="hidden"
+               id="txtagreementno"
+               name="txtagreementno"
+               value='<s:property value="txtagreementno"/>'>
+
+    </div>
+</div>
+</div>
+</td>
+
+<!-- ================= RIGHT GRID ================= -->
+<td width="80%">
+    <div id="notInvoicedDiv">
+        <jsp:include page="rentalInvoiceGrid.jsp"></jsp:include>
+    </div>
+</td>
+
+</tr>
+</table>
+
+</div>
+
+<!-- POPUPS -->
+<div id="clientDetailsWindow"><div></div><div></div></div>
+<div id="agreementDetailsWindow"><div></div><div></div></div>
+
+</div>
 </body>
 </html>

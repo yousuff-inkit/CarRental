@@ -1,16 +1,111 @@
-
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+ 
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
@@ -201,64 +296,107 @@ function disitems()
 </script>
 </head>
 <body onload="getBranch();getinfo();disitems();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
+
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+
+<table width="100%">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table width="100%" >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 
-	 
-	 <tr><td align="right"><label class="branch">Fleet NO</label></td>
-	 <td align="left"><input type="text" id="fleetno" style="height:20px;width:70%;" name="fleetno"  value='<s:property value="fleetno"/>' readonly="readonly"> </td></tr>
-	<tr> <td  align="right"><label class="branch">Process</label></td><td align="left">
- <select name="cmbinfo" id="cmbinfo" style="width:70%;" name="cmbinfo"  value='<s:property value="cmbinfo"/>' onchange="funchangeinfo()">
-       
 
-</select></td></tr>
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="20%">
+<div class="master-container">
+<div class="sidebar-filters">
 
-	<tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='dateDue' name='dateDue' value='<s:property value="dateDue"/>'></div>
-                   </td></tr>
-	 <tr><td align="right"><label class="branch">Remarks </label></td><td align="left"><input type="text" id="remarks" style="height:20px;width:88%;" name="remarks"  value='<s:property value="remarks"/>'> </td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="UPDATE" onclick="funupdate()"></td> </tr>
-	
-	 <tr><td colspan="2">&nbsp;</td></tr>  
- 	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>	
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>	
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr><td colspan="2">&nbsp;</td></tr>
- </table>
-   <input type="hidden" name="branchids" id="branchids" style="height:20px;width:70%;" value='<s:property value="branchids"/>' >
- <input type="hidden" name="rentaldoc" id="rentaldoc" style="height:20px;width:70%;" value='<s:property value="rentaldoc"/>' >
-	 
-	    <input type="hidden" name="grgid" id="grgid" style="height:20px;width:70%;" value='<s:property value="grgid"/>' >
- <input type="hidden" name="fleetno" id="fleetno" style="height:20px;width:70%;" value='<s:property value="fleetno"/>' >
-	 
-   </fieldset>
+    <!-- Fixed Heading -->
+    <div class="sidebar-fixed-top">
+        <div class="filter-card">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+    </div>
 
+    <!-- Scrollable Content -->
+    <div class="sidebar-scroll-content">
+
+        <!-- Process Info -->
+        <div class="filter-card">
+            <table class="process-filter-table">
+
+                <tr>
+                    <td class="label-cell">Fleet No</td>
+                    <td>
+                        <input type="text" id="fleetno" name="fleetno" readonly
+                               value='<s:property value="fleetno"/>'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Process</td>
+                    <td>
+                        <select id="cmbinfo" name="cmbinfo"
+                                onchange="funchangeinfo()">
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Date</td>
+                    <td>
+                        <div id="dateDue"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label-cell">Remarks</td>
+                    <td>
+                        <input type="text" id="remarks" name="remarks"
+                               value='<s:property value="remarks"/>'>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="process-actions">
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funupdate();">
+                    Update
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden Fields -->
+        <input type="hidden" id="branchids" name="branchids"
+               value='<s:property value="branchids"/>'>
+        <input type="hidden" id="rentaldoc" name="rentaldoc"
+               value='<s:property value="rentaldoc"/>'>
+        <input type="hidden" id="grgid" name="grgid"
+               value='<s:property value="grgid"/>'>
+        <input type="hidden" id="fleetno" name="fleetno"
+               value='<s:property value="fleetno"/>'>
+
+    </div>
+</div>
+</div>
 </td>
+
+<!-- ================= RIGHT CONTENT ================= -->
 <td width="80%">
-	<table width="100%">
-		<tr>
-			  <td><div id="duedatediv"><jsp:include page="mainGrid.jsp"></jsp:include></div><br>
-			  </td> 
-		</tr>
-		
-		<tr>
-		<td colspan="2" align="left" ><div id="detaildiv"><jsp:include page="detailgrid.jsp"></jsp:include></div></td></tr>
-	</table>
+    <div id="duedatediv">
+        <jsp:include page="mainGrid.jsp"></jsp:include>
+    </div>
+
+    <br>
+
+    <div id="detaildiv">
+        <jsp:include page="detailgrid.jsp"></jsp:include>
+    </div>
+</td>
+
 </tr>
 </table>
+
 </div>
 </div>
 </body>
+
