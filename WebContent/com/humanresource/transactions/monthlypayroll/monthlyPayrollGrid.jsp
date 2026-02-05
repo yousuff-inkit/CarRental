@@ -5,6 +5,7 @@
 <% String mode = request.getParameter("mode")==null?"view":request.getParameter("mode");
    String docNo = request.getParameter("docno")==null?"0":request.getParameter("docno");
    String date = request.getParameter("date")==null?"0":request.getParameter("date");
+   System.out.println("DEBUG: Grid received date parameter = [" + date + "]");
    String category = request.getParameter("category")==null?"0":request.getParameter("category");
    String empId = request.getParameter("empid")==null?"0":request.getParameter("empid");
    String check = request.getParameter("check")==null?"0":request.getParameter("check");
@@ -364,7 +365,7 @@
             $("#monthlyPayrollGridID").jqxGrid(
             {
             	width: '100%',
-                height: 440,
+                height: 580,
                 source: dataAdapter,
                 editable: true,
                 selectionmode: 'singlecell',
@@ -384,8 +385,8 @@
                                   return "<center><div style='margin:4px;'>" + (value + 1) + "</div></center>";
                               }    
 							},
-							{ text: 'Emp. ID', pinned: true, datafield: 'employeeid', editable: false, cellclassname: cellclassname, width: '7%' },
-							{ text: 'Emp. Name', pinned: true, datafield: 'employeename', editable: false, cellclassname: cellclassname, width: '17%' },
+							{ text: 'Emp. ID', pinned: true, datafield: 'employeeid', editable: false, cellclassname: cellclassname, width: '5%' },
+							{ text: 'Emp. Name', pinned: true, datafield: 'employeename', editable: false, cellclassname: cellclassname, width: '12%' },
 							{ text: 'Date', pinned: true, datafield: 'dates', cellsformat: 'dd.MM.yyyy', editable: false, cellclassname: cellclassname, width: '6%' },
 							{ text: 'Total Days', pinned: true, datafield: 'totaldays', cellsformat: 'd2', width: '6%', editable: false, cellclassname: cellclassname, cellsalign: 'center', align: 'center' },
 							{ text: ' '+document.getElementById("txtleavetype1").value, pinned: true, datafield: 'leave1', width: '3%', editable: false, cellclassname: cellclassname, cellsalign: 'center', align: 'center' },	
