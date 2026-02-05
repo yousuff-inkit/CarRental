@@ -10,207 +10,132 @@
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script> 
 <style type="text/css">
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
+/* ===== MASTER LAYOUT ===== */
+body, html { 
+    height: 100%; 
+    margin: 0; 
+    font-family: 'Segoe UI', 'Roboto', sans-serif; 
+    background-color: #f4f7f9; 
+    overflow: hidden; 
 }
 
-.myProcessCalcButton {
-	 background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #E0ECF8), color-stop(1, #81BEF7));
-	 background:-moz-linear-gradient(top, #E0ECF8 5%, #81BEF7 100%);
-	 background:-webkit-linear-gradient(top, #E0ECF8 5%, #81BEF7 100%);
-	 background:-o-linear-gradient(top, #E0ECF8 5%, #81BEF7 100%);
-	 background:-ms-linear-gradient(top, #E0ECF8 5%, #81BEF7 100%);
-	 background:linear-gradient(to bottom, #E0ECF8 5%, #81BEF7 100%);
-	 filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0ECF8', endColorstr='#81BEF7',GradientType=0);
-	 background-color:#E0ECF8;
-	 -moz-border-radius:4px;
-	 -webkit-border-radius:4px;
-	 border-radius:4px;
-	 display:inline-block;
-	 cursor:pointer;
-	 font-family:Verdana;
-	 font-size:10px;
-	 padding:4px 8px;
-	 text-decoration:none;
-}
-.myProcessCalcButton:hover {
-	 background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #81BEF7), color-stop(1, #E0ECF8));
-	 background:-moz-linear-gradient(top, #81BEF7 5%, #E0ECF8 100%);
-	 background:-webkit-linear-gradient(top, #81BEF7 5%, #E0ECF8 100%);
-	 background:-o-linear-gradient(top, #81BEF7 5%, #E0ECF8 100%);
-	 background:-ms-linear-gradient(top, #81BEF7 5%, #E0ECF8 100%);
-	 background:linear-gradient(to bottom, #81BEF7 5%, #E0ECF8 100%);
-	 filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#81BEF7', endColorstr='#E0ECF8',GradientType=0);
-	 background-color:#81BEF7;
-}
-.myProcessCalcButton:active {
-	 position:relative;
-	 top:1px;
+.master-container { 
+    display: flex; 
+    height: calc(100vh - 100px); 
+    width: 100%; 
 }
 
-.mySaveButton {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811));
-	background:-moz-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:-webkit-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:-o-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:-ms-linear-gradient(top, #77d42a 5%, #5cb811 100%);
-	background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811',GradientType=0);
-	background-color:#77d42a;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #268a16;
-	display:inline-block;
-	cursor:pointer;
-	font-family:Verdana;
-	font-size:10px;
-	font-weight:bold;
-	padding:4px 8px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #aade7c;
-}
-.mySaveButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
-	background:-moz-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:-webkit-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:-o-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:-ms-linear-gradient(top, #5cb811 5%, #77d42a 100%);
-	background:linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a',GradientType=0);
-	background-color:#5cb811;
-}
-.mySaveButton:active {
-	position:relative;
-	top:1px;
+/* Sidebar Styling */
+.sidebar { 
+    width: 340px; 
+    height:100%;
+    background: #ffffff; 
+    border-right: 1px solid #cfe2ff; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
 }
 
-.myConfirmButton {
-	-moz-box-shadow: 0px 1px 0px 0px #fff6af;
-	-webkit-box-shadow: 0px 1px 0px 0px #fff6af;
-	box-shadow: 0px 1px 0px 0px #fff6af;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
-	background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
-	background-color:#ffec64;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #ffaa22;
-	display:inline-block;
-	cursor:pointer;
-	font-family:Verdana;
-	font-size:10px;
-	font-weight:bold;
-	padding:4px 8px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffee66;
-}
-.myConfirmButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
-	background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-	background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-	background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-	background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
-	background-color:#ffab23;
-}
-.myConfirmButton:active {
-	position:relative;
-	top:1px;
+
+
+.sidebar-scroll { 
+    flex: 1; 
+    overflow-y: auto; 
+    padding: 15px;
+    padding-bottom: 50px; 
 }
 
-.bounce {
-	color: #f35626;
-    background-image: -webkit-linear-gradient(92deg,#f35626,#feab3a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear,bounce 2s infinite; 
+/* Card / Fieldset Replacements */
+.filter-card {
+    background: #f8FAFC;
+    border: 1px solid #cfe2ff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
-@-webkit-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    -moz-transform: translateX(0);
-    -ms-transform: translateX(0);
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-  40% {
-    -moz-transform: translateX(-30px);
-    -ms-transform: translateX(-30px);
-    -webkit-transform: translateX(-30px);
-    transform: translateX(-30px);
-  }
-  60% {
-    -moz-transform: translateX(-15px);
-    -ms-transform: translateX(-15px);
-    -webkit-transform: translateX(-15px);
-    transform: translateX(-15px);
-  }
-} 
-
-@media (min-width: 15px) {
-  .mega {
+.card-title {
     font-size: 15px;
-  }
+    font-weight: 700;
+    color: #1f4fd8;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-@font-face {
-  font-family: 'Roboto',comic sans ms,Tahoma;
-  font-style: normal;
-  font-weight: 100;
-  unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+.form-group { margin-bottom: 10px; }
+.form-group label { 
+    display: block; 
+    font-size: 12px; 
+    font-weight: 700; 
+    color: #333; 
+    margin-bottom: 4px; 
 }
-  
-@-webkit-keyframes hue {
-  from {
-    -webkit-filter: hue-rotate(0deg);
-  }
-
-  to {
-    -webkit-filter: hue-rotate(-360deg);
-  }
+.form-group input[type="text"], .form-group select { 
+    width: 100%; 
+    box-sizing: border-box; 
+    border: 1px solid #cfe2ff;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 14px;
+    height: 30px;
+}
+.form-group-date{
+	display:flex;
+	gap:8px;
+	
 }
 
+.main-content { 
+    flex: 1; 
+    background: #fff; 
+    overflow: auto; 
+    padding: 10px;
+}
+
+.myButtons, .myProcessCalcButton, .mySaveButton, .myConfirmButton {
+    background: #1f4fd8!important;
+    color: #ffffff !important;
+    border: 1px solid #b6d4fe !important;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px !important;
+    min-height: 28px;
+    min-width: 72px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.myButtons:hover, .myProcessCalcButton:hover, .mySaveButton:hover, .myConfirmButton:hover {
+    box-shadow: 0 0 8px #ffffff;
+    border-color: #fff !important;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+#lblcurrentstatus {
+    color: #d32f2f;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+}
+.header{
+	background-color: #ffffff;
+    height: 90px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
+
+.sidebar-scroll::-webkit-scrollbar { width: 5px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: #cfe2ff; border-radius: 10px; }
 </style>
 
 <script type="text/javascript">
@@ -1012,106 +937,120 @@
 		}
 </script>
 
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-</style>
+
 
 </head>
 <body onload="setValues();getEmailConfig();">   
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmMonthlyPayroll" action="saveMonthlyPayroll" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>   
+<div class="header">
+<jsp:include page="../../../../header.jsp"></jsp:include>
+</div>
+<div class="master-container">
+        
+        <div class="sidebar">
+            
+                <label id="lblcurrentstatus" name="lblcurrentstatus">
+                    <s:property value="lblcurrentstatus"/>
+                </label>
 
-<div class='hidden-scrollbar'>
-<table width="99%">
-  <tr>
-    <td width="20%">
-<fieldset style="background-color: #EBDEF0;">
-<table width="99%">
-  <tr><td colspan="2" class="bounce" style="text-align: center;">&nbsp;<b><label id="lblcurrentstatus"  name="lblcurrentstatus"><s:property value="lblcurrentstatus"/></label></b></td></tr>
-  <tr><td colspan="2"><fieldset><legend><b><input type="checkbox" id="chckpayrollprocess" name="chckpayrollprocess" class="chckpayrollprocessprint" onclick="funCheckPayrollProcess();">&nbsp;Process
-       <input type="hidden" id="hidchckpayrollprocess" name="hidchckpayrollprocess" value='<s:property value="hidchckpayrollprocess"/>'/></b></legend>
-	   <table width="100%">
-  <tr>
-    <td width="29%" align="right">Date</td>
-    <td width="71%"><div id="payrollDate" name="payrollDate" value='<s:property value="payrollDate"/>'></div>
-      <input type="hidden" id="hidpayrollDate" name="hidpayrollDate" value='<s:property value="hidpayrollDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Category</td>
-    <td><select id="cmbempcategory" name="cmbempcategory" style="width:80%;" value='<s:property value="cmbempcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempcategory" name="hidcmbempcategory" value='<s:property value="hidcmbempcategory"/>'/></td>
-  </tr>
-  
-  <tr>
-    <td align="right">Employee</td>
-    <td><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
-    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
-  </tr>
-  
-   <tr>
-    <td colspan="2"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:95%;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td>
-  </tr>
-  
- <tr>
-    <td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();">&nbsp;&nbsp;&nbsp;
-    <input type="button" class="myProcessCalcButton" id="btnProcess" name="btnProcess" value="Process & Calc" onclick="funProcessGrid();"></td>
- </tr>
- 
- <tr><td colspan="2">&nbsp;</td></tr>
- <tr>
-    <td colspan="2" align="center"><input type="button" class="mySaveButton" id="btnSavePayRoll" name="btnSavePayRoll" value="Save" onclick="funSaveGrid();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="button" class="myConfirmButton" id="btnConfirmed" name="btnConfirmed" value="Confirm" onclick="funConfirm();">
-	<input type="button" class="myProcessCalcButton" id="btnPayrollprocessPrint" name="btnPayrollprocessPrint" value="Print" onclick="funPayrollprocessPrint();"></td>
- </tr>
- 
- </table>
- </fieldset></td></tr>
- <tr><td colspan="2">&nbsp;</td></tr>
- <tr><td colspan="2"><fieldset><legend><b><input type="checkbox" id="chckpayrollprint" name="chckpayrollprint" class="chckpayrollprocessprint" onclick="funCheckPayrollPrint();">&nbsp;Print
-       <input type="hidden" id="hidchckpayrollprint" name="hidchckpayrollprint" value='<s:property value="hidchckpayrollprint"/>'/></b></legend>
-	   <table width="100%">
-  <tr>
-    <td width="29%" align="right">Date</td>
-    <td width="71%"><div id="payrollPrintDate" name="payrollPrintDate" onchange="payrollprintdatechange();" value='<s:property value="payrollPrintDate"/>'></div>
-      <input type="hidden" id="hidpayrollPrintDate" name="hidpayrollPrintDate" value='<s:property value="hidpayrollPrintDate"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Category</td>
-    <td><select id="cmbempprintcategory" name="cmbempprintcategory" style="width:80%;" value='<s:property value="cmbempprintcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempprintcategory" name="hidcmbempprintcategory" value='<s:property value="hidcmbempprintcategory"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Employee</td>
-    <td><input type="text" id="txtprintemployeeid" name="txtprintemployeeid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtprintemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
-    <input type="hidden" id="txtprintemployeedocno" name="txtprintemployeedocno" value='<s:property value="txtprintemployeedocno"/>'/></td>
-  </tr>
-   <tr>
-    <td colspan="2"><input type="text" id="txtprintemployeename" name="txtprintemployeename" placeholder="Employee Name" style="width:95%;" tabindex="-1" value='<s:property value="txtprintemployeename"/>'/></td>
-  </tr>
-  <tr><td align="center"><input type="checkbox" id="chckpayslip" name="chckpayslip" onclick="funCheckPaySlip();">&nbsp;Pay Slip
-       <input type="hidden" id="hidchckpayslip" name="hidchckpayslip" value='<s:property value="hidchckpayslip"/>'/></td><td>&nbsp;</td></tr>
-  <tr>
-    <td colspan="2" align="center"><input type="button" class="myButtons" name="clearPrint" id="clearPrint"  value="Clear" onclick="funClearPrintInfo();">&nbsp;&nbsp;&nbsp;
-    <input type="button" class="myProcessCalcButton" id="btnView" name="btnView" value="View" onclick="funLoadPrintGrid();payrollprintdatechange();">&nbsp;&nbsp;&nbsp;
-    <input type="button" class="myProcessCalcButton" id="btnPayrollPrint" name="btnPayrollPrint" value="Print" onclick="funPayrollPrint();">&nbsp;&nbsp;&nbsp;
-    <input type="button" class="myProcessCalcButton" id="btnPayrollEmail" name="btnPayrollEmail" value="Email" onclick="funPayrollEmail();"></td>    
-  </tr>
-  </table></fieldset></td></tr>   
-  </table>
-</fieldset>
-    </td>
-    <td width="80%">
-    <div id="payrollDiv"><jsp:include page="monthlyPayrollGrid.jsp"></jsp:include></div>
-    <div id="payrollPrintDiv" hidden="true"><jsp:include page="monthlyPayrollPrintGrid.jsp"></jsp:include></div>
-    </td>
-  </tr>
-</table>
+            <div class="sidebar-scroll">
+                
+                <div class="filter-card">
+                    <span class="card-title">
+                        <input type="checkbox" id="chckpayrollprocess" name="chckpayrollprocess" class="chckpayrollprocessprint" onclick="funCheckPayrollProcess();">
+                        Process Payroll
+                        <input type="hidden" id="hidchckpayrollprocess" name="hidchckpayrollprocess" value='<s:property value="hidchckpayrollprocess"/>'/>
+                    </span>
+
+                    <div class="form-group form-group-date">
+                        <label>Date</label><div id="payrollDate"></div>
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="cmbempcategory" name="cmbempcategory">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" id="hidcmbempcategory" name="hidcmbempcategory" value='<s:property value="hidcmbempcategory"/>'/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Employee</label>
+                        <input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="Press F3 to Search" onkeydown="getEmployeeId(event);"/>
+                        <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" tabindex="-1" readonly/>
+                    </div>
+
+                    <div class="button-row">
+                        <input type="button" class="myButtons" id="clear" value="Clear" onclick="funClearInfo();">
+                        <input type="button" class="myProcessCalcButton" id="btnProcess" value="Process & Calc" onclick="funProcessGrid();">
+                    </div>
+
+                    <div class="button-row" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 15px;">
+                        <input type="button" class="mySaveButton" id="btnSavePayRoll" value="Save" onclick="funSaveGrid();">
+                        <input type="button" class="myConfirmButton" id="btnConfirmed" value="Confirm" onclick="funConfirm();">
+                        <input type="button" class="myProcessCalcButton" id="btnPayrollprocessPrint" value="Print" onclick="funPayrollprocessPrint();">
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <span class="card-title">
+                        <input type="checkbox" id="chckpayrollprint" name="chckpayrollprint" class="chckpayrollprocessprint" onclick="funCheckPayrollPrint();">
+                        Print Payroll
+                        <input type="hidden" id="hidchckpayrollprint" name="hidchckpayrollprint" value='<s:property value="hidchckpayrollprint"/>'/>
+                    </span>
+
+                    <div class="form-group form-group-date">
+                        <label>Date</label> <div id="payrollPrintDate" onchange="payrollprintdatechange();"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="cmbempprintcategory" name="cmbempprintcategory">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Employee</label>
+                        <input type="text" id="txtprintemployeeid" name="txtprintemployeeid" placeholder="Press F3 to Search" onkeydown="getEmployeeId(event);"/>
+                        <input type="hidden" id="txtprintemployeedocno" name="txtprintemployeedocno"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="txtprintemployeename" name="txtprintemployeename" placeholder="Employee Name" tabindex="-1" readonly/>
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="chckpayslip" name="chckpayslip" onclick="funCheckPaySlip();">
+                        <label style="margin:0">Pay Slip</label>
+                        <input type="hidden" id="hidchckpayslip" name="hidchckpayslip" value='<s:property value="hidchckpayslip"/>'/>
+                    </div>
+
+                    <div class="button-row">
+                        <input type="button" class="myButtons" id="clearPrint" value="Clear" onclick="funClearPrintInfo();">
+                        <input type="button" class="myProcessCalcButton" id="btnView" value="View" onclick="funLoadPrintGrid();payrollprintdatechange();">
+                        <input type="button" class="myProcessCalcButton" id="btnPayrollPrint" value="Print" onclick="funPayrollPrint();">
+                        <input type="button" class="myProcessCalcButton" id="btnPayrollEmail" value="Email" onclick="funPayrollEmail();">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="payrollDiv">
+                <jsp:include page="monthlyPayrollGrid.jsp"></jsp:include>
+            </div>
+            <div id="payrollPrintDiv" hidden="true">
+                <jsp:include page="monthlyPayrollPrintGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
@@ -1144,12 +1083,8 @@
 <input type="hidden" id="txtchkgridload" name="txtchkgridload"  value='<s:property value="txtchkgridload"/>'/>
 <input type="hidden" id="txtpayrollalreadyprocessed" name="txtpayrollalreadyprocessed"  value='<s:property value="txtpayrollalreadyprocessed"/>'/>
 <input type="hidden" id="gridlength" name="gridlength"/>
-</div>
 </form>
 
-<div id="employeeDetailsWindow">
-   <div></div>
-</div>
-</div>
+<div id="employeeDetailsWindow"><div></div></div>
 </body>
 </html>
