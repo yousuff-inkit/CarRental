@@ -1,16 +1,111 @@
-
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+/* Tables */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* Inputs */
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Page height fix */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+</style>
+
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
@@ -384,243 +479,164 @@ x.send();
 
 </script>
 </head>
-<style type="text/css">
-    /* Layout & Sidebar Structure */
-    .master-container {
-        display: flex;
-        font-family: 'Segoe UI', Tahoma, sans-serif !important;
-        background-color: #f4f7f9;
-        width: 100%;
-        height: 100vh !important;
-        overflow: hidden !important;
-        color: black !important;
-    }
-
-    .sidebar-filters {
-        width: 350px; 
-        flex: 0 0 350px;
-        background-color: #ffffff;
-        border-right: 1px solid #e1e8ed;
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-        height: 100vh !important;
-    }
-
-    .sidebar-fixed-top {
-        padding: 20px 20px 15px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f4f8;
-        flex-shrink: 0;
-    }
-
-    .sidebar-scroll-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px 20px 25px 20px;
-    }
-
-    /* Cleaned Cards */
-    .filter-card {
-        background-color: #f8fafc !important;
-        border: 1px solid #e3e8ee !important;
-        border-radius: 12px !important;
-        padding: 15px;
-        margin-bottom: 12px;
-    }
-
-    /* Reset legacy styles and force black text */
-    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
-        background-color: transparent !important;
-        background: none !important;
-        color: black !important;
-    }
-
-    .filter-table { 
-        width: 100%; 
-        border-spacing: 0 8px; 
-    }
-
-    .label-cell {
-        text-align: right;
-        padding-right: 10px;
-        font-size: 13px;
-        font-weight: 600;
-        width: 90px;
-    }
-
-    /* Input & Select Styling */
-    input[type="text"], select {
-        width: 100%;
-        border: 1px solid #ccd6e0;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 13px;
-        color: black !important;
-        box-sizing: border-box;
-        background-color: #ffffff !important;
-    }
-
-    /* RHS Visibility */
-    .main-content-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100%;
-        max-width: calc(100vw - 350px);
-        overflow: hidden !important; 
-        position: relative;
-        background-color: #ffffff;
-    }
-
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto !important;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    /* FINALIZED BUTTONS (#2563eb) */
-    .myButtons {
-        background-color: #2563eb !important;
-        color: #ffffff !important; 
-        border: none !important;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 10px 15px;
-        text-align: center;
-        display: block;
-        width: 100%;
-        margin-top: 5px;
-        transition: background 0.2s;
-    }
-
-    .myButtons:hover { 
-        background-color: #1d4ed8 !important; 
-    }
-
-    fieldset {
-        border: 1px solid #ccd6e0 !important;
-        border-radius: 8px !important;
-        padding: 12px !important;
-        margin-top: 10px !important;
-    }
-
-    legend {
-        font-weight: bold !important;
-        padding: 0 5px !important;
-        font-size: 13px !important;
-    }
-
-    .branch { font-size: 13px; font-weight: 600; }
-</style>
 <body onload="getBranch();getrentaltype();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
+
+<table width="100%">
+<tr>
+
+<!-- ================= LEFT SIDEBAR (MASTER UI) ================= -->
+<td width="20%" valign="top">
+
 <div class="master-container">
     <div class="sidebar-filters">
+
+        <!-- Fixed Header -->
         <div class="sidebar-fixed-top">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
 
+        <!-- Scrollable Filters -->
         <div class="sidebar-scroll-content">
+
+            <!-- FILTER CARD -->
             <div class="filter-card">
                 <table class="filter-table">
                     <tr>
                         <td class="label-cell">From</td>
-                        <td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
+                        <td><div id="fromdate" value='<s:property value="fromdate"/>'></div></td>
                     </tr>
                     <tr>
                         <td class="label-cell">To</td>
-                        <td><div id='todate' name='todate' value='<s:property value="todate"/>'></div></td>
+                        <td><div id="todate" value='<s:property value="todate"/>'></div></td>
                     </tr>
                     <tr>
                         <td class="label-cell">Status</td>
                         <td>
-                            <select id="status" name="status" value='<s:property value="status"/>'>
-                                <option value="" selected>All</option>
-                                <option value=0>Open</option>
-                                <option value=1>Close</option>
+                            <select id="status" name="status">
+                                <option value="">All</option>
+                                <option value="0">Open</option>
+                                <option value="1">Close</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td class="label-cell">Client</td>
-                        <td><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' " value='<s:property value="clientname"/>'></td>
+                        <td>
+                            <input type="text" id="clientname" name="clientname"
+                                   readonly placeholder="Press F3 TO Search"
+                                   onkeydown="getclinfo(event);"
+                                   value='<s:property value="clientname"/>'>
+                        </td>
                     </tr>
                     <tr>
                         <td class="label-cell">Category</td>
-                        <td><input type="text" name="catname" id="catname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclcat(event);" onclick="this.placeholder='' " value='<s:property value="catname"/>'></td>
+                        <td>
+                            <input type="text" id="catname" name="catname"
+                                   readonly placeholder="Press F3 TO Search"
+                                   onkeydown="getclcat(event);"
+                                   value='<s:property value="catname"/>'>
+                        </td>
                     </tr>
                     <tr>
                         <td class="label-cell">Fleet</td>
-                        <td><input type="text" name="fleet" id="fleet" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getfleet(event)" onclick="this.placeholder='' " value='<s:property value="fleet"/>' ></td>
+                        <td>
+                            <input type="text" id="fleet" name="fleet"
+                                   readonly placeholder="Press F3 TO Search"
+                                   onkeydown="getfleet(event);"
+                                   value='<s:property value="fleet"/>'>
+                        </td>
                     </tr>
                     <tr>
                         <td class="label-cell">Salesman</td>
-                        <td><input type="text" name="salesman" id="salesman" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getsalesman(event)" onclick="this.placeholder='' " value='<s:property value="salesman"/>' ></td>
+                        <td>
+                            <input type="text" id="salesman" name="salesman"
+                                   readonly placeholder="Press F3 TO Search"
+                                   onkeydown="getsalesman(event);"
+                                   value='<s:property value="salesman"/>'>
+                        </td>
                     </tr>
                     <tr>
                         <td class="label-cell">Type</td>
-                        <td><select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'></select></td>
+                        <td>
+                            <select id="rentaltype" name="rentaltype"></select>
+                        </td>
                     </tr>
                 </table>
-                <input type="button" class="myButtons" name="clear" id="clear" value="Clear" onclick="funcleardata()">
+
+                <button type="button"
+                        class="btn-submit"
+                        onclick="funcleardata();">
+                    Clear
+                </button>
             </div>
 
+            <!-- SALESMAN CHANGE -->
             <div class="filter-card">
                 <fieldset>
                     <legend>Salesman change</legend>
-                    <table class="filter-table" id="salesmanchange">
+                    <table class="filter-table">
                         <tr>
                             <td class="label-cell">Salesman</td>
-                            <td><input type="text" name="salesmann" id="salesmann" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getsalesmann(event)" onclick="this.placeholder='' " value='<s:property value="salesman"/>' ></td>
+                            <td>
+                                <input type="text" id="salesmann" name="salesmann"
+                                       readonly placeholder="Press F3 TO Search"
+                                       onkeydown="getsalesmann(event);"
+                                       value='<s:property value="salesman"/>'>
+                            </td>
                         </tr>
                     </table>
-                    <input type="button" class="myButtons" name="update" id="update" value="Update" onclick="funupdate()">
+
+                    <button type="button"
+                            class="btn-submit"
+                            onclick="funupdate();">
+                        Update
+                    </button>
                 </fieldset>
             </div>
 
-            <div id='paychaaaaa' style="width: 100%; height: 100px; border: 1px solid #e1e8ed; border-radius: 8px; margin-top: 10px;"></div>
+            <div id="paychaaaaa" style="height:100px;"></div>
 
-            <input type="hidden" name="ra_no" id="ra_no" value='<s:property value="ra_no"/>'>
-            <input type="hidden" name="salesman_txt" id="salesman_txt" value='<s:property value="salesman_txt"/>'>
-            <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>'>
-            <input type="hidden" name="salesmandoc" id="salesmandoc" value='<s:property value="salesmandoc"/>'>
-            <input type="hidden" name="catid" id="catid" value='<s:property value="catid"/>'>
+            <!-- HIDDEN VALUES -->
+            <input type="hidden" id="ra_no" value='<s:property value="ra_no"/>'>
+            <input type="hidden" id="salesman_txt" value='<s:property value="salesman_txt"/>'>
+            <input type="hidden" id="cldocno" value='<s:property value="cldocno"/>'>
+            <input type="hidden" id="salesmandoc" value='<s:property value="salesmandoc"/>'>
+            <input type="hidden" id="catid" value='<s:property value="catid"/>'>
+
         </div>
     </div>
+</div>
 
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
+</td>
+
+<!-- ================= RIGHT SIDE (ORIGINAL TABLE – FULL WIDTH) ================= -->
+<td width="80%" valign="top">
+
+<table width="100%">
+    <tr>
+        <td>
             <div id="detlist">
                 <jsp:include page="detailedGrid.jsp"></jsp:include>
             </div>
-        </div>
-    </div>
-</div>
+        </td>
+    </tr>
+</table>
+
+</td>
+
+</tr>
+</table>
 
 </div>
 
-<div id="catwindow">
-   <div ></div>
-</div>
-
-<div id="clientwindow">
-   <div ></div>
-</div>
-<div id="fleetwindow">
-   <div ></div>
-</div>
-<div id="salesmanwindow">
-   <div ></div>
-</div>
+<!-- POPUPS -->
+<div id="catwindow"><div></div></div>
+<div id="clientwindow"><div></div></div>
+<div id="fleetwindow"><div></div></div>
+<div id="salesmanwindow"><div></div></div>
 
 </div>
 </body>
