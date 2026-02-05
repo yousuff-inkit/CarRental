@@ -75,7 +75,7 @@
             $("#detailsgrid").jqxGrid(
             { 
             	width: '100%',
-                height: 501,
+                height: 800,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,

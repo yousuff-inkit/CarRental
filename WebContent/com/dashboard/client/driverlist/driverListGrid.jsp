@@ -86,7 +86,7 @@
             $("#driverListGridID").jqxGrid(
             {
             	width: '98%',
-                height: 490,
+                height: 800,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

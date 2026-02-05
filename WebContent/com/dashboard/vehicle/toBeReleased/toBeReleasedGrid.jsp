@@ -55,7 +55,7 @@ if(document.getElementById("cmbbranch").value!=""){
             $("#toBeReleasedGrid").jqxGrid(
             {
                 width: '100%',
-                height: 525,
+                height: 750,
                 source: dataAdapter,
                 columnsresize: true,
                 pageable: false,

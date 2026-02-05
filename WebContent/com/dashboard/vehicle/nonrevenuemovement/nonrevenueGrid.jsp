@@ -80,7 +80,7 @@ $(document).ready(function () {
     $("#nonmovement").jqxGrid(
     {
         width: '98%',
-        height: 500,
+        height: 900,
         source: dataAdapter,
         Showfilterrow:true,
         enabletooltips:true,
