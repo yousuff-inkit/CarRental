@@ -107,7 +107,7 @@
             	
             	
             	width: '100%',
-                height: 500,
+                height: 800,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,

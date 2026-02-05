@@ -1,17 +1,14 @@
 <% String contextPath=request.getContextPath();%>
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
-<%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
 
 /* ===== MASTER LAYOUT ===== */
@@ -87,6 +84,8 @@ body, html { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; backg
 @keyframes blink { 0%{opacity: 0;} 50%{opacity: .5;} 100%{opacity: 1;} }
 .salikallocatecount { color: #d32f2f; font-weight: bold; margin-bottom: 10px; animation: blink 1s linear infinite; }
 </style>
+  
+<%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
 
 $(document).ready(function () {

@@ -116,7 +116,7 @@ $(document).ready(function () {
     $("#unRentableGrid").jqxGrid(
     {
         width: '98%',
-        height: 495,
+        height: 900,
         source: dataAdapter,
         showaggregates:true,
         filtermode:'excel',
