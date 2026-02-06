@@ -34,8 +34,8 @@
 	            });
          
             $("#documentDetailsGrid").jqxGrid({ 
-            	width: '98%',
-                height: 102,
+            	width: '100%',
+                height: 300,
                 source: dataAdapter,
                 selectionmode: 'singlerow',
                 filtermode:'excel',
