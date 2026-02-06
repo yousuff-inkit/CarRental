@@ -122,7 +122,7 @@ $(document).ready(function () {
     $("#vehmovement").jqxGrid(
     {
         width: '98%',
-        height: 500,
+        height: 800,
         source: dataAdapter,
         showaggregates:true,
         columnsresize:true,

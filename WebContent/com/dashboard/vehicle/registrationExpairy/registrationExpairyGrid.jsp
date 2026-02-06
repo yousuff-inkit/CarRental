@@ -100,7 +100,7 @@ $(document).ready(function () {
     $("#regexpgrid").jqxGrid(
     {
         width: '98%',
-        height: 500,
+        height: 700,
         source: dataAdapter,
         //showaggregates:true,
         enableAnimations: true,
