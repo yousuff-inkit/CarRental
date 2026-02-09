@@ -87,8 +87,8 @@ $(document).ready(function () {
     
     $("#costupdateGrid").jqxGrid(
     {
-        width: '98%',
-        height: 513,
+        width: '100%',
+        height: 730,
         source: dataAdapter,
         showaggregates:true,
         filtermode:'excel',

@@ -60,7 +60,7 @@
 		            });
             
             $("#jqxUserRoledetails").jqxGrid({
-            	width: '90%',
+            	width: '100%',
                 height: 268,
                 source: dataAdapter,
                 filtermode:'excel',
