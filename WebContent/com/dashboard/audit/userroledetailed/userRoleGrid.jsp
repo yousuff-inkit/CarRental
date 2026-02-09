@@ -65,8 +65,8 @@
 		            });
             
             $("#jqxUserRole").jqxGrid({
-            	width: '90%',
-                height: 268,
+            	width: '100%',
+                height: 500,
                 source: dataAdapter,
                 filtermode:'excel',
                 showfilterrow: true,

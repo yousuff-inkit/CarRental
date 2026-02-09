@@ -111,7 +111,7 @@
             $("#employeeDetailedListGridId").jqxGrid(
             {
             	width: '100%',
-                height: 515,
+                height: 730,
                 source: dataAdapter,
                 //pageable: true,
                 altRows: true,

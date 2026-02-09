@@ -43,8 +43,8 @@
             
             $("#reviewTrialBalanceGridId").jqxGrid(
             {
-            	width: '98%',
-    	        height: 360,
+            	width: '100%',
+    	        height: 700,
                 source: dataAdapter,
                 filterable: true,
                 showfilterrow: true,
