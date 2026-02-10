@@ -10,175 +10,79 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
+
 /* ===== MASTER LAYOUT ===== */
-.master-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #f4f7f9;
+body, html { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f7f9; overflow: hidden; }
+
+.master-container { display: flex; height: 100vh; width: 100%; }
+
+/* Sidebar Styling */
+.sidebar { 
+    width: 340px; 
+    background: #ffffff; 
+    border-right: 1px solid #e1e8ed; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
 }
 
-/* Sidebar */
-.sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+.sidebar-content { flex: 1; overflow-y: auto; padding: 20px; }
+
+/* Card Styling */
+.card { 
+    background: #fff; 
+    border: 1px solid #e3e8ee; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 15px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+.card-title { 
+    font-size: 14px; 
+    font-weight: 700; 
+    color: #1e293b; 
+    margin-bottom: 12px; 
+    border-bottom: 1px solid #f1f5f9; 
+    padding-bottom: 5px;
+    display: block;
 }
 
-.sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px 20px 25px;
-}
-
-/* Cards */
-.filter-card {
-    background: #f8fafc;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 12px;
-}
-
-/* Tables */
-.filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
-
-.label-cell {
-    text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #4e5e71;
-    width: 90px;
-}
-
-/* Inputs */
-input[type="text"], select {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
+/* Form Elements */
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 4px; }
+.form-group input[type="text"], .form-group select { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #cbd5e1; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
     font-size: 13px;
 }
 
 /* Buttons */
-.btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
+.btn-group { display: flex; gap: 8px; margin-top: 10px; }
+.myButton, .myButtons { 
+    flex: 1;
+    padding: 10px;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    border-radius: 4px;
     cursor: pointer;
-}
-
-.btn-submit:hover {
-    background: #1d4ed8;
-}
-
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
-}
-/* ================= SALIK ALLOCATION – SIDEBAR ================= */
-
-.salik-filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
-
-.salik-filter-table .label-cell {
-    text-align: right;
-    padding-right: 12px;
-    font-size: 13px;
-    color: #4e5e71;
     font-weight: 600;
-    width: 95px;
-}
-
-/* Inputs & selects */
-.salik-filter-table input[type="text"],
-.salik-filter-table select {
-    width: 100%;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    padding: 7px 10px;
     font-size: 13px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-}
-
-/* Readonly / disabled */
-.salik-filter-table input[readonly],
-.salik-filter-table input:disabled {
-    background-color: #f3f6f9;
-    color: #555;
-}
-
-/* Count banner */
-.salikallocatecount {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-radius: 8px;
-    padding: 8px 10px;
     text-align: center;
-    font-weight: 600;
-    color: #1e3a8a;
-    margin-bottom: 10px;
+    transition: background 0.2s;
 }
+.myButton { background: #2563eb; color: white; } /* Allocate */
+.myButtons { background: #64748b; color: white; } /* Clear */
+.myButton:hover { background: #1d4ed8; }
 
-/* Button rows */
-.salik-actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
+/* Right Content Area */
+.main-content { flex: 1; padding: 0; background: #fff; overflow: auto; }
 
-.salik-actions .btn-submit {
-    width: auto;
-    min-width: 110px;
-}
-
-/* Manual allocate card */
-.manual-allocate-card {
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px dashed #e2e8f0;
-}
-
-.manual-allocate-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a3a5f;
-    margin-bottom: 8px;
-    text-align: center;
-}
+/* Blinking Label */
+@keyframes blink { 0%{opacity: 0;} 50%{opacity: .5;} 100%{opacity: 1;} }
+.salikallocatecount { color: #d32f2f; font-weight: bold; margin-bottom: 10px; animation: blink 1s linear infinite; }
 </style>
   
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
@@ -605,170 +509,123 @@ function funreload(event)
 </script>
 </head>
 <body onload="hiddenbrh();getAllocateBranch();dis();">
+    <div class="master-container">
+        
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div style="margin-bottom: 20px;">
+                    <jsp:include page="../../heading.jsp"></jsp:include>
+                </div>
 
-<div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
+                <div class="salikallocatecount" id="salikStatus" hidden="true">
+                    Total Saliks Allocated: <span class="currentsalikallocated"></span>
+                </div>
 
-<table width="100%">
-<tr>
+                <div class="card">
+                    <span class="card-title">Search Filters</span>
+                    
+                    <div class="form-group" style="text-align: right;">
+                        <label><input type="checkbox" id="Chkfromdate" name="Chkfromdate" onchange="funchange()"> Enable From Date</label>
+                    </div>
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="20%" valign="top">
-<div class="master-container">
-<div class="sidebar-filters">
+                    <div class="form-group" style="display:none;">
+                        <label>Reg No</label>
+                        <input type="text" id="regno" name="regno" placeholder="Press F3 To Search" readonly="readonly" value='<s:property value="regno"/>' onkeydown="getregno(event);">
+                    </div>
 
-    <!-- Fixed Heading -->
-    <div class="sidebar-fixed-top">
-        <div class="filter-card">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-    </div>
+                    <div class="form-group" style="display:none;">
+                        <label>Tag No</label>
+                        <input type="text" id="tagno" name="tagno" placeholder="Press F3 To Search" readonly="readonly" value='<s:property value="tagno"/>' onkeydown="gettagno(event);">
+                    </div>
 
-    <!-- Scrollable Content -->
-    <div class="sidebar-scroll-content">
-
-        <!-- Allocation Count -->
-        <div class="salikallocatecount" hidden>
-            Total Saliks Allocated :
-            <span class="currentsalikallocated"></span>
-        </div>
-
-        <!-- Main Filters -->
-        <div class="filter-card">
-            <table class="salik-filter-table">
-
-                <tr>
-                    <td class="label-cell">Reg No</td>
-                    <td>
-                        <input type="text" id="regno" name="regno"
-                               placeholder="Press F3 To Search"
-                               readonly
-                               onkeydown="getregno(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Tag No</td>
-                    <td>
-                        <input type="text" id="tagno" name="tagno"
-                               placeholder="Press F3 To Search"
-                               readonly
-                               onkeydown="gettagno(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Type</td>
-                    <td>
-                        <select id="cmbsaliktype" name="cmbsaliktype">
+                    <div class="form-group" style="display:none;">
+                        <label>Type</label>
+                        <select name="cmbsaliktype" id="cmbsaliktype">
                             <option value="">--Select--</option>
                             <option value="SAL">Salik</option>
                             <option value="PAR">Parking</option>
                         </select>
-                    </td>
-                </tr>
+                    </div>
 
-                <tr>
-                    <td class="label-cell">From Date</td>
-                    <td><div id="fromdate"></div></td>
-                </tr>
+                    <div class="form-group">
+                        <label>From Date</label>
+                        <div id='fromdate' name='fromdate'></div>
+                    </div>
 
-                <tr>
-                    <td class="label-cell">Up To</td>
-                    <td><div id="uptodate"></div></td>
-                </tr>
+                    <div class="form-group">
+                        <label>Up To</label>
+                        <div id='uptodate' name='uptodate'></div>
+                    </div>
 
-            </table>
+                    <div class="btn-group">
+                        <input type="Button" id="driverUpdate" class="myButton" value="ALLOCATE" onclick="funallocate()">
+                        <input type="button" id="clear" class="myButtons" value="Clear" onclick="funcleardata()">
+                    </div>
+                </div>
 
-            <div class="salik-actions">
-                <button type="button" class="btn-submit" onclick="funallocate()">Allocate</button>
-                <button type="button" class="btn-submit" onclick="funcleardata()">Clear</button>
-            </div>
-        </div>
+                <div class="card">
+                    <span class="card-title">Manual Allocation</span>
+                    
+                    <div class="form-group">
+                        <label>Salik Tag</label>
+                        <input type="text" id="saliktag" readonly="readonly" name="saliktag" value='<s:property value="saliktag"/>'>
+                    </div>
 
-        <!-- Manual Allocate -->
-        <div class="filter-card manual-allocate-card">
-            <div class="manual-allocate-title">Manual Allocate</div>
+                    <div class="form-group">
+                        <label>Fleet No</label>
+                        <input type="text" id="fleet_no" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getfleet(event);" name="fleet_no" value='<s:property value="fleet_no"/>'>
+                    </div>
 
-            <table class="salik-filter-table">
-
-                <tr>
-                    <td class="label-cell">Salik Tag</td>
-                    <td><input type="text" id="saliktag" readonly></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Fleet No</td>
-                    <td>
-                        <input type="text" id="fleet_no"
-                               placeholder="Press F3 To Search"
-                               readonly
-                               onkeydown="getfleet(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Type</td>
-                    <td>
-                        <select id="trftype" onchange="cleardatas()">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="trftype" onchange="cleardatas()"> 
                             <option value="RAG">Rental</option>
                             <option value="LAG">Lease</option>
                             <option value="STF">Staff</option>
                             <option value="DRV">Driver</option>
                         </select>
-                    </td>
-                </tr>
+                    </div>
 
-                <tr>
-                    <td class="label-cell">Branch</td>
-                    <td>
+                    <div class="form-group">
+                        <label>Branch</label>
                         <select id="cmballocatebranch" name="cmballocatebranch">
                             <option value="">--Select--</option>
                         </select>
-                    </td>
-                </tr>
+                    </div>
 
-                <tr>
-                    <td class="label-cell">Convict</td>
-                    <td>
-                        <input type="text" id="typesearch"
-                               placeholder="Press F3 To Search"
-                               readonly
-                               onkeydown="gettypessearch(event);">
-                    </td>
-                </tr>
+                    <div class="form-group">
+                        <label>Convict</label>
+                        <input type="text" id="typesearch" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="gettypessearch(event)" name="typesearch" value='<s:property value="typesearch"/>'>
+                    </div>
 
-            </table>
-
-            <div class="salik-actions">
-                <button type="button" class="btn-submit" onclick="funoneallocate()">Manual</button>
+                    <input type="Button" name="allocates" id="allocates" class="myButton" style="width:100%" value="Manual Process" onclick="funoneallocate()">
+                </div>
             </div>
         </div>
 
+        <div class="main-content">
+            <div id="allodiv">
+                <jsp:include page="allocatelistGrid.jsp"></jsp:include>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-</td>
 
-<!-- ================= RIGHT GRID ================= -->
-<td width="80%">
-    <div id="allodiv">
-        <jsp:include page="allocatelistGrid.jsp"></jsp:include>
+    <input type="hidden" id="gridlength" name="gridlength">
+    <input type="hidden" id="rentaldoc" name="rentaldoc">
+    <input type="hidden" id="leasedoc" name="leasedoc">
+    <input type="hidden" id="drdoc" name="drdoc">
+    <input type="hidden" id="staffdoc" name="staffdoc">
+    <input type="hidden" id="hidchkdate" name="hidchkdate">
+
+    <div id="hidediv" style="position:fixed; top:50%; left:50%; z-index:9999; display:none;">
+        <img src="<%=contextPath%>/icons/31load.gif">
     </div>
-</td>
 
-</tr>
-</table>
+    <div id="regwindow"><div></div></div>
+    <div id="tagwindow"><div></div></div>
+    <div id="fleetwindow"><div></div></div>
+    <div id="commonwindow"><div></div></div>
+    <div id="commonwindow1"><div></div></div>
 
-</div>
-
-<!-- POPUP WINDOWS -->
-<div id="regwindow"><div></div></div>
-<div id="tagwindow"><div></div></div>
-<div id="fleetwindow"><div></div></div>
-<div id="commonwindow"><div></div></div>
-<div id="commonwindow1"><div></div></div>
-
-</div>
 </body>
 </html>

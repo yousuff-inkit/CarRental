@@ -99,8 +99,8 @@
             
             $("#monthlyPayrollPostingGridID").jqxGrid(
             {
-            	width: '98%',
-    	        height: 260,
+            	width: '100%',
+    	        height: 450,
     	        source: dataAdapter,
     	        showaggregates: true,
                 showstatusbar:true,

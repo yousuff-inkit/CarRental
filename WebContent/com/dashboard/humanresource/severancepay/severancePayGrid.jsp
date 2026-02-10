@@ -80,8 +80,8 @@
             );
             $("#severancePayGridID").jqxGrid(
             {
-                width: '98%',
-                height: 490,
+                width: '100%',
+                height: 720,
                 source: dataAdapter,
                 rowsheight:25,
                 statusbarheight:25,
