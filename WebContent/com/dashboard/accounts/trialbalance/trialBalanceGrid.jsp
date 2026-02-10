@@ -105,8 +105,8 @@
             );
             $("#trialBalance").jqxGrid(
             {
-                width: '98%',
-                height: 480,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 rowsheight:25,
                 statusbarheight:25,

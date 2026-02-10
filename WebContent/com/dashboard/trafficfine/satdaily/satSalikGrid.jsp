@@ -56,7 +56,7 @@
             $("#jqxloaddataGrid").jqxGrid(
             {
                 width: '100%',
-                height: 535,
+                height: 800,
                 source: dataAdapter,
                 columnsresize: true,
                 altRows: true,

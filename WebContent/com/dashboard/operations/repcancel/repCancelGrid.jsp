@@ -66,8 +66,8 @@ String branch=request.getParameter("branch")==null?"0":request.getParameter("bra
             
             $("#repCancelGrid").jqxGrid(
             {
-                width: '98%',
-                height: 522,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

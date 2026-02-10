@@ -114,8 +114,8 @@ String check = request.getParameter("check")==null?"0":request.getParameter("che
             
             $("#staffList").jqxGrid(
             {
-                width: '98%',
-                height: 480,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,
