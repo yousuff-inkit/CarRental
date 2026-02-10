@@ -55,8 +55,8 @@ String check = request.getParameter("check")==null?"0":request.getParameter("che
             );
             $("#summary").jqxGrid(
             {
-                width: '98%',
-                height: 550,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 rowsheight:25,
                 showaggregates:true,
