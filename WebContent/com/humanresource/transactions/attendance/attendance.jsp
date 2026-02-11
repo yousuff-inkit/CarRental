@@ -165,7 +165,10 @@ margin: 0;
 body{
 	font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
-
+#btnRecheck {
+    display: inline-block !important;
+    
+}
 
 </style>
 
