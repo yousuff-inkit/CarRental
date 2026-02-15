@@ -390,7 +390,6 @@
     /* HARD RESET: Force black fonts and remove unwanted backgrounds */
     .filter-card *, fieldset, legend, .branch, td, tr, label, span {
         background-color: transparent !important;
-        background: none !important;
         color: black !important;
     }
 

@@ -56,7 +56,6 @@
 
     .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
         background-color: transparent !important;
-        background: none !important;
         color: black !important;
     }
 
