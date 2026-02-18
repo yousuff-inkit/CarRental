@@ -103,7 +103,6 @@ function funExportBtn(){
     /* Reset legacy styles and force black text */
     .filter-card *, fieldset, legend, .branch, td, tr, label, span {
         background-color: transparent !important;
-        background: none !important;
         color: black !important;
     }
 
