@@ -745,9 +745,7 @@
 </script>
 
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -768,9 +766,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -795,9 +791,6 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
 
 .receipt-header {
     display: flex;
@@ -821,9 +814,7 @@ label {
     color: #e67e22;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
+
 
 .form-group {
     display: grid;
@@ -844,7 +835,6 @@ label {
     width: 100%;
 }
 
-/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
 .form-group.dual-input {
     grid-template-columns: 120px 1fr 120px 1fr;
 }
@@ -858,7 +848,6 @@ label {
     padding-right: 8px;
 }
 
-/* Special case: One label with two equal-width inputs */
 .form-group.single-label-dual-input {
     grid-template-columns: 120px 1fr 1fr;
 }
@@ -894,10 +883,9 @@ label {
     border-left: 4px solid #007bff;
 }
 
-/* Special handling for the "to-account-row" - all items in one line */
 .to-account-row {
     display: grid;
-    grid-template-columns: 120px 110px 120px 140px 1fr;
+    grid-template-columns: 120px 130px 140px 140px 1fr;
     align-items: center;
     gap: 12px;
     margin-bottom: 12px;
@@ -920,9 +908,7 @@ label {
     width: 100%;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+
 
 .table-section {
     margin: 20px 0;
@@ -961,16 +947,12 @@ label {
     border-bottom: none;
 }
 
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
 
 .hidden-scrollbar {
     overflow: auto;
     height: 100vh;
 }
 
-/* Hide scrollbars (but allow scrolling) */
 .hidden-scrollbar::-webkit-scrollbar {
     width: 0px;
 }
@@ -987,9 +969,6 @@ label {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
 
 #approval-table td {
     font-size: 14px;
@@ -999,48 +978,75 @@ label {
 #approval-table tr:nth-child(even) {
     background: #f9fafb;
 }
-/* PDC Cheque Row - specific styling for PDC checkbox row */
-/* PDC Cheque Row - all in one line */
-.pdc-cheque-row {
-    display: flex;
+
+.to-account-row #txttoaccname {
+    width: 100%;
+}
+.to-account-row-pdc {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 140px 1fr;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     margin-bottom: 12px;
-    flex-wrap: nowrap;
 }
 
-/* Checkbox with PDC text - keep them together */
-.pdc-cheque-row input[type="checkbox"] {
-    width: auto;
-    margin: 0 4px 0 0;
-    flex-shrink: 0;
-}
-
-/* Hidden inputs should not take space */
-.pdc-cheque-row input[type="hidden"] {
-    display: none;
-}
-
-/* Labels styling */
-.pdc-cheque-row label {
+.to-account-row-pdc label {
     text-align: right;
     padding-right: 8px;
-    white-space: nowrap;
-    margin: 0;
-    flex-shrink: 0;
-    font-weight: 600;
 }
 
-/* Cheque No input */
-.pdc-cheque-row #txtchequeno {
-    width: 200px;
-    flex-shrink: 0;
+.to-account-row-pdc #cmbtotype {
+    width: 100%;
 }
 
-/* Cheque Date */
-.pdc-cheque-row #jqxChequeDate {
-    width: 200px;
-    flex-shrink: 0;
+.to-account-row-pdc #txttoaccid {
+    width: 100%;
+}
+
+.to-account-row-pdc #txttoaccname {
+    width: 100%;
+}
+body::-webkit-scrollbar {
+    width: 0px;
+}
+
+.myButton {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    
+   
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  }
+
+
+  .myButton:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .myButton:active {
+    background-color: #004085;
+    transform: scale(0.98); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-group.dual-input-curr {
+    grid-template-columns: 120px 220px 50px 1fr;
+}
+
+.form-group.dual-input-curr label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input-curr label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
 }
 </style>
 
@@ -1080,7 +1086,7 @@ label {
                 <input type="text" id="txtfromaccname" name="txtfromaccname" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
                 <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
             </div>
-            <div class="form-group dual-input" style="margin-bottom: 10px;">
+            <div class="form-group dual-input-curr" style="margin-bottom: 10px;">
                 <label for="cmbfromcurrency">Currency</label>
 
                 <select id="cmbfromcurrency" name="cmbfromcurrency" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxBankPaymentDate').val());">
@@ -1098,8 +1104,9 @@ label {
             </div>
 
 
-            <div class="form-group pdc-cheque-row">
-                <input type="checkbox" id="chckpdc" name="chckpdc" onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxBankPaymentDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" >&nbsp;PDC
+            <div class="form-group to-account-row-pdc">
+               <label><input type="checkbox" id="chckpdc" name="chckpdc" onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxBankPaymentDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" >PDC
+                </label> 
                 <input type="hidden" id="hidchckpdc" name="hidchckpdc" value='<s:property value="hidchckpdc"/>'/>
                 <input type="hidden" id="txtpdcacno" name="txtpdcacno" value='<s:property value="txtpdcacno"/>'/>
 
@@ -1112,7 +1119,7 @@ label {
             </div>
 
             <div class="form-group">
-                <label for="txtbankname">Cheque Name&nbsp;</label>
+                <label for="txtbankname">Cheque Name</label>
                 <input type="text" id="txtchequename" name="txtchequename" value='<s:property value="txtchequename"/>' />
             </div>
 

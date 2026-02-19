@@ -718,9 +718,7 @@
 	  
 </script>
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -741,9 +739,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -768,9 +764,6 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
 
 .receipt-header {
     display: flex;
@@ -945,16 +938,38 @@ label {
 .hidden-scrollbar::-webkit-scrollbar {
     width: 0px;
 }
+body::-webkit-scrollbar {
+    width: 0px;
+}
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
+
+.myButton {
+    /* Base Styles */
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    
+    
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  }
 
 
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
+  .myButton:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 
+
+  .myButton:active {
+    background-color: #004085;
+    transform: scale(0.98); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 #validrate,
 #validrate1 {
     color: red;
@@ -962,9 +977,7 @@ label {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
+
 
 #approval-table td {
     font-size: 14px;
@@ -1059,7 +1072,7 @@ select:-webkit-autofill {
             <h2>Payment From</h2>
             <div class="form-group to-account-row" >
                 <label for="cmbtotype">Type</label>
-                <select id="cmbtotype" name="cmbtotype"  onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
+                <select id="cmbtotype" name="cmbtotype" style="width:130%;" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
                     <option value="AR">AR</option><option value="AP">AP</option>
                 </select>
                 <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>' />
