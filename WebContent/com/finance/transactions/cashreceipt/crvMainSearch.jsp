@@ -41,7 +41,7 @@
 
 
 td[align="right"] {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   color: #222;
 }
@@ -65,7 +65,7 @@ input[type="text"] {
 
 /* Additional spacing for rows */
 tr {
-  line-height: 1.8;
+  line-height: 1.6;
 }
 #btnsearch{
    background-color: #2f80ed;   /* clean blue */

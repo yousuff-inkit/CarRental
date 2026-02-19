@@ -566,8 +566,38 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 <style>
 .hidden-scrollbar {
   overflow: auto;
-  height: 530px;
+  height: calc(100vh-40px);
 }
+
+body::-webkit-scrollbar {
+    width: 0px;
+}
+
+.myButton {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    
+   
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  }
+
+
+  .myButton:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .myButton:active {
+    background-color: #004085;
+    transform: scale(0.98); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 </style>
 
 </head>
@@ -577,7 +607,7 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
 <div  class='hidden-scrollbar'>
-<table width="100%">   
+<table width="100%" style="table-layout: auto;">   
   <tr>
     <td width="6%" align="right">Date</td>
     <td width="15%"><div id="jqxJournalVouchersDate" name="jqxJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxJournalVouchersDate"/>'></div>
@@ -598,8 +628,8 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
   <tr>
     <td align="right">Ref. No.</td>
     <td><input type="text" id="txtrefno" name="txtrefno" style="width:62%;" value='<s:property value="txtrefno"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:80%;"  value='<s:property value="txtdescription"/>'/></td>
+    <td align="right" >Description</td>
+    <td colspan="5"style="width: 90%;"><input type="text" id="txtdescription" name="txtdescription" style="width: 100%; min-width: 500px; display: block;" value='<s:property value="txtdescription"/>'/></td>
 	<td align="left" colspan="2"><i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="lblformposted"/></label></b></i></td>
   </tr>
   <tr>

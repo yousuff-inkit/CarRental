@@ -671,9 +671,9 @@
 </script>
 
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+body::-webkit-scrollbar {
+    width: 0px;
+}
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -694,9 +694,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -721,9 +719,7 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
+
 
 .receipt-header {
     display: flex;
@@ -747,9 +743,7 @@ label {
     color: #e67e22;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
+
 
 .form-group {
     display: grid;
@@ -784,7 +778,6 @@ label {
     padding-right: 8px;
 }
 
-/* Special case: One label with two equal-width inputs */
 .form-group.single-label-dual-input {
     grid-template-columns: 120px 1fr 1fr;
 }
@@ -820,7 +813,6 @@ label {
     border-left: 4px solid #007bff;
 }
 
-/* Special handling for the "to-account-row" - all items in one line */
 .to-account-row {
     display: grid;
     grid-template-columns: 120px 110px 120px 140px 1fr;
@@ -846,9 +838,7 @@ label {
     width: 100%;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+
 
 .table-section {
     margin: 20px 0;
@@ -908,9 +898,7 @@ label {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
+
 
 #approval-table td {
     font-size: 14px;
@@ -920,6 +908,31 @@ label {
 #approval-table tr:nth-child(even) {
     background: #f9fafb;
 }
+.myButton {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    
+   
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  }
+
+
+  .myButton:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .myButton:active {
+    background-color: #004085;
+    transform: scale(0.98); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 </style>
 
 </head>
