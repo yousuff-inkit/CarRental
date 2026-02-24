@@ -63,84 +63,161 @@ function loadAccountSearchGrid() {
 </script>
 
 <!-- ✅ FORCE BLUE EASYUI BUTTON -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modernized Search</title>
 <style>
-.l-btn {
-    background-color: #007bff !important;
-    border-color: #007bff !important;
-}
-.l-btn .l-btn-text {
-    color: #ffffff !important;
-    font-weight: 600;
-}
-.l-btn:hover {
-    background-color: #0056b3 !important;
-}
+    /* 1. Global & Container Styles */
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f4f7fa;
+        display: flex;
+        justify-content: center;
+        padding-top: 40px;
+        margin: 0;
+    }
 
-/* FINAL EASYUI OVERRIDE */
-a.l-btn,
-a.l-btn:hover,
-a.l-btn:active {
-    background-image: none !important;
-    background-color: #0066ff !important;
-    border: 1px solid #0066ff !important;
-}
+    #search-card {
+        background: #ffffff;
+        width: 90%;
+        max-width: 900px;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e1e8f0;
+    }
 
-a.l-btn span.l-btn-text {
-    color: #ffffff !important;
-    font-weight: bold;
-}
+    /* 2. Grid Layout Logic */
+    .search-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 150px; /* Three columns: 2 inputs + 1 button */
+        gap: 20px;
+        align-items: end;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 2; /* Account Name spans 2 columns */
+    }
+
+    /* 3. Typography & Input Styling */
+    label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    input[type="text"] {
+        height: 40px;
+        padding: 0 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #1e293b;
+        transition: all 0.2s ease;
+        background-color: #fcfcfc;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #2563eb;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    /* 4. Your Specific Button Request */
+    .btn-search {
+        font-weight: 700;
+        font-size: 13px;
+        width: 130px;
+        height: 42px; /* Matched to input height */
+        padding: 8px 12px;
+        background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+        color: #ffffff !important;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+        text-align: center;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-search:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        filter: brightness(1.1);
+    }
+
+    .btn-search:active {
+        transform: translateY(0);
+    }
+
+    /* 5. Results Section */
+    .results-container {
+        margin-top: 30px;
+        border-top: 2px solid #f1f5f9;
+        padding-top: 20px;
+    }
+
+    /* Utility for hidden fields */
+    .hidden { display: none; }
 </style>
-
-
-
 </head>
 
 <body>
 
-<div id="search">
+<div id="search-card">
+    <div class="search-form-grid">
+        
+        <div class="form-group">
+            <label for="txtacctno">Account No</label>
+            <input type="text" id="txtacctno" placeholder="e.g. 10002345">
+        </div>
 
-<table width="100%" cellpadding="5">
+        <div class="form-group">
+            <label for="txtacctcurrency">Currency</label>
+            <input type="text" id="txtacctcurrency" placeholder="USD">
+            
+            <input type="hidden" id="txttypes">
+            <input type="hidden" id="txtnewmaindate">
+        </div>
 
-<tr>
-    <td width="10%" align="right">Account No</td>
-    <td width="30%">
-        <input type="text" id="txtacctno" style="width:85%;">
-    </td>
+        <div class="form-group" style="align-items: center;">
+            <a href="javascript:void(0)" 
+               class="btn-search" 
+               onclick="loadAccountSearchGrid();">
+                Search
+            </a>
+        </div>
 
-    <td width="10%" align="right">Currency</td>
-    <td width="27%">
-        <input type="text" id="txtacctcurrency" style="width:50%;">
-        <input type="hidden" id="txttypes">
-        <input type="hidden" id="txtnewmaindate">
-    </td>
+        <div class="form-group full-width">
+            <label for="txtacctname">Account Name</label>
+            <input type="text" id="txtacctname" placeholder="Search by customer or business name...">
+        </div>
 
-    <td width="23%" rowspan="2" align="center">
-        <!-- EasyUI Button -->
-        <a href="javascript:void(0)"
-           class="easyui-linkbutton"
-           onclick="loadAccountSearchGrid();">
-            Search
-        </a>
-    </td>
-</tr>
+    </div>
 
-<tr>
-    <td align="right">Account Name</td>
-    <td colspan="3">
-        <input type="text" id="txtacctname" style="width:80%;">
-    </td>
-</tr>
-
-<tr>
-    <td colspan="5">
+    <div class="results-container">
         <div id="refreshAccountSearchDetailsDiv">
             <jsp:include page="cashReceiptSearchGrid.jsp"/>
         </div>
-    </td>
-</tr>
-
-</table>
-
+    </div>
 </div>
 
 </body>

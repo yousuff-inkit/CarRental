@@ -100,70 +100,99 @@ function getGroup() {
  
 	</script>
 <style type="text/css">
-
-table {
+/* Master UI Table Container */
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 18px; 
+  border-spacing: 15px 18px; /* Standard master gap */
+  width: 100%;
 }
 
-
+/* Label Styling */
 td[align="right"] {
-  font-weight: 700;
+  font-family: Tahoma, Arial, sans-serif;
   font-size: 14px;
+  font-weight: 700;
   color: #222;
 }
 
-
+/* Input & Select Field Styling */
 input[type="text"], select {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
-  width: 95%; /* Prevent overflow */
+  width: 95%;
   max-width: 100%;
   box-sizing: border-box; /* Include padding in width */
 }
 
-
+/* Date Picker Container */
 #searchdate {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
   font-size: 14px;
 }
 
-/* Bold button text */
+/* Master Button Appearance */
 .myButton {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 700;
   font-size: 14px;
+  background-color: #007bff; /* Master Blue */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  min-width: 90px;
 }
 
-/* Additional spacing for rows */
+/* Master Green Hover Effect */
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Row Spacing */
 tr {
   line-height: 1.8;
 }
 </style>
 
 <body bgcolor="#E0ECF8">
-<div id=search>
-  <table width="100%" >
+<div id="search">
+  <table width="100%">
     <tr>
       <td width="12%" align="right">Doc No</td>
       <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
       <td width="7%" align="right">Date</td>
       <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
       <td width="13%" align="right">Color</td>
-      <td width="15%" align="left"><select name="searchcolor" id="searchcolor" ><option value="">--Select--</option></select></td>
+      <td width="15%" align="left">
+        <select name="searchcolor" id="searchcolor">
+          <option value="">--Select--</option>
+        </select>
+      </td>
       <td width="12%" align="right">&nbsp;</td>
       <td width="14%" align="left">&nbsp;</td>
     </tr>
 
     <tr>
       <td align="right">Fleet No</td>
-      <td align="left"><input type="text" name="searchfleetno" id="searchfleetno" ></td>
+      <td align="left"><input type="text" name="searchfleetno" id="searchfleetno"></td>
       <td align="right">Reg No</td>
       <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
       <td align="right">Group</td>
-      <td align="left"><select name="searchgroup" id="searchgroup" ><option value="">--Select--</option></select></td>
+      <td align="left">
+        <select name="searchgroup" id="searchgroup">
+          <option value="">--Select--</option>
+        </select>
+      </td>
       <td align="right">&nbsp;</td>
-      <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
+      <td align="center">
+        <input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();">
+      </td>
     </tr>
     <tr>
       <td colspan="8">
