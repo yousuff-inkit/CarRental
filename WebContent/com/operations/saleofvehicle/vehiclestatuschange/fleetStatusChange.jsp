@@ -217,169 +217,119 @@ function setValues()
 </script>
 </head>
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 32px 0;
+    box-sizing: border-box;
+    /* Changed from min-height: 100vh to fit content and remove excess bottom space */
+    min-height: auto; 
+    overflow-y: auto;
+}
 
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        /* FORCE HEADER LEFT ALIGNMENT */
-        text-align: left !important;
-    }
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    /* Prevents container from stretching vertically unnecessarily */
+    display: inline-block;
+    width: 100%;
+}
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
+.receipt-header {
+    display: block;
+    margin-bottom: 16px;
+    padding: 0 10px;
+}
 
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
+.receipt-header table {
+    width: 100%;
+}
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
-    .receipt-header {
-        display: block; /* Header block container */
-        padding: 0 0 0 5px;
-    }
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
 
-    .form-group {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    /* Reduced bottom margin to pull content together */
+    margin-bottom: 15px; 
+}
 
-    .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
-    }
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #333;
+}
 
-    .form-group.single-label-dual-input {
-        grid-template-columns: 120px 1fr 1fr;
-    }
-    
-    .form-group.three-field-input {
-        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
-    }
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
 
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-    }
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
 
-    .section-block {
-        flex: 1;
-        background: #f6f8fa; /* Uniform background color */
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        min-width: 45%;
-    }
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
 
-    .full-width-block {
-        flex: 1 1 100%;
-    }
+input[type="text"], select, textarea {
+    height: 32px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
 
-    .section-block h2, .section-block h3, .fieldset-legend-replacement {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-        display: block;
-        border-radius: 0; /* Ensure straight line */
-    }
-    
-    .fieldset-legend-replacement {
-        background: none;
-        padding: 0 0 0 10px;
-        margin-bottom: 10px;
-    }
+textarea {
+    height: 80px !important;
+    padding: 10px;
+    resize: none; /* Prevents user from creating extra space by dragging */
+}
 
+input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
-    input[type="text"], input[type="email"], select, textarea {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
-    
-    textarea {
-        height: 80px !important; /* Larger for Reason field */
-        padding: 10px;
-    }
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
+    text-align: right;
+    padding-right: 8px;
+}
 
-    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+.jqx-datetimeinput {
+    height: 34px !important;
+    box-sizing: border-box;
+}
 
-    input[readonly], textarea[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
-
-    label {
-        font : Tahoma;
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 16px;
-    }
-
-    /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
-
-    /* SCROLLBAR FIX (Not used in this small form, but kept for consistency) */
-    .hidden-scrollbar { overflow: auto; height: 100vh; }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
-
+/* Ensures no extra padding at the bottom of the last element */
+.section-block:last-child {
+    margin-bottom: 0;
+}
 </style>
 
 <body onload="funReadOnly();setValues();">
@@ -392,51 +342,56 @@ function setValues()
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
 
-    <div class="section-block full-width-block">
-        <h3 class="fieldset-legend-replacement">Fleet Status Change Info</h3>
+  <div id="mainBG">
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="5%" align="right"><label>Date</label></td>
+                <td width="180px">
+                    <div id="fleetstatusdate" name="fleetstatusdate" value='<s:property value="fleetstatusdate"/>'></div>
+                    <input type="hidden" name="hidfleetstatusdate" id="hidfleetstatusdate" value='<s:property value="hidfleetstatusdate"/>'>
+                </td>
+                <td width="5%" align="right"><label>Time</label></td>
+                <td width="150px">
+                    <div id="fleetstatustime" name="fleetstatustime" value='<s:property value="fleetstatustime"/>'></div>
+                    <input type="hidden" name="hidfleetstatustime" id="hidfleetstatustime" value='<s:property value="hidfleetstatustime"/>'>
+                </td>
+                <td></td>
+                <td width="10%" align=><label>Doc No</label></td>
+                <td width="180px">
+                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-        <div class="form-group three-field-input">
-            <label>Date</label>
-            <div>
-                <div id="fleetstatusdate" name="fleetstatusdate" value='<s:property value="fleetstatusdate"/>'></div>
-            </div>
-            <input type="hidden" name="hidfleetstatusdate" id="hidfleetstatusdate" value='<s:property value="hidfleetstatusdate"/>'>
-
-            <label>Time</label>
-            <div>
-                <div id="fleetstatustime" name="fleetstatustime" value='<s:property value="fleetstatustime"/>'></div>
-            </div>
-            <input type="hidden" name="hidfleetstatustime" id="hidfleetstatustime" value='<s:property value="hidfleetstatustime"/>'>
-
-            <label>Doc No</label>
-            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
-        </div>
+    <div class="section-block">
+        <h2>Fleet Status Change Info</h2>
 
         <div class="form-group single-label-dual-input">
             <label>Fleet</label>
-            <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' readonly onkeydown="getFleet(event);">
-            <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' readonly>
+            <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' readonly onkeydown="getFleet(event);" placeholder="Press F3 to Search">
+            <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' readonly tabindex="-1">
         </div>
 
         <div class="form-group dual-input">
             <label>Current Status</label>
-            <input type="text" name="currentstatus" id="currentstatus" value='<s:property value="currentstatus"/>' readonly>
+            <input type="text" name="currentstatus" id="currentstatus" value='<s:property value="currentstatus"/>' readonly tabindex="-1">
             <input type="hidden" name="hidcurrentstatus" id="hidcurrentstatus" value='<s:property value="hidcurrentstatus"/>'>
 
             <label>Change to Status</label>
-            <select name="cmbchangestatus" id="cmbchangestatus" >
+            <select name="cmbchangestatus" id="cmbchangestatus">
                 <option value="">--Select--</option>
             </select>
-            <input type="hidden" name="hidcmbchangestatus" id="hidcmbchangestatus" value='<s:property value="hidcmbchangestatus"/>' readonly>
+            <input type="hidden" name="hidcmbchangestatus" id="hidcmbchangestatus" value='<s:property value="hidcmbchangestatus"/>'>
         </div>
 
-        <div class="form-group" style="grid-template-columns: 120px 1fr;">
-            <label style="align-self: flex-start; padding-top: 10px;">Reason</label>
-            <textarea id="reason" name="reason" ><s:property value="reason"/>
-            </textarea>
+        <div class="form-group">
+            <label style="align-self: flex-start; padding-top: 8px;">Reason</label>
+            <textarea id="reason" name="reason"><s:property value="reason"/></textarea>
         </div>
-        
     </div>
+</div>
 
     <input type="hidden" name="hidcmbsalesman" id="hidcmbsalesman" value='<s:property value="hidcmbsalesman"/>'>
     <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>

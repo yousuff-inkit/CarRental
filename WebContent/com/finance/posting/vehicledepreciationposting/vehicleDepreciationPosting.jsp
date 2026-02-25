@@ -318,10 +318,6 @@
 </script>
 
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -329,7 +325,7 @@ body {
     margin: 0;
     padding: 32px 0;
     box-sizing: border-box;
-    overflow-y: auto !important;
+    overflow-y: auto;
 }
 
 #mainBG {
@@ -341,19 +337,6 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-#formdet {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1f2937;
-    display: block;
-    text-align: left;
-    /* margin-bottom: 18px; */
-}
-
-/* ------------------------------
-    COMMON UI ELEMENTS
------------------------------- */
-
 input[type="text"], select {
     height: 32px !important;
     border: 1px solid #d1d5db;
@@ -363,8 +346,6 @@ input[type="text"], select {
     transition: border-color 0.2s;
     font-size: 14px;
     box-sizing: border-box;
-    width: 100%;
-    
 }
 
 input[type="text"]:focus,
@@ -374,25 +355,34 @@ select:focus {
 }
 
 label {
-    font: 14px Tahoma;
+    font-weight: 600;
     color: #253858;
     white-space: nowrap;
-    line-height: 32px;
-    padding: 0px 8px 0px 0px; 
-    text-align: right; 
 }
 
-/* ------------------------------
-    CARD ROWS LAYOUT (CORE MASTER UI)
------------------------------- */
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
+
+.receipt-header table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
 
 .section-block {
-    flex: 1;
-    min-width: 0;
     background: #f6f8fa;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 20px;
 }
 
 .section-block h2 {
@@ -400,33 +390,14 @@ label {
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
-    border-left: 4px solid #007bff; /* Blue line accent */
+    border-left: 4px solid #007bff;
+    color: #253858;
 }
 
 .agmt-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
-    gap: 15px 25px;
-    align-items: center;
-}
-
-/* Custom button/icon styling from original */
-.icon {
-    width: 2.5em;
-    height: 2.5em;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background-color: #fff;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.icon:hover {
-    background-color: #f0f0f0;
-    border-color: #007bff;
+    gap: 15px;
 }
 
 .action-btn-group {
@@ -435,12 +406,49 @@ label {
     align-items: center;
 }
 
-/* SCROLLING FIX */
-.hidden-scrollbar {
-    overflow-y: visible !important; 
-    max-height: none !important; 
-    min-height: 1px; 
-    padding-right: 5px; 
+.icon {
+    width: 35px !important;
+    height: 35px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0;
+}
+
+.icon img {
+    width: 20px;
+    height: 20px;
+    display: block;
+    object-fit: contain;
+}
+
+.icon:hover {
+    background-color: #f0f0f0;
+    border-color: #007bff;
+}
+
+#docno {
+    width: 180px !important;
+}
+
+.jqx-datetimeinput {
+    height: 34px !important;
+    box-sizing: border-box;
+    width: 130px !important;
+}
+
+.jqx-datetimeinput input {
+    width: 100% !important;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
 }
 </style>
 </head>
@@ -452,66 +460,70 @@ label {
 
     <div class='hidden-scrollbar' style="padding: 10px;">
         
-        <div class="section-block" style="margin-bottom: 20px;">
-            <h2>Posting Control</h2>
-            <div class="agmt-info-grid">
-                
-                <label for="jqxVehDepreciationPostingDate">Date</label>
-                <div>
+        <div id="mainBG">
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="1%"><label>Date</label></td>
+                <td width="180px">
                     <div id="jqxVehDepreciationPostingDate" name="jqxVehDepreciationPostingDate" onchange="datechange();" value='<s:property value="jqxVehDepreciationPostingDate"/>'></div>
                     <input type="hidden" id="hidjqxVehDepreciationPostingDate" name="hidjqxVehDepreciationPostingDate" value='<s:property value="hidjqxVehDepreciationPostingDate"/>'/>
-                </div>
+                </td>
+                <td></td>
+                <td width="1%" align="right"><label>Doc&nbsp;No.</label></td>
+                <td width="180px" align="right">
+                    <input type="text" id="docno" name="txtjvno" value='<s:property value="txtjvno"/>' tabindex="-1" readonly>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-                <label>Actions</label>
-                <div class="action-btn-group">
-                    <button type="button" class="icon" id="btnExcelExporter" title="Export to Excel" onclick="funExcelExporter();">
-                        <img src="<%=contextPath%>/icons/excel_new.png" alt="Excel">
-                    </button>
-                    <button type="button" class="icon" id="btnProcessing" title="Process" onclick="funProcessBtn();">
-                        <img src="<%=contextPath%>/icons/process2.png" width="20" height="20" alt="Process">
-                    </button>
-                    <button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funCalculateBtn();">
-                        <img src="<%=contextPath%>/icons/calculate_new.png" alt="Calculate">
-                    </button>
-                </div>
-
-                <label for="docno">Doc No.</label>
-                <div>
-                    <input type="text" id="docno" name="txtjvno" value='<s:property value="txtjvno"/>' tabindex="-1" readonly/>
-                </div>
-
+    <div class="section-block">
+        <h2>Posting Control</h2>
+        <div class="agmt-info-grid">
+            <label>Actions</label>
+            <div class="action-btn-group">
+                <button type="button" class="icon" id="btnExcelExporter" title="Export to Excel" onclick="funExcelExporter();">
+                    <img src="<%=contextPath%>/icons/excel_new.png" alt="Excel">
+                </button>
+                <button type="button" class="icon" id="btnProcessing" title="Process" onclick="funProcessBtn();">
+                    <img src="<%=contextPath%>/icons/process2.png" width="20" height="20" alt="Process">
+                </button>
+                <button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funCalculateBtn();">
+                    <img src="<%=contextPath%>/icons/calculate_new.png" alt="Calculate">
+                </button>
             </div>
         </div>
+    </div>
 
-        <div class="section-block" style="margin-bottom: 20px;">
-            <h2>Vehicle Details</h2>
-            <div id="vehiclesDetailsDiv">
-                <jsp:include page="vehiclesDetailsGrid.jsp"></jsp:include>
+    <div class="section-block">
+        <h2>Vehicle Details</h2>
+        <div id="vehiclesDetailsDiv">
+            <jsp:include page="vehiclesDetailsGrid.jsp"></jsp:include>
+        </div>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; gap: 10px;">
+            <label style="font-weight: 600;">Depr. Total</label>
+            <input type="text" id="txtdeprtotal" name="txtdeprtotal" style="width: 200px; text-align: right; font-weight: bold; color: #007bff;" value='<s:property value="txtdeprtotal"/>' tabindex="-1" readonly/>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>Accounts</h2>
+        <div id="accountsDetailsDiv">
+            <jsp:include page="accountsDetailsGrid.jsp"></jsp:include>
+        </div>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <label style="font-weight: 600;">Dr. Total</label>
+                <input type="text" id="txtdrtotal" name="txtdrtotal" style="width: 150px; text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly/>
             </div>
-            
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; gap: 10px;">
-                <label style="font-weight: 600;">Depr. Total</label>
-                <input type="text" id="txtdeprtotal" name="txtdeprtotal" style="width: 200px; text-align: right; font-weight: bold; color: #007bff;" value='<s:property value="txtdeprtotal"/>' tabindex="-1" readonly/>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <label style="font-weight: 600;">Cr. Total</label>
+                <input type="text" id="txtcrtotal" name="txtcrtotal" style="width: 150px; text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly/>
             </div>
         </div>
-
-        <div class="section-block" style="margin-bottom: 20px;">
-            <h2>Accounts</h2>
-            <div id="accountsDetailsDiv">
-                <jsp:include page="accountsDetailsGrid.jsp"></jsp:include>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 15px; gap: 20px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label style="font-weight: 600;">Dr. Total</label>
-                    <input type="text" id="txtdrtotal" name="txtdrtotal" style="width: 150px; text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly/>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label style="font-weight: 600;">Cr. Total</label>
-                    <input type="text" id="txtcrtotal" name="txtcrtotal" style="width: 150px; text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly/>
-                </div>
-            </div>
-        </div>
+    </div>
+</div>
 
         <input type="hidden" id="mode" name="mode"/>
         <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
