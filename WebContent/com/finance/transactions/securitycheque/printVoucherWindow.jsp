@@ -15,37 +15,59 @@
     });
 	
 
- 	function printHeaderVoucher() {
-
-        var url=document.URL;
-        var reurl=url.split("saveSecurityCheque");
+    function printHeaderVoucher() {
+        var url = document.URL;
+        var reurl = url.split("saveSecurityCheque");
         $("#docno").prop("disabled", false);
 
-        var win= window.open(reurl[0]+"securityChequeVoucherPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	    win.focus();
-				
- 	}
+        var win = window.open(
+            reurl[0] + "securityChequeVoucherPrint?docno=" + document.getElementById("docno").value +
+            "&branch=" + document.getElementById("brchName").value + "&header=1",
+            "_blank",
+            "top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes"
+        );
+        if (win) {
+            setTimeout(function() { win.focus(); win.print(); }, 2000);
+        } else {
+            $.messager.alert('Message', 'Popup was blocked. Please allow popups for this site.', 'warning');
+        }
+    }
  	
- 	function printCheque(){
- 		
-        var url=document.URL;
-        var reurl=url.split("com");
-        $("#docno").prop("disabled", false);  
-        
-        var win= window.open(reurl[0]+"printSecurityCheque?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	    win.focus();
+    function printCheque() {
+        var url = document.URL;
+        var reurl = url.split("com");
+        $("#docno").prop("disabled", false);
 
- 	}
+        var win = window.open(
+            reurl[0] + "printSecurityCheque?docno=" + document.getElementById("docno").value +
+            "&branch=" + document.getElementById("brchName").value + "&header=1",
+            "_blank",
+            "top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes"
+        );
+        if (win) {
+            setTimeout(function() { win.focus(); win.print(); }, 2000);
+        } else {
+            $.messager.alert('Message', 'Popup was blocked. Please allow popups for this site.', 'warning');
+        }
+    }
  	
- 	function printWithOutHeader(){
- 		
- 		var url=document.URL;
-        var reurl=url.split("saveSecurityCheque");
-        $("#docno").prop("disabled", false); 
-        
-        var win= window.open(reurl[0]+"securityChequeVoucherPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	    win.focus();
- 	}
+    function printWithOutHeader() {
+        var url = document.URL;
+        var reurl = url.split("saveSecurityCheque");
+        $("#docno").prop("disabled", false);
+
+        var win = window.open(
+            reurl[0] + "securityChequeVoucherPrint?docno=" + document.getElementById("docno").value +
+            "&branch=" + document.getElementById("brchName").value + "&header=0",
+            "_blank",
+            "top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes"
+        );
+        if (win) {
+            setTimeout(function() { win.focus(); win.print(); }, 2000);
+        } else {
+            $.messager.alert('Message', 'Popup was blocked. Please allow popups for this site.', 'warning');
+        }
+    }
  	function getChequePrintConfig(){
   		var x = new XMLHttpRequest();
   		x.onreadystatechange = function() {
