@@ -71,8 +71,8 @@ String fromdate = request.getParameter("froms")==null?"0":request.getParameter("
             
             $("#jqxFleetGrid").jqxGrid(
             {
-                width: '98%',
-                height: 520,
+                width: '100%',
+                height: 750,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

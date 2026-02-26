@@ -63,8 +63,8 @@ String chkdatails = request.getParameter("chkdatails")==null?"":request.getParam
             
             $("#jqxsalikGrid").jqxGrid(
             {
-                width: '98%',
-                height: 520,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

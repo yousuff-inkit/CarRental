@@ -62,8 +62,8 @@
             
             $("#dayBook").jqxGrid(
             {
-                width: '98%',
-                height: 490,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 rowsheight:25,
                 filtermode:'excel',

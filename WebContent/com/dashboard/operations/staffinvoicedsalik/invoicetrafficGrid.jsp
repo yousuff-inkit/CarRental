@@ -63,7 +63,7 @@
             $("#jqxloadtrafficdataGrid").jqxGrid(
             {
                 width: '100%',
-                height: 480,
+                height: 730,
                 source: dataAdapter,
                 columnsresize: true,
                 //pageable: true,

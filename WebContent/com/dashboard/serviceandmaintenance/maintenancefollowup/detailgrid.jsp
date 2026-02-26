@@ -52,7 +52,7 @@ String rdoc = request.getParameter("rdoc")==null?"0":request.getParameter("rdoc"
             	
             	
             	width: '100%',
-                height: 102,
+                height: 300,
                 source: dataAdapter,
                 
                 selectionmode: 'singlerow',

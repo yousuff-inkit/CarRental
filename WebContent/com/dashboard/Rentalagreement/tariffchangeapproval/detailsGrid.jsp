@@ -95,8 +95,8 @@
             { 
             	
             	
-            	width: '99%',
-                height: 340,
+            	width: '100%',
+                height: 600,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,
