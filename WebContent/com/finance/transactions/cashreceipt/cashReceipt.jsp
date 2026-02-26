@@ -884,9 +884,7 @@ label {
     width: 100%;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+
 
 .table-section {
     margin: 20px 0;
@@ -934,7 +932,6 @@ label {
     height: 100vh;
 }
 
-/* Hide scrollbars (but allow scrolling) */
 .hidden-scrollbar::-webkit-scrollbar {
     width: 0px;
 }
@@ -943,33 +940,9 @@ body::-webkit-scrollbar {
 }
 
 
-.myButton {
-    /* Base Styles */
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    
-    
-    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-  }
 
-
-  .myButton:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-
-  .myButton:active {
-    background-color: #004085;
-    transform: scale(0.98); 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+  
+  
 #validrate,
 #validrate1 {
     color: red;
