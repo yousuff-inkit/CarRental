@@ -79,7 +79,7 @@
     
     
     .form-group.quad-input {
-        grid-template-columns: 120px 80px 140px 1fr;
+        grid-template-columns: 120px 100px 160px 1fr;
     }
 
     .section-row {
@@ -149,11 +149,7 @@
         color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
     }
     
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
+    
 
     .doc-group { display: flex; gap: 5px; }
     
@@ -178,10 +174,14 @@
         display: flex;
         align-items: center;
     }
-    .myButton {
- font-weight: 500;
+    body::-webkit-scrollbar {
+    width: 0px;
+}
+
+.myButton {
+ font-weight: 700;
     font-size: 13px;
-    width: fit-content;
+    width: 130px;
     height: 38px;
     padding: 8px 12px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
