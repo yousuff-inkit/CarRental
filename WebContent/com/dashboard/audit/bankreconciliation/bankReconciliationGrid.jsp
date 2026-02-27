@@ -60,8 +60,8 @@
 
             $("#jqxBankReconciliation").jqxGrid(
             {
-            	width: '98%',
-                height: 500,
+            	width: '100%',
+                height: 730,
                 source: dataAdapter,
                 rowsheight:25,
                 filtermode:'excel',

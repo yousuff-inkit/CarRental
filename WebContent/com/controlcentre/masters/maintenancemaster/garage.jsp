@@ -14,32 +14,24 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
-
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 130vh;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 1450px;
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
-
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
 
 input[type="text"], select {
     height: 32px !important;
@@ -64,10 +56,6 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
-
 .receipt-header {
     display: flex;
     flex-direction: column;
@@ -84,16 +72,6 @@ label {
     vertical-align: middle;
 }
 
-#txtStatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #e67e22;
-}
-
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
-
 .form-group {
     display: grid;
     grid-template-columns: 120px 1fr;
@@ -105,7 +83,7 @@ label {
 .form-group label {
     text-align: right;
     padding-right: 8px;
-    font-size:1rem;
+    font-size: 1rem;
 }
 
 .form-group input[type="text"],
@@ -113,35 +91,8 @@ label {
     width: 100%;
 }
 
-/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
 .form-group.dual-input {
-    display: grid;
     grid-template-columns: 120px 1fr 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-}
-form-group.dual-input label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Special case: One label with two equal-width inputs */
-.form-group.single-label-dual-input {
-    grid-template-columns: 120px 1fr 1fr;
-}
-
-.form-group.single-label-dual-input input[type="text"]:first-of-type {
-    width: 100%;
-}
-
-.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
-    width: 100%;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 30px;
 }
 
 .section-block {
@@ -151,6 +102,7 @@ form-group.dual-input label {
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 30px;
 }
 
 .section-block h2 {
@@ -159,157 +111,30 @@ form-group.dual-input label {
     margin: 0 0 20px;
     padding-left: 10px;
     border-left: 4px solid #007bff;
-}
-
-/* Special handling for the "to-account-row" - all items in one line */
-.dual-input-type-location {
-    display: grid;
-    grid-template-columns: 140px 375px 160px 240px; 
-    /* Label | Type Select | Location Label | Location Select */
-    align-items: center;
-    gap: 14px 20px;
-    margin-bottom: 14px;
-}
-
-.dual-input-type-location label {
-    text-align: right;
-    padding-right: 10px;
-    white-space: nowrap;
-    font-weight: 700;       /* Increased font-weight */
-    font-size: 15px;
-}
-
-/* Type dropdown width */
-.dual-input-type-location #type {
-    width: 400px !important;
-}
-
-/* Location dropdown — bigger & aligns with Doc No */
-.dual-input-type-location #location {
-    width: 400px !important;
-    font-weight: 600;
-}
-
-
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
-
-.table-section {
-    margin: 20px 0;
-}
-
-.table-section h3 {
     color: #253858;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 12px;
 }
 
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
-/* Hide scrollbars (but allow scrolling) */
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
-}
-
-/* ------------------------------
-   BUTTONS
------------------------------- */
-
-button, .myButton {
-    background: #007bff;
+.myButton {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
 }
 
-button:hover, .myButton:hover {
-    background: #0056b3;
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
 }
 
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
-
-#validrate,
-#validrate1 {
-    color: red;
-    font-size: 12px;
-    grid-column: 2 / -1;
+.jqx-datetimeinput {
+    height: 34px !important;
+    box-sizing: border-box;
 }
-
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
-
-.dual-input-date-docno {
-    display: grid;
-    grid-template-columns: 140px 380px 160px 240px; 
-    /*   Label | Date | DocNo Label | DocNo Input  */
-    align-items: center;
-    gap: 14px 20px;
-    margin-bottom: 14px;
-}
-
-.dual-input-date-docno label {
-    text-align: right;
-    padding-right: 10px;
-    white-space: nowrap;
-    font-weight: 700;            /* Increased font weight */
-    font-size: 15px;
-}
-
-/* Date control width */
-.dual-input-date-docno #garagedate {
-    width: 200px !important;
-    padding-left:-10px
-}
-
-/* Doc No input field wider */
-.dual-input-date-docno input[type="text"] {
-    width: 240px !important;
-    font-weight: 600;
-}
-
-
 </style>
 <script type="text/javascript">
 
@@ -520,42 +345,57 @@ function setValues()
 <div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
 <form id="frmGarage" action="saveActionGarage" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /><br/> 
-<fieldset><legend>Garage Details</legend>
-<div class="section-block">
- 
-  <div class="dual-input-date-docno">
-    <label>Date</label>
-    <div id="garagedate" name="garagedate" value='<s:property value="garagedate"/>'></div></td>
-    <label>Doc No</label>  
-    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
-  </div>
-  <div class="form-group dual-input">
-    <label>Code</label>
-    <label><input type="text" name="garagecode" id="garagecode" value='<s:property value="garagecode"/>'>
-    <label>Name</label>
-    <input type="text" name="garagename" id="garagename" value='<s:property value="garagename"/>' >
-  </div>
-  <div class="form-group dual-input-type-location">
-    
-      <label>Type</label>
-    
-    <select name="type" id="type" value='<s:property value="type"/>' style="width:90%;">
-      <option value="">--Select--</option>
-      <option value="E">External</option>
-      <option value="O">Own</option>
-    </select>
-    <label>Location</label>
-    <select name="location" id="location" value='<s:property value="location"/>' style="width:32.5%;">
-      <option>----</option>
-    </select>
-  </div>
-  <div class="form-group ">
-    <label>Account</label>
-    <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' style="width:32%;" ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" placeholder="Press F3 to Search" readonly="readonly">
-    <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-  </div>
-</div>
-</fieldset><br/>
+<div id="mainBG">
+    <div class='receipt-header'>
+        <table width="100%">
+            <tr>
+                <td width="5%" align="right"><label>Date</label></td>
+                <td width="15%">
+                    <div id="garagedate" name="garagedate" value='<s:property value="garagedate"/>'></div>
+                </td>
+                <td width="40%"></td>
+                <td width="10%" align="right"><label>Doc No</label></td>
+                <td width="30%">
+                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-block">
+        <h2>Garage Details</h2>
+        
+        <div class="form-group dual-input">
+            <label>Code</label>
+            <input type="text" name="garagecode" id="garagecode" value='<s:property value="garagecode"/>'>
+            
+            <label>Name</label>
+            <input type="text" name="garagename" id="garagename" value='<s:property value="garagename"/>'>
+        </div>
+
+        <div class="form-group dual-input">
+            <label>Type</label>
+            <select name="type" id="type" value='<s:property value="type"/>'>
+                <option value="">--Select--</option>
+                <option value="E">External</option>
+                <option value="O">Own</option>
+            </select>
+            
+            <label>Location</label>
+            <select name="location" id="location" value='<s:property value="location"/>'>
+                <option>----</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Account</label>
+            <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' 
+                   ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" 
+                   placeholder="Press F3 to Search" readonly="readonly">
+            <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
+        </div>
+    </div>
+</div><br/>
 	 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
 <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>

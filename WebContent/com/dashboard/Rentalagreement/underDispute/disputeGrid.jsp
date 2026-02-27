@@ -88,7 +88,7 @@ String barchval = request.getParameter("barchval")==null?"0":request.getParamete
             	
             	
             	width: '100%',
-                height: 400,
+                height: 600,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,

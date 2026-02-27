@@ -85,8 +85,8 @@ $(document).ready(function () {
     
     $("#updateContractGrid").jqxGrid(
     {
-        width: '98%',
-        height: 525,
+        width: '100%',
+        height: 730,
         source: dataAdapter,
         filtermode:'excel',
         filterable: true,

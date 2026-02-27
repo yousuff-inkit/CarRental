@@ -99,7 +99,7 @@
             {
                 source: dataAdapter,
                 width: '99.5%',
-                height: 520,
+                height: 700,
                 ready: function() 
                 {
                 	var rows = $("#profitLossGrid").jqxTreeGrid('getRows');

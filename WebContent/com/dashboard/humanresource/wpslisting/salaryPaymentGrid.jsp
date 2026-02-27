@@ -87,12 +87,12 @@
             
             $("#salaryPaymentDetailsGridID").jqxGrid(
             {
-                width: '98%',
+                width: '100%',
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,
                 sortable: true,
-                height:500,
+                height:730,
                 rowsheight:25,
                 columnsresize: true,
                 editable: false,

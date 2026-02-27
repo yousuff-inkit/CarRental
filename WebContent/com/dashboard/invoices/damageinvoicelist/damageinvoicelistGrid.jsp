@@ -96,8 +96,8 @@ $(document).ready(function () {
     
     $("#damageinvoicelist").jqxGrid(
     {
-        width: '98%',
-        height: 500,
+        width: '100%',
+        height: 730,
         source: dataAdapter,
         showaggregates:true,
         enableAnimations: true,

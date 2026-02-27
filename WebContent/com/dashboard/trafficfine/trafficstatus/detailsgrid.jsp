@@ -90,8 +90,8 @@ String regno = request.getParameter("regno")==null?"":request.getParameter("regn
             
             $("#jqxFleetGrid").jqxGrid(
             {
-                width: '98%',
-                height: 530,
+                width: '100%',
+                height: 730,
                 source: dataAdapter,
                 
                 showaggregates:true,

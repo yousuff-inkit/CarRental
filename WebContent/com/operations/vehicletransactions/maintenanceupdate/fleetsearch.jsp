@@ -36,50 +36,96 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table >
-   <tr>
-    <td align="right" width="6%">Fleet</td> 
-    <td align="left" ><input type="text" name="fleetno" id="fleetno"  style="width:90%;" value='<s:property value="fleetno"/>'></td>
-    <td align="right" width="14%">Reg No</td>
-    <td align="left"><input type="text" name="regno" id="regno" value='<s:property value="regno"/>'></td>
-    
-   <td align="right"  width="14%">Name</td>
-    <td align="left"  width="30%"><input type="text" name="flname" style="width:90%;" id="flname" value='<s:property value="flname"/>'></td>
-    
-    <tr>
-    </table>
-    </td>
-  </tr>
-  <tr>
-  <td>
-  <table >
-  <tr>
-   <td align="right" width="6%">Color</td>
-    <td align="left" ><input type="text" name="color"  style="width:90%;" id="color" value='<s:property value="color"/>'>
-    <td align="right" width="14%">Group</td>
-    <td align="left"><input type="text" name="group" id="group" value='<s:property value="group"/>'></td>
-    <td align="right"  width="14%">&nbsp;</td>
-    <td align="left"  width="30%"><input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onclick="loadSearchs();"></td>
-  </tr>
-  </table>
-  </td>
+<style type="text/css">
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+}
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdivs">
-      
-   <jsp:include  page="subvehinfo.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
+td[align="right"] {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+}
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;                
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+tr {
+  line-height: 1.6;
+}
+
+
+#btnsearch {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#btnsearch:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+</style>
+
+<body>
+<div id="search">
+  <table width="100%">
+    <tr>
+      <td width="10%" align="right">Fleet</td>
+      <td width="20%">
+        <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>'>
+      </td>
+      <td width="10%" align="right">Reg No</td>
+      <td width="20%">
+        <input type="text" name="regno" id="regno" value='<s:property value="regno"/>'>
+      </td>
+      <td width="10%" align="right">Name</td>
+      <td width="30%">
+        <input type="text" name="flname" id="flname" value='<s:property value="flname"/>'>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">Color</td>
+      <td>
+        <input type="text" name="color" id="color" value='<s:property value="color"/>'>
+      </td>
+      <td align="right">Group</td>
+      <td>
+        <input type="text" name="group" id="group" value='<s:property value="group"/>'>
+      </td>
+      <td>&nbsp;</td>
+      <td align="left">
+        <input type="button" name="btnsearch" id="btnsearch" value="Search" onclick="loadSearchs(); return false;">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="refreshdivs">
+          <jsp:include page="subvehinfo.jsp"></jsp:include> 
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

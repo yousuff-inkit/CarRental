@@ -93,8 +93,8 @@ $(document).ready(function () {
     
     $("#nrmListGrid").jqxGrid(
     {
-        width: '99%',
-        height: 535,
+        width: '100%',
+        height: 730,
         columnsheight:23,
         columnsresize:true,
         source: dataAdapter,
