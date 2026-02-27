@@ -68,7 +68,7 @@
     }
 
     .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
+        grid-template-columns: 120px 1fr 100px 1fr;
     }
 
     .form-group.single-label-dual-input {
@@ -163,7 +163,11 @@
         color: #253858;
         font-size: 14px;
     }
-    .myButton {
+    body::-webkit-scrollbar {
+    width: 0px;
+}
+
+.myButton {
  font-weight: 700;
     font-size: 13px;
     width: 130px;
