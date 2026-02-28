@@ -8,183 +8,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../includes.jsp"></jsp:include>
-
-    <style>
-    .container {
-    height: 100%;
-}
-
-/* ---------- SCROLL ---------- */
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
-/* ---------- BODY ---------- */
+<style>
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
+    padding: 10px 0;
     box-sizing: border-box;
+    overflow-x: hidden;
+    min-height: auto;
 }
 
-/* ---------- MAIN CARD ---------- */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 10px;
-    max-width: 100%;
-    margin: 0 auto;
+    padding: 15px;
+    /* Fixed to full screen width as per image_22a61c.png */
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: block;
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* ---------- HEADER ---------- */
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0 24px;
-    font-size: 2vh;
+#formdet {
+    text-align: left !important;
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px; /* Reduced space between title and header */
+    padding-left: 5px;
 }
 
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-
-.receipt-header input[type="text"] {
+input[type="text"], select, textarea {
+    height: 30px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
+    padding: 4px 10px;
     background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.receipt-header input[type="text"]:focus {
+input[type="text"]:focus, select:focus, textarea:focus {
     border-color: #007bff;
     outline: none;
 }
 
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.receipt-header button:hover {
-    background: #0056b3;
-}
-
-#txtStatus {
-    font-size: 1rem;
+label {
     font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
+    color: #253858;
+    white-space: nowrap;
+    text-align: right;
+    padding-right: 8px;
 }
 
-/* ---------- SECTION BLOCKS ---------- */
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
+.receipt-header {
+    display: block;
+    margin-bottom: 8px; /* Tight spacing between sections */
+    padding: 0 5px;
+}
+
+.receipt-header table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.receipt-header td {
+    padding: 2px 4px;
+    vertical-align: middle;
 }
 
 .section-block {
-    flex: 1;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 8px; /* Reduced space between cards */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px;
-    color: #253858;
-}
-
-/* ---------- TABLE SECTIONS ---------- */
-.table-section {
-    margin-bottom: 18px;
-    padding: 16px;
-    border-radius: 8px;
-    background: #f6f8fa;
-}
-
-/* 🔵 BLUE HEADING LINE */
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
+    font-size: 1rem;
     font-weight: 600;
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     padding-left: 10px;
     border-left: 4px solid #007bff;
+    color: #333;
 }
 
-/* ---------- TABLE ---------- */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr 100px 1fr 100px 1fr;
+    align-items: center;
+    gap: 8px 12px;
 }
 
-.cr-table th,
-.cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+/* Force specific widths for header inputs as per request */
+.jqx-datetimeinput {
+    height: 30px !important;
+    box-sizing: border-box;
+    width: 150px !important; 
 }
 
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+#docno, .header-docno {
+    width: 150px !important;
 }
 
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ---------- INPUTS ---------- */
-input[type="text"],
-select {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
+.grid-container {
+    margin-top: 10px;
     background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e4e7ec;
+    overflow: hidden;
 }
 
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
+input[readonly], textarea[readonly] {
+    background-color: #f3f4f6;
+    color: #6b7280;
 }
-
-/* ---------- TEXT RULES ---------- */
-label,
-td,
-th {
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-}
+</style>
     
-    </style>
- 
 <script type="text/javascript">
 
 $(document).ready(function () {     
@@ -281,59 +232,52 @@ $(document).ready(function () {
     <jsp:include page="../../../header.jsp" />
     <br/>
 
-    <div class="hidden-scrollbar receipt-header">
+    <div id="mainBG">
+    <div id="formdet">Group Master</div>
 
-        <div class="table-section">
-            <h3>Group Details</h3>
-
-            <table class="cr-table" width="100%">
-                <tr>
-                    <td width="5%" align="right">Date</td>
-                    <td width="16%">
-                        <div id="fgmdate" name="fgmdate"
-                             value='<s:property value="fgmdate"/>'></div>
-                    </td>
-                    <td colspan="3" align="right">Doc No.</td>
-                    <td width="30%">
-                        <input type="text" id="docno" name="docno"
-                               value='<s:property value="docno"/>'
-                               readonly tabindex="-1">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td align="right">Code</td>
-                    <td>
-                        <input type="text" name="fgmcode" id="fgmcode"
-                               placeholder="Group Code"
-                               value='<s:property value="fgmcode"/>'>
-                    </td>
-
-                    <td width="5%" align="right">Name</td>
-                    <td>
-                        <input type="text" name="fgmname" id="fgmname"
-                               style="width:80%;"
-                               placeholder="Group Name"
-                               value='<s:property value="fgmname"/>'>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="cr-table" id="grpgrid">
-            <jsp:include page="groupGrid.jsp"></jsp:include>
-        </div>
-
-        <input type="hidden" name="hidfgmdate" id="hidfgmdate"
-               value='<s:property value="hidfgmdate"/>'/>
-        <input type="hidden" name="mode" id="mode"
-               value='<s:property value="mode"/>'/>
-        <input type="hidden" name="deleted" id="deleted"
-               value='<s:property value="deleted"/>'/>
-        <input type="hidden" id="msg" name="msg"
-               value='<s:property value="msg"/>'/>
-
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="60px" align="right"><label>Date</label></td>
+                <td width="150px">
+                    <div id="fgmdate" name="fgmdate" value='<s:property value="fgmdate"/>'></div>
+                </td>
+                <td></td>
+                <td width="80px" align="right"><label>Doc No.</label></td>
+                <td width="150px" align="right">
+                    <input type="text" id="docno" name="docno" class="header-docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+                </td>
+            </tr>
+        </table>
     </div>
+
+    <div class="section-block">
+        <h2>Group Details</h2>
+        <div class="agmt-info-grid">
+            <label>Code</label>
+            <input type="text" name="fgmcode" id="fgmcode" placeholder="Group Code" value='<s:property value="fgmcode"/>'>
+            
+            <label>Name</label>
+            <div style="grid-column: span 3;">
+                <input type="text" name="fgmname" id="fgmname" placeholder="Group Name" value='<s:property value="fgmname"/>'>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>Group Grid Information</h2>
+        <div class="grid-container">
+            <div id="grpgrid">
+                <jsp:include page="groupGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" name="hidfgmdate" id="hidfgmdate" value='<s:property value="hidfgmdate"/>'/>
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+</div>
 </form>
 </div>
 

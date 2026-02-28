@@ -52,14 +52,14 @@
  
 	</script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
+/* Master UI Table Container */
+#search table {
   border-collapse: separate;
   border-spacing: 15px 12px; /* Standardized master gap */
+  width: 100%;
 }
 
-/* Section Header with Blue Vertical Line */
+/* Section Header styling (if needed) */
 .section-header {
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 16px;
@@ -77,7 +77,7 @@ td[align="right"] {
   color: #222;
 }
 
-/* Bold text inside inputs */
+/* Input Field Styling */
 input[type="text"] {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 600;
@@ -90,7 +90,7 @@ input[type="text"] {
   border-radius: 4px;
 }
 
-/* Date field styling */
+/* Date Picker Container */
 #searchdate {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 600;
@@ -102,7 +102,7 @@ input[type="text"] {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 700;
   font-size: 14px;
-  background-color: #007bff; /* Master green */
+  background-color: #007bff; /* Master Blue */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -110,13 +110,15 @@ input[type="text"] {
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   transition: background-color 0.3s;
+  min-width: 90px;
 }
 
+/* Master Green Hover Effect */
 .myButton:hover {
   background-color: #45a049;
 }
 
-/* Clean background and row spacing */
+/* Row Spacing */
 tr {
   line-height: 1.6;
 }
@@ -124,25 +126,33 @@ tr {
 
 <body bgcolor="#E0ECF8">
 <div id="search">
-  
-
-  <table width="100%">
+  <table>
     <tr>
       <td width="12%" align="right">Doc No</td>
-      <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
+      <td width="14%" align="left">
+        <input type="text" name="searchdocno" id="searchdocno">
+      </td>
       <td width="7%" align="right">Date</td>
-      <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
+      <td width="13%" align="left">
+        <div id="searchdate" name="searchdate"></div>
+      </td>
       <td width="13%" align="right">Mobile</td>
-      <td width="15%" align="left"><input type="text" name="searchmobile" id="searchmobile"></td>
+      <td width="15%" align="left">
+        <input type="text" name="searchmobile" id="searchmobile">
+      </td>
       <td width="12%" align="right">&nbsp;</td>
       <td width="14%" align="left">&nbsp;</td>
     </tr>
 
     <tr>
       <td align="right">Name</td>
-      <td colspan="3" align="left"><input type="text" name="searchname" id="searchname" style="width:99%;"></td>
+      <td colspan="3" align="left">
+        <input type="text" name="searchname" id="searchname" style="width:99%;">
+      </td>
       <td align="right">A/c No</td>
-      <td align="left"><input type="text" name="searchacno" id="searchacno"></td>
+      <td align="left">
+        <input type="text" name="searchacno" id="searchacno">
+      </td>
       <td align="right">&nbsp;</td>
       <td align="center">
         <input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();">

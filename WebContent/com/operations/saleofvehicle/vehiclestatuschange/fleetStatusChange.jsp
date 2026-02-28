@@ -217,28 +217,34 @@ function setValues()
 </script>
 </head>
 <style>
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+html, body {
+    /* Use 100% height to ensure the background covers everything */
+    height: 100%;
+    margin: 0;
+    padding: 0; /* Changed from 32px to 0 to remove top/bottom gaps */
+    box-sizing: border-box;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
-    margin: 0;
-    padding: 32px 0;
-    box-sizing: border-box;
-    /* Changed from min-height: 100vh to fit content and remove excess bottom space */
-    min-height: auto; 
-    overflow-y: auto;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    
+    /* Enables flex layout to force children to fill space */
+    display: flex;
+    flex-direction: column;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
+    border-radius: 16px 16px 0 0; /* Rounded top corners only if touching bottom */
     padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    /* Prevents container from stretching vertically unnecessarily */
-    display: inline-block;
     width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    
+    /* KEY CHANGES: */
+    flex-grow: 1;           /* Forces the container to grow and fill the bottom */
+    display: block;         /* Changed from inline-block to allow full width/height */
+    box-sizing: border-box; /* Ensures padding doesn't cause overflow */
 }
 
 .receipt-header {
@@ -330,6 +336,12 @@ label {
 .section-block:last-child {
     margin-bottom: 0;
 }
+
+#formdet {
+    text-align: left !important;
+    display: block;
+}
+
 </style>
 
 <body onload="funReadOnly();setValues();">
