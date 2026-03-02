@@ -39,30 +39,34 @@ body {
 
 /* Applying the preferred myButton style to the new buttons */
 input[type="button"].myButton {
-    font-size: 12px;
-    font: Tahoma;
-    padding: 10px 5px;
-    border-radius: 8px;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
     border: none;
-    background: #4a90e2;
-    color: #fff;
-    font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    /* Reduced margin-right to tighten up horizontal spacing */
-    margin-right: 5px; 
-    outline: none;
-    transition: background 0.2s;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    /* Set a fixed width for visual consistency like the image */
-    width: 150px; 
+    text-align: center;
 }
+
+
 
 
 input[type="button"].myButton:hover {
-    background: #357ab8;
+    background: linear-gradient(135deg, #32cd32 0%, #2eb82e 100%); /* Parrot green shades */
+    box-shadow: 0 4px 12px rgba(50, 205, 50, 0.3);
+    transform: translateY(-1px);
 }
+
 
 input[type="text"], input[type="hidden"], select {
     background: #fff;
