@@ -32,131 +32,77 @@
 	</script>
 
 <style type="text/css">
-    /* 1. Reset and Container */
-    #search-container {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #ffffff;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #e1e8f0;
-        max-width: 100%;
-        box-sizing: border-box;
-        margin: 0 auto;
-    }
 
-    /* 2. Compact Grid Layout */
-    .search-row {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 12px;
-        align-items: flex-end;
-    }
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        flex: 1; /* Inputs take equal available space */
-        min-width: 0; /* Prevents flex items from overflowing */
-    }
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+}
 
-    /* 3. Small, Modern Labels and Inputs */
-    .form-group label {
-        font-size: 11px;
-        font-weight: 700;
-        color: #7a8ba3;
-        text-transform: uppercase;
-        margin-bottom: 5px;
-        letter-spacing: 0.5px;
-    }
 
-    input[type="text"] {
-        height: 30px; /* Scaled down */
-        padding: 0 10px;
-        border: 1px solid #dbeafe;
-        border-radius: 5px;
-        font-size: 12px;
-        color: #334155;
-        background-color: #fcfdfe;
-        box-sizing: border-box;
-        width: 100%;
-    }
+td[align="right"] {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+}
 
-    input[type="text"]:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-    }
 
-    /* 4. The Requested Button Style (Compact Version) */
-    .btn-search-modern {
-        font-weight: 700;
-        font-size: 11px;
-        width: 100px; /* Fixed small width */
-        height: 30px; /* Matches input height */
-        background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-        color: #ffffff !important;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        transition: transform 0.1s;
-    }
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;               
+  max-width: 100%;
+  box-sizing: border-box;   /* Include padding in width */
+}
 
-    .btn-search-modern:hover {
-        filter: brightness(1.1);
-    }
 
-    .btn-search-modern:active {
-        transform: scale(0.98);
-    }
+#bankdate, #chqdate {
+  font-weight: 600;
+  font-size: 14px;
+}
 
-    /* 5. Results Area (Ensures Grid shows up) */
-    .results-wrapper {
-        margin-top: 15px;
-        border-top: 1px solid #f1f5f9;
-        padding-top: 10px;
-        width: 100%;
-        overflow: visible; /* Keeps dynamic grid visible */
-    }
+
+/* Additional spacing for rows */
+tr {
+  line-height: 1.6;
+}
+#btnsearch{
+   background-color: #2f80ed;   /* clean blue */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border: 1px solid #2f80ed;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 90px;   
+}
+
+
 </style>
-</head>
 <body>
-
-<div id="search-container">
-    <div class="search-row">
-        <div class="form-group">
-            <label>Account No</label>
-            <input type="text" id="txtacctno" placeholder="e.g. 10002345">
-        </div>
-        
-        <div class="form-group">
-            <label>Currency</label>
-            <input type="text" id="txtacctcurrency" placeholder="USD">
-            <input type="hidden" id="txttypes">
-            <input type="hidden" id="txtnewmaindate">
-        </div>
-
-        <a href="javascript:void(0)" class="btn-search-modern" onclick="loadAccountSearchGrid();">
-            Search
-        </a>
-    </div>
-
-    <div class="search-row">
-        <div class="form-group">
-            <label>Account Name</label>
-            <input type="text" id="txtacctname" placeholder="Search by name...">
-        </div>
-        <div style="width: 112px;"></div> 
-    </div>
-
-    <div id="refreshAccountSearchDetailsDiv" class="results-wrapper">
-        <jsp:include page="cashReceiptSearchGrid.jsp"/>
-    </div>
-</div>
-
+<div id=search>
+<table width="100%">
+  <tr>
+    <td width="6%" align="right">Date</td>
+    <td width="14%"><div id="receiptdate" name="receiptdate"  value='<s:property value="receiptdate"/>'></div>
+        <input type="hidden" name="hidreceiptdate" id="hidreceiptdate" value='<s:property value="hidreceiptdate"/>'></td>
+    <td width="21%" align="right">Doc No</td>
+    <td width="32%"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
+    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" 
+       value="Search" onclick="loadSearch(); return false;"></td>
+  </tr>
+  <tr>
+    <td align="right">Name</td>
+    <td colspan="2"><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'></td>
+    <td align="right">Amount</td>
+    <td><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
+  </tr>
+  <tr>
+    <td colspan="5"><div id="refreshdiv"><jsp:include page="crvMainSearchGrid.jsp"></jsp:include></div></td>
+  </tr>
+</table>
+  </div>
 </body>
 </html>
