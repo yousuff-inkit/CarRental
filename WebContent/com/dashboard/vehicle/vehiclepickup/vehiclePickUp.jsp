@@ -10,146 +10,95 @@
 <title>GatewayERP(i)</title>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-    /* Layout & Sidebar Structure - STRUCTURE PRESERVED */
-    .master-container {
-        display: flex;
-        font-family: 'Segoe UI', Tahoma, sans-serif !important;
-        background-color: #f4f7f9;
-        width: 100%;
-        height: 100vh !important;
-        overflow: hidden !important;
-        color: black !important;
-    }
+  
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
 
-    .sidebar-filters {
-        width: 330px; 
-        flex: 0 0 330px;
-        background-color: #ffffff;
-        border-right: 1px solid #e1e8ed;
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-        height: 100vh !important;
-    }
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
 
-    .sidebar-fixed-top {
-        padding: 20px 20px 15px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f4f8;
-        flex-shrink: 0;
-    }
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
 
-    .sidebar-scroll-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px 20px 25px 20px;
-    }
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
 
-    .filter-card {
-        background-color: #f8fafc !important;
-        border: 1px solid #e3e8ee !important;
-        border-radius: 12px !important;
-        padding: 15px;
-        margin-bottom: 10px;
-    }
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
 
-    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
-        background-color: transparent !important;
-        color: black !important;
-    }
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
 
-    .filter-table { 
-        width: 100%; 
-        border-spacing: 0 10px; 
-    }
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
 
-    .label-cell {
-        text-align: right;
-        padding-right: 12px;
-        font-size: 13px;
-        font-weight: 600;
-        width: 85px;
-    }
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
 
-    input[type="text"], select, textarea {
-        width: 100%;
-        border: 1px solid #ccd6e0;
-        border-radius: 6px;
-        padding: 7px 10px;
-        font-size: 13px;
-        color: black !important;
-        box-sizing: border-box;
-        background-color: #ffffff !important;
-    }
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    .main-content-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100%;
-        max-width: calc(100vw - 330px);
-        overflow: hidden !important; 
-        position: relative;
-        background-color: #ffffff;
-    }
+.btn-submit:hover {
+    background: #1d4ed8;
+}
 
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto !important;
-        overflow-x: hidden !important; 
-        padding: 20px;
-    }
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
 
-    /* --- PRIMARY BLUE BUTTONS (#2563eb) --- */
-    .myButtons {
-        background-color: #2563eb !important;
-        border: none !important;
-        border-radius: 6px;
-        cursor: pointer;
-        color: #ffffff !important;
-        font-size: 13px;
-        font-weight: 700;
-        padding: 10px 15px;
-        transition: background 0.2s;
-        display: inline-block;
-        text-align: center;
-        min-width: 80px;
-    }
-
-    .myButtons:hover { 
-        background-color: #1d4ed8 !important; 
-    }
-
-    /* --- DELETE BUTTON (RED #c0392b) --- */
-    .btn-delete {
-        background-color: #c0392b !important;
-        border: none !important;
-        border-radius: 6px;
-        cursor: pointer;
-        color: #ffffff !important;
-        font-size: 13px;
-        font-weight: 700;
-        padding: 10px 15px;
-        transition: background 0.2s;
-        display: inline-block;
-        text-align: center;
-        min-width: 80px;
-    }
-
-    .btn-delete:hover {
-        background-color: #a93226 !important;
-    }
-
-    .branch { font-size: 13px; font-weight: 600; }
-    
-    #pickupfield {
-        border: 1px solid #ccd6e0;
-        border-radius: 8px;
-        padding: 10px;
-        margin-top: 10px;
-    }
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
 </style>
 <script type="text/javascript">
 
@@ -338,120 +287,175 @@ function funreload(event){
 </head>
 <body onload="setValues();">
 <form id="frmVehiclePickup" action="saveVehiclePickup" method="post" autocomplete="off">
+
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Upto</td>
-                        <td><div id="periodupto"></div></td>
-                    </tr>
-                </table>
-                <div style="text-align: center; margin-top: 10px;">
-                    <button type="button" class="myButtons" id="btnpickupadd" onclick="funpickupadd();">Add</button>
-                    <button type="button" class="myButtons" id="btnpickupsave" hidden="true" onclick="funpickupsave();">Save</button>
+<table width="100%">
+<tr>
+
+<td width="20%">
+    <div class="master-container">
+        <div class="sidebar-filters">
+
+            <div class="sidebar-fixed-top">
+                <div class="filter-card">
+                    <jsp:include page="../../heading.jsp"></jsp:include>
                 </div>
             </div>
 
-            <div class="filter-card">
-                <fieldset id="pickupfield">
-                    <legend><b>In Details</b></legend>
+            <div class="sidebar-scroll-content">
+
+                <div class="filter-card">
                     <table class="filter-table">
                         <tr>
-                            <td class="label-cell">Type</td>
-                            <td>
-                                <select name="cmbtype" id="cmbtype" value='<s:property value="cmbtype" />'>
-                                    <option value="">--Select--</option>
-                                    <option value="RAG">Rental</option>
-                                    <option value="LAG">Lease</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Agmt</td>
-                            <td>
-                                <input type="text" name="agmtvocno" id="agmtvocno" onKeyDown="getAgmt(event);" readonly value='<s:property value="agmtvocno"/>'>
-                                <input type="hidden" name="agmtno" id="agmtno" value='<s:property value="agmtno"/>' />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Fleet</td>
-                            <td>
-                                <input type="text" name="fleetdetails" id="fleetdetails" value='<s:property value="fleetdetails"/>' readonly>
-                                <input type="hidden" name="fleet_no" id="fleet_no" value='<s:property value="fleet_no"/>'>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Date</td>
-                            <td><div id="indate" name="indate" value='<s:property value="indate" />'></div></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Time</td>
-                            <td><div id="intime" name="intime" value='<s:property value="intime" />'></div></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Km</td>
-                            <td><input type="text" name="inkm" id="inkm" value='<s:property value="inkm" />'></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Fuel</td>
-                            <td>
-                                <select name="cmbinfuel" id="cmbinfuel" value='<s:property value="cmbinfuel" />'>
-                                    <option value="">--Select--</option>
-                                    <option value="0.000">0/8</option>
-                                    <option value="0.125">1/8</option>
-                                    <option value="0.250">2/8</option>
-                                    <option value="0.500">4/8</option>
-                                    <option value="1.000">8/8</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Details</td>
-                            <td><textarea name="pickdesc" id="pickdesc" style="height:50px;"><s:property value="pickdesc" /></textarea></td>
+                            <td class="label-cell">Upto</td>
+                            <td><div id="periodupto"></div></td>
                         </tr>
                     </table>
-                </fieldset>
-            </div>
 
-            <div style="text-align: center; padding: 10px 0;">
-                <button type="button" name="btnpickupprint" id="btnpickupprint" class="myButtons" onclick="funPickupPrint();">Print</button>
-                <button type="button" name="btnpickupdelete" id="btnpickypdelete" class="btn-delete" onclick="funPickupDelete();">Delete</button>
-            </div>
+                   
+                    <button type="button"
+                            class="btn-submit"
+                            id="btnpickupadd"
+                            onclick="funpickupadd();">
+                        Add
+                    </button>
 
-            <div class="filter-card">
-                <textarea id="agmtdetails" name="agmtdetails" style="height:80px;" readonly></textarea>
+                    <button type="button"
+                            class="btn-submit"
+                            id="btnpickupsave"
+                            hidden="true"
+                            onclick="funpickupsave();">
+                        Save
+                    </button>
+                </div>
+
+                <!-- In Details -->
+                <div class="filter-card">
+                    <fieldset id="pickupfield">
+                        <legend><b>In Details</b></legend>
+
+                        <table class="filter-table">
+
+                            <tr>
+                                <td class="label-cell">Type</td>
+                                <td>
+                                    <select name="cmbtype" id="cmbtype">
+                                        <option value="">--Select--</option>
+                                        <option value="RAG">Rental</option>
+                                        <option value="LAG">Lease</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Agmt</td>
+                                <td>
+                                    <input type="text" name="agmtvocno" id="agmtvocno" readonly>
+                                    <input type="hidden" name="agmtno" id="agmtno">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Fleet</td>
+                                <td>
+                                    <input type="text" name="fleetdetails" id="fleetdetails" readonly>
+                                    <input type="hidden" name="fleet_no" id="fleet_no">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Date</td>
+                                <td><div id="indate"></div></td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Time</td>
+                                <td><div id="intime"></div></td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Km</td>
+                                <td><input type="text" name="inkm" id="inkm"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Fuel</td>
+                                <td>
+                                    <select name="cmbinfuel" id="cmbinfuel">
+                                        <option value="">--Select--</option>
+                                        <option value="0.000">0/8</option>
+                                        <option value="0.125">1/8</option>
+                                        <option value="0.250">2/8</option>
+                                        <option value="0.500">4/8</option>
+                                        <option value="1.000">8/8</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="label-cell">Details</td>
+                                <td>
+                                    <textarea name="pickdesc" id="pickdesc" style="height:50px;"></textarea>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </fieldset>
+                </div>
+                <button type="button"
+                        class="btn-submit"
+                        id="btnpickupprint"
+                        onclick="funPickupPrint();">
+                    Print
+                </button>
+
+                <button type="button"
+                        id="btnpickypdelete"
+                        onclick="funPickupDelete();"
+                        style="width:100%; padding:11px; margin-top:8px; background:#dc2626; color:#fff; border:none; border-radius:6px; font-weight:600;">
+                    Delete
+                </button>
+
+                <div class="filter-card">
+                    <textarea id="agmtdetails" name="agmtdetails" style="height:80px;" readonly></textarea>
+                </div>
+
             </div>
         </div>
     </div>
+</td>
 
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="pickupdiv">
-                <jsp:include page="pickupGrid.jsp"></jsp:include>
-            </div>
-            
-            <input type="hidden" name="gridlength" id="gridlength" >
-            <input type="hidden" name="invgridlength" id="invgridlength" >
-            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-            <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>'>
-            <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
-            <input type="hidden" name="hidkm" id="hidkm" value='<s:property value="hidkm"/>'>
-        </div>
-    </div>
+<td width="80%" valign="top">
+    <table width="100%">
+        <tr>
+            <td>
+                <div id="pickupdiv">
+                    <jsp:include page="pickupGrid.jsp"></jsp:include>
+                </div>
+
+                <input type="hidden" name="gridlength" id="gridlength">
+                <input type="hidden" name="invgridlength" id="invgridlength">
+                <input type="hidden" name="mode" id="mode">
+                <input type="hidden" name="msg" id="msg">
+                <input type="hidden" name="cldocno" id="cldocno">
+                <input type="hidden" name="docno" id="docno">
+                <input type="hidden" name="hidkm" id="hidkm">
+            </td>
+        </tr>
+    </table>
+</td>
+
+</tr>
+</table>
+
 </div>
-</div>
+
 <div id="agmtnowindow">
-   <div ></div>
+   <div></div>
 </div>
+
 </div>
 </form>
 </body>
