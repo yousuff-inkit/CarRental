@@ -220,6 +220,32 @@ form label.error {
     max-height: none !important;
     padding: 10px;
 }
+
+.myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
 </style>
 
 <body onLoad="setValues();">

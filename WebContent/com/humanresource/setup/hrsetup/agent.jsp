@@ -152,7 +152,7 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
     
     form label.error {

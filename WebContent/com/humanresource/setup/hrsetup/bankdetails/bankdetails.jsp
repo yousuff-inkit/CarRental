@@ -58,12 +58,13 @@ select:focus {
 }
 
 label {
-    font: 14px Tahoma;
+    font: 16px;
     color: #253858;
     white-space: nowrap;
     line-height: 32px; /* Aligns with input heights */
     padding: 0px 8px 0px 0px; 
     text-align: right; 
+    font-weight: 500;
 }
 
 /* ------------------------------

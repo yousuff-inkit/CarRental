@@ -191,7 +191,7 @@ input[type="text"]:focus, select:focus {
 }
 
 label {
-    font: 14px 'Segoe UI';
+    font: 16px 'Segoe UI';
     font-weight: 500;
     color: #253858;
     white-space: nowrap;
@@ -214,7 +214,7 @@ form label.error {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.4px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
