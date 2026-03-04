@@ -55,7 +55,7 @@
             $("#openingDetailsGridID").jqxGrid(
             {
                 width: '100%',
-                height: 530,
+                height: 700,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,
