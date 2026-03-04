@@ -861,7 +861,7 @@ label {
 /* Special handling for the "to-account-row" - all items in one line */
 .to-account-row {
     display: grid;
-    grid-template-columns: 120px 110px 120px 140px 1fr;
+    grid-template-columns: 100px 50px 140px 1fr;
     align-items: center;
     gap: 12px;
     margin-bottom: 12px;
@@ -965,7 +965,7 @@ body::-webkit-scrollbar {
 
 
 
-  
+  }
   
 #validrate,
 #validrate1 {
@@ -1073,8 +1073,8 @@ select:-webkit-autofill {
                     <option value="AR">AR</option><option value="AP">AP</option>
                 </select>
                 <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>' />
-                <label for="txttoaccid" >Account ID</label>
-                <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);" />
+                
+                <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3 to Search" style="margin-left:10px;" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);" />
                 <input type="text" id="txttoaccname" name="txttoaccname" value='<s:property value="txttoaccname"/>' tabindex="-1" />
                 <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>' />
                 <input type="hidden" id="txttotranid" name="txttotranid" value='<s:property value="txttotranid"/>' />

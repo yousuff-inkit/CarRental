@@ -1035,7 +1035,7 @@ label {
 
 .to-account-row {
 	display: grid;
-	grid-template-columns: 120px 110px 120px 140px 1fr;
+	grid-template-columns: 120px 60px 140px 1fr;
 	align-items: center;
 	gap: 12px;
 	margin-bottom: 12px;
@@ -1243,9 +1243,8 @@ label {
 								<option value="AP">AP</option>
 								<option value="AR">AR</option>
 							</select> <input type="hidden" id="hidcmbtotype" name="hidcmbtotype"
-								value='<s:property value="hidcmbtotype"/>' /> <label
-								for="txttoaccid" style="margin-left: 18px;">Account ID</label> <input
-								type="text" id="txttoaccid" name="txttoaccid"
+								value='<s:property value="hidcmbtotype"/>' /> <input
+								type="text" id="txttoaccid" name="txttoaccid" style="margin-left:10px;" 
 								placeholder="Press F3 to Search"
 								value='<s:property value="txttoaccid"/>'
 								onkeydown="getAccType(event);" /> <input type="text"

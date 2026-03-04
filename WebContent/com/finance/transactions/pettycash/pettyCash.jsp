@@ -56,6 +56,7 @@
         gap: 15px;
         align-items: center;
         margin-bottom: 20px;
+        margin-top: 20px;
         padding: 0 0 0 5px; 
     }
 
@@ -171,7 +172,7 @@
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
   transform: translateY(-1px);
     #validrate { color: red; font-size: 12px; }
-    
+    }
     #txtStatus {
         font-size: 14px;
         font-weight: 600;

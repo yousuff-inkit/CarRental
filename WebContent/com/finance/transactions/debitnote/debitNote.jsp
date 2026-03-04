@@ -490,8 +490,6 @@ label {
 
 
 .receipt-header {
-    background: #f6f8fa;
-    border-radius: 12px;
     padding: 24px;
     margin-bottom: 20px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
@@ -501,6 +499,9 @@ label {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    background: #f6f8fa !important;
+    border-radius: 12px;
+    padding:20px;
 }
 
 
@@ -667,7 +668,7 @@ body::-webkit-scrollbar {
   background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
   transform: translateY(-1px);
-
+}
 #validrate,
 #validrate1 {
     color: red;
@@ -684,6 +685,16 @@ body::-webkit-scrollbar {
 #approval-table tr:nth-child(even) {
     background: #f9fafb;
 }
+
+.section-block h2 {
+    font-size: 1.1rem !important;;          
+    color: #253858;             
+    padding-left: 12px;         
+    margin: 0 0 15px 0;         
+    border-left: 4px solid #007bff; 
+    line-height: 1.2;          
+    font-weight: 600;
+}
 </style>
 </head>
 <body onload="setValues();">
@@ -692,37 +703,43 @@ body::-webkit-scrollbar {
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
 <div  class='receipt-header'>
-
-    <div class="section_row">
-
-        <!-- Row 1: Date / Ref. No. / Doc No -->
-        <div class="form-group date-ref-doc-row" style="margin-left:40px">
-            <label for="jqxDebitNoteDate">Date</label>
-            <div class="date-wrapper">
+    <table width="100%" style="margin-top:-20px;">
+	<tr>
+        <td width="3%" height="42" align="right">Date</td>
+          <td width="11%">
                 <div id="jqxDebitNoteDate" name="jqxDebitNoteDate"
                      onchange="datechange();"
                      onblur="datechange();"
                      value='<s:property value="jqxDebitNoteDate"/>'></div>
                 <input type="hidden" id="hidjqxDebitNoteDate" name="hidjqxDebitNoteDate"
                        value='<s:property value="hidjqxDebitNoteDate"/>' />
-            </div>
-
-            <label for="txtrefno">Ref. No.</label>
-            <div class="ref-wrapper">
+            </td>
+		<td width="21%" align="left">&nbsp;</td>
+            <td width="9%" align="right">Ref. No.</td>
+            <td width="29%">
                 <input type="text" id="txtrefno" name="txtrefno"
                        value='<s:property value="txtrefno"/>' />
                 <button class="myButton" type="button" id="btnvaluechange"
                         name="btnvaluechange" onclick="funwarningopen();">
                     Value Change
                 </button>
-            </div>
+            </td>
 
-            <label for="docno">Doc No.</label>
+            <td width="6%" align="right">Doc No.</td>
+            <td width="21%">
             <input type="text" id="docno" name="txtdebitnotedocno"
                    value='<s:property value="txtdebitnotedocno"/>' tabindex="-1" />
-        </div>
+        </td>
+        </tr>
+  <tr>
+    <td colspan="6"></td>
+    <td><span id="txtStatus"></span></td>
+  </tr>
+</table>
 
-        <!-- Row 2: Type / Acc ID / Acc Name -->
+
+    <div class="section_row"> <div class="section-block">
+        <h2>Details</h2>
         <div class="form-group type-acc-row">
             <label for="cmbtype">Type</label>
             <select id="cmbtype" name="cmbtype"
@@ -791,6 +808,7 @@ body::-webkit-scrollbar {
                    value='<s:property value="txtdescription"/>' />
         </div>
 
+    </div>
     </div>
 </div>
 

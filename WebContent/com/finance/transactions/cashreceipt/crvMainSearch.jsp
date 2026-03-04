@@ -40,10 +40,11 @@
 }
 
 
-td[align="right"] {
-  font-weight: 600;
+#search td[align="right"] {
+  font-weight: 700;
   font-size: 14px;
   color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 
@@ -53,7 +54,7 @@ input[type="text"] {
   padding: 8px 12px;
   width: 95%;               
   max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
+  box-sizing: border-box;   
 }
 
 
@@ -63,20 +64,8 @@ input[type="text"] {
 }
 
 
-/* Additional spacing for rows */
-tr {
+#search tr {
   line-height: 1.6;
-}
-#btnsearch{
-   background-color: #2f80ed;   /* clean blue */
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 6px 18px;
-  border: 1px solid #2f80ed;
-  border-radius: 4px;
-  cursor: pointer;
-  min-width: 90px;   
 }
 
 
@@ -90,12 +79,12 @@ tr {
         <input type="hidden" name="hidreceiptdate" id="hidreceiptdate" value='<s:property value="hidreceiptdate"/>'></td>
     <td width="21%" align="right">Doc No</td>
     <td width="32%"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" 
+    <td width="27%" align="center" rowspan="2"><input type="button" name="btnsearch" id="btnsearch" class="myButton" 
        value="Search" onclick="loadSearch(); return false;"></td>
   </tr>
   <tr>
     <td align="right">Name</td>
-    <td colspan="2"><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'></td>
+    <td ><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'></td>
     <td align="right">Amount</td>
     <td><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
   </tr>
