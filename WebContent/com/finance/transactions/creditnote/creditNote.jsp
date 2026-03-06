@@ -64,10 +64,11 @@
 
     .receipt-header {
         display: grid;
-        grid-template-columns: auto 1fr auto 1fr auto 1fr;
+        grid-template-columns: 100px 120px auto 150px auto 150px;
         gap: 15px;
         align-items: center;
         margin-bottom: 20px;
+        margin-top: 20px;
         padding: 0 0 0 5px; 
     }
 

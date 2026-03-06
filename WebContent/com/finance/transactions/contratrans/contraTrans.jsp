@@ -56,6 +56,7 @@
         gap: 15px;
         align-items: center;
         margin-bottom: 20px;
+        margin-top: 20px;
         padding: 0 0 0 5px; 
     }
 
@@ -189,7 +190,7 @@
 .myButton:hover {
   background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+  transform: translateY(-1px);}
 </style>
 
 <script type="text/javascript">
@@ -198,7 +199,7 @@
 		 
 		 $("#jqxContraTransDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#jqxChequeDate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy"});
+		 $("#jqxChequeDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		
 			
 		 $('#accountDetailWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Account Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});

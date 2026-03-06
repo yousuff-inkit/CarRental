@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#jqxBankReceiptDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#jqxChequeDate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy"});
+		 $("#jqxChequeDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 
 		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
@@ -1010,7 +1010,7 @@ body::-webkit-scrollbar {
   background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
   transform: translateY(-1px);
-  
+  }
 #validrate,
 #validrate1 {
     color: red;

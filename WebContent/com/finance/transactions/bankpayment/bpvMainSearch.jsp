@@ -17,9 +17,11 @@
 
 
 #search td[align="right"] {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  
 }
 
 
@@ -27,9 +29,9 @@
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
-  width: 95%;               /* Prevent overflow */
+  width: 95%;               
   max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
+  box-sizing: border-box;   
 }
 
 
@@ -89,15 +91,16 @@ tr {
 <table width="100%">
   <tr>
     <td width="6%" align="right">Name</td>
-    <td colspan="3"><input type="text" name="txtpartyname" id="txtpartyname" style="width:80%" value='<s:property value="txtpartyname"/>'></td>
+    <td colspan="1"><input type="text" name="txtpartyname" id="txtpartyname" style="width:80%" value='<s:property value="txtpartyname"/>'></td>
     <td width="11%" align="right">Doc No</td>
-    <td colspan="2"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="17%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  <tr>
+    <td colspan="1"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
     <td align="right">Date</td>
     <td width="14%"><div id="bankdate" name="bankdate"  value='<s:property value="bankdate"/>'></div>
-        <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'></td>
+      <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'></td>
+    <td width="17%" align="center" rowspan="2"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+  </tr>
+  <tr>
+    
     <td width="10%" align="right">Amount</td>
     <td width="14%"><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
     <td align="right">Cheque No</td>
