@@ -11,7 +11,6 @@
 
 <style type="text/css">
 
-/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
@@ -20,7 +19,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -43,7 +41,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -52,7 +49,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -67,7 +63,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -76,7 +71,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -94,7 +88,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -106,7 +99,19 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    width: 100%;
+    font-weight: 600;
+}
 
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
 
 </style>
 
@@ -289,20 +294,17 @@ td[width="80%"] {
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL ================= -->
 <td width="20%" valign="top">
 
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- FIXED HEADER -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- SCROLLABLE CONTENT -->
     <div class="sidebar-scroll-content">
 
         <div class="filter-card">
@@ -390,23 +392,14 @@ td[width="80%"] {
         </table>
         </div>
 
-        <!-- MASTER BLUE CLEAR BUTTON -->
-        <div class="filter-card" style="text-align:center;">
-            <button type="button"
-                    onclick="funClearInfo();"
-                    style="
-                        background:linear-gradient(#2196f3,#1e88e5);
-                        border:1px solid #1565c0;
-                        color:#fff;
-                        padding:6px 22px;
-                        border-radius:4px;
-                        font-weight:bold;
-                        cursor:pointer;">
-                Clear
-            </button>
-        </div>
+       <div class="filter-card">
+    <button type="button"
+            class="myButtons"
+            onclick="funClearInfo();">
+        Clear
+    </button>
+</div>
 
-        <!-- HIDDEN FIELDS -->
         <input type="hidden" id="cmballowancetype" name="cmballowancetype">
         <input type="hidden" id="txtallowancetype1" name="txtallowancetype1" value='<s:property value="txtallowancetype1"/>'>
         <input type="hidden" id="txtallowancetype2" name="txtallowancetype2" value='<s:property value="txtallowancetype2"/>'>
@@ -425,7 +418,6 @@ td[width="80%"] {
 
 </td>
 
-<!-- ================= RIGHT PANEL ================= -->
 <td width="80%" valign="top">
 
 <table width="100%">
