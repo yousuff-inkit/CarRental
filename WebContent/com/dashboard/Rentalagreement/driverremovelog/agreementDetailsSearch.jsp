@@ -106,58 +106,78 @@ input[type="text"]:focus {
 
 <body bgcolor="#FFFFFF">
 <div id="search">
-<table width="100%">
-  <tr>
-    <td>
-      <table width="100%">
-        <tr>
-          <td align="left" width="6.5%"><label class="textdetail">Name</label></td>
-          <td align="left" width="54%">
-            <input type="text" name="SCl_name" id="SCl_name" style="width:96.5%;" value='<s:property value="SCl_name"/>'>
-          </td>
-          <td align="right"><label class="textdetail">Mob</label></td>
-          <td align="left">
-            <input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'>
-          </td>
-          <td align="right" width="10%"><label class="textdetail">Reg No</label></td>
-          <td align="left">
-            <input type="text" id="sregno" name="sregno" value='<s:property value="sregno"/>'>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
 
-  <tr>
-    <td>
-      <table width="100%">
-        <tr>
-          <td align="left" width="7%"><label class="textdetail">Doc No</label></td>
-          <td align="left" width="54%">
-            <input type="text" name="rno" id="rno" value='<s:property value="rno"/>'>
-            &nbsp;<label class="textdetail">Fleet No</label>
-            <input type="text" name="flno" id="flno" style="width:34%;" value='<s:property value="flno"/>'>
-          </td>
-          
-          <td align="left">&nbsp;&nbsp;
-            <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
-          </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
+<table width="100%" cellspacing="4" cellpadding="2">
 
-  <tr>
-    <td colspan="8">
-      <div id="srefreshdiv">
-        <jsp:include page="agreementDetailsSearchGrid.jsp"></jsp:include> 
-      </div>
-    </td>
-  </tr>
+<tr>
+
+<td width="8%">
+<label class="textdetail">Name</label>
+</td>
+
+<td width="32%">
+<input type="text" name="SCl_name" id="SCl_name" style="width:95%;" value='<s:property value="SCl_name"/>'>
+</td>
+
+<td width="6%" align="right">
+<label class="textdetail">Mob</label>
+</td>
+
+<td width="16%">
+<input type="text" name="Sl_mob" id="Sl_mob" style="width:95%;" value='<s:property value="Sl_mob"/>'>
+</td>
+
+<td width="8%" align="right">
+<label class="textdetail">Reg No</label>
+</td>
+
+<td width="16%">
+<input type="text" id="sregno" name="sregno" style="width:95%;" value='<s:property value="sregno"/>'>
+</td>
+
+<td width="14%"></td>
+
+</tr>
+
+
+<tr>
+
+<td>
+<label class="textdetail">Doc No</label>
+</td>
+
+<td>
+<input type="text" name="rno" id="rno" style="width:95%;" value='<s:property value="rno"/>'>
+</td>
+
+<td align="right">
+<label class="textdetail">Fleet No</label>
+</td>
+
+<td>
+<input type="text" name="flno" id="flno" style="width:95%;" value='<s:property value="flno"/>'>
+</td>
+
+<td colspan="3">
+<input type="button" name="mbtnrasearch" id="mbtnrasearch"
+class="myButton" value="Search" onclick="mainloadSearch();">
+</td>
+
+</tr>
+
+
+<tr>
+<td colspan="7">
+
+<div id="srefreshdiv">
+<jsp:include page="agreementDetailsSearchGrid.jsp"></jsp:include>
+</div>
+
+</td>
+</tr>
+
 </table>
+
 </div>
 </body>
 </html>
