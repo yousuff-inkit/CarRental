@@ -175,6 +175,8 @@
     .hidden-scrollbar { overflow: auto; height: 530px; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
     
+    
+    
 </style>
 
 <%@page import="com.humanresource.setup.hrsetup.agent.ClsAgentDAO"%>

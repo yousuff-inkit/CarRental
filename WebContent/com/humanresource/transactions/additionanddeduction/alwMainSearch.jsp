@@ -7,140 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<style type="text/css">
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
-}
-
-/* Table layout */
-#search table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 15px 12px;
-}
-
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-}
-
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
-    box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    background-color: #ffffff;
-}
-
-/* Input focus */
-#search input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
-    text-align: center;
-    width: 12%;
-}
-
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
-}
-.myButtons {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    background-color: #007bff;   /* BLUE */
-    color: #ffffff;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-}
-
-/* Keep same blue on hover */
-.myButtons:hover {
-    background-color: #007bff;
-}
-</style>
 <title>GatewayERP(i)</title>
 
 	<script type="text/javascript">
@@ -208,79 +75,122 @@
 	}
 
 	</script>
-<body>
+<style type="text/css">
+#search {
+    width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 12px 10px; 
+}
+
+td[align="right"], td.label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    text-align: right;
+}
+
+input[type="text"], select {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 4px 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    height: 28px;
+}
+
+.myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+#refreshdiv {
+    margin-top: 10px;
+    border-top: 1px solid #e0e4ee;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
 <div id="search">
-<table width="100%">
+    <table border="0">
+        <tr>
+            <td width="10%" class="label">Date</td>
+            <td width="15%">
+                <div id="alwdate" name="alwdate" value='<s:property value="alwdate"/>'></div>
+                <input type="hidden" name="hidalwdate" id="hidalwdate" value='<s:property value="hidalwdate"/>'>
+            </td>
 
-  <!-- ROW 1 -->
-  <tr>
-    <td class="label">Date</td>
-    <td class="field">
-        <div id="alwdate"
-             name="alwdate"
-             value='<s:property value="alwdate"/>'></div>
+            <td width="10%" class="label">Doc No</td>
+            <td width="15%">
+                <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
+            </td>
 
-        <input type="hidden"
-               name="hidalwdate"
-               id="hidalwdate"
-               value='<s:property value="hidalwdate"/>'>
-    </td>
+            <td width="10%" class="label">Year</td>
+            <td width="15%">
+                <select name="cmbalwyear" id="cmbalwyear">
+                    <option value="">--Select--</option>
+                </select>
+            </td>
 
-    <td class="label">Doc No</td>
-    <td class="field">
-        <input type="text"
-               name="txtdocno"
-               id="txtdocno"
-               value='<s:property value="txtdocno"/>'>
-    </td>
+            <td width="25%" rowspan="2" align="center" valign="middle">
+                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+            </td>
+        </tr>
 
-    <td class="label">Year</td>
-    <td class="field">
-        <select name="cmbalwyear" id="cmbalwyear"
-                value='<s:property value="cmbalwyear"/>'>
-            <option value="">--Select--</option>
-        </select>
-    </td>
+        <tr>
+            <td class="label">Month</td>
+            <td>
+                <select name="cmbalwmonth" id="cmbalwmonth">
+                    <option value="">--Select--</option>
+                </select>
+            </td>
 
-    <td class="action" rowspan="2">
-        <input type="button"
-               name="btnsearch"
-               id="btnsearch"
-               class="myButton"
-               value="Search"
-               onclick="loadSearch();">
-    </td>
-  </tr>
+            <td class="label">Description</td>
+            <td colspan="3">
+                <input type="text" name="txtalwdescription" id="txtalwdescription" value='<s:property value="txtalwdescription"/>'>
+            </td>
+        </tr>
 
-  <!-- ROW 2 -->
-  <tr>
-    <td class="label">Month</td>
-    <td class="field">
-        <select name="cmbalwmonth" id="cmbalwmonth"
-                value='<s:property value="cmbalwmonth"/>'>
-            <option value="">--Select--</option>
-        </select>
-    </td>
-
-    <td class="label">Description</td>
-    <td class="field" colspan="3">
-        <input type="text"
-               name="txtalwdescription"
-               id="txtalwdescription"
-               value='<s:property value="txtalwdescription"/>'>
-    </td>
-  </tr>
-
-  <!-- GRID -->
-  <tr>
-    <td colspan="7">
-        <div id="refreshdiv">
-            <jsp:include page="alwMainSearchGrid.jsp"></jsp:include>
-        </div>
-    </td>
-  </tr>
-
-</table>
+        <tr>
+            <td colspan="7">
+                <div id="refreshdiv">
+                    <jsp:include page="alwMainSearchGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
