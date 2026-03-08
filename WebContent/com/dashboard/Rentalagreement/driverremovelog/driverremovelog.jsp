@@ -10,7 +10,6 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
@@ -19,7 +18,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -42,7 +40,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,7 +48,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -66,7 +62,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -75,7 +70,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -93,7 +87,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -104,6 +97,34 @@ td[width="80%"] {
     height: 100vh;
     vertical-align: top;
     background: #fff;
+}
+.myButton{
+    background: linear-gradient(#2196f3,#1e88e5);
+    border:1px solid #1565c0;
+    color:#fff;
+    padding:6px 18px;
+    border-radius:4px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.myButton:hover{
+    background: linear-gradient(#42a5f5,#2196f3);
+}
+.btn-submit{
+    background: linear-gradient(#3b82f6,#2563eb);
+    border:1px solid #2563eb;
+    color:#fff;
+    padding:8px 0;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    width:100%;
+    font-size:13px;
+}
+
+.btn-submit:hover{
+    background: linear-gradient(#4f8df7,#2b6def);
 }
 </style>
   
@@ -286,7 +307,6 @@ $(document).ready(function () {
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
 <td width="20%" valign="top">
 
 <div class="master-container">
@@ -299,7 +319,6 @@ $(document).ready(function () {
             </div>
         </div>
 
-        <!-- Scrollable Filter Area -->
         <div class="sidebar-scroll-content">
             <div class="filter-card">
 
@@ -353,12 +372,13 @@ $(document).ready(function () {
                     </tr>
                 </table>
 
-                <div style="margin-top:15px;">
-                    <input type="button"
-                           class="myButtons"
-                           value="Clear"
-                           onclick="funClearData();">
-                </div>
+<div class="filter-card">
+    <button type="button"
+            class="btn-submit"
+            onclick="funClearData();">
+        Clear
+    </button>
+</div>
 
             </div>
         </div>
@@ -368,7 +388,7 @@ $(document).ready(function () {
 
 </td>
 
-<!-- ================= RIGHT SIDE (LEGACY FULL WIDTH TABLE) ================= -->
+
 <td width="80%" valign="top">
 
 <table width="100%">
@@ -389,7 +409,7 @@ $(document).ready(function () {
 </div>
 </div>
 
-<!-- ================= POPUP WINDOWS ================= -->
+
 <div id="clientDetailsWindow">
     <div></div><div></div>
 </div>

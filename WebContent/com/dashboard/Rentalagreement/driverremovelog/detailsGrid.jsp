@@ -198,7 +198,7 @@
             			 $.messager.alert('Message', '  Record successfully Updated ', function(r){
         				     
         			     });
-            			 funreload(event); 
+            			 funreload(event); c
             			 
             			 
             			

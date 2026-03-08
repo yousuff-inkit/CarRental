@@ -77,7 +77,7 @@
             $("#jqxRefund").jqxGrid(
             {
             	width: '100%',
-                height: 730,
+                height: 630,
                 source: dataAdapter,
                 rowsheight:25,
                 filtermode:'excel',

@@ -12,7 +12,6 @@
 
 <style type="text/css">
 
-/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
@@ -21,7 +20,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -44,7 +42,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -53,7 +50,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -68,7 +64,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -77,7 +72,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -95,7 +89,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -107,27 +100,22 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
-/* ===== FIX LEFT PANEL SCROLL ISSUE ===== */
 
-/* Allow page to calculate height correctly */
 html, body {
     height: 100%;
 }
 
-/* Main container must not block scrolling */
 #mainBG {
     height: 100%;
 }
 
-/* Left sidebar container */
 .scrollable-left {
-    max-height: calc(100vh - 90px); /* adjust if header height differs */
+    max-height: calc(100vh - 90px); 
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 6px; /* avoids scrollbar overlap */
+    padding-right: 6px; 
 }
 
-/* Smooth scrollbar (optional but nice) */
 .scrollable-left::-webkit-scrollbar {
     width: 6px;
 }
@@ -626,13 +614,12 @@ html, body {
 <table width="100%">
 <tr>
 
-<!-- ===== LEFT PANEL ===== -->
+
 <td width="20%" valign="top">
 
 <fieldset class="filter-card scrollable-left">
 <table width="100%" class="filter-table">
 
-    <!-- HEADING (UNCHANGED) -->
     <jsp:include page="../../heading.jsp"></jsp:include>
 
     <tr>
@@ -846,7 +833,6 @@ html, body {
         </td>
     </tr>
 
-    <!-- HIDDEN FIELDS (UNCHANGED) -->
     <tr><td colspan="2">
         <input type="hidden" id="txtclientdocno" name="txtclientdocno">
         <input type="hidden" id="txtclaccount" name="txtclaccount">
@@ -867,7 +853,6 @@ html, body {
 
 </td>
 
-<!-- ===== RIGHT PANEL ===== -->
 <td width="80%" valign="top">
 
 <table width="100%">
