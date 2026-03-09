@@ -587,7 +587,7 @@
 </script>
 </head>
 <style type="text/css">
-    /* Layout & Sidebar Structure */
+  
     .master-container {
         display: flex;
         font-family: 'Segoe UI', Tahoma, sans-serif !important;
@@ -623,7 +623,6 @@
         padding: 15px 20px 25px 20px;
     }
 
-    /* Cleaned Card Styling */
     .filter-card {
         background-color: #f8fafc !important;
         border: 1px solid #e3e8ee !important;
@@ -632,7 +631,6 @@
         margin-bottom: 12px;
     }
 
-    /* Reset legacy styles and force black text */
     .filter-card *, fieldset, legend, .branch, td, tr, label, span {
         background-color: transparent !important;
         color: black !important;
@@ -651,7 +649,7 @@
         width: 100px;
     }
 
-    /* Input & Select Styling */
+   
     input[type="text"], select {
         width: 100%;
         border: 1px solid #ccd6e0;
@@ -663,7 +661,7 @@
         background-color: #ffffff !important;
     }
 
-    /* RHS Grid Area & Scroll Fix */
+  
     .main-content-wrapper {
         flex: 1;
         display: flex;
@@ -685,7 +683,7 @@
         gap: 20px;
     }
 
-    /* FINALIZED BUTTONS (#2563eb) */
+ 
     .myButton {
         background-color: #2563eb !important;
         color: #ffffff !important; 
