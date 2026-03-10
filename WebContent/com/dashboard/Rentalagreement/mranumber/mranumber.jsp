@@ -9,7 +9,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -18,7 +18,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -41,7 +40,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -50,7 +48,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -65,7 +62,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -74,7 +70,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -92,7 +87,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -445,22 +439,18 @@ document.getElementById("ra_no").value="0";
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
 <td width="20%">
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- Fixed Heading -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- Scrollable Filters -->
     <div class="sidebar-scroll-content">
 
-        <!-- Date Filters -->
         <div class="filter-card">
             <table class="mra-filter-table">
                 <tr>
@@ -474,7 +464,6 @@ document.getElementById("ra_no").value="0";
             </table>
         </div>
 
-        <!-- Main Filters -->
         <div class="filter-card">
             <table class="mra-filter-table">
 
@@ -543,7 +532,6 @@ document.getElementById("ra_no").value="0";
             </div>
         </div>
 
-        <!-- MRA No Change -->
         <div class="filter-card mra-change-card">
             <div class="mra-change-title">MRA No Change</div>
 
@@ -566,12 +554,10 @@ document.getElementById("ra_no").value="0";
             </div>
         </div>
 
-        <!-- Placeholder -->
         <div class="filter-card">
             <div id="paychaaaaa"></div>
         </div>
 
-        <!-- Hidden Fields -->
         <input type="hidden" id="ra_no" name="ra_no">
         <input type="hidden" id="oldmrano" name="oldmrano">
         <input type="hidden" id="cldocno" name="cldocno">
@@ -584,7 +570,6 @@ document.getElementById("ra_no").value="0";
 </div>
 </td>
 
-<!-- ================= RIGHT GRID ================= -->
 <td width="80%">
     <div id="detlist">
         <jsp:include page="detailedGrid.jsp"></jsp:include>
@@ -596,7 +581,6 @@ document.getElementById("ra_no").value="0";
 
 </div>
 
-<!-- POPUP WINDOWS -->
 <div id="catwindow"><div></div></div>
 <div id="clientwindow"><div></div></div>
 <div id="fleetwindow"><div></div></div>
