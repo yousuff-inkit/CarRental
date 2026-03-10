@@ -80,7 +80,7 @@
             $("#jqxstaffAllocatedSalik").jqxGrid(
             {
                 width: '100%',
-                height: 850,
+                height: 750,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

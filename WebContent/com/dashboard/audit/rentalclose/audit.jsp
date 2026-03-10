@@ -10,7 +10,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-    /* Layout & Sidebar Structure */
+  
     .master-container {
         display: flex;
         font-family: 'Segoe UI', Tahoma, sans-serif !important;
@@ -18,7 +18,7 @@
         width: 100%;
         height: 100vh !important;
         overflow: hidden !important;
-        color: black !important; /* Force all font black */
+        color: black !important; 
     }
 
     .sidebar-filters {
@@ -45,8 +45,6 @@
         overflow-y: auto;
         padding: 15px 20px 25px 20px;
     }
-
-    /* Cleaned Cards - Stripping legacy backgrounds and colors */
     .filter-card {
         background-color: #f8fafc !important;
         border: 1px solid #e3e8ee !important;
@@ -55,7 +53,6 @@
         margin-bottom: 10px;
     }
 
-    /* HARD RESET: Force black fonts and remove unwanted green/blue backgrounds */
     .filter-card *, 
     fieldset, 
     legend, 
@@ -65,7 +62,6 @@
     label, 
     span {
         background-color: transparent !important;
-        background: none !important;
         color: black !important;
     }
 
@@ -82,7 +78,7 @@
         width: 95px;
     }
 
-    /* Input & Select Styling */
+    
     input[type="text"], select {
         width: 100%;
         border: 1px solid #ccd6e0;
@@ -94,7 +90,6 @@
         background-color: #ffffff !important;
     }
 
-    /* RHS Visibility & Scrollbar Kill */
     .main-content-wrapper {
         flex: 1;
         display: flex;
@@ -114,10 +109,9 @@
         padding: 20px;
     }
 
-    /* Buttons Modernized */
     .myButton {
         background-color: #2563eb !important;
-        color: #ffffff !important; /* Button text white for contrast */
+        color: #ffffff !important; 
         border: none !important;
         padding: 12px !important;
         border-radius: 6px !important;

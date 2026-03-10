@@ -559,7 +559,7 @@ function funreload(event)
 
                     <div class="btn-group">
                         <input type="Button" id="driverUpdate" class="myButton" value="ALLOCATE" onclick="funallocate()">
-                        <input type="button" id="clear" class="myButtons" value="Clear" onclick="funcleardata()">
+                        <input type="Button" id="clear" class="myButton" value="Clear" onclick="funcleardata()">
                     </div>
                 </div>
 

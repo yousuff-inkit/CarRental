@@ -90,7 +90,7 @@
             
             $("#jqxFleetGrid").jqxGrid(
             {
-                height: 650,
+                height: 450,
                 width: '100%',
               
                 source: dataAdapter,
