@@ -10,7 +10,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" /> 
 <style>
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -19,7 +19,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -42,7 +41,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,7 +49,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -66,7 +63,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -75,7 +71,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -93,7 +88,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -105,7 +99,20 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
 
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
 
 </style>
  
@@ -169,44 +176,28 @@ td[width="80%"] {
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL (MASTER STYLE) ================= -->
 <td width="20%" valign="top">
 
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- FIXED HEADER -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- SCROLLABLE CONTENT -->
     <div class="sidebar-scroll-content">
 
-        <div class="filter-card" style="text-align:center;padding-top:20px;">
-
-            <!-- 🔵 MASTER BLUE BUTTON -->
-            <button type="button"
-                    id="btnRAG"
-                    name="btnRAG"
-                    onclick="reviewTrail(event);"
-                    style="
-                        background: linear-gradient(#2196f3, #1e88e5);
-                        border: 1px solid #1565c0;
-                        color: #ffffff;
-                        padding: 8px 28px;
-                        border-radius: 4px;
-                        font-weight: bold;
-                        font-size: 13px;
-                        cursor: pointer;
-                        min-width: 120px;
-                    ">
-                Refresh
-            </button>
-
-        </div>
+       <div class="filter-card" style="padding-top:20px;">
+    <button type="button"
+            id="btnRAG"
+            name="btnRAG"
+            class="myButtons"
+            onclick="reviewTrail(event);">
+        Refresh
+    </button>
+</div>
 
     </div>
 </div>
@@ -214,7 +205,6 @@ td[width="80%"] {
 
 </td>
 
-<!-- ================= RIGHT PANEL ================= -->
 <td width="80%" valign="top">
 
 <table width="100%">
@@ -242,7 +232,7 @@ td[width="80%"] {
 
 </div>
 
-<!-- POPUP -->
+
 <div id="clientWindow">
     <div></div>
 </div>

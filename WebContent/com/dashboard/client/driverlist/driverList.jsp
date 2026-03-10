@@ -11,7 +11,7 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -20,7 +20,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -43,7 +42,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -52,7 +50,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -67,7 +64,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -76,7 +72,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -94,7 +89,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -469,22 +463,19 @@ td[width="80%"] {
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
 <td width="20%">
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- Fixed Heading -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- Scrollable Content -->
+
     <div class="sidebar-scroll-content">
 
-        <!-- Report Type -->
         <div class="filter-card">
             <div class="main-page-heading">Report Type</div>
 
@@ -498,7 +489,7 @@ td[width="80%"] {
             </div>
         </div>
 
-        <!-- Client Filter -->
+    
         <div class="filter-card">
             <table class="driver-filter-table">
                 <tr>
@@ -528,7 +519,7 @@ td[width="80%"] {
             </div>
         </div>
 
-        <!-- Hidden Fields -->
+      
         <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
         <input type="hidden" id="txtselecteddrivers" name="txtselecteddrivers"
                value='<s:property value="txtselecteddrivers"/>'>
@@ -540,7 +531,7 @@ td[width="80%"] {
 </div>
 </td>
 
-<!-- ================= RIGHT GRID ================= -->
+
 <td width="80%">
     <div id="driverListDiv">
         <jsp:include page="driverListGrid.jsp"></jsp:include>
@@ -552,7 +543,6 @@ td[width="80%"] {
 
 </div>
 
-<!-- POPUP WINDOWS -->
 <div id="clientDetailsWindow"><div></div></div>
 <div id="nationalityWindow"><div></div></div>
 <div id="stateWindow"><div></div></div>

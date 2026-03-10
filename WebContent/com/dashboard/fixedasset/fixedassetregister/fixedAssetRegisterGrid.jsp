@@ -90,7 +90,7 @@
             $("#fixedAssetRegisterGrid").jqxGrid(               
             {
                 width: '100%',
-                height: 730,
+                height: 700,
                 source: dataAdapter,
                 rowsheight:25,
                 statusbarheight:25,

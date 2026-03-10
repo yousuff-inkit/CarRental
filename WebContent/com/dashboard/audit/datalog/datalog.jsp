@@ -10,7 +10,7 @@
 <title>GatewayERP(i)</title>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -19,7 +19,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -41,8 +40,6 @@
     overflow-y: auto;
     padding: 15px 20px 25px;
 }
-
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,7 +48,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -66,7 +62,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -75,7 +70,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -93,7 +87,7 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
+
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -105,7 +99,20 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+}
 
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
 
 </style>
 
@@ -263,20 +270,16 @@ function funreload(event)
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL ================= -->
 <td width="20%" valign="top">
 
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- FIXED HEADER -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
-
-    <!-- SCROLLABLE FILTER CONTENT -->
     <div class="sidebar-scroll-content">
 
         <div class="filter-card">
@@ -338,25 +341,15 @@ function funreload(event)
         </table>
         </div>
 
-        <!-- ACTION : MASTER BLUE BUTTON -->
-        <div class="filter-card" style="text-align:center;">
-            <input type="button"
-                   id="btnclear"
-                   name="btnclear"
-                   value="Clear"
-                   onclick="funClearData();"
-                   style="
-                       background: linear-gradient(#2196f3, #1e88e5);
-                       color: #ffffff;
-                       border: 1px solid #1565c0;
-                       border-radius: 4px;
-                       padding: 6px 20px;
-                       font-weight: bold;
-                       cursor: pointer;
-                   ">
-        </div>
+      <div class="filter-card">
+    <input type="button"
+           id="btnclear"
+           name="btnclear"
+           value="Clear"
+           class="myButtons"
+           onclick="funClearData();">
+</div>
 
-        <!-- SUB GRID -->
         <div class="filter-card">
             <div id="Readygrid">
                 <jsp:include page="subgrid.jsp"></jsp:include>
@@ -369,7 +362,6 @@ function funreload(event)
 
 </td>
 
-<!-- ================= RIGHT PANEL ================= -->
 <td width="80%" valign="top">
 
 <table width="100%">
@@ -379,7 +371,7 @@ function funreload(event)
             <jsp:include page="datalogGrid.jsp"></jsp:include>
         </div>
 
-        <!-- HIDDEN FIELDS -->
+       
         <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
         <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
         <input type="hidden" id="hiduser" name="hiduser">
@@ -395,7 +387,7 @@ function funreload(event)
 
 </div>
 
-<!-- POPUPS -->
+
 <div id="userwindow">
     <div></div><div></div>
 </div>
