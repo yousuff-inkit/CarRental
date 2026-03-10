@@ -61,8 +61,8 @@
             
             $("#jqxNotInvoiced").jqxGrid(
             {
-                width: '98%',
-                height: 500,
+                width: '100%',
+                height: 600,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,
