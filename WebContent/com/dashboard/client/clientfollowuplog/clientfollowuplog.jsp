@@ -229,136 +229,120 @@ function funExportBtn(){
 </script>
 </head>
 <style type="text/css">
-    /* Layout & Sidebar Structure */
-    .master-container {
-        display: flex;
-        font-family: 'Segoe UI', Tahoma, sans-serif !important;
-        background-color: #f4f7f9;
-        width: 100%;
-        height: 100vh !important;
-        overflow: hidden !important;
-        color: black !important;
-    }
+   
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
 
-    .sidebar-filters {
-        width: 350px; 
-        flex: 0 0 350px;
-        background-color: #ffffff;
-        border-right: 1px solid #e1e8ed;
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-        height: 100vh !important;
-    }
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
 
-    .sidebar-fixed-top {
-        padding: 20px 20px 15px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f4f8;
-        flex-shrink: 0;
-    }
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
 
-    .sidebar-scroll-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px 20px 25px 20px;
-    }
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
 
-    /* Cleaned Cards */
-    .filter-card {
-        background-color: #f8fafc !important;
-        border: 1px solid #e3e8ee !important;
-        border-radius: 12px !important;
-        padding: 15px;
-        margin-bottom: 12px;
-    }
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
 
-    /* Reset legacy styles and force black text */
-    .filter-card *, fieldset, legend, .branch, td, tr, label, span, textarea {
-        background-color: transparent !important;
-        color: black !important;
-    }
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
 
-    .filter-table { 
-        width: 100%; 
-        border-spacing: 0 8px; 
-    }
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
 
-    .label-cell {
-        text-align: right;
-        padding-right: 10px;
-        font-size: 13px;
-        font-weight: 600;
-        width: 90px;
-    }
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
 
-    /* Input & Select Styling */
-    input[type="text"], select {
-        width: 100%;
-        border: 1px solid #ccd6e0;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 13px;
-        color: black !important;
-        box-sizing: border-box;
-        background-color: #ffffff !important;
-    }
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    /* RHS Visibility */
-    .main-content-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100%;
-        max-width: calc(100vw - 350px);
-        overflow: hidden !important; 
-        position: relative;
-        background-color: #ffffff;
-    }
+.btn-submit:hover {
+    background: #1d4ed8;
+}
 
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto !important;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
 
-    /* FINALIZED BUTTONS (#2563eb) */
-    .myButtons, .myButton {
-        background-color: #2563eb !important;
-        color: #ffffff !important; 
-        border: none !important;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 10px 15px;
-        text-align: center;
-        display: block;
-        width: 100%;
-        margin-top: 5px;
-        transition: background 0.2s;
-        text-decoration: none;
-        text-shadow: none;
-    }
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
 
-    .myButtons:hover, .myButton:hover { 
-        background-color: #1d4ed8 !important; 
-    }
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
+.main-content-wrapper{
+    flex:1;
+    width:100%;
+}
 
-    .branch { font-size: 13px; font-weight: 600; }
+.scrollable-grid-area{
+    width:100%;
+}
 
-    #Readygrid {
-        background-color: #ffffff !important;
-        border: 1px solid #e3e8ee;
-        border-radius: 8px;
-        margin-top: 10px;
-        overflow: hidden;
-    }
+#delupdiv{
+    width:100%;
 </style>
 <body onload="getBranch();hiddenbrh()">
 <div id="mainBG" class="homeContent" data-type="background"> 
@@ -393,11 +377,25 @@ function funExportBtn(){
                 <jsp:include page="subgrid.jsp"></jsp:include>
             </div>
 
-            <div style="padding-top: 15px;">
-                <input type="button" class="myButtons" name="clear" id="clear" value="Clear" onclick="funcleardata()">
-                <input type="button" class="myButton" name="btnPrint" id="btnPrint" value="Print" onclick="funPrint();">
-            </div>
+           <div class="filter-card">
 
+    <input type="button"
+           class="myButtons"
+           name="clear"
+           id="clear"
+           value="Clear"
+           onclick="funcleardata()"
+           style="width:100%; margin-bottom:6px;">
+
+    <input type="button"
+           class="myButton"
+           name="btnPrint"
+           id="btnPrint"
+           value="Print"
+           onclick="funPrint();"
+           style="width:100%;">
+
+</div>
             <input type="hidden" name="cldocno" id="cldocno" value='<s:property value="cldocno"/>' >
         </div>
     </div>

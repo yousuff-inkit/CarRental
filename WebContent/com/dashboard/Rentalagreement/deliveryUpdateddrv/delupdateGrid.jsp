@@ -92,7 +92,7 @@ aa=0;
             	
             	
             	width: '100%',
-                height: 526,
+                height: 700,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,
