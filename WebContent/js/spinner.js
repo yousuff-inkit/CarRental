@@ -10,8 +10,13 @@ $(document).ready(function () {
 
     $(document).ajaxStart(function () {
         $("#global-spinner-overlay").css("display", "flex");
+		setTimeout(function(){
+		        hideSpinner();
+		    },7000);
     }).ajaxStop(function () {
-        $("#global-spinner-overlay").css("display", "none");
+		if (!window.suppressSpinnerStop) {
+		           $("#global-spinner-overlay").css("display", "none");
+		       }
     });
 
 });
