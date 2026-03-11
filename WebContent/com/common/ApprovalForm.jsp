@@ -98,19 +98,18 @@
         background-color: #ffffff;
     }
 
-   /* Update this specific section in your <style> tag */
 select.list1 {
     width: 100%;
-    padding: 10px 15px !important; /* Reduced vertical padding */
+    padding: 10px 15px !important;
     font-size: 20px !important; 
     font-weight: 600;
     border: 2px solid #0984e3;
     border-radius: 8px;
     background-color: #ffffff !important;
-    color: #2d3436 !important; /* High contrast black/grey text */
+    color: #2d3436 !important;
     cursor: pointer;
-    height: auto !important; /* Ensures the box grows to fit the text */
-    line-height: 1.5 !important; /* Centers the text vertically */
+    height: auto !important;
+    line-height: 1.5 !important;
     display: block !important;
 }
 
@@ -150,7 +149,7 @@ select.list1 option {
     #jqxApprovalGrid {
         width: 100% !important;
     }
-.approval-locked #btn {
+.approval-locked #btnSend {
     display: none !important;
 }
 
@@ -160,337 +159,280 @@ select.list1 option {
     background-color: #f0f0f0 !important;
     opacity: 0.7;
 }
-
-
-    
 </style>
 
-	<script type="text/javascript">
-	$(document).ready(function(){
-	    getStatOpt();
-	    funcurdate();
-	    
-	    var data4='<%=cef.approvalGridload(session,dtype,brch,docNo)%>';
-	    Check(data4);
-	    
-	  
-	    var aprstatus = '<%=aprstatus%>';
-	    console.log("Page loaded - aprstatus from JSP:", aprstatus); 
-	    lockApprovalUI(aprstatus);
-	});
-	
-	function Check(data4){
-		function Check(data4){
+    <script type="text/javascript">
+    $(document).ready(function(){
+        getStatOpt();
+        funcurdate();
+        
+        var data4='<%=cef.approvalGridload(session,dtype,brch,docNo)%>';
+        Check(data4);
+        
+        var aprstatus = '<%=aprstatus%>';
+        console.log("Page loaded - aprstatus from JSP:", aprstatus); 
+        lockApprovalUI(aprstatus);
+    });
+    
+    function Check(data4){
+        // ===== FIXED VISIBILITY LOGIC =====
+        // Ensure we target the correct ID "btnSend"
+        if(document.getElementById("apprdesc")) { document.getElementById("apprdesc").closest("div").style.display = ""; }
+        if(document.getElementById("optname")) { document.getElementById("optname").closest("div").style.display = ""; }
+        if(document.getElementById("btnSend")) { document.getElementById("btnSend").closest("div").style.display = ""; }
 
-		    // ===== FIXED VISIBILITY LOGIC =====
+        // 2. If no data, it is PENDING
+        if (!data4 || data4.trim() === "" || data4 === "null") {
+            data4 = "[]"; 
+        } else {
+            try {
+                var rows = JSON.parse(data4);
+                for (var i = 0; i < rows.length; i++) {
+                    if (String(rows[i].apprstatus) === "3") { // Approved
+                        if(document.getElementById("apprdesc")) document.getElementById("apprdesc").closest("div").style.display = "none";
+                        if(document.getElementById("optname")) document.getElementById("optname").closest("div").style.display = "none";
+                        if(document.getElementById("btnSend")) document.getElementById("btnSend").closest("div").style.display = "none";
+                        break;
+                    }
+                }
+            } catch (e) {
+                console.error("JSON parse error in Check() - data might be malformed:", e);
+                data4 = "[]";
+            }
+        }
 
-		    // 1. ALWAYS SHOW FIRST (important)
-		    document.getElementById("apprdesc").closest("div").style.display = "";
-		    document.getElementById("optname").closest("div").style.display = "";
-		    document.getElementById("btnSend").closest("div").style.display = "";
-
-		    // 2. If no data, it is PENDING → keep showing
-		    if (!data4 || data4.trim() === "") {
-		        // pending case, do nothing
-		    } else {
-		        try {
-		            var rows = JSON.parse(data4);
-
-		            for (var i = 0; i < rows.length; i++) {
-		                if (rows[i].apprstatus === "3") { // Approved
-		                    document.getElementById("apprdesc").closest("div").style.display = "none";
-		                    document.getElementById("optname").closest("div").style.display = "none";
-		                    document.getElementById("btnSend").closest("div").style.display = "none";
-		                    break;
-		                }
-		            }
-		        } catch (e) {
-		            // parsing failed → treat as pending
-		        }
-		    }
-
-		    // ===== END FIXED LOGIC =====
-
-
-		    // ---- DO NOT TOUCH BELOW THIS ----
-
-		
-		  var source =
+        // ===== JQXGRID INITIALIZATION =====
+        var source =
           {
               datatype: "json",
               datafields: [
-						{name : 'apprtype', type: 'String'   },
-							{name : 'user_name', type: 'string'  }, 
-      						{name : 'apprdatetime', type: 'string'   },
-      						{name : 'remarks', type: 'string'   },
-      						{name : 'apprlevel', type: 'string'   }
-   						     						
+                        {name : 'apprtype', type: 'String'   },
+                        {name : 'user_name', type: 'string'  }, 
+                        {name : 'apprdatetime', type: 'string'   },
+                        {name : 'remarks', type: 'string'   },
+                        {name : 'apprlevel', type: 'string'   }
                ],
                localdata: data4, 
-              pager: function (pagenum, pagesize, oldpagenum) {
-                  // callback called when a page or page size is changed.
-              }
+               pager: function (pagenum, pagesize, oldpagenum) { }
           };
-		  
-		  var cellclassname = function (row, column, value, data) {
-      		if (data.apprlevel==1) {
+          
+        var cellclassname = function (row, column, value, data) {
+            if (data.apprlevel==1) {
                   return "redClass";
-              } else if (data.apprlevel==2) {
+            } else if (data.apprlevel==2) {
                   return "yellowClass";
-              }
-              else{
-              	return "greyClass";
-              };
-          };
+            } else {
+                return "greyClass";
+            };
+        };
           
-          var dataAdapter = new $.jqx.dataAdapter(source,
-          		 {
-              		loadError: function (xhr, status, error) {
-	                    alert(error);    
-	                    }
-		            });
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            loadError: function (xhr, status, error) {
+                console.error("Grid Load Error: ", error);   
+            }
+        });
           
-          $("#jqxApprovalGrid").jqxGrid(
-          {
-              width: '100%',
-              height: 250,
-              source: dataAdapter,
-              columnsresize: true,
-              editable: false,
-              rowsheight:40,
-              selectionmode: 'singlerow',
-              columns: [
-				{ text: '', datafield: 'apprtype',  width: '10%',cellclassname: cellclassname },
-				{ text: 'User', datafield: 'user_name', width: '15%',cellclassname: cellclassname },
-				{ text: 'Submit Time', datafield: 'apprdatetime', width: '12%',cellclassname: cellclassname },	
-				{ text: 'Remarks' , datafield: 'remarks', width: '63%',cellclassname: cellclassname },
-				{ text: 'ApprlLevel', datafield: 'apprlevel', hidden:true , width: '10%',cellclassname: cellclassname },
-							
-          ]
-          });	
-		 $('#jqxApprovalGrid').on('rowdoubleclick', function (event) 
+        $("#jqxApprovalGrid").jqxGrid(
+        {
+            width: '100%',
+            height: 250,
+            source: dataAdapter,
+            columnsresize: true,
+            editable: false,
+            rowsheight:40,
+            selectionmode: 'singlerow',
+            columns: [
+                { text: 'Type', datafield: 'apprtype',  width: '10%',cellclassname: cellclassname },
+                { text: 'User', datafield: 'user_name', width: '15%',cellclassname: cellclassname },
+                { text: 'Submit Time', datafield: 'apprdatetime', width: '12%',cellclassname: cellclassname },   
+                { text: 'Remarks' , datafield: 'remarks', width: '63%',cellclassname: cellclassname },
+                { text: 'ApprlLevel', datafield: 'apprlevel', hidden:true , width: '10%',cellclassname: cellclassname }
+            ]
+        }); 
+
+        // Restoration of your original Event Handlers
+         $('#jqxApprovalGrid').on('rowdoubleclick', function (event) 
               { 
                var rowindexes=event.args.rowindex;
-               /* SaveToDisk($('#jqxDocumentsAttach').jqxGrid('getcellvalue', rowindexes, "path"),$('#jqxDocumentsAttach').jqxGrid('getcellvalue', rowindexes, "filename")); */
+               console.log("Double clicked row: " + rowindexes);
               }); 
-		 
-		 $('#jqxApprovalGrid').on('rowclick', function (event) 
-	              { 
-	               var rowindexes=event.args.rowindex;
-	               /* document.getElementById("filename").value= $('#jqxDocumentsAttach').jqxGrid('getcellvalue', rowindexes, "filename"); */
-	              });
-		 $("#jqxApprovalGrid").jqxGrid('autoresizecolumns');
-	}
-	 function saveApprlevel()  
-	      {  
-		
-		 setTimeout(function() {$("#btnSend").attr("disabled", true);},1000);
-		 var uri=encodeURI('saveApprove.action?docno='+$("#hidocno").val()+'&dtype='+$("#hidtype").val()+'&userid='+$("#hiuserid").val()+'&brchid='+$("#hibrchid").val()+'&desc='+$("#apprdesc").val()+'&apprlevel='+$("#apprlevel").val()+'&minapprl='+$("#minapprl").val()+'&optid='+$("#optid").val()+'&apprlist='+$("#apprlist").val());
-		 //alert(uri);
-		  /*  var reftypid=document.getElementById("reftypid").value; */     
-			/* alert("===docno==="+$("#hidocno").val()+"===&dtype="+$("#hidtype").val()+"&userid===="+$("#hiuserid").val()+"==&brchid="+$("#hibrchid").val()+"===&desc="+$("#apprdesc").val()); */
-	          $.ajaxFileUpload  
-	          (    
-	              {  
-	                  url: uri,
-	                  secureuri:false,//false  
-	                  fileElementId:'file',//id  <input type="file" id="file" name="file" />  
-	                  dataType: 'String',// json  
-	                  success: function (data, status)  //  
-	                  {  
-	                      //alert(data.message);//jsonmessage,messagestruts2
-	                 	
-	               //       $('#refreshdiv').load();
-	                     
-	                     if(status=='success'){   
-	                    	 // funApproveBtn();
-	                    	/*  getapprcount(); */
-	                         $.messager.show({title:'Message',msg:'Transaction Completed',showType:'show',
-	                            style:{left:15,right:'',top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	                        });
-	                         $("#windowapprove").jqxWindow('Close');     
-	                      }
-	                     
-	                      if(typeof(data.error) != 'undefined')  
-	                      {  
-	                          if(data.error != '')  
-	                          {  
-	                              //$.messager.alert('Message',data.error);
-	                              $.messager.show({title:'Message',msg: data.error,showType:'show',
-	  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	  	                        }); 
-	                          }else  
-	                          {  
-	                              //$.messager.alert('Message',data.message);
-	                              $.messager.show({title:'Message',msg: data.message,showType:'show',
-		  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-		  	                        }); 
-	                          }  
-	                      }  
-	                  },  
-	                  error: function (data, status, e)//  
-	                  {  
-	                      //alert(e);  
-	                      $.messager.alert('Message',e);
-	                  }  
-	              }  
-	          )  
-	          return false;  
-	      }
-		
+        
+         $('#jqxApprovalGrid').on('rowclick', function (event) 
+              { 
+               var rowindexes=event.args.rowindex;
+               console.log("Clicked row: " + rowindexes);
+              });
+         $("#jqxApprovalGrid").jqxGrid('autoresizecolumns');
+    }
 
-	function funcurdate(){
-	var currentdate=new Date();
-	var date = currentdate.getDate()+ "/"+ (currentdate.getMonth()+1)+ "/"+currentdate.getFullYear(); 
-    var time= currentdate.getHours() + ":"+currentdate.getMinutes();
-   /*  + currentdate.getSeconds();
-	alert("===datetime======"+datetime); */
-	
-    document.getElementById("apprdate").value=date;
-    document.getElementById("apprtime").value=time;
-    document.getElementById("hidocno").value='<%=docNo%>';
-    document.getElementById("hidtype").value='<%=dtype%>';
-    document.getElementById("hiuserid").value='<%=userid%>';
-    document.getElementById("hibrchid").value='<%=brch%>';
-     getapprlevel();
-	}
-	
-	
-	function lockApprovalUI(aprstatus) {
-	    // Trim whitespace and convert to string for consistent comparison
-	    var status = String(aprstatus).trim();
-	    
-	    console.log("lockApprovalUI - Original:", aprstatus, "Cleaned:", status, "Type:", typeof status);
-	    
-	    // Check if status is 3 or 4
-	    if (status === "3" || status === "4") {
-	        console.log("✓ Status is 3 or 4 - HIDING button and disabling fields");
-	        document.body.classList.add("approval-locked");
-	        $("#btn").hide();
-	        $("#apprdesc").prop("disabled", true);
-	        $("#optname").prop("disabled", true);
-	    } else {
-	        console.log("✗ Status is NOT 3 or 4 - SHOWING button and enabling fields");
-	        document.body.classList.remove("approval-locked");
-	        $("#btn").show();
-	        $("#apprdesc").prop("disabled", false);
-	        $("#optname").prop("disabled", false);
-	    }
-	}
+    function saveApprlevel()  
+      {  
+         // Safety check for status selection
+         if(document.getElementById("optname").value === "") {
+             alert("Please select a status.");
+             return;
+         }
 
+         setTimeout(function() {$("#btnSend").attr("disabled", true);},100);
+         
+         var uri=encodeURI('saveApprove.action?docno='+$("#hidocno").val()+'&dtype='+$("#hidtype").val()+'&userid='+$("#hiuserid").val()+'&brchid='+$("#hibrchid").val()+'&desc='+$("#apprdesc").val()+'&apprlevel='+$("#apprlevel").val()+'&minapprl='+$("#minapprl").val()+'&optid='+$("#optid").val()+'&apprlist='+$("#apprlist").val());
 
-
-
-
-	
-	function getapprlevel(){
-	    var docno=document.getElementById('hidocno').value;
-	    var dtype=document.getElementById('hidtype').value;
-	    var brch='<%=request.getParameter("brch")%>';
-	    var usrid='<%=session.getAttribute("USERID")%>';
-	    var isfirstappr='<%=isfirstappr%>';
-	    
-	    var x=new XMLHttpRequest();
-	    x.onreadystatechange=function(){
-	        if (x.readyState==4 && x.status==200) {
-	            var items = x.responseText.split('####');
-	            var apprlevel = items[1];
-	            var minapprl  = items[2];
-	            var apprlist  = items[3];
-	            var aprstatus = items[4];
-	            
-	            $("#apprlevel").val(apprlevel);
-	            $("#minapprl").val(minapprl);
-	            $("#apprlist").val(apprlist);
-	            $("#hidAprStatus").val(aprstatus);
-	            lockApprovalUI(aprstatus);	
-	        }
-	    }
-	    x.open("GET", "<%=contextPath+"/"%>com/common/getApprLevel.jsp?docno="+docno+"&dtype="+dtype+"&brch="+brch+"&usrid="+usrid+"&isfirstappr="+isfirstappr,true);
-	    x.send();
-	}
-	
-
-	
-	function getStat(c){
-			
-		var x=new XMLHttpRequest();
-		x.onreadystatechange=function(){
-		if (x.readyState==4 && x.status==200)
-			{
-			 	var items= x.responseText;
-			 	items = items.split('####');
-			 	
-			 		var reftype = items[0].split(",");
-			 		var refcode  = items[1].split(",");
-			 		var refdocno  = items[2].split(",");
-			 		
-			 		document.getElementById("optid").value=refdocno;
-			    }
-		       else
-			  {}
-	     }
-	      x.open("GET", <%=contextPath+"/"%>+"com/common/getStat.jsp?opt_name="+c,true);
-	     x.send();
-	    
-	   }
-	
-	function getStatOpt()
-	{	
-		
-		
-	var x=new XMLHttpRequest();
-	var items,refname,refcode,refdocno;
-	x.onreadystatechange=function(){
-		if (x.readyState==4 && x.status==200)
-			{  
-	        items= x.responseText;
-	        items=items.split('####');
-	        
-	        refname=items[0].split(",");
-	        refcode=items[1].split(",");
-	        refdocno=items[2].split(",");
-	       
-	        	var optionref = '';
-	        	var optionscurr = '';
-	       for ( var i = 0; i < refname.length; i++) {
-	    	   
-	    	   
-	    	   getStat(refname[0]);
-	    	   optionref += '<option value="' + refname[i] + '">' + refname[i] + '</option>';
-	    	  
-	        }
-	       $("select#optname").html(optionref); 
-	       
-	        	
-	        }
-		else
-			{
-			}
-	}
-	x.open("GET",<%=contextPath+"/"%>+"com/common/getStatOpt.jsp",true);
-	x.send();
-	}
-	 
-	</script>
-	
-	
+          $.ajaxFileUpload  
+          (    
+              {  
+                  url: uri,
+                  secureuri:false,
+                  fileElementId:'file_hidden', // Reference the added hidden file input
+                  dataType: 'text',
+                  success: function (data, status)  
+                  {  
+                      if(status=='success'){   
+                         $.messager.show({title:'Message',msg:'Transaction Completed',showType:'show',
+                            style:{left:15,right:'',top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                        });
+                        // Allow UI to refresh
+                        setTimeout(function(){ location.reload(); }, 1000);
+                      }
+                      
+                      if(typeof(data.error) != 'undefined')  
+                      {  
+                          if(data.error != '')  
+                          {  
+                              $.messager.show({title:'Message',msg: data.error,showType:'show',
+                                style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                            }); 
+                          }
+                      }  
+                  },  
+                  error: function (data, status, e)
+                  {  
+                      $.messager.alert('Message',e);
+                      $("#btnSend").attr("disabled", false);
+                  }  
+              }  
+          )  
+          return false;  
+      }
+        
+    function funcurdate(){
+        var currentdate=new Date();
+        var date = currentdate.getDate()+ "/"+ (currentdate.getMonth()+1)+ "/"+currentdate.getFullYear(); 
+        var time= currentdate.getHours() + ":"+currentdate.getMinutes();
+        
+        document.getElementById("apprdate").value=date;
+        document.getElementById("apprtime").value=time;
+        document.getElementById("hidocno").value='<%=docNo%>';
+        document.getElementById("hidtype").value='<%=dtype%>';
+        document.getElementById("hiuserid").value='<%=userid%>';
+        document.getElementById("hibrchid").value='<%=brch%>';
+        getapprlevel();
+    }
+    
+    function lockApprovalUI(aprstatus) {
+        var status = String(aprstatus).trim();
+        console.log("lockApprovalUI logic running for status:", status);
+        
+        if (status === "3" || status === "4") {
+            document.body.classList.add("approval-locked");
+            $("#btnSend").hide();
+            $("#apprdesc").prop("disabled", true);
+            $("#optname").prop("disabled", true);
+        } else {
+            document.body.classList.remove("approval-locked");
+            $("#btnSend").show();
+            $("#apprdesc").prop("disabled", false);
+            $("#optname").prop("disabled", false);
+        }
+    }
+    
+    function getapprlevel(){
+        var docno=document.getElementById('hidocno').value;
+        var dtype=document.getElementById('hidtype').value;
+        var brch='<%=brch%>';
+        var usrid='<%=userid%>';
+        var isfirstappr='<%=isfirstappr%>';
+        
+        var x=new XMLHttpRequest();
+        x.onreadystatechange=function(){
+            if (x.readyState==4 && x.status==200) {
+                var items = x.responseText.split('####');
+                if(items.length > 4) {
+                    var apprlevel = items[1];
+                    var minapprl  = items[2];
+                    var apprlist  = items[3];
+                    var aprstatus = items[4];
+                    
+                    $("#apprlevel").val(apprlevel);
+                    $("#minapprl").val(minapprl);
+                    $("#apprlist").val(apprlist);
+                    $("#hidAprStatus").val(aprstatus);
+                    lockApprovalUI(aprstatus);  
+                }
+            }
+        }
+        x.open("GET", "<%=contextPath%>/com/common/getApprLevel.jsp?docno="+docno+"&dtype="+dtype+"&brch="+brch+"&usrid="+usrid+"&isfirstappr="+isfirstappr,true);
+        x.send();
+    }
+    
+    function getStat(c){
+        var x=new XMLHttpRequest();
+        x.onreadystatechange=function(){
+            if (x.readyState==4 && x.status==200) {
+                var items= x.responseText;
+                items = items.split('####');
+                if(items.length > 2) {
+                    var refdocno = items[2].split(",");
+                    document.getElementById("optid").value=refdocno;
+                }
+            }
+        }
+        x.open("GET", "<%=contextPath%>/com/common/getStat.jsp?opt_name="+c,true);
+        x.send();
+    }
+    
+    function getStatOpt() {   
+        var x=new XMLHttpRequest();
+        x.onreadystatechange=function(){
+            if (x.readyState==4 && x.status==200) {  
+                var items= x.responseText;
+                items=items.split('####');
+                
+                var refname=items[0].split(",");
+                var optionref = '<option value="">-- Choose Status --</option>';
+                for ( var i = 0; i < refname.length; i++) {
+                    if(refname[i] !== "") {
+                        optionref += '<option value="' + refname[i] + '">' + refname[i] + '</option>';
+                    }
+                }
+                $("select#optname").html(optionref); 
+                
+                if(refname.length > 0) {
+                    getStat(refname[0]);
+                }
+            }
+        }
+        x.open("GET", "<%=contextPath%>/com/common/getStatOpt.jsp",true);
+        x.send();
+    }
+    </script>
+    
 <body>
 
 <div id="search">
+    <input type="file" id="file_hidden" name="file" style="display:none;">
+
     <div class="main-container">
-        
         <div class="left-section">
             <div class="header-label">Approval Details</div>
             
             <div class="flex-row">
                 <div style="flex: 1;">
                     <label class="field-label">Date</label>
-                    <input type="text" name="apprdate" id="apprdate" readonly value='<s:property value="apprdate"/>'>
+                    <input type="text" name="apprdate" id="apprdate" readonly>
                 </div>
                 <div style="flex: 1;">
                     <label class="field-label">Time</label>
-                    <input type="text" name="apprtime" id="apprtime" readonly value='<s:property value="apprtime"/>'>
+                    <input type="text" name="apprtime" id="apprtime" readonly>
                 </div>
             </div>
 
@@ -510,7 +452,7 @@ select.list1 option {
             </div>
 
             <div class="btn-row">
-                <button class="my" type="button" id="btn" name="btnSend" onClick="saveApprlevel()">SUBMIT</button>
+                <button class="my" type="button" id="btnSend" name="btnSend" onClick="saveApprlevel()">SUBMIT</button>
             </div>
         </div>
 
@@ -535,9 +477,5 @@ select.list1 option {
     
 </div>
 
-
-
 </body>
-
 </html>
-
