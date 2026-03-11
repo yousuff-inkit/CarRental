@@ -107,8 +107,8 @@
             
             $("#collectionAnalysisGrid").jqxGrid(
             {
-                width: '99.5%',
-                height: 480,
+                width: '100%',
+                height: 650,
                 source: dataAdapter,
                 columnsresize: true,
                 showaggregates: true,

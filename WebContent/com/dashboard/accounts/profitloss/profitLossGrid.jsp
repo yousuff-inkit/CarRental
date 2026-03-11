@@ -98,7 +98,7 @@
             $("#profitLossGrid").jqxTreeGrid(
             {
                 source: dataAdapter,
-                width: '99.5%',
+                width: '100%',
                 height: 700,
                 ready: function() 
                 {

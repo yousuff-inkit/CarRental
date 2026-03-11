@@ -38,7 +38,7 @@
             $("#jqxAccountsTypeFromSearch").jqxGrid(
             {
                 width: '100%',
-                height: 303,
+                height: 650,
                 source: dataAdapter,
                 selectionmode: 'singlerow',
                 
