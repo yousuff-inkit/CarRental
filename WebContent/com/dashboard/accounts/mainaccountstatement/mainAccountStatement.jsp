@@ -10,7 +10,6 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
 
-/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
@@ -19,7 +18,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -42,7 +40,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,7 +48,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -66,7 +62,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -75,7 +70,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -93,7 +87,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -105,8 +98,20 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
 
-
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
 </style>
 
 <script type="text/javascript">
@@ -245,14 +250,11 @@ td[width="80%"] {
 
 <table width="100%">
 <tr>
-
-<!-- ===== LEFT PANEL ===== -->
 <td width="20%" valign="top">
 
 <fieldset class="filter-card">
 <table width="100%" class="filter-table">
 
-    <!-- HEADING (UNCHANGED) -->
     <jsp:include page="../../heading.jsp"></jsp:include>
 
     <tr>
@@ -337,26 +339,28 @@ td[width="80%"] {
 
     <tr><td colspan="2">&nbsp;</td></tr>
 
-    <!-- ✅ FIXED BUTTONS -->
-    <tr>
-        <td colspan="2" align="center">
+   
+  <tr>
+    <td colspan="2" style="padding-top:10px;">
 
-            <button type="button"
-                    class="myButton"
-                    id="clear"
-                    onclick="funClearInfo();">
-                Clear
-            </button>
+        <button type="button"
+                class="myButton"
+                id="clear"
+                onclick="funClearInfo();"
+                style="width:100%; margin-bottom:6px;">
+            Clear
+        </button>
 
-            <button type="button"
-                    class="myButton"
-                    id="btnPrintAccount"
-                    onclick="funPrintMainAccountStatement(event);">
-                Print
-            </button>
+        <button type="button"
+                class="myButton"
+                id="btnPrintAccount"
+                onclick="funPrintMainAccountStatement(event);"
+                style="width:100%;">
+            Print
+        </button>
 
-        </td>
-    </tr>
+    </td>
+</tr>
 
 </table>
 </fieldset>

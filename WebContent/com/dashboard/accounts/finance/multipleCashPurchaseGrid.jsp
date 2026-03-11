@@ -62,7 +62,7 @@
             $("#jqxMCP").jqxGrid(
             {
                 width: '100%',
-                height: 470,
+                height: 650,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

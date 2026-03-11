@@ -90,8 +90,8 @@ String check = request.getParameter("check")==null?"0":request.getParameter("che
     
    $("#prepaymentDistributionGridID").jqxGrid(
     {
-        width: '98%',
-        height: 500,
+        width: '100%',
+        height: 650,
         source: dataAdapter,
         enableAnimations: true,
         editable: true,
