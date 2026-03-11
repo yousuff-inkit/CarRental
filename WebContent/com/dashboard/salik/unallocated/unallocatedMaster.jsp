@@ -13,7 +13,7 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style>
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -22,7 +22,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -45,7 +44,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -54,7 +52,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -69,7 +66,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -78,7 +74,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -96,7 +91,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
