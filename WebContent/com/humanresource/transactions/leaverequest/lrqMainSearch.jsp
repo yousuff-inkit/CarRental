@@ -31,81 +31,93 @@
 		}
 
 	</script>
-	<style>
-	/* Make all labels & table text bold */
-#search td,
-#search label {
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: #1A2734;
+	<style type="text/css">
+/* Master UI Styles Applied */
+#search {
+  background-color: #ffffff;
+  padding: 5px;
 }
 
-/* Input boxes UI */
-#search input[type="text"] {
-    width: 100%;
-    padding: 6px 8px;
-    height: 26px;
-    border: 1px solid #b8c6d8;
-    border-radius: 5px;
-    font-weight: 600;
-    background: #fff;
-    box-sizing: border-box;
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  /* Master UI Spacing */
+  background-color: #ffffff;
 }
 
-/* Date div box look */
-#txtdate {
-    border: 1px solid #b8c6d8 !important;
-    background: #fff !important;
-    border-radius: 5px;
-    padding: 4px 6px;
+#search td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-
-#search td {
-    padding: 4px 6px;
-    vertical-align: middle;
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;                
+  max-width: 100%;
+  box-sizing: border-box;   
+  border: 1px solid #ccc;
 }
 
-/* Premium Sky Blue small search button */
+/* Master UI Button - Dark Blue Gradient */
 .myButton {
-    background: #4FA8FF;          /* premium sky blue */
-    color: #fff;
-    border: none;
-    padding: 4px 14px;            /* clean small size */
-    border-radius: 6px;
     font-weight: 700;
     font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: 0.2s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .myButton:hover {
-    background: #2F7FD4;          /* darker sky blue */
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 
-/* Full width fix so layout stays neat */
-#search table {
-    width: 100%;
-    table-layout: fixed;
+#search tr {
+  line-height: 1.6;
 }
-	
-	</style>
-<body>
-<div id=search>
-<table width="100%">
+</style>
+
+<body bgcolor="#ffffff">
+<div id="search">
+<table width="100%" border="0">
   <tr>
-    <td width="7%" align="right">Doc No</td>
-    <td width="33%"><input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'></td>
-    <td width="12%" align="right">Date</td>
-    <td width="23%"><div id="txtdate" name="txtdate"  value='<s:property value="txtdate"/>'></div>
-    <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'></td>
-<td width="25%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="10%" align="right">Doc No</td>
+    <td width="30%">
+        <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
+    </td>
+    <td width="10%" align="right">Date</td>
+    <td width="20%">
+        <div id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'></div>
+        <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'>
+    </td>
+    <td width="30%" align="center">
+        <input type="button" name="btnsearch" id="btnsearch" class="myButton" 
+               value="Search" onclick="loadSearch(); return false;">
+    </td>
   </tr>
   <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="lrqMainSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="5">
+        <div id="refreshdiv">
+            <jsp:include page="lrqMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>
