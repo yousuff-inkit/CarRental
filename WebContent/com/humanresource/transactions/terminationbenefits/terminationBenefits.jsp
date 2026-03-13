@@ -365,7 +365,7 @@ body {
     padding: 32px 0;
     min-height: 100vh;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* ===============================
@@ -445,8 +445,8 @@ select:focus {
     margin: 0 0 16px;
     padding-left: 8px;
     border-left: 4px solid #007bff;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 17.6px;
+    font-weight: 600;
     color: #253858;
 }
 
@@ -495,14 +495,14 @@ select:focus {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 13px;
+    font-size: 16px;
     vertical-align: middle;
 }
 
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .cr-table tr:last-child td {
@@ -518,7 +518,7 @@ label,
 .cr-table td,
 td,
 th {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     white-space: nowrap !important;
 }
 
@@ -564,72 +564,33 @@ select option {
     <jsp:include page="../../../../header.jsp"></jsp:include>
 
     <div class="hidden-scrollbar">
+    
+    <table width="100%">
+            <tr>
+                <td width="60px" align="right"><label>Date</label></td>
+                <td width="140px">
+                    <div id="terminationBenefitsPostingDate" name="terminationBenefitsPostingDate" onchange="datechange();" value='<s:property value="terminationBenefitsPostingDate"/>'></div>
+                    <input type="hidden" id="hidterminationBenefitsPostingDate" name="hidterminationBenefitsPostingDate" value='<s:property value="hidterminationBenefitsPostingDate"/>' />
+                </td>
+                <td align="center">
+                    <button type="button" class="icon" id="btnExcelExporter" title="Export to Excel" onclick="funExcelExporter();">
+                        <img src="<%=contextPath%>/icons/excel_new.png" alt="Excel">
+                    </button>
+                    <button type="button" class="icon" id="btnProcessing" title="Process" onclick="funProcessBtn();">
+                        <img src="<%=contextPath%>/icons/process2.png" alt="Process" width="16" height="16">
+                    </button>
+                    <button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funCalculateBtn();">
+                        <img src="<%=contextPath%>/icons/calculate_new.png" alt="Calculate">
+                    </button>
+                </td>
+                <td width="80px" align="right"><label>Doc No.</label></td>
+                <td width="140px" align="right">
+                    <input type="text" id="docno" name="txtjvno" class="header-docno" value='<s:property value="txtjvno"/>' readonly tabindex="-1" />
+                </td>
+            </tr>
+        </table>
 
-        <!-- ===============================
-             HEADER DETAILS
-        ================================ -->
-        <div class="table-section">
-            <h3>Terminal Benefits Posting</h3>
-
-            <table class="cr-table">
-                <tr>
-                    <td align="right">Date</td>
-                    <td>
-                        <div id="terminationBenefitsPostingDate"
-                             name="terminationBenefitsPostingDate"
-                             onchange="datechange();"
-                             value='<s:property value="terminationBenefitsPostingDate"/>'></div>
-                        <input type="hidden"
-                               id="hidterminationBenefitsPostingDate"
-                               name="hidterminationBenefitsPostingDate"
-                               value='<s:property value="hidterminationBenefitsPostingDate"/>' />
-                    </td>
-
-                    <td align="center">
-                        <button type="button"
-                                class="icon"
-                                id="btnExcelExporter"
-                                title="Export to Excel"
-                                onclick="funExcelExporter();">
-                            <img src="<%=contextPath%>/icons/excel_new.png"
-                                 alt="Excel">
-                        </button>
-                    </td>
-
-                    <td align="center">
-                        <button type="button"
-                                class="icon"
-                                id="btnProcessing"
-                                title="Process"
-                                onclick="funProcessBtn();">
-                            <img src="<%=contextPath%>/icons/process2.png"
-                                 alt="Process"
-                                 width="16" height="16">
-                        </button>
-                    </td>
-
-                    <td align="center">
-                        <button type="button"
-                                class="icon"
-                                id="btnCalculate"
-                                title="Calculate"
-                                onclick="funCalculateBtn();">
-                            <img src="<%=contextPath%>/icons/calculate_new.png"
-                                 alt="Calculate">
-                        </button>
-                    </td>
-
-                    <td align="right">Doc No.</td>
-                    <td>
-                        <input type="text"
-                               id="docno"
-                               name="txtjvno"
-                               tabindex="-1"
-                               value='<s:property value="txtjvno"/>' />
-                    </td>
-                </tr>
-            </table>
-        </div>
+       
 
         <!-- ===============================
              DETAILS GRID
