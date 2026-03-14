@@ -797,8 +797,8 @@ select:focus {
     margin: 0 0 16px;
     padding-left: 8px;
     border-left: 4px solid #007bff;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 17.6px;
+    font-weight: 600;
     color: #253858;
 }
 
@@ -847,14 +847,14 @@ select:focus {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 13px;
+    font-size: 16px;
     vertical-align: middle;
 }
 
 .cr-table th {
     background: #eef0f6;
     color: #354B6A;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .cr-table tr:last-child td {
@@ -870,7 +870,7 @@ label,
 .cr-table td,
 td,
 th {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     white-space: nowrap !important;
 }
 
@@ -950,7 +950,7 @@ select option {
 <tr>
 <td width="50%">
 <div class="table-section" style="background-color: #f6f8fa;">
-<h3><font style="font-family: comic sans ms;font-weight: bold;">Leave Disbursement</font></h3>
+<h3><font style="font-family: Tahoma;font-weight: bold;">Leave Disbursement</font></h3>
 <table class="" width="100%">
   <tr>
     <td colspan="2" align="right">Already Provision [Eligible Days]</td>
@@ -984,7 +984,7 @@ select option {
 
 <td width="50%">
 <div class="table-section" style="background-color: #f6f8fa; ">
-<h3><font style="font-family: comic sans ms;font-weight: bold;">Travel Disbursement</font></h3>
+<h3><font style="font-family: Tahoma; font-weight: bold;">Travel Disbursement</font></h3>
 <table class="cr-table" width="100%">
   <tr>
     <td width="22%" align="right">Ticket Value</td>
@@ -1003,7 +1003,7 @@ select option {
 </td>
 </tr></table>
 
-<div style="width: 100%;"><h3><font style="font-family: comic sans ms;font-weight: bold;">Accounts</font></h3>
+<div style="width: 100%;"><h3><font style="font-family: Tahoma;font-weight: bold;">Accounts</font></h3>
 <div class="cr-table" id="leaveTravelDisbursementDiv"><jsp:include page="leaveTravelDisbursementGrid.jsp"></jsp:include></div>
 </div>
 <table class="cr-table" width="100%">
