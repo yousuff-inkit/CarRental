@@ -111,55 +111,73 @@ input[type="text"]:focus, select:focus {
 tr {
   line-height: 1.6;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#FFFFFF">
 <div id="search">
+
 <table width="100%">
-  <tr>
+
+<tr>
+    <td width="6%" align="right">Date</td>
+    <td width="14%">
+        <div id="datess" name="datess" value='<s:property value="datess"/>'></div>
+    </td>
+
+    <td width="21%" align="right">Doc No</td>
+    <td width="32%">
+        <input type="text" name="docnoss" id="docnoss"
+        value='<s:property value="docnoss"/>'>
+    </td>
+
+    <td width="27%" align="center" rowspan="2">
+        <input type="button" name="searchs" id="searchs"
+        class="myButton" value="Search" onclick="loadSearchs()">
+    </td>
+</tr>
+
+<tr>
+    <td align="right">Account</td>
     <td>
-      <table width="100%">
-        <tr>
-          <td align="right" width="6%">Doc No</td>
-          <td align="left" width="20%"><input type="text" name="docnoss" id="docnoss" style="width:90%;" value='<s:property value="docnoss"/>'></td>
-          <td align="right" width="10%">Account</td>
-          <td align="left"><input type="text" name="accountss" id="accountss" style="width:80%;" value='<s:property value="accountss"/>'></td>
-          <td align="right" width="14%">Account Name</td>
-          <td align="left" width="30%"><input type="text" name="accnamess" style="width:90%;" id="accnamess" value='<s:property value="accnamess"/>'></td>
-        </tr>
-      </table>
+        <input type="text" name="accountss" id="accountss"
+        value='<s:property value="accountss"/>'>
     </td>
-  </tr>
-  <tr>
+
+    <td align="right">Account Name</td>
     <td>
-      <table width="100%">
-        <tr> 
-          <td align="right" width="6%">Date </td>
-          <td align="left" width="20%"><div id="datess" name="datess" value='<s:property value="datess"/>'></div></td>
-          <td align="right" width="10%">Type</td>
-          <td width="20%">
-            <select name="reftypess" id="reftypess" style="width:58%;" value='<s:property value="reftypess"/>'>
-              <option value="">--select--</option>
-              <option value="DIR">DIR </option>
-              <option value="VPO">VPO</option>
-            </select>
-          </td>
-          <td width="10%"></td>
-          <td>
-            <input type="button" name="searchs" id="searchs" class="myButton" value="Search" onclick="loadSearchs()">
-          </td>
-        </tr>
-      </table>
+        <input type="text" name="accnamess" id="accnamess"
+        value='<s:property value="accnamess"/>'>
     </td>
-  </tr>
-  <tr>
-    <td colspan="8">
-      <div id="refreshdivs">
-        <jsp:include page="submasterSearch.jsp" /> 
-      </div>
+</tr>
+
+<tr>
+    <td align="right">Type</td>
+    <td>
+        <select name="reftypess" id="reftypess" style="width:100%;">
+            <option value="">--select--</option>
+            <option value="DIR">DIR</option>
+            <option value="VPO">VPO</option>
+        </select>
     </td>
-  </tr>
+
+    <td colspan="3"></td>
+</tr>
+
+<tr>
+<td colspan="5">
+<div id="refreshdivs">
+<jsp:include page="submasterSearch.jsp" />
+</div>
+</td>
+</tr>
+
 </table>
+
 </div>
 </body>
 </html>
