@@ -88,47 +88,71 @@ input[type="text"] {
 tr {
   line-height: 1.8;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#E0ECF8">
 <div id="search">
+
 <table width="100%">
-  <tr>
-    <td width="7%" align="right">RR No</td>
-    <td width="19%">
-      <input type="text" name="txtdocumentsrno" id="txtdocumentsrno" autocomplete="off" value='<s:property value="txtdocumentsrno"/>'>
+
+<tr>
+    <td width="6%" align="right">Date</td>
+    <td width="14%">
+        <div id="refunddate" name="refunddate" value='<s:property value="refunddate"/>'></div>
+        <input type="hidden" name="hidrefunddate" id="hidrefunddate" value='<s:property value="hidrefunddate"/>'>
     </td>
-    <td width="10%" align="right">A/C Name</td>
-    <td colspan="3">
-      <input type="text" name="txtaccountname" id="txtaccountname" autocomplete="off" style="width:80%" value='<s:property value="txtaccountname"/>'>
+
+    <td width="21%" align="right">RR No</td>
+    <td width="32%">
+        <input type="text" name="txtdocumentsrno" id="txtdocumentsrno"
+        autocomplete="off" value='<s:property value="txtdocumentsrno"/>'>
     </td>
-    <td width="13%" align="center">
-      <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+
+    <td width="27%" align="center" rowspan="2">
+        <input type="button" name="btnsearch" id="btnsearch"
+        class="myButton" value="Search" onclick="loadSearch();">
     </td>
-  </tr>
-  <tr>
-    <td align="right">Date</td>
+</tr>
+
+<tr>
+    <td align="right">A/C Name</td>
     <td>
-      <div id="refunddate" name="refunddate" value='<s:property value="refunddate"/>'></div>
-      <input type="hidden" name="hidrefunddate" id="hidrefunddate" value='<s:property value="hidrefunddate"/>'>
+        <input type="text" name="txtaccountname" id="txtaccountname"
+        autocomplete="off" value='<s:property value="txtaccountname"/>'>
     </td>
+
     <td align="right">Total</td>
-    <td width="23%">
-      <input type="text" name="txtamounttotal" id="txtamounttotal" autocomplete="off" value='<s:property value="txtamounttotal"/>'>
+    <td>
+        <input type="text" name="txtamounttotal" id="txtamounttotal"
+        autocomplete="off" value='<s:property value="txtamounttotal"/>'>
     </td>
-    <td width="6%" align="right">Ref. No</td>
-    <td colspan="2">
-      <input type="text" id="txtreferenceno" name="txtreferenceno" autocomplete="off" value='<s:property value="txtreferenceno"/>'>
+</tr>
+
+<tr>
+    <td align="right">Ref No</td>
+    <td>
+        <input type="text" id="txtreferenceno" name="txtreferenceno"
+        autocomplete="off" value='<s:property value="txtreferenceno"/>'>
     </td>
-  </tr>
-  <tr>
-    <td colspan="7">
-      <div id="refreshdiv">
-        <jsp:include page="rrpMainSearchGrid.jsp" />
-      </div>
-    </td>
-  </tr>
+
+    <td colspan="3"></td>
+</tr>
+
+<tr>
+<td colspan="5">
+<div id="refreshdiv">
+<jsp:include page="rrpMainSearchGrid.jsp" />
+</div>
+</td>
+</tr>
+
 </table>
+
 </div>
 </body>
 </html>

@@ -97,45 +97,60 @@ input[type="text"], select {
 tr {
   line-height: 1.8;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#E0ECF8">
 <div id="search">
-<table width="100%" >
-  <tr>
-   <td>                        
-   <table width="100%">
-   <tr>
-    <td align="right">Doc no</td>
-    <td align="left" width="15%"><input type="text" name="msdocno" id="msdocno" value='<s:property value="msdocno"/>'></td>
-    
-    <td align="right">Date</td>
-    <td align="left" width="20%"><div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div></td>
-    
-    <td align="right">Type</td>
-    <td align="left" width="20%">
-      <select name="enqtype" id="enqtype" style="width:100%;" value='<s:property value="enqtype"/>'>
-        <option value="traffic">Traffic</option>
-        <option value="salik">Salik</option>
-      </select>
+
+<table width="100%">
+
+<tr>
+    <td width="6%" align="right">Date</td>
+    <td width="14%">
+        <div id="searchdate" name="searchdate"
+        value='<s:property value="searchdate"/>'></div>
     </td>
-    
-    <td align="left">
-     <input type="button" name="mainsearchbtn" id="mainsearchbtn" class="myButton" value="Search" onclick="loadSearch1()">
+
+    <td width="21%" align="right">Doc No</td>
+    <td width="32%">
+        <input type="text" name="msdocno" id="msdocno"
+        value='<s:property value="msdocno"/>'>
     </td>
-   </tr>
-   </table>
-   </td>
+
+    <td width="27%" align="center" rowspan="2">
+        <input type="button" name="mainsearchbtn"
+        id="mainsearchbtn" class="myButton"
+        value="Search" onclick="loadSearch1()">
+    </td>
 </tr>
 
-  <tr>
-    <td colspan="8">
-    <div id="refreshdivmas">
-      <jsp:include page="subMastersearch.jsp" /> 
-    </div>
+<tr>
+    <td align="right">Type</td>
+    <td>
+        <select name="enqtype" id="enqtype" style="width:100%;">
+            <option value="traffic">Traffic</option>
+            <option value="salik">Salik</option>
+        </select>
     </td>
-  </tr>
+
+    <td colspan="2"></td>
+</tr>
+
+<tr>
+<td colspan="5">
+<div id="refreshdivmas">
+<jsp:include page="subMastersearch.jsp" />
+</div>
+</td>
+</tr>
+
 </table>
+
 </div>
 </body>
 </html>
