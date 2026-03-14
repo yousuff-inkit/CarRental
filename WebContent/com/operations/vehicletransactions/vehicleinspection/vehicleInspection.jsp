@@ -13,9 +13,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES
-    ------------------------------ */
+  
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -36,10 +34,7 @@
         text-align: left !important;
     }
 
-    /* ------------------------------
-       OVERRIDES (Logic Preservation)
-    ------------------------------ */
-    /* Forces Date/Time widgets to be responsive and visible */
+  
     #date, #time, #accdate, #collectdate, #jqxValidUpTo, div[id^="jqx"] {
         height: 32px !important;
         width: 100% !important;
@@ -107,7 +102,7 @@
     }
 
     .section-block h2 {
-        font-size: 1.1rem; 
+        font-size: 17.6px; 
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -117,9 +112,7 @@
         align-items: center;
     }
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
+   
     input[type="text"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -136,20 +129,11 @@
     label {
         font-weight: 600;
         color: #253858;
-        font-size: 14px; /* Standard Size */
+        font-size: 16px; 
         text-align: right;
         padding-right: 10px;
         white-space: nowrap;
     }
-
-    /* ------------------------------
-       BUTTONS & UTILS
-    ------------------------------ */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;
-    }
-    .myButton:hover { background: #0056b3; }
 
     #icons {
         width: 2.5em; height: 2em; border: none; background-color: transparent; cursor: pointer;
@@ -158,7 +142,7 @@
     .hidden-scrollbar { overflow: auto; height: 600px; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
 
-    /* Camera Styles */
+   
     #webcam, #canvas {
         width: 100%; max-width: 320px;
         border: 5px solid #333; background: #e0ecf8;
@@ -168,6 +152,37 @@
         border-radius: 10px; border: 1px solid #ccc;
         max-height: 200px; object-fit: contain;
     }
+   
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+  }
+  #date {
+    min-width: 150px;
+}
 </style>
 
 <script type="text/javascript">
@@ -187,10 +202,35 @@
           
           /* Date */
           document.getElementById("btnEdit").disabled=true;
-            $("#date").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-            $("#time").jqxDateTimeInput({ width: '50%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
-          $("#accdate").jqxDateTimeInput({ width: '85px', height: '15px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
-          $("#collectdate").jqxDateTimeInput({ width: '85px', height: '15px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
+
+$("#date").jqxDateTimeInput({
+    width: '150px',
+    height: '30px',
+    formatString:"dd.MM.yyyy",
+    value: new Date()
+});
+
+$("#time").jqxDateTimeInput({
+    width: '120px',
+    height: '30px',
+    formatString:'HH:mm',
+    showCalendarButton:false,
+    value:new Date()
+});
+
+$("#accdate").jqxDateTimeInput({
+    width:'150px',
+    height:'30px',
+    formatString:"dd.MM.yyyy",
+    value:null
+});
+
+$("#collectdate").jqxDateTimeInput({
+    width:'150px',
+    height:'30px',
+    formatString:"dd.MM.yyyy",
+    value:null
+});
           /* Window */
            $('#docwindow').jqxWindow({ width: '70%', height: '60%',  maxHeight: '70%' ,maxWidth: '60%' , title: 'Document Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
            $('#docwindow').jqxWindow('close');
@@ -869,9 +909,41 @@
              </script>
 </head>
 <body onload="setValues();getConfig();">
+
 <div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmVehicleInspection" action="saveVehicleInspection" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
+<div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0 15px 0;">
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label style="width:50px;">Date</label>
+
+   
+    <div id="date"
+         name="date"
+         style="width:160px; height:30px;"
+         value='<s:property value="date"/>'>
+    </div>
+
+    <input type="hidden"
+           name="hiddate"
+           id="hiddate"
+           value='<s:property value="hiddate"/>'>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:8px;">
+    <label>Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           readonly
+           tabindex="-1"
+           style="width:160px;">
+  </div>
+
+</div>
 <script>
             window.parent.formName.value="Vehicle Inspection";
             window.parent.formCode.value="VIP";
@@ -880,20 +952,14 @@
     <div id="formdet"></div>
 
     <div class="receipt-header">
-        <label>Date</label>
-        <div>
-            <div id="date" name="date" value='<s:property value="date"/>'></div>
-            <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-        </div>
+        
 
         <label>Time</label>
         <div>
             <div id="time" name="time"  value='<s:property value="date"/>'></div>
             <input type="hidden" name="hidtime" id="hidtime" value='<s:property value="hidtime"/>'>
         </div>
-        <label>Doc No</label>
-           <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
-        
+       
 
         <label>Ref Type</label>
         <select name="cmbreftype" id="cmbreftype" onchange="funResetValues();">

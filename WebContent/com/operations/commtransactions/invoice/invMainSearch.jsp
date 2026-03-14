@@ -123,52 +123,78 @@ td[align="center"] {
 tr {
   line-height: 1.8;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#E0ECF8">
 <div id="search">
 
 <table width="100%">
-  <tr>
-    <td width="6%" align="right">Client</td>
-    <td width="24%" align="left">
-        <input type="text" name="searchclient" id="searchclient" style="width:96.5%;" value='<s:property value="searchclient"/>'>
+
+<tr>
+    <td width="6%" align="right">Date</td>
+    <td width="14%">
+        <div id="searchdate" name="searchdate"></div>
     </td>
-    <td width="15%" align="right">Ref Type</td>
-    <td width="15%" align="left">
-        <select name="searchcmbagmttype" id="searchcmbagmttype" style="width:99%;">
+
+    <td width="21%" align="right">Doc No</td>
+    <td width="32%">
+        <input type="text" name="searchdocno" id="searchdocno"
+        value='<s:property value="searchdocno"/>'>
+    </td>
+
+    <td width="27%" align="center" rowspan="2">
+        <input type="button" name="btninvsearch" id="btninvsearch"
+        class="myButton" value="Search" onClick="mainloadSearch();">
+    </td>
+</tr>
+
+<tr>
+    <td align="right">Client</td>
+    <td>
+        <input type="text" name="searchclient" id="searchclient"
+        value='<s:property value="searchclient"/>'>
+    </td>
+
+    <td align="right">Ref Type</td>
+    <td>
+        <select name="searchcmbagmttype" id="searchcmbagmttype">
             <option value="">--Select--</option>
             <option value="RAG">Rental</option>
             <option value="LAG">Lease</option>
         </select>
     </td>
-    <td width="16%" align="right">Agmt No</td>
-    <td width="24%" align="left">
-        <input type="text" name="searchagmtno" id="searchagmtno" value='<s:property value="searchagmtno"/>'>
+</tr>
+
+<tr>
+    <td align="right">Agmt No</td>
+    <td>
+        <input type="text" name="searchagmtno" id="searchagmtno"
+        value='<s:property value="searchagmtno"/>'>
     </td>
-  </tr>
-  <tr>
-    <td align="right">Date</td>
-    <td align="left"><div id="searchdate" name="searchdate"></div></td>
-    <td align="right">Doc No</td>
-    <td align="left">
-        <input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'>
+
+    <td colspan="2">
+        <input type="checkbox" name="chkdeletedinv" id="chkdeletedinv"
+        onchange="funChangeDeletedInv();">
+        Deleted Invoices
     </td>
-    <td align="center">
-        <input type="checkbox" name="chkdeletedinv" id="chkdeletedinv" onchange="funChangeDeletedInv();">&nbsp;Deleted Invoices
-    </td>
-    <td align="left">
-        <input type="button" name="btninvsearch" id="btninvsearch" class="myButton" value="Search" onClick="mainloadSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td colspan="6" align="right"> 
-      <div id="srefreshdiv">
-        <jsp:include page="subMainSearch.jsp" />
-      </div>
-    </td>
-  </tr>
+
+    <td></td>
+</tr>
+
+<tr>
+<td colspan="5">
+<div id="srefreshdiv">
+<jsp:include page="subMainSearch.jsp" />
+</div>
+</td>
+</tr>
+
 </table>
-    
+
 </div>
 </body>
