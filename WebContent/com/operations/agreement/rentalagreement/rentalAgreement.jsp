@@ -2976,29 +2976,6 @@ td {
     width: 10px;
 }
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
-
-button, .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-    font-size: 13px;
-}
-
-button:hover, .myButton:hover {
-    background: #0056b3;
-}
-
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
 
 #validrate,
 #validrate1 {
@@ -3007,9 +2984,7 @@ button:hover, .myButton:hover {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
+
 
 #approval-table td {
     font-size: 14px;
@@ -3077,6 +3052,33 @@ html, body {
     width: 100%;
     box-sizing: border-box;
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+
 </style> 
 
 </head>

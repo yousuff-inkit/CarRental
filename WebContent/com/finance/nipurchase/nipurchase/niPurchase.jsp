@@ -8,133 +8,366 @@
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size:14px;
+    font-weight:400;
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 100vh;
     box-sizing: border-box;
-    font-size: 15px;
-    font-weight: 700 !important; /* Global Boldness */
+    overflow-y: auto !important;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 100% !important; /* Force 100% width */
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    text-align: left !important;
 }
 
-/* Make all text bolder */
-* {
-    font-weight: 700 !important;
-}
-
-/* ------------------------------
-    SECTION BLOCKS & HEADERS
------------------------------- */
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-/* Blue vertical line for headers */
-.section-block h2 {
-    font-size: 1.3rem;
-    font-weight: 700 !important;
-    margin: 0 0 20px;
-    padding-left: 12px;
-    border-left: 5px solid #007bff;
-    color: #253858;
-    display: flex;
-    align-items: center;
-}
-
-/* ------------------------------
-    INPUTS & CONTROLS
------------------------------- */
-input[type="text"], select, textarea, input[type="email"] {
-    height: 38px !important; /* Increased height for bold text */
+/* INPUTS */
+input[type="text"], select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
-    font-size: 15px !important;
+    font-size: 14px;
     box-sizing: border-box;
-    width: 100%;
-    color: #222 !important;
+    width: auto;
+    max-width: 100%;
 }
 
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
 
+/* LABELS */
+
 label {
-    font-weight: 600 !important;
-    color: #253858;
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    color:#253858;
     white-space: nowrap;
-    font-size: 15px;
-}
-
-/* ------------------------------
-    TABLES & GRIDS (UNTOUCHED LOGIC)
------------------------------- */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.cr-table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #e4e7ec;
-    font-size: 15px;
-    vertical-align: middle;
-}
-
-.cr-table td[align="right"] {
-    font-weight: 700 !important;
+    line-height: 32px;
+    padding: 0px 8px 0px 0px;
     text-align: right;
 }
 
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: 100vh;
-    overflow-x: hidden;
+/* SECTION BLOCK */
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
-/* Hidden Scrollbar Utility */
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
+/* SECTION TITLES */
+
+.section-block h2 {
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:17.6px;
+    font-weight:600;
+    margin:0 0 20px;
+    padding-left:10px;
+    border-left:4px solid #007bff;
 }
 
-/* JQX Widget Overrides */
+/* ROW LAYOUT */
+
+.section-row {
+    display:flex;
+    gap:26px;
+    margin-bottom:30px;
+}
+
+.form-group {
+    display:grid;
+    grid-template-columns:120px 1fr;
+    align-items:center;
+    gap:12px 16px;
+    margin-bottom:12px;
+}
+
+.form-group label {
+    font-size:14px;
+}
+
+/* AGREEMENT GRID */
+
+.agmt-info-grid {
+    display:grid;
+    grid-template-columns:auto 1fr auto 1fr auto 1fr;
+    gap:15px 25px;
+    align-items:center;
+}
+
+/* VEHICLE IN/OUT GRID */
+
+.in-out-info-grid {
+    display:grid;
+    grid-template-columns:auto 1fr auto 1fr;
+    gap:12px 16px;
+    align-items:center;
+}
+
+.in-out-info-grid label {
+    font-weight:500;
+    padding-right:8px;
+}
+
+/* INPUT GROUP */
+
+.input-group {
+    display:flex;
+    gap:5px;
+    width:100%;
+}
+
+.input-group input {
+    width:35% !important;
+}
+
+.input-group input:nth-child(2) {
+    width:65% !important;
+}
+
+/* CHECKBOX ALIGN */
+
+.checkbox-label-end {
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:5px;
+}
+
+/* BUTTON GROUP */
+
+.btn-group-end {
+    grid-column:span 4;
+    text-align:right;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:10px;
+}
+
+/* STATUS LABEL */
+
+#lblcancelstatus {
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    color:#6000FC;
+    text-align:center;
+    grid-column:span 2;
+}
+
+/* DATE PICKER */
+
+.jqx-datetimeinput-widget,
 .jqx-datetimeinput {
-    height: 38px !important;
-    width: 100% !important;
+    height:32px !important;
+    line-height:32px !important;
 }
 
-/* Error Message */
-form label.error {
-    color: red !important;
-    font-size: 14px;
+/* SCROLL */
+
+.hidden-scrollbar {
+    overflow-y:visible !important;
+    max-height:none !important;
+    min-height:1px;
+    padding-right:5px;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width:8px;
+    background:#f0f0f0;
+}
+
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+    background:#c0c0c0;
+    border-radius:4px;
+}
+
+/* FORM TITLE */
+
+#formdet {
+    display:block;
+    text-align:left !important;
+    width:100%;
+    margin-left:0;
+}
+
+/* Fix header date alignment */
+.receipt-header label{
+    line-height:32px;
+}
+
+.receipt-header .jqx-datetimeinput{
+    height:32px !important;
+}
+
+/* Fix Doc No width */
+#docno{
+    width:180px !important;
+}
+
+/* Fix agreement grid column widths */
+.agmt-info-grid{
+    grid-template-columns:120px 1fr 120px 1fr 120px 1fr;
+}
+
+/* Fix input group alignment */
+.input-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+/* Fix Fleet No two inputs */
+.input-group input:first-child{
+    width:120px !important;
+}
+
+.input-group input:nth-child(2){
+    flex:1;
+}
+
+/* Fix Date Out / Time Out layout */
+#dateout,
+#timeout{
+    width:120px !important;
+}
+
+/* Fix KM + Fuel alignment */
+#outkm{
+    width:100px !important;
+}
+
+#cmbfuel{
+    width:140px !important;
+}
+
+/* Fix description field full width */
+#description{
+    width:100% !important;
+}
+
+/* Fix Reference No alignment */
+#referenceno{
+    width:220px !important;
+}
+
+/* Align labels properly */
+.agmt-info-grid label{
+    text-align:right;
+    padding-right:10px;
+}
+
+/* Prevent stretched inputs */
+.agmt-info-grid input,
+.agmt-info-grid select{
+    max-width:100%;
+}
+/* Align Date picker with label */
+#date{
+    display:inline-block;
+    vertical-align:middle;
+}
+
+/* Fix jqx date input height */
+.jqx-datetimeinput,
+.jqx-datetimeinput-widget{
+    height:32px !important;
+    line-height:32px !important;
+}
+
+/* Align internal input */
+.jqx-datetimeinput input{
+    height:32px !important;
+    line-height:32px !important;
+    margin-top:0px !important;
+}
+
+/* Align label with date */
+.receipt-header label{
+    line-height:32px;
+}
+.receipt-header{
+    padding-right:20px;
+}
+.jqx-datetimeinput{
+    height:34px !important;
+}
+
+.jqx-datetimeinput input{
+    line-height:34px !important;
+}
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+  select {
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 4px 8px !important;
+}
+
+select::-ms-expand {
+    display: block;
+}
+
+.form-group select,
+.agmt-info-grid select,
+.in-out-info-grid select {
+    min-height: 34px;
+}
+.agmt-info-grid {
+    grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    align-items: center;
+}
+.agmt-info-grid select {
+    width: 100%;
+    min-width: 0;
 }
 </style>
+
+
 <script type="text/javascript">
 
 $(document).ready(function () {   
@@ -979,6 +1212,40 @@ function getProdType(event){
 <div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmNipurchase" action="saveActionNipurchase" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp" /> 
+     <table width="100%">
+<tr>
+
+    <!-- DATE -->
+    <td width="8%" align="right">Date</td>
+    <td width="15%">
+        <div id="nipurchasedate"
+             name="nipurchasedate"
+             value='<s:property value="nipurchasedate"/>'></div>
+
+        <input type="hidden"
+               name="hidnipurchasedate"
+               id="hidnipurchasedate"
+               value='<s:property value="hidnipurchasedate"/>'>
+    </td>
+
+    <!-- SPACE BETWEEN -->
+    <td width="60%"></td>
+
+    <!-- DOC NO -->
+    <td width="8%" align="right">Doc No</td>
+    <td width="9%">
+        <input type="text"
+               name="docno"
+               id="docno"
+               value='<s:property value="docno"/>'
+               readonly="readonly"
+               tabindex="-1"
+               style="width:120px;">
+    </td>
+
+</tr>
+</table>
+            
     <br/>
 
     <div class="section-block">
@@ -988,14 +1255,7 @@ function getProdType(event){
 
         <!-- ROW 1 -->
         <tr>
-            <td width="8%" align="right"><label>Date</label></td>
-            <td width="15%">
-                <div id="nipurchasedate" name="nipurchasedate"
-                     value='<s:property value="nipurchasedate"/>'></div>
-                <input type="hidden" name="hidnipurchasedate"
-                       id="hidnipurchasedate"
-                       value='<s:property value="hidnipurchasedate"/>'>
-            </td>
+           
 
             <td align="right" width="10%"><label>Ref Type</label></td>
             <td width="15%">
@@ -1007,14 +1267,7 @@ function getProdType(event){
                 </select>
             </td>
 
-            <!-- DOC NO (SWAPPED HERE) -->
-            <td align="right" width="8%"><label>Doc No</label></td>
-            <td>
-                <input type="text" name="docno" id="docno"
-                       tabindex="-1"
-                       value='<s:property value="docno"/>'
-                       readonly="readonly">
-            </td>
+            
         </tr>
 
         <!-- ROW 2 -->

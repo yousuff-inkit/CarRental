@@ -279,20 +279,28 @@
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmGroup" action="saveActionGroup" autocomplete="off">
 <jsp:include page="../../../../header.jsp" />
-    
+   <div class="form-row" style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div class="jqx-datetimeinput-container" style="width:130px;">
+        <div id="groupdate" name="groupdate" value='<s:property value="groupdate"/>'></div>
+    </div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           readonly
+           tabindex="-1"
+           style="width:110px;">
+
+</div>
     <div class="section-block">
         <h2>Group Details</h2>
-        
-        <div class="form-row">
-            <label>Date</label>
-            <div class="jqx-datetimeinput-container">
-                <div id="groupdate" name="groupdate" value='<s:property value="groupdate"/>'></div>
-            </div>
-            
-            <label>Doc No</label>
-            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
-        </div>
-        
+    
         <div class="form-row">
             <label>Group</label>
             <input type="text" name="group" id="group" required="required" value='<s:property value="group"/>'>

@@ -10,9 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -33,9 +31,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -60,9 +56,7 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
+
 
 .receipt-header {
     background: #f6f8fa;
@@ -78,9 +72,7 @@ label {
     gap: 16px;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT
------------------------------- */
+
 
 .form-group {
     display: grid;
@@ -155,7 +147,7 @@ label {
     text-align: right;
     padding-right: 8px;
 }
-/* Type/AccID/AccName row */
+
 .form-group.type-acc-row {
     grid-template-columns: 120px 120px 120px 200px 1fr;
     align-items: center;
@@ -178,7 +170,7 @@ label {
     padding-right: 8px;
 }
 
-/* Full width description row */
+
 .form-row.full-row {
     display: grid;
     grid-template-columns: 120px 1fr;
@@ -235,9 +227,7 @@ label {
     border-bottom: none;
 }
 
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
+
 
 .hidden-scrollbar {
     overflow: auto;
@@ -247,29 +237,7 @@ label {
     width: 10px;
 }
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
 
-button, .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-    font-size: 13px;
-}
-
-button:hover, .myButton:hover {
-    background: #0056b3;
-}
-
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
 
 #validrate,
 #validrate1 {
@@ -303,7 +271,7 @@ h2 {
     margin: 0 0 20px 0;
 }
 
-/* vertical blurred line */
+
 h2::before {
     content: "";
     position: absolute;
@@ -327,7 +295,7 @@ h2::before {
     gap: 10px;
 }
 
-/* pushes Doc No to extreme right */
+
 .right-docno {
     margin-left: auto;
     display: flex;
@@ -346,6 +314,33 @@ h2::before {
 .right-docno input {
     width: 120px;
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+
 
 </style>
 
@@ -2290,6 +2285,31 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 			window.parent.formCode.value="MOV";
 	</script>
 	<jsp:include page="../../../../header.jsp" />
+	<div style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div id="date"
+         name="date"
+         style="width:120px;"
+         value='<s:property value="date"/>'></div>
+
+    <input type="hidden"
+           id="hiddate"
+           name="hiddate"
+           value='<s:property value="hiddate"/>'/>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           id="docno"
+           name="docno"
+           style="width:120px;"
+           tabindex="-1"
+           readonly
+           value='<s:property value="docno"/>'/>
+
+</div>
 	<br/> 
 <div class='receipt-header'>
 <div class = "section_row">
@@ -2299,13 +2319,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   
     <div class="form-group type-acc-row">
 
-    <!-- Date -->
-    <label>Date</label>
-    <div id="date" name="date"
-         style="width:120px; display:inline-block;"
-         value='<s:property value="date"/>'></div>
-    <input type="hidden" id="hiddate" name="hiddate"
-           value='<s:property value="hiddate"/>'/>
+   
 
     <!-- Fleet No -->
     <label style="margin-left:15px;">Fleet No</label>
@@ -2322,13 +2336,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
            value='<s:property value="txtfleetname"/>'
            readonly />
 
-    <!-- Doc No (RIGHT SIDE) -->
-    <label style="margin-left:40px;">Doc No</label>
-    <input type="text" id="docno" name="docno"
-           style="width:120px; margin-left:5px;"
-           tabindex="-1"
-           readonly
-           value='<s:property value="docno"/>'/>
+   
 
 </div>
     

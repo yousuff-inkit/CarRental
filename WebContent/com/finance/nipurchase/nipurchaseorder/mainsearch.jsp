@@ -77,42 +77,11 @@
     margin-top: 14px;
 }
 
-/* ===== Blue Search Button (scoped) ===== */
-#search .myButton {
-    font-size: 15px;
-    font-weight: 500;
-    padding: 8px 20px;
-    height: 38px;
-    border-radius: 6px;
-
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: #ffffff;
-    border: 1px solid #1d4ed8;
-
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
 }
-
-/* Hover effect */
-#search .myButton:hover {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-    transform: translateY(-1px);
-}
-
-/* Active (click) effect */
-#search .myButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
-}
-
-/* Focus (keyboard accessibility) */
-#search .myButton:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
-}
-
-
 </style>
 	<script type="text/javascript">
 
@@ -147,50 +116,96 @@
 
 	</script>
 <body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table width="100%" >
-   <tr>
-    <td align="right" width="6%">Doc No</td>
-    <td align="left" width="20%"><input type="text" name="docnoss" id="docnoss"  style="width:90%;" value='<s:property value="docnoss"/>'></td>
-    <td align="right" width="10%">Account</td>
-    <td align="left"><input type="text" name="accountss" id="accountss" style="width:80%;"  value='<s:property value="accountss"/>'></td>
-    
-   <td align="right"  width="14%">Account Name</td>
-    <td align="left"  width="30%"><input type="text" name="accnamess" style="width:90%;" id="accnamess" value='<s:property value="accnamess"/>'></td>
-    
-    <tr>
-    </table>
-    </td>
-  </tr>
-  <tr>
-  <td>
-  <table width="100%">
-        <tr> 
-        <td align="right" width="6%">Date </td>
-    <td align="left" width="20%"><div id="datess" name="datess"  value='<s:property value="datess"/>'></div></td>
-    <td align="right" width="10%">&nbsp;</td><td  width="20%"><input type="button" name="searchs" id="searchs" class="myButton" value="Search"  onclick="loadSearchs()">
-</td>
-   <td width="10%"></td>
-   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   </td>
-    <tr>
-    </table>
-  </td>
+<div id="search">
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdivs">
-      
-   <jsp:include  page="Subsearch.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
+<table width="100%">
+
+<tr>
+<td>
+
+<table width="100%">
+
+<tr>
+
+<td align="right" width="6%">Doc No</td>
+<td width="20%">
+<input type="text"
+       name="docnoss"
+       id="docnoss"
+       style="width:90%;"
+       value='<s:property value="docnoss"/>'>
+</td>
+
+<td align="right" width="10%">Account</td>
+<td width="20%">
+<input type="text"
+       name="accountss"
+       id="accountss"
+       style="width:80%;"
+       value='<s:property value="accountss"/>'>
+</td>
+
+<td align="right" width="14%">Account Name</td>
+<td width="30%">
+<input type="text"
+       name="accnamess"
+       id="accnamess"
+       style="width:90%;"
+       value='<s:property value="accnamess"/>'>
+</td>
+
+</tr>
+
 </table>
-  </div>
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+
+<table width="100%">
+
+<tr>
+
+<td align="right" width="6%">Date</td>
+<td width="20%">
+<div id="datess" name="datess"
+     value='<s:property value="datess"/>'></div>
+</td>
+
+<td width="54%"></td>
+
+<td width="20%" align="center">
+<input type="button"
+       name="searchs"
+       id="searchs"
+       class="myButton"
+       value="Search"
+       onclick="loadSearchs()">
+</td>
+
+</tr>
+
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+
+<div id="refreshdivs">
+<jsp:include page="Subsearch.jsp"></jsp:include>
+</div>
+
+</td>
+</tr>
+
+</table>
+
+</div>
 </body>
 </html>

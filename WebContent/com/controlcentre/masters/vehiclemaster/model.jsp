@@ -67,7 +67,7 @@
         margin-bottom: 30px;
     }
     .section-block h2 {
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -100,7 +100,7 @@
         padding: 6px 10px;
         background: #fff;
         transition: border-color 0.2s;
-        font-size: 14px;
+        font-size: 16px;
         box-sizing: border-box;
         width: 100%;
     }
@@ -315,20 +315,29 @@ if($('#msg').val()!=""){
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmModel" action="saveActionModel"  autocomplete="off">
 <jsp:include page="../../../../header.jsp" />
-    
+   <div class="form-row date-docno" style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div class="jqx-datetimeinput-container" style="width:130px;">
+        <div id="modeldate" name="modeldate" value='<s:property value="modeldate"/>'></div>
+    </div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           value='<s:property value="docno"/>'
+           id="docno"
+           readonly="readonly"
+           tabindex="-1"
+           style="width:110px;">
+
+</div>
     <div class="section-block">
         <h2>Model Details</h2>
         
-        <div class="form-row date-docno">
-            <label>Date</label>
-            <div class="jqx-datetimeinput-container">
-                <div id="modeldate" name="modeldate" value='<s:property value="modeldate"/>'></div>
-            </div>
-            <div style="grid-column: 3 / 4;"></div> <label>Doc No</label>
-            <input type="text" name="docno" value='<s:property value="docno"/>' id="docno" readonly="readonly" tabindex="-1">
-        </div>
-        
-        <div class="form-row">
+         <div class="form-row">
             <label>Brand</label>
             <select name="brand" id="brand" style="width:100%;"></select>
             
