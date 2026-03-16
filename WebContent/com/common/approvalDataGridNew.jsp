@@ -223,36 +223,33 @@
         $("#jqxapprovalDataGrid").on('rowdoubleclick', function (event) {
             var rowindextemp = event.args.rowindex;
             
-            // 1. Get values from the grid
             var doc_no   = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doc_no");
             var path1    = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "path");
             var brch     = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "branch");
             var doctype  = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doctype");
-            var name     = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "name");
+            var rawName  = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "name");
+            
+            var name = rawName.replace(/\s*\(.*?\)\s*/g, '').trim(); 
             
             var contextPath = "<%=request.getContextPath()%>"; 
             
-            // 2. DYNAMIC ACTION NAME
             var pathParts = path1.split('/');
             var fileName = pathParts[pathParts.length - 1]; 
             var folderPath = path1.substring(0, path1.lastIndexOf("/")); 
             var capitalizedForm = fileName.charAt(0).toUpperCase() + fileName.slice(1).replace(".jsp", "");
             var dynamicAction = folderPath + "/save" + capitalizedForm.trim() + ".action";
 
-            // 3. DYNAMIC ID PARAMETER (Mappings for different forms)
             var typeMap = {
-                'BPV': 'bankpay',
-                'CPV': 'cashpay',
-                'BRV': 'bankrec',
-                'CRV': 'cashrec',
-                'JV':  'jv' 
+                'BPV': 'bankpay', 'CPV': 'cashpay', 'BRV': 'bankrec', 'CRV': 'cashrec', 'JV': 'jv' 
             };
             var middlePart = typeMap[doctype] || doctype.toLowerCase();
             var dynamicIdParam = "txt" + middlePart + "docno";
 
-            // 4. CONSTRUCT THE URL
-            // We pass 'formdetail' and 'formdetailcode' so the Action fills the hidden 
-            // fields that bankpayment.jsp uses for its innerText logic.
+            if (window.parent) {
+                window.parent.formName.value = name + " - " + doc_no;
+                window.parent.formCode.value = doctype; 
+            }
+
             var cleanPath = dynamicAction.startsWith("/") ? dynamicAction : "/" + dynamicAction;
             var fullPath = contextPath + cleanPath + 
                            "?mode=View" +
@@ -261,14 +258,14 @@
                            "&formdetail=" + encodeURIComponent(name) + 
                            "&formdetailcode=" + encodeURIComponent(doctype);
 
-            // 5. STABLE ID FOR REFRESH
             var stableTabId = doctype + "_" + doc_no;
 
-            // 6. OPEN TAB
+            var tabLabel = name + " - " + doc_no; 
+
             if (window.parent && typeof window.parent.addTab === "function") {
-                window.parent.addTab(name + " - " + doc_no, fullPath, stableTabId);
+                window.parent.addTab(tabLabel, fullPath, stableTabId);
             } else if (window.parent && typeof window.parent.addNewTab === "function") {
-                window.parent.addNewTab(name + " - " + doc_no, fullPath, stableTabId);
+                window.parent.addNewTab(tabLabel, fullPath, stableTabId);
             }
         });
     });  
