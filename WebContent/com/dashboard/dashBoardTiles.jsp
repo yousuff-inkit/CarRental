@@ -68,13 +68,32 @@
         else if(selectedModule.equalsIgnoreCase("Asset")) searchTerm = "Asset";
         else if(selectedModule.equalsIgnoreCase("Control")) searchTerm = "Control";
 
-        String sql = "SELECT DISTINCT m3.menu_name, m3.func FROM my_menu m1 " + 
-                     "JOIN my_menu m2 ON m2.pmenu = m1.mno JOIN my_menu m3 ON m3.pmenu = m2.mno " + 
-                     "LEFT JOIN my_powr p ON p.mno = m3.mno " + 
-                     "WHERE (m1.menu_name LIKE '%" + searchTerm + "%' OR m1.doc_type LIKE '%" + searchTerm + "%') " + 
-                     "AND m3.GATE != 'N' AND m3.func IS NOT NULL AND m3.func <> '' " + 
-                     "AND p.roleid = '" + roleId + "' AND (p.add1<>0 OR p.edit<>0 OR p.del<>0 OR p.print<>0 OR p.attach<>0 OR p.excel<>0 OR p.view<>0) " + 
-                     "ORDER BY m3.menu_name";
+        String sql = 
+                "SELECT DISTINCT menu_name, func FROM ( " +
+                "  SELECT m2.menu_name, m2.func FROM my_menu m1 " +
+                "  JOIN my_menu m2 ON m2.pmenu = m1.mno " +
+                "  LEFT JOIN my_powr p ON p.mno = m2.mno " +
+                "  WHERE (m1.menu_name LIKE '%" + searchTerm + "%' OR m1.doc_type LIKE '%" + searchTerm + "%') " +
+                "  AND m2.GATE != 'N' AND m2.func IS NOT NULL AND m2.func <> '' " +
+                "  AND p.roleid = '" + roleId + "' AND (p.add1<>0 OR p.edit<>0 OR p.del<>0 OR p.print<>0 OR p.attach<>0 OR p.excel<>0 OR p.view<>0) " +
+                "  UNION " +
+                "  SELECT m3.menu_name, m3.func FROM my_menu m1 " +
+                "  JOIN my_menu m2 ON m2.pmenu = m1.mno " +
+                "  JOIN my_menu m3 ON m3.pmenu = m2.mno " +
+                "  LEFT JOIN my_powr p ON p.mno = m3.mno " +
+                "  WHERE (m1.menu_name LIKE '%" + searchTerm + "%' OR m1.doc_type LIKE '%" + searchTerm + "%') " +
+                "  AND m3.GATE != 'N' AND m3.func IS NOT NULL AND m3.func <> '' " +
+                "  AND p.roleid = '" + roleId + "' AND (p.add1<>0 OR p.edit<>0 OR p.del<>0 OR p.print<>0 OR p.attach<>0 OR p.excel<>0 OR p.view<>0) " +
+                "  UNION " +
+                "  SELECT m4.menu_name, m4.func FROM my_menu m1 " +
+                "  JOIN my_menu m2 ON m2.pmenu = m1.mno " +
+                "  JOIN my_menu m3 ON m3.pmenu = m2.mno " +
+                "  JOIN my_menu m4 ON m4.pmenu = m3.mno " +
+                "  LEFT JOIN my_powr p ON p.mno = m4.mno " +
+                "  WHERE (m1.menu_name LIKE '%" + searchTerm + "%' OR m1.doc_type LIKE '%" + searchTerm + "%') " +
+                "  AND m4.GATE != 'N' AND m4.func IS NOT NULL AND m4.func <> '' " +
+                "  AND p.roleid = '" + roleId + "' AND (p.add1<>0 OR p.edit<>0 OR p.del<>0 OR p.print<>0 OR p.attach<>0 OR p.excel<>0 OR p.view<>0) " +
+                ") all_menus ORDER BY menu_name";
         
         rs = stmt.executeQuery(sql);
         while(rs.next()) {
