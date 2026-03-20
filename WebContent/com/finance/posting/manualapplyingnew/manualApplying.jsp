@@ -344,7 +344,7 @@ body {
 }
 
 .section-block h2 {
-    font-size: 17.6px;
+    font-size: 14px;
     font-weight: 600;
     margin: 0 0 16px 0;
     padding-left: 10px;
@@ -361,7 +361,7 @@ input[type="text"], select {
     padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
-    font-size: 14px;
+    font-size: 12px;
     box-sizing: border-box;
     width: 100%;
 }
@@ -383,7 +383,7 @@ input[type="text"]:focus, select:focus {
 .cr-table td {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
 }
 
