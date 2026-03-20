@@ -2781,8 +2781,8 @@ body {
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 130vh;
     box-sizing: border-box;
+    overflow-y: auto; /* Replaced min-height: 130vh with this */
 }
 
 #mainBG {
@@ -2970,12 +2970,17 @@ td {
 
 .hidden-scrollbar {
     overflow: auto;
+    height: 100vh; /* Added height constraint */
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
-    width: 10px;
+    width: 0px; /* Changed from 10px to 0px */
 }
 
+/* Add this new rule right below it */
+body::-webkit-scrollbar {
+    width: 0px;
+}
 /* ------------------------------
    BUTTONS
 ------------------------------ */
@@ -3051,10 +3056,7 @@ h2::before {
     border-radius: 4px;
     filter: blur(0.6px);
 }
-html, body {
-    height: auto !important;
-    overflow-y: auto !important;
-}
+
 .vehicle-client-table {
     width: 100% !important;
     table-layout: fixed;   

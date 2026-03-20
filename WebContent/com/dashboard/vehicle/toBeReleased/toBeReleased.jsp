@@ -1,6 +1,7 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
  <% String contextPath=request.getContextPath();%> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +75,7 @@ input[type="text"], select {
     border: 1px solid #ccd6e0;
     border-radius: 6px;
     font-size: 13px;
+    box-sizing: border-box;
 }
 
 /* Buttons */
@@ -92,6 +94,11 @@ input[type="text"], select {
 
 .btn-submit:hover {
     background: #1d4ed8;
+}
+
+.btn-submit:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
 }
 
 /* Page height fix */
@@ -183,15 +190,11 @@ $(document).ready(function () {
 	
 	document.getElementById("dashfleetwarning").style.display="none";
 	document.getElementById("dashbtnrelease").disabled=true;
-	document.getElementById("dashreleasefuel").disabled=true;
 	document.getElementById("btnvehicle").disabled=true;
 	document.getElementById("btnattach").disabled=true;
 	 $("#dashreleasedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	 $("#dashreleasetime").jqxDateTimeInput({ width: '20%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
-	/*  $('#vehiclewindow').jqxWindow({ autoOpen: false,width: '80%', height: '70%',  maxHeight: '70%' ,maxWidth: '80%' , title: 'Vehicle Details' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});
-	   $('#vehiclewindow').jqxWindow('close'); */
-	 /*   $('#clientWindow').jqxWindow({ autoOpen: false,width: '78%', height: '85%',  maxHeight: '85%' ,maxWidth: '78%' , title: 'Client Details' , theme: 'energyblue', position: { x: 280, y: 10 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});
-	   $('#clientWindow').jqxWindow('close'); */
+
 	   $('#vehiclewindow').jqxWindow({width: '80%', height: '70%',  maxHeight: '80%' ,maxWidth: '90%' , title: 'Vehicle Details',position: { x: 250, y: 60} , theme: 'energyblue', showCloseButton: true,closeButtonAction:'hide'});
 	   $('#vehiclewindow').jqxWindow('close');
 	 
@@ -203,10 +206,8 @@ $(document).ready(function () {
 getBrch();	
 getTestLocation(); 
 });
-function funExportBtn(){
-	 //$("#toBeReleasedGrid").jqxGrid('exportdata', 'xls', 'ToBeReleased');
 
-   
+function funExportBtn(){
 	   if(parseInt(window.parent.chkexportdata.value)=="1")
 	    {
 	    JSONToCSVCon(datarelease, 'ToBeReleased', true);
@@ -215,19 +216,14 @@ function funExportBtn(){
 	    {
 		   $("#toBeReleasedGrid").jqxGrid('exportdata', 'xls', 'ToBeReleased');
 	    }
-	   
-	   
-
-
-
 }
+
 function getTestLocation(){
 	var x=new XMLHttpRequest();
 	x.onreadystatechange=function(){
 		if (x.readyState==4 && x.status==200)
 			{
 			 	items= x.responseText;
-					//alert(items);
 			 	items=items.split('***');
 		        var locationItems=items[0].split(",");
 		        var locationidItems=items[1].split(",");
@@ -236,7 +232,6 @@ function getTestLocation(){
 		    	   optionslocation += '<option value="' + locationidItems[i] + '">' + locationItems[i] + '</option>';
 		        }
 		       $("select#dashcmbrlsloc").html(optionslocation);
-			   //	$('#accno').val($('#accnohidden').val()) ;
 			   	if ($('#dashhidcmbrlsloc').val() != null) {
 			$('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
 		}
@@ -247,9 +242,8 @@ function getTestLocation(){
 	}
 	x.open("GET","getTestLocation.jsp",true);
 	x.send();
-//document.write(document.getElementById("authname").value);
-
 }
+
 function getBrch() {
 	var x = new XMLHttpRequest();
 	var items, brchItems, currItems;
@@ -275,15 +269,14 @@ function getBrch() {
 	x.open("GET", "getBranch.jsp", true);
 	x.send();
 }
+
 function getLocation(value)
 {
-	//alert(here);
 	var x=new XMLHttpRequest();
 	x.onreadystatechange=function(){
 		if (x.readyState==4 && x.status==200)
 			{
 			 	items= x.responseText;
-					//alert(items);
 			 	items=items.split('***');
 		        var locationItems=items[0].split(",");
 		        var locationidItems=items[1].split(",");
@@ -292,7 +285,6 @@ function getLocation(value)
 		    	   optionslocation += '<option value="' + locationidItems[i] + '">' + locationItems[i] + '</option>';
 		        }
 		       $("select#dashcmbrlsloc").html(optionslocation);
-			   //	$('#accno').val($('#accnohidden').val()) ;
 			   	if ($('#dashhidcmbrlsloc').val() != null) {
 			$('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
 		}
@@ -303,11 +295,9 @@ function getLocation(value)
 	}
 	x.open("GET","getLocation.jsp?id="+value,true);
 	x.send();
-//document.write(document.getElementById("authname").value);
-
 }
+
 function funReleaseClick(){
-	/* alert("Inside"); */
 	document.getElementById("mode").value='R';
 	var testfleet=document.getElementById("dashreleasefleet").value;
 	var testbranch=document.getElementById("dashcmbrlsbranch").value;
@@ -351,58 +341,22 @@ function funReleaseClick(){
 		 if(document.getElementById("dashreleasefleet").value<=0){
 			 return false;
 		 }
-			document.getElementById("dashreleasefuel").disabled=false;
 		 document.getElementById("frmReleaseDashBoard").submit();
-		//funVehRelease(testfleet,testbranch,testloc,testkm,testfuel,testdate,testtime,teststatus);
-		
-		
 	}
-	document.getElementById("dashreleasefuel").disabled=true;
 }
 
 function setValues(){
-	/* if($('#dashhidreleasetime').val()){
-		$("#dashreleasetime").jqxDateTimeInput('val', $('#dashhidreleasetime').val());
-	}
-	/*  if (($('#hidcmbrentalstatus').val() != null)||($('#hidcmbrentalstatus').val() != "")) {
-		$('#cmbrentalstatus').val($('#hidcmbrentalstatus').val());
-	} 
-	//alert("AAA"+$('#hidcmbrentalstatus').val()+"BBB");
-	 /* if($('#dashhidreleasedate').val()){
-			$("#dashreleasedate").jqxDateTimeInput('val', $('#hidreleasedate').val());
-		} 
-	 if ($('#dashhidreleasefuel').val() != null) {
-			$('#dashreleasefuel').val($('#dashhidreleasefuel').val());
-		}
-	 if ($('#dashhidcmbrlsbranch').val() != null) {
-			$('#dashcmbrlsbranch').val($('#dashhidcmbrlsbranch').val());
-		} 
-	 if ($('#dashhidcmbrlsloc').val() != null) {
-			$('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
-		}  */
-	
 	 if(($('#msg').val()!="")){
 		   $.messager.alert('Message',$('#msg').val());
 		  }
-	/*  if(document.getElementById("cmbbranch").value==''){
-			document.getElementById("msg").value="Invalid Branch";
-			 $.messager.alert('Message',$('#msg').val());
-			 return false;
-		} */
-	
 	  var brchval = document.getElementById("cmbbranch").value;
 	    $("#releasediv").load("toBeReleasedGrid.jsp?brchval="+brchval);
-
 }
+
 function funreload(event)
 {
-	
   var brchval = document.getElementById("cmbbranch").value;
- // var exdate = $('#insuexpdate').val();
- 
    $("#releasediv").load("toBeReleasedGrid.jsp?brchval="+brchval);
- 
- 
  }
 
 function getVehicle(){
@@ -414,53 +368,50 @@ function getVehicle(){
 	$('#vehiclewindow').jqxWindow('open');	
 	 vehicleSearchContent("<%=contextPath%>/com/controlcentre/masters/vehicle/saveVehicle1.action?mode=view&fleetno="+document.getElementById("dashreleasefleet").value);
 }
+
 function vehicleSearchContent(url) {
-	//$('#vehiclewindow').jqxWindow('open');	
 	$('#vehiclewindow').jqxWindow('focus');	
 	$.get(url).done(function (data) {
 $('#vehiclewindow').jqxWindow('setContent', data);
 }); 
 }
+
 function getAttach(){
 	if(document.getElementById("dashreleasefleet").value==""){
 		 $.messager.alert('Message',"Please Select Fleet");
 		 return false;
 	}
 	changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);  
-
 }
+
 function changeClientAttachContent(url) {
 	   $.get(url).done(function (data) {
 	        $('#clientAttachWindow').jqxWindow('open');
 	     $('#clientAttachWindow').jqxWindow('setContent',data);
 	     $('#clientAttachWindow').jqxWindow('bringToFront');
 	  }); 
-	  }
+}
 </script>
 
 </head>
 <body onload="getBranch();setValues();">
 <form id="frmReleaseDashBoard" action="saveReleaseDashBoard">
-
-<div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
+<div id="mainBG" class="homeContent" data-type="background"> 
+<div class='hidden-scrollbar'>
 
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
 <td width="20%">
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- Fixed Heading -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- Scrollable Filters -->
     <div class="sidebar-scroll-content">
         <div class="filter-card">
 
@@ -468,80 +419,83 @@ function changeClientAttachContent(url) {
 
                 <tr>
                     <td class="label-cell">Fleet No</td>
-                    <td><input type="text" id="dashreleasefleet" name="dashreleasefleet"
-                               value='<s:property value="dashreleasefleet"/>'></td>
+                    <td><input type="text" name="dashreleasefleet" id="dashreleasefleet" value='<s:property value="dashreleasefleet"/>'></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Branch</td>
                     <td>
-                        <select id="dashcmbrlsbranch" name="dashcmbrlsbranch"
-                                onchange="getLocation(this.value);"></select>
-                        <input type="hidden" id="dashhidcmbrlsbranch" name="dashhidcmbrlsbranch">
+                        <select name="dashcmbrlsbranch" id="dashcmbrlsbranch" onChange="getLocation(this.value);">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" name="dashhidcmbrlsbranch" id="dashhidcmbrlsbranch" value='<s:property value="dashhidcmbrlsbranch"/>'>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Location</td>
                     <td>
-                        <select id="dashcmbrlsloc" name="dashcmbrlsloc"></select>
-                        <input type="hidden" id="dashhidcmbrlsloc" name="dashhidcmbrlsloc">
+                        <select name="dashcmbrlsloc" id="dashcmbrlsloc">
+                            <option value="">--Select--</option>
+                        </select>
+                        <input type="hidden" name="dashhidcmbrlsloc" id="dashhidcmbrlsloc" value='<s:property value="dashhidcmbrlsloc"/>'>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Rental</td>
                     <td>
-                        <select id="dashcmbrentalstatus" name="dashcmbrentalstatus">
-                            <option value="R">Rental</option>
+                        <select name="dashcmbrentalstatus" id="dashcmbrentalstatus">
+                            <option value="R" selected>Rental</option>
                             <option value="L">Lease</option>
                             <option value="LM">Limousine</option>
                             <option value="A">All</option>
                         </select>
+                        <input type="hidden" name="dashhidcmbrentalstatus" id="dashhidcmbrentalstatus" value='<s:property value="dashhidcmbrentalstatus"/>'>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Date</td>
-                    <td><div id="dashreleasedate"></div></td>
+                    <td><div id="dashreleasedate" name="dashreleasedate" value='<s:property value="dashreleasedate"/>'></div></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Time</td>
-                    <td><div id="dashreleasetime"></div></td>
+                    <td><div id="dashreleasetime" name="dashreleasetime" value='<s:property value="dashreleasetime"/>'></div></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">KM</td>
-                    <td><input type="text" id="dashreleasekm" readonly></td>
+                    <td><input type="text" name="dashreleasekm" id="dashreleasekm" value='<s:property value="dashreleasekm"/>' tabindex="-1" readonly></td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Fuel</td>
                     <td>
-                        <select id="dashreleasefuel">
+                        <select name="dashreleasefuel" id="dashreleasefuel" value='<s:property value="dashreleasefuel"/>' style="pointer-events: none; background-color: #f3f6f9;" tabindex="-1">
                             <option value="">--Select--</option>
-                            <option value="0">Level 0/8</option>
+                            <option value="0.000" selected>Level 0/8</option>
                             <option value="0.125">Level 1/8</option>
-                            <option value="0.25">Level 2/8</option>
+                            <option value="0.250">Level 2/8</option>
                             <option value="0.375">Level 3/8</option>
-                            <option value="0.5">Level 4/8</option>
+                            <option value="0.500">Level 4/8</option>
                             <option value="0.625">Level 5/8</option>
-                            <option value="0.75">Level 6/8</option>
+                            <option value="0.750">Level 6/8</option>
                             <option value="0.875">Level 7/8</option>
-                            <option value="1">Level 8/8</option>
+                            <option value="1.000">Level 8/8</option>
                         </select>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="label-cell">Op. Status</td>
-                    <td><input type="text" value="IN" disabled></td>
+                    <td><input type="text" name="dashopstatus" id="dashopstatus" value='IN' tabindex="-1" readonly></td>
                 </tr>
 
                 <tr>
-                    <td class="label-cell">Ast Status</td>
-                    <td><input type="text" id="dashaststatus" readonly></td>
+                    <td class="label-cell">Ast status</td>
+                    <td><input type="text" name="dashaststatus" id="dashaststatus" value='<s:property value="dashaststatus"/>' tabindex="-1" readonly></td>
                 </tr>
 
                 <tr>
@@ -552,14 +506,15 @@ function changeClientAttachContent(url) {
 
             </table>
 
+            <input type="hidden" name="hidclient" id="hidclient" >
+            
             <div class="release-secondary-actions">
                 <button type="button" class="btn-submit" id="btnvehicle" onclick="getVehicle()">Vehicle</button>
                 <button type="button" class="btn-submit" id="btnattach" onclick="getAttach()">Attach</button>
             </div>
 
             <div class="release-actions">
-                <button type="button" class="btn-submit" id="dashbtnrelease"
-                        onclick="funReleaseClick()">Release</button>
+                <button type="button" class="btn-submit" id="dashbtnrelease" onclick="funReleaseClick()">Release</button>
             </div>
 
         </div>
@@ -569,14 +524,14 @@ function changeClientAttachContent(url) {
 </div>
 </td>
 
-<!-- ================= RIGHT GRID ================= -->
 <td width="80%">
-    <div id="releasediv">
-        <jsp:include page="toBeReleasedGrid.jsp"></jsp:include>
-    </div>
-
-    <input type="hidden" id="mode" name="mode">
-    <input type="hidden" id="docno" name="docno">
+    <table width="100%">
+        <tr>
+             <td><div id="releasediv"><jsp:include page="toBeReleasedGrid.jsp"></jsp:include></div></td>
+             <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>' > 
+             <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' >
+        </tr>
+    </table>
 </td>
 
 </tr>
@@ -584,8 +539,12 @@ function changeClientAttachContent(url) {
 
 </div>
 
-<div id="vehiclewindow"><div></div></div>
-<div id="clientAttachWindow"><div></div></div>
+<div id="vehiclewindow">
+<div></div>
+</div>
+<div id="clientAttachWindow">
+   <div></div>
+</div>
 
 </div>
 </form>
