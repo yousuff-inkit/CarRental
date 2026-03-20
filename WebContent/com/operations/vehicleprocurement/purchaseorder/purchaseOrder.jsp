@@ -114,25 +114,44 @@
     }
 
     /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
-    input[type="text"], select {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
+   INPUTS & CONTROLS
+------------------------------ */
+input[type="text"] {
+    height: 32px !important;   /* keep for textboxes */
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
 
-    input[type="text"]:focus, select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    
+
+select {
+    min-height: 32px;              /* instead of fixed height */
+    height: auto !important;       /* IMPORTANT FIX */
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+
+    /* RESET NATIVE DROPDOWN */
+    appearance: auto;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+}
+
+/* Focus */
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
     input[readonly] {
         background-color: #f3f4f6;
         color: #6b7280;
