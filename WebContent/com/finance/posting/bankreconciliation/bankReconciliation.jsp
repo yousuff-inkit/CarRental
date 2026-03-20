@@ -348,7 +348,7 @@ body {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 16px 0;
     padding-left: 10px;
@@ -387,12 +387,12 @@ input[type="text"]:focus, select:focus {
 .cr-table td {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
 .cr-table td[align="right"] {
-    font-weight: 700;
+    font-weight: 600;
     color: #253858;
     white-space: nowrap;
 }

@@ -150,6 +150,36 @@
         padding: 0;
         margin: 0;
     }
+    .plate-form{
+    display:grid;
+    grid-template-columns:120px 220px 120px 220px;
+    gap:10px 15px;
+    margin-top:15px;
+    align-items:center;
+    width:700px;
+}
+
+.plate-form label{
+    text-align:right;
+}
+.plate-form{
+    display:grid;
+    grid-template-columns:120px 220px 120px 220px;
+    gap:12px 20px;
+    margin-top:20px;
+    align-items:center;
+    width:700px;
+}
+
+.plate-form label{
+    text-align:right;
+    font-weight:600;
+}
+
+.plate-form input,
+.plate-form select{
+    width:100%;
+}
 </style>
 <script type="text/javascript">
 var data= '<%=cpa.searchDetails() %>';
@@ -372,33 +402,49 @@ var data= '<%=cpa.searchDetails() %>';
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmPlateCode" action="saveActionPlate"  autocomplete="off">
 	<jsp:include page="../../../../header.jsp" />
-	
-    <div class="section-block">
-        <h2>Plate Code Details</h2>
-        
-        <div class="form-grid">
-            <label>Date</label>
-            <div class="jqx-datetimeinput-container">
-                <div id="date_plateCode" name="date_plateCode" value='<s:property value="date_plateCode"/>'></div>
-            </div>
+	<div class="form-grid" style="display:flex; align-items:center; width:100%;">
 
-            <label>Doc No</label>
-            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly="readonly">
-            
-            <div id="nAliasgrid" class="n-alias-grid-container"><jsp:include page="nAliasgrid.jsp"></jsp:include></div>
+    <label style="margin-right:8px;">Date</label>
 
-            <label>Authority</label>
-            <select name="authName" id="authName" >
-                <option value="">--Select--</option>
-            </select>
-            
-            <div></div><div></div><label>Plate Code</label>
-            <input type="text" id="plateCode" name="plateCode" value='<s:property value="plateCode"/>'>
-            
-            <label>Name</label>
-            <input type="text" name="platename" id="platename" value='<s:property value="platename"/>'>
-        </div>
+    <div class="jqx-datetimeinput-container" style="width:130px;">
+        <div id="date_plateCode" name="date_plateCode" value='<s:property value="date_plateCode"/>'></div>
+    </div>
 
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           tabindex="-1"
+           readonly="readonly"
+           style="width:110px;">
+
+</div>
+  <div class="section-block">
+    <h2>Plate Code Details</h2>
+
+    <div id="nAliasgrid" class="n-alias-grid-container">
+        <jsp:include page="nAliasgrid.jsp"></jsp:include>
+    </div>
+
+   <div class="plate-form">
+
+    <label>Authority</label>
+    <select name="authName" id="authName">
+        <option value="">--Select--</option>
+    </select>
+    <div></div>
+    <div></div>
+
+    <label>Plate Code</label>
+    <input type="text" id="plateCode" name="plateCode" value='<s:property value="plateCode"/>'>
+
+    <label>Name</label>
+    <input type="text" name="platename" id="platename" value='<s:property value="platename"/>'>
+
+</div>
+</div>
         <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
         <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
         <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>

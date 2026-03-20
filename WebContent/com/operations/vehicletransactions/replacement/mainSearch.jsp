@@ -112,40 +112,114 @@ tr {
 </style>
 
 <body bgcolor="#FFFFFF">
-<div id=search>
-<table width="100%" >
-  <tr>
-    <td align="right" width="10%">Name</td>
-    <td align="left" width="25%"><input type="text" name="searchclient" id="searchclient" style="width:96.5%;" value='<s:property value="searchclient"/>'></td>
-    
-    <td align="right" width="10%">Type</td>
-    <td align="left" width="20%"><select name="cmbsearchrtype" id="cmbsearchrtype"><option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option></select></td>
-    
-    <td align="right" width="10%">Date</td>
-    <td align="left" width="25%"><div id="msearchdate" name="msearchdate" value='<s:property value="msearchdate"/>'></div></td>
-  </tr>
-  
-  <tr>
-    <td align="left" width="10%" style="font-weight: 700; font-size: 14px; color: #222;">Agmt NO</td>
-    <td align="left" width="25%"><input type="text" name="searchagmtno" id="searchagmtno" value='<s:property value="searchagmtno"/>'></td>
-    
-    <td align="right" width="10%">Fleet NO</td>
-    <td align="left" width="20%"><input type="text" name="searchfleetno" id="searchfleetno" style="width:96.5%;" value='<s:property value="searchfleetno"/>'></td>
-    
-    <td align="right" width="10%">Doc No</td>
-    <td align="left" width="15%"><input type="text" id="searchdocno" name="searchdocno" value='<s:property value="searchdocno"/>'></td>
-    
-    <td colspan="2" align="center"><input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-  </tr>
-  
-  <tr>
-    <td colspan="8" align="right">
-      <div id="srefreshdiv">
-        <jsp:include page="subMainSearch.jsp" />
-      </div>
-    </td>
-  </tr>
-</table>
+
+<div id="search">
+
+<table width="100%" style="table-layout:fixed;border-collapse:separate;border-spacing:15px 18px;font-family:'Segoe UI','Roboto','Arial',sans-serif;">
+
+<tr>
+
+<td align="right" width="10%" style="font-weight:700;font-size:14px;color:#222;">Name</td>
+
+<td width="25%">
+<input type="text"
+name="searchclient"
+id="searchclient"
+style="width:95%;font-size:14px;font-weight:600;padding:8px 12px;box-sizing:border-box;"
+value='<s:property value="searchclient"/>'>
+</td>
+
+
+<td align="right" width="10%" style="font-weight:700;font-size:14px;color:#222;">Type</td>
+
+<td width="20%">
+<select name="cmbsearchrtype"
+id="cmbsearchrtype"
+style="width:95%;font-size:14px;font-weight:600;padding:8px 10px;box-sizing:border-box;">
+<option value="">--Select--</option>
+<option value="RAG">Rental</option>
+<option value="LAG">Lease</option>
+</select>
+</td>
+
+
+<td align="right" width="10%" style="font-weight:700;font-size:14px;color:#222;">Date</td>
+
+<td width="25%">
+<div id="msearchdate"
+name="msearchdate"
+value='<s:property value="msearchdate"/>'></div>
+</td>
+
+
+<td rowspan="2" align="center">
+
+<input type="button"
+name="mbtnrasearch"
+id="mbtnrasearch"
+class="myButton"
+value="Search"
+onclick="mainloadSearch();">
+
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td align="right" width="10%" style="font-weight:700;font-size:14px;color:#222;">Agmt NO</td>
+
+<td width="25%">
+<input type="text"
+name="searchagmtno"
+id="searchagmtno"
+style="width:95%;font-size:14px;font-weight:600;padding:8px 12px;box-sizing:border-box;"
+value='<s:property value="searchagmtno"/>'>
+</td>
+
+
+<td align="right" width="10%" style="font-weight:700;font-size:14px;color:#222;">Fleet NO</td>
+
+<td width="20%">
+<input type="text"
+name="searchfleetno"
+id="searchfleetno"
+style="width:95%;font-size:14px;font-weight:600;padding:8px 12px;box-sizing:border-box;"
+value='<s:property value="searchfleetno"/>'>
+</td>
+
+
+<td align="right" width="10%" style="font-weight:700;font-size:14px;color:#222;">Doc No</td>
+
+<td width="15%">
+<input type="text"
+id="searchdocno"
+name="searchdocno"
+style="width:95%;font-size:14px;font-weight:600;padding:8px 12px;box-sizing:border-box;"
+value='<s:property value="searchdocno"/>'>
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td colspan="8">
+
+<div id="srefreshdiv">
+<jsp:include page="subMainSearch.jsp"/>
 </div>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
 </body>
 </html>

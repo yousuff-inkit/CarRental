@@ -9,9 +9,7 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
+  
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -33,9 +31,7 @@
         text-align: left !important;
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
+   
     center {
         text-align: left !important;
         display: block;
@@ -53,9 +49,7 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
+   
     .receipt-header {
         display: grid;
         grid-template-columns: auto 1fr auto 1fr auto 1fr;
@@ -105,26 +99,21 @@
         flex: 1 1 100%; /* forces this block to take full width */
     }
 
-
-    .section-block h2, .section-block legend {
-        font-size: 1.1rem;
-
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-        display: block;
-    }
-
+.section-block h2 {
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:17.6px!important;
+    font-weight:600;
+    margin: 0 0 15px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    display: block;
+}
     .section-block legend {
         border: none;
         padding-left: 0;
         margin-bottom: 0;
     }
 
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
     input[type="text"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -153,24 +142,17 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
-    /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
+    
+    
 
-    /* SCROLLBAR FIX */
+   
     .hidden-scrollbar { overflow: auto; height: 100vh; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 
-    /* CUSTOM STYLES FOR CUSTODY */
-    /* Removed custom background colors */
+    
 
     .inline-label-input {
         display: flex;
@@ -189,6 +171,32 @@
         gap: 12px;
         align-items: center;
     }
+    body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 
 </style>
 </head>
@@ -1661,23 +1669,34 @@ win.focus();
 			window.parent.formCode.value="RPL";
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
+ <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
 
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Date</label>
+        <div>
+            <div id="date" name="date" value='<s:property value="date"/>'></div>
+        </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Doc No</label>
+        <input type="text" id="docno" name="docno" tabindex="-1" readonly
+               value='<s:property value="docno"/>'/>
+    </div>
+
+</div>
+            
+            
 <div class='hidden-scrollbar'>
 
     <div class="section-block full-width-block">
         <h2>Vehicle Custody</h2>
 
         <div class="form-group dual-input" style="grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;">
-            <label>Date</label>
-            <div>
-                <div id="date" name="date" value='<s:property value="date"/>'></div>
-            </div>
-
             <label>Branch</label>
             <select name="searchbranch" id="searchbranch" value='<s:property value="searchbranch"/>'><option value="">--Select--</option></select>
 
-            <label>Doc No</label>
-            <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/>
+           
         </div>
 
         <div class="form-group dual-input">
@@ -1753,7 +1772,7 @@ win.focus();
         <div class="section-block" id="collection">
             <h2>
                 <input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();">
-                <b>Collection Details</b>
+                Collection Details
             </h2>
 
             <div class="form-group">
@@ -1784,7 +1803,7 @@ win.focus();
         </div>
 
         <div class="section-block" id="collectfield">
-            <h2><b>Branch In</b></h2>
+            <h2>Branch In</h2>
 
             <div class="form-group dual-input">
                 <label>Branch</label>
@@ -1819,7 +1838,7 @@ win.focus();
 
     <div class="section-row">
         <div class="section-block" id="branchout">
-            <h2><b>Branch Out</b></h2>
+            <h2>Branch Out</h2>
 
             <div class="form-group dual-input">
                 <label>Date</label>
@@ -1863,7 +1882,7 @@ win.focus();
         <div class="section-block" id="deliveryfield">
             <h2>
                 <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
-                <label for="chkdelivery"><b>Delivery</b></label>
+                <label for="chkdelivery">Delivery</label>
             </h2>
 
             <div class="form-group">

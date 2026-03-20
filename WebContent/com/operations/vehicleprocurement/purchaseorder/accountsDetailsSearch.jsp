@@ -29,102 +29,154 @@
 
 		 $("#refreshAccountDetailsDiv").load("accountsDetailsFromGrid.jsp?accountno="+accountsno+'&accountname='+accountsname.replace(/ /g, "%20")+'&currency='+currs+'&check='+check+'&masterdate='+masterdate);
 	}
-
+	$(document).ready(function () {
+	    $(".popup-body").scrollTop(0);
+	});
 </script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
+/* Container */
+#searchContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Tahoma, Geneva, sans-serif;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
+/* Header (FIXED LIKE OTHER PAGE) */
+.popup-header {
+    background: #f1f1f1;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Body scroll */
+.popup-body {
+    padding: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Table spacing (FIXED ISSUE) */
+table {
+    border-collapse: separate;
+    border-spacing: 10px 10px;
+}
+
+/* Labels */
+td[align="right"] {
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Inputs */
+input[type="text"] {
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+}
+
+/* Focus */
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button */
+.myButton {
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Grid */
+.grid-container {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+.popup-body {
+    padding: 0px 15px 15px 15px;  /* remove top padding */
+    margin-top: 0;
+}
+table {
+    border-spacing: 10px 0px;  /* removes top white line completely */
+}
+table tr:first-child td {
+    padding-top: 0;
+}
+.ui-dialog-content {
+    padding-top: 0 !important;
+}
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 td[align="right"] {
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
-  font-weight: 700;
-  color: #222;
-}
-
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border as requested */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
-}
-
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
-}
-
-/* No color change on hover */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
-}
-
-/* Row spacing */
-tr {
-  line-height: 1.6;
+  font-weight: 700;   /* stronger bold */
+  color: #000;        /* darker */
 }
 </style>
-
 <body bgcolor="#FFFFFF">
-<div id="search">
-<table width="100%">
-  <tr>
-    <td width="10%" align="right">Account No</td>
-    <td width="30%">
-      <input type="text" name="txtaccountsno" id="txtaccountsno" style="width:85%;" value='<s:property value="txtaccountsno"/>'>
-    </td>
-    <td width="10%" align="right">Currency</td>
-    <td width="27%">
-      <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" style="width:50%;" value='<s:property value="txtaccountcurrency"/>'>
-      <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
-    </td>
-    <td width="23%" rowspan="2" align="center">
-      <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Account Name</td>
-    <td colspan="3">
-      <input type="text" name="txtaccountsname" id="txtaccountsname" style="width:80%;" value='<s:property value="txtaccountsname"/>'>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="5">
-      <div id="refreshAccountDetailsDiv">
-        <jsp:include page="accountsDetailsFromGrid.jsp" />
-      </div>
-    </td>
-  </tr>
-</table>
+
+<div id="searchContainer">
+
+    
+
+    <!-- Content -->
+    <div class="popup-body">
+
+        <table width="100%">
+            <tr>
+                <td width="15%" align="right">Account No</td>
+                <td width="35%">
+                    <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
+                </td>
+
+                <td width="15%" align="right">Currency</td>
+                <td width="20%">
+                    <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" value='<s:property value="txtaccountcurrency"/>'>
+                    <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
+                </td>
+
+                <td width="15%" rowspan="2" align="center">
+                    <input type="button" name="btnAccountSearch" id="btnAccountSearch"
+                        class="myButton" value="Search" onclick="loadAccountSearch();">
+                </td>
+            </tr>
+
+            <tr>
+                <td align="right">Account Name</td>
+                <td colspan="3">
+                    <input type="text" name="txtaccountsname" id="txtaccountsname" style="width:95%;" value='<s:property value="txtaccountsname"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="5">
+                    <div id="refreshAccountDetailsDiv" class="grid-container">
+                        <jsp:include page="accountsDetailsFromGrid.jsp" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
 </div>
+
 </body>
+
 </html>
