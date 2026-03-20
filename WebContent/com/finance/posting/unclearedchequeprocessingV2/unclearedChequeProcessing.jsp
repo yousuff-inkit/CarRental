@@ -455,9 +455,6 @@ function funExcelBtn(){
 </script>
 
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -478,9 +475,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -506,9 +501,6 @@ label {
     font-size: 16px;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
 
 .receipt-header {
     background: #f6f8fa;
@@ -518,11 +510,7 @@ label {
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
-/* ------------------------------
-   UNCLEARED CHEQUE FORM ROWS
------------------------------- */
 
-/* Date Range + Action Buttons Row - First Line */
 .form-group.date-actions-row {
     display: flex;
     align-items: center;
@@ -617,9 +605,6 @@ label {
     border-bottom: none;
 }
 
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
 
 .hidden-scrollbar {
     overflow: auto;
@@ -629,40 +614,7 @@ label {
     width: 10px;
 }
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
-.myButton {
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
 
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-}
-button:active, .myButton:active {
-    transform: translateY(1px);
-}
-
-/* ------------------------------
-   RESPONSIVE DESIGN
------------------------------- */
 
 @media (max-width: 1200px) {
     .form-group.date-actions-row {
@@ -692,6 +644,34 @@ button:active, .myButton:active {
         min-width: 120px;
     }
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+
+
 </style>
 
 </head>

@@ -100,45 +100,91 @@ input[type="text"]:focus {
 tr {
   line-height: 1.6;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#FFFFFF">
 <div id="search">
+
 <table width="100%">
-  <tr>
-    <td width="6%" align="right">Client#</td>
-    <td><input type="text" name="txtclientid" id="txtclientid" style="width:95%" value='<s:property value="txtclientid"/>'></td>
-    <td width="4%" align="right">Name</td>
-    <td colspan="3"><input type="text" name="txtclientname" id="txtclientname" style="width:100%" value='<s:property value="txtclientname"/>'></td>
-    <td align="right">Account</td>
-    <td><input type="text" name="txtclientsaccount" id="txtclientsaccount" style="width:99%" value='<s:property value="txtclientsaccount"/>'></td>
-    <td colspan="2" align="center">
-      <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+
+<tr>
+    <td width="8%" align="right">Client#</td>
+    <td width="18%">
+        <input type="text" name="txtclientid" id="txtclientid"
+        value='<s:property value="txtclientid"/>'>
     </td>
-  </tr>
-  <tr>
+
+    <td width="8%" align="right">Name</td>
+    <td width="30%">
+        <input type="text" name="txtclientname" id="txtclientname"
+        value='<s:property value="txtclientname"/>'>
+    </td>
+
+    <td width="10%" align="right">Account</td>
+    <td width="18%">
+        <input type="text" name="txtclientsaccount" id="txtclientsaccount"
+        value='<s:property value="txtclientsaccount"/>'>
+    </td>
+
+    <td width="8%" align="center" rowspan="2">
+        <input type="button" name="btnsearch" id="btnsearch"
+        class="myButton" value="Search" onclick="loadSearch();">
+    </td>
+</tr>
+
+<tr>
     <td align="right">Licence#</td>
-    <td width="15%"><input type="text" name="txtlicence" id="txtlicence" style="width:95%" value='<s:property value="txtlicence"/>'></td>
-    <td width="4%" align="right">Mob</td>
-    <td width="17%"><input type="text" name="txtmobile" id="txtmobile" style="width:95%" value='<s:property value="txtmobile"/>'></td>
-    <td width="5%" align="right">ID#</td>
-    <td width="14%"><input type="text" name="txtdriveridsearch" id="txtdriveridsearch" style="width:95%" value='<s:property value="txtdriveridsearch"/>'></td>
-    <td width="8%" align="right">Nationality</td>
-    <td width="14%"><input type="text" id="txtnation" name="txtnation" style="width:100%" value='<s:property value="txtnation"/>'></td>
-    <td width="6%" align="right">DOB</td>
-    <td width="11%">
-      <div id="txtdob" name="txtdob" value='<s:property value="txtdob"/>'></div>
-      <input type="hidden" name="hidtxtdob" id="hidtxtdob" value='<s:property value="hidtxtdob"/>'>
+    <td>
+        <input type="text" name="txtlicence" id="txtlicence"
+        value='<s:property value="txtlicence"/>'>
     </td>
-  </tr>
-  <tr>
-    <td colspan="10">
-      <div id="refreshdiv">
-        <jsp:include page="crmMainSearchGrid.jsp" />
-      </div>
+
+    <td align="right">Mob</td>
+    <td>
+        <input type="text" name="txtmobile" id="txtmobile"
+        value='<s:property value="txtmobile"/>'>
     </td>
-  </tr>
+
+    <td align="right">DOB</td>
+    <td>
+        <div id="txtdob" name="txtdob"
+        value='<s:property value="txtdob"/>'></div>
+        <input type="hidden" name="hidtxtdob" id="hidtxtdob"
+        value='<s:property value="hidtxtdob"/>'>
+    </td>
+</tr>
+
+<tr>
+    <td align="right">ID#</td>
+    <td>
+        <input type="text" name="txtdriveridsearch" id="txtdriveridsearch"
+        value='<s:property value="txtdriveridsearch"/>'>
+    </td>
+
+    <td align="right">Nationality</td>
+    <td>
+        <input type="text" id="txtnation" name="txtnation"
+        value='<s:property value="txtnation"/>'>
+    </td>
+
+    <td colspan="3"></td>
+</tr>
+
+<tr>
+<td colspan="7">
+<div id="refreshdiv">
+<jsp:include page="crmMainSearchGrid.jsp" />
+</div>
+</td>
+</tr>
+
 </table>
+
 </div>
 </body>
 </html>
