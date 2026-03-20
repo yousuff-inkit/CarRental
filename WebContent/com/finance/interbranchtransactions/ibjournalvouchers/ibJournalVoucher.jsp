@@ -538,7 +538,7 @@ select:focus {
    LABELS
 ========================= */
 label {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #253858;
     text-align: right;
@@ -557,7 +557,7 @@ label {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin-bottom: 18px;
     padding-left: 10px;
@@ -656,6 +656,15 @@ label {
     padding: 0 8px !important;
 }
 
+.jqx-datetimeinput, 
+.jqx-datetimeinput input, {
+    width: 130px !important;
+}
+
+#docno, 
+.header-docno {
+    width: 130px !important;
+}
 </style>
 </head>
 

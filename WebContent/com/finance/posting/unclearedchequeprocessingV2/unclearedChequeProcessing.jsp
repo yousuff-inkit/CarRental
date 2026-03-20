@@ -503,7 +503,7 @@ label {
     font-weight: 600;
     color: #253858;
     white-space: nowrap;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 /* ------------------------------
@@ -604,7 +604,7 @@ label {
 .cr-table td {
     padding: 8px 12px;
     border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .cr-table th {
@@ -632,24 +632,30 @@ label {
 /* ------------------------------
    BUTTONS
 ------------------------------ */
-
-button, .myButton {
-    background: #007bff;
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
     border: none;
-    padding: 8px 20px;
-    color: #fff;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
     white-space: nowrap;
+    text-align: center;
 }
 
-button:hover, .myButton:hover {
-    background: #0056b3;
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
-
 button:active, .myButton:active {
     transform: translateY(1px);
 }
