@@ -592,7 +592,7 @@ label {
 .cr-table td {
     padding: 8px 12px;
     border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .cr-table th {
