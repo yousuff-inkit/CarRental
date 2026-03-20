@@ -262,7 +262,12 @@ select:focus {
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
   transform: translateY(-1px);
   }
- 
+ .small-select {
+    width: auto !important;     /* remove full width */
+    min-width: 80px;            /* enough for VPR */
+    max-width: 120px;           /* optional cap */
+    display: inline-block;
+}
 </style>
 
 <script type="text/javascript">
@@ -766,7 +771,7 @@ select:focus {
 
             <div class="form-group dual-input">
                 <label for="vehtype">Type</label>
-                <select id="vehtype" name="vehtype" value='<s:property value="vehtype"/>' onchange="funrefdisslno()">
+                <select id="vehtype" class="small-select" name="vehtype" onchange="funrefdisslno()">
                     <option value="DIR">DIR</option>
                     <option value="VPR">VPR</option>
                 </select>
