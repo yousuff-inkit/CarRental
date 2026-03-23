@@ -445,21 +445,22 @@
 	  					} else {
 	  						var rows = $("#jqxDriver").jqxGrid('getrows');
 		  				    var length=0;
-		  					 for(var i=0 ; i < rows.length ; i++){
+		  					 for(var i=0, j=0 ; i < rows.length ; i++){
 		  						var chk=rows[i].name;
 		  						if(typeof(chk) != "undefined"){
 		  							length=length+1;
 		  							newTextBox = $(document.createElement("input"))
 		  						    .attr("type", "dil")
-		  						    .attr("id", "test"+i)
-		  						    .attr("name", "test"+i)
+		  						    .attr("id", "test"+j)
+		  						    .attr("name", "test"+j)
 		  						    .attr("hidden", "true");
 		  					
 		  					newTextBox.val(rows[i].name+" :: "+rows[i].hiddob+":: "+rows[i].nation1+":: "+rows[i].mobno+":: "+rows[i].passport_no+":: "+rows[i].hidpassexp+":: "+rows[i].dlno+":: "+rows[i].hidissdate+":: "+rows[i].issfrm+":: "+rows[i].hidled+":: "+rows[i].ltype+":: "+rows[i].visano+":: "+rows[i].hidvisaexp+"::"+rows[i].dr_id+":: "+rows[i].hcdlno+":: "+rows[i].hidhcissdate+":: "+rows[i].hidhcled);
 		  					newTextBox.appendTo('form');
+                            j++;
 		  					 }
 		  					}
-		  		 		 $('#gridlength').val(length);
+		  		 		 $('#gridlength').val(j);
 		  		 		 
 		  		 		 
 		  		 		/* new ref det grid*/
@@ -479,7 +480,6 @@
 		  					
 		  					newTextBox.val(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 		  					newTextBox.appendTo('form');
-		  					//alert(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 		  					j++;
 		  		 			}
 		  			      }
@@ -488,60 +488,63 @@
 		  		 		 
 		  		 		 var rows = $("#jqxReferenceDetails").jqxGrid('getrows');
 		  		 		 var referencelength=0;
-		  		 		 for(var i=0 ; i < rows.length ; i++){
+		  		 		 for(var i=0, j=0 ; i < rows.length ; i++){
 		  		 				var chkd=rows[i].cperson;
 		  						if(typeof(chkd) != "undefined"){
 		  						referencelength=referencelength+1;
 		  						newTextBox = $(document.createElement("input"))
 		  					    .attr("type", "dil")
-		  					    .attr("id", "txtreference"+i)
-		  					    .attr("name", "txtreference"+i)
+		  					    .attr("id", "txtreference"+j)
+		  					    .attr("name", "txtreference"+j)
 		  					    .attr("hidden", "true");
 		  				
 		  					newTextBox.val(rows[i].cperson+" :: "+rows[i].desig+" :: "+rows[i].mob+" :: "+rows[i].email+" ::");
 		  					newTextBox.appendTo('form');
+                            j++;
 		  					}
 		  			      }
-		  			      $('#referencelength').val(referencelength);
+		  			      $('#referencelength').val(j);
 		  		      
 		  			      var rows = $("#jqxCreditCardDetails").jqxGrid('getrows');
 		  					 var creditcardlength=0;
-		  						 for(var i=0 ; i < rows.length ; i++){
+		  						 for(var i=0, j=0 ; i < rows.length ; i++){
 		  							var chkng=rows[i].type;
 		  							if(typeof(chkng) != "undefined"){
 		  								creditcardlength=creditcardlength+1;
 		  								newTextBox = $(document.createElement("input"))
 		  							    .attr("type", "dil")
-		  							    .attr("id", "txtcard"+i)
-		  							    .attr("name", "txtcard"+i)
+		  							    .attr("id", "txtcard"+j)
+		  							    .attr("name", "txtcard"+j)
 		  							    .attr("hidden", "true");
 		  						
 		  						newTextBox.val(rows[i].type+" :: "+rows[i].cardno+" :: "+rows[i].hidexpdate+":: "+rows[i].defaultcard+":: "+rows[i].remarks);
 		  						newTextBox.appendTo('form');
+                                j++;
 		  						 }
 		  						}
-		  			 		 $('#creditcardlength').val(creditcardlength);
+		  			 		 $('#creditcardlength').val(j);
 		  			 		 
 		  			 		 
 		  		    		if(parseInt($('#separateservicechargeallowed').val())==1){
 		  		    			 
 		  		    			var rows = $("#separateServiceChargeGridId").jqxGrid('getrows');
 			  					 var separateservicechargelength=0;
-			  						 for(var i=0 ; i < rows.length ; i++){
+			  						 for(var i=0, j=0 ; i < rows.length ; i++){
 			  							var chked=rows[i].doc_no;
 			  							if(typeof(chked) != "undefined"){
 			  								separateservicechargelength=separateservicechargelength+1;
 			  								newTextBox = $(document.createElement("input"))
 			  							    .attr("type", "dil")
-			  							    .attr("id", "txtseparateservicecharge"+i)
-			  							    .attr("name", "txtseparateservicecharge"+i)
+			  							    .attr("id", "txtseparateservicecharge"+j)
+			  							    .attr("name", "txtseparateservicecharge"+j)
 			  							    .attr("hidden", "true");
 			  						
 			  						newTextBox.val(rows[i].doc_no+" :: "+rows[i].salik+" :: "+rows[i].traffic);
 			  						newTextBox.appendTo('form');
+                                    j++;
 			  						 }
 			  						}
-			  			 		 $('#separateservicechargelength').val(separateservicechargelength);
+			  			 		 $('#separateservicechargelength').val(j);
 			  			 		 
 		  		    		}
 		  		    		
@@ -584,21 +587,22 @@
 	  					 
 	  					var rows = $("#jqxDriver").jqxGrid('getrows');
 	  				    var length=0;
-	  					 for(var i=0 ; i < rows.length ; i++){
+	  					 for(var i=0, j=0 ; i < rows.length ; i++){
 	  						var chk=rows[i].name;
 	  						if(typeof(chk) != "undefined"){
 	  							length=length+1;
 	  							newTextBox = $(document.createElement("input"))
 	  						    .attr("type", "dil")
-	  						    .attr("id", "test"+i)
-	  						    .attr("name", "test"+i)
+	  						    .attr("id", "test"+j)
+	  						    .attr("name", "test"+j)
 	  						    .attr("hidden", "true");
 	  					
 	  					newTextBox.val(rows[i].name+" :: "+rows[i].hiddob+":: "+rows[i].nation1+":: "+rows[i].mobno+":: "+rows[i].passport_no+":: "+rows[i].hidpassexp+":: "+rows[i].dlno+":: "+rows[i].hidissdate+":: "+rows[i].issfrm+":: "+rows[i].hidled+":: "+rows[i].ltype+":: "+rows[i].visano+":: "+rows[i].hidvisaexp+"::"+rows[i].dr_id+":: "+rows[i].hcdlno+":: "+rows[i].hidhcissdate+":: "+rows[i].hidhcled);
 	  					newTextBox.appendTo('form');
+                        j++;
 	  					 }
 	  					}
-	  		 		 $('#gridlength').val(length);
+	  		 		 $('#gridlength').val(j);
 	  		 		 
 	  		 		 
 	  		 		/* new ref det grid*/
@@ -618,7 +622,6 @@
 	  					
 	  					newTextBox.val(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 	  					newTextBox.appendTo('form');
-	  					//alert(rows[i].seqno+" :: "+rows[i].numbr+" :: "+validupto+" :: ");
 	  					j++;
 	  		 			}
 	  			      }
@@ -627,60 +630,63 @@
 	  		 		
 	  		 		 var rows = $("#jqxReferenceDetails").jqxGrid('getrows');
 	  		 		 var referencelength=0;
-	  		 		 for(var i=0 ; i < rows.length ; i++){
+	  		 		 for(var i=0, j=0 ; i < rows.length ; i++){
 	  		 				var chkd=rows[i].cperson;
 	  						if(typeof(chkd) != "undefined"){
 	  						referencelength=referencelength+1;
 	  						newTextBox = $(document.createElement("input"))
 	  					    .attr("type", "dil")
-	  					    .attr("id", "txtreference"+i)
-	  					    .attr("name", "txtreference"+i)
+	  					    .attr("id", "txtreference"+j)
+	  					    .attr("name", "txtreference"+j)
 	  					    .attr("hidden", "true");
 	  				
 	  					newTextBox.val(rows[i].cperson+" :: "+rows[i].desig+" :: "+rows[i].mob+" :: "+rows[i].email+" ::");
 	  					newTextBox.appendTo('form');
+                        j++;
 	  					}
 	  			      }
-	  			      $('#referencelength').val(referencelength);
+	  			      $('#referencelength').val(j);
 	  			      
 	  			      var rows = $("#jqxCreditCardDetails").jqxGrid('getrows');
 	  					 var creditcardlength=0;
-	  						 for(var i=0 ; i < rows.length ; i++){
+	  						 for(var i=0, j=0 ; i < rows.length ; i++){
 	  							var chkng=rows[i].type;
 	  							if(typeof(chkng) != "undefined"){
 	  								creditcardlength=creditcardlength+1;
 	  								newTextBox = $(document.createElement("input"))
 	  							    .attr("type", "dil")
-	  							    .attr("id", "txtcard"+i)
-	  							    .attr("name", "txtcard"+i)
+	  							    .attr("id", "txtcard"+j)
+	  							    .attr("name", "txtcard"+j)
 	  							    .attr("hidden", "true");
 	  						
 	  						newTextBox.val(rows[i].type+" :: "+rows[i].cardno+" :: "+rows[i].hidexpdate+":: "+rows[i].defaultcard+":: "+rows[i].remarks);
 	  						newTextBox.appendTo('form');
+                            j++;
 	  						 }
 	  						}
-	  			 		 $('#creditcardlength').val(creditcardlength);
+	  			 		 $('#creditcardlength').val(j);
 	  			 		 
 	  			 		 
 	  		    		if(parseInt($('#separateservicechargeallowed').val())==1){
 	  		    			 
 	  		    			var rows = $("#separateServiceChargeGridId").jqxGrid('getrows');
 		  					 var separateservicechargelength=0;
-		  						 for(var i=0 ; i < rows.length ; i++){
+		  						 for(var i=0, j=0 ; i < rows.length ; i++){
 		  							var chked=rows[i].doc_no;
 		  							if(typeof(chked) != "undefined"){
 		  								separateservicechargelength=separateservicechargelength+1;
 		  								newTextBox = $(document.createElement("input"))
 		  							    .attr("type", "dil")
-		  							    .attr("id", "txtseparateservicecharge"+i)
-		  							    .attr("name", "txtseparateservicecharge"+i)
+		  							    .attr("id", "txtseparateservicecharge"+j)
+		  							    .attr("name", "txtseparateservicecharge"+j)
 		  							    .attr("hidden", "true");
 		  						
 		  						newTextBox.val(rows[i].doc_no+" :: "+rows[i].salik+" :: "+rows[i].traffic);
 		  						newTextBox.appendTo('form');
+                                j++;
 		  						 }
 		  						}
-		  			 		 $('#separateservicechargelength').val(separateservicechargelength);
+		  			 		 $('#separateservicechargelength').val(j);
 		  			 		 
 	  		    		}
 	  		    		
@@ -982,7 +988,7 @@
  			 $('#txtsalikauh').attr('readonly', false );
  			 $('#txttraffic').attr('readonly', false );
  			 $('#txtparking').attr('readonly', false );
- 			/*  $('#txtsalik').val("0.0");
+ 			/* $('#txtsalik').val("0.0");
  			 $('#txtsalikauh').val("0.0");
  			 $('#txttraffic').val("0.0");
  			 $('#txtparking').val("0.0"); */
@@ -1280,7 +1286,7 @@
 		 }
 		 
 		 if($("#personal_tel2").val()==""){
-			/*  document.getElementById("errormsg").innerText="Invalid Mobile Number.";
+			/* document.getElementById("errormsg").innerText="Invalid Mobile Number.";
 			 return 0; */
 		 }
 		 
@@ -1750,7 +1756,6 @@ body::-webkit-scrollbar {
     <jsp:include page="../../../../header.jsp"></jsp:include>
    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
 
-    <!-- Date (Left) -->
     <div style="display:flex; align-items:center; gap:8px;">
         <label>Date</label>
         <div id="jqxClientDate"
@@ -1761,7 +1766,6 @@ body::-webkit-scrollbar {
         </div>
     </div>
 
-    <!-- Doc No (Right) -->
     <div style="display:flex; align-items:center; gap:8px;">
         <label>Doc No</label>
         <input type="text"
