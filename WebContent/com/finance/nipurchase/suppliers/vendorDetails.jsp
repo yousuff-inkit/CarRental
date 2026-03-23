@@ -324,10 +324,6 @@
 </script>
 
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 100vh;
-}
 
 
 body {
@@ -336,245 +332,283 @@ body {
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 100vh;
     box-sizing: border-box;
+    overflow-y: auto;
 }
+
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
+    padding: 20px;
     max-width: 100%;
-    margin: 0 auto;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 15px;
-    min-width:100%
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
+
+
+input[type="text"], select {
+    height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
     background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
 }
-.receipt-header input[type="text"]:focus {
+
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
+
+label {
+    font-weight: 600;
+    color: #253858;
+    white-space: nowrap;
 }
-.receipt-header button:hover {
-    background: #0056b3;
+
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
 }
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
 #txtStatus {
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 600;
     color: #e67e22;
-    margin-left: 12px;
+}
+
+
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size:1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Special case: One label with two equal-width inputs */
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
+
+.form-group.single-label-dual-input input[type="text"]:first-of-type {
+    width: 100%;
+}
+
+.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
+    width: 100%;
 }
 
 .section-row {
     display: flex;
     gap: 26px;
-    margin-bottom: 24px;
+    margin-bottom: 30px;
 }
+
 .section-block {
     flex: 1;
+    min-width: 0;
     background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
 .section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
+    font-size: 17.6px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
 }
 
-.section-block .form-group {
-    display: flex;
+/* Special handling for the "to-account-row" - all items in one line */
+.to-account-row {
+    display: grid;
+    grid-template-columns: 100px 50px 140px 1fr;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 12px;
 }
 
-.section-block label {
-    min-width: 110px;
+.to-account-row label {
     text-align: right;
-    font-weight: 500;
-    color: #253858;
+    padding-right: 8px;
 }
 
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
+.to-account-row #cmbtotype {
+    width: 100%;
 }
 
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
+.to-account-row #txttoaccid {
+    width: 100%;
 }
+
+.to-account-row #txttoaccname {
+    width: 100%;
+}
+
 
 
 .table-section {
-    margin-bottom: 18px;
-    width:100%;
+    margin: 20px 0;
 }
+
 .table-section h3 {
     color: #253858;
-    font-size: 1.04em;
+    font-size: 17.6px;
     font-weight: 600;
+    margin-bottom: 12px;
 }
+
 .cr-table {
     width: 100%;
     border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
+    background: #fff;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    box-shadow: 0 0 0 1px #e5e7eb;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 14px;
 }
+
 .cr-table th {
     background: #eef0f6;
-    color: #354B6A;
     font-weight: 600;
+    color: #354B6A;
 }
+
 .cr-table tr:last-child td {
     border-bottom: none;
 }
 
-.cr-table td[align="right"] {
-    font-weight: 700;
-    white-space: nowrap;
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 100vh;
 }
 
-/* ===== PREMIUM SELECT DROPDOWN ===== */
-.section-block select,
-.cr-table select,
-select {
-    font-weight: 700;
-    white-space: nowrap;
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+body::-webkit-scrollbar {
+    width: 0px;
+}
 
-    height: 32px;
-    padding: 4px 10px;
 
-    border-radius: 8px;
-    border: 1px solid #cfd6e4;
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
+}
 
-    background: #ffffff;
-    color: #253858;
 
+
+#approval-table td {
     font-size: 14px;
-    cursor: pointer;
-
-    transition: all 0.2s ease-in-out;
+    padding: 8px;
 }
 
-/* Hover */
-.section-block select:hover,
-.cr-table select:hover,
-select:hover {
-    border-color: #7aa7ff;
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
 }
-
-/* Focus */
-.section-block select:focus,
-.cr-table select:focus,
-select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.15);
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
-
-/* Disabled */
-select:disabled {
-    background: #f1f3f6;
-    color: #9aa3b2;
-    cursor: not-allowed;
-}
-
-/* Option text */
-select option {
-    font-weight: 600;
-}
-
-
-/* ===== SELECT FIX ===== */
-select {
-    width: 100%;
-    height: 34px;
-    padding: 4px 10px;
-
-    font-weight: 700;
-    font-size: 13px;
-
-    border-radius: 8px;
-    border: 1px solid #cfd6e4;
-    background: #ffffff;
-    color: #253858;
-
+/* Align jqxDateTimeInput with normal textboxes */
+.jqx-datetimeinput,
+.jqx-datetimeinput .jqx-input-content {
+    height: 34px !important;
+    line-height: 34px !important;
     box-sizing: border-box;
 }
-
-/* Dropdown options spacing */
-select option {
-    padding: 8px 12px;      /* spacing inside option */
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
     font-size: 13px;
-    font-weight: 600;
-    min-height: 32px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
-/* Fix first placeholder option */
-select option[value=""] {
-    color: #9aa3b2;
-    font-weight: 600;
-}
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
 
-/* Hover / focus */
-select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.15);
-}
+
 
 </style>
-
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">

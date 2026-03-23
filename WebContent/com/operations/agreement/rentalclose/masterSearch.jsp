@@ -11,7 +11,11 @@
 <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <style>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 	<script type="text/javascript">

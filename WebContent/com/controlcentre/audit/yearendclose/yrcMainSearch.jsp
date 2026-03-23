@@ -9,91 +9,6 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-<style>
-/* popup container */
-#search {
-    width: 900px;
-    margin: 0 auto;
-    background: #f6f8fa;
-    border-radius: 10px;
-    box-shadow: 0 8px 30px rgba(15,23,42,0.25);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 13px;
-    color: #222;
-}
-
-/* inner body */
-#search-body {
-    padding: 8px 14px 10px 14px;
-}
-
-/* filters table */
-#search table.cr-search-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    box-shadow: 0 0 0 1px #e0e4ee;
-}
-
-#search table.cr-search-table td {
-    padding: 4px 6px;
-    vertical-align: middle;
-    font-size: 12px;
-}
-
-
-#search table.cr-search-table td[align="right"] {
-    font-weight: 800;
-    color: #333;
-    white-space: nowrap;
-}
-
-/* text inputs (if any) */
-#search input[type="text"] {
-    width: 100%;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
-    padding: 2px 6px;
-    height: 22px;
-    line-height: 22px;
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 12px;
-    box-sizing: border-box;
-}
-
-/* jqx date containers fill cell */
-#search div[id^="yrc"] {
-    width: 100%;
-}
-
-/* search button aligned with fields */
-#search .myButton,
-#btnsearch {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    height: 24px;
-    line-height: 22px;
-    padding: 0 16px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-}
-#search .myButton:hover,
-#btnsearch:hover {
-    background: #0056b3;
-}
-
-/* grid area */
-#refreshdiv {
-    margin-top: 8px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 0 0 1px #e0e4ee;
-}
-</style>
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -121,59 +36,107 @@ function getdata(docNo, date, yrcAccFrmDate, yrcAccToDate){
 </script>
 </head>
 
-<body>
+<style type="text/css">
+#search {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+  background-color: #ffffff;
+}
+
+#search td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;                
+  max-width: 100%;
+  box-sizing: border-box;   
+  border: 1px solid #ccc;
+}
+
+#search tr {
+  line-height: 1.6;
+}
+
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+</style>
+
+<body bgcolor="#ffffff">
 <div id="search">
-    <div id="search-body">
-        <table class="cr-search-table">
-            <tr>
-                <td align="right" style="width:15%;">Date</td>
-                <td style="width:22%;">
-                    <div id="yrcdate" name="yrcdate"
-                         value='<s:property value="yrcdate"/>'></div>
-                    <input type="hidden" name="hidyrcdate" id="hidyrcdate"
-                           value='<s:property value="hidyrcdate"/>'>
-                </td>
+<table width="100%" border="0">
+  <tr>
+    <td width="15%" align="right">Date</td>
+    <td width="20%">
+        <div id="yrcdate" name="yrcdate" value='<s:property value="yrcdate"/>'></div>
+        <input type="hidden" name="hidyrcdate" id="hidyrcdate" value='<s:property value="hidyrcdate"/>'>
+    </td>
 
-                <td align="right" style="width:16%;">Doc No</td>
-                <td style="width:28%;">
-                    <input type="text" name="txtdocno" id="txtdocno"
-                           value='<s:property value="txtdocno"/>'>
-                </td>
+    <td width="15%" align="right">Doc No</td>
+    <td width="25%">
+        <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
+    </td>
 
-                <td style="width:19%;" rowspan="2" align="center">
-                    <input type="button" name="btnsearch" id="btnsearch"
-                           class="myButton" value="Search"
-                           onclick="loadSearch();">
-                </td>
-            </tr>
+    <td width="25%" rowspan="2" align="center">
+        <input type="button" name="btnsearch" id="btnsearch" class="myButton" 
+               value="Search" onclick="loadSearch(); return false;">
+    </td>
+  </tr>
 
-            <tr>
-                <td align="right">Accounting Year From</td>
-                <td>
-                    <div id="yrcAccFrmDate" name="yrcAccFrmDate"
-                         value='<s:property value="yrcAccFrmDate"/>'></div>
-                    <input type="hidden" name="hidyrcAccFrmDate" id="hidyrcAccFrmDate"
-                           value='<s:property value="hidyrcAccFrmDate"/>'>
-                </td>
+  <tr>
+    <td align="right">Accounting Year From</td>
+    <td>
+        <div id="yrcAccFrmDate" name="yrcAccFrmDate" value='<s:property value="yrcAccFrmDate"/>'></div>
+        <input type="hidden" name="hidyrcAccFrmDate" id="hidyrcAccFrmDate" value='<s:property value="hidyrcAccFrmDate"/>'>
+    </td>
 
-                <td align="right">Accounting Year To</td>
-                <td>
-                    <div id="yrcAccToDate" name="yrcAccToDate"
-                         value='<s:property value="yrcAccToDate"/>'></div>
-                    <input type="hidden" name="hidyrcAccToDate" id="hidyrcAccToDate"
-                           value='<s:property value="hidyrcAccToDate"/>'>
-                </td>
-            </tr>
+    <td align="right">Accounting Year To</td>
+    <td>
+        <div id="yrcAccToDate" name="yrcAccToDate" value='<s:property value="yrcAccToDate"/>'></div>
+        <input type="hidden" name="hidyrcAccToDate" id="hidyrcAccToDate" value='<s:property value="hidyrcAccToDate"/>'>
+    </td>
+  </tr>
 
-            <tr>
-                <td colspan="5">
-                    <div id="refreshdiv">
-                        <jsp:include page="yrcMainSearchGrid.jsp"></jsp:include>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+  <tr>
+    <td colspan="5">
+        <div id="refreshdiv">
+            <jsp:include page="yrcMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
+  </tr>
+</table>
 </div>
-</body>
-</html>
+</body></html>

@@ -327,155 +327,94 @@
 	  
 </script>  
 
-    <style>
-/* Scroll area */
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
-/* GLOBAL – same as master */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 24px 0;
-    min-height: 100vh;
-    box-sizing: border-box; /* consistent sizing model */ [web:29]
-    font-size: 14px;        /* base font size */ [web:41][web:60]
-}
-
-/* main card */
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 12px 24px;
-    max-width: 100%;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-/* header from include */
-.receipt-header {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0 8px;
-    font-size: 14px;
-}
-
-/* generic labels */
-label,
-.table-section td[align="right"] {
-    font-family: Tahoma, 'Segoe UI', sans-serif;
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-    font-size: 16px;
-}
-
-/* UNIFIED INPUT / SELECT SIZE (applies everywhere) */
-input[type="text"],
-select {
-    height: 32px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+<style>
+/* 1. Reset and fill screen to remove grey space at bottom */
+* {
     box-sizing: border-box;
 }
 
-/* inside table cells keep normal width but same height/look */
-table.cr-table input[type="text"],
-table.cr-table select {
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
     width: 100%;
-}
-
-/* focus state */
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* readonly look */
-input[readonly],
-input[tabindex="-1"] {
-    background-color: #f3f4f6;
-    color: #6b7280;
-}
-
-/* generic sections (wrapper for tables) */
-.section-row {
+    overflow-x: hidden;
     display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
+    flex-direction: column;
 }
 
-.section-block {
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px 25px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+    display: flex;
+    flex-direction: column;
 }
 
-/* table section (Year Close Details card) */
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
-    border-radius: 10px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
+#formdet {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a2b3c;
+    margin-bottom: 12px;
 }
 
-.table-section h3 {
-    color: #253858;
-    font-size: 1.05em;
+/* 2. Header Strip: Date LHS, Doc No RHS */
+.receipt-header {
+    margin-bottom: 15px;
+}
+
+.receipt-header table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Standardized 130px widths for date/doc components */
+.jqx-datetimeinput, 
+.jqx-datetimeinput input,
+#docno, 
+.header-docno {
+    width: 130px !important;
+}
+
+/* 3. Section Styling with Blue Accent Bar */
+.section-block {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 15px;
+    border: 1px solid #edf2f7;
+}
+
+.section-title {
+    font-size: 15px;
     font-weight: 600;
-    margin: 0 0 12px 0;
+    margin: 0 0 15px;
     padding-left: 10px;
     border-left: 4px solid #007bff;
+    color: #2d3748;
 }
 
-/* TABLE – full width, same font */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-    table-layout: fixed;  /* stable column widths at full width */ [web:46][web:55]
+/* 4. Labels & Inputs (Master UI Style) */
+label {
+    font-family: Tahoma, 'Segoe UI', sans-serif;
+    font-weight: 500; /* Regular weight as per Master UI */
+    color: #4a5568;
+    text-align: right;
     font-size: 14px;
+    display: block;
+    line-height: 32px;
+    padding-right: 10px;
 }
 
-.cr-table th,
-.cr-table td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* submit button in table */
-.myButton,
-.table-section button {
+.myButton {
     background: #007bff;
     color: #fff;
     border: none;
@@ -483,25 +422,42 @@ input[tabindex="-1"] {
     padding: 6px 18px;
     font-weight: 500;
     cursor: pointer;
-    font-size: 14px;
-    transition: background 0.2s;
+    font-size: 13px;
+    height: 32px;
 }
 
-.myButton:hover,
-.table-section button:hover {
+.myButton:hover {
     background: #0056b3;
 }
 
-/* grid containers below (yearEndCloseDiv etc.) */
-#yearEndCloseDiv,
-#yearEndCloseGroupDiv {
-    margin-top: 6px;
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-/* keep included grids framed similarly */
-#yearEndCloseDiv .cr-table,
-#yearEndCloseGroupDiv .cr-table {
+.cr-table td {
+    padding: 5px;
+    vertical-align: middle;
+}
+
+input[type="text"] {
+    height: 32px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    padding: 0 10px;
+    font-size: 13px;
     width: 100%;
+    background: #fff;
+}
+
+input[readonly] {
+    background-color: #f1f5f9;
+    color: #718096;
+}
+
+#formdet {
+    text-align: left !important;
+    display: block;
 }
 
 </style>
@@ -511,38 +467,66 @@ input[tabindex="-1"] {
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmYearEndClose" action="saveYearEndClose"  autocomplete="off" method="post">
 <jsp:include page="../../../../header.jsp" /><br/>
-	<div class="hidden-scrollbar receipt-header">
-<div class="table-section" style="width: 100%;"><h3>Year Close Details</h3>
-<table class="cr-table" width="99%">
-  <tr>
-    <td align="right">Date</td>
-    <td colspan="2"><div id="yearEndDate" name="yearEndDate" value='<s:property value="yearEndDate"/>'></div>
-    <input type="hidden" name="hidyearEndDate" id="hidyearEndDate" value='<s:property value="hidyearEndDate"/>'></td>
-    <td align="right">Doc No</td>
-    <td><input type="text" id="docno" name="txtyearendclosedocno" value='<s:property value="txtyearendclosedocno"/>' tabindex="-1"></td>
-  </tr>
-  <tr>
-    <td width="8%" align="right">Year To Close</td>
-    <td width="15%"><div id="accountingYearFrom" name="accountingYearFrom" value='<s:property value="accountingYearFrom"/>'></div>
-    <input type="hidden" name="hidaccountingYearFrom" id="hidaccountingYearFrom" value='<s:property value="hidaccountingYearFrom"/>'></td>
-    <td width="3%" align="right">To</td>
-    <td width="20%"><div id="accountingYearTo" name="accountingYearTo" value='<s:property value="accountingYearTo"/>'></div>
-    <input type="hidden" name="hidaccountingYearTo" id="hidaccountingYearTo" value='<s:property value="hidaccountingYearTo"/>'></td>
-    <td width="54%" rowspan="2" align="left"><button class="myButton" type="button" id="btnview" name="btnview" onclick="funloadgrid();">Submit</button></td>
-  </tr>
-  <tr>
-    <td align="right">Next Accounting Year</td>
-    <td><div id="ycloseDateFrom" name="ycloseDateFrom" value='<s:property value="ycloseDateFrom"/>'></div>
-    <input type="hidden" name="hidycloseDateFrom" id="hidycloseDateFrom" value='<s:property value="hidycloseDateFrom"/>'></td>
-    <td align="right">To</td>
-    <td><div id="ycloseDateTo" name="ycloseDateTo" value='<s:property value="ycloseDateTo"/>'></div>
-    <input type="hidden" name="hidycloseDateTo" id="hidycloseDateTo" value='<s:property value="hidycloseDateTo"/>'></td>
-  </tr>
-</table>
-</div><br/>
+<div id="mainBG">
+    
 
-<div class="cr-table" id="yearEndCloseDiv"><jsp:include page="yearEndCloseGrid.jsp"></jsp:include></div><br/>
-<div id="yearEndCloseGroupDiv" hidden="true"><jsp:include page="yearEndCloseGroupGrid.jsp"></jsp:include></div>
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="50px" align="left"><label>Date</label></td>
+                <td width="140px">
+                    <div id="yearEndDate" name="yearEndDate" value='<s:property value="yearEndDate"/>'></div>
+                    <input type="hidden" name="hidyearEndDate" id="hidyearEndDate" value='<s:property value="hidyearEndDate"/>'>
+                </td>
+                <td></td>
+                <td width="60px" align="right"><label>Doc No</label></td>
+                <td width="140px" align="right">
+                    <input type="text" id="docno" name="txtyearendclosedocno" class="header-docno" value='<s:property value="txtyearendclosedocno"/>' readonly tabindex="-1">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-block">
+        <div class="section-title">Year Close Details</div>
+        <table class="cr-table" width="100%">
+            <tr>
+                <td width="15%" align="right"><label>Year To Close</label></td>
+                <td width="15%">
+                    <div id="accountingYearFrom" name="accountingYearFrom" value='<s:property value="accountingYearFrom"/>'></div>
+                </td>
+                <td width="5%" align="right"><label>To</label></td>
+                <td width="15%">
+                    <div id="accountingYearTo" name="accountingYearTo" value='<s:property value="accountingYearTo"/>'></div>
+                </td>
+                <td rowspan="2" align="left" style="padding-left: 20px;">
+                    <button class="myButton" type="button" id="btnview" onclick="funloadgrid();">Submit</button>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><label>Next Year</label></td>
+                <td>
+                    <div id="ycloseDateFrom" name="ycloseDateFrom" value='<s:property value="ycloseDateFrom"/>'></div>
+                </td>
+                <td align="right"><label>To</label></td>
+                <td>
+                    <div id="ycloseDateTo" name="ycloseDateTo" value='<s:property value="ycloseDateTo"/>'></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-block">
+        <div class="section-title">Closing Records</div>
+        <div id="yearEndCloseDiv">
+            <jsp:include page="yearEndCloseGrid.jsp"></jsp:include>
+        </div>
+        <div id="yearEndCloseGroupDiv" hidden="true">
+            <jsp:include page="yearEndCloseGroupGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
+
 
 <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
 <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>

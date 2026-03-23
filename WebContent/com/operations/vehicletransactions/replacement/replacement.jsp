@@ -9,23 +9,20 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <style>
-/* ------------------------------
-   GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
 
 body {
-    /* Subtle blue gradient background */
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size:14px;
+    font-weight:400;
     color: #222;
     margin: 0;
     padding: 32px 0;
     box-sizing: border-box;
-    overflow-y: auto !important; /* Ensure body scrolling works for all content */
+    overflow-y: auto !important;
 }
 
 #mainBG {
-    /* White card container */
     background: #fff;
     border-radius: 16px;
     padding: 20px;
@@ -34,10 +31,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
-
+/* INPUTS */
 input[type="text"], select {
     height: 32px !important;
     border: 1px solid #d1d5db;
@@ -47,7 +41,8 @@ input[type="text"], select {
     transition: border-color 0.2s;
     font-size: 14px;
     box-sizing: border-box;
-    width: 100%; /* Ensure inputs fill their container columns */
+    width: auto;
+    max-width: 100%;
 }
 
 input[type="text"]:focus,
@@ -56,162 +51,323 @@ select:focus {
     outline: none;
 }
 
-label {
-font:  14px Tahoma;
+/* LABELS */
 
-    color: #253858;
+label {
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    color:#253858;
     white-space: nowrap;
-    line-height: 32px; /* Aligns with input heights */
-    padding: 0px 8px 0px 0px; 
-    text-align: right; 
+    line-height: 32px;
+    padding: 0px 8px 0px 0px;
+    text-align: right;
 }
 
-/* ------------------------------
-   CARD ROWS LAYOUT (CORE MASTER UI)
------------------------------- */
+/* SECTION BLOCK */
 
-/* The main container for a section, creating the card effect */
 .section-block {
     flex: 1;
     min-width: 0;
-    background: #f6f8fa; /* Light background for the card */
+    background: #f6f8fa;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
 }
 
+/* SECTION TITLES */
+
 .section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff; /* Blue line accent */
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:17.6px;
+    font-weight:600;
+    margin:0 0 20px;
+    padding-left:10px;
+    border-left:4px solid #007bff;
 }
 
-/* Container for rows that are side-by-side */
+/* ROW LAYOUT */
+
 .section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 30px;
+    display:flex;
+    gap:26px;
+    margin-bottom:30px;
 }
 
-/* Base layout for fields (Label | Input) */
 .form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
+    display:grid;
+    grid-template-columns:120px 1fr;
+    align-items:center;
+    gap:12px 16px;
+    margin-bottom:12px;
 }
 
 .form-group label {
-    font-size: 1rem;
+    font-size:14px;
 }
 
-/* Specific layout for the main "Vehicle Info As In Agreement" section (3 columns) */
+/* AGREEMENT GRID */
+
 .agmt-info-grid {
-    display: grid;
-    /* 3 sets of Label(auto) | Input(1fr) per row */
-    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
-    gap: 15px 25px;
-    align-items: center;
+    display:grid;
+    grid-template-columns:auto 1fr auto 1fr auto 1fr;
+    gap:15px 25px;
+    align-items:center;
 }
 
-/* Specific layout for the side-by-side cards (4 columns) */
+/* VEHICLE IN/OUT GRID */
+
 .in-out-info-grid {
-    display: grid;
-    /* Label | Input | Label | Input */
-    grid-template-columns: auto 1fr auto 1fr; 
-    gap: 12px 16px;
-    align-items: center;
+    display:grid;
+    grid-template-columns:auto 1fr auto 1fr;
+    gap:12px 16px;
+    align-items:center;
 }
+
 .in-out-info-grid label {
-    font-weight: 500; /* Slightly lighter for readability in dense cards */
-    padding-right: 8px;
+    font-weight:500;
+    padding-right:8px;
 }
+
+/* INPUT GROUP */
 
 .input-group {
-    display: flex;
-    gap: 5px;
-    width: 100%;
-}
-.input-group input {
-    width: 35% !important;
-}
-.input-group input:nth-child(2) {
-    width: 65% !important;
+    display:flex;
+    gap:5px;
+    width:100%;
 }
 
-/* Specific alignment for checkboxes (like Collection/Delivery) */
-.checkbox-label-end {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 5px;
+.input-group input {
+    width:35% !important;
 }
+
+.input-group input:nth-child(2) {
+    width:65% !important;
+}
+
+/* CHECKBOX ALIGN */
+
+.checkbox-label-end {
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:5px;
+}
+
+/* BUTTON GROUP */
 
 .btn-group-end {
-    grid-column: span 4; /* Span full row in Vehicle In Info */
-    text-align: right;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
+    grid-column:span 4;
+    text-align:right;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:10px;
 }
 
-/* Styling for status label */
+/* STATUS LABEL */
+
 #lblcancelstatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #6000FC; 
-    text-align: center;
-    grid-column: span 2;
+    font-family:'Segoe UI','Roboto','Arial',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    color:#6000FC;
+    text-align:center;
+    grid-column:span 2;
 }
 
-/* Date time inputs styling for jQWidgets */
-.jqx-datetimeinput-widget, .jqx-datetimeinput {
-    height: 32px !important; 
-    line-height: 32px !important;
+/* DATE PICKER */
+
+.jqx-datetimeinput-widget,
+.jqx-datetimeinput {
+    height:32px !important;
+    line-height:32px !important;
 }
 
-/* SCROLLING FIX */
+/* SCROLL */
+
 .hidden-scrollbar {
-    overflow-y: visible !important; 
-    max-height: none !important; 
-    min-height: 1px; 
-    padding-right: 5px; 
+    overflow-y:visible !important;
+    max-height:none !important;
+    min-height:1px;
+    padding-right:5px;
 }
+
 .hidden-scrollbar::-webkit-scrollbar {
-    width: 8px; 
-    background: #f0f0f0;
+    width:8px;
+    background:#f0f0f0;
 }
+
 .hidden-scrollbar::-webkit-scrollbar-thumb {
-    background: #c0c0c0;
-    border-radius: 4px;
+    background:#c0c0c0;
+    border-radius:4px;
 }
+
+/* FORM TITLE */
 
 #formdet {
-    display: block;
-    text-align: left !important;
-    width: 100%;
-    margin-left: 0;
-    
-button, .myButton {
-    background: #007bff;
+    display:block;
+    text-align:left !important;
+    width:100%;
+    margin-left:0;
+}
+
+/* Fix header date alignment */
+.receipt-header label{
+    line-height:32px;
+}
+
+.receipt-header .jqx-datetimeinput{
+    height:32px !important;
+}
+
+/* Fix Doc No width */
+#docno{
+    width:180px !important;
+}
+
+/* Fix agreement grid column widths */
+.agmt-info-grid{
+    grid-template-columns:120px 1fr 120px 1fr 120px 1fr;
+}
+
+/* Fix input group alignment */
+.input-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+/* Fix Fleet No two inputs */
+.input-group input:first-child{
+    width:120px !important;
+}
+
+.input-group input:nth-child(2){
+    flex:1;
+}
+
+/* Fix Date Out / Time Out layout */
+#dateout,
+#timeout{
+    width:120px !important;
+}
+
+/* Fix KM + Fuel alignment */
+#outkm{
+    width:100px !important;
+}
+
+#cmbfuel{
+    width:140px !important;
+}
+
+/* Fix description field full width */
+#description{
+    width:100% !important;
+}
+
+/* Fix Reference No alignment */
+#referenceno{
+    width:220px !important;
+}
+
+/* Align labels properly */
+.agmt-info-grid label{
+    text-align:right;
+    padding-right:10px;
+}
+
+/* Prevent stretched inputs */
+.agmt-info-grid input,
+.agmt-info-grid select{
+    max-width:100%;
+}
+/* Align Date picker with label */
+#date{
+    display:inline-block;
+    vertical-align:middle;
+}
+
+/* Fix jqx date input height */
+.jqx-datetimeinput,
+.jqx-datetimeinput-widget{
+    height:32px !important;
+    line-height:32px !important;
+}
+
+/* Align internal input */
+.jqx-datetimeinput input{
+    height:32px !important;
+    line-height:32px !important;
+    margin-top:0px !important;
+}
+
+/* Align label with date */
+.receipt-header label{
+    line-height:32px;
+}
+.receipt-header{
+    padding-right:20px;
+}
+.jqx-datetimeinput{
+    height:34px !important;
+}
+
+.jqx-datetimeinput input{
+    line-height:34px !important;
+}
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
     border: none;
-    padding: 6px 16px;
-    color: #fff;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
-button:hover, .myButton:hover {
-    background: #007bff;
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+  select {
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 4px 8px !important;
 }
 
+select::-ms-expand {
+    display: block;
+}
+
+.form-group select,
+.agmt-info-grid select,
+.in-out-info-grid select {
+    min-height: 34px;
+}
+.agmt-info-grid {
+    grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    align-items: center;
+}
+.agmt-info-grid select {
+    width: 100%;
+    min-width: 0;
+}
 </style>
+
 
 
 <script type="text/javascript">
@@ -1621,6 +1777,38 @@ function dateenable(){
 			window.parent.formCode.value="RPL";
 	</script>
 	<jsp:include page="../../../../header.jsp" />
+	<div class="receipt-header">
+<table width="100%">
+<tr>
+
+<td width="10%" align="right">
+Date
+</td>
+
+<td width="20%">
+<div id="date" name="date" value='<s:property value="date"/>'></div>
+<input type="hidden" id="hidddate" name="hidddate"
+value='<s:property value="hidddate"/>'/>
+</td>
+
+<td width="50%"></td>
+
+<td width="10%" align="right">
+<label>Doc No</label>
+</td>
+
+<td width="10%">
+<input type="text"
+id="docno"
+name="docno"
+readonly
+value='<s:property value="docno"/>'
+tabindex="-1"/>
+</td>
+
+</tr>
+</table>
+</div>
 	
 <div class='hidden-scrollbar' style="padding: 10px;">
 
@@ -1628,13 +1816,7 @@ function dateenable(){
         <h2>Vehicle Info As In Agreement</h2>
         
         <div class="agmt-info-grid">
-            
-            <label for="date">Date</label>
-            <div>
-                <div id="date" name="date" value='<s:property value="date"/>'></div>
-                <input type="hidden" id="hidddate" name="hidddate" value='<s:property value="hidddate"/>'/>
-            </div>
-            
+           
             <label for="cmbrentaltype">Rental Type</label>
             <div>
                 <select id="cmbrentaltype" name="cmbrentaltype" value='<s:property value="cmbrentaltype"/>'>
@@ -1642,10 +1824,7 @@ function dateenable(){
                 </select>
             </div>
             
-             <label for="docno">Doc No</label>
-            <div>
-                <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>'/>
-            </div>
+             
              
             <label for="refvocno">Ref No</label>
             <div style="grid-column: span 1;">
@@ -1732,15 +1911,17 @@ function dateenable(){
                 <input type="hidden" name="hidcmbreplacetype" id="hidcmbreplacetype" value='<s:property value="hidcmbreplacetype"/>' />
             </div>
             
-            <label for="description">Description</label>
-            <div style="grid-column: span 3;">
-                <input type="text" name="description" id="description" value='<s:property value="description"/>'/>
-            </div>
-            
-            <label for="referenceno">Reference No</label>
-            <div>
-                <input type="text" name="referenceno" id="referenceno" value='<s:property value="referenceno"/>'/>
-            </div>
+           <label for="description">Description</label>
+<div>
+<input type="text" name="description" id="description"
+value='<s:property value="description"/>'/>
+</div>
+
+<label for="referenceno">Reference No</label>
+<div>
+<input type="text" name="referenceno" id="referenceno"
+value='<s:property value="referenceno"/>'/>
+</div>
             
             <div style="grid-column: span 4;"></div> 
             <div style="grid-column: span 2; text-align: center;">

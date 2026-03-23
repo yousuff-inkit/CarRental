@@ -1502,14 +1502,14 @@ input[readonly] {
                     </div>
                 </div>
 
-                <div class="action-buttons-group">
-                    <input type="button" class="myButtonses" value="View" onclick="funViewAttendance();">
-                    <input type="button" class="myButtonses" value="Apply" onclick="funApplyAttendance(event);">
-                    <input type="button" class="myButtonses" style="background:#dc3545;" value="Delete" onclick="funDeleteAttendance(event);">
-                    <input type="button" class="myButtons" value="Clear" onclick="funClearInfo();">
-                </div>
-                
-                <input type="button" class="myButtonReCheck" value="Re-Check Attendance" onclick="funReCheckAttendance(event);">
+               <div class="action-buttons-group">
+    <input type="button" class="myButtonses" id="btnView" value="View" onclick="funViewAttendance();">
+    <input type="button" class="myButtonses" id="btnApply" value="Apply" onclick="funApplyAttendance(event);">
+    <input type="button" class="myButtonses" id="btnApplyDelete" style="background:#dc3545;" value="Delete" onclick="funDeleteAttendance(event);">
+    <input type="button" class="myButtons" id="clear" value="Clear" onclick="funClearInfo();">
+</div>
+
+<input type="button" class="myButtonReCheck" id="btnRecheck" value="Re-Check Attendance" onclick="funReCheckAttendance(event);">
 
                 <div class="import-area">
                     <input type="file" id="fileexcelimport" name="file" style="font-size: 11px; width: 180px;">

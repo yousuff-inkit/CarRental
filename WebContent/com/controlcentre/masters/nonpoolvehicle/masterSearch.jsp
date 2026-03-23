@@ -67,6 +67,12 @@ input[type="text"], select {
 tr {
   line-height: 1.8;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
+
 </style>
 
 	<script type="text/javascript">
@@ -155,37 +161,82 @@ function getGroup() {
  
 	</script>
 <body bgcolor="#E0ECF8">
-<div id="search">
-  <table width="100%" >
-    <tr>
-      <td width="12%" align="right">Doc No</td>
-      <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
-      <td width="7%" align="right">Date</td>
-      <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
-      <td width="13%" align="right">Color</td>
-      <td width="15%" align="left"><select name="searchcolor" id="searchcolor" ><option value="">--Select--</option></select></td>
-      <td width="12%" align="right">&nbsp;</td>
-      <td width="14%" align="left">&nbsp;</td>
-    </tr>
 
-    <tr>
-      <td align="right">Fleet No</td>
-      <td align="left"><input type="text" name="searchfleetno" id="searchfleetno" ></td>
-      <td align="right">Reg No</td>
-      <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
-      <td align="right">Group</td>
-      <td align="left"><select name="searchgroup" id="searchgroup" ><option value="">--Select--</option></select></td>
-      <td align="right">&nbsp;</td>
-      <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
-    </tr>
-    <tr>
-      <td colspan="8">
-        <div id="srefreshdiv">
-          <jsp:include page="nonPoolSearch.jsp" /> 
-        </div>
-      </td>
-    </tr>
-  </table>
+<div id="search">
+
+<table width="100%">
+
+<tr>
+
+<td width="8%" align="right"><b>Doc No</b></td>
+<td width="15%">
+<input type="text" name="searchdocno" id="searchdocno" style="width:95%;">
+</td>
+
+<td width="8%" align="right"><b>Date</b></td>
+<td width="15%">
+<div id="searchdate" name="searchdate"></div>
+</td>
+
+<td width="8%" align="right"><b>Color</b></td>
+<td width="15%">
+<select name="searchcolor" id="searchcolor" style="width:95%;">
+<option value="">--Select--</option>
+</select>
+</td>
+
+<td width="8%"></td>
+<td width="13%"></td>
+
+</tr>
+
+
+<tr>
+
+<td align="right"><b>Fleet No</b></td>
+<td>
+<input type="text" name="searchfleetno" id="searchfleetno" style="width:95%;">
+</td>
+
+<td align="right"><b>Reg No</b></td>
+<td>
+<input type="text" name="searchregno" id="searchregno" style="width:95%;">
+</td>
+
+<td align="right"><b>Group</b></td>
+<td>
+<select name="searchgroup" id="searchgroup" style="width:95%;">
+<option value="">--Select--</option>
+</select>
+</td>
+
+<td></td>
+
+<td align="center">
+<input type="button"
+name="btnSearchExt"
+id="btnSearchExt"
+class="myButton"
+value="Search"
+onclick="mainloadSearch();">
+</td>
+
+</tr>
+
+
+<tr>
+<td colspan="8">
+
+<div id="srefreshdiv">
+<jsp:include page="nonPoolSearch.jsp" />
 </div>
+
+</td>
+</tr>
+
+</table>
+
+</div>
+
 </body>
 </html>

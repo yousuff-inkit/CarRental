@@ -779,9 +779,7 @@
 </script>
 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
+    
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -803,9 +801,6 @@
         text-align: left !important;
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
     center {
         text-align: left !important;
         display: block;
@@ -823,9 +818,7 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
+   
     .receipt-header {
         display: block;
         padding: 0 0 0 5px;
@@ -903,9 +896,7 @@
     }
 
 
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
+    
     input[type="text"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -935,16 +926,14 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
     
     .section-block .form-group label {
         min-width: 110px; /* Custom width for main sections */
     }
 
-    /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
+   
     .myButton {
         background: #007bff; border: none; padding: 6px 16px; color: #fff;
         border-radius: 6px; cursor: pointer; font-weight: 600;

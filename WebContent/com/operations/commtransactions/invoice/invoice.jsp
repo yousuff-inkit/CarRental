@@ -12,9 +12,7 @@
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT
-    ------------------------------ */
+   
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -32,13 +30,11 @@
         max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        /* FORCE HEADER LEFT ALIGNMENT */
+      
         text-align: left !important; 
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons)
-    ------------------------------ */
+   
     center {
         text-align: left !important;
         display: block;
@@ -56,9 +52,7 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT)
-    ------------------------------ */
+   
     .receipt-header {
         display: grid;
         grid-template-columns: auto 1fr auto 1fr;
@@ -99,7 +93,7 @@
     }
 
     .section-block h2 {
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -107,9 +101,7 @@
         color: #333;
     }
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
+    
     input[type="text"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -144,28 +136,48 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
-    /* ------------------------------
-       TABLES & UTILS
-    ------------------------------ */
+    
     .table-section { margin: 20px 0; }
     .table-section h3 {
         color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
     }
     
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
-
+    
     .doc-group { display: flex; gap: 5px; }
     
-    /* SCROLLBAR FIX */
+    
     .hidden-scrollbar { overflow: auto; height: 530px; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
+    
+    body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 </style>
 
 <script type="text/javascript">
@@ -544,17 +556,22 @@
 	</script>
 	<jsp:include page="../../../../header.jsp" />
 	
-    <div class='receipt-header'>
-        <label>Date</label>
-        <div>
-            <div id="date" name="date" value='<s:property value="date"/>'></div>
-            <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-        </div>
+    <div class='receipt-header' style="display:flex; align-items:center; gap:10px;">
 
-        <label style="margin-left:auto;">Doc No.</label>
-        <input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'>
+    <label>Date</label>
+    <div style="width:120px;">
+        <div id="date" name="date" value='<s:property value="date"/>'></div>
+        <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
     </div>
 
+    <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+        <label>Doc No.</label>
+        <input type="text" name="voucherno" id="voucherno"
+               value='<s:property value="voucherno"/>'
+               style="width:120px;">
+    </div>
+
+</div>
     <div class="section-row">
         <div class="section-block">
             <h2>Document Details</h2>

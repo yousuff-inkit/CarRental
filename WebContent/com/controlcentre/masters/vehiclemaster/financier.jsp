@@ -11,184 +11,139 @@
 <title>GatewayERP(i) - Financier Master</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-
-* {
-    box-sizing: border-box;
-}
-
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 130vh;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 #mainBG {
-    background: #ffffff;
+    background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 100%;
+    max-width: 100%; /* Master UI Requirement */
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    text-align: left !important; 
 }
 
-/* ==============================
-   INPUTS & FORM CONTROLS
-============================== */
+/* ------------------------------
+    SECTION BLOCKS & HEADERS
+------------------------------ */
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px; 
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 25px;
+}
 
-input[type="text"],
-select {
+.section-block h2 {
+    font-size: 17.6px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff; /* Signature Blue Line */
+    color: #333;
+    display: block;
+}
+
+/* ------------------------------
+    FORM GRID SYSTEM
+------------------------------ */
+.form-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 120px 1fr; 
+    gap: 15px 30px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* ------------------------------
+    INPUTS & CONTROLS
+------------------------------ */
+input[type="text"], select {
     height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 6px 10px;
-    background: #ffffff;
-    font-size: 14px;
+    background: #fff;
     transition: border-color 0.2s;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-input[type="text"]:focus,
-select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
+}
+
+input[readonly] {
+    background-color: #f3f4f6;
+    color: #6b7280;
 }
 
 label {
     font-weight: 600;
     color: #253858;
     white-space: nowrap;
-}
-
-/* ==============================
-   HEADER / TOP AREA
-============================== */
-
-.receipt-header {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-    padding: 0 10px 10px;
-}
-
-.receipt-header table {
-    width: 100%;
-}
-
-.receipt-header td {
-    padding: 6px 4px;
-    vertical-align: middle;
-}
-
-#txtStatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #e67e22;
-}
-
-/* ==============================
-   FORM LAYOUT HELPERS
-============================== */
-
-.form-row,
-.single-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 12px;
-}
-
-.form-row label,
-.single-row label {
-    min-width: 120px;
     text-align: right;
+    padding-right: 10px;
+    font-size: 16px;
 }
 
-.form-row input,
-.single-row input {
-    flex: 1;
+/* JQX Widget Overrides */
+.jqx-datetimeinput {
+    height: 32px !important;
+    width: 100% !important;
 }
-
-
-
-
-/* ==============================
-   TABLE SECTIONS
-============================== */
-
-.table-section {
-    margin: 20px 0;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ==============================
-   SCROLL AREAS
-============================== */
 
 .hidden-scrollbar {
-    overflow: auto;
-    height: 100vh;
+    overflow-y: auto;
+    height: 530px;
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
-    width: 0;
+    width: 0px;
 }
 
-/* ==============================
-   BUTTONS
-============================== */
-
-button,
-.myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #ffffff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-button:hover,
-.myButton:hover {
-    background: #0056b3;
-}
-
-/* ==============================
-   ERROR LABELS
-============================== */
-
-#validrate,
-#validrate1 {
-    color: red;
+form label.error {
+    color:red;
+    font-weight:bold;
     font-size: 12px;
+}
+
+
+#formdet {
+    text-align: left !important;
+    display: block;
+}
+.section-block legend {
+    position: relative;
+    padding-left: 12px;
+}
+
+.section-block legend::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    height: 18px;
+    width: 4px;
+    background: #007bff;
+}
+fieldset legend {
+    border-left: 4px solid #007bff;
+    padding-left: 8px;
+    font-weight: 600;
 }
 
 </style>
@@ -387,95 +342,86 @@ button:hover,
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
 
-<!-- PAGE-LEVEL STYLE (BODY ONLY) -->
-<style>
-    fieldset {
-        border: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    legend {
-        background: #e6f0ff;
-        color: #0b3c8a;
-        font-weight: 600;
-        padding: 6px 14px;
-        font-size: 14px;
-        border-left: 4px solid #2b6fd6;
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-    }
-
-    .financier-section {
-        background: #ffffff;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-        border-radius: 6px;
-        padding: 10px 12px 14px 12px;
-    }
-</style>
-
 <form id="frmFinancier" action="saveActionFinancier" autocomplete="off">
-<jsp:include page="../../../../header.jsp" /><br/>
 
-<div style="width:1053px;" class="financier-section">
+<jsp:include page="../../../../header.jsp" />
+
+<!-- Date + Doc No Row -->
+<div style="display:flex; align-items:center; width:100%; margin:10px 0;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div style="width:130px;">
+        <div id="findate" name="findate" value='<s:property value="findate"/>'></div>
+    </div>
+
+    <input type="hidden"
+           name="hidfindate"
+           id="hidfindate"
+           value='<s:property value="hidfindate"/>'>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           readonly
+           tabindex="-1"
+           style="width:120px;">
+</div>
+
+
+<div class="financier-section">
 
 <fieldset>
-    <legend>Financier Master</legend>
+<legend>Financier Master</legend>
 
-    <table width="1043">
-        <tr>
-            <td width="89" align="right">Date</td>
-            <td width="196">
-                <div id="findate" name="findate" value='<s:property value="findate"/>'></div>
-            </td>
-            <input type="hidden" name="hidfindate" id="hidfindate" value='<s:property value="hidfindate"/>'>
+<table width="100%">
 
-            <td colspan="2">&nbsp;</td>
+<tr>
+    <td width="12%" align="right">Financier Code</td>
+    <td width="25%">
+        <input type="text"
+               name="finid"
+               id="finid"
+               value='<s:property value="finid"/>'
+               style="width:90%;">
+    </td>
 
-            <td width="97" align="right">Doc No</td>
-            <td width="313">
-                <input type="text" name="docno" id="docno"
-                       value='<s:property value="docno"/>'
-                       readonly tabindex="-1">
-            </td>
-        </tr>
+    <td width="12%" align="right">Name</td>
+    <td width="30%">
+        <input type="text"
+               name="finname"
+               id="finname"
+               value='<s:property value="finname"/>'
+               style="width:90%;">
+    </td>
+</tr>
 
-        <tr>
-            <td align="right">Financier Code</td>
-            <td>
-                <input type="text" name="finid" id="finid"
-                       value='<s:property value="finid"/>'>
-            </td>
+<tr>
+    <td align="right">Account</td>
+    <td colspan="3">
+        <input type="text"
+               name="txtaccname"
+               id="txtaccname"
+               value='<s:property value="txtaccname"/>'
+               style="width:60%;"
+               ondblclick="funSearchdblclick();"
+               onkeydown="getAcc(event);"
+               placeholder="Press F3 to Search">
+    </td>
+</tr>
 
-            <td colspan="2">&nbsp;</td>
+</table>
 
-            <td align="right">Name</td>
-            <td>
-                <input type="text" name="finname" id="finname"
-                       value='<s:property value="finname"/>'>
-            </td>
-        </tr>
-
-        <tr>
-            <td align="right">Account</td>
-            <td align="left">
-                <input type="text" name="txtaccname" id="txtaccname"
-                       value='<s:property value="txtaccname"/>'
-                       style="width:99%;"
-                       ondblclick="funSearchdblclick();"
-                       onkeydown="getAcc(event);"
-                       placeholder="Press F3 to Search">
-            </td>
-        </tr>
-    </table>
-
-    <input type="hidden" id="txtaccno" name="txtaccno" value='<s:property value="txtaccno"/>'>
-    <input type="hidden" id="mode" name="mode">
-    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
-    <input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true">
+<input type="hidden" id="txtaccno" name="txtaccno" value='<s:property value="txtaccno"/>'>
+<input type="hidden" id="mode" name="mode">
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true">
 
 </fieldset>
+
 </div>
 </form>
 
@@ -490,5 +436,4 @@ button:hover,
 
 </div>
 </body>
-
 </html>
