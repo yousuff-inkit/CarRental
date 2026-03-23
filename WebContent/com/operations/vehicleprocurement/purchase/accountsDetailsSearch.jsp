@@ -33,99 +33,128 @@
 </script>
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing and layout */
-table {
+#search {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
+  border-spacing: 15px 18px;  
+  background-color: #ffffff;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
+#search td[align="right"] {
   font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
   font-weight: 700;
+  font-size: 14px;
   color: #222;
+  white-space: nowrap;
 }
 
-/* Bold text inside inputs with Grey Borders */
 input[type="text"] {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
+  width: 95%;                
   max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border as requested */
-  border: 1px solid #bdc3c7; 
+  box-sizing: border-box;   
+  border: 1px solid #bdc3c7;
   border-radius: 4px;
   background-color: #ffffff;
 }
 
-/* Focus state for inputs */
 input[type="text"]:focus {
   border-color: #007bff;
   outline: none;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition as requested */
-}
-
-
-/* No color change on hover */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
-}
-
-/* Row spacing */
-tr {
+#search tr {
   line-height: 1.6;
+}
+
+.myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: #007bff !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: none;
+    text-align: center;
+}
+
+.myButton:hover {
+    background-color: #007bff !important;
+}
+
+#refreshAccountDetailsDiv {
+    margin-top: 10px;
+}
+
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 </style>
 
-<body bgcolor="#FFFFFF">
+<body bgcolor="#ffffff">
 <div id="search">
-<table width="100%">
+<table width="100%" border="0">
   <tr>
-    <td width="10%" align="right">Account No</td>
-    <td width="30%">
-      <input type="text" name="txtaccountsno" id="txtaccountsno" style="width:85%;" value='<s:property value="txtaccountsno"/>'>
+    <td width="12%" align="right">Account No</td>
+    <td width="28%">
+        <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
     </td>
     <td width="10%" align="right">Currency</td>
-    <td width="27%">
-      <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" style="width:50%;" value='<s:property value="txtaccountcurrency"/>'>
-      <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
+    <td width="25%">
+        <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" style="width: 60%;" value='<s:property value="txtaccountcurrency"/>'>
+        <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
     </td>
-    <td width="23%" rowspan="2" align="center">
-      <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
+    <td width="25%" rowspan="2" align="center">
+        <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
     </td>
   </tr>
   <tr>
     <td align="right">Account Name</td>
     <td colspan="3">
-      <input type="text" name="txtaccountsname" id="txtaccountsname" style="width:80%;" value='<s:property value="txtaccountsname"/>'>
+        <input type="text" name="txtaccountsname" id="txtaccountsname" style="width: 98%;" value='<s:property value="txtaccountsname"/>'>
     </td>
   </tr>
   <tr>
     <td colspan="5">
-      <div id="refreshAccountDetailsDiv">
-        <jsp:include page="accountsDetailsFromGrid.jsp" />
-      </div>
+        <div id="refreshAccountDetailsDiv">
+            <jsp:include page="accountsDetailsFromGrid.jsp" />
+        </div>
     </td>
   </tr>
 </table>
 </div>
-</body>
-</html>
+</body></html>
