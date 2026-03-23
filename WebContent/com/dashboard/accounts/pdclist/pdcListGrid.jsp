@@ -72,8 +72,8 @@
             
             $("#jqxPdcList").jqxGrid(
             {
-            	 width: '98%',
-                 height: 510,
+            	 width: '100%',
+                 height: 650,
                  source: dataAdapter,
                  rowsheight:25,
                  statusbarheight:25,

@@ -400,17 +400,14 @@ function funPrintBtn() {
 	 }
 </script>
 </head>
+
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
         color: #222;
         margin: 0;
         padding: 32px 0;
-        min-height: 100vh;
         box-sizing: border-box;
     }
 
@@ -421,43 +418,45 @@ function funPrintBtn() {
         max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        /* FORCE HEADER LEFT ALIGNMENT */
-        text-align: left !important;
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
-
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
     .receipt-header {
-        display: block; /* Header block container */
-        padding: 0 0 0 5px;
+        display: block;
+        margin-bottom: 16px;
+        padding: 0 10px;
+    }
+
+    .receipt-header table {
+        width: 100%;
+    }
+
+    .receipt-header td {
+        padding: 6px 4px;
+        vertical-align: middle;
+    }
+
+    .section-block {
+        background: #f6f8fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+        margin-bottom: 20px;
+    }
+
+    .section-block h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 20px;
+        padding-left: 10px;
+        border-left: 4px solid #007bff;
+        color: #333;
     }
 
     .form-group {
         display: grid;
         grid-template-columns: 120px 1fr;
         align-items: center;
-        gap: 12px;
+        gap: 12px 16px;
         margin-bottom: 12px;
     }
 
@@ -466,64 +465,14 @@ function funPrintBtn() {
     }
 
     .form-group.single-label-dual-input {
-        /* Used for Client Code/Name */
         grid-template-columns: 120px 1fr 1fr;
     }
-    
+
     .form-group.three-field-input {
-        /* Used for Description/Type/Calculate */
-        grid-template-columns: 120px 1fr 60px 1fr 1fr; /* Custom grid for alignment */
-        gap: 12px 10px;
-    }
-    
-    .form-group .calculate-button {
-        display: flex;
-        justify-content: flex-end;
+        grid-template-columns: 120px 1.5fr 60px 1fr auto;
     }
 
-
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-    }
-
-    .section-block {
-        flex: 1;
-        background: #f6f8fa; /* Uniform background color */
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        min-width: 45%;
-    }
-
-    .full-width-block {
-        flex: 1 1 100%;
-    }
-
-    .section-block h2, .section-block h3, .fieldset-legend-replacement {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-        display: block;
-        border-radius: 0; /* Ensure straight line */
-    }
-    
-    .fieldset-legend-replacement {
-        background: none;
-        padding: 0 0 0 10px;
-        margin-bottom: 10px;
-    }
-
-
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
-    input[type="text"], input[type="email"], select, textarea {
+    input[type="text"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
         border-radius: 6px;
@@ -535,49 +484,44 @@ function funPrintBtn() {
         width: 100%;
     }
 
-    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+    input[type="text"]:focus, select:focus {
         border-color: #007bff;
         outline: none;
     }
 
-    input[readonly], textarea[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
-    
-    /* Button styling from Master UI */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-        height: 32px; /* Match input height */
-    }
-    .myButton:hover { background: #0056b3; }
-
-
     label {
-        font : Tahoma;
         font-weight: 600;
         color: #253858;
         white-space: nowrap;
         text-align: right;
-        padding-right: 10px;
-        font-size: 16px;
+        padding-right: 8px;
     }
 
-    /* ------------------------------
-       TABLES & UTILS
-    ------------------------------ */
-
-    /* SCROLLBAR FIX */
-    .hidden-scrollbar { 
-        overflow: auto; 
-        height: 520px; /* Kept original height */
-        padding: 0 5px; /* Added padding for grid alignment */
+    .myButton {
+        background: #007bff;
+        color: white;
+        padding: 0 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        height: 32px;
     }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 
+    .myButton:hover {
+        background: #0056b3;
+    }
+
+    .jqx-datetimeinput {
+        height: 34px !important;
+        box-sizing: border-box;
+    }
+    #formdet {
+    text-align: left !important;
+    display: block;
+}
+    
 </style>
-
 <body onload="setValues();getConfigs();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmVehicleDisposal" action="saveActionVehicleDisposal" autocomplete="off" >
@@ -585,46 +529,56 @@ function funPrintBtn() {
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
     
-    <div class="section-block full-width-block" style="padding-top: 5px; padding-bottom: 5px;">
-        <h3 class="fieldset-legend-replacement">Vehicle Disposal</h3>
-        
-        <div class="hidden-scrollbar">
-
-            <div class="form-group dual-input">
-                <label>Date</label>
-                <div>
+    <div id="mainBG">
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="5%" align="right"><label>Date</label></td>
+                <td width="15%">
                     <div id="date" name="date" value='<s:property value="date"/>'></div>
-                </div>
-                
-                <label>Doc No</label>
-                <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1" readonly>
+                </td>
+                <td width="40%"></td>
+                <td width="10%" align="right"><label>Doc No</label></td>
+                <td width="8%">
+                    <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' readonly tabindex="-1">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section-block">
+        <h2>Vehicle Disposal</h2>
+
+        <div class="form-group single-label-dual-input">
+            <label>Client</label>
+            <input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
+            <input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' readonly tabindex="-1">
+        </div>
+
+        <div class="form-group three-field-input">
+            <label>Description</label>
+            <input type="text" name="description" id="description" value='<s:property value="description"/>'>
+
+            <label style="text-align:left; padding-left: 10px;">Type</label>
+            <select name="cmbtype" id="cmbtype">
+                <option value="">--Select--</option>
+                <option value="S">Sale</option>
+                <option value="L">Total Loss</option>
+            </select>
+            
+            <div style="padding-left: 10px;">
+                <input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate">
             </div>
+        </div>
 
-            <div class="form-group single-label-dual-input">
-                <label>Client</label>
-                <input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
-                <input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' readonly>
-            </div>
+        <div id="disposaldiv" style="margin-top: 20px;">
+            <jsp:include page="vehDisposalGrid.jsp"></jsp:include>
+        </div>
 
-            <div class="form-group three-field-input" style="grid-template-columns: 120px 1.5fr 60px 1fr auto;">
-                <label>Description</label>
-                <input type="text" name="description" id="description" value='<s:property value="description"/>'>
-
-                <label style="text-align:left; padding-right: 0; padding-left: 10px; min-width: 60px;">Type</label>
-                <select name="cmbtype" id="cmbtype" >
-                    <option value="">--Select--</option>
-                    <option value="S">Sale</option>
-                    <option value="L">Total Loss</option>
-                </select>
-                
-                <div class="calculate-button">
-                    <input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate">
-                </div>
-            </div>
-
-            <div id="disposaldiv" style="margin-top: 15px;"><jsp:include page="vehDisposalGrid.jsp"></jsp:include></div>
-
-            <div id="jvdiv" style="margin-top: 15px;"><jsp:include page="jvGrid.jsp"></jsp:include></div>
+        <div id="jvdiv" style="margin-top: 20px;">
+            <jsp:include page="jvGrid.jsp"></jsp:include>
+        </div>
+ 
 
             <div style="display: none;">
                 <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>

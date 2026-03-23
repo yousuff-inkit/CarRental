@@ -43,8 +43,8 @@
             );
             $("#lacloseaudit").jqxGrid(
             {
-                width: '98%',
-                height: 480,
+                width: '100%',
+                height: 690,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

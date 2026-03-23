@@ -126,8 +126,8 @@ $(document).ready(function () {
     
     $("#jqxFleetGrid").jqxGrid(
     {
-        width: '98%',
-        height: 380,
+        width: '100%',
+        height: 600,
         source: dataAdapter,
         showaggregates:true,
         filtermode:'excel',

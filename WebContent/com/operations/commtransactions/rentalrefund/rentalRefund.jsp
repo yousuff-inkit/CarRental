@@ -797,7 +797,7 @@ label {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
@@ -881,7 +881,32 @@ label {
     line-height: normal !important;
     text-align: left !important;
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
 
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 
 </style>
 
@@ -889,6 +914,24 @@ label {
 
 <div id="mainBG" class="homeContent" data-type="background">
     <jsp:include page="../../../../header.jsp"></jsp:include>
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Date</label>
+        <div id="jqxRentalRefundDate" name="jqxRentalRefundDate"
+             onchange="datechange();" onblur="datechange();"
+             value='<s:property value="jqxRentalRefundDate"/>'
+             style="width:120px;"></div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Doc No.</label>
+        <input type="text" id="docno" name="txtrentalrefunddocno"
+               value='<s:property value="txtrentalrefunddocno"/>'
+               tabindex="-1" style="width:120px;">
+    </div>
+
+</div>      
     <br>
 
     <form id="frmRentalRefund" action="saveRentalRefund" method="post" autocomplete="off">
@@ -897,14 +940,10 @@ label {
             <div class="section-block">
                 <h2>General Information</h2>
                 <div class="trans-info-grid">
-                    <label>Date</label>
-                    <div id="jqxRentalRefundDate" name="jqxRentalRefundDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxRentalRefundDate"/>'></div>
-                    
+                   
                     <label>Doc Type</label>
                     <input type="text" id="txtdoctype" name="txtdoctype" value='<s:property value="txtdoctype"/>' tabindex="-1"/>
-                    
-                    <label>Doc No.</label>
-                    <input type="text" id="docno" name="txtrentalrefunddocno" value='<s:property value="txtrentalrefunddocno"/>' tabindex="-1"/>
+
 
                     <label>Receipt No.</label>
                     <input type="text" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>' tabindex="-1"/>

@@ -240,39 +240,34 @@ function funPrintBtn() {
 
 </script>
 
-   <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-
+<style>
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
-    padding: 32px 0;
+    padding: 20px 0;
     box-sizing: border-box;
-    overflow-y: auto !important;
+    overflow-y: auto;
+    min-height: auto;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
+    padding: 15px;
+    max-width: 98%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: inline-block;
+    width: 100%;
 }
 
-/* ------------------------------
-    COMMON UI ELEMENTS
------------------------------- */
-
 input[type="text"], select {
-    height: 32px !important;
+    height: 30px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 4px 10px;
     background: #fff;
     transition: border-color 0.2s;
     font-size: 14px;
@@ -280,84 +275,94 @@ input[type="text"], select {
     width: 100%;
 }
 
-input[type="text"]:focus,
-select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
 label {
-    font: 14px Tahoma;
+    font-weight: 600;
     color: #253858;
     white-space: nowrap;
-    line-height: 32px;
-    padding: 0px 8px 0px 0px; 
-    text-align: right; 
+    text-align: right;
+    padding-right: 8px;
 }
 
-/* ------------------------------
-    CARD ROWS LAYOUT (MASTER UI)
------------------------------- */
+.receipt-header {
+    display: block;
+    margin-bottom: 10px;
+    padding: 0 5px;
+}
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 2px 4px;
+    vertical-align: middle;
+}
 
 .section-block {
-    flex: 1;
-    min-width: 0;
     background: #f6f8fa;
     border-radius: 12px;
-    padding: 20px;
+    padding: 15px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 10px;
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin: 0 0 20px;
+    margin: 0 0 15px;
     padding-left: 10px;
-    border-left: 4px solid #007bff; /* Blue line accent */
+    border-left: 4px solid #007bff;
+    color: #333;
 }
 
-/* Standardized grid for form fields */
 .agmt-info-grid {
     display: grid;
-    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
-    gap: 15px 25px;
+    grid-template-columns: 100px 1fr 100px 1fr 100px 1fr;
     align-items: center;
+    gap: 10px 15px;
 }
 
 .input-group {
     display: flex;
     gap: 5px;
-    width: 100%;
+    align-items: center;
 }
 
-/* SCROLLING FIX */
-.hidden-scrollbar {
-    overflow-y: visible !important; 
-    max-height: none !important; 
-    min-height: 1px; 
-    padding-right: 5px; 
+.myButton {
+    background: #007bff;
+    color: white;
+    padding: 0 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    height: 30px;
 }
 
-/* Grid container styling */
+.jqx-datetimeinput {
+    height: 30px !important;
+    box-sizing: border-box;
+    width: 130px !important;
+}
+
 .grid-container {
-    margin-top: 20px;
+    margin-top: 10px;
     background: #fff;
     border-radius: 8px;
     border: 1px solid #e4e7ec;
-    overflow: hidden;
 }
 
-#HeadIcons {
-    height: auto;           /* FIX */
-    display: flex;
-    align-items: center;    /* vertical center */
+input[readonly] {
+    background-color: #f3f4f6;
 }
 #formdet {
-    margin-left: 0;         /* remove -8px */
-    width: auto;
-
-    text-align: left;
-    line-height: normal;
+    text-align: left !important;
+    display: block;
 }
 
 </style>
@@ -369,70 +374,74 @@ label {
     <jsp:include page="../../../../header.jsp" />
     <br/> 
 
-    <div class='hidden-scrollbar' style="padding: 10px;">
-        
-        <div class="section-block" style="margin-bottom: 20px;">
-            <h2>Asset Sales Invoice Information</h2>
-            
-            <div class="agmt-info-grid">
-                <label for="date">Date</label>
-                <div>
+    <div id="mainBG">
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="1%"><label>Date</label></td>
+                <td width="100px">
                     <div id="date" name="date" value='<s:property value="date"/>'></div>
                     <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-                </div>
-
-                <label for="vocno">Doc No</label>
-                <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1" readonly>
-
-                <label></label><div></div>
-
-                <label for="client">Client</label>
-                <div style="grid-column: span 5;">
-                    <div class="input-group">
-                        <input type="text" name="client" id="client" style="width: 20% !important;" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
-                        <input type="text" name="clientname" id="clientname" style="width: 80% !important;" value='<s:property value="clientname"/>' readonly>
-                    </div>
-                </div>
-
-                <label for="description">Description</label>
-                <div style="grid-column: span 3;">
-                    <input type="text" name="description" id="description" value='<s:property value="description"/>'>
-                </div>
-
-                <label for="cmbtype">Type</label>
-                <div class="input-group">
-                    <select name="cmbtype" id="cmbtype">
-                        <option value="">--Select--</option>
-                        <option value="S">Sale</option>
-                        <option value="L">Total Loss</option>
-                    </select>
-                    <input type="button" name="btncalculate" id="btncalculate" class="myButton" style="width: auto; padding: 0 15px;" onclick="funCalculate();" value="Calculate">
-                </div>
-            </div>
-        </div>
-
-        <div class="section-block">
-            <h2>Invoice Details</h2>
-            <div class="grid-container">
-                <div id="assetInvoicediv">
-                    <jsp:include page="assetInvoiceGrid.jsp"></jsp:include>
-                </div>
-            </div>
-        </div>
-
-        <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden="true"></div>
-        <div id="todate" name="todate" value='<s:property value="todate"/>' hidden="true"></div>
-        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-        <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
-        <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
-        <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-        <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
-        <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
-        <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
-        <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly>
+                </td>
+                <td></td>
+                <td width="1%" align="right"><label>Doc&nbsp;No</label></td>
+                <td width="180px" align="right">
+                    <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' readonly tabindex="-1" style="width: 180px !important;">
+                </td>
+            </tr>
+        </table>
     </div>
+
+    <div class="section-block">
+        <h2>Asset Sales Invoice Information</h2>
+        <div class="agmt-info-grid">
+            <label>Client</label>
+            <div style="grid-column: span 5;">
+                <div class="input-group">
+                    <input type="text" name="client" id="client" style="width: 15% !important;" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
+                    <input type="text" name="clientname" id="clientname" style="width: 85% !important;" value='<s:property value="clientname"/>' readonly tabindex="-1">
+                </div>
+            </div>
+
+            <label>Description</label>
+            <div style="grid-column: span 3;">
+                <input type="text" name="description" id="description" value='<s:property value="description"/>'>
+            </div>
+
+            <label>Type</label>
+            <div class="input-group">
+                <select name="cmbtype" id="cmbtype">
+                    <option value="">--Select--</option>
+                    <option value="S">Sale</option>
+                    <option value="L">Total Loss</option>
+                </select>
+                <input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate">
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>Invoice Details</h2>
+        <div class="grid-container">
+            <div id="assetInvoicediv">
+                <jsp:include page="assetInvoiceGrid.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
+
+    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden="true"></div>
+    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden="true"></div>
+    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+    <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+    <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
+    <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+    <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
+    <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
+    <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
+    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
+</div>
 </form>
 
 <div id="clientwindow">

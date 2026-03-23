@@ -102,8 +102,8 @@ $(document).ready(function () {
     
     $("#unRentableGrid").jqxGrid(
     {
-        width: '98%',
-        height: 495,
+        width: '100%',
+        height: 700,
         source: dataAdapter,
         showaggregates:true,
         filtermode:'excel',
@@ -121,7 +121,7 @@ $(document).ready(function () {
 						{ text: 'Group', datafield: 'gname', width: '5%',cellclassname: cellclassname  ,editable:false},
 						{ text: 'Brand', datafield: 'brand_name', width: '12%' ,cellclassname: cellclassname ,editable:false},
 						{ text: 'Fleet', datafield: 'fleet_no', width: '5%' ,cellclassname: cellclassname  ,editable:false},
-						{ text: 'Fleet Name', datafield: 'flname', width: '17%',cellclassname: cellclassname  ,editable:false},
+						{ text: 'Fleet Name', datafield: 'flname', width: '13%',cellclassname: cellclassname  ,editable:false},
 						{ text: 'Remarks', datafield: 'remarks', width: '17%',cellclassname: cellclassname,editable:true },
 						{ text: 'Action', datafield: 'btnsave', width: '5%',columntype:'button',editable:false},
 						{ text: 'YOM', datafield: 'yom', width: '4%',cellclassname: cellclassname  ,editable:false},

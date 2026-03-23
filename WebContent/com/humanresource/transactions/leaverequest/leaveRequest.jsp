@@ -392,328 +392,238 @@
 	  }
 	  
 </script>
-
 <style>
-/* ===============================
-   SCROLL AREA
-=============================== */
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: 530px;
-    padding: 10px;
+
+* {
+    box-sizing: border-box;
 }
 
-/* ===============================
-   PAGE BASE
-=============================== */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-    font-size: 14px;
+    padding: 0;
+    /* 2. Critical: Use 100% height and hide horizontal overflow at the source */
+    height: 100vh; 
+    width: 100%;
+    overflow-x: hidden; 
+    display: flex;
+    flex-direction: column;
 }
 
-/* ===============================
-   MAIN CARD
-=============================== */
 #mainBG {
     background: #fff;
     border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: 0 auto;
+    padding: 15px;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-/* ===============================
-   HEADER STRIP
-=============================== */
-.receipt-header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 0 24px;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+    /* Forces the white background to stretch and cover the bottom of the screen */
+    flex: 1; 
 }
 
-.receipt-header label {
-    font-weight: 600;
-    color: #333;
+#formdet {
+    text-align: left !important;
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+    padding-left: 5px;
 }
-
-/* ===============================
-   GLOBAL INPUT / SELECT SIZE
-=============================== */
-input[type="text"],
-input[type="number"],
-input[type="file"],
-select {
-    height: 32px !important;
-    padding: 4px 10px !important;
-    font-size: 14px !important;
+input[type="text"], select, textarea {
+    height: 30px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
+    padding: 4px 10px;
     background: #fff;
+    transition: border-color 0.2s;
+    font-size: 14px;
     box-sizing: border-box;
+    width: 100%;
 }
 
-input:focus,
-select:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-/* ===============================
-   SECTION LAYOUT
-=============================== */
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-/* ===============================
-   🔵 BLUE HEADING ACCENT
-=============================== */
-.table-section h3,
-.section-block h2,
-.section-block h3 {
-    margin: 0 0 16px;
-    padding-left: 8px;
-    border-left: 4px solid #007bff;
-    font-size: 15px;
-    font-weight: 700;
-    color: #253858;
-}
-
-/* ===============================
-   FORM GROUPS
-=============================== */
-.form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
 label {
-    font-weight: 700;
+    font-weight: 600;
     color: #253858;
     white-space: nowrap;
+    text-align: right;
+    padding-right: 12px;
+    display: block;
+    line-height: 30px;
 }
 
-/* ===============================
-   TABLE SECTION
-=============================== */
-.table-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 12px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+.receipt-header {
+    display: block;
+    margin-bottom: 8px;
+    padding: 0 5px;
 }
 
-/* ===============================
-   TABLE GRID
-=============================== */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 13px;
-    vertical-align: middle;
-    white-space: nowrap;
-    font-weight: 700;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ===============================
-   PREMIUM SMALL BUTTONS
-=============================== */
-.myButtons,
-.myProcessCalcButton,
-.mySaveButton,
-.myConfirmButton,
-.myButton,
-#btnProcess,
-#btnPayrollprocessPrint,
-#btnSavePayRoll,
-#btnConfirmed,
-#btnView,
-#btnPayrollPrint,
-#btnPayrollEmail,
-#clear,
-#clearPrint {
-    background: #4FA8FF !important;
-    color: #fff !important;
-    border: none !important;
-    height: 28px !important;
-    padding: 4px 10px !important;
-    min-width: 60px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 13px;
-    transition: 0.2s ease-in-out;
-}
-
-.myButtons:hover,
-.myButton:hover {
-    background: #2F7FD4 !important;
-}
-
-/* ===============================
-   SEARCH FORM
-=============================== */
-#search td,
-#search label {
-    font-weight: 700;
-    white-space: nowrap;
-    color: #1A2734;
-}
-
-#search input[type="text"] {
-    height: 28px;
-    padding: 4px 8px;
-    font-size: 13px;
-}
-
-#search td {
-    padding: 6px 8px;
-}
-
-#search table {
+.receipt-header table {
     width: 100%;
     table-layout: fixed;
 }
 
-/* ===============================
-   DATE PICKER HEIGHT FIX
-=============================== */
-.jqx-datetimeinput,
-.jqx-input,
-.jqx-datetimeinput input,
-#masterdate,
-#startDate,
-#terminationDate,
-#payrollDate,
-#notifyDate,
-#joiningDate,
-#appraisalDate {
-    height: 32px !important;
-    min-height: 32px !important;
-    font-size: 14px !important;
+.receipt-header td {
+    padding: 2px 4px;
+    vertical-align: middle;
 }
 
-/* ===============================
-   DROPDOWN OPTIONS
-=============================== */
-select option {
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 1.6;
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+.section-block h2 {
+    font-size: 17.6px;
+    font-weight: 700;
+    margin: 0 0 15px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #333;
+    line-height: 1.2;
+}
+
+.agmt-info-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
+    align-items: center;
+    gap: 12px 15px;
+}
+
+.jqx-datetimeinput {
+    height: 30px !important;
+    box-sizing: border-box;
+    width: 130px !important;
+}
+
+#docno, .header-docno {
+    width: 150px !important;
+}
+
+input[readonly] {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.spacer {
+    flex-grow: 1;
+}
 </style>
-
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent hidden-scrollbar" data-type="background" >
 <form id="frmLeaveRequest" action="saveLeaveRequests" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class=' receipt-header'>
-<div class="table-section" style="background-color: #f6f8fa; width: 100%;">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="8%" align="right">Date</td>
-    <td width="15%"><div id="leaveRequestDate" name="leaveRequestDate" value='<s:property value="leaveRequestDate"/>'></div>
-    <input type="hidden" id="hidleaveRequestDate" name="hidleaveRequestDate" value='<s:property value="hidleaveRequestDate"/>'/></td>
-    <td colspan="4">&nbsp;</td>
-    <td width="12%" align="right">Doc No.</td>
-    <td width="22%"><input type="text" id="docno" name="txtleaverequestdocno" style="width:49%;" value='<s:property value="txtleaverequestdocno"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Designation</td>
-    <td><select id="cmbempdesignation" name="cmbempdesignation" style="width:95%;" value='<s:property value="cmbempdesignation"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempdesignation" name="hidcmbempdesignation" value='<s:property value="hidcmbempdesignation"/>'/></td>
-    <td width="10%" align="right">Department</td>
-    <td colspan="3"><select id="cmbempdepartment" name="cmbempdepartment" style="width:60%;" value='<s:property value="cmbempdepartment"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/></td>
-    <td align="right">Payroll Category</td>
-    <td><select id="cmbpayrollcategory" name="cmbpayrollcategory" style="width:50%;" value='<s:property value="cmbpayrollcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbpayrollcategory" name="hidcmbpayrollcategory" value='<s:property value="hidcmbpayrollcategory"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Employee</td>
-    <td><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployee(event);"/></td>
-    <td colspan="6"><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:82%;" value='<s:property value="txtemployeename"/>' tabindex="-1"/>
-    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">From</td>
-    <td><div id="fromDate" name="fromDate" onchange="funNoofDaysLeave();" value='<s:property value="fromDate"/>'></div>
-    <input type="hidden" id="hidfromDate" name="hidfromDate" value='<s:property value="hidfromDate"/>'/></td>
-    <td align="right">To</td>
-    <td width="16%"><div id="toDate" name="toDate" onchange="funNoofDaysLeave();" value='<s:property value="toDate"/>'></div>
-    <input type="hidden" id="hidtoDate" name="hidtoDate" value='<s:property value="hidtoDate"/>'/></td>
-            <td width="8%" align="center"><input type="checkbox" id="chckhalfday" name="chckhalfday" value="" onchange="halfdaycheck();funNoofDaysLeave();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Half Day
-	    <input type="hidden" id="hidchckhalfday" name="hidchckhalfday" value='<s:property value="hidchckhalfday"/>'/></td>
-    <td width="9%"><div id="halfDayDate" name="halfDayDate" onchange="funHalfDayCheck();" value='<s:property value="halfDayDate"/>'></div>
-    <input type="hidden" id="hidhalfDayDate" name="hidhalfDayDate" value='<s:property value="hidhalfDayDate"/>'/></td>
-    <td align="right">No. of Days</td>
-    <td><input type="text" id="txtnoofdays" name="txtnoofdays" placeholder="No. of Days" style="width:49%;" value='<s:property value="txtnoofdays"/>' tabindex="-1"/></td>
-  </tr>
-  <tr>
-    <td align="right">Leave Type</td>
-    <td><select id="cmbleavetype" name="cmbleavetype" style="width:80%;" value='<s:property value="cmbleavetype"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbleavetype" name="hidcmbleavetype" value='<s:property value="hidcmbleavetype"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="4"><input type="text" id="txtdescription" name="txtdescription" placeholder="Description" style="width:79%;" value='<s:property value="txtdescription"/>'/></td>
-  </tr>
-</table>
-</div><br/>
+<div id="mainBG">
+   
 
+    <div class="receipt-header">
+        <table width="100%">
+            <tr>
+                <td width="80px" align="right"><label>Date</label></td>
+                <td width="150px">
+                    <div id="leaveRequestDate" name="leaveRequestDate" value='<s:property value="leaveRequestDate"/>'></div>
+                    <input type="hidden" id="hidleaveRequestDate" name="hidleaveRequestDate" value='<s:property value="hidleaveRequestDate"/>'/>
+                </td>
+                <td></td>
+                <td width="100px" align="right"><label>Doc No.</label></td>
+                <td width="150px" align="right">
+                    <input type="text" id="docno" name="txtleaverequestdocno" class="header-docno" value='<s:property value="txtleaverequestdocno"/>' readonly tabindex="-1">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+    <div class="section-block">
+        <h2>Employee Information</h2>
+        <div class="agmt-info-grid">
+            <label>Designation</label>
+            <select id="cmbempdesignation" name="cmbempdesignation" value='<s:property value="cmbempdesignation"/>'>
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbempdesignation" name="hidcmbempdesignation" value='<s:property value="hidcmbempdesignation"/>'/>
 
+            <label>Department</label>
+            <select id="cmbempdepartment" name="cmbempdepartment" value='<s:property value="cmbempdepartment"/>'>
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/>
+
+            <label>Payroll Cat.</label>
+            <select id="cmbpayrollcategory" name="cmbpayrollcategory" value='<s:property value="cmbpayrollcategory"/>'>
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbpayrollcategory" name="hidcmbpayrollcategory" value='<s:property value="hidcmbpayrollcategory"/>'/>
+
+            <label>Employee ID</label>
+            <input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="F3 to Search" value='<s:property value="txtemployeeid"/>' onkeydown="getEmployee(event);">
+
+            <label>Name</label>
+            <div style="grid-column: span 3;">
+                <input type="text" id="txtemployeename" name="txtemployeename" readonly tabindex="-1" value='<s:property value="txtemployeename"/>'>
+                <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-block">
+        <h2>Leave Details</h2>
+        <div class="agmt-info-grid">
+            <label>From Date</label>
+            <div id="fromDate" name="fromDate" onchange="funNoofDaysLeave();" value='<s:property value="fromDate"/>'></div>
+            <input type="hidden" id="hidfromDate" name="hidfromDate" value='<s:property value="hidfromDate"/>'/>
+
+            <label>To Date</label>
+            <div id="toDate" name="toDate" onchange="funNoofDaysLeave();" value='<s:property value="toDate"/>'></div>
+            <input type="hidden" id="hidtoDate" name="hidtoDate" value='<s:property value="hidtoDate"/>'/>
+
+            <label>No. of Days</label>
+            <input type="text" id="txtnoofdays" name="txtnoofdays" readonly tabindex="-1" value='<s:property value="txtnoofdays"/>'>
+
+            <label>Half Day</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="chckhalfday" name="chckhalfday" onchange="halfdaycheck();funNoofDaysLeave();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                <div id="halfDayDate" name="halfDayDate" style="width:150px;" value='<s:property value="halfDayDate"/>'></div>
+                <input type="hidden" id="hidhalfDayDate" name="hidhalfDayDate" value='<s:property value="hidhalfDayDate"/>'/>
+                <input type="hidden" id="hidchckhalfday" name="hidchckhalfday" value='<s:property value="hidchckhalfday"/>'/>
+            </div>
+
+            <label>Leave Type</label>
+            <select id="cmbleavetype" name="cmbleavetype" value='<s:property value="cmbleavetype"/>'>
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbleavetype" name="hidcmbleavetype" value='<s:property value="hidcmbleavetype"/>'/>
+
+            <label>Description</label>
+            <div style="grid-column: span 3;">
+                <input type="text" id="txtdescription" name="txtdescription" placeholder="Description" value='<s:property value="txtdescription"/>'>
+            </div>
+        </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
 </div>
 </form>
 <div id="employeeDetailsWindow">

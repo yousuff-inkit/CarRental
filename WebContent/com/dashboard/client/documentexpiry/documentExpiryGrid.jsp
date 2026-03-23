@@ -95,8 +95,8 @@
             
             $("#documentExpiry").jqxGrid(
             {
-                width: '98%',
-                height: 400,
+                width: '100%',
+                height: 600,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

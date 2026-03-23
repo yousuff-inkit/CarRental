@@ -422,7 +422,7 @@ body {
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 15px;
+    font-size: 17.6px;
     font-weight: 600;
 }
 
@@ -443,7 +443,7 @@ body {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 13px;
+    font-size: 16px;
     vertical-align: middle;
     white-space: nowrap;
     font-weight: 500;
@@ -498,18 +498,9 @@ select {
       autocomplete="off">
 
     <jsp:include page="../../../../header.jsp"></jsp:include>
-
-    <!-- ===============================
-         SCROLLABLE CONTENT
-    ================================ -->
-    <div class="hidden-scrollbar">
-
-        <!-- ===============================
-             HEADER DETAILS
-        ================================ -->
-        <div class="table-section">
-            <h3>Deduction Schedule</h3>
-
+    
+      <div class="table-section">
+         
             <table class="cr-table">
                 <tr>
                     <td align="right">Date</td>
@@ -543,7 +534,17 @@ select {
                 </tr>
             </table>
         </div>
+    
 
+    <!-- ===============================
+         SCROLLABLE CONTENT
+    ================================ -->
+    <div class="hidden-scrollbar">
+
+        <!-- ===============================
+             HEADER DETAILS
+        ================================ -->
+      
         <!-- ===============================
              EMPLOYEE DETAILS
         ================================ -->

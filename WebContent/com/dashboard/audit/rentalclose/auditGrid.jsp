@@ -51,8 +51,8 @@
             );
             $("#racloseaudit").jqxGrid(
             {
-                width: '98%',
-                height: 476,
+                width: '100%',
+                height: 750,
                 source: dataAdapter,
                 filtermode:'excel',
                 filterable: true,

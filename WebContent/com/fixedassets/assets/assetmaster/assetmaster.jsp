@@ -6,9 +6,7 @@
 	<title>GatewayERP(i)</title>
 	 <jsp:include page="../../../../includes.jsp"></jsp:include> 
 	 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
+
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -30,9 +28,7 @@
         text-align: left !important;
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
+    
     center {
         text-align: left !important;
         display: block;
@@ -56,9 +52,6 @@
         padding: 0 0 0 5px;
     }
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
     .form-group {
         display: grid;
         grid-template-columns: 120px 1fr;
@@ -119,9 +112,7 @@
     }
 
 
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
+
     input[type="text"], input[type="email"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -169,11 +160,9 @@
         margin: 0;
     }
 
-    /* ------------------------------
-       TABLES & UTILS
-    ------------------------------ */
+   
 
-    /* SCROLLBAR FIX */
+ 
     .hidden-scrollbar { 
         overflow: auto; 
         height: 530px; 
@@ -181,7 +170,18 @@
     }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 
+
+#docno {
+    width: 150px;
+}
+
+.form-group.dual-input > * {
+    display: inline-block !important;
+    vertical-align: middle;
+}
 </style>
+
+
 </head>
 
 <script type="text/javascript">
@@ -1322,7 +1322,7 @@ function fundisgrid()
 </script>
 
 <body onload="setValues();getAssetgp();getloc();">
-<div id="mainBG" class="homeContent" data-type="background"> 
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmassetmastrer" action="saveAssetmaster" autocomplete="OFF" >
 
 
@@ -1330,10 +1330,7 @@ function fundisgrid()
 
 <div class="hidden-scrollbar receipt-header">
 
-    <div class="section-block full-width-block">
-        <h3 class="fieldset-legend-replacement">Asset Master</h3>
-
-        <div class="form-group dual-input">
+  <div class="form-group dual-input" >
             <label>Date</label>
             <div>
                 <div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
@@ -1343,7 +1340,13 @@ function fundisgrid()
             
                <label>Doc No</label>
             <input type="text" id="docno" name="docno" value='<s:property value="docno"/>'/>
+            
         </div>
+
+    <div class="section-block full-width-block">
+        <h3 class="fieldset-legend-replacement">Asset Master</h3>
+
+      
         
         <div class="form-group dual-input">
             <label>Asset Id</label>
@@ -1417,7 +1420,7 @@ function fundisgrid()
             <div class="form-group dual-input">
                 <label>WNTY Exp Date</label>
                 <div>
-                    <div id='warexpdate' name='warexpdate' value='<s:property value="warexpdate"/>'></div> 
+                    <div id='warexpdate' name='warexpdate' value='<s:property value="warexpdate"/>'></div>
                 </div>
                 <input type="hidden" id="hidwarexpdate" name="hidwarexpdate" value='<s:property value="hidwarexpdate"/>'/>
                 
@@ -1453,7 +1456,7 @@ function fundisgrid()
             <div class="form-group">
                 <div style="grid-column: 1 / span 2; display: flex; align-items: center; justify-content: flex-start; padding-left: 10px;">
                     <label class="checkbox-label" for="opening" style="min-width: 0; padding-right: 15px;">
-                        Opening 
+                        Opening
                         <input type="checkbox" id="opening" name="opening" onchange="funopening()">
                     </label>
                     <input type="hidden" id="openingval" name="openingval" value='<s:property value="openingval"/>'/>
@@ -1489,7 +1492,7 @@ function fundisgrid()
                 <input type="text" id="fixedassetaccId" placeholder="Press F3 To Search" name="fixedassetaccId" value='<s:property value="fixedassetaccId"/>' onkeydown="getaccountdetails1(1)"/>
                 <input name="fixedassetaccName" type="text" id="fixedassetaccName" value='<s:property value="fixedassetaccName"/>' readonly/>
                 <input name="fixaccDocno" type="hidden" id="fixaccDocno" value='<s:property value="fixaccDocno"/>'/>
-                <input name="fixaccCurrid" type="hidden" id="fixaccCurrid" value='<s:property value="fixaccCurrid"/>'/> 
+                <input name="fixaccCurrid" type="hidden" id="fixaccCurrid" value='<s:property value="fixaccCurrid"/>'/>
                 <input name="fixaccRate" type="hidden" id="fixaccRate" value='<s:property value="fixaccRate"/>'/>
                 <input name="fixaccType" type="hidden" id="fixaccType" value='<s:property value="fixaccType"/>'/>
             </div>

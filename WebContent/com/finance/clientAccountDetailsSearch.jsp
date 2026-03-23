@@ -53,16 +53,17 @@
     <td width="14%"><input type="text" name="txtcurrencies" id="txtcurrencies" style="width:83%;" value='<s:property value="txtcurrencies"/>'>
     <input type="hidden" name="txtatypes" id="txtatypes" value='<s:property value="txtatypes"/>'>
     <input type="hidden" name="txtdocumenttypes" id="txtdocumenttypes" value='<s:property value="txtdocumenttypes"/>'></td>
+     <td align="center" rowspan="2"><input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search"  onclick="loadClientAccountSearch();"></td>
+    
+  </tr>
+  <tr>
+    <td align="right">Account Name</td>
+    <td ><input type="text" name="accountsname" id="accountsname" style="width:85%;" value='<s:property value="accountsname"/>'></td>
     <td width="8%" align="right">Mobile</td>
     <td width="25%"><input type="text" name="clientmobileno" id="clientmobileno" style="width:85%;" value='<s:property value="clientmobileno"/>'>
     <input type="hidden" name="txtcreditdebit" id="txtcreditdebit" value='<s:property value="txtcreditdebit"/>'>
     <input type="hidden" name="txtnewdate" id="txtnewdate" value='<s:property value="txtnewdate"/>'>
    <input type="hidden" id="hidapprvlcheck"/></td>
-  </tr>
-  <tr>
-    <td align="right">Account Name</td>
-    <td colspan="4"><input type="text" name="accountsname" id="accountsname" style="width:85%;" value='<s:property value="accountsname"/>'></td>
-    <td align="center"><input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search"  onclick="loadClientAccountSearch();"></td>
   </tr>
   <tr>
     <td colspan="6"><div id="refreshClientAccountDiv"><jsp:include page="clientAccountDetailsSearchGrid.jsp"></jsp:include></div></td>

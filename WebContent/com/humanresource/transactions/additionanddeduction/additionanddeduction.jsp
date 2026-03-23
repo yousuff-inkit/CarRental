@@ -119,7 +119,7 @@ body {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 16px;
     padding-left: 10px;
@@ -173,7 +173,7 @@ body {
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 15px;
+    font-size: 17.6px;
     font-weight: 600;
 }
 
@@ -194,7 +194,7 @@ body {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 13px;
+    font-size: 16px;
     vertical-align: middle;
     white-space: nowrap;
 }
@@ -605,19 +605,7 @@ x.send();
          SCROLLABLE CONTENT AREA
     ================================ -->
     <div class="hidden-scrollbar">
-
-        <!-- ===============================
-             RECEIPT HEADER (TOP STRIP)
-        ================================ -->
-        <div class="receipt-header">
-            <!-- (Keep empty or status items here if needed later) -->
-        </div>
-
-        <!-- ===============================
-             ADD / DEDUCT DETAILS
-        ================================ -->
-        <div class="table-section">
-            <h3>Add / Deduct Details</h3>
+    
 
             <table class="cr-table">
                 <tr>
@@ -646,7 +634,20 @@ x.send();
                     </td>
                 </tr>
             </table>
+       
+
+        <!-- ===============================
+             RECEIPT HEADER (TOP STRIP)
+        ================================ -->
+        <div class="receipt-header">
+            <!-- (Keep empty or status items here if needed later) -->
         </div>
+
+        <!-- ===============================
+             ADD / DEDUCT DETAILS
+        ================================ -->
+        <div class="table-section">
+
 
         <!-- ===============================
              EFFECT IN

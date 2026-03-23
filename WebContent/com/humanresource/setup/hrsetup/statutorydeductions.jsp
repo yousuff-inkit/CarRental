@@ -45,7 +45,7 @@ body {
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 15px;
+    font-size: 17.4px;
     font-weight: 600;
 }
 
@@ -61,7 +61,7 @@ body {
 }
 .cr-table td {
     padding: 6px 8px;
-    font-size: 13px;
+    font-size: 16px;
     vertical-align: middle;
 }
 .cr-table td[align="right"] {

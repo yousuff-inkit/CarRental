@@ -57,7 +57,7 @@ var litexcel;
             $("#undergrid").jqxGrid(
             { 
             	width: '100%',
-                height: 425,
+                height: 650,
                 source: dataAdapter,
                 showaggregates:true,
 		        columnsresize: true,

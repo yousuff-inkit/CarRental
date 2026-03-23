@@ -81,8 +81,8 @@ String chkdatails = request.getParameter("chkdatails")==null?"":request.getParam
             
             $("#jqxtrafficGrid").jqxGrid(
             {
-                width: '98%',
-                height: 530,
+                width: '100%',
+                height: 690,
                 source: dataAdapter,
                 
                 showaggregates:true,

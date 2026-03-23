@@ -157,7 +157,18 @@
     /* SCROLLBAR FIX */
     .hidden-scrollbar { overflow: auto; height: 530px; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+    
+    
+.jqx-datetimeinput, 
+.jqx-datetimeinput input, {
+    width: 130px !important;
+}
 
+
+#docno, 
+.header-docno {
+    width: 130px !important;
+}
 </style><script type="text/javascript">
 	$(document).ready(function () {     
 		var data= '<%=ccd.searchDetails()%>';
@@ -344,8 +355,8 @@
 <jsp:include page="../../../../header.jsp" /><br/>
 <div class="hidden-scrollbar receipt-header">
 
-    <div class="section-block full-width-block">
-        <h3>Check In Details</h3>
+
+
 
         <div class="form-group dual-input">
             <label>Date</label>
@@ -356,6 +367,9 @@
             <label>Doc No.</label>
             <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
         </div>
+
+    <div class="section-block full-width-block">
+        <h3>Check In Details</h3>
 
         <div class="form-group dual-input">
             <label>Code</label>

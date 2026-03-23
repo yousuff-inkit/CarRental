@@ -30,52 +30,92 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table >
-   <tr>
-    <td align="right" width="14%">DOC NO</td> 
-    <td align="left" ><input type="text" name="documentno" id="documentno"  style="" value='<s:property value="documentno"/>'></td>
-    <td align="right" width="14%">FLEET NO</td>
-    <td align="left"><input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>'></td>
-    <td align="right" width="14%">REG NO</td>
-    <td align="left"><input type="text" name="regno" id="regno" value='<s:property value="regno"/>'></td>   
-  
-    <tr>
-    </table>
-    </td>
-  </tr>
-  <tr>
-   <td>
-  <table >
-  <tr>
- <!--   <td align="right" width="6%">Test</td>
-    <td align="left" ><input type="text" name="color"  style="width:90%;" id="color" value='<s:property value="color"/>'>
-    <td align="right" width="14%">Group</td>
-    <td align="left"><input type="text" name="group" id="group" value='<s:property value="group"/>'></td>
-    <td align="right"  width="14%">&nbsp;</td> -->
-     <td align="right"  width="22%">NAME</td>
-    <td align="left"  width="0%"><input type="text" name="name" style="" id="name" value='<s:property value="name"/>'></td>
-    
-    <td align="left"  width="30%"><input type="button" style="margin-left:32px" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onclick="loadSearchs();"></td>
-  </tr>
-  </table>
-  </td>
+<style type="text/css">
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+}
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdivs">
-      
- <jsp:include  page="masterSearchGrid.jsp"></jsp:include>
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
+td[align="right"] {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+}
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;                
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+tr {
+  line-height: 1.6;
+}
+
+#btnsearch {
+  font-weight: 700;
+  font-size: 13px;
+  width: 130px;
+  height: 38px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#btnsearch:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+</style>
+
+<body>
+<div id="search">
+  <table width="100%">
+    <tr>
+      <td width="10%" align="right">DOC NO</td>
+      <td width="23%">
+        <input type="text" name="documentno" id="documentno" value='<s:property value="documentno"/>'>
+      </td>
+      <td width="10%" align="right">FLEET NO</td>
+      <td width="23%">
+        <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>'>
+      </td>
+      <td width="10%" align="right">REG NO</td>
+      <td width="24%">
+        <input type="text" name="regno" id="regno" value='<s:property value="regno"/>'>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">NAME</td>
+      <td>
+        <input type="text" name="name" id="name" value='<s:property value="name"/>'>
+      </td>
+      <td colspan="3"></td>
+      <td align="left">
+        <input type="button" name="btnsearch" id="btnsearch" value="Search" onclick="loadSearchs(); return false;">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <div id="refreshdivs">
+          <jsp:include page="masterSearchGrid.jsp"></jsp:include>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

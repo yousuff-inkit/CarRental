@@ -389,6 +389,7 @@ fieldset legend {
     color: #000000 !important;
     opacity: 1 !important;
 }
+/* ===== RECEIPT HEADER (same as Cash Receipt) ===== */
 
 /* OPTIONAL: fix all readonly fields */
 input[readonly] {
@@ -396,6 +397,80 @@ input[readonly] {
     color: #000000 !important;
     opacity: 1 !important;
 }
+
+.receipt-header label {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.receipt-header input {
+    width: 120px;
+}
+
+.receipt-header .docno {
+    margin-left: auto;
+}
+/* ===== SECTION STYLE SAME AS CASH RECEIPT ===== */
+
+fieldset {
+    background: #f6f8fa;
+    border-radius: 12px;
+    border: none;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+legend {
+    font-size: 17.6px;
+    font-weight: 600;
+    color: #253858;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+/* ===== INPUT STYLE ===== */
+
+input[type="text"], select {
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    padding: 6px 10px;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+  
+
 
 </style>
 <script type="text/javascript">

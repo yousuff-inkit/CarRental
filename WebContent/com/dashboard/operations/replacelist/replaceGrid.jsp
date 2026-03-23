@@ -98,8 +98,8 @@ $(document).ready(function () {
     
     $("#replaceGrid").jqxGrid(
     {
-        width: '98%',
-        height: 535,
+        width: '100%',
+        height: 730,
         columnsheight:23,
         source: dataAdapter,
         filtermode:'excel',

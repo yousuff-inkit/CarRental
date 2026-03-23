@@ -83,8 +83,8 @@ else{
     
     $("#vehProfitGrid").jqxGrid(
     {
-        width: '98%',
-        height: 520,
+        width: '100%',
+        height: 650,
         source: dataAdapter,
         showaggregates:true,
         filtermode:'excel',

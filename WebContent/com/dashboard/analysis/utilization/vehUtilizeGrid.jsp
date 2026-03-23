@@ -129,8 +129,8 @@ $(document).ready(function () {
     
     $("#vehUtilizeGrid").jqxGrid(
     {
-        width: '98%',
-        height: 513,
+        width: '100%',
+        height: 650,
         source: dataAdapter,
         showaggregates:true,
         showstatusbar:true,

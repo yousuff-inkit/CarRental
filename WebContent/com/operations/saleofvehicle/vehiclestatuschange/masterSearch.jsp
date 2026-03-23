@@ -28,73 +28,96 @@
 
 	</script>
 	<style type="text/css">
-
-table {
+/* Master UI Table Container */
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 18px; 
+  border-spacing: 15px 18px; /* Standard master gap */
+  width: 100%;
 }
 
-
+/* Label Styling */
 td[align="right"] {
-  font-weight: 700;
+  font-family: Tahoma, Arial, sans-serif;
   font-size: 14px;
+  font-weight: 700;
   color: #222;
 }
 
-
+/* Input & Select Field Styling */
 input[type="text"], select {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
   font-size: 14px;
   padding: 8px 12px;
-  /* Applying full width and box-sizing for general inputs */
-  width: 95%; 
+  width: 95%;
   max-width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box; /* Include padding in width */
 }
 
-/* Specific styling for the Fleet Name input to ensure it respects the 98% width while having bold text */
+/* Specific styling for Fleet Name to ensure 98% width */
 #msearchflname {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 98%; /* Original width retained */
-  box-sizing: border-box; 
+  width: 98% !important;
 }
 
-
-
+/* Date Picker Container */
 #msearchdate {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 600;
   font-size: 14px;
 }
 
-/* Bold button text */
+/* Master Button Appearance */
 .myButton {
+  font-family: Tahoma, Arial, sans-serif;
   font-weight: 700;
   font-size: 14px;
+  background-color: #007bff; /* Master Blue */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  min-width: 90px;
 }
 
-/* Additional spacing for rows */
+/* Master Green Hover Effect */
+.myButton:hover {
+  background-color: #45a049;
+}
+
+/* Row Spacing */
 tr {
   line-height: 1.8;
 }
 </style>
 
 <body bgcolor="#E0ECF8">
-    <div id=search>
-        <table width="100%" border="0">
+    <div id="search">
+        <table border="0">
             <tr>
                 <td width="12%" align="right">Doc No</td>
-                <td width="14%" align="left"><input type="text" name="msearchdocno" id="msearchdocno"></td>
+                <td width="14%" align="left">
+                    <input type="text" name="msearchdocno" id="msearchdocno">
+                </td>
                 <td width="7%" align="right">Date</td>
-                <td width="13%" align="left"><div id="msearchdate" name="msearchdate"></div></td>
+                <td width="13%" align="left">
+                    <div id="msearchdate" name="msearchdate"></div>
+                </td>
                 <td width="13%" align="right">Fleet No</td>
-                <td width="15%" align="left"><input type="text" name="msearchfleetno" id="msearchfleetno"></td>
+                <td width="15%" align="left">
+                    <input type="text" name="msearchfleetno" id="msearchfleetno">
+                </td>
             </tr>
             <tr>
                 <td align="right">Fleet Name</td>
-                <td align="left" colspan="4"><input type="text" name="msearchflname" id="msearchflname" style="width:98%;"></td>
-                <td align="center"><input type="button" name="btnmastersearch" id="btnmastersearch" class="myButton" value="Search" onClick="mainloadSearch();"></td>
+                <td align="left" colspan="4">
+                    <input type="text" name="msearchflname" id="msearchflname">
+                </td>
+                <td align="center">
+                    <input type="button" name="btnmastersearch" id="btnmastersearch" class="myButton" value="Search" onClick="mainloadSearch();">
+                </td>
             </tr>
             <tr>
                 <td colspan="6">

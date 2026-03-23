@@ -9,8 +9,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-<style>
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -19,7 +18,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -42,7 +40,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,7 +48,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -66,7 +62,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -75,7 +70,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -93,7 +87,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -105,10 +98,24 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
+
 </style>
 
 
-</style>
 <script type="text/javascript">
 
 	$(document).ready(function () {

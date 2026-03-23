@@ -441,9 +441,7 @@
 
 </script>
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -464,9 +462,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -491,13 +487,9 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
+
 
 .receipt-header {
-    background: #f6f8fa;
-    border-radius: 12px;
     padding: 24px;
     margin-bottom: 20px;
     box-shadow: 0 1px 8px rgba(160,177,217,0.1);
@@ -507,11 +499,12 @@ label {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    background: #f6f8fa !important;
+    border-radius: 12px;
+    padding:20px;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT
------------------------------- */
+
 
 .form-group {
     display: grid;
@@ -532,7 +525,6 @@ label {
     width: 100%;
 }
 
-/* Dual input rows (Currency/Rate, Amount/Base Amount) */
 .form-group.dual-input {
     grid-template-columns: 120px 1fr 120px 1fr;
 }
@@ -542,7 +534,6 @@ label {
     padding-right: 8px;
 }
 
-/* Date/Ref/Doc row - 3 pairs */
 .form-group.date-ref-doc-row {
     grid-template-columns: 80px 200px 80px 1fr 80px 200px;
     align-items: center;
@@ -575,7 +566,6 @@ label {
     flex-shrink: 0;
 }
 
-/* Type/AccID/AccName row */
 .form-group.type-acc-row {
     grid-template-columns: 120px 120px 120px 200px 1fr;
     align-items: center;
@@ -587,7 +577,6 @@ label {
     padding-right: 8px;
 }
 
-/* Full width description row */
 .form-row.full-row {
     display: grid;
     grid-template-columns: 120px 1fr;
@@ -603,9 +592,7 @@ label {
     color: #253858;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+
 
 .table-section {
     margin: 20px 0;
@@ -644,9 +631,7 @@ label {
     border-bottom: none;
 }
 
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
+
 
 .hidden-scrollbar {
     overflow: auto;
@@ -656,10 +641,34 @@ label {
     width: 10px;
 }
 
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
+body::-webkit-scrollbar {
+    width: 0px;
+}
 
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
 #validrate,
 #validrate1 {
     color: red;
@@ -667,9 +676,6 @@ label {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
 
 #approval-table td {
     font-size: 14px;
@@ -679,6 +685,16 @@ label {
 #approval-table tr:nth-child(even) {
     background: #f9fafb;
 }
+
+.section-block h2 {
+    font-size: 1.1rem !important;;          
+    color: #253858;             
+    padding-left: 12px;         
+    margin: 0 0 15px 0;         
+    border-left: 4px solid #007bff; 
+    line-height: 1.2;          
+    font-weight: 600;
+}
 </style>
 </head>
 <body onload="setValues();">
@@ -687,37 +703,43 @@ label {
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
 <div  class='receipt-header'>
-
-    <div class="section_row">
-
-        <!-- Row 1: Date / Ref. No. / Doc No -->
-        <div class="form-group date-ref-doc-row" style="margin-left:40px">
-            <label for="jqxDebitNoteDate">Date</label>
-            <div class="date-wrapper">
+    <table width="100%" style="margin-top:-20px;">
+	<tr>
+        <td width="3%" height="42" align="right">Date</td>
+          <td width="11%">
                 <div id="jqxDebitNoteDate" name="jqxDebitNoteDate"
                      onchange="datechange();"
                      onblur="datechange();"
                      value='<s:property value="jqxDebitNoteDate"/>'></div>
                 <input type="hidden" id="hidjqxDebitNoteDate" name="hidjqxDebitNoteDate"
                        value='<s:property value="hidjqxDebitNoteDate"/>' />
-            </div>
-
-            <label for="txtrefno">Ref. No.</label>
-            <div class="ref-wrapper">
+            </td>
+		<td width="21%" align="left">&nbsp;</td>
+            <td width="9%" align="right">Ref. No.</td>
+            <td width="29%">
                 <input type="text" id="txtrefno" name="txtrefno"
                        value='<s:property value="txtrefno"/>' />
                 <button class="myButton" type="button" id="btnvaluechange"
                         name="btnvaluechange" onclick="funwarningopen();">
                     Value Change
                 </button>
-            </div>
+            </td>
 
-            <label for="docno">Doc No.</label>
+            <td width="6%" align="right">Doc No.</td>
+            <td width="21%">
             <input type="text" id="docno" name="txtdebitnotedocno"
                    value='<s:property value="txtdebitnotedocno"/>' tabindex="-1" />
-        </div>
+        </td>
+        </tr>
+  <tr>
+    <td colspan="6"></td>
+    <td><span id="txtStatus"></span></td>
+  </tr>
+</table>
 
-        <!-- Row 2: Type / Acc ID / Acc Name -->
+
+    <div class="section_row"> <div class="section-block">
+        <h2>Details</h2>
         <div class="form-group type-acc-row">
             <label for="cmbtype">Type</label>
             <select id="cmbtype" name="cmbtype"
@@ -786,6 +808,7 @@ label {
                    value='<s:property value="txtdescription"/>' />
         </div>
 
+    </div>
     </div>
 </div>
 

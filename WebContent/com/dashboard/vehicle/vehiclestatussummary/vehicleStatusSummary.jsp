@@ -55,152 +55,178 @@ function funExportBtn(){
 </script>
 </head>
 <style type="text/css">
-    /* Layout & Sidebar Structure */
-    .master-container {
-        display: flex;
-        font-family: 'Segoe UI', Tahoma, sans-serif !important;
-        background-color: #f4f7f9;
-        width: 100%;
-        height: 100vh !important;
-        overflow: hidden !important;
-        color: black !important;
-    }
+   
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
 
-    .sidebar-filters {
-        width: 330px; 
-        flex: 0 0 330px;
-        background-color: #ffffff;
-        border-right: 1px solid #e1e8ed;
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-        height: 100vh !important;
-    }
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
 
-    .sidebar-fixed-top {
-        padding: 20px 20px 15px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f4f8;
-        flex-shrink: 0;
-    }
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
 
-    .sidebar-scroll-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px 20px 25px 20px;
-    }
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
 
-    /* Cleaned Card Styling */
-    .filter-card {
-        background-color: #f8fafc !important;
-        border: 1px solid #e3e8ee !important;
-        border-radius: 12px !important;
-        padding: 15px;
-        margin-bottom: 10px;
-    }
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
 
-    /* Reset legacy styles and force black text */
-    .filter-card *, fieldset, legend, .branch, td, tr, label, span {
-        background-color: transparent !important;
-        background: none !important;
-        color: black !important;
-    }
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
 
-    .filter-table { 
-        width: 100%; 
-        border-spacing: 0 10px; 
-    }
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
 
-    .label-cell {
-        text-align: right;
-        padding-right: 12px;
-        font-size: 13px;
-        font-weight: 600;
-        width: 85px;
-    }
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
 
-    /* RHS Grid Area & Scroll Fix */
-    .main-content-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100%;
-        max-width: calc(100vw - 330px);
-        overflow: hidden !important; 
-        position: relative;
-        background-color: #ffffff;
-    }
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto !important;
-        overflow-x: hidden !important; 
-        padding: 20px;
-    }
+.btn-submit:hover {
+    background: #1d4ed8;
+}
 
-    /* Loading Overlay */
-    #imgdiv {
-        position: absolute;
-        z-index: 100;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
 
-    .branch { font-size: 13px; font-weight: 600; }
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
 </style>
 <body onload="getBranch();setValues();">
-	<form id="frmVehicleStatusSummary" action="saveVehicleStatusSummary" method="post">
-		<div id="mainBG" class="homeContent" data-type="background"> 
-			<div class='hidden-scrollbar'>
-				<div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
+<form id="frmVehicleStatusSummary" action="saveVehicleStatusSummary" method="post">
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From Date</td>
-                        <td><div id="fromdate"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To Date</td>
-                        <td><div id="todate"></div></td>
-                    </tr>
-                </table>
-            </div>
-            
-            <div style="height: 300px;"></div>
-        </div>
-    </div>
+<div id="mainBG" class="homeContent" data-type="background"> 
+<div class='hidden-scrollbar'>
 
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="imgdiv">
-                <img id="imgloading" alt="Loading..." src="../../../../icons/31load.gif"/>
+<table width="100%">
+<tr>
+
+
+<td width="20%" valign="top">
+
+    <div class="master-container">
+        <div class="sidebar-filters">
+
+            <div class="sidebar-fixed-top">
+                <div class="filter-card">
+                    <jsp:include page="../../heading.jsp"></jsp:include>
+                </div>
             </div>
 
-            <div id="summarydiv">
-                <jsp:include page="summaryGrid.jsp"></jsp:include>
+            <div class="sidebar-scroll-content">
+
+                <div class="filter-card">
+                    <table class="filter-table">
+
+                        <tr>
+                            <td class="label-cell">From Date</td>
+                            <td><div id="fromdate"></div></td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">To Date</td>
+                            <td><div id="todate"></div></td>
+                        </tr>
+
+                    </table>
+                </div>
+
             </div>
-            
-            <div id="detailsdiv" style="margin-top:20px;">
-                <jsp:include page="detailsGrid.jsp"></jsp:include>
-            </div>
-            
-            <input type="hidden" name="gridlength" id="gridlength" >
-            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
         </div>
     </div>
+
+</td>
+
+<td width="80%" valign="top">
+
+    <table width="100%">
+        <tr>
+            <td>
+
+              
+                <div id="imgdiv">
+                    <img id="imgloading" alt="Loading..." 
+                         src="../../../../icons/31load.gif"/>
+                </div>
+
+                <div id="summarydiv">
+                    <jsp:include page="summaryGrid.jsp"></jsp:include>
+                </div>
+
+                <div id="detailsdiv" style="margin-top:20px;">
+                    <jsp:include page="detailsGrid.jsp"></jsp:include>
+                </div>
+
+              
+                <input type="hidden" name="gridlength" id="gridlength">
+                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+                <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+
+            </td>
+        </tr>
+    </table>
+
+</td>
+
+</tr>
+</table>
+
 </div>
-			</div>
-		</div>
-	</form>
+</div>
+
+</form>
 </body>
 </html>

@@ -1,15 +1,12 @@
 <%@ page import="com.dashboard.vehicle.tobereleased.ClsToBeReleasedDAO" %>
 <% ClsToBeReleasedDAO ctrd=new ClsToBeReleasedDAO();%>
 
-
-
 <%--  <jsp:include page="../../../../includes.jsp"></jsp:include> --%> 
 <%System.out.println("Request"+request.getParameter("brchval")+"After"); %>
  <%String brchval=request.getParameter("brchval")==null||request.getParameter("brchval")==""?"0":request.getParameter("brchval"); %> 
 <script type="text/javascript">
       var datarelease;
         $(document).ready(function () {
-        //	alert("==="+document.getElementById("cmbbranch").value+"====");
         	<%System.out.println("BRCHVAL"+brchval);%>
 if(document.getElementById("cmbbranch").value!=""){
         	datarelease='<%=ctrd.getReleaseData(brchval)%>';
@@ -20,7 +17,6 @@ if(document.getElementById("cmbbranch").value!=""){
             {
                 datatype: "json",
                 datafields: [
-
 {name : 'gid' , type: 'string' },
 	{name : 'brand' , type:'string'},
 	{name : 'fleet_no' , type:'string'},
@@ -36,13 +32,10 @@ if(document.getElementById("cmbbranch").value!=""){
 	{name :'doc_no',type:'string'},
 	{name : 'purdate',type:'date'},
 	{name : 'ch_no',type:'string'}
-	
 	],
                 
                 localdata: datarelease,
-                //url: url,
                 pager: function (pagenum, pagesize, oldpagenum) {
-                    // callback called when a page or page size is changed.
                 }
             };
             var dataAdapter = new $.jqx.dataAdapter(source,
@@ -67,7 +60,6 @@ if(document.getElementById("cmbbranch").value!=""){
 				showfilterrow: true,
 				
                 editable:false,
-                //Add row method
                 columns: [
 { text: 'Group', datafield: 'gid', width: '12.5%'},
 { text: 'Brand',  datafield: 'brand',  width: '12.5%' },
@@ -95,21 +87,37 @@ if(document.getElementById("cmbbranch").value!=""){
             	var rowindex1=event.args.rowindex; 
             	$('input[type=text],[type=hidden]').val('');
          	   $('select').find('option').prop("selected", false);
-         	 // document.forms['frmVehicle'].reset();
          	 var url = window.location.href; 
          	
             	document.getElementById("dashreleasefleet").value=$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "fleet_no"); 
             	$('#dashcmbrlsbranch').val($("#toBeReleasedGrid").jqxGrid('getcellvalue', rowindex1, "branch")) ;
             	document.getElementById("dashreleasekm").value=$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "km");
-            	$('#dashreleasefuel').val($("#toBeReleasedGrid").jqxGrid('getcellvalue', rowindex1, "fuel")) ;
+            	
+            	// Sets fuel using the decimal from the database
+            	var rawFuel = $("#toBeReleasedGrid").jqxGrid('getcellvalue', rowindex1, "fuel");
+            	if(rawFuel != null) {
+            	    $('#dashreleasefuel').val(rawFuel.toString().trim());
+            	}
+            	
             	document.getElementById("dashaststatus").value=$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "aststatus");
             	document.getElementById("docno").value=$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "doc_no");
-            	var temp=$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "opstatus");
             	$('#dashreleasedate').jqxDateTimeInput('setDate',$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "purdate"));
-            	if((temp=='I')||(temp=='i'))
-            	document.getElementById("dashopstatus").value="INDUCTED";
-            	if((temp=='L')||(temp=='l'))
-            		document.getElementById("dashopstatus").value="LIVE";
+            	
+            	// OP STATUS FIX
+            	var temp=$('#toBeReleasedGrid').jqxGrid('getcellvalue', rowindex1, "opstatus");
+            	if(temp){
+            	    var tempUpper = temp.toUpperCase();
+                	if(tempUpper=='I') {
+                	    document.getElementById("dashopstatus").value="INDUCTED";
+                	} else if(tempUpper=='L') {
+                		document.getElementById("dashopstatus").value="LIVE";
+                	} else {
+                	    document.getElementById("dashopstatus").value=tempUpper;
+                	}
+            	} else {
+            	    document.getElementById("dashopstatus").value="IN";
+            	}
+            	
             	getLocation(document.getElementById("dashcmbrlsbranch").value);
             	
             	document.getElementById("dashbtnrelease").disabled=false;

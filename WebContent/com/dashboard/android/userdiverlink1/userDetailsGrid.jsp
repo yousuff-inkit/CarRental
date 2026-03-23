@@ -67,7 +67,7 @@ $(document).ready(function () {
     $("#userlist").jqxGrid(
     {
         width: '100%',
-        height: 730,
+        height: 700,
         source: dataAdapter,
         showaggregates:true,
         enableAnimations: true,
