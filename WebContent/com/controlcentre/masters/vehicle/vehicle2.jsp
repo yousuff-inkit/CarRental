@@ -12,61 +12,30 @@
 <jsp:include page="tab.css" />
 <jsp:include page="tab.jsp" />
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
 
-}
-  .sep {
-        border-bottom:1px solid black;
-    }
-    .alignright{
-    
-    text-align:
-    }
-    <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
     padding: 32px 0;
-    min-height: 100vh;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 16px;
     padding: 20px;
-    max-width: 100%; /* As requested */
+    max-width: 100%;
     margin: auto;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    text-align: left !important;
 }
 
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
 
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #333;
-    display: block;
-}
 
-input[type="text"], select, textarea {
+input[type="text"], select {
     height: 32px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -75,10 +44,10 @@ input[type="text"], select, textarea {
     transition: border-color 0.2s;
     font-size: 14px;
     box-sizing: border-box;
-    width: 100%;
 }
 
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus,
+select:focus {
     border-color: #007bff;
     outline: none;
 }
@@ -87,137 +56,345 @@ label {
     font-weight: 600;
     color: #253858;
     white-space: nowrap;
+}
+
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    padding: 0 10px 10px;
+}
+
+.receipt-header table {
+    width: 100%;
+}
+
+.receipt-header td {
+    padding: 6px 4px;
+    vertical-align: middle;
+}
+
+#txtStatus {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e67e22;
+}
+
+
+
+.form-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    text-align: right;
+    padding-right: 8px;
+    font-size:1rem;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+}
+
+/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
+.form-group.dual-input {
+    grid-template-columns: 120px 1fr 120px 1fr;
+}
+
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+.form-group.dual-input label:nth-of-type(2) {
+    text-align: right;
+    padding-right: 8px;
+}
+
+/* Special case: One label with two equal-width inputs */
+.form-group.single-label-dual-input {
+    grid-template-columns: 120px 1fr 1fr;
+}
+
+.form-group.single-label-dual-input input[type="text"]:first-of-type {
+    width: 100%;
+}
+
+.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
+    width: 100%;
+}
+
+.section-row {
+    display: flex;
+    gap: 26px;
+    margin-bottom: 30px;
+}
+
+.section-block {
+    flex: 1;
+    min-width: 0;
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+.section-block h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+
+/* Special handling for the "to-account-row" - all items in one line */
+.to-account-row {
+    display: grid;
+    grid-template-columns: 100px 50px 140px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.to-account-row label {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.to-account-row #cmbtotype {
+    width: 100%;
+}
+
+.to-account-row #txttoaccid {
+    width: 100%;
+}
+
+.to-account-row #txttoaccname {
+    width: 100%;
+}
+
+
+
+.table-section {
+    margin: 20px 0;
+}
+
+.table-section h3 {
+    color: #253858;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.cr-table th,
+.cr-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eef0f6;
     font-size: 14px;
 }
 
+.cr-table th {
+    background: #eef0f6;
+    font-weight: 600;
+    color: #354B6A;
+}
+
+.cr-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ------------------------------
+   SCROLL AREAS
+------------------------------ */
+
 .hidden-scrollbar {
-    overflow-y: auto;
-    height: 530px;
-    overflow-x: hidden;
+    overflow: auto;
+    height: 100vh;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
+}
+body::-webkit-scrollbar {
+    width: 0px;
 }
 
 .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.myButton:hover { background: #0056b3; }
-
-form label.error { color:red; font-weight:bold; }
-
-/* Standardize the tab navigation */
-#tabs {
-    list-style: none;
-    display: flex;
-    gap: 10px;
-    padding: 0;
-    margin: 20px 0 0 0;
-    border-bottom: 2px solid #007bff;
-}
-#tabs li a {
-    display: block;
-    padding: 10px 20px;
-    background: #eef2f7;
-    text-decoration: none;
-    color: #253858;
-    border-radius: 8px 8px 0 0;
-    font-weight: 600;
-}
-/* ===== PAGE BASE ===== */
-body {
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-}
-
-/* ===== MAIN CARD ===== */
-#mainBG {
-    background: #fff;
-    border-radius: 14px;
-    padding: 14px;
-    max-width: 98%;
-    margin: auto;
-}
-
-/* ===== SCROLL AREA ===== */
-.hidden-scrollbar {
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-/* ===== SECTION BLOCK (like TWO) ===== */
-fieldset {
-    border: 1px solid #dbe2ef;
-    border-radius: 12px;
-    padding: 12px;
-    background: #f9fafb;
-    margin-bottom: 16px;
-}
-
-legend {
-    font-weight: 700;
-    color: #253858;
-    padding: 0 10px;
-}
-
-/* ===== INPUTS ===== */
-input[type="text"], select {
-    height: 28px;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    padding: 4px 8px;
-    font-weight: 600;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #4fa8ff;
-    outline: none;
-}
-
-/* ===== BUTTONS ===== */
-.myButton {
-    background: #4FA8FF;
-    color: #fff;
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
     border: none;
     border-radius: 6px;
-    padding: 6px 14px;
-    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .myButton:hover {
-    background: #2f7fd4;
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+
+
+
+  }
+  
+#validrate,
+#validrate1 {
+    color: red;
+    font-size: 12px;
+    grid-column: 2 / -1;
 }
 
-/* ===== TABS ===== */
-#tabs {
-    margin-top: 12px;
-    padding-left: 0;
+
+
+#approval-table td {
+    font-size: 14px;
+    padding: 8px;
 }
 
-#tabs li {
-    display: inline-block;
-    margin-right: 12px;
+#approval-table tr:nth-child(even) {
+    background: #f9fafb;
 }
-
-#tabs li a {
-    padding: 6px 14px;
-    border-radius: 6px;
-    background: #e8f0ff;
-    font-weight: 700;
-    text-decoration: none;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253858 !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
+/* Align jqxDateTimeInput with normal textboxes */
+.jqx-datetimeinput,
+.jqx-datetimeinput .jqx-input-content {
+    height: 34px !important;
+    line-height: 34px !important;
+    box-sizing: border-box;
+}
+/* ===== RECEIPT HEADER (same as Cash Receipt) ===== */
 
-/* ===== FLEX HELPERS ===== */
-.flex-row {
+.receipt-header {
     display: flex;
-    gap: 10px;
     align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.receipt-header label {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.receipt-header input {
+    width: 120px;
+}
+
+.receipt-header .docno {
+    margin-left: auto;
+}
+/* ===== SECTION STYLE SAME AS CASH RECEIPT ===== */
+
+fieldset {
+    background: #f6f8fa;
+    border-radius: 12px;
+    border: none;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+}
+
+legend {
+    font-size: 17.6px;
+    font-weight: 600;
+    color: #253858;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+}
+/* ===== INPUT STYLE ===== */
+
+input[type="text"], select {
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    padding: 6px 10px;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+  
+/* FIX: legends going right */
+fieldset legend {
+    text-align: left !important;
+    float: left !important;
+    margin-left: 10px;
+}
+
+/* FIX: Fleet No + Fleet Name color */
+#fleetno,
+#fleetname {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    opacity: 1 !important;
+}
+
+/* OPTIONAL: fix all readonly fields */
+input[readonly] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    opacity: 1 !important;
 }
 
 </style>
@@ -1346,26 +1523,43 @@ function funGetConfigs(){
 	<div id="mainBG" class="homeContent" data-type="background"> 
 		<form id="frmVehicle" action="saveVehicle" method="post" autocomplete="off">
 		<jsp:include page="../../../../header.jsp" />
+		<div class="receipt-header">
+<table>
+<tr>
+
+<td align="right">Date</td>
+<td>
+<div id="jqxDate1" name="jqxDate1" value='<s:property value="jqxDate1"/>'></div>
+<input type="hidden" id="hidjqxDate1" name="hidjqxDate1"
+value='<s:property value="hidjqxDate1"/>'>
+</td>
+
+<td style="width:65%"></td>
+
+<td align="right">Doc No</td>
+<td>
+<input type="text" name="docno" id="docno"
+readonly="readonly"
+value='<s:property value="docno"/>'
+tabindex="-1"
+style="width:120px;">
+</td>
+
+</tr>
+</table>
+</div>
 				<fieldset><legend>Vehicle Details</legend>
 				<table width="100%" cellspacing="0">
 					<tr>
-						<td width="68" height="24" id="f" style="text-align: right"><div
-								align="right">Fleet No</div></td>
+						<td width="68" height="24" style="text-align: right;">
+    Fleet No
+</td>
 						<td colspan="5">
 							<input type="text" name="fleetno" id="fleetno" readonly tabindex="-1" 
 							style="width: 20%;" value='<s:property value="fleetno"/>'> 
 							<input type="text" name="fleetname" id="fleetname" readonly tabindex="-1"
 							style="width: 75.5%;" value='<s:property value="fleetname"/>'></td>
-						<td align="right">Date</td>
-						<td colspan="2" align="left"><div id='jqxDate1'
-								name='jqxDate1' value='<s:property value="jqxDate1"/>'></div>
-                        </td><input
-							type="hidden" id="hidjqxDate1" name="hidjqxDate1"
-							value='<s:property value="hidjqxDate1"/>' />
-						<td align="left">&nbsp;</td>
-						<td width="64" align="right">Doc No</td>
-						<td width="168" align="left"><input type="text"
-							name="docno" id="docno"  readonly="readonly" value='<s:property value="docno"/>' tabindex="-1"></td>
+						
 						
 					</tr>
 					<tr>
