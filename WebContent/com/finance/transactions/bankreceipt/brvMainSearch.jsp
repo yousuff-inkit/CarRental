@@ -17,9 +17,11 @@
 
 
 td[align="right"] {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  
 }
 
 
@@ -87,20 +89,21 @@ tr {
 <table width="100%">
   <tr>
     <td width="6%" align="right">Name</td>
-    <td colspan="3"><input type="text" name="txtpartyname" id="txtpartyname" style="width:80%" value='<s:property value="txtpartyname"/>'></td>
+    <td colspan="1"><input type="text" name="txtpartyname" id="txtpartyname" style="width:80%" value='<s:property value="txtpartyname"/>'></td>
     <td width="11%" align="right">Doc No</td>
-    <td colspan="2"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="17%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td colspan="1"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
+      <td align="right">Date</td>
+    <td width="14%"><div id="bankdate" name="bankdate"  value='<s:property value="bankdate"/>'></div>
+    <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'></td>
+    <td width="17%" align="center" rowspan="2"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
   </tr>
   <tr>
-    <td align="right">Date</td>
-    <td width="14%"><div id="bankdate" name="bankdate"  value='<s:property value="bankdate"/>'></div>
-        <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'></td>
+  	<td >Cheque No</td>
+    <td width="14%"><input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'></td>
+        
     <td width="10%" align="right">Amount</td>
     <td width="14%"><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
-    <td align="right">Cheque No</td>
-    <td width="14%"><input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'></td>
-    <td width="14%" align="right">Cheque Date</td>
+       <td width="14%" align="right">Cheque Date</td>
     <td><div id="chqdate" name="chqdate"  value='<s:property value="chqdate"/>'></div>
         <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'></td>
   </tr>

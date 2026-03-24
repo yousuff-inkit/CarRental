@@ -90,8 +90,8 @@
             
             $("#jqxFleetGrid").jqxGrid(
             {
-                height: 340,
-                width: '98%',
+                height: 450,
+                width: '100%',
               
                 source: dataAdapter,
                 filtermode:'excel',

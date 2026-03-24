@@ -10,9 +10,7 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT
-    ------------------------------ */
+   
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -30,15 +28,10 @@
         max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        /* FORCE HEADER LEFT ALIGNMENT */
         text-align: left !important; 
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons)
-    ------------------------------ */
-    
-    /* This overrides any <center> tags coming from header.jsp */
+   
     center {
         text-align: left !important;
         display: block;
@@ -46,7 +39,6 @@
         margin-left: 0;
     }
     
-    /* Force the Title (#formdet) to be Left Aligned and Big */
     #formdet {
         font-size: 24px !important;
         font-weight: 700 !important;
@@ -57,15 +49,14 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT)
-    ------------------------------ */
+  
     .receipt-header {
         display: grid;
         grid-template-columns: auto 1fr auto 1fr auto 1fr;
         gap: 15px;
         align-items: center;
         margin-bottom: 20px;
+        margin-top: 20px;
         padding: 0 0 0 5px; 
     }
 
@@ -108,9 +99,7 @@
         color: #333;
     }
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
+   
     input[type="text"], select {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -142,9 +131,7 @@
         font-size: 14px;
     }
 
-    /* ------------------------------
-       TABLES & UTILS
-    ------------------------------ */
+    
     .table-section { margin: 20px 0; }
     .table-section h3 {
         color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
@@ -154,12 +141,38 @@
 
     .doc-group { display: flex; gap: 5px; }
     
-    /* SCROLLBAR FIX */
+ 
     .hidden-scrollbar { overflow: auto; height: 100vh; }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; } /* Set to 8px if you want to see the bar */
-    
+    .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
+    body::-webkit-scrollbar {
+    width: 0px;
+}
+
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
     #validrate { color: red; font-size: 12px; }
-    
+    }
     #txtStatus {
         font-size: 14px;
         font-weight: 600;

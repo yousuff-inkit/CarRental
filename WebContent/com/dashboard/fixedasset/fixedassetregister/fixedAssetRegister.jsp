@@ -9,7 +9,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -18,7 +18,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -41,7 +40,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -50,7 +48,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -65,7 +62,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -74,7 +70,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -104,7 +99,7 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
-/* Remove green border only for inner report-type fieldset */
+
 .inner-fieldset {
     border: none !important;
     padding: 8px 0;
@@ -115,18 +110,16 @@ td[width="80%"] {
     padding: 0 6px;
     font-weight: 600;
 }
-/* ===== USE SPACE ABOVE (reduce gaps) ===== */
+
 .filter-table tr td {
     padding-top: 4px;
     padding-bottom: 4px;
 }
 
-/* tighten large gaps created by date pickers */
 .filter-table div[id$="date"] {
     margin-bottom: 6px;
 }
 
-/* ===== REMOVE REPORT TYPE GREEN LINES ===== */
 .inner-fieldset {
     border: none !important;
     background: transparent !important;
@@ -140,24 +133,21 @@ td[width="80%"] {
     font-weight: 600;
 }
 
-/* remove any inherited green row backgrounds */
 .inner-fieldset table tr,
 .inner-fieldset table td {
     background: transparent !important;
 }
 
-/* compact radio spacing */
 .inner-fieldset label {
     margin-left: 4px;
 }
-/* ===== ENABLE SCROLL FOR LEFT PANEL ONLY ===== */
+
 td[width="20%"] fieldset {
-    max-height: calc(100vh - 120px); /* leaves space for header */
+    max-height: calc(100vh - 120px); 
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-/* smooth scrolling */
 td[width="20%"] fieldset::-webkit-scrollbar {
     width: 6px;
 }
@@ -333,13 +323,12 @@ td[width="20%"] fieldset::-webkit-scrollbar-track {
 <table width="100%">
 <tr>
 
-<!-- ===== LEFT SIDE ===== -->
 <td width="20%" valign="top">
 
 <fieldset class="filter-card">
 <table width="100%" class="filter-table">
 
-    <!-- HEADING (UNCHANGED) -->
+   
     <jsp:include page="../../heading.jsp"></jsp:include>
 
     <tr><td colspan="2">&nbsp;</td></tr>
@@ -392,7 +381,7 @@ td[width="20%"] fieldset::-webkit-scrollbar-track {
 
     <tr><td colspan="2">&nbsp;</td></tr>
 
-    <!-- REPORT TYPE (KEPT AS FIELDSET – SAFE) -->
+
     <tr>
         <td colspan="2">
             <fieldset class="inner-fieldset">
@@ -442,7 +431,6 @@ td[width="20%"] fieldset::-webkit-scrollbar-track {
 
 </td>
 
-<!-- ===== RIGHT GRID ===== -->
 <td width="80%" valign="top">
 <table width="100%">
 <tr>

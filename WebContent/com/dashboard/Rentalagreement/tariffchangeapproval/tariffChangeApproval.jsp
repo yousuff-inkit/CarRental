@@ -10,7 +10,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-/* ===== MASTER LAYOUT ===== */
+
 .master-container {
     display: flex;
     width: 100%;
@@ -19,7 +19,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -42,7 +41,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,7 +49,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -66,7 +63,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -75,7 +71,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -93,7 +88,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -501,21 +495,16 @@ function disiem()
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT SIDEBAR (MASTER) ================= -->
 <td width="20%" valign="top">
 
 <div class="master-container">
     <div class="sidebar-filters">
 
-        <!-- Fixed Header -->
         <div class="sidebar-fixed-top">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
 
-        <!-- Scrollable Filters -->
-        <div class="sidebar-scroll-content">
-
-            <!-- FILTER CARD 1 -->
+ 
             <div class="filter-card">
                 <table class="filter-table">
                     <tr>
@@ -572,7 +561,6 @@ function disiem()
                 </button>
             </div>
 
-            <!-- FILTER CARD 2 -->
             <div class="filter-card">
                 <table class="filter-table">
                     <tr>
@@ -617,7 +605,7 @@ function disiem()
 
             <div id="paychaaaaa" style="height:90px;"></div>
 
-            <!-- HIDDEN VALUES -->
+            
             <div hidden>
                 <div id="jqxDateOut" value='<s:property value="jqxDateOut"/>'></div>
                 <div id="jqxDaterentalout" value='<s:property value="jqxDaterentalout"/>'></div>
@@ -641,7 +629,6 @@ function disiem()
 
 </td>
 
-<!-- ================= RIGHT SIDE (ORIGINAL TABLE – UNCHANGED) ================= -->
 <td width="80%" valign="top">
 
 <table width="100%">
@@ -668,7 +655,6 @@ function disiem()
 
 </div>
 
-<!-- POPUPS -->
 <div id="clientwindow"><div></div></div>
 <div id="ranowindow"><div></div></div>
 

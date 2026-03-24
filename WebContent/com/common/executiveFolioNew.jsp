@@ -137,6 +137,18 @@
         #btnReload { background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; padding: 3px 6px; cursor: pointer; }
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 999; }
         #PleaseWait { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; }
+        
+        
+        /* Update the TOP SECTION to fill the remaining screen height */
+.top-section { 
+    display: flex; 
+    gap: 5px; 
+    flex: 1; 
+    min-height: 0; 
+}
+.form-pane { 
+    display: none; 
+}
     </style>
 
     <script type="text/javascript">

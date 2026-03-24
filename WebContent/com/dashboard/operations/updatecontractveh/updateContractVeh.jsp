@@ -11,7 +11,6 @@
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
 
-/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
@@ -20,7 +19,6 @@
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -43,7 +41,6 @@
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -52,7 +49,6 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -67,7 +63,6 @@
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -76,7 +71,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -298,20 +292,17 @@ function funExportBtn(){
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL ================= -->
 <td width="23%" valign="top">
 
 <div class="master-container">
 <div class="sidebar-filters">
 
-    <!-- FIXED HEADER -->
     <div class="sidebar-fixed-top">
         <div class="filter-card">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
     </div>
 
-    <!-- SCROLLABLE FILTER CONTENT -->
     <div class="sidebar-scroll-content">
 
         <div class="filter-card">
@@ -380,7 +371,7 @@ function funExportBtn(){
             </table>
         </div>
 
-        <!-- MASTER BUTTON ROW -->
+    
         <div style="display:flex;gap:10px;justify-content:center;">
             <button type="button"
                     class="btn-submit"
@@ -421,7 +412,7 @@ function funExportBtn(){
         --%>
     </td>
 
-    <!-- HIDDEN FIELDS -->
+ 
     <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
     <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
     <input type="hidden" name="hidofleet" id="hidofleet">

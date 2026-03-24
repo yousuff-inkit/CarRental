@@ -10,163 +10,171 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script> 
 
-<style type="text/css">
-
-
-.hidden-scrollbar {
-    height: 530px;
-    overflow-y: auto;
+<style>
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 10px 0;
+    box-sizing: border-box;
     overflow-x: hidden;
-    
-    -webkit-overflow-scrolling: touch;
+    min-height: auto;
 }
 
-.hidden-scrollbar::-webkit-scrollbar {
-    display: none; 
-}
-
-.hidden-scrollbar {
-    scrollbar-width: none; 
-    -ms-overflow-style: none;  
-}
-
-#left-panel {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border: 1px solid #e2e8f0;
+#mainBG {
+    background: #fff;
     border-radius: 16px;
-    padding: 14px 10px;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
-    font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
+    padding: 15px;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: block;
+    box-sizing: border-box;
 }
 
-#left-panel td {
-    font-size: 16px;
+#formdet {
+    text-align: left !important;
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 8px;
+    padding-left: 5px;
+}
+
+.full-page-split {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.controls-area {
+    flex: 0 0 350px;
+}
+
+.grid-area {
+    flex: 1;
+    min-width: 0;
+}
+
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
+    margin-bottom: 10px;
+}
+
+.section-block h2 {
+    font-size: 1rem;
     font-weight: 600;
-    color: #1e293b;
-    padding: 4px 6px;
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #333;
 }
 
+.form-group {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    gap: 8px 12px;
+    margin-bottom: 8px;
+}
 
-#left-panel input[type="text"],
-#left-panel select {
+input[type="text"], select {
+    height: 30px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 10px;
+    background: #fff;
+    font-size: 13px;
     width: 100%;
-    height: 32px;
-    border-radius: 8px;
-    border: 1px solid #cbd5e1;
-    padding: 4px 8px;
-    font-size: 12px;
-    background: #ffffff;
-    transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
-#left-panel input[type="text"]:focus,
-#left-panel select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
     outline: none;
 }
 
-
-#left-panel input[type="radio"],
-#left-panel input[type="checkbox"] {
-    accent-color: #2563eb;
-    cursor: pointer;
-}
-
-
-
-.myButtonses,
-.myButtons,
-.myButtonReCheck {
-    height: 34px;
-    min-width: 72px;
-    border-radius: 8px;
-    font-size: 11px;
+label {
     font-weight: 600;
-    border: none;
-    cursor: pointer;
-    padding: 0 14px;
-    transition: all 0.2s ease;
+    color: #253858;
+    font-size: 13px;
+    text-align: right;
 }
 
+.action-buttons-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content: flex-end;
+}
 
 .myButtonses {
-    background: #fff;
-    color: #2563eb;
-    box-shadow: 3px 6px 6px rgba(37, 99, 235, 0.35);
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 12px;
 }
-
-.myButtonses:hover {
-    
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
-    transform: scale(1.05);
-}
-
 
 .myButtons {
-    background: #fff;
-    color: #64748b;
-	box-shadow: 3px 6px 6px rgba(37, 99, 235, 0.35);
-    
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 12px;
 }
-
-.myButtons:hover {
-    background: #fff;
-    transform: scale(1.05);
-}
-
 
 .myButtonReCheck {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.import-area {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.grid-container {
     background: #fff;
-    color: #16a34a;
-    border-radius: 999px;
+    border-radius: 8px;
+    border: 1px solid #e4e7ec;
+    overflow: hidden;
 }
 
-.myButtonReCheck:hover {
-    background: #fff;
-    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
-    transform: scale(1.05);
+input[readonly] {
+    background-color: #f3f4f6;
+    color: #6b7280;
 }
-
-
-#left-panel table tr td {
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-
-#rdovertime,
-label[for="rdovertime"],
-#overtime {
-    display: inline-block;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-label[for="rdovertime"] {
-    margin-right: 6px;
-}
-
-.hidden-scrollbar td {
-    white-space: nowrap;
-}
-
-.hidden-scrollbar table tr td:first-child {
-    font-weight: 600;
-}
-
-#ahead{
-margin: 0;
-    padding-left:30px;
-    line-height: normal;
-    background-color:#fff;
-    border-radius:20px;
-    height:100px;
-}
-body{
-	font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-}
-
-
 </style>
 
 <script type="text/javascript">
@@ -1390,165 +1398,7 @@ body{
 
 </script>
 
-<style type="text/css">
-/* Preserving original button styles exactly as provided */
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d8d 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-size:8pt;
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background-color:#6c7c7c;
-}
-.myButtonses {
-    background:linear-gradient(to bottom, #007bff 5%, #007bff 100%);
-    background-color:#007bff;
-    border-radius:4px;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-family:Verdana;
-    font-size:10px;
-    padding:4px 8px;
-    text-decoration:none;
-    border: none;
-}
-.myButtonReCheck {
-	box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-	background-color:#44c767;
-	border-radius:42px;
-	border:6px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:10px;
-	font-weight:bold;
-	padding:3px 8px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-}
 
-/* Master UI Styles */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.form-group {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.full-page-split {
-    display: flex;
-    gap: 20px;
-}
-
-.controls-area {
-    flex: 0 0 380px;
-}
-
-.grid-area {
-    flex: 1;
-    min-width: 0;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    font-size: 14px;
-}
-
-input[type="text"], select {
-    height: 30px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 4px 10px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.radio-control {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.action-buttons-group {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-}
-
-.input-file-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #e1e4e8;
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 100vh;
-}
-</style>
 
 </head>
 <body onload="setValues();">
@@ -1556,124 +1406,144 @@ input[type="text"], select {
 <form id="frmEmployeeAttendance" action="saveEmployeeAttendance" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div class='hidden-scrollbar'>
-<table width="99%" style="margin-top:10px;">
-  <tr>
-    <td width="20%" style="background-color: #fff;" id="left-panel">
-<table width="99%"  >
-  <tr>
-    <td width="29%" align="center" >Year</td>
-    <td width="71%"><select id="cmbyear" name="cmbyear" onchange="onYearChange();" value='<s:property value="cmbyear"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbyear" name="hidcmbyear" value='<s:property value="hidcmbyear"/>'/></td>
-  </tr>
-  <tr>
-    <td align="center">Month</td>
-    <td><select id="cmbmonth" name="cmbmonth" onchange="funClearMonthInfo();getDay();getHolidaysOfMonth($('#cmbyear').val(),this.value);" value='<s:property value="cmbmonth"/>'>
-      <option value="">--Select--</option><option value="01">January</option><option value="02">February</option><option value="03">March</option>
-      <option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option>
-      <option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option>
-      <option value="12">December</option></select>
-      <input type="hidden" id="hidcmbmonth" name="hidcmbmonth" value='<s:property value="hidcmbmonth"/>'/></td>
-  </tr>
-  <tr>
-    <td align="center">Day</td>
-    <td><select id="cmbday" name="cmbday" value='<s:property value="cmbday"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbday" name="hidcmbday" value='<s:property value="hidcmbday"/>'/></td>
-  </tr>
-  <tr>
-    <td align="center">Department</td>
-    <td><select id="cmbempdepartment" name="cmbempdepartment" value='<s:property value="cmbempdepartment"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/></td>
-  </tr>
-  <tr>
-    <td align="center">Category</td>
-    <td><select id="cmbempcategory" name="cmbempcategory" value='<s:property value="cmbempcategory"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbempcategory" name="hidcmbempcategory" value='<s:property value="hidcmbempcategory"/>'/></td>
-  </tr>
-  <tr>
-    <td align="center">Employee</td>
-    <td><input type="text" id="txtemployeeid" name="txtemployeeid" style="width:90%;"placeholder="Double click to Search" value='<s:property value="txtemployeeid"/>'  onkeydown="getEmployeeId(event);"/>
-    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/></td>
-  </tr>
-   <tr>
-    <td colspan="2" ><input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" style="width:90%; margin-left:10px;" tabindex="-1" value='<s:property value="txtemployeename"/>'/></td>
-  </tr>
- 
-  <tr>
-    <td  align="left"><input type="radio" id="rdholiday" name="rdo" value="rdholiday" onclick="radioClick();"><label for="rdholiday">Holiday</label></td>
-    <td><select id="cmbholiday" name="cmbholiday" style="width:80%; margin-left:30px;" onchange="newValueSet();getNewGridValue(this.value);" value='<s:property value="cmbholiday"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbholiday" name="hidcmbholiday" value='<s:property value="hidcmbholiday"/>'/></td>
-  </tr>
- <tr>
-    <td colspan="2">
-	  
-	 <table width="100%">
-      <tr>
-    <td width="46%" align="left"><input type="radio" id="rdleavetype" name="rdo" value="rdleavetype" onclick="radioClick();"><label for="rdleavetype">Leave Type</label></td>
-    <td width="54%"><select id="cmbleavetype" name="cmbleavetype" style="width:105%;margin-left:-12px;" onchange="clearhalfdaycheck();newValueSet();getNewGridValue(this.value);" value='<s:property value="cmbleavetype"/>'>
-      <option value="">--Select--</option></select>
-      <input type="hidden" id="hidcmbleavetype" name="hidcmbleavetype" value='<s:property value="hidcmbleavetype"/>'/></td>
-  </tr>
-  <tr>
-    <td colspan="2" align="left"><input type="checkbox" id="chckhalfday" name="chckhalfday" value="" onchange="halfdaycheck();newValueSet();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Half Day
-                                 <input type="hidden" id="hidchckhalfday" name="hidchckhalfday" value='<s:property value="hidchckhalfday"/>'/></td>
-  </tr>
-</table>
-	
-	</td>
-    </tr>
-   
-  <tr>
-    <td><input type="radio" id="rdovertime" name="rdo" value="rdovertime" onclick="radioClick();"><label for="rdovertime">Over Time</label></td>
-    <td><div id="overtime" name="overtime" onchange="newValueSet();" value='<s:property value="overtime"/>'></div>
-    <input type="hidden" id="hidovertime" name="hidovertime" value='<s:property value="hidovertime"/>'/></td>
-  </tr>
-  <tr>
-    <td colspan="2">
-    <table>
-    <tr>
-    <td ><input type="radio" id="rdtotalleaves" name="rdo" value="rdtotalleaves" onclick="radioClick();"><label id="rdtotalleaves1" for="rdtotalleaves"></label></td>
-   	<td><input type="checkbox" id="chckmarkall" name="chckmarkall" value="" onchange="markallcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">Mark All
-	    <input type="hidden" id="hidchckmarkall" name="hidchckmarkall" value='<s:property value="hidchckmarkall"/>'/></td>
-   </tr>
-    </table>
-    </tr>
-	<tr>
-    
-    <td ><input type="button" class="myButtonses" name="btnView" id="btnView"  value="View" onclick="funViewAttendance();"></td>
-    <td align="left"><input type="button" class="myButtonses" name="btnApply" id="btnApply"  value="Apply" onclick="funApplyAttendance(event);">
-    <input type="button" class="myButtonses" name="btnApplyDelete" id="btnApplyDelete"  value="Delete" onclick="funDeleteAttendance(event);">
-    <input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearInfo();"></td>
-    </tr>
-	<tr>
-    <td colspan="2" align="center"><input type="button" class="myButtonReCheck" name="btnRecheck" id="btnRecheck"  value="Re-Check" onclick="funReCheckAttendance(event);"></td>
-    </tr>
-    
-    
-</table>
-<table>
+<div id="mainBG">
+    <div id="formdet">Attendance Entry</div>
 
-       <tr>
-        <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    	<td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
-						</button></td></tr>
-						
-	<tr>
-    	<td colspan="2">&nbsp;</td>
-    </tr></table>
+    <div class="full-page-split">
+        <div class="controls-area">
+            <div class="section-block">
+                <h2>Period & Category</h2>
+                <div class="form-group">
+                    <label>Year</label>
+                    <select id="cmbyear" name="cmbyear" onchange="onYearChange();" value='<s:property value="cmbyear"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Month</label>
+                    <select id="cmbmonth" name="cmbmonth" onchange="funClearMonthInfo();getDay();getHolidaysOfMonth($('#cmbyear').val(),this.value);" value='<s:property value="cmbmonth"/>'>
+                        <option value="">--Select--</option>
+                        <option value="01">January</option><option value="02">February</option><option value="03">March</option>
+                        <option value="04">April</option><option value="05">May</option><option value="06">June</option>
+                        <option value="07">July</option><option value="08">August</option><option value="09">September</option>
+                        <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Day</label>
+                    <select id="cmbday" name="cmbday" value='<s:property value="cmbday"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select id="cmbempdepartment" name="cmbempdepartment" value='<s:property value="cmbempdepartment"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="cmbempcategory" name="cmbempcategory" value='<s:property value="cmbempcategory"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Employee</label>
+                    <input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="F3 to Search" value='<s:property value="txtemployeeid"/>' onkeydown="getEmployeeId(event);">
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <input type="text" id="txtemployeename" name="txtemployeename" placeholder="Employee Name" readonly value='<s:property value="txtemployeename"/>'>
+                </div>
+            </div>
 
-    </td>
-    <td width="80%">
-    <div id="attendanceDiv"><jsp:include page="attendanceGridMARBLELIFE.jsp"></jsp:include></div>
-    </td>
-  </tr>
-</table>
+            <div class="section-block">
+                <h2>Attendance Actions</h2>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <input type="radio" id="rdholiday" name="rdo" value="rdholiday" onclick="radioClick();">
+                        <label for="rdholiday">Holiday</label>
+                    </div>
+                    <select id="cmbholiday" name="cmbholiday" onchange="newValueSet();getNewGridValue(this.value);" value='<s:property value="cmbholiday"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <input type="radio" id="rdleavetype" name="rdo" value="rdleavetype" onclick="radioClick();">
+                        <label for="rdleavetype">Leave</label>
+                    </div>
+                    <select id="cmbleavetype" name="cmbleavetype" onchange="clearhalfdaycheck();newValueSet();getNewGridValue(this.value);" value='<s:property value="cmbleavetype"/>'>
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <div class="radio-group">
+                        <input type="checkbox" id="chckhalfday" name="chckhalfday" onchange="halfdaycheck();newValueSet();">
+                        <label for="chckhalfday">Half Day</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <input type="radio" id="rdovertime" name="rdo" value="rdovertime" onclick="radioClick();">
+                        <label for="rdovertime">OT</label>
+                    </div>
+                    <div id="overtime" name="overtime" onchange="newValueSet();"></div>
+                </div>
+                <div class="form-group">
+                    <div class="radio-group">
+                        <input type="radio" id="rdtotalleaves" name="rdo" value="rdtotalleaves" onclick="radioClick();">
+                        <label id="rdtotalleaves1" for="rdtotalleaves">Total</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="checkbox" id="chckmarkall" name="chckmarkall" onchange="markallcheck();">
+                        <label for="chckmarkall">Mark All</label>
+                    </div>
+                </div>
+
+               <div class="action-buttons-group">
+    <input type="button" class="myButtonses" id="btnView" value="View" onclick="funViewAttendance();">
+    <input type="button" class="myButtonses" id="btnApply" value="Apply" onclick="funApplyAttendance(event);">
+    <input type="button" class="myButtonses" id="btnApplyDelete" style="background:#dc3545;" value="Delete" onclick="funDeleteAttendance(event);">
+    <input type="button" class="myButtons" id="clear" value="Clear" onclick="funClearInfo();">
+</div>
+
+<input type="button" class="myButtonReCheck" id="btnRecheck" value="Re-Check Attendance" onclick="funReCheckAttendance(event);">
+
+                <div class="import-area">
+                    <input type="file" id="fileexcelimport" name="file" style="font-size: 11px; width: 180px;">
+                    <button type="button" class="myButtonses" onclick="return upload();">
+                        <img src="<%=contextPath%>/icons/import_excel.png" width="16">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-area">
+            <div class="section-block">
+                <h2>Attendance Records</h2>
+                <div class="grid-container">
+                    <div id="attendanceDiv">
+                        <jsp:include page="attendanceGridMARBLELIFE.jsp"></jsp:include>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="hidcmbyear" name="hidcmbyear" value='<s:property value="hidcmbyear"/>'/>
+    <input type="hidden" id="hidcmbmonth" name="hidcmbmonth" value='<s:property value="hidcmbmonth"/>'/>
+    <input type="hidden" id="hidcmbday" name="hidcmbday" value='<s:property value="hidcmbday"/>'/>
+    <input type="hidden" id="hidcmbempdepartment" name="hidcmbempdepartment" value='<s:property value="hidcmbempdepartment"/>'/>
+    <input type="hidden" id="hidcmbempcategory" name="hidcmbempcategory" value='<s:property value="hidcmbempcategory"/>'/>
+    <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/>
+    <input type="hidden" id="hidcmbholiday" name="hidcmbholiday" value='<s:property value="hidcmbholiday"/>'/>
+    <input type="hidden" id="hidcmbleavetype" name="hidcmbleavetype" value='<s:property value="hidcmbleavetype"/>'/>
+    <input type="hidden" id="hidchckhalfday" name="hidchckhalfday" value='<s:property value="hidchckhalfday"/>'/>
+    <input type="hidden" id="hidovertime" name="hidovertime" value='<s:property value="hidovertime"/>'/>
+    <input type="hidden" id="hidchckmarkall" name="hidchckmarkall" value='<s:property value="hidchckmarkall"/>'/>
+
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>

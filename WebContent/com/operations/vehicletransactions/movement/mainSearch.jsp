@@ -141,6 +141,11 @@ input[type="text"]:focus, select:focus {
 tr {
   line-height: 1.6;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#FFFFFF">

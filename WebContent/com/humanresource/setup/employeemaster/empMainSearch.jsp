@@ -9,91 +9,7 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-<style>
-/* popup container */
-#search {
-    width: 900px;
-    margin: 0 auto;
-    background: #f6f8fa;
-    border-radius: 10px;
-    box-shadow: 0 8px 30px rgba(15,23,42,0.25);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 13px;
-    color: #222;
-}
 
-/* inner padding */
-#search-body {
-    padding: 8px 14px 10px 14px;
-}
-
-/* search table */
-#search table.cr-search-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    box-shadow: 0 0 0 1px #e0e4ee;
-}
-
-#search table.cr-search-table td {
-    padding: 4px 6px;
-    vertical-align: middle;
-    font-size: 12px;
-}
-
-/* bold right labels */
-#search table.cr-search-table td[align="right"] {
-    font-weight: 600;
-    color: #333;
-    white-space: nowrap;
-}
-
-/* inputs/selects */
-#search input[type="text"],
-#search select {
-    width: 100%;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
-    padding: 4px 8px;
-    height: 22px;
-    line-height: 22px;
-    font-size: 12px;
-    box-sizing: border-box;
-}
-
-/* date widget container spans cell */
-#txtdob {
-    width: 100%;
-}
-
-/* button */
-#search .myButton,
-#btnsearch {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    height: 24px;
-    line-height: 22px;
-    padding: 0 16px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-}
-#search .myButton:hover,
-#btnsearch:hover {
-    background: #0056b3;
-}
-
-/* result area */
-#refreshdiv {
-    margin-top: 8px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 0 0 1px #e0e4ee;
-}
-</style>
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -174,73 +90,121 @@ function getdata(empname, mob, employeedesignation, employeedepartment,
 </script>
 </head>
 
-<body>
+<style type="text/css">
+#search {
+    width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+#search table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 12px 10px; 
+}
+
+td[align="right"] {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+}
+
+input[type="text"], select {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 4px 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    height: 28px;
+}
+
+.myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+#refreshdiv {
+    margin-top: 10px;
+    border-top: 1px solid #e0e4ee;
+}
+</style>
+
+<body bgcolor="#E0ECF8">
 <div id="search">
-    <div id="search-body">
-        <table class="cr-search-table">
-            <tr>
-                <td align="right" style="width:12%;">Name</td>
-                <td style="width:38%;">
-                    <input type="text" name="txtempname" id="txtempname"
-                           value='<s:property value="txtempname"/>'>
-                </td>
-
-                <td align="right" style="width:10%;">Mob</td>
-                <td style="width:20%;">
-                    <input type="text" name="txtmobile" id="txtmobile"
-                           value='<s:property value="txtmobile"/>'>
-                </td>
-
-                <td style="width:20%;" align="center">
-                    <input type="button" name="btnsearch" id="btnsearch"
-                           class="myButton" value="Search"
-                           onclick="loadSearch();">
-                </td>
-            </tr>
-
-            <tr>
-                <td align="right">Designation</td>
-                <td>
-                    <select id="employeedesignation" name="employeedesignation"
-                            value='<s:property value="employeedesignation"/>'>
-                        <option value="">--Select--</option>
-                    </select>
-                </td>
-
-                <td align="right">Department</td>
-                <td>
-                    <select id="employeedepartment" name="employeedepartment"
-                            value='<s:property value="employeedepartment"/>'>
-                        <option value="">--Select--</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <td align="right">Emp#</td>
-                <td>
-                    <input type="text" name="txtempid" id="txtempid"
-                           value='<s:property value="txtempid"/>'>
-                </td>
-
-                <td align="right">DOB</td>
-                <td>
-                    <div id="txtdob" name="txtdob"
-                         value='<s:property value="txtdob"/>'></div>
-                </td>
-
-                <td></td>
-            </tr>
-
-            <tr>
-                <td colspan="5">
-                    <div id="refreshdiv">
-                        <jsp:include page="empMainSearchGrid.jsp"></jsp:include>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <table border="0">
+        <tr>
+            <td width="10%" align="right">Name</td>
+            <td width="30%">
+                <input type="text" name="txtempname" id="txtempname" value='<s:property value="txtempname"/>'>
+            </td>
+            <td width="10%" align="right">Mob</td>
+            <td width="20%">
+                <input type="text" name="txtmobile" id="txtmobile" value='<s:property value="txtmobile"/>'>
+            </td>
+            <td width="30%" rowspan="2" align="center" valign="middle">
+                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Designation</td>
+            <td>
+                <select id="employeedesignation" name="employeedesignation">
+                    <option value="">--Select--</option>
+                </select>
+            </td>
+            <td align="right">Department</td>
+            <td>
+                <select id="employeedepartment" name="employeedepartment">
+                    <option value="">--Select--</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Emp#</td>
+            <td>
+                <input type="text" name="txtempid" id="txtempid" value='<s:property value="txtempid"/>'>
+            </td>
+            <td align="right">DOB</td>
+            <td>
+                <div id="txtdob" name="txtdob"></div>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <div id="refreshdiv">
+                    <jsp:include page="empMainSearchGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

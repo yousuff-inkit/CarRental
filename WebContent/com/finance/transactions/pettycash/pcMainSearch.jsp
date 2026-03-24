@@ -84,11 +84,11 @@ tr {
         <input type="hidden" name="hidpaydate" id="hidpaydate" value='<s:property value="hidpaydate"/>'></td>
     <td width="21%" align="right">Doc No</td>
     <td width="32%"><input type="text" name="txtpettydocno" id="txtpettydocno" value='<s:property value="txtpettydocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="27%" align="center" rowspan="2"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
   </tr>
   <tr>
     <td align="right">Name</td>
-    <td colspan="2"><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'></td>
+    <td ><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" value='<s:property value="txtpartyname"/>'></td>
     <td align="right">Amount</td>
     <td><input type="text" name="txtpettyamount" id="txtpettyamount" value='<s:property value="txtpettyamount"/>'></td>
   </tr>

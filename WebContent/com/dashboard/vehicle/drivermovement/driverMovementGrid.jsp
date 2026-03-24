@@ -98,8 +98,8 @@ $(document).ready(function () {
     
     $("#drvmovement").jqxGrid(
     {
-        width: '98%',
-        height: 300,
+        width: '100%',
+        height: 500,
         source: dataAdapter,
         showaggregates:true,
         enableAnimations: true,

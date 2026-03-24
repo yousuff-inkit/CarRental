@@ -70,10 +70,11 @@
     }
 
 
-     .form-row {
+    .form-row {
         display: grid;
-        grid-template-columns: 90px 125px 90px 90px 90px 120px 90px 100px ;
-        gap: 15px 20px;
+        /* Layout: Label | Input/Date | Label | Input */
+        grid-template-columns: 120px 1fr 120px 1fr; 
+        gap: 15px 30px;
         align-items: center;
         margin-bottom: 12px;
     }
@@ -139,9 +140,6 @@
         padding: 0;
         margin: 0;
     }
-    body::-webkit-scrollbar {
-	width: 0px;
-}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -291,15 +289,16 @@
                 <div id="groupdate" name="groupdate" value='<s:property value="groupdate"/>'></div>
             </div>
             
+            <label>Doc No</label>
+            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
+        </div>
         
+        <div class="form-row">
             <label>Group</label>
             <input type="text" name="group" id="group" required="required" value='<s:property value="group"/>'>
             
             <label>Name</label>
             <input type="text" name="name" value='<s:property value="name"/>' id="name">
-            
-             <label>Doc No</label>
-            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
         </div>
 
         <div class="form-row" style="display: none;">

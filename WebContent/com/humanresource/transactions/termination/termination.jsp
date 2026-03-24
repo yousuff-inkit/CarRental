@@ -482,7 +482,7 @@ button:hover,
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
 }
 
@@ -530,7 +530,7 @@ label {
     padding: 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 13px;
+    font-size: 15px;
     vertical-align: middle;
     white-space: nowrap;
     font-weight: 500;
@@ -563,7 +563,7 @@ label {
     margin: 0 0 16px;
     padding-left: 8px;
     border-left: 3px solid #007bff;
-    font-size: 15px;
+    font-size: 17.6px;
     font-weight: 600;
     color: #253858;
 }
@@ -585,13 +585,9 @@ label {
     <!-- ===============================
          SCROLLABLE CONTENT
     ================================ -->
-    <div class="hidden-scrollbar">
-
-        <!-- ===============================
-             HEADER DETAILS
-        ================================ -->
-        <div class="table-section">
-            <h3>Termination</h3>
+    
+    <div class="table-section">
+           
 
             <table class="cr-table">
                 <tr>
@@ -617,7 +613,13 @@ label {
                 </tr>
             </table>
         </div>
+    
+    <div class="hidden-scrollbar">
 
+        <!-- ===============================
+             HEADER DETAILS
+        ================================ -->
+        
         <!-- ===============================
              EMPLOYEE DETAILS
         ================================ -->

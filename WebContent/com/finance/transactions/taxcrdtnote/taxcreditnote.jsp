@@ -447,9 +447,7 @@
 </script>
 
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -470,9 +468,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -497,9 +493,7 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
+
 
 .receipt-header {
     background: #f6f8fa;
@@ -515,9 +509,7 @@ label {
     gap: 16px;
 }
 
-/* ------------------------------
-   FORM ROWS LAYOUT
------------------------------- */
+
 
 .form-group {
     display: grid;
@@ -538,7 +530,6 @@ label {
     width: 100%;
 }
 
-/* Dual input rows (Currency/Rate, Amount/Base Amount) */
 .form-group.dual-input {
     grid-template-columns: 120px 1fr 120px 1fr;
 }
@@ -548,7 +539,6 @@ label {
     padding-right: 8px;
 }
 
-/* Date/Ref/Doc row - 3 pairs */
 .form-group.date-ref-doc-row {
     grid-template-columns: 80px 200px 80px 1fr 80px 200px;
     align-items: center;
@@ -581,7 +571,6 @@ label {
     flex-shrink: 0;
 }
 
-/* Type/AccID/AccName row */
 .form-group.type-acc-row {
     grid-template-columns: 120px 120px 120px 200px 1fr;
     align-items: center;
@@ -593,7 +582,6 @@ label {
     padding-right: 8px;
 }
 
-/* Full width description row */
 .form-row.full-row {
     display: grid;
     grid-template-columns: 120px 1fr;
@@ -609,9 +597,7 @@ label {
     color: #253858;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+
 
 .table-section {
     margin: 20px 0;
@@ -650,9 +636,7 @@ label {
     border-bottom: none;
 }
 
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
+
 
 .hidden-scrollbar {
     overflow: auto;
@@ -662,29 +646,34 @@ label {
     width: 10px;
 }
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
 
-button, .myButton {
-    background: #007bff;
+ body::-webkit-scrollbar {
+    width: 0px;
+}
+
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
     border: none;
-    padding: 6px 16px;
-    color: #fff;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-    font-size: 13px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
-button:hover, .myButton:hover {
-    background: #0056b3;
-}
-
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 
 #validrate,
 #validrate1 {

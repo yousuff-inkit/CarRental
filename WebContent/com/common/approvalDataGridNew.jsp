@@ -220,30 +220,54 @@
 
             $("#jqxapprovalDataGrid").jqxGrid('clearfilters');
         };
-
-
         $("#jqxapprovalDataGrid").on('rowdoubleclick', function (event) {
             var rowindextemp = event.args.rowindex;
-            var doc_no=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doc_no");
-            var path1=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "path");
-            var brch=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "branch");
-            var doctype=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doctype");
-            var name=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "name");
             
-            document.getElementById('formName').value = name;
-            document.getElementById('formCode').value = doctype;        
-            document.getElementById('branchid').value = brch;
-            document.getElementById('mode').value = "view";        
+            var doc_no   = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doc_no");
+            var path1    = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "path");
+            var brch     = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "branch");
+            var doctype  = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doctype");
+            var rawName  = $("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "name");
             
-            var url=document.URL;                                
-            var reurl=url.split("com");            
+            var name = rawName.replace(/\s*\(.*?\)\s*/g, '').trim(); 
             
-            window.parent.formName.value=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "name");
-            window.parent.formCode.value=$("#jqxapprovalDataGrid").jqxGrid('getcellvalue', rowindextemp, "doctype");
+            var contextPath = "<%=request.getContextPath()%>"; 
             
-            var path= path1+"?mode=view&docno="+doc_no+"&exefolio=1&brch="+brch+"&doctype="+doctype+"&name="+name;
-            $("#folio").attr("src",reurl[0]+""+path);        
-        });    
+            var pathParts = path1.split('/');
+            var fileName = pathParts[pathParts.length - 1]; 
+            var folderPath = path1.substring(0, path1.lastIndexOf("/")); 
+            var capitalizedForm = fileName.charAt(0).toUpperCase() + fileName.slice(1).replace(".jsp", "");
+            var dynamicAction = folderPath + "/save" + capitalizedForm.trim() + ".action";
+
+            var typeMap = {
+                'BPV': 'bankpay', 'CPV': 'cashpay', 'BRV': 'bankrec', 'CRV': 'cashrec', 'JV': 'jv' 
+            };
+            var middlePart = typeMap[doctype] || doctype.toLowerCase();
+            var dynamicIdParam = "txt" + middlePart + "docno";
+
+            if (window.parent) {
+                window.parent.formName.value = name + " - " + doc_no;
+                window.parent.formCode.value = doctype; 
+            }
+
+            var cleanPath = dynamicAction.startsWith("/") ? dynamicAction : "/" + dynamicAction;
+            var fullPath = contextPath + cleanPath + 
+                           "?mode=View" +
+                           "&" + dynamicIdParam + "=" + doc_no + 
+                           "&brchName=" + encodeURIComponent(brch) + 
+                           "&formdetail=" + encodeURIComponent(name) + 
+                           "&formdetailcode=" + encodeURIComponent(doctype);
+
+            var stableTabId = doctype + "_" + doc_no;
+
+            var tabLabel = name + " - " + doc_no; 
+
+            if (window.parent && typeof window.parent.addTab === "function") {
+                window.parent.addTab(tabLabel, fullPath, stableTabId);
+            } else if (window.parent && typeof window.parent.addNewTab === "function") {
+                window.parent.addNewTab(tabLabel, fullPath, stableTabId);
+            }
+        });
     });  
     
     function onDateRangeChange() {

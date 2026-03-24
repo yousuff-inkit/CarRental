@@ -181,132 +181,120 @@ $(document).ready(function () {
 	}
 </script>
 <style type="text/css">
-    /* Layout & Sidebar Structure */
-    .master-container {
-        display: flex;
-        font-family: 'Segoe UI', Tahoma, sans-serif !important;
-        background-color: #f4f7f9;
-        width: 100%;
-        height: 100vh !important;
-        overflow: hidden !important;
-    }
+      .master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
 
-    .sidebar-filters {
-        width: 330px; 
-        flex: 0 0 330px;
-        background-color: #ffffff;
-        border-right: 1px solid #e1e8ed;
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-        height: 100vh !important;
-    }
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
 
-    .sidebar-fixed-top {
-        padding: 20px 20px 15px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f4f8;
-        flex-shrink: 0;
-    }
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
 
-    .sidebar-scroll-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px 20px 25px 20px;
-    }
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
 
-    /* Cleaned Cards - Removing Unwanted Green Backgrounds */
-    .filter-card {
-        background-color: #f8fafc !important;
-        border: 1px solid #e3e8ee !important;
-        border-radius: 12px !important;
-        padding: 15px;
-        margin-bottom: 10px;
-    }
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
 
-    /* HARD RESET: Stripping legacy green/shading backgrounds */
-    .filter-card *, 
-    fieldset, 
-    legend, 
-    .branch, 
-    td, 
-    tr {
-        background-color: transparent !important;
-        background: none !important;
-    }
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
 
-    .filter-table { 
-        width: 100%; 
-        border-spacing: 0 10px; 
-    }
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
 
-    .label-cell {
-        text-align: right;
-        padding-right: 12px;
-        font-size: 13px;
-        color: #4e5e71;
-        font-weight: 600;
-        width: 85px;
-    }
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    /* Input & Select Styling */
-    input[type="text"], select {
-        width: 100%;
-        border: 1px solid #ccd6e0;
-        border-radius: 6px;
-        padding: 7px 10px;
-        font-size: 13px;
-        color: #333;
-        box-sizing: border-box;
-        background-color: #ffffff !important;
-    }
+.btn-submit:hover {
+    background: #1d4ed8;
+}
 
-    /* RHS Visibility & Scrollbar Kill */
-    .main-content-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100%;
-        max-width: calc(100vw - 330px);
-        overflow: hidden !important; 
-        position: relative;
-        background-color: #ffffff;
-    }
 
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto !important;
-        overflow-x: hidden !important; 
-        padding: 20px;
-    }
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
 
-    /* Action Buttons Styling */
-    .myButtons {
-        background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-        background-color: #768d87;
-        border: 1px solid #566963;
-        border-radius: 6px;
-        cursor: pointer;
-        color: #ffffff;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 10px;
-        width: 100%;
-        margin-top: 10px;
-        text-shadow: 0px -1px 0px #2b665e;
-        display: block;
-        text-align: center;
-        text-decoration: none;
-    }
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    .myButtons:hover {
-        background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-        background-color: #6c7c7c;
-    }
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
+.main-content-wrapper{
+    flex:1;
+    width:100%;
+}
 
-    .branch { font-size: 13px; color: #4e5e71; font-weight: 600; }
+.scrollable-grid-area{
+    width:100%;
+}
+
+#delupdiv{
+    width:100%;
+}
 </style>
 
 </head>

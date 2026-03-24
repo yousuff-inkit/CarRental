@@ -67,8 +67,8 @@ String todate=request.getParameter("todate")==null?"":request.getParameter("toda
             
             $("#summaryGrid").jqxGrid(
             {
-                width: '99.5%',
-                height: 300,
+                width: '100%',
+                height: 500,
                 source: dataAdapter,
                 columnsresize: true,
                 columns: columns,

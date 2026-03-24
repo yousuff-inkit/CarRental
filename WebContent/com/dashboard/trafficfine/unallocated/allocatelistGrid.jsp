@@ -92,8 +92,8 @@ $(document).ready(function () {
     
     $("#trafficGrid").jqxGrid(
     {
-        width: '98%',
-        height: 500,
+        width: '100%',
+        height: 630,
         source: dataAdapter,
       
         filtermode:'excel',
@@ -111,13 +111,13 @@ $(document).ready(function () {
 					    }  
 					  },
                      	
-                     	{ text: 'Plate Code', datafield: 'pcolor', width: '10%'   },
+                     	{ text: 'Plate Code', datafield: 'pcolor', width: '5%'   },
 						{ text: 'Reg NO', datafield: 'regno', width: '7%' },
 						{ text: 'Ticket No', datafield: 'ticket_no', width: '10%' },
-						{ text: 'Source', datafield: 'source', width: '15%'},
-						{ text: 'Traffic Date', datafield: 'traffic_date', width: '9%',cellsformat:'dd.MM.yyyy' },
+						{ text: 'Source', datafield: 'source', width: '10%'},
+						{ text: 'Traffic Date', datafield: 'traffic_date', width: '8%',cellsformat:'dd.MM.yyyy' },
 
-						{ text: 'Traffic Time', datafield: 'time', width: '10%'},
+						{ text: 'Traffic Time', datafield: 'time', width: '8%'},
 
 						{ text: 'Amount', datafield: 'amount', width: '8%',cellsalign: 'right', align:'right' },
 						{ text: 'RA No', datafield: 'rano', width: '5%'},

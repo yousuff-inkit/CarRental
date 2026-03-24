@@ -10,83 +10,6 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-<style>
-/* popup container */
-#search {
-    width: 900px;
-    margin: 0 auto;
-    background: #f6f8fa;
-    border-radius: 10px;
-    box-shadow: 0 8px 30px rgba(15,23,42,0.25);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 13px;
-    color: #222;
-}
-
-/* inner body only – no extra header strip */
-#search-body {
-    padding: 8px 14px 10px 14px;
-}
-
-/* filters table */
-#search table.cr-search-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    box-shadow: 0 0 0 1px #e0e4ee;
-}
-
-#search table.cr-search-table td {
-    padding: 4px 6px;
-    vertical-align: middle;
-    font-size: 12px;
-}
-
-#search table.cr-search-table td[align="right"] {
-    font-weight: 800;
-    color: #333;
-    white-space: nowrap;
-}
-
-/* inputs – same look/height as master UI */
-#search input[type="text"] {
-    width: 100%;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
-    padding: 2px 6px;
-    height: 22px;
-    line-height: 22px;
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    font-size: 12px;
-    box-sizing: border-box;
-}
-
-/* search button aligned with inputs */
-#search .myButton {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    height: 24px;
-    line-height: 22px;
-    padding: 0 16px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-}
-#search .myButton:hover {
-    background: #0056b3;
-}
-
-/* grid wrapper under filters */
-#refreshdiv {
-    margin-top: 8px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 0 0 1px #e0e4ee;
-}
-</style>
 
 <script type="text/javascript">
 function loadSearch() {
@@ -106,48 +29,113 @@ function getdata(accountNo, accountName, total){
 </script>
 </head>
 
-<body>
+<style type="text/css">
+/* Wrapper container with white background */
+#search {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+/* Standardized table spacing for Master UI */
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+  background-color: #ffffff;
+}
+
+/* Label styling: bold, dark grey, Segoe UI font */
+#search td[align="right"] {
+  font-weight: 700;
+  font-size: 14px;
+  color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* Input field styling: 95% width, standard padding and borders */
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;                
+  max-width: 100%;
+  box-sizing: border-box;   
+  border: 1px solid #ccc;
+}
+
+/* Row height spacing */
+#search tr {
+  line-height: 1.6;
+}
+
+/* Master UI Primary Action Button - Dark Blue Gradient */
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Hover effect for the primary button */
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+</style>
+
+<body bgcolor="#ffffff">
 <div id="search">
-    <div id="search-body">
-        <table class="cr-search-table">
-            <tr>
-                <td align="right" style="width:12%;">A/c No</td>
-                <td style="width:31%;">
-                    <input type="text" name="txtaccountno" id="txtaccountno"
-                           autocomplete="off"
-                           value='<s:property value="txtaccountno"/>'>
-                </td>
+<table width="100%" border="0">
+  
+  <tr>
+    <td width="12%" align="right">A/c No</td>
+    <td width="35%">
+        <input type="text" name="txtaccountno" id="txtaccountno"
+               autocomplete="off"
+               value='<s:property value="txtaccountno"/>'>
+    </td>
+    <td width="15%" align="right">Balance</td>
+    <td width="38%">
+        <input type="text" name="txttotal" id="txttotal"
+               value='<s:property value="txttotal"/>'>
+    </td>
+  </tr>
 
-                <td align="right" style="width:15%;">Balance</td>
-                <td style="width:22%;">
-                    <input type="text" name="txttotal" id="txttotal"
-                           value='<s:property value="txttotal"/>'>
-                </td>
-            </tr>
+  <tr>
+    <td align="right">A/c Name</td>
+    <td colspan="2">
+        <input type="text" name="txtaccountname" id="txtaccountname"
+               autocomplete="off" style="width: 98%;"
+               value='<s:property value="txtaccountname"/>'>
+    </td>
+    <td align="center">
+        <input type="button" name="btnsearch" id="btnsearch"
+               class="myButton" value="Search"
+               onclick="loadSearch();">
+    </td>
+  </tr>
 
-            <tr>
-                <td align="right">A/c Name</td>
-                <td colspan="2">
-                    <input type="text" name="txtaccountname" id="txtaccountname"
-                           autocomplete="off"
-                           value='<s:property value="txtaccountname"/>'>
-                </td>
-                <td align="center">
-                    <input type="button" name="btnsearch" id="btnsearch"
-                           class="myButton" value="Search"
-                           onclick="loadSearch();">
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="4">
-                    <div id="refreshdiv">
-                        <jsp:include page="opnMainSearchGrid.jsp"></jsp:include>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+  <tr>
+    <td colspan="4">
+        <div id="refreshdiv">
+            <jsp:include page="opnMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
+  </tr>
+  
+</table>
 </div>
 </body>
 </html>

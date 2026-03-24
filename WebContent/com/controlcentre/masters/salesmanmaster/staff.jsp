@@ -153,6 +153,17 @@
     .hidden-scrollbar { overflow: auto; height: 530px; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 
+
+.jqx-datetimeinput, 
+.jqx-datetimeinput input, {
+    width: 130px !important;
+}
+
+
+#docno, 
+.header-docno {
+    width: 130px !important;
+}
 </style><script type="text/javascript">
 	$(document).ready(function () {     
 		  $('#accountWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
@@ -338,10 +349,8 @@
 <jsp:include page="../../../../header.jsp" /><br/>
 <div class="hidden-scrollbar receipt-header">
 
-    <div class="section-block full-width-block">
-        <h3>Staff Details</h3>
 
-        <div class="form-group dual-input">
+ <div class="form-group dual-input">
             <label>Date</label>
             <div>
                 <div id="staffdate" name="staffdate" value='<s:property value="staffdate"/>'></div>
@@ -350,6 +359,10 @@
             <label>Doc No.</label>
             <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
         </div>
+    <div class="section-block full-width-block">
+        <h3>Staff Details</h3>
+
+       
 
         <div class="form-group dual-input">
             <label>Code</label>

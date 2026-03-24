@@ -90,8 +90,8 @@ $(document).ready(function () {
     
     $("#qutfollowgrid").jqxGrid(
     {
-        width: '98%',
-        height: 450,
+        width: '100%',
+        height: 600,
         source: dataAdapter,
         showaggregates:true,
         enableAnimations: true,

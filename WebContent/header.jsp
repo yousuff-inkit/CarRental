@@ -6,21 +6,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <jsp:include page="notification.jsp"></jsp:include>
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Rubik:400,500,700" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/css/loading.css">
 <style>
 
-    body {
-        font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-        background: #f6f8fa;
-        margin: 0;
-        color: #253858;
-    }
+   body {
+       font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+       background: #f6f8fa;
+       margin: 0;
+       color: #253858;
+   }
 
 .HeadIcons {
-    font: 12px Tahoma;
-    margin-top: 0px;
+   font: 12px Tahoma;
+   margin-top: 0px;
 	line-height: 30px;
 	background-color: #E0ECF8;
 	height: 27px;
@@ -33,177 +33,177 @@
 	background-color: #E0ECF8;
 }
 label.branch{
-   font-size: 12px;
-   font-family: Tahoma;
-   font-style: normal; 
-   padding-left: 1%;
+  font-size: 12px;
+  font-family: Tahoma;
+  font-style: normal; 
+  padding-left: 1%;
 }
 label.currency{
-   font-size: 12px;
-   font-family: Tahoma;
-   font-style: normal;
-   padding-left: 1%;
+  font-size: 12px;
+  font-family: Tahoma;
+  font-style: normal;
+  padding-left: 1%;
 }
 
 #errormsg {
-  -moz-animation-duration: 1s;
-  -moz-animation-name: blink;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-direction: alternate;
-  
-  -webkit-animation-duration: 2s;
-  -webkit-animation-name: blink;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-  
-  animation-duration: 1s;
-  animation-name: blink;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+ -moz-animation-duration: 1s;
+ -moz-animation-name: blink;
+ -moz-animation-iteration-count: infinite;
+ -moz-animation-direction: alternate;
+ 
+ -webkit-animation-duration: 2s;
+ -webkit-animation-name: blink;
+ -webkit-animation-iteration-count: infinite;
+ -webkit-animation-direction: alternate;
+ 
+ animation-duration: 1s;
+ animation-name: blink;
+ animation-iteration-count: infinite;
+ animation-direction: alternate;
 }
 
 @-moz-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
+ from {
+   opacity: 1;
+ }
+ 
+ to {
+   opacity: 0;
+ }
 }
 
 @-webkit-keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
+ from {
+   opacity: 1;
+ }
+ 
+ to {
+   opacity: 0;
+ }
 }
 
 @keyframes blink {
-  from {
-    opacity: 1;
-  }
-  
-  to {
-    opacity: 0;
-  }
+ from {
+   opacity: 1;
+ }
+ 
+ to {
+   opacity: 0;
+ }
 }
 button.icon:disabled { opacity: 0.5; };
 .icon-text {
-    color: #007bff;
-    font-weight: 500;
-    cursor: pointer;
-    margin-right: 18px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
-    font-size: 1rem;
-    display: inline-block;
+   color: #007bff;
+   font-weight: 500;
+   cursor: pointer;
+   margin-right: 18px;
+   padding: 4px 10px;
+   border-radius: 6px;
+   transition: background 0.2s, color 0.2s;
+   font-size: 1rem;
+   display: inline-block;
 }
 .icon-text:hover {
-    background: #eaf4ff;
-    color: #0056b3;
-    text-decoration: underline;
+   background: #eaf4ff;
+   color: #0056b3;
+   text-decoration: underline;
 }
 
 .HeadIcons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 24px;
-    background: #FFFFFF;
-    border-radius: 12px;
-    padding: 18px 32px;
-    width: 95%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 1rem;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   gap: 24px;
+   background: #FFFFFF;
+   border-radius: 12px;
+   padding: 18px 32px;
+   width: 95%;
+   font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+   font-size: 1rem;
 }
 
 .HeadIcons label.branch,
 .HeadIcons label.currency {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-    min-width: 80px;
-    text-align: right;
+   font-weight: 500;
+   color: #333;
+   margin-right: 8px;
+   min-width: 80px;
+   text-align: right;
 }
 
 .HeadIcons select,
 .HeadIcons input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    background: #ffffff;
-    transition: border-color 0.2s;
-    min-width: 120px;
-    height: auto;
-    font-size: 10px;
+   border: 1px solid #d1d5db;
+   border-radius: 6px;
+   padding: 6px 10px;
+   font-size: 1rem;
+   background: #ffffff;
+   transition: border-color 0.2s;
+   min-width: 120px;
+   height: auto;
+   font-size: 10px;
 }
 
 .HeadIcons select:focus,
 .HeadIcons input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
+   border-color: #007bff;
+   outline: none;
 }
 
 #savemsg {
-    color: #22c55e;
-    font-weight: bold;
-    margin-left: 16px;
+   color: #22c55e;
+   font-weight: bold;
+   margin-left: 16px;
 }
 
 #errormsg {
-    color: #e11d48;
-    font-weight: bold;
-    margin-left: 16px;
+   color: #e11d48;
+   font-weight: bold;
+   margin-left: 16px;
 }
 
 .action-bar {
-    display: flex;
-    gap: 10px;
-    padding: 0.4% 2%;
+   display: flex;
+   gap: 10px;
+   padding: 0.4% 2%;
 }
 
 .action-btn {
-    background: #e4e7ed;
-    border: none;
-    color: #000;
-    padding: 4px 12px;           /* same size, smaller side padding */
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.2s ease;
+   background: #e4e7ed;
+   border: none;
+   color: #000;
+   padding: 4px 12px;           /* same size, smaller side padding */
+   border-radius: 20px;
+   font-size: 13px;
+   font-weight: 600;
+   cursor: pointer;
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   transition: background 0.2s ease;
 }
 
 .action-btn:hover {
-    background: #c3ccd8;
+   background: #c3ccd8;
 }
 
 .action-btn:active {
-    background: #b6bfcc;
+   background: #b6bfcc;
 }
 
 /* SVG ICON SIZE */
 .action-btn svg {
-    width: 14px;
-    height: 14px;
-    fill: currentColor;   /* icon uses button text color */
+   width: 14px;
+   height: 14px;
+   fill: currentColor;   /* icon uses button text color */
 }
 
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 1000px white inset !important;
-    box-shadow: 0 0 0 1000px white inset !important;
-    -webkit-text-fill-color: #1f3b70 !important;
+   -webkit-box-shadow: 0 0 0 1000px white inset !important;
+   box-shadow: 0 0 0 1000px white inset !important;
+   -webkit-text-fill-color: #1f3b70 !important;
 }
 
 
@@ -211,31 +211,31 @@ input:-webkit-autofill:focus {
 /* Target only Branch & Currency labels */
 #full label.branch,
 #full label.currency {
-    font-weight: 700 !important;
-    font-size: 14px;
-    color: #253858;
+   font-weight: 700 !important;
+   font-size: 14px;
+   color: #253858;
 }
 
 /* Target only Branch & Currency dropdowns */
 #full select#brchName,
 #full select#currency {
-    height: 34px !important;
-    padding: 4px 10px;
-    font-size: 14px;
-    font-weight: 600;
-    border: 1px solid #b8c7e0;
-    border-radius: 6px;
-    background: #ffffff;
-    width: 150px;           /* increase dropdown width */
-    box-sizing: border-box;
+   height: 34px !important;
+   padding: 4px 10px;
+   font-size: 14px;
+   font-weight: 600;
+   border: 1px solid #b8c7e0;
+   border-radius: 6px;
+   background: #ffffff;
+   width: 150px;           /* increase dropdown width */
+   box-sizing: border-box;
 }
 
 /* Improve spacing ONLY inside this section */
 #full {
-    display: flex;
-    align-items: center;
-    gap: 20px;               /* spacing between each element */
-    padding: 6px 15px;
+   display: flex;
+   align-items: center;
+   gap: 20px;               /* spacing between each element */
+   padding: 6px 15px;
 }
 
 
@@ -244,21 +244,21 @@ input:-webkit-autofill:focus {
 /* Increase visible dropdown list width */
 #brchName,
 #currency {
-    width: 180px !important;       /* Bigger dropdown box */
+   width: 180px !important;       /* Bigger dropdown box */
 }
 
 /* Increase dropdown OPTION list width */
 #brchName option,
 #currency option {
-    padding: 6px 10px;
-    font-size: 14px;
-    min-width: 180px !important;   /* Ensures dropdown list is wide */
+   padding: 6px 10px;
+   font-size: 14px;
+   min-width: 180px !important;   /* Ensures dropdown list is wide */
 }
 
 /* For browsers that override list width */
 #brchName:focus,
 #currency:focus {
-    width: 200px !important;
+   width: 200px !important;
 }
 
 
@@ -268,35 +268,35 @@ input:-webkit-autofill:focus {
 
 /* Heading Style */
 #formdet {
-    font-size: 22px;          /* Bigger title */
-    font-weight: 800;         /* Bold */
-    color: #1f2937;           /* Rich heading color */
-    display: block;
-   /* margin-bottom: 18px;  */    /* GAP between heading and buttons */
+   font-size: 22px;          /* Bigger title */
+   font-weight: 800;         /* Bold */
+   color: #1f2937;           /* Rich heading color */
+   display: block;
+  /* margin-bottom: 18px;  */    /* GAP between heading and buttons */
 }
 
 /* Arrange heading & top button row with spacing */
 .HeadIcons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px; /* gap below buttons */
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 12px; /* gap below buttons */
 }
 
 /* Make ONLY Branch & Currency labels bold */
 .HeadIcons label.branch,
 .HeadIcons label.currency {
-    font-weight: 700 !important;
+   font-weight: 700 !important;
 }
 
 /* Enlarge branch & currency dropdown */
 #brchName,
 #currency {
-    height: 38px;
-    padding: 0 10px;
-    font-weight: 600;
-    border-radius: 6px;
-    min-width: 120px;
+   height: 38px;
+   padding: 0 10px;
+   font-weight: 600;
+   border-radius: 6px;
+   min-width: 120px;
 }
 
 
@@ -304,18 +304,18 @@ input:-webkit-autofill:focus {
 
 /* Reduce space between Heading and Buttons */
 #formdet {
-    margin-bottom: 0 !important;   /* remove extra gap below heading */
-    padding-bottom: 0 !important;
+   margin-bottom: 0 !important;   /* remove extra gap below heading */
+   padding-bottom: 0 !important;
 }
 
 .HeadIcons {
-    margin-bottom: 4px !important; /* reduce gap below the Branch/Currency bar */
-    padding-bottom: 4px !important;
+   margin-bottom: 4px !important; /* reduce gap below the Branch/Currency bar */
+   padding-bottom: 4px !important;
 }
 
 .action-bar {
-    margin-top: 2px !important;      /* remove top gap above buttons */
-    padding-top: 4px !important;
+   margin-top: 2px !important;      /* remove top gap above buttons */
+   padding-top: 4px !important;
 }
 
 
@@ -324,40 +324,20 @@ input:-webkit-autofill:focus {
 
 /* REMOVE unwanted ERP padding/margin at top */
 #mainBG.homeContent {
-    padding-top: 2px !important;
-    margin-top: 2px !important;
+   padding-top: 2px !important;
+   margin-top: 2px !important;
 }
 
 /* Also remove top space from the first HeadIcons bar */
 #full.HeadIcons {
-    margin-top: 2px !important;
-    padding-top: 2px !important;
-}
-.action-bar {
-    display: flex;
-    flex-wrap: nowrap; 
-    align-items: center; 
-    gap: 10px;
-    padding: 0.4% 2%;
-    min-height: 40px; 
+   margin-top: 2px !important;
+   padding-top: 2px !important;
 }
 
-#errormsg, #savemsg {
-    white-space: nowrap; 
-    overflow: visible;         
-    text-overflow: clip;       
-    flex-shrink: 0;
-    max-width: 400px; 
-}
-
-
-#errormsg {
-    animation: blink 1s infinite alternate;
-}
 
 html, body {
-    padding: 0 !important;
-    margin: 0 !important;
+   padding: 0 !important;
+   margin: 0 !important;
 }
 
 
@@ -380,7 +360,7 @@ function showGWValidation(){
 	/*var idarray=new Array();
 	$('#'+formid).find('[id]').each(function() {
 		idarray.push(this.id);
-    });*/
+   });*/
 	$.each(validatedata,function(index,value){
 		var tabindex=value.tabindex;
 		if(tabindex!=null && tabindex!="" && tabindex!="undefined" && typeof(tabindex)!="undefined" && tabindex!="0"){
@@ -396,26 +376,26 @@ function showGWValidation(){
 		});
 	});
 	
-    /*
+   /*
 	idarray.sort(function(a, b) {
-        return ($('#' + a).attr('tabindex') || 0) - ($('#' + b).attr('tabindex') || 0);
-    });
+       return ($('#' + a).attr('tabindex') || 0) - ($('#' + b).attr('tabindex') || 0);
+   });
 	console.log(idarray);
 	$.each(idarray, function(index, id) {
-        $('#' + id).on('focus', function() {
-            // Remove highlight class from all controls
-            $.each(idarray, function(_, id) {
-                $('#' + id).removeClass('validate-next');
-            });
+       $('#' + id).on('focus', function() {
+           // Remove highlight class from all controls
+           $.each(idarray, function(_, id) {
+               $('#' + id).removeClass('validate-next');
+           });
 
-            // Find the next control ID in the array
-            var nextIndex = (index + 1) % idarray.length;
-            var nextControlId = idarray[nextIndex];
+           // Find the next control ID in the array
+           var nextIndex = (index + 1) % idarray.length;
+           var nextControlId = idarray[nextIndex];
 
-            // Add the highlight class to the next control
-            $('#' + nextControlId).addClass('validate-next');
-        });
-    });
+           // Add the highlight class to the next control
+           $('#' + nextControlId).addClass('validate-next');
+       });
+   });
 	*/
 	/*$.each(validatedata,function(index,value){
 		$('#'+formid).find('#'+value.fieldid).addClass('validate');
@@ -425,16 +405,16 @@ $(document).ready(function () {
 
 	document.addEventListener('contextmenu', event => event.preventDefault());
 	
-   if(exefolio==1){
+  if(exefolio==1){
 	doformsubmit();
-   }
-   
-     $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:200px;right:750px;'><img src='../../../../icons/31load.gif'/></div>");
-     if($("#msg").val()=="Successfully Deleted"){
+  }
+  
+    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
+    $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:200px;right:750px;'><img src='../../../../icons/31load.gif'/></div>");
+    if($("#msg").val()=="Successfully Deleted"){
 		 const deleteicon='<%=contextPath%>/icons/cancelled.png';
-    	 $('body').prepend('<div class="delete-img-container" style="z-index: 111;margin-top:60px;height: 100%;position: absolute;background-color:transparent;opacity:0.35;width: 100%;"><img src="'+deleteicon+'" style="width: 500px;height: 500px;top: 35%;position: absolute;left: 50%;transform: translate(-50%, -50%);"></div>');
-     }
+   	 $('body').prepend('<div class="delete-img-container" style="z-index: 111;margin-top:60px;height: 100%;position: absolute;background-color:transparent;opacity:0.35;width: 100%;"><img src="'+deleteicon+'" style="width: 500px;height: 500px;top: 35%;position: absolute;left: 50%;transform: translate(-50%, -50%);"></div>');
+    }
 	/* $("#txtaccperiodstartyear").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 	$("#txtaccperiodendyear").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"}); */
 	
@@ -505,7 +485,7 @@ $(document).ready(function () {
 	 $("input").click(function (evt) {
 			this.placeholder = '' ;
 		});
-  
+ 
 	/* funDtype(); */
 		$('#btnSave').mousedown(function () {
 			
@@ -588,13 +568,8 @@ $(document).ready(function () {
 			});
 		});
 		
-		
-		if (errorstatus) {
-		    $('#errormsg').text(value.label + ' ' + subvalue.msg).show();
-		    $('#savemsg').hide();
-		    return false;
-		} else {
-		    $('#errormsg').hide();
+		if(errorstatus){
+			return false
 		}
 			
 	   $.messager.confirm('Confirm', 'Do you want to save changes?', function(r){
@@ -615,8 +590,9 @@ $(document).ready(function () {
 	   });
 	   });
 			
- 			 getBrchCurr();		
- 			
+			 getBrchCurr();		
+			
+	$("#mode").val("view");		funReadOnly();
 	$("#mode").val("view");		funReadOnly(); initViewButtons();
 	
 	function initViewButtons() {
@@ -683,9 +659,9 @@ $(document).ready(function () {
 		formcode=formdetcode;
 	}
 	getFormValidateData(formcode);
- }); 
- 
- function getMessengerCount() {
+}); 
+
+function getMessengerCount() {
 		var x=new XMLHttpRequest();
 		var msgcnt;
 		var user;
@@ -720,10 +696,10 @@ $(document).ready(function () {
 		x.send();
 	}
 
-  
- function funCreateBtn(){
+ 
+function funCreateBtn(){
 	 funReset();
- 	 $("#mode").val("A");
+	 $("#mode").val("A");
 	 $("#msg").val("");
 	 showGWValidation();
 	 funRemoveReadOnly();
@@ -735,9 +711,9 @@ $(document).ready(function () {
 	 $("#brchName").hide();  $("#brchNames").show(); $('#brchNames').attr('readonly', true ); $("#brchNames").val($("#brchName option:selected").text());
 	 $("#currency").hide();  $("#currencys").show(); $('#currencys').attr('readonly', true ); $("#currencys").val($("#currency option:selected").text());
 	 $('.delete-img-container').remove();
- }
- 
- function funCloseBtn(){
+}
+
+function funCloseBtn(){
 	
 	 if($("#status").val()==1){
 		 $("#msg").val("");    $("#mode").val("view");
@@ -750,22 +726,19 @@ $(document).ready(function () {
 		 document.getElementById("errormsg").innerText="";         document.getElementById("savemsg").innerText="";
 		 $("#brchName").show(); $("#brchNames").hide();  $('#brchNames').attr('readonly', true ); $("#brchNames").val($("#brchName option:selected").text());
 		 $("#currency").show();  $("#currencys").hide(); $('#currencys').attr('readonly', true ); $("#currencys").val($("#currency option:selected").text());
-		 document.getElementById("errormsg").innerText = "";
-		    document.getElementById("savemsg").innerText = "";
-		    $('#errormsg, #savemsg').hide();	
-	 }
+		}
 	 else{
 		 return;
 		 //alert("close form");   
 	 }
- }
+}
 
- 	function funEditBtn() {
+	function funEditBtn() {
 	
 			if(exefolio==1){
- 			$.messager.alert('Message','Edit Not Possible...!!','warning');
- 			return;
- 		}
+			$.messager.alert('Message','Edit Not Possible...!!','warning');
+			return;
+		}
 		
 		if (($("#mode").val() == "view") && ($("#docno").val()!="") && ($("#deleted").val() =="")) {
 			$("#mode").val("E");	$("#msg").val("");
@@ -785,8 +758,8 @@ $(document).ready(function () {
 		}
 	}
 	
- 	function funSearchBtn() {
- 		$('.delete-img-container').remove();
+	function funSearchBtn() {
+		$('.delete-img-container').remove();
 document.getElementById("termstatus").value=0;
 			$("#msg").val("");
 			$("#deleted").val("");  $("#mode").val("view");  funReadOnly();
@@ -885,7 +858,7 @@ document.getElementById("termstatus").value=0;
 	--%>
 	
 	function getCurr(brch) {
-                    //funReset();
+                   //funReset();
 		  var x=new XMLHttpRequest();
 		  x.onreadystatechange=function(){
 		  if (x.readyState==4 && x.status==200)
@@ -1151,31 +1124,31 @@ document.getElementById("termstatus").value=0;
 			 	document.getElementById(id).value=res1;  
 			}
 
-            function funAttachBtn(){
-                if (($("#mode").val() == "view") && $("#docno").val()!="") {
-                    var x = new XMLHttpRequest();
-                    x.onreadystatechange = function() {
-                        if (x.readyState == 4 && x.status == 200) {
-                            var items = x.responseText;
-                            if(parseInt(items)==1){
-                                var  myWindow= window.open("<%=contextPath%>/com/common/checklistmaster.jsp?formCode="+document.getElementById("formdetailcode").value
-                                    +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
-                                myWindow.focus();
-                            } else {
-                                var  myWindow= window.open("<%=contextPath%>/com/common/Attachmaster.jsp?formCode="+document.getElementById("formdetailcode").value
-                                +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
-                                myWindow.focus();
-                            }
-                        }
-                    }
-                    x.open("GET", <%=contextPath + "/"%>+"getattachorchecklist.jsp?dtype="+$("#formdetailcode").val(), true);
-                    x.send();
+           function funAttachBtn(){
+               if (($("#mode").val() == "view") && $("#docno").val()!="") {
+                   var x = new XMLHttpRequest();
+                   x.onreadystatechange = function() {
+                       if (x.readyState == 4 && x.status == 200) {
+                           var items = x.responseText;
+                           if(parseInt(items)==1){
+                               var  myWindow= window.open("<%=contextPath%>/com/common/checklistmaster.jsp?formCode="+document.getElementById("formdetailcode").value
+                                   +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
+                               myWindow.focus();
+                           } else {
+                               var  myWindow= window.open("<%=contextPath%>/com/common/Attachmaster.jsp?formCode="+document.getElementById("formdetailcode").value
+                               +"&docno="+document.getElementById("docno").value+"&brchid="+document.getElementById("brchName").value+"&frmname="+document.getElementById("formdetail").value,"_blank","top=180,left=310,Width=800,Height=430,location=no,scrollbars=no,toolbar=no,resizable=no,meanubar=no,titlebar=no");
+                               myWindow.focus();
+                           }
+                       }
+                   }
+                   x.open("GET", <%=contextPath + "/"%>+"getattachorchecklist.jsp?dtype="+$("#formdetailcode").val(), true);
+                   x.send();
 
-                }else {
-                    $.messager.alert('Message','Select a Document....!','warning');
-                    return;
-                }
-            }
+               }else {
+                   $.messager.alert('Message','Select a Document....!','warning');
+                   return;
+               }
+           }
 			
 			function funCostingBtn(){
 				if (($("#mode").val() == "view") && $("#docno").val()!="") {					
@@ -1232,12 +1205,12 @@ var dtype=window.frameElement.getAttribute("data-formcode");
 							var excel  = items[5].split(",");
 							var email  = items[6].split(",");
 							var costing = items[7].split(",");
-                            var terms  = items[8].split(",");
-                            var other  = items[9].split(",");
-                            var bankreconcile  = items[10].split(",");
+                           var terms  = items[8].split(",");
+                           var other  = items[9].split(",");
+                           var bankreconcile  = items[10].split(",");
 							
-                            if(parseInt(other)==1) {                
-           
+                           if(parseInt(other)==1) {                
+          
 								if(parseInt(add)==0) {		
 									$("#btnCreate").attr('disabled', true ); 
 								}
@@ -1277,7 +1250,7 @@ var dtype=window.frameElement.getAttribute("data-formcode");
 								if(parseInt(terms)==0) {
 								    $("#btnTerms").attr('hidden', true );
 							    }
-                            }
+                           }
 					 }else {}
 				}
 				x.open("GET",<%=contextPath+"/"%>+"chkmenubuttons.jsp?formdetail="+FormNamechk+"&docno="+doc_no+"&dtype="+dtype+"&brhid="+branchval,true);           
@@ -1374,11 +1347,11 @@ function getapprcount(){
 		    }
 	       else
 		  {}
-     }
-      x.open("GET", <%=contextPath+"/"%>+"getApprCount.jsp?docno="+docno+"&dtype="+dtype+"&brch="+brch+"&usrid="+usrid,true);
-     x.send();
-    
-   }
+    }
+     x.open("GET", <%=contextPath+"/"%>+"getApprCount.jsp?docno="+docno+"&dtype="+dtype+"&brch="+brch+"&usrid="+usrid,true);
+    x.send();
+   
+  }
 
 function setapprbrch(branchval){
 			
@@ -1591,7 +1564,7 @@ function setapprbrch(branchval){
 			    
 			if($('#txtforsearch').val()==2){			
 		    		fromrate = $('#txtrate').val(); 
-            		fromamount = $('#txtamount').val();
+           		fromamount = $('#txtamount').val();
 		    	   	currencytype = $('#hidcurrencytype').val().trim();
 		    }else{ 
 		    	    fromrate = $('#txtfromrate').val(); 
@@ -1853,21 +1826,21 @@ function setapprbrch(branchval){
 <body onload="funChkButton();"  onclick="getformbranch();">
 <div id="mainBG" class="homeContent" data-type="background">
 <div class="HeadIcons" id="full">
-	<font size=5px style="width: 100%"><label id="formdet" name="formdet" ></label></font>
+<font size=5px style="width: 100%"><label id="formdet" name="formdet" ></label></font>
 
-   
-        <label class="branch">Branch</label>
-        <select name="brchName" id="brchName" onChange="getCurr(this.value)"></select>
-        <input type="text" name="brchNames" id="brchNames" readonly="readonly" />
 
-        <label class="currency">Currency</label>
-        <select name="currency" id="currency" onchange="getCurrencyType(this.value);"></select>
-        <input type="text" name="currencys" id="currencys" readonly="readonly" />
+<label class="branch">Branch</label>
+<select name="brchName" id="brchName" onChange="getCurr(this.value)"></select>
+<input type="text" name="brchNames" id="brchNames" readonly="readonly" />
 
-        <label id="savemsg"></label>
-        <label id="errormsg"></label>
-        <!-- hidden fields as needed -->
-  
+<label class="currency">Currency</label>
+<select name="currency" id="currency" onchange="getCurrencyType(this.value);"></select>
+<input type="text" name="currencys" id="currencys" readonly="readonly" />
+
+<label id="savemsg"></label>
+<label id="errormsg"></label>
+<!-- hidden fields as needed -->
+
 <%--			<label class="branch">Branch&nbsp;&nbsp;</label>--%>
 <%--			<select name="brchName" id="brchName" onChange="getCurr(this.value)">--%>
 <%--			</select>--%>
@@ -1878,81 +1851,78 @@ function setapprbrch(branchval){
 <%--					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
 <%--					<label id="savemsg" name="savemsg" style="color:green;font-weight:bold;"></label>--%>
 <%--					<label id="errormsg" name="errormsg" style="color:red;font-weight:bold;"><s:property value="errormsg"/></label>--%>
-		<input type="hidden" id="status" />
-		<input type="hidden" id="apprstatus" />
-		<input type="hidden" id="isfirstappr" />
-		<input type="hidden" name="formdetail" id="formdetail" value='<s:property value="formdetail"/>' />
-		<input type="hidden" name="formdetailcode" id="formdetailcode" value='<s:property value="formdetailcode"/>' />
-		<input type="hidden" name="chkstatus" id="chkstatus" value='<s:property value="chkstatus"/>' />
-		<input type="hidden" name="txtheadercardnumbervalidrestrict" id="txtheadercardnumbervalidrestrict" value='<s:property value="txtheadercardnumbervalidrestrict"/>' />
+<input type="hidden" id="status" />
+<input type="hidden" id="apprstatus" />
+<input type="hidden" id="isfirstappr" />
+<input type="hidden" name="formdetail" id="formdetail" value='<s:property value="formdetail"/>' />
+<input type="hidden" name="formdetailcode" id="formdetailcode" value='<s:property value="formdetailcode"/>' />
+<input type="hidden" name="chkstatus" id="chkstatus" value='<s:property value="chkstatus"/>' />
+<input type="hidden" name="txtheadercardnumbervalidrestrict" id="txtheadercardnumbervalidrestrict" value='<s:property value="txtheadercardnumbervalidrestrict"/>' />
 <input type="hidden" id="termstatus" />
-	<!-- 	If Add=1,Edit=2 -->
-		</div>
+<!-- 	If Add=1,Edit=2 -->
+</div>
 
 <div class="action-bar">
 
 <button type="button" class="action-btn" id="btnApproval" onclick="funApproveBtn()">
-    <svg viewBox="0 0 20 20"><path d="M7.629 15.314l-4.71-4.71 1.414-1.415 3.296 3.296 8.042-8.042 1.414 1.414z"/></svg>
-    Approval
+<svg viewBox="0 0 20 20"><path d="M7.629 15.314l-4.71-4.71 1.414-1.415 3.296 3.296 8.042-8.042 1.414 1.414z"/></svg>
+Approval
 </button>
 
 <button type="button" class="action-btn" id="btnClose" onclick="funCloseBtn()">
-    <svg viewBox="0 0 20 20"><path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/></svg>
-    Close
+<svg viewBox="0 0 20 20"><path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/></svg>
+Close
 </button>
 
 <button type="button" class="action-btn" id="btnCreate" onclick="funCreateBtn()">
-    <svg viewBox="0 0 20 20"><path d="M9 3h2v14H9zM3 9h14v2H3z"/></svg>
-    Create
+<svg viewBox="0 0 20 20"><path d="M9 3h2v14H9zM3 9h14v2H3z"/></svg>
+Create
 </button>
 
 <button type="button" class="action-btn" id="btnEdit" onclick="funEditBtn()">
-    <svg viewBox="0 0 20 20"><path d="M3 14.25V17h2.75l8.06-8.06-2.75-2.75L3 14.25zm12.71-7.04a1 1 0 0 0 0-1.41l-1.5-1.5a1 1 0 0 0-1.41 0l-1.29 1.29 2.75 2.75 1.45-1.13z"/></svg>
-    Edit
+<svg viewBox="0 0 20 20"><path d="M3 14.25V17h2.75l8.06-8.06-2.75-2.75L3 14.25zm12.71-7.04a1 1 0 0 0 0-1.41l-1.5-1.5a1 1 0 0 0-1.41 0l-1.29 1.29 2.75 2.75 1.45-1.13z"/></svg>
+Edit
 </button>
 
 <button type="button" class="action-btn" id="btnPrint" onclick="funPrintBtn()">
-    <svg viewBox="0 0 20 20"><path d="M6 2h8v4H6V2zm10 5H4c-1.1 0-2 .9-2 2v5h4v4h8v-4h4v-5c0-1.1-.9-2-2-2z"/></svg>
-    Print
+<svg viewBox="0 0 20 20"><path d="M6 2h8v4H6V2zm10 5H4c-1.1 0-2 .9-2 2v5h4v4h8v-4h4v-5c0-1.1-.9-2-2-2z"/></svg>
+Print
 </button>
 
 <button type="button" class="action-btn" id="btnDelete" onclick="funDeleteBtn()">
-    <svg viewBox="0 0 20 20"><path d="M6 8h1v9H6V8zm3 0h1v9H9V8zm3 0h1v9h-1V8zm2-5h-3l-1-1h-4L8 3H5v2h10V3z"/></svg>
-    Delete
+<svg viewBox="0 0 20 20"><path d="M6 8h1v9H6V8zm3 0h1v9H9V8zm3 0h1v9h-1V8zm2-5h-3l-1-1h-4L8 3H5v2h10V3z"/></svg>
+Delete
 </button>
 
 <button type="button" class="action-btn" id="btnSave" title="Save Changes" onclick="funSaveBtn()" hidden>
-    <svg viewBox="0 0 20 20">
-        <path d="M17 3H3v14h14V3zm-4 12H7v-2h6v2zm0-4H7V7h6v4z"/>
-    </svg>
-    Save
+<svg viewBox="0 0 20 20">
+<path d="M17 3H3v14h14V3zm-4 12H7v-2h6v2zm0-4H7V7h6v4z"/>
+</svg>
+Save
 </button>
 
 <button type="button" class="action-btn" id="btnCancel" title="Cancel Changes" onclick="funCancelBtn()" hidden>
-    <svg viewBox="0 0 20 20">
-        <path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/>
-    </svg>
-    Cancel
+<svg viewBox="0 0 20 20">
+<path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/>
+</svg>
+Cancel
 </button>
 
 
 
 <button type="button" class="action-btn" id="btnSearch" onclick="funSearchBtn()">
-    <svg viewBox="0 0 20 20"><path d="M12.9 14.32a7 7 0 1 1 1.41-1.41l4.39 4.39-1.41 1.41-4.39-4.39zM9 14A5 5 0 1 0 9 4a5 5 0 0 0 0 10z"/></svg>
-    Search
+<svg viewBox="0 0 20 20"><path d="M12.9 14.32a7 7 0 1 1 1.41-1.41l4.39 4.39-1.41 1.41-4.39-4.39zM9 14A5 5 0 1 0 9 4a5 5 0 0 0 0 10z"/></svg>
+Search
 </button>
 
 <button type="button" class="action-btn" id="btnAttach" onclick="funAttachBtn()">
-    <svg viewBox="0 0 20 20"><path d="M7 13.5V6a3 3 0 1 1 6 0v7.5a4.5 4.5 0 1 1-9 0V7h2v6.5a2.5 2.5 0 1 0 5 0V6a1 1 0 1 0-2 0v7.5"/></svg>
-    Attach
+<svg viewBox="0 0 20 20"><path d="M7 13.5V6a3 3 0 1 1 6 0v7.5a4.5 4.5 0 1 1-9 0V7h2v6.5a2.5 2.5 0 1 0 5 0V6a1 1 0 1 0-2 0v7.5"/></svg>
+Attach
 </button>
-
-<span id="savemsg" style="display:none; align-self:center; margin-left:15px; color:#22c55e; font-weight:bold; font-size:13px;"></span>
-<span id="errormsg" style="display:none; align-self:center; margin-left:15px; color:#e11d48; font-weight:bold; font-size:13px;"></span>
 
 </div>
 
-    <div id="attachment-container"></div>
+<div id="attachment-container"></div>
 <%--    <div>--%>
 <%--        <button type="button" class="icon" id="btnApproval" title="Document Status" onclick="funApproveBtn()" style="prop('disabled', true);" >--%>
 <%--            <img alt="statusDocument" src="<%=contextPath%>/icons/approve_new.png">--%>
@@ -2010,7 +1980,6 @@ function setapprbrch(branchval){
 
 <%--    </div>--%>
 </div>	
-	
+
 
 </body>
-</html>

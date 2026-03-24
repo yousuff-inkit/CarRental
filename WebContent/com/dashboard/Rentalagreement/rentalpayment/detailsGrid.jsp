@@ -92,7 +92,7 @@ else{
             	
             	
             	width: '100%',
-                height: 305,
+                height: 600,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,

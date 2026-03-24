@@ -477,7 +477,7 @@ body {
     padding: 24px 0;
     min-height: 100vh;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 16px;
     overflow-y: auto !important; /* Forces the main window to handle scrolling */
 }
 
@@ -661,7 +661,7 @@ body {
 
 .section-block h2 {
 
-    font-size: 14px;
+    font-size: 12px;
 
     font-weight: 500;
 
@@ -693,7 +693,7 @@ body {
 
     color: #253858;
 
-    font-size: 13px;
+    font-size: 14px;
 
 }
 
@@ -759,7 +759,7 @@ body {
 
     text-align: left;
 
-    font-size: 13px;
+    font-size: 16px;
 
     vertical-align: middle;
 
@@ -788,7 +788,7 @@ body {
     font-weight: 500;
 
     color: #333;
-font:Tahoma 14px;
+font:Tahoma 16px;
 }
 
 
@@ -809,7 +809,7 @@ font:Tahoma 14px;
 
     height: 30px;
 
-    font-size: 13px;
+    font-size: 16px;
 
     box-sizing: border-box;
 
@@ -845,7 +845,7 @@ h2.section-title {
 
     color: #253858;
 
-    font-size: 15px;
+    font-size: 14px;
 
     font-weight: 600;
 
@@ -869,7 +869,7 @@ h2.section-title {
 
     color: #253858;
 
-    font-size: 15px;
+    font-size: 17.6px;
 
     font-weight: 600;
 
@@ -898,6 +898,32 @@ h2.section-title {
     align-items: center;
 }
 
+
+.myButton {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
 </style>
  
 

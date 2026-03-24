@@ -718,9 +718,7 @@
 	  
 </script>
 <style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
+
 
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -741,9 +739,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
+
 
 input[type="text"], select {
     height: 32px !important;
@@ -768,9 +764,6 @@ label {
     white-space: nowrap;
 }
 
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
 
 .receipt-header {
     display: flex;
@@ -868,7 +861,7 @@ label {
 /* Special handling for the "to-account-row" - all items in one line */
 .to-account-row {
     display: grid;
-    grid-template-columns: 120px 110px 120px 140px 1fr;
+    grid-template-columns: 100px 50px 140px 1fr;
     align-items: center;
     gap: 12px;
     margin-bottom: 12px;
@@ -891,9 +884,7 @@ label {
     width: 100%;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+
 
 .table-section {
     margin: 20px 0;
@@ -941,20 +932,41 @@ label {
     height: 100vh;
 }
 
-/* Hide scrollbars (but allow scrolling) */
 .hidden-scrollbar::-webkit-scrollbar {
     width: 0px;
 }
+body::-webkit-scrollbar {
+    width: 0px;
+}
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 
 
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
 
+  }
+  
 #validrate,
 #validrate1 {
     color: red;
@@ -962,9 +974,7 @@ label {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
+
 
 #approval-table td {
     font-size: 14px;
@@ -1059,12 +1069,12 @@ select:-webkit-autofill {
             <h2>Payment From</h2>
             <div class="form-group to-account-row" >
                 <label for="cmbtotype">Type</label>
-                <select id="cmbtotype" name="cmbtotype"  onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
+                <select id="cmbtotype" name="cmbtotype" style="width:130%;" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
                     <option value="AR">AR</option><option value="AP">AP</option>
                 </select>
                 <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>' />
-                <label for="txttoaccid" >Account ID</label>
-                <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);" />
+                
+                <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3 to Search" style="margin-left:10px;" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);" />
                 <input type="text" id="txttoaccname" name="txttoaccname" value='<s:property value="txttoaccname"/>' tabindex="-1" />
                 <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>' />
                 <input type="hidden" id="txttotranid" name="txttotranid" value='<s:property value="txttotranid"/>' />

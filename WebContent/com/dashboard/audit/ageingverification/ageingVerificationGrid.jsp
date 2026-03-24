@@ -57,8 +57,8 @@
             );
             $("#ageingVerificationGridID").jqxGrid(
             {
-                width: '98%',
-                height: 350,
+                width: '100%',
+                height: 650,
                 source: dataAdapter,
                 rowsheight:25,
                 filtermode:'excel',

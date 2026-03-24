@@ -1582,29 +1582,6 @@ td {
     width: 10px;
 }
 
-/* ------------------------------
-   BUTTONS
------------------------------- */
-
-button, .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-    font-size: 13px;
-}
-
-button:hover, .myButton:hover {
-    background: #0056b3;
-}
-
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
 
 #validrate,
 #validrate1 {
@@ -1613,9 +1590,7 @@ button:hover, .myButton:hover {
     grid-column: 2 / -1;
 }
 
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
+
 
 #approval-table td {
     font-size: 14px;
@@ -1700,6 +1675,34 @@ select {
 *::after {
     box-sizing: border-box;
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+
+
 
 </style> 
 
@@ -1716,62 +1719,79 @@ select {
 <div class=''>
 <table style="width:100%;">
 	<tr>
-		<td width="100%" valign="top"> 
-    <table style="width:100%;">
-        <tr class="field-box">
+<td width="100%" valign="top">
 
-            <!-- Date -->
-            <td align="right">
-                <label><font size="3">Date</font></label>
-            </td>
-            <td align="left">
-                <div id="closedate" name="closedate"
-                     value='<s:property value="closedate"/>'></div>
-            </td>
-            <input type="hidden" name="hidclosedate" id="hidclosedate"
-                   value='<s:property value="hidclosedate"/>'>
+<table style="width:100%;">
+<tr class="field-box">
 
-            <!-- Location -->
-            <td align="right">
-                <label><font size="3">Location</font></label>
-            </td>
-            <td align="left">
-                <select name="cmbcloseloc" id="cmbcloseloc"
-                        style="width:100%;">
-                    <option value="">--Select--</option>
-                </select>
-            </td>
-            <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch"
-                   value='<s:property value="hidcmbagmtbranch"/>'>
-            <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc"
-                   value='<s:property value="hidcmbcloseloc"/>'>
-
-            <!-- More menu -->
-            <td width="8%" rowspan="2" align="center">
-                <div id="jqxMenuMore" title="More"
-                     style="visibility:hidden;">
-                    <ul>
-                        <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-                        <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-                        <li><a href="#history" onclick="account();">Account Statement</a></li>
-                        <li><a href="#close" onclick="closing();">Closing Summary</a></li>
-                    </ul>
-                </div>
-            </td>
-
-            <!-- Doc No (RIGHT CORNER) -->
-            <td width="6%" align="right">
-                <label><font size="3">Doc No</font></label>
-            </td>
-            <td width="8%" align="left">
-                <input type="text" name="voucherno" id="voucherno"
-                       value='<s:property value="voucherno"/>'
-                       readonly>
-            </td>
-
-        </tr>
-    </table>
+<!-- Date -->
+<td align="right">
+<label><font size="3">Date</font></label>
 </td>
+
+<td align="left">
+<div id="closedate" name="closedate"
+     value='<s:property value="closedate"/>'></div>
+</td>
+
+<input type="hidden" name="hidclosedate" id="hidclosedate"
+value='<s:property value="hidclosedate"/>'>
+
+
+<!-- Location -->
+<td align="right">
+<label><font size="3">Location</font></label>
+</td>
+
+<td align="left">
+<select name="cmbcloseloc" id="cmbcloseloc" style="width:100%;">
+<option value="">--Select--</option>
+</select>
+</td>
+
+<input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch"
+value='<s:property value="hidcmbagmtbranch"/>'>
+
+<input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc"
+value='<s:property value="hidcmbcloseloc"/>'>
+
+
+<!-- More menu -->
+<td width="8%" rowspan="2" align="center">
+<div id="jqxMenuMore" title="More" style="visibility:hidden;">
+<ul>
+<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+<li><a href="#documents" onclick="replacement();">Replacement</a></li>
+<li><a href="#history" onclick="account();">Account Statement</a></li>
+<li><a href="#close" onclick="closing();">Closing Summary</a></li>
+</ul>
+</div>
+</td>
+
+
+<!-- SPACE THAT PUSHES DOC NO RIGHT -->
+<td style="width:100%"></td>
+
+
+<!-- Doc No -->
+<td align="right">
+<label><font size="3">Doc No</font></label>
+</td>
+
+<td align="left">
+<input type="text"
+name="voucherno"
+id="voucherno"
+value='<s:property value="voucherno"/>'
+readonly
+style="width:120px;">
+</td>
+
+</tr>
+</table>
+
+</td>
+</tr>
 		
   <tr class="field-box-table">
     <td colspan="2">

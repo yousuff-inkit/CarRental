@@ -106,8 +106,8 @@
             $("#balanceSheetGrid").jqxTreeGrid(
             {
                 source: dataAdapter,
-                width: '99.5%',
-                height: 520,
+                width: '100%',
+                height: 730,
                 ready: function() 
                 {
                 	var rows = $("#balanceSheetGrid").jqxTreeGrid('getRows');

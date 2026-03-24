@@ -62,7 +62,6 @@ function loadAccountSearchGrid() {
 }
 </script>
 
-<!-- ✅ FORCE BLUE EASYUI BUTTON -->
 <style>
 .l-btn {
     background-color: #007bff !important;
@@ -113,8 +112,12 @@ a.l-btn span.l-btn-text {
         <input type="hidden" id="txttypes">
         <input type="hidden" id="txtnewmaindate">
     </td>
+    <td align="right">Account Name</td>
+    <td >
+        <input type="text" id="txtacctname" style="width:80%;">
+    </td>
 
-    <td width="23%" rowspan="2" align="center">
+    <td width="23%"  align="center">
         <!-- EasyUI Button -->
         <a href="javascript:void(0)"
            class="easyui-linkbutton"
@@ -124,12 +127,7 @@ a.l-btn span.l-btn-text {
     </td>
 </tr>
 
-<tr>
-    <td align="right">Account Name</td>
-    <td colspan="3">
-        <input type="text" id="txtacctname" style="width:80%;">
-    </td>
-</tr>
+
 
 <tr>
     <td colspan="5">

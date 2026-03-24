@@ -12,9 +12,7 @@ String contextPath=request.getContextPath();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (Adopted)
-    ------------------------------ */
+    
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -73,7 +71,7 @@ String contextPath=request.getContextPath();
     }
     
     .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
@@ -103,7 +101,7 @@ String contextPath=request.getContextPath();
         padding: 6px 10px;
         background: #fff;
         transition: border-color 0.2s;
-        font-size: 14px;
+        font-size: 16px;
         box-sizing: border-box;
         width: 100%;
     }
@@ -249,18 +247,29 @@ String contextPath=request.getContextPath();
 <div id="mainBG" class="homeContent" data-type="background"> 
     <form id="frmBrand" action="saveBrand" method="get" autocomplete="off">
         <jsp:include page="../../../../header.jsp" />
-        
+        <div class="form-row" style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div id="date_brand"
+         name="date_brand"
+         class="jqx-datetimeinput-container"
+         style="width:130px; max-width:130px;"></div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No.</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           readonly
+           tabindex="-1"
+           style="width:110px;">
+
+</div>
         <div class="scrollable-content">
             <div class="section-block">
                 <h2 style="margin-top: 0;">Brand Details</h2>
-                
-                <div class="form-row">
-                    <label>Date</label>
-                    <div id="date_brand" name="date_brand" class="jqx-datetimeinput-container"></div>
-                    
-                    <label>Doc No.</label>
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="true" tabindex="-1">
-                </div>
                 
                 <div class="form-row single-field">
                     <label>Brand</label>

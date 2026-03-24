@@ -130,8 +130,8 @@ $(document).ready(function () {
     
     $("#rentalInvoiceGrid").jqxGrid(
     {
-        width: '98%',
-        height: 500,
+        width: '100%',
+        height: 650,
         source: dataAdapter,
         columnsresize :true,
         showaggregates:true,
