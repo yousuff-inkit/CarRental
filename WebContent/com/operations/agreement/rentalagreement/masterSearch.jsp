@@ -9,10 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
-<style>
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-</style>
+
 
 	<script type="text/javascript">
 	$(document).ready(function () {
@@ -39,73 +37,102 @@
 	}
 	 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-<%--    <table  width="100%"  border="1">
-   <tr>
-    <td align="right" width="8%">Name</td>
-    <td align="left" width="60%" colspan="4"><input type="text" name="SCl_name" id="SCl_name"  style="width:96.5%;" value='<s:property value="SCl_name"/>'></td>
-    <td align="right">MOB</td>
-    <td align="left"><input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'></td>
-      <td align="right">MRA</td>
-    <td align="left"><input type="text" id="smra" name="smra" value='<s:property value="smra"/>'> </td>
-    <tr>
-     
-  <tr>
- 
-     <td align="left" width="8">Doc NO</td>
-    <td align="left" width="20%"><input type="text" name="rno" id="rno" value='<s:property value="rno"/>'>
 
-    <td align="right" width="20%">Fleet NO</td>
-    
-    <td align="left" width="20%"><input type="text" name="flno" id="flno" style="width:96.5%;" value='<s:property value="flno"/>'></td>
-    <td align="right" width="20%">Reg NO</td>
-    <td align="left" width="20%"><input type="text" id="sregno" name="sregno" value='<s:property value="sregno"/>'></td>
-    
-    <td  align="center" width="20%" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-  </tr>
-  </table> --%>
-     <table  width="100%">
-   <tr>
-    <td align="right" width="7px">Name</td>
-    <td align="left" width="25px"><input type="text" name="SCl_name" id="SCl_name"  style="width:99%;" value='<s:property value="SCl_name"/>'></td>
-    <td align="right" width="7px">MOB</td>
-    <td align="left" width="7px"><input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'></td>
-      <td width="7px" align="right">MRA</td>
-    <td width="10px" align="left"><input type="text" id="smra" name="smra" value='<s:property value="smra"/>'> </td>
-          <td width="5px" align="right"><input type="checkbox" id="branch_chk"  name="branch_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" ></td>
-    <td width="5px" align="left">All Branch </td>
-    <td align="left" width="5px"> <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-    <tr>
-     
-  <tr>
- 
-     <td  align="right" width="7px">Doc NO</td>
-    <td align="left" width="25px"><input type="text" name="rno" id="rno" value='<s:property value="rno"/>'>
-    <td align="right" width="7px">Fleet NO</td>
-    <td align="left" width="10px"><input type="text" name="flno" id="flno" style="width:96.5%;" value='<s:property value="flno"/>'></td>
-    <td align="right" width="7px">Reg NO</td>
-    <td align="left" width="10px"><input type="text" id="sregno" name="sregno" value='<s:property value="sregno"/>'></td>
-    <td align="right" width="7px">LPO#</td>
-    <td align="left" width="10px" colspan="2"><input type="text" name="lponumber" id="lponumber" style="width:96.5%;" value='<s:property value="lponumber"/>'></td>
-       </tr>
-  </table>
-  </td>
+<style type="text/css">
+#search {
+background-color: #ffffff;
+padding: 2px;
+}
+#search table {
+border-collapse: separate;
+border-spacing: 8px 10px;
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="srefreshdiv">
-      
-   <jsp:include  page="submainSearch.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
+background-color: #ffffff;
+}
+#search td[align="right"] {
+font-weight: 700;
+font-size: 13px;
+color: #222;
+font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+white-space: nowrap;
+}
+input[type="text"] {
+font-weight: 600;
+font-size: 13px;
+padding: 4px 8px;
+width: 100%;
+
+box-sizing: border-box;
+
+border: 1px solid #ccc;
+border-radius: 2px;
+height: 28px;
+}
+#search tr {
+line-height: 1;
+}
+.myButton {
+font-weight: 700;
+font-size: 13px;
+width: 110px;
+height: 32px;
+background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+color: #ffffff !important;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+text-transform: uppercase;
+text-align: center;
+}
+.myButton:hover {
+background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+}
+.chk-label {
+font-size: 12px;
+font-weight: 700;
+vertical-align: middle;
+}
+</style>
+
+<body bgcolor="#ffffff">
+<div id="search">
+<table width="100%" border="0">
+<tr>
+<td width="8%" align="right">Name</td>
+<td width="22%"><input type="text" name="SCl_name" id="SCl_name" value='<s:property value="SCl_name"/>'></td>
+<td width="8%" align="right">MOB</td>
+<td width="20%"><input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'></td>
+<td width="8%" align="right">MRA</td>
+<td width="18%"><input type="text" id="smra" name="smra" value='<s:property value="smra"/>'></td>
+<td width="16%" rowspan="2" align="center">
+<input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
+</td>
+</tr>
+<tr>
+<td align="right">Doc NO</td>
+<td><input type="text" name="rno" id="rno" value='<s:property value="rno"/>'></td>
+<td align="right">Fleet NO</td>
+<td><input type="text" name="flno" id="flno" value='<s:property value="flno"/>'></td>
+<td align="right">Reg NO</td>
+<td><input type="text" id="sregno" name="sregno" value='<s:property value="sregno"/>'></td>
+</tr>
+<tr>
+<td align="right">LPO#</td>
+<td><input type="text" name="lponumber" id="lponumber" value='<s:property value="lponumber"/>'></td>
+<td align="right">Options</td>
+<td colspan="4">
+<input type="checkbox" id="branch_chk" name="branch_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+<span class="chk-label">All Branch</span>
+</td>
+</tr>
+<tr>
+<td colspan="7">
+<div id="srefreshdiv">
+<jsp:include page="submainSearch.jsp"></jsp:include>
+</div>
+</td>
+</tr>
 </table>
-  </div>
+</div>
 </body>
 </html>

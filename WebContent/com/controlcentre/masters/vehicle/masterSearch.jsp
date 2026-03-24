@@ -110,39 +110,88 @@ input[type="text"]:focus {
 tr {
   line-height: 1.6;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#FFFFFF">
+
 <div id="search">
-  <table width="100%" >
-    <tr>
-      <td width="6%" align="right">Fleet No</td>
-      <td width="19%" align="left"><input type="text" name="searchfleet" id="searchfleet" value='<s:property value="searchfleet"/>'></td>
-      <td width="9%" align="right">Fleet Name</td>
-      <td align="left"><input type="text" name="searchfleetname" id="searchfleetname" value='<s:property value="searchfleetname"/>' style="width:99%;"></td>
-      <td align="right">Engine No</td>
-      <td align="left"><input type="text" name="searchengine" id="searchengine" value='<s:property value="searchengine"/>'></td>
-      <td align="right">Chassis No</td>
-      <td align="left"><input type="text" name="searchchassis" id="searchchassis" value='<s:property value="searchchassis"/>'></td>
-    </tr>
-    <tr>
-      <td align="right">Doc No</td>
-      <td align="left"><input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'></td>
-      <td align="right">Date</td>
-      <td width="19%" align="left"><div id="searchdate" name="searchdate"></div></td>
-      <td width="12%" align="right">Reg No</td>
-      <td width="11%" align="left"><input type="text" name="searchregno" id="searchregno"></td>
-      <td width="24%" colspan="2" align="center">
-        <input type="button" name="btninvsearch" id="btninvsearch" class="myButton" value="Search" onClick="mainloadSearch();">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="8"> 
-        <div id="srefreshdiv">
-          <jsp:include page="subMainSearch.jsp" /> 
-        </div>
-      </td>
-    </tr>
-  </table>
+
+<table width="100%">
+
+<tr>
+<td width="8%" align="right"><b>Fleet No</b></td>
+<td width="17%">
+<input type="text" name="searchfleet" id="searchfleet"
+value='<s:property value="searchfleet"/>' style="width:95%;">
+</td>
+
+<td width="10%" align="right"><b>Fleet Name</b></td>
+<td width="25%">
+<input type="text" name="searchfleetname" id="searchfleetname"
+value='<s:property value="searchfleetname"/>' style="width:98%;">
+</td>
+
+<td width="10%" align="right"><b>Engine No</b></td>
+<td width="15%">
+<input type="text" name="searchengine" id="searchengine"
+value='<s:property value="searchengine"/>' style="width:95%;">
+</td>
+
+<td width="10%" align="right"><b>Chassis No</b></td>
+<td width="15%">
+<input type="text" name="searchchassis" id="searchchassis"
+value='<s:property value="searchchassis"/>' style="width:95%;">
+</td>
+</tr>
+
+
+<tr>
+
+<td align="right"><b>Doc No</b></td>
+<td>
+<input type="text" name="searchdocno" id="searchdocno"
+value='<s:property value="searchdocno"/>' style="width:95%;">
+</td>
+
+<td align="right"><b>Date</b></td>
+<td>
+<div id="searchdate" name="searchdate"></div>
+</td>
+
+<td align="right"><b>Reg No</b></td>
+<td>
+<input type="text" name="searchregno" id="searchregno" style="width:95%;">
+</td>
+
+<td colspan="2" align="center">
+<input type="button"
+name="btninvsearch"
+id="btninvsearch"
+class="myButton"
+value="Search"
+onclick="mainloadSearch();">
+</td>
+
+</tr>
+
+
+<tr>
+<td colspan="8">
+
+<div id="srefreshdiv">
+<jsp:include page="subMainSearch.jsp" />
 </div>
+
+</td>
+</tr>
+
+</table>
+
+</div>
+
 </body>

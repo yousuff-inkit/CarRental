@@ -10,9 +10,7 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
+    
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -30,13 +28,11 @@
         max-width: 100%;
         margin: auto;
         box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        /* FORCE HEADER LEFT ALIGNMENT */
+      
         text-align: left !important;
     }
 
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
+    
     center {
         text-align: left !important;
         display: block;
@@ -54,9 +50,7 @@
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
+   
     .receipt-header {
         display: grid;
         grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr; /* Modified for 4 fields */
@@ -104,18 +98,16 @@
     }
 
     .section-block h2, .section-block legend {
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
         border-left: 4px solid #007bff;
         color: #333;
-        display: block; /* ensure it behaves like a block element */
+        display: block;
     }
 
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
+   
     input[type="text"], select, textarea {
         height: 32px !important;
         border: 1px solid #d1d5db;
@@ -150,35 +142,29 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
-    /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
+   
     .table-section { margin: 20px 0; }
     .table-section h3 {
         color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
     }
 
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
+    
 
     .doc-group { display: flex; gap: 5px; }
 
-    /* SCROLLBAR FIX */
+    
     .hidden-scrollbar { overflow: auto; height: 100vh; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
     
-    /* CUSTOM STYLES FOR RENTAL RECEIPT */
+  
     .icon {
-        width: 32px !important; /* Adjust icon size to fit layout */
+        width: 32px !important; 
         height: 32px !important;
         border: none;
-        background-color: transparent !important; /* Make background transparent */
+        background-color: transparent !important; 
         padding: 0;
         margin-right: 10px;
         cursor: pointer;
@@ -194,15 +180,15 @@
         gap: 10px;
     }
 
-    /* Alignment for numerical inputs */
+  
     .align-right-input {
         text-align: right !important;
     }
     
-    /* Small width inputs in the Amount/Discount section */
+    
     .small-input-group {
         display: grid;
-        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr; /* Label-Input pairs for Discount, Add. Charges, Amt */
+        grid-template-columns: 120px 1fr 120px 1fr 120px 1fr; 
         align-items: center;
         gap: 12px;
         margin-bottom: 12px;
@@ -211,6 +197,32 @@
     .small-input-group > input[type="text"] {
         width: 100%;
     }
+    body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 
 </style>
 

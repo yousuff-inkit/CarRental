@@ -147,6 +147,36 @@
         margin-bottom: 4px;
     }
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -537,7 +567,33 @@ function getCurrencyIds(){
 
 <div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
 <form id="frmNipurchaseOrder" action="saveActionNipurOrder" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp" />    
+<jsp:include page="../../../../header.jsp" /> 
+<div class="form-group triple-input" style="display:flex; align-items:center; width:100%;">
+
+    <label for="nipurchaseorderdate" style="margin-right:8px;">Date</label>
+
+    <div class="date-field-cell" style="width:130px;">
+        <div id="nipurchaseorderdate"
+             name="nipurchaseorderdate"
+             value='<s:property value="nipurchaseorderdate"/>'></div>
+
+        <input type="hidden"
+               name="hidnipurchaseorderdate"
+               id="hidnipurchaseorderdate"
+               value='<s:property value="hidnipurchaseorderdate"/>'>
+    </div>
+
+    <label for="docno" style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           tabindex="-1"
+           value='<s:property value="docno"/>'
+           readonly="readonly"
+           style="width:120px;">
+</div>
+               
 	<br/>
 
     <div class=' receipt-header'>
@@ -547,21 +603,10 @@ function getCurrencyIds(){
         <div class="section-block">
             <h2>Purchase Order Details</h2>
             
-            <!-- Row 1: Date, Ref No, Doc No -->
-            <div class="form-group triple-input">
-                <label for="nipurchaseorderdate">Date</label>
-                <div class="date-field-cell">
-                    <div id="nipurchaseorderdate" name="nipurchaseorderdate" value='<s:property value="nipurchaseorderdate"/>'></div>
-                    <input type="hidden" name="hidnipurchaseorderdate" id="hidnipurchaseorderdate" value='<s:property value="hidnipurchaseorderdate"/>'>
-                </div>
+            <label for="refno">Ref No</label>
+<input type="text" name="refno" id="refno"
+       value='<s:property value="refno"/>'>
                 
-                <label for="refno">Ref No</label>
-                <input type="text" name="refno" id="refno" value='<s:property value="refno"/>' style="width: 80%;">
-                
-                <label for="docno">Doc No</label>
-                <input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly" style="width: 80%;">
-            </div>
-            
             <!-- Row 2: Vendor (with 2 inputs) -->
             <div class="form-group vendor-row">
                 <label for="puraccid">Vendor</label>

@@ -372,7 +372,7 @@ label {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
@@ -395,12 +395,57 @@ label {
     min-height: 1px; 
     padding: 10px; 
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 </style>
 
 <body onload="setValues();">
 
 <div id="mainBG" class="homeContent" data-type="background">
     <jsp:include page="../../../../header.jsp" />
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Date</label>
+        <div id="tsDate" name="tsDate"
+             value='<s:property value="tsDate"/>'
+             style="width:120px;"></div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Doc No.</label>
+        <input type="text" name="traficdocno" id="traficdocno"
+               tabindex="-1"
+               value='<s:property value="traficdocno"/>'
+               style="width:120px;">
+    </div>
+
+</div>
+                  
     <br/>
 
     <form id="frmsalic" action="saveSalik" method="post" autocomplete="off">
@@ -415,11 +460,7 @@ label {
                         <option value="salik">Salik</option>
                     </select>
 
-                    <label>Date</label>
-                    <div id="tsDate" name="tsDate" value='<s:property value="tsDate"/>'></div>
-
-                    <label>Doc No.</label>
-                    <input type="text" name="traficdocno" id="traficdocno" tabindex="-1" value='<s:property value="traficdocno"/>'>
+                    
                     
                     <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
                 </div>

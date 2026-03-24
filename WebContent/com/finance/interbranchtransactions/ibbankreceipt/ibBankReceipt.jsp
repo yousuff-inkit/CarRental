@@ -723,11 +723,12 @@ body {
 
 /* ================= MAIN CARD ================= */
 #mainBG {
-    background: #ffffff;
+    background: #fff;
     border-radius: 16px;
-    padding: 12px;
+    padding: 24px;
     max-width: 100%;
-    margin: 0 auto;
+    margin: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
 /* ================= TABLE ================= */
@@ -767,7 +768,7 @@ fieldset {
 }
 
 legend {
-    font-weight: 700;
+    font-weight: 600;
     color: #253858;
     padding: 0 6px;
 }

@@ -112,54 +112,101 @@ input[type="text"]:focus, select:focus {
 tr {
   line-height: 1.6;
 }
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#FFFFFF">
 <div id="search">
-<table width="100%">
-  <tr>
-    <td>                         
-      <table width="100%">
-        <tr>
-          <td align="right" width="8%">Docno</td>
-          <td align="left" width="12%"><input type="text" name="qutdocno" id="qutdocno" value='<s:property value="qutdocno"/>'></td>
-          <td align="right" width="7%">Name</td>
-          <td align="left" width="40%"><input type="text" name="clientnames" id="clientnames" style="width:96.5%;" value='<s:property value="clientnames"/>'></td>
-          <td align="right" width="8%">MOB</td>
-          <td align="left" width="25%"><input type="text" name="clmob" id="clmob" value='<s:property value="clmob"/>'></td>
-        </tr>
-      </table>
-      
-      <table width="100%">
-        <tr> 
-          <td width="8%" align="right">Date</td>
-          <td align="left" width="12%"><div id="bookdates" name="bookdates" value='<s:property value="bookdates"/>'></div></td>
-          <td width="7%" align="right">RefType</td>
-          <td align="left">
-            <select name="quttype" id="quttype" style="width:25%;" value='<s:property value="quttype"/>'>
-              <option value="">--select--</option>
-              <option value="DIR">Direct</option>
-              <option value="QOT">Quotation</option>
-              <option value="ONL">Online</option>
-            </select>
-            &nbsp;&nbsp;Reg NO&nbsp;
-            <input type="text" name="regno" id="regno" style="width:20%;" value='<s:property value="regno"/>'>
-            &nbsp;&nbsp;
-            <input type="button" name="qutbtnrasearch" id="qutbtnrasearch" class="myButton" value="Search" onclick="bookloadSearch()">
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
 
-  <tr>
-    <td colspan="8">
-      <div id="qutrediv">
-        <jsp:include page="bookingsubsearch.jsp" /> 
-      </div>
-    </td>
-  </tr>
+<table width="100%">
+
+<tr>
+<td>
+
+<!-- ROW 1 -->
+<table width="100%">
+<tr>
+
+<td align="right" width="8%">Doc No</td>
+<td width="15%">
+<input type="text" name="qutdocno" id="qutdocno"
+style="width:95%;" value='<s:property value="qutdocno"/>'>
+</td>
+
+<td align="right" width="8%">Name</td>
+<td width="40%">
+<input type="text" name="clientnames" id="clientnames"
+style="width:95%;" value='<s:property value="clientnames"/>'>
+</td>
+
+<td align="right" width="8%">Mob</td>
+<td width="21%">
+<input type="text" name="clmob" id="clmob"
+style="width:95%;" value='<s:property value="clmob"/>'>
+</td>
+
+</tr>
 </table>
+
+
+<!-- ROW 2 -->
+<table width="100%">
+<tr>
+
+<td align="right" width="8%">Date</td>
+<td width="15%">
+<div id="bookdates" name="bookdates"
+value='<s:property value="bookdates"/>'></div>
+</td>
+
+<td align="right" width="8%">Ref Type</td>
+<td width="15%">
+<select name="quttype" id="quttype" style="width:95%;"
+value='<s:property value="quttype"/>'>
+<option value="">--Select--</option>
+<option value="DIR">Direct</option>
+<option value="QOT">Quotation</option>
+<option value="ONL">Online</option>
+</select>
+</td>
+
+<td align="right" width="8%">Reg No</td>
+<td width="15%">
+<input type="text" name="regno" id="regno"
+style="width:95%;" value='<s:property value="regno"/>'>
+</td>
+
+<td width="31%" align="right">
+<input type="button" name="qutbtnrasearch"
+id="qutbtnrasearch"
+class="myButton"
+value="Search"
+onclick="bookloadSearch()">
+</td>
+
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td colspan="8">
+
+<div id="qutrediv">
+<jsp:include page="bookingsubsearch.jsp"></jsp:include>
+</div>
+
+</td>
+</tr>
+
+</table>
+
 </div>
 </body>
 </html>

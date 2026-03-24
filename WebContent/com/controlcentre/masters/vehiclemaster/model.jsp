@@ -67,7 +67,7 @@
         margin-bottom: 30px;
     }
     .section-block h2 {
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -102,7 +102,7 @@
         padding: 6px 10px;
         background: #fff;
         transition: border-color 0.2s;
-        font-size: 14px;
+        font-size: 16px;
         box-sizing: border-box;
         width: 100%;
     }
@@ -155,83 +155,83 @@
 
 </style>
 <script type="text/javascript">
-      $(document).ready(function () {          
-    	  $("#modeldate").jqxDateTimeInput({ width: '100%', height: '32px' ,formatString : "dd.MM.yyyy" }); // Adjusted size for new layout
-     
-    	    document.getElementById("formdet").innerText="Model(MOD)";
+Â  Â  Â  $(document).ready(function () {Â  Â  Â  Â  Â Â 
+Â  Â  	Â  $("#modeldate").jqxDateTimeInput({ width: '100%', height: '32px' ,formatString : "dd.MM.yyyy" }); // Adjusted size for new layout
+Â  Â  Â 
+Â  Â  	Â  Â  document.getElementById("formdet").innerText="Model(MOD)";
 			document.getElementById("formdetail").value="Model";
 			document.getElementById("formdetailcode").value="MOD";
 			window.parent.formCode.value="MOD";
 			window.parent.formName.value="Model";
-          var data= '<%=cma.searchDetails() %>';
-              
-              var num = 0; 
-              var source =
-              {
-                  datatype: "json",
-                  datafields: [
-                            	{name : 'DOC_NO' , type: 'int' },
-       						{name : 'vtype', type: 'String'  },
-                            	{name : 'date', type: 'date'  },
-                            	{name : 'brand_name',type:'String'},
-                            	{name : 'brandid',type:'String'}
-                   ],
-                   localdata: data,
-                  
-                  
-                  pager: function (pagenum, pagesize, oldpagenum) {
-                      // callback called when a page or page size is changed.
-                  }
-              };
-              
-              var dataAdapter = new $.jqx.dataAdapter(source,
-              		 {
-                  		loadError: function (xhr, status, error) {
-  	                    alert(error);    
-  	                    }
-  		            }		
-              );
-      
+Â  Â  Â  Â  Â  var data= '<%=cma.searchDetails() %>';
+Â  Â  Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  Â  Â  var num = 0;Â 
+Â  Â  Â  Â  Â  Â  Â  var source =
+Â  Â  Â  Â  Â  Â  Â  {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  datatype: "json",
+Â  Â  Â  Â  Â  Â  Â  Â  Â  datafields: [
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'DOC_NO' , type: 'int' },
+Â  Â  Â  Â 						{name : 'vtype', type: 'String'Â  },
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'date', type: 'date'Â  },
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'brand_name',type:'String'},
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'brandid',type:'String'}
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â ],
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â localdata: data,
+Â  Â  Â  Â  Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  Â  Â  Â  Â  pager: function (pagenum, pagesize, oldpagenum) {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  // callback called when a page or page size is changed.
+Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+Â  Â  Â  Â  Â  Â  Â  };
+Â  Â  Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  Â  Â  var dataAdapter = new $.jqx.dataAdapter(source,
+Â  Â  Â  Â  Â  Â  Â  		 {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  		loadError: function (xhr, status, error) {
+Â  	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  alert(error);Â  Â Â 
+Â  	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+Â  		Â  Â  Â  Â  Â  Â  }		
+Â  Â  Â  Â  Â  Â  Â  );
+Â  Â  Â Â 
 
 
-              $("#jqxModelSearch1").jqxGrid(
-                      {
-                      	width: '100%',
-                          height: 350,
-                          source: dataAdapter,
-                          showfilterrow: true,
-                          filterable: true,
-                          selectionmode: 'multiplecellsextended',
-                          sortable: true,
-                          altrows:true,
-                          columns: [
-          					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '20%' },
-          					{ text: 'Brand ID',columntype: 'textbox', filtertype: 'input', datafield: 'brandid', width: '30%', hidden: true },
-          					{ text: 'Model',columntype: 'textbox', filtertype: 'input', datafield: 'vtype', width: '30%' },
-          					{ text: 'Date',columntype: 'textbox',filtertype: 'input',datafield:'date',width: '20%',cellsformat:'dd.MM.yyyy'},
-          					{ text: 'Brand',columntype: 'textbox', filtertype: 'input', datafield: 'brand_name', width: '30%' },
+Â  Â  Â  Â  Â  Â  Â  $("#jqxModelSearch1").jqxGrid(
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	width: '100%',
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  height: 350,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  source: dataAdapter,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  showfilterrow: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  filterable: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  selectionmode: 'multiplecellsextended',
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  sortable: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  altrows:true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  columns: [
+Â  Â  Â  Â  Â  					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '20%' },
+Â  Â  Â  Â  Â  					{ text: 'Brand ID',columntype: 'textbox', filtertype: 'input', datafield: 'brandid', width: '30%', hidden: true },
+Â  Â  Â  Â  Â  					{ text: 'Model',columntype: 'textbox', filtertype: 'input', datafield: 'vtype', width: '30%' },
+Â  Â  Â  Â  Â  					{ text: 'Date',columntype: 'textbox',filtertype: 'input',datafield:'date',width: '20%',cellsformat:'dd.MM.yyyy'},
+Â  Â  Â  Â  Â  					{ text: 'Brand',columntype: 'textbox', filtertype: 'input', datafield: 'brand_name', width: '30%' },
 
-          	              ]
-                      });
+Â  Â  Â  Â  Â  	Â  Â  Â  Â  Â  Â  Â  ]
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  });
 
-              $('#jqxModelSearch1').on('rowdoubleclick', function (event) 
-              		{
-  		            	var rowindex1=event.args.rowindex;
-  		                document.getElementById("docno").value= $('#jqxModelSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
-  		                document.getElementById("model").value = $("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "vtype");
-  		              $('#frmModel select').attr('disabled', false);
-  		    		$('#modeldate').jqxDateTimeInput({disabled: false});
-  		                $("#modeldate").jqxDateTimeInput('val',$("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
-  		                $('#brand').val($("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "brandid")) ;
-  		              $('#frmModel select').attr('disabled', true);
-  		    		$('#modeldate').jqxDateTimeInput({disabled: true});
-              		 }); 
-              $("#jqxModelSearch1").jqxGrid('hidecolumn', 'brandid'); 
+Â  Â  Â  Â  Â  Â  Â  $('#jqxModelSearch1').on('rowdoubleclick', function (event)Â 
+Â  Â  Â  Â  Â  Â  Â  		{
+Â  		Â  Â  Â  Â  Â  Â  	var rowindex1=event.args.rowindex;
+Â  		Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("docno").value= $('#jqxModelSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO");Â 
+Â  		Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("model").value = $("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "vtype");
+Â  		Â  Â  Â  Â  Â  Â  Â  $('#frmModel select').attr('disabled', false);
+Â  		Â  Â  		$('#modeldate').jqxDateTimeInput({disabled: false});
+Â  		Â  Â  Â  Â  Â  Â  Â  Â  $("#modeldate").jqxDateTimeInput('val',$("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
+Â  		Â  Â  Â  Â  Â  Â  Â  Â  $('#brand').val($("#jqxModelSearch1").jqxGrid('getcellvalue', rowindex1, "brandid")) ;
+Â  		Â  Â  Â  Â  Â  Â  Â  $('#frmModel select').attr('disabled', true);
+Â  		Â  Â  		$('#modeldate').jqxDateTimeInput({disabled: true});
+Â  Â  Â  Â  Â  Â  Â  		 });Â 
+Â  Â  Â  Â  Â  Â  Â  $("#jqxModelSearch1").jqxGrid('hidecolumn', 'brandid');Â 
 
-          });
-    
-      function funSearchLoad(){
-			changeContent('modelSearch.jsp', $('#window')); 
+Â  Â  Â  Â  Â  });
+Â  Â Â 
+Â  Â  Â  function funSearchLoad(){
+			changeContent('modelSearch.jsp', $('#window'));Â 
 		 }
 
 	function funReadOnly() {
@@ -272,31 +272,31 @@
 		document.getElementById("brand").focus();
 	}
 	 $(function(){
-	        $('#frmModel').validate({
-	                 rules: {
-	                 brand:{
-	                	 required:true
-	                 },
-	                 model:{
-	                	 required:true,
-	                	 maxlength:20
-	                 }
-	                 },
-	                 messages: {
-	                  brand:{
-	                	  required:" *"
-	                  },
-	                  model:{
-	                	  required:" *",
-	                	  maxlength:"max 20 chars"
-	                  }
-	                 }
-	        });});
-	     function funNotify(){
-	    	
-	    		return 1;
-		} 
-	     
+	Â  Â  Â  Â  $('#frmModel').validate({
+	Â  Â  Â  Â  Â  Â  Â  Â  Â rules: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â brand:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	 required:true
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â model:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	 required:true,
+	Â  Â  Â  Â  Â  Â  Â  Â  	 maxlength:20
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â messages: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  brand:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  model:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *",
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  maxlength:"max 20 chars"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  });});
+	Â  Â  Â function funNotify(){
+	Â  Â  	
+	Â  Â  		return 1;
+		}Â 
+	Â  Â  Â 
 	function setValues() {
 		//$('#brand').val($('#brandid').val());
 if ($('#brandid').val() != null) {
@@ -304,20 +304,38 @@ if ($('#brandid').val() != null) {
 			$('#brand').val($('#brandid').val());
 }
 if($('#msg').val()!=""){
-	   $.messager.alert('Message',$('#msg').val());
-	  }
+	Â  Â $.messager.alert('Message',$('#msg').val());
+	Â  }
 	}
 	
 	 function funExcelBtn(){
-		  $("#jqxModelSearch1").jqxGrid('exportdata', 'xls', 'Model');
-	  }
+		Â  $("#jqxModelSearch1").jqxGrid('exportdata', 'xls', 'Model');
+	Â  }
 </script>
 </head>
 <body onLoad="getBrand();setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmModel" action="saveActionModel"  autocomplete="off">
+<form id="frmModel" action="saveActionModel"Â  autocomplete="off">
 <jsp:include page="../../../../header.jsp" />
-    
+   <div class="form-row date-docno" style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div class="jqx-datetimeinput-container" style="width:130px;">
+        <div id="modeldate" name="modeldate" value='<s:property value="modeldate"/>'></div>
+    </div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           value='<s:property value="docno"/>'
+           id="docno"
+           readonly="readonly"
+           tabindex="-1"
+           style="width:110px;">
+
+</div>
     <div class="section-block">
         <h2>Model Details</h2>
         

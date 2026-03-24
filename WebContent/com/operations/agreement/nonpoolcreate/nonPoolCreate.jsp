@@ -206,6 +206,46 @@
         display: flex;
         gap: 10px;
     }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+.dual-input{
+    display:flex;
+    align-items:center;
+    width:100%;
+}
+
+.dual-input label:last-of-type{
+    margin-left:auto;
+}
+
+#voucherno{
+    width:120px !important;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -1063,18 +1103,23 @@ function getvalidationforeditandcloe(){
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmNonPoolCreate" action="saveNonPoolCreate" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
+<div class="form-group dual-input">
+    <label>Date</label>
+    <div>
+        <div id="date" name="date" value='<s:property value="date"/>'></div>
+    </div>
+
+    <label>Doc No</label>
+    <input type="text" name="voucherno" id="voucherno"
+           value='<s:property value="voucherno"/>'>
+</div>
+
 <br>
 <div class="hidden-scrollbar receipt-header">
 
     <div class="section-block full-width-block">
         <h3>Vehicle Info</h3>
-        <div class="form-group dual-input">
-            <label>Date</label>
-            <div><div id="date" name="date" value='<s:property value="date"/>'></div></div>
-
-            <label>Doc No</label>
-            <input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'>
-        </div>
+       
 
         <div class="form-group single-label-dual-input">
             <label>Vehicle</label>

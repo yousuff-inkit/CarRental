@@ -32,100 +32,100 @@
 
 	</script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
+#search {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
-}
-
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-}
-
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%; /* Prevent overflow */
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Updated as per request: Grey border */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
+  border-spacing: 15px 18px;  
   background-color: #ffffff;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #95a5a6;
-  outline: none;
-}
-
-/* Date field styling (div) */
-#txtdate {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
+#search td[align="right"] {
   font-weight: 700;
   font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
+  color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+input[type="text"] {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 95%;                
+  max-width: 100%;
+  box-sizing: border-box;   
+  border: 1px solid #ccc;
+}
+
+#search tr {
+  line-height: 1.6;
+}
+
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .myButton:hover {
-  background-color: #45a049;
-}
-
-/* Row spacing */
-tr {
-  line-height: 1.6;
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 </style>
-</head>
-<body bgcolor="#FFFFFF">
+
+<body bgcolor="#ffffff">
 <div id="search">
-<table width="100%">
+<table width="100%" border="0">
   <tr>
-    <td width="7%" align="right">Doc No</td>
-    <td width="20%"><input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'></td>
-    <td width="11%" align="right">Ref. No.</td>
-    <td width="23%"><input type="text" name="txtreference" id="txtreference" autocomplete="off" value='<s:property value="txtreference"/>'></td>
-    <td width="21%" align="right">Date</td>
-    <td width="18%">
-      <div id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'></div>
-      <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'>
+    <td width="10%" align="right">Doc No</td>
+    <td width="20%">
+        <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
+    </td>
+    <td width="10%" align="right">Ref. No.</td>
+    <td width="20%">
+        <input type="text" name="txtreference" id="txtreference" autocomplete="off" value='<s:property value="txtreference"/>'>
+    </td>
+    <td width="10%" align="right">Date</td>
+    <td width="20%">
+        <div id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'></div>
+        <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'>
     </td>
   </tr>
   <tr>
     <td align="right">Amount</td>
-    <td><input type="text" id="txtamount" name="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'></td>
+    <td>
+        <input type="text" id="txtamount" name="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
+    </td>
     <td align="right">Description</td>
-    <td colspan="2"><input type="text" id="txtmaindescription" name="txtmaindescription" autocomplete="off" style="width:65%;" value='<s:property value="txtmaindescription"/>'></td>
-    <td align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();"></td>
+    <td colspan="2">
+        <input type="text" id="txtmaindescription" name="txtmaindescription" autocomplete="off" style="width: 98%;" value='<s:property value="txtmaindescription"/>'>
+    </td>
+    <td align="center">
+        <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+    </td>
   </tr>
   <tr>
     <td colspan="6">
-      <div id="refreshdiv">
-        <jsp:include page="ijvMainSearchGrid.jsp" />
-      </div>
+        <div id="refreshdiv">
+            <jsp:include page="ijvMainSearchGrid.jsp"></jsp:include>
+        </div>
     </td>
   </tr>
 </table>

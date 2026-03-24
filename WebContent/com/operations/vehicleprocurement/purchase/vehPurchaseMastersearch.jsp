@@ -45,118 +45,106 @@
 	</script>
 <style type="text/css">
 /* Master UI Styles */
-/* Table spacing and layout */
-table {
+#search {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
-}
-
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-}
-
-/* Bold text inside inputs and selects with Grey Borders */
-input[type="text"], select {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border as requested */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
+  border-spacing: 12px 15px;  
   background-color: #ffffff;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus, select:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Date field styling for div */
-#datess {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
+#search td[align="right"] {
   font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+  font-size: 13px;
+  color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  white-space: nowrap;
 }
 
-/* No color change on hover */
+input[type="text"], select {
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px 8px;
+  width: 100%;                
+  box-sizing: border-box;   
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 28px;
+}
+
+#search tr {
+  line-height: 1.2;
+}
+
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 110px;
+    height: 35px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+#refreshdivs {
+    margin-top: 10px;
+    border-top: 1px solid #eee;
 }
 </style>
 
-<body bgcolor="#FFFFFF">
+<body bgcolor="#ffffff">
 <div id="search">
-<table width="100%">
+<table width="100%" border="0">
   <tr>
-    <td>
-      <table width="100%">
-        <tr>
-          <td align="right" width="6%">Doc No</td>
-          <td align="left" width="20%"><input type="text" name="docnoss" id="docnoss" style="width:90%;" value='<s:property value="docnoss"/>'></td>
-          <td align="right" width="10%">Account</td>
-          <td align="left"><input type="text" name="accountss" id="accountss" style="width:80%;" value='<s:property value="accountss"/>'></td>
-          <td align="right" width="14%">Account Name</td>
-          <td align="left" width="30%"><input type="text" name="accnamess" style="width:90%;" id="accnamess" value='<s:property value="accnamess"/>'></td>
-        </tr>
-      </table>
+    <td width="10%" align="right">Date</td>
+    <td width="20%">
+        <div id="datess" name="datess" value='<s:property value="datess"/>'></div>
+    </td>
+    <td width="12%" align="right">Doc No</td>
+    <td width="25%">
+        <input type="text" name="docnoss" id="docnoss" value='<s:property value="docnoss"/>'>
+    </td>
+    <td width="20%" rowspan="2" align="center">
+        <input type="button" name="searchs" id="searchs" class="myButton" value="Search" onclick="loadSearchs()">
     </td>
   </tr>
   <tr>
+    <td align="right">Account</td>
     <td>
-      <table width="100%">
-        <tr> 
-          <td align="right" width="6%">Date </td>
-          <td align="left" width="20%"><div id="datess" name="datess" value='<s:property value="datess"/>'></div></td>
-          <td align="right" width="10%">Type</td>
-          <td width="20%">
-            <select name="reftypess" id="reftypess" style="width:58%;" value='<s:property value="reftypess"/>'>
-              <option value="">--select--</option>
-              <option value="DIR">DIR </option>
-              <option value="VPO">VPO</option>
-            </select>
-          </td>
-          <td width="10%"></td>
-          <td>
-            <input type="button" name="searchs" id="searchs" class="myButton" value="Search" onclick="loadSearchs()">
-          </td>
-        </tr>
-      </table>
+        <input type="text" name="accountss" id="accountss" value='<s:property value="accountss"/>'>
+    </td>
+    <td align="right">Account Name</td>
+    <td>
+        <input type="text" name="accnamess" id="accnamess" value='<s:property value="accnamess"/>'>
     </td>
   </tr>
   <tr>
-    <td colspan="8">
-      <div id="refreshdivs">
-        <jsp:include page="submasterSearch.jsp" /> 
-      </div>
+    <td align="right">Type</td>
+    <td>
+        <select name="reftypess" id="reftypess">
+            <option value="">--select--</option>
+            <option value="DIR">DIR</option>
+            <option value="VPO">VPO</option>
+        </select>
+    </td>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td colspan="5">
+        <div id="refreshdivs">
+            <jsp:include page="submasterSearch.jsp" />
+        </div>
     </td>
   </tr>
 </table>

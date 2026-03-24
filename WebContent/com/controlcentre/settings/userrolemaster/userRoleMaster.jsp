@@ -57,7 +57,7 @@ html, body {
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 13px;
+    font-size: 17.6px;
     font-weight: 600;
 }
 
@@ -83,7 +83,7 @@ html, body {
     text-align: right;
     font-weight: 500;
     color: #445;
-    font-size: 12px;
+    font-size: 17.6px;
 }
 
 /* shared input style (match master text boxes) */
@@ -126,7 +126,7 @@ html, body {
     padding: 6px 8px;
     border-bottom: 1px solid #e5e7eb;
     text-align: left;
-    font-size: 12px;
+    font-size: 16px;
     vertical-align: middle;
 }
 

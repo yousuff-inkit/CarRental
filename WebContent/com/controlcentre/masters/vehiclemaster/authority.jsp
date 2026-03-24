@@ -69,7 +69,7 @@
         margin-bottom: 30px;
     }
     .section-block h2 {
-        font-size: 1.1rem;
+        font-size: 17.6px
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -101,7 +101,7 @@
         padding: 6px 10px;
         background: #fff;
         transition: border-color 0.2s;
-        font-size: 14px;
+        font-size: 16px;
         box-sizing: border-box;
         width: 100%;
     }
@@ -117,7 +117,7 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 16px;
     }
     
     form label.error {
@@ -170,79 +170,79 @@
 <script type="text/javascript">
 var data= '<%=ca.searchDetails() %>';
 
-      $(document).ready(function (){   
-    	  $("#authdate").jqxDateTimeInput({ width: '100%', height: '32px', formatString:"dd.MM.yyyy"}); 
-    	  
-    	  document.getElementById("formdet").innerText="Authority(AUT)";
-  		  document.getElementById("formdetail").value="Authority";
-  		  document.getElementById("formdetailcode").value="AUT";
-		  window.parent.formName.value="Authority";
-  			window.parent.formCode.value="AUT";    	  
-    	  var num = 0; 
-          var source =
-          {
-              datatype: "json",
-              datafields: [
-                        	{name : 'DOC_NO' , type: 'number' },
-   						{name : 'authname', type: 'String'  },
-                        	{name : 'date', type: 'date'  },
-                        	{name : 'authid',type:'String'}
-               ],
-               localdata: data,
-              
-              
-              pager: function (pagenum, pagesize, oldpagenum) {
-                  // callback called when a page or page size is changed.
-              }
-          };
-          
-          var dataAdapter = new $.jqx.dataAdapter(source,
-          		 {
-              		loadError: function (xhr, status, error) {
-	                   // alert(error);    
-	                    }
-		            }		
-          ); 
-          $("#jqxAuthoritySearch1").jqxGrid(
-                  {
-                  	width: '100%',
-                      source: dataAdapter,
-                      showfilterrow: true,
-                      filterable: true,
-                      selectionmode: 'multiplecellsextended',
-                      sortable: true,
-                      altrows:true,
-                      columns: [
-      					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
-      					{ text: 'Auth Id', datafield: 'authid', width: '20%' },
-      					{ text: 'Authority',columntype: 'textbox', filtertype: 'input', datafield: 'authname', width: '50%' },
-      					{ text: 'Date',columntype: 'textbox', filtertype: 'input', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy' },
-    					
+Â  Â  Â  $(document).ready(function (){Â  Â 
+Â  Â  	Â  $("#authdate").jqxDateTimeInput({ width: '100%', height: '32px', formatString:"dd.MM.yyyy"});Â 
+Â  Â  	Â Â 
+Â  Â  	Â  document.getElementById("formdet").innerText="Authority(AUT)";
+Â  		Â  document.getElementById("formdetail").value="Authority";
+Â  		Â  document.getElementById("formdetailcode").value="AUT";
+		Â  window.parent.formName.value="Authority";
+Â  			window.parent.formCode.value="AUT";Â  Â  	Â Â 
+Â  Â  	Â  var num = 0;Â 
+Â  Â  Â  Â  Â  var source =
+Â  Â  Â  Â  Â  {
+Â  Â  Â  Â  Â  Â  Â  datatype: "json",
+Â  Â  Â  Â  Â  Â  Â  datafields: [
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'DOC_NO' , type: 'number' },
+Â  Â 						{name : 'authname', type: 'String'Â  },
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'date', type: 'date'Â  },
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'authid',type:'String'}
+Â  Â  Â  Â  Â  Â  Â  Â ],
+Â  Â  Â  Â  Â  Â  Â  Â localdata: data,
+Â  Â  Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  Â  Â  pager: function (pagenum, pagesize, oldpagenum) {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  // callback called when a page or page size is changed.
+Â  Â  Â  Â  Â  Â  Â  }
+Â  Â  Â  Â  Â  };
+Â  Â  Â  Â  Â Â 
+Â  Â  Â  Â  Â  var dataAdapter = new $.jqx.dataAdapter(source,
+Â  Â  Â  Â  Â  		 {
+Â  Â  Â  Â  Â  Â  Â  		loadError: function (xhr, status, error) {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â // alert(error);Â  Â Â 
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+		Â  Â  Â  Â  Â  Â  }		
+Â  Â  Â  Â  Â  );Â 
+Â  Â  Â  Â  Â  $("#jqxAuthoritySearch1").jqxGrid(
+Â  Â  Â  Â  Â  Â  Â  Â  Â  {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  	width: '100%',
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  source: dataAdapter,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  showfilterrow: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  filterable: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  selectionmode: 'multiplecellsextended',
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  sortable: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  altrows:true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  columns: [
+Â  Â  Â  					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
+Â  Â  Â  					{ text: 'Auth Id', datafield: 'authid', width: '20%' },
+Â  Â  Â  					{ text: 'Authority',columntype: 'textbox', filtertype: 'input', datafield: 'authname', width: '50%' },
+Â  Â  Â  					{ text: 'Date',columntype: 'textbox', filtertype: 'input', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy' },
+Â  Â  					
 
-      	              ]
-                  });
-     
-          $('#jqxAuthoritySearch1').on('rowdoubleclick', function (event) 
-          		{ 
-		            	var rowindex1=event.args.rowindex;
-		                document.getElementById("docno").value= $('#jqxAuthoritySearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
-		                document.getElementById("authname").value = $("#jqxAuthoritySearch1").jqxGrid('getcellvalue', rowindex1, "authname");
-		            	$('#authdate').jqxDateTimeInput({ disabled: false});
+Â  Â  Â  	Â  Â  Â  Â  Â  Â  Â  ]
+Â  Â  Â  Â  Â  Â  Â  Â  Â  });
+Â  Â  Â 
+Â  Â  Â  Â  Â  $('#jqxAuthoritySearch1').on('rowdoubleclick', function (event)Â 
+Â  Â  Â  Â  Â  		{Â 
+		Â  Â  Â  Â  Â  Â  	var rowindex1=event.args.rowindex;
+		Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("docno").value= $('#jqxAuthoritySearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO");Â 
+		Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("authname").value = $("#jqxAuthoritySearch1").jqxGrid('getcellvalue', rowindex1, "authname");
+		Â  Â  Â  Â  Â  Â  	$('#authdate').jqxDateTimeInput({ disabled: false});
 
-		                $("#authdate").jqxDateTimeInput('val', $("#jqxAuthoritySearch1").jqxGrid('getcellvalue', rowindex1, "date")); 
-		                document.getElementById("auth").value= $("#jqxAuthoritySearch1").jqxGrid('getcellvalue', rowindex1, "authid");
-		            	$('#authdate').jqxDateTimeInput({ disabled: true});
+		Â  Â  Â  Â  Â  Â  Â  Â  $("#authdate").jqxDateTimeInput('val', $("#jqxAuthoritySearch1").jqxGrid('getcellvalue', rowindex1, "date"));Â 
+		Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("auth").value= $("#jqxAuthoritySearch1").jqxGrid('getcellvalue', rowindex1, "authid");
+		Â  Â  Â  Â  Â  Â  	$('#authdate').jqxDateTimeInput({ disabled: true});
 
-          		 }); 
-      });
-     
-      function funSearchLoad(){
-			changeContent('authoritySearch.jsp', $('#window')); 
+Â  Â  Â  Â  Â  		 });Â 
+Â  Â  Â  });
+Â  Â  Â 
+Â  Â  Â  function funSearchLoad(){
+			changeContent('authoritySearch.jsp', $('#window'));Â 
 		 }
 
 function funReadOnly(){
 	$('#frmAuthority input').attr('readonly', true );
-	 $('#authdate').jqxDateTimeInput({ disabled: true}); 
+	 $('#authdate').jqxDateTimeInput({ disabled: true});Â 
 	
 }
 function funRemoveReadOnly(){
@@ -256,8 +256,8 @@ function setValues() {
 
 	 }
 	 if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
+		Â  Â $.messager.alert('Message',$('#msg').val());
+		Â  }
 }
 function funFocus(){
 	document.getElementById("auth").focus();
@@ -265,40 +265,58 @@ function funFocus(){
 	function funNotify(){
 		return 1;
 	}
-	    $(function(){
-	        $('#frmAuthority').validate({
-	                 rules: {
-	                 auth: {
-	                	required:true,
-	                	maxlength:8
-	                 },
-	                authname:{
-	                	required:true,
-	                	maxlength:25
-	                }
-	                 },
-	                 messages: {
-	                  auth:{
-	                	  required:" *",
-	                	  maxlength:"max 8 chars"
-	                  },
-	                  authname:{
-	                	  required:" *",
-	                	  maxlength:"max 25 chars"
-	                  }
-	                 }
-	        });});
-	    function funExcelBtn(){
-	    	 $("#jqxAuthoritySearch1").jqxGrid('exportdata', 'xls', 'Authority');
-	    }
+	Â  Â  $(function(){
+	Â  Â  Â  Â  $('#frmAuthority').validate({
+	Â  Â  Â  Â  Â  Â  Â  Â  Â rules: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â auth: {
+	Â  Â  Â  Â  Â  Â  Â  Â  	required:true,
+	Â  Â  Â  Â  Â  Â  Â  Â  	maxlength:8
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  authname:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	required:true,
+	Â  Â  Â  Â  Â  Â  Â  Â  	maxlength:25
+	Â  Â  Â  Â  Â  Â  Â  Â  }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â messages: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  auth:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *",
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  maxlength:"max 8 chars"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  authname:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *",
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  maxlength:"max 25 chars"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  });});
+	Â  Â  function funExcelBtn(){
+	Â  Â  	 $("#jqxAuthoritySearch1").jqxGrid('exportdata', 'xls', 'Authority');
+	Â  Â  }
 </script>
 
 </head>
 <body onload="setValues();" >
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmAuthority" action="saveActionAuthority" autocomplete="off">     
+<form id="frmAuthority" action="saveActionAuthority" autocomplete="off">Â  Â  Â 
 	<jsp:include page="../../../../header.jsp" />
-	
+	<div class="form-row" style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div class="jqx-datetimeinput-container" style="width:130px;">
+        <div id="authdate" name="authdate"></div>
+    </div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           readonly="readonly"
+           value='<s:property value="docno"/>'
+           tabindex="-1"
+           style="width:110px;">
+
+</div>
     <div class="section-block">
         <h2>Authority Details</h2>
         
@@ -321,7 +339,7 @@ function funFocus(){
 
         <input type="hidden" id="authdatehidden" name="authdatehidden" value='<s:property value="authdatehidden"/>'/>					
         <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <input type="hidden" id="msg" name="msg"Â  value='<s:property value="msg"/>'/>
         <input type="hidden" id="mode" name="mode"/>
     </div>
 </form>
