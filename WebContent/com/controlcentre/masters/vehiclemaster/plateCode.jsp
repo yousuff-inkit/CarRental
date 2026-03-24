@@ -73,19 +73,25 @@
 
     .form-grid {
         display: grid;
-        /* Main grid for the form: 
-           Label (120px) | Value Col 1 | Label (120px) | Value Col 2 | Alias Grid (span all rows) */
-        grid-template-columns: 120px 180px 120px 1fr 1fr;
-        gap: 12px 30px;
+        grid-template-columns: 100px 125px 100px 100px 1fr ;
+        gap: 0px 30px;
+        align-items: center;
+
+    }
+        .form-grid_new {
+        display: grid;
+        grid-template-columns: 100px 125px 90px 120px 90px 120px ;
+        gap: 1px 30px;
         align-items: center;
         margin-bottom: 12px;
+       
     }
     
     /* Alias Grid Container spanning rows 1-3 */
     #nAliasgrid {
         grid-row: 1 / 4; 
-        grid-column: 5 / 6;
-        min-height: 200px; /* Ensure space for the embedded grid */
+        grid-column: 5/ 6;
+        min-height: 100px; /* Ensure space for the embedded grid */
     }
 
 
@@ -149,7 +155,11 @@
         border: none;
         padding: 0;
         margin: 0;
+        
     }
+    body::-webkit-scrollbar {
+	width: 0px;
+}
 </style>
 <script type="text/javascript">
 var data= '<%=cpa.searchDetails() %>';
@@ -381,18 +391,17 @@ var data= '<%=cpa.searchDetails() %>';
             <div class="jqx-datetimeinput-container">
                 <div id="date_plateCode" name="date_plateCode" value='<s:property value="date_plateCode"/>'></div>
             </div>
-
+			<div id="nAliasgrid" class="n-alias-grid-container"><jsp:include page="nAliasgrid.jsp"></jsp:include></div>
             <label>Doc No</label>
             <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly="readonly">
-            
-            <div id="nAliasgrid" class="n-alias-grid-container"><jsp:include page="nAliasgrid.jsp"></jsp:include></div>
-
+            </div>
+	<div class="form-grid_new">
             <label>Authority</label>
             <select name="authName" id="authName" >
                 <option value="">--Select--</option>
             </select>
             
-            <div></div><div></div><label>Plate Code</label>
+            <label>Plate Code</label>
             <input type="text" id="plateCode" name="plateCode" value='<s:property value="plateCode"/>'>
             
             <label>Name</label>
