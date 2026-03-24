@@ -78,12 +78,14 @@
 
     .form-row {
         display: grid;
-        /* Layout: Label | Input | Label | Input */
-        grid-template-columns: 120px 1fr 120px 1fr;
-        gap: 15px 30px;
+        grid-template-columns: 90px 125px 90px 90px 90px 120px 90px 100px ;
+        gap: 15px 20px;
         align-items: center;
         margin-bottom: 12px;
     }
+    body::-webkit-scrollbar {
+	width: 0px;
+}
     
     .form-row.date-docno {
         /* Specific layout for the top row (Date, Doc No) */
@@ -319,16 +321,15 @@ if($('#msg').val()!=""){
     <div class="section-block">
         <h2>Model Details</h2>
         
-        <div class="form-row date-docno">
-            <label>Date</label>
+        
+        
+        <div class="form-row">
+        <label>Date</label>
             <div class="jqx-datetimeinput-container">
                 <div id="modeldate" name="modeldate" value='<s:property value="modeldate"/>'></div>
             </div>
-            <div style="grid-column: 3 / 4;"></div> <label>Doc No</label>
+             <label>Doc No</label>
             <input type="text" name="docno" value='<s:property value="docno"/>' id="docno" readonly="readonly" tabindex="-1">
-        </div>
-        
-        <div class="form-row">
             <label>Brand</label>
             <select name="brand" id="brand" style="width:100%;"></select>
             

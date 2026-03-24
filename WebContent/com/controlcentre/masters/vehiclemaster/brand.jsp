@@ -12,15 +12,13 @@ String contextPath=request.getContextPath();
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (Adopted)
-    ------------------------------ */
+    
     body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
         color: #222;
         margin: 0;
-        padding: 32px 0;
+        padding: 0px 0;
         min-height: 100vh;
         box-sizing: border-box;
     }
@@ -35,7 +33,7 @@ String contextPath=request.getContextPath();
         text-align: left !important; 
     }
     
-    /* Ensure outer container can scroll if content is too tall */
+    
     .scrollable-content {
         overflow-y: auto;
         max-height: calc(100vh - 64px); 
@@ -77,20 +75,20 @@ String contextPath=request.getContextPath();
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
-    border-left: 4px solid #007bff; /* Blue line accent */
+    border-left: 4px solid #007bff; 
 }
 
     .form-row {
         display: grid;
-        /* Layout: Label | Input | Label | Input */
-        grid-template-columns: 120px 1fr 120px 1fr;
-        gap: 15px 30px;
+        
+        grid-template-columns: 120px 125px 100px 1fr 120px 1fr;
+        gap: 10px 20px;
         align-items: center;
         margin-bottom: 12px;
     }
     
     .form-row.single-field {
-        grid-template-columns: 120px 1fr 1fr; /* 1fr for spacing/alignment */
+        grid-template-columns: 120px 1fr 1fr; 
     }
 
     /* ------------------------------
@@ -131,13 +129,14 @@ String contextPath=request.getContextPath();
     /* JQWigets/Grid Styling */
     #jqxBrandSearch1 {
         margin-top: 20px;
-        /* Ensure the grid fits well within the container */
         width: 100% !important; 
     }
     .jqx-grid-cell {
         font-size: 13px !important;
     }
-
+body::-webkit-scrollbar {
+	width: 0px;
+}
 </style>
 <script type="text/javascript">
 	$(document).ready(function () {    
@@ -257,15 +256,13 @@ String contextPath=request.getContextPath();
                 <div class="form-row">
                     <label>Date</label>
                     <div id="date_brand" name="date_brand" class="jqx-datetimeinput-container"></div>
-                    
+                    <label>Brand</label>
+                    <input type="text" name="brand" id="brand" value='<s:property value="brand"/>' >
                     <label>Doc No.</label>
                     <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="true" tabindex="-1">
                 </div>
                 
-                <div class="form-row single-field">
-                    <label>Brand</label>
-                    <input type="text" name="brand" id="brand" value='<s:property value="brand"/>' >
-                    <div></div> </div>
+                
                 
                 <input type="hidden" id="mode" name="mode"/>
                 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>

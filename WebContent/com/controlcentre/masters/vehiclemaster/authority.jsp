@@ -78,10 +78,10 @@
     }
 
 
-    .form-row {
+      .form-row {
         display: grid;
-        grid-template-columns: 120px 1fr 120px 1fr; 
-        gap: 15px 30px;
+        grid-template-columns: 90px 125px 90px 90px 90px 120px 90px 100px ;
+        gap: 15px 20px;
         align-items: center;
         margin-bottom: 12px;
     }
@@ -139,7 +139,7 @@
         vertical-align: middle; 
     }
     .jqx-datetimeinput {
-        /* Overriding JQWigets internal default padding/sizing */
+        
         height: 32px !important;
         line-height: 32px !important;
     }
@@ -162,6 +162,9 @@
         padding: 0;
         margin: 0;
     }
+    body::-webkit-scrollbar {
+	width: 0px;
+}
 
 </style>
 <script type="text/javascript">
@@ -304,18 +307,17 @@ function funFocus(){
             <div class="jqx-datetimeinput-container">
                 <div id="authdate" name="authdate"></div>
             </div>
+            <label>Authority</label>
+            <input type="text" name="auth" id="auth" value='<s:property value="auth"/>'>
+			
+            <label>Name</label>
+            <input type="text" name="authname" id="authname" value='<s:property value="authname"/>'>
 
             <label>Doc No</label>
             <input type="text" name="docno" id="docno" readonly="readonly" value='<s:property value="docno"/>' tabindex="-1">
         </div>
         
-        <div class="form-row double-input">
-            <label>Authority</label>
-            <input type="text" name="auth" id="auth" value='<s:property value="auth"/>'>
-
-            <label>Name</label>
-            <input type="text" name="authname" id="authname" value='<s:property value="authname"/>'>
-        </div>
+       
 
         <input type="hidden" id="authdatehidden" name="authdatehidden" value='<s:property value="authdatehidden"/>'/>					
         <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
