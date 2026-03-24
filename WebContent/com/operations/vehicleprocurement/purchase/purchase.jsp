@@ -21,204 +21,117 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
-
 <style>
-form label.error {
-color:red;
-  font-weight:bold;
-
-}
-
-
-    
-.myButtonss {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
-	background:-moz-linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background:-webkit-linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background:-o-linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background:-ms-linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e',GradientType=0);
-	background-color:#7892c2;
-	border:1px solid #4e6096;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:12px;
-	padding:2px 7px;
-	text-decoration:none;
-}
-.myButtonss:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #476e9e), color-stop(1, #7892c2));
-	background:-moz-linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background:-webkit-linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background:-o-linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background:-ms-linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#476e9e', endColorstr='#7892c2',GradientType=0);
-	background-color:#476e9e;
-}
-.myButtonss:active {
-	position:relative;
-	top:1px;
-}
-/*  div.absolute1 {
-    position: absolute;
-    top: 350px;
-    right: 400px;
-   
-} */
-
-
-.myButtonp {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:12px;
-	padding:2px 10px;
-	text-decoration:none;
-}
-.myButtonp:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtonp:active {
-	position:relative;
-	top:1px;
-}
-
-
-   
+/* ------------------------------
+    GLOBAL STYLES (MASTER CRV UI)
+------------------------------ */
 body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    font-size: 13px; /* Slightly smaller base font */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
     margin: 0;
-    padding: 5px;
-}
-
-/* Compact Section Headers */
-legend {
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
-    padding-left: 8px;
-    border-left: 3px solid #007bff;
-    margin-bottom: 8px;
-    width: 100%;
-}
-
-fieldset {
-    border: none;
-    background: #fff;
-    border-radius: 2px;
-    padding: 8px 13px; /* Reduced padding */
-    margin-bottom: 6px; /* Reduced margin between sections */
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-/* Reduced Height Inputs */
-input[type="text"], select {
-    height: 24px; /* Compact height */
-    background-color: #f1f3f5;
-    border: 1px solid #ced4da;
-    border-radius: 3px;
-    padding: 2px 8px;
-    font-size: 13px;
-    color: #495057;
-    width: 100%;
+    padding: 15px;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-input[readonly], select[disabled] {
-    background-color: #e9ecef;
+.section-block {
+    background: #f6f8fa;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 1px 8px rgba(160, 177, 217, 0.1);
+    margin-bottom: 15px;
 }
 
-/* Tight Table Spacing */
-#search table {
-    border-collapse: separate;
-    border-spacing: 8px 6px; /* Reduced gap between fields */
-}
-
-td[align="right"] {
+.section-block h2 {
+    font-size: 16px;
     font-weight: 600;
-    color: #555;
-    padding-right: 8px;
+    margin: 0 0 12px 0;
+    padding-left: 10px;
+    border-left: 4px solid #007bff;
+    color: #253858;
+}
+
+/* INPUTS & SELECTS */
+input[type="text"], select, input[type="email"], input[type="file"] {
+    height: 30px !important;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 2px 8px;
+    background: #fff;
     font-size: 13px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+input[readonly] { background-color: #e9ecef; }
+
+/* TABLES */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cr-table td {
+    padding: 4px 8px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: middle;
+}
+
+.cr-table td[align="right"] {
+    font-weight: 600;
+    color: #253858;
     white-space: nowrap;
 }
 
-/* Compact Green Button */
-.btn-fleet-update {
-    background-color: #28a745;
+/* BUTTONS */
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+
+.myButtonss, .myButtonp {
+    background: #476e9e;
     color: white;
     border: none;
+    padding: 6px 12px;
     border-radius: 4px;
-    padding: 5px 12px;
-    font-weight: 600;
     cursor: pointer;
     font-size: 12px;
-}
-
-/* Compact Toolbar */
-.toolbar {
-    background: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin-bottom: 8px;
-    display: flex;
-    gap: 5px;
-}
-
-.tool-btn {
-    border: 1px solid #dee2e6;
-    background: #fff;
-    padding: 3px 10px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
 }
 
 .hidden-scrollbar {
     overflow-y: auto;
-    max-height: 98vh;
+    max-height: 96vh;
 }
 
-  .myButton {
-font-weight: 700;
-font-size: 13px;
-width: 110px;
-height: 32px;
-background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-color: #ffffff !important;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-text-transform: uppercase;
-text-align: center;
-}
-.myButton:hover {
-background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-} 
+body::-webkit-scrollbar { width: 0px; }
+
+form label.error { color:red; font-weight:bold; }
 </style>
+
 <script type="text/javascript">
 
 
@@ -2255,293 +2168,214 @@ else{
 <div id="mainBG" class="homeContent" data-type="background" >
 <jsp:include page="../../../../header.jsp"></jsp:include><br><br>
 
-<div  class='hidden-scrollbar'>
-
-<form id="frmpurchase" action="savePurchase" method="post" autocomplete="off" >
-
-<fieldset>
-<table width="100%"><tr><td>
-<table width="100%"  >
-  <tr>
-    <td width="4%"  align="right">&nbsp;&nbsp;Date</td> 
-    <td width="5%"><div id="vehpurorderDate" name="vehpurorderDate" value='<s:property value="vehpurorderDate"/>'></div>
-    <input type="hidden" id="hidvehpurorderDate" name="hidvehpurorderDate" value='<s:property value="hidvehpurorderDate"/>'/></td>
-    
-    <td width="75%" align="right">Doc No</td>
-    <td width="10%"><input type="text" id="docno" name="docno" style="width:97%;" value='<s:property value="docno"/>' tabindex="-1"/>
-    </td>
-  </tr>
-</table>
-</td>
-</tr>
-<tr><td>                   
-<table width="100%" >
-  <tr>
-    <td width="2%" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vendor</td>
-  <td width="34%">  <input type="text" id="accid" name="accid" style="width:20%;" placeholder="Press F3 to Search" value='<s:property value="accid"/>'  onkeydown="getaccountdetails(event)"/>
-   <input type="text" id="vehpuraccname" name="vehpuraccname" style="width:75%;" value='<s:property value="vehpuraccname"/>'/>
-   
-
-    <td align="right"  width="2%">Type</td>
-    <td width="7%"><select id="vehtype" name="vehtype" style="width:92%;" value='<s:property value="vehtype"/>' onchange="funrefdisslno()" >
-     <option value="DIR">DIR </option>
-       <option value="VPO">VPO</option></select>
-     </td>
-    
-    <td width="10%"><input type="text" id="vehrefno" name="vehrefno" style="width:95%;" placeholder="Press F3 to Search" value='<s:property value="vehrefno"/>' onfocus="funcheckaccinvendor();" onkeydown="getrefDetails(event)"/></td>
-     <td width="30%"></td>
-  </tr>
-  </table>
-  </td></tr>
-  <tr><td>
-<table >
-
-  <tr>
-    <td align="right"  width="1%">Exp.Delivery</td>
-    <td width="5%"><div id="vehpurorderdelDate" name="vehpurorderdelDate" value='<s:property value="vehpurorderdelDate"/>'></div>
-   
-     <input type="hidden" id="hidvehpurorderdelDate" name="hidvehpurorderdelDate" value='<s:property value="hidvehpurorderdelDate"/>'/></td>
-    <td >Description&nbsp;<input type="text" id="vehdesc" name="vehdesc" style="width:71.7%;" value='<s:property value="vehdesc"/>'/>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   
-    <input type="button" class="myButtonss" name="updatefleet" id="updatefleet" onclick="funupdatefleet()"  value="Fleet Update"  >
-    </td>
-  </tr>
-</table>
-</td></tr></table>
-</fieldset>
-<br>
-<fieldset>
-
-<div id="vehpuchase"><jsp:include page="vehpurchaseDetails.jsp"></jsp:include></div> 
-</fieldset>
-
-<table width="100%">
-<tr>
-<td width="40%">
-<fieldset><legend>Finance Details</legend>
-<table width="100%"   id="finance" >
-   <tr>
-   
-   	<td align="right" width="20%" id="taxlabel">Tax Amount</td>
-   	<td align="left" width="20%" id="taxbox"><input type="text" id="taxamount" name="taxamount" style="width:97%;text-align: right;" readonly="readonly"  value='<s:property value="taxamount"/>'></td>
-   	<td align="right" width="20%">Total Amount</td>
-   	<td align="left" width="20%"><input type="text" id="totalamt" name="totalamt" style="width:97%;text-align: right;" readonly="readonly" value='<s:property value="totalamt"/>'></td>
-   </tr>
-   
-   <tr>
- 	<td align="right"  width="20%">Down Payment</td>
-    <td width="20%" ><input type="text" id="downpayment" name="downpayment" style="width:97%;text-align: right;" onblur="funRoundAmt(this.value,this.id);calculateval();" value='<s:property value="downpayment"/>'/>
-    </td> 
-    <td  width="20%" align="right">Loan Amount</td><td width="20%"><input type="text" id="loanamount" tabindex="-1" name="loanamount" style="width:97%;text-align: right;"  value='<s:property value="loanamount"/>'/></td>
-    
-  </tr>
-  
-  <tr>
-  <td width="20%" align="right">
-    Start Date</td><td width="20%"><div id="jqxStartDate" name="jqxStartDate"  value='<s:property value="jqxStartDate"/>'></div>
-    <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/></td>
-    <td align="right" align="right">% Of Interest</td><td><input type="text" id="perinterest" name="perinterest" onkeypress="javascript:return isNumber (event)" style="width:97%;"  value='<s:property value="perinterest"/>'/></td>
+<div class="hidden-scrollbar">
+    <form id="frmpurchase" action="savePurchase" method="post" autocomplete="off">
         
-  </tr>
-   
-   <tr>
-  <td align="right" align="right">Calculation Method</td><td><Select id="calcumethod" name="calcumethod" style="width:97%;"  >
- 
-   <option value=1>Flat Rate</option>
-    <option value=2>Diminishing rate</option>
-</Select>
-  </td>
-  <td align="right">Number Of Inst</td><td><input type="text" id="instnos" name="instnos" style="width:97%;" onkeypress="javascript:return isNumber (event)"   value='<s:property value="instnos"/>'/>
-   <%--  <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/></td> --%>
-    
-    </tr>
-  
- <%--  <tr>
-    <td align="right">Down Payment</td>
-    <td><input type="text" id="txtcostgroup" name="txtcostgroup" style="width:80%;"  value='<s:property value="txtcostgroup"/>'/>
-    <input type="hidden" id="txtcosttype" name="txtcosttype" style="width:80%;" value='<s:property value="txtcosttype"/>'/></td>
-    <td width="26%" align="right">% Of Interest</td>
-    <td colspan="2"><input type="text" id="txtcostno" name="txtcostno" style="width:30%;"  value='<s:property value="txtcostno"/>'/>
-    &nbsp;&nbsp;&nbsp;&nbsp;Loan Amount&nbsp;
-    <input type="text" id="loanamount" name="loanamount" style="width:30%;" onblur="funRoundAmt(this.value,this.id);" value='<s:property value="loanamount"/>'/>
-    </td>
-  </tr> --%>
-<tr>
-    <td  align="right" >Account(Financier)</td> 
-    <td ><input type="text" id="financeaccid" name="financeaccid" style="width:97%;"  placeholder="Press F3 to Search" value='<s:property value="financeaccid"/>' onkeydown="getfinacc(event);"/></td>
-    <td colspan="2"><input type="text" id="financeaccname" name="financeaccname" tabindex="-1" style="width:99%;"  value='<s:property value="financeaccname"/>'/>
-   <%--  <input type="hidden" id="txtdistributiondocno" name="txtdistributiondocno" value='<s:property value="txtdistributiondocno"/>'/>
-    <input type="hidden" id="txtaccountdocno" name="txtaccountdocno" value='<s:property value="txtaccountdocno"/>'/>
-    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-    <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
-    <input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/></td> --%>
-  </tr>
-  <tr>
-    <td  align="right" >Bank A/C</td> 
-    <td ><input type="text" id="bankaccid" name="bankaccid" style="width:97%;"  placeholder="Press F3 to Search" value='<s:property value="bankaccid"/>'  onkeydown="getbankacc(event);"/></td>
-    <td colspan="2"><input type="text" id="bankaccname" name="bankaccname" style="width:99%;" tabindex="-1" value='<s:property value="bankaccname"/>'/>
-  </td>
-  </tr>
-   <tr>
-    <td  align="right" >Interest A/C</td>
-    <td ><input type="text" id="interestaccid" name="interestaccid" style="width:97%;"  placeholder="Press F3 to Search" value='<s:property value="interestaccid"/>'  onkeydown="getInterestacc(event);"/></td>
-    <td colspan="2"><input type="text" id="intaccname" name="intaccname" style="width:99%;" tabindex="-1" value='<s:property value="intaccname"/>'/>
-  </td>
-  </tr>
-  <tr>
-    <td  align="right" >Loan A/C</td>
-    <td ><input type="text" id="loanaccid" name="loanaccid" style="width:97%;"  placeholder="Press F3 to Search" value='<s:property value="loanaccid"/>' onkeydown="getloanacc(event);"/></td>
-    <td colspan="2"><input type="text" id="loanaccname" name="loanaccname"  tabindex="-1" style="width:99%;"  value='<s:property value="loanaccname"/>'/>
-  </td>
-  </tr>
-  <%-- <tr>
-  <td align="right" width="20%" align="right">Bank A/C</td><td width="20%"><input type="text" id="bankacc" name="bankacc" style="width:90%;"  value='<s:property value="bankacc"/>'/></td>
-    <td width="20%" align="right">
-    Interest A/C</td><td width="20%"> <input type="text" id="interestacc" name="interestacc" style="width:90%;"  value='<s:property value="interestacc"/>'/></td>
-     <td width="20%" align="right">Loan A/C</td> <td><input type="text" id="loanacc" name="loanacc" style="width:90%;"  value='<s:property value="loanacc"/>'/></td>
-  </tr> --%>
-  <tr> 
- 
-    <td align="right">Security Cheque NO</td> <td><input type="text" id="secchaqueno" name="secchaqueno" style="width:97%;"  value='<s:property value="secchaqueno"/>' /></td>
-     <td align="right">Amount</td><td> <input type="text" id="chqamount" name="chqamount" style="width:97%;text-align: right;" onkeypress="javascript:return isNumber (event)" value='<s:property value="chqamount"/>' onblur="funRoundAmt(this.value,this.id);"></td>
-  </tr>
-   <tr>
-  <td width="20%" align="right"> 
-    Upto Date</td><td width="20%"><div id="uptoDate" name="uptoDate"  value='<s:property value="uptoDate"/>'></div>
-    <input type="hidden" id="hiduptoDate" name="hiduptoDate" value='<s:property value="hiduptoDate"/>'/></td>
-   
-    <td align="right"><input type="button" class="myButton" name="editdeal" id="editdeal" onclick="funeditdeal()"  value="Edit" style="display:none;" >Deal No</td><td> <input type="text" id="dealno" name="dealno" style="width:97%;" onblur="funchkunique()"  value='<s:property value="dealno"/>'></td>
+        <div class="section-block">
+            <table class="cr-table">
+                <tr>
+                    <td width="8%" align="right">Date</td>
+                    <td width="15%">
+                        <div id="vehpurorderDate" name="vehpurorderDate" value='<s:property value="vehpurorderDate"/>'></div>
+                        <input type="hidden" id="hidvehpurorderDate" name="hidvehpurorderDate" value='<s:property value="hidvehpurorderDate"/>'/>
+                    </td>
+                    <td width="10%" align="right">Doc No</td>
+                    <td width="15%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' tabindex="-1"/></td>
+                    <td width="10%" align="right">Type</td>
+                    <td width="12%">
+                        <select id="vehtype" name="vehtype" onchange="funrefdisslno()">
+                            <option value="DIR">DIR</option>
+                            <option value="VPO">VPO</option>
+                        </select>
+                    </td>
+                    <td width="15%"><input type="text" id="vehrefno" name="vehrefno" placeholder="Press F3 to Search" value='<s:property value="vehrefno"/>' onfocus="funcheckaccinvendor();" onkeydown="getrefDetails(event)"/></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td align="right">Vendor</td>
+                    <td colspan="3">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="accid" name="accid" style="width: 100px;" placeholder="F3 Search" value='<s:property value="accid"/>' onkeydown="getaccountdetails(event)"/>
+                            <input type="text" id="vehpuraccname" name="vehpuraccname" value='<s:property value="vehpuraccname"/>'/>
+                        </div>
+                    </td>
+                    <td align="right">Exp. Delivery</td>
+                    <td>
+                        <div id="vehpurorderdelDate" name="vehpurorderdelDate" value='<s:property value="vehpurorderdelDate"/>'></div>
+                        <input type="hidden" id="hidvehpurorderdelDate" name="hidvehpurorderdelDate" value='<s:property value="hidvehpurorderdelDate"/>'/>
+                    </td>
+                    <td colspan="2">
+                        <input type="button" class="myButtonss" name="updatefleet" id="updatefleet" onclick="funupdatefleet()" value="Fleet Update">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Description</td>
+                    <td colspan="7">
+                        <input type="text" id="vehdesc" name="vehdesc" value='<s:property value="vehdesc"/>'/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-block">
+            <div id="vehpuchase"><jsp:include page="vehpurchaseDetails.jsp"></jsp:include></div>
+        </div>
+
+       <div style="display: flex; gap: 15px;">
+    <div class="section-block" style="flex: 0 0 600px;">
+        <h2>Finance Details</h2>
         
-  </tr>
-  <tr>
-   <td align="right">Name In Cheque</td><td colspan="3"><input type="text" id="nameincheque" name="nameincheque" style="width:99%;"  value='<s:property value="nameincheque"/>'/></td>
-  
-  
-  </tr>
-     <tr>
-   <td align="right" >Payment Method</td><td><Select id="paymentmethod" name="paymentmethod" style="width:97%;" onchange="paymtchg()" >
-  <option value="">--Select--</option>
-   <option value=1>Cheque</option> 
-    <option value=2>Direct Debit</option> 
-</Select>
-  </td>
-  
-   
-  </tr>
-  <tr>
-    
-    <td align="right">Description</td>
-    <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:99%;"  value='<s:property value="txtdescription"/>'/>
-   
-  </tr>
-   <tr>
-  <td>&nbsp;</td>
-  </tr>
-   <tr>
-  <td>&nbsp;</td>
-  </tr>
-  <tr>
-<!--   <td>&nbsp;</td> -->
- <td align="center" colspan="4">
- <input type="button" class="myButton"  id="calculatebtn" name="calculatebtn" value="Calculate"  onclick="calculate();">
- 
-  <input type="button" class="myButton"  id="updatebtn" name="updatebtn" value="Edit"  onclick="funUpdate();">
- 
-
-  </td>
-<%--   
-  <td width="28%" align="right"><input type="file" id="file" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
-						</button></td> --%>
-	</tr>
-	<tr>					
-	
-  <td align="right">
-  <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png"></button>
-						 </td>	
-						<td colspan="3" >
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-	
-	   <input type="file" id="file" name="file"/>
-  </td>				
-  </tr>
-  <tr>
-
- <td align="center" colspan="4">
- 
-
-  </td>
-  </tr>
-</table>
- </fieldset></td> 
-<td width="60%">
-<div id="detailsdiv"><jsp:include page="distributionGrid.jsp"></jsp:include></div>
-</td>
-</tr>
-</table>
-<fieldset>
-<legend>Posting</legend>
-
-
-
-
-
-
-
-<table  align="center" width="50%" >
-
-<tr>
-
-
-    <td align="right"  width="6%">Inv No</td>  
-    <td width="12%">  <input type="text" id="invno" name="invno"   value='<s:property value="invno"/>'/></td>
-    <td align="right"  width="12%">Purchase Date</td>
-    <td width="5%"><div id="vehpurinvDate" name="vehpurinvDate" value='<s:property value="vehpurinvDate"/>'></div>
-    <input type="hidden" id="hidvehpurinvDate" name="hidvehpurinvDate" value='<s:property value="hidvehpurinvDate"/>'/>
-    <td>
-  
-   
-     <td align="center"><button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funpostcalcu();">
-       <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png">
-      </button> 
-      
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <input type="button" class="myButtonp" name="updateposting" id="updateposting" onclick="funupdateposting()"  value="Posting"  >
-   
-    
-          
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <input type="button" class="myButton" name="editss" id="editss" onclick="funeditpost()"  value="Edit"  >
-    
+        <div id="errormsg" style="color: red; font-weight: bold; font-size: 12px; margin-bottom: 8px; height: 15px;"></div>
         
-    </td>
+        <input type="hidden" id="hidtaxamount" name="hidtaxamount" value='<s:property value="hidtaxamount"/>' />
+        <input type="hidden" id="hidtotalamt" name="hidtotalamt" value='<s:property value="hidtotalamt"/>' />
+        <input type="hidden" id="priamounts" name="priamounts" value='<s:property value="priamounts"/>' />
+        <input type="hidden" id="txttaxpercentage" value='<s:property value="txttaxpercentage"/>' />
 
-</tr>
+        <table class="cr-table" id="finance">
+            <tr>
+                <td align="right" width="15%">Tax Amt</td>
+                <td width="30%"><input type="text" id="taxamount" name="taxamount" style="text-align: right;" readonly value='<s:property value="taxamount"/>'></td>
+                <td align="right" width="15%">Total Amt</td>
+                <td width="30%"><input type="text" id="totalamt" name="totalamt" style="text-align: right;" readonly value='<s:property value="totalamt"/>'></td>
+            </tr>
+            <tr>
+                <td align="right">Down Pymt</td>
+                <td><input type="text" id="downpayment" name="downpayment" style="text-align: right;" onblur="funRoundAmt(this.value,this.id);calculateval();" value='<s:property value="downpayment"/>'/></td>
+                <td align="right">Loan Amt</td>
+                <td><input type="text" id="loanamount" name="loanamount" style="text-align: right;" readonly value='<s:property value="loanamount"/>' tabindex="-1"/></td>
+            </tr>
+            <tr>
+                <td align="right">Start Date</td>
+                <td>
+                    <div id="jqxStartDate" name="jqxStartDate" value='<s:property value="jqxStartDate"/>'></div>
+                    <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/>
+                </td>
+                <td align="right">% Interest</td>
+                <td><input type="text" id="perinterest" name="perinterest" onkeypress="return isNumber(event)" value='<s:property value="perinterest"/>'/></td>
+            </tr>
+            <tr>
+                <td align="right">Calc Method</td>
+                <td>
+                    <select id="calcumethod" name="calcumethod">
+                        <option value="1">Flat Rate</option>
+                        <option value="2">Diminishing rate</option>
+                    </select>
+                </td>
+                <td align="right">Inst. Nos</td>
+                <td><input type="text" id="instnos" name="instnos" onkeypress="return isNumber(event)" value='<s:property value="instnos"/>'/></td>
+            </tr>
+            <tr>
+                <td align="right">Financier</td>
+                <td colspan="3">
+                    <div style="display: flex; gap: 4px;">
+                        <input type="text" id="financeaccid" name="financeaccid" placeholder="F3" style="width: 80px;" value='<s:property value="financeaccid"/>' onkeydown="getfinacc(event);"/>
+                        <input type="text" id="financeaccname" name="financeaccname" readonly value='<s:property value="financeaccname"/>'/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Bank A/C</td>
+                <td colspan="3">
+                    <div style="display: flex; gap: 4px;">
+                        <input type="text" id="bankaccid" name="bankaccid" placeholder="F3" style="width: 80px;" value='<s:property value="bankaccid"/>' onkeydown="getbankacc(event);"/>
+                        <input type="text" id="bankaccname" name="bankaccname" readonly value='<s:property value="bankaccname"/>'/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Interest A/C</td>
+                <td colspan="3">
+                    <div style="display: flex; gap: 4px;">
+                        <input type="text" id="interestaccid" name="interestaccid" placeholder="F3" style="width: 80px;" value='<s:property value="interestaccid"/>' onkeydown="getInterestacc(event);"/>
+                        <input type="text" id="intaccname" name="intaccname" readonly value='<s:property value="intaccname"/>'/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Loan A/C</td>
+                <td colspan="3">
+                    <div style="display: flex; gap: 4px;">
+                        <input type="text" id="loanaccid" name="loanaccid" placeholder="F3" style="width: 80px;" value='<s:property value="loanaccid"/>' onkeydown="getloanacc(event);"/>
+                        <input type="text" id="loanaccname" name="loanaccname" readonly value='<s:property value="loanaccname"/>'/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Security Chq</td>
+                <td><input type="text" id="secchaqueno" name="secchaqueno" value='<s:property value="secchaqueno"/>'/></td>
+                <td align="right">Chq Amount</td>
+                <td><input type="text" id="chqamount" name="chqamount" style="text-align: right;" onkeypress="return isNumber(event)" value='<s:property value="chqamount"/>' onblur="funRoundAmt(this.value,this.id);"></td>
+            </tr>
+            <tr>
+                <td align="right">Upto Date</td>
+                <td>
+                    <div id="uptoDate" name="uptoDate" value='<s:property value="uptoDate"/>'></div>
+                    <input type="hidden" id="hiduptoDate" name="hiduptoDate" value='<s:property value="hiduptoDate"/>'/>
+                </td>
+                <td align="right">Deal No</td>
+                <td><input type="text" id="dealno" name="dealno" onblur="funchkunique()" value='<s:property value="dealno"/>'></td>
+            </tr>
+            <tr>
+                <td align="right">Chq Name</td>
+                <td><input type="text" id="nameincheque" name="nameincheque" value='<s:property value="nameincheque"/>'/></td>
+                <td align="right">Pymt Method</td>
+                <td>
+                    <select id="paymentmethod" name="paymentmethod" onchange="paymtchg()">
+                        <option value="">--Select--</option>
+                        <option value="1">Cheque</option> 
+                        <option value="2">Direct Debit</option> 
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Description</td>
+                <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding: 10px 0;">
+                    <div style="display: flex; gap: 8px; justify-content: center;">
+                        <input type="button" class="myButton" id="calculatebtn" value="Calculate" onclick="calculate();">
+                        <input type="button" class="myButton" id="updatebtn" value="Edit" onclick="funUpdate();">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
+    <div class="section-block" style="flex: 1;">
+        <h2>Distribution</h2>
+        <div id="detailsdiv"><jsp:include page="distributionGrid.jsp"></jsp:include></div>
+    </div>
+</div>
 
-</table>
-
-
-
-
-<table   width="100%" >
-
-<tr>
-
-<td   height="150px">
- <div id="postingdiv"> <jsp:include page="postinggrid.jsp"></jsp:include></div> 
-
-</td>
-
-</tr>
-
-
-</table>
-
-</fieldset>
+        <div class="section-block">
+            <h2>Posting</h2>
+            <table class="cr-table" style="margin-bottom: 10px;">
+                <tr>
+                    <td width="10%" align="right">Inv No</td>
+                    <td width="15%"><input type="text" id="invno" name="invno" value='<s:property value="invno"/>'/></td>
+                    <td width="12%" align="right">Purchase Date</td>
+                    <td width="15%">
+                        <div id="vehpurinvDate" name="vehpurinvDate" value='<s:property value="vehpurinvDate"/>'></div>
+                        <input type="hidden" id="hidvehpurinvDate" name="hidvehpurinvDate" value='<s:property value="hidvehpurinvDate"/>'/>
+                    </td>
+                    <td align="center">
+                        <div style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                            <button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funpostcalcu();" style="border:none; background:none;">
+                                <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png" height="28">
+                            </button>
+                            <input type="button" class="myButtonp" value="Posting" onclick="funupdateposting()">
+                            <input type="button" class="myButton" value="Edit" onclick="funeditpost()">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <div style="height: 180px; overflow: hidden;">
+                <div id="postingdiv"> <jsp:include page="postinggrid.jsp"></jsp:include></div>
+            </div>
+        </div>
 <br><br>
 <input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>'/>   
 
