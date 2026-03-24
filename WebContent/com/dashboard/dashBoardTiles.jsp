@@ -4,7 +4,6 @@
 <%@ page import="com.connection.ClsConnection" %>
 <%@ page import="com.dashboard.ClsDashBoardDAO" %>
 <%@ page import="com.dashboard.ClsDashBoardBean" %>
-<%@ page import="net.sf.json.JSONArray" %>
 
 <%
     // ========================================================================
@@ -35,19 +34,6 @@
     iconMap.put("Maintenance Update", svgWrench);
     iconMap.put("Rental Agreement Create", svgHandshake);
 
-    // Ajax handling logic
-    String ajaxId = request.getParameter("ajaxId");
-    if(ajaxId != null && !ajaxId.trim().isEmpty()) {
-        out.clear(); 
-        try {
-            ClsDashBoardDAO dao = new ClsDashBoardDAO();
-            JSONArray jsonResult = dao.detailSearch(ajaxId, session);
-            out.print((jsonResult == null || jsonResult.isEmpty()) ? "[]" : jsonResult.toString());
-        } catch (Exception e) { out.print("[]"); }
-        return; 
-    }
-
-    ClsDashBoardDAO tileDao = new ClsDashBoardDAO();
     String cPath = request.getContextPath();
     String selectedModule = request.getParameter("module");
     if(selectedModule == null || selectedModule.trim().isEmpty()){ selectedModule = "Finance"; }
@@ -113,11 +99,6 @@
         }
     } catch(Exception e) { e.printStackTrace(); } 
     finally { if(rs!=null) rs.close(); if(stmt!=null) stmt.close(); if(conn!=null) conn.close(); }
-
-    JSONArray jsonArray = tileDao.masterSearch(session);
-    String gridData = (jsonArray != null) ? jsonArray.toString() : "[]";
-    JSONArray detailArray = tileDao.detail(session);
-    String detailData = (detailArray != null) ? detailArray.toString() : "[]";
 %>
 
 <!DOCTYPE html>
@@ -126,33 +107,25 @@
     <script type="text/javascript" src="<%= cPath %>/scripts/jquery-1.11.1.min.js"></script>
     <style>
         * { box-sizing: border-box; }
-        /* ENABLE WHOLE DASHBOARD SCROLLING */
         body, html { min-height: 100vh; margin: 0; padding: 0; overflow-y: auto; font-family: "Segoe UI", Roboto, sans-serif; background-color: #f4f6f9; }
-        
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
 
-        /* ADDED BOTTOM PADDING TO ENSURE FULL VIEWABILITY */
         .page-container { display: flex; flex-direction: column; width: 100%; min-height: 100vh; padding-bottom: 50px; }
 
-        /* BANNER INCREASED HEIGHT */
         .banner { flex: 0 0 140px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .banner::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.2); border-radius: 8px; }
         .banner-content { z-index: 2; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
         
-        /* GREETINGS SAME FONT SIZE */
         .welcome-main, #greeting { font-size: 26px; font-weight: 700; margin: 2px 0; }
 
-        /* LAYOUT STRUCTURE */
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 15px; padding: 0 15px; margin-bottom: 15px; }
-        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; padding: 0 15px; }
 
         .grid-box { background: #fff; border-radius: 6px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
         .header-bar { flex: 0 0 auto; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .header-title { font-weight: 700; color: #444; font-size: 16px; text-transform: uppercase; }
 
-        /* EXPANDING SEARCH UI WITH BLUE HOVER */
         .header-search input { 
             padding: 6px 12px; border: 1px solid #ddd; border-radius: 15px; outline: none; width: 130px; font-size: 13px; 
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s; background-color: #f9f9f9; 
@@ -163,7 +136,6 @@
             box-shadow: 0 0 8px rgba(0,123,255,0.2); 
         }
 
-        /* FIXED HEIGHT FOR 4 ROWS DISPLAY (48px per row * 4 = 192px) */
         .scrollable-content { flex: 1; overflow-y: auto; padding: 0; max-height: 192px; min-height: 192px; }
         .top-scrollable { max-height: 350px; min-height: 350px; padding: 12px; }
 
@@ -174,84 +146,27 @@
         .tile-icon-box svg { width: 100%; height: 100%; }
         .tile-title { font-size: 11px; font-weight: 600; text-align: center; color: #555; }
 
-        .app-tile { display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 48px; border-bottom: 1px solid #f9f9f9; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
-        .app-tile:hover { background-color: #f8faff; transform: translateX(3px); color: #007bff; }
-        .app-tile.active-selection { border-left-color: #007bff; background-color: #f0f7ff; color: #007bff; font-weight: 700; }
-        .app-name { font-size: 14px; }
-
         .ann-item { display: flex; gap: 12px; padding: 15px 0; border-bottom: 1px solid #f2f2f2; }
         .ann-img-box img { width: 100px; height: 70px; border-radius: 4px; object-fit: cover; display: block; }
         .ann-body { flex: 1; }
         .ann-body h4 { margin: 0 0 4px 0; font-size: 13px; color: #333; font-weight: 700; }
         .ann-body p { margin: 0; font-size: 11px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .ann-link { display: inline-block; margin-top: 5px; font-size: 11px; color: #007bff; text-decoration: none; font-weight: 700; }
         .ann-footer { padding: 12px 0; text-align: center; }
         .ann-footer a { font-size: 12px; font-weight: 700; color: #007bff; text-decoration: none; }
         
-        /* Dropdown Container */
-        .home-dropdown {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-            z-index: 1000;
-        }
-
-        /* The Button */
-        .dropbtn {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .dropbtn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Dropdown Content (Hidden by Default) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            border-radius: 4px;
-            top: 40px;
-        }
-
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 13px;
-            border-bottom: 1px solid #eee;
-        }
-
+        .home-dropdown { position: relative; display: inline-block; margin-left: 20px; z-index: 1000; }
+        .dropbtn { background-color: rgba(255, 255, 255, 0.2); color: white; padding: 8px 16px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .dropbtn:hover { background-color: rgba(255, 255, 255, 0.3); }
+        .dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 200px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 4px; top: 40px; }
+        .dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; font-size: 13px; border-bottom: 1px solid #eee; }
         .dropdown-content a:last-child { border-bottom: none; }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-            color: #007bff;
-        }
-
-        /* Show the dropdown on hover */
+        .dropdown-content a:hover { background-color: #f1f1f1; color: #007bff; }
         .home-dropdown:hover .dropdown-content { display: block; }
 
-        /* ADDED: Styles for the module navigation tabs (was missing in your snippet) */
         .tile-nav-container { background: #f8f9fa; border-bottom: 1px solid #eee; padding: 6px 12px; }
         .tile-nav-links { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
         .tile-nav-links a { font-size: 11px; font-weight: 700; color: #666; text-decoration: none; padding: 6px 12px; border-radius: 4px; white-space: nowrap; transition: 0.2s; }
         .tile-nav-links a.active { background: #007bff; color: #fff; }
-
     </style>
 </head>
 <body>
@@ -354,55 +269,12 @@
             </div>
         </div>
     </div>
-
-    <div class="bottom-grid">
-        <div class="grid-box">
-            <div class="header-bar">
-                <div class="header-title">Application List</div>
-                <div class="header-search"><input type="text" onkeyup="filterList(this, 'appListContainer')" placeholder="Search..."></div>
-            </div>
-            <div id="appListContainer" class="scrollable-content"></div>
-        </div>
-
-        <div class="grid-box">
-            <div class="header-bar">
-                <div class="header-title">Status & Updates</div>
-                <div class="header-search"><input type="text" onkeyup="filterList(this, 'detailListContainer')" placeholder="Search..."></div>
-            </div>
-            <div id="detailListContainer" class="scrollable-content"></div>
-        </div>
-
-        <div class="grid-box">
-            <div class="header-bar"><div class="header-title">Performance</div></div>
-            <div class="scrollable-content"><div style="text-align:center; padding-top:40px; color:#bbb; font-weight:600;">SUMMARY</div></div>
-        </div>
-    </div>
 </div>
 
 <script type="text/javascript">
-    var appData = <%= gridData %>;
-    var initialDetails = <%= detailData %>;
-    var currentModuleDesc = '<%=selectedModule%>'; 
-
     $(document).ready(function () {
         var h = new Date().getHours();
         $("#greeting").text((h < 12) ? "Good Morning" : (h < 18) ? "Good Afternoon" : "Good Evening");
-
-        var leftContainer = $("#appListContainer");
-        $.each(appData, function(i, item) {
-            var html = '<div class="app-tile" onclick="openAppDetail(' + i + ', this)">' +
-                       '<div class="app-name">' + item.description + '</div>' +
-                       '<div style="font-size:18px; opacity:0.3;">&#8250;</div></div>';
-            leftContainer.append(html);
-        });
-        
-        // FIXED LOGIC: Auto-select the first item on load if data exists
-        if(appData.length > 0) {
-            var firstTile = leftContainer.find(".app-tile").first();
-            openAppDetail(0, firstTile);
-        } else {
-            renderRightPanel(initialDetails);
-        }
     });
 
     function filterTiles(el) {
@@ -413,51 +285,8 @@
         });
     }
 
-    function filterList(el, cont) {
-        var val = el.value.toUpperCase().replace(/\s+/g, '');
-        $("#" + cont + " .app-tile").each(function() {
-            var txt = $(this).find(".app-name").text().toUpperCase().replace(/\s+/g, '');
-            $(this).toggle(txt.indexOf(val) > -1);
-        });
-    }
-
-    function openParentMenu(title) { if(window.parent && window.parent.geturl) window.parent.geturl(title); }
-
-    function openAppDetail(index, el) {
-        var item = appData[index];
-        $(".app-tile").removeClass("active-selection");
-        $(el).addClass("active-selection");
-        $("#detailListContainer").html("<div style='padding:20px; color:#999;'>Loading...</div>");
-        $.ajax({
-            url: window.location.href, type: "POST", data: { ajaxId: item.doc_no }, dataType: "json",
-            success: function(response) { renderRightPanel(response, item.description); }
-        });
-    }
-
-    function renderRightPanel(data, parentDesc) {
-        var cont = $("#detailListContainer").empty();
-        if (!data || data.length === 0) { cont.html("<div class='empty-label'>Select an app</div>"); return; }
-        $.each(data, function(i, item) {
-            var safeDetName = item.description.replace(/'/g, "\\'");
-            var safeParentDesc = (parentDesc || currentModuleDesc).replace(/'/g, "\\'");
-            // FIXED: Added item.value to arguments
-            var html = '<div class="app-tile" onclick="openDetailLink(\'' + safeDetName + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + safeParentDesc + '\', \'' + item.value + '\')">' +
-                       '<div class="app-name">' + item.description + '</div><div style="font-size:18px; opacity:0.3;">&#8250;</div></div>';
-            cont.append(html);
-        });
-    }
-
-    // FIXED: Added 'val' parameter
-    function openDetailLink(detName, path, docno, mainDesc, val) {
-        var url = window.location.href;
-        var reurl = url.split("com/");
-        // FIXED: Added '&value=' + val to the URL
-        var fullUrl = reurl[0] + "" + path + "?name=" + encodeURIComponent(detName) + "&main=" + encodeURIComponent(mainDesc) + "&docno=" + docno + "&value=" + val;
-        if (typeof top.addTab === 'function') {
-            top.addTab(detName, fullUrl);
-        } else {
-            window.parent.$('#tt').tabs('add', { title: detName, content: '<iframe scrolling="auto" frameborder="0" src="' + fullUrl + '" style="width:100%;height:100%;"></iframe>', closable: true });
-        }
+    function openParentMenu(title) { 
+        if(window.parent && window.parent.geturl) window.parent.geturl(title); 
     }
 </script>
 </body>

@@ -853,6 +853,10 @@ label.licenceExpiry:hover{
          <iframe scrolling="auto" frameborder="0" id="frame" src="com/dashboard/dashBoardTiles.jsp" style="width:100%;height:100%;"></iframe>
      </div>
 
+<div title="New Home 1">
+         <iframe scrolling="auto" frameborder="0" id="frame2" src="com/dashboard/dashboardtiels2.jsp" style="width:100%;height:100%;"></iframe>
+     </div>
+
  <div title="Home">
 		<iframe scrolling="auto" frameborder="0" id="frame" src="com/dashboard/dashBoard.jsp" style="width:100%;height:100%;"></iframe>
 		</div>
