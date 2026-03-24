@@ -45,53 +45,44 @@
 	</script>
 
 <style type="text/css">
-/* Add spacing for page title */
-#header {
-  padding: 10px 20px;
-  margin-bottom: 10px;
-}
-
-#header h3 {
+/* Create a flex container for the whole page */
+body {
+  display: flex;
   margin: 0;
   padding: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
 }
 
-/* Navigation container */
+/* Sidebar Navigation */
 #nav {
-  width: 100%;
-  padding: 12px 16px;
+  width: 220px; /* Fixed width for sidebar */
+  height: 100vh;
+  padding: 20px 15px;
   box-sizing: border-box;
-  display: block;
-  border-bottom: 1px solid #ddd;
   background: #f8fafc;
-  position: relative;   /* ✅ FIXED */
-  float: none;          /* ✅ FIXED */
-  height: auto;         /* ✅ FIXED */
+  border-right: 1px solid #ddd;
+  overflow-y: auto; /* Scrollable if many buttons */
 }
 
-
-/* Flexbox container for buttons */
+/* Change grid to 1 column for vertical stacking */
 .nav-buttons {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);  /* ✅ 8 equal buttons per row */
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   width: 100%;
 }
 
-/* Individual button wrapper */
 .nav-item {
-  display: flex;
+  width: 100%;
 }
 
-/* Button styling */
 .myButton {
   font-weight: 700;
   font-size: 13px;
-  width: 130px;
-  height: 38px;
+  width: 90%; 
+  height: 32px;
   padding: 8px 12px;
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: #ffffff;
@@ -99,49 +90,43 @@
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  white-space: nowrap;
-  text-align: center;
+  text-align: left; 
+  padding-left: 15px;
 }
+
 .myButton.active {
   background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.4);
-  transform: translateY(-1px);
+  transform: translateX(5px); /* Subtle shift to the right when active */
 }
 
-.myButton:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-}
-
-.myButton:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-}
-
-/* Iframe container */
+/* Content Area */
 #comiframe {
-  width: 100%;
-  height: calc(100vh - 120px);  /* ✅ Dynamic height */
-  padding: 10px 20px;
-  box-sizing: border-box;
+  flex-grow: 1; /* Take up all remaining width */
+  height: 100vh;
+  background: #fff;
 }
-
 
 #comiframe iframe {
-  display: block;
   width: 100%;
+  height: 100%;
   border: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
 }
 </style>
 
 
 </head>
 <body >
-<div id="nav" >
+<div id="nav">
+    <div id="header">
+        <h3>Veh.Related Master</h3>
+        <hr style="border: 0; border-top: 1px solid #ccc; margin: 15px 0;">
+    </div>
   <div class="nav-buttons">
     <div class="nav-item"><input type="button" name="btnbrand" class="myButton" value="Brand" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/brand.jsp";'></div>
     <div class="nav-item"><input type="button" name="btnmodel" class="myButton" value="Model" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/model.jsp";'></div>
@@ -162,23 +147,19 @@
     <div class="nav-item"><input type="button" name="btnvehtype" class="myButton" value="Vehicle Type" onclick='document.getElementById("iframe1").src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/vehType.jsp";'></div>
   </div>
 </div>
-
+<div id="comiframe">
+	<iframe width="100%" height="100%" id="iframe1" align="right" frameborder="0" marginwidth="100%" scrolling="yes" src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/brand.jsp"></iframe>
+</div>
 <div id="mainBG" class="homeContent" data-type="background">
 
-<div >
-	<h3>Vehicle Master</h3>
-</div>
+
 
 <input type="hidden" id="formName" name="formName"  value='000'/>
 <input type="hidden" id="formCode" name="formCode"  value='veh'/>
 <input type="hidden" id="branchid" name="branchid"  value=''/>
 <input type="hidden" id="mode" name="mode"  />
 </div>
-<div id="comiframe">
-	<iframe width="100%" height="100%" id="iframe1" align="right" frameborder="0" marginwidth="100%" scrolling="yes" src="<%=contextPath%>/com/controlcentre/masters/vehiclemaster/brand.jsp"></iframe>
-	 
 
-</div>
 
 <script>
 function resizeIframeToFitContent(iframe) {
