@@ -86,6 +86,31 @@ input[readonly] { background-color: #e9ecef; }
 }
 
 /* BUTTONS */
+.myButtonss {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButtonss:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
 .myButton {
     font-weight: 700;
     font-size: 13px;
@@ -111,7 +136,30 @@ input[readonly] { background-color: #e9ecef; }
   transform: translateY(-1px);
 }
 
+.myButtonp{
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
 
+.myButtonp:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
 .myButtonss, .myButtonp {
     background: #476e9e;
     color: white;
@@ -2340,6 +2388,24 @@ else{
                     </div>
                 </td>
             </tr>
+            <%--   
+  <td width="28%" align="right"><input type="file" id="file" name="file"/></td>
+    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
+							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
+						</button></td> --%>
+	
+            <tr>					
+	
+  <td align="right">
+  <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
+							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png"></button>
+						 </td>	
+						<td colspan="3" >
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	
+	   <input type="file" id="file" name="file"/>
+  </td>				
+  </tr>
         </table>
     </div>
 
