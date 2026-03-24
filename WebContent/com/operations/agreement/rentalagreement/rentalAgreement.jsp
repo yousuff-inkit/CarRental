@@ -3077,6 +3077,22 @@ body::-webkit-scrollbar {
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
   transform: translateY(-1px);}
 
+.vehicle-client-table input,
+.vehicle-client-table select {
+    width: 30% !important;
+}
+
+/* This part adds the background color and border back to the sections */
+.section-block {
+    background: #f6f8fa !important; /* The light grey background */
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 1px 8px rgba(160, 177, 217, 0.1);
+    margin-bottom: 20px;
+    border: 1px solid #eef0f6; /* Optional: adds a subtle definition border */
+}
+
+
 </style> 
 
 </head>
@@ -3149,39 +3165,69 @@ body::-webkit-scrollbar {
 </tr>
 			   		
 			   	
-      					<tr width="100%" class="field-box">        
-      						<td width="100%">
-       							<h2>Vechile and Client Information</h2>
-									<table style="width:100%;" border="0">             
-  										<tr>
-											<td width="5%" align="right"><label><font size="3">Vehicle </font></label></td>
-  											<td width="8%"> <input type="text" id="txtfleetno" name="txtfleetno" placeholder="Press F3 To Search" value='<s:property value="txtfleetno"/>' onKeyDown="getvehinfo(event);"  /></td>
-     										<td width="80%" ><input type="text" id="vehdetails" name="vehdetails" style="width:99%;" tabindex="-1" value='<s:property value="vehdetails"/>' /></td>
- 										</tr>
- 										<tr>
-  											<td width="5%" align="right">  <label ><font size="3">Client</font></label></td>
-  											<td width="8"> <input type="text" id="txtcusid" name="txtcusid" placeholder="Press F3 To Search" value='<s:property value="txtcusid"/>' onKeyDown="getclientinfo(event);" onfocus="checkReqveh();"/></td>
-     										<td width="80%" >
-     											<input type="text" id="client_Name" name="client_Name" style="width:50%;" tabindex="-1" value='<s:property value="client_Name"/>'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><font size="3">Salesman</label>&nbsp;&nbsp;<input type="text" id="re_salman" name="re_salman" style="width:25%;" placeholder="Salesman Name"value='<s:property value="re_salman"/>'/>
- 												<input type="hidden" id="re_salmanid" name="re_salmanid" style="width:25%;"  value='<s:property value="re_salmanid"/>'/>
- 												<input type="hidden" id="re_clcodeno" name="re_clcodeno" style="width:25%;"  value='<s:property value="re_clcodeno"/>'/>
- 												<input type="hidden" id="re_clacno" name="re_clacno" style="width:25%;"  value='<s:property value="re_clacno"/>'/>
- 											</td>
-  										</tr>
-  										<tr>
-  											<td align="right"></td><td colspan="2" width="60%"><input type="text" id="cusaddress"  placeholder="Mobil NO-Address" name="cusaddress" style="width:99%; resize: none; " value='<s:property value="cusaddress"/>'></td>
-  										</tr>
-  										<tr class="actualclientrow" hidden="true">
-  											<td align="right"><label><font size="3">Actual Client</font></label></td>
-											<td><input type="text" name="actualcldocno" id="actualcldocno" placeholder="Press F3 to Search" value='<s:property value="actualcldocno"/>'></td>
-											<td><input type="text" name="actualclientname" id="actualclientname" style="width:99%;" value='<s:property value="actualclientname"/>'></td>
-										</tr>
-   										<tr>
-  											<td align="right"><label ><font size="3">Description</font></label></td><td colspan="2" width="60%"><input type="text" id="rentaldesc"  placeholder="Description" name="rentaldesc" style="width:99%; resize: none; " value='<s:property value="rentaldesc"/>' onblur="fundescvalidate()"></td>
-  										</tr>
-   									</table>
-							</td>
-						</tr>
+      					<tr width="100%">
+    <td width="100%">
+        <div class="section-block">
+            <h2>Vehicle and Client Information</h2>
+            <table class="cr-table" style="width:100%;">
+                <tr>
+                    <td width="10%" align="right">Vehicle</td>
+                    <td width="15%">
+                        <input type="text" id="txtfleetno" name="txtfleetno" placeholder="Press F3 To Search" value='<s:property value="txtfleetno"/>' onKeyDown="getvehinfo(event);" />
+                    </td>
+                    <td width="40%">
+                        <input type="text" id="vehdetails" tabindex="-1" value='<s:property value="vehdetails"/>' />
+                    </td>
+                    <td width="35%"></td> </tr>
+
+                <tr>
+                    <td align="right">Client</td>
+                    <td>
+                        <input type="text" id="txtcusid" name="txtcusid" placeholder="Press F3 To Search" value='<s:property value="txtcusid"/>' onKeyDown="getclientinfo(event);" onfocus="checkReqveh();" />
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <input type="text" id="client_Name" name="client_Name" style="flex: 1;" tabindex="-1" value='<s:property value="client_Name"/>' />
+                            <label style="white-space: nowrap;">Salesman</label>
+                            <input type="text" id="re_salman" name="re_salman" style="width: 150px;" placeholder="Name" value='<s:property value="re_salman"/>' />
+                        </div>
+                        <input type="hidden" id="re_salmanid" name="re_salmanid" value='<s:property value="re_salmanid"/>' />
+                        <input type="hidden" id="re_clcodeno" name="re_clcodeno" value='<s:property value="re_clcodeno"/>' />
+                        <input type="hidden" id="re_clacno" name="re_clacno" value='<s:property value="re_clacno"/>' />
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td align="right">Address</td>
+                    <td colspan="2">
+                        <input type="text" id="cusaddress" placeholder="Mobile NO - Address" name="cusaddress" style="width: 65.5%;" value='<s:property value="cusaddress"/>'>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr class="actualclientrow" hidden="true">
+                    <td align="right">Actual Client</td>
+                    <td>
+                        <input type="text" name="actualcldocno" id="actualcldocno" placeholder="F3 to Search" value='<s:property value="actualcldocno"/>'>
+                    </td>
+                    <td>
+                        <input type="text" name="actualclientname" id="actualclientname" style="width: 100%;" value='<s:property value="actualclientname"/>'>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td align="right">Description</td>
+                    <td colspan="2">
+                        <input type="text" id="rentaldesc" placeholder="Description" name="rentaldesc" style="width: 65.5%;" value='<s:property value="rentaldesc"/>' onblur="fundescvalidate()">
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </td>
+</tr>
 					</table>
 
 
