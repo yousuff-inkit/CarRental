@@ -34,30 +34,37 @@
     <style>
     * { box-sizing: border-box; }
     
-    /* Make body take 100% height */
-    body, html { height: 100%; margin: 0; padding: 0; font-family: "Segoe UI", Roboto, sans-serif; background-color: #f4f6f9; }
+    /* Make body take exact height and prevent outer scrolling */
+    body, html { 
+        height: 100%; 
+        margin: 0; 
+        padding: 0; 
+        overflow: hidden; /* Stops the whole page from scrolling */
+        font-family: "Segoe UI", Roboto, sans-serif; 
+        background-color: #f4f6f9; 
+    }
     
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
 
-    /* Set container to viewport height minus padding */
+    /* Container fills the exact screen */
     .page-container { 
+        height: 100%; 
         padding: 15px; 
-        height: calc(100vh - 30px); 
         display: flex;
         flex-direction: column;
     }
 
-    /* Force the grid to fill the container */
+    /* Grid fills available space */
     .bottom-grid { 
         display: grid; 
         grid-template-columns: 1fr 1fr 1fr; 
         gap: 15px; 
         flex: 1;
-        height: 100%;
+        min-height: 0; /* CRITICAL: Stops grid from growing past screen */
     }
 
-    /* Force the boxes to take 100% of the grid height */
+    /* Boxes flex to fill grid cells, but don't grow past them */
     .grid-box { 
         background: #fff; 
         border-radius: 6px; 
@@ -65,11 +72,20 @@
         display: flex; 
         flex-direction: column; 
         box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
-        height: 100%; 
+        height: 100%;
+        min-height: 0; /* CRITICAL: Forces scrollbar on child */
     }
 
-    /* Keep header fixed height */
-    .header-bar { flex: 0 0 auto; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+    /* Keep headers static */
+    .header-bar { 
+        flex: 0 0 auto; 
+        padding: 12px 15px; 
+        border-bottom: 1px solid #f0f0f0; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        background: #fff; 
+    }
     .header-title { font-weight: 700; color: #444; font-size: 16px; text-transform: uppercase; }
 
     .header-search input { 
@@ -82,12 +98,12 @@
         box-shadow: 0 0 8px rgba(0,123,255,0.2); 
     }
 
-    /* Let the content fill the remaining space inside the tall box */
+    /* Scrollable content inside the box */
     .scrollable-content { 
         flex: 1; 
         overflow-y: auto; 
         padding: 0; 
-        /* The fixed heights have been removed from here! */
+        min-height: 0; /* Ensures the container scrolls instead of growing */
     }
 
     .app-tile { display: flex; align-items: center; justify-content: space-between; padding: 0 15px; height: 48px; min-height: 48px; border-bottom: 1px solid #f9f9f9; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
