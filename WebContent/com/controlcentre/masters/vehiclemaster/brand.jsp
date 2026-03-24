@@ -18,7 +18,7 @@ String contextPath=request.getContextPath();
         font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
         color: #222;
         margin: 0;
-        padding: 32px 0;
+        padding: 0px 0;
         min-height: 100vh;
         box-sizing: border-box;
     }
@@ -33,7 +33,7 @@ String contextPath=request.getContextPath();
         text-align: left !important; 
     }
     
-    /* Ensure outer container can scroll if content is too tall */
+    
     .scrollable-content {
         overflow-y: auto;
         max-height: calc(100vh - 64px); 
@@ -75,20 +75,20 @@ String contextPath=request.getContextPath();
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
-    border-left: 4px solid #007bff; /* Blue line accent */
+    border-left: 4px solid #007bff; 
 }
 
     .form-row {
         display: grid;
-        /* Layout: Label | Input | Label | Input */
-        grid-template-columns: 120px 1fr 120px 1fr;
-        gap: 15px 30px;
+        
+        grid-template-columns: 120px 125px 100px 1fr 120px 1fr;
+        gap: 10px 20px;
         align-items: center;
         margin-bottom: 12px;
     }
     
     .form-row.single-field {
-        grid-template-columns: 120px 1fr 1fr; /* 1fr for spacing/alignment */
+        grid-template-columns: 120px 1fr 1fr; 
     }
 
     /* ------------------------------
@@ -129,69 +129,70 @@ String contextPath=request.getContextPath();
     /* JQWigets/Grid Styling */
     #jqxBrandSearch1 {
         margin-top: 20px;
-        /* Ensure the grid fits well within the container */
         width: 100% !important; 
     }
     .jqx-grid-cell {
         font-size: 13px !important;
     }
-
+body::-webkit-scrollbar {
+	width: 0px;
+}
 </style>
 <script type="text/javascript">
-	$(document).ready(function () {    
-	    $("#date_brand").jqxDateTimeInput({ width: '100%', height: '32px' ,formatString : "dd.MM.yyyy" }); // Adjusted size for new layout
-	    
-	    document.getElementById("formdet").innerText="Brand(BRD)";
+	$(document).ready(function () {Â  Â Â 
+	Â  Â  $("#date_brand").jqxDateTimeInput({ width: '100%', height: '32px' ,formatString : "dd.MM.yyyy" }); // Adjusted size for new layout
+	Â  Â Â 
+	Â  Â  document.getElementById("formdet").innerText="Brand(BRD)";
 		document.getElementById("formdetail").value="Brand";
 		document.getElementById("formdetailcode").value="BRD";
 		window.parent.formCode.value="BRD";
 		window.parent.formName.value="Brand";
- 		var data= '<%=cba.searchDetails() %>';
-             var num = 0; 
-            var source =
-            {
-                datatype: "json",
-                datafields: [
-                          	{name : 'DOC_NO' , type: 'number' },
-     						{name : 'BRAND_NAME', type: 'String'  },
-                          	{name : 'DATE', type: 'date'  }
-                 ],
-               localdata: data,
-                //url: "/searchDetails",
-                pager: function (pagenum, pagesize, oldpagenum) {
-                    // callback called when a page or page size is changed.
-                }
-            };
-            var dataAdapter = new $.jqx.dataAdapter(source,
-            		 {
-                		loadError: function (xhr, status, error) {
-	                   // alert(error);    
-	                    }
-		            }		
-            );
-    
-            $("#jqxBrandSearch1").jqxGrid(
-                    {
-                    	width: '100%', // Use 100% width
-                        source: dataAdapter,
-                        showfilterrow: true,
-                        filterable: true,
-                        selectionmode: 'multiplecellsextended',
-                        columns: [
-        					{ text: 'DOC NO', datafield: 'DOC_NO', width: '10%' },
-        					{ text: 'BRAND',columntype: 'textbox', filtertype: 'input', datafield: 'BRAND_NAME', width: '50%' },
-        					{ text: 'DATE',columntype: 'textbox', filtertype: 'input', datafield: 'DATE', width: '40%',cellsformat:'dd.MM.yyyy' }
-        	              ]
-                    });
-            $('#jqxBrandSearch1').on('rowdoubleclick', function (event) {
-                var rowindex1=event.args.rowindex;
-                document.getElementById("docno").value= $('#jqxBrandSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
-                document.getElementById("brand").value = $("#jqxBrandSearch1").jqxGrid('getcellvalue', rowindex1, "BRAND_NAME");
-                $("#date_brand").jqxDateTimeInput('val', $("#jqxBrandSearch1").jqxGrid('getcellvalue', rowindex1, "DATE"));
-            }); 
-        });
+Â 		var data= '<%=cba.searchDetails() %>';
+Â  Â  Â  Â  Â  Â  Â var num = 0;Â 
+Â  Â  Â  Â  Â  Â  var source =
+Â  Â  Â  Â  Â  Â  {
+Â  Â  Â  Â  Â  Â  Â  Â  datatype: "json",
+Â  Â  Â  Â  Â  Â  Â  Â  datafields: [
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'DOC_NO' , type: 'number' },
+Â  Â  Â 						{name : 'BRAND_NAME', type: 'String'Â  },
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'DATE', type: 'date'Â  }
+Â  Â  Â  Â  Â  Â  Â  Â  Â ],
+Â  Â  Â  Â  Â  Â  Â  Â localdata: data,
+Â  Â  Â  Â  Â  Â  Â  Â  //url: "/searchDetails",
+Â  Â  Â  Â  Â  Â  Â  Â  pager: function (pagenum, pagesize, oldpagenum) {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  // callback called when a page or page size is changed.
+Â  Â  Â  Â  Â  Â  Â  Â  }
+Â  Â  Â  Â  Â  Â  };
+Â  Â  Â  Â  Â  Â  var dataAdapter = new $.jqx.dataAdapter(source,
+Â  Â  Â  Â  Â  Â  		 {
+Â  Â  Â  Â  Â  Â  Â  Â  		loadError: function (xhr, status, error) {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â // alert(error);Â  Â Â 
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+		Â  Â  Â  Â  Â  Â  }		
+Â  Â  Â  Â  Â  Â  );
+Â  Â Â 
+Â  Â  Â  Â  Â  Â  $("#jqxBrandSearch1").jqxGrid(
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  {
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	width: '100%', // Use 100% width
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  source: dataAdapter,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  showfilterrow: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  filterable: true,
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  selectionmode: 'multiplecellsextended',
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  columns: [
+Â  Â  Â  Â  					{ text: 'DOC NO', datafield: 'DOC_NO', width: '10%' },
+Â  Â  Â  Â  					{ text: 'BRAND',columntype: 'textbox', filtertype: 'input', datafield: 'BRAND_NAME', width: '50%' },
+Â  Â  Â  Â  					{ text: 'DATE',columntype: 'textbox', filtertype: 'input', datafield: 'DATE', width: '40%',cellsformat:'dd.MM.yyyy' }
+Â  Â  Â  Â  	Â  Â  Â  Â  Â  Â  Â  ]
+Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  });
+Â  Â  Â  Â  Â  Â  $('#jqxBrandSearch1').on('rowdoubleclick', function (event) {
+Â  Â  Â  Â  Â  Â  Â  Â  var rowindex1=event.args.rowindex;
+Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("docno").value= $('#jqxBrandSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO");Â 
+Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("brand").value = $("#jqxBrandSearch1").jqxGrid('getcellvalue', rowindex1, "BRAND_NAME");
+Â  Â  Â  Â  Â  Â  Â  Â  $("#date_brand").jqxDateTimeInput('val', $("#jqxBrandSearch1").jqxGrid('getcellvalue', rowindex1, "DATE"));
+Â  Â  Â  Â  Â  Â  });Â 
+Â  Â  Â  Â  });
 	function funSearchLoad(){
-		changeContent('brandSearch.jsp', $('#window')); 
+		changeContent('brandSearch.jsp', $('#window'));Â 
 	 }
 	function funReadOnly() {
 		$('#frmBrand input').attr('readonly', true);
@@ -211,40 +212,40 @@ String contextPath=request.getContextPath();
 			$("#date_brand").jqxDateTimeInput('val', $('#datehidden').val());
 		}
 		 if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
+			Â  Â $.messager.alert('Message',$('#msg').val());
+			Â  }
 	}
 	
 	 $(function(){
-	        $('#frmBrand').validate({
-	                 rules: {
-	                 brand: {
-	                	 required:true,
-	                	 maxlength:40
-	                 }
-	                 },
-	                 messages: {
-	                  brand: {
-	                	  required:" *",
-	                	  maxlength:"max 40 only"
-	                  } 
-	                 }
-	        });});
-	     function funNotify(){
-	    
-	    		return 1;
-		} 
-	     function funFocus(){
-	    	 document.getElementById("brand").focus();
-	     }
-	  function funExcelBtn(){
-		  $("#jqxBrandSearch1").jqxGrid('exportdata', 'xls', 'Brand');
-	  }
-</script>  
- 
+	Â  Â  Â  Â  $('#frmBrand').validate({
+	Â  Â  Â  Â  Â  Â  Â  Â  Â rules: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â brand: {
+	Â  Â  Â  Â  Â  Â  Â  Â  	 required:true,
+	Â  Â  Â  Â  Â  Â  Â  Â  	 maxlength:40
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â messages: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  brand: {
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *",
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  maxlength:"max 40 only"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  }Â 
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  });});
+	Â  Â  Â function funNotify(){
+	Â  Â Â 
+	Â  Â  		return 1;
+		}Â 
+	Â  Â  Â function funFocus(){
+	Â  Â  	 document.getElementById("brand").focus();
+	Â  Â  Â }
+	Â  function funExcelBtn(){
+		Â  $("#jqxBrandSearch1").jqxGrid('exportdata', 'xls', 'Brand');
+	Â  }
+</script>Â Â 
+Â 
 </head>
 <body onLoad="setValues();" >
-<div id="mainBG" class="homeContent" data-type="background"> 
+<div id="mainBG" class="homeContent" data-type="background">Â 
     <form id="frmBrand" action="saveBrand" method="get" autocomplete="off">
         <jsp:include page="../../../../header.jsp" />
         <div class="form-row" style="display:flex; align-items:center; width:100%;">
@@ -271,13 +272,19 @@ String contextPath=request.getContextPath();
             <div class="section-block">
                 <h2 style="margin-top: 0;">Brand Details</h2>
                 
-                <div class="form-row single-field">
+                <div class="form-row">
+                    <label>Date</label>
+                    <div id="date_brand" name="date_brand" class="jqx-datetimeinput-container"></div>
                     <label>Brand</label>
                     <input type="text" name="brand" id="brand" value='<s:property value="brand"/>' >
-                    <div></div> </div>
+                    <label>Doc No.</label>
+                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="true" tabindex="-1">
+                </div>
+                
+                
                 
                 <input type="hidden" id="mode" name="mode"/>
-                <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+                <input type="hidden" id="msg" name="msg"Â  value='<s:property value="msg"/>'/>
                 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
                 <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
             </div>
