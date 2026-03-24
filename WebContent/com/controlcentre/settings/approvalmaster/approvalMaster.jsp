@@ -162,7 +162,7 @@ body {
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 14px;
+    font-size: 17.6px;
     font-weight: 600;
 }
 
@@ -180,7 +180,7 @@ body {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 13px;
+    font-size: 16px;
 }
 .cr-table th {
     background: #eef0f6;
@@ -204,6 +204,13 @@ body {
 }
 .myButton:hover {
     background: #0056b3;
+}
+
+.jqx-datetimeinput, 
+.jqx-datetimeinput input,
+#docno, 
+.header-docno {
+    width: 130px !important;
 }
 </style>
 
@@ -810,26 +817,19 @@ function funReset(){
     <div class="hidden-scrollbar receipt-header">
         <div style="width:100%;">
 
-            <table class="cr-table" id="main" width="100%">
-                <tr>
-                    <td width="11%" align="right">Doc Type</td>
-                    <td width="10%">
-                        <input type="text" id="doctype" name="doctype" style="width:85%;"
-                               placeholder="Press F3 To Search"
-                               value='<s:property value="doctype"/>'
-                               required="required" onkeydown="getUser(event);" readonly/>
-                    </td>
-                    <td width="28%">
-                        <input type="text" id="doctypename" name="doctypename" style="width:90%;"
-                               value='<s:property value="doctypename"/>' readonly/>
-                    </td>
-                    <td width="29%" align="right">Doc No</td>
-                    <td width="18%">
-                        <input type="text" id="docno" name="docno" tabindex="-1" style="width:50%;"
-                               value='<s:property value="docno"/>'/>
-                    </td>
-                </tr>
-            </table>
+        <div class="receipt-header">
+    
+    <label>Doc Type</label>
+    <input type="text" id="doctype" placeholder="Press F3 To Search">
+
+    <input type="text" id="doctypename">
+
+    <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+        <label>Doc No</label>
+        <input type="text" id="docno" class="header-docno">
+    </div>
+
+</div>
 
             <br/>
 

@@ -48,7 +48,7 @@ body {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
@@ -99,7 +99,7 @@ label {
     white-space: nowrap;
     text-align: right;
     padding-right: 10px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* JQX Widget Overrides */
@@ -306,22 +306,32 @@ label {
 <div id="mainBG" class="homeContent" data-type="background">
     <form id="frmInsurance" action="saveActionInsurance" autocomplete="off">
         <jsp:include page="../../../../header.jsp" />
+        <div class="form-row" style="display:flex; align-items:center; width:100%;">
+
+    <label style="margin-right:8px;">Date</label>
+
+    <div style="width:130px;">
+        <div id="insurdate" name="insurdate" value='<s:property value="insurdate"/>'></div>
+    </div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           readonly
+           tabindex="-1"
+           style="width:120px;">
+</div>
+                
         <br/>
         
         <div class="hidden-scrollbar">
             <div class="section-block">
                 <h2>Insurance Details</h2>
                 
-                <div class="form-row">
-                    <label>Date</label>
-                    <div>
-                        <div id="insurdate" name="insurdate" value='<s:property value="insurdate"/>'></div>
-                    </div>
-
-                    <label>Doc No</label>
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1" style="width: 150px !important;">
-                </div>
-                
+               
                 <div class="form-row">
                     <label>Account</label>
                     <input type="text" name="txtaccname" id="txtaccname"

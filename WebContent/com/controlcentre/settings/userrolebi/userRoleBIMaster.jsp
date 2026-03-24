@@ -136,7 +136,7 @@ body {
     padding-left: 10px;
     border-left: 4px solid #007bff;
     color: #253858;
-    font-size: 14px;
+    font-size: 17.6px;
     font-weight: 600;
 }
 
@@ -155,7 +155,7 @@ body {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 14px;
+    font-size: 16px;
 }
 .cr-table th {
     background: #eef0f6;

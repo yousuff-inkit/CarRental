@@ -344,7 +344,7 @@ body {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 14px;
     font-weight: 600;
     margin: 0 0 16px 0;
     padding-left: 10px;
@@ -361,7 +361,7 @@ input[type="text"], select {
     padding: 6px 10px;
     background: #fff;
     transition: border-color 0.2s;
-    font-size: 14px;
+    font-size: 12px;
     box-sizing: border-box;
     width: 100%;
 }
@@ -388,7 +388,7 @@ input[type="text"]:focus, select:focus {
 }
 
 .cr-table td[align="right"] {
-    font-weight: 700;
+    font-weight: 600;
     color: #253858;
     white-space: nowrap;
 }
@@ -403,6 +403,31 @@ input[type="text"]:focus, select:focus {
     border: none;
     cursor: pointer;
     padding: 0;
+}
+
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 </style>
 

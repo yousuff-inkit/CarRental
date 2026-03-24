@@ -100,7 +100,7 @@
     }
 
     .section-block h2, .section-block h3 {
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -119,7 +119,7 @@
         padding: 6px 10px;
         background: #fff;
         transition: border-color 0.2s;
-        font-size: 14px;
+        font-size: 16px;
         box-sizing: border-box;
         width: 100%;
     }
@@ -144,15 +144,7 @@
         font-size: 16px;
     }
 
-    /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
-
+   
     /* SCROLLBAR FIX - Added for this specific file */
     .hidden-scrollbar { 
         overflow: auto; 
@@ -165,6 +157,44 @@
         color:red;
         font-weight:bold;
     }
+    /* Fix dropdown shrinking after search */
+#search select{
+    min-width: 140px;
+    width: auto !important;
+}
+
+/* Keep inputs stable as well */
+#search input[type="text"]{
+    min-width: 120px;
+}
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);}
+
+
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -893,22 +923,33 @@ function getColor()
 <form id="frmNonpoolvehicle" action="saveActionNonpoolvehicle" autocomplete="off" method="post">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
+
+   <div class="form-group dual-input">
+
+    <label>Date</label>
+    <div>
+        <div id="nonpooldate" name="nonpooldate"
+             value='<s:property value="nonpooldate"/>'></div>
+    </div>
+
+    <label style="grid-column: 4; text-align:right;">Doc No</label>
+    <input name="docno"
+           type="text"
+           id="docno"
+           tabindex="-1"
+           value='<s:property value="docno"/>'
+           readonly
+           style="width:120px; grid-column:5;">
+
+</div>
+
+</div>
+
 <div class="hidden-scrollbar receipt-header">
 
     <div class="section-block full-width-block">
         <h3>Vehicle Info</h3>
-
-        <div class="form-group dual-input">
-            <label>Date</label>
-            <div>
-                <div id="nonpooldate" name="nonpooldate" value='<s:property value="nonpooldate"/>'></div>
-            </div>
-
-            <label>Doc No</label>
-            <input name="docno" type="text" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly>
-        </div>
-
-        <div class="form-group dual-input">
+         <div class="form-group dual-input">
             <label>Fleet No</label>
             <div style="display:flex; gap:10px;">
                 <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' style="width:25%;" tabindex="-1" readonly>

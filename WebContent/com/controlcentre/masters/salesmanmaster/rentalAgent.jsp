@@ -157,6 +157,17 @@
     .hidden-scrollbar { overflow: auto; height: 530px; }
     .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 
+
+.jqx-datetimeinput, 
+.jqx-datetimeinput input, {
+    width: 130px !important;
+}
+
+
+#docno, 
+.header-docno {
+    width: 130px !important;
+}
 </style>
 <script type="text/javascript">
   $(document).ready(function () {     
@@ -339,10 +350,9 @@ function funExcelBtn(){
 <jsp:include page="../../../../header.jsp" /><br/>
 <div class="hidden-scrollbar receipt-header">
 
-    <div class="section-block full-width-block">
-        <h3>Rental Agent Details</h3>
 
-        <div class="form-group dual-input">
+
+   <div class="form-group dual-input">
             <label>Date</label>
             <div>
                 <div id="rentalagentdate" name="rentalagentdate" value='<s:property value="rentalagentdate"/>'></div>
@@ -352,6 +362,10 @@ function funExcelBtn(){
             <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
         </div>
 
+    <div class="section-block full-width-block">
+        <h3>Rental Agent Details</h3>
+
+     
         <div class="form-group dual-input">
             <label>Code</label>
             <input type="text" id="code" name="code" placeholder="Code" value='<s:property value="code"/>' >

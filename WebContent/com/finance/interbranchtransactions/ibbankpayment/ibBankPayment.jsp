@@ -750,7 +750,7 @@ input[type="text"]:focus, select:focus {
 }
 
 label {
-    font: 14px 'Segoe UI';
+    font: 16px 'Segoe UI';
     font-weight: 500;
     color: #253858;
     white-space: nowrap;
@@ -768,7 +768,7 @@ label {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
@@ -808,6 +808,21 @@ label {
     align-items: center;
     gap: 8px;
 }
+
+.jqx-datetimeinput, 
+.jqx-datetimeinput input, {
+    width: 130px !important;
+}
+
+
+#docno, 
+.header-docno {
+    width: 130px !important;
+}
+
+#refno {
+    width: 130px !important;
+}
 </style>
 </head>
 <body onload="setValues();">
@@ -815,12 +830,6 @@ label {
 <div id="mainBG" class="homeContent" data-type="background">
     <jsp:include page="../../../../header.jsp"></jsp:include>
     <br>
-
-    <form id="frmIbBankPayment" action="saveIbBankPayment" method="post" autocomplete="off">
-        <div class="hidden-scrollbar">
-            
-            <div class="section-block">
-                <h2>General Information</h2>
                 <div class="trans-info-grid">
                     <label>Date</label>
                     <div id="jqxIbBankPaymentDate" name="jqxIbBankPaymentDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxIbBankPaymentDate"/>'></div>
@@ -834,7 +843,11 @@ label {
                         <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();" style="white-space: nowrap;">Value Change</button>
                     </div>
                 </div>
-            </div>
+
+    <form id="frmIbBankPayment" action="saveIbBankPayment" method="post" autocomplete="off">
+        <div class="hidden-scrollbar">
+            
+            
 
             <div class="section-row">
                 <div class="section-block">

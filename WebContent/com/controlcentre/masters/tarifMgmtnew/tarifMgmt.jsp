@@ -57,7 +57,7 @@ input[type="text"]:focus, select:focus, textarea:focus {
 }
 
 label {
-    font: 14px 'Segoe UI';
+    font: 16px 'Segoe UI';
     font-weight: 500;
     color: #253858;
     white-space: nowrap;
@@ -75,7 +75,7 @@ label {
 }
 
 .section-block h2 {
-    font-size: 1.1rem;
+    font-size: 17.6px;
     font-weight: 600;
     margin: 0 0 20px;
     padding-left: 10px;
@@ -121,6 +121,32 @@ label {
 .tarif-action-btn:hover {
     transform: scale(1.1);
 }
+body::-webkit-scrollbar {
+	width: 0px;
+}
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 </style>
 
 <script type="text/javascript">
@@ -856,6 +882,30 @@ document.getElementById("cmbtariftype").disabled=true;
             window.parent.formCode.value="TFM";
         </script>
         <jsp:include page="../../../../header.jsp" />
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+
+ 
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Date</label>
+        <div id="jqxTariffDate"
+             name="jqxTariffDate"
+             value='<s:property value="jqxTariffDate"/>'
+             style="width:120px;">
+        </div>
+    </div>
+
+  
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label>Doc No</label>
+        <input type="text"
+               id="docno"
+               name="docno"
+               tabindex="-1"
+               value='<s:property value="docno"/>'
+               style="width:120px;">
+    </div>
+
+</div>   
         <br/>
 
         <div class="hidden-scrollbar">
@@ -863,8 +913,7 @@ document.getElementById("cmbtariftype").disabled=true;
             <div class="section-block">
                 <h2>General Information</h2>
                 <div class="trans-info-grid">
-                    <label>Date</label>
-                    <div id='jqxTariffDate' name='jqxTariffDate' value='<s:property value="jqxTariffDate"/>'></div>
+               
                     
                     <label>Tariff Type</label>
                     <div style="display: flex; gap: 8px;">
@@ -880,8 +929,7 @@ document.getElementById("cmbtariftype").disabled=true;
                         <option value="Vehicle">Vehicle</option>
                     </select>
 
-                    <label>Doc No</label>
-                    <input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/>
+                   
 
                     <label>Validity From</label>
                     <div id='jqxTariffFromDate' name='jqxTariffFromDate' value='<s:property value="jqxTariffFromDate"/>'></div>

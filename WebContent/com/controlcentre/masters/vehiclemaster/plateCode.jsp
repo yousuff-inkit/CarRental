@@ -173,90 +173,90 @@ var data= '<%=cpa.searchDetails() %>';
 		window.parent.formCode.value="PLT";
 		window.parent.formName.value="Plate Code";
 		getAuth();
-		var data= '<%=cpa.searchDetails() %>'; 
+		var data= '<%=cpa.searchDetails() %>';Â 
 	
-	            
-	            
-	             var num = 0; 
-	            var source =
-	            {
-	                datatype: "json",
-	                datafields: [
+	Â  Â  Â  Â  Â  Â Â 
+	Â  Â  Â  Â  Â  Â Â 
+	Â  Â  Â  Â  Â  Â  Â var num = 0;Â 
+	Â  Â  Â  Â  Â  Â  var source =
+	Â  Â  Â  Â  Â  Â  {
+	Â  Â  Â  Â  Â  Â  Â  Â  datatype: "json",
+	Â  Â  Â  Â  Â  Â  Â  Â  datafields: [
 								{name : 'doc_no' , type: 'number' },
-	                          	{name : 'code_no' , type: 'String' },
-	     						{name : 'code_name', type: 'String'  },
-	                          	{name : 'authname', type: 'String'  },
-	                          	{name : 'authId', type: 'String'  },
-	                          	{name : 'plateDate', type: 'date'  }
-	                          	
-	                 ],
-	                 localdata: data,
-	                pager: function (pagenum, pagesize, oldpagenum) {
-	                    // callback called when a page or page size is changed.
-	                }
-	            };
-	            var dataAdapter = new $.jqx.dataAdapter(source,
-	            		 {
-	                		loadError: function (xhr, status, error) {
-		                    alert(error);    
-		                    }
-			            }		
-	            );
-	         
-	            $("#jqxPlateCodeSearch1").jqxGrid(
-	                    {
-	                    	width: '100%',
-	                        height: 350,
-	                        source: dataAdapter,
-	                        showfilterrow: true,
-	                        filterable: true,
-	                        selectionmode: 'singlerow',
-	                        sortable: true,
-	                        altrows:true,
-	                        columns: [
-	                                  {text: 'Doc No',datafield:'doc_no',hidden:true},
-	        					{ text: 'Plate Code', datafield: 'code_no', width: '30%' },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'code_no' , type: 'String' },
+	Â  Â  Â 						{name : 'code_name', type: 'String'Â  },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'authname', type: 'String'Â  },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'authId', type: 'String'Â  },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	{name : 'plateDate', type: 'date'Â  }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	
+	Â  Â  Â  Â  Â  Â  Â  Â  Â ],
+	Â  Â  Â  Â  Â  Â  Â  Â  Â localdata: data,
+	Â  Â  Â  Â  Â  Â  Â  Â  pager: function (pagenum, pagesize, oldpagenum) {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  // callback called when a page or page size is changed.
+	Â  Â  Â  Â  Â  Â  Â  Â  }
+	Â  Â  Â  Â  Â  Â  };
+	Â  Â  Â  Â  Â  Â  var dataAdapter = new $.jqx.dataAdapter(source,
+	Â  Â  Â  Â  Â  Â  		 {
+	Â  Â  Â  Â  Â  Â  Â  Â  		loadError: function (xhr, status, error) {
+		Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  alert(error);Â  Â Â 
+		Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+			Â  Â  Â  Â  Â  Â  }		
+	Â  Â  Â  Â  Â  Â  );
+	Â  Â  Â  Â  Â 
+	Â  Â  Â  Â  Â  Â  $("#jqxPlateCodeSearch1").jqxGrid(
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  	width: '100%',
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  height: 350,
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  source: dataAdapter,
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  showfilterrow: true,
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  filterable: true,
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  selectionmode: 'singlerow',
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  sortable: true,
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  altrows:true,
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  columns: [
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  {text: 'Doc No',datafield:'doc_no',hidden:true},
+	Â  Â  Â  Â  					{ text: 'Plate Code', datafield: 'code_no', width: '30%' },
 								{ text: 'Plate Name', datafield: 'code_name', width: '40%' },
 								{ text: 'Authority Name', datafield: 'authname', width: '30%' },
 								{ text: 'Authority Id', datafield: 'authId', width: '30%',hidden:true },
 								{ text: 'Date', datafield: 'plateDate', width: '30%',hidden:true,cellsformat:'dd.MM.yyyy' }
 								]
-	                    });
-	            $('#jqxPlateCodeSearch1').on('rowdoubleclick', function (event) 
-	            		{
-			            	var rowindex1=event.args.rowindex;
-			            	$('#date_plateCode').jqxDateTimeInput({ disabled: false});
-			        		
-			            	document.getElementById("docno").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "doc_no");
-			                document.getElementById("plateCode").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "code_no"); 
-			                document.getElementById("platename").value = $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "code_name");
-			                $('#authName').val($("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "authId")) ;
-			                $("#date_plateCode").jqxDateTimeInput('val', $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "plateDate")); 
-			        		$('#frmPlateCode select').attr('disabled', true);
-			            	$('#date_plateCode').jqxDateTimeInput({ disabled: true});
-			            	
-			            	document.getElementById("authorityname").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "authname");
-			            	
-			            	var auth12=$('#jqxPlateCodeSearch1').jqxGrid('getcelltext', rowindex1, "authname");
-			            	auth=auth12.replace(/ /g, "%20");
-			            	 $("#nAliasgrid").load("nAliasgrid.jsp?itemno="+document.getElementById("docno").value);
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  });
+	Â  Â  Â  Â  Â  Â  $('#jqxPlateCodeSearch1').on('rowdoubleclick', function (event)Â 
+	Â  Â  Â  Â  Â  Â  		{
+			Â  Â  Â  Â  Â  Â  	var rowindex1=event.args.rowindex;
+			Â  Â  Â  Â  Â  Â  	$('#date_plateCode').jqxDateTimeInput({ disabled: false});
+			Â  Â  Â  Â  		
+			Â  Â  Â  Â  Â  Â  	document.getElementById("docno").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "doc_no");
+			Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("plateCode").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "code_no");Â 
+			Â  Â  Â  Â  Â  Â  Â  Â  document.getElementById("platename").value = $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "code_name");
+			Â  Â  Â  Â  Â  Â  Â  Â  $('#authName').val($("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "authId")) ;
+			Â  Â  Â  Â  Â  Â  Â  Â  $("#date_plateCode").jqxDateTimeInput('val', $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "plateDate"));Â 
+			Â  Â  Â  Â  		$('#frmPlateCode select').attr('disabled', true);
+			Â  Â  Â  Â  Â  Â  	$('#date_plateCode').jqxDateTimeInput({ disabled: true});
+			Â  Â  Â  Â  Â  Â  	
+			Â  Â  Â  Â  Â  Â  	document.getElementById("authorityname").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "authname");
+			Â  Â  Â  Â  Â  Â  	
+			Â  Â  Â  Â  Â  Â  	var auth12=$('#jqxPlateCodeSearch1').jqxGrid('getcelltext', rowindex1, "authname");
+			Â  Â  Â  Â  Â  Â  	auth=auth12.replace(/ /g, "%20");
+			Â  Â  Â  Â  Â  Â  	 $("#nAliasgrid").load("nAliasgrid.jsp?itemno="+document.getElementById("docno").value);
 
-			                $('#window').jqxWindow('close');
-	            		 }); 
+			Â  Â  Â  Â  Â  Â  Â  Â  $('#window').jqxWindow('close');
+	Â  Â  Â  Â  Â  Â  		 });Â 
 	
 	});
-	  function funSearchLoad(){
-			changeContent('plateCodeSearch.jsp', $('#window')); 
+	Â  function funSearchLoad(){
+			changeContent('plateCodeSearch.jsp', $('#window'));Â 
 		 }
 	function funReadOnly() {
 		$('#frmPlateCode input').attr('readonly', true);
 		$('#frmPlateCode select').attr('disabled', true);
-		 $('#date_plateCode').jqxDateTimeInput({ disabled: true}); 
+		 $('#date_plateCode').jqxDateTimeInput({ disabled: true});Â 
 
 	}
 	function funRemoveReadOnly() {
 		$('#frmPlateCode input').attr('readonly', false);
-		 $('#date_plateCode').jqxDateTimeInput({ disabled: false}); 
+		 $('#date_plateCode').jqxDateTimeInput({ disabled: false});Â 
 
 		$('#frmPlateCode select').attr('disabled', false);
 		$('#docno').attr('readonly', true);
@@ -298,8 +298,8 @@ var data= '<%=cpa.searchDetails() %>';
 				$("#date_plateCode").jqxDateTimeInput('val', $('#datehidden').val());
 			}
 		 if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
+			Â  Â $.messager.alert('Message',$('#msg').val());
+			Â  }
 		 $("#nAliasgrid").load("nAliasgrid.jsp?itemno="+document.getElementById("docno").value);
 	}
 	function funFocus(){
@@ -308,79 +308,79 @@ var data= '<%=cpa.searchDetails() %>';
 		
 	}
 	 $(function(){
-	        $('#frmPlateCode').validate({
-	                 rules: {
-	                 authName:{
-	                	 required:true
-	                 },
-	                 plateCode:{
-	                	 required:true,
-	                	 maxlength:10
-	                 }
-	                 },
-	                 messages: {
-	                  authName:{
-	                	  required:" *"
-	                  },
-	                  plateCode:{
-	                	  required:" *",
-	                	  maxlength:"max 10 chars"
-	                  }
-	                 }
-	        });});
-	     function funNotify(){
-	    	 var rows = $("#jqxnalias").jqxGrid('getrows'); 
-	     	    var listss = new Array();
-	    	 	var a = 1;
-	    	   for(var i=0 ; i < rows.length ; i++){
-	    		   var code=rows[i].code;
-	    			if(code!="undefined" && code!=null && typeof(code)!="undefined" ){
-	        	    	
-	    		   listss.push(rows[i].code+"::"+rows[i].doc_no+"::"+a+"::");  
-	    			}
-	    	   }
-	    	savenalias(listss);
-	    		return 1;
-		} 
-	     function funExcelBtn(){
-			  $("#jqxPlateCodeSearch1").jqxGrid('exportdata', 'xls', 'Platecode');
-		  }
-	     
-	     function savenalias(listss)
-	     {
-	     	
-	     	    var codeno=document.getElementById("plateCode").value;
-	       	     var authname=$("#authName option:selected").text();
-	         	   var docno=document.getElementById("docno").value;
-	         		   	var x=new XMLHttpRequest();
-	         		x.onreadystatechange=function(){
-	         			if (x.readyState==4 && x.status==200)
-	         				{
-	         				 var itemsapprove= x.responseText;
-	         				 	var itemvalappr=itemsapprove.trim();
-	         					 	
-	         	  if(parseInt(itemvalappr)==1)
-	         	  	{
-	    				}
-	         			else
-	         				{
-	         			
-	         				}  
-	         		}
-	         		}
-	         		 
-	         	x.open("GET","saveNAlias.jsp?list="+listss+"&docno="+docno+"&authname="+authname+"&codeno="+codeno);
-	         		x.send();
-	     	
-	     	
-	     	}  
-	     
+	Â  Â  Â  Â  $('#frmPlateCode').validate({
+	Â  Â  Â  Â  Â  Â  Â  Â  Â rules: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â authName:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	 required:true
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â plateCode:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	 required:true,
+	Â  Â  Â  Â  Â  Â  Â  Â  	 maxlength:10
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â messages: {
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  authName:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  },
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  plateCode:{
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  required:" *",
+	Â  Â  Â  Â  Â  Â  Â  Â  	Â  maxlength:"max 10 chars"
+	Â  Â  Â  Â  Â  Â  Â  Â  Â  }
+	Â  Â  Â  Â  Â  Â  Â  Â  Â }
+	Â  Â  Â  Â  });});
+	Â  Â  Â function funNotify(){
+	Â  Â  	 var rows = $("#jqxnalias").jqxGrid('getrows');Â 
+	Â  Â  Â 	Â  Â  var listss = new Array();
+	Â  Â  	 	var a = 1;
+	Â  Â  	Â  Â for(var i=0 ; i < rows.length ; i++){
+	Â  Â  		Â  Â var code=rows[i].code;
+	Â  Â  			if(code!="undefined" && code!=null && typeof(code)!="undefined" ){
+	Â  Â  Â  Â  	Â  Â  	
+	Â  Â  		Â  Â listss.push(rows[i].code+"::"+rows[i].doc_no+"::"+a+"::");Â Â 
+	Â  Â  			}
+	Â  Â  	Â  Â }
+	Â  Â  	savenalias(listss);
+	Â  Â  		return 1;
+		}Â 
+	Â  Â  Â function funExcelBtn(){
+			Â  $("#jqxPlateCodeSearch1").jqxGrid('exportdata', 'xls', 'Platecode');
+		Â  }
+	Â  Â  Â 
+	Â  Â  Â function savenalias(listss)
+	Â  Â  Â {
+	Â  Â  Â 	
+	Â  Â  Â 	Â  Â  var codeno=document.getElementById("plateCode").value;
+	Â  Â  Â  Â 	Â  Â  Â var authname=$("#authName option:selected").text();
+	Â  Â  Â  Â  Â 	Â  Â var docno=document.getElementById("docno").value;
+	Â  Â  Â  Â  Â 		Â  Â 	var x=new XMLHttpRequest();
+	Â  Â  Â  Â  Â 		x.onreadystatechange=function(){
+	Â  Â  Â  Â  Â 			if (x.readyState==4 && x.status==200)
+	Â  Â  Â  Â  Â 				{
+	Â  Â  Â  Â  Â 				 var itemsapprove= x.responseText;
+	Â  Â  Â  Â  Â 				 	var itemvalappr=itemsapprove.trim();
+	Â  Â  Â  Â  Â 					 	
+	Â  Â  Â  Â  Â 	Â  if(parseInt(itemvalappr)==1)
+	Â  Â  Â  Â  Â 	Â  	{
+	Â  Â  				}
+	Â  Â  Â  Â  Â 			else
+	Â  Â  Â  Â  Â 				{
+	Â  Â  Â  Â  Â 			
+	Â  Â  Â  Â  Â 				}Â Â 
+	Â  Â  Â  Â  Â 		}
+	Â  Â  Â  Â  Â 		}
+	Â  Â  Â  Â  Â 		Â 
+	Â  Â  Â  Â  Â 	x.open("GET","saveNAlias.jsp?list="+listss+"&docno="+docno+"&authname="+authname+"&codeno="+codeno);
+	Â  Â  Â  Â  Â 		x.send();
+	Â  Â  Â 	
+	Â  Â  Â 	
+	Â  Â  Â 	}Â Â 
+	Â  Â  Â 
 </script>
 </head>
 
 <body onLoad="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmPlateCode" action="saveActionPlate"  autocomplete="off">
+<form id="frmPlateCode" action="saveActionPlate"Â  autocomplete="off">
 	<jsp:include page="../../../../header.jsp" />
 	
     <div class="section-block">
@@ -408,8 +408,47 @@ var data= '<%=cpa.searchDetails() %>';
             <input type="text" name="platename" id="platename" value='<s:property value="platename"/>'>
         </div>
 
+    <div class="jqx-datetimeinput-container" style="width:130px;">
+        <div id="date_plateCode" name="date_plateCode" value='<s:property value="date_plateCode"/>'></div>
+    </div>
+
+    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
+
+    <input type="text"
+           name="docno"
+           id="docno"
+           value='<s:property value="docno"/>'
+           tabindex="-1"
+           readonly="readonly"
+           style="width:110px;">
+
+</div>
+  <div class="section-block">
+    <h2>Plate Code Details</h2>
+
+    <div id="nAliasgrid" class="n-alias-grid-container">
+        <jsp:include page="nAliasgrid.jsp"></jsp:include>
+    </div>
+
+   <div class="plate-form">
+
+    <label>Authority</label>
+    <select name="authName" id="authName">
+        <option value="">--Select--</option>
+    </select>
+    <div></div>
+    <div></div>
+
+    <label>Plate Code</label>
+    <input type="text" id="plateCode" name="plateCode" value='<s:property value="plateCode"/>'>
+
+    <label>Name</label>
+    <input type="text" name="platename" id="platename" value='<s:property value="platename"/>'>
+
+</div>
+</div>
         <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
-        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <input type="hidden" id="msg" name="msg"Â  value='<s:property value="msg"/>'/>
         <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
         <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
         <input type="hidden" id="authId" name="authId" value='<s:property value="authId"/>' />

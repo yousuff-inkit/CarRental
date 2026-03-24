@@ -30,69 +30,98 @@
 
 	</script>
 <style type="text/css">
-
-
-.searchPop table {
-  border-collapse: separate;
-   border-spacing: 6px 8px;    
+#search {
+  background-color: #ffffff;
+  padding: 5px;
 }
 
+#search table {
+  border-collapse: separate;
+  border-spacing: 15px 18px;  
+  background-color: #ffffff;
+}
 
-.searchPop td[align="right"] {
-  font-weight: 300;
+#search td[align="right"] {
+  font-weight: 700;
   font-size: 14px;
   color: #222;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-
-.searchPop input[type="text"] {
-  font-weight: 300;
+input[type="text"] {
+  font-weight: 600;
   font-size: 14px;
-  padding: 4px 6px;
-  width: 95%;               /* Prevent overflow */
+  padding: 8px 12px;
+  width: 95%;                
   max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
+  box-sizing: border-box;   
+  border: 1px solid #ccc;
 }
 
-
-.searchPop #bankdate, #chqdate {
-  font-weight: 300;
-  font-size: 14px;
+#search tr {
+  line-height: 1.6;
 }
 
-
-.searchPop .myButton {
-  font-weight: 300;
-  font-size: 14px;
+.myButton {
+    font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
-
-.searchPop tr {
-  line-height: 1.2;
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
-
 </style>
-<body>
-<div id=search class="searchPop">
-<table width="100%">
+
+<body bgcolor="#ffffff">
+<div id="search">
+<table width="100%" border="0">
   <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%"><div id="paydate" name="paydate"  value='<s:property value="paydate"/>'></div>
-        <input type="hidden" name="hidpaydate" id="hidpaydate" value='<s:property value="hidpaydate"/>'></td>
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%"><input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'></td>
-    <td width="27%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
+    <td width="15%" align="right">Date</td>
+    <td width="20%">
+        <div id="paydate" name="paydate" value='<s:property value="paydate"/>'></div>
+        <input type="hidden" name="hidpaydate" id="hidpaydate" value='<s:property value="hidpaydate"/>'>
+    </td>
+    <td width="15%" align="right">Doc No</td>
+    <td width="25%">
+        <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
+    </td>
+    <td width="25%" rowspan="2" align="center">
+        <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+    </td>
   </tr>
   <tr>
     <td align="right">Name</td>
-    <td colspan="2"><input type="text" name="txtpartyname" id="txtpartyname" style="width:100%" autocomplete="off" value='<s:property value="txtpartyname"/>'></td>
+    <td>
+        <input type="text" name="txtpartyname" id="txtpartyname" autocomplete="off" value='<s:property value="txtpartyname"/>'>
+    </td>
     <td align="right">Amount</td>
-    <td><input type="text" name="txtamount" id="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'></td>
+    <td>
+        <input type="text" name="txtamount" id="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
+    </td>
   </tr>
   <tr>
-    <td colspan="5"><div id="refreshdiv"><jsp:include page="icpvMainSearchGrid.jsp"></jsp:include></div></td>
+    <td colspan="5">
+        <div id="refreshdiv">
+            <jsp:include page="icpvMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </td>
   </tr>
 </table>
-  </div>
-</body>
-</html>
+</div>
+</body></html>

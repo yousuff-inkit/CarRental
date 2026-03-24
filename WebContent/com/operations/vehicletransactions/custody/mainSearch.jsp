@@ -105,57 +105,78 @@ tr {
     overflow: auto;
     height: 600px;
 }
-
+#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 </style>
 
 <body bgcolor="#E0ECF8">
 <div id="search">
-  <table width="100%">
-    <tr>
-      <td align="right" width="10%">Name</td>
-      <td align="left" width="30%">
-        <input type="text" name="searchclient" id="searchclient" style="width:96.5%;" value='<s:property value="searchclient"/>'>
-      </td>
-      <td align="right" width="10%">Type</td>
-      <td align="left" width="20%">
-        <select name="cmbsearchrtype" id="cmbsearchrtype">
-          <option value="">--Select--</option>
-          <option value="RAG">Rental</option>
-          <option value="LAG">Lease</option>
-        </select>
-      </td>
-      <td align="right" width="10%">Date</td>
-      <td align="left" width="20%">
+
+<table width="100%">
+
+<tr>
+    <td width="6%" align="right">Date</td>
+    <td width="14%">
         <div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div>
-      </td>
-    </tr>
+    </td>
 
-    <tr>
-      <td align="left" style="font-weight: 700; font-size: 14px; color: #222;">Agmt NO</td>
-      <td align="left">
-        <input type="text" name="searchagmtno" id="searchagmtno" value='<s:property value="searchagmtno"/>'>
-      </td>
-      <td align="right">Fleet NO</td>
-      <td align="left">
-        <input type="text" name="searchfleetno" id="searchfleetno" style="width:96.5%;" value='<s:property value="searchfleetno"/>'>
-      </td>
-      <td align="right">Doc No</td>
-      <td align="left">
-        <input type="text" id="searchdocno" name="searchdocno" value='<s:property value="searchdocno"/>'>
-      </td>
-      <td align="center">
-        <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
-      </td>
-    </tr>
+    <td width="21%" align="right">Doc No</td>
+    <td width="32%">
+        <input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'>
+    </td>
 
-    <tr>
-      <td colspan="7">
-        <div id="srefreshdiv">
-          <jsp:include page="subMainSearch.jsp" />
-        </div>
-      </td>
-    </tr>
-  </table>
+    <td width="27%" align="center" rowspan="2">
+        <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton"
+        value="Search" onclick="mainloadSearch();">
+    </td>
+</tr>
+
+<tr>
+    <td align="right">Name</td>
+    <td>
+        <input type="text" name="searchclient" id="searchclient"
+        value='<s:property value="searchclient"/>'>
+    </td>
+
+    <td align="right">Type</td>
+    <td>
+        <select name="cmbsearchrtype" id="cmbsearchrtype">
+            <option value="">--Select--</option>
+            <option value="RAG">Rental</option>
+            <option value="LAG">Lease</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <td align="right">Agmt No</td>
+    <td>
+        <input type="text" name="searchagmtno" id="searchagmtno"
+        value='<s:property value="searchagmtno"/>'>
+    </td>
+
+    <td align="right">Fleet No</td>
+    <td>
+        <input type="text" name="searchfleetno" id="searchfleetno"
+        value='<s:property value="searchfleetno"/>'>
+    </td>
+
+    <td colspan="2"></td>
+</tr>
+
+<tr>
+<td colspan="5">
+    <div id="srefreshdiv">
+        <jsp:include page="subMainSearch.jsp" />
+    </div>
+</td>
+</tr>
+
+</table>
+
 </div>
 </body>
 </html>

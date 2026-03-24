@@ -58,77 +58,91 @@
     vertical-align: middle;
 }
 
-/* Premium sky-blue small button */
-.myButton {
-    background: #4FA8FF;
-    color: #ffffff;
-    border: none;
-    padding: 4px 14px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
 
-.myButton:hover {
-    background: #2F7FD4;
-}
 
 /* Keep layout stable */
 #search table {
     width: 100%;
     table-layout: fixed;
 }
-	
+	#search td[align="right"]{
+    font-weight:700;
+    font-size:14px;
+    color:#222;
+}
 	</style>
 
-<body>
+<body bgcolor="#FFFFFF">
 <div id="search">
 
 <table width="100%">
 
-  <tr>
-    <td width="6%" align="right">Name</td>
-    <td colspan="4">
-        <input type="text" name="txtvendorsname" id="txtvendorsname"
-               style="width:80%"
-               value='<s:property value="txtvendorsname"/>'>
-    </td>
-    <td width="24%" align="center">
-        <input type="button" name="btnsearch" id="btnsearch"
-               class="myButton" value="Search"
-               onclick="loadSearch();">
-    </td>
-  </tr>
+<tr>
 
-  <tr>
-    <td align="right">A/C No.</td>
-    <td width="21%">
-        <input type="text" name="txtaccountno" id="txtaccountno"
-               value='<s:property value="txtaccountno"/>'>
-    </td>
+<td width="10%" align="right">Name</td>
+<td width="35%">
+<input type="text"
+       name="txtvendorsname"
+       id="txtvendorsname"
+       style="width:90%;"
+       value='<s:property value="txtvendorsname"/>'>
+</td>
 
-    <td width="7%" align="right">Mob No.</td>
-    <td width="36%">
-        <input type="text" name="txtmobile" id="txtmobile"
-               value='<s:property value="txtmobile"/>'>
-    </td>
+<td width="10%" align="right">A/C No.</td>
+<td width="20%">
+<input type="text"
+       name="txtaccountno"
+       id="txtaccountno"
+       style="width:90%;"
+       value='<s:property value="txtaccountno"/>'>
+</td>
 
-    <td width="6%" align="right">Tel No.</td>
-    <td>
-        <input type="text" name="txttelephone" id="txttelephone"
-               value='<s:property value="txttelephone"/>'>
-    </td>
-  </tr>
+<td width="25%" align="center">
+<input type="button"
+       name="btnsearch"
+       id="btnsearch"
+       class="myButton"
+       value="Search"
+       onclick="loadSearch();">
+</td>
 
-  <tr>
-    <td colspan="6">
-        <div id="refreshdiv">
-            <jsp:include page="vndMainSearchGrid.jsp"></jsp:include>
-        </div>
-    </td>
-  </tr>
+</tr>
+
+
+<tr>
+
+<td align="right">Mob No.</td>
+<td>
+<input type="text"
+       name="txtmobile"
+       id="txtmobile"
+       style="width:90%;"
+       value='<s:property value="txtmobile"/>'>
+</td>
+
+<td align="right">Tel No.</td>
+<td>
+<input type="text"
+       name="txttelephone"
+       id="txttelephone"
+       style="width:90%;"
+       value='<s:property value="txttelephone"/>'>
+</td>
+
+<td></td>
+
+</tr>
+
+
+<tr>
+
+<td colspan="5">
+<div id="refreshdiv">
+<jsp:include page="vndMainSearchGrid.jsp"></jsp:include>
+</div>
+</td>
+
+</tr>
 
 </table>
 
