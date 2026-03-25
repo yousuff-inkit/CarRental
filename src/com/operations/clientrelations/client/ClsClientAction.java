@@ -18,7 +18,7 @@ import com.connection.ClsConnection;
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
-public class ClsClientAction extends ActionSupport {
+public class ClsClientAction extends ActionSupport{
     
 	ClsConnection ClsConnection=new ClsConnection();
 	ClsCommon commonDAO= new ClsCommon();
@@ -139,6 +139,9 @@ public class ClsClientAction extends ActionSupport {
 	private String parkingpercent;
 	private String txtparking;
 
+	
+
+	
 	public String getTxtparking() {
 		return txtparking;
 	}
@@ -247,6 +250,7 @@ public class ClsClientAction extends ActionSupport {
 	private int separateservicechargelength;
 
 	private String chksalikpercent,hidchksalikpercent,salikpercent,salikauhpercent,trafficpercent;
+	
 	
 	public String getChksalikpercent() {
 		return chksalikpercent;
@@ -1134,138 +1138,67 @@ public class ClsClientAction extends ActionSupport {
 	java.sql.Date dateOfJoiningDate=null;
 	ArrayList<String> driverarray= new ArrayList<>();
 	
-	// NEW METHOD: Converts all null strings to empty strings to prevent "Column cannot be null" DB errors
-	private void sanitizeNullStrings() {
-		if (txtoffice_fax == null) txtoffice_fax = "";
-		if (txtpersonal_fax == null) txtpersonal_fax = "";
-		if (txtresidence_fax == null) txtresidence_fax = "";
-		if (txthome_fax == null) txthome_fax = "";
-		if (txtcontractremarks == null) txtcontractremarks = "";
-		if (txtbankname == null) txtbankname = "";
-		if (txtregisteredtrnno == null) txtregisteredtrnno = "";
-		if (txtjobtitle == null) txtjobtitle = "";
-		if (txtname == null) txtname = "";
-		if (txtaddress == null) txtaddress = "";
-		if (txttelephone == null) txttelephone = "";
-		if (txtsecurity == null) txtsecurity = "";
-		if (txtsecurity1 == null) txtsecurity1 = "";
-		if (txtcontractno == null) txtcontractno = "";
-		if (txtsalik == null) txtsalik = "";
-		if (txttraffic == null) txttraffic = "";
-		if (txtref_no == null) txtref_no = "";
-		if (txtref_type == null) txtref_type = "";
-		if (txtpersonal_add1 == null) txtpersonal_add1 = "";
-		if (txtpersonal_add2 == null) txtpersonal_add2 = "";
-		if (txtpersonal_tel1 == null) txtpersonal_tel1 = "";
-		if (personal_tel2 == null) personal_tel2 = "";
-		if (txtpersonal_email == null) txtpersonal_email = "";
-		if (txtpersonal_contact == null) txtpersonal_contact = "";
-		if (txtpersonal_extn_no == null) txtpersonal_extn_no = "";
-		if (txtoffice_add1 == null) txtoffice_add1 = "";
-		if (txtoffice_add2 == null) txtoffice_add2 = "";
-		if (txtoffice_tel1 == null) txtoffice_tel1 = "";
-		if (office_tel2 == null) office_tel2 = "";
-		if (txtoffice_email == null) txtoffice_email = "";
-		if (txtoffice_contact == null) txtoffice_contact = "";
-		if (txtoffice_extn_no == null) txtoffice_extn_no = "";
-		if (txtresidence_add1 == null) txtresidence_add1 = "";
-		if (txtresidence_add2 == null) txtresidence_add2 = "";
-		if (txtresidence_tel1 == null) txtresidence_tel1 = "";
-		if (residence_tel2 == null) residence_tel2 = "";
-		if (txtresidence_email == null) txtresidence_email = "";
-		if (txtresidence_contact == null) txtresidence_contact = "";
-		if (txtresidence_extn_no == null) txtresidence_extn_no = "";
-		if (txthome_add1 == null) txthome_add1 = "";
-		if (txthome_add2 == null) txthome_add2 = "";
-		if (txthome_tel1 == null) txthome_tel1 = "";
-		if (home_tel2 == null) home_tel2 = "";
-		if (txthome_email == null) txthome_email = "";
-		if (txthome_contact == null) txthome_contact = "";
-		if (txthome_extn_no == null) txthome_extn_no = "";
-	}
-	
 	public String saveAction() throws ParseException, SQLException{
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpSession session=request.getSession();
 		Map<String, String[]> requestParams = request.getParameterMap();
 		
 		String mode=getMode();
-        if (mode == null) {
-            mode = ""; // Prevent NPE if mode is not submitted
-        }
 		
-		// Run String Sanitization BEFORE DB Calls
-		sanitizeNullStrings();
 		
 		ClsClientBean bean = new ClsClientBean();
 
-		if("A".equalsIgnoreCase(mode)){
-            // Read date safely, fallback to hidden field if primary is null
-            String cDateStr = getJqxClientDate();
-            if (cDateStr == null || cDateStr.trim().isEmpty()) {
-                cDateStr = getHidjqxClientDate();
-            }
-            clientDate = (cDateStr == null || cDateStr.trim().isEmpty()) ? null : commonDAO.changeStringtoSqlDate(cDateStr);
-            
-            String cContractStr = getJqxContractDate();
-            contractDate = (cContractStr == null || cContractStr.trim().isEmpty()) ? null : commonDAO.changeStringtoSqlDate(cContractStr);
-            
-            String cJoiningStr = getDateOfJoining();
-            dateOfJoiningDate = (cJoiningStr == null || cJoiningStr.trim().isEmpty()) ? null : commonDAO.changeStringtoSqlDate(cJoiningStr);
+		if(mode.equalsIgnoreCase("A")){
+			clientDate = commonDAO.changeStringtoSqlDate(getJqxClientDate());	
+			contractDate = (getJqxContractDate()==null || getJqxContractDate().trim().equalsIgnoreCase(""))?null:commonDAO.changeStringtoSqlDate(getJqxContractDate());
+			dateOfJoiningDate = (getDateOfJoining()==null || getDateOfJoining().trim().equalsIgnoreCase(""))?null:commonDAO.changeStringtoSqlDate(getDateOfJoining());
 			
 			/*Driver Grid*/
-            for (int i = 0; i < getGridlength() + 10; i++) {
-                String[] tempArr = requestParams.get("test" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    driverarray.add(tempArr[0]);
-                }
-            }
-			
-            /*Reference New Grid*/
-            ArrayList<String> referencearraynew = new ArrayList<>();
-            for (int i = 0; i < getReferencelength1() + 10; i++) {
-                String[] tempArr = requestParams.get("iddetail" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    referencearraynew.add(tempArr[0]);
-                }
-            }
+			for(int i=0;i<getGridlength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String temp=requestParams.get("test"+i)[0];
+				driverarray.add(temp);
+			}
+			/*Reference New Grid*/
+			ArrayList<String> referencearraynew= new ArrayList<>();
+			for(int i=0;i<getReferencelength1();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempreference1=requestParams.get("iddetail"+i)[0];
+				referencearraynew.add(tempreference1);
+			}
 		
+			
 			/*Reference Grid*/
-            ArrayList<String> referencearray = new ArrayList<>();
-            for (int i = 0; i < getReferencelength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtreference" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    referencearray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> referencearray= new ArrayList<>();
+			for(int i=0;i<getReferencelength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempreference=requestParams.get("txtreference"+i)[0];
+				referencearray.add(tempreference);
+			}
 			
 			/*Document Attach Grid*/
-            ArrayList<String> attacharray = new ArrayList<>();
-            for (int i = 0; i < getAttachlength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtattach" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    attacharray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> attacharray= new ArrayList<>();
+			for(int i=0;i<getAttachlength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempattach=requestParams.get("txtattach"+i)[0];
+				attacharray.add(tempattach);
+			}
 			
 			/*Credit Card Details Grid*/
-            ArrayList<String> creditcardarray = new ArrayList<>();
-            for (int i = 0; i < getCreditcardlength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtcard" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    creditcardarray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> creditcardarray= new ArrayList<>();
+			for(int i=0;i<getCreditcardlength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempcard=requestParams.get("txtcard"+i)[0];
+				creditcardarray.add(tempcard);
+			}
 			
 			/*Separate Service Charge Grid*/
-            ArrayList<String> separateservicechargearray = new ArrayList<>();
-            for (int i = 0; i < getSeparateservicechargelength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtseparateservicecharge" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    separateservicechargearray.add(tempArr[0]);
-                }
-            }
-
+			ArrayList<String> separateservicechargearray= new ArrayList<>();
+			for(int i=0;i<getSeparateservicechargelength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempseparateservicecharge=requestParams.get("txtseparateservicecharge"+i)[0];
+				separateservicechargearray.add(tempseparateservicecharge);
+			}
 			ClsClientAction masteraction=new ClsClientAction();
 			masteraction.setHidchksalikpercent(getHidchksalikpercent());
 			masteraction.setSalikauhpercent(getSalikauhpercent());
@@ -1278,7 +1211,6 @@ public class ClsClientAction extends ActionSupport {
 			masteraction.setParkingpercent(getParkingpercent());
 			masteraction.setHidchkparkingpercent(getHidchkparkingpercent());
 			masteraction.setTxtparking(getTxtparking());
-			
 			int val=clientDAO.insert(clientDate,getFormdetailcode(),getTxtclient_name(),getCmbsalutation(),getCmbcurrency(),getCmbgroup(),getCmbcategory(),
 					getCmbsalesman(),getHidchcknontaxableentity(),getHidchckadvance(),getCmbinvoicing_method(),getCmbdel_charges(),getCmblanguage(),getCmbtax(),getTxtrefernceno(),
 					getCmbgroup1(),getTxtaccount(),getTxtcredit_period_min(),getTxtcredit_period_max(),getTxtcredit_limit(),getHidchckdefault(),getHidchckseparatesrvcdefault(),
@@ -1294,92 +1226,111 @@ public class ClsClientAction extends ActionSupport {
 				
 				setTxtclientdocno(val);
 				setTxtcode(val);
-                Object acnoObj = request.getAttribute("acno");
-				setTxtaccount(acnoObj != null ? acnoObj.toString() : "");
-				setHidjqxClientDate(clientDate == null ? null : clientDate.toString());
+				setTxtaccount(request.getAttribute("acno").toString());
+				setHidjqxClientDate(clientDate.toString());
 				setHidjqxContractDate(contractDate==null?null:contractDate.toString());
 				setHiddateOfJoining(dateOfJoiningDate==null?null:dateOfJoiningDate.toString());
 				setData();
 				
+				/*Connection conn=ClsConnection.getMyConnection();
+				
+				try
+				{
+					
+					String status="0";
+					ResultSet rs= conn.createStatement(
+							ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE).executeQuery(
+					"select  status  from my_msgsettings where dtype='"+getFormdetailcode()+"' and  brhid in ("+session.getAttribute("BRANCHID").toString().trim()+",0) and status=3");
+
+					if(rs.next()) {
+						status=rs.getString("status");
+					}
+					
+					if(status.equalsIgnoreCase("3")) {
+					
+						String phone="",clientGeneratedDate="";
+						ResultSet rs1= conn.createStatement(
+								ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE).executeQuery(
+										"select per_mob,DATE_FORMAT('"+clientDate+"', '%d-%m-%Y') clientDate from my_acbook where doc_no="+getTxtclientdocno()+" and dtype='CRM'");
+	
+						if(rs1.next()) {
+							phone=rs1.getString("per_mob");
+							clientGeneratedDate=rs1.getString("clientDate");
+						}
+						
+						SmsAction sms = new SmsAction();
+						sms.doSendSms(phone,getTxtclient_name(),"0",String.valueOf(val),clientGeneratedDate,getFormdetailcode(), session.getAttribute("BRANCHID").toString().trim());
+						rs1.close();
+					}
+					
+					rs.close();	
+				} catch(Exception e){conn.close();e.printStackTrace();}
+				
+				conn.close();*/
 				setMsg("Successfully Saved");
 				return "success";
 			}
 			else{
 				setData();
-				setHidjqxClientDate(clientDate == null ? null : clientDate.toString());
+				setHidjqxClientDate(clientDate.toString());
 				setHidjqxContractDate(contractDate==null?null:contractDate.toString());
 				setHiddateOfJoining(dateOfJoiningDate==null?null:dateOfJoiningDate.toString());
 				setMsg("Not Saved");
 				return "fail";
 			}	
 		}
-		else if("E".equalsIgnoreCase(mode)){
-            // Read date safely, fallback to hidden field if primary is null
-            String cDateStr = getJqxClientDate();
-            if (cDateStr == null || cDateStr.trim().isEmpty()) {
-                cDateStr = getHidjqxClientDate();
-            }
-            clientDate = (cDateStr == null || cDateStr.trim().isEmpty()) ? null : commonDAO.changeStringtoSqlDate(cDateStr);
-            
-            String cContractStr = getJqxContractDate();
-            contractDate = (cContractStr == null || cContractStr.trim().isEmpty()) ? null : commonDAO.changeStringtoSqlDate(cContractStr);
-            
-            String cJoiningStr = getDateOfJoining();
-            dateOfJoiningDate = (cJoiningStr == null || cJoiningStr.trim().isEmpty()) ? null : commonDAO.changeStringtoSqlDate(cJoiningStr);
+		else if(mode.equalsIgnoreCase("E")){
+			clientDate = commonDAO.changeStringtoSqlDate(getJqxClientDate());
+			contractDate = (getJqxContractDate()==null || getJqxContractDate().trim().equalsIgnoreCase(""))?null:commonDAO.changeStringtoSqlDate(getJqxContractDate());
+			dateOfJoiningDate = (getDateOfJoining()==null || getDateOfJoining().trim().equalsIgnoreCase(""))?null:commonDAO.changeStringtoSqlDate(getDateOfJoining());
 			
 			/*Driver Grid*/
-            ArrayList<String> driverarray = new ArrayList<>();
-            for (int i = 0; i < getGridlength() + 10; i++) {
-                String[] tempArr = requestParams.get("test" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    driverarray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> driverarray= new ArrayList<>();
+			for(int i=0;i<getGridlength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String temp=requestParams.get("test"+i)[0];
+				driverarray.add(temp);
+			}
 			
-            /*Reference New Grid*/
-            ArrayList<String> referencearraynew = new ArrayList<>();
-            for (int i = 0; i < getReferencelength1() + 10; i++) {
-                String[] tempArr = requestParams.get("iddetail" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    referencearraynew.add(tempArr[0]);
-                }
-            }
+			/*Reference New Grid*/
+			ArrayList<String> referencearraynew= new ArrayList<>();
+			for(int i=0;i<getReferencelength1();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempreference1=requestParams.get("iddetail"+i)[0];
+				referencearraynew.add(tempreference1);
+			}
 			
 			/*Reference Grid*/
-            ArrayList<String> referencearray = new ArrayList<>();
-            for (int i = 0; i < getReferencelength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtreference" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    referencearray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> referencearray= new ArrayList<>();
+			for(int i=0;i<getReferencelength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempreference=requestParams.get("txtreference"+i)[0];
+				referencearray.add(tempreference);
+			}
 			
 			/*Document Attach Grid*/
-            ArrayList<String> attacharray = new ArrayList<>();
-            for (int i = 0; i < getAttachlength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtattach" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    attacharray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> attacharray= new ArrayList<>();
+			for(int i=0;i<getAttachlength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempattach=requestParams.get("txtattach"+i)[0];
+				attacharray.add(tempattach);
+			}
 			
 			/*Credit Card Details Grid*/
-            ArrayList<String> creditcardarray = new ArrayList<>();
-            for (int i = 0; i < getCreditcardlength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtcard" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    creditcardarray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> creditcardarray= new ArrayList<>();
+			for(int i=0;i<getCreditcardlength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempcard=requestParams.get("txtcard"+i)[0];
+				creditcardarray.add(tempcard);
+			}
 			
 			/*Separate Service Charge Grid*/
-            ArrayList<String> separateservicechargearray = new ArrayList<>();
-            for (int i = 0; i < getSeparateservicechargelength() + 10; i++) {
-                String[] tempArr = requestParams.get("txtseparateservicecharge" + i);
-                if (tempArr != null && tempArr.length > 0) {
-                    separateservicechargearray.add(tempArr[0]);
-                }
-            }
+			ArrayList<String> separateservicechargearray= new ArrayList<>();
+			for(int i=0;i<getSeparateservicechargelength();i++){
+				ClsClientBean clientbean=new ClsClientBean();
+				String tempseparateservicecharge=requestParams.get("txtseparateservicecharge"+i)[0];
+				separateservicechargearray.add(tempseparateservicecharge);
+			}
 			
 			ClsClientAction masteraction=new ClsClientAction();
 			masteraction.setHidchksalikpercent(getHidchksalikpercent());
@@ -1394,7 +1345,6 @@ public class ClsClientAction extends ActionSupport {
 			masteraction.setParkingpercent(getParkingpercent());
 			masteraction.setHidchkparkingpercent(getHidchkparkingpercent());
 			masteraction.setTxtparking(getTxtparking());
-			
 			int Status=clientDAO.edit(getTxtclientdocno(),getFormdetailcode(),clientDate,getTxtclient_name(),getCmbsalutation(),getCmbcurrency(),getCmbgroup(),
 					getCmbcategory(),getCmbsalesman(),getHidchcknontaxableentity(),getHidchckadvance(),getCmbinvoicing_method(),getCmbdel_charges(),getCmblanguage(),getCmbtax(),getTxtrefernceno(),
 					getCmbgroup1(),getTxtaccount(),getTxtcredit_period_min(),getTxtcredit_period_max(),getTxtcredit_limit(),getHidchckdefault(),getHidchckseparatesrvcdefault(),getTxtsalik(),
@@ -1412,7 +1362,7 @@ public class ClsClientAction extends ActionSupport {
 						setTxtclientdocno(getTxtclientdocno());
 						setTxtcode(getTxtcode());
 						setTxtaccount(getTxtaccount());
-						setHidjqxClientDate(clientDate == null ? null : clientDate.toString());
+						setHidjqxClientDate(clientDate.toString());
 						setHidjqxContractDate(contractDate==null?null:contractDate.toString());
 						setHiddateOfJoining(dateOfJoiningDate==null?null:dateOfJoiningDate.toString());
 						setData();
@@ -1422,7 +1372,7 @@ public class ClsClientAction extends ActionSupport {
 			}
 			else{
 				setData();
-				setHidjqxClientDate(clientDate == null ? null : clientDate.toString());
+				setHidjqxClientDate(clientDate.toString());
 				setHidjqxContractDate(contractDate==null?null:contractDate.toString());
 				setHiddateOfJoining(dateOfJoiningDate==null?null:dateOfJoiningDate.toString());
 				
@@ -1430,7 +1380,7 @@ public class ClsClientAction extends ActionSupport {
 				return "fail";
 			}
 		}
-		else if("D".equalsIgnoreCase(mode)){
+		else if(mode.equalsIgnoreCase("D")){
 		int Status=clientDAO.delete(getTxtclientdocno(),getTxtaccount(),getFormdetailcode(),session);
 		if(Status>0){
 					setTxtclientdocno(getTxtclientdocno());
@@ -1554,7 +1504,7 @@ else if(mode.equalsIgnoreCase("View")){
 }
 		public JSONArray searchAllDetails(HttpSession session,String clname,String mob,String lcno,String clientid,String driverid,String dob,String nation,String clientaccount,String check){
 			  JSONArray cellarray = new JSONArray();
-			  JSONObject cellobj = null;
+			  		  JSONObject cellobj = null;
 			  try {
 				  cellarray= clientDAO.clientSearch(session,clname, mob,lcno,clientid,driverid,nation, dob, clientaccount, check);
 		
