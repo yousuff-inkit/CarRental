@@ -396,6 +396,104 @@ input[readonly] {
     color: #000000 !important;
     opacity: 1 !important;
 }
+.form-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group-vertical label {
+    text-align: left;
+    padding-right: 0;
+}
+td label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+/* Row layout */
+.vertical-form table tr {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
+    gap: 20px;
+}
+
+/* Each field */
+.vertical-form table td {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+.vertical-form table td label {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Inputs full width */
+.vertical-form table td input[type="text"],
+.vertical-form table td select {
+    width: 100%;
+}
+
+/* Date fields (jqx) - keep normal */
+.vertical-form table td div[id^="jqx"] {
+    width: auto !important;
+    max-width: 180px;
+}
+/* Make row perfectly aligned */
+.vertical-form table tr {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    align-items: start;   
+}
+
+/* Each field */
+.vertical-form table td {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.vertical-form table td label {
+    display: block;
+    margin: 0;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Inputs consistent */
+.vertical-form table td input,
+.vertical-form table td select {
+    height: 34px;
+    box-sizing: border-box;
+}
+
+.vertical-form table td {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Make all inputs & selects behave same */
+.vertical-form table td input,
+.vertical-form table td select {
+    height: 34px;
+    display: block;
+}
+
+
+.vertical-form table tr {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    align-items: end;   
+}
+#releasesave {
+    margin-right: 12px;
+}
 
 </style>
 <script type="text/javascript">
@@ -1890,70 +1988,104 @@ style="width:120px;">
 						<table width="100%">
 							<tr>
 								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Vehicle Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="7%" height="28" align="right">Engine No</td>
-												<td width="10%" align="left"><input type="text"
-													id="engine_no" name="engine_no" value='<s:property value="engine_no"/>'style="text-transform:uppercase;"/></td>
-												<td width="5%" align="right" >Chasis No</td>
-												<td width="10%" align="left"><input type="text"
-													id="chasis_no" name="chasis_no" value='<s:property value="chasis_no"/>' style="text-transform:uppercase;"/></td>
-												<td width="5%" align="right">VIN</td>
-											  <td width="11%" ><input type="text"
-													name="vin" id="vin" value='<s:property value="vin"/>' /></td>
-												<td width="9%" align="right">Fuel Type</td>
-												<td width="8%" align="left"><select name="cmbfueltype" id="cmbfueltype" >
-												  <option value="">--Select--</option>
-												  <option value="P">Petrol</option>
-												  <option value="D">Diesel</option>
-												  <option value="E">Electric</option>
-											    </select></td>
-												<td width="10%" align="right">Fuel Tank Capacity</td>
-												<td width="10%" align="left"><input type="text" name="fuelcapacity" id="fuelcapacity" value='<s:property value="fuelcapacity"/>'/></td>
-												<td width="3%" align="right">Color</td>
-												<td width="12%" align="left"><select
-													name="cmbveh_color" id="cmbveh_color" value='<s:property value="cmbveh_color"/>'>
-														<option>--Select--</option>
-												</select> </td>
-												<input type="hidden" name="hidcmbveh_color" id="hidcmbveh_color" value='<s:property value="hidcmbveh_color"/>'>
-											</tr>
-										</table>
-									</fieldset>
+									<fieldset class="vertical-form">
+    <legend>Vehicle Info</legend>
+    <table width="100%">
+        <tr>
+            <td>
+                <label>Engine No</label>
+                <input type="text" id="engine_no" name="engine_no"
+                       value='<s:property value="engine_no"/>'
+                       style="text-transform:uppercase; width:100%;">
+            </td>
+
+            <td>
+                <label>Chasis No</label>
+                <input type="text" id="chasis_no" name="chasis_no"
+                       value='<s:property value="chasis_no"/>'
+                       style="text-transform:uppercase; width:100%;">
+            </td>
+
+            <td>
+                <label>VIN</label>
+                <input type="text" name="vin" id="vin"
+                       value='<s:property value="vin"/>'
+                       style="width:100%;">
+            </td>
+
+            <td>
+                <label>Fuel Type</label>
+                <select name="cmbfueltype" id="cmbfueltype" style="width:100%;">
+                    <option value="">--Select--</option>
+                    <option value="P">Petrol</option>
+                    <option value="D">Diesel</option>
+                    <option value="E">Electric</option>
+                </select>
+            </td>
+
+            <td>
+                <label>Fuel Tank Capacity</label>
+                <input type="text" name="fuelcapacity" id="fuelcapacity"
+                       value='<s:property value="fuelcapacity"/>'
+                       style="width:100%;">
+            </td>
+
+            <td>
+                <label>Color</label>
+                <select name="cmbveh_color" id="cmbveh_color"
+                        style="width:100%;">
+                    <option>--Select--</option>
+                </select>
+                <input type="hidden" name="hidcmbveh_color"
+                       id="hidcmbveh_color"
+                       value='<s:property value="hidcmbveh_color"/>'>
+            </td>
+        </tr>
+    </table>
+</fieldset>
 								</td>
 							</tr>
 
 							<tr>
 								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Warranty Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="9%" height="28" align="right">Warranty
-													Period</td>
-												<td width="9%" align="left"><input type="text"
-													id="warranty_period" name="warranty_period" value='<s:property value="warranty_period"/>' onblur="getWarrantyDate(this.value);"/></td>
-												<td width="7%" align="right">From Date</td>
-												<td width="8%" align="left"><div id='jqxWrntyFrmDate'
-														name='jqxWrntyFrmDate'
-														value='<s:property value="jqxWrntyFrmDate"/>'></div>
-														 </td><input
-													type="hidden" id="hidjqxWrntyFrmDate" name="hidjqxWrntyFrmDate"
-													value='<s:property value="hidjqxWrntyFrmDate"/>' />
-												<td width="9%" align="right">To Date</td>
-												<td width="12%" align="left"><div id='jqxWrntyToDate'
-														name='jqxWrntyToDate'
-														value='<s:property value="jqxWrntyToDate"/>'></div> 
-														</td><input
-													type="hidden" id="hidjqxWrntyToDate" name="hidjqxWrntyToDate"
-													value='<s:property value="hidjqxWrntyToDate"/>' />
-												<td width="8%" align="right">Warranty KM</td>
-												<td width="38%" align="left"><input type="text"
-													name="warranty_km" id="warranty_km"  value='<s:property value="warranty_km"/>' style="text-align:right;"/></td>
-											</tr>
-										</table>
-									</fieldset>
+									<fieldset class="vertical-form">
+    <legend>Warranty Info</legend>
+    <table width="100%">
+        <tr>
+            <td>
+                <label>Warranty Period</label>
+                <input type="text" id="warranty_period" name="warranty_period"
+                       value='<s:property value="warranty_period"/>'
+                       onblur="getWarrantyDate(this.value);" style="width:100%;">
+            </td>
+
+            <td>
+                <label>From Date</label>
+                <div id='jqxWrntyFrmDate'
+                     name='jqxWrntyFrmDate'
+                     value='<s:property value="jqxWrntyFrmDate"/>'></div>
+                <input type="hidden" id="hidjqxWrntyFrmDate" name="hidjqxWrntyFrmDate"
+                       value='<s:property value="hidjqxWrntyFrmDate"/>' />
+            </td>
+
+            <td>
+                <label>To Date</label>
+                <div id='jqxWrntyToDate'
+                     name='jqxWrntyToDate'
+                     value='<s:property value="jqxWrntyToDate"/>'></div>
+                <input type="hidden" id="hidjqxWrntyToDate" name="hidjqxWrntyToDate"
+                       value='<s:property value="hidjqxWrntyToDate"/>' />
+            </td>
+
+            <td>
+                <label>Warranty KM</label>
+                <input type="text" name="warranty_km" id="warranty_km"
+                       value='<s:property value="warranty_km"/>'
+                       style="text-align:right; width:100%;">
+            </td>
+        </tr>
+    </table>
+</fieldset>
 								</td>
 							</tr>
 							<tr>
@@ -1962,74 +2094,86 @@ style="width:120px;">
 
 							<tr>
 								<td colspan="8" style="text-align: right">
-									<fieldset>
-										<legend>Service Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="106" height="28" align="right">Service Duration (KM)</td>
-												<td width="116" align="left"><input type="text"
-													id="service_km" name="service_km" value='<s:property value="service_km"/>' style="text-align:right;"/></td>
-												<td width="79" align="right">Last Srvc. Date</td>
-												<td width="130" align="left">
-														<div id='jqxLstSrvcDate'
-														name='jqxLstSrvcDate'
-														value='<s:property value="jqxLstSrvcDate"/>'></div> 
-														</td><input type="hidden" id="hidjqxLstSrvcDate" name="hidjqxLstSrvcDate"
-													value='<s:property value="hidjqxLstSrvcDate"/>' />
-												<td width="105" align="right"><label id="lbllastsrvkm">Last Service KM</label></td>
-												<td width="400" align="left"><input type="text"
-													id="last_srvc_km" name="last_srvc_km" value='<s:property value="last_srvc_km"/>' style="text-align:right;"/></td>
-												<td width="109" align="right">&nbsp;</td>
-												<td width="185" align="left">&nbsp;</td>
-											</tr>
-										</table>
-									</fieldset>
+								<fieldset class="vertical-form">
+    <legend>Service Info</legend>
+    <table width="100%">
+        <tr>
+            <td>
+                <label>Service Duration (KM)</label>
+                <input type="text" id="service_km" name="service_km"
+                       value='<s:property value="service_km"/>'
+                       style="text-align:right; width:100%;">
+            </td>
+
+            <td>
+                <label>Last Service Date</label>
+                <div id='jqxLstSrvcDate'
+                     name='jqxLstSrvcDate'
+                     value='<s:property value="jqxLstSrvcDate"/>'></div>
+                <input type="hidden" id="hidjqxLstSrvcDate" name="hidjqxLstSrvcDate"
+                       value='<s:property value="hidjqxLstSrvcDate"/>' />
+            </td>
+
+            <td>
+                <label>Last Service KM</label>
+                <input type="text" id="last_srvc_km" name="last_srvc_km"
+                       value='<s:property value="last_srvc_km"/>'
+                       style="text-align:right; width:100%;">
+            </td>
+        </tr>
+    </table>
+</fieldset>
 								</td>
 							</tr>
 
 							<tr>
 								<td colspan="8" style="text-align: right">
-									<fieldset>
-									  <legend>Release Info</legend>
-										<table width="100%">
-											<tr>
-												<td width="107" height="30" align="right">Current KM</td>
-												<td width="149" align="left"><input type="text"
-													id="current_km" name="current_km" value='<s:property value="current_km"/>' style="text-align:right;"/></td>
-												<td width="45" align="right">Fuel</td>
-												<td width="139" align="left"><select name="cmbfuel" 
-													id="cmbfuel" value='<s:property value="cmbfuel"/>'><option value=0.000>Level 0/8</option><option value=0.125 selected>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-											    </select>
-											    <input type="hidden" id="hidcmbfuel" name="hidcmbfuel"
-													value='<s:property value="hidcmbfuel"/>' /></td><input type="hidden" name="hidcmbfueltype" id="hidcmbfueltype" value='<s:property value="hidcmbfueltype"/>' />
-											  <td width="88" align="right">Avail. Br.</td>
-											<td width="134" align="left"><select
-													name="cmbavail_br1" id="cmbavail_br1" value='<s:property value="cmbavail_br1"/>'>
-											  </select>
-											  <input type="hidden" id="hidcmbavail_br1" name="hidcmbavail_br1"
-													value='<s:property value="hidcmbavail_br1"/>' />
-											  <input type="hidden" id="tcno2" name="tcno2" style="width: 275px;" value='<s:property value="tcno2"/>'/></td>
-											  <td width="251" align="right">Calibration Km</td>
-											<td width="503" align="left"><input type="text" name="calibrationkm" id="calibrationkm" value='<s:property value="calibrationkm"/>' style="text-align:right;"  onblur="getspectab();"></td>
-											<td width="172" align="left"><select name="branded" id="branded" value='<s:property value="branded"/>' hidden="true">
-														
-													<option value="Y" selected>Y</option>
-													<option value="N">N</option>
-											  </select>
-											  <input type="hidden" id="hidbranded" name="hidbranded"
-													value='<s:property value="hidbranded"/>' />
-											  </td>
-											  <input type="hidden" name="hidreleasetime" id="hidreleasetime" value='<s:property value="hidreleasetime"/>'>
-												<%-- <td width="9%" align="right">Rent Type</td>
-												<td width="15%" align="left"><select
-													name="cmbrent_type" id="cmbrent_type" value='<s:property value="cmbrent_type"/>'>
-														<option>--Select--</option>
-												</select> <input type="hidden" id="hidcmbrent_type" name="hidcmbrent_type"
-													value='<s:property value="hidcmbrent_type"/>' /></td> --%>
-											</tr>
-										</table>
-									</fieldset>
+									<fieldset class="vertical-form">
+    <legend>Release Info</legend>
+    <table width="100%">
+        <tr>
+            <td>
+                <label>Current KM</label>
+                <input type="text" id="current_km" name="current_km"
+                       value='<s:property value="current_km"/>'
+                       style="text-align:right; width:100%;">
+            </td>
+
+            <td>
+                <label>Fuel</label>
+                <select name="cmbfuel" id="cmbfuel" style="width:100%;">
+                    <option value=0.000>Level 0/8</option>
+                    <option value=0.125 selected>Level 1/8</option>
+                    <option value=0.250>Level 2/8</option>
+                    <option value=0.375>Level 3/8</option>
+                    <option value=0.500>Level 4/8</option>
+                    <option value=0.625>Level 5/8</option>
+                    <option value=0.750>Level 6/8</option>
+                    <option value=0.875>Level 7/8</option>
+                    <option value=1.000>Level 8/8</option>
+                </select>
+                <input type="hidden" id="hidcmbfuel" name="hidcmbfuel"
+                       value='<s:property value="hidcmbfuel"/>' />
+            </td>
+
+            <td>
+                <label>Avail. Branch</label>
+                <select name="cmbavail_br1" id="cmbavail_br1"
+                        value='<s:property value="cmbavail_br1"/>' style="width:100%;">
+                </select>
+                <input type="hidden" id="hidcmbavail_br1" name="hidcmbavail_br1"
+                       value='<s:property value="hidcmbavail_br1"/>' />
+            </td>
+
+            <td>
+                <label>Calibration Km</label>
+                <input type="text" name="calibrationkm" id="calibrationkm"
+                       value='<s:property value="calibrationkm"/>'
+                       style="text-align:right; width:100%;"
+                       onblur="getspectab();">
+            </td>
+        </tr>
+    </table>
 								</td>
 							</tr>
 						</table>
