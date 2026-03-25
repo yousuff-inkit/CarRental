@@ -395,13 +395,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
+    margin-top:-12px;
+   
 }
 
 .fleet-status-wrapper .search-input-wrapper {
     flex: 1;
     position: relative;
-    max-width: 350px;
+    max-width: 150px;
+  
 }
 
 .fleet-status-wrapper .search-icon-inline {
@@ -417,16 +420,16 @@
 
 .fleet-status-wrapper .universal-search-input {
     width: 100%;
-    padding: 12px 40px 12px 40px; /* Increased from 8px to 12px */
+    padding: 6px 30px 6px 30px; 
     border: 2px solid #e2e8f0;
     border-radius: 8px;
-    font-size: 14px; /* Increased from 13px to 14px */
+    font-size: 14px; 
     font-weight: 500;
     color: var(--primary-color);
     background: white;
     transition: all 0.3s ease;
     font-family: 'Poppins', sans-serif;
-    height: 44px; /* Added explicit height */
+    height: 32px; 
     box-sizing: border-box;
 }
 
@@ -462,7 +465,7 @@
 }
 
 .fleet-status-wrapper .search-results-badge {
-    padding: 8px 14px; 
+    padding: 0px 10px; 
     background: linear-gradient(135deg, #e8f4fd, #d4e9f7);
     color: #3498db;
     border-radius: 6px;
@@ -474,7 +477,9 @@
     align-items: center;
     box-sizing: border-box;
 }
-
+.fleet-status-wrapper .main-content {
+    padding-top: 5px; 
+}
 </style>
 
 <script type="text/javascript">
@@ -1069,14 +1074,14 @@ function funExportBtn()
   <div class="grid-container" id="grid1" style="display: none;">
     <div class="compact-search-bar">
         <div class="search-input-wrapper">
-            <svg class="search-icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="search-icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
             <input 
                 type="text" 
                 class="universal-search-input" 
-                placeholder="Search all columns..." 
+                placeholder="Search..." 
                 onkeyup="universalSearch(this)"
                 autocomplete="off"
             />
