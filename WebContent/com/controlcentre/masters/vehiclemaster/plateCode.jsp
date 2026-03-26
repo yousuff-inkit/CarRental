@@ -87,11 +87,11 @@
        
     }
     
-    /* Alias Grid Container spanning rows 1-3 */
+    
     #nAliasgrid {
         grid-row: 1 / 4; 
         grid-column: 5/ 6;
-        min-height: 100px; /* Ensure space for the embedded grid */
+        min-height: 100px; 
     }
 
 
@@ -139,7 +139,6 @@
         width: 100% !important;
     }
 
-    /* JQWigets/Grid Styling */
     #jqxPlateCodeSearch1 {
         margin-top: 20px;
         width: 100% !important; 

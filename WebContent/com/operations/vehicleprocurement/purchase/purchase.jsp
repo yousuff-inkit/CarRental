@@ -178,6 +178,22 @@ input[readonly] { background-color: #e9ecef; }
 body::-webkit-scrollbar { width: 0px; }
 
 form label.error { color:red; font-weight:bold; }
+/* Base style for all inputs to be white */
+input[type="text"], select, input[type="email"] {
+    background-color: #ffffff !important; 
+    /* ... rest of your styles ... */
+}
+
+/* Ensure that when they are NOT readonly, they stay white */
+input:not([readonly]) {
+    background-color: #ffffff !important;
+}
+
+/* If you want them to turn white specifically when a 'create-mode' class is added to the form */
+.create-mode input[type="text"], 
+.create-mode select {
+    background-color: #ffffff !important;
+}
 </style>
 
 <script type="text/javascript">
@@ -2219,51 +2235,45 @@ else{
 <div class="hidden-scrollbar">
     <form id="frmpurchase" action="savePurchase" method="post" autocomplete="off">
         
-        <div class="section-block">
-            <table class="cr-table">
-                <tr>
-                    <td width="8%" align="right">Date</td>
-                    <td width="15%">
-                        <div id="vehpurorderDate" name="vehpurorderDate" value='<s:property value="vehpurorderDate"/>'></div>
-                        <input type="hidden" id="hidvehpurorderDate" name="hidvehpurorderDate" value='<s:property value="hidvehpurorderDate"/>'/>
-                    </td>
-                    <td width="10%" align="right">Doc No</td>
-                    <td width="15%"><input type="text" id="docno" name="docno" value='<s:property value="docno"/>' tabindex="-1"/></td>
-                    <td width="10%" align="right">Type</td>
-                    <td width="12%">
-                        <select id="vehtype" name="vehtype" onchange="funrefdisslno()">
-                            <option value="DIR">DIR</option>
-                            <option value="VPO">VPO</option>
-                        </select>
-                    </td>
-                    <td width="15%"><input type="text" id="vehrefno" name="vehrefno" placeholder="Press F3 to Search" value='<s:property value="vehrefno"/>' onfocus="funcheckaccinvendor();" onkeydown="getrefDetails(event)"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td align="right">Vendor</td>
-                    <td colspan="3">
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="accid" name="accid" style="width: 100px;" placeholder="F3 Search" value='<s:property value="accid"/>' onkeydown="getaccountdetails(event)"/>
-                            <input type="text" id="vehpuraccname" name="vehpuraccname" value='<s:property value="vehpuraccname"/>'/>
-                        </div>
-                    </td>
-                    <td align="right">Exp. Delivery</td>
-                    <td>
-                        <div id="vehpurorderdelDate" name="vehpurorderdelDate" value='<s:property value="vehpurorderdelDate"/>'></div>
-                        <input type="hidden" id="hidvehpurorderdelDate" name="hidvehpurorderdelDate" value='<s:property value="hidvehpurorderdelDate"/>'/>
-                    </td>
-                    <td colspan="2">
-                        <input type="button" class="myButtonss" name="updatefleet" id="updatefleet" onclick="funupdatefleet()" value="Fleet Update">
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">Description</td>
-                    <td colspan="7">
-                        <input type="text" id="vehdesc" name="vehdesc" value='<s:property value="vehdesc"/>'/>
-                    </td>
-                </tr>
-            </table>
-        </div>
+<div class="section-block">
+    <table class="cr-table">
+        <tr>
+            <td width="8%" align="right">Date</td>
+            <td width="15%">
+                <div id="vehpurorderDate" name="vehpurorderDate" value='<s:property value="vehpurorderDate"/>'></div>
+                <input type="hidden" id="hidvehpurorderDate" name="hidvehpurorderDate" value='<s:property value="hidvehpurorderDate"/>'/>
+            </td>
+            <td width="10%" align="right">Doc No</td>
+            <td width="15%"><input type="text" id="docno" name="docno" style="background-color: #fff;" value='<s:property value="docno"/>' tabindex="-1"/></td>
+            <td width="10%" align="right">Type</td>
+            <td width="12%">
+                <select id="vehtype" name="vehtype" style="background-color: #fff;" onchange="funrefdisslno()">
+                    <option value="DIR">DIR</option>
+                    <option value="VPO">VPO</option>
+                </select>
+            </td>
+            <td width="15%"><input type="text" id="vehrefno" name="vehrefno" style="background-color: #fff;" placeholder="Press F3 to Search" value='<s:property value="vehrefno"/>' onfocus="funcheckaccinvendor();" onkeydown="getrefDetails(event)"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td align="right">Vendor</td>
+            <td colspan="3">
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="accid" name="accid" style="width: 100px; background-color: #fff;" placeholder="F3 Search" value='<s:property value="accid"/>' onkeydown="getaccountdetails(event)"/>
+                    <input type="text" id="vehpuraccname" name="vehpuraccname" style="background-color: #fff;" value='<s:property value="vehpuraccname"/>'/>
+                </div>
+            </td>
+            <td align="right">Exp. Delivery</td>
+            <td>
+                <div id="vehpurorderdelDate" name="vehpurorderdelDate" value='<s:property value="vehpurorderdelDate"/>'></div>
+                <input type="hidden" id="hidvehpurorderdelDate" name="hidvehpurorderdelDate" value='<s:property value="hidvehpurorderdelDate"/>'/>
+            </td>
+            <td colspan="2">
+                <input type="button" class="myButtonss" name="updatefleet" id="updatefleet" onclick="funupdatefleet()" value="Fleet Update">
+            </td>
+        </tr>
+    </table>
+</div>
 
         <div class="section-block">
             <div id="vehpuchase"><jsp:include page="vehpurchaseDetails.jsp"></jsp:include></div>
