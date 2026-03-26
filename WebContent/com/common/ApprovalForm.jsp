@@ -184,22 +184,7 @@ select.list1 option {
         // 2. If no data, it is PENDING
         if (!data4 || data4.trim() === "" || data4 === "null") {
             data4 = "[]"; 
-        } else {
-            try {
-                var rows = JSON.parse(data4);
-                for (var i = 0; i < rows.length; i++) {
-                    if (String(rows[i].apprstatus) === "3") { // Approved
-                        if(document.getElementById("apprdesc")) document.getElementById("apprdesc").closest("div").style.display = "none";
-                        if(document.getElementById("optname")) document.getElementById("optname").closest("div").style.display = "none";
-                        if(document.getElementById("btnSend")) document.getElementById("btnSend").closest("div").style.display = "none";
-                        break;
-                    }
-                }
-            } catch (e) {
-                console.error("JSON parse error in Check() - data might be malformed:", e);
-                data4 = "[]";
-            }
-        }
+        } 
 
         // ===== JQXGRID INITIALIZATION =====
         var source =
@@ -291,7 +276,7 @@ select.list1 option {
                             style:{left:15,right:'',top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
                         });
                         // Allow UI to refresh
-                        setTimeout(function(){ location.reload(); }, 1000);
+                         $("#windowapprove").jqxWindow('Close');
                       }
                       
                       if(typeof(data.error) != 'undefined')  
@@ -360,13 +345,24 @@ select.list1 option {
                     var apprlevel = items[1];
                     var minapprl  = items[2];
                     var apprlist  = items[3];
-                    var aprstatus = items[4];
+                    var globalAprStatus = items[4]; 
+                    
+                    var urlStatus = '<%=aprstatus%>'.trim();
+                    
+                    if(urlStatus === "1" || urlStatus === "0") {
+                        globalAprStatus = urlStatus;
+                    }
                     
                     $("#apprlevel").val(apprlevel);
                     $("#minapprl").val(minapprl);
                     $("#apprlist").val(apprlist);
-                    $("#hidAprStatus").val(aprstatus);
-                    lockApprovalUI(aprstatus);  
+                    $("#hidAprStatus").val(globalAprStatus);
+                    
+                    lockApprovalUI(globalAprStatus);  
+                    
+                    console.log("apprlevel=" + apprlevel + 
+                            " minapprl=" + minapprl + 
+                            " final locked status=" + globalAprStatus);
                 }
             }
         }

@@ -10,13 +10,9 @@ $(document).ready(function () {
 
     $(document).ajaxStart(function () {
         $("#global-spinner-overlay").css("display", "flex");
-		setTimeout(function(){
-		        hideSpinner();
-		    },7000);
+		
     }).ajaxStop(function () {
-		if (!window.suppressSpinnerStop) {
-		           $("#global-spinner-overlay").css("display", "none");
-		       }
+		$("#global-spinner-overlay").css("display", "none");
     });
 
 });
