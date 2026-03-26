@@ -73,112 +73,142 @@
  
 	</script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px; /* Standardized master gap */
+/* Scope all styles strictly to #search to protect background page fonts */
+#search {
+    background-color: #ffffff;
+    padding: 5px;
+    font-family: Tahoma, Geneva, sans-serif !important;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-  white-space: nowrap;
+#search table {
+    border-collapse: separate;
+    border-spacing: 12px 10px;
+    background-color: #ffffff;
 }
 
-/* Bold text inside inputs and selects with Grey Borders */
-input[type="text"], select {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600; /* Font weight 600 as requested */
-  font-size: 14px;
-  padding: 8px 10px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
+/* Master UI Labels: Tahoma, Regular (Non-Bold), 13px */
+#search td {
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-weight: 400 !important; 
+    font-size: 13px;
+    color: #222;
+    white-space: nowrap;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus, select:focus {
-  border-color: #007bff;
-  outline: none;
+/* Master UI Inputs & Selects: White Background, Grey Border */
+#search input[type="text"], 
+#search select {
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 13px;
+    padding: 5px 8px;
+    width: 100%;                
+    box-sizing: border-box;   
+    border: 1px solid #bdc3c7;
+    border-radius: 3px;
+    height: 28px;
+    background-color: #ffffff !important;
+    outline: none;
+    display: inline-block;
 }
 
-/* Specifically adjust jqxDateTimeInput styling if used */
-#msearchdate {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+/* Ensure dropdowns are visible and don't crash */
+#search select {
+    appearance: menulist;
+    -webkit-appearance: menulist;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+#search input[type="text"]:focus, 
+#search select:focus {
+    border-color: #2563eb;
 }
 
-/* No color change on hover */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
+/* EXACT Master UI Gradient Button */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    width: 90px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+#search .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
 }
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
+
+#search tr {
+    line-height: 1.2;
+}
+
+#mainrefreshdiv {
+    margin-top: 10px;
+    border-top: 1px solid #eee;
 }
 </style>
 
-<body bgcolor="#FFFFFF">
+<body bgcolor="#ffffff">
 <div id="search">
- <table width="100%">
-  <tr>
-    <td width="9%">Doc No</td>
-    <td width="24%"><input type="text" name="msearchdocno" id="msearchdocno" style="width:95%;"></td>
-    <td width="10%">Ref Type</td>
-    <td width="24%"><select name="cmbsearchrtype" id="cmbsearchrtype" style="width:84%;"><option value="">--Select--</option></select></td>
-    <td width="8%">Status</td>
-    <td width="14%"><select name="cmbsearchstatus" id="cmbsearchstatus" style="width:99%;"><option value="">--Select--</option>
-    <option value=1>IN</option><option value=0>OUT</option></select></td>
-    <td width="11%" rowspan="2" align="center">
-        <input type="button" name="btnmainSearchExt" id="btnmainSearchExt" class="myButton" value="Search" onclick="masterloadSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td>Date</td>
-    <td><div id="msearchdate" name="msearchdate"></div></td>
-    <td>Fleet No</td>
-    <td><input type="text" name="msearchfleetno" id="msearchfleetno" style="width:84%;"></td>
-    <td>Reg No</td>
-    <td><input type="text" name="msearchregno" id="msearchregno" style="width:99%;"></td>
-  </tr>
-  <tr>
-  <td colspan="7">
-    <div id="mainrefreshdiv">
-      <jsp:include page="subMainSearch.jsp" />
-    </div>
-  </td>
-  </tr>
- </table>
+    <table width="100%" border="0">
+        <tr>
+            <td width="8%" align="right">Doc No</td>
+            <td width="22%">
+                <input type="text" name="msearchdocno" id="msearchdocno" value='<s:property value="msearchdocno"/>'>
+            </td>
+            <td width="10%" align="right">Ref Type</td>
+            <td width="22%">
+                <select name="cmbsearchrtype" id="cmbsearchrtype">
+                    <option value="">--Select--</option>
+                    <s:property value="refTypeOptions" escape="false"/>
+                </select>
+            </td>
+            <td width="8%" align="right">Status</td>
+            <td width="15%">
+                <select name="cmbsearchstatus" id="cmbsearchstatus">
+                    <option value="">--Select--</option>
+                    <option value="1">IN</option>
+                    <option value="0">OUT</option>
+                </select>
+            </td>
+            <td width="15%" rowspan="2" align="center">
+                <input type="button" name="btnmainSearchExt" id="btnmainSearchExt" class="myButton" value="Search" onclick="masterloadSearch();">
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Date</td>
+            <td>
+                <div id="msearchdate" name="msearchdate"></div>
+            </td>
+            <td align="right">Fleet No</td>
+            <td>
+                <input type="text" name="msearchfleetno" id="msearchfleetno" value='<s:property value="msearchfleetno"/>'>
+            </td>
+            <td align="right">Reg No</td>
+            <td>
+                <input type="text" name="msearchregno" id="msearchregno" value='<s:property value="msearchregno"/>'>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <div id="mainrefreshdiv">
+                    <jsp:include page="subMainSearch.jsp" />
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

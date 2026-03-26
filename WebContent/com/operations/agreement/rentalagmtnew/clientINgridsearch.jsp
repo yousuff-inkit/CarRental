@@ -39,52 +39,114 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table>
-   <tr>
-    <td align="right">Name</td>
-    <td align="left" width="73.7%"><input type="text" name="Cl_name" id="Cl_name"  style="width:99%;" value='<s:property value="Cl_name"/>'></td>
-    <td align="left">MOB</td>
-    <td align="left"><input type="text" name="Cl_mob" id="Cl_mob" value='<s:property value="Cl_mob"/>'></td>
-    <tr>
-    </table>
+<style type="text/css">
+/* Master UI Styles - Ultra Compact */
+#search {
+  background-color: #ffffff;
+  padding: 2px; /* Minimized padding */
+}
+
+#search table {
+  border-collapse: separate;
+  border-spacing: 8px 6px; /* Reduced spacing to pack elements tightly */
+  background-color: #ffffff;
+}
+
+#search td[align="right"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 400;
+  font-size: 13px; /* Slightly smaller font */
+  color: #222;
+  white-space: nowrap;
+}
+
+input[type="text"] {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 4px 6px;
+  width: 100%;                
+  box-sizing: border-box;   
+  border: 1px solid #bdc3c7;
+  border-radius: 3px;
+  height: 26px; /* Reduced height */
+}
+
+input[type="text"]:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* Master UI Gradient Button */
+.myButton {
+    font-weight: 700;
+    font-size: 12px;
+    width: 110px;
+    height: 32px;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+    transform: translateY(-1px);
+}
+
+#refreshdiv {
+    margin-top: 5px;
+    border-top: 1px solid #eee;
+}
+</style>
+
+<body bgcolor="#ffffff">
+<div id="search">
+<table width="100%" border="0">
+  <tr>
+    <td width="5%" align="right">Name</td>
+    <td width="20%"><input type="text" name="Cl_name" id="Cl_name" value='<s:property value="Cl_name"/>'></td>
+    
+    <td width="5%" align="right">MOB</td>
+    <td width="15%"><input type="text" name="Cl_mob" id="Cl_mob" value='<s:property value="Cl_mob"/>'></td>
+    
+    <td width="5%" align="right">Licence#</td>
+    <td width="15%"><input type="text" name="dr_Licence" id="dr_Licence" value='<s:property value="dr_Licence"/>'></td>
+
+    <td width="15%" rowspan="2" align="center">
+        <input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search" onclick="loadSearch();">
     </td>
   </tr>
   
-  <table>
   <tr>
-   <td align="right">Licence#</td>
-    <td align="left"><input type="text" name="dr_Licence" id="dr_Licence" value='<s:property value="dr_Licence"/>'>
     <td align="right">Passport#</td>
-    <td align="left"><input type="text" name="dr_Passport" id="dr_Passport" value='<s:property value="dr_Passport"/>'></td>
+    <td><input type="text" name="dr_Passport" id="dr_Passport" value='<s:property value="dr_Passport"/>'></td>
+    
     <td align="right">Nationality</td>
-    <td align="left"><input type="text" id="dr_Nation" name="dr_Nation" value='<s:property value="dr_Nation"/>'></td>
+    <td><input type="text" id="dr_Nation" name="dr_Nation" value='<s:property value="dr_Nation"/>'></td>
     
     <td align="right">DOB</td>
-    <td align="left"><div id="dr_DOB" name="dr_DOB"  value='<s:property value="dr_DOB"/>'></div>
-
+    <td>
+        <div id="dr_DOB" name="dr_DOB" value='<s:property value="dr_DOB"/>'></div>
         <input type="hidden" name="hiddr_DOB" id="hiddr_DOB" value='<s:property value="hiddr_DOB"/>'>
     </td>
-    <td colspan="2" align="center"><input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
   </tr>
-  </table>
-  </td>
 
   <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdiv">
-      
-   <jsp:include  page="clientinfo.jsp"></jsp:include> 
-   
-   </div>
+    <td colspan="7">
+        <div id="refreshdiv">
+            <jsp:include page="clientinfo.jsp"></jsp:include> 
+        </div>
     </td>
   </tr>
 </table>
-  </div>
+</div>
 </body>
 </html>

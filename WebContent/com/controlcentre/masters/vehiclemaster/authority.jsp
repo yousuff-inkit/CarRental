@@ -49,7 +49,7 @@
     }
     
     #formdet {
-        font-size: 24px !important;
+        font-size: 16px !important;
         font-weight: 700 !important;
         color: #2c3e50;
         margin-bottom: 15px;
@@ -69,7 +69,7 @@
         margin-bottom: 30px;
     }
     .section-block h2 {
-        font-size: 17.6px
+        font-size: 16px
         font-weight: 600;
         margin: 0 0 20px;
         padding-left: 10px;
@@ -117,7 +117,7 @@
         white-space: nowrap;
         text-align: right;
         padding-right: 10px;
-        font-size: 16px;
+        font-size: 14px;
     }
     
     form label.error {

@@ -42,99 +42,104 @@ function getWildData(tempdoc,tempfleet,tempregno,tempstatus) {
 </script>
 </head>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px; /* Standardized master gap */
+/* Strict Scope to protect background page fonts */
+#search {
+    background-color: #ffffff;
+    padding: 2px;
+    font-family: Tahoma, Geneva, sans-serif !important;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"], td {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-  white-space: nowrap;
+#search table {
+    border-collapse: separate;
+    border-spacing: 4px 2px; /* Minimal spacing */
+    background-color: #ffffff;
+    width: auto; /* Shrink table to fit content */
 }
 
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600; /* Font weight 600 as requested */
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
+/* Master UI Labels: Tahoma, Regular, 13px */
+#search td {
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-weight: 400 !important; 
+    font-size: 13px;
+    color: #222;
+    padding: 0 4px;
+    white-space: nowrap;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #007bff;
-  outline: none;
+/* Master UI Inputs: White Background, Grey Border */
+#search input[type="text"] {
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 13px;
+    padding: 3px 6px;
+    width: 120px; /* Uniform compact width */
+    box-sizing: border-box;   
+    border: 1px solid #bdc3c7;
+    border-radius: 3px;
+    height: 24px;
+    background-color: #ffffff !important;
+    outline: none;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+#search input[type="text"]:focus {
+    border-color: #2563eb;
 }
 
-/* No color change on hover */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
+/* EXACT Master UI Gradient Button - Fixed 90px Width */
+#search .myButton {
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 11px;
+    width: 90px !important;
+    height: 26px;
+    padding: 0;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    text-align: center;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+#search .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+    transform: translateY(-1px);
+}
+
+#wildgriddiv {
+    margin-top: 5px;
+    border-top: 1px solid #eee;
 }
 </style>
 
-<body bgcolor="#FFFFFF">
+<body bgcolor="#ffffff">
 <div id="search">
-<table width="100%">
-  <tr>
-    <td align="right">Doc No</td>
-    <td><input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'/></td>
+    <table border="0">
+        <tr>
+            <td align="right">Doc No</td>
+            <td><input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'/></td>
+            
+            <td align="right">Fleet</td>
+            <td><input type="text" name="searchfleet" id="searchfleet" value='<s:property value="searchfleet"/>'/></td>
+            
+            <td align="right">Reg No</td>
+            <td><input type="text" name="searchregno" id="searchregno" value='<s:property value="searchregno"/>'/></td>
+            
+            <td align="right">Status</td>
+            <td><input type="text" name="searchstatus" id="searchstatus" value='<s:property value="searchstatus"/>'/></td>
+            
+            <td style="padding-left: 10px;">
+                <input type="button" name="btndsearch" id="btndsearch" class="myButton" value="Search" onclick="funWildSearch();">
+            </td>
+        </tr>
+    </table>
     
-    <td align="right">Fleet</td>
-    <td><input type="text" name="searchfleet" id="searchfleet" value='<s:property value="searchfleet"/>'/></td>
-    
-    <td align="right">Reg No</td>
-    <td><input type="text" name="searchregno" id="searchregno" value='<s:property value="searchregno"/>'/></td>
-    
-    <td>Status</td>
-    <td><input type="text" name="searchstatus" id="searchstatus" value='<s:property value="searchstatus"/>'/></td>
-  </tr>
-  <tr>
-    <td colspan="8" align="center">
-      <input type="button" name="btndsearch" id="btndsearch" class="myButton" value="Search" onclick="funWildSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td colspan="8">
-      <div id="wildgriddiv">
+    <div id="wildgriddiv">
         <jsp:include page="wildsearchgrid.jsp"></jsp:include>
-      </div>
-    </td>
-  </tr>
-</table>
+    </div>
 </div>
 </body>
 </html>
