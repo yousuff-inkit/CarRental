@@ -2052,7 +2052,7 @@ value='<s:property value="referenceno"/>'/>
                     <input type="text" name="outlocation" id="outlocation" value='<s:property value="outlocation"/>'/>
                 </div>
                 
-                <label for="deliveryto" class="field-label">Delivery To</label>
+                <label for="deliveryto" class="field-label">To Driver</label>
                 <div class="field-input">
                     <input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'/>
                 </div>
