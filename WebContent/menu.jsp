@@ -656,7 +656,9 @@ label.licenceExpiry:hover{
 	color:transparent;
 	background-position:-500px;
 }
-
+body::-webkit-scrollbar {
+	width: 0px;
+}
 </style>
 </head>
 <!-- style="overflow:;  onload="getBrchCurr();" -->

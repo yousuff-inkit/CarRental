@@ -3,12 +3,10 @@
 <%@page import="java.util.*" %>
 <%@page import="com.connection.ClsConnection" %>
 
-<% 
-    // --- BACKEND LOGIC (KEPT EXACTLY AS PROVIDED) ---
+<%
     ClsExeFolio cef = new ClsExeFolio(); 
     
     Map<String, int[]> docStats = new TreeMap<String, int[]>();
-
     Connection conn = null; 
     PreparedStatement ps = null; 
     ResultSet rs = null;
@@ -20,10 +18,30 @@
         ClsConnection clsCon = new ClsConnection();
         conn = clsCon.getMyConnection();
         
-        String sql = "SELECT dtype, apprStatus, COUNT(*) as cnt FROM my_exdet WHERE userId = ? GROUP BY dtype, apprStatus"; 
+        // ✅ FIX: Query BOTH my_exdet (history) 
+        //        AND my_exeb (pending inbox)
+        String sql = 
+            // Part 1: History from my_exdet
+            "SELECT dtype, apprStatus, COUNT(*) as cnt " +
+            "FROM my_exdet " +
+            "WHERE userId = ? " +
+            "AND apprStatus NOT IN (8,9) " +
+            "GROUP BY dtype, apprStatus " +
+            
+            "UNION ALL " +
+            
+            // Part 2: Pending inbox from my_exeb
+            // These are Level 2+ items waiting for this user
+            "SELECT dtype, 0 as apprStatus, COUNT(*) as cnt " +
+            "FROM my_exeb " +
+            "WHERE userId = ? " +
+            "AND approved = 0 " +
+            "AND apprlevel != 0 " +
+            "GROUP BY dtype";
         
         ps = conn.prepareStatement(sql);
-        ps.setString(1, userId);
+        ps.setString(1, userId);  // for my_exdet
+        ps.setString(2, userId);  // for my_exeb
         rs = ps.executeQuery();
         
         while(rs.next()){
@@ -40,9 +58,17 @@
                 
                 int[] counts = docStats.get(docType);
                 
-                if (status == 1) counts[0] += count; 
-                else if (status == 3) counts[1] += count; 
-                else counts[2] += count; 
+                // status=1 → Pending (submitted)
+                // status=0 → Pending inbox (my_exeb items)
+                // status=3 → Approved
+                // others   → Rejected/Returned
+                if (status == 1 || status == 0) {
+                    counts[0] += count;  // Pending
+                } else if (status == 3) {
+                    counts[1] += count;  // Approved
+                } else {
+                    counts[2] += count;  // Rejected/Others
+                }
             }
         }
     } catch(Exception e) {

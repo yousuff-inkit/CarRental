@@ -720,18 +720,20 @@ public class ClsBankPaymentDAO {
 				
 				else if(resultSet1.getString("SR_NO").trim().equalsIgnoreCase("1")){
 				    srno = resultSet1.getString("SR_NO").trim();
-					bankPaymentBean.setTxttodocno(resultSet1.getInt("accno"));
-					bankPaymentBean.setHidcmbtotype(resultSet1.getString("atype"));
-					bankPaymentBean.setTxttoaccid(resultSet1.getString("account"));
-					bankPaymentBean.setTxttoaccname(resultSet1.getString("description"));
-					bankPaymentBean.setHidcmbtocurrency(resultSet1.getString("curId"));
-					bankPaymentBean.setHidtocurrencytype(resultSet1.getString("type"));
-					bankPaymentBean.setTxttorate(resultSet1.getDouble("rate"));
-					bankPaymentBean.setTxttoamount(resultSet1.getDouble("AMOUNT"));
-					bankPaymentBean.setTxttobaseamount(resultSet1.getDouble("lamount"));
-					
-					bankPaymentBean.setTxtapplyinvoiceamt(resultSet1.getDouble("AMOUNT"));
-					
+				    bankPaymentBean.setTxttodocno(resultSet1.getInt("accno"));
+				    
+				    // SAFE NULL CHECKS ADDED HERE
+				    bankPaymentBean.setHidcmbtotype(resultSet1.getString("atype") == null ? "" : resultSet1.getString("atype"));
+				    bankPaymentBean.setTxttoaccid(resultSet1.getString("account") == null ? "" : resultSet1.getString("account"));
+				    bankPaymentBean.setTxttoaccname(resultSet1.getString("description") == null ? "" : resultSet1.getString("description"));
+				    bankPaymentBean.setHidcmbtocurrency(resultSet1.getString("curId") == null ? "" : resultSet1.getString("curId"));
+				    bankPaymentBean.setHidtocurrencytype(resultSet1.getString("type") == null ? "" : resultSet1.getString("type"));
+				    
+				    bankPaymentBean.setTxttorate(resultSet1.getDouble("rate"));
+				    bankPaymentBean.setTxttoamount(resultSet1.getDouble("AMOUNT"));
+				    bankPaymentBean.setTxttobaseamount(resultSet1.getDouble("lamount"));
+				    
+				    bankPaymentBean.setTxtapplyinvoiceamt(resultSet1.getDouble("AMOUNT"));
 				}
 					bankPaymentBean.setTxtdrtotal(resultSet1.getDouble("totalAmount"));
 					bankPaymentBean.setTxtcrtotal(resultSet1.getDouble("totalAmount"));

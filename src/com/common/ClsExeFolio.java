@@ -160,53 +160,47 @@ public class ClsExeFolio {
 	    ClsCommon ClsCommon = new ClsCommon();
 	    Connection conn = null;
 	    try {
-	        
 	        String userid = session.getAttribute("USERID").toString();
 
-	        String xsql = "", select = "", join = "";
+	        String xsql1 = "", xsql2 = "";
 	        
-	        
-	        if (flag == 1)
-	            xsql = " and date(m.apprDate)=date(now()) ";
-	        else if (flag == 2)
-	            xsql = " and date(m.apprDate)!=date(now()) ";
+	        // Handle date filters for both tables
+	        if (flag == 1) {
+	            xsql1 = " and date(m.apprDate)=date(now()) ";
+	            xsql2 = " and date(m.sub_date)=date(now()) ";
+	        } else if (flag == 2) {
+	            xsql1 = " and date(m.apprDate)!=date(now()) ";
+	            xsql2 = " and date(m.sub_date)!=date(now()) ";
+	        }
 
 	        conn = ClsConnection.getMyConnection();
 	        Statement cpstmt = conn.createStatement();
 
-	        
-	        String sqlqry = "select coalesce(wt.select1,'') as select1, coalesce(wt.join1,'') join1 "
-	                      + "from win_tbldet wt where wt.dtype in (select distinct dtype from my_exdet where userId='" + userid + "') limit 1";
-
-	        ResultSet rs = cpstmt.executeQuery(sqlqry);
-	        if (rs.next()) {
-	            select = rs.getString("select1");
-	            join = rs.getString("join1");
-	        }
-
-	        
-	        String cpsql = "Select 'View' as btnclick, "
-	                + "date(now()) tdate, "
-	                + "time(now()) ttime, "
-	                + "m.doc_no as doc_no, "
-	                + "m.dtype as doctype, "
-	                + "br.doc_no as branch, "
+	        // UNION ALL to combine History (my_exdet) and Pending Inbox (my_exeb)
+	        // Removed the broken dynamic 'select1' and 'join1' injection to prevent column crashes
+	        String cpsql = "SELECT * FROM ("
+	                + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
+	                + "m.dtype as doctype, br.doc_no as branch, "
 	                + "CONVERT(concat(day(m.apprDate),'/',month(m.apprDate),'/',year(m.apprDate),' ', time(m.apprDate)), CHAR(50)) as subdatetime, "
-	                + "u.user_name as submitedby, "
-	                + "mn.func as path, "
-	                + "mn.menu_name as name, "
-	                + "mn.doc_type as dtype, "
-	                + "m.apprStatus as approved " 
-	                + select
+	                + "u.user_name as submitedby, mn.func as path, mn.menu_name as name, mn.doc_type as dtype, "
+	                + "m.apprStatus as approved, m.apprDate as sortDate " 
 	                + " from my_exdet m "
-	                + " inner join my_brch br on m.brhId=br.doc_no "
-	                + " left join my_user u on m.userId=u.doc_no "
-	                + " left join my_menu mn on(mn.doc_type=m.dtype) "
-	                + join 
+	                + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
+	                + " where m.userId='" + userid + "' and m.apprStatus != 8 " 
+	                + xsql1
+
+	                + " UNION ALL "
+
+	                + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
+	                + "m.dtype as doctype, br.doc_no as branch, "
+	                + "CONVERT(concat(day(m.sub_date),'/',month(m.sub_date),'/',year(m.sub_date),' ', time(m.sub_date)), CHAR(50)) as subdatetime, "
+	                + "u.user_name as submitedby, mn.func as path, mn.menu_name as name, mn.doc_type as dtype, "
+	                + "1 as approved, m.sub_date as sortDate " 
+	                + " from my_exeb m "
+	                + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
 	                + " where m.userId='" + userid + "' " 
-	                + " and m.apprStatus != 8 " // Exclude archived records
-	                + xsql
-	                + " order by m.apprDate desc";
+	                + xsql2
+	                + ") a order by a.sortDate desc";
 
 	        ResultSet resultSet = cpstmt.executeQuery(cpsql);
 	        RESULTDATA = ClsCommon.convertToJSON(resultSet);
@@ -250,6 +244,7 @@ public class ClsExeFolio {
 		Statement stmt4 =null;
 		Statement stmt5 =null;
 		Statement stmt6 =null;
+		stmt6 =conn.createStatement();
 		Statement stmt7 =null;
 		try { 
 
@@ -310,7 +305,10 @@ public class ClsExeFolio {
 				mtblnme=rs1.getString("mtbl");
 				transtype=rs1.getString("transtype");
 			}
-
+				
+			if (transtype == null || transtype.trim().isEmpty()) {
+			    transtype = "doc_no";
+			}
 			stmt2 =conn.createStatement();
 
 			//String strsql2="select count(*) as count,apprstatus from my_exdet m  where m.apprstatus!=9 and  m.dtype='"+dtype+"' and m.doc_no='"+docno+"' group by apprstatus";
@@ -328,7 +326,7 @@ public class ClsExeFolio {
 			}
 
 
-			stmt6 =conn.createStatement();
+			
 
 			String strsql6="select count(*) as count from my_exdet m  where apprstatus not in (0,9,8) and m.dtype='"+dtype+"' and apprlevel="+apprlevel+"  and m.brhId="+brchid+" and m.doc_no='"+docno+"'";
             //System.out.println("strsql6===="+strsql6);  
@@ -386,6 +384,12 @@ public class ClsExeFolio {
 			}
 */
 				Integer nxtapprlevel=Integer.parseInt(apprlevel)+1;
+				System.out.println("========== DEBUG ROUTING START ==========");
+				System.out.println("Doc No: " + docno + " | DType: " + dtype);
+				System.out.println("Current ApprLevel: " + apprlevel);
+				System.out.println("Next ApprLevel: " + nxtapprlevel);
+				System.out.println("docminapprls (Required Approvals): " + docminapprls);
+				System.out.println("applvlcount (Approvals received at this level): " + applvlcount);
 			
 					if((docminapprls==(applvlcount+1)) || Integer.parseInt(apprlevel)==0){
 						
@@ -398,11 +402,12 @@ public class ClsExeFolio {
 
 					}
 				
-					String strsql3="select * from my_exdoc where userid not in (select userid from (select userid from my_exdet where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid="+brchid+" and apprStatus not in(8,9) "
-							+ "union all select userid from my_exeb where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid="+brchid+") as a ) and dtype='"+dtype+"' "+branchcond
-							+ " "+sql+"" ;   	
+					String strsql3="select * from my_exdoc where userid not in (select userid from (select userid from my_exdet where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid="+brchid+" and apprStatus not in(1,8,9) "
+					        + "union all select userid from my_exeb where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid="+brchid+") as a ) and dtype='"+dtype+"' "+branchcond
+					        + " "+sql+"" ;  	
 
-            //System.out.println("===="+strsql3);
+					System.out.println("SQL to find next approver (strsql3): " + strsql3);
+					System.out.println("=========================================");
 			stmt3 =conn.createStatement();
 			ResultSet rs3 = stmt3.executeQuery(strsql3);
 			int touserid=0;
