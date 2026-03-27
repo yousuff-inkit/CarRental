@@ -305,43 +305,45 @@ function funSearchLoad(){
 	}
  
 </script>
-</head>
+
+
+
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
     margin: 0;
-    padding: 32px 0;
+    padding: 10px;
     box-sizing: border-box;
-    overflow-y: auto !important;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 1450px;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
     margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
-/* ------------------------------
-    COMMON UI ELEMENTS
------------------------------- */
+/* Master Input Heights - Set to 24px as requested */
 input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
     box-sizing: border-box;
     width: 100%;
+    background-color: #fff;
+    color: #333;
 }
 
 input[type="text"]:focus, select:focus {
@@ -349,148 +351,187 @@ input[type="text"]:focus, select:focus {
     outline: none;
 }
 
-label {
-    font: 16px Segoe UI;
-    font-weight: 500;
-    color: #253858;
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
     white-space: nowrap;
-    line-height: 32px;
-    padding: 0px 8px 0px 0px; 
 }
 
-/* ------------------------------
-    CARD ROWS LAYOUT
------------------------------- */
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 17.6px;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
+.flex-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
+    width: 100%;
 }
 
-.agmt-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
-    gap: 12px 25px;
+.chk-container {
+    display: flex;
     align-items: center;
-}
-
-.hidden-scrollbar {
-    overflow-y: visible !important; 
-    max-height: none !important; 
-    min-height: 1px; 
-    padding: 10px; 
-}
-body::-webkit-scrollbar {
-	width: 0px;
-}
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
+    gap: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
     white-space: nowrap;
-    text-align: center;
 }
 
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+.chk-container input {
+    margin: 0;
+    padding: 0;
+}
+
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Clean Tables mapping requested colors */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
+
 </style>
 
+</head>
 <body onload="setValues();">
-
 <div id="mainBG" class="homeContent" data-type="background">
-    <jsp:include page="../../../../header.jsp" />
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+<form id="frmsalic" action="saveSalik" method="post" autocomplete="off" >
 
-    <div style="display:flex; align-items:center; gap:8px;">
-        <label>Date</label>
-        <div id="tsDate" name="tsDate"
-             value='<s:property value="tsDate"/>'
-             style="width:120px;"></div>
-    </div>
+<jsp:include page="../../../../header.jsp" /><br/>
+<fieldset>
+  <div class="top-grid">
 
-    <div style="display:flex; align-items:center; gap:8px;">
-        <label>Doc No.</label>
-        <input type="text" name="traficdocno" id="traficdocno"
-               tabindex="-1"
-               value='<s:property value="traficdocno"/>'
-               style="width:120px;">
-    </div>
+    <label>Date</label>
+    <div id="tsDate"></div>
 
-</div>
-                  
-    <br/>
+    <label>Entry</label>
+    <select name="entry" id="entry" onchange="gridchange()">
+      <option value="traffic">Traffic</option>
+      <option value="salik">Salik</option>
+    </select>
 
-    <form id="frmsalic" action="saveSalik" method="post" autocomplete="off">
-        <div class="hidden-scrollbar">
-            
-            <div class="section-block">
-                <h2>Entry Details</h2>
-                <div class="agmt-info-grid">
-                    <label>Entry Type</label>
-                    <select name="entry" id="entry" value='<s:property value="entry"/>' onchange="gridchange()">
-                        <option value="traffic">Traffic</option>
-                        <option value="salik">Salik</option>
-                    </select>
-
-                    
-                    
-                    <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
-                </div>
-            </div>
-
-            <div class="section-block">
-                <h2>Record Information</h2>
-                
-                <div id="trafficdiv">
-                    <jsp:include page="traficGrid.jsp"></jsp:include>
-                </div> 
-
-                <div id="salikdiv" hidden="true">
-                    <jsp:include page="salikmainGrid.jsp"></jsp:include>
-                </div>
-            </div>
-
-            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
-            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
-            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
-            <input type="hidden" id="entryval" name="entryval" value='<s:property value="entryval"/>'>
-            <input type="hidden" id="salickgridlenght" name="salickgridlenght" value='<s:property value="salickgridlenght"/>'>
-            <input type="hidden" id="trafficgridlenght" name="trafficgridlenght" value='<s:property value="trafficgridlenght"/>'>
-        </div>
-    </form>
-
-    <div id="salickfleetsearchwindow"><div></div></div>
-    <div id="tafficfleetsearchwindow"><div></div></div>
-
+  <label>Doc No</label>
+<div style="width:20%;">
+  <input type="text" name="traficdocno" id="traficdocno">
 </div>
 
+  </div>
+</fieldset>
+<br>
+<fieldset>
+ 
+<div id="trafficdiv"  ><jsp:include page="traficGrid.jsp"></jsp:include></div> 
+
+
+<div id="salikdiv" hidden="true"><jsp:include page="salikmainGrid.jsp"></jsp:include></div> 
+
+
+
+
+</fieldset> 
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'>
+
+<input type="hidden" id="entryval" name="entryval" value='<s:property value="entryval"/>'>
+
+<input type="hidden" id="salickgridlenght" name="salickgridlenght" value='<s:property value="salickgridlenght"/>'>
+<input type="hidden" id="trafficgridlenght" name="trafficgridlenght" value='<s:property value="trafficgridlenght"/>'>
+
+</form>
+
+
+<div id="salickfleetsearchwindow">   <div ></div>
+</div>
+
+
+
+
+<div id="tafficfleetsearchwindow">    <div ></div></div>
+
+
+
+</div>
+ 
+	
 </body>
 </html>
