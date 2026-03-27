@@ -12,141 +12,45 @@
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    box-sizing: border-box;
-    overflow-y: auto !important;
+#section {
+	line-height: 50%;
+	width: 90.5%;
+	float: right;
+	margin-width: 50%;
 }
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 1450px;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+#nav {
+	line-height: 250%;
+	height: 90.5%;
+	width: 10vw;
+	float: left;
+	position: absolute;
+	left: 6px;
+	top: 5px;
 }
+form label.error {
+color:red;
+  font-weight:bold;
 
-input[type="text"], select, textarea {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
 }
-
-textarea {
-    height: auto !important;
-    min-height: 60px;
+.HeadIcons {
+	font: 12px Tahoma;
+	margin-top: 0px;
+	line-height: 30px;
+	background-color: #E0ECF8;
+	height: 27px;
+	width: 100%;
 }
-
-input[type="text"]:focus, select:focus, textarea:focus {
-    border-color: #007bff;
-    outline: none;
+.icon {
+	width: 3em;
+	height: 2em;
+	border: none;
+	background-color: #f0f0f0;
 }
-
-label {
-    font: 16px 'Segoe UI';
-    font-weight: 500;
-    color: #253858;
-    white-space: nowrap;
-    line-height: 32px;
-}
-
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 17.6px;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.section-row {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.trans-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr;
-    gap: 12px 15px;
-    align-items: center;
-}
-
-.agmt-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr;
-    gap: 12px 20px;
-    align-items: center;
-}
-
 .hidden-scrollbar {
-    overflow-y: visible !important;
-    max-height: none !important;
-    padding: 10px;
+    overflow: auto;
+    height: 600px;
 }
 
-.tarif-action-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.tarif-action-btn:hover {
-    transform: scale(1.1);
-}
-body::-webkit-scrollbar {
-	width: 0px;
-}
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
 </style>
 
 <script type="text/javascript">
@@ -871,194 +775,375 @@ document.getElementById("cmbtariftype").disabled=true;
 		}
 		
 </script>
+<style>
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
+body {
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
 
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* Master Input Heights - Set to 24px as requested */
+input[type="text"], select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.chk-container input {
+    margin: 0;
+    padding: 0;
+}
+
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Clean Tables mapping requested colors */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
+
+</style>
 </head>
 <body onLoad="setValues();">
-
 <div id="mainBG" class="homeContent" data-type="background">
-    <form id="frmTariffManagement" action="saveTariffManagementnew" autocomplete="off">
-        <script>
-            window.parent.formName.value="Tariff Management";
-            window.parent.formCode.value="TFM";
-        </script>
-        <jsp:include page="../../../../header.jsp" />
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+<form id="frmTariffManagement" action="saveTariffManagementnew" autocomplete="off">
+	<script>
+			window.parent.formName.value="Tariff Management";
+			window.parent.formCode.value="TFM";
+	</script>
+	<jsp:include page="../../../../header.jsp" />
+	<br/> 
 
- 
-    <div style="display:flex; align-items:center; gap:8px;">
-        <label>Date</label>
-        <div id="jqxTariffDate"
-             name="jqxTariffDate"
-             value='<s:property value="jqxTariffDate"/>'
-             style="width:120px;">
-        </div>
-    </div>
+<div class='hidden-scrollbar'>
+<table width="100%" >
+  <tr>
+    <td width="3%" align="right">Date</td>
+    <td width="8%" align="left"><input type="hidden" id="hidjqxTariffDate" name="hidjqxTariffDate" value='<s:property value="hidjqxTariffDate"/>'/>
+      <div id='jqxTariffDate' name='jqxTariffDate' value='<s:property value="jqxTariffDate"/>'></div></td>
+    <td width="5%" align="right">Tariff Type</td><!-- onchange="selectTarif();" -->
+    <td width="18%" align="left"><select id="cmbtariftype" name="cmbtariftype" value='<s:property value="cmbtariftype"/>' onchange="selectTarif();" >
+      <option value="">--Select--</option></select>
+      
+      <input type="text" name="txtclient" id="txtclient" value='<s:property value="txtclient"/>' onkeydown="getClient(event);">
+      <input type="hidden" id="hidcmbtariftype" name="hidcmbtariftype" value='<s:property value="hidcmbtariftype"/>'/></td>
+    <!-- <option value="Regular">Regular</option><option value="Promotion">Promotion</option><option value="Client">Client</option>
+      <option value="Condition">Condition</option><option value="Corporate">Corporate</option> -->
+    <input type="hidden" name="hidtxtclient" id="hidtxtclient" value='<s:property value="hidtxtclient"/>'>
+    <td width="4%" align="right">Tariff For</td>
+    <td width="9%" align="left"><select id="cmbtariffor" name="cmbtariffor" value='<s:property value="cmbtariffor"/>'>
+      <option value="">--Select--</option><option value="Vehicle">Vehicle</option>
+    </select>
+      <input type="hidden" id="hidcmbtariffor" name="hidcmbtariffor" value='<s:property value="hidcmbtariffor"/>'/></td>
+    <td width="6%" align="right">Validity From</td>
+    <td width="9%" align="left"><input type="hidden" id="hidjqxTariffFromDate" name="hidjqxTariffFromDate" value='<s:property value="hidjqxTariffFromDate"/>'/>
+      <div id='jqxTariffFromDate' name='jqxTariffFromDate' value='<s:property value="jqxTariffFromDate"/>'></div></td>
+    <td width="5%" align="right">Validity To</td>
+    <td width="9%" align="left"><input type="hidden" id="hidjqxTariffToDate" name="hidjqxTariffToDate" value='<s:property value="hidjqxTariffToDate"/>'/>
+      <div id='jqxTariffToDate' name='jqxTariffToDate' value='<s:property value="jqxTariffToDate"/>'></div></td>
+    <td width="9%" align="left"><input type="checkbox" id="chckdeliverychg" name="chckdeliverychg"  onchange="setCheck();">
+      &nbsp;&nbsp;Delivery Charge</td><input type="hidden" name="hidcheck" id="hidcheck" value='<s:property value="hidcheck"/>'>
+    <td width="4%" align="right">Doc No</td>
+    <td width="11%" align="left"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>
+    
+    </tr>
+  <tr>
+    <td height="41" align="right">Notes</td>
+    <td align="left" colspan="10"><textarea id="notes" name="notes" style="width:100%;resize:none;"><s:property value="notes"/></textarea></td>
+    <td align="center">
+    <button type="button"  id="btnTarifEdit" title="Tarif Edit" style="border:none;background:none;" onclick="funTarifEdit();">
+							<img alt="Tarif Edit" src="<%=contextPath%>/icons/tarifedit.png" width="30" height="30">
+		  </button>
+    <button type="button" id="btnTarifSave" title="Tarif Save" hidden="true" style="border:none;background:none;" onclick="funTarifSave();">
+							<img alt="Tarif Save" src="<%=contextPath%>/icons/tarifsave.png" width="30" height="30">
+		  </button>
+    
+    </td>
+   <input type="hidden" id="mode" name="mode"/>
+<input type="text" name="delete" id="delete" value='<s:property value="delete"/>' hidden="true"/>
+<input type="hidden" name="tempgroup" id="tempgroup" value='<s:property value="tempgroup"/>'>
+<input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+<input type="hidden" name="weekdaylength" id="weekdaylength" value='<s:property value="weekdaylength"/>'>
+<input type="hidden" name="foclength" id="foclength" value='<s:property value="foclength"/>'>
 
-  
-    <div style="display:flex; align-items:center; gap:8px;">
-        <label>Doc No</label>
-        <input type="text"
-               id="docno"
-               name="docno"
-               tabindex="-1"
-               value='<s:property value="docno"/>'
-               style="width:120px;">
-    </div>
+<input type="hidden" name="slablength" id="slablength" value='<s:property value="slablength"/>'>
+<input type="hidden" name="packagelength" id="packagelength" value='<s:property value="packagelength"/>'>
 
-</div>   
-        <br/>
+<input type="hidden" name="fuellength" id="fuellength" value='<s:property value="fuellength"/>'>
+<input type="hidden" name="tarifmode" id="tarifmode" value='<s:property value="tarifmode"/>'>
+<input type="hidden" name="temprowindex" id="temprowindex" value='<s:property value="temprowindex"/>'> 
+<input type="hidden" name="deliverylength" id="deliverylength" value='<s:property value="deliverylength"/>'>
+<input type="hidden" name="tempdocno" id="tempdocno" value='<s:property value="tempdocno"/>'>
+<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+<input type="hidden" name="tempstatus" id="tempstatus" value='<s:property value="tempstatus"/>'>
+  </tr>
+</table>
 
-        <div class="hidden-scrollbar">
-            
-            <div class="section-block">
-                <h2>General Information</h2>
-                <div class="trans-info-grid">
-               
-                    
-                    <label>Tariff Type</label>
-                    <div style="display: flex; gap: 8px;">
-                        <select id="cmbtariftype" name="cmbtariftype" onchange="selectTarif();" value='<s:property value="cmbtariftype"/>'>
-                            <option value="">--Select--</option>
-                        </select>
-                        <input type="text" name="txtclient" id="txtclient" placeholder="F3 for Client" value='<s:property value="txtclient"/>' onkeydown="getClient(event);">
-                    </div>
+<center><label id="grouplabel" style="color:red;font-weight:bold;"></label></center>
 
-                    <label>Tariff For</label>
-                    <select id="cmbtariffor" name="cmbtariffor" value='<s:property value="cmbtariffor"/>'>
-                        <option value="">--Select--</option>
-                        <option value="Vehicle">Vehicle</option>
-                    </select>
-
-                   
-
-                    <label>Validity From</label>
-                    <div id='jqxTariffFromDate' name='jqxTariffFromDate' value='<s:property value="jqxTariffFromDate"/>'></div>
-
-                    <label>Validity To</label>
-                    <div id='jqxTariffToDate' name='jqxTariffToDate' value='<s:property value="jqxTariffToDate"/>'></div>
-
-                    <div style="grid-column: span 2; display: flex; align-items: center; gap: 10px;">
-                        <input type="checkbox" id="chckdeliverychg" name="chckdeliverychg" onchange="setCheck();">
-                        <label for="chckdeliverychg">Delivery Charge</label>
-                    </div>
-                </div>
-
-                <div class="agmt-info-grid" style="margin-top: 15px;">
-                    <label>Notes</label>
-                    <div style="display: flex; gap: 15px; align-items: flex-start;">
-                        <textarea id="notes" name="notes"><s:property value="notes"/></textarea>
-                        <div style="display: flex; flex-direction: column; gap: 5px;">
-                            <button type="button" id="btnTarifEdit" class="tarif-action-btn" title="Tarif Edit" onclick="funTarifEdit();">
-                                <img alt="Tarif Edit" src="<%=contextPath%>/icons/tarifedit.png" width="30" height="30">
-                            </button>
-                            <button type="button" id="btnTarifSave" class="tarif-action-btn" title="Tarif Save" hidden="true" onclick="funTarifSave();">
-                                <img alt="Tarif Save" src="<%=contextPath%>/icons/tarifsave.png" width="30" height="30">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <center><label id="grouplabel" style="color:red;font-weight:bold;"></label></center>
-
-            <div style="display: flex; gap: 20px; align-items: flex-start;">
-                <div style="width: 250px;">
-                    <div class="section-block">
-                        <h2>Groups</h2>
-                        <div id="divgroup1"><jsp:include page="gridgroup1.jsp"></jsp:include></div>
-                    </div>
-                </div>
-
-                <div style="flex: 1;">
-                    <div class="section-block" id="fieldextrainsur">
-                        <h2>Excess & Insurance Details</h2>
-                        <div class="trans-info-grid">
-                            <label>Security Amt</label>
-                            <input type="text" name="securityamt" id="securityamt" value='<s:property value="securityamt"/>' onkeypress="javascript:return isNumber(event,id)">
-                            
-                            <label>Insurance Excess</label>
-                            <input type="text" name="insurexcess" id="insurexcess" value='<s:property value="insurexcess"/>' onkeypress="javascript:return isNumber(event,id)">
-                            
-                            <label>CDW Excess</label>
-                            <input type="text" name="cdwexcess" id="cdwexcess" value='<s:property value="cdwexcess"/>' onkeypress="javascript:return isNumber(event,id)">
-                            
-                            <label>Super CDW Excess</label>
-                            <input type="text" name="scdwexcess" id="scdwexcess" value='<s:property value="scdwexcess"/>' onkeypress="javascript:return isNumber(event,id)">
-                        </div>
-                    </div>
-
-                    <div class="section-block" id="fieldregular">
-                        <h2>Tariff Configuration</h2>
-                        <div id="divRegularTarif"><jsp:include page="gridRegularTarif.jsp"></jsp:include></div>
-                        
-                        <div id="fieldweekday" style="margin-top:20px;">
-                            <h2 style="font-size: 0.9rem; border-left-color: #28a745;">Week Day Tariff</h2>
-                            <div id="divweekday"><jsp:include page="gridWeekday.jsp"></jsp:include></div>
-                        </div>
-
-                        <div id="fieldslab" style="margin-top:20px;">
-                            <h2 style="font-size: 0.9rem; border-left-color: #fd7e14;">Slab Tariff</h2>
-                            <div id="divslab"><jsp:include page="gridSlabTarif.jsp"></jsp:include></div>
-                        </div>
-
-                        <div id="fieldpackage" style="margin-top:20px;">
-                            <h2 style="font-size: 0.9rem; border-left-color: #6f42c1;">Package Tariff</h2>
-                            <div id="divpackage"><jsp:include page="gridPackageTarif.jsp"></jsp:include></div>
-                        </div>
-
-                        <div id="fieldfoc" style="margin-top:20px;">
-                            <h2 style="font-size: 0.9rem; border-left-color: #17a2b8;">FOC Tariff</h2>
-                            <div id="divfoc"><jsp:include page="gridFoc.jsp"></jsp:include></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="width: 250px;">
-                    <div class="section-block">
-                        <h2>Sub Groups</h2>
-                        <div id="divgroup2"><jsp:include page="gridgroup2.jsp"></jsp:include></div>
-                    </div>
-                </div>
-            </div>
-
-            <input type="hidden" id="hidjqxTariffDate" name="hidjqxTariffDate" value='<s:property value="hidjqxTariffDate"/>'/>
-            <input type="hidden" id="hidcmbtariftype" name="hidcmbtariftype" value='<s:property value="hidcmbtariftype"/>'/>
-            <input type="hidden" id="hidcmbtariffor" name="hidcmbtariffor" value='<s:property value="hidcmbtariffor"/>'/>
-            <input type="hidden" id="hidjqxTariffFromDate" name="hidjqxTariffFromDate" value='<s:property value="hidjqxTariffFromDate"/>'/>
-            <input type="hidden" id="hidjqxTariffToDate" name="hidjqxTariffToDate" value='<s:property value="hidjqxTariffToDate"/>'/>
-            <input type="hidden" name="hidcheck" id="hidcheck" value='<s:property value="hidcheck"/>'>
-            <input type="hidden" name="hidtxtclient" id="hidtxtclient" value='<s:property value="hidtxtclient"/>'>
-            <input type="hidden" id="mode" name="mode"/>
-            <input type="text" name="delete" id="delete" value='<s:property value="delete"/>' hidden="true"/>
-            <input type="hidden" name="tempgroup" id="tempgroup" value='<s:property value="tempgroup"/>'>
-            <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-            <input type="hidden" name="weekdaylength" id="weekdaylength" value='<s:property value="weekdaylength"/>'>
-            <input type="hidden" name="foclength" id="foclength" value='<s:property value="foclength"/>'>
-            <input type="hidden" name="slablength" id="slablength" value='<s:property value="slablength"/>'>
-            <input type="hidden" name="packagelength" id="packagelength" value='<s:property value="packagelength"/>'>
-            <input type="hidden" name="fuellength" id="fuellength" value='<s:property value="fuellength"/>'>
-            <input type="hidden" name="tarifmode" id="tarifmode" value='<s:property value="tarifmode"/>'>
-            <input type="hidden" name="temprowindex" id="temprowindex" value='<s:property value="temprowindex"/>'> 
-            <input type="hidden" name="deliverylength" id="deliverylength" value='<s:property value="deliverylength"/>'>
-            <input type="hidden" name="tempdocno" id="tempdocno" value='<s:property value="tempdocno"/>'>
-            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-            <input type="hidden" name="tempstatus" id="tempstatus" value='<s:property value="tempstatus"/>'>
-            <input type="hidden" name="conditionstatus" id="conditionstatus" value='<s:property value="conditionstatus"/>'>
-            <input type="hidden" name="hidgroupdoc" id="hidgroupdoc" value='<s:property value="hidgroupdoc"/>'>
-            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-            <input type="hidden" name="addrow" id="addrow" value='<s:property value="addrow"/>'>
-        </div>
-    </form>
-
-    <div id="clienttarifwindow"><div></div></div>
-
-    <div hidden="true">
-        <div class="section-block">
-            <h2>Fuel Info</h2>
-            <div id="divfuel"><jsp:include page="gridfuel.jsp"></jsp:include></div>
-        </div>
-    </div>
+<table width="100%">
+  <tr>
+    <td width="6%" rowspan="11" ><div id="divgroup1" ><jsp:include page="gridgroup1.jsp"></jsp:include></div></td>
+    <td colspan="2" align="center">
+    <fieldset id="fieldregular" align="left">
+      <!-- <legend>Regular Tariff</legend> -->
+      <table width="100%">
+        <tr>
+          <td><div id="divRegularTarif">
+            <jsp:include page="gridRegularTarif.jsp"></jsp:include>
+          </div></td>
+        </tr>
+      </table>
+    </fieldset>
+    <fieldset id="fieldweekday" align="left">
+      <legend>Week Day Tariff</legend>
+      <table width="100%">
+        <tr>
+          <td><div id="divweekday">
+            <jsp:include page="gridWeekday.jsp"></jsp:include>
+          </div></td>
+        </tr>
+      </table>
+    </fieldset>
+    <fieldset id="fieldslab" align="left">
+      <legend>Slab Tariff</legend>
+      <table width="100%">
+        <tr>
+          <td><div id="divslab">
+            <jsp:include page="gridSlabTarif.jsp"></jsp:include>
+          </div></td>
+        </tr>
+      </table>
+    </fieldset>
+    <fieldset id="fieldpackage" align="left">
+      <legend>Package Tariff</legend>
+      <table width="100%">
+        <tr>
+          <td><div id="divpackage">
+            <jsp:include page="gridPackageTarif.jsp"></jsp:include>
+          </div></td>
+        </tr>
+      </table>
+    </fieldset>
+    <%-- <div id="divRegularTarif"><jsp:include page="gridRegularTarif.jsp"></jsp:include></div>
+    <div id="divslab"><jsp:include page="gridSlabTarif.jsp"></jsp:include></div>
+    <div id="divpackage"><jsp:include page="gridPackageTarif.jsp"></jsp:include></div> --%>
+    <%-- <fieldset><div id="divRegularTarif"><jsp:include page="gridRegularTarif.jsp"></jsp:include></div></fieldset> --%></td>
+    <td width="6%" rowspan="11"><div id="divgroup2"><jsp:include page="gridgroup2.jsp"></jsp:include></div></td></tr>
+  <tr>
+    <td colspan="2"  align="center"><fieldset id="fieldextrainsur" align="left">
+      
+      <table width="100%">
+        <tr>
+          <td align="right">Security Amount</td><td align="left"><input type="text" name="securityamt" id="securityamt" value='<s:property value="securityamt"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+          <td align="right">Insurance Excess</td><td align="left"><input type="text" name="insurexcess" id="insurexcess" value='<s:property value="insurexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+          <td align="right">CDW Excess</td><td align="left"><input type="text" name="cdwexcess" id="cdwexcess" value='<s:property value="cdwexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+          <td align="right">Super CDW Excess</td><td align="left"><input type="text" name="scdwexcess" id="scdwexcess" value='<s:property value="scdwexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+          
+        </tr>
+      </table>
+    </fieldset></td>
+  </tr>
+  <tr>
+    <td colspan="2"  align="center"><fieldset id="fieldfoc" align="left">
+      <legend>FOC Tariff</legend>
+      <table width="100%">
+        <tr>
+          <td><div id="divfoc">
+            <jsp:include page="gridFoc.jsp"></jsp:include>
+          </div></td>
+        </tr>
+      </table>
+    </fieldset></td>
+  </tr>
+   
+  <%-- <tr>
+    <td colspan="2"  align="center"><fieldset id="fieldweekday" align="left">
+      <legend>Week Day Tariff</legend>
+      <table width="100%">
+        <tr>
+          <td><div id="divweekday">
+            <jsp:include page="gridWeekday.jsp"></jsp:include>
+          </div></td>
+        </tr>
+      </table>
+    </fieldset></td>
+  </tr> --%>
+  <tr>
+    <td colspan="2"  align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"  align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
+  </tr>
+ <input type="hidden" name="conditionstatus" id="conditionstatus" value='<s:property value="conditionstatus"/>'>
+  <input type="hidden" name="hidgroupdoc" id="hidgroupdoc" value='<s:property value="hidgroupdoc"/>'>
+  <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+   <input type="hidden" name="addrow" id="addrow" value='<s:property value="addrow"/>'>
+</table>
+</form>
+</div>
+<div id="clienttarifwindow">
+   <div ></div>
+</div>
+</div>
+<div hidden="true">
+<fieldset>
+  <legend>Fuel Info</legend>
+  <table width="100%">
+    <tr>
+      <td><div id="divfuel">
+        <jsp:include page="gridfuel.jsp"></jsp:include>
+      </div></td>
+    </tr>
+  </table>
+</fieldset>
 </div>
 
+<p>&nbsp;</p>
 </body>
 </html>
