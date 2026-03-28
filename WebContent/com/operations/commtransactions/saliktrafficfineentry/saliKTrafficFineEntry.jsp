@@ -13,6 +13,7 @@
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript">
 
+
 $(document).ready(function () {     
   $("#tsDate").jqxDateTimeInput({  width: '125px', height: '15px', formatString:"dd.MM.yyyy"}); 
   $('#tafficfleetsearchwindow').jqxWindow({ width: '40%', height: '55%',  maxHeight: '62%' ,maxWidth: '60%' , title: 'Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
@@ -306,8 +307,6 @@ function funSearchLoad(){
  
 </script>
 
-
-
 <style>
 /* =========================================================
    MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
@@ -470,7 +469,6 @@ legend {
 #content { padding-top: 10px; }
 
 </style>
-
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
@@ -478,23 +476,35 @@ legend {
 
 <jsp:include page="../../../../header.jsp" /><br/>
 <fieldset>
-  <div class="top-grid">
-
-    <label>Date</label>
-    <div id="tsDate"></div>
-
-    <label>Entry</label>
-    <select name="entry" id="entry" onchange="gridchange()">
+ <table width="100%" >
+  <tr>
+  <td width="20%" align="right">Entry</td>
+  <td width="10%" align="left">
+  <select name="entry" id="entry" style="width:50%;"  value='<s:property value="entry"/>' onchange="gridchange()">
       <option value="traffic">Traffic</option>
-      <option value="salik">Salik</option>
+       <option value="salik">Salik</option>
     </select>
+  </td>
+   
+  <td width="4%" align="right" > 
+Date
+  </td> 
+    <td width="5%" align="left"><div id="tsDate" name="tsDate" value='<s:property value="tsDate"/>'></div>
+    
+    <input type="hidden" name="hidtsDate" id="hidtsDate" value='<s:property value="hidtsDate"/>'>
+    </td>
+  
+  <td width="4%" align="right"> Doc NO </td>
+ 
+  
+    <td width="5%" align="left"><input type="text" name="traficdocno" id="traficdocno"  tabindex="-1" value='<s:property value="traficdocno"/>'></td>
+ 
+   
+ <td width="30%"></td>
+    </tr>
+      
+</table> 
 
-  <label>Doc No</label>
-<div style="width:20%;">
-  <input type="text" name="traficdocno" id="traficdocno">
-</div>
-
-  </div>
 </fieldset>
 <br>
 <fieldset>
