@@ -12,648 +12,545 @@
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 
 <style>
-   
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      
-        text-align: left !important; 
-    }
-
-   
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
-    
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-   
-    .receipt-header {
-        display: grid;
-        grid-template-columns: auto 1fr auto 1fr;
-        gap: 15px;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 0 0 0 5px; 
-    }
-
-    .form-group {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
-    }
-
-    .form-group.single-label-dual-input {
-        grid-template-columns: 120px 1fr 1fr;
-    }
-
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 30px;
-    }
-
-    .section-block {
-        flex: 1;
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    }
-
-    .section-block h2 {
-        font-size: 17.6px;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
-
-    
-    input[type="text"], select, textarea {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
-    
-    textarea {
-        height: auto !important;
-        min-height: 32px;
-        resize: vertical;
-    }
-
-    input[type="text"]:focus, select:focus, textarea:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    
-    input[readonly], textarea[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
-
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 16px;
-    }
-
-    
-    .table-section { margin: 20px 0; }
-    .table-section h3 {
-        color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
-    }
-    
-    
-    .doc-group { display: flex; gap: 5px; }
-    
-    
-    .hidden-scrollbar { overflow: auto; height: 530px; }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; } 
-    
-    body::-webkit-scrollbar {
-	width: 0px;
+/* =========================================================
+   HYBRID UI: Compact Input Sizing (Plain Colors) side-by-side
+========================================================= */
+body {
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
-.myButton {
- font-weight: 700;
+
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    text-align: left !important;
+}
+
+/* Master Input Heights - Set to 24px */
+input[type="text"], select, textarea {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Compact Width Classes */
+.input-xs { width: 60px !important; }
+.input-sm { width: 100px !important; }
+.input-md { width: 140px !important; }
+.input-lg { width: 220px !important; }
+.input-xl { width: 350px !important; }
+.input-full { width: 100% !important; }
+
+input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+input[readonly], textarea[readonly], select:disabled, input:disabled {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.field-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+/* Middle Section Panels */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 20px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
     font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
+    border-left: 3px solid #0056b3;
+}
+
+.myButton {
+    font-weight: 700;
+    font-size: 11px;
+    height: 24px !important;
+    padding: 0px 12px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
     color: #ffffff;
     border: none;
-    border-radius: 6px;
+    border-radius: 3px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
     text-transform: uppercase;
-    letter-spacing: 0.3px;
     white-space: nowrap;
     text-align: center;
 }
 
 .myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
 </style>
 
 <script type="text/javascript">
       $(document).ready(function () { 
 
-    	//$('#btnEdit').attr('disabled',true);
-    	$('#btnEdit').click(function(){
-    		$("#jqxManualInvoice").jqxGrid("addrow", null, {}); 
-    	});
-    	
- 	    $("#date").jqxDateTimeInput({ width: '100%', height: '30px',formatString:"dd.MM.yyyy"}); 
-    
-		$("#fromdate").jqxDateTimeInput({ width: '100%', height: '30px',formatString:"dd.MM.yyyy"});
-        $("#todate").jqxDateTimeInput({ width: '100%', height: '30px',formatString:"dd.MM.yyyy"});
+        $('#btnEdit').click(function(){
+            $("#jqxManualInvoice").jqxGrid("addrow", null, {}); 
+        });
+        
+        /* Converted to exact 24px Master heights */
+        $("#date").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"}); 
+        $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+        $("#todate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+
+        /* Force internal alignment AFTER render for JQX Dates */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
+
         $('#accountwindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Account Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-    	   $('#accountwindow').jqxWindow('close');
-    	   $('#agmtnowindow').jqxWindow({ width: '60%', height: '57%',  maxHeight: '57%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-    	   $('#agmtnowindow').jqxWindow('close');
-    	   $('#date').on('change', function (event) 
-   				{  
-   					var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-   					if(docdateval==0){
-   						$('#date').jqxDateTimeInput('focus');
-   						return false;
-   					}
-   				});
-    	 	 $('#agmtvoucherno').dblclick(function(){
-    	 		 if(document.getElementById("mode").value!="A"){
-    	 			 return false;
-    	 		 }
-    	 		 if(document.getElementById("cmbagmttype").value==''){
-    	 			 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
-    	 			 return false;
-    	 		 }
-    			 document.getElementById("errormsg").innerText="";
+           $('#accountwindow').jqxWindow('close');
+           $('#agmtnowindow').jqxWindow({ width: '60%', height: '57%',  maxHeight: '57%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+           $('#agmtnowindow').jqxWindow('close');
 
-    			    $('#agmtnowindow').jqxWindow('open');
-    			$('#agmtnowindow').jqxWindow('focus');
-    			 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
-    			});
-    	 	<%--  document.getElementById("dtype").value='<%session.getAttribute("Code").toString();%>'; --%>
+           $('#date').on('change', function (event) 
+                {  
+                    var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+                    if(docdateval==0){
+                        $('#date').jqxDateTimeInput('focus');
+                        return false;
+                    }
+                });
+
+         $('#agmtvoucherno').dblclick(function(){
+             if(document.getElementById("mode").value!="A"){
+                 return false;
+             }
+             if(document.getElementById("cmbagmttype").value==''){
+                 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
+                 return false;
+             }
+                 document.getElementById("errormsg").innerText="";
+                    $('#agmtnowindow').jqxWindow('open');
+                $('#agmtnowindow').jqxWindow('focus');
+                 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
+                });
       });
+      
       function getAgmtno(event){
-    	 if(document.getElementById("mode").value!="A"){
- 			 return false;
- 		 }
-    	 if(document.getElementById("cmbagmttype").value==''){
- 			 document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
- 			 return false;
- 		 }
-			 document.getElementById("errormsg").innerText="";
+         if(document.getElementById("mode").value!="A"){
+             return false;
+         }
+         if(document.getElementById("cmbagmttype").value==''){
+             document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
+             return false;
+         }
+             document.getElementById("errormsg").innerText="";
 
-    	  var x= event.keyCode;
+          var x= event.keyCode;
           if(x==114){
-        	  $('#agmtnowindow').jqxWindow('open');
- 			$('#agmtnowindow').jqxWindow('focus');
- 			 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
+              $('#agmtnowindow').jqxWindow('open');
+            $('#agmtnowindow').jqxWindow('focus');
+             agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
           }
-          else{
-           }
       }
+
       function accountSearchContent(url) {
-    	      $.get(url).done(function (data) {
-    	    $('#accountwindow').jqxWindow('setContent', data);
-    	}); 
-    	}
+              $.get(url).done(function (data) {
+            $('#accountwindow').jqxWindow('setContent', data);
+        }); 
+        }
+
       function agmtnoSearchContent(url) {
-	      $.get(url).done(function (data) {
-	    $('#agmtnowindow').jqxWindow('setContent', data);
-	}); 
-	}
+          $.get(url).done(function (data) {
+        $('#agmtnowindow').jqxWindow('setContent', data);
+    }); 
+    }
+
     function funReset(){
-    	
-    	/* $("#invoiceDiv").load("invoiceGrid.jsp"); */
-	}
-	function funReadOnly(){
-		$('#frmManualInvoice input').attr('readonly', true );
-		$('#frmManualInvoice select').attr('disabled', true);
-		$('#frmManualInvoice textarea').attr('readonly', true );
-	    $('#date').jqxDateTimeInput({ disabled: true});
-	    $("#fromdate").jqxDateTimeInput({ disabled: true});
+        /* $("#invoiceDiv").load("invoiceGrid.jsp"); */
+    }
+
+    function funReadOnly(){
+        $('#frmManualInvoice input').attr('readonly', true );
+        $('#frmManualInvoice select').attr('disabled', true);
+        $('#frmManualInvoice textarea').attr('readonly', true );
+        $('#date').jqxDateTimeInput({ disabled: true});
+        $("#fromdate").jqxDateTimeInput({ disabled: true});
         $("#todate").jqxDateTimeInput({ disabled: true});
-       
-	}
-	
-	function funRemoveReadOnly(){
-		 $('#Sendmail').hide();
-		$('#frmManualInvoice input').attr('readonly', false );
-		$('#frmManualInvoice select').attr('disabled', false);
-		$('#frmManualInvoice textarea').attr('readonly', false );
-		$('#date').jqxDateTimeInput({ disabled: false});
-		$("#fromdate").jqxDateTimeInput({ disabled: false});
+    }
+    
+    function funRemoveReadOnly(){
+         $('#Sendmail').hide();
+        $('#frmManualInvoice input').attr('readonly', false );
+        $('#frmManualInvoice select').attr('disabled', false);
+        $('#frmManualInvoice textarea').attr('readonly', false );
+        $('#date').jqxDateTimeInput({ disabled: false});
+        $("#fromdate").jqxDateTimeInput({ disabled: false});
         $("#todate").jqxDateTimeInput({ disabled: false});
         
-		$('#docno').attr('readonly', true);
-		$('#agmtno').prop('readonly', true);
-		$('#client').prop('readonly', true);
-		$('#clientdetails').prop('readonly', true);
-		$('#driver').prop('readonly', true);
-		$('#driverdetails').prop('readonly', true);
-		$('#contractvehicle').prop('readonly', true);
-		$('#vehicledetails').prop('readonly', true);
-		//alert(document.getElementById("mode").value);
-		if(document.getElementById("mode").value=='A'){
-			//alert(document.getElementById("mode").value);
-			$("#invoiceDiv").load("invoiceGrid.jsp");
- 			$('#fromdate').jqxDateTimeInput('setDate',new Date());
-			$('#todate').jqxDateTimeInput('setDate',new Date());
-			$('#date').jqxDateTimeInput('setDate',new Date());
-			
- 		}
-		if(document.getElementById("mode").value=="E"){
-			$('#cmbagmttype').prop('disabled',true);
-		}
-		if($('#mode').val()=='A' || $('#mode').val()=='E'){
-			var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-				if(docdateval==0){
-					$('#date').jqxDateTimeInput('focus');
-					return false;
-				}
-		}
-	}
+        $('#docno').attr('readonly', true);
+        $('#agmtno').prop('readonly', true);
+        $('#client').prop('readonly', true);
+        $('#clientdetails').prop('readonly', true);
+        $('#driver').prop('readonly', true);
+        $('#driverdetails').prop('readonly', true);
+        $('#contractvehicle').prop('readonly', true);
+        $('#vehicledetails').prop('readonly', true);
+        
+        if(document.getElementById("mode").value=='A'){
+            $("#invoiceDiv").load("invoiceGrid.jsp");
+            $('#fromdate').jqxDateTimeInput('setDate',new Date());
+            $('#todate').jqxDateTimeInput('setDate',new Date());
+            $('#date').jqxDateTimeInput('setDate',new Date());
+        }
+        if(document.getElementById("mode").value=="E"){
+            $('#cmbagmttype').prop('disabled',true);
+        }
+        if($('#mode').val()=='A' || $('#mode').val()=='E'){
+            var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+                if(docdateval==0){
+                    $('#date').jqxDateTimeInput('focus');
+                    return false;
+                }
+        }
+    }
 
-	
-	function funNotify(){
-	//Month Close Validation
-		var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-		if(docdateval==0){
-			$('#date').jqxDateTimeInput('focus');
-			return 0;
-		}
-	/*	var fromdateval=funDateInPeriod($('#fromdate').jqxDateTimeInput('getDate'));
-		if(fromdateval==0){
-			$('#fromdate').jqxDateTimeInput('focus');
-			return 0;
-		}
-		var todateval=funDateInPeriod($('#todate').jqxDateTimeInput('getDate'));
-		if(todateval==0){
-			$('#todate').jqxDateTimeInput('focus');
-			return 0;
-		}
-	*/	
-		//From Date and todate validation
-		if($('#fromdate').jqxDateTimeInput('getDate')==null){
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Invoice From Date is Mandatory";
-			return 0;
-		}
-		if($('#todate').jqxDateTimeInput('getDate')==null){
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Invoice To Date is Mandatory";
-			return 0;
-		}
-	
-		var rows = $("#jqxManualInvoice").jqxGrid('getrows');
-		var gridlength=0;
-		if(rows[0].idno=="undefined" || rows[0].idno==null || rows[0].idno==""){
-		
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Cannot Generate Empty Invoice";
-			return 0;
-		}
-		
-		if(rows[0].total=="undefined" || rows[0].total==null || rows[0].total==""){
-			
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Cannot Generate Empty Invoice";
-			return 0;
-		}
-		
-		if(!((rows[0].idno=="undefined") && (rows[0].idno==null) && (rows[0].idno==""))){
-			
-			
-    	
-    		var j=0;
-    		for(var i=0 ; i < rows.length ; i++){
-			
-				if(rows[i].idno!="undefined" && rows[i].idno!=null && rows[i].idno!=""){	
-					
-					if(rows[i].total!="undefined" && rows[i].total!=null && rows[i].total!=""){
-			newTextBox = $(document.createElement("input"))
-			    .attr("type", "dil")
-			    .attr("id", "test"+j)
-			    .attr("name", "test"+j)
-			    .attr("hidden", "true");
-					
-					gridlength++;j++;
-					newTextBox.val(rows[i].idno+"::"+rows[i].account+"::"+rows[i].description+"::"+rows[i].qty+"::"+rows[i].rate+"::"+rows[i].total);		
-					newTextBox.appendTo('form');
-					}
-				}
-			
-			}
-			$('#gridlength').val(gridlength);
-    	}
-    		$('#cmbagmttype').prop('disabled',false);
-		return 1;
+    
+    function funNotify(){
+        var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+        if(docdateval==0){
+            $('#date').jqxDateTimeInput('focus');
+            return 0;
+        }
+        
+        if($('#fromdate').jqxDateTimeInput('getDate')==null){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Invoice From Date is Mandatory";
+            return 0;
+        }
+        if($('#todate').jqxDateTimeInput('getDate')==null){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Invoice To Date is Mandatory";
+            return 0;
+        }
+    
+        var rows = $("#jqxManualInvoice").jqxGrid('getrows');
+        var gridlength=0;
+        if(rows[0].idno=="undefined" || rows[0].idno==null || rows[0].idno==""){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Cannot Generate Empty Invoice";
+            return 0;
+        }
+        
+        if(rows[0].total=="undefined" || rows[0].total==null || rows[0].total==""){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Cannot Generate Empty Invoice";
+            return 0;
+        }
+        
+        if(!((rows[0].idno=="undefined") && (rows[0].idno==null) && (rows[0].idno==""))){
+            var j=0;
+            for(var i=0 ; i < rows.length ; i++){
+                if(rows[i].idno!="undefined" && rows[i].idno!=null && rows[i].idno!=""){    
+                    if(rows[i].total!="undefined" && rows[i].total!=null && rows[i].total!=""){
+            newTextBox = $(document.createElement("input"))
+                .attr("type", "dil")
+                .attr("id", "test"+j)
+                .attr("name", "test"+j)
+                .attr("hidden", "true");
+                    
+                    gridlength++;j++;
+                    newTextBox.val(rows[i].idno+"::"+rows[i].account+"::"+rows[i].description+"::"+rows[i].qty+"::"+rows[i].rate+"::"+rows[i].total);       
+                    newTextBox.appendTo('form');
+                    }
+                }
+            }
+            $('#gridlength').val(gridlength);
+        }
+            $('#cmbagmttype').prop('disabled',false);
+        return 1;
      } 
-	function setValues(){
-	if($('#deleted').val()!=''){
-		document.getElementById("errormsg").innerText="";
-		document.getElementById("errormsg").innerText="Deleted Invoice";
-	}
-/* if($('#hiddate').val()){
-			$("#date").jqxDateTimeInput('val', $('#hiddate').val());
-		} 
-		if($('#hidfromdate').val()){
-			$("#fromdate").jqxDateTimeInput('val', $('#hidfromdate').val());
-		}
-		if($('#hidtodate').val()){
-			$("#todate").jqxDateTimeInput('val', $('#hidtodate').val());
-		}
-		 */
-		
-		if ($('#hidcmbagmttype').val() != null) {
-			$('#cmbagmttype').val($('#hidcmbagmttype').val());
-		}
-		if(document.getElementById("docno").value>0){
-			var docno1=document.getElementById("docno").value;
-			document.getElementById("brchName").disabled=false;
-			$("#invoiceDiv").load("invoiceGrid.jsp?docno="+docno1+"&branch="+document.getElementById("brchName").value);
-			document.getElementById("brchName").disabled=true;
- 		}
-		 if($('#msg').val()!=""){
-    		   $.messager.alert('Message',$('#msg').val());
-    		  }
-		 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+     
+    function setValues(){
+    if($('#deleted').val()!=''){
+        document.getElementById("errormsg").innerText="";
+        document.getElementById("errormsg").innerText="Deleted Invoice";
+    }
+        if ($('#hidcmbagmttype').val() != null) {
+            $('#cmbagmttype').val($('#hidcmbagmttype').val());
+        }
+        if(document.getElementById("docno").value>0){
+            var docno1=document.getElementById("docno").value;
+            document.getElementById("brchName").disabled=false;
+            $("#invoiceDiv").load("invoiceGrid.jsp?docno="+docno1+"&branch="+document.getElementById("brchName").value);
+            document.getElementById("brchName").disabled=true;
+        }
+         if($('#msg').val()!=""){
+               $.messager.alert('Message',$('#msg').val());
+          }
+         document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 
-	}
-	 function funChkButton() {
-			/* funReset(); */
-		}
-	
-	function funSearchLoad(){
-			changeContent('invMainSearch.jsp', $('#window'));
-	}
-			
+    }
+    
+     function funChkButton() { }
+    
+    function funSearchLoad(){
+            changeContent('invMainSearch.jsp', $('#window'));
+    }
+            
     function funFocus(){
-		   document.getElementById("cmbagmttype").focus(); 	    		
-	 }
+           document.getElementById("cmbagmttype").focus();          
+     }
+     
     function funPrintBtn() {
-    	 var url=document.URL;
-			document.getElementById("brchName").disabled=false;
-    	if(document.getElementById("docno").value==""){
-    	
-    		if(document.getElementById("mode").value=="view"){
-    			var reurl=url.split("invoice.jsp");
-        		
-    	        	 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");		
-    		}
-    		else{
-    			var reurl=url.split("saveManualInvoice");
-        		
-   	        	 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");		
-    		}
-    		
-    	}
-    	else{
-    		
-    		var reurl=url.split("saveManualInvoice");
-    		//alert(reurl[0]);
-           	 var win_voucher= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");
-           	win_voucher.focus(); 
-    	} 
-    	
-    	
-    	//Multiprint ends
-    	
-    	//    	var win= window.open(reurl[0]+"printManualInvoice?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-    	
-    	 }
+         var url=document.URL;
+            document.getElementById("brchName").disabled=false;
+        if(document.getElementById("docno").value==""){
+            if(document.getElementById("mode").value=="view"){
+                var reurl=url.split("invoice.jsp");
+                 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");      
+            }
+            else{
+                var reurl=url.split("saveManualInvoice");
+                 var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");      
+            }
+        }
+        else{
+            var reurl=url.split("saveManualInvoice");
+             var win_voucher= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");
+            win_voucher.focus(); 
+        } 
+     }
      
-     
-    function funSendmail()
- 	{
- 			
- 		 if (($("#mode").val() == "view") && $("#docno").val()!="") {
- 		  
- 		if(document.getElementById("email").value=="")
- 			{
- 			document.getElementById("errormsg").innerText="Email Id Is Not Available.";  
- 			return 0;
- 			}
- 		
- 		
- 		$("#overlay, #PleaseWait").show();
-
- 		sample();
- 		
- 		 var recipient1=document.getElementById("email").value; 
-      	var recipient=recipient1.replace(/ /g, "%20");
-        	
-      <%-- window.open("<%=contextPath%>/com/email/Email.jsp?formcode="+document.getElementById("formdetailcode").value+'&recipient='+recipient+'&code='+document.getElementById("docno").value,"E-Mail","menubar=0,resizable=1,width=900,height=525 "); --%>  
- 		
-
-      	//getMailservDets();
- 		//sendmails();
- 		
- 		
- 		
- 		 }
- 		else {
-    	      $.messager.alert('Message','Select a Document....!','warning');
-    	      return false;
-    	     }
- 		
- 	}
+    function funSendmail() {
+         if (($("#mode").val() == "view") && $("#docno").val()!="") {
+        if(document.getElementById("email").value=="")
+            {
+            document.getElementById("errormsg").innerText="Email Id Is Not Available.";  
+            return 0;
+            }
+        
+        $("#overlay, #PleaseWait").show();
+        sample();
+        
+         var recipient1=document.getElementById("email").value; 
+        var recipient=recipient1.replace(/ /g, "%20");
+         }
+        else {
+              $.messager.alert('Message','Select a Document....!','warning');
+              return false;
+             }
+    }
  
- 	function sample()
- 	{  
- 		var formcode=document.getElementById("formdetailcode").value;
- 		var recep=document.getElementById("email").value.trim();
- 		var branch=<%=session.getAttribute("BRANCHID").toString()%>;
- 		
- 		
- 		$.ajaxFileUpload
-    	  (  
-    	      {  
-    	    	
-    	    	  url: 'invjspToPdf.action?vocno='+document.getElementById("voucherno").value+'&docno='+document.getElementById("docno").value+"&formcode="+formcode+"&recep="+recep+"&branch="+branch,  
-    	          secureuri:false,//false  
-    	          fileElementId:'file', //id  <input type="file" id="file" name="file" />  
-    	          dataType: 'string',// json  
-    	          success: function (data, status)  //  
-    	          {  
-    	              // alert(status);
-    	             if(status=='success'){
-    	            	
-    	            	   
-						$("#overlay, #PleaseWait").hide();
-    	            	  
-    	            	 $.messager.show({title:'Message',msg:'E-Mail Send Successfully',showType:'show',
-    	                     style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-    	                    });
-    	                 
-    	              }
-    	             if(status=='error'){
-    	            	 // $.messager.alert('Message',"E-Mail Sending failed");
-    	            	 $.messager.show({title:'Message',msg:' E-Mail Sending failed',showType:'show',
-    	                     style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-    	                    });
-    	                   
-    	             }
-    	             
-    	              $("#testImg").attr("src",data.message);
-    	              if(typeof(data.error) != 'undefined')  
-    	              {  
-    	                  if(data.error != '')  
-    	                  {  
-    	                      alert(data.error);  
-    	                  }else  
-    	                  {  
-    	                      alert(data.message);  
-    	                  }  
-    	              }  
-    	          },  
-    	           error: function (data, status, e)
-    	          {  
-    	              alert(e);  
-    	          }  
-    	      }  
-    	  ) 
-    	  return false;
+    function sample() {  
+        var formcode=document.getElementById("formdetailcode").value;
+        var recep=document.getElementById("email").value.trim();
+        var branch=<%=session.getAttribute("BRANCHID").toString()%>;
+        
+        $.ajaxFileUpload({  
+                  url: 'invjspToPdf.action?vocno='+document.getElementById("voucherno").value+'&docno='+document.getElementById("docno").value+"&formcode="+formcode+"&recep="+recep+"&branch="+branch,  
+                  secureuri:false, 
+                  fileElementId:'file', 
+                  dataType: 'string', 
+                  success: function (data, status) 
+                  {  
+                     if(status=='success'){
+                        $("#overlay, #PleaseWait").hide();
+                         $.messager.show({title:'Message',msg:'E-Mail Send Successfully',showType:'show',
+                               style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                         });
+                      }
+                     if(status=='error'){
+                         $.messager.show({title:'Message',msg:' E-Mail Sending failed',showType:'show',
+                               style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                         });
+                     }
+                     
+                      $("#testImg").attr("src",data.message);
+                      if(typeof(data.error) != 'undefined')  
+                      {  
+                          if(data.error != '')  
+                          {  
+                              alert(data.error);  
+                          }else  
+                          {  
+                              alert(data.message);  
+                          }  
+                      }  
+                  },  
+                   error: function (data, status, e)
+                  {  
+                      alert(e);  
+                  }  
+              }); 
+          return false;
       }
-
-     
-      
 </script>  
 </head>
+
 <body onload="funReadOnly();setValues();">
 <div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
 <form id="frmManualInvoice" action="saveManualInvoice" autocomplete="off">
-	<script>
-			window.parent.formName.value="Invoice";
-			window.parent.formCode.value="INV";
-	</script>
-	<jsp:include page="../../../../header.jsp" />
-	
-    <div class='receipt-header' style="display:flex; align-items:center; gap:10px;">
-
-    <label>Date</label>
-    <div style="width:120px;">
-        <div id="date" name="date" value='<s:property value="date"/>'></div>
-        <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-    </div>
-
-    <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
-        <label>Doc No.</label>
-        <input type="text" name="voucherno" id="voucherno"
-               value='<s:property value="voucherno"/>'
-               style="width:120px;">
-    </div>
-
-</div>
-    <div class="section-row">
-        <div class="section-block">
-            <h2>Document Details</h2>
-            
-            <div class="form-group dual-input">
-                <label>Agreement</label>
-                <select name="cmbagmttype" id="cmbagmttype" value='<s:property value="cmbagmttype"/>'>
-                    <option value="">--Select--</option>
-                    <option value="RAG">Rental</option>
-                    <option value="LAG">Lease</option>
-                </select>
-                <input type="hidden" name="hidcmbagmttype" id="hidcmbagmttype" value='<s:property value="hidcmbagmttype"/>'>
-
-                <label>Agmt No</label>
-                <input type="text" name="agmtvoucherno" id="agmtvoucherno" value='<s:property value="agmtvoucherno"/>' onkeydown="getAgmtno(event);" placeholder="Press F3 to Search">
-            </div>
-
-            <div class="form-group single-label-dual-input">
-                <label>Client</label>
-                <input type="text" name="client" id="client" value='<s:property value="client"/>'>
-                <input type="text" name="clientdetails" id="clientdetails" value='<s:property value="clientdetails"/>'>
-            </div>
-            
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" title="E-mail" name="email" id="email" value='<s:property value="email"/>'>
-            </div>
-
-            <div class="form-group single-label-dual-input">
-                <label>Driver</label>
-                <input type="text" name="driver" id="driver" value='<s:property value="driver"/>'>
-                <input type="text" name="driverdetails" id="driverdetails" value='<s:property value="driverdetails"/>'>
-            </div>
-
-            <div class="form-group">
-                <label>Contract Veh</label>
-                <input type="text" name="contractvehicle" id="contractvehicle" value='<s:property value="contractvehicle"/>'>
-            </div>
-
-            <div class="form-group">
-                <label>Veh Details</label>
-                <textarea rows="3" name="vehicledetails" id="vehicledetails"><s:property value="vehicledetails"/></textarea>
-            </div>
+    <script>
+            window.parent.formName.value="Invoice";
+            window.parent.formCode.value="INV";
+    </script>
+    <jsp:include page="../../../../header.jsp" />
+    
+    <div style="border: 1px solid transparent; padding: 5px 0; margin-bottom:10px; display:none;">
         </div>
-
-        <div class="section-block">
-            <h2>Invoice Period & Notes</h2>
+    
+    <div class="middle-panel">
+        <span class="middle-panel-title">Document Details</span>
+        <div style="display: flex; gap: 20px; padding-top: 5px;">
             
-            <div class="form-group dual-input">
-                <label>Period From</label>
-                <div>
+            <div style="flex: 1;">
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Agreement Type</label>
+                    <select name="cmbagmttype" id="cmbagmttype" class="input-md" value='<s:property value="cmbagmttype"/>'>
+                        <option value="">--Select--</option>
+                        <option value="RAG">Rental</option>
+                        <option value="LAG">Lease</option>
+                    </select>
+                    <input type="hidden" name="hidcmbagmttype" id="hidcmbagmttype" value='<s:property value="hidcmbagmttype"/>'>
+
+                    <label class="lbl-right" style="width: 80px;">Agreement No</label>
+                    <input type="text" name="agmtvoucherno" id="agmtvoucherno" class="input-md" value='<s:property value="agmtvoucherno"/>' onkeydown="getAgmtno(event);" placeholder="Press F3 to Search">
+                </div>
+
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Client</label>
+                    <input type="text" name="client" id="client" class="input-sm" value='<s:property value="client"/>'>
+                    <input type="text" name="clientdetails" id="clientdetails" class="input-xl" value='<s:property value="clientdetails"/>'>
+                </div>
+
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Driver</label>
+                    <input type="text" name="driver" id="driver" class="input-sm" value='<s:property value="driver"/>'>
+                    <input type="text" name="driverdetails" id="driverdetails" class="input-xl" value='<s:property value="driverdetails"/>'>
+                </div>
+                
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Email</label>
+                    <input type="text" title="E-mail" name="email" id="email" class="input-xl" value='<s:property value="email"/>'>
+                </div>
+            </div>
+
+            <div style="flex: 1;">
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Date</label>
+                    <div style="width: 140px;">
+                        <div id="date" name="date" value='<s:property value="date"/>'></div>
+                        <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
+                    </div>
+
+                    <label class="lbl-right" style="width: 80px;">Doc No</label>
+                    <input type="text" name="voucherno" id="voucherno" class="input-md" value='<s:property value="voucherno"/>'>
+                </div>
+
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Contract Vehicle</label>
+                    <input type="text" name="contractvehicle" id="contractvehicle" class="input-xl" value='<s:property value="contractvehicle"/>'>
+                </div>
+
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 100px;">Vehicle Details</label>
+                    <textarea name="vehicledetails" id="vehicledetails" class="input-xl" style="height: 24px !important; padding: 2px 6px; resize: none;"><s:property value="vehicledetails"/></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="middle-panel" style="margin-bottom: 10px;">
+        <span class="middle-panel-title">Invoice Details</span>
+        <div style="padding-top: 5px;">
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width: 100px;">Period From</label>
+                <div style="width: 140px;">
                     <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
                     <input type="hidden" name="hidfromdate" id="hidfromdate" value='<s:property value="hidfromdate"/>'>
                 </div>
 
-                <label>Period To</label>
-                <div>
+                <label class="lbl-right" style="width: 80px;">Ledger Note</label>
+                <input type="text" name="ledgernote" id="ledgernote" class="input-lg" value='<s:property value="ledgernote"/>'>
+
+                <label class="lbl-right" style="width: 80px;">Period To</label>
+                <div style="width: 140px;">
                     <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
                     <input type="hidden" name="hidtodate" id="hidtodate" value='<s:property value="hidtodate"/>'>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label>Ledger Note</label>
-                <input type="text" name="ledgernote" id="ledgernote" value='<s:property value="ledgernote"/>'>
+                <label class="lbl-right" style="width: 80px;">Invoice Note</label>
+                <input type="text" name="invoicenote" id="invoicenote" class="input-lg" value='<s:property value="invoicenote"/>'>
             </div>
-
-            <div class="form-group">
-                <label>Invoice Note</label>
-                <input type="text" name="invoicenote" id="invoicenote" value='<s:property value="invoicenote"/>'>
-            </div>
+            
         </div>
     </div>
 
-    <div class="table-section">
-        <h3>Invoice Details Grid</h3>
+    <div style="margin-bottom: 20px;">
         <input type="hidden" name="acno" id="acno" value='<s:property value="acno"/>'>
         <input type="hidden" name="hidclient" id="hidclient" value='<s:property value="hidclient"/>'>
         <div id="invoiceDiv">
             <jsp:include page="invoiceGrid.jsp"></jsp:include>
         </div>
     </div>
+
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
@@ -665,15 +562,11 @@
 <input type="hidden" name="agmtno" id="agmtno" value='<s:property value="agmtno"/>' onkeydown="getAgmtno(event);" placeholder="Press F3 to Search">
 <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
 <input type="hidden" name="hidchkdeletedinv" id="hidchkdeletedinv" value='<s:property value="hidchkdeletedinv"/>' >
-<div id="accountwindow">
-   <div ></div>
-</div>
-<div id="agmtnowindow">
-   <div ></div>
-</div>
+
+<div id="accountwindow"><div ></div></div>
+<div id="agmtnowindow"><div ></div></div>
 
 </form>
-
 </div>
 </body>
 </html>
