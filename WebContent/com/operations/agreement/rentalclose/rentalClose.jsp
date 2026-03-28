@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <link href="../../../../css/body.css" rel="stylesheet" type="text/css"> -->
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
@@ -10,13 +9,117 @@
 <title>GatewayERP(i)</title>
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
+<style>
+/* =========================================================
+   RENTAL CLOSE - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
+    box-sizing: border-box;
+}
 
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* FIX: Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 140px);
+    padding-bottom: 80px; /* Extra padding for the bottom grids */
+    box-sizing: border-box;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* EXACT Input Styles from Client Master */
+input[type="text"], select {
+    height: 24px !important; /* Matched to 24px */
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+
+input[readonly] {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
+
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
+
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
+
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function () {
 	$('#btndownload').hide();
 	$('#lblchkorgregcard').hide();
 	$('#chkorgregcardcollect').hide();
-	//$('#description').css('width','99%');
+	$('#description').css('width','99%');
 	if($('#hidchkorgregcard').val()=='1'){
 		$('#description').css('width','70%');
 		$('#lblchkorgregcard').show();
@@ -40,25 +143,28 @@ $(document).ready(function () {
 	}
 	// setCollection();
 	//$("#tarifreferencegrid").jqxGrid({ disabled: true});
-	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#indate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	// $("#accidentdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	// $("#policecollecteddate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#intime").jqxDateTimeInput({ width: '80%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
-	 $("#collecttime").jqxDateTimeInput({ width: '80%', height: '17px', formatString: 'HH:mm', showCalendarButton: false,value:null});
-	//Minimize Button
+    
+    /* MODIFIED: Heights changed to 24px to match inputs */
+	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#indate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	// $("#accidentdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	// $("#policecollecteddate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#intime").jqxDateTimeInput({ width: '80%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
+	 $("#collecttime").jqxDateTimeInput({ width: '80%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+	
+    //Minimize Button
 	 $("#jqxMenuMore").jqxMenu({ width: '40%', height: '26px', autoSizeMainItems: true});
      $("#jqxMenuMore").jqxMenu('minimize');            
      $("#jqxMenuMore").css('visibility', 'visible');
      //Common window for minimize button
      $('#window1').jqxWindow({width: '71%', height: '70%',  maxHeight: '70%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
      $('#window1').jqxWindow('close');
-	 //$("#accidenttime").jqxDateTimeInput({ width: '100%', height: '17px', formatString: 'HH:mm', showCalendarButton: false });
+	 //$("#accidenttime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
 	  $('#agmtnowindow').jqxWindow({ width: '60%', height: '68%',  maxHeight: '68%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
 	   $('#agmtnowindow').jqxWindow('close');
 	   $('#collectionWindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Collection Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
@@ -334,7 +440,7 @@ function closing(){
 
 function getAgmt(event){
 	
-	  /*  $('#gridRaSearch').jqxGrid('clear');
+	  /* $('#gridRaSearch').jqxGrid('clear');
   	 $("#gridRaSearch").jqxGrid("addrow", null, {}); */
 	if(document.getElementById("mode").value=='A'){
   	 if(document.getElementById("cmbagmtbranch").value==""){
@@ -477,7 +583,7 @@ function setCollection(){
 		   $('#tarifagmtgrid').jqxGrid({ disabled: true});
 		    $('#calculationgrid').jqxGrid({ disabled: true});
 		   
-/* 		getCheckin();
+/* getCheckin();
 		getRentalAgent(); */
 	}
 	function funNotify(){
@@ -566,11 +672,6 @@ function setCollection(){
     			document.getElementById("errormsg").innerText="Collection Time is Mandatory";
         		return false;
         	}
-    		if(document.getElementById("collectkm").value==""){
-    			document.getElementById("errormsg").innerText="";
-    			document.getElementById("errormsg").innerText="Collection Km is Mandatory";
-        		return false;
-    		}
     		var collectdate=$('#collectdate').jqxDateTimeInput('getDate');
     		var indate=$('#indate').jqxDateTimeInput('getDate');
     		var collecttime=$('#collecttime').jqxDateTimeInput('getDate');
@@ -633,7 +734,7 @@ function setCollection(){
 		}
 		
 		
-	/*  	var validrate=$("#totalgrid").jqxGrid("getcellvalue",0,"rate");
+	/* var validrate=$("#totalgrid").jqxGrid("getcellvalue",0,"rate");
 		if(validrate==="" || validrate===null || validrate==="undefined" || typeof(validrate)==="undefined"){
 			document.getElementById("errormsg").innerText="";
 			document.getElementById("errormsg").innerText="Please Process";
@@ -753,7 +854,7 @@ function setCollection(){
 				  $('#closedate').jqxDateTimeInput('setDate',new Date());
 				  $('#lblchkorgregcard').hide();
 					$('#chkorgregcardcollect').hide();
-					//$('#description').css('width','99%');
+					$('#description').css('width','99%');
 					if($('#hidchkorgregcard').val()=='1'){
 						$('#description').css('width','70%');
 						$('#lblchkorgregcard').show();
@@ -1376,339 +1477,9 @@ if(document.getElementById("rentalagent").value==""){
 	          		
 	          	}
 </script>
-<style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    box-sizing: border-box;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-}
-
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
-
-.receipt-header {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.section_row {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-/* ------------------------------
-   FORM ROWS LAYOUT
------------------------------- */
-
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    text-align: right;
-    padding-right: 8px;
-    font-size: 1rem;
-}
-
-.form-group input[type="text"],
-.form-group select {
-    width: 100%;
-}
-
-/* Dual input rows (Currency/Rate, Amount/Base Amount) */
-.form-group.dual-input {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Date/Ref/Doc row - 3 pairs */
-.form-group.date-ref-doc-row {
-    grid-template-columns: 80px 200px 80px 1fr 80px 200px;
-    align-items: center;
-    gap: 12px;
-}
-
-.form-group.date-ref-doc-row label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-.form-group.date-ref-doc-row .date-wrapper,
-.form-group.date-ref-doc-row .ref-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.form-group.date-ref-doc-row #jqxDebitNoteDate {
-    flex: 1;
-}
-
-.form-group.date-ref-doc-row #txtrefno {
-    flex: 1;
-    min-width: 120px;
-}
-
-.form-group.date-ref-doc-row .myButton {
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-/* Type/AccID/AccName row */
-.form-group.type-acc-row {
-    grid-template-columns: 120px 120px 120px 200px 1fr;
-    align-items: center;
-    gap: 12px;
-}
-
-.form-group.type-acc-row label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Full width description row */
-.form-row.full-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.form-row.full-row label {
-    text-align: right;
-    padding-right: 8px;
-    font-weight: 600;
-    color: #253858;
-}
-
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
-
-.table-section {
-    margin: 20px 0;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-
-
- th,
-td {
-   
-    font-size: 14px;
-    border: none !important;      
-    padding: 6px 10px;
-}
-
-
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
-
-.hidden-scrollbar {
-    overflow: auto;
-    flex:1;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 10px;
-}
-
-
-#validrate,
-#validrate1 {
-    color: red;
-    font-size: 12px;
-    grid-column: 2 / -1;
-}
-
-
-
-#approval-table td {
-    font-size: 14px;
-    padding: 8px;
-}
-
-#approval-table tr:nth-child(even) {
-    background: #f9fafb;
-}
-.field-box {
-    background-color: #f5f6f8;   /* light grey */
-    padding: 6px 10px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 100%;                /* dynamic */
-    height: auto;               /* dynamic */
-    box-sizing: border-box;
-}
-h2 {
-    position: relative;
-    padding-left: 16px;        /* space for vertical line */
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #253858;
-    margin: 0 0 20px 0;
-}
-
-/* vertical blurred line */
-h2::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 5px;
-    height: 70%;
-    width: 3px;
-    background: #007bff; 
-    border-radius: 4px;
-    filter: blur(0.6px);
-}
-html, body {
-    height: 100% !important;
-    overflow-y: auto !important;
-    overflow-x: hidden;
-}
-.vehicle-client-table {
-    width: 100% !important;
-    table-layout: fixed;   
-    border-collapse: collapse;
-}
-.vehicle-client-table input,
-.vehicle-client-table select {
-    width: 100%;
-    box-sizing: border-box;
-}
-.driver-table {
-    width: 100% !important;
-    table-layout: fixed;       
-    border-collapse: collapse;
-}
-.field-box-table {
-    background-color: #f5f6f8;
-    padding: 12px;
-    border-radius: 10px;
-    width: 100%;
-    box-sizing: border-box;
-}
-input[type="text"],
-select,
-textarea {
-    width: 100%;
-}
-input[type="text"],
-select {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-body::-webkit-scrollbar {
-	width: 0px;
-}
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);}
-
-
-
-</style> 
-
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmRentalClose" action="saveRentalClose" autocomplete="off">
 	<%-- <script>
 			window.parent.formName.value="Rental Agreement Close";
@@ -1716,179 +1487,114 @@ body::-webkit-scrollbar {
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
-<div class=''>
-<table style="width:100%;">
-	<tr>
-<td width="100%" valign="top">
-
-<table style="width:100%;">
-<tr class="field-box">
-
-<!-- Date -->
-<td align="right">
-<label><font size="3">Date</font></label>
-</td>
-
-<td align="left">
-<div id="closedate" name="closedate"
-     value='<s:property value="closedate"/>'></div>
-</td>
-
-<input type="hidden" name="hidclosedate" id="hidclosedate"
-value='<s:property value="hidclosedate"/>'>
-
-
-<!-- Location -->
-<td align="right">
-<label><font size="3">Location</font></label>
-</td>
-
-<td align="left">
-<select name="cmbcloseloc" id="cmbcloseloc" style="width:100%;">
-<option value="">--Select--</option>
-</select>
-</td>
-
-<input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch"
-value='<s:property value="hidcmbagmtbranch"/>'>
-
-<input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc"
-value='<s:property value="hidcmbcloseloc"/>'>
-
-
-<!-- More menu -->
-<td width="8%" rowspan="2" align="center">
-<div id="jqxMenuMore" title="More" style="visibility:hidden;">
-<ul>
-<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-<li><a href="#documents" onclick="replacement();">Replacement</a></li>
-<li><a href="#history" onclick="account();">Account Statement</a></li>
-<li><a href="#close" onclick="closing();">Closing Summary</a></li>
-</ul>
-</div>
-</td>
-
-
-<!-- SPACE THAT PUSHES DOC NO RIGHT -->
-<td style="width:100%"></td>
-
-
-<!-- Doc No -->
-<td align="right">
-<label><font size="3">Doc No</font></label>
-</td>
-
-<td align="left">
-<input type="text"
-name="voucherno"
-id="voucherno"
-value='<s:property value="voucherno"/>'
-readonly
-style="width:120px;">
-</td>
-
-</tr>
-</table>
-
-</td>
-</tr>
-		
-  <tr class="field-box-table">
-    <td colspan="2">
-       	<h2>Vechile and Client Information</h2>
+<div class='hidden-scrollbar'>
+<table width="100%">
+  <tr>
+    <td colspan="2"><fieldset>
       <table width="100%">
-      	
         <tr>
-          <td width="4%" align="right"><label ><font size="3">Branch</font></label></td>
+          <td width="4%" align="right">Branch</td>
           <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
           
-          <td width="6%" align="right"><label ><font size="3">Agmt No</font></label></td>
-          <td width="14%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
-          <td width="5%" align="right"><label ><font size="3"><label ><font size="3">Vehicle</font></label></td>
-          <td width="41%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
-          
+          <td width="6%" align="right">Agmt No</td>
+          <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
+          <td width="5%" align="right">Vehicle</td>
+          <td width="47%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
+          <td width="6%" align="right">Doc No</td>
+          <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
+          <td width="8%" rowspan="2" align="left"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
+        <ul>
+         <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+            <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+            <li><a href="#history" onclick="account();">Account Statement</a></li>   
+             <li><a href="#close" onclick="closing();">Closing Summary</a></li>                  
+        </ul>
+     </div></td>
         </tr>
         <tr>
-          <td align="right"><label ><font size="3">Client</td>
+          <td align="right">Client</td>
           <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
           <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:99%;"></td>
           <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-          
+          <td align="right">Date</td>
+          <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
+          <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
         </tr>
         <tr>
-          <td align="right"><label ><font size="3"><label ><font size="3">Description</font></label></td>
-          <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;"><label ><font size="3">Org Reg Card Collected</font></label></label>&nbsp;
+          <td align="right">Description</td>
+          <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;">Org Reg Card Collected</label>&nbsp;
           <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
           </td>
 <input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
 <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
-        
+          <td align="right">Location</td>
+          <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
+            <option value="">--Select--</option>
+          </select></td>
+          <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
+          <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
+          <td align="left">&nbsp;</td>
         </tr>
       </table>
-    </td>
+    </fieldset></td>
   </tr>
-  <br>
-  <br>
-  <tr class="field-box-table">
-    <td colspan="2">
-      <h2>In Info</h2>
+  <tr>
+    <td colspan="2"><fieldset>
+      <legend>In Info</legend>
       <table width="100%">
-      	<tr>
-      	 <td width="11%" align="right" ><label ><font size="3">Collection</font></label></td>
-           <td > <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();"></td>
-            <td colspan="4"><input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search"></td>
-            <td colspan="3"><input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
-             <td align="center" > <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
-							<img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
-            </td>
-      	</tr>
         <tr>
-         
+          <td width="11%" rowspan="2">Collection
+            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
+            &nbsp;
+            <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search">
+
+            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
+            </td>
           <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-          <td width="8%" align="right"><label ><font size="3">Collection Details</font></label></td>
-          <td width="1%" align="right"><label ><font size="3">KM</font></label></td>
-          <td width="4%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
-          <td width="2%" align="right" ><label ><font size="3">Fuel</font></label></td>
+          <td width="8%" align="right">Collection Details</td>
+          <td width="1%" align="right">KM</td>
+          <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
+          <td width="2%" align="right">Fuel</td>
           <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-          <td width="10%" align="left">
+          <td width="7%" align="left">
           <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
     <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td width="2%" align="right"><label ><font size="3">Date</font></label></td>
-          <td width="5%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
+          <td width="2%" align="right">Date</td>
+          <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
           <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-          <td width="2%" align="right"><label ><font size="3">Time</font></label></td>
+          <td width="2%" align="right">Time</td>
           <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
           <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-          <td width="10%" align="right"><label ><font size="3">Rental Agent</font></label></td>
+          <td width="5%" align="right">Rental Agent</td>
           <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
             <option value="">--Select--</option>
           </select> --%>
-          <td width="15%" align="left">
+          <td width="6%" align="left">
           <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
           </td>
           <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
           <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-          <td width="7%" align="right"><label ><font size="3">Days Used</font></label></td>
-          <td width="10%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
-          <td width="10%" align="right"><label ><font size="3">Hours Used</font></label></td>
-          <td width="5%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
-         
+          <td width="7%" align="right">Days Used</td>
+          <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
+          <td width="5%" align="right">Hours Used</td>
+          <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
+          <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
+							<img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
         </tr>
         <tr>
-          <td align="right"><label ><font size="3">In Details</font></label></td>
-          <td align="right"><label ><font size="3">KM</font></label></td>
+          <td align="right">In Details</td>
+          <td align="right">KM</td>
           <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          <td align="right"><label ><font size="3">Fuel</font></label></td>
-          <td align="left"><!--<input type="text" name="infuel" id="infuel" value='<s:property value="infuel"/>'>-->
-          <select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+          <td align="right">Fuel</td>
+          <td align="left"><select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
     <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td align="right"><label ><font size="3">Date</font></label></td>
+          <td align="right">Date</td>
           <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
           <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
-          <td align="right"><label ><font size="3">Time</font></label></td>
+          <td align="right">Time</td>
           <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
           <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
-          <td align="right"><label ><font size="3">Check In</font></label></td>
+          <td align="right">Check In</td>
           <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
             <option value="">--Select--</option>
           </select> --%>
@@ -1898,18 +1604,18 @@ style="width:120px;">
           <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
           <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
          <div border="1">
-          <td align="right"><label ><font size="3">Total KM</font></label></td>
+          <td align="right">Total KM</td>
           <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
-          <td align="right"><label ><font size="3">Excess KM</font></label></td>
+          <td align="right">Excess KM</td>
           <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
           <td width="0%" align="left">&nbsp;</td>
          </div>
         </tr>
       </table>
-    </td>
+    </fieldset></td>
   </tr>
   <tr>
-    <td width="100%"><fieldset>
+    <td width="66%"><fieldset>
       
       <table width="100%">
         <tr>
@@ -1920,9 +1626,23 @@ style="width:120px;">
     
     
     
-    
+    <td width="34%" rowspan="3">
+    <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
+    <center>
+    	<input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
+    	<input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
+    </center>
+    <fieldset><legend>Calculation Info
+      </legend>
+      <table width="100%">
+        <tr>
+          <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
+          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
+          </tr>
+        </table>
+      </fieldset>
+    </td>
   </tr>
-  
   <tr id="referencefield">
     <td>
     <fieldset>
@@ -1950,28 +1670,14 @@ style="width:120px;">
       </table>
     </fieldset></td>
     </tr>
-  <tr>
-  <td width="100%" rowspan="3">
-    <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
-    <center>
-    	<input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
-    	<input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
-    </center>
-    <fieldset><legend>Calculation Info
-      </legend>
-      <table width="100%">
-        <tr>
-          <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
-          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-          </tr>
-        </table>
-      </fieldset>
-    </td>
-  </tr>
-  
-  
 </table>
-<br><br><br><br><br><br>
+
+
+
+
+
+
+
 <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
 <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>
 <input type="hidden" name="agmtdate" id="agmtdate" value='<s:property value="agmtdate"/>'>
