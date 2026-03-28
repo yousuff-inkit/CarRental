@@ -1,182 +1,178 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html>
-<html>
-<head>
- 
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <% String contextPath=request.getContextPath();%>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
- <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>  --%> 
+
 <style>
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+/* =========================================================
+   SCOPED UI: Clean UI Panel Design for Search Modal
+   * All rules are prefixed with .modern-ui to prevent bleeding! *
+========================================================= */
 
-</style>
-
-	<script type="text/javascript">
-	$(document).ready(function () {
-		 $("#searchdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	}); 
-
- 	function mainloadSearch() {
- 		
- 		var sclnames=document.getElementById("searchclient").value;
- 		var reftype=document.getElementById("cmbsearchrtype").value;
- 		var searchdate=$('#searchdate').jqxDateTimeInput('val');
- 		var agmtno=document.getElementById("searchagmtno").value;
- 		var fleetno=document.getElementById("searchfleetno").value;
- 		var docno=document.getElementById("searchdocno").value;
-	
- 		var client = sclnames.replace(/ /g, "%20");
-		getdata(client,reftype,searchdate,agmtno,fleetno,docno);
- 
-
-	}
-	 function getdata(client,reftype,searchdate,agmtno,fleetno,docno){
-		
-		// $("#tariffDivId").load('rateDescription.jsp?txtrentaldocno='+indexVal1+'&revehGroup='+revehGroup);
-		
-		 $("#srefreshdiv").load('subMainSearch.jsp?client='+client+'&reftype='+reftype+'&searchdate='+searchdate+'&agmtno='+agmtno+'&fleetno='+fleetno+'&docno='+docno);
-		 
-
-		  
-/* x.open("GET", "dissearch.jsp?sclname="+sclname+"&smob="+smob+"&rno="+rno+"&flno="+flno+"&sregno="+sregno+"&smra="+smra, true);
-		x.send(); */
-		}
- 
-	</script>
-<style type="text/css">
-/* Master UI Styles */
-
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px; 
+.modern-ui {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    padding: 10px;
+    background-color: #f4f6f9;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-
-td[align="right"] {
-font: 14px Tahoma;
-  font-weight: 700;
-  color: #222;
+/* Master Input Heights - Set to 24px */
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
 }
 
+/* Compact Width Classes */
+.modern-ui .input-sm { width: 100px !important; }
+.modern-ui .input-md { width: 140px !important; }
+.modern-ui .input-full { width: 100% !important; flex: 1; }
 
-input[type="text"], select {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%; 
-  max-width: 100%;
-  box-sizing: border-box; 
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-
-#searchdate {
-  font-weight: 600;
-  font-size: 14px;
+/* Layout Utilities */
+.modern-ui .field-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
 }
 
-/* Bold button text and visual styling */
-.myButton {
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #077bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
+.modern-ui .lbl-right {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 5px;
 }
 
-.myButton:hover {
-  background-color: #45a049;
+/* Panel Styling (Title removed for cleaner popup) */
+.modern-ui .modern-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Additional spacing for rows */
-tr {
-  line-height: 1.8;
+/* Search Button */
+.modern-ui .myButton {
+    font-weight: bold;
+    font-size: 11px;
+    height: 24px !important;
+    padding: 0px 16px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
-/* Original file's specific style */
-.hidden-scrollbar {
-    overflow: auto;
-    height: 600px;
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
 }
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
+
+/* Grid Container */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    padding: 2px;
+    min-height: 200px;
 }
 </style>
 
-<body bgcolor="#E0ECF8">
-<div id="search">
+<script type="text/javascript">
+$(document).ready(function () {
+    /* Upgraded to 24px height to match Master UI standard */
+    $("#searchdate").jqxDateTimeInput({ width: '110px', height: '24px', formatString:"dd.MM.yyyy", value:null});
 
-<table width="100%">
+    /* Force internal alignment AFTER render */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", 
+            "line-height": "24px", 
+            "font-size": "12px", 
+            "font-family": "Arial, sans-serif",
+            "padding": "0 6px", 
+            "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
+}); 
 
-<tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%">
-        <div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div>
-    </td>
+function mainloadSearch() {
+    var sclnames=document.getElementById("searchclient").value;
+    var reftype=document.getElementById("cmbsearchrtype").value;
+    var searchdate=$('#searchdate').jqxDateTimeInput('val');
+    var agmtno=document.getElementById("searchagmtno").value;
+    var fleetno=document.getElementById("searchfleetno").value;
+    var docno=document.getElementById("searchdocno").value;
 
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%">
-        <input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'>
-    </td>
+    var client = sclnames.replace(/ /g, "%20");
+    getdata(client,reftype,searchdate,agmtno,fleetno,docno);
+}
 
-    <td width="27%" align="center" rowspan="2">
-        <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton"
-        value="Search" onclick="mainloadSearch();">
-    </td>
-</tr>
+function getdata(client,reftype,searchdate,agmtno,fleetno,docno){
+    $("#srefreshdiv").load('subMainSearch.jsp?client='+client+'&reftype='+reftype+'&searchdate='+searchdate+'&agmtno='+agmtno+'&fleetno='+fleetno+'&docno='+docno);
+}
+</script>
 
-<tr>
-    <td align="right">Name</td>
-    <td>
-        <input type="text" name="searchclient" id="searchclient"
-        value='<s:property value="searchclient"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td align="right">Type</td>
-    <td>
-        <select name="cmbsearchrtype" id="cmbsearchrtype">
-            <option value="">--Select--</option>
-            <option value="RAG">Rental</option>
-            <option value="LAG">Lease</option>
-        </select>
-    </td>
-</tr>
+    <div class="modern-panel">
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width: 50px;">Name</label>
+            <input type="text" name="searchclient" id="searchclient" class="input-full" value='<s:property value="searchclient"/>'>
 
-<tr>
-    <td align="right">Agmt No</td>
-    <td>
-        <input type="text" name="searchagmtno" id="searchagmtno"
-        value='<s:property value="searchagmtno"/>'>
-    </td>
+            <label class="lbl-right" style="width: 40px;">Type</label>
+            <select name="cmbsearchrtype" id="cmbsearchrtype" class="input-md">
+                <option value="">--Select--</option>
+                <option value="RAG">Rental</option>
+                <option value="LAG">Lease</option>
+            </select>
 
-    <td align="right">Fleet No</td>
-    <td>
-        <input type="text" name="searchfleetno" id="searchfleetno"
-        value='<s:property value="searchfleetno"/>'>
-    </td>
+            <label class="lbl-right" style="width: 40px;">Date</label>
+            <div style="width: 110px;">
+                <div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div>
+            </div>
+        </div>
 
-    <td colspan="2"></td>
-</tr>
+        <div class="field-row" style="margin-bottom: 0;">
+            <label class="lbl-right" style="width: 50px;">Agmt No</label>
+            <input type="text" name="searchagmtno" id="searchagmtno" class="input-md" value='<s:property value="searchagmtno"/>'>
 
-<tr>
-<td colspan="5">
-    <div id="srefreshdiv">
-        <jsp:include page="subMainSearch.jsp" />
+            <label class="lbl-right" style="width: 50px;">Fleet No</label>
+            <input type="text" name="searchfleetno" id="searchfleetno" class="input-md" value='<s:property value="searchfleetno"/>'>
+
+            <label class="lbl-right" style="width: 50px;">Doc No</label>
+            <input type="text" name="searchdocno" id="searchdocno" class="input-md" value='<s:property value="searchdocno"/>'>
+
+            <div style="margin-left: auto; padding-right: 5px;">
+                <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
+            </div>
+        </div>
+
     </div>
-</td>
-</tr>
 
-</table>
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="subMainSearch.jsp" />
+        </div>
+    </div>
 
 </div>
-</body>
-</html>
