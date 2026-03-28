@@ -1,4 +1,4 @@
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,37 +6,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
+
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 
 <style>
 /* =========================================================
-   HYBRID UI: Compact Input Sizing (Plain Colors) side-by-side
+   SCOPED UI: Perfectly Aligned Grid Layout
+   * Protected: CSS will ONLY apply inside .modern-ui *
 ========================================================= */
-body {
-    background: #f4f6f9;
+
+.modern-ui {
     font-family: Arial, sans-serif;
     color: #333;
     font-size: 12px;
-    margin: 0;
-    padding: 10px;
     box-sizing: border-box;
-    overflow-x: hidden;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 4px;
-    padding: 15px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-    text-align: left !important;
+    padding-top: 15px;
 }
 
 /* Master Input Heights - Set to 24px */
-input[type="text"], select, textarea {
+.modern-ui input[type="text"], 
+.modern-ui select, 
+.modern-ui textarea {
     height: 24px !important;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -45,76 +36,57 @@ input[type="text"], select, textarea {
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
+    width: 100%;
 }
 
-/* Compact Width Classes */
-.input-xs { width: 60px !important; }
-.input-sm { width: 100px !important; }
-.input-md { width: 140px !important; }
-.input-lg { width: 220px !important; }
-.input-xl { width: 350px !important; }
-.input-full { width: 100% !important; }
+/* Compact Width Overrides */
+.modern-ui .input-xs { width: 60px !important; flex: none !important; }
+.modern-ui .input-sm { width: 100px !important; flex: none !important; }
+.modern-ui .input-md { width: 140px !important; flex: none !important; }
+.modern-ui .input-full { flex: 1; }
 
-input[type="text"]:focus, select:focus, textarea:focus {
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-input[readonly], textarea[readonly], select:disabled, input:disabled {
+.modern-ui input[readonly], 
+.modern-ui select:disabled, 
+.modern-ui input:disabled {
     background-color: #f3f4f6;
     color: #6b7280;
 }
 
-/* Layout Utilities */
-.field-row {
+/* Strict Column Alignment */
+.modern-ui .field-row {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 10px;
-    flex-wrap: wrap;
 }
 
-.lbl-right {
+.modern-ui .lbl-right {
     text-align: right;
     color: #444;
     font-size: 12px;
     font-weight: bold;
     white-space: nowrap;
-    padding-right: 5px;
+    display: inline-block;
 }
 
-.chk-container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    color: #444;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.chk-container input {
-    margin: 0;
-    padding: 0;
-}
-
-/* Middle Section Panels - Side by side container */
-.middle-section {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.middle-panel {
+/* Panels */
+.modern-ui .modern-panel {
     border: 1px solid #e1e4e8;
-    padding: 20px 10px 10px 10px;
+    padding: 20px 15px 10px 15px;
     background: #fff;
     position: relative;
     border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.middle-panel-title {
+.modern-ui .modern-panel-title {
     position: absolute;
     top: -10px;
     left: 10px;
@@ -126,50 +98,78 @@ input[readonly], textarea[readonly], select:disabled, input:disabled {
     border-left: 3px solid #0056b3;
 }
 
-.myButton {
+.modern-ui .chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #0056b3;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.modern-ui .chk-container input {
+    margin: 0;
+    padding: 0;
+}
+
+.modern-ui .myButton {
     font-weight: 700;
     font-size: 11px;
     height: 24px !important;
-    padding: 0px 12px;
+    padding: 0px 16px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
     color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
     white-space: nowrap;
-    text-align: center;
 }
 
-.myButton:hover {
+.modern-ui .myButton:hover {
     background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
+
+.modern-ui .split-section {
+    display: flex;
+    gap: 20px;
+}
+
+.modern-ui .split-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden-scrollbar {
+    overflow: auto;
+    height: 550px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
 
 <script type="text/javascript">
 $(document).ready(function () { 
 
-    //date definition 
-    $("#date").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
-    $("#refdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null}); 
-    $("#dateout").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    $("#hidevmovedate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null}); 
+    // Date definition (Fixed compact widths)
+    $("#date").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
+    $("#refdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null}); 
+    $("#dateout").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+    $("#hidevmovedate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null}); 
     
-    $("#colleteddate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
-    $("#indate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
-    $("#outdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
-    $("#deldate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
+    $("#colleteddate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
+    $("#indate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
+    $("#outdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
+    $("#deldate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
     
-    //time definition
-    $("#timeout").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-    $("#hidevmovetime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-    $("#deltime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-    $("#collectedtime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-    $("#intime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-    $("#outtime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    // Time definition (Fixed compact widths)
+    $("#timeout").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    $("#hidevmovetime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    $("#deltime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    $("#collectedtime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    $("#intime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    $("#outtime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
 
     /* Force internal alignment AFTER render */
     setTimeout(function () {
@@ -1017,22 +1017,6 @@ function funoutupdate() {
     }
 }
     
-function funcleardatas() {
-        document.getElementById("masterrefno").value="";
-        document.getElementById("refno").value="";
-        document.getElementById("txtfleetno").value="";
-        document.getElementById("outkm").value="";
-        document.getElementById("cmbfuel").value="";
-        document.getElementById("txtbranch").value="";
-        document.getElementById("txtlocation").value="";
-        document.getElementById("refname").value="";
-        document.getElementById("txtfleetname").value="";
-        
-        $('#refdate').jqxDateTimeInput('setDate', null);
-        $('#dateout').jqxDateTimeInput('setDate', null);
-        $('#timeout').jqxDateTimeInput('setDate', null);
-}
-    
 function fundelUpdate() {
 
      if(document.getElementById("deldriver").value==""){
@@ -1152,335 +1136,327 @@ win.focus();
 </head>
 
 <body onload="setValues();getBranch();getBranch1();">
-<div id="mainBG" class="homeContent" data-type="background">
 <form id="custody" action="saveCustody" autocomplete="off">
 
     <jsp:include page="../../../../header.jsp" />
-    
-    <div style="border: 1px solid transparent; padding: 5px 0;">
-        <div class="field-row" style="margin-bottom: 15px;">
-            <label class="lbl-right" style="width: 50px;">Date</label>
-            <div style="width: 110px;">
-                <div id="date" name="date" value='<s:property value="date"/>'></div>
-            </div>
 
-            <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; padding-right: 10px;">
-                <label class="lbl-right">Doc No</label>
-                <input type="text" id="docno" name="docno" class="input-md" tabindex="-1" readonly value='<s:property value="docno"/>'/>
-            </div>
-        </div>
-    </div>
-
-    <div class="middle-panel" id="custody">
-        <span class="middle-panel-title">Vehicle Custody</span>
-        <div style="padding-top: 5px;">
-            
-            <div class="field-row">
-                <label class="lbl-right" style="width: 80px;">Branch</label>
-                <select name="searchbranch" id="searchbranch" class="input-lg" value='<s:property value="searchbranch"/>'>
-                    <option value="">--Select--</option>
-                </select>
-
-                <label class="lbl-right" style="width: 80px;">Rental Type</label>
-                <select id="cmbrentaltype" name="cmbrentaltype" class="input-md" onchange="funcleardatas()" value='<s:property value="cmbrentaltype"/>'>
-                    <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
-                </select>
-
-                <label class="lbl-right" style="width: 70px;">Ref No</label>
-                <input type="text" id="refno" name="refno" class="input-md" value='<s:property value="refno"/>' placeholder="Press F3" readonly onkeydown="getAgmtno(event);"/>
-                <input type="text" id="refname" name="refname" class="input-lg" value='<s:property value="refname"/>' readonly/>
-            </div>
-
-            <div class="field-row">
-                <label class="lbl-right" style="width: 80px;">Ref Date</label>
-                <div style="width: 110px;">
-                    <div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div>
-                </div>
-
-                <label class="lbl-right" style="width: 80px;">Fleet No</label>
-                <input type="text" id="txtfleetno" name="txtfleetno" class="input-md" value='<s:property value="txtfleetno"/>' readonly />
-                <input type="text" id="txtfleetname" name="txtfleetname" class="input-lg" value='<s:property value="txtfleetname"/>' readonly/>
-            </div>
-
-            <div class="field-row">
-                <label class="lbl-right" style="width: 80px;">Date Out</label>
-                <div style="width: 110px;">
-                    <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
-                </div>
-
-                <label class="lbl-right" style="width: 80px;">Time Out</label>
-                <div style="width: 110px;">
-                    <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
-                </div>
-
-                <label class="lbl-right" style="width: 70px;">Km Out</label>
-                <input type="text" id="outkm" name="outkm" class="input-sm" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event)"/>
-
-                <label class="lbl-right" style="width: 50px;">Fuel</label>
-                <select id="cmbfuel" name="cmbfuel" class="input-md" value='<s:property value="cmbfuel"/>'>
-                    <option value="">--Select--</option>
-                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                </select>
-            </div>
-
-            <div class="field-row">
-                <label class="lbl-right" style="width: 80px;">Branch</label>
-                <input type="text" name="txtbranch" id="txtbranch" class="input-lg" readonly value='<s:property value="txtbranch"/>'/>
-
-                <label class="lbl-right" style="width: 80px;">Location</label>
-                <input type="text" name="txtlocation" id="txtlocation" class="input-lg" readonly value='<s:property value="txtlocation"/>'/>
-
-                <label class="lbl-right" style="width: 70px;">Tr. Reason</label>
-                <input type="text" id="reason" name="reason" class="input-md" readonly value='<s:property value="reason"/>'>
-            </div>
-
-            <div class="field-row">
-                <label class="lbl-right" style="width: 80px;">Description</label>
-                <input type="text" name="descnew" id="descnew" class="input-xl" value='<s:property value="descnew"/>'>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="middle-section">
+    <div class="modern-ui hidden-scrollbar">
         
-        <div class="middle-panel" id="collection" style="flex: 1; margin-bottom: 0;">
-            <span class="middle-panel-title">
-                <label class="chk-container" style="color: #0056b3; margin: 0;">
-                    <input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();">
-                    Collection Details
-                </label>
-            </span>
-            <div style="padding-top: 5px;">
-                
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Driver</label>
-                    <input type="text" name="collectiondriver" id="collectiondriver" class="input-lg" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);">
+        <div style="border: 1px solid transparent; padding: 5px 0;">
+            <div class="field-row" style="margin-bottom: 15px;">
+                <label class="lbl-right" style="width: 50px;">Date</label>
+                <div style="width: 120px;">
+                    <div id="date" name="date" value='<s:property value="date"/>'></div>
                 </div>
 
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Date</label>
-                    <div style="width: 110px;">
-                        <div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div>
-                    </div>
-
-                    <label class="lbl-right" style="width: 60px;">Time</label>
-                    <div style="width: 110px;">
-                        <div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div>
-                    </div>
+                <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; padding-right: 10px;">
+                    <label class="lbl-right">Doc No</label>
+                    <input type="text" id="docno" name="docno" class="input-sm" tabindex="-1" readonly value='<s:property value="docno"/>'/>
                 </div>
-
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">KM</label>
-                    <input type="text" name="colletedkm" id="colletedkm" class="input-sm" value='<s:property value="colletedkm"/>' onkeypress="javascript:return isNumber (event)">
-
-                    <label class="lbl-right" style="width: 60px;">Fuel</label>
-                    <select name="collectedfuel" id="collectedfuel" class="input-md" value='<s:property value="collectedfuel"/>'>
-                        <option value="">--Select--</option>
-                        <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                        <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                        <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                </div>
-
             </div>
         </div>
 
-        <div class="middle-panel" id="collectfield" style="flex: 1; margin-bottom: 0;">
-            <span class="middle-panel-title">Branch In</span>
-            <div style="padding-top: 5px;">
+        <div class="modern-panel" id="custody_panel">
+            <span class="modern-panel-title">Vehicle Custody</span>
+            <div style="padding-top: 5px; display: flex; gap: 20px;">
                 
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Branch</label>
-                    <select name="inbranch" id="inbranch" class="input-md" value='<s:property value="inbranch"/>' onchange="getLoc(this.value);">
-                        <option value="">--Select--</option>
-                    </select>
-
-                    <label class="lbl-right" style="width: 60px;">Location</label>
-                    <select name="inlocation" id="inlocation" class="input-md" value='<s:property value="inlocation"/>'>
-                        <option value="">--Select--</option>
-                    </select>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Branch</label>
+                        <select name="searchbranch" id="searchbranch" class="input-full" value='<s:property value="searchbranch"/>'>
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Ref Date</label>
+                        <div style="width: 120px;">
+                            <div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Date Out</label>
+                        <div style="width: 120px;">
+                            <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Branch</label>
+                        <input type="text" name="txtbranch" id="txtbranch" class="input-full" readonly value='<s:property value="txtbranch"/>'/>
+                    </div>
                 </div>
 
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Date</label>
-                    <div style="width: 110px;">
-                        <div id="indate" name="indate" value='<s:property value="indate"/>'></div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Rental Type</label>
+                        <select id="cmbrentaltype" name="cmbrentaltype" class="input-full" onchange="funcleardatas()" value='<s:property value="cmbrentaltype"/>'>
+                            <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
+                        </select>
                     </div>
-
-                    <label class="lbl-right" style="width: 60px;">Time</label>
-                    <div style="width: 110px;">
-                        <div id="intime" name="intime" value='<s:property value="intime"/>' ></div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Fleet No</label>
+                        <div style="display: flex; flex: 1; gap: 5px;">
+                            <input type="text" id="txtfleetno" name="txtfleetno" class="input-sm" value='<s:property value="txtfleetno"/>' readonly />
+                            <input type="text" id="txtfleetname" name="txtfleetname" class="input-full" value='<s:property value="txtfleetname"/>' readonly/>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Time Out</label>
+                        <div style="width: 80px;">
+                            <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 80px;">Location</label>
+                        <input type="text" name="txtlocation" id="txtlocation" class="input-full" readonly value='<s:property value="txtlocation"/>'/>
                     </div>
                 </div>
 
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">KM</label>
-                    <input type="text" name="binkm" id="binkm" class="input-sm" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)">
-
-                    <label class="lbl-right" style="width: 60px;">Fuel</label>
-                    <select name="binfuel" id="binfuel" class="input-md" value='<s:property value="binfuel"/>'>
-                        <option value="">--Select--</option>
-                        <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                        <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                        <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
+                <div style="flex: 1.2; display: flex; flex-direction: column;">
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 70px;">Ref No</label>
+                        <div style="display: flex; flex: 1; gap: 5px;">
+                            <input type="text" id="refno" name="refno" class="input-sm" value='<s:property value="refno"/>' placeholder="Press F3" readonly onkeydown="getAgmtno(event);"/>
+                            <input type="text" id="refname" name="refname" class="input-full" value='<s:property value="refname"/>' readonly/>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <div style="height: 24px;"></div>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 70px;">Km Out</label>
+                        <input type="text" id="outkm" name="outkm" class="input-sm" style="width: 70px !important;" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event)"/>
+                        
+                        <label class="lbl-right" style="width: 40px; margin-left:auto;">Fuel</label>
+                        <select id="cmbfuel" name="cmbfuel" class="input-full" style="max-width: 120px;" value='<s:property value="cmbfuel"/>'>
+                            <option value="">--Select--</option>
+                            <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
+                            <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+                            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                        </select>
+                    </div>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 70px;">Tr. Reason</label>
+                        <input type="text" id="reason" name="reason" class="input-full" readonly value='<s:property value="reason"/>'>
+                    </div>
                 </div>
 
             </div>
+
+            <div class="field-row" style="margin-top: 10px;">
+                <label class="lbl-right" style="width: 80px;">Description</label>
+                <input type="text" name="descnew" id="descnew" class="input-full" value='<s:property value="descnew"/>'>
+            </div>
         </div>
+
+        <div class="split-section">
+            <div class="split-col">
+                <div class="modern-panel" id="collection" style="flex: 1;">
+                    <span class="modern-panel-title">
+                        <label class="chk-container">
+                            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="checkCollection();">
+                            Collection Details
+                        </label>
+                    </span>
+                    <div style="padding-top: 5px;">
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Driver</label>
+                            <input type="text" name="collectiondriver" id="collectiondriver" class="input-full" value='<s:property value="collectiondriver"/>' placeholder="Press F3 to Search" readonly onkeydown="getDriver(event,1);">
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Date</label>
+                            <div style="width: 120px;">
+                                <div id="colleteddate" name="colleteddate" value='<s:property value="colleteddate"/>'></div>
+                            </div>
+                            <label class="lbl-right" style="width: 40px;">Time</label>
+                            <div style="width: 80px;">
+                                <div id="collectedtime" name="collectedtime" value='<s:property value="collectedtime"/>'></div>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">KM</label>
+                            <input type="text" name="colletedkm" id="colletedkm" class="input-sm" style="flex: 1;" value='<s:property value="colletedkm"/>' onkeypress="javascript:return isNumber (event)">
+                            <label class="lbl-right" style="width: 40px;">Fuel</label>
+                            <select name="collectedfuel" id="collectedfuel" class="input-full" style="max-width: 120px;" value='<s:property value="collectedfuel"/>'>
+                                <option value="">-Select-</option>
+                                <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
+                                <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+                                <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="split-col">
+                <div class="modern-panel" id="collectfield" style="flex: 1;">
+                    <span class="modern-panel-title">Branch In</span>
+                    <div style="padding-top: 5px;">
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Branch</label>
+                            <select name="inbranch" id="inbranch" class="input-full" value='<s:property value="inbranch"/>' onchange="getLoc(this.value);">
+                                <option value="">--Select--</option>
+                            </select>
+                            <label class="lbl-right" style="width: 60px;">Location</label>
+                            <select name="inlocation" id="inlocation" class="input-full" value='<s:property value="inlocation"/>'>
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Date</label>
+                            <div style="width: 120px;">
+                                <div id="indate" name="indate" value='<s:property value="indate"/>'></div>
+                            </div>
+                            <label class="lbl-right" style="width: 40px;">Time</label>
+                            <div style="width: 80px;">
+                                <div id="intime" name="intime" value='<s:property value="intime"/>' ></div>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">KM</label>
+                            <input type="text" name="binkm" id="binkm" class="input-sm" style="flex: 1;" value='<s:property value="binkm"/>' onkeypress="javascript:return isNumber (event)">
+                            <label class="lbl-right" style="width: 40px;">Fuel</label>
+                            <select name="binfuel" id="binfuel" class="input-full" style="max-width: 120px;" value='<s:property value="binfuel"/>'>
+                                <option value="">-Select-</option>
+                                <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
+                                <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+                                <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-section">
+            <div class="split-col">
+                <div class="modern-panel" id="branchout" style="flex: 1;">
+                    <span class="modern-panel-title">Branch Out</span>
+                    <div style="padding-top: 5px;">
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Date</label>
+                            <div style="width: 120px;">
+                                <div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div>
+                            </div>
+                            <label class="lbl-right" style="width: 40px;">Time</label>
+                            <div style="width: 80px;">
+                                <div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">KM</label>
+                            <input type="text" name="boutkm" id="boutkm" class="input-sm" style="flex: 1;" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)">
+                            <label class="lbl-right" style="width: 40px;">Fuel</label>
+                            <select name="boutfuel" id="boutfuel" class="input-full" style="max-width: 120px;" value='<s:property value="boutfuel"/>'>
+                                <option value="">-Select-</option>
+                                <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
+                                <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+                                <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                            </select>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Delivery</label>
+                            <select name="delyesorno" id="delyesorno" class="input-xs" value='<s:property value="delyesorno"/>'>
+                                <option value="">--</option><option value=1>YES</option><option value=0>NO</option>
+                            </select>
+                            <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()" style="margin-left: auto;">
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Description</label>
+                            <input type="text" name="outdesc" id="outdesc" class="input-full" value='<s:property value="outdesc"/>'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="split-col">
+                <div class="modern-panel" id="deliveryfield" style="flex: 1;">
+                    <span class="modern-panel-title">
+                        <label class="chk-container">
+                            <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
+                            Delivery
+                        </label>
+                    </span>
+                    <div style="padding-top: 5px;">
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Driver</label>
+                            <input type="text" name="deldriver" id="deldriver" class="input-full" readonly value='<s:property value="deldriver"/>' placeholder="Press F3" onkeydown="getDriver(event,2);">
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Deliver To</label>
+                            <input type="text" name="deliveryto" id="deliveryto" class="input-full" value='<s:property value="deliveryto"/>'>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">Date</label>
+                            <div style="width: 120px;">
+                                <div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div>
+                            </div>
+                            <label class="lbl-right" style="width: 40px;">Time</label>
+                            <div style="width: 80px;">
+                                <div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div>
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <label class="lbl-right" style="width: 60px;">KM</label>
+                            <input type="text" name="delkm" id="delkm" class="input-sm" style="flex: 1;" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)">
+                            <label class="lbl-right" style="width: 40px;">Fuel</label>
+                            <select name="delfuel" id="delfuel" class="input-full" style="max-width: 120px;" value='<s:property value="delfuel"/>'>
+                                <option value="">-Select-</option>
+                                <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
+                                <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+                                <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                            </select>
+                            <input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()" style="margin-left: 10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="masterrefno" id="masterrefno" value='<s:property value="masterrefno"/>'>
+        <input type="hidden" name="searchbranchval" id="searchbranchval" value='<s:property value="searchbranchval"/>'>
+        <input type="hidden" name="branchoutval" id="branchoutval" value='<s:property value="branchoutval"/>'>
+        <input type="hidden" name="delyornval" id="delyornval" value='<s:property value="delyornval"/>'>
+        <input type="hidden" name="clientnumbers" id="clientnumbers" value='<s:property value="clientnumbers"/>'>
+        <input type="hidden" name="hidedate" id="hidedate" value='<s:property value="hidedate"/>'>
+        <input type="hidden" name="hiderefdate" id="hiderefdate" value='<s:property value="hiderefdate"/>'>
+        <input type="hidden" name="hideroutdate" id="hideroutdate" value='<s:property value="hideroutdate"/>'>
+        <input type="hidden" name="hidertimeout" id="hidertimeout" value='<s:property value="hidertimeout"/>'>
+        <input type="hidden" name="rfuelval" id="rfuelval" value='<s:property value="rfuelval"/>'>
+        <input type="hidden" name="renttypeval" id="renttypeval" value='<s:property value="renttypeval"/>'>
+        <input type="hidden" name="hidcollecteddate" id="hidcollecteddate" value='<s:property value="hidcollecteddate"/>'>
+        <input type="hidden" name="hidcollectedTime" id="hidcollectedTime" value='<s:property value="hidcollectedTime"/>'>
+        <input type="hidden" name="hidcollectedFuelval" id="hidcollectedFuelval" value='<s:property value="hidcollectedFuelval"/>'>
+        <input type="hidden" name="hideIndate" id="hideIndate" value='<s:property value="hideIndate"/>'>
+        <input type="hidden" name="hideIntime" id="hideIntime" value='<s:property value="hideIntime"/>'>
+        <input type="hidden" name="inFuelval" id="inFuelval" value='<s:property value="inFuelval"/>'>
+        <input type="hidden" name="mainbranchid" id="mainbranchid" value='<s:property value="mainbranchid"/>'>
+        <input type="hidden" name="mainlocationid" id="mainlocationid" value='<s:property value="mainlocationid"/>'>
+        <input type="hidden" name="infleettrancode" id="infleettrancode" value='<s:property value="infleettrancode"/>'>
+        <input type="hidden" name="hidebranch" id="hidebranch" value='<s:property value="hidebranch"/>'>
+        <input type="hidden" name="hidelocation" id="hidelocation" value='<s:property value="hidelocation"/>'>
+        <input type="hidden" name="hidoutdate" id="hidoutdate" value='<s:property value="hidoutdate"/>'>
+        <input type="hidden" name="hidouttime" id="hidouttime" value='<s:property value="hidouttime"/>'>
+        <input type="hidden" name="outfuelval" id="outfuelval" value='<s:property value="outfuelval"/>'>
+        <input type="hidden" name="hiddeldate" id="hiddeldate" value='<s:property value="hiddeldate"/>'>
+        <input type="hidden" name="hiddeltime" id="hiddeltime" value='<s:property value="hiddeltime"/>'>
+        <input type="hidden" ngit ame="hiddelfuelval" id="hiddelfuelval" value='<s:property value="hiddelfuelval"/>'>
+        <input type="hidden" name="colldriverid" id="colldriverid" value='<s:property value="colldriverid"/>'>
+        <input type="hidden" name="deldriverid" id="deldriverid" value='<s:property value="deldriverid"/>'>
+        <input type="hidden" name="collectintickval" id="collectintickval" value='<s:property value="collectintickval"/>'>
+        <input type="hidden" name="delchkval" id="delchkval" value='<s:property value="delchkval"/>'>
+        <div hidden="true" id="hidevmovedate" name="hidevmovedate" value='<s:property value="hidevmovedate"/>'></div>
+        <div hidden="true" id="hidevmovetime" name="hidevmovetime" value='<s:property value="hidevmovetime"/>'></div>
+        <input type="hidden" name="hidevmovekm" id="hidevmovekm" value='<s:property value="hidevmovekm"/>'>
+        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+        <input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
 
     </div>
-
-    <div class="middle-section">
-
-        <div class="middle-panel" id="branchout" style="flex: 1; margin-bottom: 0;">
-            <span class="middle-panel-title">Branch Out</span>
-            <div style="padding-top: 5px;">
-                
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Date</label>
-                    <div style="width: 110px;">
-                        <div id="outdate" name="outdate" value='<s:property value="outdate"/>'></div>
-                    </div>
-
-                    <label class="lbl-right" style="width: 60px;">Time</label>
-                    <div style="width: 110px;">
-                        <div id="outtime" name="outtime" value='<s:property value="outtime"/>'></div>
-                    </div>
-                </div>
-
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">KM</label>
-                    <input type="text" name="boutkm" id="boutkm" class="input-sm" value='<s:property value="boutkm"/>' onkeypress="javascript:return isNumber (event)">
-
-                    <label class="lbl-right" style="width: 60px;">Fuel</label>
-                    <select name="boutfuel" id="boutfuel" class="input-md" value='<s:property value="boutfuel"/>'>
-                        <option value="">--Select--</option>
-                        <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                        <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                        <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                </div>
-
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Delivery</label>
-                    <select name="delyesorno" id="delyesorno" class="input-xs" value='<s:property value="delyesorno"/>'>
-                        <option value="">--Select--</option>
-                        <option value=1>YES</option>
-                        <option value=0>NO</option>
-                    </select>
-
-                    <input type="button" id="outbranch" class="myButton" name="outbranch" value="Edit" onclick="funoutupdate()" style="margin-left: 10px;">
-                </div>
-
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Description</label>
-                    <input type="text" name="outdesc" id="outdesc" class="input-full" value='<s:property value="outdesc"/>' style="width: calc(100% - 80px) !important;">
-                </div>
-
-            </div>
-        </div>
-
-        <div class="middle-panel" id="deliveryfield" style="flex: 1; margin-bottom: 0;">
-            <span class="middle-panel-title">
-                <label class="chk-container" style="color: #0056b3; margin: 0;">
-                    <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
-                    Delivery
-                </label>
-            </span>
-            <div style="padding-top: 5px;">
-                
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Driver</label>
-                    <input type="text" name="deldriver" id="deldriver" class="input-md" readonly value='<s:property value="deldriver"/>' placeholder="Press F3 to Search" onkeydown="getDriver(event,2);">
-
-                    <label class="lbl-right" style="width: 60px;">Deliver To</label>
-                    <input type="text" name="deliveryto" id="deliveryto" class="input-md" value='<s:property value="deliveryto"/>'>
-                </div>
-
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">Date</label>
-                    <div style="width: 110px;">
-                        <div id="deldate" name="deldate" value='<s:property value="deldate"/>'></div>
-                    </div>
-
-                    <label class="lbl-right" style="width: 60px;">Time</label>
-                    <div style="width: 110px;">
-                        <div id="deltime" name="deltime" value='<s:property value="deltime"/>'></div>
-                    </div>
-                </div>
-
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 60px;">KM</label>
-                    <input type="text" name="delkm" id="delkm" class="input-sm" value='<s:property value="delkm"/>' onkeypress="javascript:return isNumber (event)">
-
-                    <label class="lbl-right" style="width: 60px;">Fuel</label>
-                    <select name="delfuel" id="delfuel" class="input-md" value='<s:property value="delfuel"/>'>
-                        <option value="">--Select--</option>
-                        <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                        <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                        <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-
-                    <div style="margin-left: auto; padding-right: 10px;">
-                        <input type="button" id="delupdate" class="myButton" name="delupdate" value="Edit" onclick="fundelUpdate()">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-<input type="hidden" name="masterrefno" id="masterrefno" value='<s:property value="masterrefno"/>'>
-<input type="hidden" name="searchbranchval" id="searchbranchval" value='<s:property value="searchbranchval"/>'>
-<input type="hidden" name="branchoutval" id="branchoutval" value='<s:property value="branchoutval"/>'>
-<input type="hidden" name="delyornval" id="delyornval" value='<s:property value="delyornval"/>'>
-<input type="hidden" name="clientnumbers" id="clientnumbers" value='<s:property value="clientnumbers"/>'>
-<input type="hidden" name="hidedate" id="hidedate" value='<s:property value="hidedate"/>'>
-<input type="hidden" name="hiderefdate" id="hiderefdate" value='<s:property value="hiderefdate"/>'>
-<input type="hidden" name="hideroutdate" id="hideroutdate" value='<s:property value="hideroutdate"/>'>
-<input type="hidden" name="hidertimeout" id="hidertimeout" value='<s:property value="hidertimeout"/>'>
-<input type="hidden" name="rfuelval" id="rfuelval" value='<s:property value="rfuelval"/>'>
-<input type="hidden" name="renttypeval" id="renttypeval" value='<s:property value="renttypeval"/>'>
-<input type="hidden" name="hidcollecteddate" id="hidcollecteddate" value='<s:property value="hidcollecteddate"/>'>
-<input type="hidden" name="hidcollectedTime" id="hidcollectedTime" value='<s:property value="hidcollectedTime"/>'>
-<input type="hidden" name="hidcollectedFuelval" id="hidcollectedFuelval" value='<s:property value="hidcollectedFuelval"/>'>
-<input type="hidden" name="hideIndate" id="hideIndate" value='<s:property value="hideIndate"/>'>
-<input type="hidden" name="hideIntime" id="hideIntime" value='<s:property value="hideIntime"/>'>
-<input type="hidden" name="inFuelval" id="inFuelval" value='<s:property value="inFuelval"/>'>
-<input type="hidden" name="mainbranchid" id="mainbranchid" value='<s:property value="mainbranchid"/>'>
-<input type="hidden" name="mainlocationid" id="mainlocationid" value='<s:property value="mainlocationid"/>'>
-<input type="hidden" name="infleettrancode" id="infleettrancode" value='<s:property value="infleettrancode"/>'>
-<input type="hidden" name="hidebranch" id="hidebranch" value='<s:property value="hidebranch"/>'>
-<input type="hidden" name="hidelocation" id="hidelocation" value='<s:property value="hidelocation"/>'>
-<input type="hidden" name="hidoutdate" id="hidoutdate" value='<s:property value="hidoutdate"/>'>
-<input type="hidden" name="hidouttime" id="hidouttime" value='<s:property value="hidouttime"/>'>
-<input type="hidden" name="outfuelval" id="outfuelval" value='<s:property value="outfuelval"/>'>
-<input type="hidden" name="hiddeldate" id="hiddeldate" value='<s:property value="hiddeldate"/>'>
-<input type="hidden" name="hiddeltime" id="hiddeltime" value='<s:property value="hiddeltime"/>'>
-<input type="hidden" name="hiddelfuelval" id="hiddelfuelval" value='<s:property value="hiddelfuelval"/>'>
-<input type="hidden" name="colldriverid" id="colldriverid" value='<s:property value="colldriverid"/>'>
-<input type="hidden" name="deldriverid" id="deldriverid" value='<s:property value="deldriverid"/>'>
-<input type="hidden" name="collectintickval" id="collectintickval" value='<s:property value="collectintickval"/>'>
-<input type="hidden" name="delchkval" id="delchkval" value='<s:property value="delchkval"/>'>
-<div hidden="true" id="hidevmovedate" name="hidevmovedate" value='<s:property value="hidevmovedate"/>'></div>
-<div hidden="true" id="hidevmovetime" name="hidevmovetime" value='<s:property value="hidevmovetime"/>'></div>
-<input type="hidden" name="hidevmovekm" id="hidevmovekm" value='<s:property value="hidevmovekm"/>'>
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-<input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-
 </form>
 
 <div id="collectionwindow"><div></div></div>
 <div id="agmtnowindow"><div></div></div>
 
-</div>
 </body>
 </html>
