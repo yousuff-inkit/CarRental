@@ -1,158 +1,178 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<title>GatewayERP(i)</title>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	 $("#refunddate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	}); 
+<style>
+/* =========================================================
+   SCOPED UI: Perfectly Aligned Column Grid
+   * All rules are prefixed with .modern-ui to prevent bleeding! *
+========================================================= */
 
- 	function loadSearch() {
-
- 		var accountName=document.getElementById("txtaccountname").value;
- 		var srNo=document.getElementById("txtdocumentsrno").value;
- 		var date=document.getElementById("refunddate").value;
- 		var total=document.getElementById("txtamounttotal").value;
- 		var refNo=document.getElementById("txtreferenceno").value;
-	
-		getdata(accountName,srNo,date,total,refNo);
-	}
-	function getdata(accountName,srNo,date,total,refNo){
-		 $("#refreshdiv").load('rrpMainSearchGrid.jsp?accountName='+accountName.replace(/ /g, "%20")+'&srNo='+srNo+'&date='+date+'&total='+total+'&refNo='+refNo);
-		}
-
-	</script>
-<style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px; /* Standardized master gap */
+.modern-ui {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    padding: 10px;
+    background-color: #f4f6f9;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+/* Master Input Heights - Set to 24px */
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
 }
 
-/* Bold text inside inputs */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;
-  max-width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.modern-ui .input-full { width: 100% !important; flex: 1; }
+
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-/* Date field styling */
-#refunddate {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+/* Layout Utilities for Strict Alignment */
+.modern-ui .field-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
+.modern-ui .lbl-right {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 65px; /* Locks label widths for perfect vertical alignment */
 }
 
-.myButton:hover {
-  background-color: #45a049;
+/* Panel Styling */
+.modern-ui .modern-panel {
+    border: 1px solid #e1e4e8;
+    padding: 20px 15px 15px 15px;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.8;
+/* Search Button */
+.modern-ui .myButton {
+    font-weight: bold;
+    font-size: 12px;
+    height: 28px !important;
+    padding: 0px 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
 }
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    padding: 2px;
+    min-height: 200px;
 }
 </style>
 
-<body bgcolor="#E0ECF8">
-<div id="search">
+<script type="text/javascript">
+$(document).ready(function () {
+    /* Upgraded to 24px height to match Master UI standard */
+    $("#refunddate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
 
-<table width="100%">
+    /* Force internal alignment AFTER render */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", 
+            "line-height": "24px", 
+            "font-size": "12px", 
+            "font-family": "Arial, sans-serif",
+            "padding": "0 6px", 
+            "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
+}); 
 
-<tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%">
-        <div id="refunddate" name="refunddate" value='<s:property value="refunddate"/>'></div>
-        <input type="hidden" name="hidrefunddate" id="hidrefunddate" value='<s:property value="hidrefunddate"/>'>
-    </td>
+function loadSearch() {
+    var accountName=document.getElementById("txtaccountname").value;
+    var srNo=document.getElementById("txtdocumentsrno").value;
+    var date=document.getElementById("refunddate").value;
+    var total=document.getElementById("txtamounttotal").value;
+    var refNo=document.getElementById("txtreferenceno").value;
 
-    <td width="21%" align="right">RR No</td>
-    <td width="32%">
-        <input type="text" name="txtdocumentsrno" id="txtdocumentsrno"
-        autocomplete="off" value='<s:property value="txtdocumentsrno"/>'>
-    </td>
+    getdata(accountName,srNo,date,total,refNo);
+}
 
-    <td width="27%" align="center" rowspan="2">
-        <input type="button" name="btnsearch" id="btnsearch"
-        class="myButton" value="Search" onclick="loadSearch();">
-    </td>
-</tr>
+function getdata(accountName,srNo,date,total,refNo){
+    $("#refreshdiv").load('rrpMainSearchGrid.jsp?accountName='+accountName.replace(/ /g, "%20")+'&srNo='+srNo+'&date='+date+'&total='+total+'&refNo='+refNo);
+}
+</script>
 
-<tr>
-    <td align="right">A/C Name</td>
-    <td>
-        <input type="text" name="txtaccountname" id="txtaccountname"
-        autocomplete="off" value='<s:property value="txtaccountname"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td align="right">Total</td>
-    <td>
-        <input type="text" name="txtamounttotal" id="txtamounttotal"
-        autocomplete="off" value='<s:property value="txtamounttotal"/>'>
-    </td>
-</tr>
+    <div class="modern-panel">
+        
+        <div style="display: flex; gap: 30px;">
+            
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <div class="field-row">
+                    <label class="lbl-right">Date</label>
+                    <div style="flex: 1;">
+                        <div id="refunddate" name="refunddate" value='<s:property value="refunddate"/>'></div>
+                        <input type="hidden" name="hidrefunddate" id="hidrefunddate" value='<s:property value="hidrefunddate"/>'>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <label class="lbl-right">A/C Name</label>
+                    <input type="text" name="txtaccountname" id="txtaccountname" class="input-full" autocomplete="off" value='<s:property value="txtaccountname"/>'>
+                </div>
+                <div class="field-row" style="margin-bottom: 0;">
+                    <label class="lbl-right">Ref No</label>
+                    <input type="text" id="txtreferenceno" name="txtreferenceno" class="input-full" autocomplete="off" value='<s:property value="txtreferenceno"/>'>
+                </div>
+            </div>
 
-<tr>
-    <td align="right">Ref No</td>
-    <td>
-        <input type="text" id="txtreferenceno" name="txtreferenceno"
-        autocomplete="off" value='<s:property value="txtreferenceno"/>'>
-    </td>
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <div class="field-row">
+                    <label class="lbl-right">RR No</label>
+                    <input type="text" name="txtdocumentsrno" id="txtdocumentsrno" class="input-full" autocomplete="off" value='<s:property value="txtdocumentsrno"/>'>
+                </div>
+                <div class="field-row" style="margin-bottom: 0;">
+                    <label class="lbl-right">Total</label>
+                    <input type="text" name="txtamounttotal" id="txtamounttotal" class="input-full" autocomplete="off" value='<s:property value="txtamounttotal"/>'>
+                </div>
+            </div>
 
-    <td colspan="3"></td>
-</tr>
+            <div style="display: flex; align-items: flex-start;">
+                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+            </div>
 
-<tr>
-<td colspan="5">
-<div id="refreshdiv">
-<jsp:include page="rrpMainSearchGrid.jsp" />
+        </div>
+
+    </div>
+
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="rrpMainSearchGrid.jsp" />
+        </div>
+    </div>
+
 </div>
-</td>
-</tr>
-
-</table>
-
-</div>
-</body>
-</html>
