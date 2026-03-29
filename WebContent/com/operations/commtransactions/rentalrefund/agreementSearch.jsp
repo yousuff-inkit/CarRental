@@ -1,166 +1,157 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html>
-<html>
-<head>
- 
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <% String contextPath=request.getContextPath();%>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
-<%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+
 <style>
-.textdetail {
-	color: black;
-	background-color: #E0ECF8;
-	width: 100%;
-	font-family: Tahoma;
-	font-size: 10px;
+/* =========================================================
+   SCOPED UI: Perfectly Aligned Column Grid
+   * All rules are prefixed with .modern-ui to prevent bleeding! *
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    padding: 10px;
+    background-color: #f4f6f9;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Master Input Heights - Set to 24px */
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+.modern-ui .input-sm { width: 100px !important; }
+.modern-ui .input-md { width: 140px !important; }
+.modern-ui .input-full { width: 100% !important; flex: 1; }
+
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Layout Utilities for Strict Alignment */
+.modern-ui .field-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.modern-ui .lbl-right {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 60px; /* Locks label widths for perfect vertical alignment */
+}
+
+/* Panel Styling */
+.modern-ui .modern-panel {
+    border: 1px solid #e1e4e8;
+    padding: 20px 15px 15px 15px;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Search Button */
+.modern-ui .myButton {
+    font-weight: bold;
+    font-size: 12px;
+    height: 28px !important;
+    padding: 0px 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    padding: 2px;
+    min-height: 200px;
 }
 </style>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	
-	}); 
+<script type="text/javascript">
+$(document).ready(function () {
+    // Initialization if needed
+}); 
 
- 	function mainloadSearch() {
- 		
- 		var sclname=document.getElementById("SCl_name").value;
- 		var smob=document.getElementById("Sl_mob").value;
- 		var rno=document.getElementById("rno").value;
- 		var flno=document.getElementById("flno").value;
- 		var sregno=document.getElementById("sregno").value;
- 		var rentaltype=document.getElementById("cmbratype").value;
- 		var clientId=document.getElementById("txtcldocno").value;
+function mainloadSearch() {
+    var sclname=document.getElementById("SCl_name").value;
+    var smob=document.getElementById("Sl_mob").value;
+    var rno=document.getElementById("rno").value;
+    var flno=document.getElementById("flno").value;
+    var sregno=document.getElementById("sregno").value;
+    
+    // Note: cmbratype and txtcldocno are likely in the parent window calling this popup
+    var rentaltype = document.getElementById("cmbratype") ? document.getElementById("cmbratype").value : "";
+    var clientId = document.getElementById("txtcldocno") ? document.getElementById("txtcldocno").value : "";
 
-	
-		getdata(sclname,smob,rno,flno,sregno,rentaltype,clientId);
-
-	}
-	 function getdata(sclname,smob,rno,flno,sregno,rentaltype,clientId){
-		 $("#srefreshdiv").load('agreementDetailsSearchGrid.jsp?sclname='+sclname.replace(/ /g, "%20")+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&rentaltype='+rentaltype+'&clientId='+clientId);
-		}
- 
-	</script>
-<style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px;
+    getdata(sclname,smob,rno,flno,sregno,rentaltype,clientId);
 }
 
-/* Section Header with Blue Vertical Line */
-.section-header {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #222;
-  
-  padding-left: 10px;
-  margin: 10px 0 5px 10px;
+function getdata(sclname,smob,rno,flno,sregno,rentaltype,clientId){
+    $("#srefreshdiv").load('agreementDetailsSearchGrid.jsp?sclname='+sclname.replace(/ /g, "%20")+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&rentaltype='+rentaltype+'&clientId='+clientId);
 }
+</script>
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-.textdetail, td[align="right"], td[align="left"] label {
-  font-family: Tahoma, Geneva, sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  color: #222 !important;
-  background-color: transparent !important;
-}
+<div id="search" class="modern-ui">
 
-/* Bold text inside inputs */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+    <div class="modern-panel">
+        
+        <div class="field-row">
+            <label class="lbl-right">Name</label>
+            <input type="text" name="SCl_name" id="SCl_name" class="input-full" style="max-width: 400px;" autocomplete="off" value='<s:property value="SCl_name"/>'>
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
-}
+            <label class="lbl-right" style="width: 40px;">Mob</label>
+            <input type="text" name="Sl_mob" id="Sl_mob" class="input-md" autocomplete="off" value='<s:property value="Sl_mob"/>'>
 
-.myButton:hover {
-  background-color: #45a049;
-}
-
-/* Row spacing */
-tr {
-  line-height: 1.6;
-}
-</style>
-
-<body bgcolor="#E0ECF8">
-<div id="search">
-  
-
-  <table width="100%">
-    <tr>
-      <td>
-        <table width="100%">
-          <tr>
-            <td align="left" width="6.5%"><label class="textdetail">Name</label></td>
-            <td align="left" width="54%">
-              <input type="text" name="SCl_name" id="SCl_name" style="width:96.5%;" autocomplete="off" value='<s:property value="SCl_name"/>'>
-            </td>
-            <td align="right" width="5%"><label class="textdetail">Mob</label></td>
-            <td align="left" width="15%">
-              <input type="text" name="Sl_mob" id="Sl_mob" autocomplete="off" value='<s:property value="Sl_mob"/>'>
-            </td>
-            <td align="right" width="10%"><label class="textdetail">Reg No</label></td>
-            <td align="left" width="15%">
-              <input type="text" id="sregno" name="sregno" autocomplete="off" value='<s:property value="sregno"/>'>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <table width="100%">
-          <tr>
-            <td align="left" width="7%"><label class="textdetail">Doc No</label></td>
-            <td align="left" width="54%">
-              <input type="text" name="rno" id="rno" style="width:30%;" autocomplete="off" value='<s:property value="rno"/>'>
-              &nbsp;&nbsp;<label class="textdetail">Fleet No</label>&nbsp;
-              <input type="text" name="flno" id="flno" style="width:34%;" autocomplete="off" value='<s:property value="flno"/>'>
-            </td>
-            <td align="left">
-              <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <tr>
-      <td colspan="8">
-        <div id="srefreshdiv">
-          <jsp:include page="agreementDetailsSearchGrid.jsp" />
+            <label class="lbl-right">Reg No</label>
+            <input type="text" id="sregno" name="sregno" class="input-md" autocomplete="off" value='<s:property value="sregno"/>'>
         </div>
-      </td>
-    </tr>
-  </table>
+
+        <div class="field-row" style="margin-bottom: 0;">
+            <label class="lbl-right">Doc No</label>
+            <input type="text" name="rno" id="rno" class="input-md" autocomplete="off" value='<s:property value="rno"/>'>
+            
+            <label class="lbl-right" style="width: 55px;">Fleet No</label>
+            <input type="text" name="flno" id="flno" class="input-md" autocomplete="off" value='<s:property value="flno"/>'>
+
+            <div style="margin-left: auto;">
+                <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="agreementDetailsSearchGrid.jsp" />
+        </div>
+    </div>
+
 </div>
-</body>
-</html>
