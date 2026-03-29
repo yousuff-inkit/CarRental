@@ -1956,7 +1956,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 
 body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
     padding: 10px;
     background: #f5f7fa;
@@ -1971,7 +1971,7 @@ fieldset {
 }
 
 legend {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     padding: 0 8px;
         border-left: 4px solid #007bff;
@@ -1984,13 +1984,13 @@ table {
 
 td {
     padding: 4px 6px;
-    font-size: 16px;
+    font-size: 14px;
     vertical-align: middle;
 }
 
 input[type="text"], select {
     height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 4px 8px;
@@ -2007,7 +2007,7 @@ select {
 }
 
 .myButton {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 14px;
     padding: 6px 10px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
@@ -2067,12 +2067,12 @@ select {
     <td width="5%" align="right">Date Out</td>
     <td width="7%" align="right"><div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div></td>
     <td width="3%" align="right">Time</td>
-    <td width="8%" align="left"><div id='timeout' name='timeout' value='<s:property value="timeout"/>'></div></td>
+    <td width="14%" align="left"><div id='timeout' name='timeout' value='<s:property value="timeout"/>'></div></td>
     <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
     <td width="3%" align="right">KM</td>
     <td width="8%" align="left"><input type="text" id="outkm" name="outkm"  value='<s:property value="outkm"/>'/></td>
     <td width="3%" align="right">Fuel</td>
-    <td width="7%" align="left"><select id="cmboutfuel" name="cmboutfuel" value='<s:property value="cmboutfuel"/>'>
+    <td width="12%" align="left"><select id="cmboutfuel" name="cmboutfuel" value='<s:property value="cmboutfuel"/>'>
       <option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
     <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
     </select>
