@@ -1,200 +1,233 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html>
-<html>
-<head>
- 
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <% String contextPath=request.getContextPath();%>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
- <%--  <jsp:include page="../../../../includes.jsp"></jsp:include>   --%>
+
 <style>
-<%-- <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
- --%>
-</style>
+/* =========================================================
+   SCOPED UI: Perfectly Aligned Column Grid
+   * All rules are prefixed with .modern-ui to prevent bleeding! *
+========================================================= */
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-		$("#searchdate").jqxDateTimeInput({ width: '100%', height: '15px',formatString:"dd.MM.yyyy",value:null});
-		/* document.body.scroll = "no";
-		document.body.style.overflow = 'hidden';
-		//document.height = window.innerHeight; */
-		funChangeDeletedInv();
-	}); 
-	function funChangeDeletedInv(){
-		if(document.getElementById("chkdeletedinv").checked==true){
-			document.getElementById("hidchkdeletedinv").value="1";
-		}
-		else{
-			document.getElementById("hidchkdeletedinv").value="0";
-		}
-	}
- 	function mainloadSearch() {
- 		
- 		if(document.getElementById("searchagmtno").value!=""){
- 			if(document.getElementById("searchcmbagmttype").value==""){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
- 				return false;
- 			}
- 		}
- 		document.getElementById("errormsg").innerText="";
- 		var client=document.getElementById("searchclient").value;
- 		var cmbagmttype=document.getElementById("searchcmbagmttype").value;
- 		var agmtno=document.getElementById("searchagmtno").value;
- 		var docno=document.getElementById("searchdocno").value;
- 		var searchdate=$('#searchdate').jqxDateTimeInput('val');
- 		document.getElementById("brchName").disabled=false;
- 		var searchbranch=$('#brchName').val();
- 		var chkdeletedinv=$('#hidchkdeletedinv').val();
-		getdata(client,cmbagmttype,agmtno,docno,searchdate,searchbranch,chkdeletedinv);
- 
-
-	}
-	function getdata(client,cmbagmttype,agmtno,docno,searchdate,searchbranch,chkdeletedinv){
-		$("#srefreshdiv").load('subMainSearch.jsp?client='+client+'&cmbagmttype='+cmbagmttype+'&agmtno='+agmtno+'&docno='+docno+'&searchdate='+searchdate+'&branch='+searchbranch+'&chkdeletedinv='+chkdeletedinv+'&id=1');
-	}
- 
-	</script>
-<style type="text/css">
-/* Master UI Styles */
-
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px; /* Standard master gap */
+.modern-ui {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    padding: 10px;
+    background-color: #f4f6f9;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-
-td[align="right"] {
-  font-weight: 700;
-  font-size: 14px;
-  color: #222;
-  font-family: Tahoma, Arial, sans-serif;
+/* Master Input Heights - Set to 24px */
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
 }
 
+.modern-ui .input-full { width: 100% !important; flex: 1; }
 
-input[type="text"], select {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%; 
-  max-width: 100%;
-  box-sizing: border-box; 
-  font-family: Tahoma, Arial, sans-serif;
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-
-#searchdate {
-  font-weight: 600;
-  font-size: 14px;
-  font-family: Tahoma, Arial, sans-serif;
+/* Layout Utilities for Strict Alignment */
+.modern-ui .field-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
-  font-family: Tahoma, Arial, sans-serif;
-}
-
-/* Button Hover Effects */
-.myButton:hover {
-  background-color: #45a049;
+.modern-ui .lbl-right {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 65px; /* Locks label widths for perfect vertical alignment */
 }
 
 /* Checkbox Label Styling */
-td[align="center"] {
-  font-weight: 600;
-  font-size: 14px;
-  color: #222;
-  font-family: Tahoma, Arial, sans-serif;
+.modern-ui .chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
 }
 
-/* Additional spacing for rows */
-tr {
-  line-height: 1.8;
+.modern-ui .chk-container input {
+    margin: 0;
+    padding: 0;
 }
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
+
+/* Panel Styling */
+.modern-ui .modern-panel {
+    border: 1px solid #e1e4e8;
+    padding: 20px 15px 15px 15px;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Search Button */
+.modern-ui .myButton {
+    font-weight: bold;
+    font-size: 12px;
+    height: 28px !important;
+    padding: 0px 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    padding: 2px;
+    min-height: 200px;
 }
 </style>
 
-<body bgcolor="#E0ECF8">
-<div id="search">
+<script type="text/javascript">
+$(document).ready(function () {
+    /* Upgraded to 24px height to match Master UI standard */
+    $("#searchdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+    
+    funChangeDeletedInv();
 
-<table width="100%">
+    /* Force internal alignment AFTER render */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", 
+            "line-height": "24px", 
+            "font-size": "12px", 
+            "font-family": "Arial, sans-serif",
+            "padding": "0 6px", 
+            "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
+}); 
 
-<tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%">
-        <div id="searchdate" name="searchdate"></div>
-    </td>
+function funChangeDeletedInv(){
+    if(document.getElementById("chkdeletedinv").checked==true){
+        document.getElementById("hidchkdeletedinv").value="1";
+    }
+    else{
+        document.getElementById("hidchkdeletedinv").value="0";
+    }
+}
 
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%">
-        <input type="text" name="searchdocno" id="searchdocno"
-        value='<s:property value="searchdocno"/>'>
-    </td>
+function mainloadSearch() {
+    if(document.getElementById("searchagmtno").value!=""){
+        if(document.getElementById("searchcmbagmttype").value==""){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Agreement Type is Mandatory";
+            return false;
+        }
+    }
+    document.getElementById("errormsg").innerText="";
+    
+    var client=document.getElementById("searchclient").value;
+    var cmbagmttype=document.getElementById("searchcmbagmttype").value;
+    var agmtno=document.getElementById("searchagmtno").value;
+    var docno=document.getElementById("searchdocno").value;
+    var searchdate=$('#searchdate').jqxDateTimeInput('val');
+    
+    // Note: brchName is likely in the parent window calling this popup
+    if(document.getElementById("brchName")) {
+        document.getElementById("brchName").disabled=false;
+    }
+    var searchbranch=$('#brchName').val() || "";
+    
+    var chkdeletedinv=$('#hidchkdeletedinv').val();
+    
+    getdata(client,cmbagmttype,agmtno,docno,searchdate,searchbranch,chkdeletedinv);
+}
 
-    <td width="27%" align="center" rowspan="2">
-        <input type="button" name="btninvsearch" id="btninvsearch"
-        class="myButton" value="Search" onClick="mainloadSearch();">
-    </td>
-</tr>
+function getdata(client,cmbagmttype,agmtno,docno,searchdate,searchbranch,chkdeletedinv){
+    $("#srefreshdiv").load('subMainSearch.jsp?client='+client+'&cmbagmttype='+cmbagmttype+'&agmtno='+agmtno+'&docno='+docno+'&searchdate='+searchdate+'&branch='+searchbranch+'&chkdeletedinv='+chkdeletedinv+'&id=1');
+}
+</script>
 
-<tr>
-    <td align="right">Client</td>
-    <td>
-        <input type="text" name="searchclient" id="searchclient"
-        value='<s:property value="searchclient"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td align="right">Ref Type</td>
-    <td>
-        <select name="searchcmbagmttype" id="searchcmbagmttype">
-            <option value="">--Select--</option>
-            <option value="RAG">Rental</option>
-            <option value="LAG">Lease</option>
-        </select>
-    </td>
-</tr>
+    <div class="modern-panel">
+        
+        <div style="display: flex; gap: 30px;">
+            
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <div class="field-row">
+                    <label class="lbl-right">Date</label>
+                    <div style="flex: 1;">
+                        <div id="searchdate" name="searchdate"></div>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <label class="lbl-right">Client</label>
+                    <input type="text" name="searchclient" id="searchclient" class="input-full" value='<s:property value="searchclient"/>'>
+                </div>
+                <div class="field-row" style="margin-bottom: 0;">
+                    <label class="lbl-right">Agmt No</label>
+                    <input type="text" name="searchagmtno" id="searchagmtno" class="input-full" value='<s:property value="searchagmtno"/>'>
+                </div>
+            </div>
 
-<tr>
-    <td align="right">Agmt No</td>
-    <td>
-        <input type="text" name="searchagmtno" id="searchagmtno"
-        value='<s:property value="searchagmtno"/>'>
-    </td>
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <div class="field-row">
+                    <label class="lbl-right">Doc No</label>
+                    <input type="text" name="searchdocno" id="searchdocno" class="input-full" value='<s:property value="searchdocno"/>'>
+                </div>
+                <div class="field-row">
+                    <label class="lbl-right">Ref Type</label>
+                    <select name="searchcmbagmttype" id="searchcmbagmttype" class="input-full">
+                        <option value="">--Select--</option>
+                        <option value="RAG">Rental</option>
+                        <option value="LAG">Lease</option>
+                    </select>
+                </div>
+                <div class="field-row" style="margin-bottom: 0;">
+                    <label class="lbl-right"></label> <label class="chk-container">
+                        <input type="checkbox" name="chkdeletedinv" id="chkdeletedinv" onchange="funChangeDeletedInv();">
+                        Deleted Invoices
+                    </label>
+                    <input type="hidden" name="hidchkdeletedinv" id="hidchkdeletedinv" value="0">
+                </div>
+            </div>
 
-    <td colspan="2">
-        <input type="checkbox" name="chkdeletedinv" id="chkdeletedinv"
-        onchange="funChangeDeletedInv();">
-        Deleted Invoices
-    </td>
+            <div style="display: flex; align-items: flex-start;">
+                <input type="button" name="btninvsearch" id="btninvsearch" class="myButton" value="Search" onClick="mainloadSearch();">
+            </div>
 
-    <td></td>
-</tr>
+        </div>
 
-<tr>
-<td colspan="5">
-<div id="srefreshdiv">
-<jsp:include page="subMainSearch.jsp" />
+    </div>
+
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="subMainSearch.jsp" />
+        </div>
+    </div>
+
 </div>
-</td>
-</tr>
-
-</table>
-
-</div>
-</body>
