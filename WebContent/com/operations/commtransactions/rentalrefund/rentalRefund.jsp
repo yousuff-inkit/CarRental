@@ -360,6 +360,7 @@ function getBranch() {
                  document.getElementById("txtonaccountamount").value='<%=amount%>';
                  
                  $("#txtclientid, #txtclientname,#txtacno, #cmbratype,#txtagreementvocher, #txtamount, #txtonaccountamount").prop("readonly", true);
+                 getNetTotal(); /* Ensures grid data displays correct calculated totals on load */
              }
      }
     
@@ -392,8 +393,8 @@ function getBranch() {
                  txtaddamount:{number:"Invalid"},
              txtnetamount:{number:"Invalid"},
              txtonaccountamount:{number:"Invalid"},
-             txtdescription: {maxlength:"    Max 500 chars"},
-             txtdescriptions: {maxlength:"    Max 500 chars"},
+             txtdescription: {maxlength:"   Max 500 chars"},
+             txtdescriptions: {maxlength:"   Max 500 chars"},
              cmbpayedas:"*"
              }
      });}); 
@@ -683,10 +684,10 @@ function getBranch() {
     } 
     
     function getNetTotal(){
-        var amount = $('#txtamount').val();
-        var discount = $('#txtdeduction').val();
-        var additionalamt = $('#txtaddamount').val();
-        var netamount=$('#txtnetamount').val();
+        var amount = $('#txtamount').val() || 0;
+        var discount = $('#txtdeduction').val() || 0;
+        var additionalamt = $('#txtaddamount').val() || 0;
+        var netamount= 0;
         
         if(amount!=''){
             netamount=(parseFloat(amount));
@@ -763,6 +764,8 @@ function getBranch() {
 <body onload="setValues();getBranch();getCardTypes();getPayTypes();">
 <div id="mainBG" class="homeContent" data-type="background">
 
+<form id="frmRentalRefund" action="saveRentalRefund" method="post" autocomplete="off">
+
     <jsp:include page="../../../../header.jsp"></jsp:include>
     
     <div style="border: 1px solid transparent; padding: 5px 0;">
@@ -785,8 +788,7 @@ function getBranch() {
         </div>
     </div>      
 
-    <form id="frmRentalRefund" action="saveRentalRefund" method="post" autocomplete="off">
-        <div class="hidden-scrollbar">
+    <div class="hidden-scrollbar">
             
             <div class="middle-section">
                 
@@ -855,7 +857,7 @@ function getBranch() {
                                 <option value="">--Select--</option>
                             </select>
 
-                            <label class="lbl-right" style="width: 100px;">Chq/Card/Onl No</label>
+                            <label class="lbl-right" style="width: 90px;">Chq/Card/Onl No</label>
                             <input type="text" id="txtchequeno" name="txtchequeno" class="input-md" value='<s:property value="txtchequeno"/>'/>
 
                             <label class="lbl-right" style="width: 40px;">Date</label>
