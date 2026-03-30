@@ -23,8 +23,8 @@
 		 $("#btnEdit").hide();$("#btnPrint").hide();$("#btnExcel").hide();$("#btnDelete").hide();$("#btnSearch").hide();$("#btnAttach").hide();  
 		 $("#btnGuideLine").hide();$("#btnSendmail").hide();
 		
-		 $("#jqxStartDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd MMM yyyy"});
-		 $("#jqxEndDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd MMM yyyy"});
+		 $("#jqxStartDate").jqxDateTimeInput({ width: '135px', height: '15px', formatString:"dd MMM yyyy"});
+		 $("#jqxEndDate").jqxDateTimeInput({ width: '135px', height: '15px', formatString:"dd MMM yyyy"});
 		 
 		 $('#unameWindow').jqxWindow({width: '30%', height: '40%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
 	     $('#unameWindow').jqxWindow('close');
