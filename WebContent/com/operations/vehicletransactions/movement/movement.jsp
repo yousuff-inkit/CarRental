@@ -1956,7 +1956,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 
 body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
     padding: 10px;
     background: #f5f7fa;
@@ -1972,7 +1972,7 @@ fieldset {
 }
 
 legend {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     padding: 0 8px;
         border-left: 4px solid #007bff;
@@ -1985,13 +1985,13 @@ table {
 
 td {
     padding: 4px 6px;
-    font-size: 16px;
+    font-size: 14px;
     vertical-align: middle;
 }
 
 input[type="text"], select {
     height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 4px 8px;
