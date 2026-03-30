@@ -59,8 +59,8 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
     	  $("#dateouthidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
     	  $("#garagedeldate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
     	  $("#garagecollectdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#timeout").jqxDateTimeInput({ width: '40%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#closetime").jqxDateTimeInput({ width: '50%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+    	  $("#timeout").jqxDateTimeInput({ width: '80%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+          $("#closetime").jqxDateTimeInput({ width: '80%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
          $("#timeouthidden").jqxDateTimeInput({ width: '12%', height: '15px', formatString: 'HH:mm', showCalendarButton: false });
           $("#garagedeliverytime").jqxDateTimeInput({ width: '50%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
           $("#garagecollecttime").jqxDateTimeInput({ width: '50%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
@@ -1968,6 +1968,7 @@ fieldset {
     border: 1px solid #d1d5db;
     padding: 10px;
     margin-bottom: 10px;
+    background: #fff;
 }
 
 legend {
@@ -2007,21 +2008,66 @@ select {
 }
 
 .myButton {
-    font-weight: 700;
-    font-size: 14px;
-    padding: 6px 10px;
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
     color: #ffffff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
     white-space: nowrap;
+    text-align: center;
 }
 
 .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+#head{
+	background:#fff;
+	border-radius: 20px;
+	padding-bottom:10px;
+	
 }
 
+.input-search-container {
+    position: relative;
+    display: block; 
+    width: 100%;
+    min-width: 150px; 
+    margin-right: 15px;
+}
+
+.input-search-container input {
+    padding-right: 30px !important; 
+    width: 100% !important;
+    display: block;
+    box-sizing: border-box !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+    pointer-events: all; 
+    
+}
+.magnifier-icon:hover {
+    color: #2563eb; 
+    transform: translateY(-50%) scale(1.1);
+}
 </style>
 
 
@@ -2033,10 +2079,10 @@ select {
 			window.parent.formName.value="Movement";
 			window.parent.formCode.value="MOV";
 	</script>
-	<jsp:include page="../../../../header.jsp" />
+	<div id="head"> <jsp:include page="../../../../header.jsp" /></div>
 	<br/> 
 <div class='hidden-scrollbar'>
-<fieldset style="background: #f6f8fa;">
+<fieldset >
 <legend><b>Vehicle Movement Opening Info</b></legend>
 <table width="100%">
   <tr>
@@ -2045,40 +2091,63 @@ select {
                    </td>
                    <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
     <td width="6%" align="right">Fleet No</td>
-    <td width="9%" align="left"><input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search"/></td>
-    <td colspan="8" align="left"><input type="text" id="txtfleetname" name="txtfleetname" style="width:100%;" value='<s:property value="txtfleetname"/>'readonly="readonly"/></td>
-    <td width="4%" align="right">&nbsp;</td>
-    <td width="7%">&nbsp;</td>
+    <td width="13%" align="left" class="input-search-container" ><input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search"/>
+    <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </td>
+    <td colspan="8" align="left"><input type="text" id="txtfleetname" name="txtfleetname" style="width:100%; margin-left:10px" value='<s:property value="txtfleetname"/>'readonly="readonly"/></td>
+    <td width="3%" align="right">&nbsp;</td>
+  
     <td width="5%" align="right">Doc No</td>
-    <td width="10%" align="left"><input type="text" id="docno" name="docno"  tabindex="-1" value='<s:property value="docno"/>' readonly/></td>
+    <td width="11%" align="left"><input type="text" id="docno" name="docno"  tabindex="-1" value='<s:property value="docno"/>' readonly/></td>
     <td width="0%">&nbsp;</td>
   </tr>
   <tr>
     <td width="4%" align="right">Branch</td>
-    <td width="11%" align="left"><select name="cmbbranch" id="cmbbranch" style="width:92%;" onchange="getLocation(this.value);">
+    <td width="13%" align="left"><select name="cmbbranch" id="cmbbranch" style="width:92%;" onchange="getLocation(this.value);">
       <option value="">--Select--</option>
     </select></td>
 <input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>'/>
     <td width="6%" align="right">Location</td>
-    <td align="left"><select name="cmblocation" id="cmblocation" style="width:92%;">
+    <td align="left" colspan="2"><select name="cmblocation" id="cmblocation" style="width:100%;">
       <option value="">--Select--</option>
     </select></td>
     <input type="hidden" id="hiddateout" name="hiddateout" value='<s:property value="hiddateout"/>'/>
-    <td width="5%" align="right">Date Out</td>
+    <td width="7%" align="right">Date Out</td>
     <td width="7%" align="right"><div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div></td>
     <td width="3%" align="right">Time</td>
-    <td width="8%" align="left"><div id='timeout' name='timeout' value='<s:property value="timeout"/>'></div></td>
+    <td width="8%" align="left"><div id='timeout' style='width:100%;' name='timeout' value='<s:property value="timeout"/>'></div></td>
     <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
     <td width="3%" align="right">KM</td>
-    <td width="8%" align="left"><input type="text" id="outkm" name="outkm"  value='<s:property value="outkm"/>'/></td>
+    <td width="7%" align="left"><input type="text" id="outkm" name="outkm"  value='<s:property value="outkm"/>'/></td>
     <td width="3%" align="right">Fuel</td>
-    <td width="7%" align="left"><select id="cmboutfuel" name="cmboutfuel" value='<s:property value="cmboutfuel"/>'>
+    <td width="10%" align="left" ><select id="cmboutfuel" name="cmboutfuel" value='<s:property value="cmboutfuel"/>'>
       <option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
     <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
     </select>
       </td>
       <input type="hidden" id="hidcmboutfuel" name="hidcmboutfuel"  value='<s:property value="hidcmboutfuel"/>'/>
-    <td align="right">Movement Type</td>
+    <td align="right">User</td>
+    <td colspan="2" align="left"><input type="text" id="outuser" name="outuser" style="width:98%;text-transform:uppercase;" value='<s:property value="outuser"/>' /></td>
+    <input type="hidden" name="outuserid" id="outuserid" value='<s:property value="outuserid"/>'/>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">Driver</td>
+    <td align="left" width="9%" ><div class="input-search-container"><input type="text" id="driver" name="driver" value='<s:property value="driver"/>' onKeyDown="getDriver(event,1);" readonly placeholder="Press F3 to Search"/>
+    <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        </div>
+      <input type="checkbox" name="chkgaragedelivery" id="chkgaragedelivery" onChange="checkGarageDelivery();" hidden="true"></td>
+    <input type="hidden" name="hidstaff" id="hidstaff" value='<s:property value="hidstaff"/>'/>
+    <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
+    <td align="right"><!--Delivery-->Remarks</td>
+    <td colspan="8" align="left"><input type="text" id="outremarks" name="outremarks" style="width:100%;" value='<s:property value="outremarks"/>'/></td>
+    <td align="right"  width="10%">Movement Type</td>
     <td colspan="2" align="left"><select id="cmbstatus" name="cmbstatus"  style="width:85%;" onchange="checkStaff();" value='<s:property value="cmbstatus"/>' >
               <option value="">-Select-</option></select>
               </td>
@@ -2086,19 +2155,7 @@ select {
     <td align="left"><input type="text" name="staff" id="staff" value='<s:property value="staff"/>' onKeyDown="getStaff(event,1);" placeholder="Press F3 to Search"/>
      <input type="text" name="garage" id="garage" value='<s:property value="garage"/>' onKeyDown="getGarage(event);" placeholder="Select Garage"/></td>
         <input type="hidden" name="hidgarage" id="hidgarage" value='<s:property value="hidgarage"/>'/>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">Driver</td>
-    <td align="left"><input type="text" id="driver" name="driver" value='<s:property value="driver"/>' onKeyDown="getDriver(event,1);" readonly placeholder="Press F3 to Search"/>
-      <input type="checkbox" name="chkgaragedelivery" id="chkgaragedelivery" onChange="checkGarageDelivery();" hidden="true"></td>
-    <input type="hidden" name="hidstaff" id="hidstaff" value='<s:property value="hidstaff"/>'/>
-    <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
-    <td align="right"><!--Delivery-->Remarks</td>
-    <td colspan="9" align="left"><input type="text" id="outremarks" name="outremarks" style="width:100%;" value='<s:property value="outremarks"/>'/></td>
-    <td align="right">User</td>
-    <td colspan="3" align="left"><input type="text" id="outuser" name="outuser" style="width:98%;text-transform:uppercase;" value='<s:property value="outuser"/>' /></td>
-    <input type="hidden" name="outuserid" id="outuserid" value='<s:property value="outuserid"/>'/>
+    
     <td>&nbsp;</td>
     </tr>
 </table>
@@ -2151,17 +2208,17 @@ select {
   </tr>
 </table>
 </fieldset>
-<fieldset style="background: #f6f8fa;">
+<fieldset>
       <legend><b>Vehicle Movement Closing Info</b></legend>
       <table width="100%">
   <tr>
     <td width="4%" align="right">Branch</td>
-    <td width="8%" align="left"><select name="cmbclosebranch" id="cmbclosebranch" style="width:97%;" onchange="getCloseLocation(this.value);">
+    <td width="10%" align="left"><select name="cmbclosebranch" id="cmbclosebranch" style="width:97%;" onchange="getCloseLocation(this.value);">
       <option value="">--Select--</option>
     </select></td>
     <input type="hidden" name="hidcmbcloselocation" id="hidcmbcloselocation" value='<s:property value="hidcmbcloselocation"/>'/>
     <td width="3%" align="right">Location</td>
-    <td width="7%" align="left"><select name="cmbcloselocation" id="cmbcloselocation" style="width:97%;">
+    <td width="10%" align="left"><select name="cmbcloselocation" id="cmbcloselocation" style="width:97%;">
       <option value="">--Select--</option>
     </select></td>
       <input type="hidden" id="hidclosedate" name="hidclosedate" value='<s:property value="hidclosedate"/>'/>
@@ -2188,7 +2245,7 @@ select {
     <td width="4%" align="right">Driver</td>
     <td width="10%" align="left"><input type="text" name="closedriver" id="closedriver" onKeyDown="getDriver(event,2);" value='<s:property value="closedriver"/>' style="width:100%;"  readonly/></td>
       <input type="hidden" id="hidcmbclosefuel" name="hidcmbclosefuel" value='<s:property value="hidcmbclosefuel"/>'/>
-    <td width="3%" align="right">Staff</td>
+    <td width="8%" align="right">Staff</td>
     <td width="8%" align="left"><input type="text" name="closestaff" id="closestaff" value='<s:property value="closestaff"/>' onKeyDown="getStaff(event,2);"  readonly/></td>
     <input type="hidden" name="hidclosestaff" id="hidclosestaff" value='<s:property value="hidclosestaff"/>'/>
     <input type="hidden" name="hidcmbaccidents" id="hidcmbaccidents" value='<s:property value="hidcmbaccidents"/>'/>

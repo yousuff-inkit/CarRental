@@ -8,368 +8,9 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
-<style>
+ <style>
 
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size:14px;
-    font-weight:400;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    box-sizing: border-box;
-    overflow-y: auto !important;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-/* INPUTS */
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: auto;
-    max-width: 100%;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* LABELS */
-
-label {
-    font-family:'Segoe UI','Roboto','Arial',sans-serif;
-    font-size:16px;
-    font-weight:600;
-    color:#253858;
-    white-space: nowrap;
-    line-height: 32px;
-    padding: 0px 8px 0px 0px;
-    text-align: right;
-}
-
-/* SECTION BLOCK */
-
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-/* SECTION TITLES */
-
-.section-block h2 {
-    font-family:'Segoe UI','Roboto','Arial',sans-serif;
-    font-size:17.6px;
-    font-weight:600;
-    margin:0 0 20px;
-    padding-left:10px;
-    border-left:4px solid #007bff;
-}
-
-/* ROW LAYOUT */
-
-.section-row {
-    display:flex;
-    gap:26px;
-    margin-bottom:30px;
-}
-
-.form-group {
-    display:grid;
-    grid-template-columns:120px 1fr;
-    align-items:center;
-    gap:12px 16px;
-    margin-bottom:12px;
-}
-
-.form-group label {
-    font-size:14px;
-}
-
-/* AGREEMENT GRID */
-
-.agmt-info-grid {
-    display:grid;
-    grid-template-columns:auto 1fr auto 1fr auto 1fr;
-    gap:15px 25px;
-    align-items:center;
-}
-
-/* VEHICLE IN/OUT GRID */
-
-.in-out-info-grid {
-    display:grid;
-    grid-template-columns:auto 1fr auto 1fr;
-    gap:12px 16px;
-    align-items:center;
-}
-
-.in-out-info-grid label {
-    font-weight:500;
-    padding-right:8px;
-}
-
-/* INPUT GROUP */
-
-.input-group {
-    display:flex;
-    gap:5px;
-    width:100%;
-}
-
-.input-group input {
-    width:35% !important;
-}
-
-.input-group input:nth-child(2) {
-    width:65% !important;
-}
-
-/* CHECKBOX ALIGN */
-
-.checkbox-label-end {
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-    gap:5px;
-}
-
-/* BUTTON GROUP */
-
-.btn-group-end {
-    grid-column:span 4;
-    text-align:right;
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
-    margin-top:10px;
-}
-
-/* STATUS LABEL */
-
-#lblcancelstatus {
-    font-family:'Segoe UI','Roboto','Arial',sans-serif;
-    font-size:14px;
-    font-weight:600;
-    color:#6000FC;
-    text-align:center;
-    grid-column:span 2;
-}
-
-/* DATE PICKER */
-
-.jqx-datetimeinput-widget,
-.jqx-datetimeinput {
-    height:32px !important;
-    line-height:32px !important;
-}
-
-/* SCROLL */
-
-.hidden-scrollbar {
-    overflow-y:visible !important;
-    max-height:none !important;
-    min-height:1px;
-    padding-right:5px;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width:8px;
-    background:#f0f0f0;
-}
-
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-    background:#c0c0c0;
-    border-radius:4px;
-}
-
-/* FORM TITLE */
-
-#formdet {
-    display:block;
-    text-align:left !important;
-    width:100%;
-    margin-left:0;
-}
-
-/* Fix header date alignment */
-.receipt-header label{
-    line-height:32px;
-}
-
-.receipt-header .jqx-datetimeinput{
-    height:32px !important;
-}
-
-/* Fix Doc No width */
-#docno{
-    width:180px !important;
-}
-
-/* Fix agreement grid column widths */
-.agmt-info-grid{
-    grid-template-columns:120px 1fr 120px 1fr 120px 1fr;
-}
-
-/* Fix input group alignment */
-.input-group{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-/* Fix Fleet No two inputs */
-.input-group input:first-child{
-    width:120px !important;
-}
-
-.input-group input:nth-child(2){
-    flex:1;
-}
-
-/* Fix Date Out / Time Out layout */
-#dateout,
-#timeout{
-    width:120px !important;
-}
-
-/* Fix KM + Fuel alignment */
-#outkm{
-    width:100px !important;
-}
-
-#cmbfuel{
-    width:140px !important;
-}
-
-/* Fix description field full width */
-#description{
-    width:100% !important;
-}
-
-/* Fix Reference No alignment */
-#referenceno{
-    width:220px !important;
-}
-
-/* Align labels properly */
-.agmt-info-grid label{
-    text-align:right;
-    padding-right:10px;
-}
-
-/* Prevent stretched inputs */
-.agmt-info-grid input,
-.agmt-info-grid select{
-    max-width:100%;
-}
-/* Align Date picker with label */
-#date{
-    display:inline-block;
-    vertical-align:middle;
-}
-
-/* Fix jqx date input height */
-.jqx-datetimeinput,
-.jqx-datetimeinput-widget{
-    height:32px !important;
-    line-height:32px !important;
-}
-
-/* Align internal input */
-.jqx-datetimeinput input{
-    height:32px !important;
-    line-height:32px !important;
-    margin-top:0px !important;
-}
-
-/* Align label with date */
-.receipt-header label{
-    line-height:32px;
-}
-.receipt-header{
-    padding-right:20px;
-}
-.jqx-datetimeinput{
-    height:34px !important;
-}
-
-.jqx-datetimeinput input{
-    line-height:34px !important;
-}
-body::-webkit-scrollbar {
-	width: 0px;
-}
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-  select {
-    height: 34px !important;
-    line-height: 34px !important;
-    padding: 4px 8px !important;
-}
-
-select::-ms-expand {
-    display: block;
-}
-
-.form-group select,
-.agmt-info-grid select,
-.in-out-info-grid select {
-    min-height: 34px;
-}
-.agmt-info-grid {
-    grid-template-columns: 120px 1fr 120px 1fr 120px 1fr;
-    align-items: center;
-}
-.agmt-info-grid select {
-    width: 100%;
-    min-width: 0;
-}
-</style>
-
-
-
+</style> 
 <script type="text/javascript">
      /*	Words Used for representing different types of vehicle movement
 	  Collect Details => oncollect
@@ -1767,7 +1408,129 @@ function dateenable(){
 	}
   </script>
 
- 
+ <style>
+
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 10px;
+    background: #f5f7fa;
+    box-sizing: border-box;
+}
+
+fieldset {
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+legend {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 8px;
+        border-left: 4px solid #007bff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 4px 6px;
+    font-size: 14px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+input[type="text"], select {
+    height: 30px;
+    font-size: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 2px 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[readonly] {
+    background: #f3f4f6;
+}
+
+select {
+    background: #fff;
+}
+
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+#head{
+	background:#fff;
+	border-radius: 20px;
+	padding-bottom:10px;
+	
+}
+
+.input-search-container {
+    position: relative;
+    display: block; 
+    width: 100%;
+    min-width: 150px; 
+    margin-right: 15px;
+}
+
+.input-search-container input {
+    padding-right: 30px !important; 
+    width: 100% !important;
+    display: block;
+    box-sizing: border-box !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+    pointer-events: all; 
+    
+}
+.magnifier-icon:hover {
+    color: #2563eb; 
+    transform: translateY(-50%) scale(1.1);
+}
+.hidden-scrollbar {
+  overflow: auto;
+  height: 540px;
+
+}
+</style>
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
@@ -1776,378 +1539,316 @@ function dateenable(){
 			window.parent.formName.value="Replacement";
 			window.parent.formCode.value="RPL";
 	</script>
-	<jsp:include page="../../../../header.jsp" />
-	<div class="receipt-header">
-<table width="100%">
-<tr>
-
-<td width="10%" align="right">
-Date
-</td>
-
-<td width="20%">
-<div id="date" name="date" value='<s:property value="date"/>'></div>
-<input type="hidden" id="hidddate" name="hidddate"
-value='<s:property value="hidddate"/>'/>
-</td>
-
-<td width="50%"></td>
-
-<td width="10%" align="right">
-<label>Doc No</label>
-</td>
-
-<td width="10%">
-<input type="text"
-id="docno"
-name="docno"
-readonly
-value='<s:property value="docno"/>'
-tabindex="-1"/>
-</td>
-
+	<div id="head"><jsp:include page="../../../../header.jsp" /></div>
+	<br/>
+<div class='hidden-scrollbar'>
+    <fieldset>
+      <legend>Vehicle Info As In Agreement</legend>
+      <table width="100%">
+        <tr>
+    <td align="right" style="width: 60px;">Date</td>
+    <td style="width: 130px;">
+        <div id="date" name="date" value='<s:property value="date"/>'></div>
+    </td>
+    <input type="hidden" id="hidddate" name="hidddate" value='<s:property value="hidddate"/>' />
+    
+    <td align="right" style="width: 90px;">Rental Type</td>
+    <td style="width: 110px;">
+        <select id="cmbrentaltype" name="cmbrentaltype" style="width: 100px;" value='<s:property value="cmbrentaltype"/>'>
+            <option value="">--Select--</option>
+            <option value="RAG">Rental</option>
+            <option value="LAG">Lease</option>
+        </select>
+    </td>
+    
+    <td align="right" style="width: 60px;">Branch</td>
+    <td style="width: 110px;">
+        <select name="cmbagmtbranch" id="cmbagmtbranch" style="width: 100px;" value='<s:property value="cmbagmtbranch"/>'>
+            <option value="">--Select--</option>
+        </select>
+    </td>
+    <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
+    
+    <td align="right" style="width: 60px;">Ref No</td>
+    <td style="width: 300px;">
+        <div style="display: flex; gap: 5px;">
+           <div class="input-search-container"> <input type="text" id="refvocno" name="refvocno" style="width: 100px;" value='<s:property value="refvocno"/>' placeholder="Press F3" readonly onKeyDown="getAgmtno(event);" />
+           <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        </div>
+            <input type="text" id="refname" name="refname" style="flex-grow: 1;" value='<s:property value="refname"/>' readonly />
+        </div>
+    </td>
+    <input type="hidden" id="hidcmbrentaltype" name="hidcmbrentaltype" value='<s:property value="hidcmbrentaltype"/>' />
+    <input type="hidden" id="hidrefdate" name="hidrefdate" value='<s:property value="hidrefdate"/>' />
+    
+    <td align="right" style="width: 80px;">Ref Date</td>
+    <td style="width: 130px;">
+        <div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div>
+    </td>
+    <input type="hidden" id="hidreftime" name="hidreftime" value='<s:property value="hidreftime"/>' />
+    
+    <td align="right" style="width: 60px;">Doc No</td>
+    <td style="width: 100px;">
+        <input type="text" id="docno" name="docno" style="width: 90px;" tabindex="-1" readonly value='<s:property value="docno"/>' />
+    </td>
 </tr>
-</table>
-</div>
-	
-<div class='hidden-scrollbar' style="padding: 10px;">
-
-    <div class="section-block" style="margin-bottom: 20px;">
-        <h2>Vehicle Info As In Agreement</h2>
-        
-        <div class="agmt-info-grid">
-           
-            <label for="cmbrentaltype">Rental Type</label>
-            <div>
-                <select id="cmbrentaltype" name="cmbrentaltype" value='<s:property value="cmbrentaltype"/>'>
-                    <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
-                </select>
-            </div>
-            
-             
-             
-            <label for="refvocno">Ref No</label>
-            <div style="grid-column: span 1;">
-                <div class="input-group">
-                    <input type="text" id="refvocno" name="refvocno" value='<s:property value="refvocno"/>' placeholder="Press F3 to Search" readonly onKeyDown="getAgmtno(event);"/>
-                    <input type="text" id="refname" name="refname" value='<s:property value="refname"/>' readonly style="width: 60% !important;"/>
-                    <input type="hidden" id="hidcmbrentaltype" name="hidcmbrentaltype" value='<s:property value="hidcmbrentaltype"/>'/>
-                </div>
-            </div>
-            
-            <label for="refdate">Ref Date</label>
-            <div>
-                <div id='refdate' name='refdate' value='<s:property value="refdate"/>'></div>
-                <input type="hidden" id="hidrefdate" name="hidrefdate" value='<s:property value="hidrefdate"/>'/>
-                <input type="hidden" id="hidreftime" name="hidreftime" value='<s:property value="hidreftime"/>'/>
-            </div>
-            
-            <label for="cmbagmtbranch">Branch</label>
-            <div>
-                <select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>'><option value="">--Select--</option></select>
-                <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>' >
-            </div>
-
-
-            <label for="txtfleetno">Fleet No</label>
-            <div style="grid-column: span 1;">
-                <div class="input-group">
-                    <input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' readonly/>
-                    <input type="text" id="txtfleetname" name="txtfleetname" value='<s:property value="txtfleetname"/>' readonly style="width: 71% !important;"/>
-                </div>
-            </div>
-            
-            <label for="dateout">Date Out</label>
-            <div style="grid-column: span 1;">
-                <div class="input-group">
-                    <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
-                    <input type="hidden" name="hiddateout" id="hiddateout" value='<s:property value="hiddateout"/>'/>
-                    <label for="timeout" style="width: 80px; text-align: right;">Time Out</label>
-                    <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
-                    <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
-                </div>
-            </div>
-            
-            <label for="outkm">Km Out</label>
-            <div style="grid-column: span 1;">
-                <div class="input-group">
-                    <input type="text" id="outkm" name="outkm" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event,id)"/>
-                    <label for="cmbfuel" style="width: 50px; text-align: right;">Fuel</label>
-                    <select id="cmbfuel" name="cmbfuel" value='<s:property value="cmbfuel"/>'>
-                        <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                    <input type="hidden" id="hidcmbfuel" name="hidcmbfuel" value='<s:property value="hidcmbfuel"/>'/>
-                </div>
-            </div>
-            
-            <label for="txtbranch">Branch</label>
-            <div>
-                <input type="text" name="txtbranch" id="txtbranch" readonly value='<s:property value="txtbranch"/>'/>
-                <input type="hidden" id="hidtxtbranch" name="hidtxtbranch" value='<s:property value="hidtxtbranch"/>'/>
-            </div>
-            
-            <label for="txtlocation">Location</label>
-            <div>
-                <input type="text" name="txtlocation" id="txtlocation" readonly value='<s:property value="txtlocation"/>'/>
-                <input type="hidden" name="hidtxtlocation" id="hidtxtlocation" value='<s:property value="hidtxtlocation"/>'/>
-            </div>
-            
-            <label for="cmbtrreason">Tr. Reason</label>
-            <div>
-                <select id="cmbtrreason" name="cmbtrreason" value='<s:property value="cmbtrreason"/>'>
-                    <option value="">--Select--</option>
-                </select>
-            </div>
-            
-            <label for="cmbreplacetype">Replace Type</label>
-            <div>
-                <select name="cmbreplacetype" id="cmbreplacetype" onchange="checkReplace();">
-                    <option value="">--Select--</option>
-                    <option value="atbranch">At Branch</option>
-                    <option value="collection">Collection</option>
-                </select>
-                <input type="hidden" id="hidcmbtrreason" name="hidcmbtrreason" value='<s:property value="hidcmbtrreason"/>'/>
-                <input type="hidden" name="hidcmbreplacetype" id="hidcmbreplacetype" value='<s:property value="hidcmbreplacetype"/>' />
-            </div>
-            
-           <label for="description">Description</label>
-<div>
-<input type="text" name="description" id="description"
-value='<s:property value="description"/>'/>
-</div>
-
-<label for="referenceno">Reference No</label>
-<div>
-<input type="text" name="referenceno" id="referenceno"
-value='<s:property value="referenceno"/>'/>
-</div>
-            
-            <div style="grid-column: span 4;"></div> 
-            <div style="grid-column: span 2; text-align: center;">
-                <label id="lblcancelstatus" name="lblcancelstatus"></label>
-                <input type="hidden" name="hiduser" id="hiduser" value='<s:property value="hiduser"/>'/>
-            </div>
+        <tr>
+    <td align="right" style="width: 60px;">Fleet No</td>
+    <td colspan="3">
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="txtfleetno" name="txtfleetno" style="width: 100px;" value='<s:property value="txtfleetno"/>' readonly />
+            <input type="text" id="txtfleetname" name="txtfleetname" style="flex-grow: 1;" value='<s:property value="txtfleetname"/>' readonly />
         </div>
-    </div>
+    </td>
     
+    <td align="right" style="width: 70px;">Date Out</td>
+    <td style="width: 130px;">
+        <div id="dateout" name="dateout" value='<s:property value="dateout"/>'></div>
+    </td>
+    <input type="hidden" name="hiddateout" id="hiddateout" value='<s:property value="hiddateout"/>' />
     
-    <div class="section-row">
-        <div class="section-block">
-            <h2>Vehicle In Info</h2>
-            <div class="in-out-info-grid">
-                
-                <div class="checkbox-label-end">
-                    <input type="checkbox" id="chkcollection" name="chkcollection" onchange="checkCollection();">
-                    <label for="chkcollection" style="padding-right: 0;">Collection</label>
-                    <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'/>
-                </div>
-                <div class="field-input">
-                    <input type="text" name="collectdriver" id="collectdriver" value='<s:property value="collectdriver"/>' onkeydown="getCollectDriver(event);"/>
-                    <input type="hidden" name="hidcollectdriver" id="hidcollectdriver" value='<s:property value="hidcollectdriver"/>'/>
-                </div>
-                
-                <label for="outuser" class="field-label">User</label>
-                <div class="field-input">
-                    <input type="text" id="outuser" name="outuser" value='<s:property value="outuser"/>'/>
-                </div>
-                
-                <label class="field-label">Collect Details : Date</label>
-                <div class="field-input">
-                    <div id="oncollectdate" name="oncollectdate" value='<s:property value="oncollectdate"/>'></div>
-                    <input type="hidden" name="hidoncollectdate" id="hidoncollectdate" value='<s:property value="hidoncollectdate"/>'/>
-                </div>
-                
-                <label class="field-label">Time</label>
-                <div class="field-input">
-                    <div id='oncollecttime' name='oncollecttime' value='<s:property value="oncollecttime"/>'></div>
-                    <input type="hidden" id="hidoncollecttime" name="hidoncollecttime" value='<s:property value="hidoncollecttime"/>'/>
-                </div>
-                
-                <label class="field-label">KM</label>
-                <div class="field-input">
-                    <input type="text" id="oncollectkm" name="oncollectkm" value='<s:property value="oncollectkm"/>' onkeypress="javascript:return isNumber (event,id)"/>
-                </div>
-                
-                <label class="field-label">Fuel</label>
-                <div class="field-input">
-                    <select id="cmboncollectfuel" name="cmboncollectfuel" value='<s:property value="cmboncollectfuel"/>'>
-                        <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                    <input type="hidden" id="hidcmboncollectfuel" name="hidcmboncollectfuel" value='<s:property value="hidcmboncollectfuel"/>'/>
-                </div>
-
-                <label class="field-label">In Details : Date</label>
-                <div class="field-input">
-                    <div id="incollectdate" name="incollectdate" value='<s:property value="incollectdate"/>'></div>
-                    <input type="hidden" name="hidincollectdate" id="hidincollectdate" value='<s:property value="hidincollectdate"/>'>
-                </div>
-                
-                <label class="field-label">Time</label>
-                <div class="field-input">
-                    <div id='incollecttime' name='incollecttime' value='<s:property value="incollecttime"/>'></div>
-                    <input type="hidden" id="hidincollecttime" name="hidincollecttime" value='<s:property value="hidincollecttime"/>'/>
-                </div>
-                
-                <label class="field-label">KM</label>
-                <div class="field-input">
-                    <input type="text" id="incollectkm" name="incollectkm" value='<s:property value="incollectkm"/>' onkeypress="javascript:return isNumber (event,id)"/>
-                </div>
-                
-                <label class="field-label">Fuel</label>
-                <div class="field-input">
-                    <select id="cmbincollectfuel" name="cmbincollectfuel" value='<s:property value="cmbincollectfuel"/>'>
-                        <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                    <input type="hidden" id="hidcmbincollectfuel" name="hidcmbincollectfuel" value='<s:property value="hidcmbincollectfuel"/>'/>
-                </div>
-
-                <label class="field-label">Branch</label>
-                <div class="field-input">
-                    <select name="cmbinbranch" id="cmbinbranch" onchange="getLoc(this.value);"><option value="">--Select--</option></select>
-                    <input type="hidden" id="hidcmbinbranch" name="hidcmbinbranch" value='<s:property value="hidcmbinbranch"/>'/>
-                </div>
-                
-                <label class="field-label">Location</label>
-                <div class="field-input">
-                    <select name="cmbinlocation" id="cmbinlocation" ><option value="">--Select--</option></select>
-                    <input type="hidden" id="hidcmbinlocation" name="hidcmbinlocation" value='<s:property value="hidcmbinlocation"/>'/>
-                </div>
-                
-                <label for="indesc" class="field-label">Description</label>
-                <div style="grid-column: span 3;">
-                    <input type="text" name="indesc" id="indesc" value='<s:property value="indesc"/>'/>
-                </div>
-                
-                <div class="btn-group-end" style="grid-column: span 4;">
-                    <input type="button" name="btnupdate" id="btnupdate" class="myButton" value="Update" onclick="funupdate();">
-                    <input type="button" name="btnsave" id="btnsave" class="myButton" value="Save" onclick="funsave();">
-                </div>
-            </div>
-        </div>
+    <td align="right" style="width: 70px;">Time Out</td>
+    <td style="width: 90px;">
+        <div id="timeout" name="timeout" value='<s:property value="timeout"/>'></div>
+    </td>
+    <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>' />
+    
+    <td align="right" style="width: 60px;">Km Out</td>
+    <td style="width: 90px;">
+        <input type="text" id="outkm" name="outkm" style="width: 80px;" value='<s:property value="outkm"/>' readonly onkeypress="javascript:return isNumber (event,id)" />
+    </td>
+    
+    <td align="right" style="width: 50px;">Fuel</td>
+    <td>
+        <select id="cmbfuel" name="cmbfuel" style="width: 100px;" value='<s:property value="cmbfuel"/>'>
+            <option value="">--Select--</option>
+            <option value=0.000>Level 0/8</option>
+            <option value=0.125>Level 1/8</option>
+            <option value=0.250>Level 2/8</option>
+            <option value=0.375>Level 3/8</option>
+            <option value=0.500>Level 4/8</option>
+            <option value=0.625>Level 5/8</option>
+            <option value=0.750>Level 6/8</option>
+            <option value=0.875>Level 7/8</option>
+            <option value=1.000>Level 8/8</option>
+        </select>
+    </td>
+    <input type="hidden" id="hidcmbfuel" name="hidcmbfuel" value='<s:property value="hidcmbfuel"/>' />
+</tr>
+        <tr>
+          <td align="right">Branch</td>
+          <td colspan="3" align="left"><input type="text" name="txtbranch" id="txtbranch" readonly value='<s:property value="txtbranch"/>'/></td>
+             <input type="hidden" id="hidtxtbranch" name="hidtxtbranch" value='<s:property value="hidtxtbranch"/>'/>
+          <td align="right">Location</td>
+          <td align="left"><input type="text" name="txtlocation" id="txtlocation" readonly value='<s:property value="txtlocation"/>'/></td>
+           <input type="hidden" name="hidtxtlocation" id="hidtxtlocation" value='<s:property value="hidtxtlocation"/>'/>
+          <td align="right">Tr. Reason</td>
+          <td align="left"><select id="cmbtrreason" name="cmbtrreason" style="width:95%;" value='<s:property value="cmbtrreason"/>'>
+            <option value="">--Select--</option>
+          </select></td>
+            
+          <td align="right">Replace Type</td>
+          <td><select name="cmbreplacetype" id="cmbreplacetype" style="width:95%;" onchange="checkReplace();">
+            <option value="">--Select--</option>
+            <option value="atbranch">At Branch</option>
+            <option value="collection">Collection</option>
+          </select></td>
+          <input type="hidden" id="hidcmbtrreason" name="hidcmbtrreason" value='<s:property value="hidcmbtrreason"/>'/>
+          <td align="right">&nbsp;</td>
+          <td colspan="3" align="center"><i><b><label id="lblcancelstatus"  name="lblcancelstatus"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"></label></b></i></td>
+          <input type="hidden" name="hiduser" id="hiduser" value='<s:property value="hiduser"/>'/>
+          <input type="hidden" name="hidcmbreplacetype" id="hidcmbreplacetype" value='<s:property value="hidcmbreplacetype"/>' />
+         
+        </tr>
+        <tr>
+          <td align="right">Description</td>
+          <td colspan="7" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' style="width:100%;"/></td>
+          <td align="right">Reference No</td>
+          <td colspan="1" align="left"><input type="text" name="referenceno" id="referenceno" value='<s:property value="referenceno"/>' style="width:100%;"/></td>
+        </tr>
+      </table>
+    </fieldset>
+    
+ <table width="100%">
+  <tr>
+    <td><fieldset><legend>Vehicle In Info</legend><table width="100%">
+      <tr>
+        <td align="right"><input type="checkbox" id="chkcollection" name="chkcollection" onchange="checkCollection();">
+          Collection</td>
+        <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'/>
         
-        <div class="section-block">
-            <h2>New Vehicle Out Info</h2>
-            <div class="in-out-info-grid">
-                
-                <label for="txtoutfleetno" class="field-label">Fleet</label>
-                <div style="grid-column: span 3;">
-                    <div class="input-group">
-                        <input type="text" id="txtoutfleetno" name="txtoutfleetno" value='<s:property value="txtoutfleetno"/>' placeholder="Press F3 to Search" onKeyDown="getOutfleet(event);"/>
-                        <input type="text" id="txtoutfleetname" name="txtoutfleetname" value='<s:property value="txtoutfleetname"/>' style="width: 65% !important;"/>
-                        <input type="hidden" name="hidoutbranch" id="hidoutbranch" value='<s:property value="hidoutbranch"/>'/>
-                        <input type="hidden" name="hidoutlocation" id="hidoutlocation" value='<s:property value="hidoutlocation"/>'/>
-                    </div>
-                </div>
-                
-                <label for="outbranch" class="field-label">Branch</label>
-                <div class="field-input">
-                    <input type="text" name="outbranch" id="outbranch" value='<s:property value="outbranch"/>'/>
-                </div>
-                
-                <label for="outlocation" class="field-label">Location</label>
-                <div class="field-input">
-                    <input type="text" name="outlocation" id="outlocation" value='<s:property value="outlocation"/>'/>
-                </div>
-                
-                <label for="deliveryto" class="field-label">To Driver</label>
-                <div class="field-input">
-                    <input type="text" name="deliveryto" id="deliveryto" value='<s:property value="deliveryto"/>'/>
-                </div>
-                
-                <div class="checkbox-label-end">
-                    <input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
-                    <label for="chkdelivery" style="padding-right: 0;">Delivery</label>
-                    <input type="hidden" name="hidchkdelivery" id="hidchkdelivery" value='<s:property value="hidchkdelivery"/>'>
-                </div>
-                
-                <div class="field-input">
-                    <input type="text" name="deliverydriver" id="deliverydriver" value='<s:property value="deliverydriver"/>' onkeydown="getDeliveryDriver(event)"/>
-                    <input type="hidden" id="hiddeliverydriver" name="hiddeliverydriver" value='<s:property value="hiddeliverydriver"/>'/>
-                </div>
-
-                <label class="field-label">Del Details : Date</label>
-                <div class="field-input">
-                    <div id="deliveryoutdate" name="deliveryoutdate" value='<s:property value="deliveryoutdate"/>'></div>
-                    <input type="hidden" id="hiddeliveryoutdate" name="hiddeliveryoutdate" value='<s:property value="hiddeliveryoutdate"/>'/>
-                </div>
-                
-                <label class="field-label">Time</label>
-                <div class="field-input">
-                    <div id="deliveryouttime" name="deliveryouttime" value='<s:property value="deliveryouttime"/>'></div>
-                    <input type="hidden" id="hiddeliveryouttime" name="hiddeliveryouttime" value='<s:property value="hiddeliveryouttime"/>'/>
-                </div>
-                
-                <label class="field-label">KM</label>
-                <div class="field-input">
-                    <input type="text" id="deliveryoutkm" name="deliveryoutkm" value='<s:property value="deliveryoutkm"/>' onkeypress="javascript:return isNumber (event,id)"/>
-                </div>
-                
-                <label class="field-label">Fuel</label>
-                <div class="field-input">
-                    <select id="cmbdeliveryoutfuel" name="cmbdeliveryoutfuel" value='<s:property value="cmbdeliveryoutfuel"/>'>
-                        <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                    <input type="hidden" id="hidcmbdeliveryoutfuel" name="hidcmbdeliveryoutfuel" value='<s:property value="hidcmbdeliveryoutfuel"/>'/>
-                </div>
-
-                <label for="user" class="field-label">User</label>
-                <div class="field-input">
-                    <input type="text" id="user" name="user" value='<s:property value="user"/>' readonly/>
-                    <input type="hidden" name="hidoutuser" id="hidoutuser" value='<s:property value="hidoutuser"/>'/>
-                </div>
-                
-                <label class="field-label">Out Details : Date</label>
-                <div class="field-input">
-                    <div id="ondeliverydate" name="ondeliverydate" value='<s:property value="ondeliverydate"/>'></div>
-                    <input type="hidden" id="hidondeliverydate" name="hidondeliverydate" value='<s:property value="hidondeliverydate"/>'/>
-                </div>
-                
-                <label class="field-label">Time</label>
-                <div class="field-input">
-                    <div id="ondeliverytime" name="ondeliverytime" value='<s:property value="ondeliverytime"/>'></div>
-                    <input type="hidden" id="hidondeliverytime" name="hidondeliverytime" value='<s:property value="hidondeliverytime"/>'/>
-                </div>
-
-                <label class="field-label">KM</label>
-                <div class="field-input">
-                    <input type="text" id="ondeliverykm" name="ondeliverykm" value='<s:property value="ondeliverykm"/>' onkeypress="javascript:return isNumber (event,id)"/>
-                </div>
-                
-                <label class="field-label">Fuel</label>
-                <div class="field-input">
-                    <select id="cmbondeliveryfuel" name="cmbondeliveryfuel" value='<s:property value="cmbondeliveryfuel"/>'>
-                        <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-                        <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                    </select>
-                    <input type="hidden" id="hidcmbondeliveryfuel" name="hidcmbondeliveryfuel" value='<s:property value="hidcmbondeliveryfuel"/>'/>
-                </div>
-                
-            </div>
+        <td align="left"><input type="text" name="collectdriver" id="collectdriver" value='<s:property value="collectdriver"/>' onkeydown="getCollectDriver(event);"/></td>
+        <input type="hidden" name="hidcollectdriver" id="hidcollectdriver" value='<s:property value="hidcollectdriver"/>'/>
+        <td align="right">User</td>
+        <td align="left"><input type="text" id="outuser" name="outuser" value='<s:property value="outuser"/>'/></td>
+        <td align="right">&nbsp;</td>
+        <td align="left"><input type="button" name="btnupdate" id="btnupdate" class="myButton" value="Update" onclick="funupdate();">
+        <input type="button" name="btnsave" id="btnsave" class="myButton" value="Save" onclick="funsave();">
+        </td>
+        <td align="right">&nbsp;</td>
+        <td colspan="5" align="left">&nbsp;</td>
+        </tr>
+      <tr>
+        <td width="9%" align="right">Collect Details : Date</td>
+        <td width="12%" align="left"><div id="oncollectdate" name="oncollectdate" value='<s:property value="oncollectdate"/>'></div></td>
+        <input type="hidden" name="hidoncollectdate" id="hidoncollectdate" value='<s:property value="hidoncollectdate"/>'/>
+        <td width="8%" align="right">Time</td>
+        <td width="11%" align="left"><div id='oncollecttime' name='oncollecttime' value='<s:property value="oncollecttime"/>'></div></td>
+        <input type="hidden" id="hidoncollecttime" name="hidoncollecttime" value='<s:property value="hidoncollecttime"/>'/>
+        <td width="10%" align="right">KM</td>
+        <td width="15%" align="left"><input type="text" id="oncollectkm" name="oncollectkm" style="width:50%" value='<s:property value="oncollectkm"/>' onkeypress="javascript:return isNumber (event,id)"/></td>
+        <td width="8%" align="right">Fuel</td>
+        <td colspan="5" align="left"><select id="cmboncollectfuel" name="cmboncollectfuel" value='<s:property value="cmboncollectfuel"/>'>
+          <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+          </select></td>
+        <input type="hidden" id="hidcmboncollectfuel" name="hidcmboncollectfuel" value='<s:property value="hidcmboncollectfuel"/>'/>
+        </tr>
+      <tr>
+        <td align="right">In Details : Date</td>
+        <td align="left"><div id="incollectdate" name="incollectdate" value='<s:property value="incollectdate"/>'></div></td>
+        <input type="hidden" name="hidincollectdate" id="hidincollectdate"  value='<s:property value="hidincollectdate"/>'>
+        <td align="right">Time</td>
+        <td align="left"><div id='incollecttime' name='incollecttime' value='<s:property value="incollecttime"/>'></div></td>
+        <input type="hidden" id="hidincollecttime" name="hidincollecttime" value='<s:property value="hidincollecttime"/>'/>
+        <td align="right">KM</td>
+        <td align="left"><input type="text" id="incollectkm" name="incollectkm" style="width:50%" value='<s:property value="incollectkm"/>' onkeypress="javascript:return isNumber (event,id)"/></td>
+        <td align="right">Fuel</td>
+        <td width="6%" align="left"><select id="cmbincollectfuel" name="cmbincollectfuel" value='<s:property value="cmbincollectfuel"/>'>
+          <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+          </select></td>
+        <td width="4%" align="right">Branch</td>
+        <td width="6%" align="left"><select name="cmbinbranch" id="cmbinbranch" onchange="getLoc(this.value);"><option value="">--Select--</option></select></td>
+        <td width="4%" align="right">Location</td>
+        <td width="7%" align="left"><select name="cmbinlocation" id="cmbinlocation" ><option value="">--Select--</option></select></td>
+        <input type="hidden" id="hidcmbincollectfuel" name="hidcmbincollectfuel" value='<s:property value="hidcmbincollectfuel"/>'/>
+                <input type="hidden" id="hidcmbinbranch" name="hidcmbinbranch" value='<s:property value="hidcmbinbranch"/>'/>
+<input type="hidden" id="hidcmbinlocation" name="hidcmbinlocation" value='<s:property value="hidcmbinlocation"/>'/>
+        </tr>
+      <tr>
+        <td align="right">Description</td>
+        <td colspan="7" align="left"><input type="text" name="indesc" id="indesc" value='<s:property value="indesc"/>' style="width:100%;"/></td>
+        <td align="right">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+        <td align="right">&nbsp;</td>
+        <td align="left">&nbsp;</td>
+      </tr>
+      </table>
+    </fieldset>
+  <tr >
+   <td>
+     <fieldset>
+       <legend>New Vehicle Out Info</legend>
+       <table width="100%">
+         <tr>
+    <td align="right" style="width: 60px;">Fleet</td>
+    <td colspan="3" style="width: 300px;">
+        <div style="display: flex; gap: 5px;">
+        <div class="input-search-container">
+            <input type="text" id="txtoutfleetno" name="txtoutfleetno" style="width: 100px;" value='<s:property value="txtoutfleetno"/>' placeholder="Press F3" onKeyDown="getOutfleet(event);"/>
+            <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
         </div>
-    </div>
+            <input type="text" id="txtoutfleetname" name="txtoutfleetname" style="flex-grow: 1;" value='<s:property value="txtoutfleetname"/>'/>
+        </div>
+    </td>
+    
+    <input type="hidden" name="hidoutbranch" id="hidoutbranch" value='<s:property value="hidoutbranch"/>'/>
+    <input type="hidden" name="hidoutlocation" id="hidoutlocation" value='<s:property value="hidoutlocation"/>'/>
+    
+    <td align="right" style="width: 70px;">Branch</td>
+    <td style="width: 130px;">
+        <input type="text" name="outbranch" id="outbranch" style="width: 100%;" value='<s:property value="outbranch"/>'/>
+    </td>
+    
+    <td align="right" style="width: 80px;">Location</td>
+    <td style="width: 130px;">
+        <input type="text" name="outlocation" id="outlocation" style="width: 100%;" value='<s:property value="outlocation"/>'/>
+    </td>
+    
+    <td align="right" style="width: 80px;">Delivery To</td>
+    <td>
+        <input type="text" name="deliveryto" id="deliveryto" style="width: 150px;" value='<s:property value="deliveryto"/>'/>
+    </td>
+</tr>
+         <tr>
+           <td align="right"><input type="checkbox" name="chkdelivery" id="chkdelivery" onchange="checkDelivery();">
+             Delivery</td>
+           <input type="hidden" name="hidchkdelivery" id="hidchkdelivery" value='<s:property value="hidchkdelivery"/>'>
+           <td width="12%" align="left"><input type="text" name="deliverydriver" id="deliverydriver" value='<s:property value="deliverydriver"/>' onkeydown="getDeliveryDriver(event)";/></td>
+                 <input type="hidden" id="hiddeliverydriver" name="hiddeliverydriver" value='<s:property value="hiddeliverydriver"/>'/>
 
+           <td width="8%" align="right">Del Details : Date</td>
+           <td width="11%" align="left"><div id="deliveryoutdate" name="deliveryoutdate"  value='<s:property value="deliveryoutdate"/>'></div></td>
+                 <input type="hidden" id="hiddeliveryoutdate" name="hiddeliveryoutdate" value='<s:property value="hiddeliveryoutdate"/>'/>
 
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
+           <td width="10%" align="right">Time</td>
+           <td width="8%" align="left"><div id="deliveryouttime" name="deliveryouttime" value='<s:property value="deliveryouttime"/>'></div></td>
+                 <input type="hidden" id="hiddeliveryouttime" name="hiddeliveryouttime" value='<s:property value="hiddeliveryouttime"/>'/>
+
+           <td width="10%" align="right">KM</td>
+           <td width="11%" align="left"><input type="text" id="deliveryoutkm" name="deliveryoutkm" style="width:50%" value='<s:property value="deliveryoutkm"/>' onkeypress="javascript:return isNumber (event,id)"/></td>
+           <td width="10%" align="right">Fuel</td>
+           <td width="11%" align="left"><select id="cmbdeliveryoutfuel" name="cmbdeliveryoutfuel" value='<s:property value="cmbdeliveryoutfuel"/>'>
+             <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+           </select></td>
+                 <input type="hidden" id="hidcmbdeliveryoutfuel" name="hidcmbdeliveryoutfuel" value='<s:property value="hidcmbdeliveryoutfuel"/>'/>
+           </tr>
+         <tr>
+           <td align="right">User</td>
+           <td align="left"><input type="text" id="user" name="user" value='<s:property value="user"/>' readonly/></td>
+           <input type="hidden" name="hidoutuser" id="hidoutuser" value='<s:property value="hidoutuser"/>'/>
+           <td align="right"> Out Details : Date</td>
+           <td align="left"><div id="ondeliverydate" name="ondeliverydate" value='<s:property value="ondeliverydate"/>'></div></td>
+                 <input type="hidden" id="hidondeliverydate" name="hidondeliverydate" value='<s:property value="hidondeliverydate"/>'/>
+
+           <td align="right">Time</td>
+           <td align="left"><div id="ondeliverytime" name="ondeliverytime" value='<s:property value="ondeliverytime"/>'></div></td>
+                 <input type="hidden" id="hidondeliverytime" name="hidondeliverytime" value='<s:property value="hidondeliverytime"/>'/>
+
+           <td align="right">KM</td>
+           <td align="left"><input type="text" id="ondeliverykm" name="ondeliverykm" style="width:50%" value='<s:property value="ondeliverykm"/>' onkeypress="javascript:return isNumber (event,id)"/></td>
+           <td align="right">Fuel</td>
+           <td align="left"><select id="cmbondeliveryfuel" name="cmbondeliveryfuel" value='<s:property value="cmbondeliveryfuel"/>'>
+             <option value="">--Select--</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+           </select></td>
+                 <input type="hidden" id="hidcmbondeliveryfuel" name="hidcmbondeliveryfuel" value='<s:property value="hidcmbondeliveryfuel"/>'/>
+           </tr>
+         </table>
+       </fieldset>
+   </td>
+   </tr>
+ </table>
+
+<input type="hidden" id="mode" name="mode"  value='<s:property value="mode"/>'/>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'  />
 <input type="hidden" name="dtype" id="dtype" value='<s:property value="dtype"/>'/>
-<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
 <div id="dateouthidden" name="dateouthidden" hidden="true"></div>
 <div id="timeouthidden" name="timeouthidden" hidden="true"></div>
-<input type="hidden" id="infleettrancode" name="infleettrancode" value='<s:property value="infleettrancode"/>'/>
+<input type="hidden" id="infleettrancode" name="infleettrancode"  value='<s:property value="infleettrancode"/>'/>
 <input type="hidden" id="refno" name="refno" value='<s:property value="refno"/>' placeholder="Press F3 to Search" readonly onkeydown="getAgmtno(event);"/>
 
 </div>
+<%-- <div id='reftime' name='reftime' value='<s:property value="reftime"/>'></div> --%>
 </form>
 <div id="agmtnowindow">
-	<div></div>
+   <div ></div>
 </div>
 <div id="collectionwindow">
-	<div></div>
+   <div ></div>
 </div>
+<!-- <div id="deliverywindow">
+   <div ></div>
+</div> -->
 </div>
 </body>
 </html>
