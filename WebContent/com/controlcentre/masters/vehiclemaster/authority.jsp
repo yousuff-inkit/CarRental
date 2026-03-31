@@ -36,7 +36,6 @@ body, .homeContent {
     box-sizing: border-box;
 }
 
-/* FIX: Responsive scroll area so the bottom is never cut off */
 .hidden-scrollbar {
     overflow-y: auto;
     overflow-x: hidden;
@@ -50,8 +49,6 @@ form label.error {
     font-weight: bold;
 }
 
-/* EXACT Input Styles from Client Master */
-/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
 input[type="text"], input[type="email"], select {
     height: 24px !important; 
     border: 1px solid #ccc !important;
@@ -74,7 +71,6 @@ input[readonly], input:disabled, select:disabled {
     border-color: #e1e4e8 !important;
 }
 
-/* Fieldset and Legend styling matching Client Master */
 fieldset {
     border: 1px solid #e1e4e8 !important;
     background-color: #fff !important;
@@ -93,7 +89,6 @@ legend {
     background: #fff;
 }
 
-/* Table adjustments for compact text */
 table td {
     padding: 6px !important;
     font-size: 12px !important;
@@ -102,7 +97,6 @@ table td {
     vertical-align: middle;
 }
 
-/* Modern Buttons matched to Client Master */
 .myButton {
     background-color: #0056b3 !important;
     color: #ffffff !important;
@@ -124,15 +118,28 @@ table td {
 var data= '<%=ca.searchDetails() %>';
 
       $(document).ready(function (){   
-          /* MODIFIED: Height set to 24px to match text inputs */
-    	  $("#authdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"}); 
-    	  
-    	  document.getElementById("formdet").innerText="Authority(AUT)";
-  		  document.getElementById("formdetail").value="Authority";
-  		  document.getElementById("formdetailcode").value="AUT";
-		  window.parent.formName.value="Authority";
-  			window.parent.formCode.value="AUT";    	  
-    	  var num = 0; 
+          $("#authdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"}); 
+          
+          // FIX: Force sync the widget date to the hidden input so Struts receives the data
+          $('#authdate').on('valueChanged', function (event) {
+              var date = event.args.date;
+              if (date) {
+                  var formattedDate = $.jqx.dataFormat.formatdate(date, 'dd.MM.yyyy');
+                  $('#authdatehidden').val(formattedDate);
+              }
+          });
+          
+          if(document.getElementById("formdet")){
+              document.getElementById("formdet").innerText="Authority(AUT)";
+              document.getElementById("formdetail").value="Authority";
+              document.getElementById("formdetailcode").value="AUT";
+          }
+          if(window.parent && window.parent.formName){
+              window.parent.formName.value="Authority";
+              window.parent.formCode.value="AUT"; 
+          }
+            	  
+          var num = 0; 
           var source =
           {
               datatype: "json",
@@ -144,19 +151,14 @@ var data= '<%=ca.searchDetails() %>';
                ],
                localdata: data,
               
-              
               pager: function (pagenum, pagesize, oldpagenum) {
-                  // callback called when a page or page size is changed.
               }
           };
           
-          var dataAdapter = new $.jqx.dataAdapter(source,
-          		 {
-              		loadError: function (xhr, status, error) {
-	                   // alert(error);    
-	                    }
-		            }		
-          ); 
+          var dataAdapter = new $.jqx.dataAdapter(source, {
+              loadError: function (xhr, status, error) { }
+          }); 
+
           $("#jqxAuthoritySearch1").jqxGrid(
                   {
                   	  width: '100%',
@@ -164,11 +166,8 @@ var data= '<%=ca.searchDetails() %>';
                       showfilterrow: true,
                       filterable: true,
                       selectionmode: 'multiplecellsextended',
-                      //pagermode: 'default',
                       sortable: true,
-                      //pageable: true,
                       altrows:true,
-                      //Add row method
                       columns: [
       					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
       					{ text: 'Auth Id', datafield: 'authid', width: '20%' },
@@ -193,67 +192,79 @@ var data= '<%=ca.searchDetails() %>';
      
       function funSearchLoad(){
 			changeContent('authoritySearch.jsp', $('#window')); 
-		 }
+      }
 
-function funReadOnly(){
-	$('#frmAuthority input').attr('readonly', true );
-	 $('#authdate').jqxDateTimeInput({ disabled: true}); 
-	// $('#frmAuthority select').attr('disabled', true );
-	
-}
-function funRemoveReadOnly(){
-	$('#frmAuthority input').attr('readonly', false );
-	$('#authdate').jqxDateTimeInput({ disabled: false});
-	$('#docno').attr('readonly', true);
-}
-function setValues() {
-	 if($('#authdatehidden').val()){
-			$("#authdate").jqxDateTimeInput('val', $('#authdatehidden').val());
+      function funReadOnly(){
+	      $('#frmAuthority input').attr('readonly', true );
+	      $('#authdate').jqxDateTimeInput({ disabled: true}); 
+      }
 
-	 }
-	 if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
-}
-function funFocus(){
-	document.getElementById("auth").focus();
-	}
-	function funNotify(){
-		return 1;
-	}
-	    $(function(){
-	        $('#frmAuthority').validate({
-	                 rules: {
-	                 auth: {
-	                	required:true,
-	                	maxlength:8
-	                 },
-	                authname:{
-	                	required:true,
-	                	maxlength:25
-	                }
-	                 },
-	                 messages: {
-	                  auth:{
-	                	  required:" *",
-	                	  maxlength:"max 8 chars"
-	                  },
-	                  authname:{
-	                	  required:" *",
-	                	  maxlength:"max 25 chars"
-	                  }
-	                 }
-	        });});
-	    function funExcelBtn(){
-	    	 $("#jqxAuthoritySearch1").jqxGrid('exportdata', 'xls', 'Authority');
-	    }
+      function funRemoveReadOnly(){
+	      $('#frmAuthority input').attr('readonly', false );
+	      $('#authdate').jqxDateTimeInput({ disabled: false});
+	      $('#docno').attr('readonly', true);
+      }
+
+      function setValues() {
+          // FIX: Ensure hidden fields are populated securely on page load
+          if($('#authdatehidden').val()){
+              $("#authdate").jqxDateTimeInput('val', $('#authdatehidden').val());
+          } else {
+              // Initialize hidden field with the default UI widget date
+              var currentDate = $('#authdate').jqxDateTimeInput('val');
+              $('#authdatehidden').val(currentDate);
+          }
+          
+          if($('#msg').val()!=""){
+              $.messager.alert('Message',$('#msg').val());
+          }
+      }
+
+      function funFocus(){
+          if(document.getElementById("auth")) {
+              document.getElementById("auth").focus();
+          }
+      }
+
+      function funNotify(){
+          return 1;
+      }
+
+      $(function(){
+          $('#frmAuthority').validate({
+                   rules: {
+                   auth: {
+                      required:true,
+                      maxlength:8
+                   },
+                  authname:{
+                      required:true,
+                      maxlength:25
+                  }
+                   },
+                   messages: {
+                    auth:{
+                        required:" *",
+                        maxlength:"max 8 chars"
+                    },
+                    authname:{
+                        required:" *",
+                        maxlength:"max 25 chars"
+                    }
+                   }
+          });
+      });
+
+      function funExcelBtn(){
+          $("#jqxAuthoritySearch1").jqxGrid('exportdata', 'xls', 'Authority');
+      }
 </script>
 
 </head>
 <body onload="setValues();" >
 <div id="mainBG" class="homeContent" data-type="background">
 
-<form id="frmAuthority" action="saveActionAuthority" autocomplete="off">     
+<form id="frmAuthority" action="saveActionAuthority" autocomplete="off" method="post">     
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
 
@@ -278,7 +289,7 @@ function funFocus(){
 <input type="hidden" id="authdatehidden" name="authdatehidden" value='<s:property value="authdatehidden"/>'/>					
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="mode" name="mode"/>
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
 
 </form>
 <br/>
