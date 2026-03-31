@@ -11,210 +11,192 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
+/* =========================================================
+SCOPED UI: Compact Input Sizing (Plain Colors)
+*Note: All rules strictly scoped to .modern-ui so header.jsp is safe*
+========================================================= */
 
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 1450px;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        text-align: left !important; 
-    }
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding-top: 15px;
+    box-sizing: border-box; 
+}
 
-    /* ------------------------------
-       HEADER FIXES
-    ------------------------------ */
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
-    
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
+/* Master Input Heights - Set to 24px */ 
+.modern-ui input[type="text"], 
+.modern-ui select, 
+.modern-ui textarea {
+    height: 24px !important; 
+    border: 1px solid #ccc; 
+    border-radius: 3px;
+    padding: 2px 6px; 
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+}
 
-    /* ------------------------------
-       GRID SYSTEM
-    ------------------------------ */
-    /* Header Grid: Date on left, Spacer, Doc No on right */
-    .receipt-header {
-        display: grid;
-        grid-template-columns: auto 150px 1fr auto 150px;
-        gap: 15px;
-        align-items: center;
-        margin-bottom: 25px;
-        padding: 0 5px;
-    }
+/* Compact Width Classes */
+.modern-ui .input-xs { width: 60px !important; }
+.modern-ui .input-sm { width: 100px !important; }
+.modern-ui .input-md { width: 140px !important; }
+.modern-ui .input-lg { width: 220px !important; }
+.modern-ui .input-xl { width: 350px !important; }
+.modern-ui .input-full { width: 100% !important; }
 
-    .section-block {
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        margin-bottom: 20px;
-    }
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus, 
+.modern-ui textarea:focus { 
+    border-color: #007bff;
+    outline: none;
+}
 
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
+.modern-ui input[readonly], 
+.modern-ui textarea[readonly], 
+.modern-ui select:disabled, 
+.modern-ui input:disabled { 
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
 
-    .form-row {
-        display: grid;
-        grid-template-columns: 80px 150px 80px 1fr; /* Specific widths for Type/Name */
-        gap: 15px;
-        align-items: center;
-    }
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
-    input[type="text"], select {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
+.modern-ui .lbl-right {
+    text-align: right; 
+    color: #444; 
+    font-size: 12px;
+    font-weight: bold; 
+    white-space: nowrap; 
+    padding-right: 5px;
+}
 
-    input[type="text"]:focus, select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    
-    input[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
+/* Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #e1e4e8; 
+    padding: 20px 10px 10px 10px; 
+    background: #fff;
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+}
 
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        font-size: 14px;
-    }
-    
-    label.error {
-        color: red;
-        font-weight: bold;
-        font-size: 12px;
-        margin-left: 5px;
-    }
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -10px;
+    left: 10px; 
+    background: #fff; 
+    padding: 0 5px 0 6px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
 
-    /* Grid Container Override */
-    #jqxDamageSearch1 {
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        margin-top: 10px;
-    }
+.modern-ui #jqxDamageSearch1 { 
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+    margin-top: 10px;
+}
+
+/* Validation Error override */
+.modern-ui label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+    margin-left: 5px;
+}
 </style>
 
 <script type="text/javascript">
 function funSearchLoad(){
     changeContent('damageSearch.jsp', $('#window')); 
  }
+
 $(document).ready(function() {
+    /* Upgraded height to 24px for Modern UI */
     $("#damagedate").jqxDateTimeInput({
         width : '125px',
-        height : '15px',
+        height : '24px',
         formatString : "dd.MM.yyyy"
     });
+    
+    /* Force internal alignment AFTER render */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", 
+            "line-height": "24px", 
+            "font-size": "12px", 
+            "font-family": "Arial, sans-serif",
+            "padding": "0 6px", 
+            "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
     
     document.getElementById("formdet").innerText="Damage(DAM)";
     document.getElementById("formdetail").value="Damage";
     document.getElementById("formdetailcode").value="DAM";
     window.parent.formCode.value="DAM";
     window.parent.formName.value="Damage";
-    var data= '<%=cdd.getDamage()  %>';
     
-             
-             
-             var num = 0; 
-            var source =
-            {
-                datatype: "json",
-                datafields: [
-                             {name : 'doc_no' , type: 'number' },
-                            {name : 'type', type: 'String'  },
-                             {name : 'name', type: 'String'  },
-                             {name : 'date',type:'String'},
-                             {name : 'dmg_chg', type:'number'}
-                  ],
-                 localdata: data,
-                pager: function (pagenum, pagesize, oldpagenum) {
-                    // callback called when a page or page size is changed.
-                }
-            };
+    var data= '<%=cdd.getDamage()  %>';
+    var num = 0; 
+    var source = {
+        datatype: "json",
+        datafields: [
+             {name : 'doc_no' , type: 'number' },
+             {name : 'type', type: 'String'  },
+             {name : 'name', type: 'String'  },
+             {name : 'date',type:'String'},
+             {name : 'dmg_chg', type:'number'}
+        ],
+        localdata: data,
+        pager: function (pagenum, pagesize, oldpagenum) {
+            // callback called when a page or page size is changed.
+        }
+    };
             
-            var dataAdapter = new $.jqx.dataAdapter(source,
-                     {
-                        loadError: function (xhr, status, error) {
-                       // alert(error);    
-                        }
-                    }        
-            );
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+        loadError: function (xhr, status, error) {
+        // alert(error);    
+        }
+    });
        
-            $("#jqxDamageSearch1").jqxGrid(
-                    {
-                        width: '100%',
-                        height:358,
-                        source: dataAdapter,
-                        sortable: true,
-                        selectionmode: 'singlerow',
-                        theme: 'energyblue',
-                        //Add row method
-                        columns: [
-                                    { text: 'Doc No', datafield: 'doc_no', width: '15%' },
-                                    { text: 'Type', datafield: 'type', width: '25%' },
-                                    { text: 'Name', datafield: 'name', width: '60%' },
-                                    { text: 'Charge', datafield: 'dmg_chg', width: '30%' ,hidden:true},
-                                    {text: 'Date',datafield:'date',width:'20%' ,hidden:true} 
-                            ]
-                    });
+    $("#jqxDamageSearch1").jqxGrid({
+        width: '100%',
+        height:358,
+        source: dataAdapter,
+        sortable: true,
+        selectionmode: 'singlerow',
+        theme: 'energyblue',
+        columns: [
+            { text: 'Doc No', datafield: 'doc_no', width: '15%' },
+            { text: 'Type', datafield: 'type', width: '25%' },
+            { text: 'Name', datafield: 'name', width: '60%' },
+            { text: 'Charge', datafield: 'dmg_chg', width: '30%' ,hidden:true},
+            { text: 'Date',datafield:'date',width:'20%' ,hidden:true} 
+        ]
+    });
   
-            $('#jqxDamageSearch1').on('rowselect', function (event) {
-                
-                var rowindex1=event.args.rowindex;
-                document.getElementById("docno").value= $('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "doc_no");
-                document.getElementById("cmbtype").value=$('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "type");
-                document.getElementById("name1").value=$('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "name");
-                //document.getElementById("dmgcharge").value=$('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "dmg_chg");
-                $("#damagedate").jqxDateTimeInput('val',$("#jqxDamageSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
-
+    $('#jqxDamageSearch1').on('rowselect', function (event) {
+        var rowindex1=event.args.rowindex;
+        document.getElementById("docno").value= $('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "doc_no");
+        document.getElementById("cmbtype").value=$('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "type");
+        document.getElementById("name1").value=$('#jqxDamageSearch1').jqxGrid('getcellvalue', rowindex1, "name");
+        $("#damagedate").jqxDateTimeInput('val',$("#jqxDamageSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
+    });
 });
-});
-  </script>
+</script>
 
 <script type="text/javascript">
 function funReadOnly(){
@@ -222,19 +204,19 @@ function funReadOnly(){
     $('#frmDamage select').attr('disabled', true );
      $('#damagedate').jqxDateTimeInput({ disabled: true});
 }
+
 function funRemoveReadOnly(){
     $('#frmDamage input').attr('readonly', false );
     $('#frmDamage select').attr('disabled', false );
     $('#damagedate').jqxDateTimeInput({ disabled: false});
     $('#docno').attr('readonly', true);
 }
-function funFocus()
-{
+
+function funFocus(){
     document.getElementById("cmbtype").focus();
-        
 }
-function setValues()
-{
+
+function setValues(){
     if($('#hiddamagedate').val()){
         $("#damagedate").jqxDateTimeInput('val', $('#hiddamagedate').val());
     }
@@ -242,97 +224,103 @@ function setValues()
         $('#cmbtype').val($('#hidcmbtype').val());
     }
     if($('#msg').val()!=""){
-           $.messager.alert('Message',$('#msg').val());
-          }
-
+        $.messager.alert('Message',$('#msg').val());
     }
+}
+
 function funNotify(){
-    
-        return 1;
+    return 1;
 } 
+
 $(function(){
     $('#frmDamage').validate({
-                 rules: {
-                     cmbtype: {
-                         required:true
-                     },
-                    name1:{
-                        //required:true,
-                        maxlength:45
-                    },
-                        
-                        dmgcharge:{
-                            required:true,
-                            number:true
-                        }
-                    },
-                     
-                     messages: {
-                      cmbtype:{
-                          required:" *"
-                      },
-                      name1:{
-                          //required:" *",
-                          maxlength:"Max 45 chars"
-                      },
-                      dmgcharge:{
-                        required:" *",
-                        number:"Only numbers allowed"
-                      }
-                      }
-    });});
+        rules: {
+            cmbtype: {
+                required:true
+            },
+            name1:{
+                //required:true,
+                maxlength:45
+            },
+            dmgcharge:{
+                required:true,
+                number:true
+            }
+        },
+        messages: {
+            cmbtype:{
+                required:" *"
+            },
+            name1:{
+                //required:" *",
+                maxlength:"Max 45 chars"
+            },
+            dmgcharge:{
+                required:" *",
+                number:"Only numbers allowed"
+            }
+        }
+    });
+});
 </script>
 
 </head>
 <body onLoad="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
-<form id="frmDamage" action="saveActionDamage" autocomplete="off">
-<jsp:include page="../../../../header.jsp" />
-
-    <div class='receipt-header'>
-        <label>Date</label>
-        <div id="damagedate" name="damagedate" value='<s:property value="damagedate"/>'></div>
+<div class="homeContent" data-type="background">
+    <form id="frmDamage" action="saveActionDamage" autocomplete="off">
         
-        <div></div>
+        <jsp:include page="../../../../header.jsp" />
 
-        <label>Doc No</label>
-        <input type="text" name="docno" id="docno" readonly value='<s:property value="docno"/>'>
-    </div>
+        <div class="modern-ui">
 
-    <div class="section-block">
-        <h2>Damage Details</h2>
-        <div class="form-row">
-            <label for="cmbtype">Type</label>
-            <div>
-                <select name="cmbtype" id="cmbtype">
-                    <option value="">--Select--</option>
-                    <option value="EXT">EXT</option>
-                    <option value="INT">INT</option>
-                    <option value="OTH">OTH</option>
-                </select>
-                <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+            <div class="middle-panel">
+                <span class="middle-panel-title">Damage Details</span>
+                <div style="padding-top: 5px;">
+
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 60px;">Date</label>
+                        <div style="width: 125px;">
+                            <div id="damagedate" name="damagedate" value='<s:property value="damagedate"/>'></div>
+                        </div>
+                        
+                        <div style="margin-left: 50px; display: flex; align-items: center; gap: 8px;">
+                            <label class="lbl-right" style="width: 60px;">Doc No</label>
+                            <input type="text" name="docno" id="docno" class="input-sm" readonly value='<s:property value="docno"/>' tabindex="-1">
+                        </div>
+                    </div>
+
+                    <div class="field-row" style="margin-bottom: 0;">
+                        <label class="lbl-right" style="width: 60px;">Type</label>
+                        <select name="cmbtype" id="cmbtype" class="input-md">
+                            <option value="">--Select--</option>
+                            <option value="EXT">EXT</option>
+                            <option value="INT">INT</option>
+                            <option value="OTH">OTH</option>
+                        </select>
+                        <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+
+                        <label class="lbl-right" style="width: 60px; margin-left: 20px;">Name</label>
+                        <input type="text" name="name1" id="name1" class="input-xl" value='<s:property value="name1"/>'>
+                        
+                        <%-- Hidden charge field preserved from original --%>
+                        <%-- 
+                        <label class="lbl-right" style="width: 80px; margin-left: 20px;">Dmg Charge</label>
+                        <input type="text" name="dmgcharge" id="dmgcharge" class="input-md" value='<s:property value="dmgcharge"/>'> 
+                        --%>
+                    </div>
+
+                </div>
             </div>
 
-            <label for="name1">Name</label>
-            <input type="text" name="name1" id="name1" value='<s:property value="name1"/>'>
-            
-            <%-- Hidden charge field preserved from original --%>
-            <%-- 
-            <label>Dmg Charge</label>
-            <input type="text" name="dmgcharge" id="dmgcharge" value='<s:property value="dmgcharge"/>'> 
-            --%>
+            <div id="jqxDamageSearch1"></div>
+
+            <input type="hidden" id="hiddamagedate" name="hiddamagedate" value='<s:property value="hiddamagedate"/>'>
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+                 
         </div>
-    </div>
-
-    <div id="jqxDamageSearch1"></div>
-
-    <input type="hidden" id="hiddamagedate" name="hiddamagedate" value='<s:property value="hiddamagedate"/>'>
-    <input type="hidden" id="mode" name="mode"/>
-    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-    <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-         
-</form>
-
+    </form>
 </div>
 </body>
 </html>
