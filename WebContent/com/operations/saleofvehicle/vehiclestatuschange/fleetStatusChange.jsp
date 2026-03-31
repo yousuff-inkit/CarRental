@@ -215,134 +215,239 @@ function setValues()
 		 changeContent('masterSearch.jsp', $('#window')); 
 	}
 </script>
-</head>
+
 <style>
-html, body {
-    /* Use 100% height to ensure the background covers everything */
-    height: 100%;
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
+body {
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
     margin: 0;
-    padding: 0; /* Changed from 32px to 0 to remove top/bottom gaps */
+    padding: 10px;
     box-sizing: border-box;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    
-    /* Enables flex layout to force children to fill space */
-    display: flex;
-    flex-direction: column;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px 16px 0 0; /* Rounded top corners only if touching bottom */
-    padding: 20px;
-    width: 100%;
+    border-radius: 4px;
+    padding: 15px;
     max-width: 100%;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    
-    /* KEY CHANGES: */
-    flex-grow: 1;           /* Forces the container to grow and fill the bottom */
-    display: block;         /* Changed from inline-block to allow full width/height */
-    box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
-.receipt-header {
-    display: block;
-    margin-bottom: 16px;
-    padding: 0 10px;
-}
-
-.receipt-header table {
+/* Master Input Heights - Set to 24px as requested */
+input[type="text"], select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
     width: 100%;
-}
-
-.receipt-header td {
-    padding: 6px 4px;
-    vertical-align: middle;
-}
-
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    /* Reduced bottom margin to pull content together */
-    margin-bottom: 15px; 
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
+    background-color: #fff;
     color: #333;
 }
 
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group.dual-input {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-.form-group.single-label-dual-input {
-    grid-template-columns: 120px 1fr 1fr;
-}
-
-input[type="text"], select, textarea {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
-}
-
-textarea {
-    height: 80px !important;
-    padding: 10px;
-    resize: none; /* Prevents user from creating extra space by dragging */
-}
-
-input[type="text"]:focus, select:focus, textarea:focus {
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
     text-align: right;
-    padding-right: 8px;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-.jqx-datetimeinput {
-    height: 34px !important;
-    box-sizing: border-box;
+.flex-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
 }
 
-/* Ensures no extra padding at the bottom of the last element */
-.section-block:last-child {
-    margin-bottom: 0;
+.chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-#formdet {
-    text-align: left !important;
-    display: block;
+.chk-container input {
+    margin: 0;
+    padding: 0;
 }
 
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Clean Tables mapping requested colors */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
+
+.fleet-row {
+    grid-template-columns: 70px 120px 200px 120px 150px 140px;
+}
+
+/* Make fleet name stretch properly */
+.fleet-row .wide {
+    width: 100%;
+}
+
+/* Prevent wrapping */
+.fleet-row {
+    align-items: center;
+}
+
+/* Optional safety */
+select {
+    width: 100%;
+}
+
+.fleet-row {
+    grid-template-columns: auto auto auto auto auto auto;
+    grid-auto-flow: column;
+}
+#fleetstatustime {
+    width: 160px;   /* increase as needed */
+}
+
+.fleet-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0 5px;
+    height: 24px;
+    background: #fff;
+}
+
+.fleet-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 12px;
+    padding-left: 4px;
+}
+
+.search-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon:hover svg {
+    stroke: #007bff;
+}
+
+select {
+    height: 24px !important;
+    line-height: 22px;
+    padding: 2px 6px;
+    color: #333 !important;
+    background-color: #fff !important;
+    appearance: auto;           /* restore default dropdown */
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+}
+.top-grid select {
+    overflow: visible;
+    white-space: nowrap;
+}
 </style>
+</head>
 
 <body onload="funReadOnly();setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
@@ -352,70 +457,86 @@ label {
 			window.parent.formCode.value="VSC";
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
+	<br/> 
+<fieldset>
+<legend>Fleet Status Change Info</legend>
 
-  <div id="mainBG">
-    <div class="receipt-header">
-        <table width="100%">
-            <tr>
-                <td width="5%" align="right"><label>Date</label></td>
-                <td width="180px">
-                    <div id="fleetstatusdate" name="fleetstatusdate" value='<s:property value="fleetstatusdate"/>'></div>
-                    <input type="hidden" name="hidfleetstatusdate" id="hidfleetstatusdate" value='<s:property value="hidfleetstatusdate"/>'>
-                </td>
-                <td width="5%" align="right"><label>Time</label></td>
-                <td width="150px">
-                    <div id="fleetstatustime" name="fleetstatustime" value='<s:property value="fleetstatustime"/>'></div>
-                    <input type="hidden" name="hidfleetstatustime" id="hidfleetstatustime" value='<s:property value="hidfleetstatustime"/>'>
-                </td>
-                <td></td>
-                <td width="10%" align=><label>Doc No</label></td>
-                <td width="180px">
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
-                </td>
-            </tr>
-        </table>
-    </div>
+<!-- ROW 1 -->
+<div class="top-grid" style="grid-template-columns: 70px 120px 70px 150px 80px 140px;">
 
-    <div class="section-block">
-        <h2>Fleet Status Change Info</h2>
+    <label>Date</label>
+    <div id="fleetstatusdate"
+         value='<s:property value="fleetstatusdate"/>'></div>
 
-        <div class="form-group single-label-dual-input">
-            <label>Fleet</label>
-            <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>' readonly onkeydown="getFleet(event);" placeholder="Press F3 to Search">
-            <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' readonly tabindex="-1">
-        </div>
+    <label>Time</label>
+    <div id="fleetstatustime"
+         value='<s:property value="fleetstatustime"/>'></div>
 
-        <div class="form-group dual-input">
-            <label>Current Status</label>
-            <input type="text" name="currentstatus" id="currentstatus" value='<s:property value="currentstatus"/>' readonly tabindex="-1">
-            <input type="hidden" name="hidcurrentstatus" id="hidcurrentstatus" value='<s:property value="hidcurrentstatus"/>'>
+    <label>Doc No</label>
+    <input type="text" name="docno" id="docno"
+           value='<s:property value="docno"/>' readonly>
 
-            <label>Change to Status</label>
-            <select name="cmbchangestatus" id="cmbchangestatus">
-                <option value="">--Select--</option>
-            </select>
-            <input type="hidden" name="hidcmbchangestatus" id="hidcmbchangestatus" value='<s:property value="hidcmbchangestatus"/>'>
-        </div>
-
-        <div class="form-group">
-            <label style="align-self: flex-start; padding-top: 8px;">Reason</label>
-            <textarea id="reason" name="reason"><s:property value="reason"/></textarea>
-        </div>
-    </div>
 </div>
 
-    <input type="hidden" name="hidcmbsalesman" id="hidcmbsalesman" value='<s:property value="hidcmbsalesman"/>'>
-    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-    <input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
-    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-    <div id="hiddate" name="hiddate" hidden="true"></div>
-    <div id="hidtime" name="hidtime" hidden="true"></div>
-    
+<!-- ROW 2 -->
+<div class="top-grid fleet-row">
+
+  <label>Fleet</label>
+
+<div class="fleet-input">
+    <span class="search-icon" onclick="getFleet(event)">
+        <!-- SVG Icon -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="#666" stroke-width="2"/>
+            <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#666" stroke-width="2"/>
+        </svg>
+    </span>
+
+    <input type="text" id="fleetno"
+           placeholder="Double click to search"
+           ondblclick="getFleet(event)">
+</div>
+
+    <input type="text" id="fleetname" class="wide">
+
+    <label>Current Status</label>
+    <input type="text" id="currentstatus">
+
+    <label>Change to Status</label>
+    <select id="cmbchangestatus">
+        <option value="">--Select--</option>
+    </select>
+
+</div>
+<!-- ROW 3 -->
+<div class="top-grid" style="grid-template-columns: 70px 1fr;">
+
+    <label>Reason</label>
+    <textarea id="reason" name="reason"
+              style="resize:none;height:50px;width:100%;">
+<s:property value="reason"/>
+    </textarea>
+
+</div>
+
+<!-- HIDDEN FIELDS -->
+<input type="hidden" name="hidcmbsalesman" id="hidcmbsalesman" value='<s:property value="hidcmbsalesman"/>'>
+<input type="hidden" name="hidfleetstatusdate" id="hidfleetstatusdate" value='<s:property value="hidfleetstatusdate"/>'>
+<input type="hidden" name="hidfleetstatustime" id="hidfleetstatustime" value='<s:property value="hidfleetstatustime"/>'>
+<input type="hidden" name="hidcmbchangestatus" id="hidcmbchangestatus" value='<s:property value="hidcmbchangestatus"/>'>
+<input type="hidden" name="hidcurrentstatus" id="hidcurrentstatus" value='<s:property value="hidcurrentstatus"/>'>
+<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+<input type="hidden" name="extramsg" id="extramsg" value='<s:property value="extramsg"/>'>
+<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+
+<div id="hiddate" hidden></div>
+<div id="hidtime" hidden></div>
+
+</fieldset>
 </form>
 <div id="fleetwindow">
-   <div ></div>
+   <div ></div>
 </div>
 </div>
 </body>
