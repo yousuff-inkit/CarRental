@@ -1076,7 +1076,7 @@ function getvalidationforeditandcloe(){
           <input type="hidden" name="hiddatein" id="hiddatein" value='<s:property value="hiddatein"/>'>
           
           <td width="8%" align="right">Time</td>
-          <td width="11%" align="left"><div id="timein" name="timein" value='<s:property value="timein"/>'></div></td>
+          <td width="15%" align="left"><div id="timein" name="timein" value='<s:property value="timein"/>'></div></td>
           <input type="hidden" name="hidtimein" id="hidtimein" value='<s:property value="hidtimein"/>'>
           
           <td width="7%" align="right">Date Due</td>

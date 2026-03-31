@@ -10,161 +10,120 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i) - Plate Code Master</title>
+<title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (Adopted)
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
+/* =========================================================
+   PLATE CODE - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
+    box-sizing: border-box;
+}
 
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        text-align: left !important; 
-        max-height: calc(100vh - 64px); 
-        overflow-y: auto; 
-    }
-    
-    /* ------------------------------
-       HEADER & TITLE FIXES
-    ------------------------------ */
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
 
-    /* ------------------------------
-       GRID SYSTEM & SECTIONS
-    ------------------------------ */
-    .section-block {
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 20px; 
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        margin-bottom: 30px;
-    }
-    
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
+/* FIX: Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
 
-    .form-grid {
-        display: grid;
-        grid-template-columns: 100px 125px 100px 100px 1fr ;
-        gap: 0px 30px;
-        align-items: center;
+form label.error {
+    color: red;
+    font-weight: bold;
+}
 
-    }
-        .form-grid_new {
-        display: grid;
-        grid-template-columns: 100px 125px 90px 120px 90px 120px ;
-        gap: 1px 30px;
-        align-items: center;
-        margin-bottom: 12px;
-       
-    }
-    
-    
-    #nAliasgrid {
-        grid-row: 1 / 4; 
-        grid-column: 5/ 6;
-        min-height: 100px; 
-    }
+/* EXACT Input Styles from Client Master */
+/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
+input[type="text"], input[type="email"], select {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
+}
 
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
-    input[type="text"], select {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
 
-    input[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
 
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 14px;
-    }
-    
-    form label.error {
-        color:red;
-        font-weight:bold;
-        font-size: 12px;
-    }
-    
-    /* JQ Date Picker size fix */
-    .jqx-datetimeinput-container {
-         height: 32px;
-    }
-    #date_plateCode {
-        height: 32px !important;
-        width: 100% !important;
-    }
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
 
-    #jqxPlateCodeSearch1 {
-        margin-top: 20px;
-        width: 100% !important; 
-    }
-    .jqx-grid-cell {
-        font-size: 13px !important;
-    }
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
 
-    /* ------------------------------
-       UTILITY STYLES
-    ------------------------------ */
-    fieldset {
-        border: none;
-        padding: 0;
-        margin: 0;
-        
-    }
-    body::-webkit-scrollbar {
-	width: 0px;
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
 }
 </style>
-<script type="text/javascript">
-var data= '<%=cpa.searchDetails() %>';
 
+<script type="text/javascript">
 	$(document).ready(function() {
-		$("#date_plateCode").jqxDateTimeInput({ width : '100%', height : '32px', formatString : "dd.MM.yyyy" });
+        /* MODIFIED: Height set to 24px to match text inputs */
+		$("#date_plateCode").jqxDateTimeInput({ width : '125px', height : '24px', formatString : "dd.MM.yyyy" });
 	//	 $("#btnEdit").attr('disabled', true );		
 		document.getElementById("formdet").innerText="Plate Code(PLT)";
 		document.getElementById("formdetail").value="Plate Code";
@@ -172,90 +131,94 @@ var data= '<%=cpa.searchDetails() %>';
 		window.parent.formCode.value="PLT";
 		window.parent.formName.value="Plate Code";
 		getAuth();
-		var data= '<%=cpa.searchDetails() %>'; 
+		var data= '<%=cpa.searchDetails() %>'; 
 	
-	            
-	            
-	             var num = 0; 
-	            var source =
-	            {
-	                datatype: "json",
-	                datafields: [
+	            
+	            
+	             var num = 0; 
+	            var source =
+	            {
+	                datatype: "json",
+	                datafields: [
 								{name : 'doc_no' , type: 'number' },
-	                          	{name : 'code_no' , type: 'String' },
-	     						{name : 'code_name', type: 'String'  },
-	                          	{name : 'authname', type: 'String'  },
-	                          	{name : 'authId', type: 'String'  },
-	                          	{name : 'plateDate', type: 'date'  }
-	                          	
-	                 ],
-	                 localdata: data,
-	                pager: function (pagenum, pagesize, oldpagenum) {
-	                    // callback called when a page or page size is changed.
-	                }
-	            };
-	            var dataAdapter = new $.jqx.dataAdapter(source,
-	            		 {
-	                		loadError: function (xhr, status, error) {
-		                    alert(error);    
-		                    }
-			            }		
-	            );
-	         
-	            $("#jqxPlateCodeSearch1").jqxGrid(
-	                    {
-	                    	width: '100%',
-	                        height: 350,
-	                        source: dataAdapter,
-	                        showfilterrow: true,
-	                        filterable: true,
-	                        selectionmode: 'singlerow',
-	                        sortable: true,
-	                        altrows:true,
-	                        columns: [
-	                                  {text: 'Doc No',datafield:'doc_no',hidden:true},
-	        					{ text: 'Plate Code', datafield: 'code_no', width: '30%' },
+	                          	{name : 'code_no' , type: 'String' },
+	     						{name : 'code_name', type: 'String'  },
+	                          	{name : 'authname', type: 'String'  },
+	                          	{name : 'authId', type: 'String'  },
+	                          	{name : 'plateDate', type: 'date'  }
+	                          	
+	                 ],
+	                 localdata: data,
+	                pager: function (pagenum, pagesize, oldpagenum) {
+	                    // callback called when a page or page size is changed.
+	                }
+	            };
+	            var dataAdapter = new $.jqx.dataAdapter(source,
+	            		 {
+	                		loadError: function (xhr, status, error) {
+		                    alert(error);    
+		                    }
+			            }		
+	            );
+	         
+	            $("#jqxPlateCodeSearch1").jqxGrid(
+	                    {
+	                    	width: '70%',
+	                        height: 350,
+	                        source: dataAdapter,
+	                        showfilterrow: true,
+	                        filterable: true,
+	                        selectionmode: 'singlerow',
+	                        //pagermode: 'default',
+	                        sortable: true,
+	                        //pageable: true,
+	                        altrows:true,
+	                        //Add row method
+	                        columns: [
+	                                  {text: 'Doc No',datafield:'doc_no',hidden:true},
+	        					{ text: 'Plate Code', datafield: 'code_no', width: '30%' },
 								{ text: 'Plate Name', datafield: 'code_name', width: '40%' },
 								{ text: 'Authority Name', datafield: 'authname', width: '30%' },
 								{ text: 'Authority Id', datafield: 'authId', width: '30%',hidden:true },
 								{ text: 'Date', datafield: 'plateDate', width: '30%',hidden:true,cellsformat:'dd.MM.yyyy' }
 								]
-	                    });
-	            $('#jqxPlateCodeSearch1').on('rowdoubleclick', function (event) 
-	            		{
-			            	var rowindex1=event.args.rowindex;
-			            	$('#date_plateCode').jqxDateTimeInput({ disabled: false});
-			        		
-			            	document.getElementById("docno").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "doc_no");
-			                document.getElementById("plateCode").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "code_no"); 
-			                document.getElementById("platename").value = $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "code_name");
-			                $('#authName').val($("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "authId")) ;
-			                $("#date_plateCode").jqxDateTimeInput('val', $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "plateDate")); 
-			        		$('#frmPlateCode select').attr('disabled', true);
-			            	$('#date_plateCode').jqxDateTimeInput({ disabled: true});
-			            	
-			            	document.getElementById("authorityname").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "authname");
-			            	
-			            	var auth12=$('#jqxPlateCodeSearch1').jqxGrid('getcelltext', rowindex1, "authname");
-			            	auth=auth12.replace(/ /g, "%20");
-			            	 $("#nAliasgrid").load("nAliasgrid.jsp?itemno="+document.getElementById("docno").value);
+	                    });
+	            $('#jqxPlateCodeSearch1').on('rowdoubleclick', function (event) 
+	            		{
+			            	var rowindex1=event.args.rowindex;
+			            	$('#date_plateCode').jqxDateTimeInput({ disabled: false});
+			        		//$('#frmPlateCode select').attr('disabled', false);
+			        		
+			            	document.getElementById("docno").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "doc_no");
+			                document.getElementById("plateCode").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "code_no"); 
+			                document.getElementById("platename").value = $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "code_name");
+			                $('#authName').val($("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "authId")) ;
+			                $("#date_plateCode").jqxDateTimeInput('val', $("#jqxPlateCodeSearch1").jqxGrid('getcellvalue', rowindex1, "plateDate")); 
+			        		$('#frmPlateCode select').attr('disabled', true);
+			            	$('#date_plateCode').jqxDateTimeInput({ disabled: true});
+			            	
+			            	document.getElementById("authorityname").value= $('#jqxPlateCodeSearch1').jqxGrid('getcellvalue', rowindex1, "authname");
+			            	
+			            	var auth12=$('#jqxPlateCodeSearch1').jqxGrid('getcelltext', rowindex1, "authname");
+			            	auth=auth12.replace(/ /g, "%20");
+			            	 $("#nAliasgrid").load("nAliasgrid.jsp?itemno="+document.getElementById("docno").value);
 
-			                $('#window').jqxWindow('close');
-	            		 }); 
+			                $('#window').jqxWindow('close');
+	            		 }); 
 	
 	});
-	  function funSearchLoad(){
-			changeContent('plateCodeSearch.jsp', $('#window')); 
+	  function funSearchLoad(){
+			changeContent('plateCodeSearch.jsp', $('#window')); 
 		 }
 	function funReadOnly() {
 		$('#frmPlateCode input').attr('readonly', true);
 		$('#frmPlateCode select').attr('disabled', true);
-		 $('#date_plateCode').jqxDateTimeInput({ disabled: true}); 
+		 $('#date_plateCode').jqxDateTimeInput({ disabled: true}); 
 
 	}
 	function funRemoveReadOnly() {
 		$('#frmPlateCode input').attr('readonly', false);
-		 $('#date_plateCode').jqxDateTimeInput({ disabled: false}); 
+		 $('#date_plateCode').jqxDateTimeInput({ disabled: false}); 
 
 		$('#frmPlateCode select').attr('disabled', false);
 		$('#docno').attr('readonly', true);
@@ -264,6 +227,12 @@ var data= '<%=cpa.searchDetails() %>';
 		$("#jqxnalias").jqxGrid({ disabled: false});
 		 $('#jqxnalias').jqxGrid('addrow', null, {});
 		}
+		/* if(document.getElementById("mode").value=='A'){
+			$("#jqxnalias").jqxGrid('clear');
+			 $('#jqxnalias').jqxGrid('addrow', null, {});
+			 $("#jqxnalias").jqxGrid({ disabled: false});	
+			
+			} */
 	}
 	
 	function getAuth() {
@@ -274,6 +243,7 @@ var data= '<%=cpa.searchDetails() %>';
 				items = items.split('####');
 				var authItems = items[0].split(",");
 				var authIdItems = items[1].split(",");
+				//alert(authIdItems);
 				var optionsauth = '<option value="">--Select--</option>';
 				for (var i = 0; i < authItems.length; i++) {
 					optionsauth += '<option value="' + authIdItems[i] + '">'
@@ -297,8 +267,8 @@ var data= '<%=cpa.searchDetails() %>';
 				$("#date_plateCode").jqxDateTimeInput('val', $('#datehidden').val());
 			}
 		 if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
+			   $.messager.alert('Message',$('#msg').val());
+			  }
 		 $("#nAliasgrid").load("nAliasgrid.jsp?itemno="+document.getElementById("docno").value);
 	}
 	function funFocus(){
@@ -307,158 +277,183 @@ var data= '<%=cpa.searchDetails() %>';
 		
 	}
 	 $(function(){
-	        $('#frmPlateCode').validate({
-	                 rules: {
-	                 authName:{
-	                	 required:true
-	                 },
-	                 plateCode:{
-	                	 required:true,
-	                	 maxlength:10
-	                 }
-	                 },
-	                 messages: {
-	                  authName:{
-	                	  required:" *"
-	                  },
-	                  plateCode:{
-	                	  required:" *",
-	                	  maxlength:"max 10 chars"
-	                  }
-	                 }
-	        });});
-	     function funNotify(){
-	    	 var rows = $("#jqxnalias").jqxGrid('getrows'); 
-	     	    var listss = new Array();
-	    	 	var a = 1;
-	    	   for(var i=0 ; i < rows.length ; i++){
-	    		   var code=rows[i].code;
-	    			if(code!="undefined" && code!=null && typeof(code)!="undefined" ){
-	        	    	
-	    		   listss.push(rows[i].code+"::"+rows[i].doc_no+"::"+a+"::");  
-	    			}
-	    	   }
-	    	savenalias(listss);
-	    		return 1;
-		} 
-	     function funExcelBtn(){
-			  $("#jqxPlateCodeSearch1").jqxGrid('exportdata', 'xls', 'Platecode');
-		  }
-	     
-	     function savenalias(listss)
-	     {
-	     	
-	     	    var codeno=document.getElementById("plateCode").value;
-	       	     var authname=$("#authName option:selected").text();
-	         	   var docno=document.getElementById("docno").value;
-	         		   	var x=new XMLHttpRequest();
-	         		x.onreadystatechange=function(){
-	         			if (x.readyState==4 && x.status==200)
-	         				{
-	         				 var itemsapprove= x.responseText;
-	         				 	var itemvalappr=itemsapprove.trim();
-	         					 	
-	         	  if(parseInt(itemvalappr)==1)
-	         	  	{
-	    				}
-	         			else
-	         				{
-	         			
-	         				}  
-	         		}
-	         		}
-	         		 
-	         	x.open("GET","saveNAlias.jsp?list="+listss+"&docno="+docno+"&authname="+authname+"&codeno="+codeno);
-	         		x.send();
-	     	
-	     	
-	     	}  
-	     
+	        $('#frmPlateCode').validate({
+	                 rules: {
+	                 authName:{
+	                	 required:true
+	                 },
+	                 plateCode:{
+	                	 required:true,
+	                	 maxlength:10
+	                 }
+	                 },
+	                 messages: {
+	                  authName:{
+	                	  required:" *"
+	                  },
+	                  plateCode:{
+	                	  required:" *",
+	                	  maxlength:"max 10 chars"
+	                  }
+	                 }
+	        });});
+	     function funNotify(){
+	    	 var rows = $("#jqxnalias").jqxGrid('getrows'); 
+	     	    var listss = new Array();
+	    	 	var a = 1;
+	    	   for(var i=0 ; i < rows.length ; i++){
+	    		   var code=rows[i].code;
+	    			if(code!="undefined" && code!=null && typeof(code)!="undefined" ){
+	        	    	
+	    		   listss.push(rows[i].code+"::"+rows[i].doc_no+"::"+a+"::");  
+	    			}
+	    	   }
+	    	savenalias(listss);
+	    		return 1;
+		} 
+	     function funExcelBtn(){
+			  $("#jqxPlateCodeSearch1").jqxGrid('exportdata', 'xls', 'Platecode');
+		  }
+	     
+	     function savenalias(listss)
+	     {
+	     	
+	     	    var codeno=document.getElementById("plateCode").value;
+	       	     var authname=$("#authName option:selected").text();
+	         	   var docno=document.getElementById("docno").value;
+	         	   
+	         		   	var x=new XMLHttpRequest();
+	         		x.onreadystatechange=function(){
+	         			if (x.readyState==4 && x.status==200)
+	         				{
+	         				 var itemsapprove= x.responseText;
+	         				 	var itemvalappr=itemsapprove.trim();
+	         					 	
+	         	  if(parseInt(itemvalappr)==1)
+	         	  	{
+	    				}
+	         			else
+	         				{
+	         			
+	         				}  
+	         		}
+	         		}
+	         		 
+	         	x.open("GET","saveNAlias.jsp?list="+listss+"&docno="+docno+"&authname="+authname+"&codeno="+codeno);
+	         		x.send();
+	     	
+	     	
+	     	}  
+	     
 </script>
 </head>
 
 <body onLoad="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
-<form id="frmPlateCode" action="saveActionPlate"  autocomplete="off">
+	<form id="frmPlateCode" action="saveActionPlate"  autocomplete="off">
 	<jsp:include page="../../../../header.jsp" />
-	
-    <div class="section-block">
-        <h2>Plate Code Details</h2>
-        
-        <div class="form-grid">
-            <label>Date</label>
-            <div class="jqx-datetimeinput-container">
-                <div id="date_plateCode" name="date_plateCode" value='<s:property value="date_plateCode"/>'></div>
-            </div>
-			<div id="nAliasgrid" class="n-alias-grid-container"><jsp:include page="nAliasgrid.jsp"></jsp:include></div>
-            <label>Doc No</label>
-            <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly="readonly">
-            </div>
-	<div class="form-grid_new">
-            <label>Authority</label>
-            <select name="authName" id="authName" >
-                <option value="">--Select--</option>
-            </select>
-            
-            <label>Plate Code</label>
-            <input type="text" id="plateCode" name="plateCode" value='<s:property value="plateCode"/>'>
-            
-            <label>Name</label>
-            <input type="text" name="platename" id="platename" value='<s:property value="platename"/>'>
-        </div>
+<br/> 
 
-    <div class="jqx-datetimeinput-container" style="width:130px;">
-        <div id="date_plateCode" name="date_plateCode" value='<s:property value="date_plateCode"/>'></div>
-    </div>
+		<div id="mainBG" class="homeContent" data-type="background">
+			<%-- <fieldset>
+				<table>
+					<tr>
+						<td width="11%"><div align="right">Date</div></td>
+					  <td width="59%"><div id='date_plateCode'
+								name='date_plateCode'
+								value='<s:property value="date_plateCode"/>'></div></td>
+						<td width="12%"><div align="right">Doc No</div></td>
+						<td width="18%"><input type="text" name="docno" id="docno"
+							value='<s:property value="docno"/>'></td>
+					</tr>
+					<tr>
+						<td><div align="right">Authority</div></td>
+						<td colspan="3"><select name="authName" id="authName"  style="width:26%;">
+						  <option value="">--Select--</option>
+                        </select>						</td>
+				  </tr>
+					<tr>
+						<td><div align="right">
+						  <div align="right">Plate Code</div>
+						</div></td>
+						<td colspan="3"><input type="text" id="plateCode" name="plateCode"
+							style="width: 25%;" value='<s:property value="plateCode"/>'>
+					    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;&nbsp; <input
+							type="text" name="platename" id="platename" style="width: 300px;"
+							value='<s:property value="platename"/>'></td>
+				  </tr>
+					<tr>										        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+					
+						<td><input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/></td>
+						<td><input type="hidden" name="deleted" id="deleted"
+							value='<s:property value="deleted"/>' /></td>
+						<td><input type="hidden" id="authId" name="authId"
+							value='<s:property value="authId"/>' /></td>
+						<td><input type="hidden" id="datehidden" name="datehidden"
+							value='<s:property value="datehidden"/>' /></td>
+					</tr>
+				</table>
+		  </fieldset>
+ --%>		
+ <fieldset>
+ <table width="100%" >
+  <tr>
+    <td width="5%">Date</td>
+    <td width="22%"><div id='date_plateCode'
+								name='date_plateCode'
+								value='<s:property value="date_plateCode"/>'></div></td>
+    <td width="4%">Doc No</td>
+    <td width="32%"><input type="text" name="docno" id="docno"
+							value='<s:property value="docno"/>'></td>
+    <td width="39%" rowspan="3"> <div id="nAliasgrid"><jsp:include page="nAliasgrid.jsp"></jsp:include></div></td>
+  </tr>
+  <tr>
+    <td>Authority</td>
+    <td><select name="authName" id="authName"  style="width:80%;">
+						  <option value="">--Select--</option>
+                        </select></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Plate Code</td>
+    <td><input type="text" id="plateCode" name="plateCode"
+							style="width: 80%;" value='<s:property value="plateCode"/>'></td>
+    <td>Name</td>
+    <td><input
+							type="text" name="platename" id="platename" style="width: 300px;"
+							value='<s:property value="platename"/>'></td>
+  </tr>
+</table>
+ </fieldset>
+ 
+		</div>
+		<table>
+		<tr>
+		<td>
+			 <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+					
+						<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
+						<input type="hidden" name="deleted" id="deleted"
+							value='<s:property value="deleted"/>' />
+						<input type="hidden" id="authId" name="authId"
+							value='<s:property value="authId"/>' />
+					<input type="hidden" id="datehidden" name="datehidden"
+							value='<s:property value="datehidden"/>' />
+					<input type="hidden" id="authorityname" name="authorityname"
+							value='<s:property value="authorityname"/>' />
+		</td>
+		</tr>
+		</table>
+	</form>
 
-    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
-
-    <input type="text"
-           name="docno"
-           id="docno"
-           value='<s:property value="docno"/>'
-           tabindex="-1"
-           readonly="readonly"
-           style="width:110px;">
-
-</div>
-  <div class="section-block">
-    <h2>Plate Code Details</h2>
-
-    <div id="nAliasgrid" class="n-alias-grid-container">
-        <jsp:include page="nAliasgrid.jsp"></jsp:include>
-    </div>
-
-   <div class="plate-form">
-
-    <label>Authority</label>
-    <select name="authName" id="authName">
-        <option value="">--Select--</option>
-    </select>
-    <div></div>
-    <div></div>
-
-    <label>Plate Code</label>
-    <input type="text" id="plateCode" name="plateCode" value='<s:property value="plateCode"/>'>
-
-    <label>Name</label>
-    <input type="text" name="platename" id="platename" value='<s:property value="platename"/>'>
-
-</div>
-</div>
-        <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
-        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-        <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
-        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-        <input type="hidden" id="authId" name="authId" value='<s:property value="authId"/>' />
-        <input type="hidden" id="authorityname" name="authorityname" value='<s:property value="authorityname"/>' />
-    </div>
-</form>
-
-<div style="padding: 0 20px;">
-    <div id="jqxPlateCodeSearch1"></div>
-</div>
-
-</div>
+<br/>
+<div id="jqxPlateCodeSearch1"></div>
+<%-- <div id="window">
+	<div id="windowHeader" class="windowHead">
+		<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Search</span>
+	</div>
+	<div id="windowContent" class="windowCont" style="overflow: hidden;">
+		<jsp:include page="plateCodeSearch.jsp"></jsp:include>
+	</div></div> --%>
 </body>
 </html>
