@@ -1958,8 +1958,7 @@ body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     font-size: 16px;
     margin: 0;
-    padding: 10px;
-    background: #f5f7fa;
+     background: #fff;
     box-sizing: border-box;
 }
 
@@ -1984,17 +1983,17 @@ table {
 }
 
 td {
-    padding: 4px 6px;
-    font-size: 16px;
+    padding: 2px 3px;
+    font-size: 14px;
     vertical-align: middle;
 }
 
 input[type="text"], select {
     height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 2px 3px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -2035,6 +2034,7 @@ select {
 	background:#fff;
 	border-radius: 20px;
 	padding-bottom:10px;
+	box-shadow: 0 1px 3px #000;
 	
 }
 
@@ -2067,6 +2067,9 @@ select {
 .magnifier-icon:hover {
     color: #2563eb; 
     transform: translateY(-50%) scale(1.1);
+}
+#mainBG{
+ background: #fff;
 }
 </style>
 

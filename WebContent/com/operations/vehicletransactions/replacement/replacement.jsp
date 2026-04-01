@@ -1414,8 +1414,7 @@ body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     font-size: 16px;
     margin: 0;
-    padding: 10px;
-    background: #f5f7fa;
+    background: #fff;
     box-sizing: border-box;
 }
 
@@ -1423,7 +1422,7 @@ fieldset {
     border-radius: 10px;
     border: 1px solid #d1d5db;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     background: #fff;
 }
 
@@ -1440,7 +1439,7 @@ table {
 }
 
 td {
-    padding: 4px 6px;
+    padding: 2px 3px;
     font-size: 14px;
     vertical-align: middle;
     white-space: nowrap;
@@ -1451,7 +1450,7 @@ input[type="text"], select {
     font-size: 13px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 2px 4px;
+    padding: 2px 3px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -1492,7 +1491,10 @@ select {
 	background:#fff;
 	border-radius: 20px;
 	padding-bottom:10px;
-	
+	box-shadow: 0 1px 3px #000;
+}
+#mainBG{
+ background: #fff;
 }
 
 .input-search-container {

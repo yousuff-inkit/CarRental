@@ -16,7 +16,7 @@
 $(document).ready(function () {
 
 $("#searchdate").jqxDateTimeInput({
-    width: '100%',
+    width: '125px',
     height: '30px',
     formatString:"dd.MM.yyyy",
     value:null
@@ -68,7 +68,7 @@ border-spacing:15px 18px;
 
 #search td[align="right"]{
 font-family:'Segoe UI','Roboto','Arial',sans-serif;
-font-weight:700;
+font-weight:500;
 font-size:14px;
 color:#222;
 }
@@ -76,7 +76,7 @@ color:#222;
 #search input[type="text"],
 #search select{
 font-family:'Segoe UI','Roboto','Arial',sans-serif;
-font-weight:600;
+font-weight:500;
 font-size:14px;
 padding:6px 10px;
 height:32px;
@@ -86,7 +86,7 @@ box-sizing:border-box;
 
 #searchdate{
 font-size:14px;
-font-weight:600;
+font-weight:500;
 }
 
 
@@ -113,8 +113,8 @@ line-height:1.6;
 <input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'>
 </td>
 
-<td width="8%" align="right">Type</td>
-<td width="11%">
+<td width="5%" align="right">Type</td>
+<td width="15%">
 <select name="searchcmbtype" id="searchcmbtype">
 <option value="">--Select--</option>
 <option value="IN">IN</option>
@@ -123,11 +123,11 @@ line-height:1.6;
 </td>
 
 <td width="15%" align="right">Ref Doc No</td>
-<td>
+<td width="15%">
 <input type="text" name="searchrdocno" id="searchrdocno" value='<s:property value="searchrdocno"/>'>
 </td>
 
-<td width="19%" align="right">Reg No</td>
+<td width="9%" align="right">Reg No</td>
 <td width="16%">
 <input type="text" name="searchregno" id="searchregno">
 </td>
