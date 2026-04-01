@@ -42,7 +42,7 @@
     	  $("#accdate").jqxDateTimeInput({ width: '85px', height: '15px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
     	  $("#collectdate").jqxDateTimeInput({ width: '85px', height: '15px',formatString:"dd.MM.yyyy",value:null,enableBrowserBoundsDetection: true});
     	  /* Window */
-    	   $('#docwindow').jqxWindow({ width: '70%', height: '60%',  maxHeight: '70%' ,maxWidth: '60%' , title: 'Document Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    	   $('#docwindow').jqxWindow({ width: '80%', height: '100%',  maxHeight: '500px' ,maxWidth: '80%' , title: 'Document Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
        	   $('#docwindow').jqxWindow('close');
        	 $('#damagewindow').jqxWindow({ width: '60%', height: '54%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Damage Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
      	   $('#damagewindow').jqxWindow('close');
@@ -792,7 +792,7 @@
  }
 
  object {
-  display:block; /* HTML5 fix */
+  display:block; 
   position:relative;
   z-index:1000;
  }
@@ -800,7 +800,6 @@
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     font-size: 16px;
     margin: 0;
-    padding: 10px;
     background: #f5f7fa;
     box-sizing: border-box;
 }
@@ -826,7 +825,7 @@ table {
 }
 
 td {
-    padding: 4px 6px;
+    padding: 2px 3px;
     font-size: 14px;
     vertical-align: middle;
     white-space: nowrap;
@@ -837,7 +836,7 @@ input[type="text"], select {
     font-size: 13px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
-    padding: 2px 4px;
+    padding: 2px 3px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -879,7 +878,10 @@ select {
 	border-radius: 20px;
 	padding-bottom:5px;
 	padding-left:5px;
-	
+box-shadow: 0 1px 3px #000;
+}
+#mainBG{
+ background: #fff;
 }
 
 .input-search-container {
@@ -916,6 +918,12 @@ select {
   overflow-y: auto;
   overflow-x: hidden;
   height: calc(100vh - 160px);
+}
+#window {
+    width: 70% !important;
+    max-width: 75% !important;
+    
+    height:60%;
 }
  </style>
       

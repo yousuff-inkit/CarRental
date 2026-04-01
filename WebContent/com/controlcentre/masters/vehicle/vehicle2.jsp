@@ -12,489 +12,18 @@
 <jsp:include page="tab.css" />
 <jsp:include page="tab.jsp" />
 <style>
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-}
-
-
-.receipt-header {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-    padding: 0 10px 10px;
-}
-
-.receipt-header table {
-    width: 100%;
-}
-
-.receipt-header td {
-    padding: 6px 4px;
-    vertical-align: middle;
-}
-
-#txtStatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #e67e22;
-}
-
-
-
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    text-align: right;
-    padding-right: 8px;
-    font-size:1rem;
-}
-
-.form-group input[type="text"],
-.form-group select {
-    width: 100%;
-}
-
-/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
-.form-group.dual-input {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Special case: One label with two equal-width inputs */
-.form-group.single-label-dual-input {
-    grid-template-columns: 120px 1fr 1fr;
-}
-
-.form-group.single-label-dual-input input[type="text"]:first-of-type {
-    width: 100%;
-}
-
-.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
-    width: 100%;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 30px;
-}
-
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-}
-
-/* Special handling for the "to-account-row" - all items in one line */
-.to-account-row {
-    display: grid;
-    grid-template-columns: 100px 50px 140px 1fr;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.to-account-row label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-.to-account-row #cmbtotype {
-    width: 100%;
-}
-
-.to-account-row #txttoaccid {
-    width: 100%;
-}
-
-.to-account-row #txttoaccname {
-    width: 100%;
-}
-
-
-
-.table-section {
-    margin: 20px 0;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 100vh;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
-}
-body::-webkit-scrollbar {
-    width: 0px;
-}
-
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-
-
-
-  }
-  
-#validrate,
-#validrate1 {
-    color: red;
-    font-size: 12px;
-    grid-column: 2 / -1;
-}
-
-
-
-#approval-table td {
-    font-size: 14px;
-    padding: 8px;
-}
-
-#approval-table tr:nth-child(even) {
-    background: #f9fafb;
-}
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-    box-shadow: 0 0 0px 1000px #ffffff inset !important;
-    -webkit-text-fill-color: #253858 !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
-/* Align jqxDateTimeInput with normal textboxes */
-.jqx-datetimeinput,
-.jqx-datetimeinput .jqx-input-content {
-    height: 34px !important;
-    line-height: 34px !important;
-    box-sizing: border-box;
-}
-/* ===== RECEIPT HEADER (same as Cash Receipt) ===== */
-
-.receipt-header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-.receipt-header label {
-    font-weight: 600;
-    margin-right: 8px;
-}
-
-.receipt-header input {
-    width: 120px;
-}
-
-.receipt-header .docno {
-    margin-left: auto;
-}
-/* ===== SECTION STYLE SAME AS CASH RECEIPT ===== */
-
-fieldset {
-    background: #f6f8fa;
-    border-radius: 12px;
-    border: none;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-legend {
-    font-size: 17.6px;
-    font-weight: 600;
-    color: #253858;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-}
-/* ===== INPUT STYLE ===== */
-
-input[type="text"], select {
-    height: 32px;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    padding: 6px 10px;
-    font-size: 16px;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-body::-webkit-scrollbar {
-	width: 0px;
-}
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);}
-  
-/* FIX: legends going right */
-fieldset legend {
-    text-align: left !important;
-    float: left !important;
-    margin-left: 10px;
-}
-
-/* FIX: Fleet No + Fleet Name color */
-#fleetno,
-#fleetname {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    opacity: 1 !important;
-}
-
-/* OPTIONAL: fix all readonly fields */
-input[readonly] {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    opacity: 1 !important;
-}
-.form-group-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.form-group-vertical label {
-    text-align: left;
-    padding-right: 0;
-}
-td label {
-    display: block;
-    margin-bottom: 5px;
-    text-align: left;
-}
-/* Row layout */
-.vertical-form table tr {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
-    gap: 20px;
-}
-
-/* Each field */
-.vertical-form table td {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Labels */
-.vertical-form table td label {
-    margin-bottom: 5px;
-    text-align: left;
-}
-
-/* Inputs full width */
-.vertical-form table td input[type="text"],
-.vertical-form table td select {
-    width: 100%;
-}
-
-/* Date fields (jqx) - keep normal */
-.vertical-form table td div[id^="jqx"] {
-    width: auto !important;
-    max-width: 180px;
-}
-/* Make row perfectly aligned */
-.vertical-form table tr {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
-    align-items: start;   
-}
-
-/* Each field */
-.vertical-form table td {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-}
-
-.vertical-form table td label {
-    display: block;
-    margin: 0;
-    margin-bottom: 6px;
-    font-size: 14px;
-}
-
-/* Inputs consistent */
-.vertical-form table td input,
-.vertical-form table td select {
-    height: 34px;
-    box-sizing: border-box;
-}
-
-.vertical-form table td {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-/* Make all inputs & selects behave same */
-.vertical-form table td input,
-.vertical-form table td select {
-    height: 34px;
-    display: block;
-}
-
-
-.vertical-form table tr {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
-    align-items: end;   
-}
-#releasesave {
-    margin-right: 12px;
-}
-
+form label.error {
+color:red;
+  font-weight:bold;
+
+}
+  .sep {
+        border-bottom:1px solid black;
+    }
+    .alignright{
+    
+    text-align:
+    }
 </style>
 <script type="text/javascript">
 	
@@ -1612,52 +1141,173 @@ function funGetConfigs(){
 		document.getElementById("releasesave").focus();
 	} */
 </script>
+ <style>
+ body {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    background: #f5f7fa;
+    box-sizing: border-box;
+}
+
+fieldset {
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    padding: 5px;
+    margin-bottom: 5px;
+    background: #fff;
+}
+
+legend {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 4px;
+        border-left: 4px solid #007bff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 2px 3px;
+    font-size: 14px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+input[type="text"], select {
+    height: 30px;
+    font-size: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 2px 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[readonly] {
+    background: #f3f4f6;
+}
+
+select {
+    background: #fff;
+}
+
+.myButton {
+ font-weight: 700;
+    font-size: 13px;
+    width: 130px;
+    height: 38px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.myButton:hover {
+  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+#head{
+	background:#fff;
+	border-radius: 20px;
+	padding-bottom:5px;
+	padding-left:5px;
+box-shadow: 0 1px 3px #000;
+}
+#mainBG{
+ background: #fff;
+}
+
+.input-search-container {
+    position: relative;
+display: inline-block;
+    width: 100%; 
+    margin-right: 15px;
+}
+
+.input-search-container input {
+    padding-right: 30px !important; 
+    width: 100% !important;
+ 
+    box-sizing: border-box !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+    pointer-events: all; 
+    
+}
+.magnifier-icon:hover {
+    color: #2563eb; 
+    transform: translateY(-50%) scale(1.1);
+}
+.hidden-scrollbar {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 40px);
+}
+#content {
+    background: #E0ECF8;
+    padding: 0px !important;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, .5);
+}
+.narrow-input {
+    width: 125px !important;
+    min-width: 120px !important;
+    display: inline-block;
+}
+
+</style>
  <link href="../../../../css/body.css" rel="stylesheet" type="text/css">
- <jsp:include page="../../../../includes.jsp"></jsp:include>
+ 	<jsp:include page="../../../../includes.jsp"></jsp:include>
+ 
  </head>
 <body onLoad="setValues();">
-	
-	<br/> 
 	<div id="mainBG" class="homeContent" data-type="background"> 
 		<form id="frmVehicle" action="saveVehicle" method="post" autocomplete="off">
-		<jsp:include page="../../../../header.jsp" />
-		<div class="receipt-header">
-<table>
-<tr>
-
-<td align="right">Date</td>
-<td>
-<div id="jqxDate1" name="jqxDate1" value='<s:property value="jqxDate1"/>'></div>
-<input type="hidden" id="hidjqxDate1" name="hidjqxDate1"
-value='<s:property value="hidjqxDate1"/>'>
-</td>
-
-<td style="width:65%"></td>
-
-<td align="right">Doc No</td>
-<td>
-<input type="text" name="docno" id="docno"
-readonly="readonly"
-value='<s:property value="docno"/>'
-tabindex="-1"
-style="width:120px;">
-</td>
-
-</tr>
-</table>
-</div>
+		<div id="head"><jsp:include page="../../../../header.jsp" /></div>
 				<fieldset><legend>Vehicle Details</legend>
 				<table width="100%" cellspacing="0">
 					<tr>
-						<td width="68" height="24" style="text-align: right;">
-    Fleet No
-</td>
+						<td width="68" height="24" id="f" style="text-align: right"><div
+								align="right">Fleet No</div></td>
 						<td colspan="5">
 							<input type="text" name="fleetno" id="fleetno" readonly tabindex="-1" 
 							style="width: 20%;" value='<s:property value="fleetno"/>'> 
 							<input type="text" name="fleetname" id="fleetname" readonly tabindex="-1"
 							style="width: 75.5%;" value='<s:property value="fleetname"/>'></td>
-						
+						<td align="right">Date</td>
+						<td colspan="2" align="left"><div id='jqxDate1'
+								name='jqxDate1' value='<s:property value="jqxDate1"/>'></div>
+                        </td><input
+							type="hidden" id="hidjqxDate1" name="hidjqxDate1"
+							value='<s:property value="hidjqxDate1"/>' />
+						<td align="left">&nbsp;</td>
+						<td width="64" align="right">Doc No</td>
+						<td width="168" align="left"><input type="text"
+							name="docno" id="docno"  readonly="readonly" value='<s:property value="docno"/>' tabindex="-1"></td>
 						
 					</tr>
 					<tr>
@@ -1752,10 +1402,10 @@ style="width:120px;">
 					</li>
 				</ul>
 				<!-- <iframe  width=1100px height=400px align='center' id='page' ></iframe> -->
-				<div id="content">
+				<div id="content" >
 					<div id="tab1">
 						<table width="100%">
-							<tr>
+							<tr >
 									<td width="25%">
                                     <fieldset><legend>Info</legend>
 									  <table width="100%" >
@@ -1778,35 +1428,35 @@ style="width:120px;">
 								        </tr>
 									    <tr>
 									      <td align="right">Purchase Cost</td>
-									      <td align="left"><input type="text" name="purchase_cost"  id="purchase_cost" value='<s:property value="purchase_cost"/>' style="text-align:right;" onblur="getTotal();" required/></td>
+									      <td align="left" ><input type="text" class="narrow-input" name="purchase_cost"  id="purchase_cost" value='<s:property value="purchase_cost"/>' style="text-align:right;" onblur="getTotal();" required/></td>
 								        </tr>
 									    <tr>
 									      <td align="right">Additions</td>
-									      <td align="left"><input type="text" id="additions" name="additions" value='<s:property value="additions"/>' style="text-align:right;" onblur="getTotal();"/></td>
+									      <td align="left"><input type="text" id="additions" name="additions" class="narrow-input" value='<s:property value="additions"/>' style="text-align:right;" onblur="getTotal();"/></td>
 								        </tr>
 									    <tr>
 									      <td align="right">Total</td>
-									      <td align="left"><input type="text" id="total" name="total" value='<s:property value="total"/>'  style="text-align:right;" readonly/></td>
+									      <td align="left"><input type="text" id="total" name="total"class="narrow-input"  value='<s:property value="total"/>'  style="text-align:right;" readonly/></td>
 								        </tr>
 									    <tr>
 									      <td align="right">&nbsp;Depr %</td>
-									      <td align="left"><input type="text" id="depr_perc" name="depr_perc" value='<s:property value="depr_perc"/>' style="text-align:right;" onblur="depr_percent(this.value);"/></td>
+									      <td align="left"><input type="text" id="depr_perc" class="narrow-input" name="depr_perc" value='<s:property value="depr_perc"/>' style="text-align:right;" onblur="depr_percent(this.value);"/></td>
 								        </tr>
 									    <tr>
 									      <td align="right">&nbsp;Accu. Dep.</td>
-									      <td align="left"><input type="text" id="accu_dep" name="accu_dep" value='<s:property value="accu_dep"/>' style="text-align:right;" /></td>
+									      <td align="left"><input type="text" id="accu_dep" name="accu_dep" class="narrow-input" value='<s:property value="accu_dep"/>' style="text-align:right;" /></td>
 								        </tr>
 									    <tr>
 									      <td align="right">&nbsp;CostTran No</td>
-									      <td align="left"><input type="text" id="tran_no" readonly name="tran_no" value='<s:property value="tran_no"/>'  tabindex="-1"/></td>
+									      <td align="left"><input type="text" id="tran_no" readonly name="tran_no" class="narrow-input" value='<s:property value="tran_no"/>'  tabindex="-1"/></td>
 								        </tr>
 									    <tr>
 									      <td align="right">Insur Membership</td>
-									      <td align="left"><input type="text" name="insurmember" id="insurmember" value='<s:property value="insurmember"/>' /></td>
+									      <td align="left"><input type="text" name="insurmember" id="insurmember" class="narrow-input" value='<s:property value="insurmember"/>' /></td>
 								        </tr>
 									    <tr>
 									      <td align="right">Tracking ID</td>
-									      <td align="left"><input type="text" name="trackid" id="trackid" value='<s:property value="trackid"/>' /></td>
+									      <td align="left"><input type="text" name="trackid" id="trackid" class="narrow-input" value='<s:property value="trackid"/>' /></td>
 								        </tr>
 								      </table>
                                       <br />
@@ -1823,15 +1473,15 @@ style="width:120px;">
 										<table width="99%">
 											<tr>
 											  <td align="right">Dealer</td>
-											  <td align="left"><input type="text" name="dealer" id="dealer" value='<s:property value="dealer"/>' onDblClick="funSearchdblclick();" onKeyDown="getDealer(event);" placeholder="Press F3 to Search"></td>
+											  <td align="left"><input type="text" name="dealer" id="dealer" class="narrow-input" value='<s:property value="dealer"/>' onDblClick="funSearchdblclick();" onKeyDown="getDealer(event);" placeholder="Press F3 to Search"></td>
 										  </tr>
 											<tr>
 											  <td align="right">LPO No</td>
-											  <td><input type="text" id="lpo_no" name="lpo_no" value='<s:property value="lpo_no"/>'/></td>
+											  <td><input type="text" id="lpo_no" name="lpo_no" class="narrow-input" value='<s:property value="lpo_no"/>'/></td>
 										  </tr>
 											<tr>
 											  <td align="right">Purchase Invoice</td>
-											  <td><input type="text" id="purchase_invoice" name="purchase_invoice" value='<s:property value="purchase_invoice"/>'/></td>
+											  <td><input type="text" id="purchase_invoice" name="purchase_invoice" class="narrow-input" value='<s:property value="purchase_invoice"/>'/></td>
 										  </tr>
 											<tr>
 											  <td align="right">Purchase Date</td>
@@ -1841,7 +1491,7 @@ style="width:120px;">
 											<tr>
 												<td align="right">Financer</td>
 												<td>
-														<input type="text" name="financier" id="financier" value='<s:property value="financier"/>' ondblclick="funFinSearchdblclick();" onkeydown="getFin(event);" placeholder="Press F3 to Search">
+														<input type="text" name="financier" id="financier" class="narrow-input" value='<s:property value="financier"/>' ondblclick="funFinSearchdblclick();" onkeydown="getFin(event);" placeholder="Press F3 to Search">
 												</select> <input type="hidden" id="hidfinancier" name="hidfinancier"
 													value='<s:property value="hidfinancier"/>' /></td>
 											</tr>
@@ -1853,7 +1503,7 @@ style="width:120px;">
 											<tr>
 												<td align="right">Insurance Type</td>
 												<td><select name="cmbinsurance_type"
-													id="cmbinsurance_type" value='<s:property value="cmbinsurance_type"/>' style="width:54%;">
+													id="cmbinsurance_type" class="narrow-input" value='<s:property value="cmbinsurance_type"/>' style="width:54%;">
 													<option value="">--Select--</option>
 												  <option value="Comprehensive">Comprehensive</option>
 												  <option value="3rdParty">3rd Party</option>
@@ -1861,21 +1511,21 @@ style="width:120px;">
 											</tr>
 											<tr>
 												<td align="right">&nbsp;&nbsp;Insurance Comp</td>
-												<td><input type="text" id="insurance_comp" name="insurance_comp" placeholder="Press F3 to Search" 
+												<td><input type="text" id="insurance_comp" name="insurance_comp" class="narrow-input" placeholder="Press F3 to Search" 
 													 value='<s:property value="insurance_comp"/>' ondblclick="funInsurSearchdblclick();" onkeydown="getInsurance(event);"/></td>
 											</tr>
 											<tr>
 												<td width="41%" align="right">Policy No</td>
-												<td width="59%"><input type="text" id="policy_no" name="policy_no" value='<s:property value="policy_no"/>' onblur="getservtab();" /></td><input type="hidden" id="hidjqxFinRegDate" name="hidjqxFinRegDate"
+												<td width="59%"><input type="text" id="policy_no" name="policy_no" class="narrow-input" value='<s:property value="policy_no"/>' onblur="getservtab();" /></td><input type="hidden" id="hidjqxFinRegDate" name="hidjqxFinRegDate"
 													value='<s:property value="hidjqxFinRegDate"/>' />
 											</tr>
 											<tr>
 											  <td align="right">File No</td>
-											  <td><input type="text" name="fileno" id="fileno" value='<s:property value="fileno"/>' /></td>
+											  <td><input type="text" name="fileno" id="fileno" class="narrow-input" value='<s:property value="fileno"/>' /></td>
 										  </tr>
 										  <tr>
 											  <td align="right">Mortgaged To</td>
-											  <td><input type="text" name="mortgaged" id="mortgaged" value='<s:property value="mortgaged"/>' placeholder="Press F3 to Search" readonly onkeydown="getMortgaged(event);"/></td>
+											  <td><input type="text" name="mortgaged" id="mortgaged" class="narrow-input" value='<s:property value="mortgaged"/>' placeholder="Press F3 to Search" readonly onkeydown="getMortgaged(event);"/></td>
                                               <input type="hidden" name="hidmortgaged" id="hidmortgaged" value='<s:property value="hidmortgaged"/>'/>
 										  </tr>
                                             
@@ -1893,10 +1543,9 @@ style="width:120px;">
                                         
 									</fieldset>
 								</td>
-<input type="hidden" name="hidinsurance_comp" id="hidinsurance_comp" 
-													 value='<s:property value="hidinsurance_comp"/>'>
+<input type="hidden" name="hidinsurance_comp" id="hidinsurance_comp"  value='<s:property value="hidinsurance_comp"/>'>
                                                      <input
-													type="hidden" id="hidjqxFinRelDate" name="hidjqxFinRelDate"
+													type="hidden" id="hidjqxFinRelDate" class="narrow-input"name="hidjqxFinRelDate"
 													value='<s:property value="hidjqxFinRelDate"/>' /><input type="hidden" id="hidcmbinsurance_type"
 													name="hidcmbinsurance_type"
 													value='<s:property value="hidcmbinsurance_type"/>' /><input
@@ -1913,25 +1562,25 @@ style="width:120px;">
 							        </tr>
 								    <tr>
 								      <td width="36%" align="right">Fleet No</td>
-								      <td colspan="2" align="left"><input type="text" name="releasefleet" id="releasefleet" value='<s:property value="releasefleet"/>'></td>
+								      <td colspan="2" align="left"><input type="text" name="releasefleet" class="narrow-input" id="releasefleet" value='<s:property value="releasefleet"/>'></td>
 							        </tr>
 								    <tr>
 								      <td align="right">Branch</td>
-								      <td colspan="2" align="left"><select name="cmbrlsbranch"  id="cmbrlsbranch" value='<s:property value="cmbrlsbranch"/>' onChange="getLocation(this.value);" style="width:50.5%;"  >
+								      <td colspan="2" align="left"><select name="cmbrlsbranch" class="narrow-input" id="cmbrlsbranch" value='<s:property value="cmbrlsbranch"/>' onChange="getLocation(this.value);" style="width:50.5%;"  >
 								        <option value="">--Select--</option>
 								        </select>
                                       <input type="hidden" name="hidcmbrlsbranch" id="hidcmbrlsbranch" value='<s:property value="hidcmbrlsbranch"/>' ></td>
 							        </tr>
 								    <tr>
 								      <td align="right">Location</td>
-								      <td colspan="2" align="left"><select name="cmbrlsloc" id="cmbrlsloc" value='<s:property value="cmbrlsloc"/>' style="width:50%;" >
+								      <td colspan="2" align="left"><select name="cmbrlsloc" id="cmbrlsloc" class="narrow-input" value='<s:property value="cmbrlsloc"/>' style="width:50%;" >
 								        <option value="">--Select--</option>
 								        </select>
 							          <input type="hidden" name="hidcmbrlsloc" id="hidcmbrlsloc" value='<s:property value="hidcmbrlsloc"/>'></td>
 							        </tr>
 								    <tr>
 								      <td align="right">Rental Status</td>
-								      <td colspan="2" align="left"><select name="cmbrentalstatus" id="cmbrentalstatus" value='<s:property value="cmbrentalstatus"/>' style="width:50%;">
+								      <td colspan="2" align="left"><select name="cmbrentalstatus"class="narrow-input"  id="cmbrentalstatus" value='<s:property value="cmbrentalstatus"/>' style="width:50%;">
  										<option value="R" >Rental</option>
 								        <option value="L">Lease</option>
 								        <option value="LM">Limousine</option>
@@ -1946,28 +1595,28 @@ style="width:120px;">
 							        </tr>
 								    <tr>
 								      <td align="right">Time</td>
-								      <td colspan="2" align="left"><div id="releasetime" name="releasetime" value='<s:property value="releasetime"/>'></td>
+								      <td colspan="2" align="left"><div id="releasetime" class="narrow-input" name="releasetime" value='<s:property value="releasetime"/>'></td>
 							        </tr>
 								    <tr>
 								      <td align="right">KM</td>
-								      <td width="32%" align="left"><input type="text" name="releasekm" id="releasekm" value='<s:property value="releasekm"/>' tabindex="-1" readonly></td>
+								      <td width="32%" align="left"><input type="text" class="narrow-input" name="releasekm" id="releasekm" value='<s:property value="releasekm"/>' tabindex="-1" readonly></td>
 								      <td width="32%" align="left">&nbsp;</td>
 							        </tr>
 								    <tr>
 								      <td align="right">Fuel</td>
-								      <td align="left"><input type="text" name="releasefuel" id="releasefuel" value='<s:property value="releasefuel"/>' tabindex="-1" readonly></td>
+								      <td align="left"><input type="text" name="releasefuel"class="narrow-input" id="releasefuel" value='<s:property value="releasefuel"/>' tabindex="-1" readonly></td>
 								      <td align="left">&nbsp;</td>
 							        </tr>
 								    <tr>
 								      <td align="right">Op. Status</td>
 								      <td align="left"><input type="text"
-							name="opstatus" id="opstatus"  value='IN' tabindex="-1" disabled="true"></td>
+							name="opstatus" id="opstatus" class="narrow-input" value='IN' tabindex="-1" disabled="true"></td>
 								      <td align="left">&nbsp;</td>
 							        </tr>
 								    <tr>
 								      <td align="right">Ast status</td>
 								      <td align="left"><input type="text"
-							name="aststatus" id="aststatus"  style="align: left;" value='<s:property value="aststatus"/>'  tabindex="-1" ></td>
+							name="aststatus" id="aststatus"  style="align: left;"class="narrow-input" value='<s:property value="aststatus"/>'  tabindex="-1" ></td>
 								      <td align="left">&nbsp;</td>
 							        </tr>
 								    <tr>
@@ -1987,193 +1636,147 @@ style="width:120px;">
 					<div id="tab2">
 						<table width="100%">
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset class="vertical-form">
-    <legend>Vehicle Info</legend>
-    <table width="100%">
-        <tr>
-            <td>
-                <label>Engine No</label>
-                <input type="text" id="engine_no" name="engine_no"
-                       value='<s:property value="engine_no"/>'
-                       style="text-transform:uppercase; width:100%;">
-            </td>
-
-            <td>
-                <label>Chasis No</label>
-                <input type="text" id="chasis_no" name="chasis_no"
-                       value='<s:property value="chasis_no"/>'
-                       style="text-transform:uppercase; width:100%;">
-            </td>
-
-            <td>
-                <label>VIN</label>
-                <input type="text" name="vin" id="vin"
-                       value='<s:property value="vin"/>'
-                       style="width:100%;">
-            </td>
-
-            <td>
-                <label>Fuel Type</label>
-                <select name="cmbfueltype" id="cmbfueltype" style="width:100%;">
-                    <option value="">--Select--</option>
-                    <option value="P">Petrol</option>
-                    <option value="D">Diesel</option>
-                    <option value="E">Electric</option>
-                </select>
-            </td>
-
-            <td>
-                <label>Fuel Tank Capacity</label>
-                <input type="text" name="fuelcapacity" id="fuelcapacity"
-                       value='<s:property value="fuelcapacity"/>'
-                       style="width:100%;">
-            </td>
-
-            <td>
-                <label>Color</label>
-                <select name="cmbveh_color" id="cmbveh_color"
-                        style="width:100%;">
-                    <option>--Select--</option>
-                </select>
-                <input type="hidden" name="hidcmbveh_color"
-                       id="hidcmbveh_color"
-                       value='<s:property value="hidcmbveh_color"/>'>
-            </td>
-        </tr>
-    </table>
-</fieldset>
+								<td colspan="8" >
+									<fieldset>
+										<legend>Vehicle Info</legend>
+										<table width="100%">
+											<tr>
+												<td width="7%" height="28" align="right">Engine No</td>
+												<td width="10%" align="left"><input type="text"
+													id="engine_no" name="engine_no" value='<s:property value="engine_no"/>'style="text-transform:uppercase;"/></td>
+												<td width="5%" align="right" >Chasis No</td>
+												<td width="10%" align="left"><input type="text"
+													id="chasis_no" name="chasis_no" value='<s:property value="chasis_no"/>' style="text-transform:uppercase;"/></td>
+												<td width="5%" align="right">VIN</td>
+											  <td width="11%" ><input type="text"
+													name="vin" id="vin" value='<s:property value="vin"/>' /></td>
+												<td width="9%" align="right">Fuel Type</td>
+												<td width="8%" align="left"><select name="cmbfueltype" id="cmbfueltype" >
+												  <option value="">--Select--</option>
+												  <option value="P">Petrol</option>
+												  <option value="D">Diesel</option>
+												  <option value="E">Electric</option>
+											    </select></td>
+												<td width="10%" align="right">Fuel Tank Capacity</td>
+												<td width="10%" align="left"><input type="text" name="fuelcapacity" id="fuelcapacity" value='<s:property value="fuelcapacity"/>'/></td>
+												<td width="3%" align="right">Color</td>
+												<td width="12%" align="left"><select
+													name="cmbveh_color" id="cmbveh_color" value='<s:property value="cmbveh_color"/>'>
+														<option>--Select--</option>
+												</select> </td>
+												<input type="hidden" name="hidcmbveh_color" id="hidcmbveh_color" value='<s:property value="hidcmbveh_color"/>'>
+											</tr>
+										</table>
+									</fieldset>
 								</td>
 							</tr>
 
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset class="vertical-form">
-    <legend>Warranty Info</legend>
-    <table width="100%">
-        <tr>
-            <td>
-                <label>Warranty Period</label>
-                <input type="text" id="warranty_period" name="warranty_period"
-                       value='<s:property value="warranty_period"/>'
-                       onblur="getWarrantyDate(this.value);" style="width:100%;">
-            </td>
-
-            <td>
-                <label>From Date</label>
-                <div id='jqxWrntyFrmDate'
-                     name='jqxWrntyFrmDate'
-                     value='<s:property value="jqxWrntyFrmDate"/>'></div>
-                <input type="hidden" id="hidjqxWrntyFrmDate" name="hidjqxWrntyFrmDate"
-                       value='<s:property value="hidjqxWrntyFrmDate"/>' />
-            </td>
-
-            <td>
-                <label>To Date</label>
-                <div id='jqxWrntyToDate'
-                     name='jqxWrntyToDate'
-                     value='<s:property value="jqxWrntyToDate"/>'></div>
-                <input type="hidden" id="hidjqxWrntyToDate" name="hidjqxWrntyToDate"
-                       value='<s:property value="hidjqxWrntyToDate"/>' />
-            </td>
-
-            <td>
-                <label>Warranty KM</label>
-                <input type="text" name="warranty_km" id="warranty_km"
-                       value='<s:property value="warranty_km"/>'
-                       style="text-align:right; width:100%;">
-            </td>
-        </tr>
-    </table>
-</fieldset>
+								<td colspan="8" >
+									<fieldset>
+										<legend>Warranty Info</legend>
+										<table width="100%">
+											<tr>
+												<td width="9%" height="28" align="right">Warranty
+													Period</td>
+												<td width="9%" align="left"><input type="text"
+													id="warranty_period" name="warranty_period" value='<s:property value="warranty_period"/>' onblur="getWarrantyDate(this.value);"/></td>
+												<td width="7%" align="right">From Date</td>
+												<td width="8%" align="left"><div id='jqxWrntyFrmDate'
+														name='jqxWrntyFrmDate'
+														value='<s:property value="jqxWrntyFrmDate"/>'></div>
+														 </td><input
+													type="hidden" id="hidjqxWrntyFrmDate" name="hidjqxWrntyFrmDate"
+													value='<s:property value="hidjqxWrntyFrmDate"/>' />
+												<td width="9%" align="right">To Date</td>
+												<td width="12%" align="left"><div id='jqxWrntyToDate'
+														name='jqxWrntyToDate'
+														value='<s:property value="jqxWrntyToDate"/>'></div> 
+														</td><input
+													type="hidden" id="hidjqxWrntyToDate" name="hidjqxWrntyToDate"
+													value='<s:property value="hidjqxWrntyToDate"/>' />
+												<td width="8%" align="right">Warranty KM</td>
+												<td width="38%" align="left"><input type="text"
+													name="warranty_km" id="warranty_km"  value='<s:property value="warranty_km"/>' style="text-align:right;"/></td>
+											</tr>
+										</table>
+									</fieldset>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="8" align="right"></td>
+								<td colspan="8" ></td>
 							</tr>
 
 							<tr>
-								<td colspan="8" style="text-align: right">
-								<fieldset class="vertical-form">
-    <legend>Service Info</legend>
-    <table width="100%">
-        <tr>
-            <td>
-                <label>Service Duration (KM)</label>
-                <input type="text" id="service_km" name="service_km"
-                       value='<s:property value="service_km"/>'
-                       style="text-align:right; width:100%;">
-            </td>
-
-            <td>
-                <label>Last Service Date</label>
-                <div id='jqxLstSrvcDate'
-                     name='jqxLstSrvcDate'
-                     value='<s:property value="jqxLstSrvcDate"/>'></div>
-                <input type="hidden" id="hidjqxLstSrvcDate" name="hidjqxLstSrvcDate"
-                       value='<s:property value="hidjqxLstSrvcDate"/>' />
-            </td>
-
-            <td>
-                <label>Last Service KM</label>
-                <input type="text" id="last_srvc_km" name="last_srvc_km"
-                       value='<s:property value="last_srvc_km"/>'
-                       style="text-align:right; width:100%;">
-            </td>
-        </tr>
-    </table>
-</fieldset>
+								<td colspan="8" >
+									<fieldset>
+										<legend>Service Info</legend>
+										<table width="100%">
+											<tr>
+												<td width="106" height="28" align="right">Service Duration (KM)</td>
+												<td width="116" align="left"><input type="text"
+													id="service_km" name="service_km" value='<s:property value="service_km"/>' style="text-align:right;"/></td>
+												<td width="79" align="right">Last Srvc. Date</td>
+												<td width="130" align="left">
+														<div id='jqxLstSrvcDate'
+														name='jqxLstSrvcDate'
+														value='<s:property value="jqxLstSrvcDate"/>'></div> 
+														</td><input type="hidden" id="hidjqxLstSrvcDate" name="hidjqxLstSrvcDate"
+													value='<s:property value="hidjqxLstSrvcDate"/>' />
+												<td width="105" align="right"><label id="lbllastsrvkm">Last Service KM</label></td>
+												<td width="400" align="left"><input type="text"
+													id="last_srvc_km" name="last_srvc_km" value='<s:property value="last_srvc_km"/>' style="text-align:right;"/></td>
+												<td width="109" align="right">&nbsp;</td>
+												<td width="185" align="left">&nbsp;</td>
+											</tr>
+										</table>
+									</fieldset>
 								</td>
 							</tr>
 
 							<tr>
-								<td colspan="8" style="text-align: right">
-									<fieldset class="vertical-form">
-    <legend>Release Info</legend>
-    <table width="100%">
-        <tr>
-            <td>
-                <label>Current KM</label>
-                <input type="text" id="current_km" name="current_km"
-                       value='<s:property value="current_km"/>'
-                       style="text-align:right; width:100%;">
-            </td>
-
-            <td>
-                <label>Fuel</label>
-                <select name="cmbfuel" id="cmbfuel" style="width:100%;">
-                    <option value=0.000>Level 0/8</option>
-                    <option value=0.125 selected>Level 1/8</option>
-                    <option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option>
-                    <option value=0.500>Level 4/8</option>
-                    <option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option>
-                    <option value=0.875>Level 7/8</option>
-                    <option value=1.000>Level 8/8</option>
-                </select>
-                <input type="hidden" id="hidcmbfuel" name="hidcmbfuel"
-                       value='<s:property value="hidcmbfuel"/>' />
-            </td>
-
-            <td>
-                <label>Avail. Branch</label>
-                <select name="cmbavail_br1" id="cmbavail_br1"
-                        value='<s:property value="cmbavail_br1"/>' style="width:100%;">
-                </select>
-                <input type="hidden" id="hidcmbavail_br1" name="hidcmbavail_br1"
-                       value='<s:property value="hidcmbavail_br1"/>' />
-            </td>
-
-            <td>
-                <label>Calibration Km</label>
-                <input type="text" name="calibrationkm" id="calibrationkm"
-                       value='<s:property value="calibrationkm"/>'
-                       style="text-align:right; width:100%;"
-                       onblur="getspectab();">
-            </td>
-        </tr>
-    </table>
+								<td colspan="8" >
+									<fieldset>
+									  <legend>Release Info</legend>
+										<table width="100%">
+											<tr>
+												<td width="107" height="30" align="right">Current KM</td>
+												<td width="149" align="left"><input type="text"
+													id="current_km" name="current_km" value='<s:property value="current_km"/>' style="text-align:right;"/></td>
+												<td width="45" align="right">Fuel</td>
+												<td width="139" align="left"><select name="cmbfuel" 
+													id="cmbfuel" value='<s:property value="cmbfuel"/>'><option value=0.000>Level 0/8</option><option value=0.125 selected>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+											    </select>
+											    <input type="hidden" id="hidcmbfuel" name="hidcmbfuel"
+													value='<s:property value="hidcmbfuel"/>' /></td><input type="hidden" name="hidcmbfueltype" id="hidcmbfueltype" value='<s:property value="hidcmbfueltype"/>' />
+											  <td width="88" align="right">Avail. Br.</td>
+											<td width="134" align="left"><select
+													name="cmbavail_br1" id="cmbavail_br1" value='<s:property value="cmbavail_br1"/>'>
+											  </select>
+											  <input type="hidden" id="hidcmbavail_br1" name="hidcmbavail_br1"
+													value='<s:property value="hidcmbavail_br1"/>' />
+											  <input type="hidden" id="tcno2" name="tcno2" style="width: 275px;" value='<s:property value="tcno2"/>'/></td>
+											  <td width="251" align="right">Calibration Km</td>
+											<td width="503" align="left"><input type="text" name="calibrationkm" id="calibrationkm" value='<s:property value="calibrationkm"/>' style="text-align:right;"  onblur="getspectab();"></td>
+											<td width="172" align="left"><select name="branded" id="branded" value='<s:property value="branded"/>' hidden="true">
+														
+													<option value="Y" selected>Y</option>
+													<option value="N">N</option>
+											  </select>
+											  <input type="hidden" id="hidbranded" name="hidbranded"
+													value='<s:property value="hidbranded"/>' />
+											  </td>
+											  <input type="hidden" name="hidreleasetime" id="hidreleasetime" value='<s:property value="hidreleasetime"/>'>
+												<%-- <td width="9%" align="right">Rent Type</td>
+												<td width="15%" align="left"><select
+													name="cmbrent_type" id="cmbrent_type" value='<s:property value="cmbrent_type"/>'>
+														<option>--Select--</option>
+												</select> <input type="hidden" id="hidcmbrent_type" name="hidcmbrent_type"
+													value='<s:property value="hidcmbrent_type"/>' /></td> --%>
+											</tr>
+										</table>
+									</fieldset>
 								</td>
 							</tr>
 						</table>
@@ -2244,5 +1847,5 @@ style="width:120px;">
 	</div>
 	 </div> --%>
 	</div>
-</body></html>
-
+</body>
+</html>

@@ -48,75 +48,66 @@
 
 	</script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
+/
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
+#search td[align="right"] {
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   color: #222;
 }
 
-/* Bold text inside inputs and selects with Grey Borders */
-input[type="text"], select {
+#search input[type="text"], select {
   font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   padding: 8px 12px;
   max-width: 100%;
   box-sizing: border-box;
-  /* Grey border as requested */
   border: 1px solid #bdc3c7; 
   border-radius: 4px;
   background-color: #ffffff;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus, select:focus {
+#search input[type="text"]:focus, select:focus {
   border-color: #007bff;
   outline: none;
 }
 
-/* Date field styling for div */
-#datess {
+#search #datess {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 600;
   font-size: 14px;
 }
 
 /* Master Button Appearance */
-.myButton {
+#search .myButton {
   font-family: Tahoma, Geneva, sans-serif;
   font-weight: 700;
   font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
+  background-color: #007bff; 
   color: white;
   padding: 10px 25px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+  transition: none; 
 }
 
-/* No color change on hover */
-.myButton:hover {
+#search .myButton:hover {
   background-color: #007bff; 
   cursor: pointer;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+#search tr {
+  line-height: 1.4;
 }
 #search td[align="right"]{
-    font-weight:700;
+    font-weight:500;
     font-size:14px;
     color:#222;
 }
@@ -126,60 +117,49 @@ tr {
 <div id="search">
 
 <table width="100%">
+    <tr>
+        <td width="60px" align="right">Date</td>
+        <td width="135px">
+            <div id="datess" name="datess" value='<s:property value="datess"/>'></div>
+        </td>
 
-<tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%">
-        <div id="datess" name="datess" value='<s:property value="datess"/>'></div>
-    </td>
+        <td width="80px" align="right">Doc No</td>
+        <td width="130px">
+            <input type="text" name="docnoss" id="docnoss" value='<s:property value="docnoss"/>'>
+        </td>
 
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%">
-        <input type="text" name="docnoss" id="docnoss"
-        value='<s:property value="docnoss"/>'>
-    </td>
+        <td width="60px" align="right">Type</td>
+        <td width="150px">
+            <select name="reftypess" id="reftypess" style="width: 100%;">
+                <option value="">--select--</option>
+                <option value="DIR">DIR</option>
+                <option value="VPR">VPR</option>
+            </select>
+        </td>
+        <td>&nbsp;</td> 
+    </tr>
 
-    <td width="27%" align="center" rowspan="2">
-        <input type="button" name="searchs" id="searchs"
-        class="myButton" value="Search" onclick="loadSearchs()">
-    </td>
-</tr>
+    <tr>
+        <td align="right">Account</td>
+        <td>
+            <input type="text" name="accountss" id="accountss" value='<s:property value="accountss"/>'>
+        </td>
 
-<tr>
-    <td align="right">Account</td>
-    <td>
-        <input type="text" name="accountss" id="accountss"
-        value='<s:property value="accountss"/>'>
-    </td>
+        <td align="right">Account Name</td>
+        <td colspan="3"> <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" name="accnamess" id="accnamess" style="width: 250px;" value='<s:property value="accnamess"/>'>
+                <input type="button" name="searchs" id="searchs" class="myButton" value="Search" onclick="loadSearchs()">
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
 
-    <td align="right">Account Name</td>
-    <td>
-        <input type="text" name="accnamess" id="accnamess"
-        value='<s:property value="accnamess"/>'>
-    </td>
-</tr>
-
-<tr>
-    <td align="right">Type</td>
-    <td>
-        <select name="reftypess" id="reftypess">
-            <option value="">--select--</option>
-            <option value="DIR">DIR</option>
-            <option value="VPR">VPR</option>
-        </select>
-    </td>
-
-    <td colspan="3"></td>
-</tr>
-
-<tr>
-<td colspan="5">
-<div id="refreshdivs">
-<jsp:include page="submasterSearch.jsp" />
-</div>
-</td>
-</tr>
-
+    <tr>
+        <td colspan="7"> <div id="refreshdivs" style="margin-top: 20px;">
+                <jsp:include page="submasterSearch.jsp" />
+            </div>
+        </td>
+    </tr>
 </table>
 
 </div>
