@@ -9,10 +9,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<link href="../../../../css/body.css" rel="stylesheet" type="text/css">
+<%-- <link href="../../../../css/body.css" rel="stylesheet" type="text/css"> --%>
+
 <style>
 /* =========================================================
-   NON POOL AGREEMENT - EXACT TEXT & UI MATCH TO CLIENT MASTER
+   UI MATCH TO BOOKING.JSP
 ========================================================= */
 body, .homeContent {
     background: #f4f6f9 !important;
@@ -33,7 +34,7 @@ body, .homeContent {
     box-sizing: border-box;
 }
 
-/* FIX: Responsive scroll area so the bottom is never cut off */
+/* Responsive scroll area so the bottom is never cut off */
 .hidden-scrollbar {
     overflow-y: auto;
     overflow-x: hidden;
@@ -48,8 +49,7 @@ form label.error {
 }
 
 /* EXACT Input Styles from Client Master */
-/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
-input[type="text"], select {
+input[type="text"], input[type="email"], select {
     height: 24px !important; 
     border: 1px solid #ccc !important;
     border-radius: 3px !important;
@@ -60,12 +60,29 @@ input[type="text"], select {
     color: #333 !important;
 }
 
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
     border-color: #007bff !important;
     outline: none !important;
 }
 
 input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+textarea {
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    font-family: Arial, sans-serif !important;
+}
+textarea:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+textarea[readonly] {
     background-color: #f4f5f7 !important;
     color: #5e6c84 !important;
     border-color: #e1e4e8 !important;
@@ -115,6 +132,22 @@ table td {
 .myButton:hover {
     background-color: #004494 !important;
 }
+
+/* Specific styling for the small search icons */
+.icon, .icons, .iconss {
+    border: none;
+    background-color: #E0ECF8;
+    cursor: pointer;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.icon { width: 2.5em; height: 2em; }
+.icons { width: 3em; height: 3em; }
+.iconss { width: 4em; height: 3em; }
+
+.icon:hover, .icons:hover, .iconss:hover {
+    background-color: #d0e0f0;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -133,14 +166,14 @@ $(document).ready(function() {
     $('#invmodewindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
     $('#invmodewindow').jqxWindow('close');
     
-    /* MODIFIED: All JQX heights explicitly set to 24px to match text inputs */
-	 $("#closetime").jqxDateTimeInput({ width: '40px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
-	 $("#timein").jqxDateTimeInput({ width: '40px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
-	 $("#timedue").jqxDateTimeInput({ width: '40px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
- 	 $("#temptimein").jqxDateTimeInput({ width: '40px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null }); 
- 	 
- 	//$('#nonPoolRateGrid').jqxGrid('disabled',true);
- 	
+    // Updated heights to 24px to match new input style
+	 $("#closetime").jqxDateTimeInput({ width: '60px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+	 $("#timein").jqxDateTimeInput({ width: '60px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+	 $("#timedue").jqxDateTimeInput({ width: '60px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+	 $("#temptimein").jqxDateTimeInput({ width: '60px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null }); 
+	
+	//$('#nonPoolRateGrid').jqxGrid('disabled',true);
+	
 $("#closedate").jqxDateTimeInput({
 		width : '125px',
 		height : '24px',
@@ -973,8 +1006,7 @@ function getvalidationforeditandcloe(){
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmNonPoolCreate" action="saveNonPoolCreate" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
-
-
+<br>
 <div class="hidden-scrollbar">
 
 <fieldset><legend>Vehicle Info</legend>
@@ -982,24 +1014,29 @@ function getvalidationforeditandcloe(){
   <tr>
     <td align="right">Date</td>
     <td width="26%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-    <td width="47.5%"  align="right">Doc No</td>
-    <td width="18%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>'></td>
+    <td width="47.5%" align="right">Doc No</td>
+    <td width="18%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' style="width: 100%;"></td>
   </tr>
   <tr>
     <td width="9%" align="right">Vehicle</td>
-    <td colspan="3"><input type="text" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search" />&nbsp;&nbsp;
-    <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' style="width:80%;">
+    <td colspan="3">
+      <div style="display: flex; gap: 10px; width: 100%; align-items: center;">
+        <input type="text" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search" style="flex: 0 0 30%;" />
+        <input type="text" name="fleetname" id="fleetname" value='<s:property value="fleetname"/>' style="flex: 1;">
+      </div>
     </td>
   </tr>
   <tr>
     <td align="right">Vendor</td>
-    <td colspan="3"><input type="text" name="vendor" id="vendor" value='<s:property value="vendor"/>'  readonly placeholder="Press F3 to Search" onkeydown="getVendor(event);">&nbsp;&nbsp;
-    <input type="text" name="vendorname" id="vendorname" value='<s:property value="vendorname"/>' style="width:80%;" >
+    <td colspan="3">
+      <div style="display: flex; gap: 10px; width: 100%; align-items: center;">
+        <input type="text" name="vendor" id="vendor" value='<s:property value="vendor"/>' readonly placeholder="Press F3 to Search" onkeydown="getVendor(event);" style="flex: 0 0 30%;">
+        <input type="text" name="vendorname" id="vendorname" value='<s:property value="vendorname"/>' style="flex: 1;" >
+      </div>
     </td>
   </tr>
 </table>
 </fieldset>
-
 <br />
       <fieldset>
     <legend>Rate Info</legend>
@@ -1039,7 +1076,7 @@ function getvalidationforeditandcloe(){
           <input type="hidden" name="hiddatein" id="hiddatein" value='<s:property value="hiddatein"/>'>
           
           <td width="8%" align="right">Time</td>
-          <td width="11%" align="left"><div id="timein" name="timein" value='<s:property value="timein"/>'></div></td>
+          <td width="15%" align="left"><div id="timein" name="timein" value='<s:property value="timein"/>'></div></td>
           <input type="hidden" name="hidtimein" id="hidtimein" value='<s:property value="hidtimein"/>'>
           
           <td width="7%" align="right">Date Due</td>
@@ -1087,7 +1124,7 @@ function getvalidationforeditandcloe(){
       </table>
     </fieldset>    </td>
   </tr>
- 
+  
   <tr>
     <td width="49%">
     
@@ -1233,7 +1270,7 @@ function getvalidationforeditandcloe(){
 <table width="100%">
   <tr>
     <td width="86%"><div id="nonpoolratediv"><jsp:include page="nonPoolRate.jsp"></jsp:include></div></td>
-    <td width="14%" align="center"><input type="button" name="btnGridEdit" id="btnGridEdit" value="Edit" class="myButton" onclick="funGridEdit();" ><br>
+    <td width="14%" align="center"><input type="button" name="btnGridEdit" id="btnGridEdit" value="Edit" class="myButton" onclick="funGridEdit();" >
     <input type="button" name="btnGridSave" id="btnGridSave" value="Save" class="myButton" onclick="funGridSave();" ></td>
   </tr>
 </table>
@@ -1250,18 +1287,7 @@ function getvalidationforeditandcloe(){
 				<div id="invmodewindow">
 				<div></div><div></div>
 				</div>
-				
-
-
-
-
-
-
-
-
-
-
-
+				<br><br><br><br><br><br><br><br><br><br>
 </div>
 </form>
 </div>

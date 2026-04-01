@@ -115,42 +115,35 @@ input[type="text"]:focus {
 
 <body bgcolor="#ffffff">
 <div id="search">
-<table width="100%" border="0">
+<table border="0">
   <tr>
-    <td width="10%" align="right">Name</td>
-    <td width="30%">
+    <td align="right">Name</td>
+    <td>
         <input type="text" name="searchclientname" id="searchclientname" value='<s:property value="searchclientname"/>'>
     </td>
-    <td width="10%" align="right">MOB</td>
-    <td width="25%">
+    
+    <td align="right">MOB</td>
+    <td>
         <input type="text" name="searchclientmobile" id="searchclientmobile" value='<s:property value="searchclientmobile"/>'>
     </td>
-    <td width="25%" rowspan="3" align="center">
-        <input type="button" name="btnclientsearch" id="btnclientsearch" class="myButton" value="Search" onclick="funClientSearch();">
-    </td>
-  </tr>
-  <tr>
+
     <td align="right">Licence#</td>
     <td>
         <input type="text" name="searchclientlicense" id="searchclientlicense" value='<s:property value="searchclientlicense"/>'>
     </td>
+
     <td align="right">Passport#</td>
     <td>
         <input type="text" name="searchclientpassport" id="searchclientpassport" value='<s:property value="searchclientpassport"/>'>
     </td>
-  </tr>
-  <tr>
-    <td align="right">Nationality</td>
-    <td>
-        <input type="text" id="searchclientnation" name="searchclientnation" value='<s:property value="searchclientnation"/>'>
-    </td>
-    <td align="right">DOB</td>
-    <td>
-        <div id="searchclientdob" name="searchclientdob" value='<s:property value="searchclientdob"/>'></div>
+
+    <td style="padding-left: 8px;">
+        <input type="button" name="btnclientsearch" id="btnclientsearch" class="myButton" value="Search" onclick="funClientSearch();">
     </td>
   </tr>
+  
   <tr>
-    <td colspan="5">
+    <td colspan="9">
         <div id="clientsearchdiv">
             <jsp:include page="actualClientSearchGrid.jsp"></jsp:include> 
         </div>

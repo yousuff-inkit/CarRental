@@ -8,127 +8,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-
 <style>
-/* =========================================================
-   RENTAL AGREEMENT - EXACT TEXT & UI MATCH TO CLIENT MASTER
-========================================================= */
-body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Arial, sans-serif !important;
-    color: #333 !important;
-    font-size: 12px !important;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 4px;
-    padding: 15px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-}
-
-/* FIX: Responsive scroll area so the bottom is never cut off */
-.hidden-scrollbar {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 140px);
-    padding-bottom: 60px;
-    box-sizing: border-box;
-}
-
 form label.error {
-    color: red;
-    font-weight: bold;
+   color:red;
+  font-weight:bold;
 }
 
-/* EXACT Input Styles from Client Master */
-/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
-input[type="text"], select {
-    height: 24px !important; 
-    border: 1px solid #ccc !important;
-    border-radius: 3px !important;
-    padding: 2px 6px !important;
-    font-size: 12px !important;
-    box-sizing: border-box;
-    background-color: #fff !important;
-    color: #333 !important;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #007bff !important;
-    outline: none !important;
-}
-
-input[readonly], input:disabled, select:disabled {
-    background-color: #f4f5f7 !important;
-    color: #5e6c84 !important;
-    border-color: #e1e4e8 !important;
-}
-
-/* Fieldset and Legend styling matching Client Master */
-fieldset {
-    border: 1px solid #e1e4e8 !important;
-    background-color: #fff !important;
-    margin-bottom: 10px !important;
-    padding: 12px 10px 10px 10px !important;
-    border-radius: 4px !important;
-}
-
-legend {
-    font-size: 13px !important;
-    font-weight: bold !important;
-    color: #0056b3 !important;
-    padding: 0 0 0 6px !important;
-    border-left: 3px solid #0056b3 !important;
-    margin-bottom: 5px !important;
-    background: #fff;
-}
-
-/* Table adjustments for compact text */
-table td {
-    padding: 4px 6px !important;
-    font-size: 12px !important;
-    color: #444 !important;
-    font-weight: bold !important;
-    vertical-align: middle;
-}
-
-/* Modern Buttons matched to Client Master */
-.myButton {
-    background-color: #0056b3 !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 3px !important;
-    padding: 4px 15px !important;
-    font-weight: bold !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    height: 24px !important;
-}
-
-.myButton:hover {
-    background-color: #004494 !important;
-}
-
-/* Specific styling for the small search icons */
 .icon {
-    width: 2.5em;
-    height: 2em;
-    border: none;
-    background-color: #E0ECF8;
-    cursor: pointer;
-    border-radius: 3px;
-}
-.icon:hover {
-    background-color: #d0e0f0;
+	width: 2.5em;
+	height: 2em;
+	border: none;
+	background-color: #E0ECF8;
 }
 </style>
-
 <%-- <link rel="text/css" href="../../../../vendors/select2/select2.min.css"/>
 <script type="text/javascript" src="../../../../vendors/select2/select2.min.js"></script> --%>
 <script type="text/javascript">   
@@ -154,7 +46,7 @@ $(document).ready(function() {
     $("#jqxMenuMore").jqxMenu('minimize');
     $("#jqxMenuMore").css('visibility', 'visible');
 
-    /* Menu-minimized window */
+    /*      Menu-minimized window */
     $('#window1').jqxWindow({
         width: '71%',
         height: '70%',
@@ -171,46 +63,45 @@ $(document).ready(function() {
     });
     $('#window1').jqxWindow('close');
 
-    /* MODIFIED: All Dates & Times explicitly set to 24px height */
+    /* Date */
     $("#jqxRentalDate").jqxDateTimeInput({
         width: '120px',
-        height: '24px',
+        height: '15px',
         formatString: "dd.MM.yyyy"
     });
     $("#jqxDateOut").jqxDateTimeInput({
         width: '110px',
-        height: '24px',
+        height: '15px',
         formatString: "dd.MM.yyyy"
     });
     $("#jqxOnDate").jqxDateTimeInput({
         width: '110px',
-        height: '24px',
+        height: '15px',
         formatString: "dd.MM.yyyy"
     });
     $("#jqxDeliveryOut").jqxDateTimeInput({
         width: '125px',
-        height: '24px',
+        height: '15px',
         formatString: "dd.MM.yyyy",
         enableBrowserBoundsDetection: true
     });
-    
     /* Time */
     $("#jqxTimeOut").jqxDateTimeInput({
         width: '80%',
-        height: '24px',
+        height: '17px',
         formatString: 'HH:mm',
         showCalendarButton: false
     });
 
     $("#jqxOnTime").jqxDateTimeInput({
         width: '80%',
-        height: '24px',
+        height: '15px',
         formatString: 'HH:mm',
         showCalendarButton: false
     });
     $("#jqxDelTimeOut").jqxDateTimeInput({
         width: '80%',
-        height: '24px',
+        height: '15px',
         formatString: 'HH:mm',
         showCalendarButton: false
     });
@@ -245,7 +136,7 @@ $(document).ready(function() {
     });
     $('#clientinfowindow').jqxWindow('close');
 
-    /* $('#Driverdlswindow').jqxWindow({ width: '30%', height: '62%',  maxHeight: '80%' ,maxWidth: '50%' ,title: 'Driver Search', position: { x: 250, y: 140 }, keyboardCloseKey: 27});
+    /*  $('#Driverdlswindow').jqxWindow({ width: '30%', height: '62%',  maxHeight: '80%' ,maxWidth: '50%' ,title: 'Driver Search', position: { x: 250, y: 140 }, keyboardCloseKey: 27});
 								   	     $('#Driverdlswindow').jqxWindow('close');  */
 
     $('#driverinfowindow').jqxWindow({
@@ -403,7 +294,7 @@ $(document).ready(function() {
             actualClientSearchContent('actualClientSearch.jsp');
     	}
     });
-    /* $('#jqxDateOut').on('change', function (event) {
+    /* 				  $('#jqxDateOut').on('change', function (event) {
     					
     				        var dateout = $('#jqxDateOut').jqxDateTimeInput('getDate');
     				   	 if ($("#mode").val() == "A") {  
@@ -1202,7 +1093,7 @@ function funRemoveReadOnly() {
     }
 
 
-    $("table#tariff input").prop("disabled", false); /* fleet search in after veh came grid */
+    $("table#tariff input").prop("disabled", false); /*  fleet search in after veh came grid */
     $('#frmRentalAgreement input').attr('readonly', false);
     $('#frmRentalAgreement select').attr('disabled', false);
     
@@ -1717,7 +1608,7 @@ function funNotify() {
 
 
 
-        /* if(checkinvoice!="Monthly")
+        /*   if(checkinvoice!="Monthly")
 							              {
 							          		if(invoicevalue=="2")
 							          			{
@@ -1775,7 +1666,6 @@ function funNotify() {
 
 
         if (checkinvoice != "Monthly") {
-
 
 
 
@@ -1858,7 +1748,7 @@ function funNotify() {
             cardnum = rows[i].cardno;
 
 
-            /* if(!(cardtype=="MASTER"||cardtype=="VISA"))
+            /*  if(!(cardtype=="MASTER"||cardtype=="VISA"))
             	{ */
             if (cardtype == "" || typeof(cardtype) == "undefined" || typeof(cardtype) == "NaN") {
                 document.getElementById("errormsg").innerText = "Select Card Type In " + rows[i].payment;
@@ -1876,7 +1766,7 @@ function funNotify() {
 
             }
 
-            /* var str = ""+cardnum;
+            /* 		var str = ""+cardnum;
             		var n = str.length;
 						
             		if(n!=16)
@@ -2039,7 +1929,6 @@ function funFuelDetails() {
         return false;
     }
 }
-
 
 
 
@@ -2436,7 +2325,7 @@ function checkReqclient() {
             }
    */
 
-/* function funsalagentreqs()
+/*     function funsalagentreqs()
    {
   	
   	  if(document.getElementById("rasales_Agent").value=="")
@@ -2486,7 +2375,7 @@ function delvalueChange() {
 
         }
     } else {
-        /* document.getElementById("radrivercheck").checked = false; */
+        /*  document.getElementById("radrivercheck").checked = false; */
         $('#radriverlist').attr('disabled', true);
     }
     if (document.getElementById("add_drchk").value == 1) {
@@ -2664,7 +2553,7 @@ function setValues() {
     }
     
 }
-/* function funchknumber()
+/*       function funchknumber()
           {
                   var x = document.rentalform.adidrvcharges.value;
                   if(isNaN(x)|| x.indexOf(" ")!=-1){
@@ -2878,112 +2767,333 @@ function funResetExcessInsur(){
 	}
 }
 </script>
+    
+  
+<style>
+
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 10px;
+    background: #f5f7fa;
+    box-sizing: border-box;
+}
+
+fieldset {
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+legend {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 8px;
+        border-left: 4px solid #007bff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 4px 6px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+input[type="text"], select {
+    height: 30px;
+    font-size: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 4px 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[readonly] {
+    background: #f3f4f6;
+}
+
+select {
+    background: #fff;
+}
+
+.myButton {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 6px 10px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+.hidden-scrollbar {
+    height: auto;
+    overflow: visible;
+}
+</style>
 </head>
 <body onload="setValues();">
 	<div id="mainBG" class="homeContent" data-type="background">
 		<form id="frmRentalAgreement" action="saveRentalAgreement" name="rentalform" method="post"  autocomplete="off">
-			<jsp:include page="../../../../header.jsp"></jsp:include>
-			<br/> 
+			<jsp:include page="../../../../header.jsp"></jsp:include><br/> 
 				<div class='hidden-scrollbar'>
 			   		<table  width="100%" id="vehicle">
       					<tr width="100%">        
       						<td width="80%">
        							<fieldset>
-									<table style="width:100%;" border="0">             
-  										<tr>
-											<td width="10%" align="right"><label><font size="2">Vehicle </font></label></td>
-  											<td width="8%"> <input type="text" id="txtfleetno" name="txtfleetno" placeholder="Press F3 To Search" value='<s:property value="txtfleetno"/>' onKeyDown="getvehinfo(event);"  /></td>
-     										<td width="80%" ><input type="text" id="vehdetails" name="vehdetails" style="width:99%;" tabindex="-1" value='<s:property value="vehdetails"/>' /></td>
- 										</tr>
- 										<tr>
-  											<td width="10%" align="right">  <label ><font size="2">Client</font></label></td>
-  											<td width="8"> <input type="text" id="txtcusid" name="txtcusid" placeholder="Press F3 To Search" value='<s:property value="txtcusid"/>' onKeyDown="getclientinfo(event);" onfocus="checkReqveh();"/></td>
-     										<td width="80%" >
-     											<input type="text" id="client_Name" name="client_Name" style="width:50%;" tabindex="-1" value='<s:property value="client_Name"/>'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>Salesman</label><input type="text" id="re_salman" name="re_salman" style="width:25%;" placeholder="Salesman Name"value='<s:property value="re_salman"/>'/>
- 												<input type="hidden" id="re_salmanid" name="re_salmanid" style="width:25%;"  value='<s:property value="re_salmanid"/>'/>
- 												<input type="hidden" id="re_clcodeno" name="re_clcodeno" style="width:25%;"  value='<s:property value="re_clcodeno"/>'/>
- 												<input type="hidden" id="re_clacno" name="re_clacno" style="width:25%;"  value='<s:property value="re_clacno"/>'/>
- 											</td>
-  										</tr>
-  										<tr>
-  											<td align="right"></td><td colspan="2" width="60%"><input type="text" id="cusaddress"  placeholder="Mobil NO-Address" name="cusaddress" style="width:99%; resize: none; " value='<s:property value="cusaddress"/>'></td>
-  										</tr>
-  										<tr class="actualclientrow" hidden="true">
-  											<td align="right"><label><font size="2">Actual Client</font></label></td>
-											<td><input type="text" name="actualcldocno" id="actualcldocno" placeholder="Press F3 to Search" value='<s:property value="actualcldocno"/>'></td>
-											<td><input type="text" name="actualclientname" id="actualclientname" style="width:99%;" value='<s:property value="actualclientname"/>'></td>
-										</tr>
-   										<tr>
-  											<td align="right"><label ><font size="2">Description</font></label></td><td colspan="2" width="60%"><input type="text" id="rentaldesc"  placeholder="Description" name="rentaldesc" style="width:99%; resize: none; " value='<s:property value="rentaldesc"/>' onblur="fundescvalidate()"></td>
-  										</tr>
-   									</table>
-								</fieldset>
+<table width="100%" style="margin-bottom:10px;">
+<tr>
+
+<!-- DOC NO -->
+<td style="white-space:nowrap;">Doc No</td>
+<td>
+    <input type="text" id="docno" name="docno"
+           style="width:140px;"
+           tabindex="-1"
+           value='<s:property value="docno"/>'/>
+</td>
+
+<!-- DATE -->
+<td style="white-space:nowrap;">Date</td>
+<td>
+    <div id='jqxRentalDate' name='jqxRentalDate'
+         value='<s:property value="jqxRentalDate"/>'></div>
+    <input type="hidden" id="hidjqxRentalDate" name="hidjqxRentalDate"
+           value='<s:property value="hidjqxRentalDate"/>'/>
+</td>
+
+<!-- ENQUIRY TYPE -->
+<td style="white-space:nowrap;">Enq.Type</td>
+<td>
+    <select name="cmbenqtype" id="cmbenqtype" style="width:160px;">
+        <option value="">--Select--</option>
+    </select>
+    <input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype"
+           value='<s:property value="hidcmbenqtype"/>'>
+</td>
+
+<!-- STATUS -->
+<td style="white-space:nowrap;">Status</td>
+<td>
+    <label id="rentalstatus" name="rentalstatus"
+           style="font-size:13px; font-family:Tahoma; color:#6000FC;">
+        <s:property value="rentalstatus"/>
+    </label>
+</td>
+
+<!-- MENU -->
+<td style="white-space:nowrap; text-align:right;">
+    <div id='jqxMenuMore' title="More">
+        <ul>
+            <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+            <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+            <li><a href="#history" onclick="account();">Account Statement</a></li>  
+            <li><a href="#close" onclick="closing();">Closing Summary</a></li> 
+            <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li> 
+            <li><a href="#inspchklist" onclick="funinspection();">Inspection Check List</a></li>  	
+            <li><a href="#fueldetails" onclick="funFuelDetails();">Fuel Details</a></li>
+        </ul>
+    </div>
+</td>
+
+</tr>
+</table>
+<table width="100%" style="table-layout:auto;">
+
+<!-- 🔹 VEHICLE -->
+<tr>
+
+<td style="white-space:nowrap;">Vehicle</td>
+
+<td style="width:140px;">
+    <input type="text" id="txtfleetno" name="txtfleetno"
+           placeholder="Press F3 To Search"
+           value='<s:property value="txtfleetno"/>'
+           onKeyDown="getvehinfo(event);" />
+</td>
+
+<td>
+    <input type="text" id="vehdetails" name="vehdetails"
+           style="width:100%;"
+           tabindex="-1"
+           value='<s:property value="vehdetails"/>' />
+</td>
+
+</tr>
+
+
+<!-- 🔹 CLIENT + SALESMAN -->
+<tr>
+
+<td style="white-space:nowrap;">Client</td>
+
+<td>
+    <input type="text" id="txtcusid" name="txtcusid"
+           placeholder="Press F3 To Search"
+           value='<s:property value="txtcusid"/>'
+           onKeyDown="getclientinfo(event);"
+           onfocus="checkReqveh();" />
+</td>
+
+<td>
+
+    <input type="text" id="client_Name" name="client_Name"
+           style="width:40%;"
+           tabindex="-1"
+           value='<s:property value="client_Name"/>' />
+
+    <span style="margin-left:10px;">Salesman</span>
+
+    <input type="text" id="re_salman" name="re_salman"
+           style="width:30%;"
+           placeholder="Salesman Name"
+           value='<s:property value="re_salman"/>' />
+
+    <!-- 🔹 hidden untouched -->
+    <input type="hidden" id="re_salmanid" name="re_salmanid"
+           value='<s:property value="re_salmanid"/>' />
+    <input type="hidden" id="re_clcodeno" name="re_clcodeno"
+           value='<s:property value="re_clcodeno"/>' />
+    <input type="hidden" id="re_clacno" name="re_clacno"
+           value='<s:property value="re_clacno"/>' />
+
+</td>
+
+</tr>
+
+
+<!-- 🔹 ADDRESS -->
+<tr>
+
+<td></td>
+
+<td colspan="2">
+    <input type="text" id="cusaddress" name="cusaddress"
+           placeholder="Mobile No - Address"
+           style="width:100%;"
+           value='<s:property value="cusaddress"/>' />
+</td>
+
+</tr>
+
+
+<!-- 🔹 ACTUAL CLIENT -->
+<tr class="actualclientrow" hidden="true">
+
+<td style="white-space:nowrap;">Actual Client</td>
+
+<td>
+    <input type="text" name="actualcldocno" id="actualcldocno"
+           placeholder="Press F3 to Search"
+           value='<s:property value="actualcldocno"/>' />
+</td>
+
+<td>
+    <input type="text" name="actualclientname" id="actualclientname"
+           style="width:100%;"
+           value='<s:property value="actualclientname"/>' />
+</td>
+
+</tr>
+
+
+<!-- 🔹 DESCRIPTION -->
+<tr>
+
+<td style="white-space:nowrap;">Description</td>
+
+<td colspan="2">
+    <input type="text" id="rentaldesc" name="rentaldesc"
+           placeholder="Description"
+           style="width:100%;"
+           value='<s:property value="rentaldesc"/>'
+           onblur="fundescvalidate()" />
+</td>
+
+</tr>
+
+</table>
+
+</fieldset>
 							</td>
-							<td width="20%" valign="top"> 
-								<table width="100%" >
-  									<tr width="100%">    
-    									<td width="20%" align="right">Doc No</td>
-    									<td ><input type="text" id="docno" name="docno" style="width:90%;" tabindex="-1" value='<s:property value="docno"/>'/></td>
-    									<td>
-    										<div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-        										<ul>
-	 												<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-										       	    <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-										            <li><a href="#history" onclick="account();">Account Statement</a></li>  
-										            <li><a href="#close" onclick="closing();">Closing Summary</a></li> 
-													<li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li> 
-													<li><a href="#inspchklist" onclick="funinspection();">Inspection Check List</a></li>  	
-										            <li><a href="#fueldetails" onclick="funFuelDetails();">Fuel Details</a></li>
-												</ul>
-     										</div>
-     									</td>
-   									</tr>
-   									<tr>
-   										<td width="15%" align="right">Date</td>
-    									<td width="23%">
-    										<div id='jqxRentalDate' name='jqxRentalDate' value='<s:property value="jqxRentalDate"/>'></div>
-                   							<input type="hidden" id="hidjqxRentalDate" name="hidjqxRentalDate" value='<s:property value="hidjqxRentalDate"/>'/>
-                   						</td>
-        							</tr>
-        							<tr>
-   										<td align="right">Enq.Type</td>
-    									<td>
-    										<select name="cmbenqtype" id="cmbenqtype" style="width:99%;">
-    											<option value="">--Select--</option>
-    										</select>
-    										<input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype" value='<s:property value="hidcmbenqtype"/>'>
-                   						</td>
-        							</tr>
-        							
-        							<tr>
-       									<td align="center" colspan="3"><i><b><label id="rentalstatus"  name="rentalstatus"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="rentalstatus"/></label></b></i></td>
-       								</tr>
-    							</table>
-							</td>
+							
 						</tr>
 					</table>
 <fieldset>
 <legend>Driver Details</legend>
-<table  width="100%">
+<table width="100%">
 <tr>
 <td width="11%">
+
 <table id="chauffer">
-<tr><td>
-<font size="1.5">Additional Driver</font>  
-<input type="checkbox" id="additional_driver"  name="additional_driver" value="0" onchange="funaddidriverview()" onclick="$(this).attr('value', this.checked ? 1 : 0)"></td></tr><tr><td>
-<font size="1.5">Charge</font>&nbsp;&nbsp;&nbsp;<input type="text" id="adidrvcharges"  style="width:60%;text-align: right;" name="adidrvcharges"value='<s:property value="adidrvcharges"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);"   >
-</td></tr><tr>
-<td><font size="1.5">Delivery</font><br>
-<input type="checkbox" id="delivery_chk"  name="delivery_chk" value="0"  onchange="fundriverdisable()" onfocus="checkReqclient()"  onclick="$(this).attr('value', this.checked ? 1 : 0)" ><br><font size="1.5">Chauffeur</font><br>
-<input type="checkbox"  id="radrivercheck"  name="radrivercheck" value="0" onchange="funShaffurdisable()" onfocus="checkReqclient()" onclick="$(this).attr('value', this.checked ? 1 : 0)"></td>
+<tr>
+
+<td>
+<label>Additional Driver</label>
+<input type="checkbox" id="additional_driver" name="additional_driver" value="0"
+       onchange="funaddidriverview()"
+       onclick="$(this).attr('value', this.checked ? 1 : 0)">
+</td>
+
+<td>
+<label>Charge</label>
+<input type="text" id="adidrvcharges" name="adidrvcharges"
+       style="width:80px; text-align:right;"
+       value='<s:property value="adidrvcharges"/>'
+       onblur="funRoundAmt(this.value,this.id);"
+       onkeypress="javascript:return isNumber (event);">
+</td>
+
+<td>
+<label>Delivery</label>
+<input type="checkbox" id="delivery_chk" name="delivery_chk" value="0"
+       onchange="fundriverdisable()"
+       onfocus="checkReqclient()"
+       onclick="$(this).attr('value', this.checked ? 1 : 0)">
+</td>
+
+<td>
+<label>Chauffeur</label>
+<input type="checkbox" id="radrivercheck" name="radrivercheck" value="0"
+       onchange="funShaffurdisable()"
+       onfocus="checkReqclient()"
+       onclick="$(this).attr('value', this.checked ? 1 : 0)">
+</td>
+
+<td>
+<input type="text" id="radriverlist" name="radriverlist"
+       style="width:160px;"
+       placeholder="Press F3 To Search"
+       value='<s:property value="radriverlist"/>'
+       onKeyDown="getchauffeur(event);" />
+</td>
+
+<!-- hidden fields untouched -->
+<input type="hidden" id="del_chaufferid" name="del_chaufferid"
+       value='<s:property value="del_chaufferid"/>'/>
+<input type="hidden" id="client_driverid" name="client_driverid"
+       value='<s:property value="client_driverid"/>'/>
+<input type="hidden" id="client_driverdoc" name="client_driverdoc"
+       value='<s:property value="client_driverdoc"/>'/>
+
 </tr>
-<tr><td><input type="text" id="radriverlist"  name="radriverlist"  placeholder="Press F3 To Search" value='<s:property value="radriverlist"/>' onKeyDown="getchauffeur(event);" />
- <input type="hidden" id="del_chaufferid" name="del_chaufferid"  value='<s:property value="del_chaufferid"/>'/>
-    
-<input type="hidden" id="client_driverid" name="client_driverid"  value='<s:property value="client_driverid"/>'/>
-    <input type="hidden" id="client_driverdoc" name="client_driverdoc"  value='<s:property value="client_driverdoc"/>'/>
-                           
-</td></tr>
+</table>
+
+</td>
+</tr>
 </table>
 </td>
 <td width="89%">
@@ -3000,183 +3110,353 @@ function funResetExcessInsur(){
 </tr>
     </table>
     
-    <table id="tariffsub"><tr>
- <td  align="right" width="6%" >Sales Agent</td>
-    <td  width="8%">
-            <input type="text" id="rasales_Agent" name="rasales_Agent"  placeholder="Press F3 To Search"  value='<s:property value="rasales_Agent"/>' onKeyDown="getsalesAgent(event);" />
-            <input type="hidden" id="tariffsales_Agentid" name="tariffsales_Agentid" value='<s:property value="tariffsales_Agentid"/>'/>    
-                      
-            </td>
-            
-            <td align="right"  width="6%"> Rental Agent </td>
-           
-    <td colspan="6"  width="10%"><input type="text" id="rarenral_Agent" name="rarenral_Agent" style="width:99%;" placeholder="Press F3 To Search"  value='<s:property value="rarenral_Agent"/>' onKeyDown="getrentalAgent(event);" onfocus="this.placeholder = ''"/>
-    <input type="hidden" id="tariffrenral_Agentid" name="tariffrenral_Agentid" style="width:95%;" value='<s:property value="tariffrenral_Agentid"/>'/>
-        </td>
-<td align="right" width="6%" > OUT :   KM </td>
- <td colspan="6"  width="6%" ><input type="text" id="re_Km" name="re_Km" style="width:95%;" value='<s:property value="re_Km"/>'/></td>
-<td align="right"  width="2%">Date</td>
-    <td width="6%"><div id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div>
-                    <input type="hidden" id="hidjqxDateOut" name="hidjqxDateOut" value='<s:property value="hidjqxDateOut"/>'/></td>
-    <td  width="3%"align="right"><div >Time</div></td>
-    <td width="5%"><div id='jqxTimeOut' name='jqxTimeOut'  value='<s:property value="jqxTimeOut"/>'></div>
-                   <input type="hidden" id="hidjqxTimeOut" name="hidjqxTimeOut" value='<s:property value="hidjqxTimeOut"/>'/></td>
-   <td  width="2%" align="right"><div >Fuel</div></td>
-    <td colspan="6" width="11%" ><input type="text" id="ratariff_fuel" name="ratariff_fuel" style="width:98%;" value='<s:property value="ratariff_fuel"/>'/></td>
-   <td align="right" width="3%"> Checkout </td>
-           
-    <td colspan="6" width="10%" ><input type="text" id="ratariff_checkout" placeholder="Press F3 To Search"  name="ratariff_checkout" style="width:98%;" value='<s:property value="ratariff_checkout"/>'onKeyDown="getcheckout(event);" onfocus="checkReqrental();this.placeholder = ''"/>
-    <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid" value='<s:property value="ratariff_checkoutid"/>'/>  
-    
-    </td>
- <td align="right"  width="5%">Due Date</td>
-    <td><div id='jqxOnDate' name='jqxOnDate' value='<s:property value="jqxOnDate"/>'></div>
-        <input type="hidden" id="hidjqxOnDate" name="hidjqxOnDate" value='<s:property value="hidjqxOnDate"/>'/></td>
-    <td align="right"  width="3%">Time</td>
-    <td width="6%"><div id='jqxOnTime' name='jqxOnTime' value='<s:property value="jqxOnTime"/>'></div>
-                   <input type="hidden" id="hidjqxOnTime" name="hidjqxOnTime" value='<s:property value="hidjqxOnTime"/>'/></td>
+    <table id="tariffsub">
+
+<!-- ROW 1 -->
+<tr>
+
+<td align="right" width="6%">Sales Agent</td>
+<td width="8%">
+    <input type="text" id="rasales_Agent" name="rasales_Agent" placeholder="Press F3 To Search"
+           value='<s:property value="rasales_Agent"/>' onKeyDown="getsalesAgent(event);" />
+    <input type="hidden" id="tariffsales_Agentid" name="tariffsales_Agentid"
+           value='<s:property value="tariffsales_Agentid"/>'/>
+</td>
+
+<td align="right" width="6%">Rental Agent</td>
+<td width="14%">
+    <input type="text" id="rarenral_Agent" name="rarenral_Agent" style="width:99%;"
+           placeholder="Press F3 To Search"
+           value='<s:property value="rarenral_Agent"/>'
+           onKeyDown="getrentalAgent(event);" onfocus="this.placeholder = ''"/>
+    <input type="hidden" id="tariffrenral_Agentid" name="tariffrenral_Agentid"
+           value='<s:property value="tariffrenral_Agentid"/>'/>
+</td>
+
+<td align="right" width="6%">OUT : KM</td>
+<td width="8%">
+    <input type="text" id="re_Km" name="re_Km" style="width:95%;"
+           value='<s:property value="re_Km"/>'/>
+</td>
+
+<td align="right" width="4%">Date</td>
+<td width="8%">
+    <div id='jqxDateOut' name='jqxDateOut' value='<s:property value="jqxDateOut"/>'></div>
+    <input type="hidden" id="hidjqxDateOut" name="hidjqxDateOut"
+           value='<s:property value="hidjqxDateOut"/>'/>
+</td>
+
+<td align="right" width="4%">Time</td>
+<td width="8%">
+    <div id='jqxTimeOut' name='jqxTimeOut' value='<s:property value="jqxTimeOut"/>'></div>
+    <input type="hidden" id="hidjqxTimeOut" name="hidjqxTimeOut"
+           value='<s:property value="hidjqxTimeOut"/>'/>
+</td>
+
+<td align="right" width="4%">Fuel</td>
+<td width="8%">
+    <input type="text" id="ratariff_fuel" name="ratariff_fuel" style="width:98%;"
+           value='<s:property value="ratariff_fuel"/>'/>
+</td>
+
 </tr>
+
+
+<!-- ROW 2 -->
+<tr>
+
+<td align="right" width="6%">Checkout</td>
+<td width="10%">
+    <input type="text" id="ratariff_checkout" name="ratariff_checkout"
+           style="width:98%;" placeholder="Press F3 To Search"
+           value='<s:property value="ratariff_checkout"/>'
+           onKeyDown="getcheckout(event);" onfocus="checkReqrental();this.placeholder = ''"/>
+    <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid"
+           value='<s:property value="ratariff_checkoutid"/>'/>
+</td>
+
+<td align="right" width="6%">Due Date</td>
+<td width="8%">
+    <div id='jqxOnDate' name='jqxOnDate' value='<s:property value="jqxOnDate"/>'></div>
+    <input type="hidden" id="hidjqxOnDate" name="hidjqxOnDate"
+           value='<s:property value="hidjqxOnDate"/>'/>
+</td>
+
+<td align="right" width="4%">Time</td>
+<td width="8%">
+    <div id='jqxOnTime' name='jqxOnTime' value='<s:property value="jqxOnTime"/>'></div>
+    <input type="hidden" id="hidjqxOnTime" name="hidjqxOnTime"
+           value='<s:property value="hidjqxOnTime"/>'/>
+</td>
+
+</tr>
+
 </table>
     
     </fieldset>
 
-  <fieldset>
+<fieldset>
 <legend>Tariff Info</legend>
-<table width="100%" id="tariff">
-<tr>
-<td width="10%">         
 
-<table  width="100%">
-<tr><td colspan="2" align="center"><input type="checkbox" id="weekend"  hidden="true" name="weekend" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" ><label id="weekend1" hidden="true">Weekend</label> &nbsp;<button type="button"  title="Search Tariff"  class="icon" id="ratariffbutton"  value='<s:property value="ratariffbutton"/>'>
-					 <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png"> 
-					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button"  title="Search User"  class="icon" id="searchuser"  value='<s:property value="searchuser"/>'>
-					 <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png"> 
-					</button></td></tr>
-<tr><td width="4%">DOCNO</td><td width="1%"><input type="text" id="ratariffdocno1"  name="ratariffdocno1"   value='<s:property value="ratariffdocno1"/>' >
-</td></tr>
-<tr><td width="4%">Ins.Excess</td><td width="1%"><input type="text" id="excessinsur"  name="excessinsur" style="text-align: right;"  value='<s:property value="excessinsur"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);" ></td></tr>
-<tr><td width="4%">Advance</td><td><input type="checkbox" id="advance_chk"  name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" > </td></tr>
-<tr><td width="4%">Invoice</td><td><select name="invoice" id="invoice" style="width:100%;"  value='<s:property value="invoice"/>'  >
-  <option value="1">Month End</option>
-  <option value="2">Period</option>
-  
-</select></td></tr> 
-<tr><td>Delivery Charges </td><td><input type="text" id="delcharges"  name="delcharges"   style="text-align: right;"  value='<s:property value="delcharges" />' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event)" ></td>  </tr>
-</table>
+<!-- 🔹 SINGLE COMPACT HEADER ROW -->
+<table width="100%" style="margin-bottom:8px;">
+<tr>
+
+<td>DOCNO</td>
+<td>
+    <input type="text" id="ratariffdocno1" name="ratariffdocno1"
+           style="width:130px;"
+           value='<s:property value="ratariffdocno1"/>'>
 </td>
-<td width="90%">
-<table width="100%">
-<tr><td>
-        <div id="tariffDivId">
-  			 <jsp:include  page="rateDescription.jsp"></jsp:include> 
-  		 </div> 
+
+<td>Ins.Excess</td>
+<td>
+    <input type="text" id="excessinsur" name="excessinsur"
+           style="width:110px; text-align:right;"
+           value='<s:property value="excessinsur"/>'
+           onblur="funRoundAmt(this.value,this.id);"
+           onkeypress="javascript:return isNumber (event);">
 </td>
-  </tr>
+
+<td>Advance</td>
+<td>
+    <input type="checkbox" id="advance_chk" name="advance_chk" value="0"
+           onclick="$(this).attr('value', this.checked ? 1 : 0)">
+</td>
+
+<td>Invoice</td>
+<td>
+    <select name="invoice" id="invoice"
+            style="width:140px;"
+            value='<s:property value="invoice"/>'>
+        <option value="1">Month End</option>
+        <option value="2">Period</option>
+    </select>
+</td>
+
+<td>Delivery Charges</td>
+<td>
+    <input type="text" id="delcharges" name="delcharges"
+           style="width:120px; text-align:right;"
+           value='<s:property value="delcharges" />'
+           onblur="funRoundAmt(this.value,this.id);"
+           onkeypress="javascript:return isNumber (event)">
+</td>
+
+<!-- 🔹 ICONS MOVED INTO SAME ROW -->
+<td style="white-space:nowrap; text-align:left;">
+
+    <input type="checkbox" id="weekend" hidden="true" name="weekend" value="0"
+           onclick="$(this).attr('value', this.checked ? 1 : 0)" >
+    <label id="weekend1" hidden="true">Weekend</label>
+
+    <button type="button" title="Search Tariff" class="icon" id="ratariffbutton"
+            value='<s:property value="ratariffbutton"/>'>
+        <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png">
+    </button>
+
+    <button type="button" title="Search User" class="icon" id="searchuser"
+            value='<s:property value="searchuser"/>'>
+        <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png">
+    </button>
+
+</td>
+
+</tr>
 </table>
-</td></tr>    </table>
-     </fieldset>
+
+
+<!-- 🔹 FULL WIDTH TABLE (NO SHRINKING) -->
+<div style="width:100%;">
+    <table width="100%" id="tariff">
+        <tr>
+            <td style="width:100%;">
+                <div id="tariffDivId" style="width:100%;">
+                    <jsp:include page="rateDescription.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</fieldset>
 
 
     <fieldset>
-      <legend>Payment Info</legend>
+<legend>Payment Info</legend>
 
-<table width="99%" id="payment">
+<!-- 🔹 MAIN GRID (FULL WIDTH) -->
+<table width="100%" id="payment">
+
+<tr>
+<td style="width:100%;">
+    <div id="divpaymentGrid">
+        <jsp:include page="paymentdetailsgrid.jsp"></jsp:include>
+    </div>
+</td>
+</tr>
+
+<!-- 🔹 DETAILS ROW (MOVED BELOW GRID - FULL WIDTH) -->
+<tr>
+<td>
+
+<table width="100%" style="margin-top:10px;">
 <tr>
 
-<td width="83%">
-<table width="100%" >
-<tr><td>
-      <div id="divpaymentGrid"> <jsp:include page="paymentdetailsgrid.jsp"></jsp:include> </div> 
-           
- </td>
-  </tr>
-</table>
+<td>Manual RA NO</td>
+<td>
+    <input type="text" id="payment_Mra" name="payment_Mra"
+           value='<s:property value="payment_Mra"/>'>
 </td>
-<td width="17%" >
-<table>
-<tr>
-<td align="right">Manual RA NO</td><td><input type="text" id="payment_Mra"  name="payment_Mra" value='<s:property value="payment_Mra"/>'></td>
-</tr>
-<tr>
-<td align="right"> LPO</td><td><input type="text" id="payment_PO"  name="payment_PO" value='<s:property value="payment_PO"/>'></td>
-</tr><tr>
-<td align="right">Contract vehicle</td><td><input type="text" id="payment_Conveh"  name="payment_Conveh" value='<s:property value="payment_Conveh"/>'>
+
+<td>LPO</td>
+<td>
+    <input type="text" id="payment_PO" name="payment_PO"
+           value='<s:property value="payment_PO"/>'>
 </td>
-</tr>
-<tr>
-<td align="right">Project</td><td><input type="text" id="rentalproject"  name="rentalproject" value='<s:property value="rentalproject"/>' placeholder="Press F3 to Search" readonly>
+
+<td>Contract vehicle</td>
+<td>
+    <input type="text" id="payment_Conveh" name="payment_Conveh"
+           value='<s:property value="payment_Conveh"/>'>
 </td>
-<input type="hidden" id="hidrentalproject"  name="hidrentalproject" value='<s:property value="hidrentalproject"/>'>
+
+<td>Project</td>
+<td>
+    <input type="text" id="rentalproject" name="rentalproject"
+           value='<s:property value="rentalproject"/>'
+           placeholder="Press F3 to Search" readonly>
+    <input type="hidden" id="hidrentalproject" name="hidrentalproject"
+           value='<s:property value="hidrentalproject"/>'>
+</td>
+
 </tr>
+
 <tr>
-	<td colspan="2" align="left">
-  		<input type="checkbox" name="chkorgregcard" id="chkorgregcard" onChange="setOrgRegCard();" style="width:15px;height:15px;"><span class="igst">Interstate Tax </span><input class="igst" type="checkbox" name="chkigst" id="chkigst" onChange="setIGST();" style="width:15px;height:15px;margin-left:40px;">
-  		Org. Reg. Card issued
-  		<input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
-  		<input type="hidden" name="hidchkigst" id="hidchkigst" value='<s:property value="hidchkigst"/>'>  
-    </td>
+
+<td colspan="4">
+    <input type="checkbox" name="chkorgregcard" id="chkorgregcard"
+           onChange="setOrgRegCard();" style="width:15px;height:15px;">
+    Org. Reg. Card issued
+
+    <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard"
+           value='<s:property value="hidchkorgregcard"/>'>
+</td>
+
+<td colspan="4">
+    <span class="igst">Interstate Tax</span>
+    <input class="igst" type="checkbox" name="chkigst" id="chkigst"
+           onChange="setIGST();" style="width:15px;height:15px;">
+
+    <input type="hidden" name="hidchkigst" id="hidchkigst"
+           value='<s:property value="hidchkigst"/>'>
+</td>
+
 </tr>
+
 <tr class="racraterow" hidden="true">
-	<td align="right">RAC Rate</td>
-	<td><input type="text" id="racrate"  name="racrate"   style="text-align: right;"  value='<s:property value="racrate" />' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event)"></td>
-</tr>  
+
+<td>RAC Rate</td>
+<td>
+    <input type="text" id="racrate" name="racrate"
+           style="text-align:right;"
+           value='<s:property value="racrate" />'
+           onblur="funRoundAmt(this.value,this.id);"
+           onkeypress="javascript:return isNumber (event)">
+</td>
+
+</tr>
+
 </table>
+
 </td>
 </tr>
+
+
+<!-- 🔹 INSURANCE ROW (FULL WIDTH ALREADY - KEPT SAME) -->
 <tr class="row-insurcomp">
-	<td colspan="3">
-		<table style="width:100%">
-			<tr>
-				<td width="15%">
-					<input type="checkbox" name="chkinsurcomp" id="chkinsurcomp" onchange="funChkInsurComp();">
-					<input type="hidden" name="hidchkinsurcomp" id="hidchkinsurcomp" value='<s:property value="hidchkinsurcomp"/>'>
-					<label for="chkinsurcomp">Insurance Company</label>
-				</td>
-				<td width="20%">
-					<select name="cmbinsurcomp" id="cmbinsurcomp" style="width:100%;" disabled>
-						<option value="">--Select--</option>
-					</select>
-					<input type="hidden" name="hidcmbinsurcomp" id="hidcmbinsurcomp" value='<s:property value="hidcmbinsurcomp"/>'>		
-				</td>
-				<td align="right">Days</td>
-				<td><input type="text" name="insurcompdays" id="insurcompdays" value='<s:property value="insurcompdays"/>' onkeypress="javascript:return isNumber (event)"></td>
-				<td align="center"><button type="button" name="btninsurupdate" id="btninsurupdate" class="myButton" disabled onclick="funUpdateInsurComp();">Update</button></td>		
-			</tr>
-		</table>
-	</td>
+<td>
+    <table width="100%">
+        <tr>
+
+            <td width="15%">
+                <input type="checkbox" name="chkinsurcomp" id="chkinsurcomp"
+                       onchange="funChkInsurComp();">
+                <input type="hidden" name="hidchkinsurcomp" id="hidchkinsurcomp"
+                       value='<s:property value="hidchkinsurcomp"/>'>
+                <label for="chkinsurcomp">Insurance Company</label>
+            </td>
+
+            <td width="20%">
+                <select name="cmbinsurcomp" id="cmbinsurcomp"
+                        style="width:100%;" disabled>
+                    <option value="">--Select--</option>
+                </select>
+                <input type="hidden" name="hidcmbinsurcomp" id="hidcmbinsurcomp"
+                       value='<s:property value="hidcmbinsurcomp"/>'>
+            </td>
+
+            <td>Days</td>
+            <td>
+                <input type="text" name="insurcompdays" id="insurcompdays"
+                       value='<s:property value="insurcompdays"/>'
+                       onkeypress="javascript:return isNumber (event)">
+            </td>
+
+            <td>
+                <button type="button" name="btninsurupdate" id="btninsurupdate"
+                        class="myButton" disabled onclick="funUpdateInsurComp();">
+                    Update
+                </button>
+            </td>
+
+        </tr>
+    </table>
+</td>
 </tr>
+
 </table>
- </fieldset>
+
+</fieldset>
   <DIV id="forspace" hidden="true">
- 
-
-
-
-
+ <br><br><br><br>
  </DIV> 
 <div id="hiddrivertable">
  <fieldset>
-      <legend>Delivery Details</legend>
- <table width="100%" >
- <tr><td width="3%"></td>
- <td width="7%">
- 
- </td>
- <td width="80%">
- 
- <table id="driver">
- <tr>
- <td width="12%" align="center">Driver</td>
-  </tr>
-  <tr>
- <td width="12%"><input type="text" name="del_Driver" id="del_Driver" value='<s:property value="del_Driver"/>' >
-  <input type="hidden" id="del_chaufferid2" name="del_chaufferid2"  value='<s:property value="del_chaufferid2"/>'/>
- 
- </td>
- <td width="6%" align="right">KM</td> <td><input type="text" name="del_KM" id="del_KM" value='<s:property value="del_KM"/>' onblur="funchkKm()" onkeypress="javascript:return isNumber (event)"></td>
- <td width="6%" align="right">Fuel</td><td width="12%">
- <select name="del_Fuel" id="del_Fuel" style="width:98%;" name="del_Fuel" value='<s:property value="del_Fuel"/>'>
+<legend>Delivery Details</legend>
+
+<table style="width:100%; table-layout:auto;">
+
+<tr>
+
+<!-- DRIVER -->
+<td style="white-space:nowrap;">Driver</td>
+<td style="width:18%;">
+    <input type="text" name="del_Driver" id="del_Driver"
+           style="width:100%;"
+           value='<s:property value="del_Driver"/>'>
+
+    <input type="hidden" id="del_chaufferid2" name="del_chaufferid2"
+           value='<s:property value="del_chaufferid2"/>'/>
+</td>
+
+<!-- KM -->
+<td style="white-space:nowrap;">KM</td>
+<td style="width:10%;">
+    <input type="text" name="del_KM" id="del_KM"
+           style="width:100%;"
+           value='<s:property value="del_KM"/>'
+           onblur="funchkKm()"
+           onkeypress="javascript:return isNumber (event)">
+</td>
+
+<!-- FUEL -->
+<td style="white-space:nowrap;">Fuel</td>
+<td style="width:12%;">
+<select name="del_Fuel" id="del_Fuel"
+        style="width:100%;"
+        value='<s:property value="del_Fuel"/>'>
+
     <option value=1.000>Level 8/8</option>
     <option value=0.875>Level 7/8</option>
     <option value=0.750>Level 6/8</option>
@@ -3186,27 +3466,62 @@ function funResetExcessInsur(){
     <option value=0.250>Level 2/8</option>
     <option value=0.125>Level 1/8</option>
     <option value=0.000>Level 0/8</option>
-    <option value="" selected>-Select-</option>   
-    
-       
+    <option value="" selected>-Select-</option>
 
-</select></td>
- <td width="6%" align="right">Date</td><td width="16%"><div id='jqxDeliveryOut' name='jqxDeliveryOut' value='<s:property value="jqxDeliveryOut"/>' onblur="fundelDatechk()"></div>
-                    <input type="hidden" id="hidjqxDeliveryOut" name="hidjqxDeliveryOut" value='<s:property value="hidjqxDeliveryOut"/>'/></td>
-  <td width="3%" align="right">Time</td><td width="10%"><div id='jqxDelTimeOut' name='jqxDelTimeOut' value='<s:property value="jqxDelTimeOut"/>'  onblur="fundelTimechk()"></div>
-                   <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut" value='<s:property value="hidjqxDelTimeOut"/>'/></td>
- <td width="30%"  align="center"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Edit" onclick="funupdate()"></td>
- </tr> </table>
-   </td>
-  </tr>
-  </table>
-   </fieldset>
+</select>
+</td>
+
+<!-- DATE -->
+<td style="white-space:nowrap;">Date</td>
+<td style="width:14%;">
+    <div id='jqxDeliveryOut'
+         style="width:100%;"
+         name='jqxDeliveryOut'
+         value='<s:property value="jqxDeliveryOut"/>'
+         onblur="fundelDatechk()"></div>
+
+    <input type="hidden" id="hidjqxDeliveryOut" name="hidjqxDeliveryOut"
+           value='<s:property value="hidjqxDeliveryOut"/>'/>
+</td>
+
+<!-- TIME -->
+<td style="white-space:nowrap;">Time</td>
+<td style="width:12%;">
+    <div id='jqxDelTimeOut'
+         style="width:100%;"
+         name='jqxDelTimeOut'
+         value='<s:property value="jqxDelTimeOut"/>'
+         onblur="fundelTimechk()"></div>
+
+    <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut"
+           value='<s:property value="hidjqxDelTimeOut"/>'/>
+</td>
+
+<!-- BUTTON -->
+<td style="width:10%; text-align:center;">
+    <input type="button" name="driverUpdate" id="driverUpdate"
+           class="myButton"
+           value="Edit"
+           onclick="funupdate()">
+</td>
+
+</tr>
+
+</table>
+
+</fieldset>
 </div>
 <div hidden="true"><select name="ratariffsystem" id="ratariffsystem" style="width:100%;"  value='<s:property value="ratariffsystem"/>'  >
-  <option value="Manual">Manual</option> 
+  <!-- <option value="">--Select--</option> -->
+  <!-- <option value="System">System</option> -->
+   <option value="Manual">Manual</option> 
 </select></div>
 
-<input type="hidden" id="configtarif" name="configtarif" value='<s:property value="configtarif"/>' />  <input type="hidden" id="configmethod" name="configmethod" value='<s:property value="configmethod"/>' /><input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>' />  
+<input type="hidden" id="configtarif" name="configtarif" value='<s:property value="configtarif"/>' />  <!-- for tarif -->
+
+ <input type="hidden" id="configmethod" name="configmethod" value='<s:property value="configmethod"/>' /><!--    for client -->
+
+ <input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>' />  
   <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />  
    <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
    <input type="hidden" name="rentaltype" id="rentaltype" value='<s:property value="rentaltype"/>' />
@@ -3227,14 +3542,27 @@ function funResetExcessInsur(){
          <input type="hidden" name="advance_chkval" id="advance_chkval" value='<s:property value="advance_chkval"/>'  /> 
                   <input type="hidden" name="weekendval" id="weekendval" value='<s:property value="weekendval"/>'  /> 
      
-      <input type="hidden" name="hidvehfuel" id="hidvehfuel" value='<s:property value="hidvehfuel"/>'  />  <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>'  />
+      <input type="hidden" name="hidvehfuel" id="hidvehfuel" value='<s:property value="hidvehfuel"/>'  />  <!-- hidden veh search fuel -->
+      
+      
+      
+      <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>'  />
       <input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>'  /> 
-      <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>'  />   <input type="hidden" name="checkbranch" id="checkbranch" value='<s:property value="checkbranch"/>'  /> <input type="hidden" name="advchkval" id="advchkval" value='<s:property value="advchkval"/>'  /> 
+      <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>'  />   <!-- set ex.insu by ratedescription grid cdw super cdw click else normal value set in quary -->
+                                                                                                              
+       <input type="hidden" name="checkbranch" id="checkbranch" value='<s:property value="checkbranch"/>'  /> <!-- check branch in main search  WIB with in branch, WOB with out branch -->
+      
+       <input type="hidden" name="advchkval" id="advchkval" value='<s:property value="advchkval"/>'  /> 
        <input type="hidden" name="invval" id="invval" value='<s:property value="invval"/>' />
        
        
        
-              <input type="hidden" name="specialdiscountuser" id="specialdiscountuser" value='<s:property value="specialdiscountuser"/>' />  <input type="hidden" id="tariffgridlength" name="tariffgridlength"/>
+              <input type="hidden" name="specialdiscountuser" id="specialdiscountuser" value='<s:property value="specialdiscountuser"/>' />  <!-- this for user change rate discount and update to table agmt  no into special discount  -->
+     
+     
+     
+    
+    <input type="hidden" id="tariffgridlength" name="tariffgridlength"/>
     <input type="hidden" id="paymentgridlength" name="paymentgridlength"/> 
     <input type="hidden" id="drivergridlength" name="drivergridlength"/>
     <input type="hidden" name="priormethod" id="priormethod">
@@ -3268,6 +3596,9 @@ function funResetExcessInsur(){
  <div id="clientinfowindow">
    <div ></div>
 </div>
+<!-- <div id="Driverdlswindow">
+   <div ></div>
+</div>  -->
 <div id="driverinfowindow">
    <div ></div>
 </div>
@@ -3300,4 +3631,5 @@ function funResetExcessInsur(){
 </div>
  </div> 
  </body>
-</html>
+</html> 
+    

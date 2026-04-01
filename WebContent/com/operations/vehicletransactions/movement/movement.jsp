@@ -1956,7 +1956,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 
 body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
      background: #fff;
     box-sizing: border-box;
@@ -1971,7 +1971,7 @@ fieldset {
 }
 
 legend {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     padding: 0 8px;
         border-left: 4px solid #007bff;

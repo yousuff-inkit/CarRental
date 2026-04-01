@@ -1,8 +1,8 @@
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
-<head>
 <% String contextPath=request.getContextPath();%>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,145 +10,166 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-/* ------------------------------
-    FAST TRACK RAC UI REPLICATION
-    High-density, efficient spacing
------------------------------- */
-body {
-    background-color: #f0f2f5; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+/* =========================================================
+   BOOKING - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
     margin: 0;
-    padding: 15px;
     box-sizing: border-box;
 }
 
 #mainBG {
-    width: 100%;
-    margin: 0 auto;
-    padding-bottom: 40px; /* Ensures space at the bottom for scrolling */
-}
-
-/* White panels with tight padding */
-.erp-panel {
-    background-color: #ffffff;
-    border-radius: 6px;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border: 1px solid #e4e7eb;
-}
-
-/* Blue vertical bar section title */
-.erp-section-title {
-    color: #1a498b;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 12px 0;
-    padding-left: 8px;
-    border-left: 4px solid #1a498b;
-    line-height: 1.2;
-}
-
-/* Tight grid tables */
-.erp-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.erp-table td {
-    padding: 5px 8px; 
-    vertical-align: middle;
-    font-size: 13px;
-    color: #222;
-    white-space: nowrap;
-}
-
-/* Labels pushed to the right */
-.erp-table td.lbl {
-    text-align: right;
-    font-weight: 600;
-    color: #1a233a;
-    padding-right: 10px;
-}
-
-/* Compact Inputs */
-input[type="text"], select, input[type="email"], textarea {
-    height: 28px !important; 
-    border: 1px solid #ccc;
+    background: #fff;
     border-radius: 4px;
-    padding: 2px 8px;
-    font-size: 13px;
-    font-family: inherit;
-    width: 100%;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
-    color: #333;
 }
 
-input[type="text"]:focus, select:focus, textarea:focus {
-    border-color: #4a90e2;
-    outline: none;
-    box-shadow: 0 0 3px rgba(74, 144, 226, 0.3);
+/* FIX: Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
 }
 
-input::placeholder {
-    color: #999;
-}
-
-/* Icons */
-.icon, .icons, .iconss {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 0 2px;
-    vertical-align: middle;
-}
-
-.username-label {
-    color: #0000ff;
+form label.error {
+    color: red;
     font-weight: bold;
 }
 
-/* Checkboxes */
-.erp-checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 13px;
+/* EXACT Input Styles from Client Master */
+/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
+input[type="text"], input[type="email"], select {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
 }
-.erp-checkbox-group input[type="checkbox"] {
-    margin: 0 5px 0 0;
+
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+textarea {
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    font-family: Arial, sans-serif !important;
+}
+textarea:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+textarea[readonly] {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
+
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
+
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
     vertical-align: middle;
 }
 
-/* Formatted Time Label */
-.time-label {
-    font-size: 13px; 
-    font-weight: 600; 
-    color: #1a233a;
-    margin: 0 5px;
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
+}
+
+/* Specific styling for the small search icons */
+.icon, .icons, .iconss {
+    border: none;
+    background-color: #E0ECF8;
+    cursor: pointer;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.icon { width: 2.5em; height: 2em; }
+.icons { width: 3em; height: 3em; }
+.iconss { width: 4em; height: 3em; }
+
+.icon:hover, .icons:hover, .iconss:hover {
+    background-color: #d0e0f0;
 }
 </style>
+
+<%-- <link rel="text/css" href="../../../../vendors/select2/select2.min.css"/>
+<script type="text/javascript" src="../../../../vendors/select2/select2.min.js"></script> --%>
 <script type="text/javascript">   
- 
    $(document).ready(function () { 
 		
 	   /* Date */ 	
-       $("#jqxBookingDate").jqxDateTimeInput({  width: '100px', height: '28px', formatString:"dd.MM.yyyy"});
+       $("#jqxBookingDate").jqxDateTimeInput({  width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
     
-       $("#todate").jqxDateTimeInput({  width: '100px', height: '28px', formatString:"dd.MM.yyyy"});
+       $("#todate").jqxDateTimeInput({  width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
          var nexttodate=$('#todate').jqxDateTimeInput('getDate');
 	    var onemonthafterdate=new Date(nexttodate.setMonth(nexttodate.getMonth()+1));
 	 
 	  $('#todate').jqxDateTimeInput('setDate', onemonthafterdate);
 	
-	  $("#jqxVehicleFromDate").jqxDateTimeInput({  width: '100px', height: '28px', formatString:"dd.MM.yyyy"});
-       $("#jqxVehicleToDate").jqxDateTimeInput({  width: '100px', height: '28px', formatString:"dd.MM.yyyy"});
-     
+	  $("#jqxVehicleFromDate").jqxDateTimeInput({  width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
+       $("#jqxVehicleToDate").jqxDateTimeInput({  width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
+      
 
        /* Time */
-       $("#jqxVehicleFromTime").jqxDateTimeInput({ width: '60px', height: '28px', formatString: 'HH:mm', showCalendarButton: false });
-       $("#jqxVehicleToTime").jqxDateTimeInput({ width: '60px', height: '28px', formatString: 'HH:mm', showCalendarButton: false });
+       $("#jqxVehicleFromTime").jqxDateTimeInput({ width: '40%', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
+       $("#jqxVehicleToTime").jqxDateTimeInput({ width: '40%', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
        
        $('#bookqutSearch').jqxWindow({ width: '55%', height: '61%',  maxHeight: '85%' ,maxWidth: '80%' ,title: 'Quotation Search' , position: { x: 540, y: 60 }, keyboardCloseKey: 27});
        $('#bookqutSearch').jqxWindow('close');
@@ -320,38 +341,54 @@ input::placeholder {
 		 
 		 
 	
-        $('#fleetno').dblclick(function(){
-   	  	 if ($("#mode").val() == "A" || $("#mode").val() == "E") { 
-	  	    $('#fleetwindow').jqxWindow('open');
+   /* $('#fleetno').dblclick(function(){
+    	 	 if ($("#mode").val() == "A") { 
+	 	   $('#fleetwindow').jqxWindow('open');
 	   
-	  	    var fromdate = $('#jqxBookingDate').val();  
-	        var todate = $('#todate').val();      
-	        var url = 'subvehinfo.jsp?fromdate=' + encodeURIComponent(fromdate) + '&todate=' + encodeURIComponent(todate);
+	 	  fleetsearchcontent('subvehinfo.jsp?', $('#fleetwindow')); 
+    	 	 }
+     }); 
+        */
+       
+        $('#fleetno').dblclick(function(){
+   	 	 if ($("#mode").val() == "A" || $("#mode").val() == "E") { 
+	 	   $('#fleetwindow').jqxWindow('open');
+	   
+	 	 /* fleetsearchcontent('subvehinfo.jsp?', $('#fleetwindow'));  */
+	 	 
+	 	    var fromdate = $('#jqxBookingDate').val();  
+        var todate = $('#todate').val();     
+        var url = 'subvehinfo.jsp?fromdate=' + encodeURIComponent(fromdate) + '&todate=' + encodeURIComponent(todate);
 
-	        fleetsearchcontent(url, $('#fleetwindow'));
+        fleetsearchcontent(url, $('#fleetwindow'));
 
-   	  	 }   
+   	 	 }   
     }); 
        
        $('#bookrefno').dblclick(function(){
-	  	    $('#bookqutSearch').jqxWindow('open');
-	  	  bookqutSearchContent('quotbookmasterSearch.jsp?', $('#bookqutSearch')); 
+    	   
+    
+	 	    $('#bookqutSearch').jqxWindow('open');
+	   
+	 	  bookqutSearchContent('quotbookmasterSearch.jsp?', $('#bookqutSearch')); 
+    	   
+    	  
     }); 
       
        $('#bookclientno').dblclick(function(){
-    	  	 if ($("#mode").val() == "A") { 
-	  	    $('#bookclientsearch').jqxWindow('open');
+    	 	 if ($("#mode").val() == "A") { 
+	 	   $('#bookclientsearch').jqxWindow('open');
 	   
-	  	  bookclientSearchContent('bookclientINgridsearch.jsp?', $('#bookclientsearch')); 
-    	  	 }
+	 	  bookclientSearchContent('bookclientINgridsearch.jsp?', $('#bookclientsearch')); 
+    	 	 }
       });
         $('#bookbrand').dblclick(function(){
         	  if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
        		   if(document.getElementById("cmbreftype").value!="QOT")
        			   {
-	  	    $('#brandsearchwndows').jqxWindow('open');
+	 	   $('#brandsearchwndows').jqxWindow('open');
 	   
-	  	  bookbrandContent('brandbookSearch.jsp?', $('#brandsearchwndows')); 
+	 	  bookbrandContent('brandbookSearch.jsp?', $('#brandsearchwndows')); 
        			   }
         	  }
      });
@@ -361,9 +398,9 @@ input::placeholder {
     	   if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
     		   if(document.getElementById("cmbreftype").value!="QOT")
     			   {
-	  	    $('#colorsearchwndows').jqxWindow('open');
+	 	   $('#colorsearchwndows').jqxWindow('open');
 	   
-	  	  bookcolorContent('colorbooksearch.jsp?', $('#colorsearchwndows')); 
+	 	  bookcolorContent('colorbooksearch.jsp?', $('#colorsearchwndows')); 
     			   }
     	   }
    });
@@ -371,26 +408,26 @@ input::placeholder {
     	   if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
     		   if(document.getElementById("cmbreftype").value!="QOT")
     			   {
-	  	    $('#groupsearchwndows').jqxWindow('open'); //bookbrandid bookmodelid
+	 	   $('#groupsearchwndows').jqxWindow('open'); //bookbrandid bookmodelid
 	   
-	  	  bookgroupContent('groupbooksearch.jsp?brand='+document.getElementById("bookbrandid").value+'&model='+document.getElementById("bookmodelid").value); 
+	 	  bookgroupContent('groupbooksearch.jsp?brand='+document.getElementById("bookbrandid").value+'&model='+document.getElementById("bookmodelid").value); 
     			   }
     	   }
   });
-        
+       
        $('#renttype').dblclick(function(){
-	  	    $('#rentalsearchwndows').jqxWindow('open');
+	 	   $('#rentalsearchwndows').jqxWindow('open');
 	   
-	  	  bookrentalContent('rentalbooksearch.jsp?', $('#rentalsearchwndows')); 
- });
+	 	  bookrentalContent('rentalbooksearch.jsp?', $('#rentalsearchwndows')); 
+});
        
        
        $('#booksalesAgent').dblclick(function(){
-    	  	 if ($("#mode").val() == "A") { 
-	  	    $('#Salesagentinfowindow').jqxWindow('open');
+    	 	 if ($("#mode").val() == "A") { 
+	 	   $('#Salesagentinfowindow').jqxWindow('open');
 	   
-	  	  salseagentsearch('salesbookmasterSearch.jsp?', $('#Salesagentinfowindow')); 
-    	  	 }
+	 	  salseagentsearch('salesbookmasterSearch.jsp?', $('#Salesagentinfowindow')); 
+    	 	 }
     }); 
        
       
@@ -407,13 +444,13 @@ input::placeholder {
 
 		     	  if(($('#bookclientno').val()!=""))
 		     		  {
-		     	  	 if ($("#mode").val() == "A") { 
+		     	 	 if ($("#mode").val() == "A") { 
 		     		  
-					  	    $('#tariffinbtnwindow').jqxWindow('open');
+					 	    $('#tariffinbtnwindow').jqxWindow('open');
 					       $('#tariffinbtnwindow').jqxWindow('focus');     
 					      
 					       tariffbtnSearchContent('gettariffbtn.jsp?vehgpid='+document.getElementById("bookgroupid").value+"&cldocno="+document.getElementById("bookclientno").value);
-		     	  	 }
+		     	 	 }
 		     		  }
 		     	  else
 		     		  {
@@ -424,8 +461,17 @@ input::placeholder {
 		     	  document.getElementById("bookclientno").focus(); 
 		     	  return false;
 		 		    }
+		     		   /* if(c)
+		 			  { */ 
+		 		 /* document.getElementById("errormsg").innerText="  Select Fleet";
+		     	  document.getElementById("fleetno").focus(); 
+		     	  return false; */
 		 		    } 
+	               /* } */
     			}
+    		
+    		
+     	  
            });
        
        
@@ -442,14 +488,14 @@ input::placeholder {
 				    		   
 				    	   if(($('#ratariffdocno1').val()!=""))
 				    		  {
-				    		  	 if ($("#mode").val() == "A") { 
-						  	    $('#usersearchwindow').jqxWindow('open');
+				    		 	 if ($("#mode").val() == "A") { 
+						 	    $('#usersearchwindow').jqxWindow('open');
 						       $('#usersearchwindow').jqxWindow('focus');     
 						   
 				    		 
 				    		  
 						  searchuserContent('searchotheruser.jsp?vehgpid='+document.getElementById("bookgroupid").value+"&tarifdoc="+document.getElementById("tarifdoc").value); 
-				    		  	 }
+				    		 	 }
 				    		  }
 				    	   else
 				    		   {
@@ -461,19 +507,19 @@ input::placeholder {
     
     
        $('#clientreview').click(function(){
-	  	   var url=document.URL;
-	  		var reurl=url.split("com/");
-	  		  window.parent.formName.value="Client Review";
-	  		  window.parent.formCode.value="CRW";
+	 	   var url=document.URL;
+	 		var reurl=url.split("com/");
+	 		  window.parent.formName.value="Client Review";
+	 		  window.parent.formCode.value="CRW";
 
 	   top.addTab("Client Review",reurl[0]+"com/operations/clientrelations/clientreview/clientReview.jsp");
 
        }); 
 	   $('#enqbutton').click(function(){
-	  	   var url=document.URL;
-	  		var reurl=url.split("com/");
-	  		  window.parent.formName.value="Enquiry";
-	  		  window.parent.formCode.value="ENQ";
+	 	   var url=document.URL;
+	 		var reurl=url.split("com/");
+	 		  window.parent.formName.value="Enquiry";
+	 		  window.parent.formCode.value="ENQ";
 
 	   top.addTab("Enquiry",reurl[0]+"com/operations/marketing/enquiry/enquiry.jsp");
 
@@ -492,29 +538,40 @@ input::placeholder {
 	}); 
     	}
    
-	  	 function getfleet(event){
-		  	 var x= event.keyCode;
-		  	 if(x==114){
-		  	  $('#fleetwindow').jqxWindow('open');
-		  	    var fromdate = $('#jqxBookingDate').val();  
-		        var todate = $('#todate').val();      
-		        var url = 'subvehinfo.jsp?fromdate=' + encodeURIComponent(fromdate) + '&todate=' + encodeURIComponent(todate);
+ /* function getfleet(event){
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 	  $('#fleetwindow').jqxWindow('open');
+	  
+	 	fleetsearchcontent('subvehinfo.jsp?', $('#fleetwindow'));   }
+	 	 else{
+	 		 }
+	 	 }  */
+   
+	 	
+	 	 function getfleet(event){
+		 	 var x= event.keyCode;
+		 	 if(x==114){
+		 	  $('#fleetwindow').jqxWindow('open');
+		 	    var fromdate = $('#jqxBookingDate').val();  
+        var todate = $('#todate').val();     
+        var url = 'subvehinfo.jsp?fromdate=' + encodeURIComponent(fromdate) + '&todate=' + encodeURIComponent(todate);
 
-		        fleetsearchcontent(url, $('#fleetwindow'));
-		        }
-		  	 else{
-		  		 }
-		  	 } 
+        fleetsearchcontent(url, $('#fleetwindow'));
+        }
+		 	 else{
+		 		 }
+		 	 } 
    
    function getsalagentdetails(event){
-	  	 var x= event.keyCode;
-	  	 if(x==114){
-	  	  $('#Salesagentinfowindow').jqxWindow('open');
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 	  $('#Salesagentinfowindow').jqxWindow('open');
 	  
-	  	salseagentsearch('salesbookmasterSearch.jsp?', $('#Salesagentinfowindow'));    }
-	  	 else{
-	  		 }
-	  	 }  
+	 	salseagentsearch('salesbookmasterSearch.jsp?', $('#Salesagentinfowindow'));    }
+	 	 else{
+	 		 }
+	 	 }  
 		  function salseagentsearch(url) {
 	        //alert(url);
 	           $.get(url).done(function (data) {
@@ -525,14 +582,14 @@ input::placeholder {
 	     	}
    
    function getrentaltypedetails(event){
-	  	 var x= event.keyCode;
-	  	 if(x==114){
-	  	  $('#rentalsearchwndows').jqxWindow('open');
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 	  $('#rentalsearchwndows').jqxWindow('open');
 	  
-	  	bookrentalContent('rentalbooksearch.jsp?', $('#rentalsearchwndows'));   }
-	  	 else{
-	  		 }
-	  	 }  
+	 	bookrentalContent('rentalbooksearch.jsp?', $('#rentalsearchwndows'));   }
+	 	 else{
+	 		 }
+	 	 }  
 		  function bookrentalContent(url) {
 	        //alert(url);
 	           $.get(url).done(function (data) {
@@ -546,7 +603,7 @@ input::placeholder {
 	        function tariffbtnSearchContent(url) {
                    //alert(url);
                     $.get(url).done(function (data) {
-	                    //alert(data);
+	                     //alert(data);
                   $('#tariffinbtnwindow').jqxWindow('setContent', data);
 
            	}); 
@@ -555,24 +612,24 @@ input::placeholder {
                  function searchuserContent(url) {
                    //alert(url);
                     $.get(url).done(function (data) {
-	                    //alert(data);
+	                     //alert(data);
                   $('#usersearchwindow').jqxWindow('setContent', data);
 
            	}); 
            	}
 
    function getgroupdetails(event){
-	  	 var x= event.keyCode;
-	  	 if(x==114){
-	  		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
-	    		   if(document.getElementById("cmbreftype").value!="QOT")
-	    			   {
-	  	  $('#groupsearchwndows').jqxWindow('open');
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
+	 		   if(document.getElementById("cmbreftype").value!="QOT")
+	 			   {
+	 	  $('#groupsearchwndows').jqxWindow('open');
 	  
-	  	  bookgroupContent('groupbooksearch.jsp?brand='+document.getElementById("bookbrandid").value+'&model='+document.getElementById("bookmodelid").value);  }}  }
-	  	 else{
-	  		 }
-	  	 }  
+	 	  bookgroupContent('groupbooksearch.jsp?brand='+document.getElementById("bookbrandid").value+'&model='+document.getElementById("bookmodelid").value);  }}  }
+	 	 else{
+	 		 }
+	 	 }  
 		  function bookgroupContent(url) {
 	        //alert(url);
 	           $.get(url).done(function (data) {
@@ -582,20 +639,20 @@ input::placeholder {
 		}); 
 	     	}
    function getcolordetails(event){
-	  	 var x= event.keyCode;
-	  	 if(x==114){
-	  		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
-	    		   if(document.getElementById("cmbreftype").value!="QOT")
-	    			   {
-	  	  $('#colorsearchwndows').jqxWindow('open');
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
+	 		   if(document.getElementById("cmbreftype").value!="QOT")
+	 			   {
+	 	  $('#colorsearchwndows').jqxWindow('open');
 	  
-	  	bookcolorContent('colorbooksearch.jsp?', $('#colorsearchwndows'));  
-	    			   }
-	  		}
-	  		}
-	  	 else{
-	  		 }
-	  	 }  
+	 	bookcolorContent('colorbooksearch.jsp?', $('#colorsearchwndows'));  
+	 			   }
+	 		}
+	 		}
+	 	 else{
+	 		 }
+	 	 }  
 		  function bookcolorContent(url) {
 	        //alert(url);
 	           $.get(url).done(function (data) {
@@ -606,20 +663,20 @@ input::placeholder {
 	     	}
 		  
    function getbranddetails(event){
-	  	 var x= event.keyCode;
-	  	 if(x==114){
-	  		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
-	    		   if(document.getElementById("cmbreftype").value!="QOT")
-	    			   {
-	  	  $('#brandsearchwndows').jqxWindow('open');
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
+	 		   if(document.getElementById("cmbreftype").value!="QOT")
+	 			   {
+	 	  $('#brandsearchwndows').jqxWindow('open');
 	  
-	  	bookbrandContent('brandbookSearch.jsp?', $('#brandsearchwndows'));  
-	    			   }
-	  		}
-	  		}
-	  	 else{
-	  		 }
-	  	 }  
+	 	bookbrandContent('brandbookSearch.jsp?', $('#brandsearchwndows'));  
+	 			   }
+	 		}
+	 		}
+	 	 else{
+	 		 }
+	 	 }  
 		  function bookbrandContent(url) {
 	        //alert(url);
 	           $.get(url).done(function (data) {
@@ -630,14 +687,14 @@ input::placeholder {
 	     	} 
    
    function getclientdetails(event){
-	  	 var x= event.keyCode;
-	  	 if(x==114){
-	  	  $('#bookclientsearch').jqxWindow('open');
+	 	 var x= event.keyCode;
+	 	 if(x==114){
+	 	  $('#bookclientsearch').jqxWindow('open');
 	  
-	  	bookclientSearchContent('bookclientINgridsearch.jsp?', $('#bookclientsearch'));    }
-	  	 else{
-	  		 }
-	  	 }  
+	 	bookclientSearchContent('bookclientINgridsearch.jsp?', $('#bookclientsearch'));    }
+	 	 else{
+	 		 }
+	 	 }  
 		  function bookclientSearchContent(url) {
 	        //alert(url);
 	           $.get(url).done(function (data) {
@@ -648,17 +705,17 @@ input::placeholder {
 	     	}
     		  
    function getqutrefno(event){
-  	 var x= event.keyCode;
-  	 if(x==114){
-  	
-  	  $('#bookqutSearch').jqxWindow('open');
+ 	 var x= event.keyCode;
+ 	 if(x==114){
+ 	
+ 	  $('#bookqutSearch').jqxWindow('open');
   
-  	  bookqutSearchContent('quotbookmasterSearch.jsp?', $('#bookqutSearch'));
-  	  
- 			   }
-  	 else{
-  		 }
-  	 }  
+ 	  bookqutSearchContent('quotbookmasterSearch.jsp?', $('#bookqutSearch'));
+ 	  
+			   }
+ 	 else{
+ 		 }
+ 	 }  
    
 	  function bookqutSearchContent(url) {
         //alert(url);
@@ -728,6 +785,7 @@ input::placeholder {
 		$('#insuexcess').attr('readonly', false);
 		$('#delcharge').attr('disabled', true);
 		$('#delcharge').attr('readonly', false);
+		$('#excessinsur').attr('readonly', false);
 		
 		 $('#delivery_chk').attr('disabled', false);
 		    $('#chauffeur_chk').attr('disabled', false);
@@ -736,6 +794,13 @@ input::placeholder {
 		
 		if ($("#mode").val() == "A") {
 			
+			
+/* document.getElementById("docno").value="";
+				document.getElementById("bookgroupid").value=="";
+		
+	   	   document.getElementById('delivery_chkval').value=0;
+	 	   document.getElementById("chauffeur_chkval").value=0 ; 
+	 	    */
 	
 	 		document.getElementById("rentalnumber").innerText="";    
 	 		document.getElementById("rentalnumberval").innerText="";  
@@ -747,9 +812,13 @@ input::placeholder {
 			
 			$('#jqxVehicleFromTime').val(new Date());
 			$('#jqxVehicleToTime').val(new Date());
+	 	       // $("#booktarifGrid").jqxGrid('clear');
+	 	    //  $("#booktarifGrid").jqxGrid('addrow', null, {});
+	 	     // $("#booktarifGrid").jqxGrid('addrow', null, {});
+	 	  // $("#booktarifGrid").jqxGrid('addrow', null, {});
 	 	 
-	  		 $("#bookpaymentId").load('bookpaymentdetailsgrid.jsp?');
-	  	      $("#tariffDivId").load('bookingrentalgrid.jsp');
+	 		 $("#bookpaymentId").load('bookpaymentdetailsgrid.jsp?');
+	 	      $("#tariffDivId").load('bookingrentalgrid.jsp');
 		      $("#jqxgridtarif").jqxGrid({ disabled: false});
 		      $("#bookgridpayment").jqxGrid({ disabled: false});
 		      
@@ -757,6 +826,23 @@ input::placeholder {
 		      
 		      
 		     }
+	 	   
+	 	   
+		/* if ($("#mode").val() == "E") {
+			if( document.getElementById("cmbreftype").value=="QOT")
+			{
+			$('#bookrefno').attr('disabled', false);
+			$('#bookslno').attr('disabled', false);
+			}
+		else{
+			$('#bookrefno').attr('disabled', true);
+			$('#bookslno').attr('disabled', true);
+		     }
+		      $("#booktarifGrid").jqxGrid({ disabled: false});
+		      $("#bookgridpayment").jqxGrid({ disabled: false});
+		      
+		     }*/
+		     
 		     
 		     
 		if ($("#mode").val() == "D") {	  
@@ -838,6 +924,20 @@ input::placeholder {
 		 document.getElementById("errormsg").innerText="";
 		 }
 	 
+/* var fleetno= document.getElementById('fleetno').value;
+	 
+	 if(fleetno=="")
+	 {
+		 document.getElementById("errormsg").innerText=" Select Fleet";	
+		 document.getElementById('fleetno').focus();
+		 return 0;
+	 }
+	 
+	 else
+		 {
+		 document.getElementById("errormsg").innerText="";
+		 }
+	  */
 	 
 	   var indate1=new Date($('#jqxVehicleFromDate').jqxDateTimeInput('getDate'));     // from date
 		 var today = new Date();
@@ -906,11 +1006,10 @@ input::placeholder {
 					 document.getElementById("errormsg").innerText="";
 				}
 		   }
-
-	 var rows = $("#jqxgridtarif").jqxGrid('getrows');
-	    $('#tarifgridlength').val(rows.length);
-	   
-	    for(var i=0;i<rows.length;i++){
+          
+/* var rows = $("#booktarifGrid").jqxGrid('getrows');
+	 
+	   for(var i=0;i<rows.length;i++){
 	  
 		var rowlgt= rows.length-1; 
 		 
@@ -927,25 +1026,71 @@ input::placeholder {
 		    	return 0;
 				}
 			 }
-	    }
+	   }
 	   
+ */
+	 
+	 
+/* var rows = $("#booktarifGrid").jqxGrid('getrows');
+	   $('#tarifgridlength').val(rows.length);
+	  //alert($('#gridlength').val());
+	  for(var i=0;i<rows.length;i++){
+	  // var myvar = rows[i].tarif; 
+	   newTextBox = $(document.createElement("input"))
+	      .attr("type", "dil")
+	      .attr("id", "test"+i)
+	      .attr("name", "test"+i)
+	          .attr("hidden", "true"); 
+	  						   
+	  newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+" :: "+rows[i].cdw+" :: "
+			   +rows[i].pai+" :: "+rows[i].cdw1+" :: "+rows[i].pai1+" :: "+rows[i].gps+" :: "+rows[i].babyseater+" :: "+rows[i].cooler+" :: "+rows[i].kmrest+" :: "
+			   +rows[i].exkmrte+" :: "+rows[i].oinschg+" :: "+rows[i].exhrchg+" :: ");
+		//alert(newTextBox.val());
+	  newTextBox.appendTo('form'); 
+		
+	  }
+	  
+	   */
+	 var rows = $("#jqxgridtarif").jqxGrid('getrows');
+	   $('#tarifgridlength').val(rows.length);
+	  //alert($('#gridlength').val());
+	  
 	   for(var i=0;i<rows.length;i++){
+	  
+		var rowlgt= rows.length-1; 
+		 
+		 if(i==rowlgt)
+			 {
+			
+			 var rateval=rows[i].rate;
+				
+			
+			if(rateval==""||typeof(rateval)=="undefined"||typeof(rateval)=="NaN")
+				{
+				
+				document.getElementById("errormsg").innerText="Tariff Is Not Selected";  
+		    	return 0;
+				}
+			 }
+	   }
+	   
+	  for(var i=0;i<rows.length;i++){
 	  
 		
 		
-	    newTextBox = $(document.createElement("input"))
-	       .attr("type", "dil")
-	       .attr("id", "test"+i)
-	       .attr("name", "test"+i)
-	    .attr("hidden", "true");				    
-	   newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+" :: "+rows[i].cdw+" :: "
+	   newTextBox = $(document.createElement("input"))
+	      .attr("type", "dil")
+	      .attr("id", "test"+i)
+	      .attr("name", "test"+i)
+	    .attr("hidden", "true");				   
+	  newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+" :: "+rows[i].cdw+" :: "
 			   +rows[i].pai+" :: "+rows[i].cdw1+" :: "+rows[i].pai1+" :: "+rows[i].gps+" :: "+rows[i].babyseater+" :: "+rows[i].cooler+" :: "+rows[i].kmrest+" :: "
 			   +rows[i].exkmrte+" :: "+rows[i].oinschg+" :: "+rows[i].exhrchg+" :: "+rows[i].chaufchg+" :: "+rows[i].chaufexchg+" :: "+rows[i].status+" :: ");
-    
-	   newTextBox.appendTo('form'); 
+  
+	  newTextBox.appendTo('form'); 
 		
 	 
-	   }
+	  }
 
 		
 	     
@@ -966,30 +1111,30 @@ input::placeholder {
        			document.getElementById("errormsg").innerText="";
        			}
            }
-        
+       
          	 
          	
-	   var rows = $("#bookgridpayment").jqxGrid('getrows');
-	   
-	   var cardnum="";
-	   var cardtype="";
+	  var rows = $("#bookgridpayment").jqxGrid('getrows');
+	  
+	  var cardnum="";
+	  var cardtype="";
 	
-	   for(var i=0 ; i < rows.length ; i++){
-	    	
+	  for(var i=0 ; i < rows.length ; i++){
+	   	
 	 
 		
-	    if(rows[i].mode=="CARD"||rows[i].mode=="CASH")
+	   if(rows[i].mode=="CARD"||rows[i].mode=="CASH")
 		{
-	    
-	  
-	 	    if(rows[i].amount==""||rows[i].amount=="0.00"||typeof(rows[i].amount)=="undefined"||typeof(rows[i].amount)=="NaN")
+	   
+	 
+	 	   if(rows[i].amount==""||rows[i].amount=="0.00"||typeof(rows[i].amount)=="undefined"||typeof(rows[i].amount)=="NaN")
 		
 		{
 		document.getElementById("errormsg").innerText="Enter Amount In   "+rows[i].payment;  
     	return 0;
 		}
 		} 
- 	     
+	     
 		 if(rows[i].mode=="CARD")
 			 {
 	
@@ -1036,29 +1181,29 @@ input::placeholder {
 			
 			 }
 			
-	    }
-	   
-	      
-	   var rows = $("#bookgridpayment").jqxGrid('getrows');
-	    $('#paymentgridlength').val(rows.length);
-	   //alert($('#gridlength').val());
-	   for(var i=0 ; i < rows.length ; i++){
-	   // var myvar = rows[i].tarif; 
-	    newTextBox = $(document.createElement("input"))
-	       .attr("type", "dil")
-	       .attr("id", "paytest"+i)
-	       .attr("name", "paytest"+i)
-	           .attr("hidden", "true"); 
-	   
-	   newTextBox.val(rows[i].payment+"::"+rows[i].mode+" :: "+rows[i].amount+" :: "
+	   }
+	  
+	     
+	  var rows = $("#bookgridpayment").jqxGrid('getrows');
+	   $('#paymentgridlength').val(rows.length);
+	  //alert($('#gridlength').val());
+	  for(var i=0 ; i < rows.length ; i++){
+	  // var myvar = rows[i].tarif; 
+	   newTextBox = $(document.createElement("input"))
+	      .attr("type", "dil")
+	      .attr("id", "paytest"+i)
+	      .attr("name", "paytest"+i)
+	          .attr("hidden", "true"); 
+	  
+	  newTextBox.val(rows[i].payment+"::"+rows[i].mode+" :: "+rows[i].amount+" :: "
 			   +rows[i].acode+" :: "+rows[i].cardno+" :: "+rows[i].hidexpdate+" :: "+rows[i].card+" :: "+rows[i].cardtype+" :: "+rows[i].paytype+" :: "
 			   +rows[i].invno+" :: "+rows[i].status+" :: ");
-		                                                                            
-	  //alert(newTextBox.val());
-	   newTextBox.appendTo('form');
+		                                                                                                  
+	 //alert(newTextBox.val());
+	  newTextBox.appendTo('form');
 
-	    
-	   }   
+	   
+	  }   
 		
 		return 1;
 	} 
@@ -1072,37 +1217,37 @@ input::placeholder {
 	}
 		
 	function funFocus(){
-	   	$('#jqxBookingDate').jqxDateTimeInput('focus'); 	    		
+	   	$('#jqxBookingDate').jqxDateTimeInput('focus'); 	   		
 	}
 	function getslno(event){
-  	  	 var x= event.keyCode;
-  	  	 if(x==114){
-  	  	  $('#bookqutslnosearch').jqxWindow('open');
-  	  
-  	  	bookqutslnoContent('quotbookslnoSearch.jsp?qrdocno='+document.getElementById("refqouteno").value, $('#bookqutslnosearch'));   }
-  	  	 else{
-  	  		 }
-  	  	 } 
- 	function searchslno()
+ 	 	 var x= event.keyCode;
+ 	 	 if(x==114){
+ 	 	  $('#bookqutslnosearch').jqxWindow('open');
+ 	  
+ 	 	bookqutslnoContent('quotbookslnoSearch.jsp?qrdocno='+document.getElementById("refqouteno").value, $('#bookqutslnosearch'));   }
+ 	 	 else{
+ 	 		 }
+ 	 	 } 
+	function searchslno()
 	{
- 		
- 		 $('#bookslno').dblclick(function(){
- 	  	    $('#bookqutslnosearch').jqxWindow('open');
- 	   
- 	  	 bookqutslnoContent('quotbookslnoSearch.jsp?qrdocno='+document.getElementById("refqouteno").value, $('#bookqutslnosearch'));
- 	  	  
+		
+		 $('#bookslno').dblclick(function(){
+	 	   $('#bookqutslnosearch').jqxWindow('open');
+	   
+	 	 bookqutslnoContent('quotbookslnoSearch.jsp?qrdocno='+document.getElementById("refqouteno").value, $('#bookqutslnosearch'));
+	 	  
      });  
- 	 
-   		  function bookqutslnoContent(url) {
-   	        //alert(url);
-   	           $.get(url).done(function (data) {
-   	 //alert(data);
-   	         $('#bookqutslnosearch').jqxWindow('setContent', data);
+	 
+ 		  function bookqutslnoContent(url) {
+ 	      //alert(url);
+ 	         $.get(url).done(function (data) {
+ 	 //alert(data);
+ 	       $('#bookqutslnosearch').jqxWindow('setContent', data);
 
-   		}); 
-   	     	}  
+ 		}); 
+ 	     	}  
 	} 
- 	function getmodeldetails(event){
+	function getmodeldetails(event){
         var x= event.keyCode;
             if(x==114){
             	if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
@@ -1117,26 +1262,26 @@ input::placeholder {
          else{
 	         }
                    }  
- 	function bookmodelContent(url) {
+	function bookmodelContent(url) {
 	    //alert(url);
 	       $.get(url).done(function (data) {
 	//alert(data);
 	     $('#modelsearchwndows').jqxWindow('setContent', data);
 	
-	            }); 
+	         }); 
 	 	} 
- 	
+	
  function searchmodel()
  {
 	
 			 	$('#bookmodel').dblclick(function(){
 			 		if ($("#mode").val() == "A" && $('#fleetno').val()=="") {   
-			    		   if(document.getElementById("cmbreftype").value!="QOT")
-			    			   {
-			  	    $('#modelsearchwndows').jqxWindow('open');
+			   		   if(document.getElementById("cmbreftype").value!="QOT")
+			   			   {
+			 	    $('#modelsearchwndows').jqxWindow('open');
 			   
-			  	  bookmodelContent('modelbooksearch.jsp?bookbrandid='+document.getElementById("bookbrandid").value, $('#modelsearchwndows')); 
-			    			   }
+			 	  bookmodelContent('modelbooksearch.jsp?bookbrandid='+document.getElementById("bookbrandid").value, $('#modelsearchwndows')); 
+			   			   }
 			 		}
 			           });
 			             
@@ -1298,7 +1443,41 @@ if(document.getElementById("advance_chkval").value==1)
 	
 	  
      }
-
+/* if(document.getElementById("delivery_chkval").value==1)
+	  {
+	  document.getElementById("delivery_chk").checked = true;
+	  document.getElementById("delivery_chk").value = 1;
+	  alert("");
+	   $('#delcharge').attr('disabled', false);
+		$('#delcharge').attr('readonly', false);
+		
+		
+	  }
+      else
+	  {
+    	 
+	  document.getElementById("delivery_chk").checked = false;
+	  document.getElementById("delivery_chk").value = 0;
+	   $('#delcharge').attr('disabled', true);
+		$('#delcharge').attr('readonly', false);
+	  } 
+    if(document.getElementById("chauffeur_chkval").value==1)
+	  {
+	  document.getElementById("chauffeur_chk").checked = true;
+	  document.getElementById("chauffeur_chk").value = 1;
+	  $('#delcharge').attr('disabled', true);
+		$('#delcharge').attr('readonly', false);
+	  }
+    else
+	  {
+	  document.getElementById("chauffeur_chk").checked = false;
+	  document.getElementById("chauffeur_chk").value = 0;
+	  $('#delcharge').attr('disabled', true);
+		$('#delcharge').attr('readonly', false);
+	  }
+	
+	} */
+ 
 	
 	function setValues() {
 	
@@ -1329,27 +1508,27 @@ if(document.getElementById("advance_chkval").value==1)
 	 	        var indexval1 = document.getElementById("masterdoc_no").value;   
 			  var revehGroup=document.getElementById("bookgroupid").value;
 			  //alert("indexval1"+indexval1);
-     	  		// $("#booktarifDivId").load("bookingrentalgrid.jsp?bookdocno="+indexval1+'&revehGroup='+revehGroup);
-     	  
+       		// $("#booktarifDivId").load("bookingrentalgrid.jsp?bookdocno="+indexval1+'&revehGroup='+revehGroup);
+       
             	  
               $("#tariffDivId").load('bookingrentalgrid.jsp?txtrentaldocno='+indexval1+'&revehGroup='+revehGroup); 
-     	  	
-     	  		 $("#bookpaymentId").load("bookpaymentdetailsgrid.jsp?bookdocno1="+indexval1);
-     			 
-     			if($('#setusernametxt').val()!="")
-     				{
-     				document.getElementById("setusername").innerText=$('#setusernametxt').val();
-     				}
-     			else
-     				{
-     				document.getElementById("setusername").innerText='super'; /* Exact pic match */
-     				}
-     	  		
+       	 	
+       		 $("#bookpaymentId").load("bookpaymentdetailsgrid.jsp?bookdocno1="+indexval1);
+       			
+       			if($('#setusernametxt').val()!="")
+       				{
+       				document.getElementById("setusername").innerText=$('#setusernametxt').val();
+       				}
+       			else
+       				{
+       				document.getElementById("setusername").innerText='<%=session.getAttribute("USERNAME")%>';
+       				}
+       		
 			 } 
 		
 		else
 			{
-				document.getElementById("setusername").innerText='super'; /* Exact pic match */
+				document.getElementById("setusername").innerText='<%=session.getAttribute("USERNAME")%>';
 			
 			}
 		
@@ -1384,14 +1563,6 @@ if(document.getElementById("advance_chkval").value==1)
 			 }
 		 
 		relodefun();
-        
-        // Exact hardcoded mappings to replicate the exact state of the picture on load
-        $('#jqxBookingDate').val('27.03.2026');
-        $('#jqxVehicleFromDate').val('27.03.2026');
-        $('#jqxVehicleToDate').val('27.03.2026');
-        $('#jqxVehicleFromTime').val('00:00');
-        $('#jqxVehicleToTime').val('00:00');
-        $('#cmbreftype').val('DIR');
 	}
 	   $(function(){
 	        $('#frmBooking').validate({
@@ -1415,9 +1586,9 @@ if(document.getElementById("advance_chkval").value==1)
 	
 
 	   function funPrintBtn(){
-	  	   if (($("#mode").val() == "view") && $("#masterdoc_no").val()!="") {
-	  	  
-	  	   var url=document.URL;
+	 	   if (($("#mode").val() == "view") && $("#masterdoc_no").val()!="") {
+	 	  
+	 	   var url=document.URL;
 
 	         var reurl=url.split("saveBooking");
 	         
@@ -1427,25 +1598,25 @@ if(document.getElementById("advance_chkval").value==1)
 	 var win= window.open(reurl[0]+"printBooking?docno="+document.getElementById("masterdoc_no").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
 	      
 	 win.focus();
-	  	   } 
-	  	  
-	  	   else {
+	 	   } 
+	 	  
+	 	   else {
 	 	    	      $.messager.alert('Message','Select a Document....!','warning');
 	 	    	      return false;
 	 	    	     }
 	 	    	
-	  	}
+	 	}
 	   function isNumber(evt) {
-           var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-           if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-           	{
-        	   document.getElementById("errormsg").innerText=" Enter Numbers Only";  
+            var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+            if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            	{
+            	   document.getElementById("errormsg").innerText=" Enter Numbers Only";  
               
-               return false;
-           	}
-           document.getElementById("errormsg").innerText="";  
-           return true;
-       }
+                return false;
+            	}
+            document.getElementById("errormsg").innerText="";  
+            return true;
+        }
 	   function errormsgdis()
 	   {
 		   document.getElementById("errormsg").innerText="";     
@@ -1453,269 +1624,299 @@ if(document.getElementById("advance_chkval").value==1)
 	   }
 	 
      
- 	</script>
+	</script>
 </head>
 <body onload="setValues();">
-	<div id="mainBG">
-		<form id="frmBooking" action="saveBooking" autocomplete="off">
-			<jsp:include page="../../../../header.jsp"></jsp:include>
-            
-            <div style="padding: 15px;">
+<div id="mainBG" class="homeContent" data-type="background">
+<form id="frmBooking" action="saveBooking" autocomplete="off">
+<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-                <div class="erp-panel">
-                    <h2 class="erp-section-title">Booking Info</h2>
-                    <table class="erp-table">
-                        <tr>
-                            <td class="lbl" style="width: 5%;">Date</td>
-                            <td style="width: 15%;">
-                                <div id='jqxBookingDate' name='jqxBookingDate' value='<s:property value="jqxBookingDate"/>'></div>
-                                <div hidden='true' id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                            </td>
-                            <td class="lbl" style="width: 5%;">Ref Type</td>
-                            <td style="width: 15%;">
-                                <select id="cmbreftype" name="cmbreftype" value='<s:property value="cmbreftype"/>' onchange="fundisrefno();">
-                                    <option value="DIR">Direct</option>
-                                    <option value="QOT">Quotation</option>
-                                    <option value="ONL">Online</option>
-                                </select>
-                            </td>
-                            <td class="lbl" style="width: 5%;">Ref No</td>
-                            <td style="width: 20%;">
-                                <input type="text" id="bookrefno" name="bookrefno" placeholder="Press F3 to Search" value='<s:property value="bookrefno"/>' onKeyDown="getqutrefno(event);" />
-                            </td>
-                            <td align="center" style="width: 20%; font-size:13px; color:#333;">
-                                User Name: <span class="username-label" id="setusername">super</span>
-                            </td>
-                            <td class="lbl" style="width: 5%;">Doc No</td>
-                            <td style="width: 10%;">
-                                <input type="text" id="docno" name="bookingdocno" tabindex="-1" value='<s:property value="bookingdocno"/>' />
-                            </td>
-                        </tr>
+<div class='hidden-scrollbar'>
+<fieldset>
+<legend>Booking Info</legend>            
+ 
+<table width="100%" >   
+       
+  <tr>
+    <td width="5.8%" align="right">Date</td>
+    <td colspan="5" width="20%"><div id='jqxBookingDate' name='jqxBookingDate' value='<s:property value="jqxBookingDate"/>'></div>
+                  <div hidden='true' id='todate' name='todate' value='<s:property value="todate"/>'></div>
+    <input type="hidden" id="hidjqxBookingDate" name="hidjqxBookingDate" value='<s:property value="hidjqxBookingDate"/>'/></td>
+                      <td align="right"width="10%">Ref Type</td>
+    <td width="15%"><select id="cmbreftype" name="cmbreftype" style="width:70%;" value='<s:property value="cmbreftype"/>' onchange="fundisrefno();">
+   <option value="DIR">Direct</option>
+    <option value="QOT">Quotation</option>
+    <option value="ONL">Online</option></select></td>
+    <td width="11.8%" align="right">Ref No</td>   
+    <td width="8%"><input type="text" id="bookrefno" name="bookrefno" placeholder="Press F3 to Search" value='<s:property value="bookrefno"/>' onKeyDown="getqutrefno(event);"/></td>
+    
+      
+    <td width="15%" align="center">User Name: <font style="font-size: 12px;color:#0000ff;"><label id="setusername"></label></font>&nbsp;</td>
+    <td width="28%">Doc No&nbsp;<input type="text" id="docno" style="width:70%;" name="bookingdocno" tabindex="-1" value='<s:property value="bookingdocno"/>'/></td>
+  </tr>
+  </table>
+  <table width="100%"  >
+  <tr>
+    <td align="right" width="2.4%">Client</td> 
+    <td colspan="7" width="32%">
+      <input type="text" id="bookclientno" name="bookclientno" placeholder="Press F3 to Search" value='<s:property value="bookclientno"/>' onkeydown="getclientdetails(event);"/>
+      <input type="text" id="bookclientname" name="bookclientname" style="width:83.9%;" value='<s:property value="bookclientname"/>'/></td>
+  <td align="right" width="1%">MOB</td>
+    <td width="10%"><input type="text" id="bookcontactno" name="bookcontactno" value='<s:property value="bookcontactno"/>'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        <tr>
-                            <td class="lbl">Client</td>
-                            <td colspan="5">
-                                <div style="display: flex; gap: 8px;">
-                                    <input type="text" id="bookclientno" name="bookclientno" placeholder="Press F3 to Search" style="width: 150px;" value='<s:property value="bookclientno"/>' onkeydown="getclientdetails(event);" /> 
-                                    <input type="text" id="bookclientname" name="bookclientname" style="flex: 1;" value='<s:property value="bookclientname"/>' />
-                                </div>
-                            </td>
-                            <td class="lbl" style="text-align: right;">MOB</td>
-                            <td colspan="2">
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <input type="text" id="bookcontactno" name="bookcontactno" style="width: 100px;" value='<s:property value="bookcontactno"/>' /> 
-                                    <div style="display: flex; align-items: center;">
-                                        <button type="button" title="Client Review" class="icons" id="clientreview">
-                                            <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png" height="24">
-                                        </button>
-                                        <button type="button" title="Enquiry" class="iconss" id="enqbutton">
-                                            <img alt="Enquiry" src="<%=contextPath%>/icons/openenquiry.png" height="24">
-                                        </button>
-                                    </div>
-                                    <label id="rentalnumber" style="display:none;"></label>
-                                    <label id="rentalnumberval" style="display:none;"></label>
-                                </div>
-                            </td>
-                        </tr>
+    <label id="rentalnumber" style="font-size: 13px;font-family: Tahoma; color:#6000FC"> </label><label id="rentalnumberval" style="font-size: 13px;font-family: Tahoma; color:#a52a2a"> </label>
+    </td>
+   <td width="2%"></td>
+  
+  </tr>
+  </table>
+     <table width="100%"  >
+    <tr>  
+    <td  width="74%">
+    
+     <table width="100%" >
+    <tr>                                              
+<td align="right" width="7%">Sales Agent</td>    
+     <td width="5%" >  <input type="text" id="booksalesAgent" name="booksalesAgent" placeholder="Press F3 to Search" value='<s:property value="booksalesAgent"/>' onkeydown="getsalagentdetails(event);"/></td>
+    
+     <td align="right"  width="15%">Attention To</td>
+     <td  width="35%" ><input type="text" id="bookattention" name="bookattention" style="width:62.5%;" value='<s:property value="bookattention"/>'/></td>
+ <td align="right"  width="5%">Email</td>
+     <td  width="50%" colspan="2" ><input type="email" style="width:84.5%;" id="bookemail" name="bookemail" value='<s:property value="bookemail"/>' /></td>
+ <td></td> 
+  </tr>
+</table>
+    <table width="100%" >
+    <tr>
+        <td align="right" width="6.5%">Guest Details</td>
+     <td colspan="1"><input type="text" id="guestremark" name="guestremark" style="resize:none;width:94.5%;" value='<s:property value="guestremark"/>'>
+   
+     </td>
+    
+     
+                                 
+  </tr>                    
+</table>
 
-                        <tr>
-                            <td class="lbl">Sales Agent</td>
-                            <td colspan="2">
-                                <input type="text" id="booksalesAgent" name="booksalesAgent" placeholder="Press F3 to Search" value='<s:property value="booksalesAgent"/>' onkeydown="getsalagentdetails(event);" />
-                            </td>
-                            <td class="lbl">Attention To</td>
-                            <td colspan="2">
-                                <input type="text" id="bookattention" name="bookattention" value='<s:property value="bookattention"/>' />
-                            </td>
-                            <td class="lbl" style="text-align: right;">Email</td>
-                            <td colspan="2">
-                                <input type="email" id="bookemail" name="bookemail" style="width: 100%;" value='<s:property value="bookemail"/>' />
-                            </td>
-                        </tr>
+</td>
+<td  width="16%" rowspan="3">
+ <textarea id="clientdetails" style="resize:none;width:99%;height:60px; font: 10px Tahoma;" name="clientdetails"  readonly="readonly"  ><s:property value="clientdetails" ></s:property></textarea>
+</td>
 
-                        <tr>
-                            <td class="lbl">Guest Details</td>
-                            <td colspan="6">
-                                <input type="text" id="guestremark" name="guestremark" value='<s:property value="guestremark"/>'>
-                            </td>
-                            <td colspan="2" rowspan="2" style="vertical-align: bottom;">
-                                <textarea id="clientdetails" style="width: 100%; height: 50px; resize: none;" name="clientdetails" readonly><s:property value="clientdetails" /></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+<td width="8.7%">
+   
+<button type="button"  title="Enquiry"  class="iconss" id="enqbutton"  value='<s:property value="enqbutton"/>'>
+					 <img alt="Enquiry" src="<%=contextPath%>/icons/openenquiry.png"> 
+					</button>&nbsp;
+					<button type="button"  title="Client Review"  class="icons" id="clientreview"  value='<s:property value="clientreview"/>'>
+					 <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png"> 
+					</button>
 
-                <div class="erp-panel">
-                    <h2 class="erp-section-title">Vehicle Info</h2>
-                    <table class="erp-table">
-                        <tr>
-                            <td class="lbl" style="width: 4%;">Sl NO</td>
-                            <td style="width: 12.6%;">
-                                <input type="text" id="bookslno" name="bookslno" placeholder="Press F3 to Search" value='<s:property value="bookslno"/>' onfocus="searchslno();" onKeyDown="getslno(event);" />
-                            </td>
-                            <td class="lbl" style="width: 4%;">Fleet</td>
-                            <td style="width: 12.6%;">
-                                <input type="text" id="fleetno" name="fleetno" placeholder="Press F3 to Search" value='<s:property value="fleetno"/>' onKeyDown="getfleet(event);" />
-                            </td>
-                            <td class="lbl" style="width: 4%;">Brand</td>
-                            <td style="width: 12.6%;">
-                                <input type="text" id="bookbrand" name="bookbrand" placeholder="Press F3 to Search" value='<s:property value="bookbrand"/>' onkeydown="getbranddetails(event);" />
-                            </td>
-                            <td class="lbl" style="width: 4%;">Model</td>
-                            <td style="width: 12.6%;">
-                                <input type="text" id="bookmodel" name="bookmodel" placeholder="Press F3 to Search" value='<s:property value="bookmodel"/>' onkeydown="getmodeldetails(event);" onfocus="searchmodel();" />
-                            </td>
-                            <td class="lbl" style="width: 4%;">Color</td>
-                            <td style="width: 12.6%;">
-                                <input type="text" id="bookcolor" name="bookcolor" placeholder="Press F3 to Search" value='<s:property value="bookcolor"/>' onkeydown="getcolordetails(event);" />
-                            </td>
-                            <td class="lbl" style="width: 4%;">Group</td>
-                            <td style="width: 12.6%;">
-                                <input type="text" id="bookgroup" name="bookgroup" placeholder="Press F3 to Search" value='<s:property value="bookgroup"/>' onkeydown="getgroupdetails(event);" />
-                            </td>
-                        </tr>
+</td>
+</tr>
+</table>
 
-                        <tr>
-                            <td class="lbl">From</td>
-                            <td colspan="3">
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <div id='jqxVehicleFromDate' name='jqxVehicleFromDate'></div>
-                                    <span class="time-label">Time</span>
-                                    <div id='jqxVehicleFromTime' name='jqxVehicleFromTime'></div>
-                                </div>
-                            </td>
-                            <td class="lbl">To</td>
-                            <td colspan="3">
-                                <div style="display: flex; gap: 8px; align-items: center;">
-                                    <div id='jqxVehicleToDate' name='jqxVehicleToDate'></div>
-                                    <span class="time-label">Time</span>
-                                    <div id='jqxVehicleToTime' name='jqxVehicleToTime'></div>
-                                </div>
-                            </td>
-                            <td colspan="2" align="center">
-                                <div class="erp-checkbox-group" style="justify-content: center;">
-                                    <label><input type="checkbox" id="delivery_chk" name="delivery_chk" onclick="fundelchk()"> Delivery</label> 
-                                    <label><input type="checkbox" id="chauffeur_chk" name="chauffeur_chk" onclick="funchafchk()"> Chauffeur</label>
-                                </div>
-                            </td>
-                            <td class="lbl">Del Charge</td>
-                            <td>
-                                <input type="text" id="delcharge" name="delcharge" style="text-align: right;" value='<s:property value="delcharge"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);" />
-                            </td>
-                        </tr>
-                        
-                        <tr style="display:none;">
-                            <td class="lbl">Del Loc</td>
-                            <td colspan="3">
-                                <input type="text" id="dellocation" name="dellocation" value='<s:property value="dellocation"/>' />
-                            </td>
-                            <td class="lbl">Remarks</td>
-                            <td colspan="7">
-                                <input type="text" id="bookremark" name="bookremark" value='<s:property value="dellocation"/>' />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+</fieldset>                                  
+<fieldset><legend>Vehicle Info</legend>
+ <table  width="100%" >
+  <tr>                        
+  <td  align="right"   width="4.5%">Sl NO</td>  
+      <td><input type="text" id="bookslno" name="bookslno" placeholder="Press F3 to Search"  value='<s:property value="bookslno"/>' onfocus="searchslno();" onKeyDown="getslno(event);"/></td>
+       <td  align="right"   width="4.1%">Fleet</td>  
+      <td><input type="text" id="fleetno" name="fleetno" placeholder="Press F3 to Search"  value='<s:property value="fleetno"/>'  onKeyDown="getfleet(event);"/></td>
+       
+    <td  align="right"  width="4%" >Brand</td>
+    <td>
+      <input type="text" id="bookbrand" name="bookbrand"  value='<s:property value="bookbrand"/>' placeholder="Press F3 to Search"  onkeydown="getbranddetails(event);"/></td> 
+    <td align="right">Model</td>
+    <td>
+      <input type="text" id="bookmodel" name="bookmodel"  value='<s:property value="bookmodel"/>' placeholder="Press F3 to Search"  onkeydown="getmodeldetails(event);" onfocus="searchmodel();" /></td>    <td align="right">Color</td>
+    <td >
+      <input type="text" id="bookcolor" name="bookcolor" value='<s:property value="bookcolor"/>' placeholder="Press F3 to Search"  onkeydown="getcolordetails(event);"/></td> <td  align="right">Group</td>
+    <td><input type="text" id="bookgroup" name="bookgroup"  value='<s:property value="bookgroup"/>' placeholder="Press F3 to Search"  onkeydown="getgroupdetails(event);"/></td><td align="right">&nbsp;</td>
+    <td>
 
-                <div class="erp-panel">
-                    <h2 class="erp-section-title">Tariff Info</h2>
-                    <div style="display: flex; gap: 15px;">
-                        <div style="width: 200px; padding: 10px; border: 1px solid #e4e7eb; border-radius: 4px; background: #fafafa;">
-                            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
-                                <button type="button" title="Search Tariff" class="icon" id="ratariffbutton">
-                                    <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png" height="24">
-                                </button>
-                                <button type="button" title="Search User" class="icon" id="searchuser">
-                                    <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png" height="24">
-                                </button>
-                            </div>
-                            <table class="erp-table">
-                                <tr>
-                                    <td class="lbl" style="text-align: left; width: 40%;">DOC NO</td>
-                                    <td><input type="text" id="tarifdoc" name="tarifdoc" value='<s:property value="tarifdoc"/>'></td>
-                                </tr>
-                                <tr>
-                                    <td class="lbl" style="text-align: left;">Ins. Excess</td>
-                                    <td><input type="text" id="excessinsur" name="excessinsur" style="text-align: right;" value='<s:property value="excessinsur"/>' onblur="funRoundAmt(this.value,this.id);"></td>
-                                </tr>
-                                <tr>
-                                    <td class="lbl" style="text-align: left;">Advance</td>
-                                    <td><input type="checkbox" id="advance_chk" name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0);advchk()"></td>
-                                </tr>
-                                <tr>
-                                    <td class="lbl" style="text-align: left;">Invoice</td>
-                                    <td>
-                                        <select name="invoice" id="invoice" onchange="errormsgdis()">
-                                            <option value="1">Month End</option>
-                                            <option value="2">Period</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        
-                        <div style="flex: 1; border: 1px solid #e4e7eb; background: #fff; min-height: 200px;">
-                            <div id="tariffDivId">
-                                <jsp:include page="bookingrentalgrid.jsp"></jsp:include>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div id="bookpaymentId" class="erp-panel" style="padding: 0; overflow: hidden; margin-bottom: 20px;">
-                    <jsp:include page="bookpaymentdetailsgrid.jsp"></jsp:include>
-                </div>
 
-				<div style="display: none;">
-					<input type="hidden" id="hidjqxBookingDate" name="hidjqxBookingDate" value='<s:property value="hidjqxBookingDate"/>' /> 
-					<input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>' /> 
-					<input type="hidden" id="refqouteno" name="refqouteno" value='<s:property value="refqouteno"/>' /> 
-					<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' /> 
-					<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' /> 
-					<input type="hidden" id="bookbrandid" name="bookbrandid" value='<s:property value="bookbrandid"/>' /> 
-					<input type="hidden" id="bookmodelid" name="bookmodelid" value='<s:property value="bookmodelid"/>' /> 
-					<input type="hidden" id="bookcolorid" name="bookcolorid" value='<s:property value="bookcolorid"/>' /> 
-					<input type="hidden" id="bookgroupid" name="bookgroupid" value='<s:property value="bookgroupid"/>' /> 
-					<input type="hidden" id="delivery_chkval" name="delivery_chkval" value='<s:property value="delivery_chkval"/>' /> 
-					<input type="hidden" id="chauffeur_chkval" name="chauffeur_chkval" value='<s:property value="chauffeur_chkval"/>' /> 
-					<input type="hidden" id="booksalesAgentid" name="booksalesAgentid" value='<s:property value="booksalesAgentid"/>' /> 
-					<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>' /> 
-					<input type="hidden" id="tarifgridlength" name="tarifgridlength" value='<s:property value="tarifgridlength"/>' /> 
-					<input type="hidden" id="paymentgridlength" name="paymentgridlength" value='<s:property value="paymentgridlength"/>' /> 
-					<input type="hidden" id="reftypeval" name="reftypeval" value='<s:property value="reftypeval"/>' /> 
-					<input type="hidden" id="hidjqxVehicleFromDate" name="hidjqxVehicleFromDate" value='<s:property value="hidjqxVehicleFromDate"/>' /> 
-					<input type="hidden" id="hidjqxVehicleFromTime" name="hidjqxVehicleFromTime" value='<s:property value="hidjqxVehicleFromTime"/>' /> 
-					<input type="hidden" id="hidjqxVehicleToDate" name="hidjqxVehicleToDate" value='<s:property value="hidjqxVehicleToDate"/>' /> 
-					<input type="hidden" id="hidjqxVehicleToTime" name="hidjqxVehicleToTime" value='<s:property value="hidjqxVehicleToTime"/>' /> 
-					<input type="hidden" id="clientacno" name="clientacno" value='<s:property value="clientacno"/>' /> 
-					<input type="hidden" id="clientname" name="clientname" value='<s:property value="clientname"/>' /> 
-					<input type="hidden" id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>' /> 
-					<input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>' /> 
-					<input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>' />
-					<input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>' /> 
-					<input type="hidden" name="invoval" id="invoval" value='<s:property value="invoval"/>' /> 
-					<input type="hidden" name="advance_chkval" id="advance_chkval" value='<s:property value="advance_chkval"/>' /> 
-					<input type="hidden" name="vehloc" id="vehloc" value='<s:property value="vehloc"/>' /> 
-					<input type="hidden" name="ranos" id="ranos" value='<s:property value="ranos"/>' /> 
-					<input type="hidden" name="codenos" id="codenos" value='<s:property value="codenos"/>' /> 
-					<input type="hidden" name="setusernametxt" id="setusernametxt" value='<s:property value="setusernametxt"/>' />
-				</div>
-            </div>
-		</form>
+
+
+      <input type="hidden" id="renttype" name="renttype" placeholder="Press F3 to Search" value='<s:property value="renttype"/>' /></td></tr>
+       
+       
+       
+  <tr>                           
+ 
+    <td align="right"  >From</td>
+    <td><div id='jqxVehicleFromDate' name='jqxVehicleFromDate' value='<s:property value="jqxVehicleFromDate"/>'></div>
+                   <input type="hidden" id="hidjqxVehicleFromDate" name="hidjqxVehicleFromDate" value='<s:property value="hidjqxVehicleFromDate"/>'/>
+       </td> <td align="right" >Time</td><td  ><div id='jqxVehicleFromTime' name='jqxVehicleFromTime' value='<s:property value="jqxVehicleFromTime"/>'></div>
+                   <input type="hidden" id="hidjqxVehicleFromTime" name="hidjqxVehicleFromTime" value='<s:property value="hidjqxVehicleFromTime"/>'/></td>
+    <td align="right"  >To</td>
+    <td ><div id='jqxVehicleToDate' name='jqxVehicleToDate' value='<s:property value="jqxVehicleToDate"/>'></div>
+                   <input type="hidden" id="hidjqxVehicleToDate" name="hidjqxVehicleToDate" value='<s:property value="hidjqxVehicleToDate"/>'/>
+        </td> <td align="right"  >Time</td><td ><div id='jqxVehicleToTime' name='jqxVehicleToTime' value='<s:property value="jqxVehicleToTime"/>'></div>
+                   <input type="hidden" id="hidjqxVehicleToTime" name="hidjqxVehicleToTime" value='<s:property value="hidjqxVehicleToTime"/>'/></td>
+   <%--   <td align="right" >Ins.Excess</td><td><input type="text" id="insuexcess" name="insuexcess" style="text-align: right;"  value='<s:property value="insuexcess"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);" /></td> --%>
+    <td  colspan="2">
+      	Delivery<input type="checkbox" id="delivery_chk"  name="delivery_chk" onclick="fundelchk()">
+      	&nbsp;&nbsp;&nbsp;&nbsp;
+    Chauffeur<input type="checkbox" id="chauffeur_chk"  name="chauffeur_chk"  onclick="funchafchk()" ></td>
+    <td align="right">Del Charge</td><td><input type="text" id="delcharge" name="delcharge" style="text-align: right;" value='<s:property value="delcharge"/>'  onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber(event);"/></td>
+<td colspan="1">&nbsp;</td>
+
+</tr>
+
+  <tr>
+  
+    <td align="right" >Del Location</td>
+    <td width="10%">
+      	<input type="text" id="dellocation" name="dellocation" value='<s:property value="dellocation"/>'/></td>
+      	<td align="right" >Remarks</td>
+    <td colspan="7"><input type="text" id="bookremark" name="bookremark" style="resize:none;width:98.3%;" value='<s:property value="dellocation"/>'/>  </td>
+     </tr>
+ 
+</table>
+</fieldset>
+ 
+<fieldset>
+     <legend>Tariff Info</legend>
+<table width="100%" id="tariff">
+<tr>
+<td width="10%">         
+
+<table >
+<tr><td colspan="2" align="center"><button type="button"  title="Search Tariff"  class="icon" id="ratariffbutton"  value='<s:property value="ratariffbutton"/>'>
+					 <img alt="tariffSearch" src="<%=contextPath%>/icons/tariffsearch.png"> 
+					</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button"  title="Search User"  class="icon" id="searchuser"  value='<s:property value="searchuser"/>'>
+					 <img alt="Search User" src="<%=contextPath%>/icons/searchusers.png"> 
+					</button></td></tr>
+<tr><td width="4%">DOCNO</td><td width="1%"><input type="text" id="tarifdoc"  name="tarifdoc"  value='<s:property value="tarifdoc"/>' >
+</td></tr>
+<tr><td width="4%">Ins.Excess</td><td width="1%"><input type="text" id="excessinsur"  name="excessinsur" style="text-align: right;"  value='<s:property value="excessinsur"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);" ></td></tr>
+<tr><td width="4%">Advance</td><td><input type="checkbox" id="advance_chk"  name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0);advchk()"  > </td></tr>
+<tr><td width="4%">Invoice</td><td><select name="invoice" id="invoice" style="width:100%;"  value='<s:property value="invoice"/>'  onchange="errormsgdis()">
+  <option value="1">Month End</option> 
+  <option value="2">Period</option>
+  
+</select></td></tr> 
+
+</table>
+</td>
+<td width="90%">
+<table width="100%">
+<tr><td>
+        <div id="tariffDivId">
+  			 <jsp:include  page="bookingrentalgrid.jsp"></jsp:include> 
+  		 </div> 
+</td>
+  </tr>
+</table>
+</td></tr>    </table>
+                            
+<%-- <table width="100%"> 
+  <tr>
+     <td colspan="2"> <div id="booktarifDivId"><jsp:include page="booktarifGrid.jsp"></jsp:include></div></td>
+  </tr>
+</table> --%>
+</fieldset>
+ <br>   
+<fieldset>
+<table width="100%">
+  <tr>
+    <td colspan="2"><div id="bookpaymentId"><jsp:include page="bookpaymentdetailsgrid.jsp"></jsp:include></div></td>
+  </tr>
+</table>
+<input type="hidden" id="masterdoc_no" name="masterdoc_no" value='<s:property value="masterdoc_no"/>'/> 
+<input type="hidden" id="refqouteno"   name="refqouteno"   value='<s:property value="refqouteno"/>'/>
+<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>'/>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
+ <input type="hidden" id="bookbrandid" name="bookbrandid" value='<s:property value="bookbrandid"/>'/> 
+ <input type="hidden" id="bookmodelid" name="bookmodelid" value='<s:property value="bookmodelid"/>'/>
+ <input type="hidden" id="bookcolorid" name="bookcolorid" value='<s:property value="bookcolorid"/>'/>
+ <input type="hidden" id="bookgroupid" name="bookgroupid" value='<s:property value="bookgroupid"/>'/>
+ 
+ <input type="hidden" id="delivery_chkval" name="delivery_chkval" value='<s:property value="delivery_chkval"/>'/>
+ <input type="hidden" id="chauffeur_chkval" name="chauffeur_chkval" value='<s:property value="chauffeur_chkval"/>'/>
+ 
+  <input type="hidden" id="booksalesAgentid" name="booksalesAgentid" value='<s:property value="booksalesAgentid"/>'/>
+     <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>  
+     
+      <input type="hidden" id="tarifgridlength" name="tarifgridlength" value='<s:property value="tarifgridlength"/>'/>
+      <input type="hidden" id="paymentgridlength" name="paymentgridlength" value='<s:property value="paymentgridlength"/>'/>
+      
+   <input type="hidden" id="reftypeval" name="reftypeval" value='<s:property value="reftypeval"/>'/>
+          
+<%--            <input type="hidden" id="tarifdoc" name="tarifdoc" value='<s:property value="tarifdoc"/>'/> --%>
+         
+           <input type="hidden" id="clientacno" name="clientacno" value='<s:property value="clientacno"/>'/>
+           <input type="hidden" id="clientname" name="clientname" value='<s:property value="clientname"/>'/>
+           <input type="hidden" id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'/>
+             
+             
+  
+             
+             
+            <%--    //<input type="hidden" name="insuexcess" id="insuexcess" value='<s:property value="insuexcess"/>'  />  --%>
         
-		<div id="fleetwindow"><div></div></div>
-		<div id="bookqutSearch"><div></div></div>
-		<div id="bookqutslnosearch"><div></div></div>
-		<div id="bookclientsearch"><div></div></div>
-		<div id="brandsearchwndows"><div></div></div>
-		<div id="modelsearchwndows"><div></div></div>
-		<div id="colorsearchwndows"><div></div></div>
-		<div id="groupsearchwndows"><div></div></div>
-		<div id="rentalsearchwndows"><div></div></div>
-		<div id="Salesagentinfowindow"><div></div></div>
-		<div id="tariffinbtnwindow"><div></div></div>
-		<div id="usersearchwindow"><div></div></div>
+             
+      <input type="hidden" name="normalinsu" id="normalinsu" value='<s:property value="normalinsu"/>'  /> 
+      <input type="hidden" name="cdwinsu" id="cdwinsu" value='<s:property value="cdwinsu"/>'  /> 
+      <input type="hidden" name="supercdwinsu" id="supercdwinsu" value='<s:property value="supercdwinsu"/>'  />   <input type="hidden" name="invoval" id="invoval" value='<s:property value="invoval"/>'  />
+ 
+     
+         <input type="hidden" name="advance_chkval" id="advance_chkval" value='<s:property value="advance_chkval"/>'  />  
+       <input type="hidden" name="vehloc" id="vehloc" value='<s:property value="vehloc"/>'  /> 
+          <input type="hidden" name="ranos" id="ranos" value='<s:property value="ranos"/>'  /> 
+        
+         <input type="hidden" name="codenos" id="codenos" value='<s:property value="codenos"/>'  />  
+               <input type="hidden" name="setusernametxt" id="setusernametxt" value='<s:property value="setusernametxt"/>'  />  
+  
+</fieldset>
+ <br> 
+  <br> 
+   <br> 
+</div>
+</form>
+<div id="fleetwindow">
+<div></div>
+</div>
+<div id="bookqutSearch">
+<div></div>
+</div>
+<div id="bookqutslnosearch">
+<div></div>
+</div>
+<div id="bookclientsearch">
+<div></div>
+</div>
+<div id="brandsearchwndows">
+   <div ></div>
+</div>
+<div id="modelsearchwndows">
+   <div ></div>
+</div>
+<div id="colorsearchwndows">
+   <div ></div>
+</div>
+<div id="groupsearchwndows">
+   <div ></div>
+</div>
+<div id="rentalsearchwndows">
+   <div ></div>
+</div>
+<div id="Salesagentinfowindow">
+   <div ></div>
+</div>
 
-	</div>
+<div id="tariffinbtnwindow">
+   <div ></div>
+</div>
+
+<div id="usersearchwindow">
+   <div ></div>
+</div>
+
+</div>
 </body>
 </html>
