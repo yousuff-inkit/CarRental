@@ -1241,19 +1241,24 @@ public class ClsManualInvoiceDAO {
 								}
 							 }
 
-							 			System.out.println("Final Todatecalc: "+todatecalc);
-						if(invtype==1 || invtype==2){
-							 if(closestatus==0){
-								 String strupdate="update gl_ragmt set invdate='"+todate+"',invtodate=("+todatecalc+") where doc_no="+agmtno;
-								 //System.out.println("Update Query"+strupdate);
-								 int agmtupdate=stmtinvoice.executeUpdate(strupdate);
-								 //System.out.println("Agmt Update Value"+agmtupdate);
-								 if(agmtupdate<0){
-									 System.out.println("Update Ragmt Error");
-									 return 0;
-								 }
-							 }
-						}
+						System.out.println("Final Todatecalc: "+todatecalc);
+if(invtype==1 || invtype==2){
+    if(closestatus==0){
+        // Add a check to prevent empty parentheses crash
+        if (todatecalc != null && !todatecalc.trim().isEmpty()) {
+            String strupdate="update gl_ragmt set invdate='"+todate+"',invtodate=("+todatecalc+") where doc_no="+agmtno;
+            //System.out.println("Update Query"+strupdate);
+            int agmtupdate=stmtinvoice.executeUpdate(strupdate);
+            //System.out.println("Agmt Update Value"+agmtupdate);
+            if(agmtupdate<0){
+                System.out.println("Update Ragmt Error");
+                return 0;
+            }
+        } else {
+            System.out.println("Skipped gl_ragmt update because todatecalc is empty.");
+        }
+    }
+}
 						else if((invtype==4 || invtype==5 || invtype==6) && closestatus==0) {
 							int monthno=0;
 							if(invtype==4) {
