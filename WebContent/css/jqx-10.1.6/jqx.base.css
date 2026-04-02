@@ -7791,12 +7791,7 @@ jqx-knob {
 
 
 
-/* ============================================
-   GRID HEADER - using jqx-grid-header class
-   (not shared with navbar/menu)
-   ============================================ */
 
-/* --- Grid column header background --- */
 .jqx-grid-header {
     background: linear-gradient(135deg, #90c8f8 0%, #bde0ff 100%) !important;
     border-color: #bde0ff !important;
@@ -7805,7 +7800,6 @@ jqx-knob {
     
 }
 
-/* --- Column header cells --- */
 .jqx-grid-column-header {
     background: transparent !important;
     color: #1e3a5f !important;
@@ -7821,14 +7815,12 @@ jqx-knob {
     text-align: left !important;
 }
 
-/* Left align inner label */
 .jqx-grid-column-header > div > div {
     text-align: left !important;
     padding-left: 6px !important;
 }
 
-/* --- DO NOT touch .jqx-widget-header at all --- */
-/* --- Cell text: left-aligned --- */
+
 .jqx-grid-cell {
     background: #ffffff;
     border-color: #e8f4ff !important;
@@ -7853,32 +7845,27 @@ jqx-knob {
     padding-right: 6px !important;
 }
 
-/* --- Alternating rows --- */
 .jqx-grid-cell-alt {
     background: #f0f8ff !important;
 }
 
-/* --- Hover --- */
 .jqx-grid-cell-hover {
     background: #d6eeff !important;
     border-color: #b3d9ff !important;
     color: #1e3a5f !important;
 }
 
-/* --- Selected row --- */
 .jqx-grid-cell-selected {
     background: #a8d4f5 !important;
     color: #0d2d5e !important;
     border-color: #7bbde8 !important;
 }
 
-/* --- Row borders: horizontal only --- */
 .jqx-grid-table .jqx-grid-cell {
     border-width: 0px 0px 1px 0px !important;
     border-color: #e0f0ff !important;
 }
 
-/* --- Grid outer border --- */
 .jqx-grid {
     border: 1px solid #b3d9ff !important;
     border-radius: 8px !important;
@@ -7886,7 +7873,6 @@ jqx-knob {
     box-shadow: 0 1px 6px rgba(144, 200, 248, 0.2) !important;
 }
 
-/* --- Sort column --- */
 .jqx-grid-cell-sort {
     background-color: #e8f4ff !important;
 }
@@ -7894,26 +7880,22 @@ jqx-knob {
     background-color: #d6eeff !important;
 }
 
-/* --- Filter column --- */
 .jqx-grid-cell-filter,
 .jqx-grid-cell-filter-alt {
     background-color: #edf7ff !important;
 }
 
-/* --- Pinned cells --- */
 .jqx-grid-cell-pinned,
 .jqx-grid-cell-pinned-alt {
     background-color: #e8f4ff !important;
 }
 
-/* --- Pager --- */
 .jqx-grid-pager {
     background: #edf7ff !important;
     border-top: 1px solid #b3d9ff !important;
     padding: 4px !important;
 }
 
-/* --- Column menu button --- */
 .jqx-grid-column-menubutton {
     opacity: 0.4;
     transition: opacity 0.2s;
@@ -7922,7 +7904,6 @@ jqx-knob {
     opacity: 1;
 }
 
-/* --- Scrollbar --- */
 .jqx-scrollbar-state-normal {
     background: #edf7ff !important;
     border-color: transparent !important;
