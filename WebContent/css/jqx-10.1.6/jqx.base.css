@@ -351,7 +351,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 /*applied to the columns.*/
 .jqx-grid-column-header, .jqx-grid-columngroup-header {
     border-style: solid;
-    border-width: 0px 1px 0px 0px;
+    border-width: 0px 0px 0px 0px;
     border-color: transparent;
     white-space: nowrap;
     border-style: solid;
@@ -373,7 +373,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 /*applied to the column's button.*/
 .jqx-grid-column-menubutton {
     border-style: solid;
-    border-width: 0px 0px 0px 1px;
+    border-width: 0px 0px 0px 0px;
     border-color: transparent;
     background-image: url('images/icon-menu-small.png') !important;
     background-repeat: no-repeat;
@@ -588,7 +588,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 /*applied to a grid cell*/
 .jqx-grid-cell {
     border-style: solid;
-    border-width: 0px 1px 1px 0px;
+    border-width: 0px 0px 1px 0px;
     margin-right: 1px;
     margin-bottom: 1px;
     border-color: transparent;
@@ -791,6 +791,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 
 .jqx-grid-table .jqx-grid-cell {
     position: static !important;
+     border-width: 0px 0px 1px 0px;
     zoom: 1 !important;
 }
 /*applied to the Grid's Table element.*/
@@ -831,23 +832,23 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 }
 /*applied to a grid cell. Represents the alternating cell background.*/
 .jqx-grid-cell-alt {
-    background: #f9f9f9;
+    background: #D6EEFF;
 }
 /*applied to a sorted and alternating grid cell*/
 .jqx-grid-cell-sort-alt {
-    background-color: #e5e5e5;
+    background-color:#D6EEFF;
 }
 /*applied to a sorted and alternating grid cell*/
 .jqx-grid-cell-filter-alt {
-    background-color: #f0f0f0;
+    background-color:#D6EEFF;
 }
 /*applied to a pinned grid cell.*/
 .jqx-grid-cell-pinned {
-    background-color: #e5e5e5;
+    background-color:#D6EEFF;
 }
 /*applied to a pinned grid cell. Represents the alternating cell background.*/
 .jqx-grid-cell-pinned-alt {
-    background-color: #e5e5e5;
+    background-color:#D6EEFF;
 }
 /*applied to a selected grid cell.*/
 .jqx-grid-cell-selected {
@@ -878,7 +879,7 @@ button.jqx-button, input[type=button].jqx-button, input[type=submit].jqx-button 
 }
 
 .jqx-grid-table .jqx-grid-cell {
-    border-width: 0px 0px 1px 1px;
+     border-width: 0px 0px 1px 0px;
 }
 
 .jqx-grid-table-one-cell {
@@ -2650,10 +2651,10 @@ of the horizontal scrollbar.*/
     overflow: hidden;
     border: 1px solid transparent;
 }
-/*applied to the jqxWindow when it’s disabled*/
+/*applied to the jqxWindow when itï¿½s disabled*/
 .jqx-window-disabled {
 }
-/*applied to the window’s header*/
+/*applied to the windowï¿½s header*/
 .jqx-window-header {
     outline: none;
     border-width: 0px;
@@ -2664,10 +2665,10 @@ of the horizontal scrollbar.*/
     white-space: nowrap;
     overflow: hidden;
 }
-/*applied to the window’s header when the window is disabled*/
+/*applied to the windowï¿½s header when the window is disabled*/
 .jqx-window-header-disabled {
 }
-/*applied to the window’s content*/
+/*applied to the windowï¿½s content*/
 .jqx-window-content {
     outline: none;
     overflow: auto;
@@ -2677,14 +2678,14 @@ of the horizontal scrollbar.*/
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 }
-/*applied to the window’s content when the window is disabled*/
+/*applied to the windowï¿½s content when the window is disabled*/
 .jqx-window-content-disabled {
     outline: none;
     overflow: auto;
     text-align: left;
     padding: 5px;
 }
-/*applied to the window’s close button*/
+/*applied to the windowï¿½s close button*/
 .jqx-window-close-button {
     cursor: pointer;
     background-image: url(images/close.png);
@@ -2703,7 +2704,7 @@ of the horizontal scrollbar.*/
     cursor: pointer;
     background-image: url(images/icon-down.png);
 }
-/*setting styles of the modal window’s background*/
+/*setting styles of the modal windowï¿½s background*/
 .jqx-window-modal {
     background-color: Black;
 }
@@ -3965,8 +3966,8 @@ of the horizontal scrollbar.*/
     background-clip: padding-box;
     -webkit-background-clip: padding-box;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    border-color: #c5c5c5;
-    background: #e8e8e8;
+    border-color: #D6EEFF;
+    background: #D6EEFF;
 }
 
 .jqx-fill-state-normal {
@@ -5909,7 +5910,7 @@ ol li .jqx-listmenu-item-label:before {
 
 .jqx-file-upload-file-cancel-rtl, .jqx-file-upload-file-upload-rtl, .jqx-file-upload-loading-element-rtl {
     float: none;
-    *float: left;
+    /* float: left;*/
 }
 
 .jqx-file-upload-button-browse, .jqx-file-upload-button-upload, .jqx-file-upload-button-cancel, .jqx-file-upload-form-ie9, .jqx-file-upload-file-input-ie9, .jqx-file-upload-file-cancel, .jqx-file-upload-file-upload {
@@ -7778,4 +7779,143 @@ jqx-knob {
 }
 .jqx-menu-item-top{
 	margin-top: -2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.jqx-grid-header {
+    background: linear-gradient(135deg, #90c8f8 0%, #bde0ff 100%) !important;
+    border-color: #bde0ff !important;
+    color: #1e3a5f !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    
+}
+
+.jqx-grid-column-header {
+    background: transparent !important;
+    color: #1e3a5f !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    text-align: left !important;
+    border-color: #90c8f8 !important;
+}
+
+.jqx-grid-column-header a:link,
+.jqx-grid-column-header a:visited {
+    color: #1e3a5f !important;
+    text-align: left !important;
+}
+
+.jqx-grid-column-header > div > div {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+
+.jqx-grid-cell {
+    background: #ffffff;
+    border-color: #e8f4ff !important;
+    color: #1f2937;
+    font-size: 11px !important;
+    text-align: left !important;
+}
+
+.jqx-grid-cell-left-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+    margin-left: 0px !important;
+}
+
+.jqx-grid-cell-middle-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+.jqx-grid-cell-right-align {
+    text-align: right !important;
+    padding-right: 6px !important;
+}
+
+.jqx-grid-cell-alt {
+    background: #f0f8ff !important;
+}
+
+.jqx-grid-cell-hover {
+    background: #d6eeff !important;
+    border-color: #b3d9ff !important;
+    color: #1e3a5f !important;
+}
+
+.jqx-grid-cell-selected {
+    background: #a8d4f5 !important;
+    color: #0d2d5e !important;
+    border-color: #7bbde8 !important;
+}
+
+.jqx-grid-table .jqx-grid-cell {
+    border-width: 0px 0px 1px 0px !important;
+    border-color: #e0f0ff !important;
+}
+
+.jqx-grid {
+    border: 1px solid #b3d9ff !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 6px rgba(144, 200, 248, 0.2) !important;
+}
+
+.jqx-grid-cell-sort {
+    background-color: #e8f4ff !important;
+}
+.jqx-grid-cell-sort-alt {
+    background-color: #d6eeff !important;
+}
+
+.jqx-grid-cell-filter,
+.jqx-grid-cell-filter-alt {
+    background-color: #edf7ff !important;
+}
+
+.jqx-grid-cell-pinned,
+.jqx-grid-cell-pinned-alt {
+    background-color: #e8f4ff !important;
+}
+
+.jqx-grid-pager {
+    background: #edf7ff !important;
+    border-top: 1px solid #b3d9ff !important;
+    padding: 4px !important;
+}
+
+.jqx-grid-column-menubutton {
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+.jqx-grid-column-menubutton:hover {
+    opacity: 1;
+}
+
+.jqx-scrollbar-state-normal {
+    background: #edf7ff !important;
+    border-color: transparent !important;
+}
+.jqx-scrollbar-thumb-state-normal,
+.jqx-scrollbar-thumb-state-normal-horizontal {
+    background: #90c8f8 !important;
+    border-color: #90c8f8 !important;
+    border-radius: 4px !important;
+}
+.jqx-scrollbar-thumb-state-hover,
+.jqx-scrollbar-thumb-state-hover-horizontal {
+    background: #60a5fa !important;
+    border-radius: 4px !important;
 }
