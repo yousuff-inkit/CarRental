@@ -659,6 +659,65 @@ label.licenceExpiry:hover{
 body::-webkit-scrollbar {
 	width: 0px;
 }
+.jqx-widget-header {
+    background: #e8e8e8 !important;
+    border-color: #c5c5c5 !important;
+    color: inherit !important;
+}
+
+.jqx-menu-item-top {
+    color: inherit !important;
+    font-weight: normal !important;
+    font-size: 13px !important;
+    padding: 3px 6px 3px 6px !important;
+    border-radius: 0px !important;
+    margin: 0px 1px 0px 1px !important;
+}
+
+.jqx-menu-item-top-hover {
+    background: #e8e8e8 !important;
+    color: inherit !important;
+    border-radius: 0px !important;
+}
+
+.jqx-menu-item-top-selected {
+    background: #e8e8e8 !important;
+    color: inherit !important;
+    border-radius: 0px !important;
+}
+
+.jqx-menu-dropdown {
+    background: #ffffff !important;
+    border: 1px solid #c5c5c5 !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    padding: 2px !important;
+}
+
+.jqx-menu-item {
+    color: inherit !important;
+    font-size: 13px !important;
+    padding: 3px 6px 3px 6px !important;
+    border-radius: 0px !important;
+    margin: 1px 3px !important;
+}
+
+.jqx-menu-item-hover {
+    background: #e8e8e8 !important;
+    color: inherit !important;
+    border-radius: 0px !important;
+}
+
+.jqx-menu-item-selected {
+    background: #e8e8e8 !important;
+    color: inherit !important;
+    border-radius: 0px !important;
+}
+
+.jqx-menu-item-separator {
+    background-color: #ddd !important;
+    margin: 1px 2px !important;
+}
 </style>
 </head>
 <!-- style="overflow:;  onload="getBrchCurr();" -->
