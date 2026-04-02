@@ -1,156 +1,177 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
- 
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
- <%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%>   
+
 <style>
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+/* =========================================================
+SCOPED UI: Clean UI Panel Design for Search Modal
+* All rules are prefixed with .modern-ui to prevent bleeding! *
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    padding: 10px;
+    background-color: #f4f6f9;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Master Input Heights - Set to 24px */
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Compact Width Classes */
+.modern-ui .input-sm { width: 100px !important; }
+.modern-ui .input-md { width: 140px !important; }
+.modern-ui .input-lg { width: 200px !important; }
+.modern-ui .input-full { width: 100% !important; flex: 1; }
+
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+/* Panel Styling (Title removed for cleaner popup) */
+.modern-ui .modern-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Search Button */
+.modern-ui .myButton {
+    font-weight: bold;
+    font-size: 11px;
+    height: 24px !important;
+    padding: 0px 16px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    padding: 2px;
+    min-height: 200px;
+}
 </style>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	  $("#searchdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null}); 
-	}); 
+<script type="text/javascript">
+$(document).ready(function () {
+    /* Upgraded height to 24px for Modern UI */
+    $("#searchdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null}); 
+    
+    /* Force internal alignment AFTER render */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", 
+            "line-height": "24px", 
+            "font-size": "12px", 
+            "font-family": "Arial, sans-serif",
+            "padding": "0 6px", 
+            "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
+}); 
 
- 	function loadSearch1() {
-
- 		var seardate=$("#searchdate").val();
- 	  var seartype=document.getElementById("enqtype").value;
- 		var seardoc=document.getElementById("msdocno").value; 
-
- 	
-	getdata1(seardate,seartype,seardoc);
- 
-
-	}
-	function getdata1(seardate,seartype,seardoc){
-		
-
-		
-		 $("#refreshdivmas").load('subMastersearch.jsp?seardate='+seardate+'&seartype='+seartype+'&seardoc='+seardoc);
-		
-		}
-
-	</script>
-<style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px; /* Standardized master gap */
+function loadSearch1() {
+    var seardate=$("#searchdate").val();
+    var seartype=document.getElementById("enqtype").value;
+    var seardoc=document.getElementById("msdocno").value; 
+    getdata1(seardate,seartype,seardoc);
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+function getdata1(seardate,seartype,seardoc){
+    $("#refreshdivmas").load('subMastersearch.jsp?seardate='+seardate+'&seartype='+seartype+'&seardoc='+seardoc);
 }
+</script>
 
-/* Bold text inside inputs and selects */
-input[type="text"], select {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%; /* Standardized width */
-  max-width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+</head>
+<body>
 
-/* Date field styling (applied to the div) */
-#searchdate {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-}
+<div id="search" class="modern-ui">
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
-}
+    <div class="modern-panel">
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width: 50px;">Date</label>
+            <div style="width: 125px;">
+                <div id="searchdate" name="searchdate" value='<s:property value="searchdate"/>'></div>
+            </div>
 
-.myButton:hover {
-  background-color: #45a049;
-}
+            <label class="lbl-right" style="width: 60px; margin-left: 20px;">Doc No</label>
+            <input type="text" name="msdocno" id="msdocno" class="input-lg" value='<s:property value="msdocno"/>'>
+        </div>
 
-/* Row spacing */
-tr {
-  line-height: 1.8;
-}
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
-}
-</style>
+        <div class="field-row" style="margin-bottom: 0;">
+            <label class="lbl-right" style="width: 50px;">Type</label>
+            <select name="enqtype" id="enqtype" class="input-md">
+                <option value="traffic">Traffic</option>
+                <option value="salik">Salik</option>
+            </select>
 
-<body bgcolor="#E0ECF8">
-<div id="search">
+            <div style="margin-left: auto; padding-right: 5px;">
+                <input type="button" name="mainsearchbtn" id="mainsearchbtn" class="myButton" value="Search" onclick="loadSearch1()">
+            </div>
+        </div>
 
-<table width="100%">
+    </div>
 
-<tr>
-    <td width="6%" align="right">Date</td>
-    <td width="14%">
-        <div id="searchdate" name="searchdate"
-        value='<s:property value="searchdate"/>'></div>
-    </td>
-
-    <td width="21%" align="right">Doc No</td>
-    <td width="32%">
-        <input type="text" name="msdocno" id="msdocno"
-        value='<s:property value="msdocno"/>'>
-    </td>
-
-    <td width="27%" align="center" rowspan="2">
-        <input type="button" name="mainsearchbtn"
-        id="mainsearchbtn" class="myButton"
-        value="Search" onclick="loadSearch1()">
-    </td>
-</tr>
-
-<tr>
-    <td align="right">Type</td>
-    <td>
-        <select name="enqtype" id="enqtype" style="width:100%;">
-            <option value="traffic">Traffic</option>
-            <option value="salik">Salik</option>
-        </select>
-    </td>
-
-    <td colspan="2"></td>
-</tr>
-
-<tr>
-<td colspan="5">
-<div id="refreshdivmas">
-<jsp:include page="subMastersearch.jsp" />
-</div>
-</td>
-</tr>
-
-</table>
+    <div class="grid-container">
+        <div id="refreshdivmas">
+            <jsp:include page="subMastersearch.jsp" />
+        </div>
+    </div>
 
 </div>
+
 </body>
 </html>
