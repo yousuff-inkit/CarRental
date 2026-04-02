@@ -455,307 +455,207 @@ function funExcelBtn(){
 </script>
 
 <style>
-
+.hidden-scrollbar {
+  overflow: auto;
+  height: 530px;
+}
+</style>
+<style>
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
     margin: 0;
-    padding: 32px 0;
-    min-height: 130vh;
+    padding: 10px;
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 4px;
+    padding: 15px;
     max-width: 100%;
     margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
 }
 
-input[type="text"]:focus,
-select:focus {
+/* Master Input Heights - Set to 24px as requested */
+input[type="text"], select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+input[type="text"]:focus, select:focus {
     border-color: #007bff;
     outline: none;
 }
 
-label {
-    font-weight: 600;
-    color: #253858;
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
     white-space: nowrap;
-    font-size: 16px;
 }
 
-
-.receipt-header {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-
-.form-group.date-actions-row {
+.flex-row {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 10px 0;
-    margin-bottom: 12px;
-}
-
-.form-group.date-actions-row label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-    min-width: 140px;
-    text-align: right;
-}
-
-.form-group.date-actions-row .date-wrapper {
-    flex: 0 0 220px;
-}
-
-.form-group.date-actions-row .date-wrapper > div {
+    gap: 5px;
     width: 100%;
 }
 
-.form-group.date-actions-row .button-group {
-    display: flex;
-    gap: 80px;
-    margin-left: auto;
-     margin-right: auto;
-}
-
-/* Type + Posting Row - Second Line */
-.form-group.type-posting-row {
+.chk-container {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 10px 0;
-    margin-bottom: 12px;
-}
-
-.form-group.type-posting-row label {
-    font-weight: 600;
-    color: #253858;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
     white-space: nowrap;
-    min-width: 60px;
-    text-align: right;
 }
 
-.form-group.type-posting-row select {
-    width: 180px;
-    padding: 6px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
+.chk-container input {
+    margin: 0;
+    padding: 0;
 }
 
-.form-group.type-posting-row .date-wrapper {
-    flex: 0 0 220px;
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-.form-group.type-posting-row .date-wrapper > div {
-    width: 100%;
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
 }
 
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
 
+/* Clean Tables mapping requested colors */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
+    border: 1px solid #ddd;
 }
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 16px;
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
 }
-
 .cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
 }
 
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-
-.hidden-scrollbar {
-    overflow: auto;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 10px;
-}
-
-
-
-@media (max-width: 1200px) {
-    .form-group.date-actions-row {
-        flex-wrap: wrap;
-    }
-    
-    .form-group.date-actions-row .button-group {
-        margin-left: 0;
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .form-group.date-actions-row label,
-    .form-group.type-posting-row label {
-        min-width: auto;
-    }
-    
-    .form-group.date-actions-row .date-wrapper,
-    .form-group.type-posting-row .date-wrapper {
-        flex: 1 1 auto;
-        min-width: 150px;
-    }
-    
-    .form-group.type-posting-row select {
-        width: 100%;
-        min-width: 120px;
-    }
-}
-body::-webkit-scrollbar {
-	width: 0px;
-}
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);}
-
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
 
 </style>
-
 </head>
 <body onload="setValues();headerbtndisable();">
-<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background" >
+<div id="mainBG" class="homeContent" data-type="background" >
 <form id="frmUnclearedChequeProcessing" action="saveUnclearedChequeProcessing" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class=' receipt-header'>
+<div  class='hidden-scrollbar'>
 
- <div class="form-group date-actions-row">
-        <label for="jqxUnclearedChequeProcessFromDate">Uncleared P.D.C From</label>
-        <div class="date-wrapper">
-            <div id="jqxUnclearedChequeProcessFromDate" 
-                 name="jqxUnclearedChequeProcessFromDate" 
-                 value='<s:property value="jqxUnclearedChequeProcessFromDate"/>'></div>
-            <input type="hidden" 
-                   id="hidjqxUnclearedChequeProcessFromDate" 
-                   name="hidjqxUnclearedChequeProcessFromDate" 
-                   value='<s:property value="hidjqxUnclearedChequeProcessFromDate"/>'/>
-        </div>
+<fieldset>
+<table width="100%">
+  <tr>
+    <td width="3%" align="right"><!-- Date --> &nbsp;</td>
+    <td width="12%"><div id="jqxUnclearedChequeProcessingDate" hidden="true" name="jqxUnclearedChequeProcessingDate" value='<s:property value="jqxUnclearedChequeProcessingDate"/>'></div>
+    <input type="hidden" id="hidjqxUnclearedChequeProcessingDate" name="hidjqxUnclearedChequeProcessingDate" value='<s:property value="hidjqxUnclearedChequeProcessingDate"/>'/></td>
+    <td width="14%" align="right">Uncleared P.D.C From</td>
+    <td width="8%"><div id="jqxUnclearedChequeProcessFromDate" name="jqxUnclearedChequeProcessFromDate" value='<s:property value="jqxUnclearedChequeProcessFromDate"/>'></div>
+    <input type="hidden" id="hidjqxUnclearedChequeProcessFromDate" name="hidjqxUnclearedChequeProcessFromDate" value='<s:property value="hidjqxUnclearedChequeProcessFromDate"/>'/></td>
+    <td width="7%" align="right">P.D.C. Upto</td>
+    <td width="9%"><div id="jqxUnclearedChequeProcessToDate" name="jqxUnclearedChequeProcessToDate" value='<s:property value="jqxUnclearedChequeProcessToDate"/>'></div>
+    <input type="hidden" id="hidjqxUnclearedChequeProcessToDate" name="hidjqxUnclearedChequeProcessToDate" value='<s:property value="hidjqxUnclearedChequeProcessToDate"/>'/></td>
+    <td width="3%" align="right">Type</td>
+    <td width="9%"><select id="cmbtype" name="cmbtype" style="width:80%;" value='<s:property value="cmbtype"/>'>
+    <option value="">--Select--</option><option value="UCP">Payment</option><option value="UCR">Receipt</option></select>
+    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
+    <td width="6%" align="right">Posting</td>
+    <td width="13%"><div id="postingDate" name="postingDate" onchange="datechange();" onblur="datechange();" value='<s:property value="postingDate"/>'></div>
+    <input type="hidden" id="hidpostingDate" name="hidpostingDate" value='<s:property value="hidpostingDate"/>'/></td>
+    <td width="16%" align="left"><button class="myButton" type="button" id="btnUnclearedChequeSearch" name="btnUnclearedChequeSearch" onclick="funloadgrid();">View</button></td>
+    <td width="16%" align="left"><button class="myButton" type="button" id="btnsavemaster" name="btnsavemaster">Save Changes</button></td>
+  </tr>
+</table>
+</fieldset><br/>
 
-        <label for="jqxUnclearedChequeProcessToDate">P.D.C. Upto</label>
-        <div class="date-wrapper">
-            <div id="jqxUnclearedChequeProcessToDate" 
-                 name="jqxUnclearedChequeProcessToDate" 
-                 value='<s:property value="jqxUnclearedChequeProcessToDate"/>'></div>
-            <input type="hidden" 
-                   id="hidjqxUnclearedChequeProcessToDate" 
-                   name="hidjqxUnclearedChequeProcessToDate" 
-                   value='<s:property value="hidjqxUnclearedChequeProcessToDate"/>'/>
-        </div>
-
-        <div class="button-group">
-            <button class="myButton" type="button" 
-                    id="btnUnclearedChequeSearch" 
-                    name="btnUnclearedChequeSearch" 
-                    onclick="funloadgrid();">
-                View
-            </button>
-            <button class="myButton" type="button" 
-                    id="btnsavemaster" 
-                    name="btnsavemaster">
-                Save Changes
-            </button>
-        </div>
-
-        <!-- Hidden Date (not displayed) -->
-        <div class="date-wrapper" style="display:none;">
-            <div id="jqxUnclearedChequeProcessingDate" 
-                 name="jqxUnclearedChequeProcessingDate" 
-                 value='<s:property value="jqxUnclearedChequeProcessingDate"/>'></div>
-            <input type="hidden" 
-                   id="hidjqxUnclearedChequeProcessingDate" 
-                   name="hidjqxUnclearedChequeProcessingDate" 
-                   value='<s:property value="hidjqxUnclearedChequeProcessingDate"/>'/>
-        </div>
-    </div>
-
-    <!-- Row 2: Type + Posting Date -->
-    <div class="form-group type-posting-row">
-        <label for="cmbtype">Type</label>
-        <select id="cmbtype" name="cmbtype" value='<s:property value="cmbtype"/>'>
-            <option value="">--Select--</option>
-            <option value="UCP">Payment</option>
-            <option value="UCR">Receipt</option>
-        </select>
-        <input type="hidden" id="hidcmbtype" name="hidcmbtype" 
-               value='<s:property value="hidcmbtype"/>'/>
-
-        <label for="postingDate" style="margin-left:190px;">Posting</label>
-        <div class="date-wrapper">
-            <div id="postingDate" name="postingDate" 
-                 onchange="datechange();" 
-                 onblur="datechange();" 
-                 value='<s:property value="postingDate"/>'></div>
-            <input type="hidden" id="hidpostingDate" name="hidpostingDate" 
-                   value='<s:property value="hidpostingDate"/>'/>
-        </div>
-    </div>
-
-</div>
-
-<div class="cr-table" id="unclearedChequeProcessingDiv"><center><jsp:include page="unclearedChequeProcessingGrid.jsp"></jsp:include></center></div><br/>
+<div id="unclearedChequeProcessingDiv"><center><jsp:include page="unclearedChequeProcessingGrid.jsp"></jsp:include></center></div><br/>
 
 <div id="bankPaymentDiv" style="visibility:hidden;"><center><jsp:include page="bankPaymentGrid.jsp"></jsp:include></center></div><br/>
 

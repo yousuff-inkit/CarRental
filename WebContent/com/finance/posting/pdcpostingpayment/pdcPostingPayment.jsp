@@ -471,7 +471,7 @@ body {
 }
 
 .section-block h2 {
-    font-size: 1.09em;
+    font-size: 12px;
     font-weight: 500;
     margin: 0 0 16px 0;
     color: #253858;
@@ -513,7 +513,7 @@ body {
 }
 .table-section h3 {
     color: #253858;
-    font-size: 1.04em;
+    font-size: 12px;
     font-weight: 600;
 }
 .cr-table {
@@ -528,7 +528,7 @@ body {
     padding: 9px 10px;
     border-bottom: 1px solid #e4e7ec;
     text-align: left;
-    font-size: 16px;
+    font-size: 12px;
 }
 .cr-table th {
     background: #eef0f6;
@@ -541,7 +541,7 @@ body {
 
 
 .cr-table td {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
 }
 
 
