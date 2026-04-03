@@ -7,116 +7,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-/* scroll area if you need it later */
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
 
-/* background */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 24px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-/* main card like User Master */
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 18px 28px;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-/* section card */
-.table-section {
-    margin-bottom: 20px;
-    padding-inline: 14px;
-    padding-block: 14px;
-    border-radius: 10px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-.table-section h3 {
-    margin: 0 0 12px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff; /* blue bar */
-    color: #253858;
-    font-size: 17.4px;
-    font-weight: 600;
-}
-
-/* grid/table layout for fields */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-    table-layout: fixed;
-}
-.cr-table td {
-    padding: 6px 8px;
-    font-size: 16px;
-    vertical-align: middle;
-}
-.cr-table td[align="right"] {
-    white-space: nowrap;
-    font-weight: 500;
+.modern-ui {
+    font-family: Arial, sans-serif; 
     color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
 }
 
-/* unified textboxes */
-.cr-table input[type="text"] {
-    width: 100%;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 4px 8px;
-    height: 30px;
-    font-size: 13px;
-    box-sizing: border-box;
-    background: #fff;
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
 }
-.cr-table input[type="text"]:focus {
-    border-color: #007bff;
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
     outline: none;
 }
 
-/* jqx date cell */
-#leavedate {
-    width: 100%;
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
 }
 
-/* grid under form */
-#leavegrid {
-    margin-top: 10px;
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 0 1px #eef0f6;
+    margin-bottom: 10px;
 }
-</style>
 
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+</style>
 
 <%@page import="com.humanresource.setup.hrsetup.leave.ClsLeaveDAO"%>
 <% ClsLeaveDAO showDAO = new ClsLeaveDAO(); %>  
 
 <script type="text/javascript">
-	$(document).ready(function () {    
-	    document.getElementById("formdet").innerText="Leave(LEV)";
-		document.getElementById("formdetail").value="Leave";
-		document.getElementById("formdetailcode").value="LEV";
-		window.parent.formCode.value="LEV";
-		window.parent.formName.value="Leave";
+	$(document).ready(function () {   
+	    if(document.getElementById("formdet")) document.getElementById("formdet").innerText="Leave(LEV)";
+		if(document.getElementById("formdetail")) document.getElementById("formdetail").value="Leave";
+		if(document.getElementById("formdetailcode")) document.getElementById("formdetailcode").value="LEV";
+		if(window.parent && window.parent.formCode) window.parent.formCode.value="LEV";
+		if(window.parent && window.parent.formName) window.parent.formName.value="Leave";
 		
-	    $("#leavedate").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy" });
+        /* FIXED DATE WIDTHS & HEIGHTS */ 
+	    $("#leavedate").jqxDateTimeInput({ width: '100%', height: '24px' ,formatString : "dd.MM.yyyy" });
+ 
+        /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
  
 	    $('#abbrevationDetailsWindow').jqxWindow({width: '31%', height: '38%',  maxHeight: '50%' ,maxWidth: '31%' , title: 'Abbreviation Search',position: { x: 600, y: 100 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		$('#abbrevationDetailsWindow').jqxWindow('close'); 
@@ -138,7 +139,7 @@ body {
                         	{name : 'abbreviation', type: 'String'  }
                           	
                  ],
-                  localdata: leavedata,
+                 localdata: leavedata,
                 
                 pager: function (pagenum, pagesize, oldpagenum) {
                     // leavedata called when a page or page size is changed.
@@ -196,33 +197,45 @@ body {
          else{}
          }
  
+    /* SAFE READONLY FUNCTION */
 	function funReadOnly() {
-		$('#frmleave input').attr('readonly', true);
-		$('#leavedate').jqxDateTimeInput({ disabled: true});
-		 
-		/* 	$('#jqxDateTimeInput').jqxDateTimeInput({ disabled: true}); */
+	    try {
+    		$('#frmleave input').attr('readonly', true);
+    		$('#leavedate').jqxDateTimeInput({ disabled: true});
+	    } catch(e) { console.error("Error in funReadOnly:", e); }
 	}
+	
+	/* SAFE REMOVE READONLY FUNCTION */
 	function funRemoveReadOnly() {
-		$('#frmleave input').attr('readonly', false);
-		$('#abbreviation').attr('readonly', true);
-		$('#leavedate').jqxDateTimeInput({ disabled: false});
-		$('#docno').attr('readonly', true);
-		
-		if ($("#mode").val() == "A") {
-			 $('#leavedate').val(new Date());
-		   }
+	    try {
+    		$('#frmleave input').attr('readonly', false);
+    		$('#abbreviation').attr('readonly', true);
+    		$('#leavedate').jqxDateTimeInput({ disabled: false});
+    		$('#docno').attr('readonly', true);
+    		
+    		if ($("#mode").val() == "A") {
+    			 $('#leavedate').val(new Date());
+    		   }
+	    } catch(e) { console.error("Error in funRemoveReadOnly:", e); }
 	}
  
+    /* SAFE SET VALUES FUNCTION */
 	function setValues() {
-		if($('#datehidden').val()){
-			$("#leavedate").jqxDateTimeInput('val', $('#datehidden').val());
-		}
-
-		if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-		}
-		
-		 //document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+	    try {
+    		if($('#datehidden').length && $('#datehidden').val()){
+    			$("#leavedate").jqxDateTimeInput('val', $('#datehidden').val());
+    		}
+    
+    		if($('#msg').length && $('#msg').val()!=""){
+    			   $.messager.alert('Message',$('#msg').val());
+    		}
+    		
+            if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                var detailVal = $('#formdetail').val() || "";
+                var codeVal = $('#formdetailcode').val() || "";
+                document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+            }
+	    } catch(e) { console.error("Error in setValues:", e); }
 	}
 	
  
@@ -243,77 +256,62 @@ body {
  
 </head>
 <body onload="setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-
 <form id="frmleave" action="saveLeave" method="post" autocomplete="off">
-    <jsp:include page="../../../../header.jsp" /> <br/>
+    <jsp:include page="../../../../header.jsp" />
 
-    <div class="hidden-scrollbar">
+    <div class="modern-ui">
 
-        <div class="table-section" style="width:100%;">
-            <h3>Leave Details</h3>
-
-            <table class="cr-table">
+        <div class="erp-form-area">
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
                 <tr>
-                    <td align="right" style="width:10%;">Date</td>
-                    <td style="width:18%;">
-                        <div id="leavedate" name="leavedate"
-                             value='<s:property value="leavedate"/>'></div>
+                    <td class="lbl-right" width="5%">Date</td>
+                    <td width="10%">
+                        <div id="leavedate" name="leavedate" value='<s:property value="leavedate"/>'></div>
                     </td>
-
-                    <td align="right" style="width:8%;">Leave</td>
-                    <td style="width:32%;">
-                        <input type="text" name="leave" id="leave"
-                               placeholder="Leave"
-                               value='<s:property value="leave"/>'>
+                    <td class="lbl-right" width="5%">Leave</td>
+                    <td width="30%">
+                        <input type="text" name="leave" id="leave" placeholder="Leave" value='<s:property value="leave"/>'>
                     </td>
-
-                    <td align="right" style="width:12%;">Abbreviation</td>
-                    <td style="width:14%;">
-                        <input type="text" name="abbreviation" id="abbreviation"
-                               placeholder="Press F3 to Search"
-                               onkeydown="getAbbrevation(event);"
-                               readonly="readonly"
-                               value='<s:property value="abbreviation"/>'>
+                    <td class="lbl-right" width="10%">Abbreviation</td>
+                    <td width="15%">
+                        <input type="text" name="abbreviation" id="abbreviation" placeholder="Press F3 to Search" onkeydown="getAbbrevation(event);" readonly="readonly" value='<s:property value="abbreviation"/>'>
                     </td>
-
-                    <td align="right" style="width:8%;">Doc No</td>
-                    <td style="width:16%;">
-                        <input type="text" name="docno" id="docno"
-                               value='<s:property value="docno"/>'
-                               readonly="readonly" tabindex="-1">
+                    <td class="lbl-right" width="10%">Doc No</td>
+                    <td width="15%">
+                        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
                     </td>
                 </tr>
 
                 <tr>
-                    <td align="right">Remarks</td>
-                    <td colspan="7">
-                        <input type="text" name="remarks" id="remarks"
-                               placeholder="Remarks"
-                               value='<s:property value="remarks"/>'>
+                    <td class="lbl-right" style="padding-top: 10px;">Remarks</td>
+                    <td colspan="7" style="padding-top: 10px;">
+                        <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>'>
                     </td>
                 </tr>
             </table>
         </div>
 
-        <input type="hidden" id="mode" name="mode"
-               value='<s:property value="mode"/>' />
-        <input type="hidden" id="msg" name="msg"
-               value='<s:property value="msg"/>'/> 
-        <input type="hidden" name="deleted" id="deleted"
-               value='<s:property value="deleted"/>'/> 
-        <input type="hidden" id="datehidden" name="datehidden"
-               value='<s:property value="datehidden"/>'/> 
+        <div class="grid-container">
+            <div id="leavegrid"></div>
+        </div>
 
-        <div id="leavegrid"></div><br/>
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/> 
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
+            <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+            
+            <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+            <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
+        </div>
+
     </div>
 </form>
 
-<div id="abbrevationDetailsWindow">
-    <div></div>
-</div> 
+<div id="abbrevationDetailsWindow"><div></div></div> 
 
 </div>
 </body>
-
 </html>

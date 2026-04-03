@@ -9,14 +9,139 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<style>
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Action Buttons */
+.modern-ui .erp-btn {
+    height: 24px;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+}
+
+.modern-ui .erp-btn-warning {
+    height: 24px;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(245, 158, 11, 0.3);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		 $("#jqxDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy", value: null });
-		 $("#jqxFromDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#jqxToDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#chequedate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#checkchequedate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+        /* FIXED DATE WIDTHS & HEIGHTS */ 
+		 $("#jqxDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: null });
+		 $("#jqxFromDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#jqxToDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#chequedate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#checkchequedate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 
+		 /* Force internal alignment AFTER render */
+         setTimeout(function () {
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", 
+                 "line-height": "24px", 
+                 "font-size": "12px", 
+                 "font-family": "Arial, sans-serif",
+                 "padding": "0 6px", 
+                 "box-sizing":"border-box"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+         }, 0);
 		 
 		 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsWindow').jqxWindow('close');  
@@ -28,7 +153,7 @@
 		
 		 $('#txtaccid').dblclick(function(){
 			  accountSearchContent('clientAccountDetailsSearch.jsp?atype='+$('#cmbacctype').val());
-			  });
+		 });
 	});
 	
 	function accountSearchContent(url){
@@ -40,57 +165,57 @@
 	}
 	
 	function getPDCAccounts(){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var docNoItems = items[0];
-  				var accountIdItems  = items[1];
-  				var accountItems = items[2];
-  				var accountTypeItems = items[3];
-  				var accountCurIdItems  = items[4];
-  				var accountRateItems = items[5];
-  				var accCurrTypeItems = items[6];
-  			
-  			    $('#txtpdcdocno').val(docNoItems);	
-  			    $('#txtpdcaccid').val(accountIdItems);
-  			    $('#txtpdcaccname').val(accountItems);
-  			  	$('#txtpdcatype').val(accountTypeItems);
+ 		var x = new XMLHttpRequest();
+ 		x.onreadystatechange = function() {
+ 			if (x.readyState == 4 && x.status == 200) {
+ 				var items = x.responseText;
+ 				items = items.split('####');
+ 				var docNoItems = items[0];
+ 				var accountIdItems  = items[1];
+ 				var accountItems = items[2];
+ 				var accountTypeItems = items[3];
+ 				var accountCurIdItems  = items[4];
+ 				var accountRateItems = items[5];
+ 				var accCurrTypeItems = items[6];
+ 			
+ 			    $('#txtpdcdocno').val(docNoItems);	
+ 			    $('#txtpdcaccid').val(accountIdItems);
+ 			    $('#txtpdcaccname').val(accountItems);
+ 			 	$('#txtpdcatype').val(accountTypeItems);
 			    $('#txtpdccurid').val(accountCurIdItems);
 			    $('#txtpdcrate').val(accountRateItems);
 			    $('#txtpdctype').val(accCurrTypeItems);
-  		}
-  		}
-  		x.open("GET", "getPDCAccounts.jsp", true);
-  		x.send();
+ 		}
+ 		}
+ 		x.open("GET", "getPDCAccounts.jsp", true);
+ 		x.send();
     }
 	
 	function getPDCPostAccount(){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var docNoItems = items[0];
-  				var accountIdItems  = items[1];
-  				var accountItems = items[2];
-  				var accountTypeItems = items[3];
-  				var accountCurIdItems  = items[4];
-  				var accountRateItems = items[5];
-  				var accCurrTypeItems = items[6];
-  			
-  			    $('#txtpdcpostdocno').val(docNoItems);	
-  			    $('#txtpdcpostaccid').val(accountIdItems);
-  			    $('#txtpdcpostaccname').val(accountItems);
-  			  	$('#txtpdcpostatype').val(accountTypeItems);
+ 		var x = new XMLHttpRequest();
+ 		x.onreadystatechange = function() {
+ 			if (x.readyState == 4 && x.status == 200) {
+ 				var items = x.responseText;
+ 				items = items.split('####');
+ 				var docNoItems = items[0];
+ 				var accountIdItems  = items[1];
+ 				var accountItems = items[2];
+ 				var accountTypeItems = items[3];
+ 				var accountCurIdItems  = items[4];
+ 				var accountRateItems = items[5];
+ 				var accCurrTypeItems = items[6];
+ 			
+ 			    $('#txtpdcpostdocno').val(docNoItems);	
+ 			    $('#txtpdcpostaccid').val(accountIdItems);
+ 			    $('#txtpdcpostaccname').val(accountItems);
+ 			 	$('#txtpdcpostatype').val(accountTypeItems);
 			    $('#txtpdcpostcurid').val(accountCurIdItems);
 			    $('#txtpdcpostrate').val(accountRateItems);
 			    $('#txtpdcposttype').val(accCurrTypeItems);
-  		}
-  		}
-  		x.open("GET", "getPDCPostAccount.jsp", true);
-  		x.send();
+ 		}
+ 		}
+ 		x.open("GET", "getPDCPostAccount.jsp", true);
+ 		x.send();
    }
 	
 	 function getAcc(event){
@@ -100,19 +225,24 @@
             }
          }
 	 
+    /* SAFE READONLY FUNCTION */
 	 function funReadOnly(){
+	     try {
 			$('#frmPDCPostingReceipt input').attr('readonly', true );
 			$('#frmPDCPostingReceipt select').attr('disabled', true);
 			$('#jqxFromDate').jqxDateTimeInput({disabled: true});
 			$('#jqxToDate').jqxDateTimeInput({disabled: true});
 			$('#jqxDate').jqxDateTimeInput({disabled: true});
 			$('#chequedate').jqxDateTimeInput({disabled: true});
-			$("#jqxJournalVoucher").jqxGrid({ disabled: true});
-			$("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
+			if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: true});
+			if($("#jqxJournalVoucherApplying").length) $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
 			$("#btnview").hide();
+	     } catch(e) { console.error("Error in funReadOnly: ", e); }
 	 }
 	 
+    /* SAFE REMOVE READONLY FUNCTION */
 	 function funRemoveReadOnly(){
+	     try {
 		    $('#frmPDCPostingReceipt input').attr('readonly', false );
 			$('#frmPDCPostingReceipt select').attr('disabled', false);
 			$('#jqxFromDate').jqxDateTimeInput({disabled: false});
@@ -124,8 +254,8 @@
 			$('#txtbankaccid').attr('readonly', true );
 			$('#txtbankaccname').attr('readonly', true );
 			$('#txtchequeno').attr('readonly', true );
-			$("#jqxJournalVoucher").jqxGrid({ disabled: true});
-			$("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
+			if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: true});
+			if($("#jqxJournalVoucherApplying").length) $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
 			$("#btnview").show();
 			
 			if ($("#mode").val() == "A") {
@@ -142,19 +272,21 @@
 			     $('#txtbankaccid').attr('readonly', true );
 				 $('#txtbankaccname').attr('readonly', true );
 				 $('#txtchequeno').attr('readonly', true );
-				 $("#jqxJournalVoucher").jqxGrid('clear'); 
-				 $("#jqxJournalVoucher").jqxGrid('addrow', null, {}); 
-			     $("#jqxJournalVoucherApplying").jqxGrid('clear');
-				 $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {}); 
+				 if($("#jqxJournalVoucher").length) {
+				     $("#jqxJournalVoucher").jqxGrid('clear'); 
+				     $("#jqxJournalVoucher").jqxGrid('addrow', null, {}); 
+				 }
+			     if($("#jqxJournalVoucherApplying").length) {
+			         $("#jqxJournalVoucherApplying").jqxGrid('clear');
+				     $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {}); 
+			     }
 			} 
-			
+	     } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
 	 }
 	 
 	 function funSearchLoad(){}
 		
-	 function funChkButton(){
-			/* funReset(); */
-		}
+	 function funChkButton(){ }
 	 
 	 function funFocus(){
 	    	document.getElementById("cmbcriteria").focus(); 	    		
@@ -169,10 +301,10 @@
 			  return 0;
 		    }
 		  
-		  	if(document.getElementById("jqxDate").value=="" || document.getElementById("jqxDate").value==null){
+		 	if(document.getElementById("jqxDate").value=="" || document.getElementById("jqxDate").value==null){
 			  document.getElementById("errormsg").innerText="Posting Date is Mandatory.";
 			  return 0;
-		  	}
+		 	}
 			
 			var postdate = $('#jqxDate').jqxDateTimeInput('getDate');
 			var postvaliddate=funDateInPeriod(postdate);
@@ -259,56 +391,68 @@
 		  return 1;
 		} 
 	  
-	  
+	  /* SAFE SET VALUES FUNCTION */
 	  function setValues(){
-		  
-		  document.getElementById("cmbcriteria").value=document.getElementById("hidcmbcriteria").value;
-		  document.getElementById("cmbacctype").value=document.getElementById("hidcmbacctype").value;
-		  
-		  if($('#hidjqxFromDate').val()){
-				 $("#jqxFromDate").jqxDateTimeInput('val', $('#hidjqxFromDate').val());
-			  }
-		  
-		  if($('#hidjqxToDate').val()){
-				 $("#jqxToDate").jqxDateTimeInput('val', $('#hidjqxToDate').val());
-			  }
-		  
-		   if($('#hidjqxDate').val()){
-				 $("#jqxDate").jqxDateTimeInput('val', $('#hidjqxDate').val());
-			  }
-			  
-		  if($('#hidchequedate').val()){
-				 $("#chequedate").jqxDateTimeInput('val', $('#hidchequedate').val());
-			  }
-		  
-		  if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
-		  
-		  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-		  funSetlabel();
-		  
-		  if($('#mode').val()=="view"){
-			    $("#jqxJournalVoucher").jqxGrid({ disabled: true});
-			  	$("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
-			  	$("#jqxJournalVoucherApplying").jqxGrid('clear');
-			  	$("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
-			  }
+	      try {
+    		  if(document.getElementById("cmbcriteria") && document.getElementById("hidcmbcriteria")){
+    		      document.getElementById("cmbcriteria").value=document.getElementById("hidcmbcriteria").value;
+    		  }
+    		  if(document.getElementById("cmbacctype") && document.getElementById("hidcmbacctype")){
+    		      document.getElementById("cmbacctype").value=document.getElementById("hidcmbacctype").value;
+    		  }
+    		  
+    		  if($('#hidjqxFromDate').length && $('#hidjqxFromDate').val()){
+    				 $("#jqxFromDate").jqxDateTimeInput('val', $('#hidjqxFromDate').val());
+    			  }
+    		  
+    		  if($('#hidjqxToDate').length && $('#hidjqxToDate').val()){
+    				 $("#jqxToDate").jqxDateTimeInput('val', $('#hidjqxToDate').val());
+    			  }
+    		  
+    		   if($('#hidjqxDate').length && $('#hidjqxDate').val()){
+    				 $("#jqxDate").jqxDateTimeInput('val', $('#hidjqxDate').val());
+    			  }
+    			  
+    		  if($('#hidchequedate').length && $('#hidchequedate').val()){
+    				 $("#chequedate").jqxDateTimeInput('val', $('#hidchequedate').val());
+    			  }
+    		  
+    		  if($('#msg').length && $('#msg').val()!=""){
+    			   $.messager.alert('Message',$('#msg').val());
+    			  }
+    		  
+    		  if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                  var detailVal = $('#formdetail').val() || "";
+                  var codeVal = $('#formdetailcode').val() || "";
+                  document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+              }
+              
+    		  if(typeof funSetlabel === 'function') funSetlabel();
+    		  
+    		  if($('#mode').length && $('#mode').val()=="view"){
+    			    if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: true});
+    			  	if($("#jqxJournalVoucherApplying").length) {
+    			  	    $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
+    			  	    $("#jqxJournalVoucherApplying").jqxGrid('clear');
+    			  	    $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
+    			  	}
+    		  }
+	      } catch(e) { console.error("Error in setValues: ", e); }
 		}
 	  
 	  function checkChequeDate(){
 		  var posted=$('#cmbcriteria').val();
 	      if(posted==4){
-		  var newchequedate = $('#chequedate').jqxDateTimeInput('getDate');
-		  var oldchequedate = $('#checkchequedate').jqxDateTimeInput('getDate');
-		  if(newchequedate<oldchequedate){
-			  document.getElementById("errormsg").innerText="Past/Current Cheque Date, Transaction Restricted.";
-			  $('#txtchequevalidation').val(1);
-			  return 0;
-		  }
-		  document.getElementById("errormsg").innerText="";
-		  $('#txtchequevalidation').val(0);
-		  return 1;
+    		  var newchequedate = $('#chequedate').jqxDateTimeInput('getDate');
+    		  var oldchequedate = $('#checkchequedate').jqxDateTimeInput('getDate');
+    		  if(newchequedate<oldchequedate){
+    			  document.getElementById("errormsg").innerText="Past/Current Cheque Date, Transaction Restricted.";
+    			  $('#txtchequevalidation').val(1);
+    			  return 0;
+    		  }
+    		  document.getElementById("errormsg").innerText="";
+    		  $('#txtchequevalidation').val(0);
+    		  return 1;
 	      }
 	  }
 	  
@@ -322,7 +466,9 @@
 		  
 		  $("#overlay, #PleaseWait").show();
 		  
-		  $("#jqxJournalVoucherGrid").load('journalVoucherGrid.jsp?txtcriteria='+criteria+'&accId='+accId+'&accType='+accType+'&fromDate='+fromDate+'&toDate='+toDate+'&check='+check);
+		  if($("#jqxJournalVoucherGrid").length) {
+		      $("#jqxJournalVoucherGrid").load('journalVoucherGrid.jsp?txtcriteria='+criteria+'&accId='+accId+'&accType='+accType+'&fromDate='+fromDate+'&toDate='+toDate+'&check='+check);
+		  }
 	  }
 	  
 	  function funloadgrid(){
@@ -346,9 +492,11 @@
 		  
 		  document.getElementById("errormsg").innerText="";
 		  
-		  $("#jqxJournalVoucher").jqxGrid({ disabled: false});
-		  $("#jqxJournalVoucherApplying").jqxGrid('clear');
-		  $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
+		  if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: false});
+		  if($("#jqxJournalVoucherApplying").length) {
+		      $("#jqxJournalVoucherApplying").jqxGrid('clear');
+		      $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
+		  }
 		  
 		  getPDCAccounts();
 		  getPDCPostAccount();
@@ -380,12 +528,16 @@
 	  
 	  function clearClientInfo(){
 		  $("#txtdocno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
-		  $("#jqxJournalVoucher").jqxGrid({ disabled: true});
-		  $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
-		  $("#jqxJournalVoucherApplying").jqxGrid('clear');
-		  $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
-		  $("#jqxJournalVoucher").jqxGrid('clear');
-		  $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
+		  if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: true});
+		  if($("#jqxJournalVoucherApplying").length) {
+		      $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
+		      $("#jqxJournalVoucherApplying").jqxGrid('clear');
+		      $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
+		  }
+		  if($("#jqxJournalVoucher").length) {
+		      $("#jqxJournalVoucher").jqxGrid('clear');
+		      $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
+		  }
 	  }
 	 
 	 function datechange(){
@@ -396,328 +548,165 @@
 				return 0;	
 			}
 			
-		   $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
-		   $("#jqxJournalVoucherApplying").jqxGrid('clear');
-		   $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
-		   $("#jqxJournalVoucher").jqxGrid({ disabled: true});
-		   $("#jqxJournalVoucher").jqxGrid('clear');
-		   $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
+		   if($("#jqxJournalVoucherApplying").length) {
+		       $("#jqxJournalVoucherApplying").jqxGrid({ disabled: true});
+		       $("#jqxJournalVoucherApplying").jqxGrid('clear');
+		       $("#jqxJournalVoucherApplying").jqxGrid('addrow', null, {});
+		   }
+		   if($("#jqxJournalVoucher").length) {
+		       $("#jqxJournalVoucher").jqxGrid({ disabled: true});
+		       $("#jqxJournalVoucher").jqxGrid('clear');
+		       $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
+		   }
 	  }
 	  
 </script>
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 16px;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-
-.cr-table td {
-    font-weight: 700 !important;
-}
-
-
-
-/* Remove autofill color from normal inputs */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    box-shadow: 0 0 0 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-    -webkit-text-fill-color: #1f2933 !important;
-    font-weight: 700 !important;
-}
-
-/* Fix autofill for JQX Date / JQX widgets */
-.jqx-widget input:-webkit-autofill,
-.jqx-input-content:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    box-shadow: 0 0 0 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-    -webkit-text-fill-color: #1f2933 !important;
-}
-
-
-
-
-
-
-.cr-table input:focus,
-.cr-table select:focus {
-    border-color: #4d7dff;
-    box-shadow: 0 0 0 2px rgba(90,140,255,0.25);
-    outline: none;
-}
-
-.myButton {
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-}
-
-</style>
-
 </head>
+
 <body onload="setValues();headerbtndisable();">
-<div id="mainBG" class="homeContent" data-type="background" >
+
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background" >
 <form id="frmPDCPostingReceipt" action="savePDCPostingReceipt" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
+<div class="modern-ui">
 
-    <div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="3%" align="right">Criteria</td>
-    <td width="23%"><select id="cmbcriteria" name="cmbcriteria" style="width:97%;" value='<s:property value="cmbcriteria"/>' onchange="dateDisable();getPDCAccounts();getPDCPostAccount();clearClientInfo();">
-    <option value="">--Select--</option><option value="1">PDC to be Posted</option><option value="2">PDC to be Returned</option><option value="3">Posted PDC to be Dishonoured</option>
-    <option value="4">PDC to be Postponed</option><option value="5">Retuned PDC to be Reversed</option><option value="6">Dishourned PDC to be Reversed</option>
-    <option value="7">CDC to be Dishourned</option></select>
-    <input type="hidden" id="hidcmbcriteria" name="hidcmbcriteria" value='<s:property value="hidcmbcriteria"/>'/></td>
-    <td width="3%" align="right">From</td>
-    <td width="3%"><div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
-    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/></td>
-    <td width="2%" align="right">To</td>
-    <td width="3%"><div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
-    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/></td>
-    <td width="4%" align="right">Account</td>
-    <td width="9%"><select id="cmbacctype" name="cmbacctype" style="width:90%;" onchange="clearClientInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="0">--Select--</option><option value="BANK">Bank</option><option value="AP">AP</option><option value="AR">AR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="12%"><input type="text" id="txtaccid" name="txtaccid" style="width:85%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td width="24%"><input type="text" id="txtaccname" name="txtaccname" style="width:97%;" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-<td width="3%" align="right" style="padding-left:35px;">Posting</td>
+    <div class="erp-form-area">
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2" style="margin-bottom: 8px;">
+            <tr>
+                <td class="lbl-right" width="8%">Criteria</td>
+                <td width="25%">
+                    <select id="cmbcriteria" name="cmbcriteria" value='<s:property value="cmbcriteria"/>' onchange="dateDisable();getPDCAccounts();getPDCPostAccount();clearClientInfo();">
+                        <option value="">--Select--</option>
+                        <option value="1">PDC to be Posted</option>
+                        <option value="2">PDC to be Returned</option>
+                        <option value="3">Posted PDC to be Dishonoured</option>
+                        <option value="4">PDC to be Postponed</option>
+                        <option value="5">Retuned PDC to be Reversed</option>
+                        <option value="6">Dishourned PDC to be Reversed</option>
+                        <option value="7">CDC to be Dishourned</option>
+                    </select>
+                    <input type="hidden" id="hidcmbcriteria" name="hidcmbcriteria" value='<s:property value="hidcmbcriteria"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">From</td>
+                <td width="15%">
+                    <div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
+                    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">To</td>
+                <td width="36%">
+                    <div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
+                    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="lbl-right" width="8%">Account</td>
+                <td width="15%">
+                    <select id="cmbacctype" name="cmbacctype" onchange="clearClientInfo();" value='<s:property value="cmbacctype"/>'>
+                        <option value="0">--Select--</option>
+                        <option value="BANK">Bank</option>
+                        <option value="AP">AP</option>
+                        <option value="AR">AR</option>
+                    </select>
+                    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+                </td>
+                <td width="10%">
+                    <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
+                </td>
+                <td width="30%">
+                    <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' tabindex="-1"/>
+                    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">Posting</td>
+                <td width="15%">
+                    <div id="jqxDate" name="jqxDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDate"/>'></div>
+                    <input type="hidden" id="hidjqxDate" name="hidjqxDate" value='<s:property value="hidjqxDate"/>'/>
+                </td>
+                <td width="14%" align="right">
+                    <button class="erp-btn" type="button" id="btnview" name="btnview" onclick="funloadgrid();">View</button>
+                </td>
+            </tr>
+        </table>
 
-    <td width="4%"><div id="jqxDate" name="jqxDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDate"/>'></div>
-	<input type="hidden" id="hidjqxDate" name="hidjqxDate" value='<s:property value="hidjqxDate"/>'/></td>
-    <td width="8%" align="center"><button class="myButton" type="button" id="btnview" name="btnview" onclick="funloadgrid();">View</button></td>
-  </tr>
-  </table></div>
-<div class="cr-table" id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div><br/>
-<div class="cr-table" id="jqxJournalVoucherApplyingGrid"><jsp:include page="journalVoucherApplyingGrid.jsp"></jsp:include></div>
-<div id="pdcPostponedDiv" hidden="true">
- <fieldset style="background: #ECF8E0;">
- <table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Bank</td>
-    <td width="14%"><input type="text" id="txtbankaccid" name="txtbankaccid" style="width:80%;" value='<s:property value="txtbankaccid"/>'/></td>
-    <td colspan="2"><input type="text" id="txtbankaccname" name="txtbankaccname" style="width:40%;" value='<s:property value="txtbankaccname"/>'/>
-    <input type="hidden" id="txtbankdocno" name="txtbankdocno" value='<s:property value="txtbankdocno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Cheque No.</td>
-    <td><input type="text" id="txtchequeno" name="txtchequeno" style="width:80%;" value='<s:property value="txtchequeno"/>'/></td>
-    <td width="8%" align="right">Cheque Date</td>
-    <td width="71%"><div id="chequedate" name="chequedate" onchange="checkChequeDate();" value='<s:property value="chequedate"/>'></div>
-	<input type="hidden" id="hidchequedate" name="hidchequedate" value='<s:property value="hidchequedate"/>'/>
-	<div hidden="true" id="checkchequedate" name="checkchequedate" value='<s:property value="checkchequedate"/>'></div></td>
-  </tr>
-</table>
-</fieldset>
- </div>
+    </div>
+
+    <div class="grid-container" id="jqxJournalVoucherGrid">
+        <jsp:include page="journalVoucherGrid.jsp"></jsp:include>
+    </div>
+    
+    <div class="grid-container" id="jqxJournalVoucherApplyingGrid">
+        <jsp:include page="journalVoucherApplyingGrid.jsp"></jsp:include>
+    </div>
+
+    <div id="pdcPostponedDiv" hidden="true">
+        <div class="erp-form-area" style="background-color: #ECF8E0; border-color: #c3e6cb;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="8%">Bank</td>
+                    <td width="20%">
+                        <input type="text" id="txtbankaccid" name="txtbankaccid" value='<s:property value="txtbankaccid"/>'/>
+                    </td>
+                    <td colspan="2">
+                        <input type="text" id="txtbankaccname" name="txtbankaccname" value='<s:property value="txtbankaccname"/>' style="max-width: 400px;"/>
+                        <input type="hidden" id="txtbankdocno" name="txtbankdocno" value='<s:property value="txtbankdocno"/>'/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl-right" style="padding-top: 8px;">Cheque No.</td>
+                    <td style="padding-top: 8px;">
+                        <input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>'/>
+                    </td>
+                    <td class="lbl-right" width="10%" style="padding-top: 8px;">Cheque Date</td>
+                    <td style="padding-top: 8px;">
+                        <div id="chequedate" name="chequedate" onchange="checkChequeDate();" value='<s:property value="chequedate"/>'></div>
+                        <input type="hidden" id="hidchequedate" name="hidchequedate" value='<s:property value="hidchequedate"/>'/>
+                        <div hidden="true" id="checkchequedate" name="checkchequedate" value='<s:property value="checkchequedate"/>'></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
  
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtpdcdocno" name="txtpdcdocno"  value='<s:property value="txtpdcdocno"/>'/>
-<input type="hidden" id="txtpdcaccid" name="txtpdcaccid"  value='<s:property value="txtpdcaccid"/>'/>
-<input type="hidden" id="txtpdcaccname" name="txtpdcaccname"  value='<s:property value="txtpdcaccname"/>'/>
-<input type="hidden" id="txtpdcatype" name="txtpdcatype"  value='<s:property value="txtpdcatype"/>'/>
-<input type="hidden" id="txtpdccurid" name="txtpdccurid"  value='<s:property value="txtpdccurid"/>'/>
-<input type="hidden" id="txtpdcrate" name="txtpdcrate"  value='<s:property value="txtpdcrate"/>'/>
-<input type="hidden" id="txtpdctype" name="txtpdctype"  value='<s:property value="txtpdctype"/>'/>
-<input type="hidden" id="txtpdcpostdocno" name="txtpdcpostdocno"  value='<s:property value="txtpdcpostdocno"/>'/>
-<input type="hidden" id="txtpdcpostaccid" name="txtpdcpostaccid"  value='<s:property value="txtpdcpostaccid"/>'/>
-<input type="hidden" id="txtpdcpostaccname" name="txtpdcpostaccname"  value='<s:property value="txtpdcpostaccname"/>'/>
-<input type="hidden" id="txtpdcpostatype" name="txtpdcpostatype"  value='<s:property value="txtpdcpostatype"/>'/>
-<input type="hidden" id="txtpdcpostcurid" name="txtpdcpostcurid"  value='<s:property value="txtpdcpostcurid"/>'/>
-<input type="hidden" id="txtpdcpostrate" name="txtpdcpostrate"  value='<s:property value="txtpdcpostrate"/>'/>
-<input type="hidden" id="txtpdcposttype" name="txtpdcposttype"  value='<s:property value="txtpdcposttype"/>'/>
-<input type="hidden" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'/>
-<input type="hidden" id="txtgriddocno" name="txtgriddocno" value='<s:property value="txtgriddocno"/>'/>
-<input type="hidden" id="txtrowno" name="txtrowno" value='<s:property value="txtrowno"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtposttrno" name="txtposttrno"  value='<s:property value="txtposttrno"/>'/>
-<input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
-<input type="hidden" id="txtchequevalidation" name="txtchequevalidation"  value='<s:property value="txtchequevalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
+    <div style="display:none;">
+        <input type="hidden" id="mode" name="mode"/>
+        <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <input type="hidden" id="txtpdcdocno" name="txtpdcdocno"  value='<s:property value="txtpdcdocno"/>'/>
+        <input type="hidden" id="txtpdcaccid" name="txtpdcaccid"  value='<s:property value="txtpdcaccid"/>'/>
+        <input type="hidden" id="txtpdcaccname" name="txtpdcaccname"  value='<s:property value="txtpdcaccname"/>'/>
+        <input type="hidden" id="txtpdcatype" name="txtpdcatype"  value='<s:property value="txtpdcatype"/>'/>
+        <input type="hidden" id="txtpdccurid" name="txtpdccurid"  value='<s:property value="txtpdccurid"/>'/>
+        <input type="hidden" id="txtpdcrate" name="txtpdcrate"  value='<s:property value="txtpdcrate"/>'/>
+        <input type="hidden" id="txtpdctype" name="txtpdctype"  value='<s:property value="txtpdctype"/>'/>
+        <input type="hidden" id="txtpdcpostdocno" name="txtpdcpostdocno"  value='<s:property value="txtpdcpostdocno"/>'/>
+        <input type="hidden" id="txtpdcpostaccid" name="txtpdcpostaccid"  value='<s:property value="txtpdcpostaccid"/>'/>
+        <input type="hidden" id="txtpdcpostaccname" name="txtpdcpostaccname"  value='<s:property value="txtpdcpostaccname"/>'/>
+        <input type="hidden" id="txtpdcpostatype" name="txtpdcpostatype"  value='<s:property value="txtpdcpostatype"/>'/>
+        <input type="hidden" id="txtpdcpostcurid" name="txtpdcpostcurid"  value='<s:property value="txtpdcpostcurid"/>'/>
+        <input type="hidden" id="txtpdcpostrate" name="txtpdcpostrate"  value='<s:property value="txtpdcpostrate"/>'/>
+        <input type="hidden" id="txtpdcposttype" name="txtpdcposttype"  value='<s:property value="txtpdcposttype"/>'/>
+        <input type="hidden" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'/>
+        <input type="hidden" id="txtgriddocno" name="txtgriddocno" value='<s:property value="txtgriddocno"/>'/>
+        <input type="hidden" id="txtrowno" name="txtrowno" value='<s:property value="txtrowno"/>'/>
+        <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+        <input type="hidden" id="txtposttrno" name="txtposttrno"  value='<s:property value="txtposttrno"/>'/>
+        <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
+        <input type="hidden" id="txtchequevalidation" name="txtchequevalidation"  value='<s:property value="txtchequevalidation"/>'/>
+        <input type="hidden" id="gridlength" name="gridlength"/>
+        
+        <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+        <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
+    </div>
+
 </div>
 </form>
-			
-<div id="accountDetailsWindow">
-	<div></div><div></div>
-</div>  
-	
+            
+<div id="accountDetailsWindow"><div></div><div></div></div>  
+    
 </div>
 </body>
 </html>

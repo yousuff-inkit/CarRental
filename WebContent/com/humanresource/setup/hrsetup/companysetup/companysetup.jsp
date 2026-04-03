@@ -1,247 +1,142 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
-<%
-String contextPath=request.getContextPath();
-%>
+<% String contextPath=request.getContextPath(); %>
 <head>
 <title>GatewayERP(i)</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../../includes.jsp"></jsp:include>
+
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
 
-body {
-    /* Subtle blue gradient background */
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
     box-sizing: border-box;
-    overflow-y: auto !important; /* Ensure body scrolling works for all content */
 }
 
-#mainBG {
-    /* White card container */
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
 }
 
-/* ------------------------------
-    COMMON UI ELEMENTS
------------------------------- */
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%; /* Ensure inputs fill their container columns */
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
 }
 
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
     outline: none;
 }
 
-label {
-    font: 16px;
-    color: #253858;
-    white-space: nowrap;
-    line-height: 32px; /* Aligns with input heights */
-    padding: 0px 8px 0px 0px; 
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
     text-align: right; 
-    font-weight: 500;
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-/* ------------------------------
-    CARD ROWS LAYOUT (CORE MASTER UI)
------------------------------- */
-
-/* The main container for a section, creating the card effect */
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa; /* Light background for the card */
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.section-block h2 {
-    font-size: 17.4px;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff; /* Blue line accent */
-}
-
-/* Container for rows that are side-by-side */
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 30px;
-}
-
-/* Base layout for fields (Label | Input) */
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    font-size: 1rem;
-}
-
-/* Specific layout for the main "Vehicle Info As In Agreement" section (3 columns) */
-.agmt-info-grid {
-    display: grid;
-    /* 3 sets of Label(auto) | Input(1fr) per row */
-    grid-template-columns: auto 1fr auto 1fr auto 1fr; 
-    gap: 15px 25px;
-    align-items: center;
-}
-
-/* Specific layout for the side-by-side cards (4 columns) */
-.in-out-info-grid {
-    display: grid;
-    /* Label | Input | Label | Input */
-    grid-template-columns: auto 1fr auto 1fr; 
-    gap: 12px 16px;
-    align-items: center;
-}
-.in-out-info-grid label {
-    font-weight: 500; /* Slightly lighter for readability in dense cards */
-    padding-right: 8px;
-}
-
-.input-group {
-    display: flex;
-    gap: 5px;
-    width: 100%;
-}
-.input-group input {
-    width: 35% !important;
-}
-.input-group input:nth-child(2) {
-    width: 65% !important;
-}
-
-/* Specific alignment for checkboxes (like Collection/Delivery) */
-.checkbox-label-end {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 5px;
-}
-
-.btn-group-end {
-    grid-column: span 4; /* Span full row in Vehicle In Info */
-    text-align: right;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-/* Styling for status label */
-#lblcancelstatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #6000FC; 
-    text-align: center;
-    grid-column: span 2;
-}
-
-/* Date time inputs styling for jQWidgets */
-.jqx-datetimeinput-widget, .jqx-datetimeinput {
-    height: 32px !important; 
-    line-height: 32px !important;
-}
-
-/* SCROLLING FIX */
-.hidden-scrollbar {
-    overflow-y: visible !important; 
-    max-height: none !important; 
-    min-height: 1px; 
-    padding-right: 5px; 
-}
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 8px; 
-    background: #f0f0f0;
-}
-.hidden-scrollbar::-webkit-scrollbar-thumb {
-    background: #c0c0c0;
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
     border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
 }
 
-/* FILE SPECIFIC STYLES (Kept from original or modified for visual consistency) */
 form label.error {
-    color:red;
-    font-weight:bold;
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
 }
 
-#formdet {
-    display: block;
-    text-align: left !important;
-    width: 100%;
-    margin-left: 0;
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
 }
-
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
 
 <%@page import="com.humanresource.setup.hrsetup.companysetup.ClsCompanysetupDAO"%>
 <% ClsCompanysetupDAO DAO = new ClsCompanysetupDAO(); %>
 
-
 <script type="text/javascript"> 
 
-	$(document).ready(function () {    
+	$(document).ready(function () {   
 		
-		    document.getElementById("formdet").innerText="Company Setup(CMS)";
-			document.getElementById("formdetail").value="Company Setup";
-			document.getElementById("formdetailcode").value="CMS";
-			window.parent.formCode.value="CMS";
-			window.parent.formName.value="Company Setup";
+	    if(document.getElementById("formdet")) document.getElementById("formdet").innerText="Company Setup(CMS)";
+		if(document.getElementById("formdetail")) document.getElementById("formdetail").value="Company Setup";
+		if(document.getElementById("formdetailcode")) document.getElementById("formdetailcode").value="CMS";
+		if(window.parent && window.parent.formCode) window.parent.formCode.value="CMS";
+		if(window.parent && window.parent.formName) window.parent.formName.value="Company Setup";
 			
-			
-		    $("#compdate").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy" });
-		 
-		    
-		    $('#compWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '27%' , title: 'Company Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 		 $('#compWindow').jqxWindow('close');
-	 		 
-		    
-		    $('#establishedCodeDetailsWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '30%' , title: 'Establishment Code Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 		 $('#establishedCodeDetailsWindow').jqxWindow('close');
-	  		
-	 		$('#company').dblclick(function(){
-	 			compSearchContent("companydetailsGrid.jsp");
-			  });
+        /* FIXED DATE WIDTHS & HEIGHTS (Changed from 100% to 120px) */
+		$("#compdate").jqxDateTimeInput({ width: '120px', height: '24px' ,formatString : "dd.MM.yyyy" });
+		
+        /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
+		   
+		$('#compWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '27%' , title: 'Company Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	 	$('#compWindow').jqxWindow('close');
 	 		
-		    $('#estcode').dblclick(function(){
-		    	 establishedCodeSearchContent("establishmentCodeDetailsSearchGrid.jsp");
-			 });
+		$('#establishedCodeDetailsWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '30%' , title: 'Establishment Code Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+	 	$('#establishedCodeDetailsWindow').jqxWindow('close');
+	 		
+	 	$('#company').dblclick(function(){
+	 		compSearchContent("companydetailsGrid.jsp");
+		});
+	 		
+		$('#estcode').dblclick(function(){
+		    establishedCodeSearchContent("establishmentCodeDetailsSearchGrid.jsp");
+		});
 
-	   
-		    var deptdata= '<%=DAO.loadgrid() %>'; 
-	  var source =
+		var deptdata= '<%=DAO.loadgrid() %>'; 
+	    var source =
             {
                 datatype: "json",
                 datafields: [
@@ -250,7 +145,6 @@ form label.error {
                           	{name : 'date', type: 'date'  },
                           	{name : 'company', type: 'String'  },
                         	{name : 'remarks', type: 'String'  }
-                            
                  ],
                	 localdata: deptdata,
                 
@@ -258,12 +152,12 @@ form label.error {
                     // callback called when a page or page size is changed.
                 }
             };
-	    
-	        var dataAdapter = new $.jqx.dataAdapter(source);
+	   
+	    var dataAdapter = new $.jqx.dataAdapter(source);
     
-            $("#companygrid").jqxGrid(
-                  {
-                  	width: "100%",
+        $("#companygrid").jqxGrid(
+                 {
+                 	width: "100%",
                     source: dataAdapter,
                     showfilterrow: true,
                     filterable: true,
@@ -275,62 +169,79 @@ form label.error {
 	        					{ text: 'EST Code',columntype: 'textbox', filtertype: 'input', datafield: 'estcode', width: '15%' },
 	        					{ text: 'Company',columntype: 'textbox', filtertype: 'input', datafield: 'company',width:'30%' },
 	        					{ text: 'Remarks',columntype: 'textbox', filtertype: 'input', datafield: 'remarks' },
-	             	           
 	        					]
                     });
 	}); 
 
-       function getEstablishmentCode(event){
-     	        var x= event.keyCode;
-	        if(x==114){
+    function getEstablishmentCode(event){
+         var x= event.keyCode;
+	     if(x==114){
 	        	establishedCodeSearchContent("establishmentCodeDetailsSearchGrid.jsp");
-	        }
-	        else{}
-	        }
-	    
-		function establishedCodeSearchContent(url) {
-		 	$('#establishedCodeDetailsWindow').jqxWindow('open');
-			$.get(url).done(function (data) {
+	     }
+	     else{}
+	}
+	   
+	function establishedCodeSearchContent(url) {
+		$('#establishedCodeDetailsWindow').jqxWindow('open');
+		$.get(url).done(function (data) {
 			$('#establishedCodeDetailsWindow').jqxWindow('setContent', data);
 			$('#establishedCodeDetailsWindow').jqxWindow('bringToFront');
 		}); 
-		}
+	}
 	  
-	    function getcomp(event){
-	          var x= event.keyCode;
-	          if(x==114){
-	        	  compSearchContent("companydetailsGrid.jsp");
-	          }
-	          else{}
-	          }
+	function getcomp(event){
+	      var x= event.keyCode;
+	      if(x==114){
+	        	compSearchContent("companydetailsGrid.jsp");
+	      }
+	      else{}
+	}
 	   
-	    function compSearchContent(url) {
-			$('#compWindow').jqxWindow('open');
-			$.get(url).done(function (data) {
+	function compSearchContent(url) {
+		$('#compWindow').jqxWindow('open');
+		$.get(url).done(function (data) {
 			$('#compWindow').jqxWindow('setContent', data);
 			$('#compWindow').jqxWindow('bringToFront');
 		}); 
-		}
+	}
 	    
-		function funReadOnly() {
-			$('#frmcompanysetup input').attr('readonly', true);
-		 
-		}
-		function funRemoveReadOnly() {
-			$('#frmcompanysetup input').attr('readonly', false);
-		}
+    /* SAFE READONLY FUNCTION */
+	function funReadOnly() {
+	    try {
+		    $('#frmcompanysetup input[type="text"]').attr('readonly', true);
+		    $('#compdate').jqxDateTimeInput({ disabled: true});
+	    } catch(e) { console.error("Error in funReadOnly: ", e); }
+	}
 	
-		function setValues(){
-			if($('#datehidden').val()){
+	/* SAFE REMOVE READONLY FUNCTION */
+	function funRemoveReadOnly() {
+	    try {
+		    $('#frmcompanysetup input[type="text"]').attr('readonly', false);
+		    $('#compdate').jqxDateTimeInput({ disabled: false});
+		    $('#docno').attr('readonly', true);
+	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
+	}
+	
+    /* SAFE SET VALUES FUNCTION */
+	function setValues(){
+	    try {
+			if($('#datehidden').length && $('#datehidden').val()){
 				$("#compdate").jqxDateTimeInput('val', $('#datehidden').val());
 			}
 			
-			if($('#msg').val()!=""){
+			if($('#msg').length && $('#msg').val()!=""){
 				  $.messager.alert('Message',$('#msg').val());
 			}
-		}
-	 
-		function funNotify(){
+			
+            if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                 var detailVal = $('#formdetail').val() || "";
+                 var codeVal = $('#formdetailcode').val() || "";
+                 document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+            }
+	    } catch(e) { console.error("Error in setValues: ", e); }
+	}
+	
+	function funNotify(){
         	if(document.getElementById("company").value=="") {
         		
         		document.getElementById("errormsg").innerText=" Enter Company";
@@ -339,76 +250,76 @@ form label.error {
         	}
     		return 1;
 	}
-		 function funFocus(){
-			 
-		 }
-		 
-		 function funSearchLoad(){
-			 changeContent('loadsearchGrid.jsp'); 
-		 }
+	 function funFocus(){
+		
+	 }
+	 
+	 function funSearchLoad(){
+		 changeContent('loadsearchGrid.jsp'); 
+	 }
 </script>
 
 </head>
 <body onLoad="setValues();" >
-<div id="mainBG" class="homeContent" data-type="background">
+
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
 <form id="frmcompanysetup" action="saveCompanysetup" method="post" autocomplete="off">
-    <jsp:include page="../../../../../header.jsp" /><br/>
+    <jsp:include page="../../../../../header.jsp" />
 
-    <div class='hidden-scrollbar' style="padding: 10px;">
+    <div class="modern-ui">
 
-        <div class="section-block" style="margin-bottom: 20px;">
-            <h2>Company Setup</h2> 
-            
-            <div class="agmt-info-grid">
-                
-                <label for="compdate">Date</label>
-                <div>
-                    <div id="compdate" name="compdate" value='<s:property value="compdate"/>'> </div>
-                </div>
-                
-                <label for="company">Company</label>
-                <div>
-                    <input type="text" name="company" id="company" placeholder="Press F3 to Search" value='<s:property value="company"/>'>
-                </div>
-                
-                <label for="docno">Doc No</label>
-                <div>
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
-                </div>
-                
-                <label for="estcode">Est Code</label>
-                <div>
-                    <input type="text" name="estcode" id="estcode" placeholder="Press F3 to Search" value='<s:property value="estcode"/>'>
-                </div>
+        <div class="erp-form-area">
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="5%">Date</td>
+                    <td width="15%">
+                        <div id="compdate" name="compdate" value='<s:property value="compdate"/>'> </div>
+                    </td>
+                    <td class="lbl-right" width="8%">Company</td>
+                    <td width="30%">
+                        <input type="text" name="company" id="company" placeholder="Press F3 to Search" value='<s:property value="company"/>' onkeydown="getcomp(event);">
+                    </td>
+                    <td class="lbl-right" width="8%">Doc No</td>
+                    <td width="34%">
+                        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1" style="width: 150px;">
+                    </td>
+                </tr>
 
-               
-
-                <label for="remarks">Remarks</label>
-                <div style="grid-column: span 3;"> 
-                    <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>' >
-                </div>
-                
-            </div>
+                <tr>
+                    <td class="lbl-right">Est Code</td>
+                    <td>
+                        <input type="text" name="estcode" id="estcode" placeholder="Press F3 to Search" value='<s:property value="estcode"/>' onkeydown="getEstablishmentCode(event);">
+                    </td>
+                    <td class="lbl-right">Remarks</td>
+                    <td colspan="3">
+                        <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>' >
+                    </td>
+                </tr>
+            </table>
         </div>
 
-        <input type="hidden" id="mode" name="mode"/>
-        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-        <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
-        
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/>
+            
+            <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+            <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
+        </div>
+
     </div>
 </form>
 
-<table width="100%">
-    <tr><td><div id="companygrid"></div></td></tr>
-</table><br/>
-
-<div id="establishedCodeDetailsWindow">
-    <div></div>
-</div>	
-<div id="compWindow">
-    <div></div>
+<div class="modern-ui" style="padding-top: 0;">
+    <div class="grid-container">
+        <div id="companygrid"></div>
+    </div>
 </div>
+
+<div id="establishedCodeDetailsWindow"><div></div></div>  
+<div id="compWindow"><div></div></div>
+
 </div>
 </body>
 </html>
