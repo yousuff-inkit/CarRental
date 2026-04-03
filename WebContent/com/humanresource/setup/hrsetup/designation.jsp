@@ -7,28 +7,128 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<style>
-form label.error {
-color:red;
-  font-weight:bold;
 
+<style>
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
 }
+
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Split Section Styling */
+.modern-ui .section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #c5d3e0;
+    padding-bottom: 3px;
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
 
 <%@page import="com.humanresource.setup.hrsetup.designation.ClsDesignationDAO"%>
 <% ClsDesignationDAO showDAO = new ClsDesignationDAO(); %>   
 
 <script type="text/javascript">
+	$(document).ready(function () {   
+	    if(document.getElementById("formdet")) document.getElementById("formdet").innerText="Designation(DES)";
+		if(document.getElementById("formdetail")) document.getElementById("formdetail").value="Designation";
+		if(document.getElementById("formdetailcode")) document.getElementById("formdetailcode").value="DES";
+		if(window.parent && window.parent.formCode) window.parent.formCode.value="DES";
+		if(window.parent && window.parent.formName) window.parent.formName.value="Designation";
 
-	$(document).ready(function () {    
-	    document.getElementById("formdet").innerText="Designation(DES)";
-		document.getElementById("formdetail").value="Designation";
-		document.getElementById("formdetailcode").value="DES";
-		window.parent.formCode.value="DES";
-		window.parent.formName.value="Designation";
+        /* FIXED DATE WIDTHS & HEIGHTS (Compact 120px) */
+		$("#desigdate").jqxDateTimeInput({ width: '120px', height: '24px' ,formatString : "dd.MM.yyyy" });
+	   
+        /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
 
-		$("#desigdate").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy" });
-	    
 		var desigdata='<%=showDAO.searchDesignation()%>';
 
 		var source =
@@ -38,7 +138,6 @@ color:red;
                           	{name : 'doc_no' , type: 'number' },
      						{name : 'designation', type: 'String'  },
                           	{name : 'date', type: 'date'  },
-                          	
                           	{name : 'remarks', type: 'String'  }
                  ],
                localdata: desigdata,
@@ -81,216 +180,117 @@ color:red;
 		 changeContent('designationsearch.jsp'); 
 	 }
  
- 
+    /* SAFE READONLY FUNCTION */
 	function funReadOnly() {
-		$('#frmdesignation input').attr('readonly', true);
-		$('#desigdate').jqxDateTimeInput({ disabled: true});
+	    try {
+    		$('#frmdesignation input[type="text"]').attr('readonly', true);
+    		$('#desigdate').jqxDateTimeInput({ disabled: true});
+	    } catch(e) { console.error("Error in funReadOnly: ", e); }
 	}
 
+	/* SAFE REMOVE READONLY FUNCTION */
 	function funRemoveReadOnly() {
-		$('#frmdesignation input').attr('readonly', false);
-		$('#desigdate').jqxDateTimeInput({ disabled: false});
-		$('#docno').attr('readonly', true);
-		
-		if ($("#mode").val() == "A") {
-			 $('#desigdate').val(new Date());
-		   }
+	    try {
+    		$('#frmdesignation input[type="text"]').attr('readonly', false);
+    		$('#desigdate').jqxDateTimeInput({ disabled: false});
+    		$('#docno').attr('readonly', true);
+    		
+    		if ($("#mode").val() == "A") {
+    			 $('#desigdate').val(new Date());
+    		   }
+	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
 	}
  
+    /* SAFE SET VALUES FUNCTION */
 	function setValues() {
-		
-		if($('#datehidden').val()){
-			$("#desigdate").jqxDateTimeInput('val', $('#datehidden').val());
-		}
-		
-		if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-		}
-		
-		 //document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+	    try {
+    		if($('#datehidden').length && $('#datehidden').val()){
+    			$("#desigdate").jqxDateTimeInput('val', $('#datehidden').val());
+    		}
+    		
+    		if($('#msg').length && $('#msg').val()!=""){
+    			   $.messager.alert('Message',$('#msg').val());
+    		}
+    		
+            if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                 var detailVal = $('#formdetail').val() || "";
+                 var codeVal = $('#formdetailcode').val() || "";
+                 document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+            }
+	    } catch(e) { console.error("Error in setValues: ", e); }
 	}
-	     function funNotify(){
-	        	
-	        	if(document.getElementById("designation").value=="") {
-	        		document.getElementById("errormsg").innerText=" Enter Designation";
-	        		document.getElementById("designation").focus();
-	        		return 0;
-	        	}
-	        	
-	    		return 1;
-		} 
+	
+	function funNotify(){
+        	if(document.getElementById("designation").value=="") {
+        		document.getElementById("errormsg").innerText=" Enter Designation";
+        		document.getElementById("designation").focus();
+        		return 0;
+        	}
+    		return 1;
+	} 
 
-	     function funFocus(){
-	    	 $('#desigdate').jqxDateTimeInput('focus');
-	     }
+	function funFocus(){
+	   	 $('#desigdate').jqxDateTimeInput('focus');
+	}
 	  
 </script>  
  
 </head>
-<style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    box-sizing: border-box;
-    overflow-y: auto !important;
-}
+<body onload="setValues();">
 
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-label {
-    font: 14px 'Segoe UI';
-    font-weight: 500;
-    color: #253858;
-    white-space: nowrap;
-    line-height: 32px;
-}
-
-form label.error {
-    color: red;
-    font-weight: bold;
-}
-
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.trans-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 2fr auto 1fr;
-    gap: 12px 15px;
-    align-items: center;
-}
-
-.agmt-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 12px 20px;
-    align-items: center;
-}
-
-.hidden-scrollbar {
-    overflow-y: visible !important;
-    max-height: none !important;
-    padding: 10px;
-}
-
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    transform: translateY(-1px);
-}
-</style>
-
-<body onLoad="setValues();">
-
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
+<form id="frmdesignation" action="saveDesignation" method="post" autocomplete="off">
     <jsp:include page="../../../../header.jsp" />
-    <br/>
 
-    <form id="frmdesignation" action="saveDesignation" method="post" autocomplete="off">
-        <div class="hidden-scrollbar">
-            
-            <div class="section-block">
-                <h2>Designation Details</h2>
-                
-                <div class="trans-info-grid">
-                    <label>Date</label>
-                    <div id="desigdate" name="desigdate" value='<s:property value="desigdate"/>'></div>
-                    
-                    <label>Designation</label>
-                    <input type="text" name="designation" id="designation" placeholder="Enter Designation" value='<s:property value="designation"/>'>
-                    
-                    <label>Doc No</label>
-                    <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
-                </div>
+    <div class="modern-ui">
 
-                <div class="agmt-info-grid" style="margin-top: 15px;">
-                    <label>Remarks</label>
-                    <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>'>
-                </div>
+        <div class="erp-form-area">
+            <div class="section-title">Designation Details</div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="8%">Date</td>
+                    <td width="20%">
+                        <div id="desigdate" name="desigdate" value='<s:property value="desigdate"/>'></div>
+                    </td>
+                    <td class="lbl-right" width="10%">Designation</td>
+                    <td width="35%">
+                        <input type="text" name="designation" id="designation" placeholder="Enter Designation" value='<s:property value="designation"/>'>
+                    </td>
+                    <td class="lbl-right" width="10%">Doc No</td>
+                    <td width="17%">
+                        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="lbl-right" style="padding-top: 10px;">Remarks</td>
+                    <td colspan="5" style="padding-top: 10px;">
+                        <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>'>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="erp-form-area">
+            <div class="section-title">View Designations</div>
+            <div class="grid-container">
+                <div id="designationgrid"></div>
             </div>
+        </div>
 
+        <div style="display:none;">
             <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
             <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/> 
             <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
             <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
             
+            <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+            <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
         </div>
-    </form>
 
-    <div class="section-block">
-        <h2>View Designations</h2>
-        <div id="designationgrid" style="width: 100%;"></div>
     </div>
+</form>
 
 </div>
-
 </body>
 </html>
