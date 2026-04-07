@@ -1491,6 +1491,7 @@ if(document.getElementById("rentalagent").value==""){
 <table width="100%">
   <tr>
     <td colspan="2"><fieldset>
+      <legend>Agreement</legend>
       <table width="100%">
         <tr>
           <td width="4%" align="right">Branch</td>
@@ -1540,7 +1541,7 @@ if(document.getElementById("rentalagent").value==""){
   </tr>
   <tr>
     <td colspan="2"><fieldset>
-      <legend>In Info</legend>
+      <legend>Vehicle and Collection Info</legend>
       <table width="100%">
         <tr>
           <td width="11%" rowspan="2">Collection
