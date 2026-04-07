@@ -161,6 +161,18 @@ $(document).ready(function () {
     $('#agmtnowindow').jqxWindow({ width: '60%', height: '57%',  maxHeight: '57%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     $('#agmtnowindow').jqxWindow('close');
     
+    /* NEW: Initialize the clean Print Modal Window */
+    $('#printConfigModalWindow').jqxWindow({ 
+        width: '750px', 
+        height: '450px', 
+        title: 'Print Options', 
+        isModal: true, 
+        position: 'center', 
+        theme: 'energyblue', 
+        showCloseButton: true, 
+        autoOpen: false 
+    });
+    
     $('#date').on('change', function (event) {  
         var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
         if(docdateval==0){
@@ -298,7 +310,7 @@ function funNotify(){
     if(!((rows[0].idno=="undefined") && (rows[0].idno==null) && (rows[0].idno==""))){
         var j=0;
         for(var i=0 ; i < rows.length ; i++){
-            if(rows[i].idno!="undefined" && rows[i].idno!=null && rows[i].idno!=""){    
+            if(rows[i].idno!="undefined" && rows[i].idno!=null && rows[i].idno!=""){   
                 if(rows[i].total!="undefined" && rows[i].total!=null && rows[i].total!=""){
                     newTextBox = $(document.createElement("input"))
                     .attr("type", "dil")
@@ -344,24 +356,18 @@ function funFocus(){
     document.getElementById("cmbagmttype").focus();             
 }
 
+/* FIXED: Re-routed Print Button to use the clean in-page Modal */
 function funPrintBtn() {
-    var url=document.URL;
-    document.getElementById("brchName").disabled=false;
+    var branch = document.getElementById("brchName") ? document.getElementById("brchName").value : "";
+    var voc = document.getElementById("voucherno").value;
     
-    if(document.getElementById("docno").value==""){
-        if(document.getElementById("mode").value=="view"){
-            var reurl=url.split("invoice.jsp");
-            var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");       
-        } else {
-            var reurl=url.split("saveProformaInvoice");
-            var win= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");       
-        }
-    } else {
-        var reurl=url.split("saveProformaInvoice");
-        var win_voucher= window.open(reurl[0]+"printVoucherWindow.jsp?branch="+document.getElementById("brchName").value+"&voc="+document.getElementById("voucherno").value,"_blank","top=250,left=310,Width=700,Height=400,location=no,scrollbars=no,toolbar=yes");
-        win_voucher.focus(); 
-    } 
- }
+    // Load the printVoucherWindow.jsp INTO the hidden iframe
+    var printUrl = "printVoucherWindow.jsp?branch=" + encodeURIComponent(branch) + "&voc=" + encodeURIComponent(voc);
+    document.getElementById('printConfigIframe').src = printUrl;
+    
+    // Open the modal to display the config screen cleanly
+    $('#printConfigModalWindow').jqxWindow('open');
+}
 
 function funSendmail() {
      if (($("#mode").val() == "view") && $("#docno").val()!="") {
@@ -528,8 +534,15 @@ function sample() {
         </div>
     </form>
 
-    <div id="accountwindow"><div></div></div>
-    <div id="agmtnowindow"><div></div></div>
+    <div id="accountwindow"><div></div><div></div></div>
+    <div id="agmtnowindow"><div></div><div></div></div>
+    
+    <div id="printConfigModalWindow" style="display:none;">
+        <div>Print Configuration</div>
+        <div style="overflow: hidden; background: #fff;">
+            <iframe id="printConfigIframe" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
 
 </div>
 </body>
