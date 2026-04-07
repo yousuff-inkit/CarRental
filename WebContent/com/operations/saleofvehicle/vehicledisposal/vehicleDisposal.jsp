@@ -20,6 +20,256 @@
     height: 520px;
 }
 </style>
+
+<style>
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
+body {
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* Master Input Heights - Set to 24px as requested */
+input[type="text"], select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.chk-container input {
+    margin: 0;
+    padding: 0;
+}
+
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Clean Tables mapping requested colors */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
+
+/* =========================================================
+   COMPACT OVERRIDE (DO NOT CHANGE ORIGINAL CSS ABOVE)
+========================================================= */
+
+/* Reduce overall spacing */
+body {
+    font-size: 11px;
+    padding: 5px;
+}
+
+/* Tighten main container */
+#mainBG {
+    padding: 8px;
+}
+
+/* Reduce fieldset spacing */
+fieldset {
+    padding: 6px 8px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Reduce legend spacing */
+legend {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+/* Make inputs compact */
+input[type="text"], select {
+    height: 20px !important;
+    font-size: 11px;
+    padding: 1px 4px;
+}
+
+/* Buttons compact */
+input[type="button"], .myButton {
+    height: 22px;
+    font-size: 11px;
+    padding: 2px 8px;
+}
+
+/* TABLE FIX (IMPORTANT for your case) */
+table td {
+    padding: 2px 4px !important;
+    font-size: 11px;
+    line-height: 1.2;
+    vertical-align: middle;
+}
+
+/* Reduce label spacing */
+td[align="right"] {
+    padding-right: 4px;
+    white-space: nowrap;
+}
+
+/* Remove extra row height */
+tr {
+    height: auto;
+}
+
+/* Tighten included JSP grids */
+#disposaldiv,
+#jvdiv {
+    margin-top: 4px;
+}
+
+/* Compact inner tables */
+.cr-table th, .cr-table td {
+    padding: 3px 4px;
+    font-size: 11px;
+}
+
+/* Reduce grid gaps (if used anywhere) */
+.top-grid {
+    column-gap: 6px;
+    row-gap: 6px;
+}
+
+/* Tabs tighter */
+#tabs {
+    margin-top: 4px;
+}
+
+#content {
+    padding-top: 5px;
+}
+
+</style>
 <script type="text/javascript">
 var configs={};
 $(document).ready(function() {
@@ -400,216 +650,112 @@ function funPrintBtn() {
 	 }
 </script>
 </head>
-
-<style>
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        box-sizing: border-box;
-    }
-
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    }
-
-    .receipt-header {
-        display: block;
-        margin-bottom: 16px;
-        padding: 0 10px;
-    }
-
-    .receipt-header table {
-        width: 100%;
-    }
-
-    .receipt-header td {
-        padding: 6px 4px;
-        vertical-align: middle;
-    }
-
-    .section-block {
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        margin-bottom: 20px;
-    }
-
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
-
-    .form-group {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        align-items: center;
-        gap: 12px 16px;
-        margin-bottom: 12px;
-    }
-
-    .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
-    }
-
-    .form-group.single-label-dual-input {
-        grid-template-columns: 120px 1fr 1fr;
-    }
-
-    .form-group.three-field-input {
-        grid-template-columns: 120px 1.5fr 60px 1fr auto;
-    }
-
-    input[type="text"], select, textarea {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    input[type="text"]:focus, select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 8px;
-    }
-
-    .myButton {
-        background: #007bff;
-        color: white;
-        padding: 0 16px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
-        height: 32px;
-    }
-
-    .myButton:hover {
-        background: #0056b3;
-    }
-
-    .jqx-datetimeinput {
-        height: 34px !important;
-        box-sizing: border-box;
-    }
-    #formdet {
-    text-align: left !important;
-    display: block;
-}
-    
-</style>
 <body onload="setValues();getConfigs();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmVehicleDisposal" action="saveActionVehicleDisposal" autocomplete="off" >
 
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
+	<br/> 
+<div class="hidden-scrollbar">
+<fieldset>
+<table width="100%" >
+  <tr>
+    <td width="6%" align="right">Date</td>
+    <td width="11%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
+    <td width="29%">&nbsp;</td>
+    <td width="4%">&nbsp;</td>
+    <td width="8%">&nbsp;</td>
+    <td width="9%" align="right">Doc No</td>
+    <td width="11%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1"  readonly></td>
+    <td colspan="2" align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">Client</td>
+    <td align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);"></td>
+    <td colspan="3" align="left"><input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' style="width:99%;" readonly></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td al align="right">Description</td>
+    <td colspan="2" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' style="width:97.5%;"></td>
+    <td align="left">Type</td>
+    <td align="left"><select name="cmbtype" id="cmbtype" >
+      <option value="">--Select--</option>
+      <option value="S">Sale</option>
+      <option value="L">Total Loss</option>
+    </select></td>
+    <td align="center"><input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate"></td>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td colspan="7" align="left"><div id="disposaldiv"><jsp:include page="vehDisposalGrid.jsp"></jsp:include></div></td>
+    <td width="10%" align="left">&nbsp;</td>
+  	
+  </tr>
+  
+  <tr>
     
-    <div id="mainBG">
-    <div class="receipt-header">
-        <table width="100%">
-            <tr>
-                <td width="5%" align="right"><label>Date</label></td>
-                <td width="15%">
-                    <div id="date" name="date" value='<s:property value="date"/>'></div>
-                </td>
-                <td width="40%"></td>
-                <td width="10%" align="right"><label>Doc No</label></td>
-                <td width="8%">
-                    <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' readonly tabindex="-1">
-                </td>
-            </tr>
-        </table>
-    </div>
+ <td align="right">&nbsp;</td>
+    <td colspan="7" align="left"><div id="jvdiv"><jsp:include page="jvGrid.jsp"></jsp:include></div></td>
+    <td width="10%" align="left">&nbsp;</td>
+  </tr>
+</table>
 
-    <div class="section-block">
-        <h2>Vehicle Disposal</h2>
 
-        <div class="form-group single-label-dual-input">
-            <label>Client</label>
-            <input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
-            <input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' readonly tabindex="-1">
-        </div>
 
-        <div class="form-group three-field-input">
-            <label>Description</label>
-            <input type="text" name="description" id="description" value='<s:property value="description"/>'>
+   <%--  <td><fieldset>
+    <table width="100%">
+  <tr>
+    <td width="50%"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+    <td width="50%"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+  </tr>
+  <tr>
+    <td align="left"><input type="radio" id="rdosummary" name="rdo" value="rdosummary"><label for="rdosummary">Summarised</label></td>
+    <td align="left">&nbsp;</td>
+    </tr>
+  <tr>
+    <td align="left"><input type="radio" id="rdodetail" name="rdo" value="rdodetail" ><label for="rdodetail">Detailed</label></td>
+    <td align="center"><input type="button" name="btnList" id="btnList" value="get Detail" class="myButton" onclick="getDetail();"></td>
+    </tr>
+  <tr>
+    <td align="left"><input type="radio" id="rdotabular" name="rdo" value="rdotabular" ><label for="rdotabular">Tabular</label></td>
+    <td align="left">&nbsp;</td>
+    </tr>
+</table>
 
-            <label style="text-align:left; padding-left: 10px;">Type</label>
-            <select name="cmbtype" id="cmbtype">
-                <option value="">--Select--</option>
-                <option value="S">Sale</option>
-                <option value="L">Total Loss</option>
-            </select>
-            
-            <div style="padding-left: 10px;">
-                <input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate">
-            </div>
-        </div>
-
-        <div id="disposaldiv" style="margin-top: 20px;">
-            <jsp:include page="vehDisposalGrid.jsp"></jsp:include>
-        </div>
-
-        <div id="jvdiv" style="margin-top: 20px;">
-            <jsp:include page="jvGrid.jsp"></jsp:include>
-        </div>
- 
-
-            <div style="display: none;">
-                <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
-                <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
-                <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-                <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-                <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-                <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
-                <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
-                <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-                <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
-                <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
-                <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
-                <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly>
-                <input type="hidden" name="mdoc" id="mdoc" value='<s:property value="mdoc"/>' tabindex="-1" readonly>
-            </div>
-        </div>
-    </div>
+    </fieldset> --%>
+    
+    
+    
+    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden=true></div>
+    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden=true></div>
+    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+    <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+    <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
+    <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+    <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
+    <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+    <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
+    <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
+    <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
+    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1"  readonly>
+    <input type="hidden" name="mdoc" id="mdoc" value='<s:property value="mdoc"/>' tabindex="-1"  readonly><!-- Temperory jv docno -->
+  </div>
 </form>
-
 <div id=clientwindow>
-   <div ></div>
+   <div ></div>
 </div>
 <div id="fleetwindow">
-   <div ></div>
+   <div ></div>
 </div>
 <div id="detailwindow">
-   <div ></div>
+   <div ></div>
 </div>
-
 </div>
 </body>
 </html>

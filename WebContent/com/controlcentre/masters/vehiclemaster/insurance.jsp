@@ -13,130 +13,115 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+/* =========================================================
+   INSURANCE - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
     margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%; /* Master UI requirement */
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    text-align: left !important;
-}
-
-/* ------------------------------
-    SECTION BLOCKS & HEADERS
------------------------------- */
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 17.6px;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff; /* Signature Blue Line */
-    color: #333;
-    display: block;
-}
-
-/* ------------------------------
-    GRID SYSTEM (FORM LAYOUT)
------------------------------- */
-.form-row {
-    display: grid;
-    grid-template-columns: 120px 1fr 120px 1fr; 
-    gap: 15px 30px;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-/* ------------------------------
-    INPUTS & CONTROLS
------------------------------- */
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
-    width: 100%;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-input[readonly] {
-    background-color: #f3f4f6;
-    color: #6b7280;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-    text-align: right;
-    padding-right: 10px;
-    font-size: 16px;
-}
-
-/* JQX Widget Overrides */
-.jqx-datetimeinput {
-    height: 32px !important;
-    width: 100% !important;
-}
-
+/* FIX: Responsive scroll area so the bottom is never cut off */
 .hidden-scrollbar {
     overflow-y: auto;
-    height: auto;
-    min-height: 530px;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
 }
 
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
+form label.error {
+    color: red;
+    font-weight: bold;
 }
 
-
-
-
-
-
-
-#formdet {
-    text-align: left !important;
-    display: block;
+/* EXACT Input Styles from Client Master */
+/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
+input[type="text"], input[type="email"], select {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
 }
 
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
 
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
 
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
 
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
 
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
+
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
+}
 </style>
 <script type="text/javascript">
       $(document).ready(function () {          
-          $("#insurdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"}); 
+          /* MODIFIED: Height set to 24px to match text inputs */
+          $("#insurdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"}); 
           $('#accountWindow').jqxWindow({width: '51%', height: '61%',  maxHeight: '61%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
 		  $('#accountWindow').jqxWindow('close');
 		  
@@ -288,7 +273,7 @@ label {
 	     function funNotify(){
 	    	 if(document.getElementById("txtaccname").value==''){
 	    			document.getElementById("errormsg").innerText="A/c is Mandatory";
-	    		/* 	//document.getElementById("txtaccname").focus;
+	    		/* //document.getElementById("txtaccname").focus;
 	    			$('#txtaccname').focus();
 */		    		return 0;
 	    		}
@@ -304,65 +289,53 @@ label {
 </head>
 <body onLoad="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-    <form id="frmInsurance" action="saveActionInsurance" autocomplete="off">
-        <jsp:include page="../../../../header.jsp" />
-        <div class="form-row" style="display:flex; align-items:center; width:100%;">
+<form id="frmInsurance" action="saveActionInsurance"  autocomplete="off">
+	<jsp:include page="../../../../header.jsp" />
+	<br/> 
+	<fieldset>
+ <table width="100%"><legend>Insurance Details</legend>
+  <tr>
+    <td width="11%"><div align="right">Date</div></td>
+    <td width="24%"><div id="insurdate" name="insurdate" value='<s:property value="insurdate"/>'></div></td>
+    <td width="16%"><div align="right">Doc No</div></td>
+    <td width="49%" ><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly tabindex="-1"></td>
+  </tr>
+  <tr>
+    <td style="text-align: right"><div align="right">Account</div></td>
+    <td><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' style="width:85%;" ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" placeholder="Press F3 to Search"></td>
+    <td ><div align="right">Company</div></td>
+     <td><input type="text" name="insurcompany" id="insurcompany"  value='<s:property value="insurcompany"/>' style="width:50%;"></td><input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>     </tr> 
+</table>
+<input type="hidden" id="mode" name="mode"/>
+										        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
 
-    <label style="margin-right:8px;">Date</label>
+<input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
+<input type="hidden" id="insurdatehidden" name="insurdatehidden" value='<s:property value="insurdatehidden"/>'/>
 
-    <div style="width:130px;">
-        <div id="insurdate" name="insurdate" value='<s:property value="insurdate"/>'></div>
-    </div>
-
-    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
-
-    <input type="text"
-           name="docno"
-           id="docno"
-           value='<s:property value="docno"/>'
-           readonly
-           tabindex="-1"
-           style="width:120px;">
+</fieldset>
+</form>
+<br/>
+<div id="jqxInsuranceSearch1"></div>
+<%-- <div id="window">
+	<div id="windowHeader" class="windowHead">
+		<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Search</span>
+	</div>
+	<div id="windowContent" class="windowCont" style="overflow: hidden;">
+		<jsp:include page="insuranceSearch.jsp"></jsp:include>
+	</div></div>
 </div>
-                
-        <br/>
-        
-        <div class="hidden-scrollbar">
-            <div class="section-block">
-                <h2>Insurance Details</h2>
-                
-               
-                <div class="form-row">
-                    <label>Account</label>
-                    <input type="text" name="txtaccname" id="txtaccname"
-                           value='<s:property value="txtaccname"/>'
-                           ondblclick="funSearchdblclick();"
-                           onkeydown="getAcc(event);"
-                           placeholder="Press F3 to Search">
+	<div id="accountWindow">
+	<div class="windowsHead">
+	<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Accounts
+	</span>
+	</div>
+	<div class="windowsCont">
+	<jsp:include page="../../../search/accountsearch/accountsSearchAP.jsp"></jsp:include>
+	</div>
+	 </div>  --%> 
+	  <div id="accountWindow">
+				<div></div><div></div>
+				</div> 
 
-                    <label>Company</label>
-                    <input type="text" name="insurcompany" id="insurcompany"
-                           value='<s:property value="insurcompany"/>'>
-                </div>
-
-                <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-                <input type="hidden" id="mode" name="mode"/>
-                <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-                <input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
-                <input type="hidden" id="insurdatehidden" name="insurdatehidden" value='<s:property value="insurdatehidden"/>'/>
-            </div>
-
-            <div class="section-block">
-                <h2>Insurance Search List</h2>
-                <div id="jqxInsuranceSearch1" style="width: 100%;"></div>
-            </div>
-
-        </div>
-    </form>
-
-    <div id="accountWindow">
-        <div></div><div></div>
-    </div> 
-</div>
 </body>
 </html>

@@ -261,49 +261,31 @@
 	function funExcelBtn(){
 		 JSONToCSVCon(dataExcelExport, 'Bank Reconciliation', true);
 	 }
-	function funPrintBtn() {
-
-	    if ($("#mode").val() !== "view" || $("#docno").val() === "") {
-	        $.messager.alert('Message','Select a Document....!','warning');
-	        return;
-	    }
-
-	    var baseUrl = document.URL.split("saveBankReconciliation")[0];
-
-	    $.messager.confirm('Confirm', 'Do you want to have header?', function (r) {
-
-	        var printUrl =
-	            baseUrl +
-	            "printBankReconciliation" +
-	            "?docno=" + $("#docno").val() +
-	            "&branch=" + $("#brchName").val() +
-	            "&header=" + (r ? 1 : 0);
-
-	        openAndPrint(printUrl);
-	    });
-	}
 	
-	 function openAndPrint(url) {
-
- 	    var win = window.open(
- 	        url,
- 	        "_blank",
- 	        "top=150,left=250,width=1020,height=600,scrollbars=yes"
- 	    );
-
- 	    if (win) {
- 	        setTimeout(function () {
- 	            win.focus();
- 	            win.print();
- 	            win.onafterprint = function () {
- 	                win.close();
- 	            };
- 	        }, 700);
- 	    } else {
- 	        $.messager.alert('Message','Popup blocked by browser','warning');
- 	    }
- 	}
-
+	function funPrintBtn() {
+		
+		if (($("#mode").val() == "view") && $("#docno").val()!="") {
+			
+			 var url=document.URL;
+		     var reurl=url.split("saveBankReconciliation");
+		     $("#docno").prop("disabled", false);
+			
+				   $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
+					if (r){
+						 var win= window.open(reurl[0]+"printBankReconciliation?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+					     win.focus();
+					 }
+					else{
+						var win= window.open(reurl[0]+"printBankReconciliation?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+					    win.focus();
+					}
+				   });
+	     }
+	    else {
+			$.messager.alert('Message','Select a Document....!','warning');
+			return;
+		}
+	  }
 	
 	function datechange(){
 		  var date = $('#jqxBankReconciliationDate').jqxDateTimeInput('getDate');
@@ -317,57 +299,47 @@
 </script>
 
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+.hidden-scrollbar {
+  overflow: auto;
+  height: 530px;
+}
+</style>
+<style>
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
     margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
+    padding: 10px;
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 4px;
+    padding: 15px;
     max-width: 100%;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
-.section-block {
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-    margin-bottom: 24px;
-}
-
-.section-block h2 {
-    font-size: 17.6px;
-    font-weight: 600;
-    margin: 0 0 16px 0;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #253858;
-    display: flex;
-    align-items: center;
-}
-
+/* Master Input Heights - Set to 24px as requested */
 input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
     box-sizing: border-box;
     width: 100%;
+    background-color: #fff;
+    color: #333;
 }
 
 input[type="text"]:focus, select:focus {
@@ -375,142 +347,191 @@ input[type="text"]:focus, select:focus {
     outline: none;
 }
 
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.chk-container input {
+    margin: 0;
+    padding: 0;
+}
+
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Clean Tables mapping requested colors */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    border: 1px solid #ddd;
 }
-
-.cr-table td {
-    padding: 10px;
-    border-bottom: 1px solid #e4e7ec;
-    font-size: 16px;
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
     color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
 }
 
-.cr-table td[align="right"] {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-}
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
 
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
-
-/* Custom button alignment */
-.btn-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-}
 </style>
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="homeContent" data-type="background" >
 <form id="frmBankReconciliation" action="saveBankReconciliation" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div class='hidden-scrollbar'>
-    
-    <div class="section-block">
-        <h2>Reconciliation Header</h2>
-        <table class="cr-table">
-          <tr>
-            <td width="8%" align="right">Date</td>
-            <td width="15%">
-                <div id="jqxBankReconciliationDate" name="jqxBankReconciliationDate" onchange="datechange();" value='<s:property value="jqxBankReconciliationDate"/>'></div>
-            </td>
-            <td width="8%" align="right">Branch</td>
-            <td width="18%">
-                <select id="cmbbranch" name="cmbbranch" value='<s:property value="cmbbranch"/>'>
-                    <option></option>
-                </select>
-            </td>
-            <td width="8%" align="right">Currency</td>
-            <td width="18%">
-                <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value);">
-                    <option></option>
-                </select>
-            </td>
-            <td width="8%" align="right">Doc No</td>
-            <td width="17%">
-                <input type="text" id="docno" name="txtbankreconciliationdocno" value='<s:property value="txtbankreconciliationdocno"/>' tabindex="-1"/>
-            </td>
-          </tr>
-          <tr>
-            <td align="right">Account</td>
-            <td>
-                <input type="text" id="txtaccid" name="txtaccid" placeholder="F3 for Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
-            </td>
-            <td colspan="2">
-                <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>'/>
-            </td>
-            <td align="right">Description</td>
-            <td colspan="2">
-                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
-            </td>
-            <td align="center">
-                <button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="getLastReconcileDate($('#jqxBankReconciliationDate').val(),$('#txtdocno').val());">Submit</button>
-            </td>
-          </tr>
-        </table>
-    </div>
+<div  class='hidden-scrollbar'>
+<table width="100%">
+  <tr>
+    <td width="5%" align="right">Date</td>
+    <td width="13%"><div id="jqxBankReconciliationDate" name="jqxBankReconciliationDate" onchange="datechange();" value='<s:property value="jqxBankReconciliationDate"/>'></div>
+    <input type="hidden" id="hidjqxBankReconciliationDate" name="hidjqxBankReconciliationDate" value='<s:property value="hidjqxBankReconciliationDate"/>'/></td>
+    <td width="10%" align="right">Branch</td>
+    <td width="20%"><select id="cmbbranch" name="cmbbranch" style="width:50%;" value='<s:property value="cmbbranch"/>'>
+    <option></option></select>
+    <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/></td>
+    <td width="12%" align="right">Currency</td>
+    <td width="14%"><select id="cmbcurrency" name="cmbcurrency" style="width:50%;" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value);">
+      <option></option></select>
+      <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+      <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+      <input type="hidden" id="txtrate" name="txtrate" value='<s:property value="txtrate"/>'/>
+      <i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 1px;font-family: Tahoma; color:#E0ECF8"><s:property value="lblformposted"/></label></b></i></td>
+    <td width="14%" align="right">Doc No</td>
+    <td width="12%"><input type="text" id="docno" name="txtbankreconciliationdocno" style="width:70%;" value='<s:property value="txtbankreconciliationdocno"/>' tabindex="-1"/></td>
+  </tr>
+  <tr>
+    <td align="right">Account</td>
+    <td><input type="text" id="txtaccid" name="txtaccid" style="width:80%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
+    <td colspan="2"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/>
+    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
+    <td align="right">Description</td>
+    <td colspan="2"><input type="text" id="txtdescription" name="txtdescription" style="width:90%;" value='<s:property value="txtdescription"/>'/></td>
+    <td align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="getLastReconcileDate($('#jqxBankReconciliationDate').val(),$('#txtdocno').val());">Submit</button></td>
+  </tr>
+</table>
+<fieldset><legend>Applying</legend>
+<div id="jqxBankReconciliationGrid"><jsp:include page="bankReconciliationGrid.jsp"></jsp:include></div></fieldset><br/>
+<table width="100%">
+  <tr>
+    <td align="right">Book Balance</td>
+    <td><input type="text" id="txtbookbalance" name="txtbookbalance" style="text-align: right;" value='<s:property value="txtbookbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);" /></td>
+    <td align="right">Uncleared Payments(+ve)</td>
+    <td><input type="text" id="txtunclrpayments" name="txtunclrpayments" style="text-align: right;" value='<s:property value="txtunclrpayments"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
+    <td align="right">Uncleared Receipts(-ve)</td>
+    <td><input type="text" id="txtunclrreceipts" name="txtunclrreceipts" style="text-align: right;" value='<s:property value="txtunclrreceipts"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
+    <td align="right">Bank St. Balance</td>
+    <td><input type="text" id="txtbankbalance" name="txtbankbalance" style="text-align: right;" value='<s:property value="txtbankbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
+  </tr>
+</table>    
 
-    <div class="section-block">
-        <h2>Applying Invoices</h2>
-        <div id="jqxBankReconciliationGrid">
-            <jsp:include page="bankReconciliationGrid.jsp"></jsp:include>
-        </div>
-    </div>
-
-    <div class="section-block">
-        <h2>Balance Summary</h2>
-        <table class="cr-table">
-          <tr>
-            <td width="12%" align="right">Book Balance</td>
-            <td><input type="text" id="txtbookbalance" name="txtbookbalance" style="text-align: right;" value='<s:property value="txtbookbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);" /></td>
-            
-            <td width="15%" align="right">Uncleared Payments</td>
-            <td><input type="text" id="txtunclrpayments" name="txtunclrpayments" style="text-align: right;" value='<s:property value="txtunclrpayments"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-            
-            <td width="15%" align="right">Uncleared Receipts</td>
-            <td><input type="text" id="txtunclrreceipts" name="txtunclrreceipts" style="text-align: right;" value='<s:property value="txtunclrreceipts"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-            
-            <td width="12%" align="right">Bank St. Balance</td>
-            <td><input type="text" id="txtbankbalance" name="txtbankbalance" style="text-align: right;" value='<s:property value="txtbankbalance"/>' tabindex="-1" onblur="funRoundAmt(this.value,this.id);"/></td>
-          </tr>
-        </table>
-    </div>
-
-    <input type="hidden" id="hidjqxBankReconciliationDate" name="hidjqxBankReconciliationDate" value='<s:property value="hidjqxBankReconciliationDate"/>'/>
-    <input type="hidden" id="hidcmbbranch" name="hidcmbbranch" value='<s:property value="hidcmbbranch"/>'/>
-    <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-    <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
-    <input type="hidden" id="txtrate" name="txtrate" value='<s:property value="txtrate"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-    <input type="hidden" id="mode" name="mode"/>
-    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-    <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
-    <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-    <input type="hidden" id="gridlength" name="gridlength"/>
-    <input type="hidden" name="txtchkgridload" id="txtchkgridload" value='<s:property value="txtchkgridload"/>'>
-    <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-    <div style="display:none">
-        <label id="lblformposted" name="lblformposted"><s:property value="lblformposted"/></label>
-    </div>
+<input type="hidden" id="mode" name="mode"/>
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<input type="hidden" id="txttrno" name="txttrno"  value='<s:property value="txttrno"/>'/>
+<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
+<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+<input type="hidden" id="gridlength" name="gridlength"/>
+<input type="hidden" name="txtchkgridload" id="txtchkgridload" value='<s:property value="txtchkgridload"/>'>
 
 </div>
 </form>
-    
+	
 <div id="accountDetailsFromWindow">
-    <div></div><div></div>
+	<div></div><div></div>
 </div>  
 
 </div>

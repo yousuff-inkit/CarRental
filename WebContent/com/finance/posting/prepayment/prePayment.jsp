@@ -997,39 +997,49 @@ function updateinv(){
 		x.send();	
  }
 </script>
+
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
+.hidden-scrollbar {
+  height: 82vh;
+  overflow-x: hidden; 
+}
+</style>
+<style>
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
     margin: 0;
-    padding: 32px 0;
+    padding: 10px;
     box-sizing: border-box;
-    overflow-y: auto;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 4px;
+    padding: 15px;
     max-width: 100%;
     margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
+/* Master Input Heights - Set to 24px as requested */
 input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
     box-sizing: border-box;
     width: 100%;
+    background-color: #fff;
+    color: #333;
 }
 
 input[type="text"]:focus, select:focus {
@@ -1037,262 +1047,285 @@ input[type="text"]:focus, select:focus {
     outline: none;
 }
 
-label {
-    font: 16px 'Segoe UI';
-    font-weight: 500;
-    color: #253858;
+/* Clean Panels mapping to fieldsets */
+fieldset {
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
+}
+
+legend {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
+}
+
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.top-grid > label {
+    text-align: right;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
     white-space: nowrap;
-    line-height: 32px;
 }
 
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 17.6px;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
+.flex-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
+    width: 100%;
 }
 
-.trans-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
-    gap: 12px 15px;
+.chk-container {
+    display: flex;
     align-items: center;
-}
-
-.agmt-info-grid {
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr;
-    gap: 12px 20px;
-    align-items: center;
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 82vh;
-}
-
-.icon {
-    background: none;
-    border: none;
+    gap: 4px;
     cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.chk-container input {
+    margin: 0;
     padding: 0;
 }
 
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
 
-.myButton {
-    font-weight: 700;
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
     font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
+    border-left: 3px solid #0056b3;
 }
 
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+/* Clean Tables mapping requested colors */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
 }
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
+
 </style>
-
-
 </head>
 <body onload="setValues();">
+<div id="mainBG" class="homeContent" data-type="background" >
+<form id="frmPrePayment" action="savePrePayment" method="post" autocomplete="off">
+<jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div id="mainBG" class="homeContent" data-type="background">
-    <form id="frmPrePayment" action="savePrePayment" method="post" autocomplete="off">
-        <jsp:include page="../../../../header.jsp"></jsp:include>
-        <br>
+<div  class='hidden-scrollbar'>
+<table width="100%">
+  <tr>
+    <td width="5%" align="right">Account</td>
+    <td width="14%"><input type="text" id="txtaccid" name="txtaccid" style="width:60%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
+    <td width="20%"><input type="text" id="txtaccname" name="txtaccname" style="width:90%;" value='<s:property value="txtaccname"/>'/> <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
+    <td width="5%" align="right">From</td>
+    <td width="13%"><div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
+    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/></td>
+    <td width="2%" align="right">To</td>
+    <td width="16%"><div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
+    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/></td>
+    <td width="4%" align="right">Type</td>
+    <td width="12%"><select id="cmbtype" name="cmbtype" style="width:70%;" onchange="funPostingGrid();" value='<s:property value="cmbtype"/>'>
+    <option value="0">--Select--</option><option value="1">For Distribution</option><option value="2">Summary</option><option value="3">To be Posted</option></select>
+    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/></td>
+    <td width="9%" align="center"><button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadgrid();">Submit</button>
+     </td>
+  </tr>
+</table>
+<fieldset><legend>Details</legend>
+<div id="jqxPrePaymentGrid"><jsp:include page="prePaymentGrid.jsp"></jsp:include></div></fieldset>
 
-        <div class="hidden-scrollbar">
-            
-            <div class="section-block">
-                <h2>Search Filters</h2>
-                <div class="trans-info-grid">
-                    <label>Account</label>
-                    <div style="display: flex; gap: 8px; grid-column: span 2;">
-                        <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);" style="width: 40%;"/>
-                        <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>'/>
-                    </div>
-                    
-                    <label>From</label>
-                    <div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
+<div id="jqxDistribution"><br/>
+<table width="100%">
+<tr>
+<td width="70%">
+<fieldset><legend>Distribution</legend>
+<table width="100%" border="0" >
+  <tr>
+    <td width="10%" align="right">Account(To be Posted)</td>
+    <td width="16%"><input type="text" id="txtdistributionaccid" name="txtdistributionaccid" style="width:53%;" placeholder="Press F3 to Search" value='<s:property value="txtdistributionaccid"/>' onkeydown="getDistributionAcc(event);"/></td>
+     <td width="6%"></td>
+      <td><input type="text" id="txtdistributionaccname" name="txtdistributionaccname" style="width:95%;" tabindex="-1" value='<s:property value="txtdistributionaccname"/>'/>
+    <input type="hidden" id="txtdistributiondocno" name="txtdistributiondocno" value='<s:property value="txtdistributiondocno"/>'/>
+    <input type="hidden" id="txtaccountdocno" name="txtaccountdocno" value='<s:property value="txtaccountdocno"/>'/>
+    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+    <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
+    <input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/></td>
+    <td width="38%"></td>
+  <tr>
+    <td align="right">Cost Type</td>
+    <td><input type="text" id="txtcostgroup" readonly  name="txtcostgroup" style="width:53%;" placeholder="Press F3 to Search" tabindex="2" onkeydown="getcostType(event);" value='<s:property value="txtcostgroup"/>'/>
+ 
+    <input type="hidden" id="txtcosttype" name="txtcosttype" style="width:80%;" value='<s:property value="txtcosttype"/>'/></td>
+    <td width="6%" align="right">Cost No</td>
+    <td><input type="text" id="txtcostcode" readonly name="txtcostcode" style="width:95%;" tabindex="4" onkeydown="getcostNo(event);" placeholder="Press F3 to Search" value='<s:property value="txtcostcode"/>'/>
+        <input type="hidden" id="txtcostno" name="txtcostno" style="width:80%;" value='<s:property value="txtcostno"/>'/>
+      <td width="20%" align="center"><input type="button" name="btnPrintSummary" id="btnPrintSummary" class="myButton" value="Print"  onclick="funPrintSummary();"><button class="myButton" type="button" id="btndist" name="btndist"  onclick="fundistribution();" >Mark as Distributed</button></td>
+ 
+   
+  </tr>
+  </table>
+  <table  width="100%" border="0" >
+  <tr>
 
-                    <label>To</label>
-                    <div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
+    <td width="10%" align="right">Amount</td>
+    <td width="16%"><input type="text" id="txtamount" name="txtamount" style="width:53%;" onchange="fundecreaseamt();" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);"/></td>
+      <td width="6%" align="right"><input type="checkbox" id="det_chk"  name="det_chk" value=""  onchange="fundecreaseamt();" onclick="$(this).attr('value', this.checked ? 1 : 0)" >
+   <input type="hidden" id="hidet_chk"  name="hidet_chk" > 
+  </td>
+    <td ><label align="right"> Settle Amt</label>&nbsp;<input type="text" id="txtdecamount" name="txtdecamount" style="width:53%;" onchange="fundecreaseamt();" value='<s:property value="txtdecamount"/>'/></td>
+    
+    <td align="right">Frequency</td>
+    <td  width="30%" ><select id="cmbfrequency" name="cmbfrequency"  style="width:36%;" onchange="clearDistributionInfo();" value='<s:property value="cmbfrequency"/>'>
+    <!-- <option value="1">Day</option> --><option value="2">Month</option><!-- <option value="3">Year</option> --></select>
+    <input type="hidden" id="hidcmbfrequency" name="hidcmbfrequency" value='<s:property value="hidcmbfrequency"/>'/></td>
+    <td width="20%"  align="center"></td>
+  </tr>
+  <tr>
+    <td align="right">Due After</td>
+    <td><input type="text" id="txtdueafter" name="txtdueafter" style="width:53%;"  onblur="clearDistributionsInfo();" value='<s:property value="txtdueafter"/>'/></td>
+   <td width="6%"  align="right"><input type="checkbox" id="ins_chk"  name="ins_chk" value="" onchange="funinstallment();"  onclick="$(this).attr('value', this.checked ? 1 : 0)" >
+   <input type="hidden" id="hiins_chk"  name="hiins_chk" > 
+   
+ <td><label align="right"> Equal Installment</label></td>
+ 
+   
+    <td  align="right">Inst. Nos</td>
+    <td width="30%" ><input type="text" id="txtinstnos" name="txtinstnos" style="width:34%;" onblur="funInstAmount();funInsEndDate();" value='<s:property value="txtinstnos"/>'/>
+     <input type="hidden" id="hitxtinstnos" name="hitxtinstnos" value='<s:property value="hitxtinstnos"/>'/> <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/></td>
+    <td width="20%" align="center"></td>
+  </tr>
+    </table>
+  <table  width="100%" border="0" >
+  <tr>
 
-                    <label>Type</label>
-                    <select id="cmbtype" name="cmbtype" onchange="funPostingGrid();" value='<s:property value="cmbtype"/>'>
-                        <option value="0">--Select--</option>
-                        <option value="1">For Distribution</option>
-                        <option value="2">Summary</option>
-                        <option value="3">To be Posted</option>
-                    </select>
+    <td width="10%" align="right">For the period From</td>
+    <td width="16%"><div id="jqxStartDate" name="jqxStartDate" tabindex="8" onchange="funInsEndDate();funInsNoFromEndDate();" value='<s:property value="jqxStartDate"/>'></div>
+    <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/></td>
+    <td width="6%"align="right">To date</td>
+    <td colspan="2"><div id="jqxEndDate" name="jqxEndDate" tabindex="9" onchange="funInsNoFromEndDate();" value='<s:property value="jqxEndDate"/>'></div>
+    <input type="hidden" id="hidjqxEndDate" name="hidjqxEndDate" value='<s:property value="hidjqxEndDate"/>'/></td>
+      <td width="38%" align="center"><button class="myButton" type="button" id="btnDistributionSubmit" name="btnDistributionSubmit" tabindex="11" onclick="funloaddistributiongrid();">Submit</button><input type="button" name="btnUpdate" id="btnUpdate" class="myButton" value="Edit" tabindex="12" onclick="funUpdate();"></td>
+  </tr>
+  <tr> 
+    <td align="right">Description</td>
+    <td colspan="4"><input type="text" id="txtdescription" name="txtdescription" style="width:97%;"  value='<s:property value="txtdescription"/>'/></td>
+    <td></td>
+  
+  </tr>
+</table></fieldset></td>
+<td width="30%">
+<div id="jqxDistributionGrid1"><jsp:include page="distributionGrid.jsp"></jsp:include></div>
+ 
+</td>
 
-                    <button class="myButton" type="button" id="btnSubmit" name="btnSubmit" onclick="funloadgrid();">Submit</button>
-                </div>
-            </div>
 
-            <div class="section-block">
-                <h2>Pre-Payment Details</h2>
-                <div id="jqxPrePaymentGrid" style="width: 100%;">
-                    <jsp:include page="prePaymentGrid.jsp"></jsp:include>
-                </div>
-            </div>
+</tr>
 
-            <div id="jqxDistribution">
-                <div style="display: flex; gap: 20px;">
-                    <div class="section-block" style="flex: 2;">
-                        <h2>Distribution Settings</h2>
-                        
-                        <div class="agmt-info-grid">
-                            <label>Post Account</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="text" id="txtdistributionaccid" name="txtdistributionaccid" placeholder="Press F3 to search" value='<s:property value="txtdistributionaccid"/>' onkeydown="getDistributionAcc(event);" style="width: 30%;"/>
-                                <input type="text" id="txtdistributionaccname" name="txtdistributionaccname" value='<s:property value="txtdistributionaccname"/>'/>
-                            </div>
+</table>
+<table width="100%"><tr><td  width="70%" ><button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" onclick="funExportBtn();">
+							<img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">
+						</button> </td>
+ <td  width="30%" align="center"><button class="myButton" type="button" id="btnpost" name="btnpost" onclick="updateinvoice();" tabindex="11" >Mark as Invoiced</button></td>
+</tr> 
+</table></div>
+<button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funCalculate();">
+							<img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png">
+						</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<%-- <button type="button" class="icon" id="btnExcel" title="Export current Document to Excel" onclick="funExportBtn();">
+							<img alt="excelDocument" src="<%=contextPath%>/icons/excel_new.png">
+						</button>&nbsp;&nbsp;&nbsp;&nbsp;
+	 --%>					 
+<div id="jqxJournalVoucherApplyingGrid" hidden="true"><br/><jsp:include page="journalVoucherApplyingGrid.jsp"></jsp:include></div>
+</div>
+<input type="hidden" id="mode" name="mode"/>
+<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<input type="hidden" id="txtmsg" name="txtmsg"  value='<s:property value="txtmsg"/>'/>
+<div hidden="hidden" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+<input type="hidden" id="txttranno" name="txttranno" value='<s:property value="txttranno"/>'/>
+<input type="hidden" id="txtdebittotal" name="txtdebittotal" value='<s:property value="txtdebittotal"/>'/>
+<input type="hidden" id="txtrowno" name="txtrowno" value='<s:property value="txtrowno"/>'/>
+<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
+<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+<input type="hidden" id="gridlength" name="gridlength"/>
+<input type="hidden" id="applylength" name="applylength"/>
+<input type="hidden" id="hidgrtype" name="hidgrtype"/>
+<input type="hidden" id="hidtxtamount" name="hidtxtamount"/>
+<input type="hidden" id="txtinstamttotal" name="txtinstamttotal" value='<s:property value="txtinstamttotal"/>'/>
+<input type="hidden" id="hidmodes" name="hidmodes"/>
 
-                            <label>Cost Center</label>
-                            <div style="display: flex; gap: 8px;">
-                                <input type="text" id="txtcostgroup" readonly name="txtcostgroup" placeholder="Press F3 to search" onkeydown="getcostType(event);" value='<s:property value="txtcostgroup"/>'/>
-                                <input type="text" id="txtcostcode" readonly name="txtcostcode" placeholder="Press F3 to search" onkeydown="getcostNo(event);" value='<s:property value="txtcostcode"/>'/>
-                            </div>
+</form> 
 
-                            <label>Amount</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <input type="text" id="txtamount" name="txtamount" style="text-align: right;" onchange="fundecreaseamt();" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);"/>
-                                <input type="checkbox" id="det_chk" name="det_chk" onchange="fundecreaseamt();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                <label style="min-width: auto;">Settle</label>
-                                <input type="text" id="txtdecamount" name="txtdecamount" style="text-align: right;" onchange="fundecreaseamt();" value='<s:property value="txtdecamount"/>'/>
-                            </div>
-
-                            <label>Frequency</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <select id="cmbfrequency" name="cmbfrequency" onchange="clearDistributionInfo();" value='<s:property value="cmbfrequency"/>'>
-                                    <option value="2">Month</option>
-                                </select>
-                                <label style="min-width: auto;">Due After</label>
-                                <input type="text" id="txtdueafter" name="txtdueafter" onblur="clearDistributionsInfo();" value='<s:property value="txtdueafter"/>'/>
-                            </div>
-
-                            <label>Installment</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <input type="checkbox" id="ins_chk" name="ins_chk" onchange="funinstallment();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                <label style="min-width: auto;">Nos</label>
-                                <input type="text" id="txtinstnos" name="txtinstnos" onblur="funInstAmount();funInsEndDate();" value='<s:property value="txtinstnos"/>'/>
-                            </div>
-
-                            <label>Period</label>
-                            <div style="display: flex; gap: 8px; align-items: center;">
-                                <div id="jqxStartDate" name="jqxStartDate" onchange="funInsEndDate();funInsNoFromEndDate();" value='<s:property value="jqxStartDate"/>'></div>
-                                <label style="min-width: auto;">To</label>
-                                <div id="jqxEndDate" name="jqxEndDate" onchange="funInsNoFromEndDate();" value='<s:property value="jqxEndDate"/>'></div>
-                            </div>
-
-                            <label>Description</label>
-                            <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
-                        </div>
-
-                        <div class="action-buttons-group" style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
-                            <button class="myButton" type="button" id="btnDistributionSubmit" onclick="funloaddistributiongrid();">Submit Distribution</button>
-                            <input type="button" name="btnUpdate" id="btnUpdate" class="myButton" value="Edit" onclick="funUpdate();">
-                            <input type="button" name="btnPrintSummary" id="btnPrintSummary" class="myButton" value="Print" onclick="funPrintSummary();">
-                            <button class="myButton" type="button" id="btndist" onclick="fundistribution();">Mark as Distributed</button>
-                        </div>
-                    </div>
-
-                    <div class="section-block" style="flex: 1;">
-                        <h2>Distribution Preview</h2>
-                        <div id="jqxDistributionGrid1">
-                            <jsp:include page="distributionGrid.jsp"></jsp:include>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-block">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <button type="button" class="icon" id="btnExcel" title="Export to Excel" onclick="funExportBtn();">
-                                <img alt="excel" src="<%=contextPath%>/icons/excel_new.png" height="30">
-                            </button>
-                            <button type="button" class="icon" id="btnCalculate" title="Calculate" onclick="funCalculate();">
-                                <img alt="Calculate" src="<%=contextPath%>/icons/calculate_new.png" height="30">
-                            </button>
-                        </div>
-                        <button class="myButton" type="button" id="btnpost" onclick="updateinvoice();">Mark as Invoiced</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="jqxJournalVoucherApplyingGrid" hidden="true">
-                <jsp:include page="journalVoucherApplyingGrid.jsp"></jsp:include>
-            </div>
-
-            <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/>
-            <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/>
-            <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
-            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-            <input type="hidden" id="txtdistributiondocno" name="txtdistributiondocno" value='<s:property value="txtdistributiondocno"/>'/>
-            <input type="hidden" id="txtaccountdocno" name="txtaccountdocno" value='<s:property value="txtaccountdocno"/>'/>
-            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-            <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
-            <input type="hidden" id="txttranid" name="txttranid" value='<s:property value="txttranid"/>'/>
-            <input type="hidden" id="txtcosttype" name="txtcosttype" value='<s:property value="txtcosttype"/>'/>
-            <input type="hidden" id="txtcostno" name="txtcostno" value='<s:property value="txtcostno"/>'/>
-            <input type="hidden" id="hidet_chk" name="hidet_chk"> 
-            <input type="hidden" id="hiins_chk" name="hiins_chk"> 
-            <input type="hidden" id="hidcmbfrequency" name="hidcmbfrequency" value='<s:property value="hidcmbfrequency"/>'/>
-            <input type="hidden" id="hitxtinstnos" name="hitxtinstnos" value='<s:property value="hitxtinstnos"/>'/>
-            <input type="hidden" id="txtinstamt" name="txtinstamt" value='<s:property value="txtinstamt"/>'/>
-            <input type="hidden" id="hidjqxStartDate" name="hidjqxStartDate" value='<s:property value="hidjqxStartDate"/>'/>
-            <input type="hidden" id="hidjqxEndDate" name="hidjqxEndDate" value='<s:property value="hidjqxEndDate"/>'/>
-            <input type="hidden" id="mode" name="mode"/>
-            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-            <input type="hidden" id="txtmsg" name="txtmsg" value='<s:property value="txtmsg"/>'/>
-            <div hidden="hidden" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-            <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-            <input type="hidden" id="txttranno" name="txttranno" value='<s:property value="txttranno"/>'/>
-            <input type="hidden" id="txtdebittotal" name="txtdebittotal" value='<s:property value="txtdebittotal"/>'/>
-            <input type="hidden" id="txtrowno" name="txtrowno" value='<s:property value="txtrowno"/>'/>
-            <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'>
-            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-            <input type="hidden" id="gridlength" name="gridlength"/>
-            <input type="hidden" id="applylength" name="applylength"/>
-            <input type="hidden" id="hidgrtype" name="hidgrtype"/>
-            <input type="hidden" id="hidtxtamount" name="hidtxtamount"/>
-            <input type="hidden" id="txtinstamttotal" name="txtinstamttotal" value='<s:property value="txtinstamttotal"/>'/>
-            <input type="hidden" id="hidmodes" name="hidmodes"/>
-        </div>
-    </form>
-
-    <div id="accountDetailsWindow"><div></div><div></div></div>
-    <div id="costTypeSearchGridWindow"><div></div><div></div></div>
+<div id="accountDetailsWindow">
+	<div></div><div></div>
 </div>
 
+<div id="costTypeSearchGridWindow">
+	<div></div><div></div>
+</div> 
+ 
+</div>
 </body>
 </html>

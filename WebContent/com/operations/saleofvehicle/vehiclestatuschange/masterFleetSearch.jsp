@@ -100,108 +100,228 @@ function getGroup() {
  
 	</script>
 <style type="text/css">
-/* Master UI Table Container */
-#search table {
-  border-collapse: separate;
-  border-spacing: 15px 18px; /* Standard master gap */
-  width: 100%;
+:root {
+    --primary-teal: #3ba294;
+    --btn-blue: #348fe2;
+    --text-color: #666;
+    --border-color: #e2e2e2;
+    --bg-light: #f5f6f8;
 }
 
-/* Label Styling */
-td[align="right"] {
-  font-family: Tahoma, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #E0ECF8;
+    margin: 0;
+    padding: 20px;
+    color: var(--text-color);
 }
 
-/* Input & Select Field Styling */
-input[type="text"], select {
-  font-family: Tahoma, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;
-  max-width: 100%;
-  box-sizing: border-box; /* Include padding in width */
+/* Container */
+.modal-container {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
 }
 
-/* Date Picker Container */
+/* Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #444;
+    font-weight: normal;
+}
+
+.modal-header span {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Form Grid */
+.search-section {
+    padding: 0 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 30px;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.input-group input,
+.input-group select {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 6px 0;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    transition: border-bottom-color 0.2s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-bottom: 2px solid var(--primary-teal);
+}
+
+/* Date input override */
 #searchdate {
-  font-family: Tahoma, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+    border-bottom: 1px solid var(--border-color);
+    padding: 6px 0;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Arial, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master Blue */
-  color: #ffffff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
-  min-width: 90px;
+#searchdate:focus-within {
+    border-bottom: 2px solid var(--primary-teal);
 }
 
-/* Master Green Hover Effect */
-.myButton:hover {
-  background-color: #45a049;
+/* Button */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
 }
 
-/* Row Spacing */
-tr {
-  line-height: 1.8;
+.btn {
+    border: none;
+    border-radius: 3px;
+    padding: 8px 18px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-search {
+    background-color: var(--primary-teal);
+    font-weight: 600;
+    width : 120px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Grid container */
+.grid-container {
+    padding: 0 20px;
+    margin-top: 10px;
+}
+
+.input-group select {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 6px 30px 6px 0; /* space for arrow */
+    font-size: 14px;
+    color: #333;
+    background: transparent;
+    width: 100%;
+    outline: none;
+
+    /* Fix arrow visibility */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Custom arrow */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0px center;
+    background-size: 18px;
 }
 </style>
 
 <body bgcolor="#E0ECF8">
-<div id="search">
-  <table width="100%">
-    <tr>
-      <td width="12%" align="right">Doc No</td>
-      <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
-      <td width="7%" align="right">Date</td>
-      <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
-      <td width="13%" align="right">Color</td>
-      <td width="15%" align="left">
-        <select name="searchcolor" id="searchcolor">
-          <option value="">--Select--</option>
-        </select>
-      </td>
-      <td width="12%" align="right">&nbsp;</td>
-      <td width="14%" align="left">&nbsp;</td>
-    </tr>
+<div class="modal-container" id="search">
 
-    <tr>
-      <td align="right">Fleet No</td>
-      <td align="left"><input type="text" name="searchfleetno" id="searchfleetno"></td>
-      <td align="right">Reg No</td>
-      <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
-      <td align="right">Group</td>
-      <td align="left">
-        <select name="searchgroup" id="searchgroup">
-          <option value="">--Select--</option>
-        </select>
-      </td>
-      <td align="right">&nbsp;</td>
-      <td align="center">
-        <input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="8">
-        <div id="srefreshdiv">
-          <jsp:include page="fleetSearch.jsp" /> 
+    <!-- Header -->
+    <div class="modal-header">
+        <h2>Fleet Search <span>Main Grid</span></h2>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="form-grid">
+
+            <!-- Row 1 -->
+            <div class="input-group">
+                <label>Doc No</label>
+                <input type="text" name="searchdocno" id="searchdocno">
+            </div>
+
+            <div class="input-group">
+                <label>Date</label>
+                <div id="searchdate" name="searchdate"></div>
+            </div>
+
+            <div class="input-group">
+                <label>Color</label>
+                <select name="searchcolor" id="searchcolor">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Fleet No</label>
+                <input type="text" name="searchfleetno" id="searchfleetno">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="input-group">
+                <label>Reg No</label>
+                <input type="text" name="searchregno" id="searchregno">
+            </div>
+
+            <div class="input-group">
+                <label>Group</label>
+                <select name="searchgroup" id="searchgroup">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+  <button type="button" id="btnSearchExt" class="btn btn-search" onclick="mainloadSearch();">
+                Search
+            </button>
         </div>
-      </td>
-    </tr>
-  </table>
-</div>
-</body>
+
+
+  
+    <!-- Grid -->
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="fleetSearch.jsp" /> 
+        </div>
+    </div>
+
+</div></body>
 </html>

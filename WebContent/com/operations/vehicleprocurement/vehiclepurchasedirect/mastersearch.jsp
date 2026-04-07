@@ -44,75 +44,65 @@
 
 	</script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
+
+#search table {
   border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
+#search td[align="right"] {
   font-family: Tahoma, Geneva, sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   color: #222;
 }
 
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
+#search input[type="text"] {
   font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   padding: 8px 12px;
   max-width: 100%;
   box-sizing: border-box;
-  /* Grey border as requested */
   border: 1px solid #bdc3c7; 
   border-radius: 4px;
   background-color: #ffffff;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
+#search input[type="text"]:focus {
   border-color: #007bff;
   outline: none;
 }
 
-/* Date field styling for div */
-#datess {
+#search #datess {
   font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
 }
 
-/* Master Button Appearance */
 .myButton {
   font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
+  background-color: #007bff; 
   color: white;
   padding: 10px 25px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+  transition: none; 
 }
 
-/* No color change on hover */
 .myButton:hover {
   background-color: #007bff; 
   cursor: pointer;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+#search tr {
+  line-height: 1.4;
 }
 #search td[align="right"]{
-    font-weight:700;
+    font-weight:500;
     font-size:14px;
     color:#222;
 }

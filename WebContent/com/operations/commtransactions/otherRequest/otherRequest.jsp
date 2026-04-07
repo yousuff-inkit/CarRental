@@ -9,12 +9,123 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
-<style type="text/css">
+<style>
+/* =========================================================
+   OTHER REQUEST - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* FIX: Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* EXACT Input Styles from Client Master */
+input[type="text"], input[type="email"], select {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
+
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
+
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
+
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
+}
+
+/* Specific styling for the small search icons */
 .icon1 {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #ECF8E0;
+    width: 2.5em;
+    height: 2em;
+    border: none;
+    background-color: #E0ECF8;
+    cursor: pointer;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.icon1:hover {
+    background-color: #d0e0f0;
 }
 </style>
 
@@ -22,8 +133,9 @@
 	$(document).ready(function() {
 		 $('#btnEdit').attr('disabled', true );
 		 
-		 $("#jqxOtherRequestDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+		 /* MODIFIED: Heights set to 24px */
+		 $("#jqxOtherRequestDate").jqxDateTimeInput({ width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
 		 
 		 $('#clientDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Client Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#clientDetailsWindow').jqxWindow('close');
@@ -35,12 +147,12 @@
 		 $('#driverDetailsWindow').jqxWindow('close');
 		 
 		 $('#nationalityWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Nation Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
- 		 $('#nationalityWindow').jqxWindow('close');
- 		 
+		 $('#nationalityWindow').jqxWindow('close');
+		 
     	 $('#stateWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'State Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
- 		 $('#stateWindow').jqxWindow('close');
- 		 
- 		 $('#serviceWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Extra Service Request Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+		 $('#stateWindow').jqxWindow('close');
+		 
+		 $('#serviceWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Extra Service Request Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#serviceWindow').jqxWindow('close');
 		 
 	});
@@ -98,7 +210,7 @@
 		  $('#txtclientname').dblclick(function(){
 			  var date = $('#jqxOtherRequestDate').jqxDateTimeInput('getDate');
 			  $("#maindate").jqxDateTimeInput('val', date);
-			  clientSearchContent(<%=contextPath+"/"%>+"com/operations/clientAccountDetailsSearch.jsp?atype=AR"+"&date="+date);
+			  clientSearchContent("<%=contextPath%>/com/operations/clientAccountDetailsSearch.jsp?atype=AR&date="+date);
 			  $('#txtforsearch').val(2);
 			  });
 		  
@@ -112,7 +224,7 @@
         if(x==114){
         	var date = $('#jqxOtherRequestDate').jqxDateTimeInput('getDate');
 			$("#maindate").jqxDateTimeInput('val', date);
-			clientSearchContent(<%=contextPath+"/"%>+"com/operations/clientAccountDetailsSearch.jsp?atype=AR"+"&date="+date);
+			clientSearchContent("<%=contextPath%>/com/operations/clientAccountDetailsSearch.jsp?atype=AR&date="+date);
 			$('#txtforsearch').val(2);
         }
        }
@@ -129,7 +241,7 @@
 		$('#frmOtherRequest select').attr('disabled', true);
 		$('#jqxOtherRequestDate').jqxDateTimeInput({disabled: true});
 		$("#btnAdditionalDriverSearch").prop("disabled", true);
- 		$("#btnAdditionalDriverAdd").prop("disabled", true);
+		$("#btnAdditionalDriverAdd").prop("disabled", true);
 		$("#jqxOtherRequest").jqxGrid({ disabled: true});
 		$("#jqxDriver").jqxGrid({ disabled: true});
 		
@@ -140,12 +252,12 @@
 		$('#frmOtherRequest select').attr('disabled', false);
 		$('#jqxOtherRequestDate').jqxDateTimeInput({disabled: false});
 		$("#btnAdditionalDriverSearch").prop("disabled", true);
- 		$("#btnAdditionalDriverAdd").prop("disabled", true);
+		$("#btnAdditionalDriverAdd").prop("disabled", true);
 		$("#jqxOtherRequest").jqxGrid({ disabled: false});
 		$("#jqxDriver").jqxGrid({ disabled: true});
 		$('#docno').attr('readonly', true);
 		$('#txtamount').attr('readonly', true);
- 		$('#txtdescription').attr('readonly', true);
+		$('#txtdescription').attr('readonly', true);
 		$('#txtclientname').attr('readonly', true);
 		$('#txtravocher').attr('readonly', true);
 		
@@ -231,7 +343,7 @@
 			newTextBox.appendTo('form');
 			 }
 			}
- 		 $('#drivergridlength').val(length1);
+		 $('#drivergridlength').val(length1);
 	   /* Other Request Grid  Saving Ends*/
 	   
 	   
@@ -382,70 +494,89 @@
    }
 			 
 </script>
-
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 100vh;
-}
-</style>
-
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmOtherRequest" action="saveOtherRequest" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include><br/>
 
-<div  class='hidden-scrollbar'>
+<div class='hidden-scrollbar'>
 <fieldset>
-<table width="100%">
+
+<table width="850">
   <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="18%"><div id="jqxOtherRequestDate" name="jqxOtherRequestDate" onchange="datechange();" value='<s:property value="jqxOtherRequestDate"/>'></div>
-    <input type="hidden" id="hidjqxOtherRequestDate" name="hidjqxOtherRequestDate" value='<s:property value="hidjqxOtherRequestDate"/>'/></td>
-    <td width="14%" align="right">Ref. No.</td>
-    <td colspan="2"><input type="text" id="txtrefno" name="txtrefno" style="width:50%;" value='<s:property value="txtrefno"/>'/></td>
-    <td colspan="2" align="right">Doc No.</td>
-    <td width="14%"><input type="text" id="docno" name="txtotherrequestdocno" style="width:70%;" value='<s:property value="txtotherrequestdocno"/>' tabindex="-1"/>
+    <td width="10%" align="right">Date</td>
+    <td width="20%">
+        <div id="jqxOtherRequestDate" name="jqxOtherRequestDate" onchange="datechange();" value='<s:property value="jqxOtherRequestDate"/>'></div>
+        <input type="hidden" id="hidjqxOtherRequestDate" name="hidjqxOtherRequestDate" value='<s:property value="hidjqxOtherRequestDate"/>'/>
+    </td>
+    <td width="10%" align="right">Ref. No.</td>
+    <td width="25%">
+        <input type="text" id="txtrefno" name="txtrefno" style="width:100%;" value='<s:property value="txtrefno"/>'/>
+    </td>
+    <td width="10%" align="right">Doc No.</td>
+    <td width="25%">
+        <input type="text" id="docno" name="txtotherrequestdocno" style="width:100%;" value='<s:property value="txtotherrequestdocno"/>' tabindex="-1" readonly/>
+    </td>
   </tr>
   <tr>
     <td align="right">Client</td>
-    <td colspan="2"><input type="text" id="txtclientname" name="txtclientname" placeholder="Press F3 to Search" style="width:70%;" value='<s:property value="txtclientname"/>' ondblclick="funSearchdblclick();" onkeydown="getClient(event);"/>
-    <input type="hidden" id="txtclientdocno" name="txtclientdocno" value='<s:property value="txtclientdocno"/>'/></td>
-    
-    <td width="7%" align="right">RA Type</td>
-    <td width="13%"><select id="cmbratype" name="cmbratype" style="width:50%;" onchange="clearAgreement();" value='<s:property value="cmbratype"/>'>
-      <option value="RAG">Rental</option><option value="LAG">Lease</option></select>
-      <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/></td>
-    <td width="6%" align="right">RA No.</td>
-    <td colspan="2"><input type="text" id="txtravocher" name="txtravocher" placeholder="Press F3 to Search" style="width:27%;" value='<s:property value="txtravocher"/>' ondblclick="funSearchdblclick();" onkeydown="getAgreement(event);"/>
-    <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'/></td>
+    <td>
+        <input type="text" id="txtclientname" name="txtclientname" placeholder="Press F3 to Search" style="width:100%;" value='<s:property value="txtclientname"/>' ondblclick="funSearchdblclick();" onkeydown="getClient(event);"/>
+        <input type="hidden" id="txtclientdocno" name="txtclientdocno" value='<s:property value="txtclientdocno"/>'/>
+    </td>
+    <td align="right">RA Type</td>
+    <td>
+        <select id="cmbratype" name="cmbratype" style="width:100%;" onchange="clearAgreement();" value='<s:property value="cmbratype"/>'>
+            <option value="RAG">Rental</option>
+            <option value="LAG">Lease</option>
+        </select>
+        <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/>
+    </td>
+    <td align="right">RA No.</td>
+    <td>
+        <input type="text" id="txtravocher" name="txtravocher" placeholder="Press F3 to Search" style="width:100%;" value='<s:property value="txtravocher"/>' ondblclick="funSearchdblclick();" onkeydown="getAgreement(event);"/>
+        <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'/>
+    </td>
   </tr>
   <tr>
     <td align="right">Remarks</td>
-    <td colspan="7"><input type="text" id="txtremarks" name="txtremarks" style="width:72%;" value='<s:property value="txtremarks"/>'/></td>
+    <td colspan="5">
+        <input type="text" id="txtremarks" name="txtremarks" style="width:100%;" value='<s:property value="txtremarks"/>'/>
+    </td>
   </tr>
 </table>
+
 </fieldset><br/>
 
 <div id="otherRequestGridDiv"><jsp:include page="otherRequestGrid.jsp"></jsp:include></div>
 
 <fieldset style="background-color:#ECF8E0;"><legend><input type="checkbox" id="chkadddriver" name="chkadddriver" onchange="checkAdditionalDriver();"><b>Additional Driver</b></legend>
 <input type="hidden" id="adddriverintickval" name="adddriverintickval" value='<s:property value="adddriverintickval"/>'>
-<table width="100%">
+
+<table width="850">
   <tr>
-    <td width="7%" align="center"><button type="button" class="icon1" id="btnAdditionalDriverSearch" title="Search Additional Driver" onclick="funAdditionalDriverSearch();">
-							<img alt="Search Additional Driver" src="<%=contextPath%>/icons/driverSearch.png">
-						</button></td>
-    <td width="7%" align="left"><button type="button" class="icon1" id="btnAdditionalDriverAdd" title="Add Additional Driver" onclick="funAdditionalDriverAdd();">
-							<img alt="Add Additional Driver" src="<%=contextPath%>/icons/driverAdd.png">
-						</button></td>
-    <td width="6%" align="right">Amount</td>
-    <td width="19%"><input type="text" id="txtamount" name="txtamount" style="width:70%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);" /></td>
-    <td width="8%" align="right">Description</td>
-    <td width="53%"><input type="text" id="txtdescription" name="txtdescription" style="width:65%;" value='<s:property value="txtdescription"/>'/></td>
+    <td width="7%" align="center">
+        <button type="button" class="icon1" id="btnAdditionalDriverSearch" title="Search Additional Driver" onclick="funAdditionalDriverSearch();">
+            <img alt="Search Additional Driver" src="<%=contextPath%>/icons/driverSearch.png">
+        </button>
+    </td>
+    <td width="7%" align="left">
+        <button type="button" class="icon1" id="btnAdditionalDriverAdd" title="Add Additional Driver" onclick="funAdditionalDriverAdd();">
+            <img alt="Add Additional Driver" src="<%=contextPath%>/icons/driverAdd.png">
+        </button>
+    </td>
+    <td width="10%" align="right">Amount</td>
+    <td width="20%">
+        <input type="text" id="txtamount" name="txtamount" style="width:100%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);" />
+    </td>
+    <td width="10%" align="right">Description</td>
+    <td width="46%">
+        <input type="text" id="txtdescription" name="txtdescription" style="width:100%;" value='<s:property value="txtdescription"/>'/>
+    </td>
   </tr>
 </table>
+
 <div id="DriverDiv"><jsp:include page="driver.jsp"></jsp:include></div><br/>
 
 </fieldset>

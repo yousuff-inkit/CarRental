@@ -1,7 +1,6 @@
 <%@page import="com.controlcentre.masters.vehiclemaster.dealer.ClsDealerAction" %>
 <%ClsDealerAction cda=new ClsDealerAction(); %>
 
-
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!DOCTYPE html>
@@ -12,345 +11,364 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i) - Dealer Master</title>
+<title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+/* =========================================================
+   DEALER - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
     margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%; /* Master UI Requirement */
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
     margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    text-align: left !important; 
-}
-
-/* ------------------------------
-    SECTION BLOCKS & HEADERS
------------------------------- */
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px; 
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 25px;
-}
-
-.section-block h2 {
-    font-size: 17.6px;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff; /* Signature Blue Line */
-    color: #333;
-    display: block;
-}
-
-/* ------------------------------
-    FORM GRID SYSTEM
------------------------------- */
-.form-row {
-    display: grid;
-    grid-template-columns: 120px 1fr 120px 1fr; 
-    gap: 15px 30px;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-/* ------------------------------
-    INPUTS & CONTROLS
------------------------------- */
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
-    width: 100%;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-input[readonly] {
-    background-color: #f3f4f6;
-    color: #6b7280;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-    text-align: right;
-    padding-right: 10px;
-    font-size: 16px;
-}
-
-/* JQX Widget Overrides */
-.jqx-datetimeinput {
-    height: 32px !important;
-    width: 100% !important;
-}
-
+/* FIX: Responsive scroll area so the bottom is never cut off */
 .hidden-scrollbar {
     overflow-y: auto;
-    height: 530px;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
 }
 
 form label.error {
-    color:red;
-    font-weight:bold;
-    font-size: 12px;
+    color: red;
+    font-weight: bold;
 }
 
-
-#formdet {
-    text-align: left !important;
-    display: block;
+/* EXACT Input Styles from Client Master */
+/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
+input[type="text"], input[type="email"], select {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
 }
 
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
 
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
 
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
+
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
+
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
+
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
+}
 </style>
-<script type="text/javascript">
-      $(document).ready(function () {          
-    	  $("#dealerdate").jqxDateTimeInput({ width : '100%', height : '32px', formatString : "dd.MM.yyyy" });  
-    	  $('#accountWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
-		  $('#accountWindow').jqxWindow('close');
-		  
-		  document.getElementById("formdet").innerText="Dealer(VDR)";
-		  document.getElementById("formdetail").value="Dealer";
-		  document.getElementById("formdetailcode").value="VDR";
-		  window.parent.formCode.value="VDR";
-		  window.parent.formName.value="Dealer";
- 		 var data1= '<%=cda.searchDetails() %>';
-             
-             var num = 0; 
-             var source =
-             {
-                 datatype: "json",
-                 datafields: [
-                           	{name : 'DOC_NO' , type: 'int' },
-      						{name : 'name', type: 'String'  },
-                           	{name : 'acc_no', type: 'String'  },
-                           	{name : 'date',type:'date'},
-                           	{name : 'description',type:'string'}
-                           	
-                  ],
-                  localdata: data1,
-                 
-                 
-                 pager: function (pagenum, pagesize, oldpagenum) {
-                     // callback called when a page or page size is changed.
-                 }
-             };
-             
-             var dataAdapter = new $.jqx.dataAdapter(source,
-             		 {
-                 		loadError: function (xhr, status, error) {
- 	                    alert(error);    
- 	                    }
- 		            }		
-             );
-           
-             $("#jqxDealerSearch1").jqxGrid(
-                     {
-                     	width: '100%',
-                         height: 315,
-                         source: dataAdapter,
-                         showfilterrow: true,
-                         filterable: true,
-                         selectionmode: 'singlerow',
-                         sortable: true,
-                         altrows:true,
-                         columns: [
-         					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
-         					{ text: 'Dealer',columntype: 'textbox', filtertype: 'input', datafield: 'name', width: '30%' },
-         					{ text: 'Acc No',columntype: 'textbox', filtertype: 'input', datafield: 'acc_no', width: '20%',hidden:true },
-         					{ text: 'Date',columntype: 'textbox', filtertype: 'input', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy' },
-         					{ text: 'Account',columntype: 'textbox', filtertype: 'input', datafield: 'description', width: '40%' },
-         					]
-                     });
 
-             $('#jqxDealerSearch1').on('rowdoubleclick', function (event) 
-             		{ 
- 		            	var rowindex1=event.args.rowindex;
- 		                document.getElementById("docno").value= $('#jqxDealerSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
- 		                document.getElementById("dealername").value = $("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "name");
- 		                $("#dealerdate").jqxDateTimeInput('val',$("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
- 		                document.getElementById("txtaccname").value = $("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "description");
- 		                document.getElementById("txtaccno").value = $("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "acc_no");
-             		 });           		 
-           		 });
-      function accountSearchContent(url) {
-		  $('#accountWindow').jqxWindow('open');
+<script type="text/javascript">
+      $(document).ready(function () {          
+          /* MODIFIED: Height set to 24px to match text inputs */
+    	  $("#dealerdate").jqxDateTimeInput({ width : '125px', height : '24px', formatString : "dd.MM.yyyy" });  
+    	  $('#accountWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
+		  $('#accountWindow').jqxWindow('close');
+		  
+		  document.getElementById("formdet").innerText="Dealer(VDR)";
+		  document.getElementById("formdetail").value="Dealer";
+		  document.getElementById("formdetailcode").value="VDR";
+		  window.parent.formCode.value="VDR";
+		  window.parent.formName.value="Dealer";
+ 		 var data1= '<%=cda.searchDetails() %>';
+             
+             var num = 0; 
+             var source =
+             {
+                 datatype: "json",
+                 datafields: [
+                           	{name : 'DOC_NO' , type: 'int' },
+      						{name : 'name', type: 'String'  },
+                           	{name : 'acc_no', type: 'String'  },
+                           	{name : 'date',type:'date'},
+                           	{name : 'description',type:'string'}
+                           	
+                  ],
+                  localdata: data1,
+                 
+                 
+                 pager: function (pagenum, pagesize, oldpagenum) {
+                     // callback called when a page or page size is changed.
+                 }
+             };
+             
+             var dataAdapter = new $.jqx.dataAdapter(source,
+             		 {
+                 		loadError: function (xhr, status, error) {
+ 	                    alert(error);    
+ 	                    }
+ 		            }		
+             );
+           
+             $("#jqxDealerSearch1").jqxGrid(
+                     {
+                     	width: '100%',
+                         height: 315,
+                         source: dataAdapter,
+                         showfilterrow: true,
+                         filterable: true,
+                         selectionmode: 'singlerow',
+                       //  pagermode: 'default',
+                         sortable: true,
+                         //pageable: true,
+                         altrows:true,
+                         //Add row method
+                         columns: [
+         					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '10%' },
+         					{ text: 'Dealer',columntype: 'textbox', filtertype: 'input', datafield: 'name', width: '30%' },
+         					{ text: 'Acc No',columntype: 'textbox', filtertype: 'input', datafield: 'acc_no', width: '20%',hidden:true },
+         					{ text: 'Date',columntype: 'textbox', filtertype: 'input', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy' },
+         					{ text: 'Account',columntype: 'textbox', filtertype: 'input', datafield: 'description', width: '40%' },
+         					]
+                     });
+
+             $('#jqxDealerSearch1').on('rowdoubleclick', function (event) 
+             		{ 
+ 		            	var rowindex1=event.args.rowindex;
+ 		                document.getElementById("docno").value= $('#jqxDealerSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
+ 		                document.getElementById("dealername").value = $("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "name");
+ 		                $("#dealerdate").jqxDateTimeInput('val',$("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "date"));
+ 		                document.getElementById("txtaccname").value = $("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "description");
+ 		                document.getElementById("txtaccno").value = $("#jqxDealerSearch1").jqxGrid('getcellvalue', rowindex1, "acc_no");
+             		 });           		 
+           		 });
+      function accountSearchContent(url) {
+		  $('#accountWindow').jqxWindow('open');
 			 $.get(url).done(function (data) {
+				// alert(data);
 			$('#accountWindow').jqxWindow('setContent', data);
-		}); 
+		}); 
 		}
-     function funSearchdblclick(){
-       	 var dtype="VDR";
-			  var url=document.URL;
-			     var reurl=url.split("/com/");
-				  	  accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchAP.jsp?dtype='+dtype);
+     function funSearchdblclick(){
+       	 var dtype="VDR";
+			  var url=document.URL;
+			     var reurl=url.split("/com/");
+				  	  accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchAP.jsp?dtype='+dtype);
+			//  });  
 	}
-    function getAcc(event){
-     	 var dtype="VDR";
-         var x= event.keyCode;
-         if(x==114){
-        	 var url=document.URL;
-		     var reurl=url.split("/com/");
-			  	  accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchAP.jsp?dtype='+dtype);
-         }
-         else{
-          }
-         }
-      function funSearchLoad(){
-			changeContent('dealerSearch.jsp', $('#window')); 
+    function getAcc(event){
+     	 var dtype="VDR";
+         var x= event.keyCode;
+         if(x==114){
+       	 //alert("here");
+        	 var url=document.URL;
+		     var reurl=url.split("/com/");
+			  	  accountSearchContent(reurl[0]+'/com/search/accountsearch/accountsSearchAP.jsp?dtype='+dtype);
+         }
+         else{
+          }
+         }
+      function funSearchLoad(){
+			changeContent('dealerSearch.jsp', $('#window')); 
 		 }
+         /* function getAcc(event){
+           			 var x= event.keyCode;
+           			 if(x==114){
+           			  $('#accountWindow').jqxWindow('open');
+       		  	    $('#accountWindow').jqxWindow('focus');
+           			 }
+           			 else{
+           				 }
+           			 }  */
+           		
 	function funReadOnly() {
 		$('#frmDealer input').attr('readonly', true);
-		 $('#dealerdate').jqxDateTimeInput({ disabled: true}); 
+		 $('#dealerdate').jqxDateTimeInput({ disabled: true}); 
 	}
 	function funRemoveReadOnly() {
 		$('#frmDealer input').attr('readonly', false);
-		 $('#dealerdate').jqxDateTimeInput({ disabled: false}); 
+		 $('#dealerdate').jqxDateTimeInput({ disabled: false}); 
 		$('#docno').attr('readonly', true);
 		$('#txtaccname').attr('readonly', true);
 		$('#dealername').attr('readonly', true);
 	}
+
+
+	/* function getAccount() {
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				items = x.responseText;
+				items = items.split('***');
+				var accItems = items[0].split(",");
+				var accnoItems = items[1].split(",");
+				var optionsacc = '<option value="">--Select--</option>';
+				for (var i = 0; i < accItems.length; i++) {
+					optionsacc += '<option value="' + accnoItems[i] + '">'
+							+ accItems[i] + '</option>';
+				}
+				$("select#accno").html(optionsacc);
+				$('#accno').val($('#accnohidden').val());
+
+			} else {
+			}
+		}
+		x.open("GET", "getAccount.jsp", true);
+		x.send();
+		//document.write(document.getElementById("authname").value);
+
+	} */
 	 function setValues(){	
-		    if($('#dealerdatehidden').val()){
+		    if($('#dealerdatehidden').val()){
 				$("#dealerdate").jqxDateTimeInput('val', $('#dealerdatehidden').val());
 			}
 			
-		    if($('#msg').val()!=""){
-				   $.messager.alert('Message',$('#msg').val());
-				  }
+		    if($('#msg').val()!=""){
+				   $.messager.alert('Message',$('#msg').val());
+				  }
 
 			}
-		    function funFocus()
-		    {
-		    	document.getElementById("dealername").focus();
-		    		
-		    }
-		    $(function(){
-		    
-		        $('#frmDealer').validate({
-		                 rules: {
-		                 dealername:{
-		                	 required:true,
-		                	 maxlength:45
-		                 } 
-		             
-		                
-		                 },
-		                 messages: {
-		                  dealername:{
-		                	  required:" *",
-		                	  maxlength:"max 45 chars"
-		                  }
-		              
-		                 }
-		        });
-		        });
-		     function funNotify(){
-		    		//alert($('#txtaccname').val());	 
-		    		if(document.getElementById("txtaccname").value==''){
-		    			document.getElementById("errormsg").innerText="A/c is Mandatory";
-		    		return 0;
-		    		}
-		    		else{
-		    			document.getElementById("errormsg").innerText="";
-		    		}
-		    		return 1;
-			} 
-		     function funExcelBtn(){
-				  $("#jqxDealerSearch1").jqxGrid('exportdata', 'xls', 'Dealer');
-			  }
+		    function funFocus()
+		    {
+		    	document.getElementById("dealername").focus();
+		    		
+		    }
+		    $(function(){
+		    
+		        $('#frmDealer').validate({
+		                 rules: {
+		                 dealername:{
+		                	 required:true,
+		                	 maxlength:45
+		                 } 
+		             
+		                
+		                 },
+		                 messages: {
+		                  dealername:{
+		                	  required:" *",
+		                	  maxlength:"max 45 chars"
+		                  }
+		              
+		                 }
+		        });
+		        });
+		     function funNotify(){
+		    		//alert($('#txtaccname').val());	 
+		    		if(document.getElementById("txtaccname").value==''){
+		    			document.getElementById("errormsg").innerText="A/c is Mandatory";
+		    		/* //document.getElementById("txtaccname").focus;
+		    			$('#txtaccname').focus();
+ */		    		return 0;
+		    		}
+		    		else{
+		    			document.getElementById("errormsg").innerText="";
+		    		}
+		    		return 1;
+			} 
+		     function funExcelBtn(){
+				  $("#jqxDealerSearch1").jqxGrid('exportdata', 'xls', 'Dealer');
+			  }
 </script>
 </head>
-<body onLoad="setValues();">
+<body onLoad="setValues();" >
 <div id="mainBG" class="homeContent" data-type="background">
-    <jsp:include page="../../../../header.jsp" />
-   <div class="form-row" style="display:flex; align-items:center; width:100%;">
+<form id="frmDealer" action="saveActionDealer" autocomplete="off" >
+	<jsp:include page="../../../../header.jsp" />
+	<br/> 
+<fieldset><legend>Dealer Details</legend>
+<table width="100%">  
+  <tr>
+    <td width="103" align="right">Date</td>
+    <td width="196"><div id="dealerdate" name="dealerdate" value='<s:property value="dealerdate"/>'></div></td>
+    <td width="102">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+    <td width="99"><div align="right">Doc No</div></td>
+    <td colspan="2"><input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly></td>
+  </tr>
+  <tr>
+    <td><div align="right">Acc. No.</div></td>
+    <td colspan="2"><input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' style="width:99%;" ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" readonly placeholder="Press F3 to Search" required ></td>
+    <td width="96">&nbsp;</td>
+    <td width="400"></td>
+    <td><div align="right">Dealer</div></td>
+    <td width="240"><input type="text" name="dealername"  id="dealername"  value='<s:property value="dealername"/>'></td>
+    <td width="43">&nbsp;</td>
+  </tr>
+</table>
+<input type="hidden" id="txtaccno" name="txtaccno" value='<s:property value="txtaccno"/>'>
+<input type="hidden" id="dealerdatehidden" name="dealerdatehidden" value='<s:property value="dealerdatehidden"/>'>
+<input type="hidden" id="mode" name="mode"/>
+				        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
 
-    <label style="margin-right:8px;">Date</label>
-
-    <div style="width:130px;">
-        <div id="dealerdate" name="dealerdate" value='<s:property value="dealerdate"/>'></div>
-    </div>
-
-    <label style="margin-left:auto; margin-right:8px;">Doc No</label>
-
-    <input type="text"
-           name="docno"
-           id="docno"
-           value='<s:property value="docno"/>'
-           readonly
-           tabindex="-1"
-           style="width:120px;">
-
-</div>s
-    <br/>
-    
-    <form id="frmDealer" action="saveActionDealer" autocomplete="off">
-        <div class="hidden-scrollbar">
-            
-            <div class="section-block">
-                <h2>Dealer Details</h2>
-                
-                
-                <div class="form-row">
-                    <label>Account</label>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' style="width: 30%;" readonly tabindex="-1">
-                        <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' ondblclick="funSearchdblclick();" onkeydown="getAcc(event);" readonly placeholder="Press F3 to Search" required>
-                    </div>
-
-                    <label>Dealer Name</label>
-                    <input type="text" name="dealername" id="dealername" value='<s:property value="dealername"/>'>
-                </div>
-
-                <input type="hidden" id="dealerdatehidden" name="dealerdatehidden" value='<s:property value="dealerdatehidden"/>'>
-                <input type="hidden" id="mode" name="mode"/>
-                <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-                <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-            </div>
-
-            <div class="section-block">
-                <h2>Dealer Search List</h2>
-                <div id="jqxDealerSearch1" style="width: 100%;"></div>
-            </div>
-
-        </div>
-    </form>
-
-    <div id="accountWindow">
-        <div></div><div></div>
-    </div>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+</fieldset>
+</form>
+<br/>
+<div id="jqxDealerSearch1"></div>
+<%-- <div id="window">
+	<div id="windowHeader" class="windowHead">
+		<span> <img src="../../../../icons/search_new.png" alt="" style="margin-right: 15px" />Search</span>
+	</div>
+	<div id="windowContent" class="windowCont" style="overflow: hidden;">
+		<jsp:include page="dealerSearch.jsp"></jsp:include>
+	</div></div> --%>
 </div>
-</body>
+ <div id="accountWindow">
+				<div></div><div></div>
+				</div> 
+ </body>
 </html>
