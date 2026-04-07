@@ -1,27 +1,130 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
- 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
- <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>  --%> 
-<style>
+
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
+<style>
+/* =========================================================
+SCOPED UI: Compact Search Modal Layout
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Panel Styling */
+.modern-ui .search-panel {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.modern-ui table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Modern Search Button */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
 </style>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function () {
-		 $("#searchdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+        /* COMPACT DATE/TIME SIZING (120px width, 24px height) */
+		$("#searchdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
+		
+        /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
+        
 		getGroup();
 		getColor();
-	
 	}); 
-function getGroup() {
+
+	function getGroup() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
@@ -32,162 +135,127 @@ function getGroup() {
 			
 				var optionsgroup = '<option value="">--Select--</option>';
 				for (var i = 0; i < groupItems.length; i++) {
-					optionsgroup += '<option value="' + groupIdItems[i] + '">'
-							+ groupItems[i] + '</option>';
+					optionsgroup += '<option value="' + groupIdItems[i] + '">' + groupItems[i] + '</option>';
 				}
-		
 				$("select#searchgroup").html(optionsgroup);
-				
-				
-			} else {
 			}
 		}
 		x.open("GET", "../../../../com/controlcentre/masters/vehiclemaster/getGroup.jsp", true);
 		x.send();
 	}
 	
-	
 	function getColor() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
 				var items = x.responseText;
-				//alert(items);
 				items = items.split('####');
 				var colorItems = items[0].split(",");
 				var colorIdItems = items[1].split(",");
+				
 				var optionscolor = '<option value="">--Select--</option>';
 				for (var i = 0; i < colorItems.length; i++) {
-					optionscolor += '<option value="' + colorIdItems[i] + '">'
-							+ colorItems[i] + '</option>';
+					optionscolor += '<option value="' + colorIdItems[i] + '">' + colorItems[i] + '</option>';
 				}
 				$("select#searchcolor").html(optionscolor);
-			} else {
 			}
 		}
 		x.open("GET", "../../../../com/controlcentre/masters/vehiclemaster/getColor.jsp", true);
 		x.send();
 	}
- 	function mainloadSearch() {
- 		
- 		//var client=document.getElementById("searchclient").value;
- 	//	var reftype=document.getElementById("cmbsearchrtype").value;
- 		var searchdate=$('#searchdate').jqxDateTimeInput('val');
- 		//var agmtno=document.getElementById("searchagmtno").value;
- 		var fleetno=document.getElementById("searchfleetno").value;
- 		var docno=document.getElementById("searchdocno").value;
- 		var regno=document.getElementById("searchregno").value;
- 		//var status=document.getElementById("cmbsearchstatus").value;
-		var color=document.getElementById("searchcolor").value;
-		var group=document.getElementById("searchgroup").value;
- 		var branchid=document.getElementById("brchName").value;
-		getdata(searchdate,fleetno,docno,regno,color,group,branchid);
- 
 
+	function mainloadSearch() {
+		var searchdate = $('#searchdate').jqxDateTimeInput('val') || "";
+		var fleetno = document.getElementById("searchfleetno").value || "";
+		var docno = document.getElementById("searchdocno").value || "";
+		var regno = document.getElementById("searchregno").value || "";
+		var color = document.getElementById("searchcolor").value || "";
+		var group = document.getElementById("searchgroup").value || "";
+        
+        // Safely pull from parent document elements if they exist
+		var branchid = document.getElementById("brchName") ? document.getElementById("brchName").value : "";
+		var agmttype = document.getElementById('cmbrentaltype') ? document.getElementById('cmbrentaltype').value : "";
+   		var agmtno = document.getElementById('refno') ? document.getElementById('refno').value : "";
+
+		getdata(searchdate, fleetno, docno, regno, color, group, branchid, agmttype, agmtno);
 	}
 
-	 function getdata(searchdate,fleetno,docno,regno,color,group,branchid){
-		
-		// $("#tariffDivId").load('rateDescription.jsp?txtrentaldocno='+indexVal1+'&revehGroup='+revehGroup);
-		var agmttype=$('#cmbrentaltype').val();
-   		var agmtno=$('#refno').val();
-		 $("#srefreshdiv").load('outFleetSearch.jsp?agmttype='+agmttype+'&agmtno='+agmtno+'&searchdate='+searchdate+'&fleetno='+fleetno+'&docno='+docno+'&regno='+regno+'&color='+color+'&group='+group+'&branch='+branchid);
-		 
+	function getdata(searchdate, fleetno, docno, regno, color, group, branchid, agmttype, agmtno) {
+        /* Safely encode URI components to prevent special character crashes */
+        var targetUrl = 'outFleetSearch.jsp?agmttype=' + encodeURIComponent(agmttype) + 
+                        '&agmtno=' + encodeURIComponent(agmtno) + 
+                        '&searchdate=' + encodeURIComponent(searchdate) + 
+                        '&fleetno=' + encodeURIComponent(fleetno) + 
+                        '&docno=' + encodeURIComponent(docno) + 
+                        '&regno=' + encodeURIComponent(regno) + 
+                        '&color=' + encodeURIComponent(color) + 
+                        '&group=' + encodeURIComponent(group) + 
+                        '&branch=' + encodeURIComponent(branchid);
+                        
+		$("#srefreshdiv").load(targetUrl);
+	}
+</script>
 
-		  
-/* x.open("GET", "dissearch.jsp?sclname="+sclname+"&smob="+smob+"&rno="+rno+"&flno="+flno+"&sregno="+sregno+"&smra="+smra, true);
-		x.send(); */
-		}
- 
-	</script>
-<style type="text/css">
-/* Master UI Styles */
+</head>
+<body style="background-color: #fff; margin: 0;">
 
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px; 
-}
+<div id="search" class="modern-ui">
 
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="lbl-right" width="10%">Doc No</td>
+                <td width="20%">
+                    <input type="text" name="searchdocno" id="searchdocno">
+                </td>
+                
+                <td class="lbl-right" width="10%">Date</td>
+                <td width="20%">
+                    <div id="searchdate" name="searchdate"></div>
+                </td>
+                
+                <td class="lbl-right" width="10%">Color</td>
+                <td width="20%">
+                    <select name="searchcolor" id="searchcolor">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+                
+                <td width="10%"></td>
+            </tr>
 
-td[align="right"] {
-  font-weight: 700;
-  font-size: 14px;
-  color: #222;
-}
+            <tr>
+                <td class="lbl-right" style="padding-top: 10px;">Fleet No</td>
+                <td style="padding-top: 10px;">
+                    <input type="text" name="searchfleetno" id="searchfleetno">
+                </td>
+                
+                <td class="lbl-right" style="padding-top: 10px;">Reg No</td>
+                <td style="padding-top: 10px;">
+                    <input type="text" name="searchregno" id="searchregno">
+                </td>
+                
+                <td class="lbl-right" style="padding-top: 10px;">Group</td>
+                <td style="padding-top: 10px;">
+                    <select name="searchgroup" id="searchgroup">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+                
+                <td align="right" style="padding-top: 10px;">
+                    <input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-
-input[type="text"], select {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%; /* Prevent overflow */
-  max-width: 100%;
-  box-sizing: border-box; /* Include padding in width */
-}
-
-
-#searchdate {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Bold button text */
-button, .myButton {
-    background: #007bff;
-    border: none;
-    padding: 6px 16px;
-    
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
-}
-
-/* Button Hover/Active Effects */
-.myButton:hover {
-  background-color: #45a049; /* Darker green on hover */
-}
-
-/* Additional spacing for rows */
-tr {
-  line-height: 1.8;
-}
-</style>
-
-<body bgcolor="#E0ECF8">
-<div id=search>
-  <table width="100%" >
-    <tr>
-      <td width="12%" align="right">Doc No</td>
-      <td width="14%" align="left"><input type="text" name="searchdocno" id="searchdocno"></td>
-      <td width="7%" align="right">Date</td>
-      <td width="13%" align="left"><div id="searchdate" name="searchdate"></div></td>
-      <td width="13%" align="right">Color</td>
-      <td width="15%" align="left"><select name="searchcolor" id="searchcolor" ><option value="">--Select--</option></select></td>
-      <td width="12%" align="right">&nbsp;</td>
-      <td width="14%" align="left">&nbsp;</td>
-    </tr>
-
-    <tr>
-      <td align="right">Fleet No</td>
-      <td align="left"><input type="text" name="searchfleetno" id="searchfleetno" ></td>
-      <td align="right">Reg No</td>
-      <td align="left"><input type="text" name="searchregno" id="searchregno"></td>
-      <td align="right">Group</td>
-      <td align="left"><select name="searchgroup" id="searchgroup" ><option value="">--Select--</option></select></td>
-      <td align="right">&nbsp;</td>
-      <td align="center"><input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onClick="mainloadSearch();"></td>
-    </tr>
-    <tr>
-      <td colspan="8">
+    <div class="grid-container">
         <div id="srefreshdiv">
-          <jsp:include page="outFleetSearch.jsp" /> 
+            <jsp:include page="outFleetSearch.jsp" /> 
         </div>
-      </td>
-    </tr>
-  </table>
+    </div>
 
-    
 </div>
+
 </body>
 </html>
