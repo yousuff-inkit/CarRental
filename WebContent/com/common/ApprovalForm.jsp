@@ -250,13 +250,15 @@ select.list1 option {
          $("#jqxApprovalGrid").jqxGrid('autoresizecolumns');
     }
 
-    function saveApprlevel()  
-      {  
+    function saveApprlevel()  {  
          // Safety check for status selection
-         if(document.getElementById("optname").value === "") {
-             alert("Please select a status.");
-             return;
-         }
+var currentLevel = $("#apprlevel").val();
+
+    // Modify the safety check
+    if(currentLevel !== "0" && document.getElementById("optname").value === "") {
+        alert("Please select a status.");
+        return;
+    }
 
          setTimeout(function() {$("#btnSend").attr("disabled", true);},100);
          
@@ -342,10 +344,10 @@ select.list1 option {
             if (x.readyState==4 && x.status==200) {
                 var items = x.responseText.split('####');
                 if(items.length > 4) {
-                    var apprlevel = items[1];
-                    var minapprl  = items[2];
-                    var apprlist  = items[3];
-                    var globalAprStatus = items[4]; 
+                	var apprlevel = items[1] ? items[1].trim() : "0";
+                    var minapprl  = items[2] ? items[2].trim() : "0";
+                    var apprlist  = items[3] ? items[3].trim() : "";
+                    var globalAprStatus = items[4] ? items[4].trim() : "0";
                     
                     var urlStatus = '<%=aprstatus%>'.trim();
                     
@@ -357,6 +359,29 @@ select.list1 option {
                     $("#minapprl").val(minapprl);
                     $("#apprlist").val(apprlist);
                     $("#hidAprStatus").val(globalAprStatus);
+                    
+                    var numericLevel = parseInt(apprlevel, 10);
+                    
+                    if(numericLevel === 0) {
+                        // Hide the Status dropdown container
+                        $("#optname").closest("div").hide();
+                        
+                        // Add an option dynamically if it doesn't exist so validation passes, 
+                        // or just set it to a value that bypasses your empty check
+                        if ($('#optname option[value="N/A"]').length === 0) {
+                            $('#optname').append('<option value="N/A">N/A</option>');
+                        }
+                        $("#optname").val("N/A"); 
+                        $("#optid").val("0"); 
+                    } else {
+                        // Ensure the dropdown is visible for Level 1, 2, etc.
+                        $("#optname").closest("div").show();
+                        
+                        // If it was previously hidden and set to N/A, reset it so the user has to pick
+                        if($("#optname").val() === "N/A") {
+                            $("#optname").val(""); 
+                        }
+                    }
                     
                     lockApprovalUI(globalAprStatus);  
                     
