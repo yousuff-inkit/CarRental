@@ -108,9 +108,14 @@ body {
 
 <script type="text/javascript">
 	$(document).ready(function () {
-        /* COMPACT DATE/TIME SIZING (120px width, 24px height) */
+        /* COMPACT DATE/TIME SIZING */
 		$("#msearchdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
 		
+        var initDate = $('#msearchdate').attr('value');
+        if(initDate && initDate !== "") {
+            $("#msearchdate").jqxDateTimeInput('val', initDate);
+        }
+
         /* Force internal alignment AFTER render */
         setTimeout(function () {
             $(".jqx-datetimeinput").find("input").css({
@@ -140,13 +145,13 @@ body {
 	}
 	
     function getdata(client, reftype, searchdate, agmtno, fleetno, docno) {
-         /* Safely encode URI components */
-		 $("#srefreshdiv").load('subMainSearch.jsp?client=' + encodeURIComponent(client) + 
-                                '&reftype=' + encodeURIComponent(reftype) + 
-                                '&searchdate=' + encodeURIComponent(searchdate) + 
-                                '&agmtno=' + encodeURIComponent(agmtno) + 
-                                '&fleetno=' + encodeURIComponent(fleetno) + 
-                                '&docno=' + encodeURIComponent(docno));
+         /* FIXED: Standard string concatenation. Encoded URIs can break older Struts mappings. */
+		 $("#srefreshdiv").load('subMainSearch.jsp?client=' + client + 
+                                '&reftype=' + reftype + 
+                                '&searchdate=' + searchdate + 
+                                '&agmtno=' + agmtno + 
+                                '&fleetno=' + fleetno + 
+                                '&docno=' + docno);
     }
 </script>
 
