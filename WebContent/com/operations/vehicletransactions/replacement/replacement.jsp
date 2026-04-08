@@ -8,11 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 
 <style>
 /* =========================================================
-SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+SCOPED UI: Bulletproof Table Layout
 ========================================================= */
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -170,22 +169,36 @@ body {
       $(document).ready(function () { 
     	  $('#btnEdit').attr('disabled',true);
 
-          /* COMPACT DATES (120px) AND TIMES (80px) FOR 24px HEIGHTS */
-    	  $("#date").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
-    	  $("#refdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#dateout").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#dateouthidden").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
-    	  $("#oncollectdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#incollectdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#deliveryoutdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#ondeliverydate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+          /* EXPLICIT DATA BINDING: Pre-fetch Struts data directly into Dates to prevent blanking */
+          var vDate = $('#hidddate').val() || null;
+          var vRefDate = $('#hidrefdate').val() || null;
+          var vDateOut = $('#hiddateout').val() || null;
+          var vOnCollectDate = $('#hidoncollectdate').val() || null;
+          var vInCollectDate = $('#hidincollectdate').val() || null;
+          var vDeliveryOutDate = $('#hiddeliveryoutdate').val() || null;
+          var vOnDeliveryDate = $('#hidondeliverydate').val() || null;
+
+    	  $("#date").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDate });
+    	  $("#refdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vRefDate });
+    	  $("#dateout").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDateOut });
+    	  $("#dateouthidden").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy" });
+    	  $("#oncollectdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vOnCollectDate });
+    	  $("#incollectdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vInCollectDate });
+    	  $("#deliveryoutdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDeliveryOutDate });
+    	  $("#ondeliverydate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vOnDeliveryDate });
           
-          $("#timeout").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#timeouthidden").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:new Date() });
-          $("#oncollecttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#incollecttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#deliveryouttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#ondeliverytime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+          var vTimeOut = $('#hidtimeout').val() || null;
+          var vOnCollectTime = $('#hidoncollecttime').val() || null;
+          var vInCollectTime = $('#hidincollecttime').val() || null;
+          var vDeliveryOutTime = $('#hiddeliveryouttime').val() || null;
+          var vOnDeliveryTime = $('#hidondeliverytime').val() || null;
+
+          $("#timeout").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: vTimeOut });
+          $("#timeouthidden").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: new Date() });
+          $("#oncollecttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: vOnCollectTime });
+          $("#incollecttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: vInCollectTime });
+          $("#deliveryouttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: vDeliveryOutTime });
+          $("#ondeliverytime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: vOnDeliveryTime });
           
           /* Force internal alignment AFTER render */
           setTimeout(function () {
@@ -236,6 +249,13 @@ body {
         		}
         	}
     	}
+
+        /* FIXED: Force the system to evaluate page setup functions since AJAX ignores body onload */
+        setTimeout(function() {
+            funReadOnly();
+            setValues();
+        }, 150);
+
       });
       
       /* HELPER FUNCTIONS FOR SEARCH ICONS & F3 */
@@ -796,25 +816,9 @@ body {
    		}
    	}
    	
-    /* SAFE SET VALUES FUNCTION */
+    /* SAFE SET VALUES FUNCTION WITH EXPLICIT DATA LOADING */
    	function setValues(){
    	    try {
-           	if($('#hidoncollecttime').length && $('#hidoncollecttime').val()){
-        		$("#oncollecttime").jqxDateTimeInput('val', $('#hidoncollecttime').val());
-        	}
-           	if($('#hiddeliveryouttime').length && $('#hiddeliveryouttime').val()){
-        		$("#deliveryouttime").jqxDateTimeInput('val', $('#hiddeliveryouttime').val());
-        	}
-           	if($('#hidtimeout').length && $('#hidtimeout').val()){
-        		$("#timeout").jqxDateTimeInput('val', $('#hidtimeout').val());
-        	}
-           	if($('#hidincollecttime').length && $('#hidincollecttime').val()){
-        		$("#incollecttime").jqxDateTimeInput('val', $('#hidincollecttime').val());
-        	}
-           	if($('#hidondeliverytime').length && $('#hidondeliverytime').val()){
-        		$("#ondeliverytime").jqxDateTimeInput('val', $('#hidondeliverytime').val());
-        	}
-        	
            	if ($('#hidcmbrentaltype').length && $('#hidcmbrentaltype').val() != null) {
     			$('#cmbrentaltype').val($('#hidcmbrentaltype').val());
     		}
@@ -1317,7 +1321,6 @@ body {
 	     });
     });
    	
-   	/* FIXED: Bulletproof Print Function Routing */
    	function funPrintBtn(){
         var rfleetno=$('#txtfleetno').val();
         var ofleetno=$('#txtoutfleetno').val();
@@ -1329,7 +1332,6 @@ body {
         }
 
         var url = window.location.href;
-        // Safely extract base path up to the last slash
         var baseUrl = url.substring(0, url.lastIndexOf('/') + 1);
         var printUrl = baseUrl + "printReplacementss?docno=" + docno + "&rfleetno=" + rfleetno + "&ofleetno=" + ofleetno;
 
@@ -1364,13 +1366,13 @@ body {
 </script>
 </head>
 
-<body onload="setValues();">
+<body>
 
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmReplacement" action="saveReplacement" autocomplete="off">
-	<script>
-			if(window.parent && window.parent.formName) window.parent.formName.value="Replacement";
-			if(window.parent && window.parent.formCode) window.parent.formCode.value="RPL";
+    <script>
+			window.parent.formName.value="Replacement";
+			window.parent.formCode.value="RPL";
 	</script>
 	<jsp:include page="../../../../header.jsp" />
 	
@@ -1739,7 +1741,6 @@ body {
         <div id="timeouthidden" name="timeouthidden" hidden="true"></div>
         <input type="hidden" id="infleettrancode" name="infleettrancode"  value='<s:property value="infleettrancode"/>'/>
         <input type="hidden" id="refno" name="refno" value='<s:property value="refno"/>' readonly />
-        
         <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
         <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
     </div>
