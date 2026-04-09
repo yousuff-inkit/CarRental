@@ -7792,26 +7792,27 @@ jqx-knob {
 
 
 
+/* Header & Column Styling */
 .jqx-grid-header {
-    background: linear-gradient(135deg, #90c8f8 0%, #bde0ff 100%) !important;
-    border-color: #bde0ff !important;
-    color: #1e3a5f !important;
+    /* Shifted from #f8f9fa to #e9ecef (subtly darker gradient) */
+    background: linear-gradient(180deg, #e9ecef 0%, #dee2e6 100%) !important;
+    border-color: #ced4da !important;
+    color: #212529 !important;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    
 }
 
 .jqx-grid-column-header {
     background: transparent !important;
-    color: #1e3a5f !important;
+    color: #212529 !important;
     font-weight: 700 !important;
     font-size: 11px !important;
     text-align: left !important;
-    border-color: #90c8f8 !important;
+    border-color: #ced4da !important;
 }
 
 .jqx-grid-column-header a:link,
 .jqx-grid-column-header a:visited {
-    color: #1e3a5f !important;
+    color: #212529 !important;
     text-align: left !important;
 }
 
@@ -7820,10 +7821,10 @@ jqx-knob {
     padding-left: 6px !important;
 }
 
-
+/* Cell Styling */
 .jqx-grid-cell {
     background: #ffffff;
-    border-color: #e8f4ff !important;
+    border-color: #dee2e6 !important; /* Slightly darker grid lines */
     color: #1f2937;
     font-size: 11px !important;
     text-align: left !important;
@@ -7845,77 +7846,82 @@ jqx-knob {
     padding-right: 6px !important;
 }
 
+/* Zebra Striping (Alt Rows) */
 .jqx-grid-cell-alt {
-    background: #f0f8ff !important;
+    background: #f1f3f5 !important; /* Darker than the previous #f8f9fa */
 }
 
+/* Hover & Selection States */
 .jqx-grid-cell-hover {
-    background: #d6eeff !important;
-    border-color: #b3d9ff !important;
-    color: #1e3a5f !important;
+    background: #dee2e6 !important; /* More pronounced hover */
+    border-color: #ced4da !important;
+    color: #000000 !important;
 }
 
 .jqx-grid-cell-selected {
-    background: #a8d4f5 !important;
-    color: #0d2d5e !important;
-    border-color: #7bbde8 !important;
+    background: #adb5bd !important; /* Solid medium grey for selection */
+    color: #ffffff !important;
+    border-color: #868e96 !important;
 }
 
 .jqx-grid-table .jqx-grid-cell {
     border-width: 0px 0px 1px 0px !important;
-    border-color: #e0f0ff !important;
+    border-color: #dee2e6 !important;
 }
 
+/* Main Container */
 .jqx-grid {
-    border: 1px solid #b3d9ff !important;
+    border: 1px solid #adb5bd !important; /* Darker outer border */
     border-radius: 8px !important;
     overflow: hidden !important;
-    box-shadow: 0 1px 6px rgba(144, 200, 248, 0.2) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* Specialized Cell States */
 .jqx-grid-cell-sort {
-    background-color: #e8f4ff !important;
+    background-color: #e9ecef !important;
 }
 .jqx-grid-cell-sort-alt {
-    background-color: #d6eeff !important;
+    background-color: #dee2e6 !important;
 }
 
 .jqx-grid-cell-filter,
 .jqx-grid-cell-filter-alt {
-    background-color: #edf7ff !important;
+    background-color: #f1f3f5 !important;
 }
 
 .jqx-grid-cell-pinned,
 .jqx-grid-cell-pinned-alt {
-    background-color: #e8f4ff !important;
+    background-color: #e9ecef !important;
 }
 
+/* Pager & UI Elements */
 .jqx-grid-pager {
-    background: #edf7ff !important;
-    border-top: 1px solid #b3d9ff !important;
+    background: #e9ecef !important; /* Darker pager background */
+    border-top: 1px solid #ced4da !important;
     padding: 4px !important;
 }
 
 .jqx-grid-column-menubutton {
-    opacity: 0.4;
+    opacity: 0.5;
     transition: opacity 0.2s;
 }
 .jqx-grid-column-menubutton:hover {
     opacity: 1;
 }
 
+/* Scrollbar Styling */
 .jqx-scrollbar-state-normal {
-    background: #edf7ff !important;
-    border-color: transparent !important;
+    background: #f1f3f5 !important;
 }
 .jqx-scrollbar-thumb-state-normal,
 .jqx-scrollbar-thumb-state-normal-horizontal {
-    background: #90c8f8 !important;
-    border-color: #90c8f8 !important;
+    background: #868e96 !important; /* Steel grey thumb */
+    border-color: #868e96 !important;
     border-radius: 4px !important;
 }
 .jqx-scrollbar-thumb-state-hover,
 .jqx-scrollbar-thumb-state-hover-horizontal {
-    background: #60a5fa !important;
+    background: #495057 !important; /* Deep grey on hover */
     border-radius: 4px !important;
 }
