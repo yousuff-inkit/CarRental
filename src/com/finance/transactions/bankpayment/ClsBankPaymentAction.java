@@ -935,9 +935,17 @@ public class ClsBankPaymentAction extends ActionSupport{
 		String mode=getMode();
 		
 		
-		bankPaymentDate = commonDAO.changeStringtoSqlDate(getJqxBankPaymentDate());
-		chequeDate = commonDAO.changeStringtoSqlDate(getJqxChequeDate());
-		hidbankPaymentDate = commonDAO.changeStringtoSqlDate(getMaindate());
+		if (getJqxBankPaymentDate() != null && !getJqxBankPaymentDate().trim().isEmpty()) {
+		    bankPaymentDate = commonDAO.changeStringtoSqlDate(getJqxBankPaymentDate());
+		}
+
+		if (getJqxChequeDate() != null && !getJqxChequeDate().trim().isEmpty()) {
+		    chequeDate = commonDAO.changeStringtoSqlDate(getJqxChequeDate());
+		}
+
+		if (getMaindate() != null && !getMaindate().trim().isEmpty()) {
+		    hidbankPaymentDate = commonDAO.changeStringtoSqlDate(getMaindate());
+		}
 		
 		if(mode.equalsIgnoreCase("A")){
 			Connection conn = null;
