@@ -9,10 +9,125 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<style>
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Action Buttons */
+.modern-ui .erp-btn-warning {
+    height: 24px;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(245, 158, 11, 0.3);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+#validrate { color: red; font-size: 11px; font-weight: bold; }
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
-		 $("#jqxDebitNoteDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+		 /* FIXED DATE WIDTHS & HEIGHTS */ 
+		 $("#jqxDebitNoteDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+		 
+		 /* Force internal alignment AFTER render */
+         setTimeout(function () {
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", 
+                 "line-height": "24px", 
+                 "font-size": "12px", 
+                 "font-family": "Arial, sans-serif",
+                 "padding": "0 6px", 
+                 "box-sizing":"border-box"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+         }, 0);
+		 
 		 $('#txtforsearch').val(2);
 		
 		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
@@ -82,20 +197,28 @@
 		    	 $("#mode").val("EDIT");
 				 $('#txtaccid').attr('readonly', true);$('#txtaccname').attr('readonly', true);$('#txtamount').attr('readonly', false);$('#txtdescription').attr('readonly', false);
 				 $('#txtrate').attr('readonly', false);$('#txtbaseamount').attr('readonly', true);$('#txtdrtotal').attr('readonly', true);$('#txtcrtotal').attr('readonly', true);
-				 $('#frmTaxCreditNote select').attr('disabled', false);$("#jqxDebitNote").jqxGrid({ disabled: false}); $('#frmTaxDebitNote select').attr('disabled', false);    
+				 $('#frmTaxCreditNote select').attr('disabled', false);
+				 if($("#jqxDebitNote").length) $("#jqxDebitNote").jqxGrid({ disabled: false}); 
+				 $('#frmTaxDebitNote select').attr('disabled', false);   
 				 $('#cmbcurrency').attr('disabled',true);
-				    }
+		    }
 		   });
 	  }
 	  
+	/* SAFE READONLY FUNCTION */
 	 function funReadOnly(){
+	     try {
 			$('#frmTaxDebitNote input').attr('readonly', true );
 			$('#frmTaxDebitNote select').attr('disabled', true);
 			$('#jqxDebitNoteDate').jqxDateTimeInput({disabled: true});
-			$("#jqxDebitNote").jqxGrid({ disabled: true});
+			if($("#jqxDebitNote").length) $("#jqxDebitNote").jqxGrid({ disabled: true});
 			$("#btnvaluechange").hide();
+	     } catch(e) { console.error("Error in funReadOnly: ", e); }
 	 }
+
+    /* SAFE REMOVE READONLY FUNCTION */
 	 function funRemoveReadOnly(){
+	     try {
 		    $('#txtforsearch').val(2);
 			$('#frmTaxDebitNote input').attr('readonly', false );
 			$('#frmTaxDebitNote select').attr('disabled', false);
@@ -103,41 +226,42 @@
 			
 			$('#txtaccid').attr('readonly', true );
 			$('#txtaccname').attr('readonly', true );
-			$('#txtnettotal').attr('readonly', true );
+			if($('#txtnettotal').length) $('#txtnettotal').attr('readonly', true );
 			$('#jqxDebitNoteDate').jqxDateTimeInput({disabled: false});
 			$('#docno').attr('readonly', true);
-			$("#jqxDebitNote").jqxGrid({ disabled: false}); 
+			if($("#jqxDebitNote").length) $("#jqxDebitNote").jqxGrid({ disabled: false}); 
 			
 			var date = $('#jqxDebitNoteDate').val();
 		    getCurrencyId(date);
 		    
 		   if ($("#mode").val() == "E") {
-      	        $("#btnvaluechange").show();
-      	        $('#frmTaxDebitNote input').attr('readonly', true );
-			    $('#frmTaxDebitNote select').attr('disabled', true);    
-			    $("#jqxDebitNote").jqxGrid({ disabled: true});
+         	    $("#btnvaluechange").show();
+         	    $('#frmTaxDebitNote input').attr('readonly', true );
+			    $('#frmTaxDebitNote select').attr('disabled', true);   
+			    if($("#jqxDebitNote").length) $("#jqxDebitNote").jqxGrid({ disabled: true});
 			    $('#txtrefno').attr('readonly', false );
 			    $('#txtdescription').attr('readonly', false );
-			    $("#jqxDebitNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
+			    if($("#jqxDebitNote").length) $("#jqxDebitNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
 			  }
 			 else{
 				$("#btnvaluechange").hide();
 			} 
 			
 			if ($("#mode").val() == "A") {
-				$('#jqxDebitNote').val(new Date());
-				$("#jqxDebitNote").jqxGrid('clear'); 
-				$("#jqxDebitNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
+				$('#jqxDebitNoteDate').val(new Date());
+				if($("#jqxDebitNote").length) {
+				    $("#jqxDebitNote").jqxGrid('clear'); 
+				    $("#jqxDebitNote").jqxGrid('addrow', null, {"type": "","accounts": "","accountname1": "","currency": "","rate": "","dr": true,"amount1": "","description": ""});
+				}
 			} 
-	       }
-	 
+	     } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
+	   }
+	
 			function funSearchLoad(){
 				changeContent('dnoMainSearch.jsp'); 
 			 }
 				
-			 function funChkButton() {
-					/* funReset(); */
-				}
+			 function funChkButton() { }
 			 
 			 function funFocus(){
 			    	$('#jqxDebitNoteDate').jqxDateTimeInput('focus'); 	    		
@@ -173,7 +297,7 @@
 						return 0;
 					}
 					 
-					accid=document.getElementById("txtdocno").value;
+					accid=document.getElementById("docno").value;
 					if(accid==""){
 						document.getElementById("errormsg").innerText="Account is Mandatory.";
 						return 0;
@@ -277,42 +401,59 @@
 				  return 1;
 			  }
 			  
+			/* SAFE SET VALUES FUNCTION */
 			  function setValues(){
-				  $('#jqxDebitNoteDate').jqxDateTimeInput({disabled: false});
-				  var date = $('#jqxDebitNoteDate').val();
-				  getCurrencyId(date);
-				  $('#jqxDebitNoteDate').jqxDateTimeInput({disabled: true});
-				  
-				  document.getElementById("cmbtype").value=document.getElementById("hidcmbtype").value;
-				  document.getElementById("cmbcurrency").value=document.getElementById("hidcmbcurrency").value;  
-				  
-				  if($('#hidjqxDebitNoteDate').val()){
-						 $("#jqxDebitNoteDate").jqxDateTimeInput('val', $('#hidjqxDebitNoteDate').val());
-					  }
-				  
-				  if($('#hidmaindate').val()){
-						 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
-					  }
-				  
-				  if($('#msg').val()!=""){
-					   $.messager.alert('Message',$('#msg').val());
-					  }
-					
-				  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-				  funSetlabel();
-				  
-					 var indexVal = document.getElementById("docno").value;
-					 if(indexVal>0){
-						 var check = 1 ;
-			             $("#jqxDebitNoteGrid").load("debitNoteGrid.jsp?txtdebitnotedocno2="+indexVal+"&check="+check);
-					 }
-					    funRoundRate($('#txtrate').val(),"txtrate");
-				        funRoundAmt($('#txtamount').val(),"txtamount");
-				        funRoundAmt($('#txtbaseamount').val(),"txtbaseamount");
-						funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
-						funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
-				        		
+			      try {
+    				  $('#jqxDebitNoteDate').jqxDateTimeInput({disabled: false});
+    				  var date = $('#jqxDebitNoteDate').val();
+    				  if(typeof getCurrencyId === 'function') getCurrencyId(date);
+    				  $('#jqxDebitNoteDate').jqxDateTimeInput({disabled: true});
+    				  
+    				  if(document.getElementById("cmbtype") && document.getElementById("hidcmbtype")) {
+    				      document.getElementById("cmbtype").value=document.getElementById("hidcmbtype").value;
+    				  }
+    				  if(document.getElementById("cmbcurrency") && document.getElementById("hidcmbcurrency")) {
+    				      document.getElementById("cmbcurrency").value=document.getElementById("hidcmbcurrency").value;  
+    				  }
+    				  
+    				  if($('#hidjqxDebitNoteDate').length && $('#hidjqxDebitNoteDate').val()){
+    						 $("#jqxDebitNoteDate").jqxDateTimeInput('val', $('#hidjqxDebitNoteDate').val());
+    					  }
+    				  
+    				  if($('#hidmaindate').length && $('#hidmaindate').val()){
+    						 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
+    					  }
+    				  
+    				  if($('#msg').length && $('#msg').val()!=""){
+    					   $.messager.alert('Message',$('#msg').val());
+    					  }
+    					
+    				  if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                          var detailVal = $('#formdetail').val() || "";
+                          var codeVal = $('#formdetailcode').val() || "";
+                          document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+                      }
+    				  
+    				  if(typeof funSetlabel === 'function') funSetlabel();
+    				  
+    				  var indexVal = document.getElementById("docno") ? document.getElementById("docno").value : 0;
+    				  if(indexVal>0 && $("#jqxDebitNoteGrid").length){
+    						 var check = 1 ;
+    			             $("#jqxDebitNoteGrid").load("debitNoteGrid.jsp?txtdebitnotedocno2="+indexVal+"&check="+check);
+    				  }
+    				  
+    				  if(typeof funRoundRate === 'function') {
+    					  funRoundRate($('#txtrate').val(),"txtrate");
+    				  }
+    				  if(typeof funRoundAmt === 'function') {
+    				      funRoundAmt($('#txtamount').val(),"txtamount");
+    				      funRoundAmt($('#txtbaseamount').val(),"txtbaseamount");
+    					  funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
+    					  funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
+    				  }
+			      } catch(e) { console.error("Error in setValues: ", e); }
 				}
+				
 			  function funvalid(){
 				  rate=document.getElementById("txtrate").value;
 					 if(rate=="" || rate=="0" || rate=="0.00"){
@@ -334,9 +475,9 @@
 			 		  var dr=0.0,cr=0.0,dr1=0.0;
 			   	      var rows = $('#jqxDebitNote').jqxGrid('getrows');
 			 	      var rowlength= rows.length;
-			 	  		for(var i=0;i<=rowlength-1;i++) {
-			 	  		
-			 	  		  var value = rows[i].dr;
+			 	 		for(var i=0;i<=rowlength-1;i++) {
+			 	 		
+			 	 		  var value = rows[i].dr;
 			 	          var baseamount = rows[i].nettotal;
 			 	          
 			 	          if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
@@ -350,19 +491,19 @@
 			                   }
 			                   else{
 			                	   if(!isNaN(baseamount)){
-			                     	  	dr=dr+baseamount;
+			                     	 	dr=dr+baseamount;
 			                   	   }else if(isNaN(baseamount)){
 			                   		    baseamount=0.00;
 			                   		 	dr=dr+baseamount;
 			                   	   }
-			                     }
-			 	  	       }
-			 	  		}
-			 	  		
-			 	  		if(!isNaN(fromamount)){
+			                   }
+			 	 	       }
+			 	 		}
+			 	 		
+			 	 		if(!isNaN(fromamount)){
 			                	dr1=parseFloat(dr) + parseFloat(fromamount);
 			                    funRoundAmt(dr1,"txtdrtotal");
-			            	 }
+			             	 }
 			 	      }
 			 		  else if(isNaN(fromamount)){
 			 			  $('#txtamount').val(0.00);
@@ -374,9 +515,9 @@
 			       function getAccType(event){
 			           var x= event.keyCode;
 			           if(x==114){
-			        	   var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+			         	   var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
 				 		   $("#maindate").jqxDateTimeInput('val', date);
-			        	   accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
+			         	   accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
 				           $('#txtforsearch').val(2);
 			           }
 			           else{}
@@ -427,7 +568,7 @@
 
 	
 			       function clearClientInfo(){
-				 		  $("#txtdocno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
+				 		  $("#docno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
 				 	  }
 			       
 			       function datechange(){
@@ -441,399 +582,139 @@
 				 	  }
 
 </script>
-
-<style>
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 130vh;
-    box-sizing: border-box;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-}
-
-
-
-.receipt-header {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.section_row {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-
-
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    text-align: right;
-    padding-right: 8px;
-    font-size: 1rem;
-}
-
-.form-group input[type="text"],
-.form-group select {
-    width: 100%;
-}
-
-.form-group.dual-input {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-
-.form-group.date-ref-doc-row {
-    grid-template-columns: 80px 125px 80px 1fr 80px 200px;
-    align-items: center;
-    gap: 12px;
-}
-
-.form-group.date-ref-doc-row label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-.form-group.date-ref-doc-row .date-wrapper,
-.form-group.date-ref-doc-row .ref-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.form-group.date-ref-doc-row #jqxDebitNoteDate {
-    flex: 1;
-}
-
-.form-group.date-ref-doc-row #txtrefno {
-    flex: 1;
-    min-width: 120px;
-}
-
-.form-group.date-ref-doc-row .myButton {
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-/* Type/AccID/AccName row */
-.form-group.type-acc-row {
-    grid-template-columns: 120px 120px 120px 200px 1fr;
-    align-items: center;
-    gap: 12px;
-}
-
-.form-group.type-acc-row label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Full width description row */
-.form-row.full-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.form-row.full-row label {
-    text-align: right;
-    padding-right: 8px;
-    font-weight: 600;
-    color: #253858;
-}
-
-
-
-.table-section {
-    margin: 20px 0;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-
-.hidden-scrollbar {
-    overflow: auto;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 10px;
-}
-
- body::-webkit-scrollbar {
-    width: 0px;
-}
-
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-
-#validrate,
-#validrate1 {
-    color: red;
-    font-size: 12px;
-    grid-column: 2 / -1;
-}
-
-
-
-#approval-table td {
-    font-size: 14px;
-    padding: 8px;
-}
-
-#approval-table tr:nth-child(even) {
-    background: #f9fafb;
-}
-</style>
-
 </head>
+
 <body onload="setValues();">
-<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background" >
+
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background" >
 <form id="frmTaxDebitNote" action="saveTaxDebitNote" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class=' receipt-header'>
-    <div class="section_row">
+<div class="modern-ui">
 
-    <!-- Row 1: Date / Ref. No. / Doc No -->
-    <div class="form-group date-ref-doc-row" style="margin-left:40px">
-        <label for="jqxDebitNoteDate">Date</label>
-        <div class="date-wrapper">
-            <div id="jqxDebitNoteDate" name="jqxDebitNoteDate"
-                 onchange="datechange();"
-                 onblur="datechange();"
-                 value='<s:property value="jqxDebitNoteDate"/>'></div>
-            <input type="hidden" id="hidjqxDebitNoteDate" 
-                   name="hidjqxDebitNoteDate"
-                   value='<s:property value="hidjqxDebitNoteDate"/>'/>
-        </div>
+    <div class="erp-form-area">
+        
+        <table width="100%" border="0" cellspacing="0" cellpadding="2" style="margin-bottom: 8px;">
+            <tr>
+                <td class="lbl-right" width="8%">Date</td>
+                <td width="15%">
+                    <div id="jqxDebitNoteDate" name="jqxDebitNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDebitNoteDate"/>'></div>
+                    <input type="hidden" id="hidjqxDebitNoteDate" name="hidjqxDebitNoteDate" value='<s:property value="hidjqxDebitNoteDate"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">Ref. No.</td>
+                <td width="15%">
+                    <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">Doc No.</td>
+                <td width="46%">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="text" id="docno" name="txtdebitnotedocno" value='<s:property value="txtdebitnotedocno"/>' style="width: 150px;" tabindex="-1"/>
+                        <button class="erp-btn-warning" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
+                    </div>
+                </td>
+            </tr>
 
-        <label for="txtrefno">Ref. No.</label>
-        <div class="ref-wrapper">
-            <input type="text" id="txtrefno" name="txtrefno"
-                   value='<s:property value="txtrefno"/>'/>
-            <button class="myButton" type="button" id="btnvaluechange"
-                    name="btnvaluechange" onclick="funwarningopen();">
-                Value Change
-            </button>
-        </div>
+            <tr>
+                <td class="lbl-right">Type</td>
+                <td>
+                    <select id="cmbtype" name="cmbtype" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>'>
+                        <option value="AR">AR</option>
+                        <option value="GL">GL</option>
+                        <option value="AP">AP</option>
+                    </select>
+                    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
+                </td>
+                <td class="lbl-right">Account ID</td>
+                <td>
+                    <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" />
+                </td>
+                <td colspan="2">
+                    <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' style="max-width: 400px;" tabindex="-1"/>
+                    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+                </td>
+            </tr>
 
-        <label for="docno">Doc No.</label>
-        <input type="text" id="docno" name="txtdebitnotedocno"
-               value='<s:property value="txtdebitnotedocno"/>' tabindex="-1"/>
+            <tr>
+                <td class="lbl-right">Currency</td>
+                <td>
+                    <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
+                        <option></option>
+                    </select>
+                    <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+                    <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+                </td>
+                <td class="lbl-right">Rate</td>
+                <td colspan="3">
+                    <input type="text" id="txtrate" name="txtrate" value='<s:property value="txtrate"/>' style="width: 100px;" onblur="funRoundRate(this.value,this.id); getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
+                    <span id="validrate"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="lbl-right">Amount</td>
+                <td>
+                    <input type="text" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id); getBaseAmountFrom();getDrTotal();" />
+                </td>
+                <td class="lbl-right">Base Amount</td>
+                <td colspan="3">
+                    <input type="text" id="txtbaseamount" name="txtbaseamount" value='<s:property value="txtbaseamount"/>' style="width: 100px;" tabindex="-1"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="lbl-right" style="padding-top: 10px;">Description</td>
+                <td colspan="5" style="padding-top: 10px;">
+                    <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>' style="max-width: 800px;"/>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <!-- Row 2: Type / Acc ID / Acc Name -->
-    <div class="form-group type-acc-row">
-        <label for="cmbtype">Type</label>
-        <select id="cmbtype" name="cmbtype"
-                onchange="clearClientInfo();"
-                value='<s:property value="cmbtype"/>'>
-            <option value="AR">AR</option>
-            <option value="GL">GL</option>
-            <option value="AP">AP</option>
-        </select>
-        <input type="hidden" id="hidcmbtype" name="hidcmbtype"
-               value='<s:property value="hidcmbtype"/>'/>
-
-        <label for="txtaccid">Account ID</label>
-        <input type="text" id="txtaccid" name="txtaccid"
-               placeholder="Press F3 to Search"
-               value='<s:property value="txtaccid"/>'
-               onkeydown="getAccType(event);" />
-
-        <input type="text" id="txtaccname" name="txtaccname"
-               value='<s:property value="txtaccname"/>' tabindex="-1"/>
-        <input type="hidden" id="txtdocno" name="txtdocno"
-               value='<s:property value="txtdocno"/>'/>
-        <input type="hidden" id="txttrno" name="txttrno"
-               value='<s:property value="txttrno"/>'/>
+    <div class="grid-container">
+        <div id="jqxDebitNoteGrid"><jsp:include page="debitNoteGrid.jsp"></jsp:include></div>
     </div>
 
-    <!-- Row 3: Currency / Rate -->
-    <div class="form-group dual-input">
-        <label for="cmbcurrency">Currency</label>
-        <select id="cmbcurrency" name="cmbcurrency"
-                value='<s:property value="cmbcurrency"/>'
-                onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
-            <option></option>
-        </select>
-        <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency"
-               value='<s:property value="hidcmbcurrency"/>'/>
-        <input type="hidden" id="hidcurrencytype" name="hidcurrencytype"
-               value='<s:property value="hidcurrencytype"/>'/>
-
-        <label for="txtrate">Rate</label>
-        <input type="text" id="txtrate" name="txtrate"
-               value='<s:property value="txtrate"/>'
-               onblur="funRoundRate(this.value,this.id);
-                       getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
-        <span id="validrate"></span>
+    <div class="erp-form-area">
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="lbl-right" width="10%">Dr. Total</td>
+                <td width="15%">
+                    <input type="text" id="txtdrtotal" name="txtdrtotal" style="text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
+                </td>
+                <td class="lbl-right" width="10%">Cr. Total</td>
+                <td width="15%">
+                    <input type="text" id="txtcrtotal" name="txtcrtotal" style="text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+                </td>
+                <td width="50%" align="right">
+                    <span id="formdet" style="font-size: 13px; font-weight: bold; color:#2c3e50;"></span>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <!-- Row 4: Amount / Base Amount -->
-    <div class="form-group dual-input">
-        <label for="txtamount">Amount</label>
-        <input type="text" id="txtamount" name="txtamount"
-               value='<s:property value="txtamount"/>'
-               onblur="funRoundAmt(this.value,this.id);
-                       getBaseAmountFrom();getDrTotal();" />
-
-        <label for="txtbaseamount">Base Amount</label>
-        <input type="text" id="txtbaseamount" name="txtbaseamount"
-               value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
+    <div style="display:none;">
+        <input type="hidden" id="mode" name="mode"/>
+        <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <div hidden="hidden" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+        <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+        <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
+        <input type="hidden" id="txtvalidation" name="txtvalidation"  value='<s:property value="txtvalidation"/>'/>
+        <input type="hidden" id="taxaccount" name="taxaccount"  value='<s:property value="taxaccount"/>'/>
+        <input type="hidden" id="gridlength" name="gridlength"/>
+        
+        <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+        <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
     </div>
 
-    <!-- Row 5: Description (full width) -->
-    <div class="form-row full-row">
-        <label for="txtdescription">Description</label>
-        <input type="text" id="txtdescription" name="txtdescription"
-               value='<s:property value="txtdescription"/>'/>
-    </div>
-
-</div>
-
-
-<div class="cr-table" id="jqxDebitNoteGrid"><jsp:include page="debitNoteGrid.jsp"></jsp:include></div><br/>
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Dr. Total</td>
-    <td width="68%"><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:15%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td width="6%" align="right">Cr. Total</td>
-    <td width="19%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-  </tr>
-</table>
-
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<div hidden="hidden" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation"  value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="taxaccount" name="taxaccount"  value='<s:property value="taxaccount"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
 </div>
 </form>
-<div id="debitNoteGridWindow">
-	<div></div><div></div>
-</div>  
-				
-<div id="accountDetailsToWindow">
-	<div></div><div></div>
-</div>
 
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
+<div id="debitNoteGridWindow"><div></div><div></div></div>  
+<div id="accountDetailsToWindow"><div></div><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
   
 </div>
 </body>

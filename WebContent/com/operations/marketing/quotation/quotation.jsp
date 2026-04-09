@@ -16,17 +16,125 @@
 <% String contextPath=request.getContextPath();%>
  <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 100vh;
+/* =========================================================
+   QUOTATION - EXACT TEXT & UI MATCH TO CLIENT MASTER
+========================================================= */
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
+    box-sizing: border-box;
 }
 
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
 
-.icons {
-	width: 3em;
-	height: 3em;
-	border: none;
-	background-color: #E0ECF8;
+/* FIX: Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* EXACT Input Styles from Client Master */
+/* FIX: Removed width: 100% to prevent side-by-side inputs from stacking */
+input[type="text"], input[type="email"], select {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+/* Fieldset and Legend styling matching Client Master */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
+
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
+
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
+
+/* Modern Buttons matched to Client Master */
+.myButton {
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    padding: 4px 15px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 24px !important;
+}
+
+.myButton:hover {
+    background-color: #004494 !important;
+}
+
+/* Specific styling for the small search icons */
+.icon, .icons, .iconss {
+    border: none;
+    background-color: #E0ECF8;
+    cursor: pointer;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.icon { width: 2.5em; height: 2em; }
+.icons { width: 3em; height: 3em; }
+.iconss { width: 4em; height: 3em; }
+
+.icon:hover, .icons:hover, .iconss:hover {
+    background-color: #d0e0f0;
 }
 </style>
 <script type="text/javascript">   
@@ -34,7 +142,8 @@
    $(document).ready(function () { 
       
 	   /* Date */ 	
-       $("#jqxQuoteDate").jqxDateTimeInput({  width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+       /* MODIFIED: Height set to 24px to match text inputs */
+       $("#jqxQuoteDate").jqxDateTimeInput({  width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
        $('#descsearchwndow').jqxWindow({ width: '40%', height: '55%',  maxHeight: '62%' ,maxWidth: '60%' , title: ' Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
        $('#descsearchwndow').jqxWindow('close');
        $('#brandsearchwndows').jqxWindow({ width: '40%', height: '55%',  maxHeight: '62%' ,maxWidth: '60%' , title: 'Brand Search' ,position: { x: 250, y: 100 }, keyboardCloseKey: 27});
@@ -302,8 +411,7 @@
    function funReset(){
 	//	$('#frmQuote')[0].reset(); 
 	}
-  /*  
-   function checkEmail() {
+  /* function checkEmail() {
 
 	    var email = document.getElementById('txt_email');
 	    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -383,7 +491,7 @@
 			}
 		
 		
-/* 		if(document.getElementById("txt_email").value=="")
+/* if(document.getElementById("txt_email").value=="")
 			{
 			document.getElementById("errormsg").innerText="Recipient Is  Mandatory";  
 			document.getElementById("txt_email").focus();
@@ -392,7 +500,7 @@
 		else
 			{ */
 		
-		  /*    var email = document.getElementById('txt_email');
+		  /* var email = document.getElementById('txt_email');
 		    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
 		    if (!filter.test(email.value)) {
@@ -501,7 +609,7 @@
 		
 	               } 
 		   
-			/*  var rows = $("#tarifGrid").jqxGrid('getrows');
+			/* var rows = $("#tarifGrid").jqxGrid('getrows');
 			    $('#tarifGrid').val(rows.length);
 			   //alert($('#gridlength').val());
 			   
@@ -984,16 +1092,13 @@ else
   
         </table>  
         </td>
-      <td width="17%"  ><!--    email2.png-->
-      <%--  <div> 
+      <td width="17%"  ><%--  <div> 
         <button type="button"   title="Send Mail"  class="icons" id="Sendmail"  onclick="funSendmail()" value='<s:property value="Sendmail" />'  >
 					 <img alt="Send Mail" src="<%=contextPath%>/icons/sendmailto.png "> 
 					</button> 
 				</div>
  --%>
-<!-- <input type="file" value="YourDefaultPathAndFilename.AndExtension"> -->
-					 
-        </td>
+</td>
         </tr>
         </table>
      </td>
@@ -1076,10 +1181,7 @@ else
 <input type="hidden" name="tacalrowindex" id="tacalrowindex" value='<s:property value="tacalrowindex"/>'/>
 <input type="hidden" name="descgridlenght" id="descgridlenght" value='<s:property value="descgridlenght"/>'/>
 
-<input type="hidden" name="errorvalid" id="errorvalid" value='<s:property value="errorvalid"/>'/>   <!--  rental type validation -->
-
-
-<input type="hidden" name="fromdatesvals" id="fromdatesvals" value='<s:property value="fromdatesvals"/>' />  
+<input type="hidden" name="errorvalid" id="errorvalid" value='<s:property value="errorvalid"/>'/>   <input type="hidden" name="fromdatesvals" id="fromdatesvals" value='<s:property value="fromdatesvals"/>' />  
 <input type="hidden" name="todatevals" id="todatevals" value='<s:property value="todatevals"/>' />  
 
 
@@ -1090,20 +1192,12 @@ else
 
 <input type="hidden" id="tdocnos" name="tdocnos"  value='<s:property value="tdocnos"/>'/>
 
-<!-- //-------------------------------------- -->
 <%-- <input type="hidden"  id="host" name="host"  value='<s:property value="host"/>'/>
 <input type="hidden"  id="port" name="port"  value='<s:property value="port"/>'/>
 <input type="hidden"  id="userName" name="userName"  value='<s:property value="userName"/>'/>
 <input type="hidden"  id="password" name="password"  value='<s:property value="password"/>'/>
 <input type="hidden"  id="signature" name="signature"  value='<s:property value="signature"/>'/>
 <input type="hidden" id="filename" name="filename"  value='<s:property value="filename"/>'/> --%>
-
-<!-- <input type="hidden" id="CC" name="CC"  value=""/>
-<input type="hidden" id="BCC" name="BCC"  value=""/>
-
-<input type="hidden" id="subject" name="subject"  value=""/>
-<input type="hidden" id="message" name="message"  value=""/> -->
-
 
 </div>
 
@@ -1142,5 +1236,3 @@ else
 </div>
 </body>
 </html>
-
-

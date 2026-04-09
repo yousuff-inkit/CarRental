@@ -16,6 +16,96 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 
+<style>
+/* =========================================================
+SCOPED UI: Form Layout (Does NOT affect header.jsp)
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Action Buttons specific to Journal Voucher */
+.modern-ui .erp-btn {
+    height: 24px;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+}
+
+.modern-ui .erp-btn-warning {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -25,8 +115,22 @@
 		
 		 $("#btnvaluechange").hide();
 		 
-		 $("#jqxJournalVouchersDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+         /* FIXED DATE WIDTHS & HEIGHTS */ 
+		 $("#jqxJournalVouchersDate").jqxDateTimeInput({ width: '130px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '130px', height: '24px', formatString:"dd.MM.yyyy"});
+         
+         /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
 		 
 		 $('#journalVoucherGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Account Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#journalVoucherGridWindow').jqxWindow('close');
@@ -97,54 +201,60 @@
 			   });
 	  }
 	
-	 function funReadOnly(){
-		 //getConfigs();
-		   // $("#btnclone").show();
+	/* SAFE READONLY FUNCTION - Prevents header freezing */
+	function funReadOnly(){
+	    try {
 			$('#frmJournalVoucher input').attr('readonly', true );
 			$('#jqxJournalVouchersDate').jqxDateTimeInput({disabled: true});
-			$("#jqxJournalVoucher").jqxGrid({ disabled: true});
+			if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: true});
 			$('#fileexcelimport').attr('hidden', true );
 			$('#btnsearch').attr('hidden', true );
-			
-			
-	 }
-	 function funRemoveReadOnly(){
-		getConfigs();
+	    } catch(e) { console.error("Error in funReadOnly: ", e); }
+	}
+
+	/* SAFE REMOVE READONLY FUNCTION - Critical for Create/Edit buttons */
+	function funRemoveReadOnly(){
+	    try {
+		    getConfigs();
 			$('#frmJournalVoucher input').attr('readonly', false );
 			$('#txtdrtotal').attr('readonly', true );
 			$('#txtcrtotal').attr('readonly', true );
 			$('#jqxJournalVouchersDate').jqxDateTimeInput({disabled: false});
 			$('#docno').attr('readonly', true);
-			$("#jqxJournalVoucher").jqxGrid({ disabled: false}); 
+			
+			if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: false}); 
+			
 			$('#fileexcelimport').attr('hidden', false );
 			$('#btnsearch').attr('hidden', false );
 			
 			if ($("#mode").val() == "E") {
-         	    $("#btnvaluechange").show();
+         	   $("#btnvaluechange").show();
          	   $("#btnclone").hide();
          	   $('#frmJournalVoucher input').attr('readonly', true );
-			    $("#jqxJournalVoucher").jqxGrid({ disabled: true});
-   			    $('#txtrefno').attr('readonly', false );
-   			    $('#txtdescription').attr('readonly', false );
-   			    $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
-   			 	$('#fileexcelimport').attr('disabled', true );
- 				$('#btnsearch').attr('disabled', true );
-			  }
-			 else{
+			   if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid({ disabled: true});
+   			   $('#txtrefno').attr('readonly', false );
+   			   $('#txtdescription').attr('readonly', false );
+   			   if($("#jqxJournalVoucher").length) $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
+   			   $('#fileexcelimport').attr('disabled', true );
+ 			   $('#btnsearch').attr('disabled', true );
+			} else {
 				$("#btnvaluechange").hide();
 				$("#btnclone").hide();
-				}
+			}
 			
 			if ($("#mode").val() == "A") {
 				$('#jqxJournalVouchersDate').val(new Date());
-				document.getElementById("lblformposted").innerText="";
+				if(document.getElementById("lblformposted")) document.getElementById("lblformposted").innerText="";
 				$('#btnEdit').attr('disabled', false );
-				$("#jqxJournalVoucher").jqxGrid('clear');
-				$("#jqxJournalVoucher").jqxGrid('addrow', null, {});
-				$("#btnclone").hide();
+				
+				if($("#jqxJournalVoucher").length) {
+				    $("#jqxJournalVoucher").jqxGrid('clear');
+				    $("#jqxJournalVoucher").jqxGrid('addrow', null, {});
 				}
-		
-	 }
+				$("#btnclone").hide();
+			}
+	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
+	}
 	 
 	 function getConfigs(){
 		 var x=new XMLHttpRequest();
@@ -155,7 +265,6 @@
 					
 					if(parseInt(items[0].trim())==1){
 						$("#btnclone").show();
-						//alert($("#btnclone").show());
 						}
 					else {
 						$("#btnclone").hide();
@@ -167,7 +276,6 @@
 	            		$('#jqxJournalVoucher').jqxGrid('showcolumn','rate');
 						 var indexVal = document.getElementById("docno").value;
 							 var check=1;
-							// alert("modes 2==="+ $("#mode").val()+"==value==="+indexVal);  
 							if(indexVal!=""){
 				         	 $("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?txtjournalvouchersdocno2="+indexVal+"&check="+check);
 							}
@@ -191,7 +299,6 @@
 	 
 	 function funExcelBtn(){
 		 if (($("#mode").val() == "view") && $("#docno").val()!="") {
-		 	  // $("#jqxJournalVoucher").jqxGrid('exportdata', 'xls', 'JournalVoucher');
 		 	     $("#jqxJournalVoucher").excelexportjs({  
        		containerid: "jqxJournalVoucher", 
        		datatype: 'json', 
@@ -206,9 +313,7 @@
 			}
 	 }
 		
-	 function funChkButton() {
-			/* funReset(); */
-		}
+	 function funChkButton() {}
 	 
 	 function funFocus(){
 	    	$('#jqxJournalVouchersDate').jqxDateTimeInput('focus'); 	    		
@@ -307,7 +412,6 @@
 					}
 					
 					newTextBox.val(rows[i].docno+"::"+rows[i].description+"::"+rows[i].currencyid+"::"+rows[i].rate+"::"+amount+"::"+baseamount+"::"+rows[i].sr_no+"::"+id+":: "+rows[i].costtype+":: "+rows[i].costcode);
-					console.log(rows[i].docno+"::"+rows[i].description+"::"+rows[i].currencyid+"::"+rows[i].rate+"::"+amount+"::"+baseamount+"::"+rows[i].sr_no+"::"+id+":: "+rows[i].costtype+":: "+rows[i].costcode);
 					newTextBox.appendTo('form'); 
 					}
 				 }
@@ -321,53 +425,70 @@
 	    		return 1;
 		} 
 	  
-	  
+	  /* SAFE SET VALUES FUNCTION - Prevents hidden field missing errors */
 	  function setValues(){
-		 
-		  if($('#hidjqxJournalVouchersDate').val()){
-			 $("#jqxJournalVouchersDate").jqxDateTimeInput('val', $('#hidjqxJournalVouchersDate').val());
-		  }
-		  
-		  if($('#hidmaindate').val()){
-				 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
-			  }
-		  
-		  if($('#msg').val()!=""){
-			   $.messager.alert('Message',$('#msg').val());
-			  }
-		  
-		  document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-		  funSetlabel();
-			
-		  if(document.getElementById("lblformposted").innerText.trim()!=""){
-			    $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );
-		  } else {
-			    $('#btnEdit').attr('disabled', false );$('#btnDelete').attr('disabled', false );
-		  }
-		  
-			 var indexVal = document.getElementById("docno").value;
-			 if(indexVal>0){
-				 var check=1;
-				 //alert("modes 3==="+ $("#mode").val()+"==value==="+indexVal); 
-	         	 $("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?txtjournalvouchersdocno2="+indexVal+"&check="+check); 
-			 }
-			
-			if(parseFloat($("#hidstatus").val())<3){
-					$("#txtStatus").html("DRAFT");
-			}else if(parseFloat($("#hidstatus").val())==4){
-					$("#txtStatus").html("REJECTED");
-			}else{
-					$("#txtStatus").html("");
-			}
-			getBankReconciled($("#docno").val(), "JVT");   
-			
-			funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
-		    funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
-		    getConfigs(); 
-		}
+	      try {
+    		  if($('#hidjqxJournalVouchersDate').val()){
+    			 $("#jqxJournalVouchersDate").jqxDateTimeInput('val', $('#hidjqxJournalVouchersDate').val());
+    		  }
+    		  
+    		  if($('#hidmaindate').val()){
+    				 $("#maindate").jqxDateTimeInput('val', $('#hidmaindate').val());
+    		  }
+    		  
+    		  if($('#msg').val()!=""){
+    			   $.messager.alert('Message',$('#msg').val());
+    		  }
+    		  
+    		  if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                  var detailVal = $('#formdetail').val() || "";
+                  var codeVal = $('#formdetailcode').val() || "";
+                  document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+              }
+    		  
+    		  if (typeof funSetlabel === "function") {
+                  funSetlabel();
+              }
+    			
+    		  var lblPosted = document.getElementById("lblformposted");
+    		  if(lblPosted && lblPosted.innerText.trim()!=""){
+    			    $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );
+    		  } else {
+    			    $('#btnEdit').attr('disabled', false );$('#btnDelete').attr('disabled', false );
+    		  }
+    		  
+    		  var indexVal = document.getElementById("docno").value;
+    		  if(indexVal>0){
+    				 var check=1;
+    				 if($("#jqxJournalVoucherGrid").length) {
+    	         	    $("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?txtjournalvouchersdocno2="+indexVal+"&check="+check); 
+    				 }
+    		  }
+    			
+    		  if(parseFloat($("#hidstatus").val())<3){
+    					$("#txtStatus").html("DRAFT");
+    		  }else if(parseFloat($("#hidstatus").val())==4){
+    					$("#txtStatus").html("REJECTED");
+    		  }else{
+    					$("#txtStatus").html("");
+    		  }
+    			
+    		  if (typeof getBankReconciled === "function") {
+                  getBankReconciled($("#docno").val(), "JVT");   
+              }
+    			
+    		  if (typeof funRoundAmt === "function") {
+    			funRoundAmt($('#txtdrtotal').val(),"txtdrtotal");
+    		    funRoundAmt($('#txtcrtotal').val(),"txtcrtotal");
+    		  }
+    		  
+    		  getConfigs(); 
+	      } catch (e) {
+	          console.error("Error in setValues:", e);
+	      }
+	  }
 	  
 	  function funPrintBtn() {
-			
 			if (($("#mode").val() == "view") && $("#docno").val()!="") {
 		        var reurl="";
 				var url=document.URL;
@@ -380,20 +501,12 @@
 		     
 		        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
 					if (r){
-	 
-var win= window.open(reurl[0]+"printJournalVoucher?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+	                    var win= window.open(reurl[0]+"printJournalVoucher?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 					     win.focus();
-
-/*  var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-						    win.focus();  */
 					 }
 					else{
-
 						var win= window.open(reurl[0]+"printJournalVoucher?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 					    win.focus();
-/* 
-var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-						    win.focus(); */ 
 					}
 				   });
 		     }
@@ -407,7 +520,6 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 			 $('#docno').val("");
 			 $("#mode").val("A");
 			 $("#msg").val("");
-//	 		 funRemoveReadOnly();
 			 $("#btnSendmail").hide();
 			 $("#status").val(1);	 $("#btnSave").show();		 $("#btnCancel").show();
 			 $("#btnApproval").hide();	 $("#btnCreate").hide();	funFocus();
@@ -426,7 +538,6 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 				$('#jqxJournalVouchersDate').val(new Date());
 				document.getElementById("lblformposted").innerText="";
 				$('#btnEdit').attr('disabled', false );
-				// $("#jqxJournalVoucher").jqxGrid('clear');
 				$("#jqxJournalVoucher").jqxGrid('addrow', null, {});
 		 }
 		
@@ -449,12 +560,10 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 					var items=x.responseText.trim();
 					
 					if(items==1){
-						 //alert("modes 1==="+ $("#mode").val()+"==value==="+indexVal); 
 						$("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?docNo="+docNo+'&date='+$('#maindate').val());
 						$.messager.alert('Message', ' Successfully Imported.', function(r){
 					});
 					}
-					
 			  }
 			}
 				
@@ -484,19 +593,15 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 						            return;
 					     } 
 					}
-					
 			  }
 			}
-				
 		x.open("GET","getAttachDocumentNo.jsp",true);
 		x.send();
 		}
 		
 		function upload(){
-			 
 			$('#txtexcelvalidation').val(1);
 			getAttachDocumentNo();
-			 
 		 }
 		
 		function ajaxFileUpload(docNo) {  
@@ -527,7 +632,7 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 	              {  
 	                  url:'fileAttachAction.action?formCode=JVTE&doc_no='+docNo+'&descpt=Excel Import' ,
 	                  secureuri:false,  
-	                  fileElementId:'fileexcelimport',    
+	                  fileElementId:'fileexcelimport',   
 	                  dataType: 'json', 
 	                  success: function (data, status)   
 	                  {  
@@ -550,128 +655,110 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 	                          {  
 	                              $.messager.show({title:'Message',msg: data.message,showType:'show',
 		  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-		  	              	          }); 
+		  	                  }); 
 	                          }  
 	                      }  
 	                  },  
 	                  error: function (data, status, e){  
 	                      $.messager.alert('Message',e);
 	                  }  
-	              });  
+	              }  
+	          );  
 	          return false;  
 	      }
-	 
+	
 </script>
-
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: calc(100vh-40px);
-}
-
-body::-webkit-scrollbar {
-    width: 0px;
-}
-
-.myButton {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    
-   
-    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-  }
-
-
-  .myButton:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .myButton:active {
-    background-color: #004085;
-    transform: scale(0.98); 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-</style>
-
 </head>
+
 <body onload="setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmJournalVoucher" action="saveJournalVoucher" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+<form id="frmJournalVoucher" action="saveJournalVoucher" method="post" autocomplete="off" enctype="multipart/form-data">
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar'>
-<table width="100%" style="table-layout: auto;">   
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="15%"><div id="jqxJournalVouchersDate" name="jqxJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxJournalVouchersDate"/>'></div>
-    <input type="hidden" id="hidjqxJournalVouchersDate" name="hidjqxJournalVouchersDate" value='<s:property value="hidjqxJournalVouchersDate"/>'/></td>
-    <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
-						</button></td>
-	<td ><button class="myButton" type="button" id="btnclone" name="btnclone" onclick="funClone();">Clone</button></td>
-    <td width="13%" align="center"><button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-    <td width="6%" align="right">Doc No</td>
-    <td width="21%"><input type="text" id="docno" name="txtjournalvouchersdocno" style="width:50%;" value='<s:property value="txtjournalvouchersdocno"/>' tabindex="-1"/></td>
-  </tr>
-   <tr>
-    <td colspan="8"></td>
-    <td><span id="txtStatus"></span></td>
-  </tr>
-  <tr>
-    <td align="right">Ref. No.</td>
-    <td><input type="text" id="txtrefno" name="txtrefno" style="width:62%;" value='<s:property value="txtrefno"/>'/></td>
-    <td align="right" >Description</td>
-    <td colspan="5"style="width: 90%;"><input type="text" id="txtdescription" name="txtdescription" style="width: 100%; min-width: 500px; display: block;" value='<s:property value="txtdescription"/>'/></td>
-	<td align="left" colspan="2"><i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="lblformposted"/></label></b></i></td>
-  </tr>
-  <tr>
-    <td colspan="8"><div id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div></td>
-  </tr>
-  <tr>  
-    <td align="right">Dr. Total</td>
-    <td><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:65%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td colspan="5" align="right">Cr. Total</td>
-    <td width="11%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-       <td  >&nbsp;</td>
-  </tr>
-</table>
+<div class="modern-ui">
+    
+    <div class="erp-form-area">
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="lbl-right" width="6%">Date</td>
+                <td width="12%">
+                    <div id="jqxJournalVouchersDate" name="jqxJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxJournalVouchersDate"/>'></div>
+                    <input type="hidden" id="hidjqxJournalVouchersDate" name="hidjqxJournalVouchersDate" value='<s:property value="hidjqxJournalVouchersDate"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">Ref. No.</td>
+                <td width="15%">
+                    <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
+                </td>
+                <td class="lbl-right" width="8%">Doc No</td>
+                <td width="15%">
+                    <input type="text" id="docno" name="txtjournalvouchersdocno" value='<s:property value="txtjournalvouchersdocno"/>' tabindex="-1" readonly="readonly"/>
+                </td>
+                <td align="right" width="36%">
+                    <span id="txtStatus" style="font-weight: bold; color: #d9534f; margin-right: 20px;"></span>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right" style="padding-top: 10px;">Description</td>
+                <td colspan="5" style="padding-top: 10px;">
+                    <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+                </td>
+                <td></td>
+            </tr>
+            
+         
+        </table>
+    </div>
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
-<input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
-<input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
-<input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="hidstatus" name="hidstatus" value='<s:property value="status"/>'/>
-<input type="hidden" id="currstatus" name="currstatus"  value='<s:property value="currstatus"/>'/>
+    <div class="grid-container">
+        <div id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div>
+    </div>
+
+    <div class="erp-form-area">
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="lbl-right" width="10%">Dr. Total</td>
+                <td width="15%">
+                    <input type="text" id="txtdrtotal" name="txtdrtotal" style="text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly="readonly"/>
+                </td>
+                <td class="lbl-right" width="10%">Cr. Total</td>
+                <td width="15%">
+                    <input type="text" id="txtcrtotal" name="txtcrtotal" style="text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly="readonly"/>
+                </td>
+                <td width="50%" align="right">
+                    <i><b><label id="lblformposted" name="lblformposted" style="font-size: 13px; font-family: Tahoma; color:#6000FC;"><s:property value="lblformposted"/></label></b></i>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="display:none;">
+        <input type="hidden" id="mode" name="mode"/>
+        <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+        <input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
+        <input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
+        <input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
+        <input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
+        <input type="hidden" id="gridlength" name="gridlength"/>
+        <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+        <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+        <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+        <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+        <input type="hidden" id="hidstatus" name="hidstatus" value='<s:property value="status"/>'/>
+        <input type="hidden" id="currstatus" name="currstatus"  value='<s:property value="currstatus"/>'/>
+        
+        <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+        <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
+    </div>
+
 </div>
 </form>
 
-<div id="journalVoucherGridWindow">
-	<div></div><div></div>
-</div>
-
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
+<div id="journalVoucherGridWindow"><div></div><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
 
 </div>
 </body>

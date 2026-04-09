@@ -10,265 +10,249 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-/* ------------------------------
-    GLOBAL STYLES (MASTER CRV UI)
------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
+/* =========================================================
+SCOPED UI: Compact Input Sizing (Plain Colors)
+*Note: All rules strictly scoped to .modern-ui so header.jsp is safe*
+========================================================= */
 
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%; /* Master UI requirement */
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    text-align: left !important;
-}
-
-/* ------------------------------
-    SECTION BLOCKS & HEADERS
------------------------------- */
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 20px;
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff; /* Signature Blue Line */
+.modern-ui {
+    font-family: Arial, sans-serif; 
     color: #333;
-    display: block;
+    font-size: 12px; 
+    padding-top: 15px;
+    box-sizing: border-box; 
 }
 
-/* ------------------------------
-    GRID SYSTEM (FORM LAYOUT)
------------------------------- */
-.form-row {
-    display: grid;
-    grid-template-columns: 120px 1fr 120px 1fr; 
-    gap: 15px 30px;
-    align-items: center;
-    margin-bottom: 12px;
+/* Master Input Heights - Set to 24px */ 
+.modern-ui input[type="text"], 
+.modern-ui select, 
+.modern-ui textarea {
+    height: 24px !important; 
+    border: 1px solid #ccc; 
+    border-radius: 3px;
+    padding: 2px 6px; 
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
 }
 
-/* ------------------------------
-    INPUTS & CONTROLS
------------------------------- */
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
-}
+/* Compact Width Classes */
+.modern-ui .input-xs { width: 60px !important; }
+.modern-ui .input-sm { width: 100px !important; }
+.modern-ui .input-md { width: 140px !important; }
+.modern-ui .input-lg { width: 220px !important; }
+.modern-ui .input-xl { width: 350px !important; }
+.modern-ui .input-full { width: 100% !important; }
 
-input[type="text"]:focus, select:focus {
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus, 
+.modern-ui textarea:focus { 
     border-color: #007bff;
     outline: none;
 }
 
-input[readonly] {
+.modern-ui input[readonly], 
+.modern-ui textarea[readonly], 
+.modern-ui select:disabled, 
+.modern-ui input:disabled { 
     background-color: #f3f4f6;
     color: #6b7280;
 }
 
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-    text-align: right;
-    padding-right: 10px;
-    font-size: 14px;
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
 }
 
-/* ------------------------------
-    UTILITY STYLES
------------------------------- */
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: auto;
-    min-height: 530px;
+.modern-ui .lbl-right {
+    text-align: right; 
+    color: #444; 
+    font-size: 12px;
+    font-weight: bold; 
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
+/* Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #e1e4e8; 
+    padding: 20px 10px 10px 10px; 
+    background: #fff;
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
 }
 
-form label.error {
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -10px;
+    left: 10px; 
+    background: #fff; 
+    padding: 0 5px 0 6px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+.modern-ui #jqxColorSearch1 { 
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+    margin-top: 10px;
+}
+
+/* Validation Error override */
+.modern-ui label.error {
     color: red;
     font-weight: bold;
+    font-size: 11px;
+    margin-left: 5px;
 }
-
-
-#formdet {
-    text-align: left !important;
-    display: block;
-}
-
-
 </style>
+
 <script type="text/javascript">
 var data= '<%=coa.searchDetails() %>';
-$(document).ready(function () { 	
+$(document).ready(function () {     
     
-    	document.getElementById("formdet").innerText="Color(CLR)";
-		document.getElementById("formdetail").value="Color";
-		document.getElementById("formdetailcode").value="CLR";
-		window.parent.formCode.value="CLR";
-		window.parent.formName.value="Color";
-		
-     var num = 0; 
-    var source =
-    {
+    document.getElementById("formdet").innerText="Color(CLR)";
+    document.getElementById("formdetail").value="Color";
+    document.getElementById("formdetailcode").value="CLR";
+    window.parent.formCode.value="CLR";
+    window.parent.formName.value="Color";
+        
+    var num = 0; 
+    var source = {
         datatype: "json",
         datafields: [
-                  	{name : 'DOC_NO' , type: 'number' },
-						{name : 'color', type: 'String'  }
-                  	
-         ],
-         localdata: data,
-        
-        
+            {name : 'DOC_NO' , type: 'number' },
+            {name : 'color', type: 'String'  }
+        ],
+        localdata: data,
         pager: function (pagenum, pagesize, oldpagenum) {
             // callback called when a page or page size is changed.
         }
     };
     
-    var dataAdapter = new $.jqx.dataAdapter(source,
-    		 {
-        		loadError: function (xhr, status, error) {
-               // alert(error);    
-                }
-            }		
-    );
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+        loadError: function (xhr, status, error) {
+            // alert(error);    
+        }
+    });
 
-    $("#jqxColorSearch1").jqxGrid(
-            {
-            	width: '100%',
-                height: 315,
-                source: dataAdapter,
-                showfilterrow: true,
-                filterable: true,
-                selectionmode: 'multiplecellsextended',
-                //pagermode: 'default',
-                sortable: true,
-                //pageable: true,
-                altrows:true,
-                //Add row method
-                columns: [
-					{ text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '40%' },
-					{ text: 'Color',columntype: 'textbox', filtertype: 'input', datafield: 'color', width: '60%' }
-	              ]
-            });
-    $('#jqxColorSearch1').on('rowdoubleclick', function (event) 
-    		{ 
-    			var rowindex1=event.args.rowindex;
-      		 	 document.getElementById("docno").value= $('#jqxColorSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
-       			 document.getElementById("color").value = $("#jqxColorSearch1").jqxGrid('getcellvalue', rowindex1, "color");                
-    	 		 $('#window').jqxWindow('hide');
-    		 }); 
+    $("#jqxColorSearch1").jqxGrid({
+        width: '100%',
+        height: 315,
+        source: dataAdapter,
+        showfilterrow: true,
+        filterable: true,
+        selectionmode: 'multiplecellsextended',
+        sortable: true,
+        altrows:true,
+        theme: 'energyblue', /* Applied energyblue theme for consistency */
+        columns: [
+            { text: 'Doc No',filtertype: 'number', datafield: 'DOC_NO', width: '40%' },
+            { text: 'Color',columntype: 'textbox', filtertype: 'input', datafield: 'color', width: '60%' }
+        ]
+    });
+
+    $('#jqxColorSearch1').on('rowdoubleclick', function (event) { 
+        var rowindex1=event.args.rowindex;
+        document.getElementById("docno").value= $('#jqxColorSearch1').jqxGrid('getcellvalue', rowindex1, "DOC_NO"); 
+        document.getElementById("color").value = $("#jqxColorSearch1").jqxGrid('getcellvalue', rowindex1, "color");                
+        $('#window').jqxWindow('hide');
+    }); 
 });
-function funReadOnly(){
-	$('#frmColor input').attr('readonly', true );
-	/* $('#jqxDateTimeInput').jqxDateTimeInput({ disabled: true}); */
-}
-function funRemoveReadOnly(){
-	$('#frmColor input').attr('readonly', false );
-	//$('#jqxDateTimeInput').jqxDateTimeInput({ disabled: false});
-	$('#docno').attr('readonly', true);
-}
-function setValues(){	
-   
-	 if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
 
-	}
-    function funFocus()
-    {
-    	document.getElementById("color").focus();
-    		
+function funReadOnly(){
+    $('#frmColor input').attr('readonly', true );
+}
+
+function funRemoveReadOnly(){
+    $('#frmColor input').attr('readonly', false );
+    $('#docno').attr('readonly', true);
+}
+
+function setValues(){   
+    if($('#msg').val()!=""){
+        $.messager.alert('Message',$('#msg').val());
     }
+}
+
+function funFocus(){
+    document.getElementById("color").focus();
+}
    
-    $(function(){
-    	
-        $('#frmColor').validate({
-                 rules: {
-                 color: {
-                	 required:true,
-                	 maxlength:45
-                 }
-                 
-                 
-                 },
-                 messages: {
-                  color:{
-                	  required:" *",
-                	  maxlength:"max 45 chars"
-                  }
-                  
-                  
-                 }
-        });});
-     function funNotify(){
-    	
-    		return 1;
-	} 
-     function funSearchLoad(){
-			changeContent('colorSearch.jsp', $('#window')); 
-		 }
-     function funExcelBtn(){
-		  $("#jqxColorSearch1").jqxGrid('exportdata', 'xls', 'Color');
-	  }
+$(function(){
+    $('#frmColor').validate({
+        rules: {
+            color: {
+                required:true,
+                maxlength:45
+            }
+        },
+        messages: {
+            color:{
+                required:" *",
+                maxlength:"max 45 chars"
+            }
+        }
+    });
+});
+
+function funNotify(){
+    return 1;
+} 
+
+function funSearchLoad(){
+    changeContent('colorSearch.jsp', $('#window')); 
+}
+
+function funExcelBtn(){
+    $("#jqxColorSearch1").jqxGrid('exportdata', 'xls', 'Color');
+}
 </script>
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
+<div class="homeContent" data-type="background">
     <form id="frmColor" action="saveActionColor" autocomplete="off">
-        <jsp:include page="../../../../header.jsp" />
-        <br/>
         
-        <div class="section-block">
-            <h2>Color Details</h2>
-            
-            <div class="form-row">
-                <label>Color</label>
-                <input type="text" name="color" id="color" value='<s:property value="color"/>'>
-                
-                <label>Doc No</label>
-                <input type="text" name="docno" id="docno" readonly="readonly" value='<s:property value="docno"/>' tabindex="-1" style="width: 150px !important;">
+        <jsp:include page="../../../../header.jsp" />
+        
+        <div class="modern-ui">
+
+            <div class="middle-panel">
+                <span class="middle-panel-title">Color Details</span>
+                <div style="padding-top: 5px;">
+
+                    <div class="field-row" style="margin-bottom: 0;">
+                        <label class="lbl-right" style="width: 50px;">Color</label>
+                        <input type="text" name="color" id="color" class="input-lg" value='<s:property value="color"/>'>
+                        
+                        <div style="margin-left: 50px; display: flex; align-items: center; gap: 8px;">
+                            <label class="lbl-right" style="width: 60px;">Doc No</label>
+                            <input type="text" name="docno" id="docno" class="input-sm" readonly="readonly" value='<s:property value="docno"/>' tabindex="-1">
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+            <div id="jqxColorSearch1"></div>
 
             <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
             <input type="hidden" id="mode" name="mode"/>
             <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            
         </div>
     </form>
-
-    <br/>
-    <div class="section-block">
-        <h2>Color Search List</h2>
-        <div id="jqxColorSearch1" style="width: 100% !important;"></div>
-    </div>
 </div>
 </body>
 </html>

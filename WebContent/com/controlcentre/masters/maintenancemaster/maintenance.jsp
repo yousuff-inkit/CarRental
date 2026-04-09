@@ -15,303 +15,290 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
+/* =========================================================
+SCOPED UI: Compact Input Sizing (Plain Colors)
+*Note: All rules strictly scoped to .modern-ui so header.jsp is safe*
+========================================================= */
 
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 1450px;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        text-align: left !important; 
-    }
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding-top: 15px;
+    box-sizing: border-box; 
+}
 
-    /* ------------------------------
-       HEADER FIXES
-    ------------------------------ */
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
-    
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
+/* Master Input Heights - Set to 24px */ 
+.modern-ui input[type="text"], 
+.modern-ui select, 
+.modern-ui textarea {
+    height: 24px !important; 
+    border: 1px solid #ccc; 
+    border-radius: 3px;
+    padding: 2px 6px; 
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+}
 
-    /* ------------------------------
-       GRID SYSTEM
-    ------------------------------ */
-    .receipt-header {
-        display: grid;
-        grid-template-columns: auto 150px 1fr auto 150px;
-        gap: 15px;
-        align-items: center;
-        margin-bottom: 25px;
-        padding: 0 5px;
-    }
+/* Compact Width Classes */
+.modern-ui .input-xs { width: 60px !important; }
+.modern-ui .input-sm { width: 100px !important; }
+.modern-ui .input-md { width: 140px !important; }
+.modern-ui .input-lg { width: 220px !important; }
+.modern-ui .input-xl { width: 350px !important; }
+.modern-ui .input-full { width: 100% !important; }
 
-    .section-block {
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        margin-bottom: 20px;
-    }
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus, 
+.modern-ui textarea:focus { 
+    border-color: #007bff;
+    outline: none;
+}
 
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
+.modern-ui input[readonly], 
+.modern-ui textarea[readonly], 
+.modern-ui select:disabled, 
+.modern-ui input:disabled { 
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
 
-    .form-row {
-        display: grid;
-        grid-template-columns: 140px 1fr 140px 1fr;
-        gap: 15px;
-        align-items: center;
-    }
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
 
-    /* ------------------------------
-       INPUTS & CONTROLS
-    ------------------------------ */
-    input[type="text"], select {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
+.modern-ui .lbl-right {
+    text-align: right; 
+    color: #444; 
+    font-size: 12px;
+    font-weight: bold; 
+    white-space: nowrap; 
+    padding-right: 5px;
+}
 
-    input[type="text"]:focus, select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    
-    input[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
+/* Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #e1e4e8; 
+    padding: 20px 10px 10px 10px; 
+    background: #fff;
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+}
 
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        font-size: 14px;
-    }
-    
-    label.error {
-        color: red;
-        font-weight: bold;
-        font-size: 12px;
-        margin-left: 5px;
-    }
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -10px;
+    left: 10px; 
+    background: #fff; 
+    padding: 0 5px 0 6px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
 
-    /* Grid Container Override */
-    #maintearch1 {
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
+.modern-ui #maintearch1 { 
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+    margin-top: 10px;
+}
+
+/* Validation Error override */
+.modern-ui label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+    margin-left: 5px;
+}
 </style>
 
 <script type="text/javascript">
 $(document).ready(function() {
+    /* Upgraded height to 24px for Modern UI */
     $("#miandate").jqxDateTimeInput({
         width : '125px',
-        height : '15px',
+        height : '24px',
         formatString : "dd.MM.yyyy"
     });
     
-        document.getElementById("formdet").innerText="Maintenance(MAT)";
-        document.getElementById("formdetail").value="Maintenance";
-        document.getElementById("formdetailcode").value="MAT";
-        window.parent.formCode.value="MAT";
-        window.parent.formName.value="Maintenance";
+    /* Force internal alignment AFTER render */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", 
+            "line-height": "24px", 
+            "font-size": "12px", 
+            "font-family": "Arial, sans-serif",
+            "padding": "0 6px", 
+            "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
+    
+    document.getElementById("formdet").innerText="Maintenance(MAT)";
+    document.getElementById("formdetail").value="Maintenance";
+    document.getElementById("formdetailcode").value="MAT";
+    window.parent.formCode.value="MAT";
+    window.parent.formName.value="Maintenance";
+        
     var datas= '<%=cmd.mainserch() %>';
-                 var num = 0; 
-            var source =
-            {                           
-                datatype: "json",
-                datafields: [  
-                            {name : 'docno' , type: 'number' },
-                            {name : 'mtype', type: 'String'  },
-                             {name : 'name', type: 'String'  },
-                             {name : 'date',type:'date'}
-           
-                  ],
-                 localdata: datas,
-                
-                
-                pager: function (pagenum, pagesize, oldpagenum) {
-                    // callback called when a page or page size is changed.
-                }
-            };
+    var num = 0; 
+    var source = {                           
+        datatype: "json",
+        datafields: [  
+            {name : 'docno' , type: 'number' },
+            {name : 'mtype', type: 'String'  },
+            {name : 'name', type: 'String'  },
+            {name : 'date',type:'date'}
+        ],
+        localdata: datas,
+        pager: function (pagenum, pagesize, oldpagenum) {}
+    };
             
-            var dataAdapter = new $.jqx.dataAdapter(source,
-                     {
-                        loadError: function (xhr, status, error) {
-                      //   alert(error);    
-                         }
-                    }        
-            );
-            $("#maintearch1").jqxGrid(
-            {
-                width: '100%',
-                height: 325,
-                source: dataAdapter,
-                sortable: true,    
-                selectionmode: 'singlerow',
-                theme: 'energyblue', /* Added Theme */
-
-                columns: [
-                    { text: 'Doc No', datafield: 'docno', width: '15%' },
-                    { text: ' Maintenance Type', datafield: 'mtype', width: '35%' },
-                    { text: 'Description',datafield:'name',width:'50%' },
-                    { text: 'Date', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy',hidden:true },
-                
-                    ]
-            });
+    var dataAdapter = new $.jqx.dataAdapter(source, {
+        loadError: function (xhr, status, error) {
+            // alert(error);    
+        }
+    }); 
+            
+    $("#maintearch1").jqxGrid({
+        width: '100%',
+        height: 325,
+        source: dataAdapter,
+        sortable: true,    
+        selectionmode: 'singlerow',
+        theme: 'energyblue',
+        columns: [
+            { text: 'Doc No', datafield: 'docno', width: '15%' },
+            { text: ' Maintenance Type', datafield: 'mtype', width: '35%' },
+            { text: 'Description',datafield:'name',width:'50%' },
+            { text: 'Date', datafield: 'date', width: '20%',cellsformat:'dd.MM.yyyy',hidden:true }
+        ]
+    });
       
-
-            $('#maintearch1').on('rowselect', function (event) {
-                
-                var rowindex1=event.args.rowindex;
-                document.getElementById("docno").value= $('#maintearch1').jqxGrid('getcellvalue', rowindex1, "docno");
-                document.getElementById("maintenancetype").value=$('#maintearch1').jqxGrid('getcellvalue', rowindex1, "mtype");
-                document.getElementById("desc").value=$('#maintearch1').jqxGrid('getcellvalue', rowindex1, "name");
-                
-                $("#miandate").jqxDateTimeInput('val',$("#maintearch1").jqxGrid('getcellvalue', rowindex1, "date"));
-                
-            }); 
-            
+    $('#maintearch1').on('rowselect', function (event) {
+        var rowindex1=event.args.rowindex;
+        document.getElementById("docno").value= $('#maintearch1').jqxGrid('getcellvalue', rowindex1, "docno");
+        document.getElementById("maintenancetype").value=$('#maintearch1').jqxGrid('getcellvalue', rowindex1, "mtype");
+        document.getElementById("desc").value=$('#maintearch1').jqxGrid('getcellvalue', rowindex1, "name");
+        $("#miandate").jqxDateTimeInput('val',$("#maintearch1").jqxGrid('getcellvalue', rowindex1, "date"));
+    }); 
 });
-  </script>
+</script>
 
 <script type="text/javascript">
 function funReadOnly(){
     $('#frmmaint input').attr('readonly', true );
-     $('#miandate').jqxDateTimeInput({ disabled: true}); 
+    $('#miandate').jqxDateTimeInput({ disabled: true}); 
 }
+
 function funRemoveReadOnly(){
     $('#frmmaint input').attr('readonly', false );
     $('#miandate').jqxDateTimeInput({ disabled: false});
     $('#docno').attr('readonly', true);
 }
-function funFocus()
-{
+
+function funFocus(){
     document.getElementById("maintenancetype").focus();
-        
 }
+
 function funSearchLoad(){
     changeContent('mainmasterSearch.jsp'); 
- }
+}
+
 function funNotify(){
     $('#miandate').jqxDateTimeInput({ disabled: false});
     return 1;
 } 
+
 $(function(){
     $('#frmmaint').validate({
-                 rules: {
-                     maintenancetype: {
-                         required:true,
-                         maxlength:20
-                      },
-                      desc:{
-                        required:true,
-                        maxlength:45
-                     }
-                    
-                     },
-                      
-                      messages: {
-                         maintenancetype:{
-                           required:" * required",
-                           maxlength:"  Max 20 chars"
-                       },
-                       desc:{
-                         required:" * required",
-                          maxlength:"  Max 45 chars"
-                       }
-                    
-                      
-                       }
-    });});
-function setValues()
-{
+        rules: {
+            maintenancetype: {
+                required:true,
+                maxlength:20
+            },
+            desc:{
+                required:true,
+                maxlength:45
+            }
+        },
+        messages: {
+            maintenancetype:{
+                required:" * required",
+                maxlength:"  Max 20 chars"
+            },
+            desc:{
+                required:" * required",
+                maxlength:"  Max 45 chars"
+            }
+        }
+    });
+});
+
+function setValues(){
     if($('#miandatehidden').val()){
         $("#miandate").jqxDateTimeInput('val', $('#miandatehidden').val());
     }
-    //$('#prevdate').val($('#prevdatehidden').val()) ;
     if($('#msg').val()!=""){
-           $.messager.alert('Message',$('#msg').val());
-          }
+        $.messager.alert('Message',$('#msg').val());
     }
+}
 </script>
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
-<form id="frmmaint" action="saveMain" autocomplete="off" method="post">
-<jsp:include page="../../../../header.jsp" />
-
-    <div class='receipt-header'>
-        <label>Date</label>
-        <div id="miandate" name="miandate" value='<s:property value="miandate"/>'></div>
+<div class="homeContent" data-type="background">
+    <form id="frmmaint" action="saveMain" autocomplete="off" method="post">
         
-        <div></div>
+        <jsp:include page="../../../../header.jsp" />
 
-        <label>Doc No</label>
-        <input type="text" name="docno" readonly="readonly" id="docno" value='<s:property value="docno"/>'>
-    </div>
+        <div class="modern-ui">
 
-    <div class="section-block">
-        <h2>Maintenance Details</h2>
-        <div class="form-row">
-            <label for="maintenancetype">Maintenance Type</label>
-            <input type="text" name="maintenancetype" id="maintenancetype" value='<s:property value="maintenancetype"/>'>
+            <div class="middle-panel">
+                <span class="middle-panel-title">Maintenance Details</span>
+                <div style="padding-top: 5px;">
 
-            <label for="desc">Description</label>
-            <input type="text" name="desc" id="desc" value='<s:property value="desc"/>'>
+                    <div class="field-row">
+                        <label class="lbl-right" style="width: 120px;">Date</label>
+                        <div style="width: 125px;">
+                            <div id="miandate" name="miandate" value='<s:property value="miandate"/>'></div>
+                        </div>
+                        <input type="hidden" name="miandatehidden" id="miandatehidden" value='<s:property value="miandatehidden"/>'>
+                        
+                        <div style="margin-left: 50px; display: flex; align-items: center; gap: 8px;">
+                            <label class="lbl-right" style="width: 60px;">Doc No</label>
+                            <input type="text" name="docno" readonly="readonly" id="docno" class="input-sm" value='<s:property value="docno"/>' tabindex="-1">
+                        </div>
+                    </div>
+
+                    <div class="field-row" style="margin-bottom: 0;">
+                        <label class="lbl-right" style="width: 120px;">Maintenance Type</label>
+                        <input type="text" name="maintenancetype" id="maintenancetype" class="input-lg" value='<s:property value="maintenancetype"/>'>
+
+                        <label class="lbl-right" style="width: 80px; margin-left: 20px;">Description</label>
+                        <input type="text" name="desc" id="desc" class="input-xl" value='<s:property value="desc"/>'>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="maintearch1"></div>
+
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+                  
         </div>
-    </div>
-
-    <div id="maintearch1" style="position:relative;"></div>
-
-    <input type="hidden" name="miandatehidden" id="miandatehidden" value='<s:property value="miandatehidden"/>'>
-    <input type="hidden" id="mode" name="mode"/>
-    <input type="text" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
-    <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-          
-</form>
-
+    </form>
 </div>
 </body>
 </html>

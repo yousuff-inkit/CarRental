@@ -177,7 +177,7 @@ $(document).ready(function () {
     $("#jqxMenuMore").css('visibility', 'visible');     
      
    /* Menu-minimized window  */
-     $('#windows2').jqxWindow({width: '71%', height: '70%',  maxHeight: '70%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
+     $('#windows2').jqxWindow({width: '71%', height: '70%',  maxHeight: '90%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
     $('#windows2').jqxWindow('close');   
     
     getLeasePrior();
@@ -203,21 +203,23 @@ $(document).ready(function () {
         $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
     }, 0);
 
+    /* FIXED: Max heights updated so windows initialize properly */
     $('#clientinfowindow').jqxWindow({ width: '62%', height: '65%',  maxHeight: '85%' ,maxWidth: '80%' ,title: ' Client Search' , position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     $('#clientinfowindow').jqxWindow('close');
-    $('#driverinfowindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '62%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#driverinfowindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '85%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     $('#driverinfowindow').jqxWindow('close');
-    $('#chauffeurinfowindow').jqxWindow({ width: '30%', height: '58%',  maxHeight: '62%' ,maxWidth: '50%' , title: ' Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#chauffeurinfowindow').jqxWindow({ width: '30%', height: '58%',  maxHeight: '85%' ,maxWidth: '50%' , title: ' Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     $('#chauffeurinfowindow').jqxWindow('close');
-    $('#vehinfowindow').jqxWindow({ width: '60%', height: '67%',  maxHeight: '70%' ,maxWidth: '70%' , title: ' Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#vehinfowindow').jqxWindow({ width: '60%', height: '67%',  maxHeight: '85%' ,maxWidth: '70%' , title: ' Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     $('#vehinfowindow').jqxWindow('close');
-    $('#deldrvwindow').jqxWindow({ width: '30%', height: '62%',  maxHeight: '54%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 650, y: 110 }, keyboardCloseKey: 27});
+    $('#deldrvwindow').jqxWindow({ width: '30%', height: '62%',  maxHeight: '85%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 650, y: 110 }, keyboardCloseKey: 27});
     $('#deldrvwindow').jqxWindow('close');
 
-    $('#projectwindow').jqxWindow({ width: '30%', height: '62%',  maxHeight: '54%' ,maxWidth: '50%' , title: 'Project Search' ,position: { x: 800, y: 150 }, keyboardCloseKey: 27});
+    $('#projectwindow').jqxWindow({ width: '30%', height: '62%',  maxHeight: '85%' ,maxWidth: '50%' , title: 'Project Search' ,position: { x: 800, y: 150 }, keyboardCloseKey: 27});
     $('#projectwindow').jqxWindow('close');
-    $('#masterrefnowindow').jqxWindow({ width: '60%', height: '62%',  maxHeight: '54%' ,maxWidth: '60%' , title: 'Master Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#masterrefnowindow').jqxWindow({ width: '60%', height: '62%',  maxHeight: '85%' ,maxWidth: '60%' , title: 'Master Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
     $('#masterrefnowindow').jqxWindow('close');
+    
     $("#btnEdit").attr('disabled', true );
 
 $('#clientid').dblclick(function(){
@@ -231,6 +233,7 @@ $('#leaseproject').dblclick(function(){
   $('#projectwindow').jqxWindow('focus');
  projectinfoSearchContent('searchproject.jsp');
  });   
+
  $('#masterrefno').dblclick(function(){
      var masterreftype=$('#cmbmasterreftype').val();
      if(masterreftype=="MLA"){
@@ -238,7 +241,6 @@ $('#leaseproject').dblclick(function(){
             $('#masterrefnowindow').jqxWindow('focus');
            masterrefnoSearchContent('masterrefnoSearch.jsp');        
      }
-
  });  
 
      
@@ -614,11 +616,15 @@ $.get(url).done(function (data) {
 
        }); 
 }
+
+/* FIXED: Brings the popup to the front after loading content */
 function masterrefnoSearchContent(url) {
-$.get(url).done(function (data) {
- $('#masterrefnowindow').jqxWindow('setContent', data);
-       }); 
+    $.get(url).done(function (data) {
+        $('#masterrefnowindow').jqxWindow('setContent', data);
+        $('#masterrefnowindow').jqxWindow('bringToFront');
+    }); 
 }
+
 function funRemoveReadOnly(){
 
      if ($("#mode").val() == "D") {
@@ -2653,14 +2659,14 @@ function checkBrandQty(fleetno,masterrefno){
         </div>
     </form>
 
-    <div id="windows2"><div style="background-color: #E0ECF8;"></div></div>  
-    <div id="clientinfowindow"><div></div></div>
-    <div id="driverinfowindow"><div></div></div>
-    <div id="vehinfowindow"><div></div></div>
-    <div id="chauffeurinfowindow"><div></div></div>
-    <div id="deldrvwindow"><div></div></div>
-    <div id="projectwindow"><div></div></div>
-    <div id="masterrefnowindow"><div></div></div>
+    <div id="windows2"><div style="background-color: #E0ECF8;"></div><div></div></div>  
+    <div id="clientinfowindow"><div></div><div></div></div>
+    <div id="driverinfowindow"><div></div><div></div></div>
+    <div id="vehinfowindow"><div></div><div></div></div>
+    <div id="chauffeurinfowindow"><div></div><div></div></div>
+    <div id="deldrvwindow"><div></div><div></div></div>
+    <div id="projectwindow"><div></div><div></div></div>
+    <div id="masterrefnowindow"><div></div><div></div></div>
 
 </div>
 

@@ -1,151 +1,105 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
-<%
-String contextPath=request.getContextPath();
-%>
+<% String contextPath=request.getContextPath();%>
 <head>
 <title>GatewayERP(i)</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-/* ------------------------------
-   MASTER UI – SCROLL AREA
------------------------------- */
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: 550px; /* master standard */
-    padding: 10px;
-}
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
 
-/* ------------------------------
-   MASTER UI – BACKGROUND
------------------------------- */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0; /* master spacing */
-    min-height: 100vh;
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
     box-sizing: border-box;
-    font-size: 14px;
 }
 
-/* ------------------------------
-   MASTER UI – MAIN CARD
------------------------------- */
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px; /* master padding */
-    max-width: 100%;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
 }
 
-/* ------------------------------
-   MASTER UI – SECTION BLOCK
------------------------------- */
-.table-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 12px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.table-section h3 {
-    margin: 0 0 16px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #253858;
-    font-size: 17.4px;
-    font-weight: 600;
-}
-
-/* ------------------------------
-   MASTER UI – TABLE GRID
------------------------------- */
-.cr-table {
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
     width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-    table-layout: fixed;
 }
 
-.cr-table th,
-.cr-table td {
-    padding: 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 16px;
-    vertical-align: middle;
-    font-weight: 500;
-    
-}
-
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ------------------------------
-   MASTER UI – INPUTS
------------------------------- */
-.cr-table input[type="text"],
-.cr-table select {
-    width: 100%;
-    height: 32px; /* master input height */
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 14px;
-    background: #fff;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
-}
-
-.cr-table input[type="text"]:focus,
-.cr-table select:focus {
-    border-color: #007bff;
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
     outline: none;
 }
 
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
 }
 
-.myButton:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    transform: translateY(-1px);
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
 }
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Split Section Styling */
+.modern-ui .section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #c5d3e0;
+    padding-bottom: 3px;
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
 
 <%@page import="com.humanresource.setup.hrsetup.department.ClsDepartmentDAO"%>
@@ -153,14 +107,28 @@ body {
 
 <script type="text/javascript">
 
-	$(document).ready(function () {    
-	    document.getElementById("formdet").innerText="Department(DEP)";
-		document.getElementById("formdetail").value="Department";
-		document.getElementById("formdetailcode").value="DEP";
-		window.parent.formCode.value="DEP";
-		window.parent.formName.value="Department";
+	$(document).ready(function () {   
+	    if(document.getElementById("formdet")) document.getElementById("formdet").innerText="Department(DEP)";
+		if(document.getElementById("formdetail")) document.getElementById("formdetail").value="Department";
+		if(document.getElementById("formdetailcode")) document.getElementById("formdetailcode").value="DEP";
+		if(window.parent && window.parent.formCode) window.parent.formCode.value="DEP";
+		if(window.parent && window.parent.formName) window.parent.formName.value="Department";
 		
-	    $("#deptdate").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy" });
+        /* FIXED DATE WIDTHS & HEIGHTS (Compact 120px) */
+		$("#deptdate").jqxDateTimeInput({ width: '120px', height: '24px' ,formatString : "dd.MM.yyyy" });
+		
+        /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
            
 	    var deptdata='<%=showDAO.searchDepartment()%>';
     
@@ -212,30 +180,44 @@ body {
 		 changeContent('departmentsearch.jsp'); 
 	 }
  
+    /* SAFE READONLY FUNCTION */
 	function funReadOnly() {
-		$('#frmdepartment input').attr('readonly', true);
-		$('#deptdate').jqxDateTimeInput({ disabled: true});
+	    try {
+    		$('#frmdepartment input[type="text"]').attr('readonly', true);
+    		$('#deptdate').jqxDateTimeInput({ disabled: true});
+	    } catch(e) { console.error("Error in funReadOnly: ", e); }
 	}
 	
+	/* SAFE REMOVE READONLY FUNCTION */
 	function funRemoveReadOnly() {
-		$('#frmdepartment input').attr('readonly', false);
-		$('#docno').attr('readonly', true);
-		$('#deptdate').jqxDateTimeInput({ disabled: false});
-
-		if ($("#mode").val() == "A") {
-			 $('#deptdate').val(new Date());
-		}
+	    try {
+    		$('#frmdepartment input[type="text"]').attr('readonly', false);
+    		$('#docno').attr('readonly', true);
+    		$('#deptdate').jqxDateTimeInput({ disabled: false});
+    
+    		if ($("#mode").val() == "A") {
+    			 $('#deptdate').val(new Date());
+    		}
+	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
 	}
 	
+    /* SAFE SET VALUES FUNCTION */
 	function setValues() {
-	
-		if($('#datehidden').val()){
-			$("#deptdate").jqxDateTimeInput('val', $('#datehidden').val());
-		}
-		
-		if($('#msg').val()!=""){
-			  $.messager.alert('Message',$('#msg').val());
-		}
+	    try {
+    		if($('#datehidden').length && $('#datehidden').val()){
+    			$("#deptdate").jqxDateTimeInput('val', $('#datehidden').val());
+    		}
+    		
+    		if($('#msg').length && $('#msg').val()!=""){
+    			  $.messager.alert('Message',$('#msg').val());
+    		}
+    		
+            if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                 var detailVal = $('#formdetail').val() || "";
+                 var codeVal = $('#formdetailcode').val() || "";
+                 document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+            }
+	    } catch(e) { console.error("Error in setValues: ", e); }
 	}
  
 	     function funNotify(){
@@ -256,64 +238,60 @@ body {
  
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="homeContent">
 
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
 <form id="frmdepartment" action="saveDepartment" method="post" autocomplete="off">
-    <jsp:include page="../../../../header.jsp" /><br/>
+    <jsp:include page="../../../../header.jsp" />
 
-    <!-- master UI section card -->
-    <div class="table-section">
-        <h3>Department Details</h3>
+    <div class="modern-ui">
 
-        <table class="cr-table" width="100%">
-            <tr>
-                <td width="10%" align="right">Date</td>
-                <td width="15%" align="left">
-                    <div id="deptdate" name="deptdate" value='<s:property value="deptdate"/>'></div>
-                </td>
+        <div class="erp-form-area">
+            <div class="section-title">Department Details</div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="8%">Date</td>
+                    <td width="20%">
+                        <div id="deptdate" name="deptdate" value='<s:property value="deptdate"/>'></div>
+                    </td>
+                    <td class="lbl-right" width="10%">Department</td>
+                    <td width="35%">
+                        <input type="text" name="department" id="department" placeholder="Department" value='<s:property value="department"/>'>
+                    </td>
+                    <td class="lbl-right" width="10%">Doc No</td>
+                    <td width="17%">
+                        <input type="text" name="docno" id="docno" value='<s:property value="docno"/>' readonly="readonly" tabindex="-1">
+                    </td>
+                </tr>
 
-                <td width="12%" align="right">Department</td>
-                <td width="34%">
-                    <input type="text" name="department" id="department"
-                           style="width:100%;" placeholder="Department"
-                           value='<s:property value="department"/>'>
-                </td>
+                <tr>
+                    <td class="lbl-right" style="padding-top: 10px;">Remarks</td>
+                    <td colspan="5" style="padding-top: 10px;">
+                        <input type="text" name="remarks" id="remarks" placeholder="Remarks" value='<s:property value="remarks"/>'>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-                <td width="10%" align="right">Doc No</td>
-                <td width="10%">
-                    <input type="text" name="docno" id="docno"
-                           value='<s:property value="docno"/>'
-                           readonly="readonly" tabindex="-1">
-                </td>
-                <td width="9%">&nbsp;</td>
-            </tr>
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+            <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
+            <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
+            
+            <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+            <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
+        </div>
 
-            <tr>
-                <td align="right">Remarks</td>
-                <td colspan="4">
-                    <input type="text" name="remarks" id="remarks"
-                           style="width:100%;" placeholder="Remarks"
-                           value='<s:property value="remarks"/>'>
-                </td>
-                <td colspan="2">&nbsp;</td>
-            </tr>
-        </table>
+        <div class="erp-form-area">
+            <div class="section-title">Department List</div>
+            <div class="grid-container">
+                <div id="departmentgrid" style="width: 100%;"></div>
+            </div>
+        </div>
 
-        <!-- hidden fields -->
-        <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/> 
-        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/> 
-        <input type="hidden" id="datehidden" name="datehidden" value='<s:property value="datehidden"/>'/> 
     </div>
 </form>
 
-<!-- grid below in its own master card if you want -->
-<div class="table-section">
-    <h3>Department List</h3>
-    <div id="departmentgrid"></div>
 </div>
-
-</div><!-- /#mainBG -->
 </body>
-
 </html>

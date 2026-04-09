@@ -3024,12 +3024,44 @@ legend {
 .accordion-header.active .accordion-arrow {
     transform: rotate(-180deg);
 }
-.hidden-scrollbar {
-  min-height: 100vh; /* Takes at least the full height of the screen */
-  overflow-y: auto;  /* Allows vertical scrolling */
-  overflow-x: hidden;
-  padding-bottom: 50px; /* Gives extra space at the bottom so the last section isn't cramped */
+/* Fix for the bottom scroll issue */
+html, body {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important; /* Restores native browser scrolling */
+    overflow-x: hidden; /* Prevents horizontal scroll jumping */
 }
+
+.hidden-scrollbar {
+    height: auto; 
+    overflow: visible; /* Let the body handle the scrolling instead of an inner box */
+    padding-bottom: 120px; /* Generous bottom padding so nothing gets cut off */
+}
+
+/* Fix for the red notification text getting cut off on the right */
+#errormsg {
+    margin-right: 25px !important; /* Pushes it safely away from the right edge/scrollbar */
+    padding-right: 10px !important;
+    display: inline-block;
+    word-wrap: break-word;
+    max-width: 250px;
+}
+
+/* Fix for the red notification text getting cut off and stacking vertically */
+#errormsg {
+    white-space: nowrap !important; /* Forces the text to stay on one single line */
+    display: inline-block !important;
+    color: #e74c3c !important; /* Deep red text */
+    font-weight: bold;
+    font-size: 13px;
+    padding: 6px 12px;
+    margin-right: 30px !important; /* Pushes it safely away from the scrollbar */
+    background-color: #fdf2f2; /* Light red alert background */
+    border: 1px solid #f5c6cb; /* Subtle border */
+    border-radius: 4px;
+    z-index: 50; /* Ensures it stays on top of other elements */
+}
+
 </style>
 
 
@@ -3935,47 +3967,52 @@ legend {
  
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // Check if an existing document is currently loaded (Search/Edit/View mode)
+    var masterDoc = document.getElementById("masterdoc_no");
+    var isLoaded = (masterDoc && masterDoc.value && masterDoc.value > 0);
 
-    // First section open, others closed
     const sections = document.querySelectorAll('.accordion-content');
-    sections.forEach((el, index) => {
-    	el.style.display = 'block';
-    });
+    const headers = document.querySelectorAll('.accordion-header');
 
+    sections.forEach((el, index) => {
+        if (isLoaded) {
+            // BUG FIX: If data is loaded, KEEP accordions open so JQX Grids don't hang on the infinite spinner
+            el.style.display = 'block';
+            if(headers[index]) headers[index].classList.add('active');
+        } else {
+            // If it's a New entry, close all except the first one (Rental Info)
+            if (index === 0) {
+                el.style.display = 'block';
+                if(headers[index]) headers[index].classList.add('active');
+            } else {
+                el.style.display = 'none';
+                if(headers[index]) headers[index].classList.remove('active');
+            }
+        }
+    });
 });
 
 function toggleAccordion(el) {
     const content = el.nextElementSibling;
     const isOpen = content.style.display === "block";
 
-    // Toggle the section
+    // Toggle the section content and the arrow rotation
     content.style.display = isOpen ? "none" : "block";
     el.classList.toggle("active", !isOpen);
 
-    // FIX: If we are opening the section, tell the JQX grids to redraw
+    // Safely tell the JQX grids to redraw if the section was just opened
     if (!isOpen) {
-        // Trigger a global resize so all hidden grids recalculate their 'length'
-        $(window).trigger('resize');
-        
-        // Optional: Target specific grids if the global resize is slow
-        if (content.find('#divDrivGrid').length > 0) {
-            $("#driverGrid").jqxGrid('refresh');
-        }
-    }
-}
-
-function toggleAccordion(el) {
-    // Toggle arrow rotation
-    el.classList.toggle("active");
-
-    // Get the content (next div)
-    const content = el.nextElementSibling;
-
-    // Toggle content visibility
-    if (content.style.display === "block") {
-        content.style.display = "none";
-    } else {
-        content.style.display = "block";
+        setTimeout(function() {
+            // Trigger a window resize to force JQX internal recalculations
+            $(window).trigger('resize');
+            
+            // Force render on specific grids if they exist in the DOM
+            if (typeof $.fn.jqxGrid === 'function') {
+                if ($("#jqxgrid2").length > 0) $("#jqxgrid2").jqxGrid('render'); // Driver grid
+                if ($("#jqxgridtarif").length > 0) $("#jqxgridtarif").jqxGrid('render'); // Tariff grid
+                if ($("#jqxgridpayment").length > 0) $("#jqxgridpayment").jqxGrid('render'); // Payment grid
+            }
+        }, 50); // Small delay ensures display:block has fully registered in the browser
     }
 }
 </script>

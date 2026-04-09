@@ -1,30 +1,156 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
 <!DOCTYPE html>
 <html>
+<% String contextPath=request.getContextPath(); %>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>GatewayERP(i)</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>GatewayERP(i)</title>
- <jsp:include page="../../../../../includes.jsp"></jsp:include> 
+<jsp:include page="../../../../../includes.jsp"></jsp:include>
 
+<style>
+/* =========================================================
+SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+========================================================= */
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.modern-ui .erp-form-area {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    min-width: 1050px; 
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Split Section Styling */
+.modern-ui .section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #c5d3e0;
+    padding-bottom: 3px;
+}
+
+/* Checkbox Group Styling */
+.modern-ui .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 3px 8px;
+}
+
+.modern-ui .checkbox-group label {
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* RESTORED: Scrollbar logic strictly for the form content area */
+.hidden-scrollbar { 
+    overflow-y: auto; 
+    height: 80vh; 
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+</style>
 
 <script type="text/javascript">
 
  $(document).ready(function () {
-	 	document.getElementById("formdet").innerText="HR Setup(HRS)";
-		document.getElementById("formdetail").value="HR Setup";
-		document.getElementById("formdetailcode").value="HRS";
-		window.parent.formCode.value="HRS"; 
-		window.parent.formName.value="HR Setup";
+        if(document.getElementById("formdet")) document.getElementById("formdet").innerText="HR Setup(HRS)";
+		if(document.getElementById("formdetail")) document.getElementById("formdetail").value="HR Setup";
+		if(document.getElementById("formdetailcode")) document.getElementById("formdetailcode").value="HRS";
+		if(window.parent && window.parent.formCode) window.parent.formCode.value="HRS"; 
+		if(window.parent && window.parent.formName) window.parent.formName.value="HR Setup";
 		
-   	 	$("#masterdate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});    
-   	 	$("#validfromdate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});   
-	   	$("#lastreviseddate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});   
-   	 	$("#workingtime").jqxDateTimeInput({ width: '60%', height: '15px', formatString:'HH:mm', showCalendarButton: false}); 
-   	 
-     	$('#formulawindow').jqxWindow({ width: '45%', height: '54%',  maxHeight: '75%' ,maxWidth: '60%' , title: 'Salary Calculation Formula' ,position: { x: 150, y: 60 }, keyboardCloseKey: 27,theme: 'energyblue', showCloseButton: true});
+        /* COMPACT DATE/TIME SIZING (120px) */
+ 	 	$("#masterdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});   
+ 	 	$("#validfromdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});   
+ 	    $("#lastreviseddate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});   
+ 	 	$("#workingtime").jqxDateTimeInput({ width: '120px', height: '24px', formatString:'HH:mm', showCalendarButton: false}); 
+ 	 	
+        /* Force internal alignment AFTER render */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
+ 	 
+      	$('#formulawindow').jqxWindow({ width: '45%', height: '54%',  maxHeight: '75%' ,maxWidth: '60%' , title: 'Salary Calculation Formula' ,position: { x: 150, y: 60 }, keyboardCloseKey: 27,theme: 'energyblue', showCloseButton: true});
 	 	$('#formulawindow').jqxWindow('close');
 	 	
 	 	$('#accountSearchwindow').jqxWindow({ width: '60%', height: '62%',  maxHeight: '75%' ,maxWidth: '60%' , title: 'Account Search' ,position: { x: 150, y: 60 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
@@ -37,7 +163,7 @@
 		$('#costCodeSearchWindow').jqxWindow('close');
 	 
    		getCategory();getleave();
-     
+      
 	   	$('#convformula').dblclick(function(){
 	    	if($('#mode').val()!= "view") {
 		  	    $('#formulawindow').jqxWindow('open');
@@ -46,7 +172,6 @@
 	    	} 
 	    });   
 	    
-   	
 	   $('#normalrate').dblclick(function(){
 		  	if($('#mode').val()!= "view") {
 			  	    $('#formulawindow').jqxWindow('open');
@@ -72,28 +197,28 @@
 		 });   
 	  
 	});
-       
+        
  	function formulaSearchContent(url) {
-    	$.get(url).done(function (data) {
+     	$.get(url).done(function (data) {
 	   		$('#formulawindow').jqxWindow('setContent', data);
-	}); 
+	    }); 
  	}
 
 	function accountSearchContent(url) {
- 		if($('#mode').val()!="view") {      
+ 		if($('#mode').val()!="view") {   
  			$.get(url).done(function (data) {
 	 		$('#accountSearchwindow').jqxWindow('open');
 			$('#accountSearchwindow').jqxWindow('setContent', data);
-		}); 
-  	}
+		    }); 
+   	    }
 	}
 	
 	function costTypeSearchContent(url) {
-    	$('#costTypeSearchGridWindow').jqxWindow('open');
+     	$('#costTypeSearchGridWindow').jqxWindow('open');
 		$.get(url).done(function (data) {
 		$('#costTypeSearchGridWindow').jqxWindow('setContent', data);
 		$('#costTypeSearchGridWindow').jqxWindow('bringToFront');
-	}); 
+	    }); 
 	}
 
 	function costCodeSearchContent(url) {
@@ -101,7 +226,7 @@
 		$.get(url).done(function (data) {
 		$('#costCodeSearchWindow').jqxWindow('setContent', data);
 		$('#costCodeSearchWindow').jqxWindow('bringToFront');
-	}); 
+	    }); 
 	}
  
  	function getconfor(event){
@@ -150,142 +275,146 @@
  
     function funReset(){ }
     
+    /* SAFE READONLY FUNCTION */
 	function funReadOnly(){
-		//masterdate validfromdate lastreviseddate workingtime
-		
-		$('#masterdate').jqxDateTimeInput({ disabled: true});
-	    $('#validfromdate').jqxDateTimeInput({ disabled: true});
-	    $('#lastreviseddate').jqxDateTimeInput({ disabled: true});
-	    $('#workingtime').jqxDateTimeInput({ disabled: true});
-		$('#frmhrsetups input').attr('readonly', true );
-		$('#frmhrsetups select').attr('disabled', true);
-	    $('#mon').attr('disabled', true);
-	    $('#tue').attr('disabled', true);
-	    $('#wed').attr('disabled', true);
-	    $('#thu').attr('disabled', true);
-	    $('#fri').attr('disabled', true);
-	    $('#sat').attr('disabled', true);
-	    $('#sun').attr('disabled', true);
-	    $('#leaveid').attr('disabled', true);
-	    $('#cmbcategory').attr('disabled', true);
-	    $('#carryforward').attr('disabled', true);
-	    
-	//    mon tue wed thu fri sat sun leaveid cmbcategory carryforward
+	    try {
+    		$('#masterdate').jqxDateTimeInput({ disabled: true});
+    	    $('#validfromdate').jqxDateTimeInput({ disabled: true});
+    	    $('#lastreviseddate').jqxDateTimeInput({ disabled: true});
+    	    $('#workingtime').jqxDateTimeInput({ disabled: true});
+    		$('#frmhrsetups input').attr('readonly', true );
+    		$('#frmhrsetups select').attr('disabled', true);
+    	    $('#mon, #tue, #wed, #thu, #fri, #sat, #sun').attr('disabled', true);
+    	    $('#leaveid').attr('disabled', true);
+    	    $('#cmbcategory').attr('disabled', true);
+    	    $('#carryforward').attr('disabled', true);
+	    } catch(e) { console.error("Error in funReadOnly: ", e); }
 	}
 	
+	/* SAFE REMOVE READONLY FUNCTION */
 	function funRemoveReadOnly(){
-		$('#masterdate').jqxDateTimeInput({ disabled: false});
-	    $('#validfromdate').jqxDateTimeInput({ disabled: false});
-	    $('#lastreviseddate').jqxDateTimeInput({ disabled: false});
-	    $('#workingtime').jqxDateTimeInput({ disabled: false});
-		$('#frmhrsetups input').attr('readonly', false );
-		$('#frmhrsetups select').attr('disabled', false);
-	    $('#mon').attr('disabled', false);
-	    $('#tue').attr('disabled', false);
-	    $('#wed').attr('disabled', false);
-	    $('#thu').attr('disabled', false);
-	    $('#fri').attr('disabled', false);
-	    $('#sat').attr('disabled', false);
-	    $('#sun').attr('disabled', false);
-	    $('#leaveid').attr('disabled', false);
-	    $('#cmbcategory').attr('disabled', false);
-	    $('#carryforward').attr('disabled', false);
-	    $('#convformula').attr('readonly', true );
-	    $('#normalrate').attr('readonly', true );
-	    $('#ot').attr('readonly', true );
-	    $('#holidayot').attr('readonly', true );
-	    
-		 if ($("#mode").val() == "A") {
-    		  $("#termibeni").load("terminationbenefitcondtiongrid.jsp");
-    		  $("#resiggrid").jqxGrid('clear');
-		      $("#resiggrid").jqxGrid('addrow', null, {});
-		      $("#resiggrid").jqxGrid('addrow', null, {});
-		      $("#resiggrid").jqxGrid('addrow', null, {});
-		      $("#resiggrid").jqxGrid('addrow', null, {});
-		      $("#trmigrid").jqxGrid('clear');
-		      $("#trmigrid").jqxGrid('addrow', null, {});
-		      $("#trmigrid").jqxGrid('addrow', null, {});
-		      $("#trmigrid").jqxGrid('addrow', null, {});
-		      $("#trmigrid").jqxGrid('addrow', null, {});
-		      $("#resiggrid").jqxGrid({ disabled: false}); 
-		      $("#trmigrid").jqxGrid({ disabled: false}); 
-    	      $("#accset").load("accountsetupgrid.jsp"); 
-		 }
-		 
-		 if ($("#mode").val() == "E") {
-             $("#resiggrid").jqxGrid({ disabled: false}); 
-			 $("#trmigrid").jqxGrid({ disabled: false}); 
-			 $("#trmigrid").jqxGrid('addrow', null, {});
-			 $("#resiggrid").jqxGrid('addrow', null, {});
-			  
-			 $("#accountsetup").jqxGrid({ disabled: false}); 
-			 var docVal1 = document.getElementById("docno").value;
-			 $("#termibeni").load("terminationbenefitcondtiongrid.jsp?docno="+docVal1+"&modeval="+"E");
-		 }
-		 
-	   //  normalrate ot holidayot
+	    try {
+    		$('#masterdate').jqxDateTimeInput({ disabled: false});
+    	    $('#validfromdate').jqxDateTimeInput({ disabled: false});
+    	    $('#lastreviseddate').jqxDateTimeInput({ disabled: false});
+    	    $('#workingtime').jqxDateTimeInput({ disabled: false});
+    		$('#frmhrsetups input').attr('readonly', false );
+    		$('#frmhrsetups select').attr('disabled', false);
+    	    $('#mon, #tue, #wed, #thu, #fri, #sat, #sun').attr('disabled', false);
+    	    $('#leaveid').attr('disabled', false);
+    	    $('#cmbcategory').attr('disabled', false);
+    	    $('#carryforward').attr('disabled', false);
+    	    $('#convformula').attr('readonly', true );
+    	    $('#normalrate').attr('readonly', true );
+    	    $('#ot').attr('readonly', true );
+    	    $('#holidayot').attr('readonly', true );
+    	    
+    		 if ($("#mode").val() == "A") {
+          		 if($("#termibeni").length) $("#termibeni").load("terminationbenefitcondtiongrid.jsp");
+          		 if($("#resiggrid").length) {
+          		     $("#resiggrid").jqxGrid('clear');
+        		     $("#resiggrid").jqxGrid('addrow', null, {});
+        		     $("#resiggrid").jqxGrid('addrow', null, {});
+        		     $("#resiggrid").jqxGrid('addrow', null, {});
+        		     $("#resiggrid").jqxGrid('addrow', null, {});
+        		     $("#resiggrid").jqxGrid({ disabled: false}); 
+          		 }
+          		 if($("#trmigrid").length) {
+        		     $("#trmigrid").jqxGrid('clear');
+        		     $("#trmigrid").jqxGrid('addrow', null, {});
+        		     $("#trmigrid").jqxGrid('addrow', null, {});
+        		     $("#trmigrid").jqxGrid('addrow', null, {});
+        		     $("#trmigrid").jqxGrid('addrow', null, {});
+        		     $("#trmigrid").jqxGrid({ disabled: false}); 
+          		 }
+          	     if($("#accset").length) $("#accset").load("accountsetupgrid.jsp"); 
+    		 }
+    		
+    		 if ($("#mode").val() == "E") {
+                 if($("#resiggrid").length) {
+                     $("#resiggrid").jqxGrid({ disabled: false}); 
+                     $("#resiggrid").jqxGrid('addrow', null, {});
+                 }
+    			 if($("#trmigrid").length) {
+    			     $("#trmigrid").jqxGrid({ disabled: false}); 
+    			     $("#trmigrid").jqxGrid('addrow', null, {});
+    			 }
+    			 if($("#accountsetup").length) $("#accountsetup").jqxGrid({ disabled: false}); 
+    			 
+    			 var docVal1 = document.getElementById("docno") ? document.getElementById("docno").value : 0;
+    			 if($("#termibeni").length) $("#termibeni").load("terminationbenefitcondtiongrid.jsp?docno="+docVal1+"&modeval="+"E");
+    		 }
+	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
 	}
  
 	function funNotify(){	
 		  var z=0;
-		  var rows = $("#benifitsgrid").jqxGrid('getrows');      
-		  var selectedrows=$("#benifitsgrid").jqxGrid('selectedrowindexes');
-			 
-			$('#benigridlength').val(selectedrows.length);
-		    for (var i = 0; i < rows.length; i++) {
-			      for(var j=0;j<selectedrows.length;j++){
-			       if(selectedrows[j]==i){
-			    	   newTextBox = $(document.createElement("input"))
-			    	   .attr("type", "dil")
-				       .attr("id", "trbenitest"+z)
-				       .attr("name", "trbenitest"+z)
-				       .attr("hidden", "true");  
-				    
-				   newTextBox.val(rows[i].allowanceid+" :: ");
-				   newTextBox.appendTo('form');
-				   z++;
-			       }
-			      }
-			   }
+		  if($("#benifitsgrid").length) {
+    		  var rows = $("#benifitsgrid").jqxGrid('getrows');      
+    		  var selectedrows=$("#benifitsgrid").jqxGrid('selectedrowindexes');
+    			
+    		  $('#benigridlength').val(selectedrows.length);
+    		  for (var i = 0; i < rows.length; i++) {
+    			   for(var j=0;j<selectedrows.length;j++){
+    			    if(selectedrows[j]==i){
+    			 	   newTextBox = $(document.createElement("input"))
+    			 	   .attr("type", "dil")
+    				   .attr("id", "trbenitest"+z)
+    				   .attr("name", "trbenitest"+z)
+    				   .attr("hidden", "true");  
+    				
+    				   newTextBox.val(rows[i].allowanceid+" :: ");
+    				   newTextBox.appendTo('form');
+    				   z++;
+    			    }
+    			   }
+    		   }
+		  }
 	   
-		var rows = $("#trmigrid").jqxGrid('getrows');      
-	    $('#trmigridlength').val(rows.length);
-	    for(var i=0;i<rows.length;i++){
-		    newTextBox = $(document.createElement("input"))
-		       .attr("type", "dil")
-		       .attr("id", "termitest"+i)
-		       .attr("name", "termitest"+i)
-		       .attr("hidden", "true");  
-	    
-	   		newTextBox.val(rows[i].hidyears+" :: "+rows[i].days+" :: "); 
-	   		newTextBox.appendTo('form');
-	   }
+	    if($("#trmigrid").length) {
+    		var rows = $("#trmigrid").jqxGrid('getrows');      
+    	    $('#trmigridlength').val(rows.length);
+    	    for(var i=0;i<rows.length;i++){
+    		    newTextBox = $(document.createElement("input"))
+    		       .attr("type", "dil")
+    		       .attr("id", "termitest"+i)
+    		       .attr("name", "termitest"+i)
+    		       .attr("hidden", "true");  
+    	    
+    	   		newTextBox.val(rows[i].hidyears+" :: "+rows[i].days+" :: "); 
+    	   		newTextBox.appendTo('form');
+    	   }
+	    }
 	   
-		var rows = $("#resiggrid").jqxGrid('getrows');
-	    $('#resiggridlength').val(rows.length);
-	    for(var i=0;i<rows.length;i++){
-		    newTextBox = $(document.createElement("input"))
-		       .attr("type", "dil")
-		       .attr("id", "resigtest"+i)
-		       .attr("name", "resigtest"+i)
-		       .attr("hidden", "true");  
+	    if($("#resiggrid").length) {
+    		var rows = $("#resiggrid").jqxGrid('getrows');
+    	    $('#resiggridlength').val(rows.length);
+    	    for(var i=0;i<rows.length;i++){
+    		    newTextBox = $(document.createElement("input"))
+    		       .attr("type", "dil")
+    		       .attr("id", "resigtest"+i)
+    		       .attr("name", "resigtest"+i)
+    		       .attr("hidden", "true");  
+    	    
+    	    	newTextBox.val(rows[i].hidyears+" :: "+rows[i].days+" :: "); 
+    	    	newTextBox.appendTo('form');
+    	   }
+	    }
 	    
-	    	newTextBox.val(rows[i].hidyears+" :: "+rows[i].days+" :: "); 
-	    	newTextBox.appendTo('form');
-	   }
-	    
-		var rows = $("#accountsetup").jqxGrid('getrows');
-	    $('#accountsetupgridlength').val(rows.length);
-	   	for(var i=0;i<rows.length;i++){
-		    newTextBox = $(document.createElement("input"))
-		       .attr("type", "dil")
-		       .attr("id", "acnotest"+i)
-		       .attr("name", "acnotest"+i)
-		       .attr("hidden", "true");  
-	    
-	   		newTextBox.val(rows[i].allowanceid+":: "+rows[i].acno+":: "+rows[i].costtype+":: "+rows[i].costcode);
-	   		newTextBox.appendTo('form');
-	   }
+	    if($("#accountsetup").length) {
+    		var rows = $("#accountsetup").jqxGrid('getrows');
+    	    $('#accountsetupgridlength').val(rows.length);
+    	   	for(var i=0;i<rows.length;i++){
+    		    newTextBox = $(document.createElement("input"))
+    		       .attr("type", "dil")
+    		       .attr("id", "acnotest"+i)
+    		       .attr("name", "acnotest"+i)
+    		       .attr("hidden", "true");  
+    	    
+    	   		newTextBox.val(rows[i].allowanceid+":: "+rows[i].acno+":: "+rows[i].costtype+":: "+rows[i].costcode);
+    	   		newTextBox.appendTo('form');
+    	   }
+	    }
 		return 1;
 	} 
 
@@ -299,80 +428,71 @@
 	function funFocus(){
 		$('#masterdate').jqxDateTimeInput('focus');		 
 	}
-	 
+	
+	/* SAFE SET VALUES FUNCTION */
 	function setValues() {
-		   
-		if($('#hidmasterdate').val()){
-			$("#masterdate").jqxDateTimeInput('val', $('#hidmasterdate').val());
-		}
-		   
-		if($('#hidvalidfromdate').val()){
-			$("#validfromdate").jqxDateTimeInput('val', $('#hidvalidfromdate').val());
-		}
-		   
-		if($('#hidlastreviseddate').val()){
-			$("#lastreviseddate").jqxDateTimeInput('val', $('#hidlastreviseddate').val());
-		}
-		   
-		if($('#hidworkingtime').val()){
-			$("#workingtime").jqxDateTimeInput('val', $('#hidworkingtime').val());
-		}
-		   
-      	if($('#msg').val()!=""){
- 		   $.messager.alert('Message',$('#msg').val());
- 		  }
-      	
-    	  var docVal1 = document.getElementById("docno").value;
-        	if(docVal1>0) {
-        		 $("#termibeni").load("terminationbenefitcondtiongrid.jsp?docno="+docVal1);
-        	     $("#trimi").load("terminationdetailsgrid.jsp?docno="+docVal1);
-        	     $("#resig").load("resignationdetailsgrid.jsp?docno="+docVal1);
-        	     $("#accset").load("accountsetupgrid.jsp?docno="+docVal1);
-        		}
-      	
-      	   var weakoff= document.getElementById("hidweakoff").value; 
-      	   	if(weakoff!="") {
-           		var arr = weakoff.split(",");
-           		for(var i=0;i<=arr.length-1;i++) {
-	           		if(arr[i]=='1') {
-    		       		 document.getElementById("mon").checked = true;
-          				 document.getElementById("mon").value=1;
-           			}
-	           		if(arr[i]=='2') {
-		       			document.getElementById("tue").checked = true;
-      					document.getElementById("tue").value=1;
-       			    }
-	           		if(arr[i]=='3') {
-       					document.getElementById("wed").checked = true;
-      		  			document.getElementById("wed").value=1;
-	       			}
-    	       		if(arr[i]=='4') {
-		       			document.getElementById("thu").checked = true;
-      					document.getElementById("thu").value=1;
-       			    }
-           			if(arr[i]=='5') {
-		       			document.getElementById("fri").checked = true;
-      			 	    document.getElementById("fri").value=1;
-       			    }
-           			if(arr[i]=='6') {
-		       			document.getElementById("sat").checked = true;
-      				    document.getElementById("sat").value=1;
-       			    }
-           			if(arr[i]=='7') {
-		       			document.getElementById("sun").checked = true;
-      				    document.getElementById("sun").value=1;
-       				}
-           		}
-      		 }
-
-      	   	var carryforward=document.getElementById("hidcarryforward").value;
-         	if(parseInt(carryforward)==1) {
-         	 	document.getElementById("carryforward").checked = true;
-    		  	document.getElementById("carryforward").value=1;
-         	} else {
-        	 	document.getElementById("carryforward").checked = false;
-    		  	document.getElementById("carryforward").value=0;
-         	}
+	    try {
+    		if($('#hidmasterdate').length && $('#hidmasterdate').val()){
+    			$("#masterdate").jqxDateTimeInput('val', $('#hidmasterdate').val());
+    		}
+    		   
+    		if($('#hidvalidfromdate').length && $('#hidvalidfromdate').val()){
+    			$("#validfromdate").jqxDateTimeInput('val', $('#hidvalidfromdate').val());
+    		}
+    		   
+    		if($('#hidlastreviseddate').length && $('#hidlastreviseddate').val()){
+    			$("#lastreviseddate").jqxDateTimeInput('val', $('#hidlastreviseddate').val());
+    		}
+    		   
+    		if($('#hidworkingtime').length && $('#hidworkingtime').val()){
+    			$("#workingtime").jqxDateTimeInput('val', $('#hidworkingtime').val());
+    		}
+    		   
+         	if($('#msg').length && $('#msg').val()!=""){
+        		   $.messager.alert('Message',$('#msg').val());
+        	}
+         	
+         	  var docVal1 = document.getElementById("docno") ? document.getElementById("docno").value : 0;
+         	  if(docVal1>0) {
+         		 if($("#termibeni").length) $("#termibeni").load("terminationbenefitcondtiongrid.jsp?docno="+docVal1);
+         	     if($("#trimi").length) $("#trimi").load("terminationdetailsgrid.jsp?docno="+docVal1);
+         	     if($("#resig").length) $("#resig").load("resignationdetailsgrid.jsp?docno="+docVal1);
+         	     if($("#accset").length) $("#accset").load("accountsetupgrid.jsp?docno="+docVal1);
+         	  }
+         	
+         	  if(document.getElementById("hidweakoff")) {
+             	   var weakoff= document.getElementById("hidweakoff").value; 
+             	   if(weakoff!="") {
+               		var arr = weakoff.split(",");
+               		for(var i=0;i<=arr.length-1;i++) {
+        	           		if(arr[i]=='1') { document.getElementById("mon").checked = true; document.getElementById("mon").value=1; }
+        	           		if(arr[i]=='2') { document.getElementById("tue").checked = true; document.getElementById("tue").value=1; }
+        	           		if(arr[i]=='3') { document.getElementById("wed").checked = true; document.getElementById("wed").value=1; }
+            	       		if(arr[i]=='4') { document.getElementById("thu").checked = true; document.getElementById("thu").value=1; }
+               			    if(arr[i]=='5') { document.getElementById("fri").checked = true; document.getElementById("fri").value=1; }
+               			    if(arr[i]=='6') { document.getElementById("sat").checked = true; document.getElementById("sat").value=1; }
+               			    if(arr[i]=='7') { document.getElementById("sun").checked = true; document.getElementById("sun").value=1; }
+               		}
+             		 }
+         	  }
+    
+         	  if(document.getElementById("hidcarryforward")) {
+             	var carryforward=document.getElementById("hidcarryforward").value;
+             	if(parseInt(carryforward)==1) {
+             	 	document.getElementById("carryforward").checked = true;
+            		document.getElementById("carryforward").value=1;
+             	} else {
+             	 	document.getElementById("carryforward").checked = false;
+            		document.getElementById("carryforward").value=0;
+             	}
+         	  }
+         	  
+            if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
+                 var detailVal = $('#formdetail').val() || "";
+                 var codeVal = $('#formdetailcode').val() || "";
+                 document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
+            }
+	    } catch(e) { console.error("Error in setValues: ", e); }
 	}
 
 	function getCategory() {
@@ -390,7 +510,7 @@
 				}
 				$("select#cmbcategory").html(optionsbranch);
 				
-				  if ($('#hidcatval').val() != null) {
+				  if ($('#hidcatval').length && $('#hidcatval').val() != null) {
 					$('#cmbcategory').val($('#hidcatval').val());
 				  }  
 			
@@ -415,7 +535,7 @@
 				}
 				$("select#leaveid").html(optionsbranch);
 				
-				  if ($('#hidleaveid').val() != null) {
+				  if ($('#hidleaveid').length && $('#hidleaveid').val() != null) {
 					$('#leaveid').val($('#hidleaveid').val());
 				   }  
 			} else { }
@@ -449,711 +569,182 @@
 		x.open("GET", "gettermconfig.jsp", true);
 		x.send();
      }
- 
-	
 </script>
-
-<style>
-
-/* scroll area */
-
-.hidden-scrollbar {
-
-    height: 80vh;
-
-    overflow-x: hidden;
-
-    overflow-y: auto;
-
-}
-
-/* background + base typography (master) */
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 24px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-    font-size: 16px;
-    overflow-y: auto !important; /* Forces the main window to handle scrolling */
-}
-
-
-
-/* main card (master) */
-
-#mainBG {
-
-    background: #fff;
-
-    border-radius: 16px;
-
-    padding: 18px 28px;
-
-    max-width: 100%;
-
-    margin: 0 auto;
-
-}
-
-
-
-/* page header strip */
-
-.receipt-header {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    align-items: center;
-
-    margin-bottom: 20px;
-
-    border-radius: 12px;
-
-    padding: 0 24px;
-
-    font-size: 14px;
-
-}
-
-.receipt-header label {
-
-    font-weight: 500;
-
-    color: #333;
-
-    margin-right: 8px;
-
-}
-
-.receipt-header input[type="text"] {
-
-    border: 1px solid #d1d5db;
-
-    border-radius: 6px;
-
-    padding: 4px 8px;
-
-    font-size: 14px;
-
-    width: 120px;
-
-    background: #fff;
-
-    transition: border-color 0.2s;
-
-}
-
-.receipt-header input[type="text"]:focus {
-
-    border-color: #007bff;
-
-    outline: none;
-
-}
-
-.receipt-header button {
-
-    background: #007bff;
-
-    color: #fff;
-
-    border: none;
-
-    border-radius: 6px;
-
-    padding: 4px 12px;
-
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition: background 0.2s;
-
-}
-
-.receipt-header button:hover {
-
-    background: #0056b3;
-
-}
-
-#txtStatus {
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    color: #e67e22;
-
-    margin-left: 12px;
-
-}
-
-
-
-/* section card like User Master (master) */
-
-.table-section {
-
-    margin-bottom: 20px;
-
-    padding-inline: 14px;
-
-    padding-block: 14px;
-
-    border-radius: 10px;
-
-    background: #f6f8fa;
-
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-
-}
-
-.table-section h3 {
-
-    margin: 0 0 12px;
-
-    padding-left: 10px;
-
-    border-left: 4px solid #007bff;  /* blue bar */
-
-    color: #253858;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-}
-
-
-
-/* optional generic blocks – match master card look */
-
-.section-row {
-
-    display: flex;
-
-    gap: 20px;
-
-    margin-bottom: 20px;
-
-}
-
-.section-block {
-
-    flex: 1;
-
-    background: #f6f8fa;
-
-    border-radius: 10px;
-
-    padding: 16px 14px;
-
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-
-}
-
-.section-block h2 {
-
-    font-size: 12px;
-
-    font-weight: 500;
-
-    margin: 0 0 12px 0;
-
-    color: #253858;
-
-}
-
-.section-block .form-group {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    margin-bottom: 10px;
-
-}
-
-.section-block label {
-
-    min-width: 110px;
-
-    text-align: right;
-
-    font-weight: 500;
-
-    color: #253858;
-
-    font-size: 14px;
-
-}
-
-.section-block input[type="text"],
-
-.section-block select {
-
-    flex: 1;
-
-    border: 1px solid #d1d5db;
-
-    border-radius: 6px;
-
-    padding: 4px 8px;
-
-    background: #fff;
-
-    transition: border-color 0.2s;
-
-    font-size: 13px;
-
-}
-
-.section-block input[type="text"]:focus,
-
-.section-block select:focus {
-
-    border-color: #007bff;
-
-    outline: none;
-
-}
-
-
-
-/* grid/table layout for fields (master) */
-
-.cr-table {
-
-    width: 100%;
-
-    border-collapse: collapse;
-
-    background: #f9fafb;
-
-    border-radius: 8px;
-
-    overflow: hidden;
-
-    box-shadow: 0 0 0 1px #eef0f6;
-
-    table-layout: fixed;
-
-}
-
-.cr-table th,
-
-.cr-table td {
-
-    padding: 8px 10px;
-
-    border-bottom: 1px solid #e4e7ec;
-
-    text-align: left;
-
-    font-size: 16px;
-
-    vertical-align: middle;
-
-}
-
-.cr-table th {
-
-    background: #eef0f6;
-
-    color: #354B6A;
-
-    font-weight: 600;
-
-}
-
-.cr-table tr:last-child td {
-
-    border-bottom: none;
-
-}
-
-.cr-table td[align="right"] {
-
-    white-space: nowrap;
-
-    font-weight: 500;
-
-    color: #333;
-font:Tahoma 16px;
-}
-
-
-
-/* unified inputs in tables (master) */
-
-.cr-table input[type="text"],
-
-.cr-table select {
-
-    width: 100%;
-
-    border: 1px solid #d1d5db;
-
-    border-radius: 6px;
-
-    padding: 4px 8px;
-
-    height: 30px;
-
-    font-size: 16px;
-
-    box-sizing: border-box;
-
-    background: #fff;
-
-}
-
-.cr-table input[type="text"]:focus,
-
-.cr-table select:focus {
-
-    border-color: #007bff;
-
-    outline: none;
-
-}
-
-/* blue line and padding for all section headings */
-
-.table-section h3,
-
-.section-block h2,
-
-h3.section-title,
-
-h2.section-title {
-
-    margin: 0 0 12px;
-
-    padding: 4px 10px;               /* space around text */
-
-    border-left: 4px solid #007bff;  /* blue line */
-
-    color: #253858;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-}
-
-/* master UI heading with blue line */
-
-.table-section h3,
-
-.section-block h2,
-
-h3.section-title,
-
-h2.section-title {
-
-    margin: 0 0 12px;
-
-    padding: 4px 10px;               /* padding around the text */
-
-    border-left: 4px solid #007bff;  /* blue line */
-
-    color: #253858;
-
-    font-size: 17.6px;
-
-    font-weight: 600;
-
-    background: transparent;
-
-}
-
-/* Specifically target the docno to force a smaller width */
-#mainBG #docno {
-    width: 100px !important;
-    max-width: 100px !important;
-    flex: none !important;
-    display: inline-block !important;
-}
-
-/* Ensure the container doesn't force it to stretch */
-.compact-cell {
-    width: auto !important;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.right-align-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    transform: translateY(-1px);
-}
-</style>
- 
 
 </head>
 <body onload="termConfig();setValues();">
 
-<div id="mainBG" class="homeContent" data-type="background">
-
+<div class="homeContent" data-type="background">
 <form id="frmhrsetups" action="saveHrsetup" autocomplete="OFF" >
+    <jsp:include page="../../../../../header.jsp"></jsp:include>
 
+    <div class="modern-ui hidden-scrollbar">
 
+        <div class="erp-form-area" style="margin-bottom: 10px;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="8%">Date</td>
+                    <td width="15%">
+                        <div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
+                    </td>
+                    <td class="lbl-right" width="10%">Doc No</td>
+                    <td width="20%">
+                        <input type="text" id="docno" name="docno" tabindex="-1" readonly value='<s:property value="docno"/>' style="width: 150px;" />
+                    </td>
+                    <td width="47%"></td> </tr>
+            </table>
+        </div>
 
-<jsp:include page="../../../../../header.jsp"></jsp:include><br/>
+        <div class="erp-form-area">
+            <div class="section-title">For Days in Year</div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="10%">Valid From</td> 
+                    <td width="15%">
+                        <div id='validfromdate' name='validfromdate' value='<s:property value="validfromdate"/>'></div>
+                    </td>
+                    <td class="lbl-right" width="12%">Last Revised On</td>
+                    <td width="15%">
+                        <div id='lastreviseddate' name='lastreviseddate' value='<s:property value="lastreviseddate"/>'></div>
+                    </td>
+                    <td class="lbl-right" width="12%">Payroll Category</td>
+                    <td width="20%">
+                        <select name="cmbcategory" id="cmbcategory" value='<s:property value="cmbcategory"/>'>
+                            <option value="">-- select -- </option>
+                        </select>
+                    </td>
+                    <td class="lbl-right" width="12%">Working Hrs/Day</td>
+                    <td width="4%">
+                        <div id='workingtime' name='workingtime' value='<s:property value="workingtime"/>'></div>
+                    </td>
+                </tr>
 
-<div class='hidden-scrollbar receipt-header'>
+                <tr>
+                    <td class="lbl-right">Annual Leave ID</td>
+                    <td>
+                        <select name="leaveid" id="leaveid" value='<s:property value="leaveid"/>'>
+                            <option value="">-- select --</option>
+                        </select>
+                    </td>
+                    <td class="lbl-right">Weekly Off</td>
+                    <td colspan="4">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="mon" name="mon" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="mon">Mon</label>
+                            <input type="checkbox" id="tue" name="tue" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="tue">Tue</label>
+                            <input type="checkbox" id="wed" name="wed" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="wed">Wed</label>
+                            <input type="checkbox" id="thu" name="thu" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="thu">Thu</label>
+                            <input type="checkbox" id="fri" name="fri" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="fri">Fri</label>
+                            <input type="checkbox" id="sat" name="sat" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="sat">Sat</label>
+                            <input type="checkbox" id="sun" name="sun" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"><label for="sun">Sun</label>
+                        </div>
+                    </td>
+                    <td align="right"> 
+                        <div class="checkbox-group" style="justify-content: center; background: transparent; border: none;">
+                            <input type="checkbox" id="carryforward" name="carryforward" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                            <label for="carryforward">Carry Forward</label>
+                        </div>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td class="lbl-right">Eligible Days</td>
+                    <td>
+                        <input type="text" id="eligibledays" name="eligibledays" onkeypress="javascript:return isNumber (event)" value='<s:property value="eligibledays"/>'>
+                    </td>
+                    <td class="lbl-right">In a Year</td>
+                    <td colspan="5">
+                        <input type="text" id="forworkingdays" name="forworkingdays" onkeypress="javascript:return isNumber (event)" value='<s:property value="forworkingdays"/>'>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
+        <div class="erp-form-area hideterm" id="fs1" style="margin-bottom: 10px;">
+            <div class="section-title">Terminal Benefits & Details</div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="60%" valign="top" style="padding-right: 15px;">
+                        <div class="grid-container" id="termibeni"> 
+                            <jsp:include page="terminationbenefitcondtiongrid.jsp"></jsp:include>
+                        </div>
+                    </td>
+                    <td width="40%" valign="top">
+                        <div class="section-title" style="font-size: 11px; margin-bottom: 5px;">Termination Details</div>
+                        <div class="grid-container" id="trimi"> 
+                            <jsp:include page="terminationdetailsgrid.jsp"></jsp:include>
+                        </div>
+                        
+                        <div class="section-title" style="font-size: 11px; margin-bottom: 5px; margin-top: 15px;">Resignation Details</div>
+                        <div class="grid-container" id="resig"> 
+                            <jsp:include page="resignationdetailsgrid.jsp"></jsp:include>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-<div class="section-block" style="margin-bottom: 20px;">
-    <div class="agmt-info-grid" style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 15px 25px; align-items: center;">
+        <div class="erp-form-area" id="fs2" style="margin-bottom: 10px;">
+            <div class="section-title">Salary Calculation Formula (Hrs)</div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="lbl-right" width="20%">Conv Formula (Month To Day)</td>
+                    <td width="30%">
+                        <input type="text" id="convformula" readonly="readonly" placeholder="Press F3 To Search" name="convformula" value='<s:property value="convformula"/>' onkeydown="getconfor(event);">
+                    </td> 
+                    <td class="lbl-right" width="20%">Rate per Hour</td>
+                    <td width="30%">
+                        <input type="text" id="normalrate" name="normalrate" readonly="readonly" placeholder="Press F3 To Search" value='<s:property value="normalrate"/>' onkeydown="getnr(event);" > 
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="lbl-right">OT</td>
+                    <td>
+                        <input type="text" id="ot" name="ot" readonly="readonly" placeholder="Press F3 To Search" value='<s:property value="ot"/>' onkeydown="getot(event);" > 
+                    </td> 
+                    <td class="lbl-right">Holiday OT</td>
+                    <td>
+                        <input type="text" id="holidayot" name="holidayot" readonly="readonly" placeholder="Press F3 To Search" value='<s:property value="holidayot"/>' onkeydown="getholyot(event);"> 
+                    </td> 
+                </tr>
+            </table>
+        </div>
         
-        <label for="masterdate">Date</label>
-        <div class="compact-cell">
-            <div id='masterdate' name='masterdate' value='<s:property value="masterdate"/>'></div>
+        <div class="erp-form-area" id="fs3" style="margin-bottom: 10px;">
+            <div class="section-title">Account Setup</div>
+            <div class="grid-container" id="accset"> 
+                <jsp:include page="accountsetupgrid.jsp"></jsp:include>
+            </div>
+        </div>
+
+        <div style="display:none;">
             <input type="hidden" id="hidmasterdate" name="hidmasterdate" value='<s:property value="hidmasterdate"/>'/>
-        </div>
-
-        <label for="docno" style="text-align: right;">Doc No</label>
-        <div class="right-align-container">
-            <input type="text" id="docno" name="docno" tabindex="-1" readonly 
-                   value='<s:property value="docno"/>' />
+            <input type="hidden" id="hidvalidfromdate" name="hidvalidfromdate" value='<s:property value="hidvalidfromdate"/>'/>
+            <input type="hidden" id="hidlastreviseddate" name="hidlastreviseddate" value='<s:property value="hidlastreviseddate"/>'/>
+            <input type="hidden" id="hidworkingtime" name="hidworkingtime" value='<s:property value="hidworkingtime"/>'/>
+            <input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
+            <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+            <input type="hidden" id="hidcatval" name="hidcatval"  value='<s:property value="hidcatval"/>'/>
+            <input type="hidden" id="hidleaveid" name="hidleaveid"  value='<s:property value="hidleaveid"/>'/>
+            <input type="hidden" id="hidweakoff" name="hidweakoff"  value='<s:property value="hidweakoff"/>'/>
+            <input type="hidden" id="hidcarryforward" name="hidcarryforward"  value='<s:property value="hidcarryforward"/>'/>
+            <input type="hidden" id="benigridlength" name="benigridlength"  value='<s:property value="benigridlength"/>'/>
+            <input type="hidden" id="trmigridlength" name="trmigridlength"  value='<s:property value="trmigridlength"/>'/>
+            <input type="hidden" id="resiggridlength" name="resiggridlength"  value='<s:property value="resiggridlength"/>'/>
+            <input type="hidden" id="accountsetupgridlength" name="accountsetupgridlength"  value='<s:property value="accountsetupgridlength"/>'/>
+            
+            <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+            <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
         </div>
 
     </div>
-</div>
-
-<div class="table-section">
-    <h3>For Days in Year</h3>
-    <table class="cr-table" width="99%">
-        <tr>
-            <td width="13%" align="right">Valid From</td> 
-            <td width="12%">
-                <div id='validfromdate' name='validfromdate' value='<s:property value="validfromdate"/>'></div>
-                <input type="hidden" id="hidvalidfromdate" name="hidvalidfromdate" value='<s:property value="hidvalidfromdate"/>'/>
-            </td>
-            <td width="10%" align="right">Last Revised On</td>
-            <td width="11%">
-                <div id='lastreviseddate' name='lastreviseddate' value='<s:property value="lastreviseddate"/>'></div>
-                <input type="hidden" id="hidlastreviseddate" name="hidlastreviseddate" value='<s:property value="hidlastreviseddate"/>'/>
-            </td>
-            <td width="9%" align="right">PayRoll Category</td>
-            <td width="14%">
-                <select name="cmbcategory" id="cmbcategory" style="width:99%;" value='<s:property value="cmbcategory"/>'>
-                    <option value="">-- select -- </option>
-                </select>
-            </td>
-            <td width="14%" align="right">Working Hours/Day</td>
-            <td width="11%">
-                <div id='workingtime' name='workingtime' style="width:100% !important; min-width:110px;" value='<s:property value="workingtime"/>'></div>
-                <input type="hidden" id="hidworkingtime" name="hidworkingtime" value='<s:property value="hidworkingtime"/>'/>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">Annual Leave:Leave ID</td>
-            <td>
-                <select name="leaveid" id="leaveid" style="width:99%;" value='<s:property value="leaveid"/>'>
-                    <option value="">-- select --</option>
-                </select>
-            </td>
-            <td align="right">Weekly Off</td>
-            <td colspan="3">
-                <fieldset style="border: 1px solid #d1d5db; border-radius: 6px; padding: 5px; background: #fff;">
-                    <input type="checkbox" id="mon" name="mon" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Mon
-                    <input type="checkbox" id="tue" name="tue" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Tue
-                    <input type="checkbox" id="wed" name="wed" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Wed
-                    <input type="checkbox" id="thu" name="thu" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Thu
-                    <input type="checkbox" id="fri" name="fri" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Fri
-                    <input type="checkbox" id="sat" name="sat" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sat
-                    <input type="checkbox" id="sun" name="sun" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Sun
-                </fieldset>
-            </td>
-            <td colspan="2" align="left"> 
-                <input type="checkbox" id="carryforward" name="carryforward" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)"> Carry Forward
-            </td>
-        </tr>
-        <tr>
-            <td align="right">Eligible Days</td>
-            <td><input type="text" id="eligibledays" name="eligibledays" onkeypress="javascript:return isNumber (event)" value='<s:property value="eligibledays"/>'></td>
-            <td align="right">In a Year</td>
-            <td colspan="5"><input type="text" id="forworkingdays" name="forworkingdays" onkeypress="javascript:return isNumber (event)" value='<s:property value="forworkingdays"/>'></td>
-        </tr>
-    </table>
-</div>
-
- <table class="cr-table" width="100%">
-
- <tr>
-
- <td height="234" width="55%">
-
-  <h2>Terminal Benefits</h2>
-
-   <table class="hideterm cr-table" id="fs1" width="100%">
-
-   <tr>
-
-   <td width="65%">
-
-    <div class="cr-table" id="termibeni"> <jsp:include page="terminationbenefitcondtiongrid.jsp"></jsp:include></div>
-
- </td>
-
- <td width="35%">
-
-    <h2>Termination Details</h2>
-
-   <div class="cr-table" id="trimi"> <jsp:include page="terminationdetailsgrid.jsp"></jsp:include></div>
-
-
-
- <h2>Resignation Details</h2>
-
-   <div class="cr-table" id="resig"> <jsp:include page="resignationdetailsgrid.jsp"></jsp:include></div>
-
-
-
-  </td>
-
- </tr>
-
- </table>
-
-
-
-
-
-
-
-       <td  width="45%">
-
-    <div id="fs2" >
-
-<h2>Salary Calculation Formula (Hrs)</h2>
-
-    <table class="cr-table" width="100%">
-
-    <tr><td width="37%" align="right">Conversion Formula Month To Day</td><td align="left"><input type="text" id="convformula" readonly="readonly"   placeholder="Press F3 To Search" name="convformula" Style="width:99%;" value='<s:property value="convformula"/>' onkeydown="getconfor(event);"></td> </tr>
-
-    <tr><td  width="37%" align="right">Rate per Hour</td><td align="left" ><input type="text" id="normalrate" name="normalrate" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="normalrate"/>' onkeydown="getnr(event);" > </td> </tr>
-
-    <tr><td  width="37%" align="right"> OT</td><td  align="left"><input type="text" id="ot" name="ot" Style="width:99%;" readonly="readonly"   placeholder="Press F3 To Search" value='<s:property value="ot"/>'  onkeydown="getot(event);" > </td> </tr>
-
-    <tr><td width="37%" align="right">Holiday OT</td><td  align="left"><input type="text" id="holidayot" name="holidayot" readonly="readonly"   placeholder="Press F3 To Search" Style="width:99%;" value='<s:property value="holidayot"/>'  onkeydown="getholyot(event);"> </td> </tr>
-
-    </table></div>
-
-    <div id="fs3"><h3>Account Setup</h3>
-
-      <div class="cr-table" id="accset"> <jsp:include page="accountsetupgrid.jsp"></jsp:include></div>
-
-    </div>
-
-   </td>
-
-   </tr>
-
-  </table>
-
-
-
- </div>
-
- 
-
-<input type="hidden" id="mode" name="mode" value='<s:property value="mode"/>' />
-
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' />
-
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-
-<input type="hidden" id="hidcatval" name="hidcatval"  value='<s:property value="hidcatval"/>'/>
-
-<input type="hidden" id="hidleaveid" name="hidleaveid"  value='<s:property value="hidleaveid"/>'/>
-
-<input type="hidden" id="hidweakoff" name="hidweakoff"  value='<s:property value="hidweakoff"/>'/>
-
-<input type="hidden" id="hidcarryforward" name="hidcarryforward"  value='<s:property value="hidcarryforward"/>'/>
-
-<input type="hidden" id="benigridlength" name="benigridlength"  value='<s:property value="benigridlength"/>'/>
-
-<input type="hidden" id="trmigridlength" name="trmigridlength"  value='<s:property value="trmigridlength"/>'/>
-
-<input type="hidden" id="resiggridlength" name="resiggridlength"  value='<s:property value="resiggridlength"/>'/>
-
-<input type="hidden" id="accountsetupgridlength" name="accountsetupgridlength"  value='<s:property value="accountsetupgridlength"/>'/>
-
 </form>
 
-
-
-<div id="formulawindow">
-
-   <div></div>
-
-</div>
-
-
-
-<div id="accountSearchwindow">
-
-   <div></div>
+<div id="formulawindow"><div></div></div>
+<div id="accountSearchwindow"><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div></div> 
+<div id="costCodeSearchWindow"><div></div></div> 
 
 </div>
-
-<div id="costTypeSearchGridWindow">
-
-<div></div>
-
-</div> 
-
-<div id="costCodeSearchWindow">
-
-<div></div>
-
-</div> 
-
-
-
-</div>
-
 </body>
-
 </html>
