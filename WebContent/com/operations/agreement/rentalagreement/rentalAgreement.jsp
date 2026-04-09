@@ -2770,80 +2770,301 @@ function funResetExcessInsur(){
     
   
 <style>
-
+/* =========================================================
+   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
+   (Fuses tight horizontal alignment with modern clean UI)
+========================================================= */
 body {
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 14px;
+    background: #f4f6f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
     margin: 0;
     padding: 10px;
-    background: #f5f7fa;
     box-sizing: border-box;
 }
 
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* Master Input Heights - Set to 24px as requested */
+input[type="text"], select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Clean Panels mapping to fieldsets */
 fieldset {
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
-    padding: 10px;
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
     margin-bottom: 10px;
+    padding: 12px 10px 10px 10px;
+    border-radius: 4px;
 }
 
 legend {
-    font-size: 14px;
-    font-weight: 600;
-    padding: 0 8px;
-        border-left: 4px solid #007bff;
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 0 0 6px;
+    border-left: 3px solid #0056b3;
+    margin-bottom: 5px;
 }
 
-table {
+/* Strict Full-Width CSS Grid for Top Section */
+.top-grid {
+    display: grid;
+    /* 5 strict columns + inputs. Stretches perfectly across. */
+    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    align-items: center;
     width: 100%;
-    border-collapse: collapse;
+    margin-bottom: 15px;
 }
 
-td {
-    padding: 4px 6px;
-    font-size: 14px;
-    vertical-align: middle;
-}
-
-input[type="text"], select {
-    height: 30px;
+.top-grid > label {
+    text-align: right;
+    color: #444;
     font-size: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 4px 8px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-input[readonly] {
-    background: #f3f4f6;
-}
-
-select {
-    background: #fff;
-}
-
-.myButton {
-    font-weight: 600;
-    font-size: 14px;
-    padding: 6px 10px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    font-weight: bold;
     white-space: nowrap;
 }
 
-.myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+.flex-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.chk-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #444;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.chk-container input {
+    margin: 0;
+    padding: 0;
+}
+
+/* Middle Section Split */
+.middle-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.middle-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+}
+
+.middle-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 5px 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Clean Tables mapping requested colors */
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.cr-table th, .cr-table td {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+}
+.cr-table th {
+    background: #f0f3f5;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.lbl-right {
+    text-align: right;
+    color: #444;
+    font-weight: bold;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Tabs Override */
+#tabs { margin-top: 5px; margin-bottom: 0px; }
+#content { padding-top: 10px; }
+
+
+#jqxDateOut, #jqxOnDate, #jqxDeliveryOut {
+    width: 120px !important;
+}
+
+#jqxTimeOut, #jqxOnTime, #jqxDelTimeOut {
+    width: 90px !important;
+}
+
+
+</style>
+
+<style>
+.accordion-header {
+    cursor: pointer;
+    padding: 8px;
+    background: #eef2f7;
+    border-radius: 6px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-content {
+    margin-top: 8px;
+}
+
+.accordion-header:hover {
+    background: #e0e7ef;
+}
+
+/* ===== ACCORDION HEADER (CRV STYLE) ===== */
+.accordion-header {
+    cursor: pointer;
+    padding: 10px 12px;
+    background: #f0f3f5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+/* LEFT SIDE (NUMBER + TITLE) */
+.accordion-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* NUMBER CIRCLE */
+.accordion-number {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2f6db3;
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* TITLE */
+.accordion-title {
+    font-weight: 600;
+    color: #333;
+}
+
+/* ARROW */
+.accordion-arrow {
+    transition: transform 0.2s ease;
+    font-size: 14px;
+}
+
+/* ROTATE WHEN OPEN */
+.accordion-header.active .accordion-arrow {
+    transform: rotate(180deg);
+}
+
+.accordion-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #333; /* DOWN arrow */
+    transition: transform 0.2s ease;
+}
+
+/* Rotate when open */
+.accordion-header.active .accordion-arrow {
+    transform: rotate(-180deg);
+}
+/* Fix for the bottom scroll issue */
+html, body {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important; /* Restores native browser scrolling */
+    overflow-x: hidden; /* Prevents horizontal scroll jumping */
 }
 
 .hidden-scrollbar {
-    height: auto;
-    overflow: visible;
+    height: auto; 
+    overflow: visible; /* Let the body handle the scrolling instead of an inner box */
+    padding-bottom: 120px; /* Generous bottom padding so nothing gets cut off */
 }
+
+/* Fix for the red notification text getting cut off on the right */
+#errormsg {
+    margin-right: 25px !important; /* Pushes it safely away from the right edge/scrollbar */
+    padding-right: 10px !important;
+    display: inline-block;
+    word-wrap: break-word;
+    max-width: 250px;
+}
+
+/* Fix for the red notification text getting cut off and stacking vertically */
+#errormsg {
+    white-space: nowrap !important; /* Forces the text to stay on one single line */
+    display: inline-block !important;
+    color: #e74c3c !important; /* Deep red text */
+    font-weight: bold;
+    font-size: 13px;
+    padding: 6px 12px;
+    margin-right: 30px !important; /* Pushes it safely away from the scrollbar */
+    background-color: #fdf2f2; /* Light red alert background */
+    border: 1px solid #f5c6cb; /* Subtle border */
+    border-radius: 4px;
+    z-index: 50; /* Ensures it stays on top of other elements */
+}
+
 </style>
+
+
 </head>
 <body onload="setValues();">
 	<div id="mainBG" class="homeContent" data-type="background">
@@ -2853,249 +3074,341 @@ select {
 			   		<table  width="100%" id="vehicle">
       					<tr width="100%">        
       						<td width="80%">
-       							<fieldset>
-<table width="100%" style="margin-bottom:10px;">
-<tr>
-
-<!-- DOC NO -->
-<td style="white-space:nowrap;">Doc No</td>
-<td>
-    <input type="text" id="docno" name="docno"
-           style="width:140px;"
-           tabindex="-1"
-           value='<s:property value="docno"/>'/>
-</td>
-
-<!-- DATE -->
-<td style="white-space:nowrap;">Date</td>
-<td>
-    <div id='jqxRentalDate' name='jqxRentalDate'
-         value='<s:property value="jqxRentalDate"/>'></div>
-    <input type="hidden" id="hidjqxRentalDate" name="hidjqxRentalDate"
-           value='<s:property value="hidjqxRentalDate"/>'/>
-</td>
-
-<!-- ENQUIRY TYPE -->
-<td style="white-space:nowrap;">Enq.Type</td>
-<td>
-    <select name="cmbenqtype" id="cmbenqtype" style="width:160px;">
-        <option value="">--Select--</option>
-    </select>
-    <input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype"
-           value='<s:property value="hidcmbenqtype"/>'>
-</td>
-
-<!-- STATUS -->
-<td style="white-space:nowrap;">Status</td>
-<td>
-    <label id="rentalstatus" name="rentalstatus"
-           style="font-size:13px; font-family:Tahoma; color:#6000FC;">
-        <s:property value="rentalstatus"/>
-    </label>
-</td>
-
-<!-- MENU -->
-<td style="white-space:nowrap; text-align:right;">
-    <div id='jqxMenuMore' title="More">
-        <ul>
-            <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-            <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-            <li><a href="#history" onclick="account();">Account Statement</a></li>  
-            <li><a href="#close" onclick="closing();">Closing Summary</a></li> 
-            <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li> 
-            <li><a href="#inspchklist" onclick="funinspection();">Inspection Check List</a></li>  	
-            <li><a href="#fueldetails" onclick="funFuelDetails();">Fuel Details</a></li>
-        </ul>
+       						<div class="accordion-header" onclick="toggleAccordion(this)">
+    
+    <div class="accordion-left">
+        <div class="accordion-number">1</div>
+        <div class="accordion-title">Rental Info</div>
     </div>
-</td>
 
-</tr>
-</table>
-<table width="100%" style="table-layout:auto;">
+    <div class="accordion-arrow"></div>
 
-<!-- 🔹 VEHICLE -->
-<tr>
+</div>
 
-<td style="white-space:nowrap;">Vehicle</td>
+<div class="accordion-content">
+<div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
 
-<td style="width:140px;">
-    <input type="text" id="txtfleetno" name="txtfleetno"
-           placeholder="Press F3 To Search"
-           value='<s:property value="txtfleetno"/>'
-           onKeyDown="getvehinfo(event);" />
-</td>
+    <!-- 🔹 LEFT : VEHICLE -->
+<div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
 
-<td>
-    <input type="text" id="vehdetails" name="vehdetails"
-           style="width:100%;"
-           tabindex="-1"
-           value='<s:property value="vehdetails"/>' />
-</td>
+    <!-- ================= VEHICLE SECTION ================= -->
+    <div style="flex:1; background:#f7f9fc; padding:12px; border-radius:8px;">
 
-</tr>
+        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
+            Vehicle Info
+        </div>
 
+        <!-- VEHICLE -->
+        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+            <label style="width:90px;">Vehicle</label>
 
-<!-- 🔹 CLIENT + SALESMAN -->
-<tr>
+            <input type="text" id="txtfleetno" name="txtfleetno"
+                   placeholder="Press F3 To Search"
+                   style="width:140px;"
+                   value='<s:property value="txtfleetno"/>'
+                   onKeyDown="getvehinfo(event);" />
 
-<td style="white-space:nowrap;">Client</td>
+            <input type="text" id="vehdetails" name="vehdetails"
+                   style="flex:1;"
+                   tabindex="-1"
+                   value='<s:property value="vehdetails"/>' />
+        </div>
 
-<td>
-    <input type="text" id="txtcusid" name="txtcusid"
-           placeholder="Press F3 To Search"
-           value='<s:property value="txtcusid"/>'
-           onKeyDown="getclientinfo(event);"
-           onfocus="checkReqveh();" />
-</td>
+        <!-- OUT KM -->
+        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+            <label style="width:90px;">OUT : KM</label>
 
-<td>
+            <input type="text" id="re_Km" name="re_Km"
+                   style="width:120px;"
+                   value='<s:property value="re_Km"/>'/>
 
-    <input type="text" id="client_Name" name="client_Name"
-           style="width:40%;"
-           tabindex="-1"
-           value='<s:property value="client_Name"/>' />
+           <label>Date</label>
+<div id='jqxDateOut' name='jqxDateOut'
+     style="width:140px;"
+     value='<s:property value="jqxDateOut"/>'></div>
+<input type="hidden" id="hidjqxDateOut" name="hidjqxDateOut"
+       value='<s:property value="hidjqxDateOut"/>'/>
 
-    <span style="margin-left:10px;">Salesman</span>
+<label>Time</label>
+<div id='jqxTimeOut' name='jqxTimeOut'
+     style="width:90px;"
+     value='<s:property value="jqxTimeOut"/>'></div>
+<input type="hidden" id="hidjqxTimeOut" name="hidjqxTimeOut"
+       value='<s:property value="hidjqxTimeOut"/>'/>
+        </div>
 
-    <input type="text" id="re_salman" name="re_salman"
-           style="width:30%;"
-           placeholder="Salesman Name"
-           value='<s:property value="re_salman"/>' />
+        <!-- FUEL -->
+        <div style="display:flex; gap:10px; align-items:center;">
+            <label style="width:90px;">Fuel</label>
 
-    <!-- 🔹 hidden untouched -->
-    <input type="hidden" id="re_salmanid" name="re_salmanid"
-           value='<s:property value="re_salmanid"/>' />
-    <input type="hidden" id="re_clcodeno" name="re_clcodeno"
-           value='<s:property value="re_clcodeno"/>' />
-    <input type="hidden" id="re_clacno" name="re_clacno"
-           value='<s:property value="re_clacno"/>' />
+            <input type="text" id="ratariff_fuel" name="ratariff_fuel"
+                   style="width:120px;"
+                   value='<s:property value="ratariff_fuel"/>'/>
 
-</td>
+            <label>Due Date</label>
+            <div id='jqxOnDate' name='jqxOnDate'
+                 value='<s:property value="jqxOnDate"/>'></div>
+            <input type="hidden" id="hidjqxOnDate" name="hidjqxOnDate"
+                   value='<s:property value="hidjqxOnDate"/>'/>
 
-</tr>
+            <label>Time</label>
+            <div id='jqxOnTime' name='jqxOnTime'
+                 value='<s:property value="jqxOnTime"/>'></div>
+            <input type="hidden" id="hidjqxOnTime" name="hidjqxOnTime"
+                   value='<s:property value="hidjqxOnTime"/>'/>
+        </div>
 
-
-<!-- 🔹 ADDRESS -->
-<tr>
-
-<td></td>
-
-<td colspan="2">
-    <input type="text" id="cusaddress" name="cusaddress"
-           placeholder="Mobile No - Address"
-           style="width:100%;"
-           value='<s:property value="cusaddress"/>' />
-</td>
-
-</tr>
+    </div>
 
 
-<!-- 🔹 ACTUAL CLIENT -->
-<tr class="actualclientrow" hidden="true">
+    <!-- ================= CLIENT SECTION ================= -->
+    <div style="flex:1; background:#f7f9fc; padding:12px; border-radius:8px;">
 
-<td style="white-space:nowrap;">Actual Client</td>
+        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
+            Client Info
+        </div>
 
-<td>
-    <input type="text" name="actualcldocno" id="actualcldocno"
-           placeholder="Press F3 to Search"
-           value='<s:property value="actualcldocno"/>' />
-</td>
+        <!-- CLIENT -->
+        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+            <label style="width:90px;">Client</label>
 
-<td>
-    <input type="text" name="actualclientname" id="actualclientname"
-           style="width:100%;"
-           value='<s:property value="actualclientname"/>' />
-</td>
+            <input type="text" id="txtcusid" name="txtcusid"
+                   placeholder="Press F3 To Search"
+                   style="width:140px;"
+                   value='<s:property value="txtcusid"/>'
+                   onKeyDown="getclientinfo(event);"
+                   onfocus="checkReqveh();" />
 
-</tr>
+            <input type="text" id="client_Name" name="client_Name"
+                   style="flex:1;"
+                   tabindex="-1"
+                   value='<s:property value="client_Name"/>' />
+
+            <label>Salesman</label>
+
+            <input type="text" id="re_salman" name="re_salman"
+                   placeholder="Salesman Name"
+                   style="width:140px;"
+                   value='<s:property value="re_salman"/>' />
+        </div>
+
+        <!-- HIDDEN -->
+        <input type="hidden" id="re_salmanid" name="re_salmanid"
+               value='<s:property value="re_salmanid"/>' />
+        <input type="hidden" id="re_clcodeno" name="re_clcodeno"
+               value='<s:property value="re_clcodeno"/>' />
+        <input type="hidden" id="re_clacno" name="re_clacno"
+               value='<s:property value="re_clacno"/>' />
+
+        <!-- ADDRESS -->
+        <div style="display:flex; margin-bottom:10px;">
+            <label style="width:90px;"></label>
+
+            <input type="text" id="cusaddress" name="cusaddress"
+                   placeholder="Mobile No - Address"
+                   style="flex:1;"
+                   value='<s:property value="cusaddress"/>' />
+        </div>
+
+        <!-- SALES + RENTAL AGENT -->
+        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+            <label style="width:90px;">Sales Agent</label>
+
+            <input type="text" id="rasales_Agent" name="rasales_Agent"
+                   placeholder="Press F3 To Search"
+                   style="width:160px;"
+                   value='<s:property value="rasales_Agent"/>'
+                   onKeyDown="getsalesAgent(event);" />
+
+            <input type="hidden" id="tariffsales_Agentid" name="tariffsales_Agentid"
+                   value='<s:property value="tariffsales_Agentid"/>'/>
+
+            <label>Rental Agent</label>
+
+            <input type="text" id="rarenral_Agent" name="rarenral_Agent"
+                   placeholder="Press F3 To Search"
+                   style="flex:1;"
+                   value='<s:property value="rarenral_Agent"/>'
+                   onKeyDown="getrentalAgent(event);" />
+
+            <input type="hidden" id="tariffrenral_Agentid" name="tariffrenral_Agentid"
+                   value='<s:property value="tariffrenral_Agentid"/>'/>
+        </div>
+
+        <!-- CHECKOUT -->
+        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+            <label style="width:90px;">Checkout</label>
+
+            <input type="text" id="ratariff_checkout" name="ratariff_checkout"
+                   placeholder="Press F3 To Search"
+                   style="flex:1;"
+                   value='<s:property value="ratariff_checkout"/>'
+                   onKeyDown="getcheckout(event);"
+                   onfocus="checkReqrental();" />
+
+            <input type="hidden" id="ratariff_checkoutid" name="ratariff_checkoutid"
+                   value='<s:property value="ratariff_checkoutid"/>'/>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div style="display:flex; align-items:center;">
+            <label style="width:90px;">Description</label>
+
+            <input type="text" id="rentaldesc" name="rentaldesc"
+                   placeholder="Description"
+                   style="flex:1;"
+                   value='<s:property value="rentaldesc"/>'
+                   onblur="fundescvalidate()" />
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- 🔹 RIGHT : DOC / DATE / STATUS -->
+    <div style="width:320px;">
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+
+    <!-- DOC NO -->
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label style="width:90px;">Doc No</label>
+        <input type="text" id="docno" name="docno"
+               style="width:160px;"
+               tabindex="-1"
+               value='<s:property value="docno"/>'/>
+    </div>
+
+    <!-- DATE -->
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label style="width:90px;">Date</label>
+        <div id='jqxRentalDate' name='jqxRentalDate'
+             style="width:160px;"
+             value='<s:property value="jqxRentalDate"/>'></div>
+
+        <input type="hidden" id="hidjqxRentalDate" name="hidjqxRentalDate"
+               value='<s:property value="hidjqxRentalDate"/>'/>
+    </div>
+
+    <!-- ENQ TYPE -->
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label style="width:90px;">Enq.Type</label>
+        <select id="cmbenqtype" name="cmbenqtype" style="width:160px;">
+            <option value="">--Select--</option>
+        </select>
+    </div>
+
+    <!-- STATUS -->
+    <div style="display:flex; align-items:center; gap:10px;">
+        <label style="width:90px;">Status</label>
+        <label id="rentalstatus"
+               style="width:160px; color:#6000FC;">
+            <s:property value="rentalstatus"/>
+        </label>
+    </div>
+
+</div>
+            <!-- MENU -->
+            <div style="text-align:right;">
+                <div id='jqxMenuMore'>
+                    <ul>
+                        <li><a href="#" onclick="fine();">Traffic Fines</a></li>
+                        <li><a href="#" onclick="replacement();">Replacement</a></li>
+                        <li><a href="#" onclick="account();">Account Statement</a></li>
+                        <li><a href="#" onclick="closing();">Closing Summary</a></li>
+                        <li><a href="#" onclick="funKmDetails();">KM Details</a></li>
+                        <li><a href="#" onclick="funinspection();">Inspection Check List</a></li>
+                        <li><a href="#" onclick="funFuelDetails();">Fuel Details</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
-<!-- 🔹 DESCRIPTION -->
-<tr>
-
-<td style="white-space:nowrap;">Description</td>
-
-<td colspan="2">
-    <input type="text" id="rentaldesc" name="rentaldesc"
-           placeholder="Description"
-           style="width:100%;"
-           value='<s:property value="rentaldesc"/>'
-           onblur="fundescvalidate()" />
-</td>
-
-</tr>
-
-</table>
-
-</fieldset>
 							</td>
 							
 						</tr>
 					</table>
-<fieldset>
-<legend>Driver Details</legend>
+<!-- Driver -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">2</div>
+        <div class="accordion-title">Driver Details</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<div class="accordion-content">
 <table width="100%">
 <tr>
 <td width="11%">
 
-<table id="chauffer">
-<tr>
+<div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
 
-<td>
-<label>Additional Driver</label>
-<input type="checkbox" id="additional_driver" name="additional_driver" value="0"
-       onchange="funaddidriverview()"
-       onclick="$(this).attr('value', this.checked ? 1 : 0)">
+    <!-- ADDITIONAL DRIVER -->
+    <div style="display:flex; align-items:center; gap:6px;">
+        <label>Additional Driver</label>
+        <input type="checkbox" id="additional_driver" name="additional_driver" value="0"
+               onchange="funaddidriverview()"
+               onclick="$(this).attr('value', this.checked ? 1 : 0)">
+    </div>
+
+    <!-- CHARGE -->
+    <div style="display:flex; align-items:center; gap:6px;">
+        <label>Charge</label>
+        <input type="text" id="adidrvcharges" name="adidrvcharges"
+               style="width:80px; text-align:right;"
+               value='<s:property value="adidrvcharges"/>'
+               onblur="funRoundAmt(this.value,this.id);"
+               onkeypress="javascript:return isNumber (event);">
+    </div>
+
+    <!-- DELIVERY -->
+    <div style="display:flex; align-items:center; gap:6px;">
+        <label>Delivery</label>
+        <input type="checkbox" id="delivery_chk" name="delivery_chk" value="0"
+               onchange="fundriverdisable()"
+               onfocus="checkReqclient()"
+               onclick="$(this).attr('value', this.checked ? 1 : 0)">
+    </div>
+
+    <!-- CHAUFFEUR -->
+    <div style="display:flex; align-items:center; gap:6px;">
+        <label>Chauffeur</label>
+        <input type="checkbox" id="radrivercheck" name="radrivercheck" value="0"
+               onchange="funShaffurdisable()"
+               onfocus="checkReqclient()"
+               onclick="$(this).attr('value', this.checked ? 1 : 0)">
+    </div>
+
+    <!-- DRIVER SEARCH -->
+    <div style="display:flex; align-items:center; gap:6px;">
+        <input type="text" id="radriverlist" name="radriverlist"
+               style="width:180px;"
+               placeholder="Press F3 To Search"
+               value='<s:property value="radriverlist"/>'
+               onKeyDown="getchauffeur(event);" />
+    </div>
+
+    <!-- HIDDEN FIELDS -->
+    <input type="hidden" id="del_chaufferid" name="del_chaufferid"
+           value='<s:property value="del_chaufferid"/>'/>
+    <input type="hidden" id="client_driverid" name="client_driverid"
+           value='<s:property value="client_driverid"/>'/>
+    <input type="hidden" id="client_driverdoc" name="client_driverdoc"
+           value='<s:property value="client_driverdoc"/>'/>
+
+</div>
+
 </td>
-
-<td>
-<label>Charge</label>
-<input type="text" id="adidrvcharges" name="adidrvcharges"
-       style="width:80px; text-align:right;"
-       value='<s:property value="adidrvcharges"/>'
-       onblur="funRoundAmt(this.value,this.id);"
-       onkeypress="javascript:return isNumber (event);">
-</td>
-
-<td>
-<label>Delivery</label>
-<input type="checkbox" id="delivery_chk" name="delivery_chk" value="0"
-       onchange="fundriverdisable()"
-       onfocus="checkReqclient()"
-       onclick="$(this).attr('value', this.checked ? 1 : 0)">
-</td>
-
-<td>
-<label>Chauffeur</label>
-<input type="checkbox" id="radrivercheck" name="radrivercheck" value="0"
-       onchange="funShaffurdisable()"
-       onfocus="checkReqclient()"
-       onclick="$(this).attr('value', this.checked ? 1 : 0)">
-</td>
-
-<td>
-<input type="text" id="radriverlist" name="radriverlist"
-       style="width:160px;"
-       placeholder="Press F3 To Search"
-       value='<s:property value="radriverlist"/>'
-       onKeyDown="getchauffeur(event);" />
-</td>
-
-<!-- hidden fields untouched -->
-<input type="hidden" id="del_chaufferid" name="del_chaufferid"
-       value='<s:property value="del_chaufferid"/>'/>
-<input type="hidden" id="client_driverid" name="client_driverid"
-       value='<s:property value="client_driverid"/>'/>
-<input type="hidden" id="client_driverdoc" name="client_driverdoc"
-       value='<s:property value="client_driverdoc"/>'/>
-
 </tr>
 </table>
 
-</td>
-</tr>
-</table>
-</td>
 <td width="89%">
 
 <table width="100%" id="driverGrid">
@@ -3107,13 +3420,13 @@ select {
 </table>
 </td>
 
-</tr>
-    </table>
+
+ 
     
     <table id="tariffsub">
 
 <!-- ROW 1 -->
-<tr>
+<%-- <tr>
 
 <td align="right" width="6%">Sales Agent</td>
 <td width="8%">
@@ -3160,10 +3473,10 @@ select {
 </td>
 
 </tr>
-
+ --%>
 
 <!-- ROW 2 -->
-<tr>
+<%-- <tr>
 
 <td align="right" width="6%">Checkout</td>
 <td width="10%">
@@ -3189,14 +3502,21 @@ select {
            value='<s:property value="hidjqxOnTime"/>'/>
 </td>
 
-</tr>
+</tr> --%>
 
 </table>
     
-    </fieldset>
+    </div>
+<!-- Tariff -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">3</div>
+        <div class="accordion-title">Tariff Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
 
-<fieldset>
-<legend>Tariff Info</legend>
+<div class="accordion-content">
 
 <!-- 🔹 SINGLE COMPACT HEADER ROW -->
 <table width="100%" style="margin-bottom:8px;">
@@ -3279,11 +3599,19 @@ select {
     </table>
 </div>
 
-</fieldset>
+</div>
 
 
-    <fieldset>
-<legend>Payment Info</legend>
+<!-- Payment -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">4</div>
+        <div class="accordion-title">Payment Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<div class="accordion-content">
 
 <!-- 🔹 MAIN GRID (FULL WIDTH) -->
 <table width="100%" id="payment">
@@ -3300,130 +3628,136 @@ select {
 <tr>
 <td>
 
-<table width="100%" style="margin-top:10px;">
-<tr>
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
 
-<td>Manual RA NO</td>
-<td>
-    <input type="text" id="payment_Mra" name="payment_Mra"
-           value='<s:property value="payment_Mra"/>'>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label style="width:130px;">Manual RA NO</label>
+        <input type="text" id="payment_Mra" name="payment_Mra"
+               style="width:160px;"
+               value='<s:property value="payment_Mra"/>'>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label style="width:60px;">LPO</label>
+        <input type="text" id="payment_PO" name="payment_PO"
+               style="width:140px;"
+               value='<s:property value="payment_PO"/>'>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label style="width:130px;">Contract Vehicle</label>
+        <input type="text" id="payment_Conveh" name="payment_Conveh"
+               style="width:180px;"
+               value='<s:property value="payment_Conveh"/>'>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label style="width:70px;">Project</label>
+        <input type="text" id="rentalproject" name="rentalproject"
+               style="width:180px;"
+               value='<s:property value="rentalproject"/>'
+               placeholder="Press F3 to Search" readonly>
+        <input type="hidden" id="hidrentalproject" name="hidrentalproject"
+               value='<s:property value="hidrentalproject"/>'>
+    </div>
+
+
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <input type="checkbox" name="chkorgregcard" id="chkorgregcard"
+               onChange="setOrgRegCard();" style="width:15px;height:15px;">
+        <label>Org. Reg. Card issued</label>
+
+        <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard"
+               value='<s:property value="hidchkorgregcard"/>'>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label class="igst">Interstate Tax</label>
+        <input class="igst" type="checkbox" name="chkigst" id="chkigst"
+               onChange="setIGST();" style="width:15px;height:15px;">
+
+        <input type="hidden" name="hidchkigst" id="hidchkigst"
+               value='<s:property value="hidchkigst"/>'>
+    </div>
+
+</div>
+
+<div class="racraterow" hidden="true" style="margin-top:10px;">
+
+    <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+
+        <!-- RAC RATE -->
+        <div style="display:flex; align-items:center; gap:8px;">
+            <label style="width:90px;">RAC Rate</label>
+
+            <input type="text" id="racrate" name="racrate"
+                   style="width:100px; text-align:right;"
+                   value='<s:property value="racrate" />'
+                   onblur="funRoundAmt(this.value,this.id);"
+                   onkeypress="javascript:return isNumber (event)">
+        </div>
+
+        <!-- INSURANCE CHECK -->
+        <div style="display:flex; align-items:center; gap:6px;">
+            <input type="checkbox" name="chkinsurcomp" id="chkinsurcomp"
+                   onchange="funChkInsurComp();">
+
+            <label>Insurance Company</label>
+
+            <input type="hidden" name="hidchkinsurcomp" id="hidchkinsurcomp"
+                   value='<s:property value="hidchkinsurcomp"/>'>
+        </div>
+
+        <!-- INSURANCE DROPDOWN -->
+        <div>
+            <select name="cmbinsurcomp" id="cmbinsurcomp"
+                    style="width:160px;" disabled>
+                <option value="">--Select--</option>
+            </select>
+
+            <input type="hidden" name="hidcmbinsurcomp" id="hidcmbinsurcomp"
+                   value='<s:property value="hidcmbinsurcomp"/>'>
+        </div>
+
+        <!-- DAYS -->
+        <div style="display:flex; align-items:center; gap:6px;">
+            <label>Days</label>
+
+            <input type="text" name="insurcompdays" id="insurcompdays"
+                   style="width:80px;"
+                   value='<s:property value="insurcompdays"/>'
+                   onkeypress="javascript:return isNumber (event)">
+        </div>
+
+        <!-- BUTTON -->
+        <div>
+            <button type="button" name="btninsurupdate" id="btninsurupdate"
+                    class="myButton" disabled onclick="funUpdateInsurComp();">
+                Update
+            </button>
+        </div>
+
+    </div>
+
+</div>
 </td>
-
-<td>LPO</td>
-<td>
-    <input type="text" id="payment_PO" name="payment_PO"
-           value='<s:property value="payment_PO"/>'>
-</td>
-
-<td>Contract vehicle</td>
-<td>
-    <input type="text" id="payment_Conveh" name="payment_Conveh"
-           value='<s:property value="payment_Conveh"/>'>
-</td>
-
-<td>Project</td>
-<td>
-    <input type="text" id="rentalproject" name="rentalproject"
-           value='<s:property value="rentalproject"/>'
-           placeholder="Press F3 to Search" readonly>
-    <input type="hidden" id="hidrentalproject" name="hidrentalproject"
-           value='<s:property value="hidrentalproject"/>'>
-</td>
-
 </tr>
-
-<tr>
-
-<td colspan="4">
-    <input type="checkbox" name="chkorgregcard" id="chkorgregcard"
-           onChange="setOrgRegCard();" style="width:15px;height:15px;">
-    Org. Reg. Card issued
-
-    <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard"
-           value='<s:property value="hidchkorgregcard"/>'>
-</td>
-
-<td colspan="4">
-    <span class="igst">Interstate Tax</span>
-    <input class="igst" type="checkbox" name="chkigst" id="chkigst"
-           onChange="setIGST();" style="width:15px;height:15px;">
-
-    <input type="hidden" name="hidchkigst" id="hidchkigst"
-           value='<s:property value="hidchkigst"/>'>
-</td>
-
-</tr>
-
-<tr class="racraterow" hidden="true">
-
-<td>RAC Rate</td>
-<td>
-    <input type="text" id="racrate" name="racrate"
-           style="text-align:right;"
-           value='<s:property value="racrate" />'
-           onblur="funRoundAmt(this.value,this.id);"
-           onkeypress="javascript:return isNumber (event)">
-</td>
-
-</tr>
-
 </table>
-
-</td>
-</tr>
+</div>
 
 
-<!-- 🔹 INSURANCE ROW (FULL WIDTH ALREADY - KEPT SAME) -->
-<tr class="row-insurcomp">
-<td>
-    <table width="100%">
-        <tr>
-
-            <td width="15%">
-                <input type="checkbox" name="chkinsurcomp" id="chkinsurcomp"
-                       onchange="funChkInsurComp();">
-                <input type="hidden" name="hidchkinsurcomp" id="hidchkinsurcomp"
-                       value='<s:property value="hidchkinsurcomp"/>'>
-                <label for="chkinsurcomp">Insurance Company</label>
-            </td>
-
-            <td width="20%">
-                <select name="cmbinsurcomp" id="cmbinsurcomp"
-                        style="width:100%;" disabled>
-                    <option value="">--Select--</option>
-                </select>
-                <input type="hidden" name="hidcmbinsurcomp" id="hidcmbinsurcomp"
-                       value='<s:property value="hidcmbinsurcomp"/>'>
-            </td>
-
-            <td>Days</td>
-            <td>
-                <input type="text" name="insurcompdays" id="insurcompdays"
-                       value='<s:property value="insurcompdays"/>'
-                       onkeypress="javascript:return isNumber (event)">
-            </td>
-
-            <td>
-                <button type="button" name="btninsurupdate" id="btninsurupdate"
-                        class="myButton" disabled onclick="funUpdateInsurComp();">
-                    Update
-                </button>
-            </td>
-
-        </tr>
-    </table>
-</td>
-</tr>
-
-</table>
-
-</fieldset>
-  <DIV id="forspace" hidden="true">
- <br><br><br><br>
- </DIV> 
 <div id="hiddrivertable">
- <fieldset>
-<legend>Delivery Details</legend>
+<!-- Delivery -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">5</div>
+        <div class="accordion-title">Delivery Details</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<div class="accordion-content">
 
 <table style="width:100%; table-layout:auto;">
 
@@ -3473,9 +3807,9 @@ select {
 
 <!-- DATE -->
 <td style="white-space:nowrap;">Date</td>
-<td style="width:14%;">
+<td>
     <div id='jqxDeliveryOut'
-         style="width:100%;"
+         style="width:140px;"
          name='jqxDeliveryOut'
          value='<s:property value="jqxDeliveryOut"/>'
          onblur="fundelDatechk()"></div>
@@ -3486,9 +3820,9 @@ select {
 
 <!-- TIME -->
 <td style="white-space:nowrap;">Time</td>
-<td style="width:12%;">
+<td>
     <div id='jqxDelTimeOut'
-         style="width:100%;"
+         style="width:90px;"
          name='jqxDelTimeOut'
          value='<s:property value="jqxDelTimeOut"/>'
          onblur="fundelTimechk()"></div>
@@ -3496,7 +3830,6 @@ select {
     <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut"
            value='<s:property value="hidjqxDelTimeOut"/>'/>
 </td>
-
 <!-- BUTTON -->
 <td style="width:10%; text-align:center;">
     <input type="button" name="driverUpdate" id="driverUpdate"
@@ -3509,7 +3842,8 @@ select {
 
 </table>
 
-</fieldset>
+
+</div>
 </div>
 <div hidden="true"><select name="ratariffsystem" id="ratariffsystem" style="width:100%;"  value='<s:property value="ratariffsystem"/>'  >
   <!-- <option value="">--Select--</option> -->
@@ -3630,6 +3964,58 @@ select {
    <div ></div>
 </div>
  </div> 
+ 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Check if an existing document is currently loaded (Search/Edit/View mode)
+    var masterDoc = document.getElementById("masterdoc_no");
+    var isLoaded = (masterDoc && masterDoc.value && masterDoc.value > 0);
+
+    const sections = document.querySelectorAll('.accordion-content');
+    const headers = document.querySelectorAll('.accordion-header');
+
+    sections.forEach((el, index) => {
+        if (isLoaded) {
+            // BUG FIX: If data is loaded, KEEP accordions open so JQX Grids don't hang on the infinite spinner
+            el.style.display = 'block';
+            if(headers[index]) headers[index].classList.add('active');
+        } else {
+            // If it's a New entry, close all except the first one (Rental Info)
+            if (index === 0) {
+                el.style.display = 'block';
+                if(headers[index]) headers[index].classList.add('active');
+            } else {
+                el.style.display = 'none';
+                if(headers[index]) headers[index].classList.remove('active');
+            }
+        }
+    });
+});
+
+function toggleAccordion(el) {
+    const content = el.nextElementSibling;
+    const isOpen = content.style.display === "block";
+
+    // Toggle the section content and the arrow rotation
+    content.style.display = isOpen ? "none" : "block";
+    el.classList.toggle("active", !isOpen);
+
+    // Safely tell the JQX grids to redraw if the section was just opened
+    if (!isOpen) {
+        setTimeout(function() {
+            // Trigger a window resize to force JQX internal recalculations
+            $(window).trigger('resize');
+            
+            // Force render on specific grids if they exist in the DOM
+            if (typeof $.fn.jqxGrid === 'function') {
+                if ($("#jqxgrid2").length > 0) $("#jqxgrid2").jqxGrid('render'); // Driver grid
+                if ($("#jqxgridtarif").length > 0) $("#jqxgridtarif").jqxGrid('render'); // Tariff grid
+                if ($("#jqxgridpayment").length > 0) $("#jqxgridpayment").jqxGrid('render'); // Payment grid
+            }
+        }, 50); // Small delay ensures display:block has fully registered in the browser
+    }
+}
+</script>
  </body>
 </html> 
     
