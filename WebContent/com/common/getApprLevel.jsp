@@ -37,11 +37,11 @@ ClsConnection ClsConnection=new ClsConnection();
 		
 		if((Integer.parseInt(isfirstappr)==0)){
 			//brhid="+brch+" and
-		  strSql1="select * from fasttrack.my_Exdoc where  dtype='"+dtype+"' and userid="+usrid+"  "+branchcond;
+		  strSql1="select * from my_Exdoc where  dtype='"+dtype+"' and userid="+usrid+"  "+branchcond;
 		}
 		else{
 			//brhid="+brch+" and
-		  strSql1="select * from fasttrack.my_Exdoc where  dtype='"+dtype+"' and userid="+usrid+" "+branchcond+" and apprlevel in (select apprlevel from my_exeb where brhid="+brch+" and dtype='"+dtype+"' and userid="+usrid+" and approved=0 "+branchcond+" ) order by apprlevel desc ";
+		  strSql1="select * from my_Exdoc where  dtype='"+dtype+"' and userid="+usrid+" "+branchcond+" and apprlevel in (select apprlevel from my_exeb where brhid="+brch+" and dtype='"+dtype+"' and userid="+usrid+" and approved=0 "+branchcond+" ) order by apprlevel desc ";
 		}
 		
 		
@@ -59,7 +59,7 @@ ClsConnection ClsConnection=new ClsConnection();
 	  		}
 		
 		//and dt.brhId="+brch+"
-		String strSql3 = "select count(*) as count from  fasttrack.my_exdoc dt   where dt.dtype='"+dtype+"' and dt.apprlevel="+apprlevel+" "+branchcond;
+		String strSql3 = "select count(*) as count from  my_exdoc dt   where dt.dtype='"+dtype+"' and dt.apprlevel="+apprlevel+" "+branchcond;
 		
 		System.out.println("strSql3====="+strSql3);
 		
@@ -74,7 +74,7 @@ ClsConnection ClsConnection=new ClsConnection();
 
 		String sqlStatus =
 		"SELECT apprStatus " +
-		"FROM fasttrack.my_exdet " +
+		"FROM my_exdet " +
 		"WHERE doc_no=" + docno + " " +
 		"AND dtype='" + dtype + "' " +
 		"AND brhId=" + brch + " " +
