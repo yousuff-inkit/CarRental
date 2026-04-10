@@ -2382,75 +2382,157 @@ function checkBrandQty(fleetno,masterrefno){
 
         <div class="modern-ui hidden-scrollbar">
             
-            <div class="modern-panel">
-                <div style="display: flex; gap: 20px;">
-                    
-                    <div style="flex: 1.2; display: flex; flex-direction: column;">
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 80px;">Date</label>
-                            <div style="width: 120px;">
-                                <div id="date" name="date" value='<s:property value="date"/>'></div>
-                                <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
-                            </div>
-                            
-                            <label class="lbl-right" style="width: 60px;">Enq.Type</label>
-                            <select name="cmbenqtype" id="cmbenqtype" class="input-md">
-                                <option value="">--Select--</option>
-                            </select>
-                            <input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype" value='<s:property value="hidcmbenqtype"/>'>
-                            
-                            <label class="lbl-right" style="width: 100px;">Master Ref Type</label>
-                            <select name="cmbmasterreftype" id="cmbmasterreftype" class="input-sm">
-                                <option value="DIR">DIR</option><option value="MLA">MLA</option>
-                            </select>
-                            <input type="hidden" name="hidcmbmasterreftype" id="hidcmbmasterreftype" value='<s:property value="hidcmbmasterreftype"/>'>
-                            
-                            <label class="lbl-right" style="width: 90px;">Master Ref No</label>
-                            <input type="text" name="masterrefno" id="masterrefno" class="input-md" value='<s:property value="masterrefno"/>' readonly placeholder="Press F3" onkeydown="getMasterRefno(event);">
-                            <input type="hidden" name="hidmasterrefno" id="hidmasterrefno" value='<s:property value="hidmasterrefno"/>'>
-                            <input type="hidden" name="masterrefnocldocno" id="masterrefnocldocno" value='<s:property value="masterrefnocldocno"/>'>                                                 
-                            
-                            <label class="lbl-right" style="width: 50px;">Doc No</label>
-                            <input type="text" id="docno" name="docno" class="input-sm" readonly tabindex="-1" value='<s:property value="docno"/>'/>
-                        </div>
-                        
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 80px;">Client</label>
-                            <input type="text" id="clientid" name="clientid" class="input-sm" readonly placeholder="Press F3" value='<s:property value="clientid"/>' onKeyDown="getclientinfo(event);" ondblclick="getclientinfo(event);"/>
-                            <input type="text" id="clientname" readonly name="clientname" class="input-full" tabindex="-1" value='<s:property value="clientname"/>'/>
-                            
-                            <label class="lbl-right" style="width: 70px;">Salesman</label>
-                            <input type="text" id="salesman" name="salesman" class="input-md" readonly placeholder="Salesman" value='<s:property value="salesman"/>'/>
-                            <input type="hidden" id="le_salmanid" name="le_salmanid" value='<s:property value="le_salmanid"/>'/>
-                            <input type="hidden" id="le_clcodeno" name="le_clcodeno" value='<s:property value="le_clcodeno"/>'/>
-                            <input type="hidden" id="le_clacno" name="le_clacno" value='<s:property value="le_clacno"/>'/>
-                        </div>
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">1</div>
+        <div class="accordion-title">Rental Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
 
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 80px;"></label>
-                            <input type="text" id="cusaddress" placeholder="Mobile NO-Address" readonly name="cusaddress" class="input-full" value='<s:property value="cusaddress"/>'>
-                        </div>
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
 
-                        <div class="field-row" style="margin-bottom: 0;">
-                            <label class="lbl-right" style="width: 80px;">Description</label>
-                            <input type="text" name="description" id="description" class="input-full" placeholder="Description" value='<s:property value="description"/>' onblur="fundescvalidate()">
-                        </div>
-                    </div>
+    <div class="modern-panel">
+        
+        <div style="display: flex; gap: 20px;">
+            
+            <!-- LEFT SIDE -->
+            <div style="flex: 1.2; display: flex; flex-direction: column;">
+                
+                <!-- ROW 1 -->
+                <div class="field-row">
                     
-                    <div style="flex: 0.2; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                        <div id='jqxMenuMore' title="More" style='visibility: hidden; margin-bottom: 10px;'>
-                            <ul>
-                                <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-                                <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-                                <li><a href="#history" onclick="account();">Account Statement</a></li>   
-                                <li><a href="#close" onclick="closing();">Closing Summary</a></li>
-                                <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>                
-                            </ul>
-                        </div> 
-                        <div><i><b><label id="leasestatus" name="leasestatus" style="font-size: 13px; font-family: Tahoma; color:#6000FC"><s:property value="leasestatus"/></label></b></i></div>
+                    <label class="lbl-right" style="width: 80px;">Date</label>
+                    <div style="width: 120px;">
+                        <div id="date"></div>
+                        <input type="hidden" id="hiddate" name="hiddate"
+                            value='<s:property value="hiddate"/>'/>
                     </div>
+
+                    <label class="lbl-right" style="width: 60px;">Enq.Type</label>
+                    <select id="cmbenqtype" name="cmbenqtype" class="input-md">
+                        <option value="">--Select--</option>
+                    </select>
+                    <input type="hidden" id="hidcmbenqtype" name="hidcmbenqtype"
+                        value='<s:property value="hidcmbenqtype"/>'>
+
+                    <label class="lbl-right" style="width: 100px;">Master Ref Type</label>
+                    <select id="cmbmasterreftype" name="cmbmasterreftype" class="input-sm">
+                        <option value="DIR">DIR</option>
+                        <option value="MLA">MLA</option>
+                    </select>
+                    <input type="hidden" id="hidcmbmasterreftype" name="hidcmbmasterreftype"
+                        value='<s:property value="hidcmbmasterreftype"/>'>
+
+                    <label class="lbl-right" style="width: 90px;">Master Ref No</label>
+                    <input type="text" id="masterrefno" name="masterrefno"
+                        class="input-md"
+                        readonly
+                        placeholder="Press F3"
+                        value='<s:property value="masterrefno"/>'
+                        onkeydown="getMasterRefno(event);">
+
+                    <input type="hidden" id="hidmasterrefno" name="hidmasterrefno"
+                        value='<s:property value="hidmasterrefno"/>'>
+
+                    <input type="hidden" id="masterrefnocldocno" name="masterrefnocldocno"
+                        value='<s:property value="masterrefnocldocno"/>'>
+
+                    <label class="lbl-right" style="width: 50px;">Doc No</label>
+                    <input type="text" id="docno" name="docno"
+                        class="input-sm"
+                        readonly
+                        tabindex="-1"
+                        value='<s:property value="docno"/>'/>
                 </div>
+
+                <!-- ROW 2 -->
+                <div class="field-row">
+                    
+                    <label class="lbl-right" style="width: 80px;">Client</label>
+                    <input type="text" id="clientid" name="clientid"
+                        class="input-sm"
+                        readonly
+                        placeholder="Press F3"
+                        value='<s:property value="clientid"/>'
+                        onkeydown="getclientinfo(event);"
+                        ondblclick="getclientinfo(event);"/>
+
+                    <input type="text" id="clientname" name="clientname"
+                        class="input-full"
+                        readonly
+                        tabindex="-1"
+                        value='<s:property value="clientname"/>'/>
+
+                    <label class="lbl-right" style="width: 70px;">Salesman</label>
+                    <input type="text" id="salesman" name="salesman"
+                        class="input-md"
+                        readonly
+                        value='<s:property value="salesman"/>'/>
+
+                    <input type="hidden" id="le_salmanid" name="le_salmanid"
+                        value='<s:property value="le_salmanid"/>'/>
+
+                    <input type="hidden" id="le_clcodeno" name="le_clcodeno"
+                        value='<s:property value="le_clcodeno"/>'/>
+
+                    <input type="hidden" id="le_clacno" name="le_clacno"
+                        value='<s:property value="le_clacno"/>'/>
+                </div>
+
+                <!-- ROW 3 -->
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 80px;"></label>
+                    <input type="text" id="cusaddress"
+                        class="input-full"
+                        readonly
+                        placeholder="Mobile NO-Address"
+                        value='<s:property value="cusaddress"/>'>
+                </div>
+
+                <!-- ROW 4 -->
+                <div class="field-row" style="margin-bottom: 0;">
+                    <label class="lbl-right" style="width: 80px;">Description</label>
+                    <input type="text" id="description" name="description"
+                        class="input-full"
+                        placeholder="Description"
+                        value='<s:property value="description"/>'
+                        onblur="fundescvalidate()">
+                </div>
+
             </div>
+
+            <!-- RIGHT SIDE MENU -->
+            <div style="flex: 0.2; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                
+                <div id="jqxMenuMore" title="More" style="visibility: hidden; margin-bottom: 10px;">
+                    <ul>
+                        <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+                        <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+                        <li><a href="#history" onclick="account();">Account Statement</a></li>   
+                        <li><a href="#close" onclick="closing();">Closing Summary</a></li>
+                        <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>                
+                    </ul>
+                </div> 
+
+                <div>
+                    <i><b>
+                        <label id="leasestatus" name="leasestatus"
+                            style="font-size: 13px; font-family: Tahoma; color:#6000FC">
+                            <s:property value="leasestatus"/>
+                        </label>
+                    </b></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
             <!-- ACCORDION HEADER -->
 <div class="accordion-header" onclick="toggleAccordion(this)">
