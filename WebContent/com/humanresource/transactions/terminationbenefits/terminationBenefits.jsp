@@ -62,7 +62,8 @@ body {
 }
 
 .modern-ui input[readonly],
-.modern-ui input:disabled { 
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
     background-color: #f8f9fa; 
     color: #6b7280;
 }
@@ -85,7 +86,7 @@ body {
     padding-right: 5px;
 }
 
-/* Middle Section Panels with Solid Backgrounds to hide the line */
+/* FIXED: Middle Section Panels with Solid Backgrounds to hide the line */
 .modern-ui .middle-panel {
     border: 1px solid #c5d3e0; 
     padding: 20px 10px 10px 10px; 
@@ -93,27 +94,28 @@ body {
     position: relative; 
     border-radius: 4px; 
     margin-bottom: 15px;
+    margin-top: 12px; /* Fix for panel hitting the ceiling */
 }
 
 .modern-ui .middle-panel-title { 
     position: absolute; 
-    top: -10px;
+    top: -12px; /* Set directly on the border line */
     left: 10px; 
-    background: #ffffff; /* Solid white background to mask the border */
+    background: #ffffff; 
     padding: 0 8px; 
     color: #0056b3;
     font-weight: bold; 
-    font-size: 13px;
+    font-size: 14px; 
     border-left: 3px solid #0056b3;
-    z-index: 2; /* Forces text to sit ON TOP of the border */
-    line-height: 1;
+    z-index: 2; 
+    line-height: normal; /* Fix for sliced text */
 }
 
 /* Custom UI Buttons matching 24px height */
 .modern-ui .myButton {
     height: 24px !important;
     line-height: 22px !important;
-    padding: 0 16px;
+    padding: 0 12px;
     font-family: Arial, sans-serif;
     font-size: 11px;
     font-weight: bold;
@@ -128,6 +130,25 @@ body {
     white-space: nowrap;
 }
 .modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: flex;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
 
 /* Grid Wrapper */
 .modern-ui .grid-container {
@@ -196,7 +217,7 @@ body {
 	 			     
 	 			   if(parseInt($('#txtchkdate').val())==0){
 	 				  if(parseInt($('#txtchkgridload').val())==1){
-	 					if(parseInt($('#txtchksalarypaid').val())==0){
+	 					if(parseInt($('#txtchksalarypaid').val())==0){  
 	 					    $("#overlay, #PleaseWait").show();
 	 					    var employeebranchchk=window.parent.employeebranchchk.value;   
 	 					    $("#terminationBenefitsDetailsDiv").load("terminationBenefitsGrid.jsp?check=1&deprdate="+date+"&branch="+document.getElementById("brchName").value+'&employeebranchchk='+employeebranchchk);

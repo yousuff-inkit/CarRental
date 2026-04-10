@@ -9,15 +9,184 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<style>
+/* =========================================================
+SCOPED UI: Modern Layout (Matches Client Master)
+========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* FIXED: Middle Section Panels with Solid Backgrounds to hide the line */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+    margin-top: 12px; /* Fix for panel hitting the ceiling */
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px; /* Set directly on the border line */
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; /* Fix for sliced text */
+}
+
+/* Custom UI Buttons matching 24px height */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: flex;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+/* Grid Wrapper */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
 		
-		 $("#terminationDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#notifyDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#joiningDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy", value:null});
-		 $("#appraisalDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy", value:null});
+         /* COMPACT DATE SIZING */
+		 $("#terminationDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#notifyDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#joiningDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
+		 $("#appraisalDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
 		
+         /* Force internal alignment AFTER render */
+         setTimeout(function () {
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                 "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+         }, 0);
+
 		 $('#employeeDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Employees Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
  		 $('#employeeDetailsWindow').jqxWindow('close');
  		 
@@ -198,9 +367,7 @@
 		changeContent('htreMainSearch.jsp');  
 	 }
 		
-	 function funChkButton() {
-			/* funReset(); */
-		}
+	 function funChkButton() { }
 	 
 	 function funFocus(){
 	    	$('#terminationDate').jqxDateTimeInput('focus'); 	    		
@@ -223,7 +390,7 @@
 	    		
 	    	    /* Validation Ends*/
 	    		
-	     		/* Termination Grid  Saving*/
+	      		/* Termination Grid  Saving*/
 				 	var rows = $("#terminationGridID").jqxGrid('getrows');
 				 	var length=0;
 					 for(var i=0 ; i < rows.length ; i++){
@@ -364,474 +531,131 @@
 	  
 </script>
 
-<style>
-/* ===============================
-   SCROLL AREA
-=============================== */
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: 530px;
-    padding: 10px;
-}
-
-/* ===============================
-   PAGE BACKGROUND
-=============================== */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-
-/* ===============================
-   MAIN CARD
-=============================== */
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-/* ===============================
-   HEADER STRIP
-=============================== */
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 0 24px;
-}
-
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-}
-
-/* ===============================
-   INPUTS (GLOBAL FIX)
-=============================== */
-input[type="text"],
-input[type="number"],
-input[type="file"],
-select {
-    height: 32px !important;
-    padding: 4px 10px !important;
-    font-size: 14px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background: #fff;
-    box-sizing: border-box;
-}
-
-input:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* ===============================
-   BUTTONS
-=============================== */
-button,
-.myButton {
-    height: 32px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 0 16px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-button:hover,
-.myButton:hover {
-    background: #0056b3;
-}
-
-/* ===============================
-   SECTION BLOCKS
-=============================== */
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.section-block h2,
-.section-block h3 {
-    margin: 0 0 16px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #253858;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* ===============================
-   FORM ROWS
-=============================== */
-.form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-label {
-    font-weight: 500;
-    color: #253858;
-    white-space: nowrap;
-}
-
-/* ===============================
-   TABLE SECTION
-=============================== */
-.table-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 12px;
-    background: #f6f8fa;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-/* ===============================
-   TABLE GRID
-=============================== */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 15px;
-    vertical-align: middle;
-    white-space: nowrap;
-    font-weight: 500;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ===============================
-   DATE PICKER HEIGHT FIX
-=============================== */
-#deductionScheduleDate,
-#masterdate,
-#startDate,
-.jqx-datetimeinput,
-.jqx-input,
-.jqx-datetimeinput input {
-    height: 32px !important;
-    min-height: 32px !important;
-    font-size: 14px !important;
-}
-.table-section h3 {
-    margin: 0 0 16px;
-    padding-left: 8px;
-    border-left: 3px solid #007bff;
-    font-size: 17.6px;
-    font-weight: 600;
-    color: #253858;
-}
-
-</style>
-
 </head>
 <body onload="setValues();">
 
 <div id="mainBG" class="homeContent" data-type="background">
 
-<form id="frmTermination"
-      action="saveTermination"
-      method="post"
-      autocomplete="off">
-
+<form id="frmTermination" action="saveTermination" method="post" autocomplete="off">
     <jsp:include page="../../../../header.jsp"></jsp:include>
 
-    <!-- ===============================
-         SCROLLABLE CONTENT
-    ================================ -->
+    <div class="modern-ui hidden-scrollbar">
     
-    <div class="table-section">
-           
-
-            <table class="cr-table">
-                <tr>
-                    <td align="right">Date</td>
-                    <td>
-                        <div id="terminationDate"
-                             name="terminationDate"
-                             value='<s:property value="terminationDate"/>'></div>
-                        <input type="hidden"
-                               id="hidterminationDate"
-                               name="hidterminationDate"
-                               value='<s:property value="hidterminationDate"/>' />
-                    </td>
-
-                    <td align="right">Doc No.</td>
-                    <td>
-                        <input type="text"
-                               id="docno"
-                               name="txtterminationdocno"
-                               tabindex="-1"
-                               value='<s:property value="txtterminationdocno"/>' />
-                    </td>
-                </tr>
-            </table>
-        </div>
-    
-    <div class="hidden-scrollbar">
-
-        <!-- ===============================
-             HEADER DETAILS
-        ================================ -->
-        
-        <!-- ===============================
-             EMPLOYEE DETAILS
-        ================================ -->
-        <div class="table-section">
-            <h3>Employee Details</h3>
-
-            <table class="cr-table">
-                <tr>
-                    <td align="right">Employee ID</td>
-                    <td>
-                        <input type="text"
-                               id="txtemployeeid"
-                               name="txtemployeeid"
-                               placeholder="Press F3 to Search"
-                               onkeydown="getEmployeeDetails(event);"
-                               value='<s:property value="txtemployeeid"/>' />
-                        <input type="hidden"
-                               id="txtemployeedocno"
-                               name="txtemployeedocno"
-                               value='<s:property value="txtemployeedocno"/>' />
-                    </td>
-
-                    <td align="right">Name</td>
-                    <td>
-                        <input type="text"
-                               id="txtemployeename"
-                               name="txtemployeename"
-                               tabindex="-1"
-                               value='<s:property value="txtemployeename"/>' />
-                    </td>
-
-                    <td align="right">Designation</td>
-                    <td>
-                        <input type="text"
-                               id="txtemployeedesignation"
-                               name="txtemployeedesignation"
-                               tabindex="-1"
-                               value='<s:property value="txtemployeedesignation"/>' />
-                    </td>
-
-                    <td align="right">Department</td>
-                    <td>
-                        <input type="text"
-                               id="txtemployeedepartment"
-                               name="txtemployeedepartment"
-                               tabindex="-1"
-                               value='<s:property value="txtemployeedepartment"/>' />
-                    </td>
-                </tr>
-
-                <tr>
-                    <td align="right">Category</td>
-                    <td>
-                        <input type="text"
-                               id="txtemployeecategory"
-                               name="txtemployeecategory"
-                               tabindex="-1"
-                               value='<s:property value="txtemployeecategory"/>' />
-                    </td>
-
-                    <td align="right">Notify Date</td>
-                    <td>
-                        <div id="notifyDate"
-                             name="notifyDate"
-                             value='<s:property value="notifyDate"/>'></div>
-                        <input type="hidden"
-                               id="hidnotifyDate"
-                               name="hidnotifyDate"
-                               value='<s:property value="hidnotifyDate"/>' />
-                    </td>
-
-                    <td align="center">
-                        <button type="button"
-                                id="btnProcessing"
-                                title="Process"
-                                onclick="funProcessBtn();"
-                                style="background:none;border:none;">
-                            <img src="<%=contextPath%>/icons/process2.png"
-                                 alt="Process"
-                                 width="16" height="16">
-                        </button>
-                    </td>
-
-                    <td align="center">
-                        <button type="button"
-                                id="btnCalculate"
-                                title="Calculate"
-                                onclick="funCalculateBtn();"
-                                style="background:none;border:none;">
-                            <img src="<%=contextPath%>/icons/calculate_new.png"
-                                 alt="Calculate">
-                        </button>
-                    </td>
-
-                    <td align="right">Type</td>
-                    <td>
-                        <select id="cmbtype" name="cmbtype">
-                            <option value="TER">Termination</option>
-                            <option value="RES">Resignation</option>
-                        </select>
-                        <input type="hidden"
-                               id="hidcmbtype"
-                               name="hidcmbtype"
-                               value='<s:property value="hidcmbtype"/>' />
-                    </td>
-                </tr>
-
-                <tr>
-                    <td align="right">Date of Join</td>
-                    <td>
-                        <div id="joiningDate"
-                             name="joiningDate"
-                             value='<s:property value="joiningDate"/>'></div>
-                        <input type="hidden"
-                               id="hidjoiningDate"
-                               name="hidjoiningDate"
-                               value='<s:property value="hidjoiningDate"/>' />
-                    </td>
-
-                    <td align="right">Appraisal Date</td>
-                    <td>
-                        <div id="appraisalDate"
-                             name="appraisalDate"
-                             value='<s:property value="appraisalDate"/>'></div>
-                        <input type="hidden"
-                               id="hidappraisalDate"
-                               name="hidappraisalDate"
-                               value='<s:property value="hidappraisalDate"/>' />
-                    </td>
-                </tr>
-            </table>
+        <div class="middle-panel">
+            <span class="middle-panel-title">General Info</span>
+            <div class="field-row" style="margin-bottom:0;">
+                <label class="lbl-right" style="width:60px;">Date</label>
+                <div style="width: 125px;">
+                    <div id="terminationDate" name="terminationDate" value='<s:property value="terminationDate"/>'></div>
+                    <input type="hidden" id="hidterminationDate" name="hidterminationDate" value='<s:property value="hidterminationDate"/>' />
+                </div>
+                
+                <label class="lbl-right" style="width:60px; margin-left:20px;">Type</label>
+                <select id="cmbtype" name="cmbtype" style="width:125px;">
+                    <option value="TER">Termination</option>
+                    <option value="RES">Resignation</option>
+                </select>
+                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>' />
+                
+                <label class="lbl-right" style="width:60px; margin-left:auto;">Doc No.</label>
+                <input type="text" id="docno" name="txtterminationdocno" style="width:120px;" tabindex="-1" value='<s:property value="txtterminationdocno"/>' readonly />
+            </div>
         </div>
 
-        <!-- ===============================
-             TERMINATION GRID
-        ================================ -->
-        <div class="table-section">
-            <h3>Termination Details</h3>
-            <div class="cr-table" id="terminationDiv">
+        <div class="middle-panel">
+            <span class="middle-panel-title">Employee Details</span>
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width:100px;">Employee ID</label>
+                <div class="input-search-container" style="width: 140px;">
+                    <input type="text" id="txtemployeeid" name="txtemployeeid" placeholder="Press F3" onkeydown="getEmployeeDetails(event);" value='<s:property value="txtemployeeid"/>'/>
+                    <svg class="magnifier-icon" onclick="employeeSearchContent('employeeDetailsSearch.jsp');" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input type="hidden" id="txtemployeedocno" name="txtemployeedocno" value='<s:property value="txtemployeedocno"/>'/>
+                
+                <label class="lbl-right" style="width:60px;">Name</label>
+                <input type="text" id="txtemployeename" name="txtemployeename" style="flex:1;" tabindex="-1" readonly value='<s:property value="txtemployeename"/>'>
+            </div>
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width:100px;">Designation</label>
+                <input type="text" id="txtemployeedesignation" name="txtemployeedesignation" tabindex="-1" readonly value='<s:property value="txtemployeedesignation"/>' style="width:150px;">
+                
+                <label class="lbl-right" style="width:100px;">Department</label>
+                <input type="text" id="txtemployeedepartment" name="txtemployeedepartment" tabindex="-1" readonly value='<s:property value="txtemployeedepartment"/>' style="width:150px;">
+                
+                <label class="lbl-right" style="width:100px;">Category</label>
+                <input type="text" id="txtemployeecategory" name="txtemployeecategory" tabindex="-1" readonly value='<s:property value="txtemployeecategory"/>' style="width:150px;">
+            </div>
+            
+            <div class="field-row" style="margin-bottom:0;">
+                <label class="lbl-right" style="width:100px;">Date of Join</label>
+                <div style="width: 125px;">
+                    <div id="joiningDate" name="joiningDate" value='<s:property value="joiningDate"/>'></div>
+                    <input type="hidden" id="hidjoiningDate" name="hidjoiningDate" value='<s:property value="hidjoiningDate"/>' />
+                </div>
+                
+                <label class="lbl-right" style="width:100px;">Appraisal Date</label>
+                <div style="width: 125px;">
+                    <div id="appraisalDate" name="appraisalDate" value='<s:property value="appraisalDate"/>'></div>
+                    <input type="hidden" id="hidappraisalDate" name="hidappraisalDate" value='<s:property value="hidappraisalDate"/>' />
+                </div>
+                
+                <label class="lbl-right" style="width:100px;">Notify Date</label>
+                <div style="width: 125px;">
+                    <div id="notifyDate" name="notifyDate" value='<s:property value="notifyDate"/>'></div>
+                    <input type="hidden" id="hidnotifyDate" name="hidnotifyDate" value='<s:property value="hidnotifyDate"/>' />
+                </div>
+                
+                <div style="margin-left:auto; display:flex; gap:10px;">
+                    <button type="button" class="myButton" id="btnProcessing" onclick="funProcessBtn();">Process</button>
+                    <button type="button" class="myButton" id="btnCalculate" onclick="funCalculateBtn();">Calculate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="middle-panel">
+            <span class="middle-panel-title">Termination Details</span>
+            <div class="grid-container" id="terminationDiv">
                 <jsp:include page="terminationGrid.jsp"></jsp:include>
             </div>
         </div>
 
-        <!-- ===============================
-             ACCOUNT DETAILS
-        ================================ -->
-        <div class="table-section">
-            <h3>Account Details</h3>
-            <div class="cr-table" id="accountDiv">
+        <div class="middle-panel">
+            <span class="middle-panel-title">Account Details</span>
+            <div class="grid-container" id="accountDiv">
                 <jsp:include page="accountsDetailsGrid.jsp"></jsp:include>
+            </div>
+            
+            <div class="field-row" style="margin-top: 15px; justify-content: flex-end; margin-bottom: 0;">
+                <label class="lbl-right">Dr. Total</label>
+                <input type="text" id="txtdrtotal" name="txtdrtotal" tabindex="-1" style="width:100px; text-align:right" value='<s:property value="txtdrtotal"/>' readonly />
+
+                <label class="lbl-right" style="margin-left:15px;">Cr. Total</label>
+                <input type="text" id="txtcrtotal" name="txtcrtotal" tabindex="-1" style="width:100px; text-align:right" value='<s:property value="txtcrtotal"/>' readonly />
             </div>
         </div>
 
-        <!-- ===============================
-             TOTALS
-        ================================ -->
-        <div class="table-section">
-            <table class="cr-table">
-                <tr>
-                    <td align="right">Dr. Total</td>
-                    <td>
-                        <input type="text"
-                               id="txtdrtotal"
-                               name="txtdrtotal"
-                               tabindex="-1"
-                               style="text-align:right"
-                               value='<s:property value="txtdrtotal"/>' />
-                    </td>
-
-                    <td align="right">Cr. Total</td>
-                    <td>
-                        <input type="text"
-                               id="txtcrtotal"
-                               name="txtcrtotal"
-                               tabindex="-1"
-                               style="text-align:right"
-                               value='<s:property value="txtcrtotal"/>' />
-                    </td>
-                </tr>
-            </table>
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode" />
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>' />
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>' />
+            <input type="hidden" id="gridlength" name="gridlength" />
+            <input type="hidden" id="journalgridlength" name="journalgridlength" />
+            <input type="hidden" id="journalsgridlength" name="journalsgridlength" />
+            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>' />
+            <input type="hidden" id="txtgridload" name="txtgridload" value='<s:property value="txtgridload"/>' />
+            <input type="hidden" id="txtchkgridload" name="txtchkgridload" value='<s:property value="txtchkgridload"/>' />
+            <input type="hidden" id="txtchksalarypaid" name="txtchksalarypaid" value='<s:property value="txtchksalarypaid"/>' />
+            <input type="hidden" id="txtchkdate" name="txtchkdate" value='<s:property value="txtchkdate"/>' />
         </div>
 
-        <!-- ===============================
-             HIDDEN FIELDS
-        ================================ -->
-        <input type="hidden" id="mode" name="mode" />
-        <input type="hidden" id="deleted" name="deleted"
-               value='<s:property value="deleted"/>' />
-        <input type="hidden" id="msg" name="msg"
-               value='<s:property value="msg"/>' />
-        <input type="hidden" id="gridlength" name="gridlength" />
-        <input type="hidden" id="journalgridlength" name="journalgridlength" />
-        <input type="hidden" id="journalsgridlength" name="journalsgridlength" />
-        <input type="hidden" id="txttrno" name="txttrno"
-               value='<s:property value="txttrno"/>' />
-        <input type="hidden" id="txtgridload" name="txtgridload"
-               value='<s:property value="txtgridload"/>' />
-        <input type="hidden" id="txtchkgridload" name="txtchkgridload"
-               value='<s:property value="txtchkgridload"/>' />
-        <input type="hidden" id="txtchksalarypaid" name="txtchksalarypaid"
-               value='<s:property value="txtchksalarypaid"/>' />
-        <input type="hidden" id="txtchkdate" name="txtchkdate"
-               value='<s:property value="txtchkdate"/>' />
-
-    </div><!-- /.hidden-scrollbar -->
-
+    </div>
 </form>
 
 <div id="employeeDetailsWindow"><div></div></div>
 
-</div><!-- /#mainBG -->
+</div>
 
 </body>
-
 </html>

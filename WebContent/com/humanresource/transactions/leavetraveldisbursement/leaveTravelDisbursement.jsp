@@ -93,20 +93,21 @@ body {
     position: relative; 
     border-radius: 4px; 
     margin-bottom: 15px;
+    margin-top: 12px; /* Fix for panel hitting the ceiling */
 }
 
 .modern-ui .middle-panel-title { 
     position: absolute; 
-    top: -10px;
+    top: -12px; /* Set directly on the border line */
     left: 10px; 
     background: #ffffff; /* Solid white background to mask the border */
     padding: 0 8px; 
     color: #0056b3;
     font-weight: bold; 
-    font-size: 13px;
+    font-size: 14px; 
     border-left: 3px solid #0056b3;
     z-index: 2; /* Forces text to sit ON TOP of the border */
-    line-height: 1;
+    line-height: normal; /* Fix for sliced text */
 }
 
 /* Custom UI Buttons matching 24px height */
