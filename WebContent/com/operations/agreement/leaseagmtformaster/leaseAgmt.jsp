@@ -2466,7 +2466,7 @@ function checkBrandQty(fleetno,masterrefno){
     <div class="split-section">
         <div class="split-col">
             <div class="modern-panel" style="flex: 1;">
-                <span class="modern-panel-title">Driver Details</span>
+           
 
                 <div style="padding-top: 5px; display: flex; gap: 10px;">
                     
@@ -2543,7 +2543,7 @@ function checkBrandQty(fleetno,masterrefno){
 <!-- ACCORDION CONTENT -->
 <div class="accordion-content">
     <div class="modern-panel">
-        <span class="modern-panel-title">Rate Info</span>
+
 
         <div style="padding-top: 5px;">
             
@@ -2620,7 +2620,7 @@ function checkBrandQty(fleetno,masterrefno){
 <!-- ACCORDION CONTENT -->
 <div class="accordion-content">
     <div class="modern-panel">
-        <span class="modern-panel-title">Payment Info</span>
+
 
         <div style="padding-top: 5px; display: flex; gap: 20px;">
             
@@ -2781,7 +2781,7 @@ function checkBrandQty(fleetno,masterrefno){
 <div class="accordion-content">
     
     <div class="modern-panel" id="vehdetailsupdate">
-        <span class="modern-panel-title">Vehicle Info</span>
+        
 
         <div style="padding-top: 5px;">
             
@@ -2908,7 +2908,7 @@ function checkBrandQty(fleetno,masterrefno){
 <div class="accordion-content">
 
     <div class="modern-panel" id="delupdatefd" style="margin-bottom: 0;">
-        <span class="modern-panel-title">Delivery Details</span>
+
 
         <div style="padding-top: 5px;">
             
