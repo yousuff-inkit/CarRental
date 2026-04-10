@@ -2938,7 +2938,18 @@ legend {
 #jqxTimeOut, #jqxOnTime, #jqxDelTimeOut {
     width: 90px !important;
 }
-
+/* Safe hide for JQX grids to prevent infinite loading spinners */
+.jqx-safe-hide {
+    height: 0px !important;
+    overflow: hidden !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+    display: block !important; /* Keeps it in the DOM flow so JQX gets the correct width */
+    opacity: 0;
+}
 
 </style>
 
@@ -3967,7 +3978,7 @@ html, body {
  
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Check if an existing document is currently loaded (Search/Edit/View mode)
+    // Check if an existing document is currently loaded
     var masterDoc = document.getElementById("masterdoc_no");
     var isLoaded = (masterDoc && masterDoc.value && masterDoc.value > 0);
 
@@ -3976,16 +3987,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     sections.forEach((el, index) => {
         if (isLoaded) {
-            // BUG FIX: If data is loaded, KEEP accordions open so JQX Grids don't hang on the infinite spinner
+            // Document loaded from search: Keep everything open
             el.style.display = 'block';
             if(headers[index]) headers[index].classList.add('active');
         } else {
-            // If it's a New entry, close all except the first one (Rental Info)
+            // New Entry (Create Mode)
             if (index === 0) {
+                // Keep the first one open
                 el.style.display = 'block';
                 if(headers[index]) headers[index].classList.add('active');
             } else {
-                el.style.display = 'none';
+                // BUG FIX: Use the safe-hide class instead of display:none.
+                // This allows the grids to initialize invisibly in the background.
+                el.classList.add('jqx-safe-hide');
+                el.style.display = ''; // Clear inline display
                 if(headers[index]) headers[index].classList.remove('active');
             }
         }
@@ -3994,25 +4009,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function toggleAccordion(el) {
     const content = el.nextElementSibling;
-    const isOpen = content.style.display === "block";
+    
+    // Scenario A: Opening from the safely hidden state (First time clicked)
+    if (content.classList.contains('jqx-safe-hide')) {
+        content.classList.remove('jqx-safe-hide');
+        content.style.display = "block";
+        el.classList.add("active");
+        
+        // Force the grids to resize now that they have physical height
+        setTimeout(function() {
+            $(window).trigger('resize');
+            if (typeof $.fn.jqxGrid === 'function') {
+                if ($("#jqxgrid2").length > 0) $("#jqxgrid2").jqxGrid('render');
+                if ($("#jqxgridtarif").length > 0) $("#jqxgridtarif").jqxGrid('render');
+                if ($("#jqxgridpayment").length > 0) $("#jqxgridpayment").jqxGrid('render');
+            }
+        }, 100);
+        return;
+    }
 
-    // Toggle the section content and the arrow rotation
+    // Scenario B: Normal toggling (Open/Close after initial render)
+    const isOpen = content.style.display === "block";
     content.style.display = isOpen ? "none" : "block";
     el.classList.toggle("active", !isOpen);
 
-    // Safely tell the JQX grids to redraw if the section was just opened
     if (!isOpen) {
+        // Render grids when reopening
         setTimeout(function() {
-            // Trigger a window resize to force JQX internal recalculations
             $(window).trigger('resize');
-            
-            // Force render on specific grids if they exist in the DOM
             if (typeof $.fn.jqxGrid === 'function') {
-                if ($("#jqxgrid2").length > 0) $("#jqxgrid2").jqxGrid('render'); // Driver grid
-                if ($("#jqxgridtarif").length > 0) $("#jqxgridtarif").jqxGrid('render'); // Tariff grid
-                if ($("#jqxgridpayment").length > 0) $("#jqxgridpayment").jqxGrid('render'); // Payment grid
+                if ($("#jqxgrid2").length > 0) $("#jqxgrid2").jqxGrid('render');
+                if ($("#jqxgridtarif").length > 0) $("#jqxgridtarif").jqxGrid('render');
+                if ($("#jqxgridpayment").length > 0) $("#jqxgridpayment").jqxGrid('render');
             }
-        }, 50); // Small delay ensures display:block has fully registered in the browser
+        }, 100);
     }
 }
 </script>

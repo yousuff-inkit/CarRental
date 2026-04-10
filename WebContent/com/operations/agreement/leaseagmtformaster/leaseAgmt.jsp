@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
@@ -167,7 +168,98 @@
 }
 .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
+<style>
+/* ACCORDION HEADER */
+.accordion-header {
+    cursor: pointer;
+    padding: 10px 12px;
+    background: #f0f3f5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
 
+.accordion-header:hover {
+    background: #e0e7ef;
+}
+
+/* LEFT SIDE */
+.accordion-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* NUMBER */
+.accordion-number {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2f6db3;
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* TITLE */
+.accordion-title {
+    font-weight: 600;
+    color: #333;
+}
+
+/* ARROW */
+.accordion-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #333;
+    transition: transform 0.2s ease;
+}
+
+.accordion-header.active .accordion-arrow {
+    transform: rotate(-180deg);
+}
+
+/* CONTENT */
+.accordion-content {
+    margin-top: 8px;
+}
+
+/* SCROLL FIX */
+html, body {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+}
+
+.hidden-scrollbar {
+    height: auto;
+    overflow: visible;
+    padding-bottom: 120px;
+}
+
+/* ERROR MESSAGE FIX */
+#errormsg {
+    white-space: nowrap !important;
+    display: inline-block !important;
+    color: #e74c3c !important;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 6px 12px;
+    margin-right: 30px !important;
+    background-color: #fdf2f2;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    z-index: 50;
+}
+
+</style>
 <script type="text/javascript">
 $(document).ready(function () {
     
@@ -2291,339 +2383,672 @@ function checkBrandQty(fleetno,masterrefno){
 
         <div class="modern-ui hidden-scrollbar">
             
-            <div class="modern-panel">
-                <div style="display: flex; gap: 20px;">
-                    
-                    <div style="flex: 1.2; display: flex; flex-direction: column;">
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 80px;">Date</label>
-                            <div style="width: 120px;">
-                                <div id="date" name="date" value='<s:property value="date"/>'></div>
-                                <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
-                            </div>
-                            
-                            <label class="lbl-right" style="width: 60px;">Enq.Type</label>
-                            <select name="cmbenqtype" id="cmbenqtype" class="input-md">
-                                <option value="">--Select--</option>
-                            </select>
-                            <input type="hidden" name="hidcmbenqtype" id="hidcmbenqtype" value='<s:property value="hidcmbenqtype"/>'>
-                            
-                            <label class="lbl-right" style="width: 100px;">Master Ref Type</label>
-                            <select name="cmbmasterreftype" id="cmbmasterreftype" class="input-sm">
-                                <option value="DIR">DIR</option><option value="MLA">MLA</option>
-                            </select>
-                            <input type="hidden" name="hidcmbmasterreftype" id="hidcmbmasterreftype" value='<s:property value="hidcmbmasterreftype"/>'>
-                            
-                            <label class="lbl-right" style="width: 90px;">Master Ref No</label>
-                            <input type="text" name="masterrefno" id="masterrefno" class="input-md" value='<s:property value="masterrefno"/>' readonly placeholder="Press F3" onkeydown="getMasterRefno(event);">
-                            <input type="hidden" name="hidmasterrefno" id="hidmasterrefno" value='<s:property value="hidmasterrefno"/>'>
-                            <input type="hidden" name="masterrefnocldocno" id="masterrefnocldocno" value='<s:property value="masterrefnocldocno"/>'>                                                 
-                            
-                            <label class="lbl-right" style="width: 50px;">Doc No</label>
-                            <input type="text" id="docno" name="docno" class="input-sm" readonly tabindex="-1" value='<s:property value="docno"/>'/>
-                        </div>
-                        
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 80px;">Client</label>
-                            <input type="text" id="clientid" name="clientid" class="input-sm" readonly placeholder="Press F3" value='<s:property value="clientid"/>' onKeyDown="getclientinfo(event);" ondblclick="getclientinfo(event);"/>
-                            <input type="text" id="clientname" readonly name="clientname" class="input-full" tabindex="-1" value='<s:property value="clientname"/>'/>
-                            
-                            <label class="lbl-right" style="width: 70px;">Salesman</label>
-                            <input type="text" id="salesman" name="salesman" class="input-md" readonly placeholder="Salesman" value='<s:property value="salesman"/>'/>
-                            <input type="hidden" id="le_salmanid" name="le_salmanid" value='<s:property value="le_salmanid"/>'/>
-                            <input type="hidden" id="le_clcodeno" name="le_clcodeno" value='<s:property value="le_clcodeno"/>'/>
-                            <input type="hidden" id="le_clacno" name="le_clacno" value='<s:property value="le_clacno"/>'/>
-                        </div>
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">1</div>
+        <div class="accordion-title">Rental Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
 
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 80px;"></label>
-                            <input type="text" id="cusaddress" placeholder="Mobile NO-Address" readonly name="cusaddress" class="input-full" value='<s:property value="cusaddress"/>'>
-                        </div>
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
 
-                        <div class="field-row" style="margin-bottom: 0;">
-                            <label class="lbl-right" style="width: 80px;">Description</label>
-                            <input type="text" name="description" id="description" class="input-full" placeholder="Description" value='<s:property value="description"/>' onblur="fundescvalidate()">
-                        </div>
-                    </div>
-                    
-                    <div style="flex: 0.2; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                        <div id='jqxMenuMore' title="More" style='visibility: hidden; margin-bottom: 10px;'>
-                            <ul>
-                                <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-                                <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-                                <li><a href="#history" onclick="account();">Account Statement</a></li>   
-                                <li><a href="#close" onclick="closing();">Closing Summary</a></li>
-                                <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>                
-                            </ul>
-                        </div> 
-                        <div><i><b><label id="leasestatus" name="leasestatus" style="font-size: 13px; font-family: Tahoma; color:#6000FC"><s:property value="leasestatus"/></label></b></i></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="split-section">
+    <div class="modern-panel">
+        
+        <div style="display: flex; gap: 20px;">
+            
+            <!-- LEFT SIDE -->
+            <div style="flex: 1.2; display: flex; flex-direction: column;">
                 
-                <div class="split-col">
-                    <div class="modern-panel" style="flex: 1;">
-                        <span class="modern-panel-title">Driver Details</span>
-                        <div style="padding-top: 5px; display: flex; gap: 10px;">
-                            
-                            <div style="flex: 0.3; display: flex; flex-direction: column;">
-                                <div class="field-row">
-                                    <label class="chk-container">
-                                        <input type="checkbox" id="additional_driver" name="additional_driver" value="0" onchange="funaddidriverview()" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                        Additional Driver
-                                    </label>
-                                </div>
-                                <div class="field-row">
-                                    <label class="lbl-right" style="width: 50px;">Charge</label>
-                                    <input type="text" id="adidrvcharges" name="adidrvcharges" class="input-full align-right-input" value='<s:property value="adidrvcharges"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event)">
-                                </div>
-                                <div class="field-row" style="margin-top: 10px;">
-                                    <label class="chk-container">
-                                        <input type="checkbox" id="ladrivercheck" name="ladrivercheck" value="0" onchange="funShaffurdisable()" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                        Chauffeur
-                                    </label>
-                                </div>
-                                <div class="field-row">
-                                    <input type="text" id="ladriverlist" name="ladriverlist" class="input-full" placeholder="Press F3" value='<s:property value="ladriverlist"/>' onKeyDown="getchauffeur(event);"/>
-                                    <input type="hidden" id="del_chaufferid" name="del_chaufferid" value='<s:property value="del_chaufferid"/>'/>
-                                    <input type="hidden" id="client_driverid" name="client_driverid" value='<s:property value="client_driverid"/>'/>
-                                    <input type="hidden" id="client_driverdoc" name="client_driverdoc" value='<s:property value="client_driverdoc"/>'/>
-                                </div>
-                            </div>
-                            
-                            <div style="flex: 0.7;">
-                                <div id="divDrivGrid"><jsp:include page="driverGrid.jsp"></jsp:include></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modern-panel">
-                <span class="modern-panel-title">Rate Info</span>
-                <div style="padding-top: 5px;">
-                    <div class="field-row">
-                        <label class="lbl-right" style="width: 50px;">Period</label>
-                        <select name="per_value" id="per_value" class="input-xs" value='<s:property value="per_value"/>'>
-                            <option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option>
-                            <option value=5>5</option><option value=6>6</option><option value=7>7</option><option value=8>8</option>
-                            <option value=9>9</option><option value=10>10</option><option value=11>11</option><option value=12>12</option>
-                            <option value=13>13</option><option value=14>14</option><option value=15>15</option><option value=16>16</option>
-                            <option value=17>17</option><option value=18>18</option><option value=19>19</option><option value=20>20</option>
-                            <option value=21>21</option><option value=22>22</option><option value=23>23</option><option value=24>24</option>
-                            <option value=25>25</option><option value=26>26</option><option value=27>27</option><option value=28>28</option>
-                            <option value=29>29</option><option value=30>30</option><option value=31>31</option><option value=32>32</option>
-                            <option value=33>33</option><option value=34>34</option><option value=35>35</option><option value=36>36</option>
-                            <option value=37>38</option><option value=38>38</option><option value=39>39</option><option value=40>40</option>
-                            <option value="" selected>-Select-</option>      
-                        </select>
-                        <select name="per_name" id="per_name" class="input-sm" value='<s:property value="per_name"/>'>
-                            <option value=1>Years</option><option value=2>Months</option><option value="" selected>-Select-</option>      
-                        </select>
-                        
-                        <label class="chk-container" style="margin-left: 20px;">
-                            <input type="checkbox" id="advance_chk" name="advance_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                            Advance
-                        </label>
-                        
-                        <label class="lbl-right" style="margin-left: 20px;">Ins.Excess</label>
-                        <input type="text" id="excessinsur" name="excessinsur" class="input-sm align-right-input" value='<s:property value="excessinsur"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event);">
-                        
-                        <label class="lbl-right" style="margin-left: 20px;">Invoice</label>
-                        <select name="invoice" id="invoice" class="input-md" value='<s:property value="invoice"/>'>
-                            <option value="1">Month End</option><option value="2">Period</option>
-                        </select>
-                    </div>
+                <!-- ROW 1 -->
+                <div class="field-row">
                     
-                    <div id="ratediv"><jsp:include page="rateGrid.jsp"></jsp:include></div>
+                    <label class="lbl-right" style="width: 80px;">Date</label>
+                    <div style="width: 120px;">
+                        <div id="date"></div>
+                        <input type="hidden" id="hiddate" name="hiddate"
+                            value='<s:property value="hiddate"/>'/>
+                    </div>
+
+                    <label class="lbl-right" style="width: 60px;">Enq.Type</label>
+                    <select id="cmbenqtype" name="cmbenqtype" class="input-md">
+                        <option value="">--Select--</option>
+                    </select>
+                    <input type="hidden" id="hidcmbenqtype" name="hidcmbenqtype"
+                        value='<s:property value="hidcmbenqtype"/>'>
+
+                    <label class="lbl-right" style="width: 100px;">Master Ref Type</label>
+                    <select id="cmbmasterreftype" name="cmbmasterreftype" class="input-sm">
+                        <option value="DIR">DIR</option>
+                        <option value="MLA">MLA</option>
+                    </select>
+                    <input type="hidden" id="hidcmbmasterreftype" name="hidcmbmasterreftype"
+                        value='<s:property value="hidcmbmasterreftype"/>'>
+
+                    <label class="lbl-right" style="width: 90px;">Master Ref No</label>
+                    <input type="text" id="masterrefno" name="masterrefno"
+                        class="input-md"
+                        readonly
+                        placeholder="Press F3"
+                        value='<s:property value="masterrefno"/>'
+                        onkeydown="getMasterRefno(event);">
+
+                    <input type="hidden" id="hidmasterrefno" name="hidmasterrefno"
+                        value='<s:property value="hidmasterrefno"/>'>
+
+                    <input type="hidden" id="masterrefnocldocno" name="masterrefnocldocno"
+                        value='<s:property value="masterrefnocldocno"/>'>
+
+                    <label class="lbl-right" style="width: 50px;">Doc No</label>
+                    <input type="text" id="docno" name="docno"
+                        class="input-sm"
+                        readonly
+                        tabindex="-1"
+                        value='<s:property value="docno"/>'/>
                 </div>
+
+                <!-- ROW 2 -->
+                <div class="field-row">
+                    
+                    <label class="lbl-right" style="width: 80px;">Client</label>
+                    <input type="text" id="clientid" name="clientid"
+                        class="input-sm"
+                        readonly
+                        placeholder="Press F3"
+                        value='<s:property value="clientid"/>'
+                        onkeydown="getclientinfo(event);"
+                        ondblclick="getclientinfo(event);"/>
+
+                    <input type="text" id="clientname" name="clientname"
+                        class="input-full"
+                        readonly
+                        tabindex="-1"
+                        value='<s:property value="clientname"/>'/>
+
+                    <label class="lbl-right" style="width: 70px;">Salesman</label>
+                    <input type="text" id="salesman" name="salesman"
+                        class="input-md"
+                        readonly
+                        value='<s:property value="salesman"/>'/>
+
+                    <input type="hidden" id="le_salmanid" name="le_salmanid"
+                        value='<s:property value="le_salmanid"/>'/>
+
+                    <input type="hidden" id="le_clcodeno" name="le_clcodeno"
+                        value='<s:property value="le_clcodeno"/>'/>
+
+                    <input type="hidden" id="le_clacno" name="le_clacno"
+                        value='<s:property value="le_clacno"/>'/>
+                </div>
+
+                <!-- ROW 3 -->
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 80px;"></label>
+                    <input type="text" id="cusaddress"
+                        class="input-full"
+                        readonly
+                        placeholder="Mobile NO-Address"
+                        value='<s:property value="cusaddress"/>'>
+                </div>
+
+                <!-- ROW 4 -->
+                <div class="field-row" style="margin-bottom: 0;">
+                    <label class="lbl-right" style="width: 80px;">Description</label>
+                    <input type="text" id="description" name="description"
+                        class="input-full"
+                        placeholder="Description"
+                        value='<s:property value="description"/>'
+                        onblur="fundescvalidate()">
+                </div>
+
             </div>
 
-            <div class="modern-panel">
-                <span class="modern-panel-title">Payment Info</span>
-                <div style="padding-top: 5px; display: flex; gap: 20px;">
-                    <div style="flex: 0.7;">
-                        <div id="paymentdiv"><jsp:include page="paymentdetailsgrid.jsp"></jsp:include></div>
-                    </div>
+            <!-- RIGHT SIDE MENU -->
+            <div style="flex: 0.2; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                
+                <div id="jqxMenuMore" title="More" style="visibility: hidden; margin-bottom: 10px;">
+                    <ul>
+                        <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+                        <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+                        <li><a href="#history" onclick="account();">Account Statement</a></li>   
+                        <li><a href="#close" onclick="closing();">Closing Summary</a></li>
+                        <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>                
+                    </ul>
+                </div> 
+
+                <div>
+                    <i><b>
+                        <label id="leasestatus" name="leasestatus"
+                            style="font-size: 13px; font-family: Tahoma; color:#6000FC">
+                            <s:property value="leasestatus"/>
+                        </label>
+                    </b></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">2</div>
+        <div class="accordion-title">Driver Details</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
+    <div class="split-section">
+        <div class="split-col">
+            <div class="modern-panel" style="flex: 1;">
+           
+
+                <div style="padding-top: 5px; display: flex; gap: 10px;">
+                    
+                    <!-- LEFT SIDE -->
                     <div style="flex: 0.3; display: flex; flex-direction: column;">
+                        
                         <div class="field-row">
-                            <label class="lbl-right" style="width: 50px;">PO</label>
-                            <input type="text" id="leasePo" name="leasePo" class="input-full" value='<s:property value="leasePo"/>'>
+                            <label class="chk-container">
+                                <input type="checkbox" id="additional_driver" name="additional_driver" value="0"
+                                    onchange="funaddidriverview()"
+                                    onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                                Additional Driver
+                            </label>
                         </div>
+
                         <div class="field-row">
-                            <label class="lbl-right" style="width: 50px;">Project</label>
-                            <input type="text" id="leaseproject" readonly="readonly" class="input-full" onkeydown="getproject(event);" placeholder="Press F3 To Search" name="leaseproject" value='<s:property value="leaseproject"/>'>
-                            <input type="hidden" id="leaseprojectDoc" name="leaseprojectDoc" value='<s:property value="leaseprojectDoc"/>'>
+                            <label class="lbl-right" style="width: 50px;">Charge</label>
+                            <input type="text" id="adidrvcharges" name="adidrvcharges"
+                                class="input-full align-right-input"
+                                value='<s:property value="adidrvcharges"/>'
+                                onblur="funRoundAmt(this.value,this.id);"
+                                onkeypress="return isNumber(event)">
+                        </div>
+
+                        <div class="field-row" style="margin-top: 10px;">
+                            <label class="chk-container">
+                                <input type="checkbox" id="ladrivercheck" name="ladrivercheck" value="0"
+                                    onchange="funShaffurdisable()"
+                                    onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                                Chauffeur
+                            </label>
+                        </div>
+
+                        <div class="field-row">
+                            <input type="text" id="ladriverlist" name="ladriverlist"
+                                class="input-full"
+                                placeholder="Press F3"
+                                value='<s:property value="ladriverlist"/>'
+                                onkeydown="getchauffeur(event);" />
+
+                            <input type="hidden" id="del_chaufferid" name="del_chaufferid"
+                                value='<s:property value="del_chaufferid"/>'/>
+
+                            <input type="hidden" id="client_driverid" name="client_driverid"
+                                value='<s:property value="client_driverid"/>'/>
+
+                            <input type="hidden" id="client_driverdoc" name="client_driverdoc"
+                                value='<s:property value="client_driverdoc"/>'/>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+                    <div style="flex: 0.7;">
+                        <div id="divDrivGrid">
+                            <jsp:include page="driverGrid.jsp"></jsp:include>
                         </div>
                     </div>
+
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">3</div>
+        <div class="accordion-title">Rate Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
 
-            <div class="split-section">
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
+    <div class="modern-panel">
+
+
+        <div style="padding-top: 5px;">
+            
+            <!-- ROW -->
+            <div class="field-row">
                 
-                <div class="split-col">
-                    <div class="modern-panel" style="flex: 1;">
-                        <span class="modern-panel-title">Termination Clauses Info</span>
-                        <div style="padding-top: 5px;">
-                            
-                            <div class="field-row">
-                                <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
-                                    <input type="text" name="m1" id="m1" class="align-center-input" style="flex:1;" value='<s:property value="m1"/>' onkeypress="javascript:return isNumber (event)">
-                                    <span>to</span>
-                                    <input type="text" name="m2" id="m2" class="align-center-input" style="flex:1;" value='<s:property value="m2"/>' onkeypress="javascript:return isNumber (event)" onblur="change1();">
-                                </div>
-                                <input type="text" id="amt1" name="amt1" class="input-full" value='<s:property value="amt1"/>' onkeypress="javascript:return isNumber (event)"/>
-                            </div>
-                            
-                            <div class="field-row">
-                                <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
-                                    <input type="text" name="m3" id="m3" class="align-center-input" style="flex:1;" value='<s:property value="m3"/>' onkeypress="javascript:return isNumber (event)" readonly>
-                                    <span>to</span>
-                                    <input type="text" name="m4" id="m4" class="align-center-input" style="flex:1;" value='<s:property value="m4"/>' onkeypress="javascript:return isNumber (event)" onblur="change2();">
-                                </div>
-                                <input type="text" id="amt2" name="amt2" class="input-full" value='<s:property value="amt2"/>' onkeypress="javascript:return isNumber (event)" />
-                            </div>
+                <label class="lbl-right" style="width: 50px;">Period</label>
 
-                            <div class="field-row">
-                                <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
-                                    <input type="text" name="m5" id="m5" class="align-center-input" style="flex:1;" value='<s:property value="m5"/>' onkeypress="javascript:return isNumber (event)" readonly>
-                                    <span>to</span>
-                                    <input type="text" name="m6" id="m6" class="align-center-input" style="flex:1;" value='<s:property value="m6"/>' onkeypress="javascript:return isNumber (event)" onblur="change3();">
-                                </div>
-                                <input type="text" id="amt3" name="amt3" class="input-full" value='<s:property value="amt3"/>' onkeypress="javascript:return isNumber (event)" />
-                            </div>
+                <select name="per_value" id="per_value" class="input-xs"
+                    value='<s:property value="per_value"/>'>
+                    <option value=1>1</option><option value=2>2</option><option value=3>3</option>
+                    <option value=4>4</option><option value=5>5</option><option value=6>6</option>
+                    <option value=7>7</option><option value=8>8</option><option value=9>9</option>
+                    <option value=10>10</option><option value=11>11</option><option value=12>12</option>
+                    <option value=13>13</option><option value=14>14</option><option value=15>15</option>
+                    <option value=16>16</option><option value=17>17</option><option value=18>18</option>
+                    <option value=19>19</option><option value=20>20</option><option value=21>21</option>
+                    <option value=22>22</option><option value=23>23</option><option value=24>24</option>
+                    <option value=25>25</option><option value=26>26</option><option value=27>27</option>
+                    <option value=28>28</option><option value=29>29</option><option value=30>30</option>
+                    <option value=31>31</option><option value=32>32</option><option value=33>33</option>
+                    <option value=34>34</option><option value=35>35</option><option value=36>36</option>
+                    <option value=37>37</option><option value=38>38</option><option value=39>39</option>
+                    <option value=40>40</option>
+                    <option value="" selected>-Select-</option>
+                </select>
 
-                            <div class="field-row">
-                                <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
-                                    <input type="text" name="m7" id="m7" class="align-center-input" style="flex:1;" value='<s:property value="m7"/>' onkeypress="javascript:return isNumber (event)" readonly>
-                                    <span>to</span>
-                                    <input type="text" name="m8" id="m8" class="align-center-input" style="flex:1;" value='<s:property value="m8"/>' onkeypress="javascript:return isNumber (event)" onblur="change4();">
-                                </div>
-                                <input type="text" id="amt4" name="amt4" class="input-full" value='<s:property value="amt4"/>' onkeypress="javascript:return isNumber (event)" />
-                            </div>
+                <select name="per_name" id="per_name" class="input-sm"
+                    value='<s:property value="per_name"/>'>
+                    <option value=1>Years</option>
+                    <option value=2>Months</option>
+                    <option value="" selected>-Select-</option>
+                </select>
 
-                            <div class="field-row" style="margin-bottom: 0;">
-                                <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
-                                    <input type="text" name="m9" id="m9" class="align-center-input" style="flex:1;" value='<s:property value="m9"/>' onkeypress="javascript:return isNumber (event)" readonly>
-                                    <span>to</span>
-                                    <input type="text" name="m10" id="m10" class="align-center-input" style="flex:1;" value='<s:property value="m10"/>' onkeypress="javascript:return isNumber (event)">
-                                </div>
-                                <input type="text" id="amt5" name="amt5" class="input-full" value='<s:property value="amt5"/>' onkeypress="javascript:return isNumber (event)" />
-                            </div>
+                <label class="chk-container" style="margin-left: 20px;">
+                    <input type="checkbox" id="advance_chk" name="advance_chk" value="0"
+                        onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                    Advance
+                </label>
 
-                        </div>
-                    </div>
+                <label class="lbl-right" style="margin-left: 20px;">Ins.Excess</label>
+                <input type="text" id="excessinsur" name="excessinsur"
+                    class="input-sm align-right-input"
+                    value='<s:property value="excessinsur"/>'
+                    onblur="funRoundAmt(this.value,this.id);"
+                    onkeypress="return isNumber(event);">
+
+                <label class="lbl-right" style="margin-left: 20px;">Invoice</label>
+                <select name="invoice" id="invoice" class="input-md"
+                    value='<s:property value="invoice"/>'>
+                    <option value="1">Month End</option>
+                    <option value="2">Period</option>
+                </select>
+
+            </div>
+
+            <!-- GRID -->
+            <div id="ratediv">
+                <jsp:include page="rateGrid.jsp"></jsp:include>
+            </div>
+
+        </div>
+    </div>
+</div>
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">4</div>
+        <div class="accordion-title">Payment Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
+    <div class="modern-panel">
+
+
+        <div style="padding-top: 5px; display: flex; gap: 20px;">
+            
+            <!-- LEFT GRID -->
+            <div style="flex: 0.7;">
+                <div id="paymentdiv">
+                    <jsp:include page="paymentdetailsgrid.jsp"></jsp:include>
+                </div>
+            </div>
+
+            <!-- RIGHT FORM -->
+            <div style="flex: 0.3; display: flex; flex-direction: column;">
+                
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 50px;">PO</label>
+                    <input type="text" id="leasePo" name="leasePo"
+                        class="input-full"
+                        value='<s:property value="leasePo"/>'>
                 </div>
 
-                <div class="split-col">
-                    <div class="modern-panel" style="flex: 1;">
-                        <span class="modern-panel-title">Other Income</span>
-                        <div style="padding-top: 5px;">
-                            <div id="newvehdiv"><jsp:include page="newvehdetails.jsp"></jsp:include></div>
-                        </div>
-                    </div>
+                <div class="field-row">
+                    <label class="lbl-right" style="width: 50px;">Project</label>
+                    <input type="text" id="leaseproject"
+                        readonly="readonly"
+                        class="input-full"
+                        onkeydown="getproject(event);"
+                        placeholder="Press F3 To Search"
+                        name="leaseproject"
+                        value='<s:property value="leaseproject"/>'>
+
+                    <input type="hidden" id="leaseprojectDoc"
+                        name="leaseprojectDoc"
+                        value='<s:property value="leaseprojectDoc"/>'>
                 </div>
 
             </div>
 
-            <div class="modern-panel" id="vehdetailsupdate">
-                <span class="modern-panel-title">Vehicle Info</span>
+        </div>
+    </div>
+</div>
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">5</div>
+        <div class="accordion-title">Termination & Other Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
+    
+    <div class="split-section">
+        
+        <!-- LEFT SIDE -->
+        <div class="split-col">
+            <div class="modern-panel" style="flex: 1;">
+                <span class="modern-panel-title">Termination Clauses Info</span>
+
                 <div style="padding-top: 5px;">
                     
+                    <!-- ROW 1 -->
                     <div class="field-row">
-                        <label class="lbl-right" style="width: 100px;">Temporary Fleet</label>
-                        <input type="text" readonly id="tempfleet" name="tempfleet" class="input-sm" placeholder="Press F3" value='<s:property value="tempfleet"/>' onKeyDown="getvehinfo(2);">
-                        
-                        <label class="lbl-right" style="width: 100px; margin-left: 10px;">Permanent Fleet</label>
-                        <input type="text" readonly id="permanentfleet" name="permanentfleet" class="input-sm" placeholder="Press F3" value='<s:property value="permanentfleet"/>' onKeyDown="getvehinfo(1);">
-
-                        <label class="chk-container" style="margin-left: 20px;">
-                            <input type="checkbox" id="chkdelivery" name="chkdelivery" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)" onchange="fundelivarytick();">
-                            Delivery
-                        </label>
-                        
-                        <input type="text" readonly id="deldrvname" placeholder="Press F3 To Search" class="input-md" style="margin-left: 5px;" name="deldrvname" value='<s:property value="deldrvname"/>' onKeyDown="getdeldrv(event);">
-
-                        <label class="lbl-right" style="width: 80px; margin-left: 10px;">Del.Charges</label>
-                        <input type="text" id="delcharges" name="delcharges" class="input-md align-right-input" value='<s:property value="delcharges" />' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event)">
-                    </div>
-
-                    <div class="field-row">
-                        <label class="lbl-right" style="width: 100px;">Fleet Details</label>
-                        <input type="text" readonly name="fleetname" id="fleetname" class="input-full" value='<s:property value="fleetname"/>'>
-                        
-                        <div style="display: flex; gap: 10px; margin-left: 10px;">
-                            <input type="button" name="btnupdate" id="btnupdate" class="myButton" value="Edit" onclick="funupdate()">
-                            <input type="button" name="leaseprintbtn" id="leaseprintbtn" class="myButton" value="Print" onclick="funPrintdown()">
+                        <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
+                            <input type="text" id="m1" name="m1" class="align-center-input"
+                                value='<s:property value="m1"/>' onkeypress="return isNumber(event)">
+                            <span>to</span>
+                            <input type="text" id="m2" name="m2" class="align-center-input"
+                                value='<s:property value="m2"/>' onkeypress="return isNumber(event)" onblur="change1();">
                         </div>
+                        <input type="text" id="amt1" name="amt1" class="input-full"
+                            value='<s:property value="amt1"/>' onkeypress="return isNumber(event)">
                     </div>
 
+                    <!-- ROW 2 -->
+                    <div class="field-row">
+                        <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
+                            <input type="text" id="m3" name="m3" class="align-center-input"
+                                value='<s:property value="m3"/>' readonly onkeypress="return isNumber(event)">
+                            <span>to</span>
+                            <input type="text" id="m4" name="m4" class="align-center-input"
+                                value='<s:property value="m4"/>' onblur="change2();" onkeypress="return isNumber(event)">
+                        </div>
+                        <input type="text" id="amt2" name="amt2" class="input-full"
+                            value='<s:property value="amt2"/>' onkeypress="return isNumber(event)">
+                    </div>
+
+                    <!-- ROW 3 -->
+                    <div class="field-row">
+                        <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
+                            <input type="text" id="m5" name="m5" class="align-center-input"
+                                value='<s:property value="m5"/>' readonly onkeypress="return isNumber(event)">
+                            <span>to</span>
+                            <input type="text" id="m6" name="m6" class="align-center-input"
+                                value='<s:property value="m6"/>' onblur="change3();" onkeypress="return isNumber(event)">
+                        </div>
+                        <input type="text" id="amt3" name="amt3" class="input-full"
+                            value='<s:property value="amt3"/>' onkeypress="return isNumber(event)">
+                    </div>
+
+                    <!-- ROW 4 -->
+                    <div class="field-row">
+                        <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
+                            <input type="text" id="m7" name="m7" class="align-center-input"
+                                value='<s:property value="m7"/>' readonly onkeypress="return isNumber(event)">
+                            <span>to</span>
+                            <input type="text" id="m8" name="m8" class="align-center-input"
+                                value='<s:property value="m8"/>' onblur="change4();" onkeypress="return isNumber(event)">
+                        </div>
+                        <input type="text" id="amt4" name="amt4" class="input-full"
+                            value='<s:property value="amt4"/>' onkeypress="return isNumber(event)">
+                    </div>
+
+                    <!-- ROW 5 -->
                     <div class="field-row" style="margin-bottom: 0;">
-                        <label class="lbl-right" style="width: 100px;">OUT : Date</label>
-                        <div style="width: 120px;">
-                            <div id="dateout" name="dateout" ></div>
+                        <div style="display: flex; gap: 5px; align-items: center; width: 140px;">
+                            <input type="text" id="m9" name="m9" class="align-center-input"
+                                value='<s:property value="m9"/>' readonly onkeypress="return isNumber(event)">
+                            <span>to</span>
+                            <input type="text" id="m10" name="m10" class="align-center-input"
+                                value='<s:property value="m10"/>' onkeypress="return isNumber(event)">
                         </div>
-                        <input type="hidden" name="hiddateout" id="hiddateout" value='<s:property value="hiddateout"/>'>
-
-                        <label class="lbl-right" style="width: 40px;">Time</label>
-                        <div style="width: 80px;">
-                            <div id="timeout" name="timeout"></div>
-                        </div>
-                        <input type="hidden" name="hidtimeout" id="hidtimeout" value='<s:property value="hidtimeout"/>'>
-
-                        <label class="lbl-right" style="width: 40px;">Km</label>
-                        <input type="text" name="kmout" id="kmout" class="input-sm" value='<s:property value="kmout"/>' onkeypress="javascript:return isNumber (event)">
-
-                        <label class="lbl-right" style="width: 40px;">Fuel</label>
-                        <select name="cmbfuelout" id="cmbfuelout" class="input-md">  
-                            <option value="" selected>-Select-</option>
-                            <option value=0.000 >Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                            <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                        </select> 
-                        <input type="hidden" name="hidcmbfuelout" id="hidcmbfuelout" value='<s:property value="hidcmbfuelout"/>'>
-                        
-                        <button type="button" title="Reset" class="icon" id="cleardata" onclick="clearvehdata()" value='<s:property value="cleardata"/>' style="margin-left: 10px;">
-                            <img alt="Reset" src="<%=contextPath%>/icons/cancel_new.png"> 
-                        </button>
+                        <input type="text" id="amt5" name="amt5" class="input-full"
+                            value='<s:property value="amt5"/>' onkeypress="return isNumber(event)">
                     </div>
 
                 </div>
             </div>
+        </div>
 
-            <div class="modern-panel" id="delupdatefd" style="margin-bottom: 0;">
-                <span class="modern-panel-title">Delivery Details</span>
+        <!-- RIGHT SIDE -->
+        <div class="split-col">
+            <div class="modern-panel" style="flex: 1;">
+                <span class="modern-panel-title">Other Income</span>
+
                 <div style="padding-top: 5px;">
-                    <div class="field-row" style="margin-bottom: 0;">
-                        <label class="lbl-right" style="width: 100px;">Del Date</label>
-                        <div style="width: 120px;">
-                            <div id="deldateout" name="deldateout"></div>
-                        </div>
-                        <input type="hidden" name="hiddeldateout" id="hiddeldateout" value='<s:property value="hiddeldateout"/>'>
-
-                        <label class="lbl-right" style="width: 60px;">Del Time</label>
-                        <div style="width: 80px;">
-                            <div id="deltimeout" name="deltimeout"></div>
-                        </div>
-                        <input type="hidden" name="hiddeltimeout" id="hiddeltimeout" value='<s:property value="hiddeltimeout"/>'>
-
-                        <label class="lbl-right" style="width: 60px;">Del Km</label>
-                        <input type="text" name="delkmout" id="delkmout" class="input-sm" value='<s:property value="delkmout"/>' onblur="funchkKm();" onkeypress="javascript:return isNumber (event);">
-
-                        <label class="lbl-right" style="width: 60px;">Del Fuel</label>
-                        <select name="cmbdelfuelout" id="cmbdelfuelout" class="input-md">
-                            <option value="" selected>-Select-</option>
-                            <option value=0.000 >Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                            <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                        </select>
-
-                        <input type="button" name="btndelupdate" id="btndelupdate" class="myButton" value="Edit" onclick="fundelupdate()" style="margin-left: auto;">
+                    <div id="newvehdiv">
+                        <jsp:include page="newvehdetails.jsp"></jsp:include>
                     </div>
                 </div>
             </div>
+        </div>
+
+    </div>
+
+</div>
+
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">6</div>
+        <div class="accordion-title">Vehicle Info</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
+    
+    <div class="modern-panel" id="vehdetailsupdate">
+        
+
+        <div style="padding-top: 5px;">
+            
+            <!-- ROW 1 -->
+            <div class="field-row">
+                
+                <label class="lbl-right" style="width: 100px;">Temporary Fleet</label>
+                <input type="text" readonly id="tempfleet" name="tempfleet"
+                    class="input-sm"
+                    placeholder="Press F3"
+                    value='<s:property value="tempfleet"/>'
+                    onkeydown="getvehinfo(2);">
+
+                <label class="lbl-right" style="width: 100px; margin-left: 10px;">Permanent Fleet</label>
+                <input type="text" readonly id="permanentfleet" name="permanentfleet"
+                    class="input-sm"
+                    placeholder="Press F3"
+                    value='<s:property value="permanentfleet"/>'
+                    onkeydown="getvehinfo(1);">
+
+                <label class="chk-container" style="margin-left: 20px;">
+                    <input type="checkbox" id="chkdelivery" name="chkdelivery" value="0"
+                        onclick="$(this).attr('value', this.checked ? 1 : 0)"
+                        onchange="fundelivarytick();">
+                    Delivery
+                </label>
+
+                <input type="text" readonly id="deldrvname"
+                    placeholder="Press F3 To Search"
+                    class="input-md"
+                    style="margin-left: 5px;"
+                    name="deldrvname"
+                    value='<s:property value="deldrvname"/>'
+                    onkeydown="getdeldrv(event);">
+
+                <label class="lbl-right" style="width: 80px; margin-left: 10px;">Del.Charges</label>
+                <input type="text" id="delcharges" name="delcharges"
+                    class="input-md align-right-input"
+                    value='<s:property value="delcharges"/>'
+                    onblur="funRoundAmt(this.value,this.id);"
+                    onkeypress="return isNumber(event)">
+            </div>
+
+            <!-- ROW 2 -->
+            <div class="field-row">
+                
+                <label class="lbl-right" style="width: 100px;">Fleet Details</label>
+                <input type="text" readonly name="fleetname" id="fleetname"
+                    class="input-full"
+                    value='<s:property value="fleetname"/>'>
+
+                <div style="display: flex; gap: 10px; margin-left: 10px;">
+                    <input type="button" id="btnupdate" class="myButton"
+                        value="Edit" onclick="funupdate()">
+                    <input type="button" id="leaseprintbtn" class="myButton"
+                        value="Print" onclick="funPrintdown()">
+                </div>
+            </div>
+
+            <!-- ROW 3 -->
+            <div class="field-row" style="margin-bottom: 0;">
+                
+                <label class="lbl-right" style="width: 100px;">OUT : Date</label>
+                <div style="width: 120px;">
+                    <div id="dateout"></div>
+                </div>
+                <input type="hidden" id="hiddateout" name="hiddateout"
+                    value='<s:property value="hiddateout"/>'>
+
+                <label class="lbl-right" style="width: 40px;">Time</label>
+                <div style="width: 80px;">
+                    <div id="timeout"></div>
+                </div>
+                <input type="hidden" id="hidtimeout" name="hidtimeout"
+                    value='<s:property value="hidtimeout"/>'>
+
+                <label class="lbl-right" style="width: 40px;">Km</label>
+                <input type="text" id="kmout" name="kmout"
+                    class="input-sm"
+                    value='<s:property value="kmout"/>'
+                    onkeypress="return isNumber(event)">
+
+                <label class="lbl-right" style="width: 40px;">Fuel</label>
+                <select id="cmbfuelout" name="cmbfuelout" class="input-md">
+                    <option value="" selected>-Select-</option>
+                    <option value="0.000">Level 0/8</option>
+                    <option value="0.125">Level 1/8</option>
+                    <option value="0.250">Level 2/8</option>
+                    <option value="0.375">Level 3/8</option>
+                    <option value="0.500">Level 4/8</option>
+                    <option value="0.625">Level 5/8</option>
+                    <option value="0.750">Level 6/8</option>
+                    <option value="0.875">Level 7/8</option>
+                    <option value="1.000">Level 8/8</option>
+                </select>
+
+                <input type="hidden" id="hidcmbfuelout" name="hidcmbfuelout"
+                    value='<s:property value="hidcmbfuelout"/>'>
+
+                <button type="button" title="Reset" class="icon"
+                    id="cleardata"
+                    onclick="clearvehdata()"
+                    style="margin-left: 10px;">
+                    <img alt="Reset" src="<%=contextPath%>/icons/cancel_new.png">
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+            <!-- ACCORDION HEADER -->
+<div class="accordion-header" onclick="toggleAccordion(this)">
+    <div class="accordion-left">
+        <div class="accordion-number">7</div>
+        <div class="accordion-title">Delivery Details</div>
+    </div>
+    <div class="accordion-arrow"></div>
+</div>
+
+<!-- ACCORDION CONTENT -->
+<div class="accordion-content">
+
+    <div class="modern-panel" id="delupdatefd" style="margin-bottom: 0;">
+
+
+        <div style="padding-top: 5px;">
+            
+            <div class="field-row" style="margin-bottom: 0;">
+                
+                <!-- DATE -->
+                <label class="lbl-right" style="width: 100px;">Del Date</label>
+                <div style="width: 120px;">
+                    <div id="deldateout"></div>
+                </div>
+                <input type="hidden" id="hiddeldateout" name="hiddeldateout"
+                    value='<s:property value="hiddeldateout"/>'>
+
+                <!-- TIME -->
+                <label class="lbl-right" style="width: 60px;">Del Time</label>
+                <div style="width: 80px;">
+                    <div id="deltimeout"></div>
+                </div>
+                <input type="hidden" id="hiddeltimeout" name="hiddeltimeout"
+                    value='<s:property value="hiddeltimeout"/>'>
+
+                <!-- KM -->
+                <label class="lbl-right" style="width: 60px;">Del Km</label>
+                <input type="text" id="delkmout" name="delkmout"
+                    class="input-sm"
+                    value='<s:property value="delkmout"/>'
+                    onblur="funchkKm();"
+                    onkeypress="return isNumber(event);">
+
+                <!-- FUEL -->
+                <label class="lbl-right" style="width: 60px;">Del Fuel</label>
+                <select id="cmbdelfuelout" name="cmbdelfuelout" class="input-md">
+                    <option value="" selected>-Select-</option>
+                    <option value="0.000">Level 0/8</option>
+                    <option value="0.125">Level 1/8</option>
+                    <option value="0.250">Level 2/8</option>
+                    <option value="0.375">Level 3/8</option>
+                    <option value="0.500">Level 4/8</option>
+                    <option value="0.625">Level 5/8</option>
+                    <option value="0.750">Level 6/8</option>
+                    <option value="0.875">Level 7/8</option>
+                    <option value="1.000">Level 8/8</option>
+                </select>
+
+                <!-- BUTTON -->
+                <input type="button"
+                    id="btndelupdate"
+                    class="myButton"
+                    value="Edit"
+                    onclick="fundelupdate()"
+                    style="margin-left: auto;">
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
             <input type="hidden" name="checkbranch" id="checkbranch" value='<s:property value="checkbranch"/>'>
             <input type="hidden" name="masterdoc_no" id="masterdoc_no" value='<s:property value="masterdoc_no"/>'>
@@ -2669,6 +3094,50 @@ function checkBrandQty(fleetno,masterrefno){
     <div id="masterrefnowindow"><div></div><div></div></div>
 
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    var masterDoc = document.getElementById("masterdoc_no");
+    var isLoaded = (masterDoc && masterDoc.value && masterDoc.value > 0);
+
+    const sections = document.querySelectorAll('.accordion-content');
+    const headers = document.querySelectorAll('.accordion-header');
+
+    sections.forEach((el, index) => {
+        if (isLoaded) {
+            el.style.display = 'block';
+            if (headers[index]) headers[index].classList.add('active');
+        } else {
+            if (index === 0) {
+                el.style.display = 'block';
+                if (headers[index]) headers[index].classList.add('active');
+            } else {
+                el.style.display = 'none';
+                if (headers[index]) headers[index].classList.remove('active');
+            }
+        }
+    });
+});
+
+function toggleAccordion(el) {
+    const content = el.nextElementSibling;
+    const isOpen = content.style.display === "block";
+
+    content.style.display = isOpen ? "none" : "block";
+    el.classList.toggle("active", !isOpen);
+
+    if (!isOpen) {
+        setTimeout(function () {
+            $(window).trigger('resize');
+
+            if (typeof $.fn.jqxGrid === 'function') {
+                if ($("#jqxgrid2").length > 0) $("#jqxgrid2").jqxGrid('render');
+                if ($("#jqxgridtarif").length > 0) $("#jqxgridtarif").jqxGrid('render');
+                if ($("#jqxgridpayment").length > 0) $("#jqxgridpayment").jqxGrid('render');
+            }
+        }, 50);
+    }
+}
+</script>
 </body>
 </html>
