@@ -22,190 +22,198 @@
 %>
 
 <style>
-    
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        text-align: left !important; 
-    }
-
-    
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
-    
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-
-    .receipt-header {
-        display: grid;
-        grid-template-columns: 100px 120px auto 150px auto 150px;
-        gap: 15px;
-        align-items: center;
-        margin-bottom: 20px;
-        margin-top: 20px;
-        padding: 0 0 0 5px; 
-    }
-
-    .form-group {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
-    }
-
-    .form-group.single-label-dual-input {
-        grid-template-columns: 120px 1fr 1fr;
-    }
-    
-    .form-group.triple-input {
-        grid-template-columns: 80px 1fr 80px 1fr 80px 1fr;
-    }
-
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 30px;
-    }
-
-    .section-block {
-        flex: 1;
-        background: #f6f8fa;
-        border-radius: 12px;
-        padding: 20px; 
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    }
-
-    .section-block h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-    }
-
-  
-    input[type="text"], select {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    input[type="text"]:focus, select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    
-    input[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
-
-    label {
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 14px;
-    }
-
- 
-    .table-section { margin: 20px 0; }
-    .table-section h3 {
-        color: #253858; font-size: 1.05rem; font-weight: 600; margin-bottom: 12px;
-    }
-    body::-webkit-scrollbar {
-    width: 0px;
+/* =========================================================
+SCOPED UI: Modern Layout (Matches Client Master)
+========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
 }
 
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Middle Section Panels - No Clipped Headings */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+    margin-top: 12px; 
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px; 
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
+
+/* Custom UI Buttons matching 24px height */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
     color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
     white-space: nowrap;
-    text-align: center;
+}
+.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: flex;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+/* Grid Wrapper */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
 }
 
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-    
+/* Validation Label */
+.modern-ui .val-error { color: red; font-size: 11px; font-weight:bold; }
 
-    .doc-group { display: flex; gap: 5px; }
-    .hidden-scrollbar { overflow: auto; height: 100vh; }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
-    #validrate { color: red; font-size: 12px; }
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
 </style>
 
 <script type="text/javascript">
     var mod1 = '<%=mod%>';
 	$(document).ready(function() {
-		 $("#jqxCreditNoteDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $('#txtforsearch').val(2);
-		 
+		
+         /* COMPACT DATE SIZING */
+		 $("#jqxCreditNoteDate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+		 $("#maindate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+		
+         /* Force internal alignment AFTER render */
+         setTimeout(function () {
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                 "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+         }, 0);
+
+         $('#txtforsearch').val(2);
+		
 		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsToWindow').jqxWindow('close');  
-		 
+		
 		 $('#creditNoteGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#creditNoteGridWindow').jqxWindow('close'); 
-		 
+		
 		 $('#costTypeSearchGridWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Type Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
  		 $('#costTypeSearchGridWindow').jqxWindow('close');
- 		 
+ 		
  		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#costCodeSearchWindow').jqxWindow('close');
-		 
+		
 		 $('#jqxCreditNoteDate').on('change', function (event) {
 				var creditdate = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 				var validdate=funDateInPeriod(creditdate);
@@ -214,13 +222,13 @@
 					return 0;	
 				} 
 			 });
-			 
+			
 		$('#txtaccid').dblclick(function(){
 			  var date = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 			  $("#maindate").jqxDateTimeInput('val', date);
 			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
 			  $('#txtforsearch').val(2);
-	    });   	 
+	    });   	
 		getConfigs();
 	});
 	
@@ -349,7 +357,7 @@
 
 		     }
 	      }
-	 
+	
 			function funSearchLoad(){
 				changeContent('cnoMainSearch.jsp'); 
 			 }
@@ -357,11 +365,11 @@
 			 function funChkButton(){
 					/* funReset(); */
 				}
-			 
+			
 			 function funFocus(){
 			    	$('#jqxCreditNoteDate').jqxDateTimeInput('focus'); 	    		
 			    }
-			 
+			
 			   $(function(){
 			        $('#frmCreditNote').validate({
 			                rules: {
@@ -605,21 +613,21 @@
 			 	                if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
 			 	 	              
 			 	                	 if(value==true){
-				 	                  	   if(!isNaN(baseamount)){
-				 	                  	      dr=dr+baseamount;
-				 	                  	   }else if(isNaN(baseamount)){
-				 	                    		 baseamount=0.00;
-				 	                    		 dr=dr+baseamount;
-				 	                    	   }
-				 	                     }
-				 	                     else{
-				 	                  	   if(!isNaN(baseamount)){
-				 	                       	  	cr=cr+baseamount;
-				 	                     	   }else if(isNaN(baseamount)){
-				 	                     		    baseamount=0.00;
-				 	                     		 	cr=cr+baseamount;
-				 	                     	   }
-				 	                       }
+				 	                 	   if(!isNaN(baseamount)){
+				 	                       	  dr=dr+baseamount;
+				 	                 	   }else if(isNaN(baseamount)){
+				 	                 		 baseamount=0.00;
+				 	                 		 dr=dr+baseamount;
+				 	                 	   }
+				 	                    }
+				 	                    else{
+				 	                 	   if(!isNaN(baseamount)){
+				 	                   	 	cr=cr+baseamount;
+				 	                 	   }else if(isNaN(baseamount)){
+				 	                 		    baseamount=0.00;
+				 	                 		 	cr=cr+baseamount;
+				 	                 	   }
+				 	                    }
 			 	        	       }
 			 	        		}
 			 	        		
@@ -638,10 +646,10 @@
 			       function getAccType(event){
 			           var x= event.keyCode;
 			           if(x==114){
-			        	  var date = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
+			         	  var date = $('#jqxCreditNoteDate').jqxDateTimeInput('getDate');
 			 			  $("#maindate").jqxDateTimeInput('val', date);
 			 			  accountSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
-			        	  $('#txtforsearch').val(2);
+			         	  $('#txtforsearch').val(2);
 			           }
 			           else{
 			            }
@@ -715,138 +723,147 @@
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background" >
+
+<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
+
 <form id="frmCreditNote" action="saveCreditNote" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
 
-    <div class='receipt-header'>
-        <label>Date</label>
-        <div>
-            <div id="jqxCreditNoteDate" name="jqxCreditNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxCreditNoteDate"/>'></div>
-            <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate" value='<s:property value="hidjqxCreditNoteDate"/>'/>
-        </div>
+    <div class="modern-ui">
 
-        <label>Ref. No.</label>
-        <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
-
-        <label>Doc No.</label>
-        <div class="doc-group">
-            <input type="text" id="docno" name="txtcreditnotedocno" value='<s:property value="txtcreditnotedocno"/>' tabindex="-1"/>
-            <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
-        </div>
-    </div>
-
-
-    <div class="section-row">
-        <div class="section-block">
-            <h2>Account Details</h2>
-            <div class="form-group">
-                <label for="cmbtype">Type</label>
-                <select id="cmbtype" name="cmbtype" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>'>
-                    <option value="AP">AP</option><option value="AR">AR</option>
-                </select>
-                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
-            </div>
-
-            <div class="form-group single-label-dual-input">
-                <label for="txtaccid">Account</label>
-                <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/>
-                <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' tabindex="-1"/>
-                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-                <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-            </div>
-        </div>
-
-        <div class="section-block">
-            <h2>Transaction Details</h2>
-            <div class="form-group dual-input">
-                <label for="cmbcurrency">Currency</label>
-                <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value,$('#jqxCreditNoteDate').val());" onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
-                    <option></option>
-                </select>
-                <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
-                <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
-
-                <label for="txtrate">Rate</label>
-                <input type="text" id="txtrate" name="txtrate" onchange="funvalid()" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" tabindex="-1" />
-                <span id="validrate"></span>
-            </div>
-
-            <div class="form-group dual-input">
-                <label for="txtamount">Amount</label>
-                <input type="text" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();setApplyAmount();" />
+        <div class="middle-panel">
+            <span class="middle-panel-title">General Info</span>
+            <div class="field-row" style="margin-bottom:0;">
+                <label class="lbl-right" style="width:80px;">Date</label>
+                <div style="width: 125px;">
+                    <div id="jqxCreditNoteDate" name="jqxCreditNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxCreditNoteDate"/>'></div>
+                    <input type="hidden" id="hidjqxCreditNoteDate" name="hidjqxCreditNoteDate" value='<s:property value="hidjqxCreditNoteDate"/>'/>
+                </div>
                 
-                <label for="txtbaseamount">Base Amount</label>
-                <input type="text" id="txtbaseamount" name="txtbaseamount" value='<s:property value="txtbaseamount"/>' tabindex="-1"/>
-            </div>
-
-            <div class="form-group">
-                <label for="txtdescription">Description</label>
-                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+                <label class="lbl-right" style="width:80px;">Ref. No.</label>
+                <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>' style="width:120px;" />
+                
+                <label class="lbl-right" style="width:80px; margin-left:auto;">Doc No.</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="docno" name="txtcreditnotedocno" value='<s:property value="txtcreditnotedocno"/>' tabindex="-1" style="width:120px;" readonly />
+                    <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="table-section">
-        <div id="jqxCreditNoteGrid"><jsp:include page="creditNoteGrid.jsp"></jsp:include></div><br/>
-        
-        <div class="form-group dual-input">
-            <label>Dr. Total</label>
-            <input type="text" id="txtdrtotal" name="txtdrtotal" value='<s:property value="txtdrtotal"/>' tabindex="-1"/>
+        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+            <div class="middle-panel" style="flex: 1; margin-bottom: 0;">
+                <span class="middle-panel-title">Account Details</span>
+                
+                <div class="field-row">
+                    <label class="lbl-right" style="width:80px;">Type</label>
+                    <select id="cmbtype" name="cmbtype" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>' style="width:80px;">
+                        <option value="AP">AP</option>
+                        <option value="AR">AR</option>
+                    </select>
+                    <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
+                </div>
+                
+                <div class="field-row" style="margin-bottom:0;">
+                    <label class="lbl-right" style="width:80px;">Account</label>
+                    <div class="input-search-container" style="width: 120px;">
+                        <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);"/>
+                        <svg class="magnifier-icon" onclick="var d=$('#jqxCreditNoteDate').jqxDateTimeInput('getDate'); $('#maindate').jqxDateTimeInput('val', d); accountSearchContent('<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype='+$('#cmbtype').val()+'&date='+d); $('#txtforsearch').val(2);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' style="flex:1;" tabindex="-1" readonly/>
+                    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+                </div>
+            </div>
+
+            <div class="middle-panel" style="flex: 1; margin-bottom: 0;">
+                <span class="middle-panel-title">Transaction Details</span>
+                
+                <div class="field-row">
+                    <label class="lbl-right" style="width:80px;">Currency</label>
+                    <select id="cmbcurrency" name="cmbcurrency" style="width:120px;" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value,$('#jqxCreditNoteDate').val());" onchange="getRatevalue(this.value,$('#jqxCreditNoteDate').val());">
+                        <option></option>
+                    </select>
+                    <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
+                    <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+
+                    <label class="lbl-right" style="width:80px; margin-left:auto;">Rate</label>
+                    <input type="text" id="txtrate" name="txtrate" onchange="funvalid()" style="width:120px; text-align:right;" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getCrTotal();" tabindex="-1" />
+                    <span id="validrate" class="val-error" style="width:100%; text-align:right;"></span>
+                </div>
+
+                <div class="field-row">
+                    <label class="lbl-right" style="width:80px;">Amount</label>
+                    <input type="text" id="txtamount" name="txtamount" style="width:120px; text-align:right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getCrTotal();setApplyAmount();" />
+                    
+                    <label class="lbl-right" style="width:80px; margin-left:auto;">Base Amount</label>
+                    <input type="text" id="txtbaseamount" name="txtbaseamount" style="width:120px; text-align:right;" value='<s:property value="txtbaseamount"/>' tabindex="-1" readonly/>
+                </div>
+
+                <div class="field-row" style="margin-bottom:0;">
+                    <label class="lbl-right" style="width:80px;">Description</label>
+                    <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>' style="flex:1;" />
+                </div>
+            </div>
+        </div>
+
+        <div class="middle-panel">
+            <span class="middle-panel-title">Credit Note Details</span>
+            <div class="grid-container" id="jqxCreditNoteGrid">
+                <jsp:include page="creditNoteGrid.jsp"></jsp:include>
+            </div>
             
-            <label>Cr. Total</label>
-            <input type="text" id="txtcrtotal" name="txtcrtotal" value='<s:property value="txtcrtotal"/>' tabindex="-1"/>
+            <div class="field-row" style="margin-top: 15px; justify-content: flex-end; margin-bottom: 0;">
+                <label class="lbl-right">Dr. Total</label>
+                <input type="text" id="txtdrtotal" name="txtdrtotal" style="width:100px; text-align:right;" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly/>
+                
+                <label class="lbl-right" style="margin-left:15px;">Cr. Total</label>
+                <input type="text" id="txtcrtotal" name="txtcrtotal" style="width:100px; text-align:right;" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly/>
+            </div>
         </div>
-    </div>
 
-    <div class="table-section">
-        <h3>Apply Invoices</h3>
-        <div id="jqxApplyInvoicing1"><center><jsp:include page="applyCreditNoteInvoicingGrid.jsp"></jsp:include></center></div> 
-        
-        <div class="form-group triple-input" style="margin-top: 10px;">
-            <label>Amount</label>
-            <input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" value='<s:property value="txtapplyinvoiceamt"/>'/>
+        <div class="middle-panel">
+            <span class="middle-panel-title">Apply Invoices</span>
+            <div class="grid-container" id="jqxApplyInvoicing1">
+                <jsp:include page="applyCreditNoteInvoicingGrid.jsp"></jsp:include>
+            </div> 
+            
+            <div class="field-row" style="margin-top: 15px; justify-content: flex-end; margin-bottom: 0;">
+                <label class="lbl-right" style="width:60px;">Amount</label>
+                <input type="text" id="txtapplyinvoiceamt" name="txtapplyinvoiceamt" style="width:100px; text-align:right;" value='<s:property value="txtapplyinvoiceamt"/>' readonly/>
+                <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+                
+                <label class="lbl-right" style="width:60px; margin-left:15px;">Applied</label>
+                <input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" style="width:100px; text-align:right;" value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1" readonly/>
+                
+                <label class="lbl-right" style="width:60px; margin-left:15px;">Balance</label>
+                <input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" style="width:100px; text-align:right;" value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1" readonly/>
+            </div>
+        </div>
+
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
+            <div id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+            <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
             <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-            
-            <label>Applied</label>
-            <input type="text" id="txtapplyinvoiceapply" name="txtapplyinvoiceapply" value='<s:property value="txtapplyinvoiceapply"/>' tabindex="-1"/>
-            
-            <label>Balance</label>
-            <input type="text" id="txtapplyinvoicebalance" name="txtapplyinvoicebalance" value='<s:property value="txtapplyinvoicebalance"/>' tabindex="-1"/>
+            <input type="hidden" id="gridlength" name="gridlength"/>
+            <input type="hidden" id="applylength" name="applylength"/>
+            <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
+            <input type="hidden" id="cnoapplyconfig" name="cnoapplyconfig"/>
+            <input type="hidden" id="cnrdocno" name="cnrdocno" value='<s:property value="cnrdocno"/>'/>
         </div>
+
     </div>
-
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" name="txtforsearch" id="txtforsearch" value='<s:property value="txtforsearch"/>'/>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation"  value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="applylength" name="applylength"/>
-<input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
-<input type="hidden" id="cnoapplyconfig" name="cnoapplyconfig"/>
-<input type="hidden" id="cnrdocno" name="cnrdocno"  value='<s:property value="cnrdocno"/>'/>
-
 </form>
+
+<div id="creditNoteGridWindow"><div></div><div></div></div>  
+<div id="accountDetailsToWindow"><div></div><div></div></div>  
+<div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
+
 </div>
-
-<div id="creditNoteGridWindow">
-	<div></div><div></div>
-</div>  
-				
-<div id="accountDetailsToWindow">
-	<div></div><div></div>
-</div>  
-
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
-
 </body>
 </html>
