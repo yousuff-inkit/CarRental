@@ -74,11 +74,11 @@ var agmtdata;
 		            }		
             );
             $("#rateGrid").jqxGrid(
-            {
-                width: '100%',
-                height: 45,
-                source: dataAdapter,
-                rowsheight:18,
+            		{
+            		    width: '100%',
+            		    height: 90, // Change this from 45 to 150
+            		    source: dataAdapter,
+            		    rowsheight: 18,
                 columnsresize: true,
                 pageable: false,
                 disabled:true,
