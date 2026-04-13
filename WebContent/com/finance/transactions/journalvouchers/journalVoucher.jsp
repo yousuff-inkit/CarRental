@@ -16,24 +16,181 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 
+<style>
+/* =========================================================
+SCOPED UI: Modern Layout (Matches Client Master)
+========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select,
+.modern-ui input[type="file"] { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+/* File input specific fix for 24px height */
+.modern-ui input[type="file"] {
+    padding: 0px 2px;
+    line-height: 22px;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Middle Section Panels - No Clipped Headings */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+    margin-top: 12px; 
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px; 
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
+
+/* Custom UI Buttons matching 24px height */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+/* Grid Wrapper */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
-		 
-		 $("#jqxJournalVouchersDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 
+		
+         /* COMPACT DATE SIZING */
+		 $("#jqxJournalVouchersDate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+		 $("#maindate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+		
+         /* Force internal alignment AFTER render */
+         setTimeout(function () {
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                 "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+         }, 0);
+
 		 $('#journalVoucherGridWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Account Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#journalVoucherGridWindow').jqxWindow('close');
-		 
+		
 		 $('#costTypeSearchGridWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Type Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
  		 $('#costTypeSearchGridWindow').jqxWindow('close');
- 		 
+ 		
  		 $('#costCodeSearchWindow').jqxWindow({width: '25%', height: '58%',  maxHeight: '70%' ,maxWidth: '25%' , title: 'Cost Code Search',position: { x: 420, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#costCodeSearchWindow').jqxWindow('close');
-		 getConfigs(); 
-	      	
 		 
+         getConfigs(); 
+	      	
 		 $('#jqxJournalVouchersDate').on('change', function (event) {
 		    if ($("#mode").val() != "view") {
 		    	$("#btnclone").hide();
@@ -45,7 +202,7 @@
 				}
 			}
 		 });
-		 
+		
 		 $('#txtdescription').keydown(function (evt) {
 			  if (evt.keyCode==9) {
 			          event.preventDefault();
@@ -53,7 +210,7 @@
 			          $('#jqxJournalVoucher').jqxGrid('focus',0, '');
 			  }
 		 });
-		 
+		
 	});
 	
 	function AccountSearchContent(url) {
@@ -93,16 +250,13 @@
 	  }
 	
 	 function funReadOnly(){
-		 //getConfigs();
-		   // $("#btnclone").show();
 			$('#frmJournalVoucher input').attr('readonly', true );
 			$('#jqxJournalVouchersDate').jqxDateTimeInput({disabled: true});
 			$("#jqxJournalVoucher").jqxGrid({ disabled: true});
 			$('#fileexcelimport').attr('hidden', true );
 			$('#btnsearch').attr('hidden', true );
-			
-			
 	 }
+
 	 function funRemoveReadOnly(){
 		getConfigs();
 			$('#frmJournalVoucher input').attr('readonly', false );
@@ -138,9 +292,8 @@
 				$("#jqxJournalVoucher").jqxGrid('addrow', null, {});
 				$("#btnclone").hide();
 				}
-		
 	 }
-	 
+	
 	 function getConfigs(){
 		 var x=new XMLHttpRequest();
 			x.onreadystatechange=function(){
@@ -150,7 +303,6 @@
 					
 					if(parseInt(items[0].trim())==1){
 						$("#btnclone").show();
-						//alert($("#btnclone").show());
 						}
 					else {
 						$("#btnclone").hide();
@@ -159,10 +311,9 @@
 						
 						$("#currstatus").val(1);
 						$('#jqxJournalVoucher').jqxGrid('showcolumn','curr');
-	            		$('#jqxJournalVoucher').jqxGrid('showcolumn','rate');
+            		    $('#jqxJournalVoucher').jqxGrid('showcolumn','rate');
 						 var indexVal = document.getElementById("docno").value;
 							 var check=1;
-							// alert("modes 2==="+ $("#mode").val()+"==value==="+indexVal);  
 							if(indexVal!=""){
 				         	 $("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?txtjournalvouchersdocno2="+indexVal+"&check="+check);
 							}
@@ -170,12 +321,10 @@
 					}else{
 						$("#currstatus").val(0);
 						$('#jqxJournalVoucher').jqxGrid('hidecolumn','curr');
-	            		$('#jqxJournalVoucher').jqxGrid('hidecolumn','rate');
+            		    $('#jqxJournalVoucher').jqxGrid('hidecolumn','rate');
 					}
-					
 			  }
 			}
-				
 		x.open("GET","getConfig.jsp",false);
 		x.send();
 		}
@@ -183,10 +332,9 @@
 	 function funSearchLoad(){
 		   changeContent('jvtMainSearch.jsp');  
 	 }
-	 
+	
 	 function funExcelBtn(){
 		 if (($("#mode").val() == "view") && $("#docno").val()!="") {
-		 	  // $("#jqxJournalVoucher").jqxGrid('exportdata', 'xls', 'JournalVoucher');
 		 	     $("#jqxJournalVoucher").excelexportjs({  
        		containerid: "jqxJournalVoucher", 
        		datatype: 'json', 
@@ -201,15 +349,12 @@
 			}
 	 }
 		
-	 function funChkButton() {
-			/* funReset(); */
-		}
-	 
+	 function funChkButton() { }
+	
 	 function funFocus(){
 	    	$('#jqxJournalVouchersDate').jqxDateTimeInput('focus'); 	    		
 	    }
-	 
-	 
+	
 	   $(function(){
 	        $('#frmJournalVoucher').validate({
 	                rules: {
@@ -318,7 +463,7 @@
 	  
 	  
 	  function setValues(){
-		 
+		
 		  if($('#hidjqxJournalVouchersDate').val()){
 			 $("#jqxJournalVouchersDate").jqxDateTimeInput('val', $('#hidjqxJournalVouchersDate').val());
 		  }
@@ -343,7 +488,6 @@
 			 var indexVal = document.getElementById("docno").value;
 			 if(indexVal>0){
 				 var check=1;
-				 //alert("modes 3==="+ $("#mode").val()+"==value==="+indexVal); 
 	         	 $("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?txtjournalvouchersdocno2="+indexVal+"&check="+check); 
 			 }
 			
@@ -375,20 +519,12 @@
 		     
 		        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
 					if (r){
-	 
-var win= window.open(reurl[0]+"printJournalVoucher?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+                        var win= window.open(reurl[0]+"printJournalVoucher?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 					     win.focus();
-
-/*  var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-						    win.focus();  */
 					 }
 					else{
-
 						var win= window.open(reurl[0]+"printJournalVoucher?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 					    win.focus();
-/* 
-var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-						    win.focus(); */ 
 					}
 				   });
 		     }
@@ -402,7 +538,6 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 			 $('#docno').val("");
 			 $("#mode").val("A");
 			 $("#msg").val("");
-//	 		 funRemoveReadOnly();
 			 $("#btnSendmail").hide();
 			 $("#status").val(1);	 $("#btnSave").show();		 $("#btnCancel").show();
 			 $("#btnApproval").hide();	 $("#btnCreate").hide();	funFocus();
@@ -421,7 +556,6 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 				$('#jqxJournalVouchersDate').val(new Date());
 				document.getElementById("lblformposted").innerText="";
 				$('#btnEdit').attr('disabled', false );
-				// $("#jqxJournalVoucher").jqxGrid('clear');
 				$("#jqxJournalVoucher").jqxGrid('addrow', null, {});
 		 }
 		
@@ -444,7 +578,6 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 					var items=x.responseText.trim();
 					
 					if(items==1){
-						 //alert("modes 1==="+ $("#mode").val()+"==value==="+indexVal); 
 						$("#jqxJournalVoucherGrid").load("journalVoucherGrid.jsp?docNo="+docNo+'&date='+$('#maindate').val());
 						$.messager.alert('Message', ' Successfully Imported.', function(r){
 					});
@@ -470,13 +603,13 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 						var fsize = $('#fileexcelimport')[0].files[0].size;
 						var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
 						
-						if((extn=='xls') || (extn=='csv')){ 
+						if((extn=='xls') || (extn=='csv') || (extn=='xlsx')){ 
 					        	ajaxFileUpload(items);	
 					     }else{
-					        	 $.messager.show({title:'Message',msg: 'File of xlsx Format is not Supported.',showType:'show',
+					        	 $.messager.show({title:'Message',msg: 'Only Excel Formats are Supported.',showType:'show',
 			                         style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
 			                     }); 
-						            return;
+						             return;
 					     } 
 					}
 					
@@ -488,10 +621,10 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 		}
 		
 		function upload(){
-			 
+			
 			$('#txtexcelvalidation').val(1);
 			getAttachDocumentNo();
-			 
+			
 		 }
 		
 		function ajaxFileUpload(docNo) {  
@@ -522,7 +655,7 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 	              {  
 	                  url:'fileAttachAction.action?formCode=JVTE&doc_no='+docNo+'&descpt=Excel Import' ,
 	                  secureuri:false,  
-	                  fileElementId:'fileexcelimport',    
+	                  fileElementId:'fileexcelimport',   
 	                  dataType: 'json', 
 	                  success: function (data, status)   
 	                  {  
@@ -539,13 +672,13 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 	                          if(data.error != '')  
 	                          {  
 	                              $.messager.show({title:'Message',msg: data.error,showType:'show',
-	  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	  	                        }); 
+	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+	                        }); 
 	                          }else  
 	                          {  
 	                              $.messager.show({title:'Message',msg: data.message,showType:'show',
-		  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-		  	              	          }); 
+		                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+		                        }); 
 	                          }  
 	                      }  
 	                  },  
@@ -555,344 +688,84 @@ var win= window.open(reurl[0]+"JournalVoucherPrint?docno="+document.getElementBy
 	              });  
 	          return false;  
 	      }
-	 
+	
 </script>
-
-<style>
-/* ------------------------------
-   GLOBAL STYLES
------------------------------- */
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 130vh;
-    box-sizing: border-box;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-
-/* ------------------------------
-   COMMON UI ELEMENTS
------------------------------- */
-
-input[type="text"], select {
-    height: 32px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-}
-
-/* ------------------------------
-   HEADER SECTION
------------------------------- */
-
-.receipt-header {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-    padding: 0 10px 10px;
-}
-
-.receipt-header table {
-    width: 100%;
-}
-
-.receipt-header td {
-    padding: 6px 4px;
-    vertical-align: middle;
-}
-
-#txtStatus {
-    font-size: 14px;
-    font-weight: 600;
-    color: #e67e22;
-}
-
-/* ------------------------------
-   FORM ROWS LAYOUT (FIXED)
------------------------------- */
-
-.form-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    align-items: center;
-    gap: 12px 16px;
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    text-align: right;
-    padding-right: 8px;
-    font-size:1rem;
-}
-
-.form-group input[type="text"],
-.form-group select {
-    width: 100%;
-}
-
-/* For rows with multiple input pairs (Currency/Rate, Amount/Base Amount) */
-.form-group.dual-input {
-    grid-template-columns: 120px 1fr 120px 1fr;
-}
-
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-.form-group.dual-input label:nth-of-type(2) {
-    text-align: right;
-    padding-right: 8px;
-}
-
-/* Special case: One label with two equal-width inputs */
-.form-group.single-label-dual-input {
-    grid-template-columns: 120px 1fr 1fr;
-}
-
-.form-group.single-label-dual-input input[type="text"]:first-of-type {
-    width: 100%;
-}
-
-.form-group.single-label-dual-input input[type="text"]:nth-of-type(2) {
-    width: 100%;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 30px;
-}
-
-.section-block {
-    flex: 1;
-    min-width: 0;
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-}
-
-.section-block h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 20px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-}
-
-/* Special handling for the "to-account-row" - all items in one line */
-.to-account-row {
-    display: grid;
-    grid-template-columns: 120px 110px 120px 140px 1fr;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.to-account-row label {
-    text-align: right;
-    padding-right: 8px;
-}
-
-.to-account-row #cmbtotype {
-    width: 100%;
-}
-
-.to-account-row #txttoaccid {
-    width: 100%;
-}
-
-.to-account-row #txttoaccname {
-    width: 100%;
-}
-
-/* ------------------------------
-   TABLE SECTIONS
------------------------------- */
-
-.table-section {
-    margin: 20px 0;
-}
-
-.table-section h3 {
-    color: #253858;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #e5e7eb;
-}
-
-.cr-table th,
-.cr-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eef0f6;
-    font-size: 14px;
-}
-
-.cr-table th {
-    background: #eef0f6;
-    font-weight: 600;
-    color: #354B6A;
-}
-
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* ------------------------------
-   SCROLL AREAS
------------------------------- */
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 100vh;
-}
-
-/* Hide scrollbars (but allow scrolling) */
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
-}
-
-
-
-/* ------------------------------
-   ERROR LABELS
------------------------------- */
-
-#validrate,
-#validrate1 {
-    color: red;
-    font-size: 12px;
-    grid-column: 2 / -1;
-}
-
-/* ------------------------------
-   APPROVAL TABLE
------------------------------- */
-
-#approval-table td {
-    font-size: 14px;
-    padding: 8px;
-}
-
-#approval-table tr:nth-child(even) {
-    background: #f9fafb;
-}
-</style>
-
-
-
-
 
 </head>
 <body onload="setValues();">
-<div id="mainBG" class="hidden-scrollbar homeContent" data-type="background">
+
+<div id="mainBG" class="homeContent" data-type="background">
+
 <form id="frmJournalVoucher" action="saveJournalVoucher" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+    <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class=' receipt-header'>
-    <div class="table-section">
-<table class='cr-table' width="100%">
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="15%"><div id="jqxJournalVouchersDate" name="jqxJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxJournalVouchersDate"/>'></div>
-    <input type="hidden" id="hidjqxJournalVouchersDate" name="hidjqxJournalVouchersDate" value='<s:property value="hidjqxJournalVouchersDate"/>'/></td>
-    <td width="28%" align="right"><input type="file" id="fileexcelimport" name="file"/></td>
-    <td width="11%" align="center"> <button class="icon" id="btnsearch" name="btnsearch" title="Import Excel" type="button" onclick="return upload();">
-							<img alt="Import Excel" src="<%=contextPath%>/icons/import_excel.png">
-						</button></td>
-	<td ><button class="myButton" type="button" id="btnclone" name="btnclone" onclick="funClone();">Clone</button></td>
-    <td width="13%" align="center"><button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td>
-    <td width="6%" align="right">Doc No</td>
-    <td width="21%"><input type="text" id="docno" name="txtjournalvouchersdocno" style="width:50%;" value='<s:property value="txtjournalvouchersdocno"/>' tabindex="-1"/></td>
-  </tr>
-   <tr>
-    <td colspan="8"></td>
-    <td><span id="txtStatus"></span></td>
-  </tr>
-  <tr>
-    <td align="right">Ref. No.</td>
-    <td><input type="text" id="txtrefno" name="txtrefno" style="width:62%;" value='<s:property value="txtrefno"/>'/></td>
-    <td align="right">Description</td>
-    <td colspan="3"><input type="text" id="txtdescription" name="txtdescription" style="width:80%;"  value='<s:property value="txtdescription"/>'/></td>
-	<td align="left" colspan="2"><i><b><label id="lblformposted"  name="lblformposted"   style="font-size: 13px;font-family: Tahoma; color:#6000FC"><s:property value="lblformposted"/></label></b></i></td>
-  </tr>
-  <tr>
-    <td colspan="8"><div id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div></td>
-  </tr>
-  <tr>  
-    <td align="right">Dr. Total</td>
-    <td><input type="text" id="txtdrtotal" name="txtdrtotal" style="width:65%;text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1"/></td>
-    <td colspan="5" align="right">Cr. Total</td>
-    <td width="11%"><input type="text" id="txtcrtotal" name="txtcrtotal" style="width:50%;text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1"/></td>
-       <td  >&nbsp;</td>
-  </tr>
-</table></div>
+    <div class="modern-ui hidden-scrollbar">
 
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
-<input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
-<input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
-<input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-<input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-<input type="hidden" id="hidstatus" name="hidstatus" value='<s:property value="status"/>'/>
-<input type="hidden" id="currstatus" name="currstatus"  value='<s:property value="currstatus"/>'/>
-</div>
+        <div class="middle-panel">
+            <span class="middle-panel-title">General Info</span>
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width:80px;">Date</label>
+                <div style="width: 125px;">
+                    <div id="jqxJournalVouchersDate" name="jqxJournalVouchersDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxJournalVouchersDate"/>'></div>
+                    <input type="hidden" id="hidjqxJournalVouchersDate" name="hidjqxJournalVouchersDate" value='<s:property value="hidjqxJournalVouchersDate"/>'/>
+                </div>
+                
+                <label class="lbl-right" style="width:80px;">Ref. No.</label>
+                <input type="text" id="txtrefno" name="txtrefno" style="width:120px;" value='<s:property value="txtrefno"/>'/>
+                
+                <label class="lbl-right" style="width:80px; margin-left:auto;">Doc No.</label>
+                <input type="text" id="docno" name="txtjournalvouchersdocno" style="width:120px;" value='<s:property value="txtjournalvouchersdocno"/>' tabindex="-1" readonly/>
+                <span id="txtStatus" style="font-weight:bold; color:#e67e22; margin-left:10px;"></span>
+            </div>
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width:80px;">Description</label>
+                <input type="text" id="txtdescription" name="txtdescription" style="flex:1;" value='<s:property value="txtdescription"/>'/>
+                <label id="lblformposted" name="lblformposted" style="font-size: 13px; font-weight: bold; color: #6000FC; margin-left: 15px;"><s:property value="lblformposted"/></label>
+            </div>
+
+           
+        </div>
+
+        <div class="middle-panel">
+            <span class="middle-panel-title">Voucher Details</span>
+            <div class="grid-container" id="jqxJournalVoucherGrid">
+                <jsp:include page="journalVoucherGrid.jsp"></jsp:include>
+            </div>
+            
+            <div class="field-row" style="margin-top: 15px; justify-content: flex-end; margin-bottom: 0;">
+                <label class="lbl-right">Dr. Total</label>
+                <input type="text" id="txtdrtotal" name="txtdrtotal" style="width:120px; text-align:right" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly />
+                
+                <label class="lbl-right" style="margin-left:15px;">Cr. Total</label>
+                <input type="text" id="txtcrtotal" name="txtcrtotal" style="width:120px; text-align:right" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly />
+            </div>
+        </div>
+
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="txtexceltypevalidation" name="txtexceltypevalidation" value='<s:property value="txtexceltypevalidation"/>'/>
+            <input type="hidden" id="txtexcelaccvalidation" name="txtexcelaccvalidation" value='<s:property value="txtexcelaccvalidation"/>'/>
+            <input type="hidden" id="txtexcelgrtypevalidation" name="txtexcelgrtypevalidation" value='<s:property value="txtexcelgrtypevalidation"/>'/>
+            <input type="hidden" id="txtexcelcostvalidation" name="txtexcelcostvalidation" value='<s:property value="txtexcelcostvalidation"/>'/>
+            <input type="hidden" id="gridlength" name="gridlength"/>
+            <div id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+            <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+            <input type="hidden" id="hidstatus" name="hidstatus" value='<s:property value="status"/>'/>
+            <input type="hidden" id="currstatus" name="currstatus" value='<s:property value="currstatus"/>'/>
+        </div>
+
+    </div>
 </form>
 
-<div id="journalVoucherGridWindow">
-	<div></div><div></div>
-</div>
-
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
+<div id="journalVoucherGridWindow"><div></div><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
 
 </div>
 </body>
