@@ -1616,15 +1616,22 @@ if(document.getElementById("rentalagent").value==""){
     </fieldset></td>
   </tr>
   <tr>
-    <td width="66%"><fieldset>
-      
-      <table width="100%">
-        <tr>
-          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
-        </tr>
-      </table>
-    </fieldset></td>
+    <td width="66%">
+  <fieldset>
+    <legend>Rental Agreed Rates</legend>
     
+    <table width="100%">
+      <tr>
+        <td>
+          <div id="agmttarifdiv">
+            <jsp:include page="agreementTarifGrid.jsp"></jsp:include>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+  </fieldset>
+</td>
     
     
     <td width="34%" rowspan="3">
@@ -1645,32 +1652,59 @@ if(document.getElementById("rentalagent").value==""){
     </td>
   </tr>
   <tr id="referencefield">
-    <td>
+  <td>
     <fieldset>
+      <legend>Reference Tariff Rates</legend>
       
       <table width="100%">
         <tr>
-          <td><div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></td>
-          </tr>
-       </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
+          <td>
+            <div id="referencetarifdiv">
+              <jsp:include page="referenceTarifGrid.jsp"></jsp:include>
+            </div>
+          </td>
         </tr>
       </table>
-    </fieldset></td>
-    </tr>
+
+    </fieldset>
+  </td>
+</tr>
   <tr>
-    <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
+  <td>
+    <fieldset>
+      <legend>Calculated Tariff Rates</legend>
+      
+      <table width="100%">
+        <tr>
+          <td>
+            <div id="totaldiv">
+              <jsp:include page="totalGrid.jsp"></jsp:include>
+            </div>
+          </td>
         </tr>
       </table>
-    </fieldset></td>
-    </tr>
+
+    </fieldset>
+  </td>
+</tr>
+  <tr>
+  <td>
+    <fieldset>
+      <legend>Traffic Fine</legend>
+      
+      <table width="100%">
+        <tr>
+          <td>
+            <div id="trafficdiv">
+              <jsp:include page="trafficGrid.jsp"></jsp:include>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </fieldset>
+  </td>
+</tr>
 </table>
 
 
