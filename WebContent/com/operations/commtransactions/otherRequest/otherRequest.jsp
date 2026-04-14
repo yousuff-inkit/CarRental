@@ -11,131 +11,199 @@
 
 <style>
 /* =========================================================
-   OTHER REQUEST - EXACT TEXT & UI MATCH TO CLIENT MASTER
+   SCOPED UI: Stable Modern Layout (Table-Based Alignment)
 ========================================================= */
-body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Arial, sans-serif !important;
-    color: #333 !important;
-    font-size: 12px !important;
+body {
+    background: #ffffff; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
     margin: 0;
+    padding: 15px; 
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 15px;
     max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb; 
 }
 
-/* FIX: Responsive scroll area so the bottom is never cut off */
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Stable 24px */
+.modern-ui input[type="text"],
+.modern-ui input[type="email"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui input[type="email"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Restored Table Alignment for Perfect Input Sizing */
+.modern-ui table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 6px 8px;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 18px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 20px;
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -10px; 
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 6px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 13px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+    display: flex;
+    align-items: center;
+}
+
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 4px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+/* Custom UI Buttons */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+.icon-btn {
+    background: #f4f6f9;
+    border: 1px solid #c5d3e0;
+    border-radius: 3px;
+    padding: 2px;
+    cursor: pointer;
+    height: 24px;
+    width: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-btn:hover { background: #e0ecf8; }
+.icon-btn img { height: 16px; }
+
+form label.error { color: red; font-weight: bold; font-size: 11px; }
+#errormsg { color: red; font-weight: bold; font-size: 12px; margin-bottom: 5px; display: block; height:15px;}
+
 .hidden-scrollbar {
     overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 140px);
-    padding-bottom: 60px;
-    box-sizing: border-box;
+    max-height: calc(100vh - 100px);
+    padding-right: 5px;
 }
-
-form label.error {
-    color: red;
-    font-weight: bold;
-}
-
-/* EXACT Input Styles from Client Master */
-input[type="text"], input[type="email"], select {
-    height: 24px !important; 
-    border: 1px solid #ccc !important;
-    border-radius: 3px !important;
-    padding: 2px 6px !important;
-    font-size: 12px !important;
-    box-sizing: border-box;
-    background-color: #fff !important;
-    color: #333 !important;
-}
-
-input[type="text"]:focus, input[type="email"]:focus, select:focus {
-    border-color: #007bff !important;
-    outline: none !important;
-}
-
-input[readonly], input:disabled, select:disabled {
-    background-color: #f4f5f7 !important;
-    color: #5e6c84 !important;
-    border-color: #e1e4e8 !important;
-}
-
-/* Fieldset and Legend styling matching Client Master */
-fieldset {
-    border: 1px solid #e1e4e8 !important;
-    background-color: #fff !important;
-    margin-bottom: 10px !important;
-    padding: 12px 10px 10px 10px !important;
-    border-radius: 4px !important;
-}
-
-legend {
-    font-size: 13px !important;
-    font-weight: bold !important;
-    color: #0056b3 !important;
-    padding: 0 0 0 6px !important;
-    border-left: 3px solid #0056b3 !important;
-    margin-bottom: 5px !important;
-    background: #fff;
-}
-
-/* Table adjustments for compact text */
-table td {
-    padding: 4px 6px !important;
-    font-size: 12px !important;
-    color: #444 !important;
-    font-weight: bold !important;
-    vertical-align: middle;
-}
-
-/* Modern Buttons matched to Client Master */
-.myButton {
-    background-color: #0056b3 !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 3px !important;
-    padding: 4px 15px !important;
-    font-weight: bold !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    height: 24px !important;
-}
-
-.myButton:hover {
-    background-color: #004494 !important;
-}
-
-/* Specific styling for the small search icons */
-.icon1 {
-    width: 2.5em;
-    height: 2em;
-    border: none;
-    background-color: #E0ECF8;
-    cursor: pointer;
-    border-radius: 3px;
-    vertical-align: middle;
-}
-.icon1:hover {
-    background-color: #d0e0f0;
-}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
 </style>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $('#btnEdit').attr('disabled', true );
 		 
-		 /* MODIFIED: Heights set to 24px */
-		 $("#jqxOtherRequestDate").jqxDateTimeInput({ width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
+		 /* STRICT 24px DATE INPUTS */
+		 $("#jqxOtherRequestDate").jqxDateTimeInput({ width: '100%', height: 24, formatString:"dd.MM.yyyy" });
+		 $("#maindate").jqxDateTimeInput({ width: '100%', height: 24, formatString:"dd.MM.yyyy" });
+		 
+         /* Force exactly 24px styling onto JQX elements */
+         setTimeout(function () {
+             $(".jqx-datetimeinput").css({
+                 "border": "1px solid #b8c6d8", "border-radius": "3px", "height": "24px", "box-sizing": "border-box"
+             });
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", "line-height": "22px", "height": "22px", "font-size": "12px", 
+                 "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box",
+                 "border": "none", "background": "transparent"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({
+                 "top": "0px", "height": "22px", "border": "none", "background-color": "transparent"
+             });
+         }, 0);
 		 
 		 $('#clientDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Client Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#clientDetailsWindow').jqxWindow('close');
@@ -205,20 +273,6 @@ table td {
 	}); 
 	}
 	
-	function funSearchdblclick(){
-		 
-		  $('#txtclientname').dblclick(function(){
-			  var date = $('#jqxOtherRequestDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  clientSearchContent("<%=contextPath%>/com/operations/clientAccountDetailsSearch.jsp?atype=AR&date="+date);
-			  $('#txtforsearch').val(2);
-			  });
-		  
-		  $('#txtravocher').dblclick(function(){
-			  agreementSearchContent('agreementSearch.jsp?clientId='+$('#txtclientdocno').val());
-			  });
-	}
-	
 	function getClient(event){
         var x= event.keyCode;
         if(x==114){
@@ -244,7 +298,6 @@ table td {
 		$("#btnAdditionalDriverAdd").prop("disabled", true);
 		$("#jqxOtherRequest").jqxGrid({ disabled: true});
 		$("#jqxDriver").jqxGrid({ disabled: true});
-		
   }
 	
  function funRemoveReadOnly(){
@@ -273,9 +326,7 @@ table td {
      changeContent('oreMainSearch.jsp');  
  }
 	
- function funChkButton() {
-		/* funReset(); */
-	}
+ function funChkButton() {}
  
  function funFocus(){
     	$('#jqxOtherRequestDate').jqxDateTimeInput('focus'); 	    		
@@ -394,14 +445,11 @@ table td {
 	   var indexVal1 = document.getElementById("txtclientdocno").value;
 	   if(indexVal>0){
       		$("#otherRequestGridDiv").load("otherRequestGrid.jsp?txtotherrequestdocno2="+indexVal);
-      		
       		$("#DriverDiv").load("driver.jsp?docNo="+indexVal+"&clientId="+indexVal1);
 	   }
-	   
 	}
   
   function funPrintBtn() {
-		
 		if (($("#mode").val() == "view") && $("#docno").val()!="") {
 	        var url=document.URL;
 	        var reurl=url.split("saveOtherRequest");
@@ -487,99 +535,112 @@ table td {
   function clearAgreement(){
 	    document.getElementById("txtravocher").value="";
 		document.getElementById("txtrano").value="";
-		
 		 if (document.getElementById("txtravocher").value == "") {
 		        $('#txtravocher').attr('placeholder', 'Press F3 to Search'); 
 		    }
    }
-			 
+			
 </script>
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmOtherRequest" action="saveOtherRequest" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div class='hidden-scrollbar'>
-<fieldset>
+<div class='modern-ui hidden-scrollbar'>
+<span id="errormsg"></span>
 
-<table width="850">
-  <tr>
-    <td width="10%" align="right">Date</td>
-    <td width="20%">
-        <div id="jqxOtherRequestDate" name="jqxOtherRequestDate" onchange="datechange();" value='<s:property value="jqxOtherRequestDate"/>'></div>
-        <input type="hidden" id="hidjqxOtherRequestDate" name="hidjqxOtherRequestDate" value='<s:property value="hidjqxOtherRequestDate"/>'/>
-    </td>
-    <td width="10%" align="right">Ref. No.</td>
-    <td width="25%">
-        <input type="text" id="txtrefno" name="txtrefno" style="width:100%;" value='<s:property value="txtrefno"/>'/>
-    </td>
-    <td width="10%" align="right">Doc No.</td>
-    <td width="25%">
-        <input type="text" id="docno" name="txtotherrequestdocno" style="width:100%;" value='<s:property value="txtotherrequestdocno"/>' tabindex="-1" readonly/>
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Client</td>
-    <td>
-        <input type="text" id="txtclientname" name="txtclientname" placeholder="Press F3 to Search" style="width:100%;" value='<s:property value="txtclientname"/>' ondblclick="funSearchdblclick();" onkeydown="getClient(event);"/>
-        <input type="hidden" id="txtclientdocno" name="txtclientdocno" value='<s:property value="txtclientdocno"/>'/>
-    </td>
-    <td align="right">RA Type</td>
-    <td>
-        <select id="cmbratype" name="cmbratype" style="width:100%;" onchange="clearAgreement();" value='<s:property value="cmbratype"/>'>
-            <option value="RAG">Rental</option>
-            <option value="LAG">Lease</option>
-        </select>
-        <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/>
-    </td>
-    <td align="right">RA No.</td>
-    <td>
-        <input type="text" id="txtravocher" name="txtravocher" placeholder="Press F3 to Search" style="width:100%;" value='<s:property value="txtravocher"/>' ondblclick="funSearchdblclick();" onkeydown="getAgreement(event);"/>
-        <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'/>
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Remarks</td>
-    <td colspan="5">
-        <input type="text" id="txtremarks" name="txtremarks" style="width:100%;" value='<s:property value="txtremarks"/>'/>
-    </td>
-  </tr>
-</table>
-
-</fieldset><br/>
+<div class="middle-panel">
+    <span class="middle-panel-title">Request Info</span>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="lbl-right" width="8%">Date</td>
+            <td width="15%">
+                <div id="jqxOtherRequestDate" name="jqxOtherRequestDate" onchange="datechange();" value='<s:property value="jqxOtherRequestDate"/>'></div>
+                <input type="hidden" id="hidjqxOtherRequestDate" name="hidjqxOtherRequestDate" value='<s:property value="hidjqxOtherRequestDate"/>'/>
+            </td>
+            
+            <td class="lbl-right" width="8%">Ref. No.</td>
+            <td width="20%">
+                <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
+            </td>
+            
+            <td class="lbl-right" width="8%">Doc No.</td>
+            <td width="20%">
+                <input type="text" id="docno" name="txtotherrequestdocno" value='<s:property value="txtotherrequestdocno"/>' tabindex="-1" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td class="lbl-right">Client</td>
+            <td>
+                <div class="input-search-container">
+                    <input type="text" id="txtclientname" name="txtclientname" value='<s:property value="txtclientname"/>' onkeydown="getClient(event);" placeholder="Press F3"/>
+                    <svg class="magnifier-icon" onclick="var date = $('#jqxOtherRequestDate').jqxDateTimeInput('getDate'); $('#maindate').jqxDateTimeInput('val', date); clientSearchContent('<%=contextPath%>/com/operations/clientAccountDetailsSearch.jsp?atype=AR&date='+date); $('#txtforsearch').val(2);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input type="hidden" id="txtclientdocno" name="txtclientdocno" value='<s:property value="txtclientdocno"/>'/>
+            </td>
+            
+            <td class="lbl-right">RA Type</td>
+            <td>
+                <select id="cmbratype" name="cmbratype" onchange="clearAgreement();" value='<s:property value="cmbratype"/>'>
+                    <option value="RAG">Rental</option>
+                    <option value="LAG">Lease</option>
+                </select>
+                <input type="hidden" id="hidcmbratype" name="hidcmbratype" value='<s:property value="hidcmbratype"/>'/>
+            </td>
+            
+            <td class="lbl-right">RA No.</td>
+            <td>
+                <div class="input-search-container">
+                    <input type="text" id="txtravocher" name="txtravocher" value='<s:property value="txtravocher"/>' onkeydown="getAgreement(event);" placeholder="Press F3"/>
+                    <svg class="magnifier-icon" onclick="agreementSearchContent('agreementSearch.jsp?clientId='+$('#txtclientdocno').val());" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'/>
+            </td>
+        </tr>
+        <tr>
+            <td class="lbl-right">Remarks</td>
+            <td colspan="5">
+                <input type="text" id="txtremarks" name="txtremarks" value='<s:property value="txtremarks"/>'/>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <div id="otherRequestGridDiv"><jsp:include page="otherRequestGrid.jsp"></jsp:include></div>
 
-<fieldset style="background-color:#ECF8E0;"><legend><input type="checkbox" id="chkadddriver" name="chkadddriver" onchange="checkAdditionalDriver();"><b>Additional Driver</b></legend>
-<input type="hidden" id="adddriverintickval" name="adddriverintickval" value='<s:property value="adddriverintickval"/>'>
+<div class="middle-panel" style="margin-top: 20px;">
+    <span class="middle-panel-title" style="padding:0 5px; display:flex; align-items:center; gap:5px;">
+        <input type="checkbox" id="chkadddriver" name="chkadddriver" onchange="checkAdditionalDriver();" style="margin:0;">
+        <span>Additional Driver</span>
+    </span>
+    <input type="hidden" id="adddriverintickval" name="adddriverintickval" value='<s:property value="adddriverintickval"/>'>
 
-<table width="850">
-  <tr>
-    <td width="7%" align="center">
-        <button type="button" class="icon1" id="btnAdditionalDriverSearch" title="Search Additional Driver" onclick="funAdditionalDriverSearch();">
-            <img alt="Search Additional Driver" src="<%=contextPath%>/icons/driverSearch.png">
-        </button>
-    </td>
-    <td width="7%" align="left">
-        <button type="button" class="icon1" id="btnAdditionalDriverAdd" title="Add Additional Driver" onclick="funAdditionalDriverAdd();">
-            <img alt="Add Additional Driver" src="<%=contextPath%>/icons/driverAdd.png">
-        </button>
-    </td>
-    <td width="10%" align="right">Amount</td>
-    <td width="20%">
-        <input type="text" id="txtamount" name="txtamount" style="width:100%;text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);" />
-    </td>
-    <td width="10%" align="right">Description</td>
-    <td width="46%">
-        <input type="text" id="txtdescription" name="txtdescription" style="width:100%;" value='<s:property value="txtdescription"/>'/>
-    </td>
-  </tr>
-</table>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:10px;">
+        <tr>
+            <td width="10%" align="center">
+                <button type="button" class="icon-btn" id="btnAdditionalDriverSearch" title="Search Additional Driver" onclick="funAdditionalDriverSearch();" style="margin-right:5px;">
+                    <img alt="Search Additional Driver" src="<%=contextPath%>/icons/driverSearch.png">
+                </button>
+                <button type="button" class="icon-btn" id="btnAdditionalDriverAdd" title="Add Additional Driver" onclick="funAdditionalDriverAdd();">
+                    <img alt="Add Additional Driver" src="<%=contextPath%>/icons/driverAdd.png">
+                </button>
+            </td>
+            
+            <td class="lbl-right" width="8%">Amount</td>
+            <td width="15%">
+                <input type="text" id="txtamount" name="txtamount" style="text-align: right;" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);" />
+            </td>
+            
+            <td class="lbl-right" width="10%">Description</td>
+            <td width="57%">
+                <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+            </td>
+        </tr>
+    </table>
 
-<div id="DriverDiv"><jsp:include page="driver.jsp"></jsp:include></div><br/>
-
-</fieldset>
+    <div id="DriverDiv"><jsp:include page="driver.jsp"></jsp:include></div>
+</div>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
@@ -591,24 +652,13 @@ table td {
 <input type="hidden" id="drivergridlength" name="drivergridlength"/>
 </div>
 </form>
-<div id="clientDetailsWindow">
-	<div></div><div></div>
-</div> 
-<div id="agreementDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="driverDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="nationalityWindow">
-   <div></div>
-</div>
-<div id="stateWindow">
-   <div></div>
-</div>
-<div id="serviceWindow">
-   <div></div>
-</div>
+
+<div id="clientDetailsWindow"><div></div><div></div></div> 
+<div id="agreementDetailsWindow"><div></div><div></div></div>
+<div id="driverDetailsWindow"><div></div><div></div></div>
+<div id="nationalityWindow"><div></div></div>
+<div id="stateWindow"><div></div></div>
+<div id="serviceWindow"><div></div></div>
 
 </div>
 </body>
