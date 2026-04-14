@@ -2551,65 +2551,61 @@ function checkBrandQty(fleetno,masterrefno){
             <div class="modern-panel" style="flex: 1;">
            
 
-                <div style="padding-top: 5px; display: flex; gap: 10px;">
-                    
-                    <!-- LEFT SIDE -->
-                    <div style="flex: 0.3; display: flex; flex-direction: column;">
-                        
-                        <div class="field-row">
-                            <label class="chk-container">
-                                <input type="checkbox" id="additional_driver" name="additional_driver" value="0"
-                                    onchange="funaddidriverview()"
-                                    onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                Additional Driver
-                            </label>
-                        </div>
+                <div style="padding-top: 5px; display: flex; flex-direction: column; gap: 10px;">
 
-                        <div class="field-row">
-                            <label class="lbl-right" style="width: 50px;">Charge</label>
-                            <input type="text" id="adidrvcharges" name="adidrvcharges"
-                                class="input-full align-right-input"
-                                value='<s:property value="adidrvcharges"/>'
-                                onblur="funRoundAmt(this.value,this.id);"
-                                onkeypress="return isNumber(event)">
-                        </div>
+    <!-- TOP ROW (ALL CONTROLS IN ONE LINE) -->
+    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
 
-                        <div class="field-row" style="margin-top: 10px;">
-                            <label class="chk-container">
-                                <input type="checkbox" id="ladrivercheck" name="ladrivercheck" value="0"
-                                    onchange="funShaffurdisable()"
-                                    onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                Chauffeur
-                            </label>
-                        </div>
+        <!-- Additional Driver -->
+        <label class="chk-container">
+            <input type="checkbox" id="additional_driver" name="additional_driver" value="0"
+                onchange="funaddidriverview()"
+                onclick="$(this).attr('value', this.checked ? 1 : 0)">
+            Additional Driver
+        </label>
 
-                        <div class="field-row">
-                            <input type="text" id="ladriverlist" name="ladriverlist"
-                                class="input-full"
-                                placeholder="Press F3"
-                                value='<s:property value="ladriverlist"/>'
-                                onkeydown="getchauffeur(event);" />
+        <!-- Charge -->
+        <label class="lbl-right">Charge</label>
+        <input type="text" id="adidrvcharges" name="adidrvcharges"
+            class="align-right-input"
+            style="width: 100px;"
+            value='<s:property value="adidrvcharges"/>'
+            onblur="funRoundAmt(this.value,this.id);"
+            onkeypress="return isNumber(event)">
 
-                            <input type="hidden" id="del_chaufferid" name="del_chaufferid"
-                                value='<s:property value="del_chaufferid"/>'/>
+        <!-- Chauffeur -->
+        <label class="chk-container">
+            <input type="checkbox" id="ladrivercheck" name="ladrivercheck" value="0"
+                onchange="funShaffurdisable()"
+                onclick="$(this).attr('value', this.checked ? 1 : 0)">
+            Chauffeur
+        </label>
 
-                            <input type="hidden" id="client_driverid" name="client_driverid"
-                                value='<s:property value="client_driverid"/>'/>
+        <!-- Chauffeur Input -->
+        <input type="text" id="ladriverlist" name="ladriverlist"
+            style="width: 180px;"
+            placeholder="Press F3"
+            value='<s:property value="ladriverlist"/>'
+            onkeydown="getchauffeur(event);" />
 
-                            <input type="hidden" id="client_driverdoc" name="client_driverdoc"
-                                value='<s:property value="client_driverdoc"/>'/>
-                        </div>
+        <!-- Hidden Fields (unchanged) -->
+        <input type="hidden" id="del_chaufferid" name="del_chaufferid"
+            value='<s:property value="del_chaufferid"/>'/>
 
-                    </div>
+        <input type="hidden" id="client_driverid" name="client_driverid"
+            value='<s:property value="client_driverid"/>'/>
 
-                    <!-- RIGHT SIDE -->
-                    <div style="flex: 0.7;">
-                        <div id="divDrivGrid">
-                            <jsp:include page="driverGrid.jsp"></jsp:include>
-                        </div>
-                    </div>
+        <input type="hidden" id="client_driverdoc" name="client_driverdoc"
+            value='<s:property value="client_driverdoc"/>'/>
 
-                </div>
+    </div>
+
+    <!-- GRID BELOW -->
+    <div id="divDrivGrid">
+        <jsp:include page="driverGrid.jsp"></jsp:include>
+    </div>
+
+</div>
             </div>
         </div>
     </div>
@@ -2705,43 +2701,40 @@ function checkBrandQty(fleetno,masterrefno){
     <div class="modern-panel">
 
 
-        <div style="padding-top: 5px; display: flex; gap: 20px;">
-            
-            <!-- LEFT GRID -->
-            <div style="flex: 0.7;">
-                <div id="paymentdiv">
-                    <jsp:include page="paymentdetailsgrid.jsp"></jsp:include>
-                </div>
-            </div>
+      <div style="padding-top: 5px; display: flex; flex-direction: column; gap: 10px;">
 
-            <!-- RIGHT FORM -->
-            <div style="flex: 0.3; display: flex; flex-direction: column;">
-                
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 50px;">PO</label>
-                    <input type="text" id="leasePo" name="leasePo"
-                        class="input-full"
-                        value='<s:property value="leasePo"/>'>
-                </div>
+    <!-- TOP ROW (FORM FIELDS) -->
+    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
 
-                <div class="field-row">
-                    <label class="lbl-right" style="width: 50px;">Project</label>
-                    <input type="text" id="leaseproject"
-                        readonly="readonly"
-                        class="input-full"
-                        onkeydown="getproject(event);"
-                        placeholder="Press F3 To Search"
-                        name="leaseproject"
-                        value='<s:property value="leaseproject"/>'>
+        <!-- PO -->
+        <label class="lbl-right">PO</label>
+        <input type="text" id="leasePo" name="leasePo"
+            style="width: 150px;"
+            value='<s:property value="leasePo"/>'>
 
-                    <input type="hidden" id="leaseprojectDoc"
-                        name="leaseprojectDoc"
-                        value='<s:property value="leaseprojectDoc"/>'>
-                </div>
+        <!-- Project -->
+        <label class="lbl-right">Project</label>
+        <input type="text" id="leaseproject"
+            readonly="readonly"
+            style="width: 200px;"
+            onkeydown="getproject(event);"
+            placeholder="Press F3 To Search"
+            name="leaseproject"
+            value='<s:property value="leaseproject"/>'>
 
-            </div>
+        <!-- Hidden Field -->
+        <input type="hidden" id="leaseprojectDoc"
+            name="leaseprojectDoc"
+            value='<s:property value="leaseprojectDoc"/>'>
 
-        </div>
+    </div>
+
+    <!-- GRID BELOW -->
+    <div id="paymentdiv">
+        <jsp:include page="paymentdetailsgrid.jsp"></jsp:include>
+    </div>
+
+</div>
     </div>
 </div>
             <!-- ACCORDION HEADER -->
@@ -2866,114 +2859,110 @@ function checkBrandQty(fleetno,masterrefno){
     <div class="modern-panel" id="vehdetailsupdate">
         
 
-        <div style="padding-top: 5px;">
-            
-            <!-- ROW 1 -->
-            <div class="field-row">
-                
-                <label class="lbl-right" style="width: 100px;">Temporary Fleet</label>
-                <input type="text" readonly id="tempfleet" name="tempfleet"
-                    class="input-sm"
-                    placeholder="Press F3"
-                    value='<s:property value="tempfleet"/>'
-                    onkeydown="getvehinfo(2);">
+        <div style="padding-top: 5px; display: flex; flex-direction: column; gap: 8px;">
 
-                <label class="lbl-right" style="width: 100px; margin-left: 10px;">Permanent Fleet</label>
-                <input type="text" readonly id="permanentfleet" name="permanentfleet"
-                    class="input-sm"
-                    placeholder="Press F3"
-                    value='<s:property value="permanentfleet"/>'
-                    onkeydown="getvehinfo(1);">
+    <!-- ROW 1 -->
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: nowrap;">
 
-                <label class="chk-container" style="margin-left: 20px;">
-                    <input type="checkbox" id="chkdelivery" name="chkdelivery" value="0"
-                        onclick="$(this).attr('value', this.checked ? 1 : 0)"
-                        onchange="fundelivarytick();">
-                    Delivery
-                </label>
+        <label class="lbl-right" style="width: 100px;">Temporary Fleet</label>
+        <input type="text" readonly id="tempfleet" name="tempfleet"
+            class="input-sm"
+            placeholder="Press F3"
+            value='<s:property value="tempfleet"/>'
+            onkeydown="getvehinfo(2);">
 
-                <input type="text" readonly id="deldrvname"
-                    placeholder="Press F3 To Search"
-                    class="input-md"
-                    style="margin-left: 5px;"
-                    name="deldrvname"
-                    value='<s:property value="deldrvname"/>'
-                    onkeydown="getdeldrv(event);">
+        <label class="lbl-right" style="width: 100px;">Permanent Fleet</label>
+        <input type="text" readonly id="permanentfleet" name="permanentfleet"
+            class="input-sm"
+            placeholder="Press F3"
+            value='<s:property value="permanentfleet"/>'
+            onkeydown="getvehinfo(1);">
 
-                <label class="lbl-right" style="width: 80px; margin-left: 10px;">Del.Charges</label>
-                <input type="text" id="delcharges" name="delcharges"
-                    class="input-md align-right-input"
-                    value='<s:property value="delcharges"/>'
-                    onblur="funRoundAmt(this.value,this.id);"
-                    onkeypress="return isNumber(event)">
-            </div>
+        <label class="chk-container">
+            <input type="checkbox" id="chkdelivery" name="chkdelivery" value="0"
+                onclick="$(this).attr('value', this.checked ? 1 : 0)"
+                onchange="fundelivarytick();">
+            Delivery
+        </label>
 
-            <!-- ROW 2 -->
-            <div class="field-row">
-                
-                <label class="lbl-right" style="width: 100px;">Fleet Details</label>
-                <input type="text" readonly name="fleetname" id="fleetname"
-                    class="input-full"
-                    value='<s:property value="fleetname"/>'>
+        <input type="text" readonly id="deldrvname"
+            placeholder="Press F3 To Search"
+            class="input-md"
+            name="deldrvname"
+            value='<s:property value="deldrvname"/>'
+            onkeydown="getdeldrv(event);">
 
-                <div style="display: flex; gap: 10px; margin-left: 10px;">
-                    <input type="button" id="btnupdate" class="myButton"
-                        value="Edit" onclick="funupdate()">
-                    <input type="button" id="leaseprintbtn" class="myButton"
-                        value="Print" onclick="funPrintdown()">
-                </div>
-            </div>
+        <label class="lbl-right" style="width: 80px;">Del.Charges</label>
+        <input type="text" id="delcharges" name="delcharges"
+            class="input-md align-right-input"
+            value='<s:property value="delcharges"/>'
+            onblur="funRoundAmt(this.value,this.id);"
+            onkeypress="return isNumber(event)">
 
-            <!-- ROW 3 -->
-            <div class="field-row" style="margin-bottom: 0;">
-                
-                <label class="lbl-right" style="width: 100px;">OUT : Date</label>
-                <div style="width: 120px;">
-                    <div id="dateout"></div>
-                </div>
-                <input type="hidden" id="hiddateout" name="hiddateout"
-                    value='<s:property value="hiddateout"/>'>
+        <label class="lbl-right" style="width: 100px;">Fleet Details</label>
+<input type="text" readonly name="fleetname" id="fleetname"
+    class="input-md"
+    style="flex: 1; min-width: 400px;"
+    value='<s:property value="fleetname"/>'>
 
-                <label class="lbl-right" style="width: 40px;">Time</label>
-                <div style="width: 80px;">
-                    <div id="timeout"></div>
-                </div>
-                <input type="hidden" id="hidtimeout" name="hidtimeout"
-                    value='<s:property value="hidtimeout"/>'>
+    </div>
 
-                <label class="lbl-right" style="width: 40px;">Km</label>
-                <input type="text" id="kmout" name="kmout"
-                    class="input-sm"
-                    value='<s:property value="kmout"/>'
-                    onkeypress="return isNumber(event)">
+    <!-- ROW 2 -->
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: nowrap;">
 
-                <label class="lbl-right" style="width: 40px;">Fuel</label>
-                <select id="cmbfuelout" name="cmbfuelout" class="input-md">
-                    <option value="" selected>-Select-</option>
-                    <option value="0.000">Level 0/8</option>
-                    <option value="0.125">Level 1/8</option>
-                    <option value="0.250">Level 2/8</option>
-                    <option value="0.375">Level 3/8</option>
-                    <option value="0.500">Level 4/8</option>
-                    <option value="0.625">Level 5/8</option>
-                    <option value="0.750">Level 6/8</option>
-                    <option value="0.875">Level 7/8</option>
-                    <option value="1.000">Level 8/8</option>
-                </select>
-
-                <input type="hidden" id="hidcmbfuelout" name="hidcmbfuelout"
-                    value='<s:property value="hidcmbfuelout"/>'>
-
-                <button type="button" title="Reset" class="icon"
-                    id="cleardata"
-                    onclick="clearvehdata()"
-                    style="margin-left: 10px;">
-                    <img alt="Reset" src="<%=contextPath%>/icons/cancel_new.png">
-                </button>
-
-            </div>
-
+        <label class="lbl-right">OUT : Date</label>
+        <div style="width: 120px;">
+            <div id="dateout"></div>
         </div>
+        <input type="hidden" id="hiddateout" name="hiddateout"
+            value='<s:property value="hiddateout"/>'>
+
+        <label class="lbl-right">Time</label>
+        <div style="width: 80px;">
+            <div id="timeout"></div>
+        </div>
+        <input type="hidden" id="hidtimeout" name="hidtimeout"
+            value='<s:property value="hidtimeout"/>'>
+
+        <label class="lbl-right">Km</label>
+        <input type="text" id="kmout" name="kmout"
+            class="input-sm"
+            value='<s:property value="kmout"/>'
+            onkeypress="return isNumber(event)">
+
+        <label class="lbl-right">Fuel</label>
+        <select id="cmbfuelout" name="cmbfuelout" class="input-md">
+            <option value="" selected>-Select-</option>
+            <option value="0.000">Level 0/8</option>
+            <option value="0.125">Level 1/8</option>
+            <option value="0.250">Level 2/8</option>
+            <option value="0.375">Level 3/8</option>
+            <option value="0.500">Level 4/8</option>
+            <option value="0.625">Level 5/8</option>
+            <option value="0.750">Level 6/8</option>
+            <option value="0.875">Level 7/8</option>
+            <option value="1.000">Level 8/8</option>
+        </select>
+
+        <input type="hidden" id="hidcmbfuelout" name="hidcmbfuelout"
+            value='<s:property value="hidcmbfuelout"/>'>
+
+        <!-- Buttons at END -->
+        <input type="button" id="btnupdate" class="myButton"
+            value="Edit" onclick="funupdate()">
+
+        <input type="button" id="leaseprintbtn" class="myButton"
+            value="Print" onclick="funPrintdown()">
+
+        <button type="button" title="Reset" class="icon"
+            id="cleardata"
+            onclick="clearvehdata()">
+            <img alt="Reset" src="<%=contextPath%>/icons/cancel_new.png">
+        </button>
+
+    </div>
+
+</div>
     </div>
 
 </div>
