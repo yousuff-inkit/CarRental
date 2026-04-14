@@ -11,70 +11,99 @@
 
 <style>
 /* =========================================================
-   CONTRA TRANSACTION - EXACT TEXT & UI MATCH TO CLIENT MASTER
+   SCOPED UI: Stable Modern Layout (Client Master Style)
 ========================================================= */
-body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Arial, sans-serif !important;
-    color: #333 !important;
-    font-size: 12px !important;
+body {
+    background: #ffffff; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
     margin: 0;
+    padding: 15px; 
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 15px;
     max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin: 0 auto;
+    border: 1px solid #e5e7eb; 
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 0;
     box-sizing: border-box;
+    width: 100%;
 }
 
-/* FIX: Responsive scroll area so the bottom is never cut off */
-.hidden-scrollbar {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 140px);
-    padding-bottom: 60px;
-    box-sizing: border-box;
-}
-
-form label.error {
-    color: red;
-    font-weight: bold;
-}
-
-#validrate, #validrate1 {
-    color: red;
-}
-
-/* EXACT Input Styles from Client Master */
-/* FIX: No width: 100% to keep your exact layout widths intact */
-input[type="text"], input[type="email"], select {
+/* Master Input Heights - Stable 24px */
+.modern-ui input[type="text"],
+.modern-ui input[type="email"],
+.modern-ui select { 
     height: 24px !important; 
-    border: 1px solid #ccc !important;
-    border-radius: 3px !important;
+    border: 1px solid #b8c6d8 !important; 
+    border-radius: 3px !important; 
     padding: 2px 6px !important;
     font-size: 12px !important;
-    box-sizing: border-box;
-    background-color: #fff !important;
+    box-sizing: border-box; 
+    background-color: #fff !important; 
     color: #333 !important;
+    width: 100%;
 }
 
-input[type="text"]:focus, input[type="email"]:focus, select:focus {
-    border-color: #007bff !important;
+.modern-ui input[type="text"]:focus,
+.modern-ui input[type="email"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff !important; 
     outline: none !important;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f4f5f7 !important;
-    color: #5e6c84 !important;
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa !important; 
+    color: #6b7280 !important;
     border-color: #e1e4e8 !important;
 }
 
-/* Fieldset and Legend styling matching Client Master */
+/* THE CSS FAILSAFE FOR JQX DATE FIELDS */
+.jqx-datetimeinput, .jqx-datetimeinput-energyblue { 
+    height: 24px !important; 
+    min-height: 24px !important; 
+    box-sizing: border-box !important; 
+    border: 1px solid #b8c6d8 !important; 
+    border-radius: 3px !important; 
+}
+.jqx-datetimeinput input, .jqx-datetimeinput-energyblue input { 
+    height: 22px !important; 
+    margin-top: 0 !important; 
+    line-height: 22px !important; 
+    padding: 0 6px !important; 
+    border: none !important; 
+    box-sizing: border-box !important; 
+    background: transparent !important; 
+}
+.jqx-datetimeinput .jqx-action-button, .jqx-datetimeinput-energyblue .jqx-action-button { 
+    height: 22px !important; 
+    width: 24px !important; 
+    padding: 0 !important; 
+    margin: 0 !important; 
+    border: none !important; 
+    background: transparent !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.jqx-datetimeinput .jqx-icon-calendar, .jqx-datetimeinput-energyblue .jqx-icon-calendar { 
+    margin: 0 !important; 
+    position: static !important; 
+}
+
+/* Fieldsets */
 fieldset {
     border: 1px solid #e1e4e8 !important;
     background-color: #fff !important;
@@ -93,6 +122,46 @@ legend {
     background: #fff;
 }
 
+/* Search Icon Wrapper */
+.input-search-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.input-search-container input {
+    padding-right: 25px !important;
+}
+.magnifier-icon {
+    position: absolute;
+    right: 4px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.magnifier-icon:hover { color: #2563eb; }
+
+/* Custom UI Buttons */
+.myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    border-radius: 3px !important;
+    cursor: pointer !important;
+    text-shadow: none !important;
+    transition: all 0.2s !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    border: none !important;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    white-space: nowrap !important;
+}
+.myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important; }
+
 /* Table adjustments for compact text */
 table td {
     padding: 4px 6px !important;
@@ -102,36 +171,47 @@ table td {
     vertical-align: middle;
 }
 
-/* Modern Buttons matched to Client Master */
-.myButton {
-    background-color: #0056b3 !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 3px !important;
-    padding: 4px 15px !important;
-    font-weight: bold !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    height: 24px !important;
+.lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-.myButton:hover {
-    background-color: #004494 !important;
+form label.error, #validrate, #validrate1, #errormsg { color: red; font-weight: bold; font-size: 11px; }
+
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 100px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
 }
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
 </style>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
 		 
-         /* MODIFIED: Heights set to 24px */
-		 $("#jqxContraTransDate").jqxDateTimeInput({ width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '24px', formatString:"dd.MM.yyyy"});
-		 $("#jqxChequeDate").jqxDateTimeInput({ width: '110px', height: '24px', formatString:"dd.MM.yyyy"});
+		 /* Force exact integer 24 for height to avoid jqx math bugs */
+		 $("#jqxContraTransDate").jqxDateTimeInput({ width: '125px', height: 24, formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '125px', height: 24, formatString:"dd.MM.yyyy"});
+		 $("#jqxChequeDate").jqxDateTimeInput({ width: '110px', height: 24, formatString:"dd.MM.yyyy"});
 		
+         /* Nuclear JavaScript Override for JQX Dates */
+         setTimeout(function() {
+             $(".jqx-datetimeinput").find("input.jqx-input").attr("style", "height: 22px !important; margin-top: 0px !important; padding: 0 6px !important; line-height: 22px !important; font-size: 12px !important; border: none !important; background: transparent !important; box-sizing: border-box !important;");
+             $(".jqx-datetimeinput").find(".jqx-action-button").attr("style", "height: 22px !important; width: 24px !important; padding: 0 !important; margin: 0 !important; border: none !important; background: transparent !important; display: flex !important; align-items: center !important; justify-content: center !important;");
+             $(".jqx-datetimeinput").find(".jqx-icon-calendar").attr("style", "margin: 0 !important; position: static !important;");
+         }, 50);
 			
 		 $('#accountDetailWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Account Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailWindow').jqxWindow('close');
+		 
 		 $('#jqxContraTransDate').on('change', function (event) {
 			 var contradate = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
 			 var validdate=funDateInPeriod(contradate);
@@ -142,20 +222,28 @@ table td {
 		 });
 		 
 		 $('#txtfromaccid').dblclick(function(){
-			  var date = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  AccountSearchContent('accountsDetailsSearch.jsp?type1='+$('#cmbtype').val()+"&date="+date);
-			  $('#txtfromorto').val(2);
-			  });
+			  openFromAccountSearch();
+		  });
 		 
 		  $('#txttoaccid').dblclick(function(){
-			  var date = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  AccountSearchContent('accountsDetailsSearch.jsp?type1='+$('#cmbtotype').val()+"&date="+date);
-			  $('#txtfromorto').val(3);
-			  });  
+			  openToAccountSearch();
+		  });  
 		 
 	});
+    
+    function openFromAccountSearch() {
+        var date = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        AccountSearchContent('accountsDetailsSearch.jsp?type1='+$('#cmbtype').val()+"&date="+date);
+        $('#txtfromorto').val(2);
+    }
+    
+    function openToAccountSearch() {
+        var date = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        AccountSearchContent('accountsDetailsSearch.jsp?type1='+$('#cmbtotype').val()+"&date="+date);
+        $('#txtfromorto').val(3);
+    }
 	
 	function AccountSearchContent(url) {
 		$('#accountDetailWindow').jqxWindow('open');
@@ -321,7 +409,7 @@ table td {
 	   
 	  function funNotify(){	
 		  
-		  	/* Validation */
+		 	/* Validation */
 		    var contradate = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
 			var validdate=funDateInPeriod(contradate);
 			if(parseInt(validdate)==0){
@@ -518,26 +606,16 @@ table td {
 	  function getAcc(event){
           var x= event.keyCode;
           if(x==114){
-        	  var date = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-        	  AccountSearchContent('accountsDetailsSearch.jsp?type1='+$('#cmbtype').val()+"&date="+date);
-        	  $('#txtfromorto').val(2);  
+        	  openFromAccountSearch();
           }
-          else{
-           }
-          }
+       }
 	  
 	  function getAccType(event){
           var x= event.keyCode;
           if(x==114){
-        	  var date = $('#jqxContraTransDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-        	  AccountSearchContent('accountsDetailsSearch.jsp?type1='+$('#cmbtotype').val()+"&date="+date);
-        	  $('#txtfromorto').val(3);
+        	  openToAccountSearch();
           }
-          else{
-           }
-          }
+       }
 	  
 	  function funPrintBtn() {
 			
@@ -580,7 +658,7 @@ table td {
 		  }
 			
 			if($('#cmbbranch').val()!='' && $('#cmbbranch').val()!=null){
-		  	   var validibdate=funIBDateInPeriod($('#jqxContraTransDate').val(),$('#cmbbranch').val());
+		 	   var validibdate=funIBDateInPeriod($('#jqxContraTransDate').val(),$('#cmbbranch').val());
 			   if(parseInt(validibdate)==0){
 					document.getElementById("errormsg").innerText="Closing Done, Transaction Restricted.";
 					return 0;	
@@ -598,35 +676,36 @@ table td {
 <form id="frmContraTrans" action="saveContraTrans" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div class='hidden-scrollbar'>
+<div class='modern-ui hidden-scrollbar'>
+<span id="errormsg"></span>
 
 <table width="100%" cellpadding="3" cellspacing="0" style="margin-bottom: 10px;">
   <tr>
-    <td width="10%" align="right">Date</td>
+    <td class="lbl-right" width="10%">Date</td>
     <td width="20%">
         <div id="jqxContraTransDate" name="jqxContraTransDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxContraTransDate"/>'></div>
         <input type="hidden" id="hidjqxContraTransDate" name="hidjqxContraTransDate" value='<s:property value="hidjqxContraTransDate"/>'/>
     </td>
-    <td width="10%" align="right">Ref. No.</td>
+    <td class="lbl-right" width="10%">Ref. No.</td>
     <td width="30%" style="display: flex; gap: 5px; align-items: center;">
         <input type="text" id="txtrefno" name="txtrefno" style="width:150px;" value='<s:property value="txtrefno"/>'/>
         <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();" style="padding: 2px 8px !important;">Value Change</button>
     </td>
-    <td width="10%" align="right">Doc No.</td>
+    <td class="lbl-right" width="10%">Doc No.</td>
     <td width="20%">
         <input type="text" id="docno" name="txtcontratransdocno" style="width:150px; background-color:#f4f5f7;" value='<s:property value="txtcontratransdocno"/>' tabindex="-1" readonly/>
     </td>
   </tr>
 </table>
 
-<table width="100%">
+<table width="100%" cellspacing="10">
 <tr>
 <td width="50%" valign="top">
 <fieldset>
 <legend>Payment From</legend>
 <table width="100%" cellpadding="3" cellspacing="0">
   <tr>
-    <td width="15%" align="right">Type</td>
+    <td class="lbl-right" width="15%">Type</td>
     <td width="25%">
         <select id="cmbtype" name="cmbtype" style="width:100px;" onchange="clearClientInfoFrom();funchequedate();" value='<s:property value="cmbtype"/>'>
             <option value="CASH">Cash</option>
@@ -634,14 +713,19 @@ table td {
         </select>
         <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
     </td>
-    <td colspan="2" style="display: flex; gap: 5px;">
-        <input type="text" id="txtfromaccid" name="txtfromaccid" style="width:100px;" readonly placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>' onkeydown="getAcc(event);"/>
-        <input type="text" id="txtfromaccname" name="txtfromaccname" readonly style="width:200px; background-color:#f4f5f7;" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
-        <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
+    <td colspan="2">
+        <div style="display: flex; gap: 5px; width:100%;">
+            <div class="input-search-container" style="width: 100px; flex-shrink: 0;">
+                <input type="text" id="txtfromaccid" name="txtfromaccid" readonly placeholder="Press F3" value='<s:property value="txtfromaccid"/>' onkeydown="getAcc(event);"/>
+                <svg class="magnifier-icon" onclick="openFromAccountSearch();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <input type="text" id="txtfromaccname" name="txtfromaccname" readonly style="flex-grow: 1; background-color:#f4f5f7;" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
+            <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
+        </div>
     </td>
   </tr>
   <tr>
-    <td align="right">Currency</td>
+    <td class="lbl-right">Currency</td>
     <td>
         <select id="cmbfromcurrency" name="cmbfromcurrency" style="width:100px;" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxContraTransDate').val());">
             <option></option>
@@ -649,7 +733,7 @@ table td {
         <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>
         <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/>
     </td>
-    <td width="15%" align="right">Rate</td>
+    <td class="lbl-right" width="15%">Rate</td>
     <td>
         <input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" style="width:100px; text-align: right;" value='<s:property value="txtfromrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();" tabindex="-1"/>
         <span id="validrate"></span>
@@ -657,7 +741,9 @@ table td {
   </tr>
   <tr>
     <td align="right">
-        <input type="checkbox" id="chckpdc" name="chckpdc" onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxContraTransDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" style="vertical-align: middle;"> PDC
+        <label style="cursor:pointer; display:flex; align-items:center; justify-content:flex-end; gap:4px; font-weight:bold; font-size:12px; color:#444;">
+            <input type="checkbox" id="chckpdc" name="chckpdc" onclick="funCheck();funPDCDate($('#hidchckpdc').val(),$('#jqxContraTransDate').jqxDateTimeInput('getDate'),$('#jqxChequeDate').jqxDateTimeInput('getDate'));" style="margin:0;"> PDC
+        </label>
         <input type="hidden" id="hidchckpdc" name="hidchckpdc" value='<s:property value="hidchckpdc"/>'/>
         <input type="hidden" id="txtpdcacno" name="txtpdcacno" value='<s:property value="txtpdcacno"/>'/>
     </td>
@@ -670,17 +756,17 @@ table td {
     </td>
   </tr>
   <tr>
-    <td align="right">Amount</td>
+    <td class="lbl-right">Amount</td>
     <td>
         <input type="text" id="txtfromamount" name="txtfromamount" style="width:120px; text-align: right;" value='<s:property value="txtfromamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();" />
     </td>
-    <td align="right">Base Amount</td>
+    <td class="lbl-right">Base Amount</td>
     <td>
         <input type="text" id="txtfrombaseamount" name="txtfrombaseamount" style="width:120px; text-align: right; background-color:#f4f5f7;" value='<s:property value="txtfrombaseamount"/>' tabindex="-1" readonly/>
     </td>
   </tr>
   <tr>
-    <td align="right">Description</td>
+    <td class="lbl-right">Description</td>
     <td colspan="3">
         <input type="text" id="txtdescription" name="txtdescription" style="width:100%;" value='<s:property value="txtdescription"/>'/>
     </td>
@@ -695,10 +781,12 @@ table td {
 <table width="100%" cellpadding="3" cellspacing="0">
   <tr>
     <td colspan="2" align="center">
-        <input type="checkbox" id="chckib" name="chckib" onclick="funCheckIb();" style="vertical-align: middle;"> Inter-Branch
+        <label style="cursor:pointer; display:flex; align-items:center; justify-content:center; gap:4px; font-weight:bold; font-size:12px; color:#444;">
+            <input type="checkbox" id="chckib" name="chckib" onclick="funCheckIb();" style="margin:0;"> Inter-Branch
+        </label>
         <input type="hidden" id="hidchckib" name="hidchckib" value='<s:property value="hidchckib"/>'/>
     </td>
-    <td width="20%" align="right">Branch</td>
+    <td class="lbl-right" width="20%">Branch</td>
     <td>
         <select id="cmbbranch" name="cmbbranch" style="width:150px;" value='<s:property value="cmbbranch"/>'>
             <option value=""></option>
@@ -707,7 +795,7 @@ table td {
     </td>
   </tr>
   <tr>
-    <td width="15%" align="right">Type</td>
+    <td class="lbl-right" width="15%">Type</td>
     <td width="25%">
         <select id="cmbtotype" name="cmbtotype" style="width:100px;" onchange="clearClientInfoTo();" value='<s:property value="cmbtotype"/>'>
             <option value="CASH">Cash</option>
@@ -715,16 +803,21 @@ table td {
         </select>
         <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/>
     </td>
-    <td colspan="2" style="display: flex; gap: 5px;">
-        <input type="text" id="txttoaccid" name="txttoaccid" style="width:100px;" readonly placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
-        <input type="text" id="txttoaccname" name="txttoaccname" readonly style="width:200px; background-color:#f4f5f7;" value='<s:property value="txttoaccname"/>' tabindex="-1"/>
-        <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
-        <input type="hidden" id="txttotranid" name="txttotranid" value='<s:property value="txttotranid"/>'/>
-        <input type="hidden" id="txttotrno" name="txttotrno" value='<s:property value="txttotrno"/>'/>
+    <td colspan="2">
+        <div style="display: flex; gap: 5px; width:100%;">
+            <div class="input-search-container" style="width: 100px; flex-shrink: 0;">
+                <input type="text" id="txttoaccid" name="txttoaccid" readonly placeholder="Press F3" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
+                <svg class="magnifier-icon" onclick="openToAccountSearch();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <input type="text" id="txttoaccname" name="txttoaccname" readonly style="flex-grow: 1; background-color:#f4f5f7;" value='<s:property value="txttoaccname"/>' tabindex="-1"/>
+            <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
+            <input type="hidden" id="txttotranid" name="txttotranid" value='<s:property value="txttotranid"/>'/>
+            <input type="hidden" id="txttotrno" name="txttotrno" value='<s:property value="txttotrno"/>'/>
+        </div>
     </td>
   </tr>
   <tr>
-    <td align="right">Currency</td>
+    <td class="lbl-right">Currency</td>
     <td>
         <select id="cmbtocurrency" name="cmbtocurrency" style="width:100px;" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxContraTransDate').val());">
             <option></option>
@@ -732,18 +825,18 @@ table td {
         <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency" value='<s:property value="hidcmbtocurrency"/>'/>
         <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype" value='<s:property value="hidtocurrencytype"/>'/>
     </td>
-    <td align="right">Rate</td>
+    <td class="lbl-right">Rate</td>
     <td>
         <input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" style="width:100px; text-align: right;" value='<s:property value="txttorate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>
         <span id="validrate1"></span>
     </td>
   </tr>
   <tr>
-    <td align="right">Amount</td>
+    <td class="lbl-right">Amount</td>
     <td>
         <input type="text" id="txttoamount" name="txttoamount" style="width:120px; text-align: right;" value='<s:property value="txttoamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();" />
     </td>
-    <td align="right">Base Amount</td>
+    <td class="lbl-right">Base Amount</td>
     <td>
         <input type="text" id="txttobaseamount" name="txttobaseamount" style="width:120px; text-align: right; background-color:#f4f5f7;" value='<s:property value="txttobaseamount"/>' tabindex="-1" readonly/>
     </td>
@@ -768,17 +861,9 @@ table td {
 </div>
 </form>
 
-<div id="accountDetailWindow">
-	<div></div><div></div>
-</div>
-
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
+<div id="accountDetailWindow"><div></div><div></div></div>
+<div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
 
 </div>
 </body>

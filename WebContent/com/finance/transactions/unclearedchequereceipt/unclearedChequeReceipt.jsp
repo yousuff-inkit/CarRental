@@ -18,148 +18,145 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+   UNCLEARED CHEQUE RECEIPT - EXACT CLIENT MASTER STYLE
 ========================================================= */
-
-.modern-ui {
-    font-family: Arial, sans-serif; 
-    color: #333;
-    font-size: 12px; 
-    padding: 10px 20px;
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Tahoma, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
     box-sizing: border-box;
 }
 
-.modern-ui .erp-form-area {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+#mainBG {
+    background: #fff;
     border-radius: 4px;
-    padding: 15px 10px;
-    margin-bottom: 10px;
-    min-width: 1050px; 
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"],
-.modern-ui select { 
+/* EXACT Input Styles from Client Master */
+input[type="text"], select {
     height: 24px !important; 
-    border: 1px solid #b8c6d8; 
-    border-radius: 3px; 
-    padding: 2px 6px;
-    font-size: 12px;
-    box-sizing: border-box; 
-    background-color: #fff; 
-    color: #333;
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    font-family: Tahoma, sans-serif !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #333 !important;
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus,
-.modern-ui select:focus { 
-    border-color: #007bff; 
-    outline: none;
+input[type="text"]:focus, select:focus {
+    border-color: #007bff !important;
+    background-color: #FFD6FF !important; /* Client Master Focus Color */
+    outline: none !important;
 }
 
-.modern-ui input[readonly],
-.modern-ui input:disabled { 
-    background-color: #f8f9fa; 
-    color: #6b7280;
+input[readonly], input:disabled, select:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
 }
 
-.modern-ui td {
-    padding: 4px 5px;
+/* Fieldset and Legend styling */
+fieldset {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 12px 10px 10px 10px !important;
+    border-radius: 4px !important;
+}
+
+legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 0 0 0 6px !important;
+    border-left: 3px solid #0056b3 !important;
+    margin-bottom: 5px !important;
+    background: #fff;
+}
+
+/* Table adjustments */
+table td {
+    padding: 4px 6px !important;
+    font-size: 11px !important;
+    font-family: Tahoma, sans-serif !important;
+    color: #444 !important;
+    font-weight: bold !important;
     vertical-align: middle;
 }
 
-.modern-ui .lbl-right { 
+.lbl-right { 
     text-align: right; 
-    color: #444;
-    font-size: 12px; 
-    font-weight: bold;
+    color: #404040;
     white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Action Buttons */
-.modern-ui .erp-btn-warning {
-    height: 24px;
-    padding: 0 15px;
-    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-    color: #fff;
-    border: none;
-    border-radius: 3px;
+/* Value Change Button */
+.erp-btn-warning {
+    height: 24px !important;
+    padding: 0 10px !important;
+    background-color: #f39c12 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    font-family: Tahoma, sans-serif !important;
+    cursor: pointer !important;
+}
+
+/* Search Icon Wrapper */
+.input-search-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.input-search-container input {
+    padding-right: 25px !important;
+}
+.magnifier-icon {
+    position: absolute;
+    right: 4px; 
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
-    font-size: 11px;
-    font-weight: bold;
-    box-shadow: 0 1px 2px rgba(245, 158, 11, 0.3);
+    color: #64748b; 
+    z-index: 10;
 }
+.magnifier-icon:hover { color: #2563eb; }
 
-/* Split Section Styling */
-.modern-ui .section-title {
-    font-size: 13px;
-    font-weight: bold;
-    color: #0056b3;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #c5d3e0;
-    padding-bottom: 3px;
-}
-
-.modern-ui .split-container {
-    display: flex;
-    gap: 15px;
-}
-
-.modern-ui .split-panel {
-    flex: 1;
-    background: #fff;
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
-    padding: 10px;
-}
-
-/* Data Grid Container */
-.modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
-    overflow: hidden;
-    background: #fff;
-    margin-bottom: 10px;
-}
-
-form label.error {
+form label.error, #validrate, #validrate1 {
     color: red;
     font-weight: bold;
     font-size: 11px;
 }
 
-#validrate, #validrate1 { color: red; font-size: 11px; font-weight: bold; }
-
-.hidden-scrollbar { 
-    overflow: auto; 
-    height: calc(100vh - 100px);
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
 }
-.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
 		
-         /* FIXED DATE WIDTHS & HEIGHTS */ 
-		 $("#jqxUnclearedChequeReceiptDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
-		 $("#jqxChequeDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});        
-         
-         /* Force internal alignment AFTER render */
-        setTimeout(function () {
-            $(".jqx-datetimeinput").find("input").css({
-                "margin-top": "0px", 
-                "line-height": "24px", 
-                "font-size": "12px", 
-                "font-family": "Arial, sans-serif",
-                "padding": "0 6px", 
-                "box-sizing":"border-box"
-            });
-            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-        }, 0);
+		 $("#jqxUnclearedChequeReceiptDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#jqxChequeDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 		
 		 $('#accountDetailsToWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsToWindow').jqxWindow('close');  
@@ -188,18 +185,21 @@ form label.error {
 				 }
 			 });
 		 
-		 $('#txtfromaccid').dblclick(function(){
-			  var date = $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  accountFromSearchContent(<%=contextPath+"/"%>+"com/finance/accountsDetailsSearch.jsp?date="+date);
-			  });
-		 
-		  $('#txttoaccid').dblclick(function(){
-			  var date = $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  accountToSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtotype').val()+"&date="+date);
-			  });  
+		 $('#txtfromaccid').dblclick(function(){ openFromAcc(); });
+		 $('#txttoaccid').dblclick(function(){ openToAcc(); });  
 	});
+	
+	function openFromAcc() {
+        var date = $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        accountFromSearchContent("<%=contextPath%>/com/finance/accountsDetailsSearch.jsp?date="+date);
+    }
+
+    function openToAcc() {
+        var date = $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        accountToSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtotype').val()+"&date="+date);
+    }
 	
 	function unclearedChequeSearchContent(url) {
 		$('#unclearedChequeReceiptGridWindow').jqxWindow('open');
@@ -306,15 +306,11 @@ form label.error {
 	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
 	}
 	 
-	 function funSearchLoad(){
-		changeContent('ucrMainSearch.jsp'); 
-	 }
+	 function funSearchLoad(){ changeContent('ucrMainSearch.jsp'); }
 		
 	 function funChkButton() { }
 	 
-	 function funFocus() {
-	    $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('focus'); 	    		
-	 }
+	 function funFocus() { $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('focus'); }
 	 
 	  /* Validations */
 	   $(function(){
@@ -356,7 +352,6 @@ form label.error {
 				 document.getElementById("errormsg").innerText="Enter Account";
 				 return 0;
 			 }
-			 
 			
 			currency=document.getElementById("cmbfromcurrency").value;
 			 if(currency==""){
@@ -627,7 +622,7 @@ form label.error {
                   }
                   else{
                	   if(!isNaN(baseamount)){
-                    	 	dr=dr+baseamount;
+                   	 	dr=dr+baseamount;
                   	   }else if(isNaN(baseamount)){
                   		    baseamount=0.00;
                   		 	dr=dr+baseamount;
@@ -650,22 +645,16 @@ form label.error {
 	  function getAcc(event){
           var x= event.keyCode;
           if(x==114){
-        	  var date = $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('getDate');
-        	  $("#maindate").jqxDateTimeInput('val', date);
-        	  accountFromSearchContent(<%=contextPath+"/"%>+"com/finance/accountsDetailsSearch.jsp?date="+date);
+        	  openFromAcc();
           }
-          else{}
-          }
+       }
 	  
 	  function getAccType(event){
           var x= event.keyCode;
           if(x==114){
-        	  var date = $('#jqxUnclearedChequeReceiptDate').jqxDateTimeInput('getDate');
-        	  $("#maindate").jqxDateTimeInput('val', date);
-        	  accountToSearchContent(<%=contextPath+"/"%>+"com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtotype').val()+"&date="+date);
+        	  openToAcc();
           }
-          else{}
-          }
+       }
 	  
 	  
 	  function funPrintBtn() {
@@ -702,188 +691,185 @@ form label.error {
 <form id="frmUnclearedChequeReceipt" action="saveUnclearedChequeReceipt" method="post" autocomplete="off">
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div class="modern-ui">
+<span id="errormsg" style="color:red; font-weight:bold; margin-left: 15px; font-size: 11px; display:block;"></span>
 
-    <div class="erp-form-area">
-        
-        <table width="100%" border="0" cellspacing="0" cellpadding="2" style="margin-bottom: 8px;">
-            <tr>
-                <td class="lbl-right" width="6%">Date</td>
-                <td width="12%">
-                    <div id="jqxUnclearedChequeReceiptDate" name="jqxUnclearedChequeReceiptDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxUnclearedChequeReceiptDate"/>'></div>
-                    <input type="hidden" id="hidjqxUnclearedChequeReceiptDate" name="hidjqxUnclearedChequeReceiptDate" value='<s:property value="hidjqxUnclearedChequeReceiptDate"/>'/>
-                </td>
-                <td class="lbl-right" width="8%">Ref. No.</td>
-                <td width="15%">
-                    <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>'/>
-                </td>
-                <td class="lbl-right" width="8%">Doc No</td>
-                <td width="15%">
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <input type="text" id="docno" name="txtunclearedchequereceiptdocno" value='<s:property value="txtunclearedchequereceiptdocno"/>' tabindex="-1" readonly="readonly"/>
-                        <button class="erp-btn-warning" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
-                    </div>
-                </td>
-                <td align="right" width="36%"></td>
-            </tr>
-        </table>
+<table width="100%" cellpadding="3" cellspacing="0" style="margin-bottom: 10px;">
+  <tr>
+    <td width="10%" class="lbl-right">Date</td>
+    <td width="20%">
+        <div id="jqxUnclearedChequeReceiptDate" name="jqxUnclearedChequeReceiptDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxUnclearedChequeReceiptDate"/>'></div>
+        <input type="hidden" id="hidjqxUnclearedChequeReceiptDate" name="hidjqxUnclearedChequeReceiptDate" value='<s:property value="hidjqxUnclearedChequeReceiptDate"/>'/>
+    </td>
+    <td width="10%" class="lbl-right">Ref. No.</td>
+    <td width="30%" style="display: flex; gap: 5px; align-items: center;">
+        <input type="text" id="txtrefno" name="txtrefno" style="width:150px;" value='<s:property value="txtrefno"/>'/>
+        <button class="erp-btn-warning" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button>
+    </td>
+    <td width="10%" class="lbl-right">Doc No.</td>
+    <td width="20%">
+        <input type="text" id="docno" name="txtunclearedchequereceiptdocno" style="width:150px; background-color:#f4f5f7;" value='<s:property value="txtunclearedchequereceiptdocno"/>' tabindex="-1" readonly="readonly"/>
+    </td>
+  </tr>
+</table>
 
-        <div class="split-container">
-            
-            <div class="split-panel">
-                <div class="section-title">Bank</div>
-                <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                    <tr>
-                        <td class="lbl-right" width="20%">Bank</td>
-                        <td width="30%">
-                            <input type="text" id="txtfromaccid" name="txtfromaccid" placeholder="Press F3" value='<s:property value="txtfromaccid"/>'  onkeydown="getAcc(event);"/>
-                        </td>
-                        <td width="50%" colspan="2">
-                            <input type="text" id="txtfromaccname" name="txtfromaccname" value='<s:property value="txtfromaccname"/>' tabindex="-1"/>
-                            <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Currency</td>
-                        <td>
-                            <select id="cmbfromcurrency" name="cmbfromcurrency" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
-                                <option></option>
-                            </select>
-                            <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>
-                            <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/>
-                        </td>
-                        <td class="lbl-right" width="15%">Rate</td>
-                        <td width="35%">
-                            <input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" value='<s:property value="txtfromrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
-                            <div id="validrate"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Cheque No</td>
-                        <td>
-                            <input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>' />
-                        </td>
-                        <td class="lbl-right">Date</td>
-                        <td>
-                            <div id="jqxChequeDate" name="jqxChequeDate" value='<s:property value="jqxChequeDate"/>'></div>
-                            <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate" value='<s:property value="hidjqxChequeDate"/>'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Cheque Name</td>
-                        <td colspan="3">
-                            <input type="text" id="txtchequename" name="txtchequename" value='<s:property value="txtchequename"/>' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Amount</td>
-                        <td>
-                            <input type="text" id="txtfromamount" name="txtfromamount" value='<s:property value="txtfromamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
-                        </td>
-                        <td class="lbl-right">Base Amt</td>
-                        <td>
-                            <input type="text" id="txtfrombaseamount" name="txtfrombaseamount" value='<s:property value="txtfrombaseamount"/>' tabindex="-1" readonly="readonly"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Description</td>
-                        <td colspan="3">
-                            <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="split-panel">
-                <div class="section-title">Received From</div>
-                <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                    <tr>
-                        <td class="lbl-right" width="20%">Type</td>
-                        <td width="80%" colspan="3">
-                            <select id="cmbtotype" name="cmbtotype" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>' style="width: 100px;">
-                                <option value="AP">AP</option><option value="AR">AR</option>
-                            </select>
-                            <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Account</td>
-                        <td width="30%">
-                            <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
-                        </td>
-                        <td width="50%" colspan="2">
-                            <input type="text" id="txttoaccname" name="txttoaccname" value='<s:property value="txttoaccname"/>' tabindex="-1"/>
-                            <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Currency</td>
-                        <td>
-                            <select id="cmbtocurrency" name="cmbtocurrency" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
-                                <option></option>
-                            </select>
-                            <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency" value='<s:property value="hidcmbtocurrency"/>'/>
-                            <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype" value='<s:property value="hidtocurrencytype"/>'/>
-                        </td>
-                        <td class="lbl-right" width="15%">Rate</td>
-                        <td width="35%">
-                            <input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" value='<s:property value="txttorate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>
-                            <div id="validrate1"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl-right">Amount</td>
-                        <td>
-                            <input type="text" id="txttoamount" name="txttoamount" value='<s:property value="txttoamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();" />
-                        </td>
-                        <td class="lbl-right">Base Amt</td>
-                        <td>
-                            <input type="text" id="txttobaseamount" name="txttobaseamount" value='<s:property value="txttobaseamount"/>' tabindex="-1" readonly="readonly"/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
+<table width="100%">
+<tr>
+<td width="50%" valign="top">
+<fieldset>
+<legend>Bank</legend>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <tr>
+    <td width="15%" class="lbl-right">Bank</td>
+    <td width="25%">
+        <div class="input-search-container">
+            <input type="text" id="txtfromaccid" name="txtfromaccid" placeholder="Press F3" value='<s:property value="txtfromaccid"/>' onkeydown="getAcc(event);"/>
+            <svg class="magnifier-icon" onclick="openFromAcc();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
-    </div>
+    </td>
+    <td colspan="2">
+        <input type="text" id="txtfromaccname" name="txtfromaccname" value='<s:property value="txtfromaccname"/>' style="background-color:#f4f5f7;" tabindex="-1" readonly/>
+        <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Currency</td>
+    <td>
+        <select id="cmbfromcurrency" name="cmbfromcurrency" value='<s:property value="cmbfromcurrency"/>' onchange="getRate(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
+            <option></option>
+        </select>
+        <input type="hidden" id="hidcmbfromcurrency" name="hidcmbfromcurrency" value='<s:property value="hidcmbfromcurrency"/>'/>
+        <input type="hidden" id="hidfromcurrencytype" name="hidfromcurrencytype" value='<s:property value="hidfromcurrencytype"/>'/>
+    </td>
+    <td width="15%" class="lbl-right">Rate</td>
+    <td width="35%">
+        <input type="text" id="txtfromrate" name="txtfromrate" onchange="funvalid()" value='<s:property value="txtfromrate"/>' style="text-align: right;" onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1"/>
+        <div id="validrate"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Cheque No</td>
+    <td>
+        <input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>' />
+    </td>
+    <td class="lbl-right">Date</td>
+    <td>
+        <div id="jqxChequeDate" name="jqxChequeDate" value='<s:property value="jqxChequeDate"/>'></div>
+        <input type="hidden" id="hidjqxChequeDate" name="hidjqxChequeDate" value='<s:property value="hidjqxChequeDate"/>'/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Cheque Name</td>
+    <td colspan="3">
+        <input type="text" id="txtchequename" name="txtchequename" value='<s:property value="txtchequename"/>' />
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Amount</td>
+    <td>
+        <input type="text" id="txtfromamount" name="txtfromamount" value='<s:property value="txtfromamount"/>' style="text-align: right;" onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" />
+    </td>
+    <td class="lbl-right">Base Amt</td>
+    <td>
+        <input type="text" id="txtfrombaseamount" name="txtfrombaseamount" value='<s:property value="txtfrombaseamount"/>' style="text-align: right; background-color:#f4f5f7;" tabindex="-1" readonly="readonly"/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Description</td>
+    <td colspan="3">
+        <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
+    </td>
+  </tr>
+</table>
+</fieldset>
+</td>
 
-    <div class="grid-container">
-        <div id="jqxUnclearedChequeReceiptGrid"><jsp:include page="unclearedChequeReceiptGrid.jsp"></jsp:include></div>
-    </div>
+<td width="50%" valign="top">
+<fieldset>
+<legend>Received From</legend>
+<table width="100%" cellpadding="3" cellspacing="0">
+  <tr>
+    <td width="15%" class="lbl-right">Type</td>
+    <td width="25%">
+        <select id="cmbtotype" name="cmbtotype" onchange="clearClientInfo();" value='<s:property value="cmbtotype"/>'>
+            <option value="AP">AP</option><option value="AR">AR</option>
+        </select>
+        <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/>
+    </td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Account</td>
+    <td>
+        <div class="input-search-container">
+            <input type="text" id="txttoaccid" name="txttoaccid" placeholder="Press F3" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
+            <svg class="magnifier-icon" onclick="openToAcc();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+    </td>
+    <td colspan="2">
+        <input type="text" id="txttoaccname" name="txttoaccname" value='<s:property value="txttoaccname"/>' style="background-color:#f4f5f7;" tabindex="-1" readonly/>
+        <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Currency</td>
+    <td>
+        <select id="cmbtocurrency" name="cmbtocurrency" value='<s:property value="cmbtocurrency"/>' onchange="getRatevalue(this.value,$('#jqxUnclearedChequeReceiptDate').val());">
+            <option></option>
+        </select>
+        <input type="hidden" id="hidcmbtocurrency" name="hidcmbtocurrency" value='<s:property value="hidcmbtocurrency"/>'/>
+        <input type="hidden" id="hidtocurrencytype" name="hidtocurrencytype" value='<s:property value="hidtocurrencytype"/>'/>
+    </td>
+    <td class="lbl-right" width="15%">Rate</td>
+    <td width="35%">
+        <input type="text" id="txttorate" name="txttorate" onchange="funvalid1()" value='<s:property value="txttorate"/>' style="text-align: right;" onblur="funRoundRate(this.value,this.id);getBaseAmountTo();getCrTotal();" tabindex="-1"/>
+        <div id="validrate1"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="lbl-right">Amount</td>
+    <td>
+        <input type="text" id="txttoamount" name="txttoamount" value='<s:property value="txttoamount"/>' style="text-align: right;" onblur="funRoundAmt(this.value,this.id);getBaseAmountTo();getCrTotal();" />
+    </td>
+    <td class="lbl-right">Base Amt</td>
+    <td>
+        <input type="text" id="txttobaseamount" name="txttobaseamount" value='<s:property value="txttobaseamount"/>' style="text-align: right; background-color:#f4f5f7;" tabindex="-1" readonly="readonly"/>
+    </td>
+  </tr>
+</table>
+</fieldset>
+</td>
+</tr></table>
 
-    <div class="erp-form-area">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
-            <tr>
-                <td class="lbl-right" width="10%">Dr. Total</td>
-                <td width="15%">
-                    <input type="text" id="txtdrtotal" name="txtdrtotal" style="text-align: right;" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly="readonly"/>
-                </td>
-                <td class="lbl-right" width="10%">Cr. Total</td>
-                <td width="15%">
-                    <input type="text" id="txtcrtotal" name="txtcrtotal" style="text-align: right;" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly="readonly"/>
-                </td>
-                <td width="50%" align="right">
-                    <i><b><label id="lblformposted" name="lblformposted" style="font-size: 13px; font-family: Tahoma; color:#6000FC;"></label></b></i>
-                    <span id="formdet" style="display:none;"></span>
-                </td>
-            </tr>
-        </table>
-    </div>
+<div id="jqxUnclearedChequeReceiptGrid"><jsp:include page="unclearedChequeReceiptGrid.jsp"></jsp:include></div>
 
-    <div style="display:none;">
-        <input type="hidden" id="mode" name="mode"/>
-        <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-        <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-        <input type="hidden" name="txtforsearch" id="txtforsearch" value="0"/>
-        <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
-        <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
-        <input type="hidden" id="gridlength" name="gridlength"/>
-        
-        <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
-        <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
-    </div>
+<table width="100%" cellpadding="3" cellspacing="0" style="margin-top: 10px;">
+  <tr>
+    <td width="10%" class="lbl-right">Dr. Total</td>
+    <td width="20%">
+        <input type="text" id="txtdrtotal" name="txtdrtotal" style="text-align: right; background-color:#f4f5f7;" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly="readonly"/>
+    </td>
+    <td width="40%"></td>
+    <td width="10%" class="lbl-right">Cr. Total</td>
+    <td width="20%">
+        <input type="text" id="txtcrtotal" name="txtcrtotal" style="text-align: right; background-color:#f4f5f7;" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly="readonly"/>
+    </td>
+  </tr>
+</table>
 
+<div style="display:none;">
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+    <input type="hidden" name="txtforsearch" id="txtforsearch" value="0"/>
+    <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
+    <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>
+    <input type="hidden" id="gridlength" name="gridlength"/>
+    <input type="hidden" id="formdetail" name="formdetail" value='<s:property value="formdetail"/>'/>
+    <input type="hidden" id="formdetailcode" name="formdetailcode" value='<s:property value="formdetailcode"/>'/>
+    <span id="formdet" style="display:none;"></span>
+    <i><b><label id="lblformposted" name="lblformposted"></label></b></i>
 </div>
+
 </form>
 
 <div id="unclearedChequeReceiptGridWindow"><div></div><div></div></div>  

@@ -1,63 +1,190 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-	<script type="text/javascript">
+<style>
+/* =========================================================
+   SCOPED UI: Tahoma Font & Blue Background Search Panel
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff; /* Main background white */
+    font-family: Tahoma, Geneva, sans-serif; 
+}
+
+.modern-ui {
+    font-size: 11px;
+    color: #404040;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Styles */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 11px; 
+    font-family: Tahoma, sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #FFD6FF; /* Purple focus color from your body.css */
+}
+
+/* Panel Styling - RESTORED BLUE BACKGROUND */
+.modern-ui .search-panel {
+    background-color: #E0ECF8 !important; /* Your specific blue background */
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #404040;
+    font-size: 11px; 
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Search Button - Modern Blue matched to Client Master */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+}
+
+.modern-ui .myButton:hover {
+    background-color: #004494;
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
+    background: #fff;
+}
+</style>
+
+<script type="text/javascript">
 	$(document).ready(function () {
-	 $("#unclearchequedate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	 $("#chqdate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+        /* Dates left at 15px height as requested */
+		$("#unclearchequedate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
+		$("#chqdate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
 	}); 
 
- 	function loadSearch() {
-
- 		var partyname=document.getElementById("txtpartyname").value;
- 		var docNo=document.getElementById("txtdocno").value;
- 		var date=document.getElementById("unclearchequedate").value;
- 		var amount=document.getElementById("txtamount").value;
- 		var chequeNo=document.getElementById("txtchqno").value;
- 		var chequeDt=document.getElementById("chqdate").value;
+	function loadSearch() {
+		var partyname = document.getElementById("txtpartyname").value || "";
+		var docNo = document.getElementById("txtdocno").value || "";
+		var date = $('#unclearchequedate').jqxDateTimeInput('val') || "";
+		var amount = document.getElementById("txtamount").value || "";
+		var chequeNo = document.getElementById("txtchqno").value || "";
+		var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
 	    var check = 1;
 	    
-		getdata(partyname,docNo,date,amount,chequeNo,chequeDt,check);
+		getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
 	}
-	function getdata(partyname,docNo,date,amount,chequeNo,chequeDt,check){
-		 $("#refreshdiv").load('ucpMainSearchGrid.jsp?partyname='+partyname+'&docNo='+docNo+'&date='+date+'&amount='+amount+'&chequeNo='+chequeNo+'&chequeDt='+chequeDt+'&check='+check);
-		}
+	
+	function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
+		 $("#refreshdiv").load('ucpMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
+                               '&docNo=' + encodeURIComponent(docNo) + 
+                               '&date=' + date + 
+                               '&amount=' + encodeURIComponent(amount) + 
+                               '&chequeNo=' + encodeURIComponent(chequeNo) + 
+                               '&chequeDt=' + chequeDt + 
+                               '&check=' + check);
+	}
+</script>
+</head>
 
-	</script>
-<body>
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">Name</td>
-    <td colspan="3"><input type="text" name="txtpartyname" id="txtpartyname" style="width:80%" value='<s:property value="txtpartyname"/>'></td>
-    <td width="11%" align="right">Doc No</td>
-    <td colspan="2"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-    <td width="17%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  <tr>
-    <td align="right">Date</td>
-    <td width="14%"><div id="unclearchequedate" name="unclearchequedate"  value='<s:property value="unclearchequedate"/>'></div>
-        <input type="hidden" name="hidunclearchequedate" id="hidunclearchequedate" value='<s:property value="hidunclearchequedate"/>'></td>
-    <td width="10%" align="right">Amount</td>
-    <td width="14%"><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
-    <td align="right">Cheque No</td>
-    <td width="14%"><input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'></td>
-    <td width="14%" align="right">Cheque Date</td>
-    <td><div id="chqdate" name="chqdate"  value='<s:property value="chqdate"/>'></div>
-        <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="8"><div id="refreshdiv"><jsp:include  page="ucpMainSearchGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-  </div>
+<body style="background-color: #fff; margin: 0;">
+
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="8%">Name</td>
+                <td colspan="3">
+                    <input type="text" name="txtpartyname" id="txtpartyname" value='<s:property value="txtpartyname"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Doc No</td>
+                <td width="20%">
+                    <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
+                </td>
+                
+                <td width="20%" align="center">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
+            <tr>
+                <td class="lbl-right">Date</td>
+                <td width="15%">
+                    <div id="unclearchequedate" name="unclearchequedate" value='<s:property value="unclearchequedate"/>'></div>
+                </td>
+                
+                <td class="lbl-right" width="10%">Amount</td>
+                <td width="15%">
+                    <input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Chq No</td>
+                <td width="15%">
+                    <input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'>
+                </td>
+                
+                <td class="lbl-right" width="12%">Chq Date</td>
+                <td>
+                    <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="ucpMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>
