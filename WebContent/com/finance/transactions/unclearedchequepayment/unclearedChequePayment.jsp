@@ -41,14 +41,8 @@ body, .homeContent {
     box-sizing: border-box;
 }
 
-form label.error {
-    color: red;
-    font-weight: bold;
-}
-
-#validrate, #validrate1 {
-    color: red;
-}
+form label.error { color: red; font-weight: bold; }
+#validrate, #validrate1 { color: red; font-size: 11px; font-weight: bold; }
 
 /* EXACT Input Styles from Client Master */
 input[type="text"], input[type="email"], select {
@@ -104,7 +98,7 @@ table td {
 
 /* Modern Buttons matched to Client Master */
 .myButton {
-    background-color: #0056b3 !important;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 3px !important;
@@ -113,18 +107,39 @@ table td {
     font-size: 12px !important;
     cursor: pointer !important;
     height: 24px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
 }
 
 .myButton:hover {
-    background-color: #004494 !important;
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
 }
+
+/* Search Icon Wrapper */
+.input-search-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.input-search-container input {
+    padding-right: 25px !important;
+}
+.magnifier-icon {
+    position: absolute;
+    right: 4px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.magnifier-icon:hover { color: #2563eb; }
 </style>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
 		 
-		 /* MODIFIED: Heights set to 24px to match text boxes */
+		 /* Date setup left completely untouched as requested */
 		 $("#jqxUnclearedChequePaymentDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 		 $("#maindate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 		 $("#jqxChequeDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
@@ -157,17 +172,25 @@ table td {
 			 });
 			 
 		 $('#txtfromaccid').dblclick(function(){
-			  var date = $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  accountFromSearchContent("<%=contextPath%>/com/finance/accountsDetailsSearch.jsp?date="+date);
-			  });
+			 openFromAccountSearch();
+		  });
 		 
 		  $('#txttoaccid').dblclick(function(){
-			  var date = $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  accountToSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtotype').val()+"&date="+date);
-			  });  	 
+			 openToAccountSearch();
+		  });  	 
 	});
+	
+	function openFromAccountSearch() {
+        var date = $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        accountFromSearchContent("<%=contextPath%>/com/finance/accountsDetailsSearch.jsp?date="+date);
+    }
+    
+    function openToAccountSearch() {
+        var date = $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        accountToSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtotype').val()+"&date="+date);
+    }
 	
 	function unclearedChequeSearchContent(url) {
 		$('#unclearedChequePaymentGridWindow').jqxWindow('open');
@@ -349,42 +372,42 @@ table td {
 	    /* Validation Ends*/
 	    
 	    	/* Uncleared Cheque Payment Grid  Saving*/
-	  		  var rows = $("#jqxUnclearedChequePayment").jqxGrid('getrows');
-	  		var length=0,val=0,valid=0;
+	 		  var rows = $("#jqxUnclearedChequePayment").jqxGrid('getrows');
+	 		var length=0,val=0,valid=0;
 			  for(var i=0 ; i < rows.length ; i++){
 				    var chk=rows[i].docno;
 				    var rate=rows[i].rate;
 				    var amount=rows[i].amount1;
 					
 				    if(typeof(chk) != "undefined" && typeof(chk) != "NaN" && chk != ""){
-	  					newTextBox = $(document.createElement("input"))
-	  				    .attr("type", "dil")
-	  				    .attr("id", "test"+length)
-	  				    .attr("name", "test"+length)
-	  				    .attr("hidden", "true");
-	  					length=length+1;
-	  					if(rate=="" || rate=="0" || rate=="0.00"){
+	 					newTextBox = $(document.createElement("input"))
+	 				    .attr("type", "dil")
+	 				    .attr("id", "test"+length)
+	 				    .attr("name", "test"+length)
+	 				    .attr("hidden", "true");
+	 					length=length+1;
+	 					if(rate=="" || rate=="0" || rate=="0.00"){
 							  val=1;
 							  break;
 						 }
-	  					if(amount=="" || amount=="0" || amount=="0.00"){
+	 					if(amount=="" || amount=="0" || amount=="0.00"){
 							  valid=1;
 							  break;
 						 }
-	  					
-	  					var amount,baseamount;
-	  					if(rows[i].dr==true){
-	  						 amount=rows[i].amount1;
-	  						 baseamount=rows[i].rate*rows[i].amount1;
-	  					}
-	  					else if(rows[i].dr==false){
-	  						 amount=rows[i].amount1*-1;
-	  						 baseamount=rows[i].rate*rows[i].amount1*-1;
-	  					}
-	  					
-	  				newTextBox.val(rows[i].docno+":: "+rows[i].currencyid+":: "+rows[i].rate+":: "+rows[i].dr+":: "+amount+":: "+rows[i].description+":: "+baseamount+":: "+rows[i].costtype+":: "+rows[i].costcode);
-	  				newTextBox.appendTo('form');
-	  				}
+	 					
+	 					var amount,baseamount;
+	 					if(rows[i].dr==true){
+	 						 amount=rows[i].amount1;
+	 						 baseamount=rows[i].rate*rows[i].amount1;
+	 					}
+	 					else if(rows[i].dr==false){
+	 						 amount=rows[i].amount1*-1;
+	 						 baseamount=rows[i].rate*rows[i].amount1*-1;
+	 					}
+	 					
+	 				newTextBox.val(rows[i].docno+":: "+rows[i].currencyid+":: "+rows[i].rate+":: "+rows[i].dr+":: "+amount+":: "+rows[i].description+":: "+baseamount+":: "+rows[i].costtype+":: "+rows[i].costcode);
+	 				newTextBox.appendTo('form');
+	 				}
 			      }
 			  if(val==1){
 					 document.getElementById("errormsg").innerText= "Rate is Mandatory.";
@@ -395,18 +418,18 @@ table td {
 					 return 0;
 				 }
 			      $('#gridlength').val(length);
-	  	 		   /* Uncleared Cheque Payment Grid  Saving Ends*/	 
-	  				 
-	  				 $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput({disabled: false});
+	 	 		   /* Uncleared Cheque Payment Grid  Saving Ends*/	 
+	 				 
+	 				 $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput({disabled: false});
 			         $('#jqxChequeDate').jqxDateTimeInput({disabled: false});
 			         
 			         if ($("#mode").val() == "E") {
 			        	 $('#frmUnclearedChequePayment select').attr('disabled', false); 
 			         }
 			         $('#cmbfromcurrency').attr('disabled', false);
-			  		  $('#cmbtocurrency').attr('disabled', false);
-			  			
-	  				 
+			 		  $('#cmbtocurrency').attr('disabled', false);
+			 			
+	 				 
 	    		return 1;
 		} 
 	  
@@ -504,9 +527,9 @@ table td {
 		  var dr=0.0,cr=0.0,dr1=0.0;
   	      var rows = $('#jqxUnclearedChequePayment').jqxGrid('getrows');
 	      var rowlength= rows.length;
-	  		for(var i=0;i<=rowlength-1;i++) {
-	  		
-	  		  var value = rows[i].dr;
+	 		for(var i=0;i<=rowlength-1;i++) {
+	 		
+	 		  var value = rows[i].dr;
 	          var baseamount = rows[i].baseamount1;
 	          
 	          if(typeof(baseamount) != "undefined" && typeof(baseamount) != "NaN" && baseamount != ""){
@@ -520,16 +543,16 @@ table td {
                   }
                   else{
                 	  if(!isNaN(baseamount)){
-                    	  	cr=cr+baseamount;
+                    	 	cr=cr+baseamount;
                   	   }else if(isNaN(baseamount)){
                   		 baseamount=0.00;
                   		 cr=cr+baseamount;
                   	   }
                   }
-	  	       }
-	  		}
-	  		
-	  		if(!isNaN(toamount)){
+	 	       }
+	 		}
+	 		
+	 		if(!isNaN(toamount)){
                	dr1=parseFloat(dr) + parseFloat(toamount);
                 funRoundAmt(dr1,"txtdrtotal");
            	 }
@@ -564,7 +587,7 @@ table td {
 	                  }
 	                  else{
 	                	  if(!isNaN(baseamount)){
-	                    	  	cr=cr+baseamount;
+	                    	 	cr=cr+baseamount;
 	                  	   }else if(isNaN(baseamount)){
 	                  		 baseamount=0.00;
 	                  		 cr=cr+baseamount;
@@ -587,22 +610,16 @@ table td {
 	  function getAcc(event){
           var x= event.keyCode;
           if(x==114){
-        	  var date = $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput('getDate');
-        	  $("#maindate").jqxDateTimeInput('val', date);
-        	  accountFromSearchContent("<%=contextPath%>/com/finance/accountsDetailsSearch.jsp?date="+date);
+        	 openFromAccountSearch();
           }
-          else{}
-          }
+       }
 	  
 	  function getAccType(event){
           var x= event.keyCode;
           if(x==114){
-        	  var date = $('#jqxUnclearedChequePaymentDate').jqxDateTimeInput('getDate');
-        	  $("#maindate").jqxDateTimeInput('val', date);
-        	  accountToSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtotype').val()+"&date="+date);
+        	 openToAccountSearch();
           }
-          else{}
-          }
+       }
 	  
 	  function funPrintBtn() {
 			
@@ -639,6 +656,8 @@ table td {
 
 <div class='hidden-scrollbar'>
 
+<span id="errormsg" style="color:red; font-weight:bold; font-size:12px; margin-bottom:5px; display:block;"></span>
+
 <table width="100%" cellpadding="3" cellspacing="0" style="margin-bottom: 10px;">
   <tr>
     <td width="10%" align="right">Date</td>
@@ -658,7 +677,7 @@ table td {
   </tr>
 </table>
  
-<table width="100%">
+<table width="100%" cellspacing="10">
 <tr>
 <td width="50%" valign="top">
 <fieldset>
@@ -666,12 +685,15 @@ table td {
 <table width="100%" cellpadding="3" cellspacing="0">
   <tr>
     <td width="15%" align="right">Bank</td>
-    <td width="25%">
-        <input type="text" id="txtfromaccid" name="txtfromaccid" placeholder="Press F3 to Search" value='<s:property value="txtfromaccid"/>' onkeydown="getAcc(event);"/>
-    </td>
-    <td colspan="2" style="display: flex; gap: 5px;">
-        <input type="text" id="txtfromaccname" name="txtfromaccname" style="width:200px; background-color:#f4f5f7;" value='<s:property value="txtfromaccname"/>' tabindex="-1" readonly/>
-        <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
+    <td colspan="3">
+        <div style="display: flex; gap: 5px; width:100%;">
+            <div class="input-search-container" style="width: 120px; flex-shrink: 0;">
+                <input type="text" id="txtfromaccid" name="txtfromaccid" readonly placeholder="Press F3" value='<s:property value="txtfromaccid"/>' onkeydown="getAcc(event);"/>
+                <svg class="magnifier-icon" onclick="openFromAccountSearch();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <input type="text" id="txtfromaccname" name="txtfromaccname" style="flex-grow: 1; background-color:#f4f5f7;" value='<s:property value="txtfromaccname"/>' tabindex="-1" readonly/>
+            <input type="hidden" id="txtfromdocno" name="txtfromdocno" value='<s:property value="txtfromdocno"/>'/>
+        </div>
     </td>
   </tr>
   <tr>
@@ -739,10 +761,15 @@ table td {
         </select>
         <input type="hidden" id="hidcmbtotype" name="hidcmbtotype" value='<s:property value="hidcmbtotype"/>'/>
     </td>
-    <td colspan="2" style="display: flex; gap: 5px;">
-        <input type="text" id="txttoaccid" name="txttoaccid" style="width:100px;" placeholder="Press F3 to Search" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
-        <input type="text" id="txttoaccname" name="txttoaccname" style="width:200px; background-color:#f4f5f7;" value='<s:property value="txttoaccname"/>' tabindex="-1" readonly/>
-        <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
+    <td colspan="2">
+        <div style="display: flex; gap: 5px; width:100%;">
+            <div class="input-search-container" style="width: 100px; flex-shrink: 0;">
+                <input type="text" id="txttoaccid" name="txttoaccid" readonly placeholder="Press F3" value='<s:property value="txttoaccid"/>' onkeydown="getAccType(event);"/>
+                <svg class="magnifier-icon" onclick="openToAccountSearch();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <input type="text" id="txttoaccname" name="txttoaccname" style="flex-grow: 1; background-color:#f4f5f7;" value='<s:property value="txttoaccname"/>' tabindex="-1" readonly/>
+            <input type="hidden" id="txttodocno" name="txttodocno" value='<s:property value="txttodocno"/>'/>
+        </div>
     </td>
   </tr>
   <tr>
@@ -801,29 +828,12 @@ table td {
 </div>
 </form>
 	
-<div id="unclearedChequePaymentGridWindow">
-	<div></div><div></div>
-</div>  
-				
-<div id="accountDetailsFromWindow">
-	<div></div><div></div>
-</div>  
-	 
-<div id="accountDetailsToWindow">
-    <div></div><div></div>
-</div> 
-
-<div id="costTypeSearchGridWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="costCodeSearchWindow">
-	<div></div><div></div>
-</div> 
-
-<div id="printWindow">
-	<div></div><div></div>
-</div> 
+<div id="unclearedChequePaymentGridWindow"><div></div><div></div></div>  
+<div id="accountDetailsFromWindow"><div></div><div></div></div>  
+<div id="accountDetailsToWindow"><div></div><div></div></div> 
+<div id="costTypeSearchGridWindow"><div></div><div></div></div> 
+<div id="costCodeSearchWindow"><div></div><div></div></div> 
+<div id="printWindow"><div></div><div></div></div> 
 
 </div>
 </body>
