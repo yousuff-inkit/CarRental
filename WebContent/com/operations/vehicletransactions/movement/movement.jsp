@@ -18,7 +18,7 @@ body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     font-size: 12px;
     margin: 0;
-    background: #fff;
+    background: #f3f4f6; /* Neutral light grey background */
     box-sizing: border-box;
 }
 
@@ -39,7 +39,7 @@ body {
 .modern-ui input[type="text"], 
 .modern-ui select {
     height: 24px !important; 
-    border: 1px solid #c5d3e0; 
+    border: 1px solid #d1d5db; /* Neutral grey border instead of blue-grey */
     border-radius: 3px;
     padding: 2px 6px; 
     font-size: 12px;
@@ -79,11 +79,11 @@ body {
     padding-right: 2px;
 }
 
-/* Middle Section Panels */
+/* Middle Section Panels - Neutralized */
 .modern-ui .middle-panel {
-    border: 1px solid #c5d3e0; 
+    border: 1px solid #d1d5db; /* Neutral grey border */
     padding: 20px 10px 10px 10px; 
-    background: #f4f7fb;
+    background: #ffffff; /* Clean white background instead of light blue */
     position: relative; 
     border-radius: 4px; 
     margin-bottom: 15px;
@@ -93,7 +93,7 @@ body {
     position: absolute; 
     top: -10px;
     left: 10px; 
-    background: #f4f7fb; 
+    background: #ffffff; /* Matched to pure white panel background */
     padding: 0 5px 0 6px; 
     color: #0056b3;
     font-weight: bold; 
@@ -159,7 +159,7 @@ form label.error {
     padding-right: 5px;
 }
 .hidden-scrollbar::-webkit-scrollbar { width: 6px; }
-.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; } /* Neutralized scrollbar thumb */
 </style> 
 
 <%
