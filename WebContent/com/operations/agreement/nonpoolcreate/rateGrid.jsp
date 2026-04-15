@@ -4,7 +4,6 @@
 <%@page import="javax.servlet.http.HttpSession" %>
 <style>
 .column{
-background-color: #D6FFEA;
 }
 </style>
 <%

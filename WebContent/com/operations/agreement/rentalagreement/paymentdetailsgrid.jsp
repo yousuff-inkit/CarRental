@@ -17,7 +17,7 @@
         {
         
        
-       background-color: #deb887; 
+        
          
         }
         

@@ -4,7 +4,6 @@
 <%@page import="com.operations.agreement.rentalagreement.ClsRentalAgreementDAO"%>
 <style>
 .column{
-background-color: #D6FFEA;
 }
 </style>
  <%@page import="javax.servlet.http.HttpServletRequest" %>

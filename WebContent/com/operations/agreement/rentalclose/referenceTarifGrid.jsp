@@ -4,7 +4,6 @@ ClsRentalCloseDAO closedao=new ClsRentalCloseDAO();
 %>
 <style>
 .column{
-background-color: #D6FFEA;
 }
 </style>
  <jsp:include  page="..\..\..\common\commonGrid.jsp"></jsp:include> 

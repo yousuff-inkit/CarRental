@@ -2,7 +2,6 @@
 
 <style>
 .column{
-background-color: #D6FFEA;
 }
 
 </style> 
