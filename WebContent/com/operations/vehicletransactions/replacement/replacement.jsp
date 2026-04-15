@@ -10,7 +10,6 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 
-/* Base Reset & Layout */
 body {
     background: #fff;
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -31,14 +30,12 @@ body {
     margin-bottom: 15px;
 }
 
-/* Scrollbar area */
 .hidden-scrollbar {
     overflow-y: auto;
     max-height: calc(100vh - 150px);
     padding-right: 5px;
 }
 
-/* Fieldset & Legend Styling */
 fieldset {
     border: 1px solid #ced4da;
     border-radius: 6px;
@@ -55,7 +52,6 @@ legend {
     border-left: 4px solid #0056b3;
 }
 
-/* Table Specific Alignment */
 table {
     border-spacing: 0;
     border-collapse: collapse;
@@ -66,14 +62,12 @@ td {
     font-size: 12px;
 }
 
-/* Right-align labels for professional look */
 td[align="right"] {
     font-weight: bold;
     color: #4b5563;
     white-space: nowrap;
 }
 
-/* Modern Input & Select Elements (24px - 26px height) */
 input[type="text"], 
 select {
     height: 26px !important;
@@ -99,7 +93,6 @@ input[readonly] {
     border: 1px solid #e2e8f0;
 }
 
-/* Magnifier Container for F3 Search Inputs */
 .input-search-container {
     position: relative;
     display: flex;
@@ -123,7 +116,6 @@ input[readonly] {
     color: #2563eb;
 }
 
-/* Buttons Styling */
 .myButton {
     height: 30px;
     min-width: 90px;
@@ -145,7 +137,6 @@ input[readonly] {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Error Message Label */
 #errormsg {
     color: #dc3545;
     font-weight: bold;
@@ -153,7 +144,6 @@ input[readonly] {
     padding: 5px;
 }
 
-/* Cancel Status Badge */
 #lblcancelstatus {
     background: #fee2e2;
     color: #991b1b;
@@ -163,7 +153,6 @@ input[readonly] {
     font-size: 11px;
 }
 
-/* Checkbox alignment */
 input[type="checkbox"] {
     vertical-align: middle;
     margin-right: 5px;
