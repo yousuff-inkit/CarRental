@@ -1661,7 +1661,7 @@ while(rsenabled.next()){
 		rentalno=lastday;
 	}
 	}
-	else if(Integer.parseInt(closecalflag)==0){	
+	else if(Integer.parseInt(closecalflag)<=0){	
 		//System.out.println("Close Cal Flag: "+closecalflag);		
 		if(defaulttarif.equalsIgnoreCase(rentaltype)){
 			sqltest=" and rstatus=7";
