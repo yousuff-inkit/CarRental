@@ -3039,50 +3039,72 @@ function checkBrandQty(fleetno,masterrefno){
 
 </div>
 
-            <input type="hidden" name="checkbranch" id="checkbranch" value='<s:property value="checkbranch"/>'>
-            <input type="hidden" name="masterdoc_no" id="masterdoc_no" value='<s:property value="masterdoc_no"/>'>
-            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-            <input type="hidden" id="tariffgridlength" name="tariffgridlength"/>
-            <input type="hidden" id="paymentgridlength" name="paymentgridlength"/> 
-            <input type="hidden" id="drivergridlength" name="drivergridlength"/> 
-            <input type="hidden" id="newvehdetalslenght" name="newvehdetalslenght"/>
-            <input type="hidden" name="deldrvid" id="deldrvid" value='<s:property value="deldrvid"/>'/>
-            <input type="hidden" name="delchkvalue" id="delchkvalue" value='<s:property value="delchkvalue"/>'/>
-            <input type="hidden" name="chaffchkvalue" id="chaffchkvalue" value='<s:property value="chaffchkvalue"/>'/>
-            <input type="hidden" name="add_drchk" id="add_drchk" value='<s:property value="add_drchk"/>'/>
-            <input type="hidden" name="hidper_value" id="hidper_value" value='<s:property value="hidper_value"/>'/>
-            <input type="hidden" name="hidper_name" id="hidper_name" value='<s:property value="hidper_name"/>'/>
-            <input type="hidden" name="hidadvance_chk" id="hidadvance_chk" value='<s:property value="hidadvance_chk"/>'/>
-            <input type="hidden" name="hidinvoice" id="hidinvoice" value='<s:property value="hidinvoice"/>'/>
-            <input type="hidden" name="hidoutdate" id="hidoutdate" value='<s:property value="hidoutdate"/>'/>
-            <input type="hidden" name="hidouttime" id="hidouttime" value='<s:property value="hidouttime"/>'/>
-            <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
-            <input type="hidden" name="hiddeloutdate" id="hiddeloutdate" value='<s:property value="hiddeloutdate"/>'/>
-            <input type="hidden" name="hiddelouttime" id="hiddelouttime" value='<s:property value="hiddelouttime"/>'/>
-            <input type="hidden" name="hiddelcmbtype" id="hiddelcmbtype" value='<s:property value="hiddelcmbtype"/>'/>
-            <input type="hidden" id="vehlocation" name="vehlocation" value='<s:property value="vehlocation"/>' />
-            <input type="hidden" name="priormethod" id="priormethod">
-            <input type="hidden" name="totalmasterqty" id="totalmasterqty">
-            <input type="hidden" name="totalagmtqty" id="totalagmtqty">
-            <input type="hidden" name="priorvalue" id="priorvalue">
-            <input type="hidden" name="invruleoverride" id="invruleoverride">
-            <input type="hidden" name="advchkval" id="advchkval" value='<s:property value="advchkval"/>'/> 
-            <input type="hidden" name="invval" id="invval" value='<s:property value="invval"/>' />
-            <input type="hidden" id="configmethod" name="configmethod" value='<s:property value="configmethod"/>' />
-
-        </div>
-    </form>
-
-    <div id="windows2"><div style="background-color: #E0ECF8;"></div><div></div></div>  
-    <div id="clientinfowindow"><div></div><div></div></div>
-    <div id="driverinfowindow"><div></div><div></div></div>
-    <div id="vehinfowindow"><div></div><div></div></div>
-    <div id="chauffeurinfowindow"><div></div><div></div></div>
-    <div id="deldrvwindow"><div></div><div></div></div>
-    <div id="projectwindow"><div></div><div></div></div>
-    <div id="masterrefnowindow"><div></div><div></div></div>
-
+<input type="hidden" name="checkbranch" id="checkbranch" value='<s:property value="checkbranch"/>'>
+  
+ <input type="hidden" name="masterdoc_no" id="masterdoc_no" value='<s:property value="masterdoc_no"/>'>
+  <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+  <input type="hidden" id="tariffgridlength" name="tariffgridlength"/>
+    <input type="hidden" id="paymentgridlength" name="paymentgridlength"/> 
+    
+     <input type="hidden" id="drivergridlength" name="drivergridlength"/> 
+    
+    
+<input type="hidden" id="newvehdetalslenght" name="newvehdetalslenght"/>
+    
+    
+      <input type="hidden" name="deldrvid" id="deldrvid" value='<s:property value="deldrvid"/>'  />
+    
+    <input type="hidden" name="delchkvalue" id="delchkvalue" value='<s:property value="delchkvalue"/>'  />
+     <input type="hidden" name="chaffchkvalue" id="chaffchkvalue" value='<s:property value="chaffchkvalue"/>'  />
+     <input type="hidden" name="add_drchk" id="add_drchk" value='<s:property value="add_drchk"/>'  />
+     <input type="hidden" name="hidper_value" id="hidper_value" value='<s:property value="hidper_value"/>'  />
+     <input type="hidden" name="hidper_name" id="hidper_name" value='<s:property value="hidper_name"/>'  />
+     <input type="hidden" name="hidadvance_chk" id="hidadvance_chk" value='<s:property value="hidadvance_chk"/>'  />
+     <input type="hidden" name="hidinvoice" id="hidinvoice" value='<s:property value="hidinvoice"/>'  />
+     <input type="hidden" name="hidoutdate" id="hidoutdate" value='<s:property value="hidoutdate"/>'  />
+     <input type="hidden" name="hidouttime" id="hidouttime" value='<s:property value="hidouttime"/>'  />
+     <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'  />
+     <input type="hidden" name="hiddeloutdate" id="hiddeloutdate" value='<s:property value="hiddeloutdate"/>'  />
+     <input type="hidden" name="hiddelouttime" id="hiddelouttime" value='<s:property value="hiddelouttime"/>'  />
+     <input type="hidden" name="hiddelcmbtype" id="hiddelcmbtype" value='<s:property value="hiddelcmbtype"/>'  />
+     <input type="hidden" id="vehlocation" name="vehlocation"  value='<s:property value="vehlocation"/>' />
+	 <input type="hidden" name="priormethod" id="priormethod">
+	 <input type="hidden" name="totalmasterqty" id="totalmasterqty">
+	 <input type="hidden" name="totalagmtqty" id="totalagmtqty">
+<input type="hidden" name="priorvalue" id="priorvalue">
+<input type="hidden" name="invruleoverride" id="invruleoverride">
+<input type="hidden" name="advchkval" id="advchkval" value='<s:property value="advchkval"/>'  /> 
+       <input type="hidden" name="invval" id="invval" value='<s:property value="invval"/>' />
+       <input type="hidden" id="configmethod" name="configmethod" value='<s:property value="configmethod"/>' />
 </div>
+
+</form>
+ <div id="windows2">
+   <div style="background-color: #E0ECF8;"></div>
+</div>  
+
+<div id="clientinfowindow">
+   <div ></div>
+   </div>
+   <div id="driverinfowindow">
+   <div ></div></div>
+   <div id="vehinfowindow">
+   <div ></div></div>
+   <div id="chauffeurinfowindow">
+   <div ></div>
+</div>
+  <div id="deldrvwindow">
+   <div ></div>
+</div>
+
+  <div id="projectwindow">
+   <div ></div>
+</div>
+ <div id="masterrefnowindow">
+   <div ></div>
+</div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -3128,5 +3150,6 @@ function toggleAccordion(el) {
     }
 }
 </script>
+
 </body>
 </html>
