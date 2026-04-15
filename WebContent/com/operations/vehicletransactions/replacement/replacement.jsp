@@ -14,7 +14,7 @@
 SCOPED UI: Bulletproof Table Layout
 ========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-color: #f3f4f6; /* Neutral light grey background */
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
@@ -42,8 +42,8 @@ body {
 }
 
 .modern-ui .erp-form-area {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #ffffff; /* Clean white background for form areas */
+    border: 1px solid #d1d5db; /* Neutral grey border */
     border-radius: 4px;
     padding: 15px 10px;
     margin-bottom: 10px;
@@ -102,7 +102,7 @@ body {
     font-weight: bold;
     color: #0056b3;
     margin-bottom: 10px;
-    border-bottom: 1px solid #c5d3e0;
+    border-bottom: 1px solid #d1d5db; /* Neutral grey border */
     padding-bottom: 3px;
     display: flex;
     align-items: center;
@@ -167,7 +167,7 @@ body {
 
 <script type="text/javascript">
       $(document).ready(function () { 
-    	  $('#btnEdit').attr('disabled',true);
+          $('#btnEdit').attr('disabled',true);
 
           /* EXPLICIT DATA BINDING: Pre-fetch Struts data directly into Dates to prevent blanking */
           var vDate = $('#hidddate').val() || null;
@@ -178,14 +178,14 @@ body {
           var vDeliveryOutDate = $('#hiddeliveryoutdate').val() || null;
           var vOnDeliveryDate = $('#hidondeliverydate').val() || null;
 
-    	  $("#date").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDate });
-    	  $("#refdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vRefDate });
-    	  $("#dateout").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDateOut });
-    	  $("#dateouthidden").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy" });
-    	  $("#oncollectdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vOnCollectDate });
-    	  $("#incollectdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vInCollectDate });
-    	  $("#deliveryoutdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDeliveryOutDate });
-    	  $("#ondeliverydate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vOnDeliveryDate });
+          $("#date").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDate });
+          $("#refdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vRefDate });
+          $("#dateout").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDateOut });
+          $("#dateouthidden").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy" });
+          $("#oncollectdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vOnCollectDate });
+          $("#incollectdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vInCollectDate });
+          $("#deliveryoutdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vDeliveryOutDate });
+          $("#ondeliverydate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value: vOnDeliveryDate });
           
           var vTimeOut = $('#hidtimeout').val() || null;
           var vOnCollectTime = $('#hidoncollecttime').val() || null;
@@ -210,45 +210,45 @@ body {
           }, 0);
 
           $('#agmtnowindow').jqxWindow({ width: '60%', height: '54%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-   	      $('#agmtnowindow').jqxWindow('close');
-   	      $('#collectionwindow').jqxWindow({ width: '60%', height: '54%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-  	      $('#collectionwindow').jqxWindow('close');
+          $('#agmtnowindow').jqxWindow('close');
+          $('#collectionwindow').jqxWindow({ width: '60%', height: '54%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+          $('#collectionwindow').jqxWindow('close');
 
-		  if(document.getElementById("btnsave")) document.getElementById("btnsave").style.display="none";
-		  $('#dateout').on('change', function (event) { checkfuturedate(); }); 
-		  
-          /* F3 KEY BINDS AND DOUBLE CLICKS */
-   	      $('#refvocno').dblclick(function(){ openAgmtSearch(); });
-   	      $('#txtoutfleetno').dblclick(function(){ openFleetSearch(); });
+          if(document.getElementById("btnsave")) document.getElementById("btnsave").style.display="none";
+          $('#dateout').on('change', function (event) { checkfuturedate(); }); 
           
-   	      $('#collectdriver').dblclick(function(){
-		      $('#collectionwindow').jqxWindow('open');
-		      $('#collectionwindow').jqxWindow('focus');
-		      collectionSearchContent('driverSearchGrid.jsp?id=1', $('#collectionwindow'));
-		  });
-		
-  	      $('#deliverydriver').dblclick(function(){
-  	          $('#collectionwindow').jqxWindow('open');
-		      $('#collectionwindow').jqxWindow('focus');
-		      collectionSearchContent('driverSearchGrid.jsp?id=2',  $('#collectionwindow'));
-	      });
-	    
-    	getReason();
-    	check();
-    	checkDelivery();
-    	checkCollection();
-    	getBranch();
-    	getTestLocation();
-    	
-    	if(document.getElementById("docno") && document.getElementById("cmbreplacetype")) {
-        	if((document.getElementById("docno").value=='')||(document.getElementById("cmbreplacetype").value=="atbranch")||(document.getElementById("cmbreplacetype").value=="0")){
-        		if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="none";
-        	} else {
-        		if(!(document.getElementById("cmbreplacetype").value=="atbranch")){
-        		    if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="block";
-        		}
-        	}
-    	}
+          /* F3 KEY BINDS AND DOUBLE CLICKS */
+          $('#refvocno').dblclick(function(){ openAgmtSearch(); });
+          $('#txtoutfleetno').dblclick(function(){ openFleetSearch(); });
+          
+          $('#collectdriver').dblclick(function(){
+              $('#collectionwindow').jqxWindow('open');
+              $('#collectionwindow').jqxWindow('focus');
+              collectionSearchContent('driverSearchGrid.jsp?id=1', $('#collectionwindow'));
+          });
+        
+          $('#deliverydriver').dblclick(function(){
+              $('#collectionwindow').jqxWindow('open');
+              $('#collectionwindow').jqxWindow('focus');
+              collectionSearchContent('driverSearchGrid.jsp?id=2',  $('#collectionwindow'));
+          });
+        
+        getReason();
+        check();
+        checkDelivery();
+        checkCollection();
+        getBranch();
+        getTestLocation();
+        
+        if(document.getElementById("docno") && document.getElementById("cmbreplacetype")) {
+            if((document.getElementById("docno").value=='')||(document.getElementById("cmbreplacetype").value=="atbranch")||(document.getElementById("cmbreplacetype").value=="0")){
+                if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="none";
+            } else {
+                if(!(document.getElementById("cmbreplacetype").value=="atbranch")){
+                    if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="block";
+                }
+            }
+        }
 
         /* FIXED: Force the system to evaluate page setup functions since AJAX ignores body onload */
         setTimeout(function() {
@@ -289,1020 +289,1020 @@ body {
       
       /* OTHER FUNCTIONS */
       function checkfuturedate(){
-   		var date1=new Date($('#dateout').jqxDateTimeInput('getDate'));
-   		var time1=new Date($('#timeout').jqxDateTimeInput('getDate')); 
-   		var futuredate=new Date();
-   		var futuretime=new Date();
-   		date1.setHours(0,0,0,0);
-   		futuredate.setHours(0,0,0,0);
+        var date1=new Date($('#dateout').jqxDateTimeInput('getDate'));
+        var time1=new Date($('#timeout').jqxDateTimeInput('getDate')); 
+        var futuredate=new Date();
+        var futuretime=new Date();
+        date1.setHours(0,0,0,0);
+        futuredate.setHours(0,0,0,0);
 
-   		if(date1>futuredate){
-   				   if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date Cannot be applied";
-   				   $('#dateout').jqxDateTimeInput('focus'); 
-   				   return false;
-   			   }
-   		if(date1-futuredate==0){
-   			if(time1.getHours()>futuretime.getHours()){
-			   if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time Cannot be applied";
-			   $('#timeout').jqxDateTimeInput('focus'); 
-			   return false;
-   			}
-   			if(time1.getHours()==futuretime.getHours()){
-   				if(time1.getMinutes()>futuretime.getMinutes()){
-   			       if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time Cannot be applied";
-   			       $('#timeout').jqxDateTimeInput('focus'); 
-   			       return false;
-   				}
-    		}
-		   }
-   			   if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-   			   return true;
-   	  }
-   	  
+        if(date1>futuredate){
+                   if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date Cannot be applied";
+                   $('#dateout').jqxDateTimeInput('focus'); 
+                   return false;
+               }
+        if(date1-futuredate==0){
+            if(time1.getHours()>futuretime.getHours()){
+               if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time Cannot be applied";
+               $('#timeout').jqxDateTimeInput('focus'); 
+               return false;
+            }
+            if(time1.getHours()==futuretime.getHours()){
+                if(time1.getMinutes()>futuretime.getMinutes()){
+                   if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time Cannot be applied";
+                   $('#timeout').jqxDateTimeInput('focus'); 
+                   return false;
+                }
+            }
+           }
+                   if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+                   return true;
+      }
+      
       function getTestLocation(){
-    		var x = new XMLHttpRequest();
-    		x.onreadystatechange = function() {
-    			if (x.readyState == 4 && x.status == 200) {
-    				var items = x.responseText;
-    				items = items.split('***');
-    				var locItems = items[0].split(",");
-    				var locIdItems = items[1].split(",");
-    				var optionsloc = '<option value="">--Select--</option>';
-    				for (var i = 0; i < locItems.length; i++) {
-    					optionsloc += '<option value="' + locIdItems[i] + '">'
-    							+ locItems[i] + '</option>';
-    				}
-    				$("select#cmbinlocation").html(optionsloc);
-    				if ($('#hidcmbinlocation').length && $('#hidcmbinlocation').val() != null) {
-    					$('#cmbinlocation').val($('#hidcmbinlocation').val());
-    				}
-    			}
-    		}
-    		x.open("GET", "getTestLocation.jsp", true);
-    		x.send();
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText;
+                    items = items.split('***');
+                    var locItems = items[0].split(",");
+                    var locIdItems = items[1].split(",");
+                    var optionsloc = '<option value="">--Select--</option>';
+                    for (var i = 0; i < locItems.length; i++) {
+                        optionsloc += '<option value="' + locIdItems[i] + '">'
+                                + locItems[i] + '</option>';
+                    }
+                    $("select#cmbinlocation").html(optionsloc);
+                    if ($('#hidcmbinlocation').length && $('#hidcmbinlocation').val() != null) {
+                        $('#cmbinlocation').val($('#hidcmbinlocation').val());
+                    }
+                }
+            }
+            x.open("GET", "getTestLocation.jsp", true);
+            x.send();
       }
       
       function getDeliveryDriver(event){
-    	  var x= event.keyCode;
+          var x= event.keyCode;
           if(x==114){
-        	  $('#collectionwindow').jqxWindow('open');
-    		  $('#collectionwindow').jqxWindow('focus');
-    		  collectionSearchContent('driverSearchGrid.jsp?id=2', $('#collectionwindow'));
+              $('#collectionwindow').jqxWindow('open');
+              $('#collectionwindow').jqxWindow('focus');
+              collectionSearchContent('driverSearchGrid.jsp?id=2', $('#collectionwindow'));
           }
       }
       
       function getCollectDriver(event){
-    	  var x= event.keyCode;
+          var x= event.keyCode;
           if(x==114){
-        	  $('#collectionwindow').jqxWindow('open');
-   			  $('#collectionwindow').jqxWindow('focus');
-   			  collectionSearchContent('driverSearchGrid.jsp?id=1', $('#collectionwindow'));
+              $('#collectionwindow').jqxWindow('open');
+              $('#collectionwindow').jqxWindow('focus');
+              collectionSearchContent('driverSearchGrid.jsp?id=1', $('#collectionwindow'));
           }
       }
       
       function agmtnoSearchContent(url) {
-	      $.get(url).done(function (data) {
-	         $('#agmtnowindow').jqxWindow('setContent', data);
-	      }); 
-	  }
-	  
+          $.get(url).done(function (data) {
+             $('#agmtnowindow').jqxWindow('setContent', data);
+          }); 
+      }
+      
       function collectionSearchContent(url) {
-	      $.get(url).done(function (data) {
-	         $('#collectionwindow').jqxWindow('setContent', data);
-	      }); 
-	  }
-	  
+          $.get(url).done(function (data) {
+             $('#collectionwindow').jqxWindow('setContent', data);
+          }); 
+      }
+      
       function funReset(){ }
         
     /* SAFE READONLY FUNCTION */
-   	function funReadOnly(){
-   	    try {
-       		$('#frmReplacement input[type="text"]').attr('readonly', true );
-       		$('#frmReplacement select').attr('disabled', true);
-       		$('#date').jqxDateTimeInput({ disabled: true});
-       		$('#refdate').jqxDateTimeInput({ disabled: true});
-       		$('#dateout').jqxDateTimeInput({ disabled: true});
-       		$('#timeout').jqxDateTimeInput({ disabled: true});
-       		$('#incollectdate').jqxDateTimeInput({ disabled: true});
-       		$('#incollecttime').jqxDateTimeInput({ disabled: true});
-       		$('#oncollectdate').jqxDateTimeInput({ disabled: true});
-       		$('#oncollecttime').jqxDateTimeInput({ disabled: true});
-       		$('#deliveryoutdate').jqxDateTimeInput({ disabled: true});
-       		$('#deliveryouttime').jqxDateTimeInput({ disabled: true});
-       		$('#ondeliverydate').jqxDateTimeInput({ disabled: true});
-       		$('#ondeliverytime').jqxDateTimeInput({ disabled: true});
-   	    } catch(e) { console.error("Error in funReadOnly: ", e); }
-   	}
-   	
-   	/* SAFE REMOVE READONLY FUNCTION */
-   	function funRemoveReadOnly(){
-   	    try {
-       		$('#frmReplacement input[type="text"]').attr('readonly', false );
-      		$('#frmReplacement select').attr('disabled', false);
-      		$('#date').jqxDateTimeInput({ disabled: false});
-      		$('#refdate').jqxDateTimeInput({ disabled: false});
-      		$('#dateout').jqxDateTimeInput({ disabled:false});
-      		$('#timeout').jqxDateTimeInput({ disabled: false});
-      		$('#incollectdate').jqxDateTimeInput({ disabled:false});
-      		$('#incollecttime').jqxDateTimeInput({ disabled: false});
-      		$('#oncollectdate').jqxDateTimeInput({ disabled: false});
-      		$('#oncollecttime').jqxDateTimeInput({ disabled: false});
-      		$('#deliveryoutdate').jqxDateTimeInput({ disabled: false});
-      		$('#deliveryouttime').jqxDateTimeInput({ disabled: false});
-      		$('#ondeliverydate').jqxDateTimeInput({ disabled: false});
-      		$('#ondeliverytime').jqxDateTimeInput({ disabled: false});
-      		
-   			$('#refno').prop('readonly', true);
-   			$('#refname').prop('readonly', true);
-   			$('#txtfleetno').prop('readonly', true);
-   			$('#txtfleetname').prop('readonly', true);
-   			$('#outkm').prop('readonly', true);
-   			$('#txtbranch').prop('readonly', true);
-   			$('#txtlocation').prop('readonly', true);
-   			$('#user').prop('readonly', true);
-   			$('#outbranch').prop('readonly', true);
-   			$('#outlocation').prop('readonly', true);
-   			$('#txtoutfleetno').prop('readonly', true);
-   			$('#txtoutfleetname').prop('readonly', true);
-   			$('#outuser').prop('readonly', true);
-   			$('#dateout').val(new Date());
-   			$('#collectdriver').prop('readonly',true);
-   			$('#deliverydriver').prop('readonly',true);
-   			
-   			getReason(); check(); checkDelivery(); checkCollection(); getBranch();
-   			
-   			if(document.getElementById("mode").value=='A' && document.getElementById("chkstatus")!="1"){
-   				$('input:checkbox').removeAttr('checked');
-   				funResetValues();
-   			}	
-   	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
-   	}
-   	
-   	function funResetValues(){
-   		$('#refdate').jqxDateTimeInput('setDate', null);
-  		$('#dateout').jqxDateTimeInput('setDate', null);
-  		$('#timeout').jqxDateTimeInput('setDate', null);
-  		$('#incollectdate').jqxDateTimeInput('setDate', null);
-  		$('#incollecttime').jqxDateTimeInput('setDate', null);
-  		$('#oncollectdate').jqxDateTimeInput('setDate', null);
-  		$('#oncollecttime').jqxDateTimeInput('setDate', null);
-  		$('#deliveryoutdate').jqxDateTimeInput('setDate', null);
-  		$('#deliveryouttime').jqxDateTimeInput('setDate', null);
-  		$('#ondeliverydate').jqxDateTimeInput('setDate', null);
-  		$('#ondeliverytime').jqxDateTimeInput('setDate', null);
-  		$('#refno').val('');
-  		$('#referenceno').val('');
-   		$('#refname').val('');
-   		$('#txtfleetno').val('');
-   		$('#txtfleetname').val('');
-   		$('#outkm').val('');
-   		$('#txtbranch').val('');
-   		$('#txtlocation').val('');
-   		$('#user').val('');
-   		$('#outbranch').val('');
-   		$('#outlocation').val('');
-   		$('#txtoutfleetno').val('');
-   		$('#txtoutfleetname').val('');
-   		$('#outuser').val('');
-   		$('#collectdriver').val('');
-   		$('#deliverydriver').val('');
-   		$('#incollectkm').val('');
-   		$('#cmbincollectfuel').val('');
-   		$('#cmbinbranch').val('');
-   		$('#cmbinlocation').val('');
-   		$('#ondeliverykm').val('');
-   		$('#cmbondeliveryfuel').val('');
-   	}
-   	
-   	function check(){
-   		if(document.getElementById("hidchkdelivery") && document.getElementById("hidchkdelivery").value==1){
-   			document.getElementById("chkdelivery").checked=true;
-   			checkDelivery();
-   		}
-   		if(document.getElementById("hidchkdelivery") && document.getElementById("hidchkdelivery").value==0){
-   			document.getElementById("chkdelivery").checked=false;
-   			checkDelivery();
-   		}
-   		if(document.getElementById("hidchkcollection") && document.getElementById("hidchkcollection").value==1){
-   			document.getElementById("chkcollection").checked=true;
-   			checkCollection();
-   		}
-   		if(document.getElementById("hidchkcollection") && document.getElementById("hidchkcollection").value==0){
-   			document.getElementById("chkcollection").checked=false;
-   			checkCollection();
-   		}	
-   	}
-   	
-   	function funSearchLoad(){
-  		 changeContent('mainSearch.jsp'); 
-  	}
-  	
-   	function funNotify(){
-   		var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-			if(docdateval==0){
-				$('#date').jqxDateTimeInput('focus');
-				return false;
-			}
-			else{
-				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-			}
-   		var reptype=document.getElementById("cmbreplacetype").value;
-   		var outkm=parseFloat(document.getElementById("outkm").value);
-   		var dateout1=new Date($('#dateout').jqxDateTimeInput('getDate'));
-  	 	var timeout1=new Date($('#timeout').jqxDateTimeInput('getDate'));
-  	 	dateout1.setHours(0,0,0,0);
-  	 	var x=checkfuturedate();
-  	 	if(x==false){ return 0; }
-  	 	
-  	 	if(document.getElementById("refno").value==''){
-  	 	    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Ref No Should Not be Empty";
-			document.getElementById("refno").focus();
-			return 0;
-  	 	}
-  	 	
-   		if(reptype=='atbranch'){
-   			if($('#incollectdate').jqxDateTimeInput('getDate')==null){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date is Mandatory";
-   				$('#incollectdate').jqxDateTimeInput('focus'); 
-   				return 0;	
-   			}
-   			var atbranchindateval=funDateInPeriod($('#incollectdate').jqxDateTimeInput('getDate'));
- 			if(atbranchindateval==0){
- 				$('#incollectdate').jqxDateTimeInput('focus');
- 				return 0;
- 			}
-   			if($('#incollecttime').jqxDateTimeInput('getDate')==null){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time is Mandatory";
-   				$('#incollecttime').jqxDateTimeInput('focus'); 
-   				return 0;	
-   			}
-   			
-   			var incollectdate1=new Date($('#incollectdate').jqxDateTimeInput('getDate'));
- 	 	    incollectdate1.setHours(0,0,0,0);
-   			var incollecttime1=new Date($('#incollecttime').jqxDateTimeInput('getDate'));
-			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-			var ondeliverydate1=new Date($('#ondeliverydate').jqxDateTimeInput('getDate'));
-			ondeliverydate1.setHours(0,0,0,0);
-			var ondeliverytime1=new Date($('#ondeliverytime').jqxDateTimeInput('getDate'));
-			
-   			if(incollectdate1<dateout1){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date Should Not be less than Fleet Date";
-   				$('#incollectdate').jqxDateTimeInput('focus'); 
-				return 0;
-   			}
-   			if(incollectdate1-dateout1==0){
-    		 	if(incollecttime1.getHours()<timeout1.getHours()){
-    				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time Should Not be less than Fleet Time";
-    				$('#incollecttime').jqxDateTimeInput('focus'); 
-    				return 0;
-   				}
-    		 	else if(incollecttime1.getHours()==timeout1.getHours()){
-    		 		if(incollecttime1.getMinutes()<timeout1.getMinutes()){
-    		 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time Should Not be less than Fleet Time";
-    		 			$('#incollecttime').jqxDateTimeInput('focus'); 
-        				return 0;	
-    		 		}
-    		 	}
-   			}
-   			if(document.getElementById("incollectkm").value=='' || parseFloat(document.getElementById("incollectkm").value)==0.0){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In KM cannot be Empty";
-   				document.getElementById("incollectkm").focus();
-   				return 0;
-   			}
-   			if(parseFloat(document.getElementById("incollectkm").value)<outkm){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In KM Should Not be less than Out Km";
-   				document.getElementById("incollectkm").focus();
-   				return 0;
-   			}
-   			if(document.getElementById("cmbincollectfuel").value==''){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please select In Fuel";
-   				document.getElementById("cmbincollectfuel").focus();
-   				return 0;
-   			}
-   			if(document.getElementById("cmbinbranch").value==''){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Branch Cannot be Empty";
-   				document.getElementById("cmbinbranch").focus();
-   				return 0;
-   			}
-   			if(document.getElementById("cmbinlocation").value==''){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Location Cannot be Empty";
-   				document.getElementById("cmbinlocation").focus();
-   				return 0;
-   			}
-   			
- 			if(ondeliverydate1<incollectdate1){
- 				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Date cannot be less than In Date";
- 				$('#ondeliverydate').jqxDateTimeInput('focus'); 
-     			return 0;
- 			}
- 			if(incollectdate1-ondeliverydate1==0){
- 				if(ondeliverytime1.getHours()<incollecttime1.getHours()){
-         			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than In Time";
-         			$('#ondeliverytime').jqxDateTimeInput('focus'); 
-         			return 0;
- 				}
- 				if(ondeliverytime1.getHours()==incollecttime1.getHours()){
- 					if(ondeliverytime1.getMinutes()<incollecttime1.getMinutes()){
-         				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than Vehicle In Time";
-         				$('#ondeliverytime').jqxDateTimeInput('focus'); 
-         				return 0;
- 					}
- 				}
- 			}
-   		}
-   		
-   		if(document.getElementById("txtoutfleetno").value==''){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Fleet Cannot be Empty";
-   			document.getElementById("txtoutfleetno").focus();
-   			return 0;
-   		}
-   		if($('#ondeliverydate').jqxDateTimeInput('getDate')==null){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Date is Mandatory";
-   			$('#ondeliverydate').jqxDateTimeInput('focus'); 
-   			return 0;
-   		}
-   		var outdateval=funDateInPeriod($('#ondeliverydate').jqxDateTimeInput('getDate'));
-		if(outdateval==0){
-			$('#ondeliverydate').jqxDateTimeInput('focus');
-			return 0;
-		}
-		
-   		if($('#ondeliverytime').jqxDateTimeInput('getDate')==null){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time is Mandatory";
-   			$('#ondeliverytime').jqxDateTimeInput('focus'); 
-   			return 0;
-   		}
-   		
-   		var ondeliverydate=new Date($('#ondeliverydate').jqxDateTimeInput('getDate'));
-   		ondeliverydate.setHours(0,0,0,0);       		
-   		var ondeliverytime=new Date($('#ondeliverytime').jqxDateTimeInput('getDate'));
-   		if(ondeliverydate<dateout1){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Date cannot be less than Agreement Date";
-   			$('#ondeliverydate').jqxDateTimeInput('focus');
-   			return 0;
-   		}
-   		if(ondeliverydate-dateout1==0){
-   			if(ondeliverytime.getHours()<timeout1.getHours()){
-       			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than Agreement Time";
-       			$('#ondeliverytime').jqxDateTimeInput('focus');
-       			return 0;	
-   			}
-   			if(ondeliverytime.getHours()==timeout1.getHours()){
-   				if(ondeliverytime.getMinutes()<timeout1.getMinutes()){
-           			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than Agreement Time";
-           			$('#ondeliverytime').jqxDateTimeInput('focus');
-           			return 0;	
-   				}
-   			}
-   		}
-   		
-   		var outTimeStatus=funFutureTimeValidate(ondeliverydate,ondeliverytime);
-		if(outTimeStatus==-1 || outTimeStatus==-2){
-			if(outTimeStatus==-1){
-				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
-	 			return false;
-			}
-			if(outTimeStatus==-2){
-				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
-	 			return false;
-			}
-		}
-		
-   		if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-   		dateenable();
-   		$('#frmReplacement input').attr('disabled',false);
-   		$('#frmReplacement select').attr('disabled',false);
-   		return 1;
-   	} 
-
-   	function funChkButton() { }
-
-   	function funFocus(){
-   	   	$('#date').jqxDateTimeInput('focus'); 	    		
-   	}
-   	
-   	function chkCollection(){ }
-   	
-    function dateenable(){
-    	$('#date').jqxDateTimeInput({ disabled: false});
-    	$('#refdate').jqxDateTimeInput({ disabled: false});
-    	$('#dateout').jqxDateTimeInput({ disabled:false});
-    	$('#timeout').jqxDateTimeInput({ disabled: false});
-    	$('#incollectdate').jqxDateTimeInput({ disabled:false});
-    	$('#incollecttime').jqxDateTimeInput({ disabled: false});
-    	$('#oncollectdate').jqxDateTimeInput({ disabled: false});
-    	$('#oncollecttime').jqxDateTimeInput({ disabled: false});
-    	$('#deliveryoutdate').jqxDateTimeInput({ disabled: false});
-    	$('#deliveryouttime').jqxDateTimeInput({ disabled: false});
-    	$('#ondeliverydate').jqxDateTimeInput({ disabled: false});
-    	$('#ondeliverytime').jqxDateTimeInput({ disabled: false});
+    function funReadOnly(){
+        try {
+            $('#frmReplacement input[type="text"]').attr('readonly', true );
+            $('#frmReplacement select').attr('disabled', true);
+            $('#date').jqxDateTimeInput({ disabled: true});
+            $('#refdate').jqxDateTimeInput({ disabled: true});
+            $('#dateout').jqxDateTimeInput({ disabled: true});
+            $('#timeout').jqxDateTimeInput({ disabled: true});
+            $('#incollectdate').jqxDateTimeInput({ disabled: true});
+            $('#incollecttime').jqxDateTimeInput({ disabled: true});
+            $('#oncollectdate').jqxDateTimeInput({ disabled: true});
+            $('#oncollecttime').jqxDateTimeInput({ disabled: true});
+            $('#deliveryoutdate').jqxDateTimeInput({ disabled: true});
+            $('#deliveryouttime').jqxDateTimeInput({ disabled: true});
+            $('#ondeliverydate').jqxDateTimeInput({ disabled: true});
+            $('#ondeliverytime').jqxDateTimeInput({ disabled: true});
+        } catch(e) { console.error("Error in funReadOnly: ", e); }
     }
     
-   	function getReason() {
-   		var x = new XMLHttpRequest();
-   		x.onreadystatechange = function() {
-   			if (x.readyState == 4 && x.status == 200) {
-   				var items = x.responseText;
-   				items = items.split('***');
-   				var statusItems = items[0].split(",");
-   				var statusIdItems = items[1].split(",");
-   				var optionsstatus = '<option value="">--Select--</option>';
-   				for (var i = 0; i < statusItems.length; i++) {
-   					optionsstatus += '<option value="' + statusIdItems[i] + '">'
-   							+ statusItems[i] + '</option>';
-   				}
-   				$("select#cmbtrreason").html(optionsstatus);
-   				if ($('#hidcmbtrreason').length && $('#hidcmbtrreason').val() != null) {
-   					$('#cmbtrreason').val($('#hidcmbtrreason').val());
-   				}
-   			}
-   		}
-   		x.open("GET", "getReason.jsp", true);
-   		x.send();
-   	}
-   	
-   	function getBranch() {
-   		var x = new XMLHttpRequest();
-   		x.onreadystatechange = function() {
-   			if (x.readyState == 4 && x.status == 200) {
-   				var items = x.responseText;
-   				items = items.split('***');
-   				var branchItems = items[0].split(",");
-   				var branchIdItems = items[1].split(",");
-   				var optionsbranch = '<option value="">--Select--</option>';
-   				for (var i = 0; i < branchItems.length; i++) {
-   					optionsbranch += '<option value="' + branchIdItems[i] + '">'
-   							+ branchItems[i] + '</option>';
-   				}
-   				$("select#cmbinbranch").html(optionsbranch);
-   				$("select#cmbagmtbranch").html(optionsbranch);
-   				
-   				if ($('#hidcmbagmtbranch').length && $('#hidcmbagmtbranch').val() != null) {
-   					$('#cmbagmtbranch').val($('#hidcmbagmtbranch').val());
-   				}
-   				if ($('#hidcmbinbranch').length && $('#hidcmbinbranch').val() != null) {
-   					$('#cmbinbranch').val($('#hidcmbinbranch').val());
-   				}
-   			}
-   		}
-   		x.open("GET", "getBranch.jsp", true);
-   		x.send();
-   	}
-   	
-   	function getLoc(value) {
-   		var x = new XMLHttpRequest();
-   		x.onreadystatechange = function() {
-   			if (x.readyState == 4 && x.status == 200) {
-   				var items = x.responseText;
-   				items = items.split('***');
-   				var locationItems = items[0].split(",");
-   				var locationIdItems = items[1].split(",");
-   				var optionslocation = '<option value="">--Select--</option>';
-   				for (var i = 0; i < locationItems.length; i++) {
-   					optionslocation += '<option value="' + locationIdItems[i] + '">'
-   							+ locationItems[i] + '</option>';
-   				}
-   				$("select#cmbinlocation").html(optionslocation);
-   				if ($('#hidcmbinlocation').length && $('#hidcmbinlocation').val() != null) {
-   					$('#cmbinlocation').val($('#hidcmbinlocation').val());
-   				}
-   			}
-   		}
-   		x.open("GET", "getLoc.jsp?id="+value, true);
-   		x.send();
-   	}
-   	
-   	function checkCollection(){
-   		if(document.getElementById("chkcollection") && document.getElementById("chkcollection").checked==false){
-   			document.getElementById("hidchkcollection").value="0";
-   			$('#collectdriver').prop('disabled',true);
-   			$('#oncollectdate').jqxDateTimeInput({ disabled: true});
-   			$('#oncollecttime').jqxDateTimeInput({ disabled: true});
-   			$('#oncollectkm').prop('disabled',true);
-   			$('#cmboncollectfuel').prop('disabled',true);
-   		}
-   		if(document.getElementById("chkcollection") && document.getElementById("chkcollection").checked==true){
-   			document.getElementById("hidchkcollection").value="1";
-   			$('#collectdriver').prop('disabled',false);
-   			$('#oncollectdate').jqxDateTimeInput({ disabled: false});
-   			$('#oncollecttime').jqxDateTimeInput({ disabled: false});
-   			$('#oncollectkm').prop('disabled',false);
-   			$('#oncollectkm').prop('readonly',false);
-   			$('#cmboncollectfuel').prop('disabled',false);
-   		}
-   	}
-   	
-   	function checkDelivery(){
-   		if(document.getElementById("chkdelivery") && document.getElementById("chkdelivery").checked==false){
-   			document.getElementById("hidchkdelivery").value="0";
-   			$('#deliverydriver').prop('disabled',true);
-   			$('#deliveryoutdate').jqxDateTimeInput({ disabled: true});
-   			$('#deliveryouttime').jqxDateTimeInput({ disabled: true});
-   			$('#deliveryto').prop('disabled',true);
-   			$('#cmbdeliveryoutfuel').prop('disabled',true);
-   			$('#deliveryoutkm').prop('disabled',false);
-   		}
-   		if(document.getElementById("chkdelivery") && document.getElementById("chkdelivery").checked==true){
-   			document.getElementById("hidchkdelivery").value="1";
-   			$('#deliverydriver').prop('disabled',false);
-   			$('#deliveryoutdate').jqxDateTimeInput({ disabled: false});
-   			$('#deliveryouttime').jqxDateTimeInput({ disabled: false});
-   			$('#deliveryoutkm').prop('readonly',false);
-   			$('#cmbdeliveryoutfuel').prop('disabled',false);
-   			$('#ondeliverykm').prop('disabled',false);
-   			$('#cmbondeliveryfuel').prop('disabled',false);
-   			$('#deliveryto').prop('disabled',false);
-   			$('#deliveryto').prop('readonly',false);
-   		}
-   	}
-   	
+    /* SAFE REMOVE READONLY FUNCTION */
+    function funRemoveReadOnly(){
+        try {
+            $('#frmReplacement input[type="text"]').attr('readonly', false );
+            $('#frmReplacement select').attr('disabled', false);
+            $('#date').jqxDateTimeInput({ disabled: false});
+            $('#refdate').jqxDateTimeInput({ disabled: false});
+            $('#dateout').jqxDateTimeInput({ disabled:false});
+            $('#timeout').jqxDateTimeInput({ disabled: false});
+            $('#incollectdate').jqxDateTimeInput({ disabled:false});
+            $('#incollecttime').jqxDateTimeInput({ disabled: false});
+            $('#oncollectdate').jqxDateTimeInput({ disabled: false});
+            $('#oncollecttime').jqxDateTimeInput({ disabled: false});
+            $('#deliveryoutdate').jqxDateTimeInput({ disabled: false});
+            $('#deliveryouttime').jqxDateTimeInput({ disabled: false});
+            $('#ondeliverydate').jqxDateTimeInput({ disabled: false});
+            $('#ondeliverytime').jqxDateTimeInput({ disabled: false});
+            
+            $('#refno').prop('readonly', true);
+            $('#refname').prop('readonly', true);
+            $('#txtfleetno').prop('readonly', true);
+            $('#txtfleetname').prop('readonly', true);
+            $('#outkm').prop('readonly', true);
+            $('#txtbranch').prop('readonly', true);
+            $('#txtlocation').prop('readonly', true);
+            $('#user').prop('readonly', true);
+            $('#outbranch').prop('readonly', true);
+            $('#outlocation').prop('readonly', true);
+            $('#txtoutfleetno').prop('readonly', true);
+            $('#txtoutfleetname').prop('readonly', true);
+            $('#outuser').prop('readonly', true);
+            $('#dateout').val(new Date());
+            $('#collectdriver').prop('readonly',true);
+            $('#deliverydriver').prop('readonly',true);
+            
+            getReason(); check(); checkDelivery(); checkCollection(); getBranch();
+            
+            if(document.getElementById("mode").value=='A' && document.getElementById("chkstatus")!="1"){
+                $('input:checkbox').removeAttr('checked');
+                funResetValues();
+            }   
+        } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
+    }
+    
+    function funResetValues(){
+        $('#refdate').jqxDateTimeInput('setDate', null);
+        $('#dateout').jqxDateTimeInput('setDate', null);
+        $('#timeout').jqxDateTimeInput('setDate', null);
+        $('#incollectdate').jqxDateTimeInput('setDate', null);
+        $('#incollecttime').jqxDateTimeInput('setDate', null);
+        $('#oncollectdate').jqxDateTimeInput('setDate', null);
+        $('#oncollecttime').jqxDateTimeInput('setDate', null);
+        $('#deliveryoutdate').jqxDateTimeInput('setDate', null);
+        $('#deliveryouttime').jqxDateTimeInput('setDate', null);
+        $('#ondeliverydate').jqxDateTimeInput('setDate', null);
+        $('#ondeliverytime').jqxDateTimeInput('setDate', null);
+        $('#refno').val('');
+        $('#referenceno').val('');
+        $('#refname').val('');
+        $('#txtfleetno').val('');
+        $('#txtfleetname').val('');
+        $('#outkm').val('');
+        $('#txtbranch').val('');
+        $('#txtlocation').val('');
+        $('#user').val('');
+        $('#outbranch').val('');
+        $('#outlocation').val('');
+        $('#txtoutfleetno').val('');
+        $('#txtoutfleetname').val('');
+        $('#outuser').val('');
+        $('#collectdriver').val('');
+        $('#deliverydriver').val('');
+        $('#incollectkm').val('');
+        $('#cmbincollectfuel').val('');
+        $('#cmbinbranch').val('');
+        $('#cmbinlocation').val('');
+        $('#ondeliverykm').val('');
+        $('#cmbondeliveryfuel').val('');
+    }
+    
+    function check(){
+        if(document.getElementById("hidchkdelivery") && document.getElementById("hidchkdelivery").value==1){
+            document.getElementById("chkdelivery").checked=true;
+            checkDelivery();
+        }
+        if(document.getElementById("hidchkdelivery") && document.getElementById("hidchkdelivery").value==0){
+            document.getElementById("chkdelivery").checked=false;
+            checkDelivery();
+        }
+        if(document.getElementById("hidchkcollection") && document.getElementById("hidchkcollection").value==1){
+            document.getElementById("chkcollection").checked=true;
+            checkCollection();
+        }
+        if(document.getElementById("hidchkcollection") && document.getElementById("hidchkcollection").value==0){
+            document.getElementById("chkcollection").checked=false;
+            checkCollection();
+        }   
+    }
+    
+    function funSearchLoad(){
+         changeContent('mainSearch.jsp'); 
+    }
+    
+    function funNotify(){
+        var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+            if(docdateval==0){
+                $('#date').jqxDateTimeInput('focus');
+                return false;
+            }
+            else{
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+            }
+        var reptype=document.getElementById("cmbreplacetype").value;
+        var outkm=parseFloat(document.getElementById("outkm").value);
+        var dateout1=new Date($('#dateout').jqxDateTimeInput('getDate'));
+        var timeout1=new Date($('#timeout').jqxDateTimeInput('getDate'));
+        dateout1.setHours(0,0,0,0);
+        var x=checkfuturedate();
+        if(x==false){ return 0; }
+        
+        if(document.getElementById("refno").value==''){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Ref No Should Not be Empty";
+            document.getElementById("refno").focus();
+            return 0;
+        }
+        
+        if(reptype=='atbranch'){
+            if($('#incollectdate').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date is Mandatory";
+                $('#incollectdate').jqxDateTimeInput('focus'); 
+                return 0;   
+            }
+            var atbranchindateval=funDateInPeriod($('#incollectdate').jqxDateTimeInput('getDate'));
+            if(atbranchindateval==0){
+                $('#incollectdate').jqxDateTimeInput('focus');
+                return 0;
+            }
+            if($('#incollecttime').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time is Mandatory";
+                $('#incollecttime').jqxDateTimeInput('focus'); 
+                return 0;   
+            }
+            
+            var incollectdate1=new Date($('#incollectdate').jqxDateTimeInput('getDate'));
+            incollectdate1.setHours(0,0,0,0);
+            var incollecttime1=new Date($('#incollecttime').jqxDateTimeInput('getDate'));
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+            var ondeliverydate1=new Date($('#ondeliverydate').jqxDateTimeInput('getDate'));
+            ondeliverydate1.setHours(0,0,0,0);
+            var ondeliverytime1=new Date($('#ondeliverytime').jqxDateTimeInput('getDate'));
+            
+            if(incollectdate1<dateout1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date Should Not be less than Fleet Date";
+                $('#incollectdate').jqxDateTimeInput('focus'); 
+                return 0;
+            }
+            if(incollectdate1-dateout1==0){
+                if(incollecttime1.getHours()<timeout1.getHours()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time Should Not be less than Fleet Time";
+                    $('#incollecttime').jqxDateTimeInput('focus'); 
+                    return 0;
+                }
+                else if(incollecttime1.getHours()==timeout1.getHours()){
+                    if(incollecttime1.getMinutes()<timeout1.getMinutes()){
+                        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time Should Not be less than Fleet Time";
+                        $('#incollecttime').jqxDateTimeInput('focus'); 
+                        return 0;   
+                    }
+                }
+            }
+            if(document.getElementById("incollectkm").value=='' || parseFloat(document.getElementById("incollectkm").value)==0.0){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In KM cannot be Empty";
+                document.getElementById("incollectkm").focus();
+                return 0;
+            }
+            if(parseFloat(document.getElementById("incollectkm").value)<outkm){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In KM Should Not be less than Out Km";
+                document.getElementById("incollectkm").focus();
+                return 0;
+            }
+            if(document.getElementById("cmbincollectfuel").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please select In Fuel";
+                document.getElementById("cmbincollectfuel").focus();
+                return 0;
+            }
+            if(document.getElementById("cmbinbranch").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Branch Cannot be Empty";
+                document.getElementById("cmbinbranch").focus();
+                return 0;
+            }
+            if(document.getElementById("cmbinlocation").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Location Cannot be Empty";
+                document.getElementById("cmbinlocation").focus();
+                return 0;
+            }
+            
+            if(ondeliverydate1<incollectdate1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Date cannot be less than In Date";
+                $('#ondeliverydate').jqxDateTimeInput('focus'); 
+                return 0;
+            }
+            if(incollectdate1-ondeliverydate1==0){
+                if(ondeliverytime1.getHours()<incollecttime1.getHours()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than In Time";
+                    $('#ondeliverytime').jqxDateTimeInput('focus'); 
+                    return 0;
+                }
+                if(ondeliverytime1.getHours()==incollecttime1.getHours()){
+                    if(ondeliverytime1.getMinutes()<incollecttime1.getMinutes()){
+                        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than Vehicle In Time";
+                        $('#ondeliverytime').jqxDateTimeInput('focus'); 
+                        return 0;
+                    }
+                }
+            }
+        }
+        
+        if(document.getElementById("txtoutfleetno").value==''){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Fleet Cannot be Empty";
+            document.getElementById("txtoutfleetno").focus();
+            return 0;
+        }
+        if($('#ondeliverydate').jqxDateTimeInput('getDate')==null){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Date is Mandatory";
+            $('#ondeliverydate').jqxDateTimeInput('focus'); 
+            return 0;
+        }
+        var outdateval=funDateInPeriod($('#ondeliverydate').jqxDateTimeInput('getDate'));
+        if(outdateval==0){
+            $('#ondeliverydate').jqxDateTimeInput('focus');
+            return 0;
+        }
+        
+        if($('#ondeliverytime').jqxDateTimeInput('getDate')==null){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time is Mandatory";
+            $('#ondeliverytime').jqxDateTimeInput('focus'); 
+            return 0;
+        }
+        
+        var ondeliverydate=new Date($('#ondeliverydate').jqxDateTimeInput('getDate'));
+        ondeliverydate.setHours(0,0,0,0);               
+        var ondeliverytime=new Date($('#ondeliverytime').jqxDateTimeInput('getDate'));
+        if(ondeliverydate<dateout1){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Date cannot be less than Agreement Date";
+            $('#ondeliverydate').jqxDateTimeInput('focus');
+            return 0;
+        }
+        if(ondeliverydate-dateout1==0){
+            if(ondeliverytime.getHours()<timeout1.getHours()){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than Agreement Time";
+                $('#ondeliverytime').jqxDateTimeInput('focus');
+                return 0;   
+            }
+            if(ondeliverytime.getHours()==timeout1.getHours()){
+                if(ondeliverytime.getMinutes()<timeout1.getMinutes()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Out Time cannot be less than Agreement Time";
+                    $('#ondeliverytime').jqxDateTimeInput('focus');
+                    return 0;   
+                }
+            }
+        }
+        
+        var outTimeStatus=funFutureTimeValidate(ondeliverydate,ondeliverytime);
+        if(outTimeStatus==-1 || outTimeStatus==-2){
+            if(outTimeStatus==-1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
+                return false;
+            }
+            if(outTimeStatus==-2){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
+                return false;
+            }
+        }
+        
+        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+        dateenable();
+        $('#frmReplacement input').attr('disabled',false);
+        $('#frmReplacement select').attr('disabled',false);
+        return 1;
+    } 
+
+    function funChkButton() { }
+
+    function funFocus(){
+        $('#date').jqxDateTimeInput('focus');           
+    }
+    
+    function chkCollection(){ }
+    
+    function dateenable(){
+        $('#date').jqxDateTimeInput({ disabled: false});
+        $('#refdate').jqxDateTimeInput({ disabled: false});
+        $('#dateout').jqxDateTimeInput({ disabled:false});
+        $('#timeout').jqxDateTimeInput({ disabled: false});
+        $('#incollectdate').jqxDateTimeInput({ disabled:false});
+        $('#incollecttime').jqxDateTimeInput({ disabled: false});
+        $('#oncollectdate').jqxDateTimeInput({ disabled: false});
+        $('#oncollecttime').jqxDateTimeInput({ disabled: false});
+        $('#deliveryoutdate').jqxDateTimeInput({ disabled: false});
+        $('#deliveryouttime').jqxDateTimeInput({ disabled: false});
+        $('#ondeliverydate').jqxDateTimeInput({ disabled: false});
+        $('#ondeliverytime').jqxDateTimeInput({ disabled: false});
+    }
+    
+    function getReason() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText;
+                items = items.split('***');
+                var statusItems = items[0].split(",");
+                var statusIdItems = items[1].split(",");
+                var optionsstatus = '<option value="">--Select--</option>';
+                for (var i = 0; i < statusItems.length; i++) {
+                    optionsstatus += '<option value="' + statusIdItems[i] + '">'
+                            + statusItems[i] + '</option>';
+                }
+                $("select#cmbtrreason").html(optionsstatus);
+                if ($('#hidcmbtrreason').length && $('#hidcmbtrreason').val() != null) {
+                    $('#cmbtrreason').val($('#hidcmbtrreason').val());
+                }
+            }
+        }
+        x.open("GET", "getReason.jsp", true);
+        x.send();
+    }
+    
+    function getBranch() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText;
+                items = items.split('***');
+                var branchItems = items[0].split(",");
+                var branchIdItems = items[1].split(",");
+                var optionsbranch = '<option value="">--Select--</option>';
+                for (var i = 0; i < branchItems.length; i++) {
+                    optionsbranch += '<option value="' + branchIdItems[i] + '">'
+                            + branchItems[i] + '</option>';
+                }
+                $("select#cmbinbranch").html(optionsbranch);
+                $("select#cmbagmtbranch").html(optionsbranch);
+                
+                if ($('#hidcmbagmtbranch').length && $('#hidcmbagmtbranch').val() != null) {
+                    $('#cmbagmtbranch').val($('#hidcmbagmtbranch').val());
+                }
+                if ($('#hidcmbinbranch').length && $('#hidcmbinbranch').val() != null) {
+                    $('#cmbinbranch').val($('#hidcmbinbranch').val());
+                }
+            }
+        }
+        x.open("GET", "getBranch.jsp", true);
+        x.send();
+    }
+    
+    function getLoc(value) {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText;
+                items = items.split('***');
+                var locationItems = items[0].split(",");
+                var locationIdItems = items[1].split(",");
+                var optionslocation = '<option value="">--Select--</option>';
+                for (var i = 0; i < locationItems.length; i++) {
+                    optionslocation += '<option value="' + locationIdItems[i] + '">'
+                            + locationItems[i] + '</option>';
+                }
+                $("select#cmbinlocation").html(optionslocation);
+                if ($('#hidcmbinlocation').length && $('#hidcmbinlocation').val() != null) {
+                    $('#cmbinlocation').val($('#hidcmbinlocation').val());
+                }
+            }
+        }
+        x.open("GET", "getLoc.jsp?id="+value, true);
+        x.send();
+    }
+    
+    function checkCollection(){
+        if(document.getElementById("chkcollection") && document.getElementById("chkcollection").checked==false){
+            document.getElementById("hidchkcollection").value="0";
+            $('#collectdriver').prop('disabled',true);
+            $('#oncollectdate').jqxDateTimeInput({ disabled: true});
+            $('#oncollecttime').jqxDateTimeInput({ disabled: true});
+            $('#oncollectkm').prop('disabled',true);
+            $('#cmboncollectfuel').prop('disabled',true);
+        }
+        if(document.getElementById("chkcollection") && document.getElementById("chkcollection").checked==true){
+            document.getElementById("hidchkcollection").value="1";
+            $('#collectdriver').prop('disabled',false);
+            $('#oncollectdate').jqxDateTimeInput({ disabled: false});
+            $('#oncollecttime').jqxDateTimeInput({ disabled: false});
+            $('#oncollectkm').prop('disabled',false);
+            $('#oncollectkm').prop('readonly',false);
+            $('#cmboncollectfuel').prop('disabled',false);
+        }
+    }
+    
+    function checkDelivery(){
+        if(document.getElementById("chkdelivery") && document.getElementById("chkdelivery").checked==false){
+            document.getElementById("hidchkdelivery").value="0";
+            $('#deliverydriver').prop('disabled',true);
+            $('#deliveryoutdate').jqxDateTimeInput({ disabled: true});
+            $('#deliveryouttime').jqxDateTimeInput({ disabled: true});
+            $('#deliveryto').prop('disabled',true);
+            $('#cmbdeliveryoutfuel').prop('disabled',true);
+            $('#deliveryoutkm').prop('disabled',false);
+        }
+        if(document.getElementById("chkdelivery") && document.getElementById("chkdelivery").checked==true){
+            document.getElementById("hidchkdelivery").value="1";
+            $('#deliverydriver').prop('disabled',false);
+            $('#deliveryoutdate').jqxDateTimeInput({ disabled: false});
+            $('#deliveryouttime').jqxDateTimeInput({ disabled: false});
+            $('#deliveryoutkm').prop('readonly',false);
+            $('#cmbdeliveryoutfuel').prop('disabled',false);
+            $('#ondeliverykm').prop('disabled',false);
+            $('#cmbondeliveryfuel').prop('disabled',false);
+            $('#deliveryto').prop('disabled',false);
+            $('#deliveryto').prop('readonly',false);
+        }
+    }
+    
     /* SAFE SET VALUES FUNCTION WITH EXPLICIT DATA LOADING */
-   	function setValues(){
-   	    try {
-           	if ($('#hidcmbrentaltype').length && $('#hidcmbrentaltype').val() != null) {
-    			$('#cmbrentaltype').val($('#hidcmbrentaltype').val());
-    		}
-           	if ($('#hidcmbtrreason').length && $('#hidcmbtrreason').val() != null) {
-           		$('#cmbtrreason').val($('#hidcmbtrreason').val());
-           	}
-           	if ($('#hidcmbreplacetype').length && $('#hidcmbreplacetype').val() != null) {
-           		$('#cmbreplacetype').val($('#hidcmbreplacetype').val());
-           	}
-           	if ($('#hidcmbfuel').length && $('#hidcmbfuel').val() != null) {
-           		$('#cmbfuel').val($('#hidcmbfuel').val());
-           	}
-           	if ($('#hidcmboncollectfuel').length && $('#hidcmboncollectfuel').val() != null) {
-           		$('#cmboncollectfuel').val($('#hidcmboncollectfuel').val());
-           	}
-           	if ($('#hidcmbincollectfuel').length && $('#hidcmbincollectfuel').val() != null) {
-           		$('#cmbincollectfuel').val($('#hidcmbincollectfuel').val());
-           	}
-           	if ($('#hidcmbinbranch').length && $('#hidcmbinbranch').val() != null) {
-           		$('#cmbinbranch').val($('#hidcmbinbranch').val());
-           	}
-           	if ($('#hidcmbinlocation').length && $('#hidcmbinlocation').val() != null) {
-           		$('#cmbinlocation').val($('#hidcmbinlocation').val());
-           	}
-           	if ($('#hidcmbdeliveryoutfuel').length && $('#hidcmbdeliveryoutfuel').val() != null) {
-           		$('#cmbdeliveryoutfuel').val($('#hidcmbdeliveryoutfuel').val());
-           	}
-           	if ($('#hidcmbondeliveryfuel').length && $('#hidcmbondeliveryfuel').val() != null) {
-           		$('#cmbondeliveryfuel').val($('#hidcmbondeliveryfuel').val());
-           	}
-           	
-           	if($('#msg').length && $('#msg').val()!=""){
-           	    $.messager.alert('Message',$('#msg').val());
-           	}
-           	
+    function setValues(){
+        try {
+            if ($('#hidcmbrentaltype').length && $('#hidcmbrentaltype').val() != null) {
+                $('#cmbrentaltype').val($('#hidcmbrentaltype').val());
+            }
+            if ($('#hidcmbtrreason').length && $('#hidcmbtrreason').val() != null) {
+                $('#cmbtrreason').val($('#hidcmbtrreason').val());
+            }
+            if ($('#hidcmbreplacetype').length && $('#hidcmbreplacetype').val() != null) {
+                $('#cmbreplacetype').val($('#hidcmbreplacetype').val());
+            }
+            if ($('#hidcmbfuel').length && $('#hidcmbfuel').val() != null) {
+                $('#cmbfuel').val($('#hidcmbfuel').val());
+            }
+            if ($('#hidcmboncollectfuel').length && $('#hidcmboncollectfuel').val() != null) {
+                $('#cmboncollectfuel').val($('#hidcmboncollectfuel').val());
+            }
+            if ($('#hidcmbincollectfuel').length && $('#hidcmbincollectfuel').val() != null) {
+                $('#cmbincollectfuel').val($('#hidcmbincollectfuel').val());
+            }
+            if ($('#hidcmbinbranch').length && $('#hidcmbinbranch').val() != null) {
+                $('#cmbinbranch').val($('#hidcmbinbranch').val());
+            }
+            if ($('#hidcmbinlocation').length && $('#hidcmbinlocation').val() != null) {
+                $('#cmbinlocation').val($('#hidcmbinlocation').val());
+            }
+            if ($('#hidcmbdeliveryoutfuel').length && $('#hidcmbdeliveryoutfuel').val() != null) {
+                $('#cmbdeliveryoutfuel').val($('#hidcmbdeliveryoutfuel').val());
+            }
+            if ($('#hidcmbondeliveryfuel').length && $('#hidcmbondeliveryfuel').val() != null) {
+                $('#cmbondeliveryfuel').val($('#hidcmbondeliveryfuel').val());
+            }
+            
+            if($('#msg').length && $('#msg').val()!=""){
+                $.messager.alert('Message',$('#msg').val());
+            }
+            
             if (document.getElementById("formdet") && $('#formdetail').length && $('#formdetailcode').length) {
                  var detailVal = $('#formdetail').val() || "";
                  var codeVal = $('#formdetailcode').val() || "";
                  document.getElementById("formdet").innerText = detailVal + " (" + codeVal.trim() + ")";
             }
             
-           	if(document.getElementById("cmbreplacetype") && document.getElementById("cmbreplacetype").value=="atbranch"){
-           		if(document.getElementById("btnupdate")) document.getElementById("btnupdate").disabled=true;
-           	} else if(document.getElementById("cmbreplacetype") && document.getElementById("cmbreplacetype").value=="collection"){
-           		if(document.getElementById("btnupdate")) document.getElementById("btnupdate").disabled=false;
-           	}
-           	
-           	if(document.getElementById("incollectkm") && document.getElementById("incollectkm").value!='' && parseFloat(document.getElementById("incollectkm").value)>0){
-           		if(document.getElementById("btnupdate")) document.getElementById("btnupdate").disabled=true;
-           	}
-           	
-           	if(document.getElementById("chkcollection")) document.getElementById("chkcollection").disabled=true;
-           	if(document.getElementById("chkdelivery")) document.getElementById("chkdelivery").disabled=true;
-    		
-    		if(document.getElementById("docno") && document.getElementById("docno").value!=""){
-    			getCancelStatus(document.getElementById("docno").value);
-    		}
-   	    } catch(e) { console.error("Error in setValues: ", e); }
-   	}
-		
-	function getCancelStatus(value) {
-    	var x = new XMLHttpRequest();
-    	x.onreadystatechange = function() {
-    		if (x.readyState == 4 && x.status == 200) {
-    			var items = x.responseText.trim();
-    			if(items=="1" && document.getElementById("lblcancelstatus")){
-    				document.getElementById("lblcancelstatus").innerText="CANCELLED";
-    			}
-    			else if(document.getElementById("lblcancelstatus")){
-    				document.getElementById("lblcancelstatus").innerText="";
-    			}
-    		}
-    	}
-    	x.open("GET", "getCancelStatus.jsp?id="+value, true);
-    	x.send();
+            if(document.getElementById("cmbreplacetype") && document.getElementById("cmbreplacetype").value=="atbranch"){
+                if(document.getElementById("btnupdate")) document.getElementById("btnupdate").disabled=true;
+            } else if(document.getElementById("cmbreplacetype") && document.getElementById("cmbreplacetype").value=="collection"){
+                if(document.getElementById("btnupdate")) document.getElementById("btnupdate").disabled=false;
+            }
+            
+            if(document.getElementById("incollectkm") && document.getElementById("incollectkm").value!='' && parseFloat(document.getElementById("incollectkm").value)>0){
+                if(document.getElementById("btnupdate")) document.getElementById("btnupdate").disabled=true;
+            }
+            
+            if(document.getElementById("chkcollection")) document.getElementById("chkcollection").disabled=true;
+            if(document.getElementById("chkdelivery")) document.getElementById("chkdelivery").disabled=true;
+            
+            if(document.getElementById("docno") && document.getElementById("docno").value!=""){
+                getCancelStatus(document.getElementById("docno").value);
+            }
+        } catch(e) { console.error("Error in setValues: ", e); }
     }
-		
-  	function isNumber(evt,id) {
-  	    var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-  	    if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57)) {
-  	    	 $.messager.alert('Warning','Enter Numbers Only');
-  	       $("#"+id+"").focus();
-  	        return false;
-  	    }
-  	    return true;
-  	}
-  	
-   	function checkReplace(){
-   		var temp=document.getElementById("cmbreplacetype").value;
-   		if(temp=='atbranch'){
-   			document.getElementById("hidchkdelivery").value=0;
-   			$('#deliverydriver').prop('disabled',true);
-   			$('#deliveryoutdate').jqxDateTimeInput({ disabled: true});
-   			$('#deliveryouttime').jqxDateTimeInput({ disabled: true});
-   			$('#deliveryoutkm').prop('disabled',true);
-   			$('#cmbdeliveryoutfuel').prop('disabled',true);
-   			$('#deliveryto').prop('disabled',true);
-   			document.getElementById("hidchkcollection").value=0;
-   			$('#collectdriver').prop('disabled',true);
-   			$('#oncollectdate').jqxDateTimeInput({ disabled: true});
-   			$('#oncollecttime').jqxDateTimeInput({ disabled: true});
-   			$('#oncollectkm').prop('disabled',true);
-   			$('#cmboncollectfuel').prop('disabled',true);
-   			if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="none";
-   			$('#chkdelivery').prop('disabled',true);
-   			$('#chkcollection').prop('disabled',true);
-   			$('#incollectdate').jqxDateTimeInput({ disabled: false});
-   			$('#incollecttime').jqxDateTimeInput({ disabled: false});
-   			$('#incollectkm').prop('disabled',false);
-   			$('#incollectkm').prop('readonly',false);
-   			$('#cmbincollectfuel').prop('disabled',false);
-   			$('#cmbinbranch').prop('disabled',false);
-   			$('#cmbinlocation').prop('disabled',false);
-   			$('#incollectdate').jqxDateTimeInput('focus');
-   		}
-   		if(temp=='collection'){
-       	  if(document.getElementById("mode").value=='A'){
-       		$('#oncollectdate').jqxDateTimeInput({ disabled: true});
-  			$('#oncollecttime').jqxDateTimeInput({ disabled: true});
-  			$('#oncollectkm').prop('disabled',true);
-  			$('#oncollectkm').prop('readonly',true);
-  			$('#cmboncollectfuel').prop('disabled',true);
-       		$('#incollectdate').jqxDateTimeInput({ disabled: true});
-  			$('#incollecttime').jqxDateTimeInput({ disabled: true});
-  			$('#incollectkm').prop('disabled',true);
-  			$('#incollectkm').prop('readonly',true);
-  			$('#cmbincollectfuel').prop('disabled',true);
-  			$('#cmbinbranch').prop('disabled',true);
-  			$('#cmbinlocation').prop('disabled',true);
-  			document.getElementById("txtoutfleetno").focus();
-  			$('#chkdelivery').prop('disabled',true);
-  			$('#chkcollection').prop('disabled',true);
-  			checkDelivery();
-  			checkCollection();
-       	  }
-   		  if(document.getElementById("docno").value>0 && document.getElementById("btnupdate")){
-   			  document.getElementById("btnupdate").style.display="block";
-   		  }
-   		}
-   	}
-   	
-   	function funupdate(){
-   		document.getElementById("chkcollection").disabled=false;
-		document.getElementById("chkdelivery").disabled=false;
-   		$('#incollectdate').jqxDateTimeInput({ disabled: false});
-		$('#incollecttime').jqxDateTimeInput({ disabled: false});
-		$('#incollectkm').prop('disabled',false);
-		$('#incollectkm').prop('readonly',false);
-		$('#cmbincollectfuel').prop('disabled',false);
-		$('#cmbinbranch').prop('disabled',false);
-		$('#cmbinlocation').prop('disabled',false);
-		$('#ondeliverydate').jqxDateTimeInput({ disabled: false});
-		$('#ondeliverytime').jqxDateTimeInput({ disabled: false});
-		$('#ondeliverykm').prop('disabled',false);
-		$('#ondeliverykm').prop('readonly',false);
-		$('#cmbondeliveryfuel').prop('disabled',false);
-		
-		if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="none";
-		if(document.getElementById("btnsave")) document.getElementById("btnsave").style.display="block";
-		
-		$('#cmbtrreason').prop('disabled',false);
-		$('#indesc').prop('readonly',false);
-   	}
-   	
-   	function funsave(){
-		$('#dateout').jqxDateTimeInput({ disabled: false});
-		$('#timeout').jqxDateTimeInput({ disabled: false});
-   		var oncollectdate1=new Date($('#oncollectdate').jqxDateTimeInput('getDate'));
-   		oncollectdate1.setHours(0,0,0,0);
-		var oncollecttime1=new Date($('#oncollecttime').jqxDateTimeInput('getDate'));
-		var outkm=document.getElementById("outkm").value;
-		var dateout1=new Date($('#dateout').jqxDateTimeInput('getDate'));
-		dateout1.setHours(0,0,0,0);
-		var timeout1=new Date($('#oncollecttime').jqxDateTimeInput('getDate'));
-		var deliveryoutdate1=new Date($('#deliveryoutdate').jqxDateTimeInput('getDate'));
-		var deliveryouttime1=new Date($('#deliveryouttime').jqxDateTimeInput('getDate'));
-		var ondeliverydate1=new Date($('#ondeliverydate').jqxDateTimeInput('getDate'));
-		ondeliverydate1.setHours(0,0,0,0);
-		deliveryoutdate1.setHours(0,0,0,0);
-		var ondeliverytime1=new Date($('#ondeliverytime').jqxDateTimeInput('getDate'));
-		$('#dateout').jqxDateTimeInput({ disabled: true});
-		$('#timeout').jqxDateTimeInput({ disabled: true});
-		var incollectdate1=new Date($('#incollectdate').jqxDateTimeInput('getDate'));
-		var incollecttime1=new Date($('#incollecttime').jqxDateTimeInput('getDate'));
-		incollectdate1.setHours(0,0,0,0);
-		
-		if(document.getElementById("chkcollection").checked==false && document.getElementById("chkdelivery").checked==false){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection/Delivery is Mandatory";
-   			return false;
-   		}
-   		if(document.getElementById("chkcollection").checked==true){
-   			var collectTimeStatus=funFutureTimeValidate(oncollectdate1,oncollecttime1);
-   			if(collectTimeStatus==-1 || collectTimeStatus==-2){
-   				if(collectTimeStatus==-1){
-   					if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
-   	 	 			return false;
-   				}
-   				if(collectTimeStatus==-2){
-   					if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
-   	 	 			return false;
-   				}
-   			}
-   			if(document.getElementById("collectdriver").value==''){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please Select Collection Driver";
-   				document.getElementById("collectdriver").focus();
-   				return false;
-   			}
-   			if($('#oncollectdate').jqxDateTimeInput('getDate')==null){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Date is Mandatory";
-   	 			$('#oncollectdate').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-   			
-   			var collectdateval=funDateInPeriod($('#oncollectdate').jqxDateTimeInput('getDate'));
-   			if(collectdateval==0){
-   				$('#oncollectdate').jqxDateTimeInput('focus');
-   				return false;
-   			} else {
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-   			}
-   			if($('#oncollecttime').jqxDateTimeInput('getDate')==null){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time is Mandatory";
-   	 			$('#oncollecttime').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-   			if($('#incollectdate').jqxDateTimeInput('getDate')==null){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date is Mandatory";
-   	 			$('#incollectdate').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-   			var colindateval=funDateInPeriod($('#incollectdate').jqxDateTimeInput('getDate'));
-   			if(colindateval==0){
-   				$('#incollectdate').jqxDateTimeInput('focus');
-   				return false;
-   			} else {
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-   			}
-   			if($('#incollecttime').jqxDateTimeInput('getDate')==null){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time is Mandatory";
-   	 			$('#incollecttime').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-   			
-   			if(oncollectdate1<ondeliverydate1){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collect Date cannot be less than Vehicle out Date";
-   				$('#oncollectdate').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-   			if(oncollectdate1-ondeliverydate1==0){
-   				if(oncollecttime1.getHours()<ondeliverytime1.getHours()){
-   	 			    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time cannot be less than Vehicle out Time";
-   	 			    $('#oncollecttime').jqxDateTimeInput('focus'); 
-   	 			    return false;
-   				}
-   				if(oncollecttime1.getHours()==ondeliverytime1.getHours()){
-   					if(oncollecttime1.getMinutes()<ondeliverytime1.getMinutes()){
-   	 	 			    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time cannot be less than Vehicle out Time";
-   	 	 			    $('#oncollecttime').jqxDateTimeInput('focus'); 
-   	 	 			    return false;
-   					}
-   				}
-   			}
-   			
-   			if(incollectdate1<oncollectdate1){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date Cannot be less than Collection Date";
-   				$('#incollectdate').jqxDateTimeInput('focus');
-   				return false;
-   			}	
-   			if(incollectdate1-oncollectdate1==0){
-   				if(incollecttime1.getHours()<oncollecttime1.getHours()){
-   	 			    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time Cannot be less than In Time";
-   	 			    $('#oncollecttime').jqxDateTimeInput('focus');
-   	 			    return false;
-   				}
-   				if(incollecttime1.getHours()==oncollecttime1.getHours()){
-   					if(incollecttime1.getMinutes()<oncollecttime1.getMinutes()){
-   	 	 			    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time Cannot be less than In Time";
-   	 	 			    $('#incollecttime').jqxDateTimeInput('focus');
-   	 	 			    return false;	
-   					}
-   				}
-   			}
-   			if(document.getElementById("oncollectkm").value==''){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Km cannot be Empty";
-   				document.getElementById("oncollectkm").focus();
-   				return false;
-   			}
-   			if(parseFloat(document.getElementById("oncollectkm").value)==0.0){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Km cannot be Empty";
-   				document.getElementById("oncollectkm").focus();
-   				return false;
-   			}
-   			if(parseFloat(document.getElementById("oncollectkm").value)<parseFloat(outkm)){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Km cannot be less than Agreement Km";
-   				document.getElementById("oncollectkm").focus();
-   				return false;
-   			}
-   			if(document.getElementById("cmboncollectfuel").value==''){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please select Collect fuel";
-   				document.getElementById("cmboncollectfuel").focus();
-   				return false;
-   			}
-   			
-   			if(parseFloat(document.getElementById("incollectkm").value)<parseFloat(document.getElementById("oncollectkm").value)){
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km Cannot be less than Collection Km";
-   				document.getElementById("incollectkm").focus();
-   				return false;
-   			}
-   		}
-   		
-   		if(document.getElementById("incollectkm").value==''){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km cannot be Empty";
-   			document.getElementById("incollectkm").focus();
-   			return false;
-   		}
-   		if(parseFloat(document.getElementById("incollectkm").value)==0.0){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km cannot be Empty";
-   			document.getElementById("incollectkm").focus();
-   			return false;
-   		}
-   		if(parseFloat(document.getElementById("incollectkm").value)<parseFloat(outkm)){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km Cannot be less than Agreement Km";
-   			document.getElementById("incollectkm").focus();
-   			return false;
-   		}
-   		if(document.getElementById("cmbincollectfuel").value==''){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Fuel cannot be Empty";
-   			document.getElementById("cmbincollectfuel").focus();
-   			return false;
-   		}
-   		if(document.getElementById("cmbinbranch").value==''){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Select In Branch";
-   			document.getElementById("cmbinbranch").focus();
-   			return false;
-   		}
-   		if(document.getElementById("cmbinlocation").value==''){
-   			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Select In Location";
-   			document.getElementById("cmbinlocation").focus();
-   			return false;
-   		}
-   			
-		if(incollectdate1<ondeliverydate1){
-			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date cannot be less than Vehicle out Date";
-			$('#incollectdate').jqxDateTimeInput('focus'); 
- 			return false;
-		}
-		if(incollectdate1-ondeliverydate1==0){
-			if(incollecttime1.getHours()<ondeliverytime1.getHours()){
-	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time cannot be less than Vehicle out Time";
-	 			$('#incollecttime').jqxDateTimeInput('focus'); 
-	 			return false;
-			}
-			if(incollecttime1.getHours()==ondeliverytime1.getHours()){
-				if(incollecttime1.getMinutes()<ondeliverytime1.getMinutes()){
-	 	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time cannot be less than Vehicle out Time";
-	 	 			$('#incollecttime').jqxDateTimeInput('focus'); 
-	 	 			return false;
-				}
-			}
-		}
-			
-   		if(document.getElementById("chkdelivery").checked==true){
-   			var delTimeStatus=funFutureTimeValidate(deliveryoutdate1,deliveryouttime1);
-   			if(delTimeStatus==-1 || delTimeStatus==-2){
-   				if(delTimeStatus==-1){
-   					if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
-   	 	 			return false;
-   				}
-   				if(delTimeStatus==-2){
-   					if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
-   	 	 			return false;
-   				}
-   			}
-   			
-   			if(document.getElementById("deliverydriver").value==''){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please Select Driver";
-   	 			document.getElementById("deliverydriver").focus();
-   	 			return false;
-   			}
-   			if($('#deliveryoutdate').jqxDateTimeInput('getDate')==null){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Date is Mandatory";
-   	 			$('#deliveryoutdate').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-   			
-   			var deliverydateval=funDateInPeriod($('#deliveryoutdate').jqxDateTimeInput('getDate'));
-   			if(deliverydateval==0){
-   				$('#deliveryoutdate').jqxDateTimeInput('focus');
-   				return false;
-   			} else {
-   				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-   			}
-   			if($('#deliveryouttime').jqxDateTimeInput('getDate')==null){
-   	 			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time is Mandatory";
-   	 			$('#deliveryouttime').jqxDateTimeInput('focus'); 
-   	 			return false;
-   			}
-    		if(deliveryoutdate1<ondeliverydate1){
-    			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Date cannot be less than Out Date";
-    			$('#deliveryoutdate').jqxDateTimeInput('focus'); 
-    			return false;
-    		}
-    		if(deliveryoutdate1-ondeliverydate1==0){
-    			if(deliveryouttime1.getHours()<ondeliverytime1.getHours()){
-        			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time cannot be less than Out Time";
-        			$('#deliveryouttime').jqxDateTimeInput('focus'); 
-        			return false;
-    			}
-    			if(deliveryouttime1.getHours()==ondeliverytime1.getHours()){
-        			if(deliveryouttime1.getMinutes()<ondeliverytime1.getMinutes()){
-            			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time cannot be less than Out Time";
-            			$('#deliveryouttime').jqxDateTimeInput('focus'); 
-            			return false;
-        			}
-    			}
-    		}
-    		if(document.getElementById("chkcollection").checked==true){
-    			if(deliveryoutdate1<oncollectdate1){
-        			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Date cannot be less than Collection Date";
-        			$('#deliveryouttime').jqxDateTimeInput('focus'); 
-        			return false;
-        		}
-        		if(deliveryoutdate1-oncollectdate1==0){
-        			if(deliveryouttime1.getHours()<oncollecttime1.getHours()){
-            			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time cannot be less than Collection Time";
-            			$('#deliveryouttime').jqxDateTimeInput('focus'); 
-            			return false;
-        			}
-        			if(deliveryouttime1.getHours()==oncollecttime1.getHours()){
-        				if(deliveryouttime1.getMinutes()<=oncollecttime1.getMinutes()){
-            				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time must be Greater than Collection Time";
-            				$('#deliveryouttime').jqxDateTimeInput('focus'); 
-            				return false;
-        				}
-        			}
-        		}
-    		}
-    		
-   			if(document.getElementById("deliveryoutkm").value==''){
-    			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Km cannot be Empty";
-    			document.getElementById("deliveryoutkm").focus();
-    			return false;
-   			}	
-   			if(parseFloat(document.getElementById("deliveryoutkm").value)==0.0){
-    			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Km cannot be Empty";
-    			document.getElementById("deliveryoutkm").focus();
-    			return false;
-   			}
-   			if(parseFloat(document.getElementById("deliveryoutkm").value)<parseFloat(document.getElementById("ondeliverykm").value)){
-    			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Km Cannot be Less than Out Km";
-    			document.getElementById("deliveryoutkm").focus();
-    			return false;
-   			}
-   			if(document.getElementById("cmbdeliveryoutfuel").value==""){
-    			if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please Select Delivery Fuel";
-    			document.getElementById("cmbdeliveryoutfuel").focus();
-    			return false;
-   			}
-   		}
-   		
-   		var inTimeStatus=funFutureTimeValidate(incollectdate1,incollecttime1);
-		if(inTimeStatus==-1 || inTimeStatus==-2){
-			if(inTimeStatus==-1){
-				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
-	 			return false;
-			}
-			if(inTimeStatus==-2){
-				if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
-	 			return false;
-			}
-		}
-		
-   		if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
-   		document.getElementById("mode").value="update";
-   		dateenable();
-   		$('#cmbondeliveryfuel').attr('disabled',false);
-   		$('#cmbdeliveryoutfuel').attr('disabled',false);
-   		
-   		if(document.getElementById("btnSave")) document.getElementById("btnSave").mousedown();
-   	}
-   	
-   	$(function(){
-	    $('#frmReplacement').validate({
-	        rules: {
+        
+    function getCancelStatus(value) {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim();
+                if(items=="1" && document.getElementById("lblcancelstatus")){
+                    document.getElementById("lblcancelstatus").innerText="CANCELLED";
+                }
+                else if(document.getElementById("lblcancelstatus")){
+                    document.getElementById("lblcancelstatus").innerText="";
+                }
+            }
+        }
+        x.open("GET", "getCancelStatus.jsp?id="+value, true);
+        x.send();
+    }
+        
+    function isNumber(evt,id) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57)) {
+             $.messager.alert('Warning','Enter Numbers Only');
+           $("#"+id+"").focus();
+            return false;
+        }
+        return true;
+    }
+    
+    function checkReplace(){
+        var temp=document.getElementById("cmbreplacetype").value;
+        if(temp=='atbranch'){
+            document.getElementById("hidchkdelivery").value=0;
+            $('#deliverydriver').prop('disabled',true);
+            $('#deliveryoutdate').jqxDateTimeInput({ disabled: true});
+            $('#deliveryouttime').jqxDateTimeInput({ disabled: true});
+            $('#deliveryoutkm').prop('disabled',true);
+            $('#cmbdeliveryoutfuel').prop('disabled',true);
+            $('#deliveryto').prop('disabled',true);
+            document.getElementById("hidchkcollection").value=0;
+            $('#collectdriver').prop('disabled',true);
+            $('#oncollectdate').jqxDateTimeInput({ disabled: true});
+            $('#oncollecttime').jqxDateTimeInput({ disabled: true});
+            $('#oncollectkm').prop('disabled',true);
+            $('#cmboncollectfuel').prop('disabled',true);
+            if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="none";
+            $('#chkdelivery').prop('disabled',true);
+            $('#chkcollection').prop('disabled',true);
+            $('#incollectdate').jqxDateTimeInput({ disabled: false});
+            $('#incollecttime').jqxDateTimeInput({ disabled: false});
+            $('#incollectkm').prop('disabled',false);
+            $('#incollectkm').prop('readonly',false);
+            $('#cmbincollectfuel').prop('disabled',false);
+            $('#cmbinbranch').prop('disabled',false);
+            $('#cmbinlocation').prop('disabled',false);
+            $('#incollectdate').jqxDateTimeInput('focus');
+        }
+        if(temp=='collection'){
+          if(document.getElementById("mode").value=='A'){
+            $('#oncollectdate').jqxDateTimeInput({ disabled: true});
+            $('#oncollecttime').jqxDateTimeInput({ disabled: true});
+            $('#oncollectkm').prop('disabled',true);
+            $('#oncollectkm').prop('readonly',true);
+            $('#cmboncollectfuel').prop('disabled',true);
+            $('#incollectdate').jqxDateTimeInput({ disabled: true});
+            $('#incollecttime').jqxDateTimeInput({ disabled: true});
+            $('#incollectkm').prop('disabled',true);
+            $('#incollectkm').prop('readonly',true);
+            $('#cmbincollectfuel').prop('disabled',true);
+            $('#cmbinbranch').prop('disabled',true);
+            $('#cmbinlocation').prop('disabled',true);
+            document.getElementById("txtoutfleetno").focus();
+            $('#chkdelivery').prop('disabled',true);
+            $('#chkcollection').prop('disabled',true);
+            checkDelivery();
+            checkCollection();
+          }
+          if(document.getElementById("docno").value>0 && document.getElementById("btnupdate")){
+              document.getElementById("btnupdate").style.display="block";
+          }
+        }
+    }
+    
+    function funupdate(){
+        document.getElementById("chkcollection").disabled=false;
+        document.getElementById("chkdelivery").disabled=false;
+        $('#incollectdate').jqxDateTimeInput({ disabled: false});
+        $('#incollecttime').jqxDateTimeInput({ disabled: false});
+        $('#incollectkm').prop('disabled',false);
+        $('#incollectkm').prop('readonly',false);
+        $('#cmbincollectfuel').prop('disabled',false);
+        $('#cmbinbranch').prop('disabled',false);
+        $('#cmbinlocation').prop('disabled',false);
+        $('#ondeliverydate').jqxDateTimeInput({ disabled: false});
+        $('#ondeliverytime').jqxDateTimeInput({ disabled: false});
+        $('#ondeliverykm').prop('disabled',false);
+        $('#ondeliverykm').prop('readonly',false);
+        $('#cmbondeliveryfuel').prop('disabled',false);
+        
+        if(document.getElementById("btnupdate")) document.getElementById("btnupdate").style.display="none";
+        if(document.getElementById("btnsave")) document.getElementById("btnsave").style.display="block";
+        
+        $('#cmbtrreason').prop('disabled',false);
+        $('#indesc').prop('readonly',false);
+    }
+    
+    function funsave(){
+        $('#dateout').jqxDateTimeInput({ disabled: false});
+        $('#timeout').jqxDateTimeInput({ disabled: false});
+        var oncollectdate1=new Date($('#oncollectdate').jqxDateTimeInput('getDate'));
+        oncollectdate1.setHours(0,0,0,0);
+        var oncollecttime1=new Date($('#oncollecttime').jqxDateTimeInput('getDate'));
+        var outkm=document.getElementById("outkm").value;
+        var dateout1=new Date($('#dateout').jqxDateTimeInput('getDate'));
+        dateout1.setHours(0,0,0,0);
+        var timeout1=new Date($('#oncollecttime').jqxDateTimeInput('getDate'));
+        var deliveryoutdate1=new Date($('#deliveryoutdate').jqxDateTimeInput('getDate'));
+        var deliveryouttime1=new Date($('#deliveryouttime').jqxDateTimeInput('getDate'));
+        var ondeliverydate1=new Date($('#ondeliverydate').jqxDateTimeInput('getDate'));
+        ondeliverydate1.setHours(0,0,0,0);
+        deliveryoutdate1.setHours(0,0,0,0);
+        var ondeliverytime1=new Date($('#ondeliverytime').jqxDateTimeInput('getDate'));
+        $('#dateout').jqxDateTimeInput({ disabled: true});
+        $('#timeout').jqxDateTimeInput({ disabled: true});
+        var incollectdate1=new Date($('#incollectdate').jqxDateTimeInput('getDate'));
+        var incollecttime1=new Date($('#incollecttime').jqxDateTimeInput('getDate'));
+        incollectdate1.setHours(0,0,0,0);
+        
+        if(document.getElementById("chkcollection").checked==false && document.getElementById("chkdelivery").checked==false){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection/Delivery is Mandatory";
+            return false;
+        }
+        if(document.getElementById("chkcollection").checked==true){
+            var collectTimeStatus=funFutureTimeValidate(oncollectdate1,oncollecttime1);
+            if(collectTimeStatus==-1 || collectTimeStatus==-2){
+                if(collectTimeStatus==-1){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
+                    return false;
+                }
+                if(collectTimeStatus==-2){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
+                    return false;
+                }
+            }
+            if(document.getElementById("collectdriver").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please Select Collection Driver";
+                document.getElementById("collectdriver").focus();
+                return false;
+            }
+            if($('#oncollectdate').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Date is Mandatory";
+                $('#oncollectdate').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            
+            var collectdateval=funDateInPeriod($('#oncollectdate').jqxDateTimeInput('getDate'));
+            if(collectdateval==0){
+                $('#oncollectdate').jqxDateTimeInput('focus');
+                return false;
+            } else {
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+            }
+            if($('#oncollecttime').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time is Mandatory";
+                $('#oncollecttime').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            if($('#incollectdate').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date is Mandatory";
+                $('#incollectdate').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            var colindateval=funDateInPeriod($('#incollectdate').jqxDateTimeInput('getDate'));
+            if(colindateval==0){
+                $('#incollectdate').jqxDateTimeInput('focus');
+                return false;
+            } else {
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+            }
+            if($('#incollecttime').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time is Mandatory";
+                $('#incollecttime').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            
+            if(oncollectdate1<ondeliverydate1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collect Date cannot be less than Vehicle out Date";
+                $('#oncollectdate').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            if(oncollectdate1-ondeliverydate1==0){
+                if(oncollecttime1.getHours()<ondeliverytime1.getHours()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time cannot be less than Vehicle out Time";
+                    $('#oncollecttime').jqxDateTimeInput('focus'); 
+                    return false;
+                }
+                if(oncollecttime1.getHours()==ondeliverytime1.getHours()){
+                    if(oncollecttime1.getMinutes()<ondeliverytime1.getMinutes()){
+                        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time cannot be less than Vehicle out Time";
+                        $('#oncollecttime').jqxDateTimeInput('focus'); 
+                        return false;
+                    }
+                }
+            }
+            
+            if(incollectdate1<oncollectdate1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date Cannot be less than Collection Date";
+                $('#incollectdate').jqxDateTimeInput('focus');
+                return false;
+            }   
+            if(incollectdate1-oncollectdate1==0){
+                if(incollecttime1.getHours()<oncollecttime1.getHours()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time Cannot be less than In Time";
+                    $('#oncollecttime').jqxDateTimeInput('focus');
+                    return false;
+                }
+                if(incollecttime1.getHours()==oncollecttime1.getHours()){
+                    if(incollecttime1.getMinutes()<oncollecttime1.getMinutes()){
+                        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Time Cannot be less than In Time";
+                        $('#incollecttime').jqxDateTimeInput('focus');
+                        return false;   
+                    }
+                }
+            }
+            if(document.getElementById("oncollectkm").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Km cannot be Empty";
+                document.getElementById("oncollectkm").focus();
+                return false;
+            }
+            if(parseFloat(document.getElementById("oncollectkm").value)==0.0){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Km cannot be Empty";
+                document.getElementById("oncollectkm").focus();
+                return false;
+            }
+            if(parseFloat(document.getElementById("oncollectkm").value)<parseFloat(outkm)){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Collection Km cannot be less than Agreement Km";
+                document.getElementById("oncollectkm").focus();
+                return false;
+            }
+            if(document.getElementById("cmboncollectfuel").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please select Collect fuel";
+                document.getElementById("cmboncollectfuel").focus();
+                return false;
+            }
+            
+            if(parseFloat(document.getElementById("incollectkm").value)<parseFloat(document.getElementById("oncollectkm").value)){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km Cannot be less than Collection Km";
+                document.getElementById("incollectkm").focus();
+                return false;
+            }
+        }
+        
+        if(document.getElementById("incollectkm").value==''){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km cannot be Empty";
+            document.getElementById("incollectkm").focus();
+            return false;
+        }
+        if(parseFloat(document.getElementById("incollectkm").value)==0.0){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km cannot be Empty";
+            document.getElementById("incollectkm").focus();
+            return false;
+        }
+        if(parseFloat(document.getElementById("incollectkm").value)<parseFloat(outkm)){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Km Cannot be less than Agreement Km";
+            document.getElementById("incollectkm").focus();
+            return false;
+        }
+        if(document.getElementById("cmbincollectfuel").value==''){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Fuel cannot be Empty";
+            document.getElementById("cmbincollectfuel").focus();
+            return false;
+        }
+        if(document.getElementById("cmbinbranch").value==''){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Select In Branch";
+            document.getElementById("cmbinbranch").focus();
+            return false;
+        }
+        if(document.getElementById("cmbinlocation").value==''){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Select In Location";
+            document.getElementById("cmbinlocation").focus();
+            return false;
+        }
+            
+        if(incollectdate1<ondeliverydate1){
+            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Date cannot be less than Vehicle out Date";
+            $('#incollectdate').jqxDateTimeInput('focus'); 
+            return false;
+        }
+        if(incollectdate1-ondeliverydate1==0){
+            if(incollecttime1.getHours()<ondeliverytime1.getHours()){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time cannot be less than Vehicle out Time";
+                $('#incollecttime').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            if(incollecttime1.getHours()==ondeliverytime1.getHours()){
+                if(incollecttime1.getMinutes()<ondeliverytime1.getMinutes()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="In Time cannot be less than Vehicle out Time";
+                    $('#incollecttime').jqxDateTimeInput('focus'); 
+                    return false;
+                }
+            }
+        }
+            
+        if(document.getElementById("chkdelivery").checked==true){
+            var delTimeStatus=funFutureTimeValidate(deliveryoutdate1,deliveryouttime1);
+            if(delTimeStatus==-1 || delTimeStatus==-2){
+                if(delTimeStatus==-1){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
+                    return false;
+                }
+                if(delTimeStatus==-2){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
+                    return false;
+                }
+            }
+            
+            if(document.getElementById("deliverydriver").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please Select Driver";
+                document.getElementById("deliverydriver").focus();
+                return false;
+            }
+            if($('#deliveryoutdate').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Date is Mandatory";
+                $('#deliveryoutdate').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            
+            var deliverydateval=funDateInPeriod($('#deliveryoutdate').jqxDateTimeInput('getDate'));
+            if(deliverydateval==0){
+                $('#deliveryoutdate').jqxDateTimeInput('focus');
+                return false;
+            } else {
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+            }
+            if($('#deliveryouttime').jqxDateTimeInput('getDate')==null){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time is Mandatory";
+                $('#deliveryouttime').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            if(deliveryoutdate1<ondeliverydate1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Date cannot be less than Out Date";
+                $('#deliveryoutdate').jqxDateTimeInput('focus'); 
+                return false;
+            }
+            if(deliveryoutdate1-ondeliverydate1==0){
+                if(deliveryouttime1.getHours()<ondeliverytime1.getHours()){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time cannot be less than Out Time";
+                    $('#deliveryouttime').jqxDateTimeInput('focus'); 
+                    return false;
+                }
+                if(deliveryouttime1.getHours()==ondeliverytime1.getHours()){
+                    if(deliveryouttime1.getMinutes()<ondeliverytime1.getMinutes()){
+                        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time cannot be less than Out Time";
+                        $('#deliveryouttime').jqxDateTimeInput('focus'); 
+                        return false;
+                    }
+                }
+            }
+            if(document.getElementById("chkcollection").checked==true){
+                if(deliveryoutdate1<oncollectdate1){
+                    if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Date cannot be less than Collection Date";
+                    $('#deliveryouttime').jqxDateTimeInput('focus'); 
+                    return false;
+                }
+                if(deliveryoutdate1-oncollectdate1==0){
+                    if(deliveryouttime1.getHours()<oncollecttime1.getHours()){
+                        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time cannot be less than Collection Time";
+                        $('#deliveryouttime').jqxDateTimeInput('focus'); 
+                        return false;
+                    }
+                    if(deliveryouttime1.getHours()==oncollecttime1.getHours()){
+                        if(deliveryouttime1.getMinutes()<=oncollecttime1.getMinutes()){
+                            if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Time must be Greater than Collection Time";
+                            $('#deliveryouttime').jqxDateTimeInput('focus'); 
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            if(document.getElementById("deliveryoutkm").value==''){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Km cannot be Empty";
+                document.getElementById("deliveryoutkm").focus();
+                return false;
+            }   
+            if(parseFloat(document.getElementById("deliveryoutkm").value)==0.0){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Km cannot be Empty";
+                document.getElementById("deliveryoutkm").focus();
+                return false;
+            }
+            if(parseFloat(document.getElementById("deliveryoutkm").value)<parseFloat(document.getElementById("ondeliverykm").value)){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Delivery Km Cannot be Less than Out Km";
+                document.getElementById("deliveryoutkm").focus();
+                return false;
+            }
+            if(document.getElementById("cmbdeliveryoutfuel").value==""){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Please Select Delivery Fuel";
+                document.getElementById("cmbdeliveryoutfuel").focus();
+                return false;
+            }
+        }
+        
+        var inTimeStatus=funFutureTimeValidate(incollectdate1,incollecttime1);
+        if(inTimeStatus==-1 || inTimeStatus==-2){
+            if(inTimeStatus==-1){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Date is not allowed";
+                return false;
+            }
+            if(inTimeStatus==-2){
+                if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="Future Time is not allowed";
+                return false;
+            }
+        }
+        
+        if(document.getElementById("errormsg")) document.getElementById("errormsg").innerText="";
+        document.getElementById("mode").value="update";
+        dateenable();
+        $('#cmbondeliveryfuel').attr('disabled',false);
+        $('#cmbdeliveryoutfuel').attr('disabled',false);
+        
+        if(document.getElementById("btnSave")) document.getElementById("btnSave").mousedown();
+    }
+    
+    $(function(){
+        $('#frmReplacement').validate({
+            rules: {
                 cmbtrreason:"required",
                 cmbreplacetype:"required",
                 refno:"required",
@@ -1311,17 +1311,17 @@ body {
                 description:{ maxlength:250 }
             },
             messages: {
-           	    cmbtrreason:" *",
-           	    cmbreplacetype:" *",
-           	    refno:" *",
-           	    txtoutfleetno:" *",
-           	    cmbrentaltype:" *",
-           	    description:{ maxlength:"max 250 chars" }
+                cmbtrreason:" *",
+                cmbreplacetype:" *",
+                refno:" *",
+                txtoutfleetno:" *",
+                cmbrentaltype:" *",
+                description:{ maxlength:"max 250 chars" }
             }
-	     });
+         });
     });
-   	
-   	function funPrintBtn(){
+    
+    function funPrintBtn(){
         var rfleetno=$('#txtfleetno').val();
         var ofleetno=$('#txtoutfleetno').val();
         var docno = document.getElementById("docno").value;
@@ -1337,32 +1337,32 @@ body {
 
         var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
         win.focus(); 
-   	} 
-   	
-	function funFutureTimeValidate(paramdate,paramtime){
-		var curdate=new Date();
-		var curtime=new Date();
-		paramdate=new Date(paramdate);
-		paramdate.setHours(0,0,0,0);
-		curdate.setHours(0,0,0,0);
-		
-		if(paramdate>curdate){
-			return -1;
-		}
-		else if(paramdate-curdate==0){
-			if(parseInt(paramtime.getHours())>curtime.getHours()){
-				return -2;
-			}
-			else if(parseInt(paramtime.getHours())==curtime.getHours()){
-				if(parseInt(paramtime.getMinutes())>curtime.getMinutes()){
-					return -2;
-				}
-			}
-		}
-		else{
-			return 0;
-		}
-	}
+    } 
+    
+    function funFutureTimeValidate(paramdate,paramtime){
+        var curdate=new Date();
+        var curtime=new Date();
+        paramdate=new Date(paramdate);
+        paramdate.setHours(0,0,0,0);
+        curdate.setHours(0,0,0,0);
+        
+        if(paramdate>curdate){
+            return -1;
+        }
+        else if(paramdate-curdate==0){
+            if(parseInt(paramtime.getHours())>curtime.getHours()){
+                return -2;
+            }
+            else if(parseInt(paramtime.getHours())==curtime.getHours()){
+                if(parseInt(paramtime.getMinutes())>curtime.getMinutes()){
+                    return -2;
+                }
+            }
+        }
+        else{
+            return 0;
+        }
+    }
 </script>
 </head>
 
@@ -1371,11 +1371,11 @@ body {
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmReplacement" action="saveReplacement" autocomplete="off">
     <script>
-			window.parent.formName.value="Replacement";
-			window.parent.formCode.value="RPL";
-	</script>
-	<jsp:include page="../../../../header.jsp" />
-	
+            window.parent.formName.value="Replacement";
+            window.parent.formCode.value="RPL";
+    </script>
+    <jsp:include page="../../../../header.jsp" />
+    
 <div class="modern-ui hidden-scrollbar">
 
     <div class="erp-form-area">
