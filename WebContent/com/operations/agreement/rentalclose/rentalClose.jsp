@@ -1579,8 +1579,8 @@ if(document.getElementById("rentalagent").value==""){
           <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
           <td width="5%" align="right">Hours Used</td>
           <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
-          <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
-							<img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
+          <td width="6%" align="center" rowspan="2">
+<button type="button" id="btnprocess" class ="myButton" title="Process"  onclick="funChecking();">Process</button></td>
         </tr>
         <tr>
           <td align="right">In Details</td>
