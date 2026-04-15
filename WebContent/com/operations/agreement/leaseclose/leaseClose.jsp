@@ -138,885 +138,1183 @@ SCOPED UI: Compact Input Sizing & Bulletproof Grids
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $('#btndownload').hide(); 
-    document.getElementById("chkcollection").checked=false; 
-    document.getElementById("chauffer").disabled=true; 
-    getBranch();
-    getLeasePrior(); 
-    getTestLocation();
+	$('#btndownload').hide();
+	document.getElementById("chkcollection").unchecked=true;
+	document.getElementById("chauffer").disabled="true";
+	// checkConvertion(); 
+//	getConvertion();
+	getBranch();
+	getLeasePrior();
+	getTestLocation();
+	$('#brchName').change(function(){
+  getAgmtLocation();
+ });
+	if(document.getElementById("hidchkcollection").value=="1"){
+		document.getElementById("chkcollection").checked=true;
+	}
+	else{
+		document.getElementById("chkcollection").checked=false;
+	}
 
-    $('#brchName').change(function(){ 
-        getAgmtLocation();
-    });
+	//setCollection();
+	//$("#tarifreferencegrid").jqxGrid({ disabled: true});
+	$("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#indate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	// $("#accidentdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	// $("#policecollecteddate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#intime").jqxDateTimeInput({ width: '80%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
+	 $("#collecttime").jqxDateTimeInput({ width: '80%', height: '17px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+	//Minimize Button
+	 $("#jqxMenuMore").jqxMenu({ width: '40%', height: '26px', autoSizeMainItems: true});
+     $("#jqxMenuMore").jqxMenu('minimize');            
+     $("#jqxMenuMore").css('visibility', 'visible');
+     //Common window for minimize button
+     $('#window1').jqxWindow({autoOpen:false, width: '71%', height: '70%',  maxHeight: '70%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
+     $('#window1').jqxWindow('close');
+	 //$("#accidenttime").jqxDateTimeInput({ width: '100%', height: '17px', formatString: 'HH:mm', showCalendarButton: false });
+	  $('#agmtnowindow').jqxWindow({autoOpen:false, width: '60%', height: '68%',  maxHeight: '68%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+	   $('#agmtnowindow').jqxWindow('close');
+	   $('#collectionWindow').jqxWindow({ autoOpen:false, width: '50%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Collection Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+	   $('#collectionWindow').jqxWindow('close');
+	   $('#checkinWindow').jqxWindow({ autoOpen:false, width: '50%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Check In Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+	   $('#checkinWindow').jqxWindow('close');
+	   $('#rentalAgentWindow').jqxWindow({autoOpen:false,  width: '50%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Rental Agent Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+	   $('#rentalAgentWindow').jqxWindow('close');
+	   
+	   $('#indate').on('change', function (event) 
+			   {  
+		  if(document.getElementById("mode").value=="A"){
+			document.getElementById("useddays").value="";
+			document.getElementById("usedhours").value="";
+			document.getElementById("totalkm").value="";
+			document.getElementById("excesskm").value="";
+			document.getElementById("lblinvoicedone").innerText="";
+			 $('#totalgrid').jqxGrid('clear');
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+	    	 
+	    	 if($('#intime').jqxDateTimeInput('getDate')!=null && $('#indate').jqxDateTimeInput('getDate')!=null){
+				   var intime=new Date($('#intime').jqxDateTimeInput('getDate'));
+				   var indate=new Date($('#indate').jqxDateTimeInput('getDate'));
+				   var status=checkPriorTime(intime,indate);
+				   if(status){
+					   document.getElementById("errormsg").innerText="";
+					   return true;
+				   }
+				   else{
+					   $('#indate').jqxDateTimeInput('focus');
+					   return false;
+				   }
+			   }
+		  }
+			   });
+	   $('#intime').on('change', function (event) 
+			   {  
+		   if(document.getElementById("mode").value=="A"){
+			document.getElementById("useddays").value="";
+			document.getElementById("usedhours").value="";
+			document.getElementById("totalkm").value="";
+			document.getElementById("excesskm").value="";
+			document.getElementById("lblinvoicedone").innerText="";
+			 $('#totalgrid').jqxGrid('clear');
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+	    	 if($('#intime').jqxDateTimeInput('getDate')!=null){
+				   var intime=new Date($('#intime').jqxDateTimeInput('getDate'));
+				   var indate=new Date($('#indate').jqxDateTimeInput('getDate'));
+				   var status=checkPriorTime(intime,indate);
+				   if(status){
+					   document.getElementById("errormsg").innerText="";
+					   return true;
+				   }
+				   else{
+					   $('#intime').jqxDateTimeInput('focus');
+					   return false;
+				   }
+			   }
+		   }
+		   
+		   
+			   });
+	   $( "#inkm" ).change(function() {
+		   if(document.getElementById("mode").value=="A"){
+			document.getElementById("useddays").value="";
+			document.getElementById("usedhours").value="";
+			document.getElementById("totalkm").value="";
+			document.getElementById("excesskm").value="";
+			document.getElementById("lblinvoicedone").innerText="";
+			 $('#totalgrid').jqxGrid('clear');
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+		   }
+		 });
+	   $( "#cmbinfuel" ).change(function() {
+		   if(document.getElementById("mode").value=="A"){
+			document.getElementById("useddays").value="";
+			document.getElementById("usedhours").value="";
+			document.getElementById("totalkm").value="";
+			document.getElementById("excesskm").value="";
+			document.getElementById("lblinvoicedone").innerText="";
+			 $('#totalgrid').jqxGrid('clear');
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+		   }
+		 });
+	   
+	   
 
-    if(document.getElementById("hidchkcollection").value=="1"){ 
-        document.getElementById("chkcollection").checked=true;
-    } else {
-        document.getElementById("chkcollection").checked=false;
-    }
+	   
+	   
+	   
+	   $('#vocno').dblclick(function(){
+		 if(document.getElementById("mode").value=="A"){
+			 if(document.getElementById("cmbagmtbranch").value==""){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Agreement Branch is Mandatory";
+					return false;
+				}
+		    $('#agmtnowindow').jqxWindow('open');
+		$('#agmtnowindow').jqxWindow('focus');
+		 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
+		 }
+		});
+	   $('#checkin').dblclick(function(){
+			 if(document.getElementById("mode").value=="A"){
 
-    /* Strict 24px Master Heights for JQX Dates/Times */
-    $("#closeinvdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
-    $("#closedate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
-    $("#indate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    $("#collectdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    $("#datehidden").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
-    $("#agmtdeliverydate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
-    $("#closedatehidden").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
-    $("#intime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
-    $("#collecttime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+		    $('#checkinWindow').jqxWindow('open');
+		$('#checkinWindow').jqxWindow('focus');
+		 checkinSearchContent('checkinGrid.jsp?', $('#checkinWindow'));
+			 }
+			 });
+	   $('#rentalagent').dblclick(function(){
+			 if(document.getElementById("mode").value=="A"){
 
-    /* Force internal alignment AFTER render */ 
-    setTimeout(function () {
-        $(".jqx-datetimeinput").find("input").css({ 
-            "margin-top": "0px",
-            "line-height": "24px",
-            "font-size": "12px",
-            "font-family": "Arial, sans-serif", 
-            "padding": "0 6px",
-            "box-sizing":"border-box"
-        });
-        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-    }, 0);
-
-    /* Hamburger Menu fix */
-    $("#jqxMenuMore").jqxMenu({ width: '32px', height: '24px', autoSizeMainItems: true});
-    $("#jqxMenuMore").jqxMenu('minimize');
-    $("#jqxMenuMore").css('visibility', 'visible');
-
-    // Windows
-    $('#window1').jqxWindow({autoOpen:false, width: '71%', height: '70%', maxHeight: '70%',maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
-    $('#window1').jqxWindow('close');
-    $('#agmtnowindow').jqxWindow({autoOpen:false, width: '60%', height: '68%', maxHeight: '68%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-    $('#agmtnowindow').jqxWindow('close');
-    $('#collectionWindow').jqxWindow({ autoOpen:false, width: '50%', height: '58%', maxHeight: '58%' ,maxWidth: '50%' , title: 'Collection Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-    $('#collectionWindow').jqxWindow('close');
-    $('#checkinWindow').jqxWindow({ autoOpen:false, width: '50%', height: '58%', maxHeight: '58%' ,maxWidth: '50%' , title: 'Check In Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-    $('#checkinWindow').jqxWindow('close');
-    $('#rentalAgentWindow').jqxWindow({autoOpen:false, width: '50%', height: '58%', maxHeight: '58%' ,maxWidth: '50%' , title: 'Rental Agent Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-    $('#rentalAgentWindow').jqxWindow('close');
-
-    $('#indate').on('change', function (event) { 
-        if(document.getElementById("mode").value=="A"){
-            document.getElementById("useddays").value=""; 
-            document.getElementById("usedhours").value=""; 
-            document.getElementById("totalkm").value=""; 
-            document.getElementById("excesskm").value=""; 
-            document.getElementById("lblinvoicedone").innerText="";
-            $('#totalgrid').jqxGrid('clear');
-            $("#totalgrid").jqxGrid("addrow", null, {});
-            $('#calculationgrid').jqxGrid('clear');
-            $("#calculationgrid").jqxGrid("addrow", null, {});
-
-            if($('#intime').jqxDateTimeInput('getDate')!=null && $('#indate').jqxDateTimeInput('getDate')!=null){
-                var intime=new Date($('#intime').jqxDateTimeInput('getDate')); 
-                var indate=new Date($('#indate').jqxDateTimeInput('getDate')); 
-                var status=checkPriorTime(intime,indate);
-                if(status){ 
-                    document.getElementById("errormsg").innerText=""; 
-                    return true;
-                } else {
-                    $('#indate').jqxDateTimeInput('focus'); 
-                    return false;
-                }
-            }
-        }
-    });
-
-    $('#intime').on('change', function (event) { 
-        if(document.getElementById("mode").value=="A"){
-            document.getElementById("useddays").value=""; 
-            document.getElementById("usedhours").value=""; 
-            document.getElementById("totalkm").value="";
-            document.getElementById("excesskm").value=""; 
-            document.getElementById("lblinvoicedone").innerText="";
-            $('#totalgrid').jqxGrid('clear');
-            $("#totalgrid").jqxGrid("addrow", null, {});
-            $('#calculationgrid').jqxGrid('clear');
-            $("#calculationgrid").jqxGrid("addrow", null, {}); 
-            
-            if($('#intime').jqxDateTimeInput('getDate')!=null){
-                var intime=new Date($('#intime').jqxDateTimeInput('getDate')); 
-                var indate=new Date($('#indate').jqxDateTimeInput('getDate')); 
-                var status=checkPriorTime(intime,indate);
-                if(status){ 
-                    document.getElementById("errormsg").innerText=""; 
-                    return true;
-                } else {
-                    $('#intime').jqxDateTimeInput('focus'); 
-                    return false;
-                }
-            }
-        }
-    });
-
-    $( "#inkm" ).change(function() { 
-        if(document.getElementById("mode").value=="A"){
-            document.getElementById("useddays").value=""; 
-            document.getElementById("usedhours").value=""; 
-            document.getElementById("totalkm").value=""; 
-            document.getElementById("excesskm").value=""; 
-            document.getElementById("lblinvoicedone").innerText="";
-            $('#totalgrid').jqxGrid('clear');
-            $("#totalgrid").jqxGrid("addrow", null, {});
-            $('#calculationgrid').jqxGrid('clear');
-            $("#calculationgrid").jqxGrid("addrow", null, {});
-        }
-    });
-
-    $( "#cmbinfuel" ).change(function() { 
-        if(document.getElementById("mode").value=="A"){
-            document.getElementById("useddays").value=""; 
-            document.getElementById("usedhours").value=""; 
-            document.getElementById("totalkm").value=""; 
-            document.getElementById("excesskm").value=""; 
-            document.getElementById("lblinvoicedone").innerText="";
-            $('#totalgrid').jqxGrid('clear');
-            $("#totalgrid").jqxGrid("addrow", null, {});
-            $('#calculationgrid').jqxGrid('clear');
-            $("#calculationgrid").jqxGrid("addrow", null, {});
-        }
-    });
+		    $('#rentalAgentWindow').jqxWindow('open');
+		$('#rentalAgentWindow').jqxWindow('focus');
+		 rentalSearchContent('rentalAgentGrid.jsp?', $('#rentalAgentWindow'));
+			 }
+			 });
+	   $('#chauffer').dblclick(function(){
+		    $('#collectionWindow').jqxWindow('open');
+		$('#collectionWindow').jqxWindow('focus');
+		 collectSearchContent('collectSearch.jsp', $('#collectionWindow'));
+		});
+	   //alert(document.getElementById("mode").value);
+	   if(document.getElementById("mode").value=='view'){
+		  $('#btnprocess').attr('disabled',true);
+		  $('#btncalculate').attr('disabled',true);
+	   }
+ });
  
-    $('#vocno').dblclick(function(){ 
-        if(document.getElementById("mode").value=="A"){
-            if(document.getElementById("cmbagmtbranch").value==""){ 
-                document.getElementById("errormsg").innerText=""; 
-                document.getElementById("errormsg").innerText="Agreement Branch is Mandatory"; 
-                return false;
-            }
-            $('#agmtnowindow').jqxWindow('open');
-            $('#agmtnowindow').jqxWindow('focus'); 
-            agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
-        }
-    });
-
-    $('#checkin').dblclick(function(){ 
-        if(document.getElementById("mode").value=="A"){
-            $('#checkinWindow').jqxWindow('open');
-            $('#checkinWindow').jqxWindow('focus'); 
-            checkinSearchContent('checkinGrid.jsp?', $('#checkinWindow'));
-        }
-    });
-
-    $('#rentalagent').dblclick(function(){ 
-        if(document.getElementById("mode").value=="A"){
-            $('#rentalAgentWindow').jqxWindow('open');
-            $('#rentalAgentWindow').jqxWindow('focus'); 
-            rentalSearchContent('rentalAgentGrid.jsp?', $('#rentalAgentWindow'));
-        }
-    });
-
-    $('#chauffer').dblclick(function(){
-        $('#collectionWindow').jqxWindow('open');
-        $('#collectionWindow').jqxWindow('focus'); 
-        collectSearchContent('collectSearch.jsp', $('#collectionWindow'));
-    });
-
-    if(document.getElementById("mode").value=='view'){
-        $('#btnprocess').attr('disabled',true);
-        $('#btncalculate').attr('disabled',true);
-    }
-});
-
-function getLeasePrior(){
-    var x = new XMLHttpRequest(); 
-    x.onreadystatechange = function() {
-        if (x.readyState == 4 && x.status == 200) { 
-            var items = x.responseText.trim();
-            items = items.split('***'); 
-            document.getElementById("priormethod").value=items[0]; 
-            document.getElementById("priorvalue").value=items[1]; 
-            document.getElementById("defaultdate").value=items[2]; 
-            document.getElementById("agmtsat").value=items[3]; 
-            
-            if(document.getElementById("defaultdate").value=="1" && document.getElementById("docno").value==""){
-                $('#indate,#intime').jqxDateTimeInput('setDate',new Date());
-            }
-            if(document.getElementById("agmtsat").value=="1" && document.getElementById("docno").value==""){
-                $('#btndownload').show();
-            }
-        }
-    }
-    x.open("GET", "../getLeasePriorClose.jsp", true); 
-    x.send();
+ function getLeasePrior(){
+	var x = new XMLHttpRequest();
+	x.onreadystatechange = function() {
+		if (x.readyState == 4 && x.status == 200) {
+			var items = x.responseText.trim();
+			items = items.split('***');
+			document.getElementById("priormethod").value=items[0];
+			document.getElementById("priorvalue").value=items[1];
+			document.getElementById("defaultdate").value=items[2];
+			document.getElementById("agmtsat").value=items[3];
+			if(document.getElementById("defaultdate").value=="1" && document.getElementById("docno").value==""){
+				$('#indate,#intime').jqxDateTimeInput('setDate',new Date());
+			}
+			if(document.getElementById("agmtsat").value=="1"  && document.getElementById("docno").value==""){
+				$('#btndownload').show();
+			}
+			} else {
+			}
+		}
+		x.open("GET", "../getLeasePriorClose.jsp", true);
+		x.send();
+ }
+function checkPriorTime(intime,indate){
+	 var currenttime=new Date();
+	 var priormethod=document.getElementById("priormethod").value;
+	 var priorvalue=document.getElementById("priorvalue").value;
+	 var priorhours=priorvalue/60;
+	 if(priormethod=="0"){
+		 return true;
+	 }
+	 else if(parseInt(priormethod)>0){
+		 var priordate=indate;
+		 priordate.setHours(intime.getHours());
+		 priordate.setMinutes(intime.getMinutes());
+		 var difference=currenttime-priordate;
+		 var minutediff=parseInt(difference/(1000*60));
+		 if(minutediff>priorvalue){
+			 document.getElementById("errormsg").innerText="";
+			 document.getElementById("errormsg").innerText="Prior Close time is "+priorhours+" hours";
+			 return false;
+		 }
+		 else{
+			 return true;
+		 }
+	 }
 }
-
-function checkPriorTime(intime,indate){ 
-    var currenttime=new Date();
-    var priormethod=document.getElementById("priormethod").value; 
-    var priorvalue=document.getElementById("priorvalue").value;
-    var priorhours=priorvalue/60; 
-    
-    if(priormethod=="0"){
-        return true;
-    } else if(parseInt(priormethod)>0){ 
-        var priordate=indate;
-        priordate.setHours(intime.getHours()); 
-        priordate.setMinutes(intime.getMinutes()); 
-        var difference=currenttime-priordate;
-        var minutediff=parseInt(difference/(1000*60)); 
-        
-        if(minutediff>priorvalue){
-            document.getElementById("errormsg").innerText="Prior Close time is "+priorhours+" hours";
-            return false;
-        } else {
-            return true;
-        }
-    }
-}
-
+ 
 function getBranch(){
-    var x = new XMLHttpRequest(); 
-    x.onreadystatechange = function() {
-        if (x.readyState == 4 && x.status == 200) { 
-            var items = x.responseText;
-            items = items.split('***');
-            var locItems = items[0].split(","); 
-            var locIdItems = items[1].split(",");
-            var optionsloc = '<option value="">--Select--</option>'; 
-            for (var i = 0; i < locItems.length; i++) {
-                optionsloc += '<option value="' + locIdItems[i] + '">' + locItems[i] + '</option>';
-            }
-            $("select#cmbagmtbranch").html(optionsloc);
-
-            if ($('#hidcmbagmtbranch').val() != null) {
-                $('#cmbagmtbranch').val($('#hidcmbagmtbranch').val());
-            }
-        }
-    }
-    x.open("GET", "getBranch.jsp", true); 
-    x.send();
-}
-
+	var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				items = items.split('***');
+				var locItems = items[0].split(",");
+				var locIdItems = items[1].split(",");
+				var optionsloc = '<option value="">--Select--</option>';
+				for (var i = 0; i < locItems.length; i++) {
+					optionsloc += '<option value="' + locIdItems[i] + '">'
+							+ locItems[i] + '</option>';
+				}
+				$("select#cmbagmtbranch").html(optionsloc);
+				
+				if ($('#hidcmbagmtbranch').val() != null) {
+					$('#cmbagmtbranch').val($('#hidcmbagmtbranch').val());
+				}
+			} else {
+			}
+		}
+		x.open("GET", "getBranch.jsp", true);
+		x.send();
+	}
+	
+	
+	
+//Minimize menu functions
 function menuContent(url) {
     $.get(url).done(function (data) {
-        $('#window1').jqxWindow('open');
-        $('#window1').jqxWindow('setContent', data);
-        $('#window1').jqxWindow('bringToFront');
-    });
+       $('#window1').jqxWindow('open');
+   $('#window1').jqxWindow('setContent', data);
+   $('#window1').jqxWindow('bringToFront');
+   
+      });
 }
-
 function replacement(){
-    if (($("#mode").val() == "view") && $("#docno").val()!="") {
-        $('#window1').jqxWindow('open');
-        menuContent('vehReplaceGrid.jsp?docnovals='+document.getElementById("agreementno").value, $('#window1'));
-    } else {
-        $.messager.alert('Message','Select a Document !','warning');
-        return false;
-    }
+//Function to show replaced vehicles
+if (($("#mode").val() == "view") && $("#docno").val()!="") {
+$('#window1').jqxWindow('open');
+    menuContent('vehReplaceGrid.jsp?docnovals='+document.getElementById("agreementno").value, $('#window1')); 
+}
+else {
+    $.messager.alert('Message','Select a Document....!','warning');
+    return false;
+   }
 }
 
 function fine(){
-    if (($("#mode").val() == "view") && $("#docno").val()!="") {
-        $('#window1').jqxWindow('open'); 
-        menuContent('trafficFines.jsp?docnovals='+document.getElementById("agreementno").value, $('#window1'));
-    } else {
-        $.messager.alert('Message','Select a Document !','warning');
-        return false;
-    }
+//Function to show Traffic Fines Charged	
+if (($("#mode").val() == "view") && $("#docno").val()!="") {
+ $('#window1').jqxWindow('open');
+    menuContent('trafficFines.jsp?docnovals='+document.getElementById("agreementno").value, $('#window1'));         
+}
+else {
+    $.messager.alert('Message','Select a Document....!','warning');
+    return false;
+   }
 }
 
 function account(){
-    if (($("#mode").val() == "view") && $("#docno").val()!="") {
-        $('#window1').jqxWindow('open');
-        menuContent('accountsmainForm.jsp?docnovals='+document.getElementById("agreementno").value, $('#window1'));
-    } else {
-        $.messager.alert('Message','Select a Document !','warning');
-        return false;
-    }
+//Function to show Account Statement 	
+if (($("#mode").val() == "view") && $("#docno").val()!="") {
+ $('#window1').jqxWindow('open');
+    menuContent('accountsmainForm.jsp?docnovals='+document.getElementById("agreementno").value, $('#window1'));
+}
+else {
+    $.messager.alert('Message','Select a Document....!','warning');
+    return false;
+   }
 }
 
 function closing(){
-    if (($("#mode").val() == "view") && $("#docno").val()!="") { 
-        var url=document.URL;
-        var reurl=url.split("saveLeaseClose");
-        $("#docno").prop("disabled", false);
-        var win= window.open(reurl[0]+"printLAGClosingSummary?docno="+document.getElementById("agreementno").value,"_blank","top=85,left=150,Width=1020,Height=600,location=no,scrollbars=no,toolbar=yes");
-        win.focus();
-    } else {
-        $.messager.alert('Message','Select a Document !','warning');
-        return false;
-    }
-}
+	 if (($("#mode").val() == "view") && $("#docno").val()!="") {
+	      var url=document.URL;
+	        var reurl=url.split("saveLeaseClose");
+	        $("#docno").prop("disabled", false);                
 
+	        var win= window.open(reurl[0]+"printLAGClosingSummary?docno="+document.getElementById("agreementno").value,"_blank","top=85,left=150,Width=1020,Height=600,location=no,scrollbars=no,toolbar=yes");
+	      win.focus();
+	     } 
+	    
+	     else {
+	            $.messager.alert('Message','Select a Document....!','warning');
+	            return false;
+	           } 
+	}
+	
 function funKmDetails(){
-    if (($("#mode").val() == "view") && $("#agreementno").val()!="") {
-        $('#window1').jqxWindow('open');
-        menuContent('kmdetails.jsp?docno='+document.getElementById("agreementno").value+'&id=1', $('#window1'));
-    } else {
-        $.messager.alert('Message','Select a Document !','warning');
-        return false;
-    }
+  	if (($("#mode").val() == "view") && $("#agreementno").val()!="") {
+	 $('#window1').jqxWindow('open');
+     menuContent('kmdetails.jsp?docno='+document.getElementById("agreementno").value+'&id=1', $('#window1')); 
+  	}
+  	 else {
+	      $.messager.alert('Message','Select a Document....!','warning');
+	      return false;
+	     }
 }
-
-function getAgmt(event){ 
-    if(document.getElementById("cmbagmtbranch").value==""){
-        document.getElementById("errormsg").innerText=""; 
-        document.getElementById("errormsg").innerText="Agreement Branch is Mandatory"; 
-        return false;
-    }
-    var x= event.keyCode; 
+//Minimize menu functions ends here
+function getAgmt(event){
+	 if(document.getElementById("cmbagmtbranch").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Agreement Branch is Mandatory";
+			return false;
+		}
+	 var x= event.keyCode;
+     if(x==114){
+ 	    $('#agmtnowindow').jqxWindow('open');
+		$('#agmtnowindow').jqxWindow('focus');
+		 agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
+     }
+     else{
+      }
+}
+function getChauffer(event){
+	 var x= event.keyCode;
+     if(x==114){
+    	   $('#collectionWindow').jqxWindow('open');
+   		$('#collectionWindow').jqxWindow('focus');
+   		 collectSearchContent('collectSearch.jsp', $('#collectionWindow'));
+     }
+     else{
+      }
+}
+function getCheckin(event){
+	 var x= event.keyCode;
     if(x==114){
-        $('#agmtnowindow').jqxWindow('open');
-        $('#agmtnowindow').jqxWindow('focus'); 
-        agmtnoSearchContent('agmtnoSearch.jsp?', $('#agmtnowindow'));
+    	 $('#checkinWindow').jqxWindow('open');
+ 		$('#checkinWindow').jqxWindow('focus');
+ 		 checkinSearchContent('checkinGrid.jsp?', $('#checkinWindow'));
+    }
+    else{
+     }
+}
+function getRentalAgent(event){
+	 var x= event.keyCode;
+   if(x==114){
+   	 $('#rentalAgentWindow').jqxWindow('open');
+		$('#rentalAgentWindow').jqxWindow('focus');
+		rentalSearchContent('rentalAgentGrid.jsp?', $('#rentalAgentWindow'));
+   }
+   else{
     }
 }
 
-function getChauffer(event){ 
-    var x= event.keyCode; 
-    if(x==114){
-        $('#collectionWindow').jqxWindow('open');
-        $('#collectionWindow').jqxWindow('focus'); 
-        collectSearchContent('collectSearch.jsp', $('#collectionWindow'));
-    }
-}
+ function agmtnoSearchContent(url) {
+    //alert(url);
+      $.get(url).done(function (data) {
+//alert(data);
+    $('#agmtnowindow').jqxWindow('setContent', data);
 
-function getCheckin(event){ 
-    var x= event.keyCode; 
-    if(x==114){
-        $('#checkinWindow').jqxWindow('open');
-        $('#checkinWindow').jqxWindow('focus'); 
-        checkinSearchContent('checkinGrid.jsp?', $('#checkinWindow'));
-    }
+}); 
 }
+ function checkinSearchContent(url) {
+	    //alert(url);
+	      $.get(url).done(function (data) {
+	//alert(data);
+	    $('#checkinWindow').jqxWindow('setContent', data);
 
-function getRentalAgent(event){ 
-    var x= event.keyCode; 
-    if(x==114){
-        $('#rentalAgentWindow').jqxWindow('open');
-        $('#rentalAgentWindow').jqxWindow('focus'); 
-        rentalSearchContent('rentalAgentGrid.jsp?', $('#rentalAgentWindow'));
-    }
-}
+	}); 
+	}
+ function rentalSearchContent(url) {
+	    //alert(url);
+	      $.get(url).done(function (data) {
+	//alert(data);
+	    $('#rentalAgentWindow').jqxWindow('setContent', data);
 
-function agmtnoSearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#agmtnowindow').jqxWindow('setContent', data);
-    });
-}
-function checkinSearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#checkinWindow').jqxWindow('setContent', data);
-    });
-}
-function rentalSearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#rentalAgentWindow').jqxWindow('setContent', data);
-    });
-}
+	}); 
+	}
 function collectSearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#collectionWindow').jqxWindow('setContent', data);
-    });
+    //alert(url);
+      $.get(url).done(function (data) {
+//alert(data);
+    $('#collectionWindow').jqxWindow('setContent', data);
+
+}); 
+}
+function setCollection(){
+	if(document.getElementById("chkcollection").checked==true){
+		document.getElementById("chauffer").disabled=false;
+		document.getElementById("collectchg").disabled=false;
+		document.getElementById("collectkm").disabled=false;
+		document.getElementById("cmbcollectfuel").disabled=false;
+		$('#collectdate').jqxDateTimeInput({ disabled: false});
+		$('#collecttime').jqxDateTimeInput({ disabled: false});
+		document.getElementById("hidchkcollection").value=1;
+	}
+	else if(document.getElementById("chkcollection").checked==false){
+		document.getElementById("chauffer").disabled=true;
+		document.getElementById("collectchg").disabled=true;
+		document.getElementById("collectkm").disabled=true;
+		document.getElementById("cmbcollectfuel").disabled=true;
+		$('#collectdate').jqxDateTimeInput({ disabled: true});
+		$('#collecttime').jqxDateTimeInput({ disabled: true});
+		document.getElementById("hidchkcollection").value=0;
+	}
 }
 
-function setCollection(){ 
-    if(document.getElementById("chkcollection").checked==true){
-        document.getElementById("chauffer").disabled=false; 
-        document.getElementById("collectchg").disabled=false; 
-        document.getElementById("collectkm").disabled=false;
-        document.getElementById("cmbcollectfuel").disabled=false;
-        $('#collectdate').jqxDateTimeInput({ disabled: false});
-        $('#collecttime').jqxDateTimeInput({ disabled: false}); 
-        document.getElementById("hidchkcollection").value=1;
-    } else if(document.getElementById("chkcollection").checked==false){ 
-        document.getElementById("chauffer").disabled=true; 
-        document.getElementById("collectchg").disabled=true; 
-        document.getElementById("collectkm").disabled=true; 
-        document.getElementById("cmbcollectfuel").disabled=true;
-        $('#collectdate').jqxDateTimeInput({ disabled: true});
-        $('#collecttime').jqxDateTimeInput({ disabled: true}); 
-        document.getElementById("hidchkcollection").value=0;
-    }
+	function funReadOnly(){
+		setCollection();
+		$('#frmRentalClose input').attr('readonly',true);
+		$('#frmRentalClose select').attr('disabled',true);
+		 $('#closedate').jqxDateTimeInput({ disabled: true});
+		 $('#indate').jqxDateTimeInput({ disabled: true});
+		 $('#collectdate').jqxDateTimeInput({ disabled: true});
+		 $('#intime').jqxDateTimeInput({ disabled: true});
+		 $('#collecttime').jqxDateTimeInput({ disabled: true});
+		 //$('#tarifreferencegrid').jqxGrid({ disabled: true});
+		  $('#totalgrid').jqxGrid({ disabled: true});
+		   $('#trafficGrid').jqxGrid({ disabled: true});
+		   $('#tarifagmtgrid').jqxGrid({ disabled: true});
+		    $('#calculationgrid').jqxGrid({ disabled: true});
+/* 		getCheckin();
+		getRentalAgent(); */
+	}
+	function funNotify(){
+	
+		if(document.getElementById("agreementno").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Please select an Agreement";
+    		return false;
+		}
+		if(document.getElementById("cmbcloseloc").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Please select Close Location";
+			document.getElementById("cmbcloseloc").focus();
+    		return false;
+		}
+		var docdateval=funDateInPeriod($('#closedate').jqxDateTimeInput('getDate'));
+		if(docdateval==0){
+			$('#closedate').jqxDateTimeInput('focus');
+			return false;
+		}
+		
+		if($('#indate').jqxDateTimeInput('getDate')==null){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Date is Mandatory";
+    		return false;
+    	}
+		var indateval=funDateInPeriod($('#indate').jqxDateTimeInput('getDate'));
+		if(indateval==0){
+			$('#indate').jqxDateTimeInput('focus');
+			return false;
+		}	
+		if($('#intime').jqxDateTimeInput('getDate')==null){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Time is Mandatory";
+    		return false;
+    	}
+		
+		var intimeprior=new Date($('#intime').jqxDateTimeInput('getDate'));
+		var indateprior=new Date($('#indate').jqxDateTimeInput('getDate'));
+		var intimepriorstatus=checkPriorTime(intimeprior,indateprior);
+		if(intimepriorstatus){
+			document.getElementById("errormsg").innerText="";
+		}
+		else if(intimepriorstatus==false && document.getElementById("priormethod").value=="2"){
+			$('#intime').jqxDateTimeInput('focus');
+			return 0;
+		}
+		
+		if($('#inkm').val()==''){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Km is Mandatory";
+    		return false;
+    	}
+    	if(document.getElementById("chkcollection").checked==true){
+    		if(document.getElementById("chauffer").value==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Driver is Mandatory";
+    			return false;
+    		}
+    		if(document.getElementById("collectchg").value==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Charge is Mandatory";
+    			return false;
+    		}
+    		if($('#collectdate').jqxDateTimeInput('getDate')==null){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Date cannot be Empty";
+    			return false;
+    		}
+    		var collectdateval=funDateInPeriod($('#collectdate').jqxDateTimeInput('getDate'));
+    		if(collectdateval==0){
+    			$('#collectdate').jqxDateTimeInput('focus');
+    			return false;
+    		}
+    		if($('#collecttime').jqxDateTimeInput('getDate')==null){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Time is Mandatory";
+        		return false;
+        	}
+    		if(document.getElementById("collectkm").value==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Km is Mandatory";
+        		return false;
+    		}
+    		var collectdate=$('#collectdate').jqxDateTimeInput('getDate');
+    		var indate=$('#indate').jqxDateTimeInput('getDate');
+    		var collecttime=$('#collecttime').jqxDateTimeInput('getDate');
+    		var intime=$('#intime').jqxDateTimeInput('getDate');
+    		collectdate.setHours(0,0,0,0);
+    		indate.setHours(0,0,0,0);
+    		var inkm=parseFloat(document.getElementById("inkm").value);
+    		var collectkm=parseFloat(document.getElementById("collectkm").value);
+    		if(indate<collectdate){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="In Date cannot be less than Collection Date";
+    			return false;
+    		}
+    		if(indate-collectdate==0){
+    			if(intime.getHours()<collecttime.getHours()){
+    				document.getElementById("errormsg").innerText="";
+    				document.getElementById("errormsg").innerText="In Time cannot be less than Collection Time";
+    				return false;
+    			}
+    			if(intime.getHours()==collecttime.getHours()){
+    				if(intime.getMinutes()<collecttime.getMinutes()){
+    					document.getElementById("errormsg").innerText="";
+    					document.getElementById("errormsg").innerText="In Time cannot be less than Collection Time";
+    					return false;
+    				}
+    				
+    			}
+    		}
+    		if(inkm<collectkm){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="In Km cannot be less than Collection Km";
+    			return false;
+    		}
+    	}
+		if(document.getElementById("cmbinfuel").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Fuel is Mandatory";
+			return false;
+		}
+if(document.getElementById("rentalagent").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Rental Agent is Mandatory";
+			return false;
+		}
+		if(document.getElementById("checkin").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Check In is Mandatory";
+			return false;
+		}
+		
+		
+		/*if(typeof($("#totalgrid").jqxGrid("getcellvalue",0,"rate"))=="undefined" || $("#totalgrid").jqxGrid("getcellvalue",0,"rate")==""){
+			
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Please Process";
+			return 0;
+		}
+		if($('#calculationgrid').jqxGrid('getcellvalue',0,'description')=='' || typeof($('#calculationgrid').jqxGrid('getcellvalue',0,'description'))=='undefined'){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Please Calculate";
+			return 0;
+		}
+		*/
+		
+		var rows = $("#totalgrid").jqxGrid('getrows');
+			if(rows[0].rentaltype=="undefined" || rows[0].rentaltype==""){
+				document.getElementById("errormsg").innerText="";
+				document.getElementById("errormsg").innerText="Please Process";
+				return 0;	
+			}
+		
+		//alert(rows);
+    	$('#gridlength').val(rows.length);
+    		//alert($('#gridlength').val());
+    		for(var i=0 ; i < rows.length ; i++){
+			//	var myvar = rows[i].tarif; 
+				newTextBox = $(document.createElement("input"))
+			    .attr("type", "dil")
+			    .attr("id", "test"+i)
+			    .attr("name", "test"+i)
+			    .attr("hidden", "true");
+			
+				newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+"::"+rows[i].cdw+"::"+rows[i].pai+"::"+rows[i].cdw1+"::"+rows[i].pai1+"::"+rows[i].gps+"::"+rows[i].babyseater+"::"+rows[i].cooler+"::"+rows[i].exhrchg+"::"+rows[i].exkmrte+"::"+rows[i].chaufchg);
+			
+			newTextBox.appendTo('form');
+			
+				//alert("ddddd"+$("#test"+i).val());
+			}
+    		var rowscalc = $("#calculationgrid").jqxGrid('getrows');
+    		//alert(rows);
+    		/*if(rowscalc[0].description=="undefined" || rowscalc[0].description==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Please Calculate";
+    			return 0;
+    			
+    		}*/
+    		document.getElementById("errormsg").innerText="";
+        	$('#calcgridlength').val(rowscalc.length);
+        		//alert($('#gridlength').val());
+        		for(var i=0 ; i < rowscalc.length ; i++){
+    			//	var myvar = rows[i].tarif; 
+    				newTextBox = $(document.createElement("input"))
+    			    .attr("type", "dil")
+    			    .attr("id", "testcalc"+i)
+    			    .attr("name", "testcalc"+i)
+    			    .attr("hidden", "true");
+    				  var summaryData= $("#calculationgrid").jqxGrid('getcolumnaggregateddata', 'creditnote', ['sum'],true);
+                      document.getElementById("creditnotesum").value=summaryData.sum;
+    				//newTextBox.val(rows[i].idno+"::"+rows[i].account+"::"+rows[i].description+"::"+rows[i].qty+"::"+rows[i].rate+"::"+rows[i].total);
+    				newTextBox.val(rowscalc[i].idno+"::"+rowscalc[i].acno+"::"+rowscalc[i].description+"::"+rowscalc[i].qty+"::"+rowscalc[i].invoiced+"::"+rowscalc[i].invoice+"::"+rowscalc[i].creditnote+"::"+rowscalc[i].salamount+"::"+rowscalc[i].salikrate+"::"+rowscalc[i].saliksrvc+"::"+rowscalc[i].salikamt+"::"+rowscalc[i].trafficamt+"::"+rowscalc[i].trafficsrvc+"::"+rowscalc[i].salikauhamt+"::"+rowscalc[i].salikdxbamt+"::"+rowscalc[i].salikauhsrvc+"::"+rowscalc[i].salikdxbsrvc+"::"+rowscalc[i].salikauhcount+"::"+rowscalc[i].salikdxbcount+"::"+rowscalc[i].salikauhrate+"::"+rowscalc[i].salikdxbrate+"::"+rowscalc[i].salikauhsrvcrate+"::"+rowscalc[i].salikdxbsrvcrate+"::"+rowscalc[i].salikparkamt+"::"+rowscalc[i].salikparksrvc+"::"+rowscalc[i].salikparkcount+"::"+rowscalc[i].salikparkrate+"::"+rowscalc[i].salikparksrvcrate);
+    			
+    			newTextBox.appendTo('form');
+    			
+    				//alert("ddddd"+$("#testcalc"+i).val());
+    			}
+        		
+		return 1;
+	}
+	
+	function funRemoveReadOnly(){
+		$('#frmRentalClose input').attr('readonly',false);
+		$('#frmRentalClose select').attr('disabled',false);
+		 $('#closedate').jqxDateTimeInput({ disabled: false});
+		 $('#indate').jqxDateTimeInput({ disabled:false});
+		 $('#intime').jqxDateTimeInput({ disabled: false});
+		 $('#useddays').attr('readonly',true);
+		 $('#usedhours').attr('readonly',true);
+		 $('#totalkm').attr('readonly',true);
+		 $('#excesskm').attr('readonly',true);
+		 $('#agreementno').attr('readonly',true);
+		 $('#vehicle').attr('readonly',true);
+		 $('#clientid').attr('readonly',true);
+		 $('#chauffer').attr('readonly',true);
+		 $('#client').attr('readonly',true);
+		 $('#docno').attr('readonly',true);
+		 $('#checkin').attr('readonly',true);
+		 $('#rentalagent').attr('readonly',true);
+		// $('#tarifreferencegrid').jqxGrid({ disabled: false});
+		  $('#totalgrid').jqxGrid({ disabled: false});
+		   $('#trafficGrid').jqxGrid({ disabled:false});
+		   $('#tarifagmtgrid').jqxGrid({ disabled: false});
+		    $('#calculationgrid').jqxGrid({ disabled: false});
+		    if(document.getElementById("mode").value=='A'){
+		    	 $('#totalgrid').jqxGrid('clear');
+		    	 $("#totalgrid").jqxGrid("addrow", null, {});
+		    	 $('#trafficGrid').jqxGrid('clear');
+		    	 $("#trafficGrid").jqxGrid("addrow", null, {});
+		    	 $('#tarifagmtgrid').jqxGrid('clear');
+		    	 $("#tarifagmtgrid").jqxGrid("addrow", null, {});
+		    	 $('#calculationgrid').jqxGrid('clear');
+		    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+		    	 $('#btnprocess').attr('disabled',false);
+				  $('#btncalculate').attr('disabled',false);
+		    
+		    
+			}
+			if(document.getElementById("brchName").value!=""){
+				getAgmtLocation();
+			}
+			if(document.getElementById("mode").value!="A"){
+				document.getElementById("btnprocess").disabled=true;
+				document.getElementById("btncalculate").disabled=true;
+			}
+		    setCollection();
+			getLeasePrior();
+	}
+	function funChkButton(){
+		
+	}
+	  function isNumber(evt,id) {
+	//Function to restrict characters and enter number only
+		  var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+	        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+	         {
+	        	 $.messager.alert('Warning','Enter Numbers Only');
+	           $("#"+id+"").focus();
+	            return false;
+	            
+	         }
+	        
+	        return true;
+	    }
+	function funFocus(){
+		document.getElementById("agreementno").focus();
+	}
+
+	function funChecking(){
+	//Validation Before calling Ajax method for calculation	
+		var docdateval=funDateInPeriod($('#closedate').jqxDateTimeInput('getDate'));
+		if(docdateval==0){
+			$('#closedate').jqxDateTimeInput('focus');
+			return false;
+		}
+		if($('#indate').jqxDateTimeInput('getDate')==null){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Date is Mandatory";
+    		return false;
+    	}
+		
+		var indateval=funDateInPeriod($('#indate').jqxDateTimeInput('getDate'));
+		if(indateval==0){
+			$('#indate').jqxDateTimeInput('focus');
+			return false;
+		}
+		if($('#intime').jqxDateTimeInput('getDate')==null){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Time is Mandatory";
+    		return false;
+    	}
+    	if(document.getElementById("chkcollection").checked==true){
+    		if(document.getElementById("chauffer").value==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Chauffer is Mandatory";
+    			return false;
+    		}
+    		if(document.getElementById("collectchg").value==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Charge is Mandatory";
+    			return false;
+    		}
+    		if($('#collectdate').jqxDateTimeInput('getDate')==null){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Date cannot be Empty";
+    			return false;
+    		}
+    		var collectdateval=funDateInPeriod($('#collectdate').jqxDateTimeInput('getDate'));
+    		if(collectdateval==0){
+    			$('#collectdate').jqxDateTimeInput('focus');
+    			return false;
+    		}
+    		if($('#collecttime').jqxDateTimeInput('getDate')==null){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Time is Mandatory";
+        		return false;
+        	}
+    		if(document.getElementById("collectkm").value==""){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="Collection Km is Mandatory";
+        		return false;
+    		}
+    		var collectdate=$('#collectdate').jqxDateTimeInput('getDate');
+    		var indate=$('#indate').jqxDateTimeInput('getDate');
+    		var collecttime=$('#collecttime').jqxDateTimeInput('getDate');
+    		var intime=$('#intime').jqxDateTimeInput('getDate');
+    		collectdate.setHours(0,0,0,0);
+    		indate.setHours(0,0,0,0);
+    		var inkm=parseFloat(document.getElementById("inkm").value);
+    		var collectkm=parseFloat(document.getElementById("collectkm").value);
+    		if(indate<collectdate){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="In Date cannot be less than Collection Date";
+    			return false;
+    		}
+    		if(indate-collectdate==0){
+    			if(intime.getHours()<collecttime.getHours()){
+    				document.getElementById("errormsg").innerText="";
+    				document.getElementById("errormsg").innerText="In Time cannot be less than Collection Time";
+    				return false;
+    			}
+    			if(intime.getHours()==collecttime.getHours()){
+    				if(intime.getMinutes()<collecttime.getMinutes()){
+    					document.getElementById("errormsg").innerText="";
+    					document.getElementById("errormsg").innerText="In Time cannot be less than Collection Time";
+    					return false;
+    				}
+    				
+    			}
+    		}
+    		if(inkm<collectkm){
+    			document.getElementById("errormsg").innerText="";
+    			document.getElementById("errormsg").innerText="In Km cannot be less than Collection Km";
+    			return false;
+    		}
+    	}
+		if(document.getElementById("cmbinfuel").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="In Fuel is Mandatory";
+			return false;
+		}
+if(document.getElementById("rentalagent").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Rental Agent is Mandatory";
+			return false;
+		}
+		if(document.getElementById("checkin").value==""){
+			document.getElementById("errormsg").innerText="";
+			document.getElementById("errormsg").innerText="Check In is Mandatory";
+			return false;
+		}
+		document.getElementById("errormsg").innerText="";
+		checkAgmtDelivery();//Calling ajax method
+		
+	}
+	
+	function funProcess(){
+	
+		if(document.getElementById("errormsg").innerText!=""){
+			return false;
+		}
+	
+		var useddays=document.getElementById("useddays").value;
+		var usedhours=document.getElementById("usedhours").value;
+		var totalkm=document.getElementById("totalkm").value;
+		var excesskm=document.getElementById("excesskm").value;
+		var agmtno=document.getElementById("agreementno").value;
+		//var rentaltype=$('#tarifagmtgrid').jqxGrid('getcellvalue', 0, "rentaltype");
+		var agmtdate=$('#datehidden').jqxDateTimeInput('getText');
+		var closedate=$('#closedatehidden').jqxDateTimeInput('getText');
+		var closeinvdate=$('#closeinvdate').jqxDateTimeInput('val');
+		$('#totaldiv').load("totalGrid.jsp?useddays="+useddays+"&usedhours="+usedhours+"&totalkm="+totalkm+"&excesskm="+excesskm+"&agmtno="+agmtno+"&agmtdate="+agmtdate+"&closedate="+closedate+"&temp=1&closeinvdate="+closeinvdate);
+	}
+	 function checkAgmtDelivery(){
+		 //alert("Here in ajax");
+		 var coldate=null;
+		 var coltime="";
+		 var colkm=0.0,colfuel=0.0;
+		 document.getElementById("hidchkcollection").value="0";
+		 if(document.getElementById("chkcollection").checked==true){
+			 if($('#collectdate').jqxDateTimeInput('getDate')==null){
+				 document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Collection Date is Mandatory";
+					return false;
+			 }
+			 document.getElementById("hidchkcollection").value="1";
+			 colkm=document.getElementById("collectkm").value;
+			 colfuel=document.getElementById("cmbcollectfuel").value;
+			 coltime=$('#collecttime').jqxDateTimeInput('getText');
+			 coldate=$('#collectdate').jqxDateTimeInput('getText');
+		 }
+		 var temprentaltype= $("#tarifagmtgrid").jqxGrid("getcellvalue",0,"rentaltype");
+		 //alert("delstatus="+document.getElementById("delstatus").value+"&agmtno="+document.getElementById("agreementno").value+"&collectkm="+colkm+"&inkm="+document.getElementById("inkm").value+"&indate="+$('#indate').jqxDateTimeInput('getText')+"&infuel="+document.getElementById("cmbinfuel").value+"&collectfuel="+colfuel+"&intime="+$('#intime').jqxDateTimeInput('getText')+"&collecttime="+coltime+"&collectdate="+coldate);
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				//alert(x.responseText);
+				
+				items = items.split('***');
+				document.getElementById("useddays").value="";
+				document.getElementById("usedhours").value="";
+				document.getElementById("totalkm").value="";
+				document.getElementById("totalfuel").value="";
+				document.getElementById("agmtkm").value="";
+				
+				 $('#totalgrid').jqxGrid('clear');
+		    	 $("#totalgrid").jqxGrid("addrow", null, {});
+		    	 $('#calculationgrid').jqxGrid('clear');
+		    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+		    	 document.getElementById("excesskm").value="";
+		    	 //alert($("#datehidden").jqxDateTimeInput('val'));
+				//alert($("#datehidden").jqxDateTimeInput('val'));
+				if(items[12].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Agreement Not yet Started..Please check Out Date";
+					return false;
+				}
+				if(items[13].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Agreement Not yet Started..Please check Out Time";
+					return false;
+				}
+				if(items[5].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="In KM cannot be less than Out KM";
+					return false;
+				}
+				if(items[6].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="In Date cannot be less than Out Date";
+					return false;
+				}
+				if(items[7].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="In Time cannot be less than Out Time";
+					return false;
+				}
+				if(items[11].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Collection KM cannot be less than In KM";
+					return false;
+				}
+				if(items[14].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Agreement Delivery is not Completed";
+					return false;
+				}
+				if(items[9].trim()=='1'){
+					 $.messager.alert('Warning','Invoice has been done till '+items[10].trim());
+				}
+				if(items[15].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Invoice's are Pending";
+					return false;
+				}
+				if(items[20].trim()=='1'){
+					document.getElementById("errormsg").innerText="";
+					document.getElementById("errormsg").innerText="Vehicle In Date cannot be less than last out date";
+					return false;
+				}
+				
+				document.getElementById("errormsg").innerText="";
+				//alert("finish");
+				document.getElementById("fuel2").value=items[21].trim();
+				document.getElementById("delcheckstatus").value=items[14].trim();
+				document.getElementById("useddays").value=items[0];
+				document.getElementById("usedhours").value=items[1];
+				document.getElementById("totalkm").value=items[2];
+				document.getElementById("totalfuel").value=items[3];
+				document.getElementById("agmtkm").value=items[4];
+				$("#datehidden").jqxDateTimeInput('val',items[8].trim());
+				document.getElementById("closecalflag").value=items[17].trim();
+				$("#closedatehidden").jqxDateTimeInput('val',items[16].trim());
+				$("#closeinvdate").jqxDateTimeInput('val',items[18].trim());
+				if(items[19].trim()!='1'){
+					document.getElementById("lblinvoicedone").innerText="Invoice has been done till "+items[10].trim();	
+				}
+				
+				funProcess();
+			//alert(items[0]+"====="+items[1]+"====="+items[2]+"======"+items[3]);
+			/* return "2"; */
+			
+		}
+	}
+		x.open("GET", "CheckDeliverykm.jsp?delstatus="+document.getElementById("delstatus").value+"&agmtno="+document.getElementById("agreementno").value+"&collectkm="+colkm+"&inkm="+document.getElementById("inkm").value+"&indate="+$('#indate').jqxDateTimeInput('getText')+"&infuel="+document.getElementById("cmbinfuel").value+"&collectfuel="+colfuel+"&intime="+$('#intime').jqxDateTimeInput('getText')+"&collecttime="+coltime+"&collectdate="+coldate+"&hidchkcollection="+document.getElementById("hidchkcollection").value+"&rentaltype="+temprentaltype, true);
+		x.send();
+	 }
+	function funCalculate(){
+		if(document.getElementById("agreementno").value==''){
+			document.getElementById("errormsg").innerText="Please Enter Necessary Details";
+			return false;
+		}
+		var temp=$('#totalgrid').jqxGrid('getcellvalue', 0, "rate");
+		if((temp=='undefined')||(temp==null)){
+			//alert(temp);
+			document.getElementById("errormsg").innerText="Please Process Again";
+			return false;
+		}
+		
+		document.getElementById("errormsg").innerText="";
+		var agmtno=document.getElementById("agreementno").value;
+		var tarif=$('#totalgrid').jqxGrid('getcellvalue', 2, "rate");
+		var cdwtotal=0;
+		cdwtotal=$('#totalgrid').jqxGrid('getcellvalue', 2, "cdw");
+		cdwtotal=cdwtotal+$('#totalgrid').jqxGrid('getcellvalue', 2, "pai");
+		cdwtotal=cdwtotal+$('#totalgrid').jqxGrid('getcellvalue', 2, "cdw1");
+		cdwtotal=cdwtotal+$('#totalgrid').jqxGrid('getcellvalue', 2, "pai1");
+		var acc=0;
+		acc=$('#totalgrid').jqxGrid('getcellvalue', 2, "gps");
+		acc=acc+$('#totalgrid').jqxGrid('getcellvalue', 2, "babyseater");
+		acc=acc+$('#totalgrid').jqxGrid('getcellvalue', 2, "cooler");
+		var chauffer=0;
+		chauffer=$('#totalgrid').jqxGrid('getcellvalue', 2, "chaufchg");
+		var excesskmchg=0.0,excesshrchg=0.0;
+		excesskmchg=$('#totalgrid').jqxGrid('getcellvalue', 2, "exkmrte");
+		excesshrchg=$('#totalgrid').jqxGrid('getcellvalue', 2, "exhrchg");
+		var clientid=document.getElementById("clientid").value;
+		var fuel=document.getElementById("totalfuel").value;
+		var termamt=document.getElementById("termamt").value;
+		var agmtdate=$('#datehidden').jqxDateTimeInput('getText');
+		var closedate=$('#indate').jqxDateTimeInput('getText');
+		var closeinvdate=$('#closeinvdate').jqxDateTimeInput('val');
+		var calctype=document.getElementById("calctype").value;
+	$('#calcdiv').load("calculationGrid.jsp?agmtno="+agmtno+"&tarif="+tarif+"&cdwtotal="+cdwtotal+"&acctotal="+acc+"&chauffer="+chauffer+"&excesskmchg="+excesskmchg+"&excesshrchg="+excesshrchg+"&temp=1&usedhours="+document.getElementById("usedhours").value+"&clientid="+clientid+"&fuel="+fuel+"&deliverychg="+document.getElementById("deliverychg").value+"&collectchg="+document.getElementById("collectchg").value+"&termamt="+termamt+"&outdate="+agmtdate+"&indate="+closedate+"&cmbinfuel="+document.getElementById("fuel2").value+"&exkm="+document.getElementById("excesskm").value+"&termmonth="+document.getElementById("termmonth").value+"&closeinvdate="+closeinvdate+"&closecalflag="+$('#closecalflag').val()+"&calctype="+calctype);
+	}
+	function setValues(){
+		if(document.getElementById("mode").value!="A"){
+			document.getElementById("btnprocess").disabled=true;
+			document.getElementById("btncalculate").disabled=true;
+		}
+		// document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+		funSetlabel(); 
+		if($('#msg').val()!=""){
+  		   $.messager.alert('Message',$('#msg').val());
+  		  }
+		 if($('#hidcollecttime').val()){
+				$("#collecttime").jqxDateTimeInput('val', $('#hidcollecttime').val());
+			}
+		 if($('#hidintime').val()){
+				$("#intime").jqxDateTimeInput('val', $('#hidintime').val());
+			}
+			if ($('#hidcmbcollectfuel').val() != null) {
+				$('#cmbcollectfuel').val($('#hidcmbcollectfuel').val());
+			}
+			if ($('#hidcmbinfuel').val() != null) {
+				$('#cmbinfuel').val($('#hidcmbinfuel').val());
+			}
+		   if($('#hidclosedate').val()){
+				$("#closedate").jqxDateTimeInput('val', $('#hidclosedate').val());
+			}
+		 if($('#hidcollectdate').val()){
+				$("#collectdate").jqxDateTimeInput('val', $('#hidcollectdate').val());
+			}
+		 if($('#hidindate').val()){
+				$("#indate").jqxDateTimeInput('val', $('#hidindate').val());
+			}  
+		//alert($('#hidclosedate').val());
+		/* 	if ($('#hidcmbcheckin').val() != null) {
+				$('#cmbcheckin').val($('#hidcmbcheckin').val());
+			}
+			if ($('#hidcmbrentalagent').val() != null) {
+				$('#cmbrentalagent').val($('#hidcmbrentalagent').val());
+			} */
+			
+		/* 	if(document.getElementById("agreementno").value==''){
+				alert("Inside agreement blank");
+				$('#calcdiv').load("calculationGrid.jsp");
+				$('#totaldiv').load("totalGrid.jsp");
+				$("#trafficdiv").load("trafficGrid.jsp");
+				$("#agmttarifdiv").load("agreementTarifGrid.jsp");
+			} */
+			/* if(document.getElementById("docno").value!=''){
+				//alert("docno not null");
+				
+				$("#agmttarifdiv").load("agreementTarifGrid.jsp?agmt="+document.getElementById("agreementno").value);
+				$('#totaldiv').load("totalGrid.jsp?agmtno="+document.getElementById("agreementno").value+"&temp=2");
+				$("#trafficdiv").load("trafficGrid.jsp?id="+document.getElementById("agreementno").value);
+				$('#calcdiv').load("calculationGrid.jsp?agmtno="+document.getElementById("agreementno").value+"&temp=2");
+				 
+				 /*$("#agmttarifdiv").load("agreementTarifGrid.jsp?agmt="+document.getElementById("agreementno").value);
+			} */
+			
+			if((document.getElementById("agreementno").value!='')&&(document.getElementById("docno").value!='')){
+
+				$("#agmttarifdiv").load("agreementTarifGrid.jsp?agmt="+document.getElementById("agreementno").value);
+				$('#totaldiv').load("totalGrid.jsp?agmtno="+document.getElementById("agreementno").value+"&temp=2");
+				$("#trafficdiv").load("trafficGrid.jsp?id="+document.getElementById("agreementno").value);
+				$('#calcdiv').load("calculationGrid.jsp?agmtno="+document.getElementById("agreementno").value+"&temp=2");
+			//	$('#referencetarifdiv').load("referenceTarifGrid.jsp?id="+document.getElementById("agreementno").value);
+			}
+			
+			if(document.getElementById("allbranch").value=="1"){
+				$("#btnDelete").attr('disabled', true );
+			}
 }
-
-function funReadOnly(){ 
-    setCollection();
-    $('#frmRentalClose input').attr('readonly',true);
-    $('#frmRentalClose select').attr('disabled',true);
-    $('#closedate').jqxDateTimeInput({ disabled: true});
-    $('#indate').jqxDateTimeInput({ disabled: true});
-    $('#collectdate').jqxDateTimeInput({ disabled: true});
-    $('#intime').jqxDateTimeInput({ disabled: true});
-    $('#collecttime').jqxDateTimeInput({ disabled: true});
-    $('#totalgrid').jqxGrid({ disabled: true});
-    $('#trafficGrid').jqxGrid({ disabled: true});
-    $('#tarifagmtgrid').jqxGrid({ disabled: true});
-    $('#calculationgrid').jqxGrid({ disabled: true});
-}
-
-function funNotify(){ 
-    if(document.getElementById("agreementno").value==""){
-        document.getElementById("errormsg").innerText="Please select an Agreement"; 
-        return false;
-    }
-    if(document.getElementById("cmbcloseloc").value==""){ 
-        document.getElementById("errormsg").innerText="Please select Close Location"; 
-        document.getElementById("cmbcloseloc").focus();
-        return false;
-    }
-    
-    var docdateval=funDateInPeriod($('#closedate').jqxDateTimeInput('getDate')); 
-    if(docdateval==0){
-        $('#closedate').jqxDateTimeInput('focus');
-        return false;
-    }
-
-    if($('#indate').jqxDateTimeInput('getDate')==null){ 
-        document.getElementById("errormsg").innerText="In Date is Mandatory"; 
-        return false;
-    }
-    
-    var indateval=funDateInPeriod($('#indate').jqxDateTimeInput('getDate')); 
-    if(indateval==0){
-        $('#indate').jqxDateTimeInput('focus'); 
-        return false;
-    }
-    
-    if($('#intime').jqxDateTimeInput('getDate')==null){ 
-        document.getElementById("errormsg").innerText="In Time is Mandatory"; 
-        return false;
-    }
-
-    var intimeprior=new Date($('#intime').jqxDateTimeInput('getDate')); 
-    var indateprior=new Date($('#indate').jqxDateTimeInput('getDate')); 
-    var intimepriorstatus=checkPriorTime(intimeprior,indateprior); 
-    
-    if(intimepriorstatus){
-        document.getElementById("errormsg").innerText="";
-    } else if(intimepriorstatus==false && document.getElementById("priormethod").value=="2"){
-        $('#intime').jqxDateTimeInput('focus'); 
-        return 0;
-    }
-
-    if($('#inkm').val()==''){ 
-        document.getElementById("errormsg").innerText="In Km is Mandatory"; 
-        return false;
-    }
-    
-    if(document.getElementById("chkcollection").checked==true){ 
-        if(document.getElementById("chauffer").value==""){
-            document.getElementById("errormsg").innerText="Driver is Mandatory"; 
-            return false;
-        }
-        if(document.getElementById("collectchg").value==""){ 
-            document.getElementById("errormsg").innerText="Collection Charge is Mandatory"; 
-            return false;
-        }
-        if($('#collectdate').jqxDateTimeInput('getDate')==null){ 
-            document.getElementById("errormsg").innerText="Collection Date cannot be Empty"; 
-            return false;
-        }
-        var collectdateval=funDateInPeriod($('#collectdate').jqxDateTimeInput('getDate')); 
-        if(collectdateval==0){
-            $('#collectdate').jqxDateTimeInput('focus'); 
-            return false;
-        }
-        if($('#collecttime').jqxDateTimeInput('getDate')==null){ 
-            document.getElementById("errormsg").innerText="Collection Time is Mandatory"; 
-            return false;
-        }
-        if(document.getElementById("collectkm").value==""){ 
-            document.getElementById("errormsg").innerText="Collection Km is Mandatory"; 
-            return false;
-        }
-        
-        var collectdate=$('#collectdate').jqxDateTimeInput('getDate'); 
-        var indate=$('#indate').jqxDateTimeInput('getDate');
-        var collecttime=$('#collecttime').jqxDateTimeInput('getDate'); 
-        var intime=$('#intime').jqxDateTimeInput('getDate'); 
-        
-        collectdate.setHours(0,0,0,0);
-        indate.setHours(0,0,0,0);
-        
-        var inkm=parseFloat(document.getElementById("inkm").value);
-        var collectkm=parseFloat(document.getElementById("collectkm").value); 
-        
-        if(indate<collectdate){
-            document.getElementById("errormsg").innerText="In Date cannot be less than Collection Date";
-            return false;
-        }
-        
-        if(indate-collectdate==0){ 
-            if(intime.getHours()<collecttime.getHours()){
-                document.getElementById("errormsg").innerText="In Time cannot be less than Collection Time";
-                return false;
-            }
-            if(intime.getHours()==collecttime.getHours()){ 
-                if(intime.getMinutes()<collecttime.getMinutes()){
-                    document.getElementById("errormsg").innerText="In Time cannot be less than Collection Time";
-                    return false;
-                }
-            }
-        }
-        
-        if(inkm<collectkm){
-            document.getElementById("errormsg").innerText="In Km cannot be less than Collection Km";
-            return false;
-        }
-    }
-    
-    if(document.getElementById("cmbinfuel").value==""){ 
-        document.getElementById("errormsg").innerText="In Fuel is Mandatory"; 
-        return false;
-    }
-    if(document.getElementById("rentalagent").value==""){ 
-        document.getElementById("errormsg").innerText="Rental Agent is Mandatory"; 
-        return false;
-    }
-    if(document.getElementById("checkin").value==""){ 
-        document.getElementById("errormsg").innerText="Check In is Mandatory"; 
-        return false;
-    }
-
-    var rows = $("#totalgrid").jqxGrid('getrows'); 
-    if(rows[0].rentaltype=="undefined" || rows[0].rentaltype==""){
-        document.getElementById("errormsg").innerText="Please Process"; 
-        return 0;
-    }
-
-    $('#gridlength').val(rows.length); 
-    for(var i=0 ; i < rows.length ; i++){
-        newTextBox = $(document.createElement("input"))
-        .attr("type", "dil")
-        .attr("id", "test"+i)
-        .attr("name", "test"+i)
-        .attr("hidden", "true");
-
-        newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+"::"+rows[i].cdw+"::"+rows[i].pai+"::"+rows[i].cdw1+"::"+rows[i].pai1+"::"+rows[i].gps+"::"+rows[i].babyseater+"::"+rows[i].cooler+"::"+rows[i].exhrchg+"::"+rows[i].exkmrte+"::"+rows[i].chaufchg);
-        newTextBox.appendTo('form');
-    }
-    
-    var rowscalc = $("#calculationgrid").jqxGrid('getrows'); 
-    document.getElementById("errormsg").innerText="";
-    $('#calcgridlength').val(rowscalc.length); 
-    
-    for(var i=0 ; i < rowscalc.length ; i++){
-        newTextBox = $(document.createElement("input"))
-        .attr("type", "dil")
-        .attr("id", "testcalc"+i)
-        .attr("name", "testcalc"+i)
-        .attr("hidden", "true");
-        
-        var summaryData= $("#calculationgrid").jqxGrid('getcolumnaggregateddata', 'creditnote', ['sum'],true);
-        document.getElementById("creditnotesum").value=summaryData.sum;
-
-        newTextBox.val(rowscalc[i].idno+"::"+rowscalc[i].acno+"::"+rowscalc[i].description+"::"+rowscalc[i].qty+"::"+rowscalc[i].invoiced+"::"+rowscalc[i].invoice+"::"+rowscalc[i].creditnote+"::"+rowscalc[i].salamount+"::"+rowscalc[i].salikrate+"::"+rowscalc[i].saliksrvc+"::"+rowscalc[i].salikamt+"::"+rowscalc[i].trafficamt+"::"+rowscalc[i].trafficsrvc+"::"+rowscalc[i].salikauhamt+"::"+rowscalc[i].salikdxbamt+"::"+rowscalc[i].salikauhsrvc+"::"+rowscalc[i].salikdxbsrvc+"::"+rowscalc[i].salikauhcount+"::"+rowscalc[i].salikdxbcount+"::"+rowscalc[i].salikauhrate+"::"+rowscalc[i].salikdxbrate+"::"+rowscalc[i].salikauhsrvcrate+"::"+rowscalc[i].salikdxbsrvcrate+"::"+rowscalc[i].salikparkamt+"::"+rowscalc[i].salikparksrvc+"::"+rowscalc[i].salikparkcount+"::"+rowscalc[i].salikparkrate+"::"+rowscalc[i].salikparksrvcrate);
-        newTextBox.appendTo('form');
-    }
-
-    return 1;
-}
-
-function funProcess(){ 
-    if(document.getElementById("errormsg").innerText!=""){
-        return false;
-    }
-    var useddays=document.getElementById("useddays").value; 
-    var usedhours=document.getElementById("usedhours").value; 
-    var totalkm=document.getElementById("totalkm").value;
-    var excesskm=document.getElementById("excesskm").value; 
-    var agmtno=document.getElementById("agreementno").value; 
-    var agmtdate=$('#datehidden').jqxDateTimeInput('getText');
-    var closedate=$('#closedatehidden').jqxDateTimeInput('getText'); 
-    var closeinvdate=$('#closeinvdate').jqxDateTimeInput('val');
-
-    $('#totaldiv').load("totalGrid.jsp?useddays="+useddays+"&usedhours="+usedhours+"&totalkm="+totalkm+"&excesskm="+excesskm+"&agmtno="+agmtno+"&agmtdate="+agmtdate+"&closedate="+closedate+"&temp=1&closeinvdate="+closeinvdate);
-}
-
-function checkAgmtDelivery(){ 
-    var coldate=null;
-    var coltime="";
-    var colkm=0.0,colfuel=0.0;
-    
-    document.getElementById("hidchkcollection").value="0"; 
-    if(document.getElementById("chkcollection").checked==true){
-        if($('#collectdate').jqxDateTimeInput('getDate')==null){ 
-            document.getElementById("errormsg").innerText="Collection Date is Mandatory";
-            return false;
-        }
-        document.getElementById("hidchkcollection").value="1"; 
-        colkm=document.getElementById("collectkm").value; 
-        colfuel=document.getElementById("cmbcollectfuel").value; 
-        coltime=$('#collecttime').jqxDateTimeInput('getText'); 
-        coldate=$('#collectdate').jqxDateTimeInput('getText');
-    }
-    
-    var temprentaltype= $("#tarifagmtgrid").jqxGrid("getcellvalue",0,"rentaltype"); 
-    var x = new XMLHttpRequest();
-    x.onreadystatechange = function() {
-        if (x.readyState == 4 && x.status == 200) { 
-            var items = x.responseText;
-            items = items.split('***'); 
-            document.getElementById("useddays").value=""; 
-            document.getElementById("usedhours").value=""; 
-            document.getElementById("totalkm").value=""; 
-            document.getElementById("totalfuel").value=""; 
-            document.getElementById("agmtkm").value="";
-
-            $('#totalgrid').jqxGrid('clear');
-            $("#totalgrid").jqxGrid("addrow", null, {});
-            $('#calculationgrid').jqxGrid('clear');
-            $("#calculationgrid").jqxGrid("addrow", null, {}); 
-            document.getElementById("excesskm").value="";
-
-            if(items[12].trim()=='1'){
-                document.getElementById("errormsg").innerText="Agreement Not yet Started..Please check Out Date";
-                return false;
-            }
-            if(items[13].trim()=='1'){
-                document.getElementById("errormsg").innerText="Agreement Not yet Started..Please check Out Time";
-                return false;
-            }
-            if(items[5].trim()=='1'){
-                document.getElementById("errormsg").innerText="In KM cannot be less than Out KM";
-                return false;
-            }
-            if(items[6].trim()=='1'){
-                document.getElementById("errormsg").innerText="In Date cannot be less than Out Date";
-                return false;
-            }
-            if(items[7].trim()=='1'){
-                document.getElementById("errormsg").innerText="In Time cannot be less than Out Time";
-                return false;
-            }
-            if(items[11].trim()=='1'){
-                document.getElementById("errormsg").innerText="Collection KM cannot be less than In KM";
-                return false;
-            }
-            if(items[14].trim()=='1'){ 
-                document.getElementById("errormsg").innerText="Agreement Delivery is not Completed";
-                return false;
-            }
-            if(items[9].trim()=='1'){
-                $.messager.alert('Warning','Invoice has been done till '+items[10].trim());
-            }
-            if(items[15].trim()=='1'){ 
-                document.getElementById("errormsg").innerText="Invoice's are Pending"; 
-                return false;
-            }
-            if(items[20].trim()=='1'){
-                document.getElementById("errormsg").innerText="Vehicle In Date cannot be less than last out date";
-                return false;
-            }
-
-            document.getElementById("errormsg").innerText=""; 
-            document.getElementById("fuel2").value=items[21].trim(); 
-            document.getElementById("delcheckstatus").value=items[14].trim(); 
-            document.getElementById("useddays").value=items[0]; 
-            document.getElementById("usedhours").value=items[1]; 
-            document.getElementById("totalkm").value=items[2]; 
-            document.getElementById("totalfuel").value=items[3]; 
-            document.getElementById("agmtkm").value=items[4];
-            
-            $("#datehidden").jqxDateTimeInput('val',items[8].trim()); 
-            document.getElementById("closecalflag").value=items[17].trim();
-            $("#closedatehidden").jqxDateTimeInput('val',items[16].trim());
-            $("#closeinvdate").jqxDateTimeInput('val',items[18].trim()); 
-            
-            if(items[19].trim()!='1'){
-                document.getElementById("lblinvoicedone").innerText="Invoice has been done till "+items[10].trim();
-            }
-
-            funProcess();
-        }
-    }
-    x.open("GET", "CheckDeliverykm.jsp?delstatus="+document.getElementById("delstatus").value+"&agmtno="+document.getElementById("agreementno").value+"&collectkm="+colkm+"&inkm="+document.getElementById("inkm").value+"&indate="+$('#indate').jqxDateTimeInput('getText')+"&infuel="+document.getElementById("cmbinfuel").value+"&collectfuel="+colfuel+"&intime="+$('#intime').jqxDateTimeInput('getText')+"&collecttime="+coltime+"&collectdate="+coldate+"&hidchkcollection="+document.getElementById("hidchkcollection").value+"&rentaltype="+temprentaltype, true);
-    x.send();
-}
-
-function funCalculate(){ 
-    if(document.getElementById("agreementno").value==''){
-        document.getElementById("errormsg").innerText="Please Enter Necessary Details"; 
-        return false;
-    }
-    var temp=$('#totalgrid').jqxGrid('getcellvalue', 0, "rate"); 
-    if((temp=='undefined')||(temp==null)){
-        document.getElementById("errormsg").innerText="Please Process Again"; 
-        return false;
-    }
-
-    document.getElementById("errormsg").innerText="";
-    var agmtno=document.getElementById("agreementno").value; 
-    var tarif=$('#totalgrid').jqxGrid('getcellvalue', 2, "rate");
-    
-    var cdwtotal=0; 
-    cdwtotal=$('#totalgrid').jqxGrid('getcellvalue', 2, "cdw");
-    cdwtotal=cdwtotal+$('#totalgrid').jqxGrid('getcellvalue', 2, "pai");
-    cdwtotal=cdwtotal+$('#totalgrid').jqxGrid('getcellvalue', 2, "cdw1");
-    cdwtotal=cdwtotal+$('#totalgrid').jqxGrid('getcellvalue', 2, "pai1"); 
-    
-    var acc=0;
-    acc=$('#totalgrid').jqxGrid('getcellvalue', 2, "gps");
-    acc=acc+$('#totalgrid').jqxGrid('getcellvalue', 2, "babyseater");
-    acc=acc+$('#totalgrid').jqxGrid('getcellvalue', 2, "cooler"); 
-    
-    var chauffer=0;
-    chauffer=$('#totalgrid').jqxGrid('getcellvalue', 2, "chaufchg"); 
-    
-    var excesskmchg=0.0,excesshrchg=0.0;
-    excesskmchg=$('#totalgrid').jqxGrid('getcellvalue', 2, "exkmrte");
-    excesshrchg=$('#totalgrid').jqxGrid('getcellvalue', 2, "exhrchg"); 
-    
-    var clientid=document.getElementById("clientid").value;
-    var fuel=document.getElementById("totalfuel").value;
-    var termamt=document.getElementById("termamt").value; 
-    var agmtdate=$('#datehidden').jqxDateTimeInput('getText'); 
-    var closedate=$('#indate').jqxDateTimeInput('getText');
-    var closeinvdate=$('#closeinvdate').jqxDateTimeInput('val'); 
-    var calctype=document.getElementById("calctype").value;
-
-    $('#calcdiv').load("calculationGrid.jsp?agmtno="+agmtno+"&tarif="+tarif+"&cdwtotal="+cdwtotal+"&acctotal="+acc+"&chauffer="+chauffer+"&excesskmchg="+excesskmchg+"&excesshrchg="+excesshrchg+"&temp=1&usedhours="+document.getElementById("usedhours").value+"&clientid="+clientid+"&fuel="+fuel+"&deliverychg="+document.getElementById("deliverychg").value+"&collectchg="+document.getElementById("collectchg").value+"&termamt="+termamt+"&outdate="+agmtdate+"&indate="+closedate+"&cmbinfuel="+document.getElementById("fuel2").value+"&exkm="+document.getElementById("excesskm").value+"&termmonth="+document.getElementById("termmonth").value+"&closeinvdate="+closeinvdate+"&closecalflag="+$('#closecalflag').val()+"&calctype="+calctype);
-}
-
-function setValues(){ 
-    if(document.getElementById("mode").value!="A"){
-        document.getElementById("btnprocess").disabled=true; 
-        document.getElementById("btncalculate").disabled=true;
-    }
-    
-    if($('#msg').val()!=""){
-        $.messager.alert('Message',$('#msg').val());
-    }
-    
-    if($('#hidcollecttime').val()){ $("#collecttime").jqxDateTimeInput('val', $('#hidcollecttime').val()); }
-    if($('#hidintime').val()){ $("#intime").jqxDateTimeInput('val', $('#hidintime').val()); }
-    if ($('#hidcmbcollectfuel').val() != null) { $('#cmbcollectfuel').val($('#hidcmbcollectfuel').val()); } 
-    if ($('#hidcmbinfuel').val() != null) { $('#cmbinfuel').val($('#hidcmbinfuel').val()); }
-    if($('#hidclosedate').val()){ $("#closedate").jqxDateTimeInput('val', $('#hidclosedate').val()); } 
-    if($('#hidcollectdate').val()){ $("#collectdate").jqxDateTimeInput('val', $('#hidcollectdate').val()); }
-    if($('#hidindate').val()){ $("#indate").jqxDateTimeInput('val', $('#hidindate').val()); }
-    
-    if((document.getElementById("agreementno").value!='')&&(document.getElementById("docno").value!='')){
-        $("#agmttarifdiv").load("agreementTarifGrid.jsp?agmt="+document.getElementById("agreementno").value);
-        $('#totaldiv').load("totalGrid.jsp?agmtno="+document.getElementById("agreementno").value+"&temp=2");
-        $("#trafficdiv").load("trafficGrid.jsp?id="+document.getElementById("agreementno").value);
-        $('#calcdiv').load("calculationGrid.jsp?agmtno="+document.getElementById("agreementno").value+"&temp=2");
-    }
-
-    if(document.getElementById("allbranch").value=="1"){
-        $("#btnDelete").attr('disabled', true );
-    }
-}
-
-function funSearchLoad(){ 
-    changeContent('masterSearch.jsp', $('#window'));
-}
-
-function funPrintBtn() { 
-    if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-        $.messager.alert('Warning','Select a Document'); 
-        return false;
-    }
-    var url=document.URL;
-    var reurl=url.split("saveLeaseClose"); 
-    var win= window.open(reurl[0]+"printLeaseClose?docno="+document.getElementById("agreementno").value+"&formdetailcode=LAC","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-    win.focus();
-}
-
-function resetvalues(){
-    $("#indate").jqxDateTimeInput('setDate', null);
-    $("#intime").jqxDateTimeInput('setDate', null);
-    $("#collectdate").jqxDateTimeInput('setDate', null);
-    $("#collecttime").jqxDateTimeInput('setDate', null);
-    
-    document.getElementById("chkcollection").checked=false; 
-    document.getElementById("agreementno").value=""; 
-    document.getElementById("vehicle").value=""; 
-    document.getElementById("client").value=""; 
-    document.getElementById("clientid").value=""; 
-    document.getElementById("description").value=""; 
-    document.getElementById("chauffer").value=""; 
-    document.getElementById("collectchg").value=""; 
-    document.getElementById("collectkm").value="";
-    $('#cmbcollectfuel').val(''); 
-    document.getElementById("rentalagent").value=""; 
-    document.getElementById("checkin").value=""; 
-    document.getElementById("useddays").value=""; 
-    document.getElementById("usedhours").value=""; 
-    document.getElementById("totalkm").value=""; 
-    document.getElementById("excesskm").value=""; 
-    document.getElementById("inkm").value="";
-    $('#cmbinfuel').val('');
-    
-    $('#totalgrid').jqxGrid('clear');
-    $("#totalgrid").jqxGrid("addrow", null, {});
-    $('#trafficGrid').jqxGrid('clear');
-    $("#trafficGrid").jqxGrid("addrow", null, {});
-    $('#tarifagmtgrid').jqxGrid('clear');
-    $("#tarifagmtgrid").jqxGrid("addrow", null, {});
-    $('#calculationgrid').jqxGrid('clear');
-    $("#calculationgrid").jqxGrid("addrow", null, {}); 
-    
-    setCollection();
-}
-
-function getAgmtLocation(){
-    var value=document.getElementById("brchName").value; 
-    var x = new XMLHttpRequest();
-    x.onreadystatechange = function() {
-        if (x.readyState == 4 && x.status == 200) { 
-            var items = x.responseText;
-            items = items.split('***');
-            var locItems = items[0].split(","); 
-            var locIdItems = items[1].split(",");
-            var optionsloc = '<option value="">--Select--</option>'; 
-            for (var i = 0; i < locItems.length; i++) {
-                optionsloc += '<option value="' + locIdItems[i] + '">' + locItems[i] + '</option>';
-            }
-            $("select#cmbcloseloc").html(optionsloc);
-            
-            if ($('#hidcmbcloseloc').val() != null) {
-                $('#cmbcloseloc').val($('#hidcmbcloseloc').val());
-            }
-        }
-    }
-    x.open("GET", "../rentalclose/getLocation.jsp?branch="+value, true); 
-    x.send();
-}
-
-function getTestLocation(){
-    var x = new XMLHttpRequest(); 
-    x.onreadystatechange = function() {
-        if (x.readyState == 4 && x.status == 200) { 
-            var items = x.responseText;
-            items = items.split('***');
-            var locItems = items[0].split(","); 
-            var locIdItems = items[1].split(",");
-            var optionsloc = '<option value="">--Select--</option>'; 
-            for (var i = 0; i < locItems.length; i++) {
-                optionsloc += '<option value="' + locIdItems[i] + '">' + locItems[i] + '</option>';
-            }
-            $("select#cmbcloseloc").html(optionsloc);
-
-            if ($('#hidcmbcloseloc').val() != null) {
-                $('#cmbcloseloc').val($('#hidcmbcloseloc').val());
-            }
-        }
-    }
-    x.open("GET", "../rentalclose/getTestLocation.jsp", true); 
-    x.send();
-}
-
-function funDownload(){
-    if($('#mode').val()=='A' || $('#mode').val()=='E'){ 
-        var agmtno=$('#agreementno').val();
-        var fleetno=document.getElementById("hidfleet").value; 
-        var x = new XMLHttpRequest();
-        x.onreadystatechange = function() {
-            if (x.readyState == 4 && x.status == 200) { 
-                var items = x.responseText.trim().split("::");
-                document.getElementById("errormsg").innerText=""; 
-                document.getElementById("errormsg").innerText=items[0]+" Saliks Downloaded";
-            }
-        }
-        x.open("GET", "downloadData.jsp?agmtno="+agmtno+"&fleetno="+fleetno, true); 
-        x.send();
-    }
-}
+	function funSearchLoad(){
+		changeContent('masterSearch.jsp', $('#window'));
+	}
+	function funPrintBtn() {
+    	if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
+    		 $.messager.alert('Warning','Select a Document');
+    		 return false;
+    	}
+    	var url=document.URL;
+    	  var reurl=url.split("saveLeaseClose");
+    	    	var win= window.open(reurl[0]+"printLeaseClose?docno="+document.getElementById("agreementno").value+"&formdetailcode=LAC","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
+    	win.focus();
+    	 }
+	
+	
+	function resetvalues(){
+		$("#indate").jqxDateTimeInput('setDate', null);
+		$("#intime").jqxDateTimeInput('setDate', null);		
+		$("#collectdate").jqxDateTimeInput('setDate', null);
+		$("#collecttime").jqxDateTimeInput('setDate', null);
+		document.getElementById("chkcollection").checked=false;
+		document.getElementById("agreementno").value="";
+		document.getElementById("vehicle").value="";
+		document.getElementById("client").value="";
+		document.getElementById("clientid").value="";
+		document.getElementById("description").value="";
+		document.getElementById("chauffer").value="";
+		document.getElementById("collectchg").value="";
+		document.getElementById("collectkm").value="";
+		$('#cmbcollectfuel').val('');
+		document.getElementById("rentalagent").value="";
+		document.getElementById("checkin").value="";
+		document.getElementById("useddays").value="";
+		document.getElementById("usedhours").value="";
+		document.getElementById("totalkm").value="";
+		document.getElementById("excesskm").value="";
+		document.getElementById("inkm").value="";
+		$('#cmbinfuel').val('');
+    	 $('#totalgrid').jqxGrid('clear');
+    	 $("#totalgrid").jqxGrid("addrow", null, {});
+    	 $('#trafficGrid').jqxGrid('clear');
+    	 $("#trafficGrid").jqxGrid("addrow", null, {});
+    	 $('#tarifagmtgrid').jqxGrid('clear');
+    	 $("#tarifagmtgrid").jqxGrid("addrow", null, {});
+    	 $('#calculationgrid').jqxGrid('clear');
+    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+    	 setCollection();
+	}
+			
+			
+			
+	function getAgmtLocation(){
+		var value=document.getElementById("brchName").value;
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				items = items.split('***');
+				var locItems = items[0].split(",");
+				var locIdItems = items[1].split(",");
+				var optionsloc = '<option value="">--Select--</option>';
+				for (var i = 0; i < locItems.length; i++) {
+					optionsloc += '<option value="' + locIdItems[i] + '">'
+							+ locItems[i] + '</option>';
+				}
+				$("select#cmbcloseloc").html(optionsloc);
+				
+				if ($('#hidcmbcloseloc').val() != null) {
+					$('#cmbcloseloc').val($('#hidcmbcloseloc').val());
+				}
+			} else {
+			}
+		}
+		x.open("GET", "../rentalclose/getLocation.jsp?branch="+value, true);
+		x.send();			
+	}
+	
+	
+	function getTestLocation(){
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				items = items.split('***');
+				var locItems = items[0].split(",");
+				var locIdItems = items[1].split(",");
+				var optionsloc = '<option value="">--Select--</option>';
+				for (var i = 0; i < locItems.length; i++) {
+					optionsloc += '<option value="' + locIdItems[i] + '">'
+							+ locItems[i] + '</option>';
+				}
+				$("select#cmbcloseloc").html(optionsloc);
+				
+				 if ($('#hidcmbcloseloc').val() != null) {
+					$('#cmbcloseloc').val($('#hidcmbcloseloc').val());
+				} 
+			} else {
+			}
+		}
+		x.open("GET", "../rentalclose/getTestLocation.jsp", true);
+		x.send();
+	}
+	function funDownload(){
+  		if($('#mode').val()=='A' || $('#mode').val()=='E'){
+  			var agmtno=$('#agreementno').val();
+      		var fleetno=document.getElementById("hidfleet").value;
+     		var x = new XMLHttpRequest();
+     		x.onreadystatechange = function() {
+     			if (x.readyState == 4 && x.status == 200) {
+     				var items = x.responseText.trim().split("::");
+     				document.getElementById("errormsg").innerText="";
+     				document.getElementById("errormsg").innerText=items[0]+" Saliks Downloaded";
+     			}else {
+     			}
+     		}
+     		x.open("GET", "downloadData.jsp?agmtno="+agmtno+"&fleetno="+fleetno, true);
+     		x.send();	
+  		}
+  	}
 </script>
+
+
 </head>
 <body onload="setValues();">
 <div class="homeContent" data-type="background" >
