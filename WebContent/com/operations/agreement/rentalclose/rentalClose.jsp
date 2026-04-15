@@ -1491,6 +1491,7 @@ if(document.getElementById("rentalagent").value==""){
 <table width="100%">
   <tr>
     <td colspan="2"><fieldset>
+      <legend>Agreement</legend>
       <table width="100%">
         <tr>
           <td width="4%" align="right">Branch</td>
@@ -1540,7 +1541,7 @@ if(document.getElementById("rentalagent").value==""){
   </tr>
   <tr>
     <td colspan="2"><fieldset>
-      <legend>In Info</legend>
+      <legend>Vehicle and Collection Info</legend>
       <table width="100%">
         <tr>
           <td width="11%" rowspan="2">Collection
@@ -1578,8 +1579,8 @@ if(document.getElementById("rentalagent").value==""){
           <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
           <td width="5%" align="right">Hours Used</td>
           <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
-          <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  style="border:none;background:none;" onclick="funChecking();">
-							<img alt="Process" src="<%=contextPath%>/icons/process2.png" width="30" height="30"></button></td>
+          <td width="6%" align="center" rowspan="2">
+<button type="button" id="btnprocess" class ="myButton" title="Process"  onclick="funChecking();">Process</button></td>
         </tr>
         <tr>
           <td align="right">In Details</td>
@@ -1615,15 +1616,22 @@ if(document.getElementById("rentalagent").value==""){
     </fieldset></td>
   </tr>
   <tr>
-    <td width="66%"><fieldset>
-      
-      <table width="100%">
-        <tr>
-          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
-        </tr>
-      </table>
-    </fieldset></td>
+    <td width="66%">
+  <fieldset>
+    <legend>Rental Agreed Rates</legend>
     
+    <table width="100%">
+      <tr>
+        <td>
+          <div id="agmttarifdiv">
+            <jsp:include page="agreementTarifGrid.jsp"></jsp:include>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+  </fieldset>
+</td>
     
     
     <td width="34%" rowspan="3">
@@ -1644,32 +1652,59 @@ if(document.getElementById("rentalagent").value==""){
     </td>
   </tr>
   <tr id="referencefield">
-    <td>
+  <td>
     <fieldset>
+      <legend>Reference Tariff Rates</legend>
       
       <table width="100%">
         <tr>
-          <td><div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></td>
-          </tr>
-       </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
+          <td>
+            <div id="referencetarifdiv">
+              <jsp:include page="referenceTarifGrid.jsp"></jsp:include>
+            </div>
+          </td>
         </tr>
       </table>
-    </fieldset></td>
-    </tr>
+
+    </fieldset>
+  </td>
+</tr>
   <tr>
-    <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
+  <td>
+    <fieldset>
+      <legend>Calculated Tariff Rates</legend>
+      
+      <table width="100%">
+        <tr>
+          <td>
+            <div id="totaldiv">
+              <jsp:include page="totalGrid.jsp"></jsp:include>
+            </div>
+          </td>
         </tr>
       </table>
-    </fieldset></td>
-    </tr>
+
+    </fieldset>
+  </td>
+</tr>
+  <tr>
+  <td>
+    <fieldset>
+      <legend>Traffic Fine</legend>
+      
+      <table width="100%">
+        <tr>
+          <td>
+            <div id="trafficdiv">
+              <jsp:include page="trafficGrid.jsp"></jsp:include>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </fieldset>
+  </td>
+</tr>
 </table>
 
 

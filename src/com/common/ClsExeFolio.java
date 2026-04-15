@@ -40,749 +40,613 @@ import com.dashboard.ClsDashBoardBean;
 
 public class ClsExeFolio {
 
-	ClsConnection ClsConnection=new ClsConnection();
-
-	public  JSONArray exefolioGridload(HttpSession session) throws SQLException {
-		JSONArray RESULTDATA=new JSONArray();
-		ClsCommon ClsCommon=new ClsCommon();
-		Connection conn =null;
-		try {
-
-			String userid=session.getAttribute("USERID").toString();
-
-			conn = ClsConnection.getMyConnection();
-			Statement cpstmt = conn.createStatement();
-
-			/*String  cpsql="select (@n := @n + 1) as flag,status,coalesce(xnew,0) approval,'' general,coalesce(userId,0) as userId from "
-					+ "(Select 'New' as status,sum(if(date(t.sub_Date)=date(now()) and t.approved=0  ,1,0)) xnew,t.userId"
-					+ " from my_exeb t where  t.approved=0 and t.userId='"+userid+"' union all Select 'Pending'as status,"
-					+ " sum(if(date(t.sub_Date)!=date(now()) and t.approved=0,1,0)) xnew,t.userId "
-					+ "from my_exeb t where   t.approved!=0 and t.userId='"+userid+"' union all Select 'P-Cycle'as status,"
-					+ " sum(if(t.apprStatus!=0 and t.apprlevel!=0 ,1,0)) xnew,t.userId from my_exdet t where   t.userId='"+userid+"' "
-					+ "union all Select 'No Of Messages'as status, sum(1) xnew,t.userId from my_exdet t where  t.apprlevel!=0 and t.userId='"+userid+"') as a,"
-					+ "(select @n:=0) srno  group by status order by flag";*/
-			
-			String  cpsql="select (@n := @n + 1) as flag,status,coalesce(xnew,0) approval,'' general,coalesce(userId,0) as userId from "
-					+ "(Select 'New' as status,sum(if(date(t.sub_Date)=date(now()) and t.approved=0  ,1,0)) xnew,t.userId"
-					+ " from my_exeb t where  t.approved=0 and t.userId='"+userid+"' union all Select 'Pending'as status,"
-					+ " sum(if(date(t.sub_Date)!=date(now()) and t.approved=0,1,0)) xnew,t.userId "
-					+ "from my_exeb t where   t.approved!=0 and t.userId='"+userid+"' "
-					+ "union all Select 'No Of Messages'as status, sum(1) xnew,t.userId from my_exdet t where  t.apprlevel!=0 and t.userId='"+userid+"') as a,"
-					+ "(select @n:=0) srno  group by status order by flag";
-
-			//System.out.println("=== "+cpsql);
-			ResultSet resultSet = cpstmt.executeQuery(cpsql);
-			RESULTDATA=ClsCommon.convertToJSON(resultSet);
-			cpstmt.close();
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			conn.close();
-		}
-
-		return RESULTDATA;
-	}
-
-
-
-	public  JSONArray approvalGridload(HttpSession session,String dtype,String branch,String docno) throws SQLException {
-		JSONArray RESULTDATA=new JSONArray();
-		ClsCommon ClsCommon=new ClsCommon();
-		try {
-
-			String userid=session.getAttribute("USERID").toString();
-			if(branch.equals("0") || branch.equals("")){
-				  branch = session.getAttribute("BRANCHID").toString();   
-			}
-			Connection conn = ClsConnection.getMyConnection();
-			Statement cpstmt = conn.createStatement();
-           //OLD Records status also added
-			String cpsql="SELECT * FROM (SELECT m.doc_no,m.dtype,m.userid,m.apprdate,m.apprstatus,m.remarks,m.finstatus,m.tsr_no sr_no,m.apprlevel, "
-					+ "m.subdate,m.subby, CASE WHEN m.apprStatus=5 THEN 'Forwarded By' WHEN m.apprStatus=3 THEN 'Approved By' WHEN m.apprStatus=2 THEN 'Returned By' WHEN m.apprStatus=4 THEN 'Rejected By' WHEN m.apprStatus=1 THEN 'Submitted By' WHEN m.apprStatus=9 THEN 'Returned Records' WHEN m.apprStatus=8 THEN 'Old Records' ELSE 'Send To' END AS apprtype, "
-					+ "CONVERT(CONCAT(DAY(m.apprDate),'/',MONTH(m.apprDate),'/',YEAR(m.apprDate),' ',TIME(m.apprDate)),CHAR(50)) apprDateTime, "
-					+ "u.user_name FROM my_exdet m LEFT JOIN my_user u ON m.userId=u.doc_no WHERE m.dtype='"+dtype+"' AND m.brhId="+branch+" AND m.doc_no='"+docno+"' "
-					+ "union all SELECT m.doc_no,m.dtype,m.userid,sub_date apprdate,0 apprstatus,m.desc1 remarks,0  finstatus,m.sr_no,m.apprlevel,m.sub_date subdate,0 subby, "
-					+ "' Send To ' apprtype,''  apprDateTime,u.user_name FROM my_exeb m LEFT JOIN my_user u ON m.userId=u.doc_no WHERE m.dtype='"+dtype+"' AND m.brhId="+branch+" AND m.doc_no='"+docno+"')a ORDER BY apprDateTime DESC";
-            //System.out.println("==cpsql=="+cpsql);
-
-			ResultSet resultSet = cpstmt.executeQuery(cpsql);
-			RESULTDATA=ClsCommon.convertToJSON(resultSet);
-			cpstmt.close();
-			conn.close();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return RESULTDATA;
-	}
-
-	public  JSONArray ApprovalStatus() throws SQLException {
-		
-		/* used by nitin for updating fancy movement
-		 * ClsAudit ClsAudit=new ClsAudit();
-		ClsAudit.getparent();*/
-		List<ClsDashBoardBean> fleetStatusBean = new ArrayList<ClsDashBoardBean>();
-
-		JSONArray RESULTDATA=new JSONArray();
-		ClsCommon ClsCommon=new ClsCommon();
-		Connection conn = null;
-		try {
-			conn = ClsConnection.getMyConnection();
-			Statement stmtDashBoard6 = conn.createStatement ();
-
-			/*ResultSet resultSet6 = stmtDashBoard6.executeQuery ("select round(aa.val/bb.val *100,2) per,aa.tran_code from (select count(*) val,tran_code from gl_vehmaster vm  group by vm.tran_code )aa,"
-						+ "(select count(*) val,tran_code from gl_vehmaster vm  where tran_code is not null )bb");*/
-
-			ResultSet resultSet6 = stmtDashBoard6.executeQuery ("select round(aa.val/bb.val *100,2) per,aa.level from ( select count(*) val,if(m.apprlevel=1,'Level 1',if(m.apprlevel=2,'Level 2','Level 3')) level "
-					+ "from my_exdet m group by  apprlevel)aa,(select count(*) val,if(m.apprlevel=1,'Level 1',if(m.apprlevel=2,'Level 2','Level 3')) level from my_exdet m where m.apprlevel is not null )bb");
-
-
-			RESULTDATA=ClsCommon.convertToJSON(resultSet6);
-
-			stmtDashBoard6.close();
-			conn.close();
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			conn.close();
-		}finally{
-			conn.close();
-		}
-		return RESULTDATA;
-	}
-
-
-	public JSONArray exefolioDataGridload(int flag, HttpSession session) throws SQLException {
-	    JSONArray RESULTDATA = new JSONArray();
-	    ClsCommon ClsCommon = new ClsCommon();
-	    Connection conn = null;
-	    try {
-	        String userid = session.getAttribute("USERID").toString();
-
-	        String xsql1 = "", xsql2 = "";
-	        
-	        // Handle date filters for both tables
-	        if (flag == 1) {
-	            xsql1 = " and date(m.apprDate)=date(now()) ";
-	            xsql2 = " and date(m.sub_date)=date(now()) ";
-	        } else if (flag == 2) {
-	            xsql1 = " and date(m.apprDate)!=date(now()) ";
-	            xsql2 = " and date(m.sub_date)!=date(now()) ";
-	        }
-
-	        conn = ClsConnection.getMyConnection();
-	        Statement cpstmt = conn.createStatement();
-
-	        // UNION ALL to combine History (my_exdet) and Pending Inbox (my_exeb)
-	        // Removed the broken dynamic 'select1' and 'join1' injection to prevent column crashes
-	        String cpsql = "SELECT * FROM ("
-	                + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
-	                + "m.dtype as doctype, br.doc_no as branch, "
-	                + "CONVERT(concat(day(m.apprDate),'/',month(m.apprDate),'/',year(m.apprDate),' ', time(m.apprDate)), CHAR(50)) as subdatetime, "
-	                + "u.user_name as submitedby, mn.func as path, mn.menu_name as name, mn.doc_type as dtype, "
-	                + "m.apprStatus as approved, m.apprDate as sortDate " 
-	                + " from my_exdet m "
-	                + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
-	                + " where m.userId='" + userid + "' and m.apprStatus != 8 " 
-	                + xsql1
-
-	                + " UNION ALL "
-
-	                + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
-	                + "m.dtype as doctype, br.doc_no as branch, "
-	                + "CONVERT(concat(day(m.sub_date),'/',month(m.sub_date),'/',year(m.sub_date),' ', time(m.sub_date)), CHAR(50)) as subdatetime, "
-	                + "u.user_name as submitedby, mn.func as path, mn.menu_name as name, mn.doc_type as dtype, "
-	                + "1 as approved, m.sub_date as sortDate " 
-	                + " from my_exeb m "
-	                + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
-	                + " where m.userId='" + userid + "' " 
-	                + xsql2
-	                + ") a order by a.sortDate desc";
-
-	        ResultSet resultSet = cpstmt.executeQuery(cpsql);
-	        RESULTDATA = ClsCommon.convertToJSON(resultSet);
-	        cpstmt.close();
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        if (conn != null) conn.close();
-	    }
-	    return RESULTDATA;
-	}
-
-/*funDtype();
-	getapprcount();
-	apprCheck();       These methods in header.jsp has to be called for approval working */
-	public String saveApproveAction() throws Exception { 
-		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpSession session=request.getSession();
-		Map<String, String[]> requestParams = request.getParameterMap();
-
-		//System.out.println(" inside saveApproveAction");  
-
-		String docno=request.getParameter("docno").trim();
-		String dtype=request.getParameter("dtype").trim();
-		String userid=request.getParameter("userid").trim();
-		String brchid=request.getParameter("brchid").trim();
-		if(brchid.equals("0") || brchid.equals("") || brchid==null){  
-			brchid = session.getAttribute("BRANCHID").toString();   
-		}
-		String desc=request.getParameter("desc").trim();
-		String apprlevel=request.getParameter("apprlevel").trim();
-		String minapprl=request.getParameter("minapprl").trim();
-		String optid=request.getParameter("optid").trim();
-		String apprlist=request.getParameter("apprlist").trim();
-		//System.out.println("==minapprl==="+minapprl+"===apprlevel=="+apprlevel+"==optid==="+optid+"==apprlist===="+apprlist+"==userid===="+userid);
-		Connection conn = ClsConnection.getMyConnection();
-		Statement stmt1 =null;
-		Statement stmt2 =null;
-		Statement stmt3 =null;
-		Statement stmt4 =null;
-		Statement stmt5 =null;
-		Statement stmt6 =null;
-		stmt6 =conn.createStatement();
-		Statement stmt7 =null;
-		try { 
-
-			stmt1 =conn.createStatement();
-			String mtblnme="",subuser="";
-			int approvalcount=0;
-			int applvlcount=0;
-			String msg="";
-			int doccount=0, doccount1=0, userid1=0;
-			int docapprlevel=0;
-			int docminapprls=0;
-
-			String sql="",doccmd="",branchcond="";
-/*
- * commented as didnot understand the use of brhid in this query 			
-			String strsql11="select a.count, b.userid from(select count(*) as count, max(apprlevel) apprlevel, dtype, brhid from my_exdoc where dtype='"+dtype+"' and brhid="+brchid+")a left join my_exdoc b on b.dtype=a.dtype and b.brhid=a.brhid and b.apprlevel=a.apprlevel";
-*/			//System.out.println("===== "+strsql11);   
-	        String strsql11="select a.count, b.userid from(select count(*) as count, max(apprlevel) apprlevel, dtype, brhid from my_exdoc where dtype='"+dtype+"' )a left join my_exdoc b on b.dtype=a.dtype and b.apprlevel=a.apprlevel ";
-
-			stmt7 =conn.createStatement();
-			ResultSet rs11 = stmt7.executeQuery(strsql11); 
-			while(rs11.next()) {
-				doccount1=rs11.getInt("count");  
-				userid1=rs11.getInt("userid");  
-			}
-			
-			int aprcount = 0;
-			String sqlcnt = "select count(*) count from my_exdet where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid='"+brchid+"' and apprstatus in(1,3)";
-			ResultSet rss = stmt7.executeQuery(sqlcnt);
-			while(rss.next()) {
-				aprcount = rss.getInt("count");  
-			}  
-			if(aprcount>doccount1) {              
-				String sqlup = "update my_exdet set apprstatus=8 where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid='"+brchid+"' and apprstatus not in(8,9)";
-				stmt7.executeUpdate(sqlup);
-			}else {
-				String sql22 = "select * from my_exdet where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid='"+brchid+"'  and apprstatus not in(8,9) and userid='"+userid1+"'";
-				ResultSet rs22 = stmt7.executeQuery(sql22);
-				if(rs22.next()) {
-					String sqlup = "update my_exdet set apprstatus=8 where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid='"+brchid+"' and apprstatus not in(8,9)";  
-					stmt6.executeUpdate(sqlup);      
-				}
-			}     
-			
-			String strbrch="select method from gl_config where field_nme='brchapproval'";
-			ResultSet rsbrch = stmt1.executeQuery(strbrch);
-			while(rsbrch.next()) {
-				if(rsbrch.getInt("method")==1){
-					branchcond= " and brhId="+brchid ;
-				}
-				
-			}
-			
-			String transtype="";
-			String strsql="select msttable as mtbl,transtype from win_tbldet where dtype='"+dtype+"'";
-			ResultSet rs1 = stmt1.executeQuery(strsql);
-			while(rs1.next()) {
-				mtblnme=rs1.getString("mtbl");
-				transtype=rs1.getString("transtype");
-			}
-				
-			if (transtype == null || transtype.trim().isEmpty()) {
-			    transtype = "doc_no";
-			}
-			stmt2 =conn.createStatement();
-
-			//String strsql2="select count(*) as count,apprstatus from my_exdet m  where m.apprstatus!=9 and  m.dtype='"+dtype+"' and m.doc_no='"+docno+"' group by apprstatus";
-			String strsql2="select count(*) as count,apprstatus from my_exdet m  where m.apprstatus not in(8,9) and  m.dtype='"+dtype+"'  and m.brhId="+brchid+" and m.doc_no='"+docno+"' group by apprstatus"; //returned records  
-			//System.out.println("strsql2=="+strsql2);
-			ResultSet rs2 = stmt2.executeQuery(strsql2);
-			while(rs2.next()) {
-				if(rs2.getString("apprstatus").equalsIgnoreCase("2")){
-					approvalcount=0;
-					break;
-				}
-				else{
-					approvalcount=rs2.getInt("count");
-				}
-			}
-
-
-			
-
-			String strsql6="select count(*) as count from my_exdet m  where apprstatus not in (0,9,8) and m.dtype='"+dtype+"' and apprlevel="+apprlevel+"  and m.brhId="+brchid+" and m.doc_no='"+docno+"'";
-            //System.out.println("strsql6===="+strsql6);  
-			ResultSet rs6 = stmt6.executeQuery(strsql6);
-			while(rs6.next()) {
-				applvlcount=rs6.getInt("count");
-			}
-
-			if(Integer.parseInt(apprlevel)!=0){
-				doccmd=" and apprlevel="+apprlevel+"";
-			}
-			String strsql7="select count(*) as count,apprlevel,minapprls from my_exdoc m  where m.dtype='"+dtype+"' and m.brhid="+brchid+" "+branchcond+" "+doccmd+" group by apprlevel order by apprlevel desc";
-			//System.out.println("===== "+strsql7);
-			stmt7 =conn.createStatement();
-			ResultSet rs7 = stmt7.executeQuery(strsql7);
-			while(rs7.next()) {
-				doccount=rs7.getInt("count");
-				docapprlevel=rs7.getInt("apprlevel");
-				docminapprls=rs7.getInt("minapprls");
-			}
-            //System.out.println("==== "+doccount+"==== "+docapprlevel+"===="+docminapprls);
-			conn.setAutoCommit(false);
-			CallableStatement stmt = conn.prepareCall("{CALL ApproveDML(?,?,?,?,?,?,?,?,?,?,?)}");	
-
-			stmt.registerOutParameter(11, java.sql.Types.INTEGER);
-			stmt.setString(1,dtype);
-			stmt.setInt(2,Integer.parseInt(docno));
-			stmt.setInt(3,Integer.parseInt(brchid));
-			stmt.setInt(4,Integer.parseInt(userid));
-			stmt.setString(5,desc);
-			stmt.setInt(6,Integer.parseInt(apprlevel));
-			stmt.setInt(7,Integer.parseInt(userid));
-			stmt.setInt(8,Integer.parseInt(optid));
-			stmt.setInt(9,Integer.parseInt(minapprl));
-			stmt.setInt(10,approvalcount);
-
-			stmt.executeQuery(); 
-
-
-			int no=stmt.getInt("srNo");
-			if(no>=1){
-				conn.commit();
-//				System.out.println("=== commit ===");
-			}
-			// Thread.sleep(1500);
-			int minapp=0;
-
-			minapp=(Integer.parseInt(minapprl)==0)?doccount:docminapprls;
-			String minsqlapnd="";
-/*			if(Integer.parseInt(minapprl)==0){
-				minsqlapnd="limit "+(doccount)+"";
-			}
-			else{
-				minsqlapnd="limit "+minapp+"";
-			}
-*/
-				Integer nxtapprlevel=Integer.parseInt(apprlevel)+1;
-				System.out.println("========== DEBUG ROUTING START ==========");
-				System.out.println("Doc No: " + docno + " | DType: " + dtype);
-				System.out.println("Current ApprLevel: " + apprlevel);
-				System.out.println("Next ApprLevel: " + nxtapprlevel);
-				System.out.println("docminapprls (Required Approvals): " + docminapprls);
-				System.out.println("applvlcount (Approvals received at this level): " + applvlcount);
-			
-					if((docminapprls==(applvlcount+1)) || Integer.parseInt(apprlevel)==0){
-						
-						sql="and apprlevel in (select coalesce(min(apprlevel),0) from my_exdoc where dtype='"+dtype+"' and apprlevel > "+Integer.parseInt(apprlevel)+" "+branchcond+" ) "+minsqlapnd;
-
-					}
-					else{
-
-						sql="and apprlevel="+Integer.parseInt(apprlevel)+" "+branchcond +"order by apprlevel "+minsqlapnd+"";
-
-					}
-				
-					String strsql3="select * from my_exdoc where userid not in (select userid from (select userid from my_exdet where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid="+brchid+" and apprStatus not in(1,8,9) "
-					        + "union all select userid from my_exeb where dtype='"+dtype+"' and doc_no='"+docno+"' and brhid="+brchid+") as a ) and dtype='"+dtype+"' "+branchcond
-					        + " "+sql+"" ;  	
-
-					System.out.println("SQL to find next approver (strsql3): " + strsql3);
-					System.out.println("=========================================");
-			stmt3 =conn.createStatement();
-			ResultSet rs3 = stmt3.executeQuery(strsql3);
-			int touserid=0;
-			int nextapprlvl=0;
-			int status=0;
-			while(rs3.next()) { 
-
-				touserid=rs3.getInt("userid");
-				nextapprlvl=rs3.getInt("apprlevel");
-
-                //System.out.println("===== "+touserid+"====== "+nextapprlvl+" ===== "+optid);
-				if(!((Integer.parseInt(optid)==2) || (Integer.parseInt(optid)==4)))
-				{
-
-					String strsql4="insert into my_exeb(brhId, doc_no, dtype, userId, sr_no, apprlevel,sub_date,suby) "
-							+ "values("+brchid+","+docno+",'"+dtype+"',"+touserid+","+no+","+nextapprlvl+",now(),"+userid+")";
-					//System.out.println("====== "+strsql4);
-					stmt4=conn.createStatement();
-					int val1=stmt4.executeUpdate(strsql4);
-
-					conn.commit();
-
-					status=Integer.parseInt(apprlevel);
-				}
-
-				File saveFile = null ;
-				SendTomail(saveFile,dtype,touserid+"" ,docno,brchid , userid,apprlevel,msg);
-			}
-
-			if(((Integer.parseInt(optid.trim())==2) || (Integer.parseInt(optid.trim())==4))){
-
-				if((Integer.parseInt(optid.trim())==2)){
-					status=0;
-				}
-				else{
-
-					status=Integer.parseInt(optid.trim());
-				}
-			}
-			else{
-				status=Integer.parseInt(apprlevel);
-			}
-			
-			if(status==3){
-				
-				ResultSet rsset= conn.createStatement().executeQuery(
-								"select userid,u.user_name as suby,ur.user_name as users from my_exdet e left join my_user u on(u.doc_no="+userid+") left join my_user ur on(ur.doc_no=e.userid) where e.apprlevel=0 and e.dtype='"+dtype+"' and e.doc_no="+Integer.parseInt(docno)+" and e.brhid="+Integer.parseInt(brchid)+"");
-
-				if(rsset.next())
-				{
-
-					touserid=rsset.getInt("userid");
-					//msg="Dear "+rsset.getString("users")+" , Document No "+docno+" of "+dtype+" is  approval by "+rsset.getString("suby");
-					
-				}
-				File saveFile = null ;
-				
-				SendTomail(saveFile,dtype,touserid+"" ,docno,brchid , userid,apprlevel,msg);
-				
-			}
-
-
-			String strsql5="update "+mtblnme+" set status="+status+" where dtype='"+dtype+"' and "+transtype+"="+Integer.parseInt(docno)+" and brhid="+Integer.parseInt(brchid)+"";
-
-			//System.out.println(" checking ==== "+strsql5);
-			stmt5=conn.createStatement();
-			int val2=stmt5.executeUpdate(strsql5);
-			String strsql8="";
-			
-			if(dtype.equalsIgnoreCase("IBP")){
-			
-				strsql8="update my_jvtran j inner join "+mtblnme+" a on j.tr_no=a.tr_no "
-						+ " set j.status="+status+" where a.dtype='"+dtype+"' and a."+transtype+"="+Integer.parseInt(docno)+" and a.brhid="+Integer.parseInt(brchid)+" ";
-
-			}
-			else{
-				
-				strsql8="update my_jvtran j inner join "+mtblnme+" a on j.doc_no=a.doc_no and j.dtype=a.dtype and j.brhid=a.brhid "
-						+ " set j.status="+status+" where a.dtype='"+dtype+"' and a."+transtype+"="+Integer.parseInt(docno)+" and a.brhid="+Integer.parseInt(brchid)+" ";
-
-			}
-//			System.out.println("===update my_jvtran===="+strsql7);
-
-			stmt6=conn.createStatement();
-			int val3=stmt6.executeUpdate(strsql8);
-
-			conn.commit();
-
-
-
-
-		} catch (Exception e) {  
-			e.printStackTrace();
-
-
-		}
-		finally{
-			conn.close();
-		}
-		return "SUCCESS";  
-	}
-
-
-
-	public String SendTomail(File saveFile,String formdetailcode,String recipient , String doc_no, String branch , String userid , String refid,String msg) throws IOException, AddressException,
-	MessagingException, SQLException, InterruptedException {
-
-		String docnos="",subject="",message="",userName="",password="";
-		String host="",port="";
-
-
-		Connection conn = null;
-		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpSession session=request.getSession();
-
-
-		String sub="";
-		String sqlmessage="";
-
-		ClsConnection ClsConnection=new ClsConnection();    
-		
-		conn=ClsConnection.getMyConnection();
-		
-		
-		
-		
-		ResultSet rs= conn.createStatement(
-				ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE).executeQuery(
-						"select  msg,subject  from gl_emailmsg where dtype='APPR' ");
-
-		if(rs.next())
-		{
-			sub =rs.getString("subject");	
-
-		}
-		
-		if(msg.equalsIgnoreCase("")){
-		message=message( branch, formdetailcode, userid, doc_no);
-		
-		if(message.equalsIgnoreCase("")){
-			
-			return "error";
-		}
-		
-		}
-		else{
-			message=msg;
-		}
-
-		subject= sub;
-
-		try{
-    
-			try {
-
-
-				conn=ClsConnection.getMyConnection();
-				Statement stmt1 = conn.createStatement();
-				String strSql1 = "select email,mailpass,smtpServer,smtpHostport FROM my_user where doc_no='"+userid+"'";
-				//	System.out.println("==strSql1===="+strSql1);
-				ResultSet rs1 = stmt1.executeQuery(strSql1);
-				while(rs1.next ()) {
-
-
-					userName=rs1.getString("email");
-					port=rs1.getString("smtpHostport");
-					host=rs1.getString("smtpServer");
-					password=rs1.getString("mailpass");
-					password=ClsEncrypt.getInstance().decrypt(password);
-					//System.out.println("getpassword====="+password);
-
-				}
-				stmt1.close();
-				conn.close();
-
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-
-
-
-			try {
-
-
-				conn=ClsConnection.getMyConnection();
-				Statement stmt1 = conn.createStatement();
-				String strSql1 = "select email,mailpass,smtpServer,smtpHostport FROM my_user where doc_no='"+recipient+"'";
-				//	System.out.println("==strSql1===="+strSql1);
-				ResultSet rs1 = stmt1.executeQuery(strSql1);
-				while(rs1.next ()) {
-
-
-					recipient=rs1.getString("email");
-
-				}
-				stmt1.close();
-				conn.close();
-
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-
-			
-			sendEmail(host, port, userName, password, recipient,
-					subject, message, saveFile,docnos);
-
-			conn=ClsConnection.getMyConnection();
-			Statement stmt10 = conn.createStatement();
-
-			/*Inserting into emaillog*/
-			String sqls=("insert into emaillog (doc_no, brhId, dtype, edate, userId, refid, email) values ('"+doc_no+"','"+branch+"','"+formdetailcode+"',now(),'"+userid+"','"+refid+"','"+recipient+"')");
-			int datas = stmt10.executeUpdate(sqls);
-			/*Inserting into emaillog Ends*/
-
-
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return "error";
-		}
-
-		return "success";
-	}
-
-
-	public  void sendEmail(String host, String port,
-			final String userName, final String password,
-			String recipient,String subject, String message, File attachFile,String docnos)
-					throws AddressException, MessagingException {
-		
-		
-		//System.out.println("==host==="+host+"==password=="+password+"==recipient=="+recipient+"==subject==="+subject+"==message=="+message);
-
-		Properties properties = new Properties();
-		properties.setProperty("mail.smtp.protocol", "smtps");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", host);
-		properties.put("mail.smtp.port", port);
-		properties.put("mail.smtp.debug", "true");
-		properties.put("mail.smtp.socketFactory.port", "465");
-		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		properties.put("mail.smtp.socketFactory.fallback", "false");
-		properties.put("mail.user", userName);
-		properties.put("mail.password", password);
-
-		Authenticator auth = new Authenticator() {
-			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(userName, password);
-			}
-		};
-		Session session = Session.getInstance(properties, auth);
-
-		Message msg = new MimeMessage(session);
-
-		msg.setFrom(new InternetAddress(userName));
-		InternetAddress[] toAddresses = { new InternetAddress(recipient) };
-		msg.setRecipients(Message.RecipientType.TO, toAddresses);
-
-
-		/*  String[] cc = null;
-        String[] bcc = null;
-        if(CC.length() != 0){
-            cc = CC.trim().split(",");
-        } 
-        if(BCC.length() != 0){
-            bcc = BCC.trim().split(",");
+    ClsConnection ClsConnection = new ClsConnection();
+
+    public JSONArray exefolioGridload(HttpSession session) throws SQLException {
+        JSONArray RESULTDATA = new JSONArray();
+        ClsCommon ClsCommon = new ClsCommon();
+        Connection conn = null;
+        try {
+            String userid = session.getAttribute("USERID").toString();
+            conn = ClsConnection.getMyConnection();
+            Statement cpstmt = conn.createStatement();
+
+            String cpsql = "select (@n := @n + 1) as flag,status,coalesce(xnew,0) approval,'' general,coalesce(userId,0) as userId from "
+                    + "(Select 'New' as status,sum(if(date(t.sub_Date)=date(now()) and t.approved=0 ,1,0)) xnew,t.userId"
+                    + " from my_exeb t where t.approved=0 and t.userId='" + userid + "' union all Select 'Pending'as status,"
+                    + " sum(if(date(t.sub_Date)!=date(now()) and t.approved=0,1,0)) xnew,t.userId "
+                    + "from my_exeb t where t.approved!=0 and t.userId='" + userid + "' "
+                    + "union all Select 'No Of Messages'as status, sum(1) xnew,t.userId from my_exdet t where t.apprlevel!=0 and t.userId='" + userid + "') as a,"
+                    + "(select @n:=0) srno group by status order by flag";
+
+            ResultSet resultSet = cpstmt.executeQuery(cpsql);
+            RESULTDATA = ClsCommon.convertToJSON(resultSet);
+            cpstmt.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) conn.close();
         }
 
+        return RESULTDATA;
+    }
 
-        if(!(CC.equals(""))){
-        for(int i = 0; i < cc.length; i++) {
-            if(!cc[i].isEmpty())
-                msg.addRecipient(Message.RecipientType.CC, new InternetAddress(cc[i]));
+    public JSONArray approvalGridload(HttpSession session, String dtype, String branch, String docno) throws SQLException {
+        JSONArray RESULTDATA = new JSONArray();
+        ClsCommon ClsCommon = new ClsCommon();
+        Connection conn = null;
+        try {
+            String userid = session.getAttribute("USERID").toString();
+            if (branch.equals("0") || branch.equals("")) {
+                branch = session.getAttribute("BRANCHID").toString();
+            }
+            conn = ClsConnection.getMyConnection();
+            Statement cpstmt = conn.createStatement();
+
+            String cpsql = "SELECT * FROM (SELECT m.doc_no,m.dtype,m.userid,m.apprdate,m.apprstatus,m.remarks,m.finstatus,m.tsr_no sr_no,m.apprlevel, "
+                    + "m.subdate,m.subby, CASE WHEN m.apprStatus=5 THEN 'Forwarded By' WHEN m.apprStatus=3 THEN 'Approved By' WHEN m.apprStatus=2 THEN 'Returned By' WHEN m.apprStatus=4 THEN 'Rejected By' WHEN m.apprStatus=1 THEN 'Submitted By' WHEN m.apprStatus=9 THEN 'Returned Records' WHEN m.apprStatus=8 THEN 'Old Records' ELSE 'Send To' END AS apprtype, "
+                    + "CONVERT(CONCAT(DAY(m.apprDate),'/',MONTH(m.apprDate),'/',YEAR(m.apprDate),' ',TIME(m.apprDate)),CHAR(50)) apprDateTime, "
+                    + "u.user_name FROM my_exdet m LEFT JOIN my_user u ON m.userId=u.doc_no WHERE m.dtype='" + dtype + "' AND m.brhId=" + branch + " AND m.doc_no='" + docno + "' "
+                    + "union all SELECT m.doc_no,m.dtype,m.userid,sub_date apprdate,0 apprstatus,m.desc1 remarks,0 finstatus,m.sr_no,m.apprlevel,m.sub_date subdate,0 subby, "
+                    + "' Send To ' apprtype,'' apprDateTime,u.user_name FROM my_exeb m LEFT JOIN my_user u ON m.userId=u.doc_no WHERE m.dtype='" + dtype + "' AND m.brhId=" + branch + " AND m.doc_no='" + docno + "')a ORDER BY apprDateTime DESC";
+
+            ResultSet resultSet = cpstmt.executeQuery(cpsql);
+            RESULTDATA = ClsCommon.convertToJSON(resultSet);
+            cpstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return RESULTDATA;
+    }
+
+    public JSONArray ApprovalStatus() throws SQLException {
+        List<ClsDashBoardBean> fleetStatusBean = new ArrayList<ClsDashBoardBean>();
+        JSONArray RESULTDATA = new JSONArray();
+        ClsCommon ClsCommon = new ClsCommon();
+        Connection conn = null;
+        try {
+            conn = ClsConnection.getMyConnection();
+            Statement stmtDashBoard6 = conn.createStatement();
+
+            ResultSet resultSet6 = stmtDashBoard6.executeQuery("select round(aa.val/bb.val *100,2) per,aa.level from ( select count(*) val,if(m.apprlevel=1,'Level 1',if(m.apprlevel=2,'Level 2','Level 3')) level "
+                    + "from my_exdet m group by apprlevel)aa,(select count(*) val,if(m.apprlevel=1,'Level 1',if(m.apprlevel=2,'Level 2','Level 3')) level from my_exdet m where m.apprlevel is not null )bb");
+
+            RESULTDATA = ClsCommon.convertToJSON(resultSet6);
+            stmtDashBoard6.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (conn != null) conn.close();
+        } finally {
+            if (conn != null) conn.close();
+        }
+        return RESULTDATA;
+    }
+
+    public JSONArray exefolioDataGridload(int flag, HttpSession session) throws SQLException {
+        JSONArray RESULTDATA = new JSONArray();
+        ClsCommon ClsCommon = new ClsCommon();
+        Connection conn = null;
+        try {
+            String userid = session.getAttribute("USERID").toString();
+            String xsql1 = "", xsql2 = "";
+            
+            if (flag == 1) {
+                xsql1 = " and date(m.apprDate)=date(now()) ";
+                xsql2 = " and date(m.sub_date)=date(now()) ";
+            } else if (flag == 2) {
+                xsql1 = " and date(m.apprDate)!=date(now()) ";
+                xsql2 = " and date(m.sub_date)!=date(now()) ";
+            }
+
+            conn = ClsConnection.getMyConnection();
+            Statement cpstmt = conn.createStatement();
+
+            String cpsql = "SELECT * FROM ("
+                    + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
+                    + "m.dtype as doctype, br.doc_no as branch, "
+                    + "CONVERT(concat(day(m.apprDate),'/',month(m.apprDate),'/',year(m.apprDate),' ', time(m.apprDate)), CHAR(50)) as subdatetime, "
+                    + "u.user_name as submitedby, mn.func as path, mn.menu_name as name, mn.doc_type as dtype, "
+                    + "m.apprStatus as approved, m.apprDate as sortDate " 
+                    + " from my_exdet m "
+                    + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
+                    + " where m.userId='" + userid + "' and m.apprStatus != 8 " 
+                    // --- GHOST ROW FIX: Only select the most recent history status so the grid does not show duplicates ---
+                    + " and m.apprDate = (select max(m2.apprDate) from my_exdet m2 where m2.doc_no=m.doc_no and m2.dtype=m.dtype and m2.userId=m.userId and m2.brhId=m.brhId) "
+                    + xsql1
+                    + " UNION ALL "
+                    + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
+                    + "m.dtype as doctype, br.doc_no as branch, "
+                    + "CONVERT(concat(day(m.sub_date),'/',month(m.sub_date),'/',year(m.sub_date),' ', time(m.sub_date)), CHAR(50)) as subdatetime, "
+                    + "u.user_name as submitedby, mn.func as path, mn.menu_name as name, mn.doc_type as dtype, "
+                    + "1 as approved, m.sub_date as sortDate " 
+                    + " from my_exeb m "
+                    + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
+                    + " where m.userId='" + userid + "' " 
+                    + xsql2
+                    + ") a order by a.sortDate desc";
+
+            ResultSet resultSet = cpstmt.executeQuery(cpsql);
+            RESULTDATA = ClsCommon.convertToJSON(resultSet);
+            cpstmt.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) conn.close();
+        }
+        return RESULTDATA;
+    }
+
+    public String saveApproveAction() throws Exception { 
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpSession session = request.getSession();
+
+        // --- FIX 1: SAFE PARAMETER EXTRACTION ---
+        // Prevent NumberFormatException if frontend sends empty values
+        String docno = request.getParameter("docno") == null ? "0" : request.getParameter("docno").trim();
+        if(docno.isEmpty() || docno.equalsIgnoreCase("undefined")) docno = "0";
+
+        String dtype = request.getParameter("dtype") == null ? "" : request.getParameter("dtype").trim();
+
+        String userid = request.getParameter("userid") == null ? "0" : request.getParameter("userid").trim();
+        if(userid.isEmpty() || userid.equalsIgnoreCase("undefined")) userid = "0";
+
+        String brchid = request.getParameter("brchid") == null ? "0" : request.getParameter("brchid").trim();
+        if (brchid.equals("0") || brchid.equals("") || brchid.equalsIgnoreCase("undefined")) {
+            brchid = session.getAttribute("BRANCHID") != null ? session.getAttribute("BRANCHID").toString() : "0";
         }
 
-        if(!(BCC.equals(""))){
-        for(int i = 0; i < bcc.length; i++) {
-            if(!bcc[i].isEmpty())
-                msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc[i]));
+        String desc = request.getParameter("desc") == null ? "" : request.getParameter("desc").trim();
+
+        String apprlevel = request.getParameter("apprlevel") == null ? "0" : request.getParameter("apprlevel").trim();
+        if(apprlevel.isEmpty() || apprlevel.equalsIgnoreCase("undefined")) apprlevel = "0";
+
+        String minapprl = request.getParameter("minapprl") == null ? "0" : request.getParameter("minapprl").trim();
+        if(minapprl.isEmpty() || minapprl.equalsIgnoreCase("undefined")) minapprl = "0";
+
+        String optid = request.getParameter("optid") == null ? "0" : request.getParameter("optid").trim();
+        if(optid.isEmpty() || optid.equalsIgnoreCase("undefined")) optid = "0";
+
+        String apprlist = request.getParameter("apprlist") == null ? "" : request.getParameter("apprlist").trim();
+
+        // 👇 PASTE THESE 5 LINES RIGHT HERE 👇
+        System.out.println("==== APPROVAL POPUP TRIGGERED ====");
+        System.out.println("DocNo Received: " + docno);
+        System.out.println("Dtype Received: " + dtype);
+        System.out.println("ApprLevel Received: " + apprlevel);
+        System.out.println("OptId Received: " + optid);
+        // 👆 ------------------------------- 👆
+
+        Connection conn = ClsConnection.getMyConnection();
+        Statement stmt1 = null;
+        Statement stmt2 = null;
+        Statement stmt3 = null;
+        Statement stmt4 = null;
+        Statement stmt5 = null;
+        Statement stmt6 = null;
+        Statement stmt7 = null;
+        
+        try { 
+            stmt1 = conn.createStatement();
+            stmt6 = conn.createStatement();
+            
+            // --- The Inbox Security Shield ---
+         // --- The Inbox Security Shield ---
+            /*
+            if (Integer.parseInt(apprlevel) != 0) {
+                String securitySql = "SELECT count(*) FROM my_exeb WHERE doc_no=" + docno + " AND dtype='" + dtype + "' AND brhId=" + brchid + " AND userId=" + userid;
+                ResultSet rsSecurity = conn.createStatement().executeQuery(securitySql);
+                rsSecurity.next();
+                if (rsSecurity.getInt(1) == 0) {
+                    System.out.println("BLOCKED BY SHIELD: Doc not in my_exeb!");
+                    conn.close();
+                    return "SUCCESS"; 
+                }
+            }
+            */
+
+            String mtblnme = "", subuser = "";
+            int approvalcount = 0;
+            int applvlcount = 0;
+            String msg = "";
+            int doccount = 0, doccount1 = 0, userid1 = 0;
+            int docapprlevel = 0;
+            int docminapprls = 0;
+            String sql = "", doccmd = "", branchcond = "";
+
+            String strsql11 = "select a.count, b.userid from(select count(*) as count, max(apprlevel) apprlevel, dtype, brhid from my_exdoc where dtype='" + dtype + "' )a left join my_exdoc b on b.dtype=a.dtype and b.apprlevel=a.apprlevel ";
+
+            stmt7 = conn.createStatement();
+            ResultSet rs11 = stmt7.executeQuery(strsql11); 
+            while (rs11.next()) {
+                doccount1 = rs11.getInt("count");  
+                userid1 = rs11.getInt("userid");  
+            }
+            
+            int aprcount = 0;
+            String sqlcnt = "select count(*) count from my_exdet where dtype='" + dtype + "' and doc_no='" + docno + "' and brhid='" + brchid + "' and apprstatus in(1,3)";
+            ResultSet rss = stmt7.executeQuery(sqlcnt);
+            while (rss.next()) {
+                aprcount = rss.getInt("count");  
+            }  
+            if (aprcount > doccount1) {             
+                String sqlup = "update my_exdet set apprstatus=8 where dtype='" + dtype + "' and doc_no='" + docno + "' and brhid='" + brchid + "' and apprstatus not in(8,9)";
+                stmt7.executeUpdate(sqlup);
+            } else {
+                String sql22 = "select * from my_exdet where dtype='" + dtype + "' and doc_no='" + docno + "' and brhid='" + brchid + "'  and apprstatus not in(8,9) and userid='" + userid1 + "'";
+                ResultSet rs22 = stmt7.executeQuery(sql22);
+                if (rs22.next()) {
+                    String sqlup = "update my_exdet set apprstatus=8 where dtype='" + dtype + "' and doc_no='" + docno + "' and brhid='" + brchid + "' and apprstatus not in(8,9)";  
+                    stmt6.executeUpdate(sqlup);      
+                }
+            }     
+            
+            String strbrch = "select method from gl_config where field_nme='brchapproval'";
+            ResultSet rsbrch = stmt1.executeQuery(strbrch);
+            while (rsbrch.next()) {
+                if (rsbrch.getInt("method") == 1) {
+                    branchcond = " and brhId=" + brchid;
+                }
+            }
+            
+            String transtype = "";
+            String strsql = "select msttable as mtbl,transtype from win_tbldet where dtype='" + dtype + "'";
+            ResultSet rs1 = stmt1.executeQuery(strsql);
+            while (rs1.next()) {
+                mtblnme = rs1.getString("mtbl");
+                transtype = rs1.getString("transtype");
+            }
+                
+            if (transtype == null || transtype.trim().isEmpty()) {
+                transtype = "doc_no";
+            }
+            stmt2 = conn.createStatement();
+
+            String strsql2 = "select count(*) as count,apprstatus from my_exdet m where m.apprstatus not in(8,9) and m.dtype='" + dtype + "' and m.brhId=" + brchid + " and m.doc_no='" + docno + "' group by apprstatus"; 
+            ResultSet rs2 = stmt2.executeQuery(strsql2);
+            while (rs2.next()) {
+                if (rs2.getString("apprstatus").equalsIgnoreCase("2")) {
+                    approvalcount = 0;
+                    break;
+                } else {
+                    approvalcount = rs2.getInt("count");
+                }
+            }
+
+            String strsql6 = "select count(*) as count from my_exdet m where apprstatus not in (0,9,8) and m.dtype='" + dtype + "' and apprlevel=" + apprlevel + " and m.brhId=" + brchid + " and m.doc_no='" + docno + "'";
+            ResultSet rs6 = stmt6.executeQuery(strsql6);
+            while (rs6.next()) {
+                applvlcount = rs6.getInt("count");
+            }
+
+            if (Integer.parseInt(apprlevel) != 0) {
+                doccmd = " and apprlevel=" + apprlevel;
+            }
+            
+            String strsql7 = "select count(*) as count,apprlevel,minapprls from my_exdoc m where m.dtype='" + dtype + "' and m.brhid=" + brchid + " " + branchcond + " " + doccmd + " group by apprlevel order by apprlevel desc";
+            stmt7 = conn.createStatement();
+            ResultSet rs7 = stmt7.executeQuery(strsql7);
+            while (rs7.next()) {
+                doccount = rs7.getInt("count");
+                docapprlevel = rs7.getInt("apprlevel");
+                docminapprls = rs7.getInt("minapprls");
+            }
+
+            conn.setAutoCommit(false);
+            CallableStatement stmt = conn.prepareCall("{CALL ApproveDML(?,?,?,?,?,?,?,?,?,?,?)}");   
+
+            stmt.registerOutParameter(11, java.sql.Types.INTEGER);
+            stmt.setString(1, dtype);
+            stmt.setInt(2, Integer.parseInt(docno));
+            stmt.setInt(3, Integer.parseInt(brchid));
+            stmt.setInt(4, Integer.parseInt(userid));
+            stmt.setString(5, desc);
+            stmt.setInt(6, Integer.parseInt(apprlevel));
+            stmt.setInt(7, Integer.parseInt(userid));
+            stmt.setInt(8, Integer.parseInt(optid));
+            stmt.setInt(9, Integer.parseInt(minapprl));
+            stmt.setInt(10, approvalcount);
+
+            stmt.executeQuery(); 
+
+            int no = stmt.getInt("srNo");
+            if (no >= 1) {
+                conn.commit();
+            }
+
+            int minapp = 0;
+            minapp = (Integer.parseInt(minapprl) == 0) ? doccount : docminapprls;
+            String minsqlapnd = "";
+            
+            String globalBranchCond = branchcond;
+            if (branchcond != null && !branchcond.trim().isEmpty()) {
+                globalBranchCond = " and (brhId=" + brchid + " or brhId=0) ";
+            }
+
+            Integer nxtapprlevel = Integer.parseInt(apprlevel) + 1;
+            
+            if ((minapp == (applvlcount + 1)) || Integer.parseInt(apprlevel) == 0) {
+                sql = "and apprlevel in (select coalesce(min(apprlevel),0) from my_exdoc where dtype='" + dtype + "' and apprlevel > " + Integer.parseInt(apprlevel) + " " + globalBranchCond + " ) " + minsqlapnd;
+                
+                try {
+                    conn.createStatement().executeUpdate("delete from my_exeb where doc_no=" + docno + " and dtype='" + dtype + "' and brhId=" + brchid);
+                } catch(Exception ex) { 
+                    ex.printStackTrace(); 
+                }
+
+            } else {
+                sql = "and apprlevel=" + Integer.parseInt(apprlevel) + " " + globalBranchCond + "order by apprlevel " + minsqlapnd;
+            }
+        
+            String strsql3 = "select distinct userid, apprlevel from my_exdoc where userid not in (select userid from (select userid from my_exdet where dtype='" + dtype + "' and doc_no='" + docno + "' and brhid=" + brchid + " and apprStatus not in(1,8,9) and apprlevel=" + apprlevel + " "
+                    + "union all select userid from my_exeb where dtype='" + dtype + "' and doc_no='" + docno + "' and brhid=" + brchid + ") as a ) and dtype='" + dtype + "' " + globalBranchCond
+                    + " " + sql;  
+
+            stmt3 = conn.createStatement();
+            ResultSet rs3 = stmt3.executeQuery(strsql3);
+            int touserid = 0;
+            int nextapprlvl = 0;
+            int status = 0;
+            
+            while (rs3.next()) { 
+                touserid = rs3.getInt("userid");
+                nextapprlvl = rs3.getInt("apprlevel");
+
+                if (!((Integer.parseInt(optid) == 2) || (Integer.parseInt(optid) == 4))) {
+                    ResultSet rsCheck = conn.createStatement().executeQuery("select count(*) from my_exeb where doc_no=" + docno + " and dtype='" + dtype + "' and userId=" + touserid + " and brhId=" + brchid);
+                    rsCheck.next();
+                    
+                    if (rsCheck.getInt(1) == 0) {
+                        String strsql4 = "insert into my_exeb(brhId, doc_no, dtype, userId, sr_no, apprlevel,sub_date,suby) "
+                                + "values(" + brchid + "," + docno + ",'" + dtype + "'," + touserid + "," + no + "," + nextapprlvl + ",now()," + userid + ")";
+                        stmt4 = conn.createStatement();
+                        stmt4.executeUpdate(strsql4);
+                        conn.commit();
+                    }
+                    status = Integer.parseInt(apprlevel);
+                }
+
+                // --- FIX 2: WRAP EMAIL SO IT DOESN'T KILL THE TRANSACTION ---
+                try {
+                    File saveFile = null;
+                    SendTomail(saveFile, dtype, touserid + "", docno, brchid, userid, apprlevel, msg);
+                } catch(Exception mailEx) {
+                    System.out.println("Mail sending failed for user " + touserid + " but proceeding with workflow.");
+                    mailEx.printStackTrace();
+                }
+            }
+                
+            if (((Integer.parseInt(optid.trim()) == 2) || (Integer.parseInt(optid.trim()) == 4))) {
+                if ((Integer.parseInt(optid.trim()) == 2)) {
+                    status = 0;
+                } else {
+                    status = Integer.parseInt(optid.trim());
+                }
+            } else {
+                if (nextapprlvl > 0) {
+                    status = 1;
+                } else {
+                    status = 3;
+                }
+            }
+            
+            if (status == 3) {
+                ResultSet rsset = conn.createStatement().executeQuery(
+                                "select userid,u.user_name as suby,ur.user_name as users from my_exdet e left join my_user u on(u.doc_no=" + userid + ") left join my_user ur on(ur.doc_no=e.userid) where e.apprlevel=0 and e.dtype='" + dtype + "' and e.doc_no=" + Integer.parseInt(docno) + " and e.brhid=" + Integer.parseInt(brchid) + "");
+
+                if (rsset.next()) {
+                    touserid = rsset.getInt("userid");
+                }
+                
+                // --- FIX 2: WRAP SECOND EMAIL CALL ---
+                try {
+                    File saveFile = null;
+                    SendTomail(saveFile, dtype, touserid + "", docno, brchid, userid, apprlevel, msg);
+                } catch(Exception mailEx) {
+                    System.out.println("Mail sending failed for final approval, but proceeding with workflow.");
+                    mailEx.printStackTrace();
+                }
+            }
+
+            String strsql5 = "update " + mtblnme + " set status=" + status + " where dtype='" + dtype + "' and " + transtype + "=" + Integer.parseInt(docno) + " and brhid=" + Integer.parseInt(brchid) + "";
+
+            stmt5 = conn.createStatement();
+            int val2 = stmt5.executeUpdate(strsql5);
+            String strsql8 = "";
+            
+            if (dtype.equalsIgnoreCase("IBP")) {
+                strsql8 = "update my_jvtran j inner join " + mtblnme + " a on j.tr_no=a.tr_no "
+                        + " set j.status=" + status + " where a.dtype='" + dtype + "' and a." + transtype + "=" + Integer.parseInt(docno) + " and a.brhid=" + Integer.parseInt(brchid) + " ";
+            } else {
+                strsql8 = "update my_jvtran j inner join " + mtblnme + " a on j.doc_no=a.doc_no and j.dtype=a.dtype and j.brhid=a.brhid "
+                        + " set j.status=" + status + " where a.dtype='" + dtype + "' and a." + transtype + "=" + Integer.parseInt(docno) + " and a.brhid=" + Integer.parseInt(brchid) + " ";
+            }
+
+            stmt6 = conn.createStatement();
+            int val3 = stmt6.executeUpdate(strsql8);
+
+            conn.commit();
+
+        } catch (Exception e) {  
+            e.printStackTrace();
+        } finally {
+            if (conn != null) conn.close();
         }
-        }*/
+        return "SUCCESS";  
+    }
 
+    public String SendTomail(File saveFile, String formdetailcode, String recipient, String doc_no, String branch, String userid, String refid, String msg) throws IOException, AddressException, MessagingException, SQLException, InterruptedException {
+        String docnos = "", subject = "", message = "", userName = "", password = "";
+        String host = "", port = "";
 
-		if(!(subject.equals(""))){
-			msg.setSubject(subject);
-		}
-		msg.setSentDate(new Date());
+        Connection conn = null;
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpSession session = request.getSession();
 
-		Multipart multipart = new MimeMultipart();
-		docnos=docnos==null?"":docnos;
+        String sub = "";
+        String sqlmessage = "";
 
-		MimeBodyPart myattach = new MimeBodyPart();
+        ClsConnection ClsConnection = new ClsConnection();  
+        conn = ClsConnection.getMyConnection();
+        
+        ResultSet rs = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery("select msg,subject from gl_emailmsg where dtype='APPR' ");
 
-		DataSource source = new FileDataSource(attachFile);
-		myattach.setDataHandler(new DataHandler(source));
+        if (rs.next()) {
+            sub = rs.getString("subject");    
+        }
+        
+        if (msg.equalsIgnoreCase("")) {
+            message = message(branch, formdetailcode, userid, doc_no);
+            if (message.equalsIgnoreCase("")) {
+                return "error";
+            }
+        } else {
+            message = msg;
+        }
 
-		MimeBodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setContent(message, "text/html");
+        subject = sub;
 
-		multipart.addBodyPart(messageBodyPart);
+        try {
+            try {
+                conn = ClsConnection.getMyConnection();
+                Statement stmt1 = conn.createStatement();
+                String strSql1 = "select email,mailpass,smtpServer,smtpHostport FROM my_user where doc_no='" + userid + "'";
+                ResultSet rs1 = stmt1.executeQuery(strSql1);
+                while (rs1.next()) {
+                    userName = rs1.getString("email");
+                    port = rs1.getString("smtpHostport");
+                    host = rs1.getString("smtpServer");
+                    password = rs1.getString("mailpass");
+                    password = ClsEncrypt.getInstance().decrypt(password);
+                }
+                stmt1.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
+            try {
+                conn = ClsConnection.getMyConnection();
+                Statement stmt1 = conn.createStatement();
+                String strSql1 = "select email,mailpass,smtpServer,smtpHostport FROM my_user where doc_no='" + recipient + "'";
+                ResultSet rs1 = stmt1.executeQuery(strSql1);
+                while (rs1.next()) {
+                    recipient = rs1.getString("email");
+                }
+                stmt1.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            sendEmail(host, port, userName, password, recipient, subject, message, saveFile, docnos);
 
+            conn = ClsConnection.getMyConnection();
+            Statement stmt10 = conn.createStatement();
 
-		if (attachFile != null) {
-			MimeBodyPart attachPart = new MimeBodyPart();
+            String sqls = ("insert into emaillog (doc_no, brhId, dtype, edate, userId, refid, email) values ('" + doc_no + "','" + branch + "','" + formdetailcode + "',now(),'" + userid + "','" + refid + "','" + recipient + "')");
+            int datas = stmt10.executeUpdate(sqls);
 
-			try {
-				attachPart.attachFile(attachFile);
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
 
-			multipart.addBodyPart(attachPart);
-		}
+        return "success";
+    }
 
-		msg.setContent(multipart);
+    public void sendEmail(String host, String port, final String userName, final String password, String recipient, String subject, String message, File attachFile, String docnos) throws AddressException, MessagingException {
+        Properties properties = new Properties();
+        properties.setProperty("mail.smtp.protocol", "smtps");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.debug", "true");
+        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.socketFactory.fallback", "false");
+        properties.put("mail.user", userName);
+        properties.put("mail.password", password);
 
-		Transport.send(msg);
+        Authenticator auth = new Authenticator() {
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(userName, password);
+            }
+        };
+        Session session = Session.getInstance(properties, auth);
 
-	}
+        Message msg = new MimeMessage(session);
 
-	public String message(String branch,String formdetailcode,String userid,String doc_no) throws SQLException{
+        msg.setFrom(new InternetAddress(userName));
+        InternetAddress[] toAddresses = { new InternetAddress(recipient) };
+        msg.setRecipients(Message.RecipientType.TO, toAddresses);
 
-		String msg="";	
-		String sqlmessage="";
-		Connection conn = null;
-		HttpServletRequest request=ServletActionContext.getRequest();
-		HttpSession session=request.getSession();
+        if (!(subject.equals(""))) {
+            msg.setSubject(subject);
+        }
+        msg.setSentDate(new Date());
 
-		try{
+        Multipart multipart = new MimeMultipart();
+        docnos = docnos == null ? "" : docnos;
 
+        MimeBodyPart myattach = new MimeBodyPart();
 
-			ClsConnection ClsConnection=new ClsConnection();  
+        DataSource source = new FileDataSource(attachFile);
+        myattach.setDataHandler(new DataHandler(source));
 
-			conn=ClsConnection.getMyConnection();
-			
-			
-			ResultSet rs= conn.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE).executeQuery(
-							"select  msg,subject  from gl_emailmsg where dtype='APPR'");
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setContent(message, "text/html");
 
-			if(rs.next())
-			{
+        multipart.addBodyPart(messageBodyPart);
 
-				sqlmessage = rs.getString("msg").replaceAll("branch", branch).replaceAll("documentno", doc_no).replaceAll("documenttype", formdetailcode).replaceAll("userno", userid);
-				
-			}
-			if(!(sqlmessage.trim().equalsIgnoreCase(""))){
-			ResultSet rsset=conn.createStatement().executeQuery(sqlmessage);
+        if (attachFile != null) {
+            MimeBodyPart attachPart = new MimeBodyPart();
+            try {
+                attachPart.attachFile(attachFile);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            multipart.addBodyPart(attachPart);
+        }
 
-			while(rsset.next()) {
+        msg.setContent(multipart);
+        Transport.send(msg);
+    }
 
-				msg =rsset.getString("msg");
+    public String message(String branch, String formdetailcode, String userid, String doc_no) throws SQLException {
+        String msg = "";    
+        String sqlmessage = "";
+        Connection conn = null;
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpSession session = request.getSession();
 
-			}
-			}
+        try {
+            ClsConnection ClsConnection = new ClsConnection();  
+            conn = ClsConnection.getMyConnection();
+            
+            ResultSet rs = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE).executeQuery("select msg,subject from gl_emailmsg where dtype='APPR'");
 
-		}catch(SQLException e){
-			e.printStackTrace();
+            if (rs.next()) {
+                sqlmessage = rs.getString("msg").replaceAll("branch", branch).replaceAll("documentno", doc_no).replaceAll("documenttype", formdetailcode).replaceAll("userno", userid);
+            }
+            if (!(sqlmessage.trim().equalsIgnoreCase(""))) {
+                ResultSet rsset = conn.createStatement().executeQuery(sqlmessage);
+                while (rsset.next()) {
+                    msg = rsset.getString("msg");
+                }
+            }
 
-		}
-		finally{
-			conn.close();
-		}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) conn.close();
+        }
 
-
-
-		return msg;
-	}
-
-
-	
+        return msg;
+    }
 }

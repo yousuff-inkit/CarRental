@@ -1,4 +1,3 @@
-
 <%@page import="com.controlcentre.masters.tarifmgmtnew.ClsTarifAction"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
@@ -11,770 +10,7 @@
 <title>GatewayERP(i)</title>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<style>
-#section {
-	line-height: 50%;
-	width: 90.5%;
-	float: right;
-	margin-width: 50%;
-}
-#nav {
-	line-height: 250%;
-	height: 90.5%;
-	width: 10vw;
-	float: left;
-	position: absolute;
-	left: 6px;
-	top: 5px;
-}
-form label.error {
-color:red;
-  font-weight:bold;
 
-}
-.HeadIcons {
-	font: 12px Tahoma;
-	margin-top: 0px;
-	line-height: 30px;
-	background-color: #E0ECF8;
-	height: 27px;
-	width: 100%;
-}
-.icon {
-	width: 3em;
-	height: 2em;
-	border: none;
-	background-color: #f0f0f0;
-}
-.hidden-scrollbar {
-    overflow: auto;
-    height: 600px;
-}
-
-</style>
-
-<script type="text/javascript">
-	$(document).ready(function () { 
-    	getTariftype();
-    	getcheckbox();
-     	setCheck();
-    	/* Date */
-    	document.getElementById("fieldextrainsur").style.display="none";
-    	document.getElementById("grouplabel").style.display="none";
-		document.getElementById("txtclient").disabled="true";
-    	$("#jqxTariffDate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-    	$("#jqxTariffFromDate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-    	$("#jqxTariffToDate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-    	document.getElementById("btnTarifEdit").style.display="none";
-
-		$('#clienttarifwindow').jqxWindow({autoOpen:false, width: '50%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-		$('#clienttarifwindow').jqxWindow('close');
-		//$('#frmTariffManagement select').attr('disabled', false );
-		selectTarif();
-		//$('#frmTariffManagement select').attr('disabled', true );
-	    $('#txtclient').dblclick(function(){
-			$('#clienttarifwindow').jqxWindow('open');
-			$('#clienttarifwindow').jqxWindow('focus');
-		 	clientSearchContent('clientSearch.jsp?tariftype='+document.getElementById("cmbtariftype").value, $('#clienttarifwindow'));
-		});
-	     
-	});
-    
-    function clientSearchContent(url) {
-		$.get(url).done(function (data) {
-  	    	$('#clienttarifwindow').jqxWindow('setContent', data);
-  		}); 
-  	}
-      
-    function getClient(event){
-  		var x= event.keyCode;
-        if(x==114){
-        	$('#clienttarifwindow').jqxWindow('open');
-       		$('#clienttarifwindow').jqxWindow('focus');
-       		clientSearchContent('clientSearch.jsp?tariftype='+document.getElementById("cmbtariftype").value, $('#clienttarifwindow'));
-        }
-        else{
-        }
-    }
-    function selectTarif(){
-    	$('#frmTariffManagement select').attr('disabled',false );
-  		var temp=document.getElementById("cmbtariftype").value;
-  		// $('#frmTariffManagement select').attr('disabled',true );
-  		// if(document.getElementById("mode").value=='A'){
-  		$("#divRegularTarif").load("gridRegularTarif.jsp");
-        $("#divfoc").load("gridFoc.jsp");
-        $("#divweekday").load("gridWeekday.jsp");
-        $("#divslab").load("gridSlabTarif.jsp");
-        $("#divpackage").load("gridPackageTarif.jsp");
-        $("#divgroup1").load("gridgroup1.jsp");
-      	$("#divgroup2").load("gridgroup2.jsp");
-  	//	 }
-  		 
-  		/* if(temp=="Condition"){
-  			//alert("Inside condition");
-  			
-			document.getElementById("fieldfoc").style.display="block";
-    	  	document.getElementById("fieldweekday").style.display="block";
-  			$('#txtclient').attr('disabled', true );
-  			$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
-  			$("#jqxgridtariffoc").jqxGrid({ disabled: false});
-  			$("#jqxgridtariffuel").jqxGrid({ disabled: false});
-  			$("#jqxgridtarif").jqxGrid({ disabled: true});
-  			if(document.getElementById("mode").value=='A'){
-  				$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
-  	  			$("#jqxgridtariffoc").jqxGrid({ disabled: true});
-  			}
-  		}
-  		else */ 
-  		if(temp=="Client"){
-  			document.getElementById("fieldextrainsur").style.display="none";
-  			$('#txtclient').attr('disabled', false );
-  			$("#jqxgridtarif").jqxGrid({ disabled: false});
-  			$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
-  			$("#jqxgridtariffoc").jqxGrid({ disabled: true});
-  			$("#jqxgridtariffuel").jqxGrid({ disabled: false});
-  			if(document.getElementById("mode").value=='A'){
-  	  			$("#jqxgridtarif").jqxGrid({ disabled: true});
-
-  			}
-  		}
-  		else if(temp=="Corporate"){
-  			document.getElementById("fieldextrainsur").style.display="none";
-  			$('#txtclient').attr('disabled', false );
-  			document.getElementById("fieldfoc").style.display="none";
-  			document.getElementById("fieldpackage").style.display="none";
-  			document.getElementById("fieldslab").style.display="none";
-  			document.getElementById("fieldweekday").style.display="none";
-  			document.getElementById("fieldregular").style.display="block";
-  			$("#jqxgridtarif").jqxGrid({ disabled: false});
-  		if(document.getElementById("mode").value=='A'){
-  		
-  			$("#jqxgridtarif").jqxGrid({ disabled: true});
-  			}	
-  		}
-  		else if(temp=="Weekend"){
-  			$('#txtclient').attr('disabled', true );
-  			document.getElementById("fieldextrainsur").style.display="none";
-  			document.getElementById("fieldfoc").style.display="none";
-  			document.getElementById("fieldregular").style.display="none";
-  			document.getElementById("fieldpackage").style.display="none";
-  			document.getElementById("fieldslab").style.display="none";
-  			document.getElementById("fieldweekday").style.display="block";
-  			$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
-  		if(document.getElementById("mode").value=='A'){
-  		
-  			$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
-  			}
-  			
-  		}
-  		else if(temp=="FOC"){
-  			$('#txtclient').attr('disabled', true );
-  			document.getElementById("fieldextrainsur").style.display="none";
-  			document.getElementById("fieldweekday").style.display="none";
-  			document.getElementById("fieldfoc").style.display="block";
-  			$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
-  			$("#jqxgridtarif").jqxGrid({ disabled: true});
-  			if(document.getElementById("mode").value=='A'){
-  				$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
-  	  			$("#jqxgridtariffoc").jqxGrid({ disabled: true});
-  			}
-  		}
-  		else if(temp=="Slab"){
-  			$('#txtclient').attr('disabled', true );
-  			document.getElementById("fieldextrainsur").style.display="none";
-  			document.getElementById("fieldfoc").style.display="none";
-  			document.getElementById("fieldregular").style.display="none";
-  			document.getElementById("fieldweekday").style.display="none";
-  			document.getElementById("fieldpackage").style.display="none";
-  			document.getElementById("fieldslab").style.display="block";
-  			$("#jqxslabtarif").jqxGrid({ disabled: false});
-  		if(document.getElementById("mode").value=='A'){
-  		
-  			$("#jqxslabtarif").jqxGrid({ disabled: true});
-  			}
-  		}
-  		else if(temp=="Package"){
-  			$('#txtclient').attr('disabled', true );
-  			document.getElementById("fieldextrainsur").style.display="none";
-  			document.getElementById("fieldfoc").style.display="none";
-  			document.getElementById("fieldregular").style.display="none";
-  			document.getElementById("fieldweekday").style.display="none";
-  			document.getElementById("fieldslab").style.display="none";
-  			document.getElementById("fieldpackage").style.display="block";
-  			$("#jqxpackagetarif").jqxGrid({ disabled: false});
-  		if(document.getElementById("mode").value=='A'){
-  		
-  			$("#jqxpackagetarif").jqxGrid({ disabled: true});
-  			}
-  		}
-  		else{
-  			$('#txtclient').attr('disabled', true );
-  			document.getElementById("fieldextrainsur").style.display="block";
-  			document.getElementById("fieldfoc").style.display="none";
-  			document.getElementById("fieldweekday").style.display="none";
-  			document.getElementById("fieldpackage").style.display="none";
-  			document.getElementById("fieldslab").style.display="none";
-  			document.getElementById("fieldregular").style.display="block";
-  			$("#jqxgridtarif").jqxGrid({ disabled: false});
-  		if(document.getElementById("mode").value=='A'){
-  		
-  			$("#jqxgridtarif").jqxGrid({ disabled: true});
-  			}
-  	} 
-      }
-	function funReset(){
-    	
-    		
-    	}
-		
-    	function funReadOnly(){
-    		$('#frmTariffManagement input').attr('readonly', true );
-			$('#frmTariffManagement select').attr('disabled', true );
-			$('#frmTariffManagement textarea').attr('readonly', true );
-    		$('#jqxTariffFromDate').jqxDateTimeInput({ disabled: true});
-    		$('#jqxTariffToDate').jqxDateTimeInput({ disabled: true});
-    		$('#jqxTariffDate').jqxDateTimeInput({ disabled: true});
-    		
-    	    		
-    		$("#jqxgridtarif").jqxGrid({ disabled: true});
-    		//$("#jqxgridtarifgrp").jqxGrid({ disabled: true});
-    		$("#jqxgridtariffuel").jqxGrid({ disabled: true});
-    		$("#jqxgridtariffoc").jqxGrid({ disabled: true});
-    		$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
-    		$("#jqxgridtarifgrpfinish").jqxGrid({ disabled: true});
-    		
-			
-    		
-    	} 
-    	
-    	function funRemoveReadOnly(){
-    		
-    		$('#frmTariffManagement input').attr('readonly', false );
-			$('#frmTariffManagement select').attr('disabled', false );
-			$('#frmTariffManagement textarea').attr('readonly', false );
-    		$('#jqxTariffFromDate').jqxDateTimeInput({ disabled: false});
-    		$('#jqxTariffToDate').jqxDateTimeInput({ disabled: false});
-    		$('#jqxTariffDate').jqxDateTimeInput({ disabled: false});
-    		$("#jqxgridtarif").jqxGrid({ disabled: false});
-    		//$("#jqxgridtarifgrp").jqxGrid({ disabled: true});
-    		$("#jqxgridtariffuel").jqxGrid({ disabled: false});
-    		$("#jqxgridtariffoc").jqxGrid({ disabled: false});
-    		$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
-    		$("#jqxgridtarifgrpfinish").jqxGrid({ disabled: false});
-    		
-    		
-    		if(document.getElementById("mode").value=='A'){
-    			$("#divRegularTarif").load("gridRegularTarif.jsp");
-             	 $("#divfoc").load("gridFoc.jsp");
-             	 $("#divweekday").load("gridWeekday.jsp");
-             	 $("#divslab").load("gridSlabTarif.jsp");
-             	 $("#divpackage").load("gridPackageTarif.jsp");
-          		 $("#divgroup1").load("gridgroup1.jsp");
-          		 $("#divgroup2").load("gridgroup2.jsp");
-          		 document.getElementById("grouplabel").style.display="none";
-          		 document.getElementById("btnTarifEdit").style.display="none";
-          		document.getElementById("btnTarifSave").style.display="none";
-          		 $("#jqxTariffFromDate").jqxDateTimeInput('setDate', new Date());
-          		$("#jqxTariffToDate").jqxDateTimeInput('setDate', new Date());
-          		$("#jqxTariffDate").jqxDateTimeInput('setDate', new Date());
-          		
-          		 document.getElementById("fieldfoc").style.display="none";
-	        	  document.getElementById("fieldweekday").style.display="none";	
-	        	  
-	        	  document.getElementById("fieldslab").style.display="none";
-	        	  document.getElementById("fieldpackage").style.display="none";
-	       	  document.getElementById("fieldregular").style.display="block";
-	       	 document.getElementById("fieldextrainsur").style.display="block";
-    		}
-    		
-    		if(document.getElementById("mode").value=='E'){
-    			$('#cmbtariftype').attr('disabled', 'disabled');
-    			$('#txtclient').attr('disabled', true );
-    			$('#cmbtariffor').attr('disabled', 'disabled');
-    		}
-    		if(document.getElementById("mode").value=='D'){
-    			$("#divRegularTarif").load("gridRegularTarif.jsp");
-            	 $("#divfoc").load("gridFoc.jsp");
-            	 $("#divweekday").load("gridWeekday.jsp");
-            	 $("#divslab").load("gridSlabTarif.jsp");
-            	 $("#divpackage").load("gridPackageTarif.jsp");
-         		 $("#divgroup1").load("gridgroup1.jsp");
-         		 $("#divgroup2").load("gridgroup2.jsp");
-    		}
-    	}
-    	
-    	function funNotify(){	
-    			if(document.getElementById("docno").value!=''){
-    			
-    				if(document.getElementById("cmbtariftype").value=='Regular' || document.getElementById("cmbtariftype").value=='Corporate'  || document.getElementById("cmbtariftype").value=='Agent'){	
-    	var rows = $("#jqxgridtarif").jqxGrid('getrows');
-		$('#gridlength').val(rows.length);
-    		//alert($('#gridlength').val());
-    		for(var i=0 ; i < rows.length ; i++){
-			//	var myvar = rows[i].tarif; 
-				newTextBox = $(document.createElement("input"))
-			    .attr("type", "dil")
-			    .attr("id", "test"+i)
-			    .attr("name", "test"+i);
-				
-			newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+"::"+rows[i].cdw+"::"+rows[i].pai+"::"+rows[i].cdw1+"::"+rows[i].pai1+"::"+rows[i].gps+"::"+rows[i].babyseater+"::"+rows[i].cooler+"::"+rows[i].exhrchg+"::"+rows[i].chaufchg+"::"+rows[i].chaufexchg+"::"+rows[i].disclevel1+"::"+rows[i].disclevel2+"::"+rows[i].disclevel3+"::"+rows[i].kmrest+"::"+rows[i].exkmrte+"::"+rows[i].oinschg);
-			
-			newTextBox.appendTo('form');
-			
-				//alert("ddddd"+$("#test"+i).val());
-			}
-		}
-    				else if(document.getElementById("cmbtariftype").value=='Weekend'){
-    		var rowsweekday=$("#jqxgridtarifweekday").jqxGrid('getrows');
-    		
-    		var j=0;
-    		
-    		
-    		for(var i=0 ; i < rowsweekday.length ; i++){
-
-    				newTextBoxweekday = $(document.createElement("input"))
-    			    .attr("type", "dil")
-    			    .attr("id", "txtweekday"+i)
-    			    .attr("name", "txtweekday"+i);
-    			 	//alert(rowsweekday[i].cstime.getMinutes());
-    			 	//alert((rowsweekday[i].cstime.getMinutes().getMinutes()<10?'0':'') + rowsweekday[i].cstime.getMinutes().getMinutes());
-    				var d=new Date(rowsweekday[i].cstime);
-    				
-    				var tempstarttime=d.getHours()+":"+(d.getMinutes()<10?'0':'') + d.getMinutes();
-    				//alert(tempstarttime.toString());
-    				var d1=new Date(rowsweekday[i].cetime);
-    				var tempendtime=d1.getHours()+":"+(d1.getMinutes()<10?'0':'') + d1.getMinutes();
-    				//alert(tempendtime.toString());
-    				if(typeof(rowsweekday[i].cswkday)!="undefined" && rowsweekday[i].cswkday!="" && typeof(rowsweekday[i].cstime)!="undefined" && typeof(rowsweekday[i].cstime)!="" && 
-    						typeof(rowsweekday[i].cewkday)!="undefined" && typeof(rowsweekday[i].cewkday)!="" && typeof(rowsweekday[i].cetime)!="undefined" && typeof(rowsweekday[i].cetime)!=""){
-    					newTextBoxweekday.val(rowsweekday[i].cswkday+"::"+tempstarttime+"::"+rowsweekday[i].cewkday+"::"+tempendtime+"::"+rowsweekday[i].rate+"::"+rowsweekday[i].cdw+"::"+rowsweekday[i].gps+"::"+rowsweekday[i].babyseater+"::"+rowsweekday[i].cooler+"::"+rowsweekday[i].kmrest+"::"+rowsweekday[i].exkmrte+"::"+rowsweekday[i].oinschg+"::"+rowsweekday[i].ulevel1+"::"+rowsweekday[i].ulevel2+"::"+rowsweekday[i].ulevel3+"::"+rowsweekday[i].exdaychg);
-    				j++;
-    				newTextBoxweekday.appendTo('form');
-    				}
-    				
-    			
-    				
-    				//alert("ddddd"+$("#txtweekday"+i).val());
-    			}
-    		$('#weekdaylength').val(j);
-    	}
-    	
-    		else if(document.getElementById("cmbtariftype").value=='Slab'){
-    			
-    			 var rowsslab = $("#jqxslabtarif").jqxGrid('getrows');
-    				var z=0;
-            		for(var i=0;i<rowsslab.length;i++){
-            			var slabfrom=rowsslab[i].slabfromday;
-    	    			var slabto=rowsslab[i].slabtoday;
-    	    			var slabperday=rowsslab[i].slabrateperday;
-    	    		if(slabfrom!="undefined" && slabfrom!="" && slabfrom!=null && typeof(slabfrom)!="undefined" && slabto!="undefined" && slabto!="" && slabto!=null && typeof(slabto)!="undefined" && slabperday!="undefined" && slabperday!="" && slabperday!=null && typeof(slabperday)!="undefined"){
-    	    				
-    	    				newTextBoxSlab = $(document.createElement("input"))
-        			        .attr("type", "dil")
-        			        .attr("id", "txtslab"+z)
-        			        .attr("name", "txtslab"+z)
-        			        .attr("hidden", "true");
-    	    				newTextBoxSlab.val(rowsslab[i].rentaltype="Slab "+(z+1)+"::"+rowsslab[i].slabfromday+"::"+rowsslab[i].slabtoday+"::"+rowsslab[i].slabrateperday+"::"+rowsslab[i].cdw+"::"+rowsslab[i].pai+"::"+rowsslab[i].cdw1+"::"+rowsslab[i].pai1+"::"+rowsslab[i].gps+"::"+rowsslab[i].babyseater+"::"+rowsslab[i].cooler+"::"+rowsslab[i].exhrchg+"::"+rowsslab[i].chaufexchg+"::"+rowsslab[i].kmrest+"::"+rowsslab[i].exkmrte+"::"+rowsslab[i].oinschg);
-        	    			newTextBoxSlab.appendTo('form');
-    	    				z++;
-    	    			}
-    	    			
-            		}
-            		
-            		$('#slablength').val(z);
-            		
-        	}
-    		
-    	
-    		else if(document.getElementById("cmbtariftype").value=='Package'){
-    			
-    			var rowspackage = $("#jqxpackagetarif").jqxGrid('getrows');
-        	  	var z=0;
-            		for(var i=0 ; i < rowspackage.length ; i++){
-            			var packageday=rowspackage[i].packageblockday;
-    	    			var packagetarif=rowspackage[i].packageblocktarif;
-    	    			var packageextarif=rowspackage[i].packageextradaytarif;
-    	    		if(packageday!="undefined" && packageday!="" && packageday!=null && typeof(packageday)!="undefined" && packagetarif!="undefined" && packagetarif!="" && packagetarif!=null && typeof(packagetarif)!="undefined" && packageextarif!="undefined" && packageextarif!="" && packageextarif!=null && typeof(packageextarif)!="undefined"){
-    	    			
-        				newTextBoxPackage = $(document.createElement("input"))
-        			    .attr("type", "dil")
-        			    .attr("id", "txtpackage"+z)
-        			    .attr("name", "txtpackage"+z)
-        				.attr("hidden", "true");
-        				newTextBoxPackage.val(rowspackage[i].rentaltype="Package "+(z+1)+"::"+rowspackage[i].packageblockday+"::"+rowspackage[i].packageblocktarif+"::"+rowspackage[i].packageextradaytarif+"::"+rowspackage[i].cdw+"::"+rowspackage[i].pai+"::"+rowspackage[i].cdw1+"::"+rowspackage[i].pai1+"::"+rowspackage[i].gps+"::"+rowspackage[i].babyseater+"::"+rowspackage[i].cooler+"::"+rowspackage[i].exhrchg+"::"+rowspackage[i].chaufexchg+"::"+rowspackage[i].kmrest+"::"+rowspackage[i].exkmrte+"::"+rowspackage[i].oinschg);
-        			
-        				newTextBoxPackage.appendTo('form');
-        				z++;
-    	    		}
-        			}
-           		
-           		$('#packagelength').val(z);
-           		
-       	}			
-    				
-    	
-    				else if(document.getElementById("cmbtariftype").value=='FOC'){
-    		var rowsfoc=$("#jqxgridtariffoc").jqxGrid('getrows');
-    		
-
-    		$('#foclength').val(rowsfoc.length);
-    		for(var i=0 ; i < rowsfoc.length ; i++){
-    
-    				newTextBoxfoc = $(document.createElement("input"))
-    			    .attr("type", "dil")
-    			    .attr("id", "txtfoc"+i)
-    			    .attr("name", "txtfoc"+i);
-    				
-    				newTextBoxfoc.val(rowsfoc[i].minday+"::"+rowsfoc[i].foc+"::"+rowsfoc[i].rate+"::"+rowsfoc[i].cdw+"::"+rowsfoc[i].gps+"::"+rowsfoc[i].babyseater+"::"+rowsfoc[i].cooler+"::"+rowsfoc[i].kmrest+"::"+rowsfoc[i].exkmrte+"::"+rowsfoc[i].oinschg);
-    			
-    				newTextBoxfoc.appendTo('form');
-    				//alert("ddddd"+$("#txtfoc"+i).val());
-    			}
-    		
-    	}
-    		
-    		var a=document.getElementById("gridlength").value;
-			var b=document.getElementById("weekdaylength").value;
-			var c=document.getElementById("foclength").value;
-			var d=document.getElementById("fuellength").value;
-			var e=document.getElementById("slablength").value;
-			var f=document.getElementById("packagelength").value;
-			//alert("Regular:"+a+"Weekday:"+b+"FOC:"+c+"Fuel"+d);
-    			}
-    			$('#frmTariffManagement select').attr('disabled',false);
-    			$('#txtclient').attr('disabled',false);
-			return 1;
-			$('#frmTariffManagement select').attr('disabled',true);
-    		
- 	} 
-
-     	function funChkButton() {
-    		/* funReset(); */
-    	}
-
-    	function funSearchLoad(){
-    		changeContent('tarifSearch.jsp', $('#window')); 
-    	}
-    		
-     	function funFocus(){
-    	   	$('#jqxTariffDate').jqxDateTimeInput('focus'); 	    		
-     	}
-		function setCheck(){
-			if(document.getElementById("chckdeliverychg").checked==true){
-				document.getElementById("hidcheck").value=1;
-			}
-			else
-				document.getElementById("hidcheck").value=0;
-		}
-		function getcheckbox(){
-			if(document.getElementById("hidcheck").value==1){
-				document.getElementById("chckdeliverychg").checked=true;
-			}
-			else{
-				document.getElementById("chckdeliverychg").unchecked=true;
-			}
-		}
-		function setValues(){
-				
-			if(document.getElementById("mode").value=='view'){
-	  			$("#divRegularTarif").load("gridRegularTarif.jsp");
-	        	 $("#divfoc").load("gridFoc.jsp");
-	        	 $("#divweekday").load("gridWeekday.jsp");
-	        	 $("#divslab").load("gridSlabTarif.jsp");
-	        	 $("#divpackage").load("gridPackageTarif.jsp");
-	        	 $("#divgroup1").load("gridgroup1.jsp");
-	      		 $("#divgroup2").load("gridgroup2.jsp");
-	  		 }
-		document.getElementById("cmbtariftype").disabled=false;
-			
-		//	document.getElementById("fieldextrainsur").style.display="none";
-			/* if(document.getElementById("cmbtariftype").value=="Weekend"){
-				document.getElementById("fieldweekday").style.display="block";
-	  			document.getElementById("fieldfoc").style.display="none";
-			}
-			if(document.getElementById("cmbtariftype").value=="FOC"){
-				document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldfoc").style.display="block";
-			} */
-			
-			if(document.getElementById("hidcmbtariftype").value=="Regular"){
-				document.getElementById("fieldfoc").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldpackage").style.display="none";
-	  			document.getElementById("fieldslab").style.display="none";
-	  			document.getElementById("fieldregular").style.display="block";
-	  			document.getElementById("fieldextrainsur").style.display="block";
-			}
-			else if(document.getElementById("hidcmbtariftype").value=="Corporate"){
-				
-				document.getElementById("fieldextrainsur").style.display="none";
-				document.getElementById("fieldfoc").style.display="none";
-	  			document.getElementById("fieldpackage").style.display="none";
-	  			document.getElementById("fieldslab").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldregular").style.display="block";
-			}
-			else if(document.getElementById("hidcmbtariftype").value=="Weekend"){
-				document.getElementById("fieldextrainsur").style.display="none";
-				document.getElementById("fieldfoc").style.display="none";
-	  			document.getElementById("fieldpackage").style.display="none";
-	  			document.getElementById("fieldslab").style.display="none";
-	  			document.getElementById("fieldregular").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="block";
-			}
-			else if(document.getElementById("hidcmbtariftype").value=="Slab"){
-				document.getElementById("fieldextrainsur").style.display="none";
-				document.getElementById("fieldslab").style.display="block";
-				document.getElementById("fieldfoc").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldpackage").style.display="none";
-	  			document.getElementById("fieldregular").style.display="none";
-	  			
-			}
-			else if(document.getElementById("hidcmbtariftype").value=="Package"){
-				document.getElementById("fieldextrainsur").style.display="none";
-				document.getElementById("fieldfoc").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldslab").style.display="none";
-	  			document.getElementById("fieldregular").style.display="none";
-	  			document.getElementById("fieldpackage").style.display="block";
-			}
-			else if(document.getElementById("hidcmbtariftype").value=="FOC"){
-				document.getElementById("fieldextrainsur").style.display="none";
-				
-	  			document.getElementById("fieldpackage").style.display="none";
-	  			document.getElementById("fieldslab").style.display="none";
-	  			document.getElementById("fieldregular").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldfoc").style.display="block";
-			} 
-			else if(document.getElementById("hidcmbtariftype").value=="Agent"){
-				document.getElementById("fieldfoc").style.display="none";
-	  			document.getElementById("fieldweekday").style.display="none";
-	  			document.getElementById("fieldpackage").style.display="none";
-	  			document.getElementById("fieldslab").style.display="none";
-	  			document.getElementById("fieldregular").style.display="block";
-	  			document.getElementById("fieldextrainsur").style.display="block";
-			}
-			//alert("CMB"+document.getElementById("hidcmbtariftype").value);
-			if(document.getElementById("docno")!=''){
-				var temp=document.getElementById("docno").value;
-				$("#divgroup2").load("gridgroup2.jsp?id="+temp);
-				$("#divgroup1").load("gridgroup1.jsp?id="+temp);
-			}
-			 if ($('#hidcmbtariftype').val() != null) {
-					$('#cmbtariftype').val($('#hidcmbtariftype').val());
-			 }
-			if ($('#hidcmbtariffor').val() != null) {
-				$('#cmbtariffor').val($('#hidcmbtariffor').val());
-			}
-			if($('#hidjqxTariffDate').val()){
-				$("#jqxTariffDate").jqxDateTimeInput('val', $('#hidjqxTariffDate').val());
-			}
-			if($('#hidjqxTariffFromDate').val()){
-				$("#jqxTariffFromDate").jqxDateTimeInput('val', $('#hidjqxTariffFromDate').val());
-			}
-			if($('#hidjqxTariffToDate').val()){
-				$("#jqxTariffToDate").jqxDateTimeInput('val', $('#hidjqxTariffToDate').val());
-			}
-			if($('#msg').val()!=""){
-				   $.messager.alert('Message',$('#msg').val());
-				  }
-			 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-if(document.getElementById("docno").value==''){
-	document.getElementById("btnTarifEdit").style.display="none";
-}
-
-
-document.getElementById("cmbtariftype").disabled=true;
-
-		}
-		 function funTarifEdit(){
-		 	 document.getElementById("cmbtariftype").disabled=false;
-		 	$("#jqxgridtarifgrp").jqxGrid({ disabled:false});
-		 	document.getElementById("insurexcess").readOnly=false;
-		 	document.getElementById("cdwexcess").readOnly=false;
-		 	document.getElementById("scdwexcess").readOnly=false;
-		 	document.getElementById("securityamt").readOnly=false;
-				/* if(document.getElementById("cmbtariftype").value=="Condition"){
-	    			$("#jqxgridtariffoc").jqxGrid({ disabled:false});
-	        		$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
-	        		$("#jqxgridtariffuel").jqxGrid({ disabled: false});
-	        		 document.getElementById("btnTarifEdit").style.display="none";
-	     			document.getElementById("btnTarifSave").style.display="block";
-	    			$("#jqxgridtarif").jqxGrid({ disabled: true});
-
-	    		} */
-	    		if(document.getElementById("cmbtariftype").value=="Weekend"){
-	    				    			
-	    			 $("#jqxgridtarifweekday").jqxGrid({ disabled: false});
-	    			 document.getElementById("btnTarifEdit").style.display="none";
-		     			document.getElementById("btnTarifSave").style.display="block";
-	    		}
-	    		else if(document.getElementById("cmbtariftype").value=="Slab"){
-	    			 $("#jqxslabtarif").jqxGrid({ disabled: false});
-	    	 	
-	    			 var rows = $('#jqxslabtarif').jqxGrid('getrows');
-	                 var rowlength= rows.length;
-	                 var slabval = $("#jqxslabtarif").jqxGrid('getcellvalue', rowlength-1, 'slabrateperday');
-	                 if(slabval!="undefined" && slabval!="" && slabval!=null && typeof(slabval)!="undefined")
-	                	 {
-	                            $("#jqxslabtarif").jqxGrid('addrow', null, {});
-	                            rowlength++;
-	                            $("#jqxslabtarif").jqxGrid('setcellvalue',rowlength-1,'rentaltype','Slab '+rowlength);
-	                	 }
-	    		
-	    			 document.getElementById("btnTarifEdit").style.display="none";
-		     			document.getElementById("btnTarifSave").style.display="block";
-	    		}
-	    		else if(document.getElementById("cmbtariftype").value=="Package"){
-	    			
-	    			 $("#jqxpackagetarif").jqxGrid({ disabled: false});
-	    			 var rows1 = $('#jqxpackagetarif').jqxGrid('getrows');
-	                 var rowlengthpack= rows1.length;
-	                 var packval = $("#jqxpackagetarif").jqxGrid('getcellvalue', rowlengthpack-1, 'packageextradaytarif');
-	                 if(packval!="undefined" && packval!="" && packval!=null && typeof(packval)!="undefined")
-	                	 {
-	                            $("#jqxpackagetarif").jqxGrid('addrow', null, {});
-	                            rowlengthpack++;
-	                        $("#jqxpackagetarif").jqxGrid('setcellvalue',rowlengthpack-1,'rentaltype','Package '+rowlengthpack);
-	    		 }
-	    			 document.getElementById("btnTarifEdit").style.display="none";
-		     			document.getElementById("btnTarifSave").style.display="block";
-	    		}
-	    		else if(document.getElementById("cmbtariftype").value=="FOC"){
-	    			$("#jqxgridtariffoc").jqxGrid({ disabled:false});
-	    				 document.getElementById("btnTarifEdit").style.display="none";
-		     			document.getElementById("btnTarifSave").style.display="block";
-	    		}
-	    		else{
-	    			$("#jqxgridtarif").jqxGrid({ disabled: false});
-	        		 document.getElementById("btnTarifEdit").style.display="none";
-	     			document.getElementById("btnTarifSave").style.display="block";
-	    			
-	    		}
-		/*  alert("CMB"+document.getElementById("hidcmbtariftype").value);
-		
-    		$("#jqxgridtarifgrp").jqxGrid({ disabled: false});
-    		$("#jqxgridtarifdelivery").jqxGrid({ disabled: false});
-    		$("#jqxgridtarifgrpfinish").jqxGrid({ disabled: false});
-    		$('#frmTariffManagement select').attr('disabled', false); */
-    	
-		 	document.getElementById("cmbtariftype").disabled=true;
-		}  
-		 function funTarifSave(){
-			 document.getElementById("cmbtariftype").disabled=false;
-			 if(document.getElementById("cmbtariftype").value=="Weekend"){
-	
-				 var rowsweekday=$('#jqxgridtarifweekday').jqxGrid('getrows');
-	
-				 if(typeof(rowsweekday[0].cswkday)=="undefined" || rowsweekday[0].cswkday==""){
-			
-					 document.getElementById("errormsg").innerText="";
-		    			document.getElementById("errormsg").innerText="Start day is Mandatory";
-		    			return false;
-		    		}
-		    		if(typeof(rowsweekday[0].cstime)=="undefined" || rowsweekday[0].cstime==""){
-		    			document.getElementById("errormsg").innerText="";
-		    			document.getElementById("errormsg").innerText="Start time is Mandatory";
-		    			return false;
-		    		}
-		    		if(typeof(rowsweekday[0].cewkday)=="undefined" || rowsweekday[0].cewkday==""){
-		    			document.getElementById("errormsg").innerText="";
-		    			document.getElementById("errormsg").innerText="End day is Mandatory";
-		    			return false;
-		    		}
-		    		if(typeof(rowsweekday[0].cetime)=="undefined" || rowsweekday[0].cetime==""){
-		    			document.getElementById("errormsg").innerText="";
-		    			document.getElementById("errormsg").innerText="End time is Mandatory";
-		    			return false;
-		    		}
-		    		if(typeof(rowsweekday[0].rate)=="undefined" || rowsweekday[0].rate==""){
-		    			document.getElementById("errormsg").innerText="";
-		    			document.getElementById("errormsg").innerText="Tariff is Mandatory";
-		    			return false;
-		    		}
-			 }
-			if(document.getElementById("docno").value!=""){
-				 document.getElementById("mode").value="A";
-				 $('#btnSave').mousedown();	 
-			 }
-			 else{
-				 $.messager.alert('Warning','Please Select a Valid Document');
-				 return false;
-			 }
-			// document.getElementById("btnTarifSave").disabled=true;
-			 document.getElementById("cmbtariftype").disabled=true;
-		 }
-		  function isNumber(evt,id) {
-		        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-		        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-		         {
-		        	 $.messager.alert('Warning','Enter Numbers Only');
-		           $("#"+id+"").focus();
-		            return false;
-		            
-		         }
-		        
-		        return true;
-		    }
-		function funPrintBtn() {
-	   		if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-	   		 $.messager.alert('Warning','Select a Document');
-	   		 return false;
-		   		}
-	   		var url=document.URL;
-	   	 var reurl=url.split("com/");
-	   	  	//var reurl=url.split("tarifMgmt.jsp");
-
-	   	   	var win= window.open(reurl[0]+"com/controlcentre/masters/tarifmgmt/tarifPrint.action?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	   	    	//var win= window.open(reurl[0]+"printManualInvoice?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	   		win.focus();  
-
-
-	   	 }
-		
-		function getTariftype(){
-			var x = new XMLHttpRequest();
-			x.onreadystatechange = function() {
-				if (x.readyState == 4 && x.status == 200) {
-					var items = x.responseText;
-					items=items.split("***");
-					var tarifitems = items[0].split(",");
-					var status=items[1];				
-					var optionstarif = '<option value="">--Select--</option>';
-					for (var i = 0; i < tarifitems.length; i++) {
-						optionstarif += '<option value="' + tarifitems[i] + '">'
-								+ tarifitems[i] + '</option>';
-					}
-					$("select#cmbtariftype").html(optionstarif);
-				 	 if ($('#hidcmbtariftype').val() != null) {
-						$('#cmbtariftype').val($('#hidcmbtariftype').val());
-					}
-				 	/*  if(status.trim()=="1"){
-			    		  document.getElementById("fieldfoc").style.display="block";
-			        	  document.getElementById("fieldweekday").style.display="block";
-			    	  }
-			    	  else{
-			    		  document.getElementById("fieldfoc").style.display="none";
-			        	  document.getElementById("fieldweekday").style.display="none";	  
-			    	  }   */
-				 	 /*  document.getElementById("fieldfoc").style.display="none";
-		        	  document.getElementById("fieldweekday").style.display="none";	
-		        	  
-		        	  document.getElementById("fieldslab").style.display="none";
-		        	  document.getElementById("fieldpackage").style.display="none";
-		       	  document.getElementById("fieldregular").style.display="block"; */
-		        	 
-		        	  
-		        	  
-				}
-			}
-			x.open("GET", "getTariftype.jsp", true);
-			x.send();
-		}
-		
-</script>
 <style>
 /* =========================================================
    MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
@@ -795,13 +31,13 @@ body {
     border-radius: 4px;
     padding: 15px;
     max-width: 100%;
-    margin: auto;
+    margin: 0 auto;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
 }
 
-/* Master Input Heights - Set to 24px as requested */
-input[type="text"], select {
+/* Master Input Heights - Set to 24px */
+input[type="text"], select, textarea {
     height: 24px !important;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -813,9 +49,19 @@ input[type="text"], select {
     color: #333;
 }
 
-input[type="text"]:focus, select:focus {
+textarea {
+    height: auto !important; /* allow textarea to grow */
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
     border-color: #007bff;
     outline: none;
+}
+
+input[readonly], input:disabled, select:disabled, textarea:disabled {
+    background-color: #f4f5f7 !important;
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
 }
 
 /* Clean Panels mapping to fieldsets */
@@ -834,12 +80,22 @@ legend {
     padding: 0 0 0 6px;
     border-left: 3px solid #0056b3;
     margin-bottom: 5px;
+    background: #fff;
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 0;
+    margin-top: 15px; /* Added spacing to pull away from header */
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* Strict Full-Width CSS Grid for Top Section */
 .top-grid {
     display: grid;
-    /* 5 strict columns + inputs. Stretches perfectly across. */
     grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
     column-gap: 8px;
     row-gap: 8px;
@@ -856,11 +112,14 @@ legend {
     white-space: nowrap;
 }
 
-.flex-row {
-    display: flex;
+/* Specific grid layout for the Notes row */
+.notes-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px;
+    gap: 8px;
     align-items: center;
-    gap: 5px;
     width: 100%;
+    margin-bottom: 15px;
 }
 
 .chk-container {
@@ -879,129 +138,730 @@ legend {
     padding: 0;
 }
 
-/* Middle Section Split */
-.middle-section {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+form label.error {
+    color: red;
+    font-weight: bold;
 }
 
-.middle-panel {
-    border: 1px solid #e1e4e8;
-    padding: 15px 10px 10px 10px;
-    background: #fff;
-    position: relative;
-    border-radius: 4px;
-}
-
-.middle-panel-title {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: #fff;
-    padding: 0 5px 0 6px;
-    color: #0056b3;
-    font-weight: bold;
-    font-size: 13px;
-    border-left: 3px solid #0056b3;
-}
-
-/* Clean Tables mapping requested colors */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border: 1px solid #ddd;
-}
-.cr-table th, .cr-table td {
-    padding: 4px 6px;
-    border: 1px solid #ddd;
-    font-size: 12px;
-}
-.cr-table th {
-    background: #f0f3f5;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-}
-.lbl-right {
-    text-align: right;
-    color: #444;
-    font-weight: bold;
-    font-size: 12px;
+.hidden-scrollbar {
+    overflow: auto;
+    height: calc(100vh - 120px);
     padding-right: 5px;
 }
 
-/* Tabs Override */
-#tabs { margin-top: 5px; margin-bottom: 0px; }
-#content { padding-top: 10px; }
-
+.btn-icon {
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.btn-icon:hover {
+    transform: scale(1.05);
+}
 </style>
+
+<script type="text/javascript">
+	$(document).ready(function () { 
+    	getTariftype();
+    	getcheckbox();
+     	setCheck();
+     	
+    	document.getElementById("fieldextrainsur").style.display="none";
+    	document.getElementById("grouplabel").style.display="none";
+		document.getElementById("txtclient").disabled="true";
+		
+    	$("#jqxTariffDate").jqxDateTimeInput({ width: '100%', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+    	$("#jqxTariffFromDate").jqxDateTimeInput({ width: '100%', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+    	$("#jqxTariffToDate").jqxDateTimeInput({ width: '100%', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+    	document.getElementById("btnTarifEdit").style.display="none";
+    	
+    	/* Force exactly 24px styling onto JQX elements */
+        setTimeout(function () {
+            $(".jqx-datetimeinput").css({
+                "border": "1px solid #ccc", "border-radius": "3px", "height": "24px", "box-sizing": "border-box"
+            });
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", "line-height": "22px", "height": "22px", "font-size": "12px", 
+                "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box",
+                "border": "none", "background": "transparent"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({
+                "top": "0px", "height": "22px", "border": "none", "background-color": "transparent"
+            });
+        }, 0);
+
+		$('#clienttarifwindow').jqxWindow({autoOpen:false, width: '50%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+		$('#clienttarifwindow').jqxWindow('close');
+		
+		selectTarif();
+		
+	    $('#txtclient').dblclick(function(){
+			$('#clienttarifwindow').jqxWindow('open');
+			$('#clienttarifwindow').jqxWindow('focus');
+		 	clientSearchContent('clientSearch.jsp?tariftype='+document.getElementById("cmbtariftype").value, $('#clienttarifwindow'));
+		});
+	});
+    
+    function clientSearchContent(url) {
+		$.get(url).done(function (data) {
+  	    	$('#clienttarifwindow').jqxWindow('setContent', data);
+  		}); 
+  	}
+      
+    function getClient(event){
+  		var x= event.keyCode;
+        if(x==114){
+        	$('#clienttarifwindow').jqxWindow('open');
+       		$('#clienttarifwindow').jqxWindow('focus');
+       		clientSearchContent('clientSearch.jsp?tariftype='+document.getElementById("cmbtariftype").value, $('#clienttarifwindow'));
+        }
+    }
+    
+    function selectTarif(){
+    	$('#frmTariffManagement select').attr('disabled',false );
+  		var temp=document.getElementById("cmbtariftype").value;
+  		$("#divRegularTarif").load("gridRegularTarif.jsp");
+        $("#divfoc").load("gridFoc.jsp");
+        $("#divweekday").load("gridWeekday.jsp");
+        $("#divslab").load("gridSlabTarif.jsp");
+        $("#divpackage").load("gridPackageTarif.jsp");
+        $("#divgroup1").load("gridgroup1.jsp");
+      	$("#divgroup2").load("gridgroup2.jsp");
+  		
+  		if(temp=="Client"){
+  			document.getElementById("fieldextrainsur").style.display="none";
+  			$('#txtclient').attr('disabled', false );
+  			$("#jqxgridtarif").jqxGrid({ disabled: false});
+  			$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
+  			$("#jqxgridtariffoc").jqxGrid({ disabled: true});
+  			$("#jqxgridtariffuel").jqxGrid({ disabled: false});
+  			if(document.getElementById("mode").value=='A'){
+  	 			$("#jqxgridtarif").jqxGrid({ disabled: true});
+  			}
+  		}
+  		else if(temp=="Corporate"){
+  			document.getElementById("fieldextrainsur").style.display="none";
+  			$('#txtclient').attr('disabled', false );
+  			document.getElementById("fieldfoc").style.display="none";
+  			document.getElementById("fieldpackage").style.display="none";
+  			document.getElementById("fieldslab").style.display="none";
+  			document.getElementById("fieldweekday").style.display="none";
+  			document.getElementById("fieldregular").style.display="block";
+  			$("#jqxgridtarif").jqxGrid({ disabled: false});
+  		if(document.getElementById("mode").value=='A'){
+  			$("#jqxgridtarif").jqxGrid({ disabled: true});
+  			}	
+  		}
+  		else if(temp=="Weekend"){
+  			$('#txtclient').attr('disabled', true );
+  			document.getElementById("fieldextrainsur").style.display="none";
+  			document.getElementById("fieldfoc").style.display="none";
+  			document.getElementById("fieldregular").style.display="none";
+  			document.getElementById("fieldpackage").style.display="none";
+  			document.getElementById("fieldslab").style.display="none";
+  			document.getElementById("fieldweekday").style.display="block";
+  			$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
+  		if(document.getElementById("mode").value=='A'){
+  			$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
+  			}
+  		}
+  		else if(temp=="FOC"){
+  			$('#txtclient').attr('disabled', true );
+  			document.getElementById("fieldextrainsur").style.display="none";
+  			document.getElementById("fieldweekday").style.display="none";
+  			document.getElementById("fieldfoc").style.display="block";
+  			$("#jqxgridtarifweekday").jqxGrid({ disabled: false});
+  			$("#jqxgridtarif").jqxGrid({ disabled: true});
+  			if(document.getElementById("mode").value=='A'){
+  				$("#jqxgridtarifweekday").jqxGrid({ disabled: true});
+  	 			$("#jqxgridtariffoc").jqxGrid({ disabled: true});
+  			}
+  		}
+  		else if(temp=="Slab"){
+  			$('#txtclient').attr('disabled', true );
+  			document.getElementById("fieldextrainsur").style.display="none";
+  			document.getElementById("fieldfoc").style.display="none";
+  			document.getElementById("fieldregular").style.display="none";
+  			document.getElementById("fieldweekday").style.display="none";
+  			document.getElementById("fieldpackage").style.display="none";
+  			document.getElementById("fieldslab").style.display="block";
+  			$("#jqxslabtarif").jqxGrid({ disabled: false});
+  		if(document.getElementById("mode").value=='A'){
+  			$("#jqxslabtarif").jqxGrid({ disabled: true});
+  			}
+  		}
+  		else if(temp=="Package"){
+  			$('#txtclient').attr('disabled', true );
+  			document.getElementById("fieldextrainsur").style.display="none";
+  			document.getElementById("fieldfoc").style.display="none";
+  			document.getElementById("fieldregular").style.display="none";
+  			document.getElementById("fieldweekday").style.display="none";
+  			document.getElementById("fieldslab").style.display="none";
+  			document.getElementById("fieldpackage").style.display="block";
+  			$("#jqxpackagetarif").jqxGrid({ disabled: false});
+  		if(document.getElementById("mode").value=='A'){
+  			$("#jqxpackagetarif").jqxGrid({ disabled: true});
+  			}
+  		}
+  		else{
+  			$('#txtclient').attr('disabled', true );
+  			document.getElementById("fieldextrainsur").style.display="block";
+  			document.getElementById("fieldfoc").style.display="none";
+  			document.getElementById("fieldweekday").style.display="none";
+  			document.getElementById("fieldpackage").style.display="none";
+  			document.getElementById("fieldslab").style.display="none";
+  			document.getElementById("fieldregular").style.display="block";
+  			$("#jqxgridtarif").jqxGrid({ disabled: false});
+  		if(document.getElementById("mode").value=='A'){
+  			$("#jqxgridtarif").jqxGrid({ disabled: true});
+  			}
+  	    } 
+      }
+	
+	function funReset(){ }
+		
+    function funReadOnly(){
+        $('#frmTariffManagement input').attr('readonly', true );
+        $('#frmTariffManagement select').attr('disabled', true );
+        $('#frmTariffManagement textarea').attr('readonly', true );
+        $('#jqxTariffFromDate').jqxDateTimeInput({ disabled: true});
+        $('#jqxTariffToDate').jqxDateTimeInput({ disabled: true});
+        $('#jqxTariffDate').jqxDateTimeInput({ disabled: true});
+        $("#jqxgridtarif").jqxGrid({ disabled: true});
+        $("#jqxgridtariffuel").jqxGrid({ disabled: true});
+        $("#jqxgridtariffoc").jqxGrid({ disabled: true});
+        $("#jqxgridtarifweekday").jqxGrid({ disabled: true});
+        $("#jqxgridtarifgrpfinish").jqxGrid({ disabled: true});
+    } 
+    	
+    function funRemoveReadOnly(){
+        $('#frmTariffManagement input').attr('readonly', false );
+        $('#frmTariffManagement select').attr('disabled', false );
+        $('#frmTariffManagement textarea').attr('readonly', false );
+        $('#jqxTariffFromDate').jqxDateTimeInput({ disabled: false});
+        $('#jqxTariffToDate').jqxDateTimeInput({ disabled: false});
+        $('#jqxTariffDate').jqxDateTimeInput({ disabled: false});
+        $("#jqxgridtarif").jqxGrid({ disabled: false});
+        $("#jqxgridtariffuel").jqxGrid({ disabled: false});
+        $("#jqxgridtariffoc").jqxGrid({ disabled: false});
+        $("#jqxgridtarifweekday").jqxGrid({ disabled: false});
+        $("#jqxgridtarifgrpfinish").jqxGrid({ disabled: false});
+        
+        if(document.getElementById("mode").value=='A'){
+            $("#divRegularTarif").load("gridRegularTarif.jsp");
+             $("#divfoc").load("gridFoc.jsp");
+             $("#divweekday").load("gridWeekday.jsp");
+             $("#divslab").load("gridSlabTarif.jsp");
+             $("#divpackage").load("gridPackageTarif.jsp");
+             $("#divgroup1").load("gridgroup1.jsp");
+             $("#divgroup2").load("gridgroup2.jsp");
+             document.getElementById("grouplabel").style.display="none";
+             document.getElementById("btnTarifEdit").style.display="none";
+            document.getElementById("btnTarifSave").style.display="none";
+             $("#jqxTariffFromDate").jqxDateTimeInput('setDate', new Date());
+            $("#jqxTariffToDate").jqxDateTimeInput('setDate', new Date());
+            $("#jqxTariffDate").jqxDateTimeInput('setDate', new Date());
+            
+             document.getElementById("fieldfoc").style.display="none";
+              document.getElementById("fieldweekday").style.display="none"; 
+              
+              document.getElementById("fieldslab").style.display="none";
+              document.getElementById("fieldpackage").style.display="none";
+             document.getElementById("fieldregular").style.display="block";
+             document.getElementById("fieldextrainsur").style.display="block";
+        }
+        
+        if(document.getElementById("mode").value=='E'){
+            $('#cmbtariftype').attr('disabled', 'disabled');
+            $('#txtclient').attr('disabled', true );
+            $('#cmbtariffor').attr('disabled', 'disabled');
+        }
+        if(document.getElementById("mode").value=='D'){
+            $("#divRegularTarif").load("gridRegularTarif.jsp");
+             $("#divfoc").load("gridFoc.jsp");
+             $("#divweekday").load("gridWeekday.jsp");
+             $("#divslab").load("gridSlabTarif.jsp");
+             $("#divpackage").load("gridPackageTarif.jsp");
+             $("#divgroup1").load("gridgroup1.jsp");
+             $("#divgroup2").load("gridgroup2.jsp");
+        }
+    }
+    	
+    function funNotify(){	
+        if(document.getElementById("docno").value!=''){
+            if(document.getElementById("cmbtariftype").value=='Regular' || document.getElementById("cmbtariftype").value=='Corporate'  || document.getElementById("cmbtariftype").value=='Agent'){	
+                var rows = $("#jqxgridtarif").jqxGrid('getrows');
+                $('#gridlength').val(rows.length);
+                for(var i=0 ; i < rows.length ; i++){
+                    newTextBox = $(document.createElement("input"))
+                    .attr("type", "dil")
+                    .attr("id", "test"+i)
+                    .attr("name", "test"+i);
+                    
+                    newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+"::"+rows[i].cdw+"::"+rows[i].pai+"::"+rows[i].cdw1+"::"+rows[i].pai1+"::"+rows[i].gps+"::"+rows[i].babyseater+"::"+rows[i].cooler+"::"+rows[i].exhrchg+"::"+rows[i].chaufchg+"::"+rows[i].chaufexchg+"::"+rows[i].disclevel1+"::"+rows[i].disclevel2+"::"+rows[i].disclevel3+"::"+rows[i].kmrest+"::"+rows[i].exkmrte+"::"+rows[i].oinschg);
+                    newTextBox.appendTo('form');
+                }
+            }
+            else if(document.getElementById("cmbtariftype").value=='Weekend'){
+                var rowsweekday=$("#jqxgridtarifweekday").jqxGrid('getrows');
+                var j=0;
+                for(var i=0 ; i < rowsweekday.length ; i++){
+                    newTextBoxweekday = $(document.createElement("input"))
+                    .attr("type", "dil")
+                    .attr("id", "txtweekday"+i)
+                    .attr("name", "txtweekday"+i);
+                    
+                    var d=new Date(rowsweekday[i].cstime);
+                    var tempstarttime=d.getHours()+":"+(d.getMinutes()<10?'0':'') + d.getMinutes();
+                    var d1=new Date(rowsweekday[i].cetime);
+                    var tempendtime=d1.getHours()+":"+(d1.getMinutes()<10?'0':'') + d1.getMinutes();
+                    
+                    if(typeof(rowsweekday[i].cswkday)!="undefined" && rowsweekday[i].cswkday!="" && typeof(rowsweekday[i].cstime)!="undefined" && typeof(rowsweekday[i].cstime)!="" && 
+                            typeof(rowsweekday[i].cewkday)!="undefined" && typeof(rowsweekday[i].cewkday)!="" && typeof(rowsweekday[i].cetime)!="undefined" && typeof(rowsweekday[i].cetime)!=""){
+                        newTextBoxweekday.val(rowsweekday[i].cswkday+"::"+tempstarttime+"::"+rowsweekday[i].cewkday+"::"+tempendtime+"::"+rowsweekday[i].rate+"::"+rowsweekday[i].cdw+"::"+rowsweekday[i].gps+"::"+rowsweekday[i].babyseater+"::"+rowsweekday[i].cooler+"::"+rowsweekday[i].kmrest+"::"+rowsweekday[i].exkmrte+"::"+rowsweekday[i].oinschg+"::"+rowsweekday[i].ulevel1+"::"+rowsweekday[i].ulevel2+"::"+rowsweekday[i].ulevel3+"::"+rowsweekday[i].exdaychg);
+                    j++;
+                    newTextBoxweekday.appendTo('form');
+                    }
+                }
+                $('#weekdaylength').val(j);
+            }
+            else if(document.getElementById("cmbtariftype").value=='Slab'){
+                 var rowsslab = $("#jqxslabtarif").jqxGrid('getrows');
+                    var z=0;
+                    for(var i=0;i<rowsslab.length;i++){
+                        var slabfrom=rowsslab[i].slabfromday;
+                        var slabto=rowsslab[i].slabtoday;
+                        var slabperday=rowsslab[i].slabrateperday;
+                    if(slabfrom!="undefined" && slabfrom!="" && slabfrom!=null && typeof(slabfrom)!="undefined" && slabto!="undefined" && slabto!="" && slabto!=null && typeof(slabto)!="undefined" && slabperday!="undefined" && slabperday!="" && slabperday!=null && typeof(slabperday)!="undefined"){
+                            
+                            newTextBoxSlab = $(document.createElement("input"))
+                            .attr("type", "dil")
+                            .attr("id", "txtslab"+z)
+                            .attr("name", "txtslab"+z)
+                            .attr("hidden", "true");
+                            newTextBoxSlab.val(rowsslab[i].rentaltype="Slab "+(z+1)+"::"+rowsslab[i].slabfromday+"::"+rowsslab[i].slabtoday+"::"+rowsslab[i].slabrateperday+"::"+rowsslab[i].cdw+"::"+rowsslab[i].pai+"::"+rowsslab[i].cdw1+"::"+rowsslab[i].pai1+"::"+rowsslab[i].gps+"::"+rowsslab[i].babyseater+"::"+rowsslab[i].cooler+"::"+rowsslab[i].exhrchg+"::"+rowsslab[i].chaufexchg+"::"+rowsslab[i].kmrest+"::"+rowsslab[i].exkmrte+"::"+rowsslab[i].oinschg);
+                            newTextBoxSlab.appendTo('form');
+                            z++;
+                        }
+                    }
+                    $('#slablength').val(z);
+            }
+            else if(document.getElementById("cmbtariftype").value=='Package'){
+                var rowspackage = $("#jqxpackagetarif").jqxGrid('getrows');
+                var z=0;
+                    for(var i=0 ; i < rowspackage.length ; i++){
+                        var packageday=rowspackage[i].packageblockday;
+                        var packagetarif=rowspackage[i].packageblocktarif;
+                        var packageextarif=rowspackage[i].packageextradaytarif;
+                    if(packageday!="undefined" && packageday!="" && packageday!=null && typeof(packageday)!="undefined" && packagetarif!="undefined" && packagetarif!="" && packagetarif!=null && typeof(packagetarif)!="undefined" && packageextarif!="undefined" && packageextarif!="" && packageextarif!=null && typeof(packageextarif)!="undefined"){
+                        
+                        newTextBoxPackage = $(document.createElement("input"))
+                        .attr("type", "dil")
+                        .attr("id", "txtpackage"+z)
+                        .attr("name", "txtpackage"+z)
+                        .attr("hidden", "true");
+                        newTextBoxPackage.val(rowspackage[i].rentaltype="Package "+(z+1)+"::"+rowspackage[i].packageblockday+"::"+rowspackage[i].packageblocktarif+"::"+rowspackage[i].packageextradaytarif+"::"+rowspackage[i].cdw+"::"+rowspackage[i].pai+"::"+rowspackage[i].cdw1+"::"+rowspackage[i].pai1+"::"+rowspackage[i].gps+"::"+rowspackage[i].babyseater+"::"+rowspackage[i].cooler+"::"+rowspackage[i].exhrchg+"::"+rowspackage[i].chaufexchg+"::"+rowspackage[i].kmrest+"::"+rowspackage[i].exkmrte+"::"+rowspackage[i].oinschg);
+                    
+                        newTextBoxPackage.appendTo('form');
+                        z++;
+                    }
+                    }
+                    $('#packagelength').val(z);
+            }           
+            else if(document.getElementById("cmbtariftype").value=='FOC'){
+                var rowsfoc=$("#jqxgridtariffoc").jqxGrid('getrows');
+                $('#foclength').val(rowsfoc.length);
+                for(var i=0 ; i < rowsfoc.length ; i++){
+        
+                        newTextBoxfoc = $(document.createElement("input"))
+                        .attr("type", "dil")
+                        .attr("id", "txtfoc"+i)
+                        .attr("name", "txtfoc"+i);
+                        
+                        newTextBoxfoc.val(rowsfoc[i].minday+"::"+rowsfoc[i].foc+"::"+rowsfoc[i].rate+"::"+rowsfoc[i].cdw+"::"+rowsfoc[i].gps+"::"+rowsfoc[i].babyseater+"::"+rowsfoc[i].cooler+"::"+rowsfoc[i].kmrest+"::"+rowsfoc[i].exkmrte+"::"+rowsfoc[i].oinschg);
+                    
+                        newTextBoxfoc.appendTo('form');
+                    }
+            }
+            
+            var a=document.getElementById("gridlength").value;
+            var b=document.getElementById("weekdaylength").value;
+            var c=document.getElementById("foclength").value;
+            var d=document.getElementById("fuellength").value;
+            var e=document.getElementById("slablength").value;
+            var f=document.getElementById("packagelength").value;
+        }
+        $('#frmTariffManagement select').attr('disabled',false);
+        $('#txtclient').attr('disabled',false);
+        return 1;
+        $('#frmTariffManagement select').attr('disabled',true);
+    } 
+
+    function funChkButton() { }
+
+    function funSearchLoad(){
+        changeContent('tarifSearch.jsp', $('#window')); 
+    }
+        
+    function funFocus(){
+        $('#jqxTariffDate').jqxDateTimeInput('focus');          
+    }
+    
+    function setCheck(){
+        if(document.getElementById("chckdeliverychg").checked==true){
+            document.getElementById("hidcheck").value=1;
+        }
+        else
+            document.getElementById("hidcheck").value=0;
+    }
+    function getcheckbox(){
+        if(document.getElementById("hidcheck").value==1){
+            document.getElementById("chckdeliverychg").checked=true;
+        }
+        else{
+            document.getElementById("chckdeliverychg").unchecked=true;
+        }
+    }
+    
+    function setValues(){
+            
+        if(document.getElementById("mode").value=='view'){
+            $("#divRegularTarif").load("gridRegularTarif.jsp");
+             $("#divfoc").load("gridFoc.jsp");
+             $("#divweekday").load("gridWeekday.jsp");
+             $("#divslab").load("gridSlabTarif.jsp");
+             $("#divpackage").load("gridPackageTarif.jsp");
+             $("#divgroup1").load("gridgroup1.jsp");
+             $("#divgroup2").load("gridgroup2.jsp");
+         }
+        document.getElementById("cmbtariftype").disabled=false;
+        
+        if(document.getElementById("hidcmbtariftype").value=="Regular"){
+            document.getElementById("fieldfoc").style.display="none";
+            document.getElementById("fieldweekday").style.display="none";
+            document.getElementById("fieldpackage").style.display="none";
+            document.getElementById("fieldslab").style.display="none";
+            document.getElementById("fieldregular").style.display="block";
+            document.getElementById("fieldextrainsur").style.display="block";
+        }
+        else if(document.getElementById("hidcmbtariftype").value=="Corporate"){
+            
+            document.getElementById("fieldextrainsur").style.display="none";
+            document.getElementById("fieldfoc").style.display="none";
+            document.getElementById("fieldpackage").style.display="none";
+            document.getElementById("fieldslab").style.display="none";
+            document.getElementById("fieldweekday").style.display="none";
+            document.getElementById("fieldregular").style.display="block";
+        }
+        else if(document.getElementById("hidcmbtariftype").value=="Weekend"){
+            document.getElementById("fieldextrainsur").style.display="none";
+            document.getElementById("fieldfoc").style.display="none";
+            document.getElementById("fieldpackage").style.display="none";
+            document.getElementById("fieldslab").style.display="none";
+            document.getElementById("fieldregular").style.display="none";
+            document.getElementById("fieldweekday").style.display="block";
+        }
+        else if(document.getElementById("hidcmbtariftype").value=="Slab"){
+            document.getElementById("fieldextrainsur").style.display="none";
+            document.getElementById("fieldslab").style.display="block";
+            document.getElementById("fieldfoc").style.display="none";
+            document.getElementById("fieldweekday").style.display="none";
+            document.getElementById("fieldpackage").style.display="none";
+            document.getElementById("fieldregular").style.display="none";
+            
+        }
+        else if(document.getElementById("hidcmbtariftype").value=="Package"){
+            document.getElementById("fieldextrainsur").style.display="none";
+            document.getElementById("fieldfoc").style.display="none";
+            document.getElementById("fieldweekday").style.display="none";
+            document.getElementById("fieldslab").style.display="none";
+            document.getElementById("fieldregular").style.display="none";
+            document.getElementById("fieldpackage").style.display="block";
+        }
+        else if(document.getElementById("hidcmbtariftype").value=="FOC"){
+            document.getElementById("fieldextrainsur").style.display="none";
+            document.getElementById("fieldpackage").style.display="none";
+            document.getElementById("fieldslab").style.display="none";
+            document.getElementById("fieldregular").style.display="none";
+            document.getElementById("fieldweekday").style.display="none";
+            document.getElementById("fieldfoc").style.display="block";
+        } 
+        else if(document.getElementById("hidcmbtariftype").value=="Agent"){
+            document.getElementById("fieldfoc").style.display="none";
+            document.getElementById("fieldweekday").style.display="none";
+            document.getElementById("fieldpackage").style.display="none";
+            document.getElementById("fieldslab").style.display="none";
+            document.getElementById("fieldregular").style.display="block";
+            document.getElementById("fieldextrainsur").style.display="block";
+        }
+
+        if(document.getElementById("docno")!=''){
+            var temp=document.getElementById("docno").value;
+            $("#divgroup2").load("gridgroup2.jsp?id="+temp);
+            $("#divgroup1").load("gridgroup1.jsp?id="+temp);
+        }
+         if ($('#hidcmbtariftype').val() != null) {
+                $('#cmbtariftype').val($('#hidcmbtariftype').val());
+         }
+        if ($('#hidcmbtariffor').val() != null) {
+            $('#cmbtariffor').val($('#hidcmbtariffor').val());
+        }
+        if($('#hidjqxTariffDate').val()){
+            $("#jqxTariffDate").jqxDateTimeInput('val', $('#hidjqxTariffDate').val());
+        }
+        if($('#hidjqxTariffFromDate').val()){
+            $("#jqxTariffFromDate").jqxDateTimeInput('val', $('#hidjqxTariffFromDate').val());
+        }
+        if($('#hidjqxTariffToDate').val()){
+            $("#jqxTariffToDate").jqxDateTimeInput('val', $('#hidjqxTariffToDate').val());
+        }
+        if($('#msg').val()!=""){
+             $.messager.alert('Message',$('#msg').val());
+            }
+         document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+        if(document.getElementById("docno").value==''){
+            document.getElementById("btnTarifEdit").style.display="none";
+        }
+        document.getElementById("cmbtariftype").disabled=true;
+    }
+    
+     function funTarifEdit(){
+         document.getElementById("cmbtariftype").disabled=false;
+        $("#jqxgridtarifgrp").jqxGrid({ disabled:false});
+        document.getElementById("insurexcess").readOnly=false;
+        document.getElementById("cdwexcess").readOnly=false;
+        document.getElementById("scdwexcess").readOnly=false;
+        document.getElementById("securityamt").readOnly=false;
+
+        if(document.getElementById("cmbtariftype").value=="Weekend"){
+                         
+             $("#jqxgridtarifweekday").jqxGrid({ disabled: false});
+             document.getElementById("btnTarifEdit").style.display="none";
+             document.getElementById("btnTarifSave").style.display="block";
+        }
+        else if(document.getElementById("cmbtariftype").value=="Slab"){
+             $("#jqxslabtarif").jqxGrid({ disabled: false});
+        
+             var rows = $('#jqxslabtarif').jqxGrid('getrows');
+                 var rowlength= rows.length;
+                 var slabval = $("#jqxslabtarif").jqxGrid('getcellvalue', rowlength-1, 'slabrateperday');
+                 if(slabval!="undefined" && slabval!="" && slabval!=null && typeof(slabval)!="undefined")
+                     {
+                             $("#jqxslabtarif").jqxGrid('addrow', null, {});
+                             rowlength++;
+                             $("#jqxslabtarif").jqxGrid('setcellvalue',rowlength-1,'rentaltype','Slab '+rowlength);
+                     }
+        
+             document.getElementById("btnTarifEdit").style.display="none";
+             document.getElementById("btnTarifSave").style.display="block";
+        }
+        else if(document.getElementById("cmbtariftype").value=="Package"){
+            
+             $("#jqxpackagetarif").jqxGrid({ disabled: false});
+             var rows1 = $('#jqxpackagetarif').jqxGrid('getrows');
+                 var rowlengthpack= rows1.length;
+                 var packval = $("#jqxpackagetarif").jqxGrid('getcellvalue', rowlengthpack-1, 'packageextradaytarif');
+                 if(packval!="undefined" && packval!="" && packval!=null && typeof(packval)!="undefined")
+                     {
+                             $("#jqxpackagetarif").jqxGrid('addrow', null, {});
+                             rowlengthpack++;
+                         $("#jqxpackagetarif").jqxGrid('setcellvalue',rowlengthpack-1,'rentaltype','Package '+rowlengthpack);
+         }
+             document.getElementById("btnTarifEdit").style.display="none";
+             document.getElementById("btnTarifSave").style.display="block";
+        }
+        else if(document.getElementById("cmbtariftype").value=="FOC"){
+            $("#jqxgridtariffoc").jqxGrid({ disabled:false});
+                 document.getElementById("btnTarifEdit").style.display="none";
+                 document.getElementById("btnTarifSave").style.display="block";
+        }
+        else{
+            $("#jqxgridtarif").jqxGrid({ disabled: false});
+             document.getElementById("btnTarifEdit").style.display="none";
+             document.getElementById("btnTarifSave").style.display="block";
+            
+        }
+        document.getElementById("cmbtariftype").disabled=true;
+    }  
+     function funTarifSave(){
+         document.getElementById("cmbtariftype").disabled=false;
+         if(document.getElementById("cmbtariftype").value=="Weekend"){
+             var rowsweekday=$('#jqxgridtarifweekday').jqxGrid('getrows');
+             if(typeof(rowsweekday[0].cswkday)=="undefined" || rowsweekday[0].cswkday==""){
+                 document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="Start day is Mandatory";
+                return false;
+            }
+            if(typeof(rowsweekday[0].cstime)=="undefined" || rowsweekday[0].cstime==""){
+                document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="Start time is Mandatory";
+                return false;
+            }
+            if(typeof(rowsweekday[0].cewkday)=="undefined" || rowsweekday[0].cewkday==""){
+                document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="End day is Mandatory";
+                return false;
+            }
+            if(typeof(rowsweekday[0].cetime)=="undefined" || rowsweekday[0].cetime==""){
+                document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="End time is Mandatory";
+                return false;
+            }
+            if(typeof(rowsweekday[0].rate)=="undefined" || rowsweekday[0].rate==""){
+                document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="Tariff is Mandatory";
+                return false;
+            }
+         }
+        if(document.getElementById("docno").value!=""){
+             document.getElementById("mode").value="A";
+             $('#btnSave').mousedown(); 
+         }
+         else{
+             $.messager.alert('Warning','Please Select a Valid Document');
+             return false;
+         }
+         document.getElementById("cmbtariftype").disabled=true;
+     }
+      function isNumber(evt,id) {
+            var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+            if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+             {
+                 $.messager.alert('Warning','Enter Numbers Only');
+               $("#"+id+"").focus();
+                return false;
+                
+             }
+            
+            return true;
+        }
+    function funPrintBtn() {
+        if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
+         $.messager.alert('Warning','Select a Document');
+         return false;
+            }
+        var url=document.URL;
+         var reurl=url.split("com/");
+
+            var win= window.open(reurl[0]+"com/controlcentre/masters/tarifmgmt/tarifPrint.action?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
+        win.focus();  
+
+
+     }
+    
+    function getTariftype(){
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText;
+                items=items.split("***");
+                var tarifitems = items[0].split(",");
+                var status=items[1];				
+                var optionstarif = '<option value="">--Select--</option>';
+                for (var i = 0; i < tarifitems.length; i++) {
+                    optionstarif += '<option value="' + tarifitems[i] + '">'
+                            + tarifitems[i] + '</option>';
+                }
+                $("select#cmbtariftype").html(optionstarif);
+                 if ($('#hidcmbtariftype').val() != null) {
+                    $('#cmbtariftype').val($('#hidcmbtariftype').val());
+                }
+            }
+        }
+        x.open("GET", "getTariftype.jsp", true);
+        x.send();
+    }
+</script>
+
 </head>
 <body onLoad="setValues();">
-<div id="mainBG" class="homeContent" data-type="background">
+<div id="mainBG" class="homeContent">
 <form id="frmTariffManagement" action="saveTariffManagementnew" autocomplete="off">
 	<script>
 			window.parent.formName.value="Tariff Management";
 			window.parent.formCode.value="TFM";
 	</script>
 	<jsp:include page="../../../../header.jsp" />
-	<br/> 
+    <div style="height: 20px;"></div>
 
-<div class='hidden-scrollbar'>
-<table width="100%" >
-  <tr>
-    <td width="3%" align="right">Date</td>
-    <td width="8%" align="left"><input type="hidden" id="hidjqxTariffDate" name="hidjqxTariffDate" value='<s:property value="hidjqxTariffDate"/>'/>
-      <div id='jqxTariffDate' name='jqxTariffDate' value='<s:property value="jqxTariffDate"/>'></div></td>
-    <td width="5%" align="right">Tariff Type</td><!-- onchange="selectTarif();" -->
-    <td width="18%" align="left"><select id="cmbtariftype" name="cmbtariftype" value='<s:property value="cmbtariftype"/>' onchange="selectTarif();" >
-      <option value="">--Select--</option></select>
-      
-      <input type="text" name="txtclient" id="txtclient" value='<s:property value="txtclient"/>' onkeydown="getClient(event);">
-      <input type="hidden" id="hidcmbtariftype" name="hidcmbtariftype" value='<s:property value="hidcmbtariftype"/>'/></td>
-    <!-- <option value="Regular">Regular</option><option value="Promotion">Promotion</option><option value="Client">Client</option>
-      <option value="Condition">Condition</option><option value="Corporate">Corporate</option> -->
-    <input type="hidden" name="hidtxtclient" id="hidtxtclient" value='<s:property value="hidtxtclient"/>'>
-    <td width="4%" align="right">Tariff For</td>
-    <td width="9%" align="left"><select id="cmbtariffor" name="cmbtariffor" value='<s:property value="cmbtariffor"/>'>
-      <option value="">--Select--</option><option value="Vehicle">Vehicle</option>
-    </select>
-      <input type="hidden" id="hidcmbtariffor" name="hidcmbtariffor" value='<s:property value="hidcmbtariffor"/>'/></td>
-    <td width="6%" align="right">Validity From</td>
-    <td width="9%" align="left"><input type="hidden" id="hidjqxTariffFromDate" name="hidjqxTariffFromDate" value='<s:property value="hidjqxTariffFromDate"/>'/>
-      <div id='jqxTariffFromDate' name='jqxTariffFromDate' value='<s:property value="jqxTariffFromDate"/>'></div></td>
-    <td width="5%" align="right">Validity To</td>
-    <td width="9%" align="left"><input type="hidden" id="hidjqxTariffToDate" name="hidjqxTariffToDate" value='<s:property value="hidjqxTariffToDate"/>'/>
-      <div id='jqxTariffToDate' name='jqxTariffToDate' value='<s:property value="jqxTariffToDate"/>'></div></td>
-    <td width="9%" align="left"><input type="checkbox" id="chckdeliverychg" name="chckdeliverychg"  onchange="setCheck();">
-      &nbsp;&nbsp;Delivery Charge</td><input type="hidden" name="hidcheck" id="hidcheck" value='<s:property value="hidcheck"/>'>
-    <td width="4%" align="right">Doc No</td>
-    <td width="11%" align="left"><input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>'/></td>
-    
-    </tr>
-  <tr>
-    <td height="41" align="right">Notes</td>
-    <td align="left" colspan="10"><textarea id="notes" name="notes" style="width:100%;resize:none;"><s:property value="notes"/></textarea></td>
-    <td align="center">
-    <button type="button"  id="btnTarifEdit" title="Tarif Edit" style="border:none;background:none;" onclick="funTarifEdit();">
-							<img alt="Tarif Edit" src="<%=contextPath%>/icons/tarifedit.png" width="30" height="30">
-		  </button>
-    <button type="button" id="btnTarifSave" title="Tarif Save" hidden="true" style="border:none;background:none;" onclick="funTarifSave();">
-							<img alt="Tarif Save" src="<%=contextPath%>/icons/tarifsave.png" width="30" height="30">
-		  </button>
-    
-    </td>
-   <input type="hidden" id="mode" name="mode"/>
+<div class='modern-ui hidden-scrollbar'>
+
+    <div class="top-grid">
+        <label>Date</label>
+        <div>
+            <div id='jqxTariffDate' name='jqxTariffDate' value='<s:property value="jqxTariffDate"/>'></div>
+            <input type="hidden" id="hidjqxTariffDate" name="hidjqxTariffDate" value='<s:property value="hidjqxTariffDate"/>'/>
+        </div>
+        
+        <label>Tariff Type</label>
+        <div>
+            <select id="cmbtariftype" name="cmbtariftype" value='<s:property value="cmbtariftype"/>' onchange="selectTarif();" >
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidcmbtariftype" name="hidcmbtariftype" value='<s:property value="hidcmbtariftype"/>'/>
+        </div>
+        
+        <label>Client</label>
+        <div>
+            <input type="text" name="txtclient" id="txtclient" value='<s:property value="txtclient"/>' onkeydown="getClient(event);" placeholder="F3 for Client">
+            <input type="hidden" name="hidtxtclient" id="hidtxtclient" value='<s:property value="hidtxtclient"/>'>
+        </div>
+        
+        <label>Tariff For</label>
+        <div>
+            <select id="cmbtariffor" name="cmbtariffor" value='<s:property value="cmbtariffor"/>'>
+                <option value="">--Select--</option>
+                <option value="Vehicle">Vehicle</option>
+            </select>
+            <input type="hidden" id="hidcmbtariffor" name="hidcmbtariffor" value='<s:property value="hidcmbtariffor"/>'/>
+        </div>
+        
+        <label>Valid From</label>
+        <div>
+            <div id='jqxTariffFromDate' name='jqxTariffFromDate' value='<s:property value="jqxTariffFromDate"/>'></div>
+            <input type="hidden" id="hidjqxTariffFromDate" name="hidjqxTariffFromDate" value='<s:property value="hidjqxTariffFromDate"/>'/>
+        </div>
+        
+        <label>Valid To</label>
+        <div>
+            <div id='jqxTariffToDate' name='jqxTariffToDate' value='<s:property value="jqxTariffToDate"/>'></div>
+            <input type="hidden" id="hidjqxTariffToDate" name="hidjqxTariffToDate" value='<s:property value="hidjqxTariffToDate"/>'/>
+        </div>
+        
+        <div></div> <div class="chk-container">
+            <input type="checkbox" id="chckdeliverychg" name="chckdeliverychg" onchange="setCheck();">
+            <label for="chckdeliverychg" style="cursor:pointer;">Delivery Charge</label>
+            <input type="hidden" name="hidcheck" id="hidcheck" value='<s:property value="hidcheck"/>'>
+        </div>
+        
+        <label>Doc No</label>
+        <div>
+            <input type="text" id="docno" name="docno" tabindex="-1" value='<s:property value="docno"/>' readonly/>
+        </div>
+    </div>
+
+    <div class="notes-grid">
+        <label class="lbl-right">Notes</label>
+        <textarea id="notes" name="notes" rows="1" style="width:100%; resize:none; font-family:Arial; font-size:12px; padding:2px 6px; border:1px solid #ccc; border-radius:3px;"><s:property value="notes"/></textarea>
+        
+        <div style="display:flex; justify-content: flex-end; gap:5px;">
+            <button type="button" id="btnTarifEdit" title="Tarif Edit" class="btn-icon" onclick="funTarifEdit();">
+                <img alt="Tarif Edit" src="<%=contextPath%>/icons/tarifedit.png" width="24" height="24">
+            </button>
+            <button type="button" id="btnTarifSave" title="Tarif Save" style="display:none;" class="btn-icon" onclick="funTarifSave();">
+                <img alt="Tarif Save" src="<%=contextPath%>/icons/tarifsave.png" width="24" height="24">
+            </button>
+        </div>
+    </div>
+
+<input type="hidden" id="mode" name="mode"/>
 <input type="text" name="delete" id="delete" value='<s:property value="delete"/>' hidden="true"/>
 <input type="hidden" name="tempgroup" id="tempgroup" value='<s:property value="tempgroup"/>'>
 <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
 <input type="hidden" name="weekdaylength" id="weekdaylength" value='<s:property value="weekdaylength"/>'>
 <input type="hidden" name="foclength" id="foclength" value='<s:property value="foclength"/>'>
-
 <input type="hidden" name="slablength" id="slablength" value='<s:property value="slablength"/>'>
 <input type="hidden" name="packagelength" id="packagelength" value='<s:property value="packagelength"/>'>
-
 <input type="hidden" name="fuellength" id="fuellength" value='<s:property value="fuellength"/>'>
 <input type="hidden" name="tarifmode" id="tarifmode" value='<s:property value="tarifmode"/>'>
 <input type="hidden" name="temprowindex" id="temprowindex" value='<s:property value="temprowindex"/>'> 
@@ -1009,141 +869,92 @@ legend {
 <input type="hidden" name="tempdocno" id="tempdocno" value='<s:property value="tempdocno"/>'>
 <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
 <input type="hidden" name="tempstatus" id="tempstatus" value='<s:property value="tempstatus"/>'>
-  </tr>
-</table>
 
 <center><label id="grouplabel" style="color:red;font-weight:bold;"></label></center>
 
-<table width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
   <tr>
-    <td width="6%" rowspan="11" ><div id="divgroup1" ><jsp:include page="gridgroup1.jsp"></jsp:include></div></td>
-    <td colspan="2" align="center">
-    <fieldset id="fieldregular" align="left">
-      <!-- <legend>Regular Tariff</legend> -->
-      <table width="100%">
-        <tr>
-          <td><div id="divRegularTarif">
+    <td width="15%" valign="top" style="padding-right: 5px;">
+        <div id="divgroup1"><jsp:include page="gridgroup1.jsp"></jsp:include></div>
+    </td>
+    <td width="70%" valign="top" align="center">
+        
+        <fieldset id="fieldregular" style="text-align: left;">
+          <div id="divRegularTarif">
             <jsp:include page="gridRegularTarif.jsp"></jsp:include>
-          </div></td>
-        </tr>
-      </table>
-    </fieldset>
-    <fieldset id="fieldweekday" align="left">
-      <legend>Week Day Tariff</legend>
-      <table width="100%">
-        <tr>
-          <td><div id="divweekday">
+          </div>
+        </fieldset>
+        
+        <fieldset id="fieldweekday" style="text-align: left; display: none;">
+          <legend>Week Day Tariff</legend>
+          <div id="divweekday">
             <jsp:include page="gridWeekday.jsp"></jsp:include>
-          </div></td>
-        </tr>
-      </table>
-    </fieldset>
-    <fieldset id="fieldslab" align="left">
-      <legend>Slab Tariff</legend>
-      <table width="100%">
-        <tr>
-          <td><div id="divslab">
+          </div>
+        </fieldset>
+        
+        <fieldset id="fieldslab" style="text-align: left; display: none;">
+          <legend>Slab Tariff</legend>
+          <div id="divslab">
             <jsp:include page="gridSlabTarif.jsp"></jsp:include>
-          </div></td>
-        </tr>
-      </table>
-    </fieldset>
-    <fieldset id="fieldpackage" align="left">
-      <legend>Package Tariff</legend>
-      <table width="100%">
-        <tr>
-          <td><div id="divpackage">
+          </div>
+        </fieldset>
+        
+        <fieldset id="fieldpackage" style="text-align: left; display: none;">
+          <legend>Package Tariff</legend>
+          <div id="divpackage">
             <jsp:include page="gridPackageTarif.jsp"></jsp:include>
-          </div></td>
+          </div>
+        </fieldset>
+        
+        <fieldset id="fieldextrainsur" style="text-align: left; display: none;">
+          <table width="100%" cellpadding="2" cellspacing="0">
+            <tr>
+              <td class="lbl-right" width="15%">Security Amount</td>
+              <td width="10%"><input type="text" name="securityamt" id="securityamt" value='<s:property value="securityamt"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+              <td class="lbl-right" width="15%">Insurance Excess</td>
+              <td width="10%"><input type="text" name="insurexcess" id="insurexcess" value='<s:property value="insurexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+              <td class="lbl-right" width="15%">CDW Excess</td>
+              <td width="10%"><input type="text" name="cdwexcess" id="cdwexcess" value='<s:property value="cdwexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+              <td class="lbl-right" width="15%">Super CDW Excess</td>
+              <td width="10%"><input type="text" name="scdwexcess" id="scdwexcess" value='<s:property value="scdwexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+            </tr>
+          </table>
+        </fieldset>
+        
+        <fieldset id="fieldfoc" style="text-align: left; display: none;">
+          <legend>FOC Tariff</legend>
+          <div id="divfoc">
+            <jsp:include page="gridFoc.jsp"></jsp:include>
+          </div>
+        </fieldset>
+
+    </td>
+    <td width="15%" valign="top" style="padding-left: 5px;">
+        <div id="divgroup2"><jsp:include page="gridgroup2.jsp"></jsp:include></div>
+    </td>
+  </tr>
+</table>
+
+<input type="hidden" name="conditionstatus" id="conditionstatus" value='<s:property value="conditionstatus"/>'>
+<input type="hidden" name="hidgroupdoc" id="hidgroupdoc" value='<s:property value="hidgroupdoc"/>'>
+<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+<input type="hidden" name="addrow" id="addrow" value='<s:property value="addrow"/>'>
+
+</div>
+</form>
+
+<div id="clienttarifwindow"><div ></div></div>
+<div hidden="true">
+    <fieldset>
+      <legend>Fuel Info</legend>
+      <table width="100%">
+        <tr>
+          <td><div id="divfuel"><jsp:include page="gridfuel.jsp"></jsp:include></div></td>
         </tr>
       </table>
     </fieldset>
-    <%-- <div id="divRegularTarif"><jsp:include page="gridRegularTarif.jsp"></jsp:include></div>
-    <div id="divslab"><jsp:include page="gridSlabTarif.jsp"></jsp:include></div>
-    <div id="divpackage"><jsp:include page="gridPackageTarif.jsp"></jsp:include></div> --%>
-    <%-- <fieldset><div id="divRegularTarif"><jsp:include page="gridRegularTarif.jsp"></jsp:include></div></fieldset> --%></td>
-    <td width="6%" rowspan="11"><div id="divgroup2"><jsp:include page="gridgroup2.jsp"></jsp:include></div></td></tr>
-  <tr>
-    <td colspan="2"  align="center"><fieldset id="fieldextrainsur" align="left">
-      
-      <table width="100%">
-        <tr>
-          <td align="right">Security Amount</td><td align="left"><input type="text" name="securityamt" id="securityamt" value='<s:property value="securityamt"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          <td align="right">Insurance Excess</td><td align="left"><input type="text" name="insurexcess" id="insurexcess" value='<s:property value="insurexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          <td align="right">CDW Excess</td><td align="left"><input type="text" name="cdwexcess" id="cdwexcess" value='<s:property value="cdwexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          <td align="right">Super CDW Excess</td><td align="left"><input type="text" name="scdwexcess" id="scdwexcess" value='<s:property value="scdwexcess"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td colspan="2"  align="center"><fieldset id="fieldfoc" align="left">
-      <legend>FOC Tariff</legend>
-      <table width="100%">
-        <tr>
-          <td><div id="divfoc">
-            <jsp:include page="gridFoc.jsp"></jsp:include>
-          </div></td>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-   
-  <%-- <tr>
-    <td colspan="2"  align="center"><fieldset id="fieldweekday" align="left">
-      <legend>Week Day Tariff</legend>
-      <table width="100%">
-        <tr>
-          <td><div id="divweekday">
-            <jsp:include page="gridWeekday.jsp"></jsp:include>
-          </div></td>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr> --%>
-  <tr>
-    <td colspan="2"  align="center">&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2"  align="center">&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" >&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" >&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" >&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="2" >&nbsp;</td>
-  </tr>
- <input type="hidden" name="conditionstatus" id="conditionstatus" value='<s:property value="conditionstatus"/>'>
-  <input type="hidden" name="hidgroupdoc" id="hidgroupdoc" value='<s:property value="hidgroupdoc"/>'>
-  <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-   <input type="hidden" name="addrow" id="addrow" value='<s:property value="addrow"/>'>
-</table>
-</form>
-</div>
-<div id="clienttarifwindow">
-   <div ></div>
-</div>
-</div>
-<div hidden="true">
-<fieldset>
-  <legend>Fuel Info</legend>
-  <table width="100%">
-    <tr>
-      <td><div id="divfuel">
-        <jsp:include page="gridfuel.jsp"></jsp:include>
-      </div></td>
-    </tr>
-  </table>
-</fieldset>
 </div>
 
-<p>&nbsp;</p>
+</div>
 </body>
 </html>

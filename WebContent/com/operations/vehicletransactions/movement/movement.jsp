@@ -9,16 +9,157 @@
 <title>GatewayERP(i)</title>
 <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 545px;
-}
-form label.error {
-color:red;
-  font-weight:bold;
 
+<style>
+/* =========================================================
+SCOPED UI: Compact Input Sizing (Plain Colors)
+========================================================= */
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 12px;
+    margin: 0;
+    background: #f3f4f6; /* Neutral light grey background */
+    box-sizing: border-box;
 }
+
+#mainBG {
+    background: #fff;
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding-top: 15px;
+    box-sizing: border-box; 
+    width: 100%;
+}
+
+/* Master Input Heights - Set to 24px */ 
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important; 
+    border: 1px solid #d1d5db; /* Neutral grey border instead of blue-grey */
+    border-radius: 3px;
+    padding: 2px 6px; 
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+}
+
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus { 
+    border-color: #007bff;
+    outline: none;
+}
+
+.modern-ui input[readonly], 
+.modern-ui select:disabled, 
+.modern-ui input:disabled { 
+    background-color: #f8f9fa;
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right {
+    text-align: right; 
+    color: #444; 
+    font-size: 12px;
+    font-weight: bold; 
+    white-space: nowrap; 
+    padding-right: 2px;
+}
+
+/* Middle Section Panels - Neutralized */
+.modern-ui .middle-panel {
+    border: 1px solid #d1d5db; /* Neutral grey border */
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; /* Clean white background instead of light blue */
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -10px;
+    left: 10px; 
+    background: #ffffff; /* Matched to pure white panel background */
+    padding: 0 5px 0 6px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
+}
+
+/* Custom UI Buttons */
+.modern-ui .myButton {
+    font-weight: 700;
+    font-size: 12px;
+    height: 26px !important;
+    padding: 0 16px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+}
+
+.modern-ui .input-search-container {
+    position: relative;
+    display: block; 
+    min-width: 120px; 
+}
+
+.modern-ui .input-search-container input {
+    padding-right: 25px !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.hidden-scrollbar {
+    overflow-y: auto;
+    max-height: calc(100vh - 130px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; } /* Neutralized scrollbar thumb */
 </style> 
 
 <%
@@ -26,14 +167,10 @@ String riderconfig=request.getParameter("riderconfig")==null?"":request.getParam
 String staffid=request.getParameter("staffid")==null?"":request.getParameter("staffid");
 %>
 <script type="text/javascript">
-     $(document).ready(function ()
-    		 {
+     $(document).ready(function () {
     	 $('#btnEdit').attr('disabled',true);
-    	 //$('#btnDelete').attr('disabled',true);
-    	
     	 getBranch();
     	 
-    	 /* getLocation(document.getElementById("cmbbranch").value); */
     	 document.getElementById("deliveryfield").style.display="none";
     	 document.getElementById("collectionfield").style.display="none";
 		 if(document.getElementById("hidchkgaragedelivery").value==1){
@@ -53,203 +190,172 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
     		 checkGarageCollection();
     	 }  
     	 checkStaff();
-    	  $("#date").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-    	  $("#dateout").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#closedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#dateouthidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-    	  $("#garagedeldate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#garagecollectdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-    	  $("#timeout").jqxDateTimeInput({ width: '80%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#closetime").jqxDateTimeInput({ width: '80%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-         $("#timeouthidden").jqxDateTimeInput({ width: '12%', height: '15px', formatString: 'HH:mm', showCalendarButton: false });
-          $("#garagedeliverytime").jqxDateTimeInput({ width: '50%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#garagecollecttime").jqxDateTimeInput({ width: '50%', height: '15px', formatString: 'HH:mm', showCalendarButton: false,value:null });
-          $("#hiddelivery").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-          $("#hidcollect").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
- document.getElementById("garage").style.display="none";
+    	 
+    	 $("#date").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
+    	 $("#dateout").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+    	 $("#closedate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+    	 $("#dateouthidden").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
+    	 $("#garagedeldate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+    	 $("#garagecollectdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+    	 $("#timeout").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+         $("#closetime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+         $("#timeouthidden").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
+         $("#garagedeliverytime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+         $("#garagecollecttime").jqxDateTimeInput({ width: '80px', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null });
+         $("#hiddelivery").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+         $("#hidcollect").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy",value:null});
+         
+         setTimeout(function () {
+             $(".jqx-datetimeinput").find("input").css({
+                 "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                 "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+             });
+             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+         }, 0);
+         
+         document.getElementById("garage").style.display="none";
     	 document.getElementById("staff").style.display="none";
      	 document.getElementById("btnclosesave").style.display="none";
-    	document.getElementById("btndeliverysave").style.display="none"; 
+    	 document.getElementById("btndeliverysave").style.display="none"; 
     	
-    	$('#dateout').on('change', function (event) 
-    			{  
-    	//checkfuturedate();
-    	if($('#dateout').jqxDateTimeInput('getDate')!=null){
-    		var date=new Date($('#dateout').jqxDateTimeInput('getDate'));
-    		var status=checkfuturedatenew(date);//Checking Future date.Written on 11-07-2016	
-    		if(status){
-    			document.getElementById("errormsg").innerText="";
-    			return true;
-    		}
-    		else{
-    			$('#dateout').jqxDateTimeInput('focus');
-    			return false;
-    		}
-    	}
+    	$('#dateout').on('change', function (event) {  
+    	    if($('#dateout').jqxDateTimeInput('getDate')!=null){
+    		    var date=new Date($('#dateout').jqxDateTimeInput('getDate'));
+    		    var status=checkfuturedatenew(date);
+    		    if(status){
+    			    document.getElementById("errormsg").innerText="";
+    			    return true;
+    		    } else{
+    			    $('#dateout').jqxDateTimeInput('focus');
+    			    return false;
+    		    }
+    	    }
     	});
     	
-    	$('#closedate').on('change', function (event) 
-    			{  
-    	//checkfuturedate();
-    	if($('#closedate').jqxDateTimeInput('getDate')!=null){
-    		var date=new Date($('#closedate').jqxDateTimeInput('getDate'));
-    		var status=checkfuturedatenew(date);//Checking Future date.Written on 11-07-2016	
-    		if(status){
-    			document.getElementById("errormsg").innerText="";
-    			return true;
-    		}
-    		else{
-    			$('#closedate').jqxDateTimeInput('focus');
-    			return false;
-    		}
-    	}
+    	$('#closedate').on('change', function (event) {  
+    	    if($('#closedate').jqxDateTimeInput('getDate')!=null){
+    		    var date=new Date($('#closedate').jqxDateTimeInput('getDate'));
+    		    var status=checkfuturedatenew(date);
+    		    if(status){
+    			    document.getElementById("errormsg").innerText="";
+    			    return true;
+    		    } else{
+    			    $('#closedate').jqxDateTimeInput('focus');
+    			    return false;
+    		    }
+    	    }
     	});
     	
-    	
-    	$('#garagedeldate').on('change', function (event) 
-    			{  
-    	//checkfuturedate();
-    	if($('#garagedeldate').jqxDateTimeInput('getDate')!=null){
-    		var date=new Date($('#garagedeldate').jqxDateTimeInput('getDate'));
-    		var status=checkfuturedatenew(date);//Checking Future date.Written on 11-07-2016	
-    		if(status){
-    			document.getElementById("errormsg").innerText="";
-    			return true;
-    		}
-    		else{
-    			$('#garagedeldate').jqxDateTimeInput('focus');
-    			return false;
-    		}
-    	}
+    	$('#garagedeldate').on('change', function (event) {  
+    	    if($('#garagedeldate').jqxDateTimeInput('getDate')!=null){
+    		    var date=new Date($('#garagedeldate').jqxDateTimeInput('getDate'));
+    		    var status=checkfuturedatenew(date);
+    		    if(status){
+    			    document.getElementById("errormsg").innerText="";
+    			    return true;
+    		    } else{
+    			    $('#garagedeldate').jqxDateTimeInput('focus');
+    			    return false;
+    		    }
+    	    }
     	});
     	
-    	
-    	$('#garagecollectdate').on('change', function (event) 
-    			{  
-    	//checkfuturedate();
-    	if($('#garagecollectdate').jqxDateTimeInput('getDate')!=null){
-    		var date=new Date($('#garagecollectdate').jqxDateTimeInput('getDate'));
-    		var status=checkfuturedatenew(date);//Checking Future date.Written on 11-07-2016	
-    		if(status){
-    			document.getElementById("errormsg").innerText="";
-    			return true;
-    		}
-    		else{
-    			$('#garagecollectdate').jqxDateTimeInput('focus');
-    			return false;
-    		}
-    	}
+    	$('#garagecollectdate').on('change', function (event) {  
+    	    if($('#garagecollectdate').jqxDateTimeInput('getDate')!=null){
+    		    var date=new Date($('#garagecollectdate').jqxDateTimeInput('getDate'));
+    		    var status=checkfuturedatenew(date);
+    		    if(status){
+    			    document.getElementById("errormsg").innerText="";
+    			    return true;
+    		    } else{
+    			    $('#garagecollectdate').jqxDateTimeInput('focus');
+    			    return false;
+    		    }
+    	    }
     	});
     	
-    	
-    	  //Future Validation for time
-     	$('#timeout').on('change', function (event) 
-     			{  
-    	    	//checkfuturetime();
-    	    	if($('#timeout').jqxDateTimeInput('getDate')!=null){
-    		  
-    	  
-    	    	var date=$('#dateout').jqxDateTimeInput('getDate');
-    	    	if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
-    	    		document.getElementById("errormsg").innerText="";
-    	    		document.getElementById("errormsg").innerText="Please select a valid date";
-    	    		$('#dateout').jqxDateTimeInput('focus');
-    	    		return false;
-    	    	}
-    	    	else{
-    		    	var time=$('#timeout').jqxDateTimeInput('getDate');
-    		    	var status=checkfuturetime(date,time);
-    		    	if(status){
-    		    		document.getElementById("errormsg").innerText="";
-    		    		return true;	
-    		    	}
-    		    	else{
-    		    		$('#timeout').jqxDateTimeInput('focus');
-    		    		return false;
-    		    	}	    		
-    	    	}
-    	  }
+     	$('#timeout').on('change', function (event) {  
+    	 	if($('#timeout').jqxDateTimeInput('getDate')!=null){
+    	 	    var date=$('#dateout').jqxDateTimeInput('getDate');
+    	 	    if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
+    	 	    	document.getElementById("errormsg").innerText="Please select a valid date";
+    	 	    	$('#dateout').jqxDateTimeInput('focus');
+    	 	    	return false;
+    	 	    } else{
+    		 	    var time=$('#timeout').jqxDateTimeInput('getDate');
+    		 	    var status=checkfuturetime(date,time);
+    		 	    if(status){
+    		 		    document.getElementById("errormsg").innerText="";
+    		 		    return true;	
+    		 	    } else{
+    		 		    $('#timeout').jqxDateTimeInput('focus');
+    		 		    return false;
+    		 	    }  		
+    	 	    }
+    	    }
      	}); 
      	
-     	$('#garagecollecttime').on('change', function (event) 
-     			{  
-    	    	//checkfuturetime();
-    	    	if($('#garagecollecttime').jqxDateTimeInput('getDate')!=null){
-	    	    	var date=$('#garagecollectdate').jqxDateTimeInput('getDate');
-	    	    	if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
-	    	    		document.getElementById("errormsg").innerText="";
-	    	    		document.getElementById("errormsg").innerText="Please select a valid date";
-	    	    		$('#garagecollectdate').jqxDateTimeInput('focus');
-	    	    		return false;
-	    	    	}
-	    	    	else{
-	    		    	var time=$('#garagecollecttime').jqxDateTimeInput('getDate');
-	    		    	var status=checkfuturetime(date,time);
-	    		    	if(status){
-	    		    		document.getElementById("errormsg").innerText="";
-	    		    		return true;	
-	    		    	}
-	    		    	else{
-	    		    		$('#garagecollecttime').jqxDateTimeInput('focus');
-	    		    		return false;
-	    		    	}	    		
-	    	    	}
-    	  }
+     	$('#garagecollecttime').on('change', function (event) {  
+    	 	if($('#garagecollecttime').jqxDateTimeInput('getDate')!=null){
+	 	 	    var date=$('#garagecollectdate').jqxDateTimeInput('getDate');
+	 	 	    if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
+	 	 	    	document.getElementById("errormsg").innerText="Please select a valid date";
+	 	 	    	$('#garagecollectdate').jqxDateTimeInput('focus');
+	 	 	    	return false;
+	 	 	    } else{
+	 		 	    var time=$('#garagecollecttime').jqxDateTimeInput('getDate');
+	 		 	    var status=checkfuturetime(date,time);
+	 		 	    if(status){
+	 		 		    document.getElementById("errormsg").innerText="";
+	 		 		    return true;	
+	 		 	    } else{
+	 		 		    $('#garagecollecttime').jqxDateTimeInput('focus');
+	 		 		    return false;
+	 		 	    }  		
+	 	 	    }
+    	    }
      	});
      	
-     	
-    	$('#garagedeliverytime').on('change', function (event) 
-     			{  
-    	    	//checkfuturetime();
-    	    	if($('#garagedeliverytime').jqxDateTimeInput('getDate')!=null){
-	    	    	var date=$('#garagedeldate').jqxDateTimeInput('getDate');
-	    	    	if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
-	    	    		document.getElementById("errormsg").innerText="";
-	    	    		document.getElementById("errormsg").innerText="Please select a valid date";
-	    	    		$('#garagedeldate').jqxDateTimeInput('focus');
-	    	    		return false;
-	    	    	}
-	    	    	else{
-	    		    	var time=$('#garagedeliverytime').jqxDateTimeInput('getDate');
-	    		    	var status=checkfuturetime(date,time);
-	    		    	if(status){
-	    		    		document.getElementById("errormsg").innerText="";
-	    		    		return true;	
-	    		    	}
-	    		    	else{
-	    		    		$('#garagedeliverytime').jqxDateTimeInput('focus');
-	    		    		return false;
-	    		    	}	    		
-	    	    	}
-    	  }
+    	$('#garagedeliverytime').on('change', function (event) {  
+    	 	if($('#garagedeliverytime').jqxDateTimeInput('getDate')!=null){
+	 	 	    var date=$('#garagedeldate').jqxDateTimeInput('getDate');
+	 	 	    if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
+	 	 	    	document.getElementById("errormsg").innerText="Please select a valid date";
+	 	 	    	$('#garagedeldate').jqxDateTimeInput('focus');
+	 	 	    	return false;
+	 	 	    } else{
+	 		 	    var time=$('#garagedeliverytime').jqxDateTimeInput('getDate');
+	 		 	    var status=checkfuturetime(date,time);
+	 		 	    if(status){
+	 		 		    document.getElementById("errormsg").innerText="";
+	 		 		    return true;	
+	 		 	    } else{
+	 		 		    $('#garagedeliverytime').jqxDateTimeInput('focus');
+	 		 		    return false;
+	 		 	    }  		
+	 	 	    }
+    	    }
      	});
     	
-    	
-    	
-    	$('#closetime').on('change', function (event) 
-     			{  
-    	    	//checkfuturetime();
-    	    	if($('#closetime').jqxDateTimeInput('getDate')!=null){
-	    	    	var date=$('#closedate').jqxDateTimeInput('getDate');
-	    	    	if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
-	    	    		document.getElementById("errormsg").innerText="";
-	    	    		document.getElementById("errormsg").innerText="Please select a valid date";
-	    	    		$('#closedate').jqxDateTimeInput('focus');
-	    	    		return false;
-	    	    	}
-	    	    	else{
-	    		    	var time=$('#closetime').jqxDateTimeInput('getDate');
-	    		    	var status=checkfuturetime(date,time);
-	    		    	if(status){
-	    		    		document.getElementById("errormsg").innerText="";
-	    		    		return true;	
-	    		    	}
-	    		    	else{
-	    		    		$('#closetime').jqxDateTimeInput('focus');
-	    		    		return false;
-	    		    	}	    		
-	    	    	}
-    	  }
+    	$('#closetime').on('change', function (event) {  
+    	 	if($('#closetime').jqxDateTimeInput('getDate')!=null){
+	 	 	    var date=$('#closedate').jqxDateTimeInput('getDate');
+	 	 	    if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
+	 	 	    	document.getElementById("errormsg").innerText="Please select a valid date";
+	 	 	    	$('#closedate').jqxDateTimeInput('focus');
+	 	 	    	return false;
+	 	 	    } else{
+	 		 	    var time=$('#closetime').jqxDateTimeInput('getDate');
+	 		 	    var status=checkfuturetime(date,time);
+	 		 	    if(status){
+	 		 		    document.getElementById("errormsg").innerText="";
+	 		 		    return true;	
+	 		 	    } else{
+	 		 		    $('#closetime').jqxDateTimeInput('focus');
+	 		 		    return false;
+	 		 	    }  		
+	 	 	    }
+    	    }
      	});
     	
     	 if(document.getElementById("docno").value==''){
@@ -264,7 +370,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
     	 if(document.getElementById("chkgaragedelivery").checked==true){
     		 $('#garagedeldate').jqxDateTimeInput({ disabled:false});
     		 if($('#garagedeldate').jqxDateTimeInput('getDate')==null){
-    			 $('#btndeliveryupdate').prop('disabled',false);	 
+    			 $('#btndeliveryupdate').prop('disabled',false);	
     		 }
     		 $('#garagedeldate').jqxDateTimeInput({ disabled:true});
     	 }
@@ -272,166 +378,147 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
     		 $('#btndeliveryupdate').prop('disabled',true);
     	 }
     	
-    	   	checkStaff();
+    	 checkStaff();
     	 getAccidents();
 
-          $('#fleetwindow').jqxWindow({ width: '60%', height: '57%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+         $('#fleetwindow').jqxWindow({ width: '60%', height: '57%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
    	   $('#fleetwindow').jqxWindow('close');
-   	 $('#driverwindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
- 	   $('#driverwindow').jqxWindow('close');
- 	  $('#staffwindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+   	   $('#driverwindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+  	   $('#driverwindow').jqxWindow('close');
+  	   $('#staffwindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
 	   $('#staffwindow').jqxWindow('close');
-   	 $('#maintenancewindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Maintenance Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
- 	   $('#maintenancewindow').jqxWindow('close');
- 	  $('#garagewindow').jqxWindow({ autoOpen:false,width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Garage Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+   	   $('#maintenancewindow').jqxWindow({ width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Maintenance Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+  	   $('#maintenancewindow').jqxWindow('close');
+  	   $('#garagewindow').jqxWindow({ autoOpen:false,width: '60%', height: '55%',  maxHeight: '75%' ,maxWidth: '50%' , title: 'Garage Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
 	   $('#garagewindow').jqxWindow('close');
-   	 $('#txtfleetno').dblclick(function(){
-   		if(document.getElementById("mode").value=="A"){
-		    $('#fleetwindow').jqxWindow('open');
-		$('#fleetwindow').jqxWindow('focus');
-		 fleetSearchContent('masterFleetSearch.jsp?', $('#fleetwindow'));
-   		}
-		});
+	   
+   	   $('#txtfleetno').dblclick(function(){
+   		   if(document.getElementById("mode").value=="A"){
+		       $('#fleetwindow').jqxWindow('open');
+		       $('#fleetwindow').jqxWindow('focus');
+		       fleetSearchContent('masterFleetSearch.jsp?', $('#fleetwindow'));
+   		   }
+	   });
    	 
-   	 //function getdblDriver(id)
-   	 $('#driver').dblclick(function(){
-   		 if(document.getElementById("mode").value=="A"){
-   			if(document.getElementById("cmbstatus").value==""){
- 			   document.getElementById("errormsg").innerText="";
- 			   document.getElementById("errormsg").innerText="Please Select Movement Type";
- 			   document.getElementById("cmbstatus").focus();
- 			   return false;
- 		   }
-   			$('#driverwindow').jqxWindow('open');
-   			$('#driverwindow').jqxWindow('focus');
-   			 driverSearchContent('driverSearch.jsp?id=1&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow')); 
-   		 }
-		    
-		});
-   	 $('#staff').dblclick(function(){
-   		 //var status=document.getElementById("cmbstatus").value;
-   		 	 if(document.getElementById("mode").value=="A"){
-		    $('#staffwindow').jqxWindow('open');
-		$('#staffwindow').jqxWindow('focus');
-		 staffSearchContent('staffSearch.jsp?id=1', $('#staffwindow'));
-   		 	 }
-		});
-   	 $('#garage').dblclick(function(){
-   		 //var status=document.getElementById("cmbstatus").value;
-   		 	 if(document.getElementById("mode").value=="A"){
-		    $('#garagewindow').jqxWindow('open');
-		$('#garagewindow').jqxWindow('focus');
-		 garageSearchContent('garageSearch.jsp?', $('#garagewindow'));
-   		 	 }
-		});
-   	 $('#closestaff').dblclick(function(){
-   		 if(document.getElementById("mode").value=="A"){   
-   		 $('#staffwindow').jqxWindow('open');
-		$('#staffwindow').jqxWindow('focus');
-		 staffSearchContent('staffSearch.jsp?id=2', $('#staffwindow'));
-   		 }
-		});
-   	 $('#closedriver').dblclick(function(){
-   		 if(document.getElementById("mode").value=="close"){ 
-   		 $('#driverwindow').jqxWindow('open');
-		$('#driverwindow').jqxWindow('focus');
-		 driverSearchContent('driverSearch.jsp?id=2&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow'));
-   		 }
-		});
-   //	checkStaff();
+   	   $('#driver').dblclick(function(){
+   		   if(document.getElementById("mode").value=="A"){
+   			   if(document.getElementById("cmbstatus").value==""){
+			       document.getElementById("errormsg").innerText="Please Select Movement Type";
+			       document.getElementById("cmbstatus").focus();
+			       return false;
+		       }
+   			   $('#driverwindow').jqxWindow('open');
+   			   $('#driverwindow').jqxWindow('focus');
+   			   driverSearchContent('driverSearch.jsp?id=1&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow')); 
+   		   }
+	   });
+	   
+   	   $('#staff').dblclick(function(){
+   		   if(document.getElementById("mode").value=="A"){
+		       $('#staffwindow').jqxWindow('open');
+		       $('#staffwindow').jqxWindow('focus');
+		       staffSearchContent('staffSearch.jsp?id=1', $('#staffwindow'));
+   		   }
+	   });
+	   
+   	   $('#garage').dblclick(function(){
+   		   if(document.getElementById("mode").value=="A"){
+		       $('#garagewindow').jqxWindow('open');
+		       $('#garagewindow').jqxWindow('focus');
+		       garageSearchContent('garageSearch.jsp?', $('#garagewindow'));
+   		   }
+	   });
+	   
+   	   $('#closestaff').dblclick(function(){
+   		   if(document.getElementById("mode").value=="A"){   
+   		       $('#staffwindow').jqxWindow('open');
+		       $('#staffwindow').jqxWindow('focus');
+		       staffSearchContent('staffSearch.jsp?id=2', $('#staffwindow'));
+   		   }
+	   });
+	   
+   	   $('#closedriver').dblclick(function(){
+   		   if(document.getElementById("mode").value=="close"){ 
+   		       $('#driverwindow').jqxWindow('open');
+		       $('#driverwindow').jqxWindow('focus');
+		       driverSearchContent('driverSearch.jsp?id=2&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow'));
+   		   }
+	   });
+	   
       if(document.getElementById("clstatus").value=='1'){
-    	 document.getElementById("btnclose").style.display="none";
-     }
-     else{
-    	 document.getElementById("btnclose").style.display="block";
-     }
+    	  document.getElementById("btnclose").style.display="none";
+      } else{
+    	  document.getElementById("btnclose").style.display="block";
+      }
       
-      
-      //Reconfirm Closing km and km difference
-      
-    $(document).ajaxStop(function() {
-        // Call a function after all AJAX requests are completed
-    	var riderconfig='<%=riderconfig%>';
-		if(riderconfig=="1" && $('#docno').val()==''){
-			funCreateBtn();
-		}
-    });
-    
+      $(document).ajaxStop(function() {
+    	  var riderconfig='<%=riderconfig%>';
+		  if(riderconfig=="1" && $('#docno').val()==''){
+			  funCreateBtn();
+		  }
+      });
 });
+
      function checkfuturedatenew(date){
     	 var date1=new Date(date);
     	 date1.setHours(0,0,0,0);
     	 var currentdate=new Date();
     	 currentdate.setHours(0,0,0,0);
     	 if(date1>currentdate){
-    		 document.getElementById("errormsg").innerText="";
     		 document.getElementById("errormsg").innerText="Future Date Not Allowed";
     		 return false;
-    	 }
-    	 else{
+    	 } else{
     		 return true;
     	 }
      }
      
- 
- 	function checkfuturetime(date,time){
- 		var date1=new Date(date);
- 		var time1=new Date(time);
- 		var currentdate = new Date(); 
- 		var currenthours=currentdate.getHours();
- 		var currentminutes=currentdate.getMinutes();
- 		var time1hours=time1.getHours();
- 		var time1minutes=time1.getMinutes();
- 		date1.setHours(0,0,0,0);
- 		currentdate.setHours(0,0,0,0);
- 		if(date1-currentdate==0){
- 			if(time1hours>currenthours){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Future Time Not Allowed";
- 				return false;
- 			}
- 			else if(time1hours==currenthours){
- 				if(time1minutes>currentminutes){
- 					document.getElementById("errormsg").innerText="";
- 					document.getElementById("errormsg").innerText="Future Time Not Allowed";
- 					return false;
- 				}
- 			}
- 		}
- 		return true;
- 	}
-	 
+	function checkfuturetime(date,time){
+		var date1=new Date(date);
+		var time1=new Date(time);
+		var currentdate = new Date(); 
+		var currenthours=currentdate.getHours();
+		var currentminutes=currentdate.getMinutes();
+		var time1hours=time1.getHours();
+		var time1minutes=time1.getMinutes();
+		date1.setHours(0,0,0,0);
+		currentdate.setHours(0,0,0,0);
+		if(date1-currentdate==0){
+			if(time1hours>currenthours){
+				document.getElementById("errormsg").innerText="Future Time Not Allowed";
+				return false;
+			}
+			else if(time1hours==currenthours){
+				if(time1minutes>currentminutes){
+					document.getElementById("errormsg").innerText="Future Time Not Allowed";
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
      function checkfuturedate(){
- 		var date1=new Date($('#dateout').jqxDateTimeInput('getDate')); 
- 		var futuredate=new Date();
- 		date1.setHours(0,0,0,0);
- 		futuredate.setHours(0,0,0,0);
- 		if(date1>futuredate){
- 				   document.getElementById("errormsg").innerText="";
- 				   document.getElementById("errormsg").innerText="Future Date Cannot be applied";
- 				   $('#dateout').jqxDateTimeInput('focus'); 
- 				   return false;
- 			   }
- 	
- 			 
- 			   document.getElementById("errormsg").innerText="";
- 			   //$('#timeout').jqxDateTimeInput('focus'); 
- 			   return true;
- 			  
- 	}
+		var date1=new Date($('#dateout').jqxDateTimeInput('getDate')); 
+		var futuredate=new Date();
+		date1.setHours(0,0,0,0);
+		futuredate.setHours(0,0,0,0);
+		if(date1>futuredate){
+		    document.getElementById("errormsg").innerText="Future Date Cannot be applied";
+		    $('#dateout').jqxDateTimeInput('focus'); 
+		    return false;
+	    }
+	    document.getElementById("errormsg").innerText="";
+	    return true;
+	}
+	
      function checkStaff(){
-    	 //alert("Inside Checking");
     	 $('#cmbstatus').prop('disabled',false);
-    	// alert(document.getElementById("cmbstatus").value);
     	 var temp=document.getElementById("cmbstatus").value;
-    	// $('#cmbstatus').prop('disabled',true);
     	 if(temp=="ST"){
-    	// alert("Inside ST:"+temp+"-----");
     		 document.getElementById("garage").style.display="none";
     		 document.getElementById("staff").style.display="block";
-    		// alert("After staff");
-    		document.getElementById("driver").disabled=true;
-    		document.getElementById("closedriver").disabled=true;
+    		 document.getElementById("driver").disabled=true;
+    		 document.getElementById("closedriver").disabled=true;
     		 document.getElementById("closestaff").disabled=false;
     		 $('#chkgaragedelivery').attr('disabled', true);
     		 $('#chkgaragecollect').attr('disabled', true); 
@@ -439,14 +526,12 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
     		 checkGarageCollection();
     		 document.getElementById("deliveryfield").style.display="none";
         	 document.getElementById("collectionfield").style.display="none";
-    		 
     	 }
     	 else if(temp=='GA'||temp=='GM'||temp=='GS'){
     		 document.getElementById("staff").style.display="none";
     		 document.getElementById("closestaff").disabled=true;
-
-     		document.getElementById("driver").disabled=false;
-     		document.getElementById("closedriver").disabled=false;
+     		 document.getElementById("driver").disabled=false;
+     		 document.getElementById("closedriver").disabled=false;
     		 document.getElementById("garage").style.display="block";
     		 $('#chkgaragedelivery').attr('disabled', false);
     		 $('#chkgaragecollect').attr('disabled', false);
@@ -456,8 +541,6 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
         	 document.getElementById("collectionfield").style.display="block";
     	 }
     	 else{
-    		// document.getElementById("staff").style.display="block";
-    		
     		document.getElementById("driver").disabled=false;
     		document.getElementById("closedriver").disabled=false;
     		 document.getElementById("closestaff").disabled=true;
@@ -470,207 +553,126 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
     		 document.getElementById("deliveryfield").style.display="none";
         	 document.getElementById("collectionfield").style.display="none";
     	 }
-     /* 	 else{
-    		 document.getElementById("staff").style.display="none";
-    		 document.getElementById("garage").style.display="none";
-    		 document.getElementById("closestaff").disabled=true;
-    		 $('#chkgaragedelivery').attr('disabled', true);
-    		 $('#chkgaragecollect').attr('disabled', true); 
-    		 checkGarageDelivery();
-    		 checkGarageCollection();
-    	 }  */
-    	// $('#cmbstatus').prop('disabled',true);
      }
+     
      function fleetSearchContent(url) {
-   	    //alert(url);
-   	      $.get(url).done(function (data) {
-   	//alert(data);
-   	    $('#fleetwindow').jqxWindow('setContent', data);
-
-   	}); 
-   	}
+	     $.get(url).done(function (data) {
+	         $('#fleetwindow').jqxWindow('setContent', data);
+	     }); 
+   	 }
      function driverSearchContent(url) {
-    	    //alert(url);
-    	      $.get(url).done(function (data) {
-    	//alert(data);
-    	    $('#driverwindow').jqxWindow('setContent', data);
-
-    	}); 
-    	}
+ 	     $.get(url).done(function (data) {
+ 	         $('#driverwindow').jqxWindow('setContent', data);
+ 	     }); 
+   	 }
      function staffSearchContent(url) {
- 	    //alert(url);
- 	      $.get(url).done(function (data) {
- 	//alert(data);
- 	    $('#staffwindow').jqxWindow('setContent', data);
-
- 	}); 
- 	}
+	     $.get(url).done(function (data) {
+	         $('#staffwindow').jqxWindow('setContent', data);
+	     }); 
+	 }
      function garageSearchContent(url) {
-  	    //alert(url);
-  	      $.get(url).done(function (data) {
-  	//alert(data);
-  	    $('#garagewindow').jqxWindow('setContent', data);
-
-  	}); 
-  	}
+ 	     $.get(url).done(function (data) {
+ 	         $('#garagewindow').jqxWindow('setContent', data);
+ 	     }); 
+   	 }
      function maintenanceSearchContent(url) {
-    	    //alert(url);
-    	      $.get(url).done(function (data) {
-    	//alert(data);
-    	    $('#maintenancewindow').jqxWindow('setContent', data);
-
-    	}); 
-    	}
+ 	     $.get(url).done(function (data) {
+ 	         $('#maintenancewindow').jqxWindow('setContent', data);
+ 	     }); 
+   	 }
      function getFleet(event){
-   	   	//alert("Here");
          var x= event.keyCode;
          if(document.getElementById("mode").value=="A"){
-         if(x==114){
-       	   $('#fleetwindow').jqxWindow('open');
-      		$('#fleetwindow').jqxWindow('focus');
-      		 fleetSearchContent('masterFleetSearch.jsp?', $('#fleetwindow'));
+             if(x==114){
+       	         $('#fleetwindow').jqxWindow('open');
+       		     $('#fleetwindow').jqxWindow('focus');
+       		     fleetSearchContent('masterFleetSearch.jsp?', $('#fleetwindow'));
+             }
          }
-         else{
-          }
-         }
-         }
+     }
      function getGarage(event){
-          
     	 var x= event.keyCode;
     	 if(document.getElementById("mode").value=="A"){
-    	 if(x==114){
-        	  $('#garagewindow').jqxWindow('open');
-      		$('#garagewindow').jqxWindow('focus');
-      		 garageSearchContent('garageSearch.jsp?', $('#garagewindow'));
-          }
-          else{
-           }
+    	     if(x==114){
+        	     $('#garagewindow').jqxWindow('open');
+       		     $('#garagewindow').jqxWindow('focus');
+       		     garageSearchContent('garageSearch.jsp?', $('#garagewindow'));
+             }
     	 }
-          }
+     }
      function getDriver(event,value){   
-    	var aa=value;
+    	 var aa=value;
          var x= event.keyCode;
-         
          if(x==114){
-       if(aa==1){
-    	   if(document.getElementById("mode").value=="A"){
-    		   if(document.getElementById("cmbstatus").value==""){
-    			   document.getElementById("errormsg").innerText="";
-    			   document.getElementById("errormsg").innerText="Please Select Movement Type";
-    			   document.getElementById("cmbstatus").focus();
-    			   return false;
-    		   }
- $('#driverwindow').jqxWindow('open');
-      		$('#driverwindow').jqxWindow('focus');
-      		 driverSearchContent('driverSearch.jsp?id=1&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow'));
-    	   }
-    	   }
-       else if(aa==2){
-    	   if(document.getElementById("mode").value=="close"){
-    		   
-    		   $('#driverwindow').jqxWindow('open');
-      		$('#driverwindow').jqxWindow('focus');
-      		 driverSearchContent('driverSearch.jsp?id=2&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow'));
-    	   }
-       }
-       else{
-    	   
-       }
+             if(aa==1){
+    	         if(document.getElementById("mode").value=="A"){
+    		         if(document.getElementById("cmbstatus").value==""){
+    			         document.getElementById("errormsg").innerText="Please Select Movement Type";
+    			         document.getElementById("cmbstatus").focus();
+    			         return false;
+    		         }
+                     $('#driverwindow').jqxWindow('open');
+       		         $('#driverwindow').jqxWindow('focus');
+       		         driverSearchContent('driverSearch.jsp?id=1&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow'));
+    	         }
+    	     }
+             else if(aa==2){
+    	         if(document.getElementById("mode").value=="close"){
+    		         $('#driverwindow').jqxWindow('open');
+       		         $('#driverwindow').jqxWindow('focus');
+       		         driverSearchContent('driverSearch.jsp?id=2&trancode='+document.getElementById("cmbstatus").value, $('#driverwindow'));
+    	         }
+             }
          }
-         else{
-          }
-        
-         }
+     }
      function getStaff(event,value){   
-     	var aa=value;
-          var x= event.keyCode;
-          if(document.getElementById("mode").value=="A"){
-          if(x==114){
-        if(aa==1){
-     	   
-        
-        	   $('#staffwindow').jqxWindow('open');
-       		$('#staffwindow').jqxWindow('focus');
-       		 staffSearchContent('staffSearch.jsp?id=1', $('#staffwindow'));
-        }
-        else if(aa==2){
-
-        	   $('#staffwindow').jqxWindow('open');
-       		$('#staffwindow').jqxWindow('focus');
-       		 satffSearchContent('staffSearch.jsp?id=2', $('#staffwindow'));
-       
-        }
-        else{
-     	   
-        }
-          }
-          else{
-           }
-          }
-          }
-    function funReset(){
-  		//$('#frmMovement')[0].reset(); 
-  	}
+     	 var aa=value;
+         var x= event.keyCode;
+         if(document.getElementById("mode").value=="A"){
+             if(x==114){
+                 if(aa==1){
+        	         $('#staffwindow').jqxWindow('open');
+       		         $('#staffwindow').jqxWindow('focus');
+       		         staffSearchContent('staffSearch.jsp?id=1', $('#staffwindow'));
+                 }
+                 else if(aa==2){
+        	         $('#staffwindow').jqxWindow('open');
+       		         $('#staffwindow').jqxWindow('focus');
+       		         satffSearchContent('staffSearch.jsp?id=2', $('#staffwindow'));
+                 }
+             }
+         }
+     }
+     
+    function funReset(){}
+    
   	function funReadOnly(){
-  		
   		$('#frmMovement input').attr('readonly', true );
   		$('#frmMovement select').attr('disabled', true);
   		$('#frmMovement checkbox').attr('disabled', true);
   		$('#frmMovement textarea').attr('readonly', true );
-  		if($('#date').jqxDateTimeInput('disabled')==false){
-  			$('#date').jqxDateTimeInput({ disabled: true});
-  		}
+  		if($('#date').jqxDateTimeInput('disabled')==false) $('#date').jqxDateTimeInput({ disabled: true});
+  		if($('#dateout').jqxDateTimeInput('disabled')==false) $('#dateout').jqxDateTimeInput({ disabled: true});	
+		if($('#closedate').jqxDateTimeInput('disabled')==false) $('#closedate').jqxDateTimeInput({ disabled: true});
+  		if($('#timeout').jqxDateTimeInput('disabled')==false) $('#timeout').jqxDateTimeInput({ disabled: true});
+  		if($('#closetime').jqxDateTimeInput('disabled')==false) $('#closetime').jqxDateTimeInput({ disabled: true});
   		
-  		if($('#dateout').jqxDateTimeInput('disabled')==false){
-  			$('#dateout').jqxDateTimeInput({ disabled: true});	
-  		}
-  		
-  /* 		$('#garagedeldate').jqxDateTimeInput({ disabled: true});
-  		$('#garagedeliverytime').jqxDateTimeInput({ disabled: true});
-  		$('#garagecollectdate').jqxDateTimeInput({ disabled: true});
-  		$('#garagecollecttime').jqxDateTimeInput({ disabled: true}); */
-		if($('#closedate').jqxDateTimeInput('disabled')==false){
-			$('#closedate').jqxDateTimeInput({ disabled: true});
-		}
-  		//$('#accdate').jqxDateTimeInput({ disabled: true});
-  		//$('#collectdate').jqxDateTimeInput({ disabled: true});
-  		if($('#timeout').jqxDateTimeInput('disabled')==false){
-  			$('#timeout').jqxDateTimeInput({ disabled: true});
-  		}
-  		if($('#closetime').jqxDateTimeInput('disabled')==false){
-  			$('#closetime').jqxDateTimeInput({ disabled: true});
-  		}
-  		
-  //	checkGarageDelivery();
-  
-  		
-  	
-   	checkStaff();
-   	
-	   	
+   	    checkStaff();
   	}
+  	
   	function funRemoveReadOnly(){
-  		
   	 	$('#frmMovement input').attr('readonly', false );
   		$('#frmMovement select').attr('disabled', false);
   		$('#frmMovement textarea').attr('readonly', false );
   		$('#frmMovement checkbox').attr('disabled', false);
   		$('#date').jqxDateTimeInput({ disabled: false});
   		$('#dateout').jqxDateTimeInput({ disabled: false});
-  		/*  */
   		$('#closedate').jqxDateTimeInput({ disabled: false});
-  		//$('#accdate').jqxDateTimeInput({ disabled: false});
-  		//$('#collectdate').jqxDateTimeInput({ disabled: false});
   		$('#timeout').jqxDateTimeInput({ disabled: false});
-  		
   		$('#closetime').jqxDateTimeInput({ disabled: false});
-  		//$('#acctime').jqxDateTimeInput({ disabled: false});
-  		//$("#jqxMaintenances").jqxGrid({ disabled: false});
-  		//$("#jqxMovement").jqxGrid({ disabled: false});
   		$('#docno').attr('readonly', true); 
   		var session1='<%=session.getAttribute("USERNAME").toString()%>';
   		var session2='<%=session.getAttribute("USERID").toString()%>';
-  		//alert("SESSION"+session1);
   		$('#outuser').val(session1);
   		$('#outuserid').val(session2);
   		$('#txtfleetno').attr('readonly', true );
@@ -678,68 +680,58 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   		$('#staff').attr('readonly', true );
   		$('#garage').attr('readonly', true );
   		$('#driver').attr('readonly', true );
-  		$('#driver').attr('readonly', true );
   		$('#outuser').attr('readonly', true );
   		$('#closestaff').attr('readonly', true );
   		$('#closeuser').attr('readonly', true );
   		$('#totalkm').attr('readonly', true );
-  		getTestLocation();
-  		/* $('#garagedeliverykm').prop('disabled', true);
-  		$('#cmbgaragedeliveryfuel').prop('disabled', true);
-  		$('#garagecollectkm').prop('disabled', true);
-  		$('#cmbgaragecollectfuel').prop('disabled', true); */
-  	if(document.getElementById("mode").value=="A" && document.getElementById("chkstatus").value!="1"){
   		
-
-  		$('#date').jqxDateTimeInput({ value: new Date()});
-  		$('#dateout').jqxDateTimeInput({ value: null});
-  		$('#timeout').jqxDateTimeInput({ value:null});
-  		$('#garagedeldate').jqxDateTimeInput({ value: null});
-  		$('#garagedeliverytime').jqxDateTimeInput({ value: null});
-  		$('#garagecollectdate').jqxDateTimeInput({ value:null});
-  		$('#garagecollecttime').jqxDateTimeInput({ value: null});
-  		$('#closedate').jqxDateTimeInput({ value:null});
-  		$('#closetime').jqxDateTimeInput({ value: null}); 
-  		document.getElementById("btnclose").style.display="block";
-  		document.getElementById("accfines").value="0.0";
-  		$('#outuser').val('');
-  		document.getElementById("btndeliverysave").style.display="none";
-  		document.getElementById("btndeliveryupdate").style.display="block";
-  		document.getElementById("btndeliveryupdate").disabled=true;
- 	  	$('#cmbcloselocation').attr('disabled',true);$('#cmbclosebranch').attr('disabled',true);
-		$('#closedate').jqxDateTimeInput({ disabled: true});
-		$('#closetime').jqxDateTimeInput({ disabled: true});
-		$('#closekm').attr('disabled',true);
-		$('#cmbclosefuel').attr('disabled',true);
-		$('#closedriver').attr('disabled',true);
-		$('#closestaff').attr('disabled',true);
-		$('#cmbaccidents').attr('disabled',true);
-		$('#accdetails').attr('disabled',true);
-		$('#accfines').attr('disabled',true);
-		$('#closeuser').attr('disabled',true);
-		$('#totalkm').attr('disabled',true);
-		$('#remarks').attr('disabled',true);
-		
-		
-  		
-  	}
-   	 getAccidents();
-   	checkStaff();
+  	    if(document.getElementById("mode").value=="A" && document.getElementById("chkstatus").value!="1"){
+  		    $('#date').jqxDateTimeInput({ value: new Date()});
+  		    $('#dateout').jqxDateTimeInput({ value: null});
+  		    $('#timeout').jqxDateTimeInput({ value:null});
+  		    $('#garagedeldate').jqxDateTimeInput({ value: null});
+  		    $('#garagedeliverytime').jqxDateTimeInput({ value: null});
+  		    $('#garagecollectdate').jqxDateTimeInput({ value:null});
+  		    $('#garagecollecttime').jqxDateTimeInput({ value: null});
+  		    $('#closedate').jqxDateTimeInput({ value:null});
+  		    $('#closetime').jqxDateTimeInput({ value: null}); 
+  		    document.getElementById("btnclose").style.display="block";
+  		    document.getElementById("accfines").value="0.0";
+  		    $('#outuser').val('');
+  		    document.getElementById("btndeliverysave").style.display="none";
+  		    document.getElementById("btndeliveryupdate").style.display="block";
+  		    document.getElementById("btndeliveryupdate").disabled=true;
+  	 	    $('#cmbcloselocation').attr('disabled',true);
+  	 	    $('#cmbclosebranch').attr('disabled',true);
+		    $('#closedate').jqxDateTimeInput({ disabled: true});
+		    $('#closetime').jqxDateTimeInput({ disabled: true});
+		    $('#closekm').attr('disabled',true);
+		    $('#cmbclosefuel').attr('disabled',true);
+		    $('#closedriver').attr('disabled',true);
+		    $('#closestaff').attr('disabled',true);
+		    $('#cmbaccidents').attr('disabled',true);
+		    $('#accdetails').attr('disabled',true);
+		    $('#accfines').attr('disabled',true);
+		    $('#closeuser').attr('disabled',true);
+		    $('#totalkm').attr('disabled',true);
+		    $('#remarks').attr('disabled',true);
+  	    }
+   	    getAccidents();
+   	    checkStaff();
    		
-   	var riderconfig='<%=riderconfig%>';
-	if(riderconfig=="1"){
-		$('#cmbstatus').val("ST");
-		var staffid='<%=request.getParameter("staffid")==null?"":request.getParameter("staffid")%>';
-		var staffname='<%=request.getParameter("staffname")==null?"":request.getParameter("staffname")%>';
-		$('#hidstaff').val(staffid);
-		$('#staff').val(staffname);
-		$('#riderconfig').val("1");
-		checkStaff();
-	}
-  }
+   	    var riderconfig='<%=riderconfig%>';
+	    if(riderconfig=="1"){
+		    $('#cmbstatus').val("ST");
+		    var staffid='<%=request.getParameter("staffid")==null?"":request.getParameter("staffid")%>';
+		    var staffname='<%=request.getParameter("staffname")==null?"":request.getParameter("staffname")%>';
+		    $('#hidstaff').val(staffid);
+		    $('#staff').val(staffname);
+		    $('#riderconfig').val("1");
+		    checkStaff();
+	    }
+    }
   	
   	function funenable(){
-  		//alert("Inside Enable");
   		$('#frmMovement input').attr('disabled', false );
   		$('#frmMovement select').attr('disabled', false);
   		$('#frmMovement textarea').attr('disabled', false );
@@ -753,31 +745,26 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   		$('#garagecollecttime').jqxDateTimeInput({ disabled: false});
   		$('#closedate').jqxDateTimeInput({ disabled: false});
   		$('#closetime').jqxDateTimeInput({ disabled: false});
-
   	}
+  	
+  	/* FIXED: Robust Location Loading callback */
   	function getLocation(value) {
-  		//alert(value);
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('***');
+				var items = x.responseText.split('***');
 				var locItems = items[0].split(",");
 				var locIdItems = items[1].split(",");
 				var optionsloc = '<option value="">--Select--</option>';
 				for (var i = 0; i < locItems.length; i++) {
-					optionsloc += '<option value="' + locIdItems[i] + '">'
-							+ locItems[i] + '</option>';
+					optionsloc += '<option value="' + locIdItems[i] + '">' + locItems[i] + '</option>';
 				}
 				$("select#cmblocation").html(optionsloc);
-				//$("select#cmbcloselocation").html(optionsloc);
-				if ($('#hidcmblocation').val() != null) {
+				
+				// Re-bind selected value safely after async fetch
+				if ($('#hidcmblocation').val() != null && $('#hidcmblocation').val() != "") {
 					$('#cmblocation').val($('#hidcmblocation').val());
 				}
-				/* if ($('#hidcmbcloselocation').val() != null) {
-					$('#cmbcloselocation').val($('#hidcmbcloselocation').val());
-				} */
-			} else {
 			}
 		}
 		x.open("GET", "getLocation.jsp?branch="+value, true);
@@ -788,27 +775,21 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('***');
+				var items = x.responseText.split('***');
 				var locItems = items[0].split(",");
 				var locIdItems = items[1].split(",");
 				var optionsloc = '<option value="">--Select--</option>';
 				for (var i = 0; i < locItems.length; i++) {
-					optionsloc += '<option value="' + locIdItems[i] + '">'
-							+ locItems[i] + '</option>';
+					optionsloc += '<option value="' + locIdItems[i] + '">' + locItems[i] + '</option>';
 				}
-				//$("select#cmblocation").html(optionsloc);
 				$("select#cmbcloselocation").html(optionsloc);
-				/* if ($('#hidcmblocation').val() != null) {
-					$('#cmblocation').val($('#hidcmblocation').val());
-				} */
-				if ($('#hidcmbcloselocation').val() != null) {
+				
+				if ($('#hidcmbcloselocation').val() != null && $('#hidcmbcloselocation').val() != "") {
 					$('#cmbcloselocation').val($('#hidcmbcloselocation').val());
 				}
-			} else {
 			}
 		}
-		x.open("GET", "getLocation.jsp?branch="+value+"", true);
+		x.open("GET", "getLocation.jsp?branch="+value, true);
 		x.send();
 	}
   	
@@ -816,84 +797,50 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('***');
+				var items = x.responseText.split('***');
 				var locItems = items[0].split(",");
 				var locIdItems = items[1].split(",");
 				var optionsloc = '<option value="">--Select--</option>';
 				for (var i = 0; i < locItems.length; i++) {
-					optionsloc += '<option value="' + locIdItems[i] + '">'
-							+ locItems[i] + '</option>';
+					optionsloc += '<option value="' + locIdItems[i] + '">' + locItems[i] + '</option>';
 				}
 				$("select#cmbbranch").html(optionsloc);
 				$("select#cmbclosebranch").html(optionsloc);
+				
 				if ($('#hidcmbbranch').val() != null) {
 					$('#cmbbranch').val($('#hidcmbbranch').val());
 				}
 				if ($('#hidcmbclosebranch').val() != null) {
 					$('#cmbclosebranch').val($('#hidcmbclosebranch').val());
 				}
-			} else {
 			}
 		}
 		x.open("GET", "getBranch.jsp", true);
 		x.send();
 	}
-  	function getTestLocation() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('***');
-				//alert(items);
-				var locItems = items[0].split(",");
-				var locIdItems = items[1].split(",");
-				var optionsloc = '<option value="">--Select--</option>';
-				for (var i = 0; i < locItems.length; i++) {
-					optionsloc += '<option value="' + locIdItems[i] + '">'
-							+ locItems[i] + '</option>';
-				}
-				$("select#cmblocation").html(optionsloc);
-				$("select#cmbcloselocation").html(optionsloc);
-				/* if ($('#hidcmblocation').val() != null) {
-					$('#cmblocation').val($('#hidcmblocation').val());
-				}
-				if ($('#hidcmbcloselocation').val() != null) {
-					$('#cmbcloselocation').val($('#hidcmbcloselocation').val());
-				} */
-			} else {
-			}
-		}
-		x.open("GET", "getTestLocation.jsp", true);
-		x.send();
-	}
+  	
   	function getStatus() {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('***');
+				var items = x.responseText.split('***');
 				var statusItems = items[0].split(",");
 				var statusIdItems = items[1].split(",");
 				var optionsstatus = '<option value="">--Select--</option>';
 				for (var i = 0; i < statusItems.length; i++) {
-					optionsstatus += '<option value="' + statusIdItems[i] + '">'
-							+ statusItems[i] + '</option>';
+					optionsstatus += '<option value="' + statusIdItems[i] + '">' + statusItems[i] + '</option>';
 				}
 				$("select#cmbstatus").html(optionsstatus);
 				
 				if ($('#hidcmbstatus').val() != null) {
 					$('#cmbstatus').val($('#hidcmbstatus').val());
 				}
-				
-			} else {
 			}
 		}
 		x.open("GET", "getStatus.jsp", true);
 		x.send();
 	}
 
-  	
   	function funNotify(){
   		var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
 		if(docdateval==0){
@@ -901,13 +848,11 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 			return false;
 		}
   		if($('#dateout').jqxDateTimeInput('getDate')==null){
-  			document.getElementById("errormsg").innerText="";
   			document.getElementById("errormsg").innerText="Out Date is Mandatory";
   			$('#dateout').jqxDateTimeInput('focus'); 
-	  			return 0;	
+  			return 0;	
   		}
   		if($('#timeout').jqxDateTimeInput('getDate')==null){
-  			document.getElementById("errormsg").innerText="";
   			document.getElementById("errormsg").innerText="Out Time is Mandatory";
   			$('#timeout').jqxDateTimeInput('focus');
   			return 0;	
@@ -916,113 +861,82 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   		if($('#mode').val()=='A' || $('#mode').val()=='E'){
   			$('div.error-label').remove();
   			var reqfields=["cmbbranch","cmblocation","cmbstatus"];
-  	  		
-  	  		var validatestatus=1;
-  	  		for(var i=0;i<reqfields.length;i++){
-  	  			var item=reqfields[i];
-  	  			if(document.getElementById(item).value==''){
-  	  				$('#'+item).closest('td').append('<div class="error-label">Please Select</div>');
-  	  				validatestatus=0;
-  	  			}
-  	  			else{
-  	  				$('#'+item).closest('td').find('div.error-label').remove();
-  	  			}
-  	  		}
-  	  		//accdetails:200,outremarks:250,closeremarks:250
-  	  		if(document.getElementById("accdetails").value.length>200){
-  	  			$('#accdetails').closest('td').append('<div class="error-label">Max 200 Chars</div>');
-  	  			validatestatus=0;
-  	  		}
-  	  		else{
-  	  			$('#accdetails').closest('td').find('div.error-label').remove();
-  	  		}
-  	  		if(document.getElementById("outremarks").value.length>250){
-	  			$('#outremarks').closest('td').append('<div class="error-label">Max 200 Chars</div>');
-	  			validatestatus=0;
-	  		}
-	  		else{
-	  			$('#outremarks').closest('td').find('div.error-label').remove();
-	  		}
-  	  		if(document.getElementById("closeremarks").value.length>250){
-	  			$('#closeremarks').closest('td').append('<div class="error-label">Max 200 Chars</div>');
-	  			validatestatus=0;
-	  		}
-	  		else{
-	  			$('#closeremarks').closest('td').find('div.error-label').remove();
-	  		}
-  	  		if(validatestatus==0){
-  	  			return 0;
-  	  		}
+  	 		var validatestatus=1;
+  	 		for(var i=0;i<reqfields.length;i++){
+  	 			var item=reqfields[i];
+  	 			if(document.getElementById(item).value==''){
+  	 				$('#'+item).closest('td').append('<div class="error-label">Please Select</div>');
+  	 				validatestatus=0;
+  	 			} else{
+  	 				$('#'+item).closest('td').find('div.error-label').remove();
+  	 			}
+  	 		}
+  	 		if(document.getElementById("accdetails").value.length>200){
+  	 			$('#accdetails').closest('td').append('<div class="error-label">Max 200 Chars</div>');
+  	 			validatestatus=0;
+  	 		} else{
+  	 			$('#accdetails').closest('td').find('div.error-label').remove();
+  	 		}
+  	 		if(document.getElementById("outremarks").value.length>250){
+	 			$('#outremarks').closest('td').append('<div class="error-label">Max 250 Chars</div>');
+	 			validatestatus=0;
+	 		} else{
+	 			$('#outremarks').closest('td').find('div.error-label').remove();
+	 		}
+  	 		if(document.getElementById("closeremarks").value.length>250){
+	 			$('#closeremarks').closest('td').append('<div class="error-label">Max 250 Chars</div>');
+	 			validatestatus=0;
+	 		} else{
+	 			$('#closeremarks').closest('td').find('div.error-label').remove();
+	 		}
+  	 		if(validatestatus==0){
+  	 			return 0;
+  	 		}
   		}
   	 	var dateout1=new Date($('#dateout').jqxDateTimeInput('getDate'));
   	 	var timeout1=$('#timeout').jqxDateTimeInput('getDate');
   		var dateouthidden1=new Date($('#dateouthidden').jqxDateTimeInput('getDate'));
   		var timeouthidden1=$('#timeouthidden').jqxDateTimeInput('getDate');
   		var tempstatus=document.getElementById("cmbstatus").value;
-  		//alert(timeout1+"::"+timeouthidden1);
-  		//alert("Date Out:"+dateout1);
+  		
   		var futuretimestatus=checkfuturetime(dateout1,timeout1);
     	if(futuretimestatus){
     		document.getElementById("errormsg").innerText="";
-    			
-    	}
-    	else{
+    	} else{
     		$('#timeout').jqxDateTimeInput('focus');
     		return false;
     	}
+    	
   		dateout1.setHours(0,0,0,0);
   		dateouthidden1.setHours(0,0,0,0);
   		if(document.getElementById("txtfleetno").value==''){
-  			document.getElementById("errormsg").innerText="";
   			document.getElementById("errormsg").innerText="Fleet is Mandatory";
   			document.getElementById("txtfleetno").focus();
   			return 0;
   		}
-  		else{
-  			document.getElementById("errormsg").innerText="";
-  		}
-  		//alert("Date Out:"+dateout1);
-  		//alert("Date OutHidden:"+dateouthidden1);
   		
   		if(dateout1<dateouthidden1){
-  			//alert("Date Out:"+dateout1+" In Date:"+dateouthidden1);
-  			document.getElementById("errormsg").innerText="";
   			document.getElementById("errormsg").innerText="Date Should Not be Less than In Date";
   			$('#dateout').jqxDateTimeInput('focus'); 
-  	  			return 0;	
-  			
+  			return 0;	
   		}
   		if(dateout1-dateouthidden1==0){
-				
-	  			if(timeout1.getHours() < timeouthidden1.getHours()){
-	  				document.getElementById("errormsg").innerText="";
-	  				document.getElementById("errormsg").innerText="Time Should Not be Less than In Time";
-	  				$('#timeout').jqxDateTimeInput('focus'); 
-	  				return 0;
-	  			}
-	  			if(timeout1.getHours() == timeouthidden1.getHours()){
-	  			if(timeout1.getMinutes() < timeouthidden1.getMinutes()){
-	  				document.getElementById("errormsg").innerText="";
-	  				document.getElementById("errormsg").innerText="Time Should Not be Less than In Time";
-	  				$('#timeout').jqxDateTimeInput('focus');
-	  				return 0;
-	  			}
-	  			}
-	  			
-	  			else{
-	  				document.getElementById("errormsg").innerText="";
-	  			}
-	  		}
-  		else{
-  			document.getElementById("errormsg").innerText="";
+			if(timeout1.getHours() < timeouthidden1.getHours()){
+				document.getElementById("errormsg").innerText="Time Should Not be Less than In Time";
+				$('#timeout').jqxDateTimeInput('focus'); 
+				return 0;
+			}
+			if(timeout1.getHours() == timeouthidden1.getHours()){
+				if(timeout1.getMinutes() < timeouthidden1.getMinutes()){
+					document.getElementById("errormsg").innerText="Time Should Not be Less than In Time";
+					$('#timeout').jqxDateTimeInput('focus');
+					return 0;
+				}
+			}
   		}
-  		//alert("Outer");
+  		
   		var x=checkfuturedate();
-  		//alert(x);
-  		if(x==false){
-  			return 0;
-  		}
-  		//alert(!(dateout1!=dateouthidden1));
+  		if(x==false){ return 0; }
   		
   		if((tempstatus=='GA')||(tempstatus=='GM')||tempstatus=='GS'){
   			if(document.getElementById("garage").value==''){
@@ -1030,43 +944,28 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   				document.getElementById("garage").focus();
   				return 0;
   			}
-  			else{
-  				document.getElementById("errormsg").innerText="";
-  			}
   			if(document.getElementById("driver").value==''){
-  				document.getElementById("errormsg").innerText="";
   				document.getElementById("errormsg").innerText="Driver is Mandatory";
   				document.getElementById("driver").focus();
   				return 0;
-  			}
-  			else{
-  				document.getElementById("errormsg").innerText="";
   			}
   			document.getElementById("chkgaragedelivery").checked=true;
   			checkGarageDelivery();
   		}
   		else if(tempstatus=='ST'){
   			if(document.getElementById("staff").value==''){
-  				document.getElementById("errormsg").innerText="";
   				document.getElementById("errormsg").innerText="Staff is Mandatory";
   				document.getElementById("staff").focus();
   				return 0;
-  			}
-  			else{
-  				document.getElementById("errormsg").innerText="";
   			}
   			document.getElementById("chkgaragedelivery").checked=false;
   			checkGarageDelivery();
   		}
   		else{
   			if(document.getElementById("driver").value==''){
-  				document.getElementById("errormsg").innerText="";
   				document.getElementById("errormsg").innerText="Driver is Mandatory";
   				document.getElementById("driver").focus();
   				return 0;
-  			}
-  			else{
-  				document.getElementById("errormsg").innerText="";
   			}
   			document.getElementById("chkgaragedelivery").checked=false;
   			checkGarageDelivery();
@@ -1074,832 +973,611 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   		checkavailability('add');
  	} 
 
-		
-  	
   	function checkavailability(mode){
 		var valfleet=document.getElementById("txtfleetno").value;
 		if(mode=="add"){
 			var dateout=$('#dateout').jqxDateTimeInput('val');
 			var timeout=$('#timeout').jqxDateTimeInput('val');
-			
-		}
-		else{
+		} else{
 			var dateout=$('#closedate').jqxDateTimeInput('val');
 			var timeout=$('#closetime').jqxDateTimeInput('val');
-
 		}
-		  var x=new XMLHttpRequest();
-		    x.onreadystatechange=function(){
-		    if (x.readyState==4 && x.status==200)
-		     {
-		     
-		           
-		      var items=x.responseText;
-		    var chkfleet=items.trim();
-		       if(chkfleet=="1")
-		        {
-		    	  // alert("inside 0");
-		        $.messager.alert('Message','Fleet Is Not Available ','warning');   
-		        return false;
-		        }
-		       else
-		        {
-		    	   // alert("inside 1");
-		    	   $('#cmboutfuel').prop("disabled", false);
-  		$('#outkm').prop("disabled", false);
-  		$('#cmblocation').prop("disabled", false);
-  		$('#cmbbranch').prop("disabled", false);
-		    	 
-		    		 funSetlabel();
-					   $("#overlay, #PleaseWait").show();
+		var x=new XMLHttpRequest();
+		x.onreadystatechange=function(){
+		    if (x.readyState==4 && x.status==200) {
+		        var items=x.responseText;
+		        var chkfleet=items.trim();
+		        if(chkfleet=="1") {
+		            $.messager.alert('Message','Fleet Is Not Available ','warning');   
+		            return false;
+		        } else {
+		    	    $('#cmboutfuel').prop("disabled", false);
+  		            $('#outkm').prop("disabled", false);
+  		            $('#cmblocation').prop("disabled", false);
+  		            $('#cmbbranch').prop("disabled", false);
+		    		funSetlabel();
+					$("#overlay, #PleaseWait").show();
 					$('#frmMovement').submit();
 					$('#cmboutfuel').prop("disabled", true);
-			  		$('#outkm').prop("disabled", true);
-			  		$('#cmblocation').prop("disabled", true);
-			  		$('#cmbbranch').prop("disabled", true);
-			  		$('#cmbstatus').prop("disabled", true);
-					
+			 		$('#outkm').prop("disabled", true);
+			 		$('#cmblocation').prop("disabled", true);
+			 		$('#cmbbranch').prop("disabled", true);
+			 		$('#cmbstatus').prop("disabled", true);
 		        }
-		    
-		      
-		      }
-		    
 		    }
-		     
-		   x.open("GET","chkavailablefleet.jsp?valfleet="+valfleet+"&dateout="+dateout+"&timeout="+timeout+"&mode="+mode,true);
-
-		   x.send();
-		     
-		   
+		}
+		x.open("GET","chkavailablefleet.jsp?valfleet="+valfleet+"&dateout="+dateout+"&timeout="+timeout+"&mode="+mode,true);
+		x.send();
 	}
 	
- 	function funChkButton() {
-		/* funReset(); */
-	}
+	function funChkButton() {}
 
 	function funSearchLoad(){
-		//alert(document.getElementById("mode").value);
 		 changeContent('mainSearch.jsp', $('#window')); 
 	}
 		
- 	function funFocus(){
+	function funFocus(){
 	   	$('#date').jqxDateTimeInput('focus'); 	    		
- 	}
- 	function setValues(){
- 		funSetlabel();
- 		getTestLocation();
- 		//getLocation(document.getElementById("cmb"));
- 		getStatus();
- 		$('#date').jqxDateTimeInput({ disabled: false});
- 	//	$('#dateout').jqxDateTimeInput({ disabled: false});
- 		$('#timeout').jqxDateTimeInput({ disabled: false});
- 		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
- 		$('#garagedeliverytime').jqxDateTimeInput({ disabled: false});
- 		$('#garagecollectdate').jqxDateTimeInput({ disabled: false});
- 		$('#garagecollecttime').jqxDateTimeInput({ disabled: false});
- 		$('#closedate').jqxDateTimeInput({ disabled: false});
- 		$('#closetime').jqxDateTimeInput({ disabled: false});
- 		$('#frmMovement select').attr('disabled',false);
- 		
- 		//date and time setting
- 	 	if($('#hidtimeout').val()){
+	}
+	
+	function setValues(){
+		funSetlabel();
+		getStatus();
+		$('#date').jqxDateTimeInput({ disabled: false});
+		$('#timeout').jqxDateTimeInput({ disabled: false});
+		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
+		$('#garagedeliverytime').jqxDateTimeInput({ disabled: false});
+		$('#garagecollectdate').jqxDateTimeInput({ disabled: false});
+		$('#garagecollecttime').jqxDateTimeInput({ disabled: false});
+		$('#closedate').jqxDateTimeInput({ disabled: false});
+		$('#closetime').jqxDateTimeInput({ disabled: false});
+		$('#frmMovement select').attr('disabled',false);
+		
+	 	if($('#hidtimeout').val()){
 			$("#timeout").jqxDateTimeInput('val', $('#hidtimeout').val());
 		}
- 		//alert("Hid Delivery:"+$('#hiddelivery').jqxDateTimeInput('getDate'));
- 	 	/* if($('#hiddelivery').jqxDateTimeInput('getDate')!=null ){
- 	 		$("#garagedeldate").jqxDateTimeInput('val', $('#hiddelivery').jqxDateTimeInput('val'));
- 	 	}
- 	 	if($('#hidcollect').jqxDateTimeInput('val')!=null){
- 	 		$("#garagecollectdate").jqxDateTimeInput('val', $('#hidcollect').jqxDateTimeInput('val'));
- 	 	} */
- 		if($('#hidgaragedeliverytime').val()){
+		if($('#hidgaragedeliverytime').val()){
 			$("#garagedeliverytime").jqxDateTimeInput('val', $('#hidgaragedeliverytime').val());
 		}
- 		
- 		if($('#hidgaragecollecttime').val()){
+		if($('#hidgaragecollecttime').val()){
 			$("#garagecollecttime").jqxDateTimeInput('val', $('#hidgaragecollecttime').val());
 		}
- 		
- 		if($('#hidclosetime').val()){
+		if($('#hidclosetime').val()){
 			$("#closetime").jqxDateTimeInput('val', $('#hidclosetime').val());
 		} 
- 		 
- 		//setting combo box
- 		
- 		if ($('#hidcmbstatus').val() != null) {
+		
+		if ($('#hidcmbstatus').val() != null) {
 			$('#cmbstatus').val($('#hidcmbstatus').val());
 		}
- 		
- 		
- 		if ($('#hidcmbbranch').val() != null) {
+		
+		if ($('#hidcmbbranch').val() != null && $('#hidcmbbranch').val() != "") {
 			$('#cmbbranch').val($('#hidcmbbranch').val());
+            getLocation($('#hidcmbbranch').val());
 		}
- 		
- 		getLocation($('#hidcmbbranch').val());
- 		
- 		if ($('#hidcmboutfuel').val() != null) {
+		
+		if ($('#hidcmboutfuel').val() != null) {
 			$('#cmboutfuel').val($('#hidcmboutfuel').val());
 		}
- 		if ($('#hidcmbgaragedeliveryfuel').val() != null) {
+		if ($('#hidcmbgaragedeliveryfuel').val() != null) {
 			$('#cmbgaragedeliveryfuel').val($('#hidcmbgaragedeliveryfuel').val());
 		}
- 		
- 		if ($('#hidcmbgaragecollectfuel').val() != null) {
+		if ($('#hidcmbgaragecollectfuel').val() != null) {
 			$('#cmbgaragecollectfuel').val($('#hidcmbgaragecollectfuel').val());
 		}
- 		
- 		
- 		if ($('#hidcmbclosebranch').val() != null) {
+		
+		if ($('#hidcmbclosebranch').val() != null && $('#hidcmbclosebranch').val() != "") {
 			$('#cmbclosebranch').val($('#hidcmbclosebranch').val());
+            getCloseLocation($('#hidcmbclosebranch').val());
 		}
- 		getCloseLocation($('#hidcmbclosebranch').val());
- 		if ($('#hidcmbcloselocation').val() != null) {
-			$('#cmbcloselocation').val($('#hidcmbcloselocation').val());
-		}
- 		if ($('#hidcmbclosefuel').val() != null) {
+		
+		if ($('#hidcmbclosefuel').val() != null) {
 			$('#cmbclosefuel').val($('#hidcmbclosefuel').val());
 		}
- 		if ($('#hidcmbaccidents').val() != null) {
+		if ($('#hidcmbaccidents').val() != null) {
 			$('#cmbaccidents').val($('#hidcmbaccidents').val());
 		}
- 		if($('#hidcmbstatus').val()=='ST'){
- 			document.getElementById("staff").style.display="block";
- 			document.getElementById("garage").style.display="none";
- 		}
- 		if(($('#hidcmbstatus').val()=='GA')||($('#hidcmbstatus').val()=='GM')||($('#hidcmbstatus').val()=='GS')){
- 			document.getElementById("staff").style.display="none";
- 			document.getElementById("garage").style.display="block";
- 		}
- 		if(document.getElementById("staff").value!=''){
- 			if(document.getElementById("closekm").value>0){
- 		 		$('#closestaff').attr('disabled',false);
- 	 			document.getElementById("closestaff").value=document.getElementById("staff").value;
- 	 			$('#closestaff').attr('disabled',true);
- 			}
- 	
- 		}
- 		
- 		 if($('#msg').val()!=""){
-  		   $.messager.alert('Message',$('#extramsg').val());
-  		  }
- 		 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
- 		 if($('#date').jqxDateTimeInput('disabled')==false){
- 			$('#date').jqxDateTimeInput({ disabled: true});
- 		 }
- 		 if($('#dateout').jqxDateTimeInput('disabled')==false){
- 			$('#dateout').jqxDateTimeInput({ disabled: true});	 
- 		 }
- 		if($('#timeout').jqxDateTimeInput('disabled')==false){
- 			$('#timeout').jqxDateTimeInput({ disabled: true});
- 		}
- 		if($('#garagedeldate').jqxDateTimeInput('disabled')==false){
- 			$('#garagedeldate').jqxDateTimeInput({ disabled: true});
- 		}
- 		if($('#garagedeliverytime').jqxDateTimeInput('disabled')==false){
- 			$('#garagedeliverytime').jqxDateTimeInput({ disabled: true});	
- 		}
- 		if($('#garagecollectdate').jqxDateTimeInput('disabled')==false){
- 			$('#garagecollectdate').jqxDateTimeInput({ disabled: true});	
- 		}
- 		if($('#garagecollecttime').jqxDateTimeInput('disabled')==false){
- 			$('#garagecollecttime').jqxDateTimeInput({ disabled: true});	
- 		}
- 		if($('#closedate').jqxDateTimeInput('disabled')==false){
- 			$('#closedate').jqxDateTimeInput({ disabled: true});	
- 		}
- 		if($('#closetime').jqxDateTimeInput('disabled')==false){
- 			$('#closetime').jqxDateTimeInput({ disabled: true});	
- 		}
- 		
- 		$('#frmMovement select').attr('disabled',true);
- 		if(document.getElementById("movtempstatus").value=="OUT"){
- 			document.getElementById("btnclose").style.display="block";
- 			$('#btnclose').attr('disabled',false);
- 		}
- 		else{
- 			document.getElementById("btnclose").style.display="block";
- 			$('#btnclose').attr('disabled',true);
- 			$('#btndeliveryupdate').attr('disabled',true);
- 		}
- 		$('#cmbstatus').prop('disabled',false);
- 		//alert($('#hidcmbstatus').val());
- 		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
- 			document.getElementById("deliveryfield").style.display="block";
- 	    	 document.getElementById("collectionfield").style.display="block";
- 		}
- 		else{
- 			document.getElementById("deliveryfield").style.display="none";
- 	    	 document.getElementById("collectionfield").style.display="none";
- 		}
- 		$('#cmbstatus').prop('disabled',true);
- 	 if(document.getElementById("deliverystatus").value=="1"){
- 		document.getElementById("btndeliveryupdate").disabled=true;
- 	}	
- 	else{
- 		document.getElementById("btndeliveryupdate").disabled=false;
- 	} 
-	
-	 
- 	if ($('#hidcmblocation').val() != null || $('#hidcmblocation').val()!="") {
-		$('#cmblocation').val($('#hidcmblocation').val());
-	}
- 	}
- 
- 	function getTotalkm(){
- 		var km1=document.getElementById("outkm").value;
- 		var km2=document.getElementById("closekm").value;
- 		var totkm=km2-km1;
- 		document.getElementById("totalkm").value=totkm;
- 	}
- 	function closeMov(){
- 	//alert("Here");
- 	if(document.getElementById("deliverystatus").value=="0" && ($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM")){
- 		document.getElementById("errormsg").innerText="";
- 		document.getElementById("errormsg").innerText="Please Update Delivery Info";
- 		return false;
- 	}
- 	
-	$('#cmbcloselocation').attr('disabled', false);
-	$('#cmbclosebranch').attr('disabled', false);
- 		checkStaff();
-	$('#date').jqxDateTimeInput({ disabled: false});
-	if($('#dateout').jqxDateTimeInput('disabled')==false){
-		$('#dateout').jqxDateTimeInput({ disabled: false});
-	}
-	if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
-		document.getElementById("chkgaragecollect").checked=true;
-		checkGarageCollection();
-	}
-	else{
-		document.getElementById("chkgaragecollect").checked=false;
-		checkGarageCollection();
-	}
-	
-/* 	$('#garagedeldate').jqxDateTimeInput({ disabled: false});
-	$('#garagecollectdate').jqxDateTimeInput({ disabled: false}); */
-	
-  		$('#closedate').jqxDateTimeInput({ disabled: false});
-  		$('#closetime').jqxDateTimeInput({ disabled: false});
-  		$('#cmbclosefuel').attr('disabled', false);
-  		$('#closekm').attr('readonly', false);
-  		$('#closedriver').attr('readonly', true);
-  		$('#closeremarks').attr('readonly', false);
-  		$('#closeuser').attr('readonly', true);
-  		$('#totalkm').attr('readonly', true);
-  		document.getElementById("btnclose").style.display="none";
-  		document.getElementById("btnclosesave").style.display="block";
-  		//document.getElementById("cmbcloselocation").focus();
-  		$('#cmbaccidents').attr('disabled', false);
-  		//document.getElementById("closeuser").value=document.getElementById("outuser").value;
-  		//document.getElementById("hidcloseuser").value=document.getElementById("outuserid").value;
-  		//alert($('#hidcmbstatus').val());
-  		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
-  			document.getElementById("closedriver").value="";
-  	  		document.getElementById("hidclosedriver").value="";
-  	  	$('#garagecollectdate').jqxDateTimeInput('focus');
-  		}
-  		else{
-  			document.getElementById("closedriver").value=document.getElementById("driver").value;
-  	  		document.getElementById("hidclosedriver").value=document.getElementById("hiddriver").value;	
-  	  	document.getElementById("cmbclosebranch").focus();
-  		}
-  		
-  		document.getElementById("closestaff").value=document.getElementById("staff").value;
-  		document.getElementById("hidclosestaff").value=document.getElementById("hidstaff").value;
-  		document.getElementById("mode").value="close";
- 	}
- 	function closeSave(){
- 		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
- 		if($('#closedate').jqxDateTimeInput('getDate')==null){
-				document.getElementById("errormsg").innerText="";
-				document.getElementById("errormsg").innerText="Close Date is Mandatory";
-				$('#closedate').jqxDateTimeInput('focus'); 
-				return false;
+		
+		if($('#hidcmbstatus').val()=='ST'){
+			document.getElementById("staff").style.display="block";
+			document.getElementById("garage").style.display="none";
+		}
+		if(($('#hidcmbstatus').val()=='GA')||($('#hidcmbstatus').val()=='GM')||($('#hidcmbstatus').val()=='GS')){
+			document.getElementById("staff").style.display="none";
+			document.getElementById("garage").style.display="block";
+		}
+		
+		if(document.getElementById("staff").value!=''){
+			if(document.getElementById("closekm").value>0){
+		 		$('#closestaff').attr('disabled',false);
+	 			document.getElementById("closestaff").value=document.getElementById("staff").value;
+	 			$('#closestaff').attr('disabled',true);
 			}
+		}
+		
+		if($('#msg').val()!=""){
+ 		   $.messager.alert('Message',$('#extramsg').val());
+ 		}
+		
+		document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+		
+		if($('#date').jqxDateTimeInput('disabled')==false) $('#date').jqxDateTimeInput({ disabled: true});
+		if($('#dateout').jqxDateTimeInput('disabled')==false) $('#dateout').jqxDateTimeInput({ disabled: true});	 
+		if($('#timeout').jqxDateTimeInput('disabled')==false) $('#timeout').jqxDateTimeInput({ disabled: true});
+		if($('#garagedeldate').jqxDateTimeInput('disabled')==false) $('#garagedeldate').jqxDateTimeInput({ disabled: true});
+		if($('#garagedeliverytime').jqxDateTimeInput('disabled')==false) $('#garagedeliverytime').jqxDateTimeInput({ disabled: true});	
+		if($('#garagecollectdate').jqxDateTimeInput('disabled')==false) $('#garagecollectdate').jqxDateTimeInput({ disabled: true});	
+		if($('#garagecollecttime').jqxDateTimeInput('disabled')==false) $('#garagecollecttime').jqxDateTimeInput({ disabled: true});	
+		if($('#closedate').jqxDateTimeInput('disabled')==false) $('#closedate').jqxDateTimeInput({ disabled: true});	
+		if($('#closetime').jqxDateTimeInput('disabled')==false) $('#closetime').jqxDateTimeInput({ disabled: true});	
+		
+		$('#frmMovement select').attr('disabled',true);
+		
+		if(document.getElementById("movtempstatus").value=="OUT"){
+			document.getElementById("btnclose").style.display="block";
+			$('#btnclose').attr('disabled',false);
+		} else{
+			document.getElementById("btnclose").style.display="block";
+			$('#btnclose').attr('disabled',true);
+			$('#btndeliveryupdate').attr('disabled',true);
+		}
+		
+		$('#cmbstatus').prop('disabled',false);
+		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
+			document.getElementById("deliveryfield").style.display="block";
+	 	    document.getElementById("collectionfield").style.display="block";
+		} else{
+			document.getElementById("deliveryfield").style.display="none";
+	 	    document.getElementById("collectionfield").style.display="none";
+		}
+		$('#cmbstatus').prop('disabled',true);
+		
+	    if(document.getElementById("deliverystatus").value=="1"){
+		    document.getElementById("btndeliveryupdate").disabled=true;
+	    } else{
+		    document.getElementById("btndeliveryupdate").disabled=false;
+	    } 
+	}
+ 
+	function getTotalkm(){
+		var km1=document.getElementById("outkm").value;
+		var km2=document.getElementById("closekm").value;
+		var totkm=km2-km1;
+		document.getElementById("totalkm").value=totkm;
+	}
+	
+	function closeMov(){
+	    if(document.getElementById("deliverystatus").value=="0" && ($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM")){
+		    document.getElementById("errormsg").innerText="Please Update Delivery Info";
+		    return false;
+	    }
+	
+	    $('#cmbcloselocation').attr('disabled', false);
+	    $('#cmbclosebranch').attr('disabled', false);
+		checkStaff();
+	    $('#date').jqxDateTimeInput({ disabled: false});
+	    if($('#dateout').jqxDateTimeInput('disabled')==false){
+		    $('#dateout').jqxDateTimeInput({ disabled: false});
+	    }
+	    
+	    if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
+		    document.getElementById("chkgaragecollect").checked=true;
+		    checkGarageCollection();
+	    } else{
+		    document.getElementById("chkgaragecollect").checked=false;
+		    checkGarageCollection();
+	    }
+	
+ 		$('#closedate').jqxDateTimeInput({ disabled: false});
+ 		$('#closetime').jqxDateTimeInput({ disabled: false});
+ 		$('#cmbclosefuel').attr('disabled', false);
+ 		$('#closekm').attr('readonly', false);
+ 		$('#closedriver').attr('readonly', true);
+ 		$('#closeremarks').attr('readonly', false);
+ 		$('#closeuser').attr('readonly', true);
+ 		$('#totalkm').attr('readonly', true);
+ 		document.getElementById("btnclose").style.display="none";
+ 		document.getElementById("btnclosesave").style.display="block";
+ 		$('#cmbaccidents').attr('disabled', false);
  		
- 		var closedateval=funDateInPeriod($('#closedate').jqxDateTimeInput('getDate'));
+ 		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
+ 			document.getElementById("closedriver").value="";
+ 	 		document.getElementById("hidclosedriver").value="";
+ 	 	    $('#garagecollectdate').jqxDateTimeInput('focus');
+ 		} else{
+ 			document.getElementById("closedriver").value=document.getElementById("driver").value;
+ 	 		document.getElementById("hidclosedriver").value=document.getElementById("hiddriver").value;	
+ 	 	    document.getElementById("cmbclosebranch").focus();
+ 		}
+ 		
+ 		document.getElementById("closestaff").value=document.getElementById("staff").value;
+ 		document.getElementById("hidclosestaff").value=document.getElementById("hidstaff").value;
+ 		document.getElementById("mode").value="close";
+	}
+	
+	function closeSave(){
+		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
+		if($('#closedate').jqxDateTimeInput('getDate')==null){
+			document.getElementById("errormsg").innerText="Close Date is Mandatory";
+			$('#closedate').jqxDateTimeInput('focus'); 
+			return false;
+		}
+		
+		var closedateval=funDateInPeriod($('#closedate').jqxDateTimeInput('getDate'));
 		if(closedateval==0){
 			$('#closedate').jqxDateTimeInput('focus');
 			return false;
 		}
-		else{
-			document.getElementById("errormsg").innerText="";
-			
-		}
- 		if($('#closetime').jqxDateTimeInput('getDate')==null){
- 	 	 		document.getElementById("errormsg").innerText="";
- 	 	 		document.getElementById("errormsg").innerText="Close Time is Mandatory";
- 	 	 		$('#closetime').jqxDateTimeInput('focus'); 
- 	 	 		return false;
- 		}
 		
+		if($('#closetime').jqxDateTimeInput('getDate')==null){
+ 	 		document.getElementById("errormsg").innerText="Close Time is Mandatory";
+ 	 		$('#closetime').jqxDateTimeInput('focus'); 
+ 	 		return false;
+		}
 			
- 		if($('#closetime').jqxDateTimeInput('getDate')!=null){
+		if($('#closetime').jqxDateTimeInput('getDate')!=null){
 	    	var date=$('#closedate').jqxDateTimeInput('getDate');
 	    	if(date==null || date=="undefined" || typeof(date)=="undefined" || date==""){
-	    		document.getElementById("errormsg").innerText="";
 	    		document.getElementById("errormsg").innerText="Please select a valid date";
 	    		$('#closedate').jqxDateTimeInput('focus');
 	    		return false;
-	    	}
-	    	else{
+	    	} else {
 		    	var time=$('#closetime').jqxDateTimeInput('getDate');
 		    	var status=checkfuturetime(date,time);
-		    	if(status){
-		    		document.getElementById("errormsg").innerText="";
-		    			
-		    	}
-		    	else{
+		    	if(!status){
 		    		$('#closetime').jqxDateTimeInput('focus');
 		    		return false;
 		    	}	    		
 	    	}
-  }
+        }
 		
+		var tempindate=new Date($('#dateout').jqxDateTimeInput('getDate'));
+		tempindate.setHours(0,0,0,0);
+		var tempintime=$('#timeout').jqxDateTimeInput('getDate');
+		var tempcollectdate=new Date($('#garagecollectdate').jqxDateTimeInput('getDate'));
+		var tempcollecttime=$('#garagecollecttime').jqxDateTimeInput('getDate');
+		var tempoutdate=new Date($('#garagedeldate').jqxDateTimeInput('getDate'));
+		var tempouttime=$('#garagedeliverytime').jqxDateTimeInput('getDate');
 		
- 		var tempindate=new Date($('#dateout').jqxDateTimeInput('getDate'));
- 		tempindate.setHours(0,0,0,0);
- 		var tempintime=$('#timeout').jqxDateTimeInput('getDate');													// first date n time 
- 		var tempcollectdate=new Date($('#garagecollectdate').jqxDateTimeInput('getDate'));
- 		var tempcollecttime=$('#garagecollecttime').jqxDateTimeInput('getDate');
- 		var tempoutdate=new Date($('#garagedeldate').jqxDateTimeInput('getDate'));								// deleivery
- 		var tempouttime=$('#garagedeliverytime').jqxDateTimeInput('getDate');
- 		
- 		var tempclosedate=new Date($('#closedate').jqxDateTimeInput('getDate'));									// close
- 		tempclosedate.setHours(0,0,0,0);
- 		var tempclosetime=$('#closetime').jqxDateTimeInput('getDate');
- 	 	$('#outkm').prop('disabled',false);
- 		var tempoutkm=parseFloat($('#outkm').val());
- 		$('#outkm').prop('disabled',true);
- 		
- 		/* if($('#cmbstatus').val()=='TR' || $('#cmbstatus').val()=='ST'){ */
- 			var closekm=parseFloat($('#closekm').val());	
- 			var closefuel=$('#cmbclosefuel').val();
- 			//alert(tempclosedate+"::::::::"+tempindate);
- 			
- 			if(tempclosedate<tempindate){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Close Date cannot be less than Out Date";
- 				$('#closedate').jqxDateTimeInput('focus'); 
- 				return false;
- 			}
- 			
- 			else if(tempclosedate-tempindate==0){
- 				
- 				if(tempclosetime.getHours()<tempintime.getHours()){
- 					document.getElementById("errormsg").innerText="";
- 					document.getElementById("errormsg").innerText="Close Time cannot be less than Out Time";
- 					$('#closetime').jqxDateTimeInput('focus'); 
- 					return false;
- 				}
- 				else if(tempclosetime.getHours()==tempintime.getHours()){
- 				
- 					if(tempclosetime.getMinutes()<tempintime.getMinutes()){
- 						document.getElementById("errormsg").innerText="";
- 						document.getElementById("errormsg").innerText="Close Time cannot be less than Out Time";
- 						$('#closetime').jqxDateTimeInput('focus'); 
- 						return false;
- 					}
- 					else{
- 						document.getElementById("errormsg").innerText="";
- 					}
- 				}
- 			}
- 			else{
- 				document.getElementById("errormsg").innerText="";
- 			}
- 			if(closekm==''||closekm==0.0){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Close Km Cannot be less than Out Km";
- 				document.getElementById("closekm").focus();
- 				return false;
- 			}
- 			else if(closekm<tempoutkm){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Close km cannot be less than Out km";
- 				document.getElementById("closekm").focus();
- 				return false;
- 			}
- 			else{
- 				document.getElementById("errormsg").innerText="";
- 			}
- 			if(document.getElementById("cmbclosefuel").value==""){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Please select Close Fuel";
- 				document.getElementById("cmbclosefuel").focus();
- 				return false;
- 			}
- 			document.getElementById("errormsg").value="";
- 		/* } */
- 
- 		/** Collection validation starts */
- 		
- 		if(document.getElementById("chkgaragecollect").checked==true){
- 			tempcollectdate.setHours(0,0,0,0);
- 			tempoutdate.setHours(0,0,0,0);
- 			tempoutkm=parseFloat($('#garagedeliverykm').val());
- 			if($('#garagecollectdate').jqxDateTimeInput('getDate')==null){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Collection Date is Mandatory";
- 				$('#garagecollectdate').jqxDateTimeInput('focus'); 
- 				return false;
- 			}
- 			
- 			var collectdateval=funDateInPeriod($('#garagecollectdate').jqxDateTimeInput('getDate'));
- 			if(collectdateval==0){
- 				$('#garagecollectdate').jqxDateTimeInput('focus');
- 				return false;
- 			}
- 			else{
- 				document.getElementById("errormsg").innerText="";
- 			}
- 			if($('#garagecollecttime').jqxDateTimeInput('getDate')==null){
- 				
- 		 	 		document.getElementById("errormsg").innerText="";
- 		 	 		document.getElementById("errormsg").innerText="Collection Time is Mandatory";
- 		 	 		$('#garagecollecttime').jqxDateTimeInput('focus'); 
- 		 	 		return false;
- 		 	 	
- 			}
- 			if(document.getElementById("cmbgaragecollectfuel").value==""){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Collection Fuel is Mandatory";
- 				document.getElementById("cmbgaragecollectfuel").focus();
- 				return false;
- 			}
- 			if(tempcollectdate<tempoutdate){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Collection Date should Not be Less than Delivery Date";
- 				$('#garagecollectdate').jqxDateTimeInput('focus');
- 				return false;
- 			}  
- 			
- 			if(tempcollectdate-tempoutdate==0){
- 				if(tempcollecttime.getHours() < tempouttime.getHours()){
- 					document.getElementById("errormsg").innerText="";
- 					document.getElementById("errormsg").innerText="Collection Time should Not be Less than Delivery Time";
- 					$('#garagecollecttime').jqxDateTimeInput('focus');
- 					return false;
- 				}
- 				else if(tempcollecttime.getHours()==tempouttime.getHours()){
- 					if(tempcollecttime.getMinutes()<tempouttime.getMinutes()){
- 						document.getElementById("errormsg").innerText="";
- 	 					document.getElementById("errormsg").innerText="Collection Time should Not be Less than Delivery Time";
- 	 					$('#garagecollecttime').jqxDateTimeInput('focus');
- 	 					return false;
- 	 				}
- 				}
- 				
- 				
- 				else{
- 					document.getElementById("errormsg").innerText="";
- 				}
- 			}
- 			
- 			if((document.getElementById("garagecollectkm").value=='')||parseFloat((document.getElementById("garagecollectkm").value)==0.0)){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Collection KM should not be Empty";
- 				document.getElementById("garagecollectkm").focus();
- 				return false;
- 			}
- 			else{
- 				document.getElementById("errormsg").innerText="";
- 			}
- 			if(parseFloat(document.getElementById("garagecollectkm").value)<tempoutkm){
- 				//alert("Collectkm:"+document.getElementById("garagecollectkm").value+"Out KM:"+tempoutkm);
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Collection KM should not be less than Delivery KM";
- 				document.getElementById("garagecollectkm").focus();
- 				return false;
- 			}
- 			else{
- 				document.getElementById("errormsg").innerText="";
- 			}
- 			//alert("Here Inside");
- 			if(tempclosedate<tempcollectdate){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Close Date Cannot be less than Collection Date";
- 				$('#closedate').jqxDateTimeInput('focus');
- 				return false;
- 			}
- 			if(tempclosedate-tempcollectdate==0){
- 				if(tempclosetime.getHours()<tempcollecttime.getHours()){
- 					document.getElementById("errormsg").innerText="";
- 					document.getElementById("errormsg").innerText="Close Time cannot be less than Collection Time";
- 					$('#closetime').jqxDateTimeInput('focus');
- 					return false;
- 				}
- 				if(tempclosetime.getHours()==tempcollecttime.getHours()){
- 					if(tempclosetime.getMinutes()<tempcollecttime.getMinutes()){
- 						document.getElementById("errormsg").innerText="";
- 	 					document.getElementById("errormsg").innerText="Close Time cannot be less than Collection Time";
- 	 					$('#closetime').jqxDateTimeInput('focus');
- 	 					return false;	
- 					}
- 				}
- 			}
- 			if(parseFloat(document.getElementById("closekm").value)<parseFloat(document.getElementById("garagecollectkm").value)){
- 				document.getElementById("errormsg").innerText="";
- 				document.getElementById("errormsg").innerText="Close Km Cannot be less than Collection Km";
- 				document.getElementById("closekm").focus();
- 				return false;
- 			}
- 	}
- 		
- 		/** Collection validation finish */
- 		
- 		if(document.getElementById("totalkm").value=='' || parseFloat(document.getElementById("totalkm").value)==0.0){
- 			document.getElementById("errormsg").innerText="";
- 			document.getElementById("errormsg").innerText="Close KM must be greater than Out KM";
- 			document.getElementById("closekm").focus();
- 			return false;
- 		}
- 		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
- 		if(parseFloat(document.getElementById("totalkm").value)<0){
- 			document.getElementById("errormsg").innerText="";
- 			document.getElementById("errormsg").innerText="Please enter valid KM";
- 			document.getElementById("closekm").focus();
- 			return false;
- 		}
- 		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
- 		if(document.getElementById("cmbclosebranch").value==''){
- 			document.getElementById("errormsg").innerText="";
- 			document.getElementById("errormsg").innerText="Close Branch is Mandatory";
- 			document.getElementById("cmbclosebranch").focus();
- 			return false;
- 		}
- 		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
- 		if(document.getElementById("cmbcloselocation").value==''){
- 			document.getElementById("errormsg").innerText="";
- 			document.getElementById("errormsg").innerText="Close Location is Mandatory";
- 			document.getElementById("cmbcloselocation").focus();
- 			return false;
- 		}
- 		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
-		if(document.getElementById("closekm").value=="" || parseFloat(document.getElementById("closekm").value)==0.0){
-			document.getElementById("errormsg").innerText="";
+		var tempclosedate=new Date($('#closedate').jqxDateTimeInput('getDate'));
+		tempclosedate.setHours(0,0,0,0);
+		var tempclosetime=$('#closetime').jqxDateTimeInput('getDate');
+	 	$('#outkm').prop('disabled',false);
+		var tempoutkm=parseFloat($('#outkm').val());
+		$('#outkm').prop('disabled',true);
+		
+		var closekm=parseFloat($('#closekm').val());	
+		var closefuel=$('#cmbclosefuel').val();
+		
+		if(tempclosedate<tempindate){
+			document.getElementById("errormsg").innerText="Close Date cannot be less than Out Date";
+			$('#closedate').jqxDateTimeInput('focus'); 
+			return false;
+		}
+		else if(tempclosedate-tempindate==0){
+			if(tempclosetime.getHours()<tempintime.getHours()){
+				document.getElementById("errormsg").innerText="Close Time cannot be less than Out Time";
+				$('#closetime').jqxDateTimeInput('focus'); 
+				return false;
+			}
+			else if(tempclosetime.getHours()==tempintime.getHours()){
+				if(tempclosetime.getMinutes()<tempintime.getMinutes()){
+					document.getElementById("errormsg").innerText="Close Time cannot be less than Out Time";
+					$('#closetime').jqxDateTimeInput('focus'); 
+					return false;
+				}
+			}
+		}
+		
+		if(closekm==''||closekm==0.0){
+			document.getElementById("errormsg").innerText="Close Km Cannot be less than Out Km";
+			document.getElementById("closekm").focus();
+			return false;
+		}
+		else if(closekm<tempoutkm){
+			document.getElementById("errormsg").innerText="Close km cannot be less than Out km";
+			document.getElementById("closekm").focus();
+			return false;
+		}
+		if(document.getElementById("cmbclosefuel").value==""){
+			document.getElementById("errormsg").innerText="Please select Close Fuel";
+			document.getElementById("cmbclosefuel").focus();
+			return false;
+		}
+		document.getElementById("errormsg").innerText="";
+
+		/** Collection validation starts */
+		if(document.getElementById("chkgaragecollect").checked==true){
+			tempcollectdate.setHours(0,0,0,0);
+			tempoutdate.setHours(0,0,0,0);
+			tempoutkm=parseFloat($('#garagedeliverykm').val());
+			if($('#garagecollectdate').jqxDateTimeInput('getDate')==null){
+				document.getElementById("errormsg").innerText="Collection Date is Mandatory";
+				$('#garagecollectdate').jqxDateTimeInput('focus'); 
+				return false;
+			}
+			
+			var collectdateval=funDateInPeriod($('#garagecollectdate').jqxDateTimeInput('getDate'));
+			if(collectdateval==0){
+				$('#garagecollectdate').jqxDateTimeInput('focus');
+				return false;
+			}
+			if($('#garagecollecttime').jqxDateTimeInput('getDate')==null){
+	 	 		document.getElementById("errormsg").innerText="Collection Time is Mandatory";
+	 	 		$('#garagecollecttime').jqxDateTimeInput('focus'); 
+	 	 		return false;
+			}
+			if(document.getElementById("cmbgaragecollectfuel").value==""){
+				document.getElementById("errormsg").innerText="Collection Fuel is Mandatory";
+				document.getElementById("cmbgaragecollectfuel").focus();
+				return false;
+			}
+			if(tempcollectdate<tempoutdate){
+				document.getElementById("errormsg").innerText="Collection Date should Not be Less than Delivery Date";
+				$('#garagecollectdate').jqxDateTimeInput('focus');
+				return false;
+			}  
+			
+			if(tempcollectdate-tempoutdate==0){
+				if(tempcollecttime.getHours() < tempouttime.getHours()){
+					document.getElementById("errormsg").innerText="Collection Time should Not be Less than Delivery Time";
+					$('#garagecollecttime').jqxDateTimeInput('focus');
+					return false;
+				}
+				else if(tempcollecttime.getHours()==tempouttime.getHours()){
+					if(tempcollecttime.getMinutes()<tempouttime.getMinutes()){
+	 					document.getElementById("errormsg").innerText="Collection Time should Not be Less than Delivery Time";
+	 					$('#garagecollecttime').jqxDateTimeInput('focus');
+	 					return false;
+	 				}
+				}
+			}
+			
+			if((document.getElementById("garagecollectkm").value=='')||parseFloat((document.getElementById("garagecollectkm").value)==0.0)){
+				document.getElementById("errormsg").innerText="Collection KM should not be Empty";
+				document.getElementById("garagecollectkm").focus();
+				return false;
+			}
+			if(parseFloat(document.getElementById("garagecollectkm").value)<tempoutkm){
+				document.getElementById("errormsg").innerText="Collection KM should not be less than Delivery KM";
+				document.getElementById("garagecollectkm").focus();
+				return false;
+			}
+			
+			if(tempclosedate<tempcollectdate){
+				document.getElementById("errormsg").innerText="Close Date Cannot be less than Collection Date";
+				$('#closedate').jqxDateTimeInput('focus');
+				return false;
+			}
+			if(tempclosedate-tempcollectdate==0){
+				if(tempclosetime.getHours()<tempcollecttime.getHours()){
+					document.getElementById("errormsg").innerText="Close Time cannot be less than Collection Time";
+					$('#closetime').jqxDateTimeInput('focus');
+					return false;
+				}
+				if(tempclosetime.getHours()==tempcollecttime.getHours()){
+					if(tempclosetime.getMinutes()<tempcollecttime.getMinutes()){
+	 					document.getElementById("errormsg").innerText="Close Time cannot be less than Collection Time";
+	 					$('#closetime').jqxDateTimeInput('focus');
+	 					return false;	
+					}
+				}
+			}
+			if(parseFloat(document.getElementById("closekm").value)<parseFloat(document.getElementById("garagecollectkm").value)){
+				document.getElementById("errormsg").innerText="Close Km Cannot be less than Collection Km";
+				document.getElementById("closekm").focus();
+				return false;
+			}
+	    }
+		
+		if(document.getElementById("totalkm").value=='' || parseFloat(document.getElementById("totalkm").value)==0.0){
 			document.getElementById("errormsg").innerText="Close KM must be greater than Out KM";
 			document.getElementById("closekm").focus();
 			return false;
 		}
-		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
+		if(parseFloat(document.getElementById("totalkm").value)<0){
+			document.getElementById("errormsg").innerText="Please enter valid KM";
+			document.getElementById("closekm").focus();
+			return false;
+		}
+		if(document.getElementById("cmbclosebranch").value==''){
+			document.getElementById("errormsg").innerText="Close Branch is Mandatory";
+			document.getElementById("cmbclosebranch").focus();
+			return false;
+		}
+		if(document.getElementById("cmbcloselocation").value==''){
+			document.getElementById("errormsg").innerText="Close Location is Mandatory";
+			document.getElementById("cmbcloselocation").focus();
+			return false;
+		}
+		if(document.getElementById("closekm").value=="" || parseFloat(document.getElementById("closekm").value)==0.0){
+			document.getElementById("errormsg").innerText="Close KM must be greater than Out KM";
+			document.getElementById("closekm").focus();
+			return false;
+		}
 		if(parseFloat(document.getElementById("closekm").value)<parseFloat(document.getElementById("outkm").value)){
-			document.getElementById("errormsg").innerText="";
 			document.getElementById("errormsg").innerText="Close Km cannot be less than out km";
 			document.getElementById("closekm").focus();
 			return false;
 		}
-		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
- 		if(document.getElementById("cmbclosefuel").value==""){
- 			document.getElementById("errormsg").innerText="";
- 			document.getElementById("errormsg").innerText="Close Fuel is Mandatory";
- 			document.getElementById("cmbclosefuel").focus();
- 			return false;
- 		}
- 		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
- 		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
- 		if(document.getElementById("closedriver").value==""){
- 			document.getElementById("errormsg").innerText="";
- 			document.getElementById("errormsg").innerText="Close Driver is Mandatory";
- 			document.getElementById("closedriver").focus();
- 			return false;
- 		}
- 		}
- 		$('#garagecollectdate').jqxDateTimeInput({ disabled: false});
- 		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
- 		
- 		funenable();
- 		//alert($('#closedate').jqxDateTimeInput('getDate'));
- 		$.messager.confirm('Confirm', 'Closing KM: '+$('#closekm').val()+' Driven KM: '+$('#totalkm').val(), function(r){
-		if (r){
-			 checkavailability('close');
-			//$('#garagecollectdate').jqxDateTimeInput({ disabled: true});
-	 		//$('#garagedeldate').jqxDateTimeInput({ disabled: true});
+		if(document.getElementById("cmbclosefuel").value==""){
+			document.getElementById("errormsg").innerText="Close Fuel is Mandatory";
+			document.getElementById("cmbclosefuel").focus();
+			return false;
 		}
- 		});
- 		//document.getElementById("frmMovement").submit();
- 		
-
- 		
- 	}
- 	function getAccidents(){
- 		$('#cmbaccidents').prop('disabled', false );
- 		if(document.getElementById("cmbaccidents").value==1){
- 			document.getElementById("hidaccidents").value=1;
- 			$('#accdetails').prop('disabled', false );
- 			$('#accfines').prop('disabled', false );
- 			$('#accdetails').prop('readonly', false );
- 			$('#accfines').prop('readonly', false );
- 		}
- 		else{
- 			document.getElementById("hidaccidents").value=0;
- 			$('#accdetails').prop('disabled', true );
- 			$('#accfines').prop('disabled', true );
- 			
- 		}
- 		//$('#cmbaccidents').prop('disabled', true );
- 	}
- 	function checkGarageDelivery(){
- 		//alert("here");
- 		if(document.getElementById("chkgaragedelivery").checked==true){
- 			//alert("Inside Garage Delivery");
- 			document.getElementById("hidchkgaragedelivery").value="1";
- 		 	//$('#garagedeldate').jqxDateTimeInput({ disabled: false});
- 		 	if(document.getElementById("mode").value!="A"){
-    		$('#garagedeliverytime').jqxDateTimeInput({ disabled: false});
-    		$('#garagedeliverykm').prop('disabled', false );
-    		$('#garagedeliverykm').prop('readonly', false );
-    		$('#cmbgaragedeliveryfuel').prop('disabled', false );
- 		 	}
-    		//$('#btndeliveryupdate').prop('disabled', false );
- 			//disableGarage2();
- 		}
- 		if(document.getElementById("chkgaragedelivery").checked==false){
- 			document.getElementById("hidchkgaragedelivery").value="0";
- 			//$('#garagedeldate').jqxDateTimeInput({ disabled: true});
- 			if(document.getElementById("mode").value!="A"){
- 				if($('#garagedeliverytime').jqxDateTimeInput('disabled')==false){
- 					$('#garagedeliverytime').jqxDateTimeInput({ disabled: true});		
- 				}
- 				
-    		
-    		
-    		$('#garagedeliverykm').prop('disabled', true );
-    		$('#cmbgaragedeliveryfuel').prop('disabled', true );
-    		$('#btndeliveryupdate').prop('disabled', true );
- 			}
- 		}
- 		
- 	}
- 	
- 	function checkGarageCollection(){
- 		if(document.getElementById("chkgaragecollect").checked==true){
- 			//alert("here2");
- 			document.getElementById("hidchkgaragecollect").value=1;
- 			if($('#garagecollectdate').jqxDateTimeInput('disabled')==true){
- 				$('#garagecollectdate').jqxDateTimeInput({ disabled: false});
- 			}
- 			
- 			//
+		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
+		    if(document.getElementById("closedriver").value==""){
+			    document.getElementById("errormsg").innerText="Close Driver is Mandatory";
+			    document.getElementById("closedriver").focus();
+			    return false;
+		    }
+		}
+		
+		$('#garagecollectdate').jqxDateTimeInput({ disabled: false});
+		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
+		
+		funenable();
+		$.messager.confirm('Confirm', 'Closing KM: '+$('#closekm').val()+' Driven KM: '+$('#totalkm').val(), function(r){
+		    if (r){
+			    checkavailability('close');
+		    }
+		});
+	}
+	
+	function getAccidents(){
+		$('#cmbaccidents').prop('disabled', false );
+		if(document.getElementById("cmbaccidents").value==1){
+			document.getElementById("hidaccidents").value=1;
+			$('#accdetails').prop('disabled', false );
+			$('#accfines').prop('disabled', false );
+			$('#accdetails').prop('readonly', false );
+			$('#accfines').prop('readonly', false );
+		}
+		else{
+			document.getElementById("hidaccidents").value=0;
+			$('#accdetails').prop('disabled', true );
+			$('#accfines').prop('disabled', true );
+		}
+	}
+	
+	function checkGarageDelivery(){
+		if(document.getElementById("chkgaragedelivery").checked==true){
+			document.getElementById("hidchkgaragedelivery").value="1";
+		 	if(document.getElementById("mode").value!="A"){
+    		    $('#garagedeliverytime').jqxDateTimeInput({ disabled: false});
+    		    $('#garagedeliverykm').prop('disabled', false );
+    		    $('#garagedeliverykm').prop('readonly', false );
+    		    $('#cmbgaragedeliveryfuel').prop('disabled', false );
+		 	}
+		}
+		if(document.getElementById("chkgaragedelivery").checked==false){
+			document.getElementById("hidchkgaragedelivery").value="0";
+			if(document.getElementById("mode").value!="A"){
+				if($('#garagedeliverytime').jqxDateTimeInput('disabled')==false){
+					$('#garagedeliverytime').jqxDateTimeInput({ disabled: true});		
+				}
+    		    $('#garagedeliverykm').prop('disabled', true );
+    		    $('#cmbgaragedeliveryfuel').prop('disabled', true );
+    		    $('#btndeliveryupdate').prop('disabled', true );
+			}
+		}
+	}
+	
+	function checkGarageCollection(){
+		if(document.getElementById("chkgaragecollect").checked==true){
+			document.getElementById("hidchkgaragecollect").value=1;
+			if($('#garagecollectdate').jqxDateTimeInput('disabled')==true){
+				$('#garagecollectdate').jqxDateTimeInput({ disabled: false});
+			}
     		$('#garagecollecttime').jqxDateTimeInput({ disabled: false});
     		$('#garagecollectkm').prop('readonly', false );
     		$('#garagecollectkm').prop('disabled', false );
     		$('#cmbgaragecollectfuel').prop('disabled', false );
-    		
- 			//disableGarage2();
- 		}
- 		if(document.getElementById("chkgaragecollect").checked==false){
- 			document.getElementById("hidchkgaragecollect").value=0;
- 			if($('#garagecollectdate').jqxDateTimeInput('disabled')==false){
- 				$('#garagecollectdate').jqxDateTimeInput({ disabled: true});
- 			}
- 			//$('#garagecollectdate').jqxDateTimeInput({ disabled: true});
+		}
+		if(document.getElementById("chkgaragecollect").checked==false){
+			document.getElementById("hidchkgaragecollect").value=0;
+			if($('#garagecollectdate').jqxDateTimeInput('disabled')==false){
+				$('#garagecollectdate').jqxDateTimeInput({ disabled: true});
+			}
     		$('#garagecollecttime').jqxDateTimeInput({ disabled: true});
     		$('#garagecollectkm').prop('disabled', true );
     		$('#cmbgaragecollectfuel').prop('disabled', true );
- 		}
- 	}
- 	//Extra function used for disable collectdate in case of jquery error
- 
- 	function funDeliveryUpdate(){
- 		//alert("Delivery update Function");
- 		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
- 		$('#garagedeliverytime').jqxDateTimeInput({ disabled: false});
- 		$('#garagedeliverykm').prop('disabled',false);
- 		$('#garagedeliverykm').prop('readonly',false);
- 		$('#cmbgaragedeliveryfuel').prop('disabled',false);
- 		document.getElementById("btndeliveryupdate").style.display="none";
+		}
+	}
+	
+	function funDeliveryUpdate(){
+		$('#garagedeldate').jqxDateTimeInput({ disabled: false});
+		$('#garagedeliverytime').jqxDateTimeInput({ disabled: false});
+		$('#garagedeliverykm').prop('disabled',false);
+		$('#garagedeliverykm').prop('readonly',false);
+		$('#cmbgaragedeliveryfuel').prop('disabled',false);
+		document.getElementById("btndeliveryupdate").style.display="none";
 		document.getElementById("btndeliverysave").style.display="block";
 		$('#garagedeldate').jqxDateTimeInput('focus');
- 	}
- 	function funDeliverySave(){
- 		if($('#garagedeldate').jqxDateTimeInput('getDate')==null){
- 	 		document.getElementById("errormsg").innerText="";
- 	 		document.getElementById("errormsg").innerText="Delivery Date is Mandatory";
- 	 		return false;
- 	 	}
- 		
- 		var deliverydateval=funDateInPeriod($('#garagedeldate').jqxDateTimeInput('getDate'));
+	}
+	
+	function funDeliverySave(){
+		if($('#garagedeldate').jqxDateTimeInput('getDate')==null){
+	 		document.getElementById("errormsg").innerText="Delivery Date is Mandatory";
+	 		return false;
+	 	}
+		var deliverydateval=funDateInPeriod($('#garagedeldate').jqxDateTimeInput('getDate'));
 		if(deliverydateval==0){
 			$('#garagedeldate').jqxDateTimeInput('focus');
 			return false;
 		}
- 		if($('#garagedeliverytime').jqxDateTimeInput('getDate')==null){
- 			document.getElementById("errormsg").innerText="";
-  			document.getElementById("errormsg").innerText="Garage Delivery Time is Mandatory";
-	  			return 0;	
- 		}
- 		var date1 = new Date($('#garagedeldate').jqxDateTimeInput('getDate'));
- 		var date2=new Date($('#dateout').jqxDateTimeInput('getDate'));
- 		var time1=$('#garagedeliverytime').jqxDateTimeInput('getDate');
- 		var time2=$('#timeout').jqxDateTimeInput('getDate');
- 		$('#outkm').prop('disabled',false);
- 		$('#outfuel').prop('disabled',false);
- 		var tempoutkm=parseFloat($('#outkm').val());
- 		var tempoutfuel=$('#outfuel').val();
- 		$('#outkm').prop('disabled',true);
- 		$('#outfuel').prop('disabled',true);
+		if($('#garagedeliverytime').jqxDateTimeInput('getDate')==null){
+ 			document.getElementById("errormsg").innerText="Garage Delivery Time is Mandatory";
+ 			return 0;	
+		}
+		var date1 = new Date($('#garagedeldate').jqxDateTimeInput('getDate'));
+		var date2=new Date($('#dateout').jqxDateTimeInput('getDate'));
+		var time1=$('#garagedeliverytime').jqxDateTimeInput('getDate');
+		var time2=$('#timeout').jqxDateTimeInput('getDate');
+		$('#outkm').prop('disabled',false);
+		$('#outfuel').prop('disabled',false);
+		var tempoutkm=parseFloat($('#outkm').val());
+		var tempoutfuel=$('#outfuel').val();
+		$('#outkm').prop('disabled',true);
+		$('#outfuel').prop('disabled',true);
 		var status=checkfuturetime(date1,time1);
-    	if(status){
-    		document.getElementById("errormsg").innerText="";
-    			
-    	}
-    	else{
+    	if(!status){
     		$('#garagedeliverytime').jqxDateTimeInput('focus');
     		return false;
     	}
- 	 	date1.setHours(0,0,0,0);
- 	 	date2.setHours(0,0,0,0);
- 	 	
- 		if(date1<date2){
+	 	date1.setHours(0,0,0,0);
+	 	date2.setHours(0,0,0,0);
+	 	
+		if(date1<date2){
 			document.getElementById("errormsg").innerText="Delivery Date should Not be Less than Out Date";
 			return false;
- 		}
- 	if(date1-date2==0){
- 		
- 		if(time1.getHours()<time2.getHours()){
- 			document.getElementById("errormsg").innerText="Delivery Time should Not be Less than Out Time";
- 			return false;
- 		}
- 		else if(time1.getHours()==time2.getHours()){
- 		if(time1.getMinutes()<time2.getMinutes()){
- 			document.getElementById("errormsg").innerText="Delivery Time should Not be Less than Out Time";
- 			return false;
- 		}
- 		
- 		}
- 		else{
- 			document.getElementById("errormsg").innerText="";
- 		}
- 		
- 	}
- 	else{
- 		document.getElementById("errormsg").innerText="";
- 	
- 	}
- 	if((document.getElementById("garagedeliverykm").value=='')||(parseFloat(document.getElementById("garagedeliverykm").value)==0.0)){
- 		document.getElementById("errormsg").innerText="Delivery KM is Mandatory";
- 		return false;
- 	}
- 	else{
- 		document.getElementById("errormsg").innerText="";
- 	}
- 	if(parseFloat(document.getElementById("garagedeliverykm").value)<tempoutkm){
- 		document.getElementById("errormsg").innerText="Delivery KM should Not be Less than Out KM";
- 		return false;
- 	}
- 	else{
- 		document.getElementById("errormsg").innerText="";
- 	}
- 	if(document.getElementById("cmbgaragedeliveryfuel").value==''){
- 		document.getElementById("errormsg").innerText="Please Select Delivery Fuel";
- 		return false;
- 	}
- 	else{
- 		document.getElementById("errormsg").innerText="";
- 	}
- 	document.getElementById("errormsg").innerText="";
- 	
- 			
- 		var testdoc=document.getElementById("docno").value;
- 		var testfleet=document.getElementById("txtfleetno").value;
- 		var deliverydate=$('#garagedeldate').jqxDateTimeInput('getDate');
- 		var deliverytime=$('#garagedeliverytime').jqxDateTimeInput('getDate');
- 		var deliverykm=document.getElementById("garagedeliverykm").value;
- 		var deliveryfuel=document.getElementById("cmbgaragedeliveryfuel").value;
- 		var location=document.getElementById("cmblocation").value;
- 		var branch=document.getElementById("cmbbranch").value;
- 		var trancode=document.getElementById("cmbstatus").value;
-		var d1=new Date(deliverytime);
+		}
+	    if(date1-date2==0){
+		    if(time1.getHours()<time2.getHours()){
+			    document.getElementById("errormsg").innerText="Delivery Time should Not be Less than Out Time";
+			    return false;
+		    }
+		    else if(time1.getHours()==time2.getHours()){
+		        if(time1.getMinutes()<time2.getMinutes()){
+			        document.getElementById("errormsg").innerText="Delivery Time should Not be Less than Out Time";
+			        return false;
+		        }
+		    }
+	    }
+	    if((document.getElementById("garagedeliverykm").value=='')||(parseFloat(document.getElementById("garagedeliverykm").value)==0.0)){
+		    document.getElementById("errormsg").innerText="Delivery KM is Mandatory";
+		    return false;
+	    }
+	    if(parseFloat(document.getElementById("garagedeliverykm").value)<tempoutkm){
+		    document.getElementById("errormsg").innerText="Delivery KM should Not be Less than Out KM";
+		    return false;
+	    }
+	    if(document.getElementById("cmbgaragedeliveryfuel").value==''){
+		    document.getElementById("errormsg").innerText="Please Select Delivery Fuel";
+		    return false;
+	    }
+	    document.getElementById("errormsg").innerText="";
+	
+		var testdoc=document.getElementById("docno").value;
+		var testfleet=document.getElementById("txtfleetno").value;
+		var deliverydate=$('#garagedeldate').jqxDateTimeInput('getDate');
 		var temptime=$('#garagedeliverytime').jqxDateTimeInput('val');
+		var deliverykm=document.getElementById("garagedeliverykm").value;
+		var deliveryfuel=document.getElementById("cmbgaragedeliveryfuel").value;
+		var location=document.getElementById("cmblocation").value;
+		var branch=document.getElementById("cmbbranch").value;
+		var trancode=document.getElementById("cmbstatus").value;
 		var driver=document.getElementById("hiddriver").value;
- 		getDelivery(testdoc,testfleet,deliverydate,temptime,deliverykm,deliveryfuel,location,trancode,driver,branch);
- 	}
- 	function getDelivery(testdoc,testfleet,deliverydate,temptime,deliverykm,deliveryfuel,location,trancode,driver,branch){
- 		//alert("Inside Ajax");
- 		$('#btndeliveryupdate,#btndeliverysave').attr('disabled',true);
-	var x = new XMLHttpRequest();
+		getDelivery(testdoc,testfleet,deliverydate,temptime,deliverykm,deliveryfuel,location,trancode,driver,branch);
+	}
+	
+	function getDelivery(testdoc,testfleet,deliverydate,temptime,deliverykm,deliveryfuel,location,trancode,driver,branch){
+		$('#btndeliveryupdate,#btndeliverysave').attr('disabled',true);
+	    var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
 				var items = x.responseText;
-				//alert(items);
-			//	alert((parseInt(items))>0);
 				if((parseInt(items))>0){
-					document.getElementById("msg").value="Successfully Saved";
+					 document.getElementById("msg").value="Successfully Saved";
 					 $.messager.alert('Message',$('#msg').val());
 					 $('#btndeliveryupdate,#btndeliverysave').attr('disabled',false);
 					 document.getElementById("btndeliveryupdate").style.display="block";
@@ -1907,172 +1585,30 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 					 document.getElementById("btndeliveryupdate").disabled=true;
 					 document.getElementById("hidchkgaragedelivery").value="1";
 					 document.getElementById("deliverystatus").value="1";
-				}
-				else{
-					document.getElementById("msg").value="Not Saved";
+				} else {
+					 document.getElementById("msg").value="Not Saved";
 					 $.messager.alert('Message',$('#msg').val());
 					 document.getElementById("chkstatus").value="1";
 					 $('#btndeliveryupdate,#btndeliverysave').attr('disabled',false);
 					 document.getElementById("hidchkgaragedelivery").value="0";
 				}
-			} else {
 			}
 		}
 		x.open("GET", "deliveryUpdate.jsp?doc="+testdoc+"&fleet="+testfleet+"&date="+$('#garagedeldate').jqxDateTimeInput('getDate')+"&time="+temptime+"&km="+deliverykm+"&fuel="+deliveryfuel+"&location="+location+"&trancode="+trancode+"&driver="+driver+"&branch="+branch, true);
 		x.send();
-		}
- 	
- 	
- 	  function isNumber(evt,id) {
-	        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-	        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-	         {
-	        	 $.messager.alert('Warning','Enter Numbers Only');
-	           $("#"+id+"").focus();
-	            return false;
-	            
-	         }
-	        
-	        return true;
-	    }
- 
- 	  //Function to Print
-		function funPrintBtn() {
-	   		if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-	   		 $.messager.alert('Warning','Select a Document');
-	   		 return false;
-		   		}
-	   		var url=document.URL;
-	   	 var reurl=url.split("saveMovement");
-	   	  	//var reurl=url.split("tarifMgmt.jsp");
-	   	  	
-	   	  	var win= window.open(reurl[0]+"printMovement.action?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	   	    	//var win= window.open(reurl[0]+"printManualInvoice?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	   		win.focus();
-	   	 }
- 	
-</script>
-<style>
-
-body {
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 14px;
-    margin: 0;
-     background: #fff;
-    box-sizing: border-box;
-}
-
-fieldset {
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #fff;
-}
-
-legend {
-    font-size: 14px;
-    font-weight: 600;
-    padding: 0 8px;
-        border-left: 4px solid #007bff;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-td {
-    padding: 2px 3px;
-    font-size: 14px;
-    vertical-align: middle;
-}
-
-input[type="text"], select {
-    height: 30px;
-    font-size: 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 2px 3px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-input[readonly] {
-    background: #f3f4f6;
-}
-
-select {
-    background: #fff;
-}
-
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-}
-#head{
-	background:#fff;
-	border-radius: 20px;
-	padding-bottom:10px;
-	box-shadow: 0 1px 3px #000;
+	}
 	
-}
-
-.input-search-container {
-    position: relative;
-    display: block; 
-    width: 100%;
-    min-width: 150px; 
-    margin-right: 15px;
-}
-
-.input-search-container input {
-    padding-right: 30px !important; 
-    width: 100% !important;
-    display: block;
-    box-sizing: border-box !important;
-}
-
-.magnifier-icon {
-    position: absolute;
-    right: 8px; 
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #64748b; 
-    z-index: 10;
-    pointer-events: all; 
-    
-}
-.magnifier-icon:hover {
-    color: #2563eb; 
-    transform: translateY(-50%) scale(1.1);
-}
-#mainBG{
- background: #fff;
-}
-</style>
-
+	function funPrintBtn() {
+	   if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
+	       $.messager.alert('Warning','Select a Document');
+	       return false;
+	   }
+	   var url=document.URL;
+	   var reurl=url.split("saveMovement");
+	   var win= window.open(reurl[0]+"printMovement.action?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
+	   win.focus();
+	}
+</script>
 
 </head>
 <body onload="setValues();">
@@ -2084,283 +1620,245 @@ select {
 	</script>
 	<div id="head"> <jsp:include page="../../../../header.jsp" /></div>
 	<br/> 
-<div class='hidden-scrollbar'>
-<fieldset >
-<legend><b>Vehicle Movement Opening Info</b></legend>
-<table width="100%">
-  <tr>
-    <td width="4%" align="right">Date</td>
-    <td width="11%" align="left"><div id='date' name='date' value='<s:property value="date"/>'></div>
-                   </td>
-                   <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
-    <td width="6%" align="right">Fleet No</td>
-    <td width="13%" align="left" class="input-search-container" ><input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3 to Search"/>
-    <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-    </td>
-    <td colspan="8" align="left"><input type="text" id="txtfleetname" name="txtfleetname" style="width:100%; margin-left:10px" value='<s:property value="txtfleetname"/>'readonly="readonly"/></td>
-    <td width="3%" align="right">&nbsp;</td>
-  
-    <td width="5%" align="right">Doc No</td>
-    <td width="11%" align="left"><input type="text" id="docno" name="docno"  tabindex="-1" value='<s:property value="docno"/>' readonly/></td>
-    <td width="0%">&nbsp;</td>
-  </tr>
-  <tr>
-    <td width="4%" align="right">Branch</td>
-    <td width="13%" align="left"><select name="cmbbranch" id="cmbbranch" style="width:92%;" onchange="getLocation(this.value);">
-      <option value="">--Select--</option>
-    </select></td>
-<input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>'/>
-    <td width="6%" align="right">Location</td>
-    <td align="left" colspan="2"><select name="cmblocation" id="cmblocation" style="width:100%;">
-      <option value="">--Select--</option>
-    </select></td>
-    <input type="hidden" id="hiddateout" name="hiddateout" value='<s:property value="hiddateout"/>'/>
-    <td width="7%" align="right">Date Out</td>
-    <td width="7%" align="right"><div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div></td>
-    <td width="3%" align="right">Time</td>
-    <td width="8%" align="left"><div id='timeout' style='width:100%;' name='timeout' value='<s:property value="timeout"/>'></div></td>
-    <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
-    <td width="3%" align="right">KM</td>
-    <td width="7%" align="left"><input type="text" id="outkm" name="outkm"  value='<s:property value="outkm"/>'/></td>
-    <td width="3%" align="right">Fuel</td>
-    <td width="10%" align="left" ><select id="cmboutfuel" name="cmboutfuel" value='<s:property value="cmboutfuel"/>'>
-      <option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-    </select>
-      </td>
-      <input type="hidden" id="hidcmboutfuel" name="hidcmboutfuel"  value='<s:property value="hidcmboutfuel"/>'/>
-    <td align="right">User</td>
-    <td colspan="2" align="left"><input type="text" id="outuser" name="outuser" style="width:98%;text-transform:uppercase;" value='<s:property value="outuser"/>' /></td>
-    <input type="hidden" name="outuserid" id="outuserid" value='<s:property value="outuserid"/>'/>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">Driver</td>
-    <td align="left" width="9%" ><div class="input-search-container"><input type="text" id="driver" name="driver" value='<s:property value="driver"/>' onKeyDown="getDriver(event,1);" readonly placeholder="Press F3 to Search"/>
-    <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        </div>
-      <input type="checkbox" name="chkgaragedelivery" id="chkgaragedelivery" onChange="checkGarageDelivery();" hidden="true"></td>
-    <input type="hidden" name="hidstaff" id="hidstaff" value='<s:property value="hidstaff"/>'/>
-    <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
-    <td align="right"><!--Delivery-->Remarks</td>
-    <td colspan="8" align="left"><input type="text" id="outremarks" name="outremarks" style="width:100%;" value='<s:property value="outremarks"/>'/></td>
-    <td align="right"  width="10%">Movement Type</td>
-    <td colspan="2" align="left"><select id="cmbstatus" name="cmbstatus"  style="width:85%;" onchange="checkStaff();" value='<s:property value="cmbstatus"/>' >
-              <option value="">-Select-</option></select>
-              </td>
-              <input type="hidden" id="hidcmbstatus" name="hidcmbstatus" value='<s:property value="hidcmbstatus"/>'/>
-    <td align="left"><input type="text" name="staff" id="staff" value='<s:property value="staff"/>' onKeyDown="getStaff(event,1);" placeholder="Press F3 to Search"/>
-     <input type="text" name="garage" id="garage" value='<s:property value="garage"/>' onKeyDown="getGarage(event);" placeholder="Select Garage"/></td>
-        <input type="hidden" name="hidgarage" id="hidgarage" value='<s:property value="hidgarage"/>'/>
-    
-    <td>&nbsp;</td>
-    </tr>
-</table>
-    </fieldset>
-<fieldset>
-<table width="100%" >
-  <tr>
-    <td width="50%"><fieldset id="deliveryfield"><legend><b>Delivery Info</b></legend><table width="100%" >
-      <tr>
-        <td width="4%" align="right">Date </td>
-        <td width="16%" align="left"><div id="garagedeldate" name="garagedeldate" value='<s:property value="garagedeldate"/>'></div>
-</td>
-        <td width="4%" align="right">Time</td>
-        <td width="16%" align="left"><div id="garagedeliverytime" name="garagedeliverytime" value='<s:property value="garagedeliverytime"/>'></div>
-</td>
-        <td width="5%" align="right">KM</td>
-        <td width="17%" align="left"><input type="text" name="garagedeliverykm" id="garagedeliverykm" value='<s:property value="garagedeliverykm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-        <td width="6%" align="right">Fuel</td>
-        <td width="19%" align="left"><select name="cmbgaragedeliveryfuel" id="cmbgaragedeliveryfuel">
-          <option value="">--Select--</option><option value=0.000>Level 0/8</option>
-       <option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-        </select></td>
-        <td width="19%" align="center"><button type="button" name="btndeliveryupdate" id="btndeliveryupdate" class="myButton" onclick="funDeliveryUpdate();">Update</button>
-        <button type="button" name="btndeliverysave" id="btndeliverysave" class="myButton" onclick="funDeliverySave();" hidden="true">Save</button>
-        </td>
-      </tr>
-    </table></fieldset></td>
-    
-    <td width="50%"><fieldset id="collectionfield"><legend><b>Collection Info</b></legend><table width="100%">
-      <tr>
-        <td width="4%" align="left"><input type="checkbox" name="chkgaragecollect" id="chkgaragecollect" onchange="checkGarageCollection();" hidden="true">
-          <!--Collection--></td>
-        <td width="6%" align="right">Date</td>
-        <td width="15%" align="left"><div id="garagecollectdate" name="garagecollectdate" value='<s:property value="garagecollectdate"/>'></div>
-</td>
-        <td width="7%" align="right">Time</td>
-        <td width="16%" align="left"><div id="garagecollecttime" name="garagecollecttime" value='<s:property value="garagecollecttime"/>'></div>
-</td>
-        <td width="7%" align="right">KM</td>
-        <td width="16%" align="left"><input type="text" name="garagecollectkm" id="garagecollectkm" value='<s:property value="garagecollectkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-        <td width="5%" align="right">Fuel</td>
-        <td width="24%" align="left"><select name="cmbgaragecollectfuel" id="cmbgaragecollectfuel">
-          <option value="">--Select--</option><option value=0.000>Level 0/8</option>
-        <option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-        </select></td>
-      </tr>
-    </table></fieldset></td>
-  </tr>
-</table>
-</fieldset>
-<fieldset>
-      <legend><b>Vehicle Movement Closing Info</b></legend>
-      <table width="100%">
-  <tr>
-    <td width="4%" align="right">Branch</td>
-    <td width="10%" align="left"><select name="cmbclosebranch" id="cmbclosebranch" style="width:97%;" onchange="getCloseLocation(this.value);">
-      <option value="">--Select--</option>
-    </select></td>
-    <input type="hidden" name="hidcmbcloselocation" id="hidcmbcloselocation" value='<s:property value="hidcmbcloselocation"/>'/>
-    <td width="3%" align="right">Location</td>
-    <td width="10%" align="left"><select name="cmbcloselocation" id="cmbcloselocation" style="width:97%;">
-      <option value="">--Select--</option>
-    </select></td>
-      <input type="hidden" id="hidclosedate" name="hidclosedate" value='<s:property value="hidclosedate"/>'/>
-    <td width="2%" align="right">Date</td>
-    <td width="6%" align="left"><div id='closedate' name='closedate' value='<s:property value="closedate"/>'></div></td>
-    <td width="2%" align="right">Time</td>
-    <td width="7%" align="left"><div id='closetime' name='closetime' value='<s:property value="closetime"/>'></div></td>
-    <td width="3%" align="right">KM</td>
-    <td width="8%" align="left"><input type="text" id="closekm" name="closekm"  value='<s:property value="closekm"/>' onKeyPress="javascript:return isNumber (event,id)" onBlur="getTotalkm();"/></td>
-    <td width="7%" align="right">Fuel</td>
-      <input type="hidden" id="hidclosetime" name="hidclosetime" value='<s:property value="hidclosetime"/>'/>
-    <td width="8%" align="right"><select id="cmbclosefuel" name="cmbclosefuel" style="width:98%;" value='<s:property value="cmbclosefuel"/>'>
-      <option value="">-Select-</option>
-      <option value=0.000>Level 0/8</option>
-      <option value=0.125>Level 1/8</option>
-      <option value=0.250>Level 2/8</option>
-      <option value=0.375>Level 3/8</option>
-      <option value=0.500>Level 4/8</option>
-      <option value=0.625>Level 5/8</option>
-      <option value=0.750>Level 6/8</option>
-      <option value=0.875>Level 7/8</option>
-      <option value=1.000>Level 8/8</option>
-    </select></td>
-    <td width="4%" align="right">Driver</td>
-    <td width="10%" align="left"><input type="text" name="closedriver" id="closedriver" onKeyDown="getDriver(event,2);" value='<s:property value="closedriver"/>' style="width:100%;"  readonly/></td>
-      <input type="hidden" id="hidcmbclosefuel" name="hidcmbclosefuel" value='<s:property value="hidcmbclosefuel"/>'/>
-    <td width="8%" align="right">Staff</td>
-    <td width="8%" align="left"><input type="text" name="closestaff" id="closestaff" value='<s:property value="closestaff"/>' onKeyDown="getStaff(event,2);"  readonly/></td>
-    <input type="hidden" name="hidclosestaff" id="hidclosestaff" value='<s:property value="hidclosestaff"/>'/>
-    <input type="hidden" name="hidcmbaccidents" id="hidcmbaccidents" value='<s:property value="hidcmbaccidents"/>'/>
-    <td width="10%" rowspan="2" align="center"><input type="button" name="btnclose" id="btnclose" class="myButton" value="Close" onclick="closeMov();">
-    <input type="button" name="btnclosesave" id="btnclosesave" class="myButton" value="Save" onclick="closeSave();">
-    </td>
-      <input type="hidden" id="hidclosedriver" name="hidclosedriver" value='<s:property value="hidclosedriver"/>'/>
-      <input type="hidden" id="hidcloseuser" name="hidcloseuser" value='<s:property value="hidcloseuser"/>'/>
-  </tr>
-  <tr>
-    <td align="right">Accidents</td>
-    <td align="left"><select name="cmbaccidents" id="cmbaccidents" onChange="getAccidents();" style="width:97%;">
-      <option value="">--Select--</option>
-      <option value=1>Yes</option>
-      <option value=0>No</option>
-    </select></td>
-    <input type="hidden" name="hidaccidents" id="hidaccidents" value='<s:property value="hidaccidents"/>'/>
-    <td align="right">Details</td>
-    <td colspan="5" align="left"><input type="text" name="accdetails" id="accdetails" style="width:99%;" value='<s:property value="accdetails"/>'/></td>
-    <td align="right">Fines</td>
-    <td colspan="2" align="left"><input type="text" name="accfines" id="accfines" value='<s:property value="accfines"/>'/></td>
-    <td align="right">&nbsp;</td>
-    <td align="right">User</td>
-    <td align="left"><input type="text" id="closeuser" name="closeuser" style="width:100%;text-transform:uppercase;" value='<s:property value="closeuser"/>' readonly  /></td>
-    <td align="right">Total KM</td>
-    <td align="left"><input type="text" id="totalkm" name="totalkm"  value='<s:property value="totalkm"/>'/></td>
-    </tr>
-  <tr>
-    <td align="right">Remarks</td>
-    <td colspan="10" align="left"><input type="text" id="closeremarks" name="closeremarks" style="width:99.5%;" value='<s:property value="closeremarks"/>'/></td>
-    <td align="right">&nbsp;</td>
-    <td align="right">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="right">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="center">&nbsp;</td>
-  </tr>
-      </table>
-    </fieldset>
-    
-<br/>
-  <!--<div id='jqxExpander'>
-  <div>Accidents/Maintenance Details</div>
-  <div>
-  <table width="100%" style="background: #E0ECF8;">
-  <tr>
-    <td><input type="checkbox" name="chkaccident" id="chkaccident" unchecked onchange="changeAcc();"></td>
-    <td><input type="checkbox" name="chkmaintenance" id="chkmaintenance"  unchecked onchange="changeMaintenance();"></td>
-  </tr>
-  <tr>
-    <td width="50%"><div id="accdiv"><fieldset id="fieldsetacc">
-      <legend>Accidents Info</legend>
-      <table width="100%">
-  <tr>
-    <td width="13%" align="right">Date</td>
-    <td width="25%" align="left"><div id='accdate' name='accdate' value='<s:property value="accdate"/>'></div>
-                    </td>
-                    <input type="hidden" id="hidaccdate" name="hidaccdate" value='<s:property value="hidaccdate"/>'/>
-    <td align="right">Time</td>
-    <td align="left"><div id='acctime' name='acctime' value='<s:property value="acctime"/>'></div>
-                   </td>
-                   <input type="hidden" id="hidacctime" name="hidacctime" value='<s:property value="hidacctime"/>'/>
-  </tr>
-  <tr>
-    <td align="right">Type</td>
-    <td align="left"><select id="cmbacctype" name="cmbacctype" style="width:80%" value='<s:property value="cmbacctype"/>'>
-            <option vaue="">-Select-</option><option value="Third Party">Third Party</option><option value="Own Claim">Own Claim</option></select>
-            </td>
-            <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
-    <td width="15%" align="right">PRCS</td>
-    <td width="47%" align="left"><select id="cmbprcs" name="cmbprcs" style="width:30%" value='<s:property value="cmbprcs"/>'>
-            <option vaue="-1">-Select-</option><option value=1>Yes</option><option value=0>No</option></select>
-            </td>
-            <input type="hidden" id="hidcmbprcs" name="hidcmbprcs" value='<s:property value="hidcmbprcs"/>'/>
-  </tr>
-  <tr>
-     <td align="right">Collected</td>
-    <td align="left"><div id='collectdate' name='collectdate' value='<s:property value="collectdate"/>'></div>
-        </td><input type="hidden" id="hidcollectdate" name="hidcollectdate" value='<s:property value="hidcollectdate"/>'/>
-    <td colspan="2"><button type="button" class="icon" id="btnUpdate" title="Update" onclick="">
-							<img alt="search" src="../../../../icons/update.png"></button></td>
-  </tr>
-  <tr>
-    <td align="right">Place</td>
-    <td align="left"><input type="text" name="accplace" id="accplace" value='<s:property value="accplace"/>'/></td>
-    <td align="right">Fines</td>
-    <td align="left"><input type="text" id="fines" name="fines" style="width:30%" value='<s:property value="fines"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Details</td>
-    <td colspan="3" align="left"><textarea id="details" name="details" style="width:62.5%;resize: none;" value='<s:property value="details"/>'></textarea></td>
-  </tr>
-</table>
-      </fieldset></div>
-    </td>
-    <td width="50%"><table width="100%">
-  <tr>
-    <td width="100%" height="100%"><div id="maintdiv"><jsp:include page="maintenanceGrid.jsp"></jsp:include></div></td>
-  </tr>
-  <div id="maintenancewarning" align="center" style="color:red;font-weight:bold;">Please Select a Valid Type</div>
-</table></td>
+	
+<div class='modern-ui hidden-scrollbar'>
 
-  </tr>
-</table></div></div>-->
+    <div class="middle-panel">
+        <span class="middle-panel-title">Vehicle Movement Opening Info</span>
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width: 80px;">Date</label>
+            <div style="width: 120px;">
+                <div id='date' name='date' value='<s:property value="date"/>'></div>
+            </div>
+            <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'/>
+            
+            <label class="lbl-right" style="width: 80px;">Fleet No</label>
+            <div class="input-search-container" style="width: 140px;">
+                <input type="text" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>' onkeydown="getFleet(event);" readonly placeholder="Press F3"/>
+                <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            
+            <input type="text" id="txtfleetname" name="txtfleetname" style="flex:1;" value='<s:property value="txtfleetname"/>' readonly="readonly"/>
+            
+            <label class="lbl-right" style="width: 80px; margin-left: auto;">Doc No</label>
+            <input type="text" id="docno" name="docno" class="input-sm" tabindex="-1" value='<s:property value="docno"/>' readonly/>
+        </div>
+
+        <div class="field-row">
+            <label class="lbl-right" style="width: 80px;">Branch</label>
+            <select name="cmbbranch" id="cmbbranch" class="input-md" onchange="getLocation(this.value);">
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" name="hidcmblocation" id="hidcmblocation" value='<s:property value="hidcmblocation"/>'/>
+            
+            <label class="lbl-right" style="width: 80px;">Location</label>
+            <select name="cmblocation" id="cmblocation" class="input-md">
+                <option value="">--Select--</option>
+            </select>
+            
+            <input type="hidden" id="hiddateout" name="hiddateout" value='<s:property value="hiddateout"/>'/>
+            <label class="lbl-right" style="width: 80px;">Date Out</label>
+            <div style="width: 120px;">
+                <div id='dateout' name='dateout' value='<s:property value="dateout"/>'></div>
+            </div>
+            
+            <label class="lbl-right" style="width: 50px;">Time</label>
+            <div style="width: 80px;">
+                <div id='timeout' name='timeout' value='<s:property value="timeout"/>'></div>
+            </div>
+            <input type="hidden" id="hidtimeout" name="hidtimeout" value='<s:property value="hidtimeout"/>'/>
+            
+            <label class="lbl-right" style="width: 40px;">KM</label>
+            <input type="text" id="outkm" name="outkm" class="input-xs" value='<s:property value="outkm"/>'/>
+            
+            <label class="lbl-right" style="width: 40px;">Fuel</label>
+            <select id="cmboutfuel" name="cmboutfuel" class="input-sm" value='<s:property value="cmboutfuel"/>'>
+                <option value="">-Select-</option>
+                <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+                <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+            </select>
+            <input type="hidden" id="hidcmboutfuel" name="hidcmboutfuel" value='<s:property value="hidcmboutfuel"/>'/>
+            
+            <label class="lbl-right" style="width: 50px;">User</label>
+            <input type="text" id="outuser" name="outuser" class="input-md" style="text-transform:uppercase;" value='<s:property value="outuser"/>' />
+            <input type="hidden" name="outuserid" id="outuserid" value='<s:property value="outuserid"/>'/>
+        </div>
+
+        <div class="field-row" style="margin-bottom: 0;">
+            <label class="lbl-right" style="width: 100px;">Movement Type</label>
+            <select id="cmbstatus" name="cmbstatus" class="input-md" onchange="checkStaff();" value='<s:property value="cmbstatus"/>'>
+                <option value="">-Select-</option>
+            </select>
+            <input type="hidden" id="hidcmbstatus" name="hidcmbstatus" value='<s:property value="hidcmbstatus"/>'/>
+            
+            <label class="lbl-right" style="width: 60px;">Driver</label>
+            <div class="input-search-container" style="width: 150px;">
+                <input type="text" id="driver" name="driver" value='<s:property value="driver"/>' onKeyDown="getDriver(event,1);" readonly placeholder="Press F3"/>
+                <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            <input type="checkbox" name="chkgaragedelivery" id="chkgaragedelivery" onChange="checkGarageDelivery();" hidden="true">
+            <input type="hidden" name="hidstaff" id="hidstaff" value='<s:property value="hidstaff"/>'/>
+            <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'/>
+            
+            <label class="lbl-right" style="width: 90px;">Staff/Garage</label>
+            <div style="display:flex; gap:5px; flex:1; max-width: 250px;">
+                <input type="text" name="staff" id="staff" value='<s:property value="staff"/>' onKeyDown="getStaff(event,1);" placeholder="Press F3"/>
+                <input type="text" name="garage" id="garage" value='<s:property value="garage"/>' onKeyDown="getGarage(event);" placeholder="Select Garage"/>
+            </div>
+            <input type="hidden" name="hidgarage" id="hidgarage" value='<s:property value="hidgarage"/>'/>
+
+            <label class="lbl-right" style="width: 70px;">Remarks</label>
+            <input type="text" id="outremarks" name="outremarks" style="flex:1;" value='<s:property value="outremarks"/>'/>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+        <div class="middle-panel" id="deliveryfield" style="flex: 1; margin-bottom: 0;">
+            <span class="middle-panel-title">Delivery Info</span>
+            <div class="field-row" style="margin-bottom: 0;">
+                <label class="lbl-right" style="width: 40px;">Date</label>
+                <div style="width: 120px;">
+                    <div id="garagedeldate" name="garagedeldate" value='<s:property value="garagedeldate"/>'></div>
+                </div>
+                
+                <label class="lbl-right" style="width: 40px;">Time</label>
+                <div style="width: 80px;">
+                    <div id="garagedeliverytime" name="garagedeliverytime" value='<s:property value="garagedeliverytime"/>'></div>
+                </div>
+                
+                <label class="lbl-right" style="width: 30px;">KM</label>
+                <input type="text" name="garagedeliverykm" id="garagedeliverykm" class="input-xs" value='<s:property value="garagedeliverykm"/>' onkeypress="javascript:return isNumber (event,id)">
+                
+                <label class="lbl-right" style="width: 40px;">Fuel</label>
+                <select name="cmbgaragedeliveryfuel" id="cmbgaragedeliveryfuel" class="input-sm">
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+                    <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+                
+                <div style="margin-left: auto;">
+                    <button type="button" name="btndeliveryupdate" id="btndeliveryupdate" class="myButton" onclick="funDeliveryUpdate();">Update</button>
+                    <button type="button" name="btndeliverysave" id="btndeliverysave" class="myButton" onclick="funDeliverySave();" style="display:none;">Save</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="middle-panel" id="collectionfield" style="flex: 1; margin-bottom: 0;">
+            <span class="middle-panel-title">Collection Info</span>
+            <div class="field-row" style="margin-bottom: 0;">
+                <input type="checkbox" name="chkgaragecollect" id="chkgaragecollect" onchange="checkGarageCollection();" style="display:none;">
+                
+                <label class="lbl-right" style="width: 40px;">Date</label>
+                <div style="width: 120px;">
+                    <div id="garagecollectdate" name="garagecollectdate" value='<s:property value="garagecollectdate"/>'></div>
+                </div>
+                
+                <label class="lbl-right" style="width: 40px;">Time</label>
+                <div style="width: 80px;">
+                    <div id="garagecollecttime" name="garagecollecttime" value='<s:property value="garagecollecttime"/>'></div>
+                </div>
+                
+                <label class="lbl-right" style="width: 30px;">KM</label>
+                <input type="text" name="garagecollectkm" id="garagecollectkm" class="input-xs" value='<s:property value="garagecollectkm"/>' onkeypress="javascript:return isNumber (event,id)">
+                
+                <label class="lbl-right" style="width: 40px;">Fuel</label>
+                <select name="cmbgaragecollectfuel" id="cmbgaragecollectfuel" class="input-sm">
+                    <option value="">--Select--</option>
+                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+                    <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="middle-panel">
+        <span class="middle-panel-title">Vehicle Movement Closing Info</span>
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width: 60px;">Branch</label>
+            <select name="cmbclosebranch" id="cmbclosebranch" class="input-md" onchange="getCloseLocation(this.value);">
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" name="hidcmbcloselocation" id="hidcmbcloselocation" value='<s:property value="hidcmbcloselocation"/>'/>
+            
+            <label class="lbl-right" style="width: 60px;">Location</label>
+            <select name="cmbcloselocation" id="cmbcloselocation" class="input-md">
+                <option value="">--Select--</option>
+            </select>
+            <input type="hidden" id="hidclosedate" name="hidclosedate" value='<s:property value="hidclosedate"/>'/>
+            
+            <label class="lbl-right" style="width: 40px;">Date</label>
+            <div style="width: 120px;">
+                <div id='closedate' name='closedate' value='<s:property value="closedate"/>'></div>
+            </div>
+            
+            <label class="lbl-right" style="width: 40px;">Time</label>
+            <div style="width: 80px;">
+                <div id='closetime' name='closetime' value='<s:property value="closetime"/>'></div>
+            </div>
+            <input type="hidden" id="hidclosetime" name="hidclosetime" value='<s:property value="hidclosetime"/>'/>
+            
+            <label class="lbl-right" style="width: 30px;">KM</label>
+            <input type="text" id="closekm" name="closekm" class="input-sm" value='<s:property value="closekm"/>' onKeyPress="javascript:return isNumber (event,id)" onBlur="getTotalkm();"/>
+            
+            <label class="lbl-right" style="width: 40px;">Fuel</label>
+            <select id="cmbclosefuel" name="cmbclosefuel" class="input-sm" value='<s:property value="cmbclosefuel"/>'>
+                <option value="">-Select-</option>
+                <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+                <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+            </select>
+        </div>
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width: 60px;">Driver</label>
+            <input type="text" name="closedriver" id="closedriver" class="input-md" onKeyDown="getDriver(event,2);" value='<s:property value="closedriver"/>' readonly/>
+            <input type="hidden" id="hidcmbclosefuel" name="hidcmbclosefuel" value='<s:property value="hidcmbclosefuel"/>'/>
+            
+            <label class="lbl-right" style="width: 60px;">Staff</label>
+            <input type="text" name="closestaff" id="closestaff" class="input-md" value='<s:property value="closestaff"/>' onKeyDown="getStaff(event,2);" readonly/>
+            <input type="hidden" name="hidclosestaff" id="hidclosestaff" value='<s:property value="hidclosestaff"/>'/>
+            <input type="hidden" name="hidcmbaccidents" id="hidcmbaccidents" value='<s:property value="hidcmbaccidents"/>'/>
+            <input type="hidden" id="hidclosedriver" name="hidclosedriver" value='<s:property value="hidclosedriver"/>'/>
+            <input type="hidden" id="hidcloseuser" name="hidcloseuser" value='<s:property value="hidcloseuser"/>'/>
+            
+            <label class="lbl-right" style="width: 60px;">Accidents</label>
+            <select name="cmbaccidents" id="cmbaccidents" class="input-sm" onChange="getAccidents();">
+                <option value="">--Select--</option>
+                <option value=1>Yes</option>
+                <option value=0>No</option>
+            </select>
+            <input type="hidden" name="hidaccidents" id="hidaccidents" value='<s:property value="hidaccidents"/>'/>
+            
+            <label class="lbl-right" style="width: 60px;">Details</label>
+            <input type="text" name="accdetails" id="accdetails" style="flex:1;" value='<s:property value="accdetails"/>'/>
+            
+            <label class="lbl-right" style="width: 40px;">Fines</label>
+            <input type="text" name="accfines" id="accfines" class="input-sm" value='<s:property value="accfines"/>'/>
+        </div>
+        
+        <div class="field-row" style="margin-bottom: 0;">
+            <label class="lbl-right" style="width: 60px;">User</label>
+            <input type="text" id="closeuser" name="closeuser" class="input-md" style="text-transform:uppercase;" value='<s:property value="closeuser"/>' readonly />
+            
+            <label class="lbl-right" style="width: 60px;">Total KM</label>
+            <input type="text" id="totalkm" name="totalkm" class="input-md" value='<s:property value="totalkm"/>'/>
+            
+            <label class="lbl-right" style="width: 60px;">Remarks</label>
+            <input type="text" id="closeremarks" name="closeremarks" style="flex:1;" value='<s:property value="closeremarks"/>'/>
+            
+            <div style="display: flex; gap: 10px; margin-left: 20px;">
+                <input type="button" name="btnclose" id="btnclose" class="myButton" value="Close" onclick="closeMov();">
+                <input type="button" name="btnclosesave" id="btnclosesave" class="myButton" value="Save" onclick="closeSave();" style="display:none;">
+            </div>
+        </div>
+    </div>
+    
 <br/>
- <!--<div id='jqxExpander1'>
- <div>Overview</div>
- <div style="background: #E0ECF8;">
- <br/>
- <center><jsp:include page="movementGrid.jsp"></jsp:include></center>
- <br/>
-</div></div>-->
 <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
 <input type="hidden" id="extramsg" name="extramsg" value='<s:property value="extramsg"/>'>
 
@@ -2386,20 +1884,21 @@ select {
 <input type="hidden" name="vehtrancode" id="vehtrancode" value='<s:property value="vehtrancode"/>'>
 <input type="hidden" name="riderconfig" id="riderconfig" value='<s:property value="riderconfig"/>'>
 </div>
+
 <div id="fleetwindow">
-   <div ></div>
+   <div ></div><div></div>
 </div>
 <div id="maintenancewindow">
-   <div ></div>
+   <div ></div><div></div>
 </div>
 <div id="driverwindow">			
-   <div ></div>
+   <div ></div><div></div>
 </div>
 <div id="staffwindow">
-   <div ></div>
+   <div ></div><div></div>
 </div>
 <div id="garagewindow">
-   <div ></div>
+   <div ></div><div></div>
 </div>
 <div id="errormsg"></div>
 </form>

@@ -30,7 +30,6 @@
         color: #2d3436;
     }
 
-    /* Original functional classes preserved */
     .redClass { background-color: #FFEBEB; }
     .yellowClass { background-color: #FFFFD1; }
     .greyClass { background-color: #D8D8D8; }
@@ -42,7 +41,6 @@
         margin: 0 auto;
     }
 
-    /* Left Section - 40% */
     .left-section {
         flex: 0 0 40%;
         background: #ffffff;
@@ -54,7 +52,6 @@
         gap: 20px;
     }
 
-    /* Right Section - 60% */
     .right-section {
         flex: 1;
         background: #ffffff;
@@ -81,7 +78,6 @@
         display: block;
     }
 
-    /* Input & Textarea Styling */
     input[type="text"], textarea {
         width: 100%;
         padding: 15px;
@@ -162,31 +158,32 @@ select.list1 option {
 </style>
 
     <script type="text/javascript">
+    
+    // Global flag to track if this is a brand new document
+    var isNewDocument = false; 
+
     $(document).ready(function(){
         getStatOpt();
         funcurdate();
         
         var data4='<%=cef.approvalGridload(session,dtype,brch,docNo)%>';
         Check(data4);
-        
-        var aprstatus = '<%=aprstatus%>';
-        console.log("Page loaded - aprstatus from JSP:", aprstatus); 
-        lockApprovalUI(aprstatus);
     });
     
     function Check(data4){
-        // ===== FIXED VISIBILITY LOGIC =====
-        // Ensure we target the correct ID "btnSend"
         if(document.getElementById("apprdesc")) { document.getElementById("apprdesc").closest("div").style.display = ""; }
-        if(document.getElementById("optname")) { document.getElementById("optname").closest("div").style.display = ""; }
         if(document.getElementById("btnSend")) { document.getElementById("btnSend").closest("div").style.display = ""; }
 
-        // 2. If no data, it is PENDING
-        if (!data4 || data4.trim() === "" || data4 === "null") {
+        if (!data4 || data4.trim() === "" || data4 === "null" || data4 === "[]") {
             data4 = "[]"; 
-        } 
+            isNewDocument = true; 
+            $("#statusDropdownDiv").hide();
+        } else {
+            isNewDocument = false; 
+            $("#statusDropdownDiv").show();
+            $("#optname").val(""); 
+        }
 
-        // ===== JQXGRID INITIALIZATION =====
         var source =
           {
               datatype: "json",
@@ -235,7 +232,6 @@ select.list1 option {
             ]
         }); 
 
-        // Restoration of your original Event Handlers
          $('#jqxApprovalGrid').on('rowdoubleclick', function (event) 
               { 
                var rowindexes=event.args.rowindex;
@@ -251,56 +247,61 @@ select.list1 option {
     }
 
     function saveApprlevel()  {  
-         // Safety check for status selection
-var currentLevel = $("#apprlevel").val();
+        var currentLevel = $("#apprlevel").val();
 
-    // Modify the safety check
-    if(currentLevel !== "0" && document.getElementById("optname").value === "") {
-        alert("Please select a status.");
-        return;
-    }
+        if(!isNewDocument && (currentLevel === "0" || currentLevel === "")) {
+            $.messager.alert('Warning', 'You have no pending approval tasks for this document. It may already be fully approved.');
+            $("#windowapprove").jqxWindow('Close');
+            return false;
+        }
 
-         setTimeout(function() {$("#btnSend").attr("disabled", true);},100);
-         
-         var uri=encodeURI('saveApprove.action?docno='+$("#hidocno").val()+'&dtype='+$("#hidtype").val()+'&userid='+$("#hiuserid").val()+'&brchid='+$("#hibrchid").val()+'&desc='+$("#apprdesc").val()+'&apprlevel='+$("#apprlevel").val()+'&minapprl='+$("#minapprl").val()+'&optid='+$("#optid").val()+'&apprlist='+$("#apprlist").val());
+        if($("#statusDropdownDiv").is(":visible")) {
+            if($("#optname").val() === "" || $("#optname").val() === null) {
+                alert("Please select a status (Approved, Rejected, Returned, etc.).");
+                return false;
+            }
+        }
 
-          $.ajaxFileUpload  
-          (    
-              {  
-                  url: uri,
-                  secureuri:false,
-                  fileElementId:'file_hidden', // Reference the added hidden file input
-                  dataType: 'text',
-                  success: function (data, status)  
-                  {  
-                      if(status=='success'){   
-                         $.messager.show({title:'Message',msg:'Transaction Completed',showType:'show',
-                            style:{left:15,right:'',top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                        });
-                        // Allow UI to refresh
-                         $("#windowapprove").jqxWindow('Close');
-                      }
-                      
-                      if(typeof(data.error) != 'undefined')  
-                      {  
-                          if(data.error != '')  
-                          {  
-                              $.messager.show({title:'Message',msg: data.error,showType:'show',
-                                style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                            }); 
-                          }
-                      }  
-                  },  
-                  error: function (data, status, e)
-                  {  
-                      $.messager.alert('Message',e);
-                      $("#btnSend").attr("disabled", false);
-                  }  
-              }  
-          )  
-          return false;  
-      }
+        setTimeout(function() {$("#btnSend").attr("disabled", true);},100);
         
+        var uri=encodeURI('saveApprove.action?docno='+$("#hidocno").val()+'&dtype='+$("#hidtype").val()+'&userid='+$("#hiuserid").val()+'&brchid='+$("#hibrchid").val()+'&desc='+$("#apprdesc").val()+'&apprlevel='+$("#apprlevel").val()+'&minapprl='+$("#minapprl").val()+'&optid='+$("#optid").val()+'&apprlist='+$("#apprlist").val());
+
+         $.ajaxFileUpload  
+         (    
+             {  
+                 url: uri,
+                 secureuri:false,
+                 fileElementId:'file_hidden', 
+                 dataType: 'text',
+                 success: function (data, status)  
+                 {  
+                     if(status=='success'){   
+                        $.messager.show({title:'Message',msg:'Transaction Completed',showType:'show',
+                           style:{left:15,right:'',top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                       });
+                        $("#windowapprove").jqxWindow('Close');
+                     }
+                     
+                     if(typeof(data.error) != 'undefined')  
+                     {  
+                         if(data.error != '')  
+                         {  
+                             $.messager.show({title:'Message',msg: data.error,showType:'show',
+                               style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                           }); 
+                         }
+                     }  
+                 },  
+                 error: function (data, status, e)
+                 {  
+                     $.messager.alert('Message',e);
+                     $("#btnSend").attr("disabled", false);
+                 }  
+             }  
+         )  
+         return false;  
+     }
+
     function funcurdate(){
         var currentdate=new Date();
         var date = currentdate.getDate()+ "/"+ (currentdate.getMonth()+1)+ "/"+currentdate.getFullYear(); 
@@ -313,23 +314,6 @@ var currentLevel = $("#apprlevel").val();
         document.getElementById("hiuserid").value='<%=userid%>';
         document.getElementById("hibrchid").value='<%=brch%>';
         getapprlevel();
-    }
-    
-    function lockApprovalUI(aprstatus) {
-        var status = String(aprstatus).trim();
-        console.log("lockApprovalUI logic running for status:", status);
-        
-        if (status === "3" || status === "4") {
-            document.body.classList.add("approval-locked");
-            $("#btnSend").hide();
-            $("#apprdesc").prop("disabled", true);
-            $("#optname").prop("disabled", true);
-        } else {
-            document.body.classList.remove("approval-locked");
-            $("#btnSend").show();
-            $("#apprdesc").prop("disabled", false);
-            $("#optname").prop("disabled", false);
-        }
     }
     
     function getapprlevel(){
@@ -350,44 +334,66 @@ var currentLevel = $("#apprlevel").val();
                     var globalAprStatus = items[4] ? items[4].trim() : "0";
                     
                     var urlStatus = '<%=aprstatus%>'.trim();
-                    
                     if(urlStatus === "1" || urlStatus === "0") {
                         globalAprStatus = urlStatus;
                     }
-                    
-                    $("#apprlevel").val(apprlevel);
+
                     $("#minapprl").val(minapprl);
                     $("#apprlist").val(apprlist);
                     $("#hidAprStatus").val(globalAprStatus);
                     
                     var numericLevel = parseInt(apprlevel, 10);
-                    
-                    if(numericLevel === 0) {
-                        // Hide the Status dropdown container
-                        $("#optname").closest("div").hide();
+
+                    // --- FIX: Strict View-Only UI Logic ---
+                    if (isNewDocument) {
+                        // 1. BRAND NEW DOCUMENT - Allow Submission to start workflow
+                        apprlevel = "0";
+                        $("#apprlevel").val("0");
+                        $("#minapprl").val("0"); 
                         
-                        // Add an option dynamically if it doesn't exist so validation passes, 
-                        // or just set it to a value that bypasses your empty check
-                        if ($('#optname option[value="N/A"]').length === 0) {
-                            $('#optname').append('<option value="N/A">N/A</option>');
+                        $("#btnSend").show().text("Submit to Workflow");
+                        $("#statusDropdownDiv").hide();
+                        $("#apprdesc").prop("disabled", false);
+                        
+                        if ($('#optname option[value="Forward"]').length === 0) {
+                            $('#optname').append('<option value="Forward">Forward</option>');
                         }
-                        $("#optname").val("N/A"); 
+                        $("#optname").val("Forward"); 
                         $("#optid").val("0"); 
-                    } else {
-                        // Ensure the dropdown is visible for Level 1, 2, etc.
-                        $("#optname").closest("div").show();
                         
-                        // If it was previously hidden and set to N/A, reset it so the user has to pick
-                        if($("#optname").val() === "N/A") {
-                            $("#optname").val(""); 
+                    } else if (numericLevel === 0) {
+                        // 2. EXISTING DOCUMENT, BUT NOT THIS USER'S TURN - Lock it down!
+                        // This fixes the bug where Level 2 opens it while it's waiting for Level 1.
+                        $("#apprlevel").val("0");
+                        $("#btnSend").hide();
+                        $("#statusDropdownDiv").hide();
+                        $("#apprdesc").prop("disabled", true);
+                        
+                    } else {
+                        // 3. EXISTING DOCUMENT AND IT IS THIS USER'S TURN - Show dropdown
+                        $("#apprlevel").val(apprlevel);
+                        $("#btnSend").show().text("SUBMIT");
+                        $("#statusDropdownDiv").show();
+                        $("#apprdesc").prop("disabled", false);
+                        
+                        if($("#optname").val() === "Forward") {
+                            var firstRealOption = $("#optname option:first").val();
+                            $("#optname").val(firstRealOption); 
+                            getStat(firstRealOption);
                         }
                     }
                     
-                    lockApprovalUI(globalAprStatus);  
+                    // 4. OVERRIDE FOR FULLY APPROVED/REJECTED DOCUMENTS
+                    if (globalAprStatus === "3" || globalAprStatus === "4") {
+                        document.body.classList.add("approval-locked");
+                        $("#btnSend").hide();
+                        $("#statusDropdownDiv").hide();
+                        $("#apprdesc").prop("disabled", true);
+                    } else {
+                        document.body.classList.remove("approval-locked");
+                    }
                     
-                    console.log("apprlevel=" + apprlevel + 
-                            " minapprl=" + minapprl + 
-                            " final locked status=" + globalAprStatus);
+                    console.log("isNewDoc=" + isNewDocument + " apprlevel=" + apprlevel + " locked status=" + globalAprStatus);
                 }
             }
         }
@@ -419,7 +425,7 @@ var currentLevel = $("#apprlevel").val();
                 items=items.split('####');
                 
                 var refname=items[0].split(",");
-                var optionref = '<option value="">-- Choose Status --</option>';
+                var optionref = '<option value="">-- Choose Status --</option>'; 
                 for ( var i = 0; i < refname.length; i++) {
                     if(refname[i] !== "") {
                         optionref += '<option value="' + refname[i] + '">' + refname[i] + '</option>';
@@ -428,7 +434,9 @@ var currentLevel = $("#apprlevel").val();
                 $("select#optname").html(optionref); 
                 
                 if(refname.length > 0) {
-                    getStat(refname[0]);
+                    var firstValidOption = refname[0];
+                    $("select#optname").val(firstValidOption);
+                    getStat(firstValidOption);
                 }
             }
         }
@@ -462,7 +470,7 @@ var currentLevel = $("#apprlevel").val();
                 <textarea maxlength="540" id="apprdesc" name="apprdesc"><s:property value="apprdesc" ></s:property></textarea>
             </div>
 
-            <div>
+            <div id="statusDropdownDiv" style="display: none;">
                 <label class="field-label">Status</label>
                 <select name="optname" class="list1" id="optname" onchange="getStat(this.value);">
                     <option value="">-- Choose Status --</option>

@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,103 +9,185 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	 $("#contradate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	 $("#chqdate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	}); 
-
- 	function loadSearch() {
-
- 		var partyname=document.getElementById("txtpartyname").value;
- 		var docNo=document.getElementById("txtdocno").value;
- 		var date=document.getElementById("contradate").value;
- 		var amount=document.getElementById("txtamount").value;
- 		var chequeNo=document.getElementById("txtchqno").value;
- 		var chequeDt=document.getElementById("chqdate").value;
-	    var check = 1;
-	    
-		getdata(partyname,docNo,date,amount,chequeNo,chequeDt,check);
-	}
- 	
-	function getdata(partyname,docNo,date,amount,chequeNo,chequeDt,check){
-		 $("#refreshdiv").load('cotMainSearchGrid.jsp?partyname='+partyname.replace(/ /g, "%20")+'&docNo='+docNo+'&date='+date+'&amount='+amount+'&chequeNo='+chequeNo+'&chequeDt='+chequeDt+'&check='+check);
-	}
-
-	</script>
-	<style type="text/css">
-
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px;  
+<style>
+/* =========================================================
+   SCOPED UI: Compact Search Modal Layout (Table-Based)
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
 }
 
-
-td[align="right"] {
-  font-weight: 700;
-  font-size: 14px;
-  color: #222;
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-
-input[type="text"] {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;               /* Prevent overflow */
-  max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
+/* Master Input Heights - Forced to 24px (Dates excluded) */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
 }
 
-
-#bankdate, #chqdate {
-  font-weight: 600;
-  font-size: 14px;
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-#btnsearch{
-  background-color: #2f80ed;   /* clean blue */
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 6px 18px;
-  border: 1px solid #2f80ed;
-  border-radius: 4px;
-  cursor: pointer;
-  min-width: 90px;
+/* Panel Styling */
+.modern-ui .search-panel {
+    background-color: #f4f7fb;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
 }
-/* Additional spacing for rows */
-tr {
-  line-height: 1.8;
+
+/* Restored Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Modern Search Button */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
 }
 </style>
-<body>
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="6%" align="right">Name</td>
-    <td colspan="1"><input type="text" name="txtpartyname" id="txtpartyname" style="width:80%" value='<s:property value="txtpartyname"/>'></td>
-    <td width="11%" align="right">Doc No</td>
-    <td colspan="1"><input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'></td>
-     <td align="right">Date</td>
-    <td width="14%"><div id="contradate" name="contradate"  value='<s:property value="contradate"/>'></div>
-        <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'></td>
-    <td width="17%" align="center" rowspan="2"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  <tr>
-   
-    <td width="10%" align="right">Amount</td>
-    <td width="14%"><input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'></td>
-    <td align="right">Cheque No</td>
-    <td width="14%"><input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'></td>
-    <td width="14%" align="right">Cheque Date</td>
-    <td><div id="chqdate" name="chqdate"  value='<s:property value="chqdate"/>'></div>
-        <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="8"><div id="refreshdiv"><jsp:include  page="cotMainSearchGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-  </div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    /* Left completely untouched as requested */
+    $("#contradate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
+    $("#chqdate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
+}); 
+
+function loadSearch() {
+    var partyname = document.getElementById("txtpartyname").value || "";
+    var docNo = document.getElementById("txtdocno").value || "";
+    var date = $('#contradate').jqxDateTimeInput('val') || "";
+    var amount = document.getElementById("txtamount").value || "";
+    var chequeNo = document.getElementById("txtchqno").value || "";
+    var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
+    var check = 1;
+    
+    getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
+}
+
+function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
+    /* Upgraded to encodeURIComponent for safe special character passing */
+    $("#refreshdiv").load('cotMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
+                          '&docNo=' + encodeURIComponent(docNo) + 
+                          '&date=' + date + 
+                          '&amount=' + encodeURIComponent(amount) + 
+                          '&chequeNo=' + encodeURIComponent(chequeNo) + 
+                          '&chequeDt=' + chequeDt + 
+                          '&check=' + check);
+}
+</script>
+</head>
+
+<body style="background-color: #fff; margin: 0;">
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="lbl-right" width="6%">Name</td>
+            <td width="20%">
+                <input type="text" name="txtpartyname" id="txtpartyname" value='<s:property value="txtpartyname"/>'>
+            </td>
+            
+            <td class="lbl-right" width="11%">Doc No</td>
+            <td width="15%">
+                <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
+            </td>
+            
+            <td class="lbl-right" width="8%">Date</td>
+            <td width="15%">
+                <div id="contradate" name="contradate" value='<s:property value="contradate"/>'></div>
+                <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'>
+            </td>
+            
+            <td width="25%" align="center" rowspan="2">
+                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+            </td>
+          </tr>
+          <tr>
+            <td class="lbl-right">Amount</td>
+            <td>
+                <input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'>
+            </td>
+            
+            <td class="lbl-right">Cheque No</td>
+            <td>
+                <input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'>
+            </td>
+            
+            <td class="lbl-right">Cheque Date</td>
+            <td>
+                <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
+                <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'>
+            </td>
+          </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="cotMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
