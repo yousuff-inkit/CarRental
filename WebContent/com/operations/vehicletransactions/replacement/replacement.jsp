@@ -1410,92 +1410,169 @@ function dateenable(){
 
  <style>
 
+
+/* Base Reset & Layout */
 body {
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-size: 16px;
-    margin: 0;
     background: #fff;
-    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    color: #333;
 }
 
-fieldset {
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
-    padding: 10px;
-    margin-bottom: 5px;
+#mainBG {
     background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+#head {
+    background: #fff;
+    margin-bottom: 15px;
+}
+
+/* Scrollbar area */
+.hidden-scrollbar {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+
+/* Fieldset & Legend Styling */
+fieldset {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background-color: #fff;
 }
 
 legend {
-    font-size: 16px;
-    font-weight: 600;
-    padding: 0 8px;
-        border-left: 4px solid #007bff;
+    font-size: 13px;
+    font-weight: bold;
+    color: #0056b3;
+    padding: 0 10px;
+    border-left: 4px solid #0056b3;
 }
 
+/* Table Specific Alignment */
 table {
-    width: 100%;
+    border-spacing: 0;
     border-collapse: collapse;
 }
 
 td {
-    padding: 2px 3px;
-    font-size: 14px;
-    vertical-align: middle;
+    padding: 4px 6px;
+    font-size: 12px;
+}
+
+/* Right-align labels for professional look */
+td[align="right"] {
+    font-weight: bold;
+    color: #4b5563;
     white-space: nowrap;
 }
 
-input[type="text"], select {
-    height: 30px;
-    font-size: 13px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 2px 3px;
+/* Modern Input & Select Elements (24px - 26px height) */
+input[type="text"], 
+select {
+    height: 26px !important;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
     width: 100%;
     box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus, 
+select:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
 input[readonly] {
-    background: #f3f4f6;
+    background-color: #fff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
 }
 
-select {
-    background: #fff;
+/* Magnifier Container for F3 Search Inputs */
+.input-search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
-.myButton {
- font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
+.input-search-container input {
+    padding-right: 25px !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.magnifier-icon:hover {
+    color: #2563eb;
+}
+
+/* Buttons Styling */
+.myButton {
+    height: 30px;
+    min-width: 90px;
+    background: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
+    transition: background 0.2s;
+    margin: 0 5px;
 }
 
 .myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+    background: #004494;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-#head{
-	background:#fff;
-	border-radius: 20px;
-	padding-bottom:10px;
-	box-shadow: 0 1px 3px #000;
+
+/* Error Message Label */
+#errormsg {
+    color: #dc3545;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 5px;
 }
-#mainBG{
- background: #fff;
+
+/* Cancel Status Badge */
+#lblcancelstatus {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 2px 10px;
+    border-radius: 12px;
+    border: 1px solid #fecaca;
+    font-size: 11px;
 }
+
+/* Checkbox alignment */
+input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+
+
+
 
 .input-search-container {
     position: relative;
