@@ -3,10 +3,8 @@
 <%@page import="com.common.ClsCommon"%>
 <style>
 .column2{
-background-color: #FFEEDC;
 }
 .redClass{
-color:red;
 }
 </style>
  <%@page import="javax.servlet.http.HttpServletRequest" %>

@@ -2,7 +2,6 @@
 <%@page import="com.operations.agreement.leaseclose.ClsLeaseCloseDAO"%>
 <style>
 .column2{
-background-color: #FFEEDC;
 }
 </style>
 <%@page import="com.common.ClsCommon"%>

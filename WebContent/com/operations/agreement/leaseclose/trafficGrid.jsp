@@ -1,7 +1,6 @@
 
 <style>
 .column{
-background-color: #D6FFEA;
 }
 </style>
  <%String agmtno=request.getParameter("id")==null?"0":request.getParameter("id").toString(); %> 

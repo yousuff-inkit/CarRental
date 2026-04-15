@@ -133,7 +133,7 @@ var source =
 	    if ( row == row1 || row == row2) {
 	    	//alert("row3"+row3);
 	        var element = $(defaultHtml);
-	        element.css({ 'background-color': '#F3F297', 'width': '100%', 'height': '100%', 'margin': '0px' });
+	        element.css({  'width': '100%', 'height': '100%', 'margin': '0px' });
 	        return element[0].outerHTML;
 	    }
 	    var row3=rowval-3;
@@ -141,7 +141,7 @@ var source =
 	    if (row == row3) {
 	    	//alert(row3);
 	        var element = $(defaultHtml);
-	        element.css({ 'background-color': '#ACF6CB', 'width': '100%', 'height': '100%', 'margin': '0px' });
+	        element.css({  'width': '100%', 'height': '100%', 'margin': '0px' });
 	        return element[0].outerHTML;
 	    }
 	    return defaultHtml;
