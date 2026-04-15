@@ -9,134 +9,172 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
-<style>
-/* =========================================================
-SCOPED UI: Bulletproof Table Layout
-========================================================= */
+
+/* Base Reset & Layout */
 body {
-    background-color: #f3f4f6; /* Neutral light grey background */
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
+    background: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    padding: 24px 0;
-    box-sizing: border-box;
-    overflow-y: auto !important;
+    padding: 10px;
+    color: #333;
 }
 
 #mainBG {
     background: #fff;
-    border-radius: 16px;
     padding: 15px;
-    max-width: 100%;
-    margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.modern-ui {
-    font-family: Arial, sans-serif; 
-    color: #333;
-    font-size: 12px; 
-    padding: 5px 15px;
-    box-sizing: border-box;
-    width: 100%;
+#head {
+    background: #fff;
+    margin-bottom: 15px;
 }
 
-.modern-ui .erp-form-area {
-    background-color: #ffffff; /* Clean white background for form areas */
-    border: 1px solid #d1d5db; /* Neutral grey border */
-    border-radius: 4px;
-    padding: 15px 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"],
-.modern-ui select { 
-    height: 24px !important; 
-    border: 1px solid #b8c6d8; 
-    border-radius: 3px; 
-    padding: 2px 6px;
-    font-size: 12px;
-    box-sizing: border-box; 
-    background-color: #fff; 
-    color: #333;
-    width: 100%;
-}
-
-.modern-ui input[type="text"]:focus,
-.modern-ui select:focus { 
-    border-color: #007bff; 
-    outline: none;
-}
-
-.modern-ui input[readonly],
-.modern-ui input:disabled { 
-    background-color: #f8f9fa; 
-    color: #6b7280;
-}
-
-.modern-ui table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.modern-ui td {
-    padding: 4px 5px;
-    vertical-align: middle;
-}
-
-.modern-ui .lbl-right { 
-    text-align: right; 
-    color: #444;
-    font-size: 12px; 
-    font-weight: bold;
-    white-space: nowrap; 
+/* Scrollbar area */
+.hidden-scrollbar {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
     padding-right: 5px;
 }
 
-/* Split Section Styling */
-.modern-ui .section-title {
+/* Fieldset & Legend Styling */
+fieldset {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background-color: #fff;
+}
+
+legend {
     font-size: 13px;
     font-weight: bold;
     color: #0056b3;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #d1d5db; /* Neutral grey border */
-    padding-bottom: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 0 10px;
+    border-left: 4px solid #0056b3;
 }
 
-/* Custom UI Buttons matching 24px height */
-.modern-ui .myButton {
-    height: 24px !important;
-    line-height: 22px !important;
-    padding: 0 12px;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
+/* Table Specific Alignment */
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 4px 6px;
+    font-size: 12px;
+}
+
+/* Right-align labels for professional look */
+td[align="right"] {
     font-weight: bold;
-    border-radius: 3px;
-    cursor: pointer;
-    text-shadow: none;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    border: none;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
+    color: #4b5563;
     white-space: nowrap;
+}
+
+/* Modern Input & Select Elements (24px - 26px height) */
+input[type="text"], 
+select {
+    height: 26px !important;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus, 
+select:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+input[readonly] {
+    background-color: #fff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+/* Magnifier Container for F3 Search Inputs */
+.input-search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-search-container input {
+    padding-right: 25px !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 6px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.magnifier-icon:hover {
+    color: #2563eb;
+}
+
+/* Buttons Styling */
+.myButton {
+    height: 30px;
+    min-width: 90px;
+    background: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+    margin: 0 5px;
 }
 .modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
 
-.modern-ui label.error {
-    color: red;
+.myButton:hover {
+    background: #004494;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Error Message Label */
+#errormsg {
+    color: #dc3545;
     font-weight: bold;
+    font-size: 12px;
+    padding: 5px;
+}
+
+/* Cancel Status Badge */
+#lblcancelstatus {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 2px 10px;
+    border-radius: 12px;
+    border: 1px solid #fecaca;
     font-size: 11px;
 }
 
-/* Search Icon Wrapper */
-.modern-ui .input-search-container {
+/* Checkbox alignment */
+input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+
+
+
+
+.input-search-container {
     position: relative;
     display: flex;
     width: 120px;
