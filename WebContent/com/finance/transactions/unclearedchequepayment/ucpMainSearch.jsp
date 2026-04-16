@@ -11,17 +11,17 @@
 
 <style>
 /* =========================================================
-   SCOPED UI: Tahoma Font & Blue Background Search Panel
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
     background-color: #fff; /* Main background white */
-    font-family: Tahoma, Geneva, sans-serif; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
-    font-size: 11px;
-    color: #404040;
+    font-size: 12px;
+    color: #333;
     padding: 10px;
     box-sizing: border-box;
     width: 100%;
@@ -33,8 +33,8 @@ body {
     border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 11px; 
-    font-family: Tahoma, sans-serif;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
@@ -47,9 +47,9 @@ body {
     background-color: #FFD6FF; /* Purple focus color from your body.css */
 }
 
-/* Panel Styling - RESTORED BLUE BACKGROUND */
+/* Panel Styling - Clean White Panel (Blue Removed) */
 .modern-ui .search-panel {
-    background-color: #E0ECF8 !important; /* Your specific blue background */
+    background-color: #fff !important; 
     border: 1px solid #BDBDBD;
     border-radius: 4px;
     padding: 12px;
@@ -69,10 +69,10 @@ body {
 
 .modern-ui .lbl-right { 
     text-align: right; 
-    color: #404040;
-    font-size: 11px; 
-    font-weight: bold;
-    font-family: Tahoma, sans-serif;
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
     padding-right: 5px;
 }
@@ -86,9 +86,9 @@ body {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
-    font-family: Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 .modern-ui .myButton:hover {

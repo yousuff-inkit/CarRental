@@ -6,17 +6,177 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>GatewayERP(i)</title>  
+<title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
+<style>
+/* =========================================================
+   SCOPED UI: Segoe UI Font & Clean White Master Layout
+========================================================= */
+body, .homeContent {
+    background-color: #fff !important; /* Pure White Background */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
+    padding: 15px; 
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb; 
+}
+
+.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+
+/* Master Input Heights - Set to 24px */
+.modern-ui input[type="text"],
+.modern-ui select,
+.modern-ui textarea { 
+    height: 24px !important; 
+    border: 1px solid #BDBDBD !important; 
+    border-radius: 3px !important; 
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    box-sizing: border-box; 
+    background-color: #fff !important; 
+    color: #333 !important;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff !important; 
+    background-color: #FFD6FF !important; /* Client Master Focus Color */
+    outline: none !important;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f4f5f7 !important; 
+    color: #5e6c84 !important;
+    border-color: #e1e4e8 !important;
+}
+
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    padding: 4px 2px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    color: #222 !important;
+    font-weight: 600 !important;
+    vertical-align: middle;
+}
+
+/* Labels */
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222 !important;
+    font-size: 12px !important; 
+    font-weight: 600 !important;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Exact Panel Styling - CLEAN WHITE */
+.modern-ui .bordered-panel { 
+    border: 1px solid #BDBDBD !important; 
+    padding: 10px; 
+    background: #fff !important; /* NO BLUE BACKGROUND */
+    border-radius: 4px; 
+    margin-bottom: 10px;
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+/* Magnifier Icon Styling */
+.input-search-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.input-search-container input {
+    padding-right: 25px !important;
+}
+.magnifier-icon {
+    position: absolute;
+    right: 4px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.magnifier-icon:hover { color: #2563eb; }
+
+/* Search Button - Modern Blue matched to Client Master */
+.modern-ui .myButton {
+    height: 24px !important;
+    padding: 0 15px !important;
+    background-color: #0056b3 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 3px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+}
+
+.modern-ui .myButton:hover {
+    background-color: #004494 !important;
+}
+
+/* Validation Error override */
+.modern-ui label.error, #errormsg {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.hidden-scrollbar { 
+    overflow: auto; 
+    height: calc(100vh - 100px);
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
+</style>
 
 <script type="text/javascript">
 	$(document).ready(function() {      
 		
-		 $("#jqxDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy", value: null });
-		 $("#jqxFromDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#jqxToDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#chequedate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
-		 $("#checkchequedate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+         /* Adjusted Date fields to perfectly match the 24px inputs */
+		 $("#jqxDate").jqxDateTimeInput({ width: '100px', height: '24px', formatString:"dd.MM.yyyy", value: null });
+		 $("#jqxFromDate").jqxDateTimeInput({ width: '100px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#jqxToDate").jqxDateTimeInput({ width: '100px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#chequedate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
+		 $("#checkchequedate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
 		 
 		 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailsWindow').jqxWindow('close');  
@@ -26,10 +186,15 @@
 	     var oneyearbackdate=new Date(new Date(oneyeardate).setDate(oneyeardate.getDate()));
 	     $('#jqxFromDate ').jqxDateTimeInput('setDate', new Date(oneyearbackdate));
 		
-		$('#txtaccid').dblclick(function(){
-			  accountSearchContent('clientAccountDetailsSearch.jsp?atype='+$('#cmbacctype').val());
-			  });
+		$('#txtaccid').dblclick(function(){ openAccSearch(); });
 	});
+
+    /* Icon Click Handler */
+    function openAccSearch() {
+        if($('#mode').val() != "view") {
+            accountSearchContent('clientAccountDetailsSearch.jsp?atype='+$('#cmbacctype').val());
+        }
+    }
 	
 	function accountSearchContent(url){
 	    $('#accountDetailsWindow').jqxWindow('open');
@@ -40,38 +205,36 @@
 	}
 	
 	function getPDCAccounts(){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  				var docNoItems = items[0];
-  				var accountIdItems  = items[1];
-  				var accountItems = items[2];
-  				var accountTypeItems = items[3];
-  				var accountCurIdItems  = items[4];
-  				var accountRateItems = items[5];
-  				var accCurrTypeItems = items[6];
-  			
-  			    $('#txtpdcdocno').val(docNoItems);	
-  			    $('#txtpdcaccid').val(accountIdItems);
-  			    $('#txtpdcaccname').val(accountItems);
-  			  	$('#txtpdcatype').val(accountTypeItems);
+ 		var x = new XMLHttpRequest();
+ 		x.onreadystatechange = function() {
+ 			if (x.readyState == 4 && x.status == 200) {
+ 				var items = x.responseText;
+ 				items = items.split('####');
+ 				var docNoItems = items[0];
+ 				var accountIdItems  = items[1];
+ 				var accountItems = items[2];
+ 				var accountTypeItems = items[3];
+ 				var accountCurIdItems  = items[4];
+ 				var accountRateItems = items[5];
+ 				var accCurrTypeItems = items[6];
+ 			
+ 			    $('#txtpdcdocno').val(docNoItems);	
+ 			    $('#txtpdcaccid').val(accountIdItems);
+ 			    $('#txtpdcaccname').val(accountItems);
+ 			 	$('#txtpdcatype').val(accountTypeItems);
 			    $('#txtpdccurid').val(accountCurIdItems);
 			    $('#txtpdcrate').val(accountRateItems);
 			    $('#txtpdctype').val(accCurrTypeItems);
-  		}
-  		}
-  		x.open("GET", "getPDCAccounts.jsp", true);
-  		x.send();
+ 		}
+ 		}
+ 		x.open("GET", "getPDCAccounts.jsp", true);
+ 		x.send();
    }
 	
 	 function getAcc(event){
          var x= event.keyCode;
-         if(x==114){
-        	 accountSearchContent('clientAccountDetailsSearch.jsp?atype='+$('#cmbacctype').val());
-            }
-         }
+         if(x==114){ openAccSearch(); }
+     }
 	 
 	 function funReadOnly(){
 			$('#frmPDCPostingPayment input').attr('readonly', true );
@@ -125,9 +288,7 @@
 	 
 	 function funSearchLoad(){}
 		
-	 function funChkButton(){
-			/* funReset(); */
-		}
+	 function funChkButton(){ }
 	 
 	 function funFocus(){
 	    	document.getElementById("cmbcriteria").focus(); 	    		
@@ -142,10 +303,10 @@
 			  return 0;
 		    }
 		  
-		  	if(document.getElementById("jqxDate").value=="" || document.getElementById("jqxDate").value==null){
+		 	if(document.getElementById("jqxDate").value=="" || document.getElementById("jqxDate").value==null){
 			  document.getElementById("errormsg").innerText="Posting Date is Mandatory.";
 			  return 0;
-		  	}
+		 	}
 	    	
 			var postdate = $('#jqxDate').jqxDateTimeInput('getDate');
 			var postvaliddate=funDateInPeriod(postdate);
@@ -185,9 +346,9 @@
 			
 		 /* Journal Voucher Applying Grid Saving */
     	 var rows = $("#jqxJournalVoucherApplying").jqxGrid('getrows');
- 		 var length=0;
- 		 for(var i=0 ; i < rows.length ; i++){
- 			var chk=rows[i].doc_no;
+		 var length=0;
+		 for(var i=0 ; i < rows.length ; i++){
+			var chk=rows[i].doc_no;
 			if(typeof(chk) != "undefined" && typeof(chk) != "NaN" && chk != ""){
 				newTextBox = $(document.createElement("input"))
 			    .attr("type", "dil")
@@ -219,11 +380,11 @@
 			}
 			newTextBox.appendTo('form');
 			}
- 		 }
+		 }
 		 $('#gridlength').val(length);
- 		/* Journal Voucher Applying Grid Saving Ends */
- 		 
- 		  $('#jqxFromDate').jqxDateTimeInput({disabled: false});
+		/* Journal Voucher Applying Grid Saving Ends */
+		 
+		  $('#jqxFromDate').jqxDateTimeInput({disabled: false});
 		  $('#jqxToDate').jqxDateTimeInput({disabled: false});
 		  $('#jqxDate').jqxDateTimeInput({disabled: false});
 		  $('#chequedate').jqxDateTimeInput({disabled: false});
@@ -385,304 +546,140 @@
 	  }
 	  
 </script>
-<style>
-.hidden-scrollbar {
-  overflow: auto;
-  height: 530px;
-}
-
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 12px;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-}
-.table-section h3 {
-    color: #253858;
-    font-size: 12px;
-    font-weight: 600;
-}
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
-}
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 12px;
-}
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
-}
-.cr-table tr:last-child td {
-    border-bottom: none;
-}
-
-
-.cr-table td {
-    font-weight: 600 !important;
-}
-
-
-
-
-/* Remove autofill color from normal inputs */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    box-shadow: 0 0 0 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-    -webkit-text-fill-color: #1f2933 !important;
-    font-weight: 700 !important;
-}
-
-/* Fix autofill for JQX Date / JQX widgets */
-.jqx-widget input:-webkit-autofill,
-.jqx-input-content:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    box-shadow: 0 0 0 1000px #ffffff inset !important;
-    background-color: #ffffff !important;
-    -webkit-text-fill-color: #1f2933 !important;
-}
-
-.cr-table input:focus,
-.cr-table select:focus {
-    border-color: #4d7dff;
-    box-shadow: 0 0 0 2px rgba(90,140,255,0.25);
-    outline: none;
-}
-
-
-.myButton {
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-}
-
-</style>
-
 </head>
+
 <body onload="setValues();headerbtndisable();">
 <div id="mainBG" class="homeContent" data-type="background" >
 <form id="frmPDCPostingPayment" action="savePDCPostingPayment" method="post" autocomplete="off">
-<jsp:include page="../../../../header.jsp"></jsp:include><br/>
+<jsp:include page="../../../../header.jsp"></jsp:include>
 
-<div  class='hidden-scrollbar receipt-header'>
-<div class="table-section">
-<table class="cr-table" width="100%">
-  <tr>
-    <td width="3%" align="right">Criteria</td>
-    <td width="23%"><select id="cmbcriteria" name="cmbcriteria" style="width:97%;" value='<s:property value="cmbcriteria"/>' onchange="dateDisable();getPDCAccounts();clearClientInfo();">
-    <option value="">--Select--</option><option value="1">PDC to be Posted</option><option value="2">PDC to be Returned</option><option value="3">Posted PDC to be Dishonoured</option>
-    <option value="4">PDC to be Postponed</option><option value="5">Retuned PDC to be Reversed</option><option value="6">Dishourned PDC to be Reversed</option>
-    <option value="7">CDC to be Dishourned</option></select>
-    <input type="hidden" id="hidcmbcriteria" name="hidcmbcriteria" value='<s:property value="hidcmbcriteria"/>'/></td>
-    <td width="3%" align="right">From</td>
-    <td width="3%"><div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
-    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/></td>
-    <td width="2%" align="right">To</td>          
-    <td width="3%"><div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
-    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/></td>
-    <td width="4%" align="right">Account</td>   
-    <td width="9%"><select id="cmbacctype" name="cmbacctype" style="width:90%;" onchange="clearClientInfo();" value='<s:property value="cmbacctype"/>'>
-    <option value="0">--Select--</option><option value="BANK">Bank</option><option value="AP">AP</option><option value="AR">AR</option></select>
-    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/></td>
-    <td width="12%"><input type="text" id="txtaccid" name="txtaccid" style="width:85%;" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/></td>
-    <td width="24%"><input type="text" id="txtaccname" name="txtaccname" style="width:97%;" value='<s:property value="txtaccname"/>'/>
-    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/></td>
-    <td width="3%" align="right" style="padding-left:35px;">Posting</td>
-    <td width="4%"><div id="jqxDate" name="jqxDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDate"/>'></div>
-	<input type="hidden" id="hidjqxDate" name="hidjqxDate" value='<s:property value="hidjqxDate"/>'/></td>
-    <td width="8%" align="center"><button class="myButton" type="button" id="btnview" name="btnview" onclick="funloadgrid();">View</button></td>
-  </tr>
-  </table></div>
- <div class="cr-table" id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div><br/>
- <div class="cr-table" id="jqxJournalVoucherApplyingGrid"><jsp:include page="journalVoucherApplyingGrid.jsp"></jsp:include></div>
- <div id="pdcPostponedDiv" hidden="true">
- <fieldset style="background: #ECF8E0;">
- <table class="cr-table" width="100%">
-  <tr>
-    <td width="7%" align="right">Bank</td>
-    <td width="14%"><input type="text" id="txtbankaccid" name="txtbankaccid" style="width:80%;" value='<s:property value="txtbankaccid"/>'/></td>
-    <td colspan="2"><input type="text" id="txtbankaccname" name="txtbankaccname" style="width:40%;" value='<s:property value="txtbankaccname"/>'/>
-    <input type="hidden" id="txtbankdocno" name="txtbankdocno" value='<s:property value="txtbankdocno"/>'/></td>
-  </tr>
-  <tr>
-    <td align="right">Cheque No.</td>
-    <td><input type="text" id="txtchequeno" name="txtchequeno" style="width:80%;" value='<s:property value="txtchequeno"/>'/></td>
-    <td width="8%" align="right">Cheque Date</td>
-    <td width="71%"><div id="chequedate" name="chequedate" onchange="checkChequeDate();" value='<s:property value="chequedate"/>'></div>
-	<input type="hidden" id="hidchequedate" name="hidchequedate" value='<s:property value="hidchequedate"/>'/>
-	<div hidden="true" id="checkchequedate" name="checkchequedate" value='<s:property value="checkchequedate"/>'></div></td>
-  </tr>
-</table>
-</fieldset>
- </div>
+<div class="modern-ui hidden-scrollbar">
+    <span id="errormsg"></span>
+
+    <div class="bordered-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="5%" class="lbl-right">Criteria</td>
+                <td width="15%">
+                    <select id="cmbcriteria" name="cmbcriteria" value='<s:property value="cmbcriteria"/>' onchange="dateDisable();getPDCAccounts();clearClientInfo();">
+                        <option value="">--Select--</option>
+                        <option value="1">PDC to be Posted</option>
+                        <option value="2">PDC to be Returned</option>
+                        <option value="3">Posted PDC to be Dishonoured</option>
+                        <option value="4">PDC to be Postponed</option>
+                        <option value="5">Retuned PDC to be Reversed</option>
+                        <option value="6">Dishourned PDC to be Reversed</option>
+                        <option value="7">CDC to be Dishourned</option>
+                    </select>
+                    <input type="hidden" id="hidcmbcriteria" name="hidcmbcriteria" value='<s:property value="hidcmbcriteria"/>'/>
+                </td>
+                
+                <td width="4%" class="lbl-right">From</td>
+                <td width="8%">
+                    <div id="jqxFromDate" name="jqxFromDate" value='<s:property value="jqxFromDate"/>'></div>
+                    <input type="hidden" id="hidjqxFromDate" name="hidjqxFromDate" value='<s:property value="hidjqxFromDate"/>'/>
+                </td>
+                
+                <td width="3%" class="lbl-right">To</td>          
+                <td width="8%">
+                    <div id="jqxToDate" name="jqxToDate" value='<s:property value="jqxToDate"/>'></div>
+                    <input type="hidden" id="hidjqxToDate" name="hidjqxToDate" value='<s:property value="hidjqxToDate"/>'/>
+                </td>
+                
+                <td width="5%" class="lbl-right">Account</td>   
+                <td width="8%">
+                    <select id="cmbacctype" name="cmbacctype" onchange="clearClientInfo();" value='<s:property value="cmbacctype"/>'>
+                        <option value="0">--Select--</option>
+                        <option value="BANK">Bank</option>
+                        <option value="AP">AP</option>
+                        <option value="AR">AR</option>
+                    </select>
+                    <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+                </td>
+                
+                <td width="12%">
+                    <div class="input-search-container">
+                        <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);" readonly/>
+                        <svg class="magnifier-icon" onclick="openAccSearch();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                </td>
+                
+                <td width="16%">
+                    <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' tabindex="-1" readonly/>
+                    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+                </td>
+                
+                <td width="5%" class="lbl-right">Posting</td>
+                <td width="8%">
+                    <div id="jqxDate" name="jqxDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDate"/>'></div>
+                    <input type="hidden" id="hidjqxDate" name="hidjqxDate" value='<s:property value="hidjqxDate"/>'/>
+                </td>
+                
+                <td width="6%" align="center">
+                    <button class="myButton" type="button" id="btnview" name="btnview" onclick="funloadgrid();">View</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container" id="jqxJournalVoucherGrid"><jsp:include page="journalVoucherGrid.jsp"></jsp:include></div>
+    <div class="grid-container" id="jqxJournalVoucherApplyingGrid"><jsp:include page="journalVoucherApplyingGrid.jsp"></jsp:include></div>
+
+    <div id="pdcPostponedDiv" hidden="true">
+        <div class="bordered-panel">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="8%" class="lbl-right">Bank</td>
+                    <td width="15%">
+                        <input type="text" id="txtbankaccid" name="txtbankaccid" value='<s:property value="txtbankaccid"/>'/>
+                    </td>
+                    <td colspan="2">
+                        <input type="text" id="txtbankaccname" name="txtbankaccname" style="width: 50%;" value='<s:property value="txtbankaccname"/>' tabindex="-1" readonly/>
+                        <input type="hidden" id="txtbankdocno" name="txtbankdocno" value='<s:property value="txtbankdocno"/>'/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl-right">Cheque No.</td>
+                    <td>
+                        <input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>'/>
+                    </td>
+                    <td width="10%" class="lbl-right">Cheque Date</td>
+                    <td width="67%">
+                        <div style="display: flex;">
+                            <div id="chequedate" name="chequedate" onchange="checkChequeDate();" value='<s:property value="chequedate"/>'></div>
+                            <input type="hidden" id="hidchequedate" name="hidchequedate" value='<s:property value="hidchequedate"/>'/>
+                            <div hidden="true" id="checkchequedate" name="checkchequedate" value='<s:property value="checkchequedate"/>'></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
  
-<input type="hidden" id="mode" name="mode"/>
-<input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
-<input type="hidden" id="txtpdcdocno" name="txtpdcdocno"  value='<s:property value="txtpdcdocno"/>'/>
-<input type="hidden" id="txtpdcaccid" name="txtpdcaccid"  value='<s:property value="txtpdcaccid"/>'/>
-<input type="hidden" id="txtpdcaccname" name="txtpdcaccname"  value='<s:property value="txtpdcaccname"/>'/>
-<input type="hidden" id="txtpdcatype" name="txtpdcatype"  value='<s:property value="txtpdcatype"/>'/>
-<input type="hidden" id="txtpdccurid" name="txtpdccurid"  value='<s:property value="txtpdccurid"/>'/>
-<input type="hidden" id="txtpdcrate" name="txtpdcrate"  value='<s:property value="txtpdcrate"/>'/>
-<input type="hidden" id="txtpdctype" name="txtpdctype"  value='<s:property value="txtpdctype"/>'/>
-<input type="hidden" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'/>
-<input type="hidden" id="txtgriddocno" name="txtgriddocno" value='<s:property value="txtgriddocno"/>'/>
-<input type="hidden" id="txtrowno" name="txtrowno" value='<s:property value="txtrowno"/>'/>
-<input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-<input type="hidden" id="txtposttrno" name="txtposttrno"  value='<s:property value="txtposttrno"/>'/>
-<input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
-<input type="hidden" id="txtibbranch" name="txtibbranch" value='<s:property value="txtibbranch"/>'/>
-<input type="hidden" id="typevalue" name="typevalue"  value='<s:property value="typevalue"/>'/>
-<input type="hidden" id="txtchequevalidation" name="txtchequevalidation"  value='<s:property value="txtchequevalidation"/>'/>
-<input type="hidden" id="gridlength" name="gridlength"/>
+    <input type="hidden" id="mode" name="mode"/>
+    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+    <input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+    <input type="hidden" id="txtpdcdocno" name="txtpdcdocno"  value='<s:property value="txtpdcdocno"/>'/>
+    <input type="hidden" id="txtpdcaccid" name="txtpdcaccid"  value='<s:property value="txtpdcaccid"/>'/>
+    <input type="hidden" id="txtpdcaccname" name="txtpdcaccname"  value='<s:property value="txtpdcaccname"/>'/>
+    <input type="hidden" id="txtpdcatype" name="txtpdcatype"  value='<s:property value="txtpdcatype"/>'/>
+    <input type="hidden" id="txtpdccurid" name="txtpdccurid"  value='<s:property value="txtpdccurid"/>'/>
+    <input type="hidden" id="txtpdcrate" name="txtpdcrate"  value='<s:property value="txtpdcrate"/>'/>
+    <input type="hidden" id="txtpdctype" name="txtpdctype"  value='<s:property value="txtpdctype"/>'/>
+    <input type="hidden" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'/>
+    <input type="hidden" id="txtgriddocno" name="txtgriddocno" value='<s:property value="txtgriddocno"/>'/>
+    <input type="hidden" id="txtrowno" name="txtrowno" value='<s:property value="txtrowno"/>'/>
+    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+    <input type="hidden" id="txtposttrno" name="txtposttrno"  value='<s:property value="txtposttrno"/>'/>
+    <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'/>
+    <input type="hidden" id="txtibbranch" name="txtibbranch" value='<s:property value="txtibbranch"/>'/>
+    <input type="hidden" id="typevalue" name="typevalue"  value='<s:property value="typevalue"/>'/>
+    <input type="hidden" id="txtchequevalidation" name="txtchequevalidation"  value='<s:property value="txtchequevalidation"/>'/>
+    <input type="hidden" id="gridlength" name="gridlength"/>
+
 </div>
 </form>
+
 <div id="accountDetailsWindow">
 	<div></div><div></div>
 </div>  

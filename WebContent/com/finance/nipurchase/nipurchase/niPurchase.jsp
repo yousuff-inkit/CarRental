@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
+<% String contextPath=request.getContextPath();%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>GatewayERP(i)</title>
@@ -12,54 +13,77 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Bulletproof Table Layout
+   SCOPED UI: Stable Modern Layout (Client Master Style)
 ========================================================= */
 
+body, .homeContent {
+    background: #ffffff !important; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    color: #222 !important;
+    margin: 0;
+    padding: 15px; 
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 1px solid #e5e7eb; 
+}
+
 .erp-form-area {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff; /* Keep it clean white */
+    border: 1px solid #e1e4e8;
     border-radius: 4px;
     padding: 15px 10px;
     margin-bottom: 10px;
-    min-width: 1100px; /* Prevents squishing on small monitors */
+    min-width: 1100px; 
 }
 
-/* Master Input Heights - Forced to 24px */
+/* Master Input Heights - Stable 24px */
 .erp-form-area input[type="text"],
 .erp-form-area select { 
     height: 24px !important; 
-    border: 1px solid #b8c6d8; 
-    border-radius: 3px; 
-    padding: 2px 6px;
-    font-size: 12px;
+    border: 1px solid #b8c6d8 !important; 
+    border-radius: 3px !important; 
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     box-sizing: border-box; 
-    background-color: #fff; 
-    color: #333;
+    background-color: #fff !important; 
+    color: #333 !important;
     width: 100%;
 }
 
 .erp-form-area input[type="text"]:focus,
 .erp-form-area select:focus { 
-    border-color: #007bff; 
-    outline: none;
+    border-color: #007bff !important; 
+    outline: none !important;
+    background-color: #FFD6FF !important; /* Client Master Focus */
 }
 
 .erp-form-area input[readonly],
-.erp-form-area input:disabled { 
-    background-color: #f8f9fa; 
-    color: #6b7280;
+.erp-form-area input:disabled,
+.erp-form-area select:disabled { 
+    background-color: #f8f9fa !important; 
+    color: #6b7280 !important;
 }
 
 .erp-form-area td {
-    padding: 4px 5px;
+    padding: 4px 5px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #222 !important;
     vertical-align: middle;
 }
 
 .erp-form-area .lbl-right { 
     text-align: right; 
-    color: #444;
-    font-size: 12px; 
-    font-weight: bold;
+    color: #222 !important;
     white-space: nowrap; 
     padding-right: 5px;
 }
@@ -78,6 +102,12 @@ form label.error {
     font-size: 11px;
 }
 
+#errormsg {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}
+
 .hidden-scrollbar { 
     overflow: auto; 
     height: calc(100vh - 100px);
@@ -87,23 +117,10 @@ form label.error {
 
 <script type="text/javascript">
 $(document).ready(function () {   
-    /* EXACT DATE WIDTHS */  
+    /* EXACT DATE WIDTHS & HEIGHTS (NO CSS HACKS) */  
     $("#nipurchasedate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
     $("#deliverydate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
     $("#invDate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
-
-    /* Force internal alignment AFTER render */
-    setTimeout(function () {
-        $(".jqx-datetimeinput").find("input").css({
-            "margin-top": "0px", 
-            "line-height": "24px", 
-            "font-size": "12px", 
-            "font-family": "Arial, sans-serif",
-            "padding": "0 6px", 
-            "box-sizing":"border-box"
-        });
-        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-    }, 0);
 
     $('#typesearchwindow').jqxWindow({ width : '25%', height : '58%', maxHeight : '70%', maxWidth : '45%', title : ' Search', position : { x : 700, y : 87 }, theme : 'energyblue', showCloseButton : true, keyboardCloseKey : 27 });
     $('#typesearchwindow').jqxWindow('close');
@@ -260,7 +277,7 @@ function funNotify(){
           }
        }
      }
-        
+       
      if(parseInt(aa)==0) {
          document.getElementById("errormsg").innerText=" Please Select Account";
          return false;
@@ -620,6 +637,8 @@ function setValues() {
 
     <div class="erp-form-area">
         
+        <span id="errormsg"></span>
+
         <table width="100%" border="0" cellspacing="0" cellpadding="2" style="margin-bottom: 8px;">
             <tr>
                 <td class="lbl-right" width="4%">Date</td>
@@ -674,7 +693,7 @@ function setValues() {
                             </td>
                             <td width="2%"></td>
                             <td width="68%">
-                                <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>'>
+                                <input type="text" id="puraccname" name="puraccname" value='<s:property value="puraccname"/>' tabindex="-1" readonly>
                             </td>
                         </tr>
                     </table>
@@ -687,7 +706,7 @@ function setValues() {
                 </td>
                 <td class="lbl-right" width="5%">Rate</td>
                 <td width="8%">
-                    <input type="text" name="currate" id="currate" value='<s:property value="currate"/>'>
+                    <input type="text" name="currate" id="currate" value='<s:property value="currate"/>' style="text-align: right;" readonly tabindex="-1">
                 </td>
                 <td class="lbl-right" width="6%">Bill Type</td>
                 <td width="24%">
@@ -742,14 +761,15 @@ function setValues() {
         <input type="hidden" id="nettotal" name="nettotal" value='<s:property value="nettotal"/>'/>
         <input type="hidden" id="rowval" name="rowval" value='<s:property value="rowval"/>'/>
         <input type="hidden" id="accdocno" name="accdocno" value='<s:property value="accdocno"/>'/>  
-        <input type="hidden" id="descgridlenght" name="descgridlenght" value='<s:property value="descgridlenght"/>'/>    
-        <input type="hidden" id="cmbcurrval" name="cmbcurrval" value='<s:property value="cmbcurrval"/>'/>    
+        <input type="hidden" id="descgridlenght" name="descgridlenght" value='<s:property value="descgridlenght"/>'/>   
+        <input type="hidden" id="cmbcurrval" name="cmbcurrval" value='<s:property value="cmbcurrval"/>'/>   
         <input type="hidden" id="acctypeval" name="acctypeval" value='<s:property value="acctypeval"/>'/>  
         <input type="hidden" id="reftypeval" name="reftypeval" value='<s:property value="reftypeval"/>'/>  
         <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
         <input type="hidden" id="taxpers" name="taxpers" value='<s:property value="taxpers"/>'/>
         <input type="hidden" id="taxaccount" name="taxaccount" value='<s:property value="taxaccount"/>'/>
         <input type="hidden" id="refslno" name="refslno" value='<s:property value="refslno"/>' >
+        <span id="formdet"></span>
     </div>
             
 </form>
