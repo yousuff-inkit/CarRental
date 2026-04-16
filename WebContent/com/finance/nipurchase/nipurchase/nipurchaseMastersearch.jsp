@@ -1,206 +1,193 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
- 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
-<style>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-</style>
-	<script type="text/javascript">
 
+<style>
+/* =========================================================
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff; /* Main background white */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
+}
+
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Styles */
+.modern-ui input[type="text"], .modern-ui select {
+    height: 24px !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus, .modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
+}
+
+/* Panel Styling - Clean White Panel */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Search Button - Modern Blue matched to Client Master */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.modern-ui .myButton:hover {
+    background-color: #004494;
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
+    background: #fff;
+}
+</style>
+
+<script type="text/javascript">
 	$(document).ready(function () { 
-	    
-		   /* Date */ 	
-	    $("#datess").jqxDateTimeInput({  width: '125px', height: '15px', formatString:"dd.MM.yyyy",value:null}); 
-		   
+	    /* Date left untouched at 15px height */
+	    $("#datess").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy", value:null}); 
 	});   
 		   
- 	function loadSearchs() {
- 		
- 		var docnoss=document.getElementById("docnoss").value;
- 		var accountss=document.getElementById("accountss").value;
- 		var accnamesss=document.getElementById("accnamess").value;
- 		var datess=document.getElementById("datess").value;
- 		var reftypess=document.getElementById("reftypess").value;
- 		var desc=document.getElementById("description").value;
- 		var description=desc.replace(/ /g, "%20");
- 		var accnamess = accnamesss.replace(/ /g, "%20");
-
-		
-	var aa="yes";
-		getdata(docnoss,accountss,accnamess,datess,reftypess,aa,description);
- 
-
+	function loadSearchs() {
+		var docnoss = document.getElementById("docnoss").value || "";
+		var accountss = document.getElementById("accountss").value || "";
+		var accnamess = document.getElementById("accnamess").value || "";
+		var datess = $('#datess').jqxDateTimeInput('val') || "";
+		var reftypess = document.getElementById("reftypess").value || "";
+		var description = document.getElementById("description").value || "";
+	    var aa = "yes";
+	    
+		getdata(docnoss, accountss, accnamess, datess, reftypess, aa, description);
 	}
-	function getdata(docnoss,accountss,accnamess,datess,reftypess,aa,description){
-		
-		 $("#refreshdivs").load('submasterSearch.jsp?docnoss='+docnoss+'&accountss='+accountss+'&accnamess='+accnamess+'&datess='+datess+'&reftypess='+reftypess+'&aa='+aa+'&description='+description);
+	
+	function getdata(docnoss, accountss, accnamess, datess, reftypess, aa, description){
+         /* Upgraded to encodeURIComponent to handle spaces & special chars safely */
+		 $("#refreshdivs").load('submasterSearch.jsp?docnoss=' + encodeURIComponent(docnoss) + 
+                                '&accountss=' + encodeURIComponent(accountss) + 
+                                '&accnamess=' + encodeURIComponent(accnamess) + 
+                                '&datess=' + datess + 
+                                '&reftypess=' + encodeURIComponent(reftypess) + 
+                                '&aa=' + aa + 
+                                '&description=' + encodeURIComponent(description));
+	}
+</script>
+</head>
 
-		}
+<body style="background-color: #fff; margin: 0;">
 
-	</script>
-	<style type="text/css">
-/* Master UI Styles */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px; /* Standardized master gap */
-}
+<div id="search" class="modern-ui">
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-  white-space: nowrap;
-}
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="8%">Doc No</td>
+                <td width="20%">
+                    <input type="text" name="docnoss" id="docnoss" value='<s:property value="docnoss"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Account</td>
+                <td width="20%">
+                    <input type="text" name="accountss" id="accountss" value='<s:property value="accountss"/>'>
+                </td>
+                
+                <td class="lbl-right" width="12%">Account Name</td>
+                <td width="30%">
+                    <input type="text" name="accnamess" id="accnamess" value='<s:property value="accnamess"/>'>
+                </td>
+            </tr>
+            <tr>
+                <td class="lbl-right">Date</td>
+                <td>
+                    <div id="datess" name="datess" value='<s:property value="datess"/>'></div>
+                </td>
+                
+                <td class="lbl-right">Description</td>
+                <td>
+                    <input type="text" name="description" id="description" value='<s:property value="description"/>'>
+                </td>
+                
+                <td class="lbl-right">Type</td>
+                <td>
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <select name="reftypess" id="reftypess" value='<s:property value="reftypess"/>' style="width: 100px;">
+                            <option value="">--select--</option>
+                            <option value="DIR">DIR</option>
+                            <option value="NPO">NPO</option>
+                        </select>
+                        <input type="button" name="searchs" id="searchs" class="myButton" value="Search" onclick="loadSearchs(); return false;">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-/* Bold text inside inputs and selects with Grey Borders */
-input[type="text"], select {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 10px;
-  max-width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #bdc3c7; /* Grey border */
-  border-radius: 4px;
-  background-color: #ffffff;
-}
-
-/* Focus state for inputs */
-input[type="text"]:focus, select:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Specifically adjust jqxDateTimeInput styling */
-#datess {
-  font-family: Tahoma, Geneva, sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-}
-
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 8px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none;
-}
-
-/* No color change on hover as requested */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
-}
-
-/* Row spacing */
-tr {
-  line-height: 1.6;
-}
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
-}
-</style>
-
-<body bgcolor="#FFFFFF">
-<div id="search">
-
-<table width="100%">
-
-<tr>
-
-<td width="8%" align="right">Doc No</td>
-<td width="20%">
-<input type="text" name="docnoss" id="docnoss"
-       style="width:90%;"
-       value='<s:property value="docnoss"/>'>
-</td>
-
-<td width="10%" align="right">Account</td>
-<td width="20%">
-<input type="text" name="accountss" id="accountss"
-       style="width:90%;"
-       value='<s:property value="accountss"/>'>
-</td>
-
-<td width="12%" align="right">Account Name</td>
-<td width="30%">
-<input type="text" name="accnamess" id="accnamess"
-       style="width:90%;"
-       value='<s:property value="accnamess"/>'>
-</td>
-
-</tr>
-
-
-<tr>
-
-<td align="right">Date</td>
-<td>
-<div id="datess" name="datess"
-     value='<s:property value="datess"/>'></div>
-</td>
-
-<td align="right">Description</td>
-<td>
-<input type="text" name="description" id="description"
-       style="width:90%;"
-       value='<s:property value="description"/>'>
-</td>
-
-<td align="right">Type</td>
-<td>
-
-<select name="reftypess" id="reftypess"
-        style="width:55%;"
-        value='<s:property value="reftypess"/>'>
-<option value="">--select--</option>
-<option value="DIR">DIR</option>
-<option value="NPO">NPO</option>
-</select>
-
-<input type="button"
-       name="searchs"
-       id="searchs"
-       class="myButton"
-       value="Search"
-       onclick="loadSearchs()"
-       style="margin-left:10px;">
-
-</td>
-
-</tr>
-
-
-<tr>
-<td colspan="6">
-
-<div id="refreshdivs">
-<jsp:include page="submasterSearch.jsp"/>
-</div>
-
-</td>
-</tr>
-
-</table>
+    <div class="grid-container">
+        <div id="refreshdivs">
+            <jsp:include page="submasterSearch.jsp"/>
+        </div>
+    </div>
 
 </div>
+
 </body>
 </html>

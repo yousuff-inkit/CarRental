@@ -1,4 +1,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@page import="com.common.ClsCommon"%>
+<%@page import="java.sql.*"%>
+<%@page import="javax.sql.*"%>
+<%@page import="com.connection.*" %>
+<%@page import="javax.servlet.http.HttpServletRequest.*" %>
+<%@page import="javax.servlet.http.HttpSession.*" %>
 <!DOCTYPE html>
 <html>
 <% String contextPath=request.getContextPath();%>
@@ -11,11 +17,11 @@
 
 <style>
 /* =========================================================
-   DEBIT NOTE - EXACT TEXT & UI MATCH TO CLIENT MASTER
+   DEBIT NOTE - SEGOE UI / CLEAN WHITE STYLING
 ========================================================= */
 body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Arial, sans-serif !important;
+    background-color: #fff !important; /* No Blue Background */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     color: #333 !important;
     font-size: 12px !important;
     margin: 0;
@@ -28,7 +34,6 @@ body, .homeContent {
     padding: 15px;
     max-width: 100%;
     margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
 }
 
@@ -44,11 +49,14 @@ body, .homeContent {
 form label.error {
     color: red;
     font-weight: bold;
+    font-size: 11px;
 }
 
-#validrate{
- color:red;
- }
+#validrate {
+    color:red;
+    font-size: 11px;
+    font-weight: bold;
+}
 
 /* EXACT Input Styles from Client Master */
 input[type="text"], input[type="email"], select {
@@ -56,7 +64,8 @@ input[type="text"], input[type="email"], select {
     border: 1px solid #ccc !important;
     border-radius: 3px !important;
     padding: 2px 6px !important;
-    font-size: 12px !important;
+    font-size: 12px !important; /* Updated for Segoe UI */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     box-sizing: border-box;
     background-color: #fff !important;
     color: #333 !important;
@@ -65,6 +74,7 @@ input[type="text"], input[type="email"], select {
 
 input[type="text"]:focus, input[type="email"]:focus, select:focus {
     border-color: #007bff !important;
+    background-color: #FFD6FF !important; /* Client Master Focus Color */
     outline: none !important;
 }
 
@@ -74,7 +84,7 @@ input[readonly], input:disabled, select:disabled {
     border-color: #e1e4e8 !important;
 }
 
-/* Fieldset and Legend styling matching Client Master */
+/* Fieldset and Legend styling */
 fieldset {
     border: 1px solid #e1e4e8 !important;
     background-color: #fff !important;
@@ -97,9 +107,17 @@ legend {
 table td {
     padding: 4px 6px !important;
     font-size: 12px !important;
-    color: #444 !important;
-    font-weight: bold !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    color: #222 !important;
+    font-weight: 600 !important; /* Slightly bolder for Segoe UI */
     vertical-align: middle;
+}
+
+.lbl-right { 
+    text-align: right; 
+    color: #222 !important;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
 /* Modern Buttons matched to Client Master */
@@ -108,9 +126,10 @@ table td {
     color: #ffffff !important;
     border: none !important;
     border-radius: 3px !important;
-    padding: 4px 15px !important;
+    padding: 0 15px !important;
     font-weight: bold !important;
     font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     cursor: pointer !important;
     height: 24px !important;
 }
@@ -118,6 +137,27 @@ table td {
 .myButton:hover {
     background-color: #004494 !important;
 }
+
+/* Magnifier Icon Styling */
+.input-search-container {
+    position: relative;
+    display: inline-block;
+    width: 65%; /* Replaces the inline style on txtaccid */
+}
+.input-search-container input {
+    padding-right: 25px !important;
+}
+.magnifier-icon {
+    position: absolute;
+    right: 4px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.magnifier-icon:hover { color: #2563eb; }
+
 </style>
 
 <script type="text/javascript">
@@ -148,13 +188,16 @@ table td {
 				 }
 		});
 			 
-		$('#txtaccid').dblclick(function(){
-			  var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
-			  $("#maindate").jqxDateTimeInput('val', date);
-			  accountSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
-          	  $('#txtforsearch').val(2);
-		}); 	 
+		$('#txtaccid').dblclick(function(){ openToAcc(); }); 	 
 	});
+
+    /* ADDED CLICK HANDLER FOR MAGNIFIER ICON */
+    function openToAcc() {
+        var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
+        $("#maindate").jqxDateTimeInput('val', date);
+        accountSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
+        $('#txtforsearch').val(2);
+    }
 	
 	function DebitSearchContent(url) {
 		$('#debitNoteGridWindow').jqxWindow('open');
@@ -223,8 +266,8 @@ table td {
 		    getCurrencyId(date);
 		    
 		   if ($("#mode").val() == "E") {
-       	        $("#btnvaluechange").show();
-       	        $('#frmDebitNote input').attr('readonly', true );
+                $("#btnvaluechange").show();
+                $('#frmDebitNote input').attr('readonly', true );
 			    $('#frmDebitNote select').attr('disabled', true);
 			    $("#jqxDebitNote").jqxGrid({ disabled: true});
 			    $('#txtrefno').attr('readonly', false );
@@ -382,7 +425,7 @@ table td {
 			             $('#frmDebitNote select').attr('disabled', false); 
 			           }
 			 		  $('#cmbcurrency').attr('disabled', false);
-					 
+					
 				  return 1;
 			  }
 			  
@@ -456,18 +499,18 @@ table td {
 			                	   if(!isNaN(baseamount)){
 			                	      cr=cr+baseamount;
 			                	   }else if(isNaN(baseamount)){
-			                 		 baseamount=0.00;
-			                 		 cr=cr+baseamount;
-			                 	   }
+			                  		 baseamount=0.00;
+			                  		 cr=cr+baseamount;
+			                  	   }
 			                   }
 			                   else{
 			                	   if(!isNaN(baseamount)){
 			                    	 	dr=dr+baseamount;
-			                    	   }else if(isNaN(baseamount)){
-			                    		    baseamount=0.00;
-			                    		 	dr=dr+baseamount;
-			                    	   }
-			                     }
+			                   	   }else if(isNaN(baseamount)){
+			                   		    baseamount=0.00;
+			                   		 	dr=dr+baseamount;
+			                   	   }
+			                   }
 			 	 	       }
 			 	 		}
 			 	 		
@@ -486,13 +529,10 @@ table td {
 			       function getAccType(event){
 			           var x= event.keyCode;
 			           if(x==114){
-			         	   var date = $('#jqxDebitNoteDate').jqxDateTimeInput('getDate');
-				 		   $("#maindate").jqxDateTimeInput('val', date);
-			         	   accountSearchContent("<%=contextPath%>/com/finance/clientAccountDetailsSearch.jsp?atype="+$('#cmbtype').val()+"&date="+date);
-				           $('#txtforsearch').val(2);
+			         	   openToAcc();
 			           }
 			           else{}
-			           }
+			       }
 			       
 			       function funPrintBtn() {
 						
@@ -541,28 +581,29 @@ table td {
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
 <div class='hidden-scrollbar'>
+<span id="errormsg" style="color:red; font-weight:bold;"></span>
 <fieldset style="border:none !important; padding: 0 !important; background: transparent !important; margin-bottom: 5px !important;">
 
 <table width="100%" cellpadding="3" cellspacing="0">
   <tr>
-    <td width="10%" align="right">Date</td>
+    <td width="10%" class="lbl-right">Date</td>
     <td width="23%">
         <div id="jqxDebitNoteDate" name="jqxDebitNoteDate" onchange="datechange();" onblur="datechange();" value='<s:property value="jqxDebitNoteDate"/>'></div>
         <input type="hidden" id="hidjqxDebitNoteDate" name="hidjqxDebitNoteDate" value='<s:property value="hidjqxDebitNoteDate"/>'/>
     </td>
-    <td width="10%" align="right">Ref. No.</td>
+    <td width="10%" class="lbl-right">Ref. No.</td>
     <td width="23%" style="display: flex; gap: 5px;">
         <input type="text" id="txtrefno" name="txtrefno" value='<s:property value="txtrefno"/>' style="flex:1;"/>
-        <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();" style="padding: 2px 8px !important;">Value Change</button>
+        <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();" style="padding: 2px 8px !important; background-color: #f39c12 !important;">Value Change</button>
     </td>
-    <td width="10%" align="right">Doc No.</td>
+    <td width="10%" class="lbl-right">Doc No.</td>
     <td width="24%">
         <input type="text" id="docno" name="txtdebitnotedocno" value='<s:property value="txtdebitnotedocno"/>' tabindex="-1" readonly style="background-color: #f4f5f7;"/>
     </td>
   </tr>
   
   <tr>
-    <td align="right">Type</td>
+    <td class="lbl-right">Type</td>
     <td>
         <select id="cmbtype" name="cmbtype" onchange="clearClientInfo();" value='<s:property value="cmbtype"/>' style="width: 30%; display: inline-block;">
             <option value="AP">AP</option>
@@ -570,7 +611,11 @@ table td {
             <option value="HR">HR</option>
         </select>
         <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'/>
-        <input type="text" id="txtaccid" name="txtaccid" placeholder="F3" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" style="width: 65%; display: inline-block;"/>
+        
+        <div class="input-search-container">
+            <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" readonly/>
+            <svg class="magnifier-icon" onclick="openToAcc();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
     </td>
     <td colspan="4" style="padding-left: 10px;">
         <input type="text" id="txtaccname" name="txtaccname" value='<s:property value="txtaccname"/>' tabindex="-1" readonly/>
@@ -580,7 +625,7 @@ table td {
   </tr>
   
   <tr>
-    <td align="right">Currency</td>
+    <td class="lbl-right">Currency</td>
     <td>
         <select id="cmbcurrency" name="cmbcurrency" value='<s:property value="cmbcurrency"/>' onload="getRatevalue(this.value,$('#jqxDebitNoteDate').val());" onchange="getRatevalue(this.value,$('#jqxDebitNoteDate').val());">
             <option></option>
@@ -588,7 +633,7 @@ table td {
         <input type="hidden" id="hidcmbcurrency" name="hidcmbcurrency" value='<s:property value="hidcmbcurrency"/>'/>
         <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
     </td>
-    <td align="right">Rate</td>
+    <td class="lbl-right">Rate</td>
     <td>
         <input type="text" id="txtrate" name="txtrate" onchange="funvalid()" value='<s:property value="txtrate"/>' onblur="funRoundRate(this.value,this.id);getBaseAmountFrom();getDrTotal();" tabindex="-1" style="text-align: right;"/>
         <span id="validrate"></span>
@@ -597,11 +642,11 @@ table td {
   </tr>
   
   <tr>
-    <td align="right">Amount</td>
+    <td class="lbl-right">Amount</td>
     <td>
         <input type="text" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>' onblur="funRoundAmt(this.value,this.id);getBaseAmountFrom();getDrTotal();" style="text-align: right;"/>
     </td>
-    <td align="right">Base Amount</td>
+    <td class="lbl-right">Base Amount</td>
     <td>
         <input type="text" id="txtbaseamount" name="txtbaseamount" value='<s:property value="txtbaseamount"/>' tabindex="-1" readonly style="text-align: right; background-color: #f4f5f7;"/>
     </td>
@@ -609,7 +654,7 @@ table td {
   </tr>
   
   <tr>
-    <td align="right">Description</td>
+    <td class="lbl-right">Description</td>
     <td colspan="5">
         <input type="text" id="txtdescription" name="txtdescription" value='<s:property value="txtdescription"/>'/>
     </td>
@@ -621,12 +666,12 @@ table td {
 
 <table width="100%" cellpadding="3" cellspacing="0">
   <tr>
-    <td width="10%" align="right"><b>Dr. Total</b></td>
+    <td width="10%" class="lbl-right">Dr. Total</td>
     <td width="20%">
         <input type="text" id="txtdrtotal" name="txtdrtotal" value='<s:property value="txtdrtotal"/>' tabindex="-1" readonly style="text-align: right; background-color: #f4f5f7;"/>
     </td>
     <td width="50%"></td>
-    <td width="10%" align="right"><b>Cr. Total</b></td>
+    <td width="10%" class="lbl-right">Cr. Total</td>
     <td width="20%">
         <input type="text" id="txtcrtotal" name="txtcrtotal" value='<s:property value="txtcrtotal"/>' tabindex="-1" readonly style="text-align: right; background-color: #f4f5f7;"/>
     </td>

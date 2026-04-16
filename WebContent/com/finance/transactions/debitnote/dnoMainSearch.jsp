@@ -6,102 +6,192 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
-<style type="text/css">
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px;  
+<style>
+/* =========================================================
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff; /* Main background white */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
-
-td[align="right"] {
-  font-weight: 700;
-  font-size: 14px;
-  color: #222;
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-
-input[type="text"] {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;               /* Prevent overflow */
-  max-width: 100%;
-  box-sizing: border-box;   /* Include padding in width */
+/* Master Input Styles */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
 }
 
-
-#bankdate, #chqdate {
-  font-weight: 600;
-  font-size: 14px;
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-#btnsearch{
-  background-color: #2f80ed;   /* clean blue */
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 6px 18px;
-  border: 1px solid #2f80ed;
-  border-radius: 4px;
-  cursor: pointer;
-  min-width: 90px;
+/* Panel Styling - Clean White Panel */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
 }
-/* Additional spacing for rows */
-tr {
-  line-height: 1.8;
+
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Search Button - Modern Blue matched to Client Master */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.modern-ui .myButton:hover {
+    background-color: #004494;
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
+    background: #fff;
 }
 </style>
-	<script type="text/javascript">
+
+<script type="text/javascript">
 	$(document).ready(function () {
-	 $("#debitdate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+        /* Date left untouched at 15px height */
+		$("#debitdate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
 	}); 
 
- 	function loadSearch() {
-
- 		var docNo=document.getElementById("txtdocumentno").value;
- 		var date=document.getElementById("debitdate").value;
- 		var accId=document.getElementById("txtaccountid").value;
- 		var accName=document.getElementById("txtaccountname").value;
- 		var amounts=document.getElementById("txtamounts").value;
- 		var amount=(amounts*-1);
- 		var description=document.getElementById("txtdescriptions").value;
-	    var check = 1 ;
+	function loadSearch() {
+		var docNo = document.getElementById("txtdocumentno").value || "";
+		var date = $('#debitdate').jqxDateTimeInput('val') || "";
+		var accId = document.getElementById("txtaccountid").value || "";
+		var accName = document.getElementById("txtaccountname").value || "";
+		var amounts = document.getElementById("txtamounts").value || "";
+        var description = document.getElementById("txtdescriptions").value || "";
+	    var check = 1;
 	    
-		getdata(docNo,date,accId,accName,amount,description,check);
+        /* Preserved your specific logic for amount inversion safely */
+        var amount = "";
+        if(amounts !== "") {
+            amount = (parseFloat(amounts) * -1);
+        }
+        
+		getdata(docNo, date, accId, accName, amount, description, check);
 	}
-	function getdata(docNo,date,accId,accName,amount,description,check){
-		 $("#refreshdiv").load('dnoMainSearchGrid.jsp?docNo='+docNo+'&date='+date+'&accId='+accId+'&accName='+accName.replace(/ /g, "%20")+'&amount='+amount+'&description='+description.replace(/ /g, "%20")+'&check='+check);
-		}
+	
+	function getdata(docNo, date, accId, accName, amount, description, check){
+         /* Upgraded to encodeURIComponent to handle spaces & special chars safely */
+		 $("#refreshdiv").load('dnoMainSearchGrid.jsp?docNo=' + encodeURIComponent(docNo) + 
+                               '&date=' + date + 
+                               '&accId=' + encodeURIComponent(accId) + 
+                               '&accName=' + encodeURIComponent(accName) + 
+                               '&amount=' + encodeURIComponent(amount) + 
+                               '&description=' + encodeURIComponent(description) + 
+                               '&check=' + check);
+	}
+</script>
+</head>
 
-	</script>
-<body>
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="9%" align="right">Doc No</td>
-    <td width="23%"><input type="text" name="txtdocumentno" id="txtdocumentno" value='<s:property value="txtdocumentno"/>'></td>
-    <td width="6%" align="right">Date</td>
-    <td width="21%"><div id="debitdate" name="debitdate"  value='<s:property value="debitdate"/>'></div>
-        <input type="hidden" name="hiddebitdate" id="hiddebitdate" value='<s:property value="hiddebitdate"/>'></td>
-    <td width="7%" align="right">A/C No.</td>
-    <td width="23%"><input type="text" name="txtaccountid" id="txtaccountid" style="width:80%" value='<s:property value="txtaccountid"/>'></td>
-    <td width="11%" align="center"><input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  <tr>
-    <td align="right">A/C Name</td>
-    <td><input type="text" name="txtaccountname" id="txtaccountname" style="width:80%" value='<s:property value="txtaccountname"/>'></td>
-    <td align="right">Amount</td>
-    <td><input type="text" name="txtamounts" id="txtamounts" value='<s:property value="txtamounts"/>'></td>
-    <td align="right">Description</td>
-    <td colspan="2"><input type="text" name="txtdescriptions" id="txtdescriptions" style="width:80%" value='<s:property value="txtdescriptions"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="7"><div id="refreshdiv"><jsp:include  page="dnoMainSearchGrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
-  </div>
+<body style="background-color: #fff; margin: 0;">
+
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="10%">Doc No</td>
+                <td width="20%">
+                    <input type="text" name="txtdocumentno" id="txtdocumentno" value='<s:property value="txtdocumentno"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Date</td>
+                <td width="15%">
+                    <div id="debitdate" name="debitdate" value='<s:property value="debitdate"/>'></div>
+                    <input type="hidden" name="hiddebitdate" id="hiddebitdate" value='<s:property value="hiddebitdate"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">A/C No.</td>
+                <td width="20%">
+                    <input type="text" name="txtaccountid" id="txtaccountid" value='<s:property value="txtaccountid"/>'>
+                </td>
+                
+                <td width="15%" align="center" rowspan="2">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
+            <tr>
+                <td class="lbl-right">A/C Name</td>
+                <td>
+                    <input type="text" name="txtaccountname" id="txtaccountname" value='<s:property value="txtaccountname"/>'>
+                </td>
+                
+                <td class="lbl-right">Amount</td>
+                <td>
+                    <input type="text" name="txtamounts" id="txtamounts" value='<s:property value="txtamounts"/>'>
+                </td>
+                
+                <td class="lbl-right">Description</td>
+                <td>
+                    <input type="text" name="txtdescriptions" id="txtdescriptions" value='<s:property value="txtdescriptions"/>'>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="dnoMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>

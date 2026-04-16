@@ -1,4 +1,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@page import="com.common.ClsCommon"%>
+<%@page import="java.sql.*"%>
+<%@page import="javax.sql.*"%>
+<%@page import="com.connection.*" %>
+<%@page import="javax.servlet.http.HttpServletRequest.*" %>
+<%@page import="javax.servlet.http.HttpSession.*" %>
 <!DOCTYPE html>
 <html>
 <% String contextPath=request.getContextPath();%>
@@ -32,7 +38,7 @@ body {
 }
 
 .modern-ui {
-    font-family: Arial, sans-serif; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
     color: #333;
     font-size: 12px; 
     padding: 0;
@@ -60,6 +66,7 @@ body {
 .modern-ui select:focus { 
     border-color: #007bff !important; 
     outline: none !important;
+    background-color: #FFD6FF !important;
 }
 
 .modern-ui input[readonly],
@@ -68,39 +75,6 @@ body {
     background-color: #f8f9fa !important; 
     color: #6b7280 !important;
     border-color: #e1e4e8 !important;
-}
-
-/* THE CSS FAILSAFE FOR JQX DATE FIELDS */
-.jqx-datetimeinput, .jqx-datetimeinput-energyblue { 
-    height: 24px !important; 
-    min-height: 24px !important; 
-    box-sizing: border-box !important; 
-    border: 1px solid #b8c6d8 !important; 
-    border-radius: 3px !important; 
-}
-.jqx-datetimeinput input, .jqx-datetimeinput-energyblue input { 
-    height: 22px !important; 
-    margin-top: 0 !important; 
-    line-height: 22px !important; 
-    padding: 0 6px !important; 
-    border: none !important; 
-    box-sizing: border-box !important; 
-    background: transparent !important; 
-}
-.jqx-datetimeinput .jqx-action-button, .jqx-datetimeinput-energyblue .jqx-action-button { 
-    height: 22px !important; 
-    width: 24px !important; 
-    padding: 0 !important; 
-    margin: 0 !important; 
-    border: none !important; 
-    background: transparent !important; 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.jqx-datetimeinput .jqx-icon-calendar, .jqx-datetimeinput-energyblue .jqx-icon-calendar { 
-    margin: 0 !important; 
-    position: static !important; 
 }
 
 /* Fieldsets */
@@ -147,7 +121,7 @@ legend {
     height: 24px !important;
     line-height: 22px !important;
     padding: 0 12px !important;
-    font-family: Arial, sans-serif !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     font-size: 11px !important;
     font-weight: bold !important;
     border-radius: 3px !important;
@@ -166,16 +140,16 @@ legend {
 table td {
     padding: 4px 6px !important;
     font-size: 12px !important;
-    color: #444 !important;
-    font-weight: bold !important;
+    color: #222 !important;
+    font-weight: 600 !important;
     vertical-align: middle;
 }
 
 .lbl-right { 
     text-align: right; 
-    color: #444;
+    color: #222;
     font-size: 12px; 
-    font-weight: bold;
+    font-weight: 600;
     white-space: nowrap; 
     padding-right: 5px;
 }
@@ -197,17 +171,9 @@ form label.error, #validrate, #validrate1, #errormsg { color: red; font-weight: 
 	$(document).ready(function() {
 		 $("#btnvaluechange").hide();
 		 
-		 /* Force exact integer 24 for height to avoid jqx math bugs */
-		 $("#jqxContraTransDate").jqxDateTimeInput({ width: '125px', height: 24, formatString:"dd.MM.yyyy"});
-		 $("#maindate").jqxDateTimeInput({ width: '125px', height: 24, formatString:"dd.MM.yyyy"});
-		 $("#jqxChequeDate").jqxDateTimeInput({ width: '110px', height: 24, formatString:"dd.MM.yyyy"});
-		
-         /* Nuclear JavaScript Override for JQX Dates */
-         setTimeout(function() {
-             $(".jqx-datetimeinput").find("input.jqx-input").attr("style", "height: 22px !important; margin-top: 0px !important; padding: 0 6px !important; line-height: 22px !important; font-size: 12px !important; border: none !important; background: transparent !important; box-sizing: border-box !important;");
-             $(".jqx-datetimeinput").find(".jqx-action-button").attr("style", "height: 22px !important; width: 24px !important; padding: 0 !important; margin: 0 !important; border: none !important; background: transparent !important; display: flex !important; align-items: center !important; justify-content: center !important;");
-             $(".jqx-datetimeinput").find(".jqx-icon-calendar").attr("style", "margin: 0 !important; position: static !important;");
-         }, 50);
+		 $("#jqxContraTransDate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
+		 $("#jqxChequeDate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy"});
 			
 		 $('#accountDetailWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Account Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		 $('#accountDetailWindow').jqxWindow('close');
@@ -222,11 +188,11 @@ form label.error, #validrate, #validrate1, #errormsg { color: red; font-weight: 
 		 });
 		 
 		 $('#txtfromaccid').dblclick(function(){
-			  openFromAccountSearch();
+			 openFromAccountSearch();
 		  });
 		 
 		  $('#txttoaccid').dblclick(function(){
-			  openToAccountSearch();
+			 openToAccountSearch();
 		  });  
 		 
 	});
@@ -394,7 +360,6 @@ form label.error, #validrate, #validrate1, #errormsg { color: red; font-weight: 
 			x.onreadystatechange = function() {
 				if (x.readyState == 4 && x.status == 200) {
 				var items = x.responseText.trim();
-				//alert(items)   
 				if(parseInt(items)>0){ 
 					       $('#btnEdit').attr('disabled', true);
        			            $('#btnDelete').attr('disabled', true);
@@ -848,7 +813,7 @@ form label.error, #validrate, #validrate1, #errormsg { color: red; font-weight: 
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-<input type="hidden" id="msg" name="msg"  value='<s:property value="msg"/>'/>
+<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
 <input type="hidden" id="gridlength" name="gridlength"/>
 <div hidden="true" id="maindate" name="maindate" value='<s:property value="maindate"/>'></div>
 <input type="hidden" id="hidmaindate" name="hidmaindate" value='<s:property value="hidmaindate"/>'/>

@@ -14,15 +14,14 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 
 <style>
 /* =========================================================
-   UNCLEARED CHEQUE RECEIPT - EXACT CLIENT MASTER STYLE
+   UNCLEARED CHEQUE RECEIPT - SEGOE UI / CLEAN WHITE UI
 ========================================================= */
 body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Tahoma, sans-serif !important;
+    background-color: #fff !important; /* Pure White Background */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     color: #333 !important;
     font-size: 12px !important;
     margin: 0;
@@ -39,21 +38,42 @@ body, .homeContent {
     box-sizing: border-box;
 }
 
+/* Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 140px);
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+#validrate, #validrate1 {
+    color: red;
+    font-size: 11px;
+    font-weight: bold;
+}
+
 /* EXACT Input Styles from Client Master */
-input[type="text"], select {
+input[type="text"], input[type="email"], select {
     height: 24px !important; 
     border: 1px solid #ccc !important;
     border-radius: 3px !important;
     padding: 2px 6px !important;
-    font-size: 11px !important;
-    font-family: Tahoma, sans-serif !important;
+    font-size: 12px !important; /* Updated for Segoe UI */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     box-sizing: border-box;
     background-color: #fff !important;
     color: #333 !important;
     width: 100%;
 }
 
-input[type="text"]:focus, select:focus {
+input[type="text"]:focus, input[type="email"]:focus, select:focus {
     border-color: #007bff !important;
     background-color: #FFD6FF !important; /* Client Master Focus Color */
     outline: none !important;
@@ -68,7 +88,7 @@ input[readonly], input:disabled, select:disabled {
 /* Fieldset and Legend styling */
 fieldset {
     border: 1px solid #e1e4e8 !important;
-    background-color: #fff !important;
+    background-color: #fff !important; /* No Blue Background */
     margin-bottom: 10px !important;
     padding: 12px 10px 10px 10px !important;
     border-radius: 4px !important;
@@ -84,19 +104,19 @@ legend {
     background: #fff;
 }
 
-/* Table adjustments */
+/* Table adjustments for compact text */
 table td {
     padding: 4px 6px !important;
-    font-size: 11px !important;
-    font-family: Tahoma, sans-serif !important;
-    color: #444 !important;
-    font-weight: bold !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    color: #222 !important;
+    font-weight: 600 !important; /* Match Segoe UI bold look */
     vertical-align: middle;
 }
 
 .lbl-right { 
     text-align: right; 
-    color: #404040;
+    color: #222 !important;
     white-space: nowrap; 
     padding-right: 5px;
 }
@@ -109,9 +129,9 @@ table td {
     color: #fff !important;
     border: none !important;
     border-radius: 3px !important;
-    font-size: 11px !important;
+    font-size: 12px !important;
     font-weight: bold !important;
-    font-family: Tahoma, sans-serif !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
     cursor: pointer !important;
 }
 
@@ -135,19 +155,6 @@ table td {
 }
 .magnifier-icon:hover { color: #2563eb; }
 
-form label.error, #validrate, #validrate1 {
-    color: red;
-    font-weight: bold;
-    font-size: 11px;
-}
-
-.hidden-scrollbar {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 140px);
-    padding-bottom: 60px;
-    box-sizing: border-box;
-}
 </style>
 
 <script type="text/javascript">
