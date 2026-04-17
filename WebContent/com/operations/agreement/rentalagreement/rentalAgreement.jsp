@@ -3103,7 +3103,7 @@ html, body {
 <div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
 
     <!-- ================= VEHICLE SECTION ================= -->
-    <div style="flex:1; background:#f7f9fc; padding:12px; border-radius:8px;">
+    <div style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
 
         <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
             Vehicle Info
@@ -3173,7 +3173,7 @@ html, body {
 
 
     <!-- ================= CLIENT SECTION ================= -->
-    <div style="flex:1; background:#f7f9fc; padding:12px; border-radius:8px;">
+    <div style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
 
         <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
             Client Info

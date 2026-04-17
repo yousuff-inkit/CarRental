@@ -1566,7 +1566,7 @@ if(document.getElementById("rentalagent").value==""){
           <td width="2%" align="right">Time</td>
           <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
           <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-          <td width="5%" align="right">Rental Agent</td>
+          <td width="7%" align="right">Rental Agent</td>
           <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
             <option value="">--Select--</option>
           </select> --%>
