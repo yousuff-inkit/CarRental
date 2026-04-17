@@ -33,7 +33,7 @@
 			comp_id=rsgetera.getString("comp_refid");
 		}
 		
-		if(erastatus>0){
+		/* if(erastatus>0){
 			System.out.println("Entered IN Call");
 			URL url = new URL("http://185.217.125.145:8877/ServiceDB/getlist.jsp?compid="+comp_id);
 	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -74,7 +74,7 @@
 					int result = stmt.executeUpdate(updateDate); 
 				} 
 	        }
-		}
+		} */
 		
 		// end checking era for license
 		
