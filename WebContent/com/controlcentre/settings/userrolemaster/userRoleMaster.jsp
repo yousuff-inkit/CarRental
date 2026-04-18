@@ -32,7 +32,7 @@ html, body {
     background: #ffffff !important;
 }
 
-/* 2. main content area – flat like master */
+/* 2. main content area â flat like master */
 #mainBG {
     background: #ffffff;
     border-radius: 8px;
@@ -61,7 +61,7 @@ html, body {
     font-weight: 600;
 }
 
-/* 4. labels and inputs – same size/shape as master forms */
+/* 4. labels and inputs â same size/shape as master forms */
 .section-block {
     flex: 1;
     background: #ffffff;
@@ -110,7 +110,7 @@ html, body {
     box-shadow: 0 0 0 1px rgba(122,167,255,0.35);
 }
 
-/* 5. grid table – keep subtle like master */
+/* 5. grid table â keep subtle like master */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
