@@ -3073,6 +3073,17 @@ html, body {
     z-index: 50; /* Ensures it stays on top of other elements */
 }
 
+
+
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0;
+    padding: 20px 10px 10px 10px;
+    background: #ffffff;
+    position: relative;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    margin-top: 12px;
+}
 </style>
 
 
@@ -3103,7 +3114,7 @@ html, body {
 <div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
 
     <!-- ================= VEHICLE SECTION ================= -->
-    <div style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
+    <div class="middle-panel" style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
 
         <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
             Vehicle Info
@@ -3173,7 +3184,7 @@ html, body {
 
 
     <!-- ================= CLIENT SECTION ================= -->
-    <div style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
+    <div class="middle-panel" style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
 
         <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
             Client Info
