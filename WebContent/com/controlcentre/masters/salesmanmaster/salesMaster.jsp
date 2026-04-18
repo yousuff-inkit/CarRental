@@ -1,147 +1,150 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <% String contextPath=request.getContextPath();%>
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head>
-
 <title>GatewayERP(i)</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="../../../../css/main.css" rel="stylesheet" type="text/css" />
 <link href="../../../../css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="../../../../css/myButton.css" rel="stylesheet" type="text/css"/>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 18px;
-            background: #f7f9fc;
-            color: #222;
-            margin: 0;
-            padding: 0;
-        }
 
-        #nav table {
-            background: #fff;
-            border-radius: 8px;
-        }
+<style>
+/* =========================================================
+   SCOPED UI: Vertical Sidebar Layout (Matches HR Setup Image)
+========================================================= */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    background: #f7f9fc;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        #nav table td {
-            padding: 0 12px;
-        }
-/* Applying the preferred myButton style to the new buttons */
-   input[type="button"].myButton {
-    font-size: 12px;
-    font: Tahoma;
-    padding: 10px 5px;
+#mainBG {
+    background: #fff;
     border-radius: 8px;
-    border: none;
-    background: #4a90e2;
-    color: #fff;
-    font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    /* Reduced margin-right to tighten up horizontal spacing */
-    margin-right: 5px; 
-    outline: none;
-    transition: background 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    /* Set a fixed width for visual consistency like the image */
-    width: 150px; 
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: row; /* Aligns Sidebar and Iframe side-by-side */
+    gap: 25px;
+    flex: 1;
 }
 
+/* Sidebar Navigation Styling */
+#nav-sidebar {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+}
 
+#nav-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1a2b3c;
+    font-size: 18px;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 8px;
+}
 
-        input[type="button"].myButton:hover {
-            background: #357ab8;
-        }
-
-        input[type="text"], input[type="hidden"], select {
-            background: #fff;
-            font-size: 1.1rem;
-            padding: 8px 12px;
-            border: 1px solid #bcdffb;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            color: #222;
-        }
-
-        label {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #222;
-            margin-bottom: 4px;
-            display: block;
-        }
-        
-        .myButton {
-    font-weight: 700;
+/* Button Styling matching the image */
+input[type="button"].myButton {
+    width: 100%;
     font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    font-weight: 700;
+    padding: 12px 15px;
+    border-radius: 4px;
     border: none;
-    border-radius: 6px;
+    background: #1d4ed8; /* Solid flat blue matching the image */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    outline: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+    transition: background 0.2s, transform 0.1s;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
     text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+input[type="button"].myButton:hover {
+    background: #1e3a8a; /* Darker blue on hover */
+    transform: translateY(-1px);
 }
-    </style>
 
+/* Active/Focused state to mimic selection */
+input[type="button"].myButton:focus {
+    background: #1e3a8a;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+}
 
-    <script type="text/javascript">
-	
-	$(document).ready(function() {
-		//document.getElementById("btnproject").disabled="true";
-		$('#branchid').val(window.parent.branchid.value); 
-	});
-	</script>
+/* Content Area Styling */
+#comiframe {
+    flex: 1; /* Takes up all remaining width */
+    border-left: 1px solid #e2e8f0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    flex: 1;
+}
+
+/* Hidden inputs logic */
+.hidden-data {
+    display: none;
+}
+</style>
+
+<script type="text/javascript" src="../../../../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    if (window.parent && window.parent.branchid) {
+        $('#branchid').val(window.parent.branchid.value); 
+    }
+});
+</script>
 </head>
+
 <body>
-<div id="mainBG" class="homeContent" data-type="background">
-<h3>Salesman Master</h3>
 
+<div id="mainBG" class="homeContent">
+    
+    <div id="nav-sidebar">
+        <h3>Salesman Master</h3>
+        <input type="button" name="btnsalesman" class="myButton" value="SALESMAN" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/salesManMaster.jsp";'>
+        <input type="button" name="btnsalesagent" class="myButton" value="SALES AGENT" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/salesAgent.jsp";'>
+        <input type="button" name="btnrentalagent" class="myButton" value="RENTAL AGENT" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/rentalAgent.jsp";'>
+        <input type="button" name="btndriver" class="myButton" value="DRIVER" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/driver.jsp";'>
+        <input type="button" name="btncheckin" class="myButton" value="CHECK IN" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/checkin.jsp";'>
+        <input type="button" name="btnstaff" class="myButton" value="STAFF" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/staff.jsp";'>
+    </div>
 
-<div id="nav">
-<table >
-<tr><td><input type="button" name="btnsalesman" class="myButton" value="Salesman" style="width:120px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/salesManMaster.jsp";'></td>
-    <td><input type="button" name="btnsalesagent" class="myButton" value="Sales Agent" style="width:120px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/salesAgent.jsp";'></td>
-    <td><input type="button" name="btnrentalagent" class="myButton" value="Rental Agent" style="width:120px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/rentalAgent.jsp";'></td>
-    <td><input type="button" name="btndriver" class="myButton" value="Driver" style="width:120px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/driver.jsp";'></td>
-    <td><input type="button" name="btncheckin" class="myButton" value="Check In" style="width:120px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/checkin.jsp";'></td>
-    <td><input type="button" name="btnstaff" class="myButton" value="Staff" style="width:120px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/staff.jsp";'></td>
-</tr>
+    <div id="comiframe">
+        <iframe id="iframe2" scrolling="auto" src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/salesManMaster.jsp"></iframe>
+    </div>
 
-</table>
-</div>
-<input type="hidden" id="formName" name="formName"  value='000'/>
-<input type="hidden" id="formCode" name="formCode"  value='SAP'/> 
-<input type="hidden" id="branchid" name="branchid"  value=''/>
-<input type="hidden" id="mode" name="mode"  />
-<div id="comiframe">
-	<iframe width="100%" height="100%" id="iframe2" align="right" frameborder="0" marginwidth="100%" scrolling="no" src="<%=contextPath%>/com/controlcentre/masters/salesmanmaster/salesManMaster.jsp"></iframe>
-</div>
-<!-- <script>
-function resizeIframeToFitContent(iframe) {
-    // This function resizes an IFrame object
-    // to fit its content.
-    // The IFrame tag must have a unique ID attribute.
-    iframe.height = document.frames[iframe.iframe2]
-                    .document.body.scrollHeight;
-}
-</script> -->
+    <div class="hidden-data">
+        <input type="hidden" id="formName" name="formName" value='000'/>
+        <input type="hidden" id="formCode" name="formCode" value='SAP'/> 
+        <input type="hidden" id="branchid" name="branchid" value=''/>
+        <input type="hidden" id="mode" name="mode" />
+    </div>
 
 </div>
+
 </body>
 </html>
