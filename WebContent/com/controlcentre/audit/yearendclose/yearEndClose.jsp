@@ -7,19 +7,179 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
+<style>
+/* =========================================================
+SCOPED UI: Modern Layout (Matches Cash Receipts)
+========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* FIXED: Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+    margin-top: 12px;
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px;
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
+
+/* Custom UI Buttons matching 24px height */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+/* Grid Wrappers */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* Validation Label */
+.modern-ui .val-error { color: red; font-size: 11px; font-weight:bold; }
+
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function () {    
 		$('#btnEdit').attr('disabled', true );$('#btnPrint').attr('disabled', true );$('#btnExcel').attr('disabled', true );
 		$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
 		 
-	    $("#yearEndDate").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy" ,value:new Date()});
-	    $("#accountingYearFrom").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy",value:null });
-	    $("#accountingYearTo").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy",value:null});
-	    $("#ycloseDateFrom").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy",value:null });
-	    $("#ycloseDateTo").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy",value:null });
+	    /* Formatted heights to 24px to match modern UI */
+	    $("#yearEndDate").jqxDateTimeInput({ width: '125px', height: 24 ,formatString : "dd.MM.yyyy" ,value:new Date(), theme: 'energyblue'});
+	    $("#accountingYearFrom").jqxDateTimeInput({ width: '125px', height: 24 ,formatString : "dd.MM.yyyy",value:null, theme: 'energyblue' });
+	    $("#accountingYearTo").jqxDateTimeInput({ width: '125px', height: 24 ,formatString : "dd.MM.yyyy",value:null, theme: 'energyblue'});
+	    $("#ycloseDateFrom").jqxDateTimeInput({ width: '125px', height: 24 ,formatString : "dd.MM.yyyy",value:null, theme: 'energyblue' });
+	    $("#ycloseDateTo").jqxDateTimeInput({ width: '125px', height: 24 ,formatString : "dd.MM.yyyy",value:null, theme: 'energyblue' });
 	    
+	    /* force internal alignment AFTER render */
+		 setTimeout(function () {
+		     $("#yearEndDate, #accountingYearFrom, #accountingYearTo, #ycloseDateFrom, #ycloseDateTo").find("input").css({
+		         "margin-top": "0px",
+		         "line-height": "24px",
+                 "font-size": "12px", 
+                 "font-family": "Arial, sans-serif", 
+                 "padding": "0 6px", 
+                 "box-sizing":"border-box"
+		     });
+		     $("#yearEndDate, #accountingYearFrom, #accountingYearTo, #ycloseDateFrom, #ycloseDateTo").find(".jqx-action-button").css({
+		         "top": "0px",
+		         "height": "24px"
+		     });
+		 }, 0);
+
 		$('#ycloseDateTo').focusout(function(){
-	    
 	    if($('#ycloseDateTo').jqxDateTimeInput('getDate')<=$('#ycloseDateFrom').jqxDateTimeInput('getDate')){
     		document.getElementById("errormsg").innerText="";
     		document.getElementById("errormsg").innerText="Next Accounting Year Close Date Cannot be less than From Date";
@@ -66,7 +226,7 @@
 	
 	function getAccountingPeriods(){
 		
- 		 var x = new XMLHttpRequest();
+		 var x = new XMLHttpRequest();
 		 x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
 				var items= x.responseText.trim();
@@ -171,22 +331,6 @@
          
 	}
 	
-	/*  $(function(){
-	        $('#frmBrand').validate({
-	                 rules: {
-	                 brand: {
-	                	 required:true,
-	                	 maxlength:40
-	                 }
-	                 },
-	                 messages: {
-	                  brand: {
-	                	  required:" *",
-	                	  maxlength:"max 40 only"
-	                  } 
-	                 }
-	        });}); */
-	        
 	     function funNotify(){
 	    
 	        	if($('#accountingYearTo').jqxDateTimeInput('getDate')==null){
@@ -237,7 +381,6 @@
 						    	id=1;
 						    }
 							
-					// alert(rows[i].docno+"::"+rows[i].currencyid+"::"+rows[i].rate+"::"+id+"::"+amount+"::"+rows[i].description+"::"+baseamount+"::"+rows[i].brhid);
 				    newTextBox.val(rows[i].docno+"::"+rows[i].currencyid+"::"+rows[i].rate+"::"+id+"::"+amount+"::"+rows[i].description+"::"+baseamount+"::"+rows[i].brhid);
 					newTextBox.appendTo('form');
 					 }
@@ -326,216 +469,80 @@
 	  }
 	  
 </script>  
-
-<style>
-/* 1. Reset and fill screen to remove grey space at bottom */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 15px 25px;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-#formdet {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1a2b3c;
-    margin-bottom: 12px;
-}
-
-/* 2. Header Strip: Date LHS, Doc No RHS */
-.receipt-header {
-    margin-bottom: 15px;
-}
-
-.receipt-header table {
-    width: 100%;
-    table-layout: fixed;
-}
-
-/* Standardized 130px widths for date/doc components */
-.jqx-datetimeinput, 
-.jqx-datetimeinput input,
-#docno, 
-.header-docno {
-    width: 130px !important;
-}
-
-/* 3. Section Styling with Blue Accent Bar */
-.section-block {
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 15px;
-    border: 1px solid #edf2f7;
-}
-
-.section-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 15px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #2d3748;
-}
-
-/* 4. Labels & Inputs (Master UI Style) */
-label {
-    font-family: Tahoma, 'Segoe UI', sans-serif;
-    font-weight: 500; /* Regular weight as per Master UI */
-    color: #4a5568;
-    text-align: right;
-    font-size: 14px;
-    display: block;
-    line-height: 32px;
-    padding-right: 10px;
-}
-
-.myButton {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 18px;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 13px;
-    height: 32px;
-}
-
-.myButton:hover {
-    background: #0056b3;
-}
-
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.cr-table td {
-    padding: 5px;
-    vertical-align: middle;
-}
-
-input[type="text"] {
-    height: 32px;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    padding: 0 10px;
-    font-size: 13px;
-    width: 100%;
-    background: #fff;
-}
-
-input[readonly] {
-    background-color: #f1f5f9;
-    color: #718096;
-}
-
-#formdet {
-    text-align: left !important;
-    display: block;
-}
-
-</style>
     
 </head>
 <body onLoad="setValues();" >
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmYearEndClose" action="saveYearEndClose"  autocomplete="off" method="post">
-<jsp:include page="../../../../header.jsp" /><br/>
-<div id="mainBG">
-    
+<jsp:include page="../../../../header.jsp" />
 
-    <div class="receipt-header">
-        <table width="100%">
-            <tr>
-                <td width="50px" align="left"><label>Date</label></td>
-                <td width="140px">
-                    <div id="yearEndDate" name="yearEndDate" value='<s:property value="yearEndDate"/>'></div>
-                    <input type="hidden" name="hidyearEndDate" id="hidyearEndDate" value='<s:property value="hidyearEndDate"/>'>
-                </td>
-                <td></td>
-                <td width="60px" align="right"><label>Doc No</label></td>
-                <td width="140px" align="right">
-                    <input type="text" id="docno" name="txtyearendclosedocno" class="header-docno" value='<s:property value="txtyearendclosedocno"/>' readonly tabindex="-1">
-                </td>
-            </tr>
-        </table>
+<div class='modern-ui hidden-scrollbar'>
+
+    <div class="middle-panel">
+        <span class="middle-panel-title">General Info</span>
+        <div class="field-row" style="margin-bottom:0;">
+            <label class="lbl-right" style="width:80px;">Date</label>
+            <div style="width: 125px;">
+                <div id="yearEndDate" name="yearEndDate" value='<s:property value="yearEndDate"/>'></div>
+                <input type="hidden" name="hidyearEndDate" id="hidyearEndDate" value='<s:property value="hidyearEndDate"/>'>
+            </div>
+
+            <label class="lbl-right" style="width:80px; margin-left:auto;">Doc No</label>
+            <input type="text" id="docno" name="txtyearendclosedocno" value='<s:property value="txtyearendclosedocno"/>' readonly tabindex="-1" style="width:120px;">
+        </div>
     </div>
 
-    <div class="section-block">
-        <div class="section-title">Year Close Details</div>
-        <table class="cr-table" width="100%">
-            <tr>
-                <td width="15%" align="right"><label>Year To Close</label></td>
-                <td width="15%">
-                    <div id="accountingYearFrom" name="accountingYearFrom" value='<s:property value="accountingYearFrom"/>'></div>
-                </td>
-                <td width="5%" align="right"><label>To</label></td>
-                <td width="15%">
-                    <div id="accountingYearTo" name="accountingYearTo" value='<s:property value="accountingYearTo"/>'></div>
-                </td>
-                <td rowspan="2" align="left" style="padding-left: 20px;">
-                    <button class="myButton" type="button" id="btnview" onclick="funloadgrid();">Submit</button>
-                </td>
-            </tr>
-            <tr>
-                <td align="right"><label>Next Year</label></td>
-                <td>
-                    <div id="ycloseDateFrom" name="ycloseDateFrom" value='<s:property value="ycloseDateFrom"/>'></div>
-                </td>
-                <td align="right"><label>To</label></td>
-                <td>
-                    <div id="ycloseDateTo" name="ycloseDateTo" value='<s:property value="ycloseDateTo"/>'></div>
-                </td>
-            </tr>
-        </table>
+    <div class="middle-panel">
+        <span class="middle-panel-title">Year Close Details</span>
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width:100px;">Year To Close</label>
+            <div style="width: 125px;">
+                <div id="accountingYearFrom" name="accountingYearFrom" value='<s:property value="accountingYearFrom"/>'></div>
+            </div>
+            
+            <label class="lbl-right" style="width:40px;">To</label>
+            <div style="width: 125px;">
+                <div id="accountingYearTo" name="accountingYearTo" value='<s:property value="accountingYearTo"/>'></div>
+            </div>
+
+            <button class="myButton" type="button" id="btnview" onclick="funloadgrid();" style="margin-left: 20px;">Submit</button>
+        </div>
+
+        <div class="field-row" style="margin-bottom:0;">
+            <label class="lbl-right" style="width:100px;">Next Year</label>
+            <div style="width: 125px;">
+                <div id="ycloseDateFrom" name="ycloseDateFrom" value='<s:property value="ycloseDateFrom"/>'></div>
+            </div>
+            
+            <label class="lbl-right" style="width:40px;">To</label>
+            <div style="width: 125px;">
+                <div id="ycloseDateTo" name="ycloseDateTo" value='<s:property value="ycloseDateTo"/>'></div>
+            </div>
+        </div>
     </div>
 
-    <div class="section-block">
-        <div class="section-title">Closing Records</div>
-        <div id="yearEndCloseDiv">
+    <div class="middle-panel">
+        <span class="middle-panel-title">Closing Records</span>
+        <div id="yearEndCloseDiv" class="grid-container" style="margin-bottom: 10px;">
             <jsp:include page="yearEndCloseGrid.jsp"></jsp:include>
         </div>
-        <div id="yearEndCloseGroupDiv" hidden="true">
+        <div id="yearEndCloseGroupDiv" class="grid-container" hidden="true">
             <jsp:include page="yearEndCloseGroupGrid.jsp"></jsp:include>
         </div>
     </div>
 
-
-
-<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
-<input type="hidden" name="txttrno" id="txttrno" value='<s:property value="txttrno"/>'>
-<input type="hidden" name="txtnettotal" id="txtnettotal" value='<s:property value="txtnettotal"/>'>
-<input type="hidden" id="gridlength" name="gridlength"/>
-<input type="hidden" id="yearendclosegroupgridlength" name="yearendclosegroupgridlength"/>
+    <div style="display:none;">
+        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
+        <input type="hidden" name="txttrno" id="txttrno" value='<s:property value="txttrno"/>'>
+        <input type="hidden" name="txtnettotal" id="txtnettotal" value='<s:property value="txtnettotal"/>'>
+        <input type="hidden" id="gridlength" name="gridlength"/>
+        <input type="hidden" id="yearendclosegroupgridlength" name="yearendclosegroupgridlength"/>
     </div>
+
+</div>
 </form>
 </div>
 </body>

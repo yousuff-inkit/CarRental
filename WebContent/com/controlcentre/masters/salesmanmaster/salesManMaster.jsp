@@ -10,219 +10,208 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <style>
-    /* ------------------------------
-       GLOBAL STYLES & LAYOUT (From Master)
-    ------------------------------ */
-    body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-        color: #222;
-        margin: 0;
-        padding: 32px 0;
-        min-height: 100vh;
-        box-sizing: border-box;
-    }
-
-    #mainBG {
-        background: #fff;
-        border-radius: 16px;
-        padding: 20px;
-        max-width: 100%;
-        margin: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        /* FORCE HEADER LEFT ALIGNMENT */
-        text-align: left !important;
-    }
-
-    /* ------------------------------
-       HEADER FIXES (Title & Buttons) (From Master)
-    ------------------------------ */
-    center {
-        text-align: left !important;
-        display: block;
-        width: 100%;
-        margin-left: 0;
-    }
-
-    #formdet {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #2c3e50;
-        margin-bottom: 15px;
-        display: block;
-        text-align: left !important;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    /* ------------------------------
-       GRID SYSTEM (FORM LAYOUT) (From Master)
-    ------------------------------ */
-    .receipt-header {
-        display: block; /* Header block container */
-        padding: 0 0 0 5px;
-    }
-
-    .form-group {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .form-group.dual-input {
-        grid-template-columns: 120px 1fr 120px 1fr;
-    }
-
-    .form-group.single-label-dual-input {
-        grid-template-columns: 120px 1fr 1fr;
-    }
-
-    .section-row {
-        display: flex;
-        gap: 26px;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-    }
-
-    .section-block {
-        flex: 1;
-        background: #f6f8fa; /* Uniform background color */
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-        min-width: 45%;
-    }
-
-    .full-width-block {
-        flex: 1 1 100%;
-    }
-
-    .section-block h2, .section-block h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 20px;
-        padding-left: 10px;
-        border-left: 4px solid #007bff;
-        color: #333;
-        display: block;
-    }
-
-    /* ------------------------------
-       INPUTS & CONTROLS (From Master)
-    ------------------------------ */
-    input[type="text"], input[type="email"], select, textarea {
-        height: 32px !important;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        padding: 6px 10px;
-        background: #fff;
-        transition: border-color 0.2s;
-        font-size: 14px;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-
-    input[readonly], textarea[readonly] {
-        background-color: #f3f4f6;
-        color: #6b7280;
-    }
-
-    label {
-  font: Tahoma;
-        font-weight: 600;
-        color: #253858;
-        white-space: nowrap;
-        text-align: right;
-        padding-right: 10px;
-        font-size: 16px;
-    }
-
-    /* ------------------------------
-       TABLES & UTILS (From Master)
-    ------------------------------ */
-    .myButton {
-        background: #007bff; border: none; padding: 6px 16px; color: #fff;
-        border-radius: 6px; cursor: pointer; font-weight: 600;
-    }
-    .myButton:hover { background: #0056b3; }
-
-    /* SCROLLBAR FIX */
-    .hidden-scrollbar { overflow: auto; height: 530px; }
-    .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
-    
-    .input-group-stack {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    .input-group-stack input:first-child {
-        margin-bottom: 0;
-    }
-
-.jqx-datetimeinput, 
-.jqx-datetimeinput input, {
-    width: 130px !important;
+/* =========================================================
+SCOPED UI: Modern Layout (Matches Cash Receipts / Master)
+========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
 }
 
-
-#docno, 
-.header-docno {
-    width: 130px !important;
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui input[type="email"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui input[type="email"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* FIXED: Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+    margin-top: 12px;
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px;
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
+
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: flex;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+/* Grid Wrappers */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* Validation Label */
+.modern-ui .val-error { color: red; font-size: 11px; font-weight:bold; }
+
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
 </style>
 <script type="text/javascript">
 
 $(document).ready(function () {     
-	 $("#salesmandate").jqxDateTimeInput({width : '125px',height : '15px',formatString : "dd.MM.yyyy"});
+	 $("#salesmandate").jqxDateTimeInput({width : '125px', height: 24, formatString : "dd.MM.yyyy", theme: 'energyblue'});
 	
+     /* force internal alignment AFTER render */
+     setTimeout(function () {
+         $("#salesmandate").find("input").css({
+             "margin-top": "0px",
+             "line-height": "24px",
+             "font-size": "12px", 
+             "font-family": "Arial, sans-serif", 
+             "padding": "0 6px", 
+             "box-sizing":"border-box"
+         });
+         $("#salesmandate").find(".jqx-action-button").css({
+             "top": "0px",
+             "height": "24px"
+         });
+     }, 0);
+
 	 $('#accountWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 	 $('#accountWindow').jqxWindow('close');
 	 document.getElementById("formdet").innerText="Sales Man(SLM)";
-		document.getElementById("formdetail").value="Sales Man";
-		document.getElementById("formdetailcode").value="SLM";
-		window.parent.formCode.value="SLM";
-		window.parent.formName.value="Sales Man";
-      		 $('#txtaccno').dblclick(function(){
-		  	    $('#accountWindow').jqxWindow('open');
-			    var url=document.URL;
-			    var reurl=url.split("com/");
-				  accountSearchContent(reurl[0]+'com/search/accountsearch/accountsEmployee.jsp?dtype='+document.getElementById("formdetailcode").value);
-      		 }); 
+	 document.getElementById("formdetail").value="Sales Man";
+	 document.getElementById("formdetailcode").value="SLM";
+	 window.parent.formCode.value="SLM";
+	 window.parent.formName.value="Sales Man";
+     
+     $('#txtaccno').dblclick(function(){
+        openAccountSearch();
+     }); 
       		
-    		var data='<%=csd.searchDetails()%>';
-    		var source =
+     var data='<%=csd.searchDetails()%>';
+     var source =
              {
                  datatype: "json",
                  datafields: [
-                           	{name : 'doc_no' , type: 'int' },
+                            {name : 'doc_no' , type: 'int' },
       						{name : 'name', type: 'String'  },
-                           	{name : 'mail', type: 'String'  },
-                           	{name : 'acno',type:'string'},
-                           	{name : 'description',type:'String'},
-                           	{name : 'mobile',type:'string'},
-                           	{name : 'code',type:'string'},
-                           	{name :'date',type:'date'},
-                           	{name : 'acdoc',type:'String'},
+                            {name : 'mail', type: 'String'  },
+                            {name : 'acno',type:'string'},
+                            {name : 'description',type:'String'},
+                            {name : 'mobile',type:'string'},
+                            {name : 'code',type:'string'},
+                            {name :'date',type:'date'},
+                            {name : 'acdoc',type:'String'},
                   ],
                   localdata: data,
                  
                  
-                 pager: function (pagenum, pagesize, oldpagenum) {
-                     // callback called when a page or page size is changed.
-                 }
+                  pager: function (pagenum, pagesize, oldpagenum) {
+                      // callback called when a page or page size is changed.
+                  }
              };
              
              var dataAdapter = new $.jqx.dataAdapter(source,
              		 {
                  		loadError: function (xhr, status, error) {
-   	                   // alert(error);    
+   	                   // alert(error);   
    	                    }
    		            }		
              ); 
@@ -266,22 +255,26 @@ $(document).ready(function () {
              		 }); 
   });
 		 
+     /* Helper to handle SVG click and double clicks uniformly */
+     function openAccountSearch() {
+         $('#accountWindow').jqxWindow('open');
+         var url = document.URL;
+         var reurl = url.split("com/");
+         accountSearchContent(reurl[0]+'com/search/accountsearch/accountsEmployee.jsp?dtype='+document.getElementById("formdetailcode").value);
+     }
+
 	 function getAcc(event){
 		 var x= event.keyCode;
 		 if(x==114){
-		  $('#accountWindow').jqxWindow('open');
-		    var url=document.URL;
-		     var reurl=url.split("com/");
-			  	  accountSearchContent(reurl[0]+'com/search/accountsearch/accountsEmployee.jsp?dtype='+document.getElementById("formdetailcode").value);
+             openAccountSearch();
 		 }
-		 else{}
-		 }
+	 }
 	
 	 function accountSearchContent(url) {
-			 $.get(url).done(function (data) {
-	    	 $('#accountWindow').jqxWindow('setContent', data);
+		$.get(url).done(function (data) {
+	    	$('#accountWindow').jqxWindow('setContent', data);
 		}); 
-		}
+	 }
 	
 	function funFocus(){
 		document.getElementById("salesmanid").focus();
@@ -305,9 +298,9 @@ $(document).ready(function () {
 			$("#salesmandate").jqxDateTimeInput('val', $('#hidsalesmandate').val());
 		}
 		
-			if($('#msg').val()!=""){
-				   $.messager.alert('Message',$('#msg').val());
-				  }
+        if($('#msg').val()!=""){
+            $.messager.alert('Message',$('#msg').val());
+        }
 			
 	}
 	
@@ -338,9 +331,7 @@ $(document).ready(function () {
 		return 1;
 	}
 	
-	function funChkButton() {
-		   /* funReset(); */
-		  }
+	function funChkButton() { }
 		  
 	function funSearchLoad(){
 		changeContent('salesmanSearch.jsp'); 
@@ -355,57 +346,70 @@ $(document).ready(function () {
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmSalesman" action="saveSalesman" method="post" autocomplete="off" >
 	<jsp:include page="../../../../header.jsp" />
-	<br/>
-    <div class="hidden-scrollbar receipt-header">
-          <div class="form-group dual-input">
-                <label>Date</label>
-                <div>
+	
+    <div class='modern-ui hidden-scrollbar'>
+        
+        <div class="middle-panel">
+            <span class="middle-panel-title">General Info</span>
+            <div class="field-row" style="margin-bottom:0;">
+                <label class="lbl-right" style="width:80px;">Date</label>
+                <div style="width: 125px;">
                     <div id="salesmandate" name="salesmandate" value='<s:property value="salesmandate"/>'></div>
                 </div>
 
-                <label>Doc No.</label>
-                <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1">
-            </div>
-        <div class="section-block full-width-block">
-            <h3>Salesman Details</h3>
-
-  
-
-            <div class="form-group dual-input">
-                <label>Code</label>
-                <input type="text" name="salesmanid" id="salesmanid" placeholder="Code" value='<s:property value="salesmanid"/>' >
-
-                <label>Name</label>
-                <input type="text" name="salesmanname" id="salesmanname" placeholder="Code Name" value='<s:property value="salesmanname"/>'>
-            </div>
-            
-            <div class="form-group dual-input">
-                <label>Email</label>
-                <input type="email" name="salesmanmail" id="salesmanmail" placeholder="someone@example.com" value='<s:property value="salesmanmail"/>' >
-
-                <label>Mobile</label>
-                <input type="text" name="telephone" id="telephone" value='<s:property value="telephone"/>'>
-            </div>
-            
-            <div class="form-group single-label-dual-input">
-                <label>Account</label>
-                <input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3 to Search">
-                <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' readonly>
+                <label class="lbl-right" style="width:80px; margin-left:auto;">Doc No.</label>
+                <input type="text" id="docno" name="docno" value='<s:property value="docno"/>' readonly tabindex="-1" style="width:120px;">
             </div>
         </div>
 
+        <div class="middle-panel">
+            <span class="middle-panel-title">Salesman Details</span>
 
-        <input type="hidden" name="hidsalesmandate" id="hidsalesmandate" value='<s:property value="hidsalesmandate"/>'/>
-        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
-        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
-        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-        <input type="hidden" id="hidacno" name="hidacno" value='<s:property value="hidacno"/>'/>
+            <div class="field-row">
+                <label class="lbl-right" style="width:80px;">Code</label>
+                <input type="text" name="salesmanid" id="salesmanid" placeholder="Code" value='<s:property value="salesmanid"/>' style="width:120px;">
 
-        <div id="jqxSalesmanSearch1"></div>
+                <label class="lbl-right" style="width:80px;">Name</label>
+                <input type="text" name="salesmanname" id="salesmanname" placeholder="Name" value='<s:property value="salesmanname"/>' style="flex:1;">
+            </div>
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width:80px;">Email</label>
+                <input type="email" name="salesmanmail" id="salesmanmail" placeholder="someone@example.com" value='<s:property value="salesmanmail"/>' style="width:250px;">
+
+                <label class="lbl-right" style="width:80px;">Mobile</label>
+                <input type="text" name="telephone" id="telephone" value='<s:property value="telephone"/>' style="width:150px;">
+            </div>
+            
+            <div class="field-row" style="margin-bottom:0;">
+                <label class="lbl-right" style="width:80px;">Account</label>
+                <div class="input-search-container" style="width: 120px;">
+                    <input type="text" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>' onKeyDown="getAcc(event);" readonly placeholder="Press F3">
+                    <svg class="magnifier-icon" onclick="openAccountSearch();" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <input type="text" name="txtaccname" id="txtaccname" value='<s:property value="txtaccname"/>' readonly style="flex:1; max-width: 350px;">
+            </div>
+        </div>
+
+        <div class="middle-panel">
+            <span class="middle-panel-title">Salesman List</span>
+            <div class="grid-container">
+                <div id="jqxSalesmanSearch1"></div>
+            </div>
+        </div>
+
+        <div style="display:none;">
+            <input type="hidden" name="hidsalesmandate" id="hidsalesmandate" value='<s:property value="hidsalesmandate"/>'/>
+            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
+            <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="hidacno" name="hidacno" value='<s:property value="hidacno"/>'/>
+        </div>
 
         <div id="accountWindow">
             <div ></div>
         </div>
+
     </div>
 </form>
 </div>

@@ -9,6 +9,185 @@
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+<style>
+/* =========================================================
+SCOPED UI: Modern Layout (Matches Client Master / Cash Receipts)
+========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 24px 0;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 15px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
+    outline: none;
+}
+
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
+}
+
+/* Layout Utilities */
+.modern-ui .field-row { 
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* FIXED: Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 15px;
+    margin-top: 12px;
+}
+
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px;
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
+
+/* Custom UI Buttons matching 24px height */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: flex;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+/* Clean Tables for Approvals */
+.modern-ui .cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.modern-ui .cr-table th, .modern-ui .cr-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #eef0f6;
+    font-size: 12px;
+    text-align: left;
+}
+.modern-ui .cr-table th { background: #f4f7fb; font-weight: bold; color: #0056b3; }
+
+/* Grid Wrappers */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* Validation Label */
+.modern-ui .val-error { color: red; font-size: 11px; font-weight:bold; }
+
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 150px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		 
@@ -163,7 +342,7 @@
 		
 	  var indexVal = document.getElementById("txttrno").value;
 	  if(indexVal>0){
-      $("#jqxAppliedAccountsGrid").load("accountsInvoiceGrid.jsp?txttrno2="+indexVal); 
+       $("#jqxAppliedAccountsGrid").load("accountsInvoiceGrid.jsp?txttrno2="+indexVal); 
 		 }
 	}
 	
@@ -175,213 +354,97 @@
 	} 
 
 </script>
-
-<style>
-/* 1. Global Layout Fixes */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 15px 25px;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 2. Section Styling with Blue Accent Bar */
-.section-block {
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 15px;
-    border: 1px solid #edf2f7;
-}
-
-.section-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 15px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #2d3748;
-}
-
-/* 3. Balanced Grid (Regular weights, no forced bolding) */
-.section-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 20px;
-}
-
-.form-group {
-    display: grid;
-    grid-template-columns: 110px 260px; /* Fixed widths from master ui */
-    align-items: center;
-    gap: 10px;
-}
-
-label {
-    font-family: 'Segoe UI', sans-serif;
-    font-weight: 500;
-    color: #4a5568;
-    text-align: right;
-    font-size: 14px;
-}
-
-input[type="text"], select {
-    height: 32px;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    padding: 0 10px;
-    font-size: 13px;
-    width: 260px !important;
-    background: #fff;
-    box-sizing: border-box;
-}
-
-input[readonly] {
-    background-color: #f1f5f9;
-    color: #718096;
-}
-
-/* 4. Grid Container Styling */
-#jqxAppliedAccountsGrid {
-    border: 1px solid #e4e7ec;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.totals-block input[type="text"] {
-    text-align: right;
-    font-weight: 600;
-}
-
-#formdet {
-    text-align: left !important;
-    display: block;
-}
-
-</style>
 </head>
 <body onload="setValues();">
 
-<div id="mainBG" class="homeContent">
+<div id="mainBG" class="homeContent" data-type="background">
 
 <form id="frmAccountsOpening" action="saveAccountsOpening" method="post" autocomplete="off">
 
     <jsp:include page="../../../../header.jsp"></jsp:include>
 
-    <!-- ================= ACCOUNT DETAILS ================= -->
-   <div class="section-block">
-    <div class="section-title">Account Details</div>
-    <div class="section-row">
-        <div class="form-group">
-            <label>Account</label>
-            <select id="cmbacctype" name="cmbacctype" onchange="clearAccountInfo();">
-                <option value="BANK">Bank</option>
-                <option value="GL">GL</option>
-                <option value="AR">AR</option>
-                <option value="AP">AP</option>
-                <option value="HR">HR</option>
-            </select>
-            <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+    <div class='modern-ui hidden-scrollbar'>
+
+        <div class="middle-panel">
+            <span class="middle-panel-title">Account Details</span>
+            
+            <div class="field-row">
+                <label class="lbl-right" style="width:100px;">Account</label>
+                <select id="cmbacctype" name="cmbacctype" style="width:120px;" onchange="clearAccountInfo();">
+                    <option value="BANK">Bank</option>
+                    <option value="GL">GL</option>
+                    <option value="AR">AR</option>
+                    <option value="AP">AP</option>
+                    <option value="HR">HR</option>
+                </select>
+                <input type="hidden" id="hidcmbacctype" name="hidcmbacctype" value='<s:property value="hidcmbacctype"/>'/>
+
+                <label class="lbl-right" style="width:100px;">Account ID</label>
+                <div class="input-search-container" style="width: 120px;">
+                    <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
+                    <svg class="magnifier-icon" onclick="accountSearchContent('clientAccountDetailsSearch.jsp?atype='+$('#cmbacctype').val());" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+
+                <label class="lbl-right" style="width:100px;">Account Name</label>
+                <input type="text" id="txtaccname" name="txtaccname" readonly tabindex="-1" value='<s:property value="txtaccname"/>' style="flex:1; max-width: 250px;" />
+                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+            </div>
+
+            <div class="field-row" style="margin-bottom:0;">
+                <label class="lbl-right" style="width:100px;">Currency</label>
+                <input type="text" id="txtaccountcurrency" name="txtaccountcurrency" readonly style="width:120px;" value='<s:property value="txtaccountcurrency"/>'/>
+                <input type="hidden" id="txtaccountcurrencyid" name="txtaccountcurrencyid" value='<s:property value="txtaccountcurrencyid"/>'/>
+                <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+
+                <label class="lbl-right" style="width:100px;">Rate</label>
+                <input type="text" id="txtrate" name="txtrate" style="width:120px; text-align:right;" value='<s:property value="txtrate"/>'/>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Account ID</label>
-            <input type="text" id="txtaccid" name="txtaccid" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAcc(event);"/>
+        <div class="middle-panel">
+            <span class="middle-panel-title">Opening Invoice / Cheque / Other Details</span>
+            <div id="jqxAppliedAccountsGrid" class="grid-container">
+                <jsp:include page="accountsInvoiceGrid.jsp"></jsp:include>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Account Name</label>
-            <input type="text" id="txtaccname" name="txtaccname" readonly tabindex="-1" value='<s:property value="txtaccname"/>'/>
-            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
+        <div class="middle-panel">
+            <span class="middle-panel-title">Totals</span>
+            <div class="field-row" style="justify-content: flex-end; margin-bottom:0;">
+                
+                <label class="lbl-right" style="width:80px;">Debit Total</label>
+                <input type="text" id="txtdebittotal" name="txtdebittotal" readonly tabindex="-1" style="width:100px; text-align:right; font-weight:bold; color:#0056b3;" value='<s:property value="txtdebittotal"/>'/>
+                <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
+
+                <label class="lbl-right" style="width:80px; margin-left:15px;">Credit Total</label>
+                <input type="text" id="txtcredittotal" name="txtcredittotal" readonly tabindex="-1" style="width:100px; text-align:right; font-weight:bold; color:#0056b3;" value='<s:property value="txtcredittotal"/>'/>
+
+                <label class="lbl-right" style="width:80px; margin-left:15px;">Net Total</label>
+                <input type="text" id="txtnettotal" name="txtnettotal" readonly tabindex="-1" style="width:100px; text-align:right; font-weight:bold; color:#e67e22;" value='<s:property value="txtnettotal"/>'/>
+
+                <label class="lbl-right" style="width:80px; margin-left:15px;">Base Amount</label>
+                <input type="text" id="txtbaseamount" name="txtbaseamount" readonly tabindex="-1" style="width:100px; text-align:right; font-weight:bold;" value='<s:property value="txtbaseamount"/>'/>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Currency</label>
-            <input type="text" id="txtaccountcurrency" name="txtaccountcurrency" readonly value='<s:property value="txtaccountcurrency"/>'/>
-            <input type="hidden" id="txtaccountcurrencyid" name="txtaccountcurrencyid" value='<s:property value="txtaccountcurrencyid"/>'/>
-            <input type="hidden" id="hidcurrencytype" name="hidcurrencytype" value='<s:property value="hidcurrencytype"/>'/>
+        <div style="display:none;">
+            <input type="hidden" id="mode" name="mode"/>
+            <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
+            <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
+            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
+            <input type="hidden" id="gridlength" name="gridlength"/>
+            <input type="hidden" id="applylength" name="applylength"/>
+            <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
         </div>
 
-        <div class="form-group">
-            <label>Rate</label>
-            <input type="text" id="txtrate" name="txtrate" style="text-align:right;" value='<s:property value="txtrate"/>'/>
-        </div>
     </div>
-</div>
-
-<div class="section-block">
-    <div class="section-title">Opening Invoice / Cheque / Other Details</div>
-    <div id="jqxAppliedAccountsGrid">
-        <jsp:include page="accountsInvoiceGrid.jsp"></jsp:include>
-    </div>
-</div>
-
-<div class="section-block totals-block">
-    <div class="section-title">Totals</div>
-    <div class="section-row">
-        <div class="form-group">
-            <label>Debit Total</label>
-            <input type="text" id="txtdebittotal" name="txtdebittotal" readonly tabindex="-1" value='<s:property value="txtdebittotal"/>'/>
-            <input type="hidden" id="txtvalidation" name="txtvalidation" value='<s:property value="txtvalidation"/>'/>
-        </div>
-
-        <div class="form-group">
-            <label>Credit Total</label>
-            <input type="text" id="txtcredittotal" name="txtcredittotal" readonly tabindex="-1" value='<s:property value="txtcredittotal"/>'/>
-        </div>
-
-        <div class="form-group">
-            <label>Net Total</label>
-            <input type="text" id="txtnettotal" name="txtnettotal" readonly tabindex="-1" value='<s:property value="txtnettotal"/>'/>
-        </div>
-
-        <div class="form-group">
-            <label>Base Amount</label>
-            <input type="text" id="txtbaseamount" name="txtbaseamount" readonly tabindex="-1" value='<s:property value="txtbaseamount"/>'/>
-        </div>
-    </div>
-</div>
-
-    <!-- ================= HIDDEN FIELDS ================= -->
-    <input type="hidden" id="mode" name="mode"/>
-    <input type="hidden" id="deleted" name="deleted" value='<s:property value="deleted"/>'/>
-    <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
-    <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'/>
-    <input type="hidden" id="gridlength" name="gridlength"/>
-    <input type="hidden" id="applylength" name="applylength"/>
-    <input type="hidden" id="applylengthupdate" name="applylengthupdate"/>
 
 </form>
 
-<!-- ================= POPUP WINDOWS ================= -->
 <div id="accountDetailsWindow"><div></div><div></div></div>
 <div id="openingBalanceGridWindow"><div></div><div></div></div>
 
 </div>
 
 </body>
-
 </html>
