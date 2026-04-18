@@ -154,8 +154,14 @@ public class ClsExeFolio {
                     + " from my_exdet m "
                     + " inner join my_brch br on m.brhId=br.doc_no left join my_user u on m.userId=u.doc_no left join my_menu mn on(mn.doc_type=m.dtype) "
                     + " where m.userId='" + userid + "' and m.apprStatus != 8 " 
-                    // --- GHOST ROW FIX: Only select the most recent history status so the grid does not show duplicates ---
                     + " and m.apprDate = (select max(m2.apprDate) from my_exdet m2 where m2.doc_no=m.doc_no and m2.dtype=m.dtype and m2.userId=m.userId and m2.brhId=m.brhId) "
+                    
+                    // 👇 THE MAGIC FIX 👇
+                    // Only show History rows if the document is Fully Approved (3), Rejected (4), or completely Returned (9). 
+                    // This hides it from the creator's view while it is pending with other levels, killing the duplicates!
+                    + " and m.apprStatus IN (3, 4, 9) "
+                    // 👆 ------------ 👆
+                    
                     + xsql1
                     + " UNION ALL "
                     + "Select 'View' as btnclick, date(now()) tdate, time(now()) ttime, m.doc_no as doc_no, "
@@ -179,14 +185,12 @@ public class ClsExeFolio {
             if (conn != null) conn.close();
         }
         return RESULTDATA;
+    
     }
-
     public String saveApproveAction() throws Exception { 
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
 
-        // --- FIX 1: SAFE PARAMETER EXTRACTION ---
-        // Prevent NumberFormatException if frontend sends empty values
         String docno = request.getParameter("docno") == null ? "0" : request.getParameter("docno").trim();
         if(docno.isEmpty() || docno.equalsIgnoreCase("undefined")) docno = "0";
 
@@ -213,14 +217,6 @@ public class ClsExeFolio {
 
         String apprlist = request.getParameter("apprlist") == null ? "" : request.getParameter("apprlist").trim();
 
-        // 👇 PASTE THESE 5 LINES RIGHT HERE 👇
-        System.out.println("==== APPROVAL POPUP TRIGGERED ====");
-        System.out.println("DocNo Received: " + docno);
-        System.out.println("Dtype Received: " + dtype);
-        System.out.println("ApprLevel Received: " + apprlevel);
-        System.out.println("OptId Received: " + optid);
-        // 👆 ------------------------------- 👆
-
         Connection conn = ClsConnection.getMyConnection();
         Statement stmt1 = null;
         Statement stmt2 = null;
@@ -235,19 +231,16 @@ public class ClsExeFolio {
             stmt6 = conn.createStatement();
             
             // --- The Inbox Security Shield ---
-         // --- The Inbox Security Shield ---
-            /*
+            // Blocks cheating, but ignores new documents (apprlevel=0)
             if (Integer.parseInt(apprlevel) != 0) {
                 String securitySql = "SELECT count(*) FROM my_exeb WHERE doc_no=" + docno + " AND dtype='" + dtype + "' AND brhId=" + brchid + " AND userId=" + userid;
                 ResultSet rsSecurity = conn.createStatement().executeQuery(securitySql);
                 rsSecurity.next();
                 if (rsSecurity.getInt(1) == 0) {
-                    System.out.println("BLOCKED BY SHIELD: Doc not in my_exeb!");
                     conn.close();
                     return "SUCCESS"; 
                 }
             }
-            */
 
             String mtblnme = "", subuser = "";
             int approvalcount = 0;
@@ -410,13 +403,11 @@ public class ClsExeFolio {
                     status = Integer.parseInt(apprlevel);
                 }
 
-                // --- FIX 2: WRAP EMAIL SO IT DOESN'T KILL THE TRANSACTION ---
                 try {
                     File saveFile = null;
                     SendTomail(saveFile, dtype, touserid + "", docno, brchid, userid, apprlevel, msg);
                 } catch(Exception mailEx) {
                     System.out.println("Mail sending failed for user " + touserid + " but proceeding with workflow.");
-                    mailEx.printStackTrace();
                 }
             }
                 
@@ -442,13 +433,11 @@ public class ClsExeFolio {
                     touserid = rsset.getInt("userid");
                 }
                 
-                // --- FIX 2: WRAP SECOND EMAIL CALL ---
                 try {
                     File saveFile = null;
                     SendTomail(saveFile, dtype, touserid + "", docno, brchid, userid, apprlevel, msg);
                 } catch(Exception mailEx) {
                     System.out.println("Mail sending failed for final approval, but proceeding with workflow.");
-                    mailEx.printStackTrace();
                 }
             }
 
