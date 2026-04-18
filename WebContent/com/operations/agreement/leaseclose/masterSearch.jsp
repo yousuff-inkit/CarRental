@@ -11,10 +11,10 @@
 <style>
 /* =========================================================
 SCOPED UI: Clean UI Panel Design for Search Modal
-* All rules are prefixed with .modern-ui to prevent bleeding! *
+* Renamed to .search-popup-ui to prevent breaking the main page! *
 ========================================================= */
 
-.modern-ui {
+.search-popup-ui {
     font-family: Arial, sans-serif;
     color: #333;
     font-size: 12px;
@@ -25,8 +25,8 @@ SCOPED UI: Clean UI Panel Design for Search Modal
 }
 
 /* Master Input Heights - Set to 24px */
-.modern-ui input[type="text"], 
-.modern-ui select {
+.search-popup-ui input[type="text"], 
+.search-popup-ui select {
     height: 24px !important;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -38,28 +38,28 @@ SCOPED UI: Clean UI Panel Design for Search Modal
 }
 
 /* Checkbox specific fix */
-.modern-ui input[type="checkbox"] {
+.search-popup-ui input[type="checkbox"] {
     margin: 0;
     padding: 0;
     vertical-align: middle;
 }
 
 /* Compact Width Classes */
-.modern-ui .input-xs { width: 60px !important; }
-.modern-ui .input-sm { width: 100px !important; }
-.modern-ui .input-md { width: 140px !important; }
-.modern-ui .input-lg { width: 200px !important; }
-.modern-ui .input-xl { width: 300px !important; }
-.modern-ui .input-full { width: 100% !important; flex: 1; }
+.search-popup-ui .input-xs { width: 60px !important; }
+.search-popup-ui .input-sm { width: 100px !important; }
+.search-popup-ui .input-md { width: 140px !important; }
+.search-popup-ui .input-lg { width: 200px !important; }
+.search-popup-ui .input-xl { width: 300px !important; }
+.search-popup-ui .input-full { width: 100% !important; flex: 1; }
 
-.modern-ui input[type="text"]:focus, 
-.modern-ui select:focus {
+.search-popup-ui input[type="text"]:focus, 
+.search-popup-ui select:focus {
     border-color: #007bff;
     outline: none;
 }
 
 /* Layout Utilities */
-.modern-ui .field-row {
+.search-popup-ui .field-row {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -67,7 +67,7 @@ SCOPED UI: Clean UI Panel Design for Search Modal
     flex-wrap: wrap;
 }
 
-.modern-ui .lbl-right {
+.search-popup-ui .lbl-right {
     text-align: right;
     color: #444;
     font-size: 12px;
@@ -77,7 +77,7 @@ SCOPED UI: Clean UI Panel Design for Search Modal
 }
 
 /* Panel Styling */
-.modern-ui .modern-panel {
+.search-popup-ui .modern-panel {
     border: 1px solid #e1e4e8;
     padding: 15px;
     background: #fff;
@@ -87,7 +87,7 @@ SCOPED UI: Clean UI Panel Design for Search Modal
 }
 
 /* Search Button */
-.modern-ui .myButton {
+.search-popup-ui .myButton {
     font-weight: bold;
     font-size: 12px;
     height: 24px !important;
@@ -101,13 +101,13 @@ SCOPED UI: Clean UI Panel Design for Search Modal
     transition: all 0.2s ease;
 }
 
-.modern-ui .myButton:hover {
+.search-popup-ui .myButton:hover {
     background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
     transform: translateY(-1px);
 }
 
 /* Grid Container */
-.modern-ui .grid-container {
+.search-popup-ui .grid-container {
     background: #fff;
     border: 1px solid #e1e4e8;
     padding: 2px;
@@ -117,12 +117,10 @@ SCOPED UI: Clean UI Panel Design for Search Modal
 
 <script type="text/javascript">
 $(document).ready(function () {
-    /* Upgraded height to 24px for Modern UI */
     $("#searchdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
     
-    /* Force internal alignment AFTER render */
     setTimeout(function () {
-        $(".jqx-datetimeinput").find("input").css({
+        $("#searchdate").find("input").css({
             "margin-top": "0px", 
             "line-height": "24px", 
             "font-size": "12px", 
@@ -130,7 +128,7 @@ $(document).ready(function () {
             "padding": "0 6px", 
             "box-sizing":"border-box"
         });
-        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        $("#searchdate").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
     }, 0);
 });
 
@@ -142,7 +140,6 @@ function mainloadSearch() {
     var sregno=document.getElementById("sregno").value;
     var searchdate=$('#searchdate').jqxDateTimeInput('val');
     
-    // Safety check in case brchName doesn't exist on this popup
     var branch = "";
     if(document.getElementById("brchName")){
         branch=document.getElementById("brchName").value;
@@ -163,7 +160,7 @@ function getdata(sclname,smob,rno,flno,sregno,searchdate,branch,allbranch){
 </head>
 <body>
 
-<div id="search" class="modern-ui">
+<div id="search" class="search-popup-ui">
 
     <div class="modern-panel">
         
