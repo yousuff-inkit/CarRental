@@ -3192,7 +3192,7 @@ html, body {
 
         <!-- CLIENT -->
         <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-            <label style="width:90px;">Client</label>
+            <label style="width:70px;">Client</label>
 
             <input type="text" id="txtcusid" name="txtcusid"
                    placeholder="Press F3 To Search"
@@ -3224,7 +3224,7 @@ html, body {
 
         <!-- ADDRESS -->
         <div style="display:flex; margin-bottom:10px;">
-            <label style="width:90px;"></label>
+            <label style="width:80px;"></label>
 
             <input type="text" id="cusaddress" name="cusaddress"
                    placeholder="Mobile No - Address"
@@ -3234,7 +3234,7 @@ html, body {
 
         <!-- SALES + RENTAL AGENT -->
         <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-            <label style="width:90px;">Sales Agent</label>
+            <label style="width:70px;">Sales Agent</label>
 
             <input type="text" id="rasales_Agent" name="rasales_Agent"
                    placeholder="Press F3 To Search"
@@ -3259,7 +3259,7 @@ html, body {
 
         <!-- CHECKOUT -->
         <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-            <label style="width:90px;">Checkout</label>
+            <label style="width:70px;">Checkout</label>
 
             <input type="text" id="ratariff_checkout" name="ratariff_checkout"
                    placeholder="Press F3 To Search"
@@ -3274,7 +3274,7 @@ html, body {
 
         <!-- DESCRIPTION -->
         <div style="display:flex; align-items:center;">
-            <label style="width:90px;">Description</label>
+            <label style="width:80px;">Description</label>
 
             <input type="text" id="rentaldesc" name="rentaldesc"
                    placeholder="Description"

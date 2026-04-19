@@ -125,6 +125,7 @@ SCOPED UI: Compact Input Sizing & Bulletproof Grids
     transition: all 0.2s ease;
 }
 
+
 .modern-ui .myButton:hover {
     background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
     transform: translateY(-1px);
@@ -162,17 +163,17 @@ $(document).ready(function () {
 
 	//setCollection();
 	//$("#tarifreferencegrid").jqxGrid({ disabled: true});
-	$("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#indate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
+	$("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#indate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	// $("#accidentdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	// $("#policecollecteddate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#intime").jqxDateTimeInput({ width: '80%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
-	 $("#collecttime").jqxDateTimeInput({ width: '80%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+	 $("#intime").jqxDateTimeInput({ width: '80%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
+	 $("#collecttime").jqxDateTimeInput({ width: '80%', height: '17px', formatString: 'HH:mm', showCalendarButton: false,value:null});
 	//Minimize Button
 	 $("#jqxMenuMore").jqxMenu({ width: '40%', height: '26px', autoSizeMainItems: true});
      $("#jqxMenuMore").jqxMenu('minimize');            
@@ -199,11 +200,11 @@ $(document).ready(function () {
 			document.getElementById("excesskm").value="";
 			document.getElementById("lblinvoicedone").innerText="";
 			 $('#totalgrid').jqxGrid('clear');
-	     $("#totalgrid").jqxGrid("addrow", null, {});
-	     $('#calculationgrid').jqxGrid('clear');
-	     $("#calculationgrid").jqxGrid("addrow", null, {});
-	    
-	     if($('#intime').jqxDateTimeInput('getDate')!=null && $('#indate').jqxDateTimeInput('getDate')!=null){
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+	    	 
+	    	 if($('#intime').jqxDateTimeInput('getDate')!=null && $('#indate').jqxDateTimeInput('getDate')!=null){
 				   var intime=new Date($('#intime').jqxDateTimeInput('getDate'));
 				   var indate=new Date($('#indate').jqxDateTimeInput('getDate'));
 				   var status=checkPriorTime(intime,indate);
@@ -227,10 +228,10 @@ $(document).ready(function () {
 			document.getElementById("excesskm").value="";
 			document.getElementById("lblinvoicedone").innerText="";
 			 $('#totalgrid').jqxGrid('clear');
-	     $("#totalgrid").jqxGrid("addrow", null, {});
-	     $('#calculationgrid').jqxGrid('clear');
-	     $("#calculationgrid").jqxGrid("addrow", null, {});
-	     if($('#intime').jqxDateTimeInput('getDate')!=null){
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+	    	 if($('#intime').jqxDateTimeInput('getDate')!=null){
 				   var intime=new Date($('#intime').jqxDateTimeInput('getDate'));
 				   var indate=new Date($('#indate').jqxDateTimeInput('getDate'));
 				   var status=checkPriorTime(intime,indate);
@@ -255,9 +256,9 @@ $(document).ready(function () {
 			document.getElementById("excesskm").value="";
 			document.getElementById("lblinvoicedone").innerText="";
 			 $('#totalgrid').jqxGrid('clear');
-	     $("#totalgrid").jqxGrid("addrow", null, {});
-	     $('#calculationgrid').jqxGrid('clear');
-	     $("#calculationgrid").jqxGrid("addrow", null, {});
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
 		   }
 		 });
 	   $( "#cmbinfuel" ).change(function() {
@@ -268,9 +269,9 @@ $(document).ready(function () {
 			document.getElementById("excesskm").value="";
 			document.getElementById("lblinvoicedone").innerText="";
 			 $('#totalgrid').jqxGrid('clear');
-	     $("#totalgrid").jqxGrid("addrow", null, {});
-	     $('#calculationgrid').jqxGrid('clear');
-	     $("#calculationgrid").jqxGrid("addrow", null, {});
+	    	 $("#totalgrid").jqxGrid("addrow", null, {});
+	    	 $('#calculationgrid').jqxGrid('clear');
+	    	 $("#calculationgrid").jqxGrid("addrow", null, {});
 		   }
 		 });
 	   
@@ -578,7 +579,7 @@ function setCollection(){
 		   $('#trafficGrid').jqxGrid({ disabled: true});
 		   $('#tarifagmtgrid').jqxGrid({ disabled: true});
 		    $('#calculationgrid').jqxGrid({ disabled: true});
-/* getCheckin();
+/* 		getCheckin();
 		getRentalAgent(); */
 	}
 	function funNotify(){
@@ -816,8 +817,8 @@ if(document.getElementById("rentalagent").value==""){
 		    	 $("#calculationgrid").jqxGrid("addrow", null, {});
 		    	 $('#btnprocess').attr('disabled',false);
 				  $('#btncalculate').attr('disabled',false);
-		   
-		   
+		    
+		    
 			}
 			if(document.getElementById("brchName").value!=""){
 				getAgmtLocation();
@@ -835,16 +836,16 @@ if(document.getElementById("rentalagent").value==""){
 	  function isNumber(evt,id) {
 	//Function to restrict characters and enter number only
 		  var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-         {
-        	 $.messager.alert('Warning','Enter Numbers Only');
-           $("#"+id+"").focus();
-            return false;
-            
-         }
-        
-        return true;
-    }
+	        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+	         {
+	        	 $.messager.alert('Warning','Enter Numbers Only');
+	           $("#"+id+"").focus();
+	            return false;
+	            
+	         }
+	        
+	        return true;
+	    }
 	function funFocus(){
 		document.getElementById("agreementno").focus();
 	}
@@ -1008,11 +1009,11 @@ if(document.getElementById("rentalagent").value==""){
 				document.getElementById("agmtkm").value="";
 				
 				 $('#totalgrid').jqxGrid('clear');
-		     $("#totalgrid").jqxGrid("addrow", null, {});
-		     $('#calculationgrid').jqxGrid('clear');
-		     $("#calculationgrid").jqxGrid("addrow", null, {});
-		     document.getElementById("excesskm").value="";
-		     //alert($("#datehidden").jqxDateTimeInput('val'));
+		    	 $("#totalgrid").jqxGrid("addrow", null, {});
+		    	 $('#calculationgrid').jqxGrid('clear');
+		    	 $("#calculationgrid").jqxGrid("addrow", null, {});
+		    	 document.getElementById("excesskm").value="";
+		    	 //alert($("#datehidden").jqxDateTimeInput('val'));
 				//alert($("#datehidden").jqxDateTimeInput('val'));
 				if(items[12].trim()=='1'){
 					document.getElementById("errormsg").innerText="";
@@ -1135,8 +1136,8 @@ if(document.getElementById("rentalagent").value==""){
 		// document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 		funSetlabel(); 
 		if($('#msg').val()!=""){
- 		   $.messager.alert('Message',$('#msg').val());
- 		  }
+  		   $.messager.alert('Message',$('#msg').val());
+  		  }
 		 if($('#hidcollecttime').val()){
 				$("#collecttime").jqxDateTimeInput('val', $('#hidcollecttime').val());
 			}
@@ -1159,14 +1160,14 @@ if(document.getElementById("rentalagent").value==""){
 				$("#indate").jqxDateTimeInput('val', $('#hidindate').val());
 			}  
 		//alert($('#hidclosedate').val());
-		/* if ($('#hidcmbcheckin').val() != null) {
+		/* 	if ($('#hidcmbcheckin').val() != null) {
 				$('#cmbcheckin').val($('#hidcmbcheckin').val());
 			}
 			if ($('#hidcmbrentalagent').val() != null) {
 				$('#cmbrentalagent').val($('#hidcmbrentalagent').val());
 			} */
 			
-		/* if(document.getElementById("agreementno").value==''){
+		/* 	if(document.getElementById("agreementno").value==''){
 				alert("Inside agreement blank");
 				$('#calcdiv').load("calculationGrid.jsp");
 				$('#totaldiv').load("totalGrid.jsp");
@@ -1207,7 +1208,7 @@ if(document.getElementById("rentalagent").value==""){
     	}
     	var url=document.URL;
     	  var reurl=url.split("saveLeaseClose");
-    	   	var win= window.open(reurl[0]+"printLeaseClose?docno="+document.getElementById("agreementno").value+"&formdetailcode=LAC","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
+    	    	var win= window.open(reurl[0]+"printLeaseClose?docno="+document.getElementById("agreementno").value+"&formdetailcode=LAC","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
     	win.focus();
     	 }
 	
@@ -1300,8 +1301,8 @@ if(document.getElementById("rentalagent").value==""){
 		x.send();
 	}
 	function funDownload(){
- 		if($('#mode').val()=='A' || $('#mode').val()=='E'){
- 			var agmtno=$('#agreementno').val();
+  		if($('#mode').val()=='A' || $('#mode').val()=='E'){
+  			var agmtno=$('#agreementno').val();
       		var fleetno=document.getElementById("hidfleet").value;
      		var x = new XMLHttpRequest();
      		x.onreadystatechange = function() {
@@ -1314,8 +1315,8 @@ if(document.getElementById("rentalagent").value==""){
      		}
      		x.open("GET", "downloadData.jsp?agmtno="+agmtno+"&fleetno="+fleetno, true);
      		x.send();	
- 		}
- 	}
+  		}
+  	}
 </script>
 
 
@@ -1413,84 +1414,115 @@ if(document.getElementById("rentalagent").value==""){
                 <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
             </div>
 
-            <div style="width: 48%; display: grid; grid-template-columns: max-content minmax(60px, 1fr) max-content minmax(70px, 1fr) max-content 125px max-content 80px; gap: 12px 8px; align-items: center; flex-shrink: 0; min-width: 0;">
-                
-                <label class="lbl-right">Collection Details KM</label>
-                <input type="text" name="collectkm" id="collectkm" class="align-right-input" value='<s:property value="collectkm"/>'>
-                
-                <label class="lbl-right">Fuel</label>
-                <select name="cmbcollectfuel" id="cmbcollectfuel">
-                    <option value="">-Select-</option>
-                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                </select>
-                <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-                
-                <label class="lbl-right">Date</label>
-                <div style="width:125px;">
-                    <div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div>
-                    <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-                </div>
-                
-                <label class="lbl-right">Time</label>
-                <div style="width:80px;">
-                    <div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div>
-                    <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-                </div>
+            <div style="width:100%; display:flex; flex-direction:column; gap:10px;">
 
-                <label class="lbl-right">In Details KM</label>
-                <input type="text" name="inkm" id="inkm" class="align-right-input" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber(event,id)">
-                
-                <label class="lbl-right">Fuel</label>
-                <select name="cmbinfuel" id="cmbinfuel">
-                    <option value="">-Select-</option>
-                    <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option>
-                    <option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-                    <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-                </select>
-                
-                <label class="lbl-right">Date</label>
-                <div style="width:125px;">
-                    <div id="indate" name="indate" value='<s:property value="indate"/>'></div>
-                    <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
-                </div>
-                
-                <label class="lbl-right">Time</label>
-                <div style="width:80px;">
-                    <div id="intime" name="intime" value='<s:property value="intime"/>'></div>
-                    <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
-                </div>
-            </div>
+    <!-- COMMON GRID (8 columns = 4 pairs) -->
 
-            <div style="width: 34%; display: grid; grid-template-columns: max-content minmax(80px, 1fr) max-content 60px max-content 60px max-content; gap: 12px 8px; align-items: center; flex-grow: 1; min-width: 0;">
-                
-                <label class="lbl-right">Rental Agent</label>
-                <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3" onkeydown="getRentalAgent(event);">
-                <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
-                <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-                
-                <label class="lbl-right">Days Used</label>
-                <input type="text" name="useddays" id="useddays" class="align-right-input" value='<s:property value="useddays"/>' readonly>
-                
-                <label class="lbl-right">Hours Used</label>
-                <input type="text" name="usedhours" id="usedhours" class="align-right-input" value='<s:property value="usedhours"/>' readonly>
-                
-                <div></div>
+    <!-- ROW 1 -->
+    <div style="display:grid;
+                grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr;
+                gap:10px; align-items:center;">
 
-                <label class="lbl-right">Check In</label>
-                <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3" onkeydown="getCheckin(event);">
-                <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
-                <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
+        <label class="lbl-right">Collection Details KM</label>
+        <input type="text" name="collectkm" id="collectkm" class="align-right-input" value='<s:property value="collectkm"/>'>
 
-                <label class="lbl-right">Total KM</label>
-                <input type="text" name="totalkm" id="totalkm" class="align-right-input" value='<s:property value="totalkm"/>' readonly>
-                
-                <label class="lbl-right">Excess KM</label>
-                <input type="text" name="excesskm" id="excesskm" class="align-right-input" value='<s:property value="excesskm"/>' readonly>
-                
-                <input type="button" name="btnprocess" id="btnprocess" class="myButton" value="Process" onclick="checkAgmtDelivery();">
-            </div>
+        <label class="lbl-right">Fuel</label>
+        <select name="cmbcollectfuel" id="cmbcollectfuel">
+            <option value="">-Select-</option>
+            <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option>
+            <option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+            <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option>
+            <option value=1.000>Level 8/8</option>
+        </select>
+        <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
+
+        <label class="lbl-right">Date</label>
+        <div>
+            <div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div>
+            <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
+        </div>
+
+        <label class="lbl-right">Time</label>
+        <div>
+            <div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div>
+            <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
+        </div>
+    </div>
+
+    <!-- ROW 2 -->
+    <div style="display:grid;
+                grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr;
+                gap:10px; align-items:center;">
+
+        <label class="lbl-right">In Details KM</label>
+        <input type="text" name="inkm" id="inkm" class="align-right-input"
+               value='<s:property value="inkm"/>'
+               onkeypress="javascript:return isNumber(event,id)">
+
+        <label class="lbl-right">Fuel</label>
+        <select name="cmbinfuel" id="cmbinfuel">
+            <option value="">-Select-</option>
+            <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option>
+            <option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
+            <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
+            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option>
+            <option value=1.000>Level 8/8</option>
+        </select>
+
+        <label class="lbl-right">Date</label>
+        <div>
+            <div id="indate" name="indate" value='<s:property value="indate"/>'></div>
+            <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
+        </div>
+
+        <label class="lbl-right">Time</label>
+        <div>
+            <div id="intime" name="intime" value='<s:property value="intime"/>'></div>
+            <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
+        </div>
+    </div>
+
+    <!-- ROW 3 -->
+    <div style="display:grid;
+                grid-template-columns:110px 1fr 110px 1fr 110px 1fr auto;
+                gap:10px; align-items:center;">
+
+        <label class="lbl-right">Rental Agent</label>
+        <input type="text" name="rentalagent" id="rentalagent"
+               value='<s:property value="rentalagent"/>'
+               readonly placeholder="Press F3 to search"
+               onkeydown="getRentalAgent(event);">
+
+        <input type="hidden" name="hidrentalagent" id="hidrentalagent"
+               value='<s:property value="hidrentalagent"/>'>
+        <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin"
+               value='<s:property value="hidcmbcheckin"/>'>
+
+        <label class="lbl-right">Check In</label>
+        <input type="text" name="checkin" id="checkin"
+               value='<s:property value="checkin"/>'
+               readonly placeholder="Press F3 to search"
+               onkeydown="getCheckin(event);">
+
+        <input type="hidden" name="hidcheckin" id="hidcheckin"
+               value='<s:property value="hidcheckin"/>'>
+        <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent"
+               value='<s:property value="hidcmbrentalagent"/>'>
+
+        <label class="lbl-right">Total KM</label>
+        <input type="text" name="totalkm" id="totalkm"
+               class="align-right-input"
+               value='<s:property value="totalkm"/>' readonly>
+
+        <!-- PROCESS BUTTON -->
+        <input type="button" name="btnprocess" id="btnprocess"
+               class="myButton"
+               value="Process"
+               onclick="checkAgmtDelivery();">
+    </div>
+
+</div>
 
         </div>
     </div>
