@@ -11,107 +11,113 @@
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
 /* =========================================================
-   RENTAL CLOSE - EXACT TEXT & UI MATCH TO CLIENT MASTER
+   MASTER UI (SCOPED) — RENTAL CLOSE CONVERSION
 ========================================================= */
-body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Arial, sans-serif !important;
-    color: #333 !important;
-    font-size: 12px !important;
-    margin: 0;
+
+.modern-ui {
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 12px;
+    padding-top: 15px;
     box-sizing: border-box;
 }
 
-#mainBG {
-    background: #fff;
-    border-radius: 4px;
-    padding: 15px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-}
-
-/* FIX: Responsive scroll area so the bottom is never cut off */
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: calc(100vh - 140px);
-    padding-bottom: 80px; /* Extra padding for the bottom grids */
-    box-sizing: border-box;
-}
-
-form label.error {
-    color: red;
-    font-weight: bold;
-}
-
-/* EXACT Input Styles from Client Master */
-input[type="text"], select {
-    height: 24px !important; /* Matched to 24px */
-    border: 1px solid #ccc !important;
-    border-radius: 3px !important;
-    padding: 2px 6px !important;
-    font-size: 12px !important;
+/* INPUTS */
+.modern-ui input[type="text"],
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
     box-sizing: border-box;
     width: 100%;
-    background-color: #fff !important;
-    color: #333 !important;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: #007bff !important;
-    outline: none !important;
+.modern-ui input:focus,
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-input[readonly] {
-    background-color: #f4f5f7 !important;
-    color: #5e6c84 !important;
-    border-color: #e1e4e8 !important;
+.modern-ui input[readonly] {
+    background-color: #f3f4f6;
+    color: #6b7280;
 }
 
-/* Fieldset and Legend styling matching Client Master */
-fieldset {
-    border: 1px solid #e1e4e8 !important;
-    background-color: #fff !important;
-    margin-bottom: 10px !important;
-    padding: 12px 10px 10px 10px !important;
-    border-radius: 4px !important;
+/* LABELS */
+.modern-ui .lbl-right {
+    text-align: right;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
-legend {
-    font-size: 13px !important;
-    font-weight: bold !important;
-    color: #0056b3 !important;
-    padding: 0 0 0 6px !important;
-    border-left: 3px solid #0056b3 !important;
-    margin-bottom: 5px !important;
+/* PANEL */
+.modern-ui .modern-panel {
+    border: 1px solid #e1e4e8;
+    padding: 15px 10px 10px;
     background: #fff;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    position: relative;
 }
 
-/* Table adjustments for compact text */
-table td {
-    padding: 4px 6px !important;
-    font-size: 12px !important;
-    color: #444 !important;
-    font-weight: bold !important;
-    vertical-align: middle;
+.modern-ui .modern-panel-title {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: #fff;
+    padding: 0 6px;
+    color: #0056b3;
+    font-weight: bold;
+    font-size: 13px;
+    border-left: 3px solid #0056b3;
 }
 
-/* Modern Buttons matched to Client Master */
-.myButton {
-    background-color: #0056b3 !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 3px !important;
-    padding: 4px 15px !important;
-    font-weight: bold !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    height: 24px !important;
+/* GRID */
+.modern-ui .top-details-grid {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content 1fr max-content 1fr max-content 1fr;
+    gap: 10px;
+    align-items: center;
 }
 
-.myButton:hover {
-    background-color: #004494 !important;
+/* BUTTON */
+.modern-ui .myButton {
+    font-weight: bold;
+    font-size: 12px;
+    height: 24px;
+    padding: 0 14px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+/* CHECK */
+.modern-ui .chk-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* SCROLL */
+.hidden-scrollbar {
+    overflow: auto;
+    height: calc(100vh - 140px);
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    width: 0px;
 }
 </style>
 <script type="text/javascript">
@@ -1487,225 +1493,167 @@ if(document.getElementById("rentalagent").value==""){
 	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
-<div class='hidden-scrollbar'>
-<table width="100%">
-  <tr>
-    <td colspan="2"><fieldset>
-      <legend>Agreement</legend>
-      <table width="100%">
-        <tr>
-          <td width="4%" align="right">Branch</td>
-          <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
-          
-          <td width="6%" align="right">Agmt No</td>
-          <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
-          <td width="5%" align="right">Vehicle</td>
-          <td width="47%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
-          <td width="6%" align="right">Doc No</td>
-          <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
-          <td width="8%" rowspan="2" align="left"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-        <ul>
-         <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-            <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-            <li><a href="#history" onclick="account();">Account Statement</a></li>   
-             <li><a href="#close" onclick="closing();">Closing Summary</a></li>                  
-        </ul>
-     </div></td>
-        </tr>
-        <tr>
-          <td align="right">Client</td>
-          <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
-          <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:99%;"></td>
-          <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-          <td align="right">Date</td>
-          <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
-          <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
-        </tr>
-        <tr>
-          <td align="right">Description</td>
-          <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;">Org Reg Card Collected</label>&nbsp;
-          <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
-          </td>
-<input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
-<input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
-          <td align="right">Location</td>
-          <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
-            <option value="">--Select--</option>
-          </select></td>
-          <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
-          <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
-          <td align="left">&nbsp;</td>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td colspan="2"><fieldset>
-      <legend>Vehicle and Collection Info</legend>
-      <table width="100%">
-        <tr>
-          <td width="11%" rowspan="2">Collection
-            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
-            &nbsp;
-            <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search">
+<div class="modern-ui hidden-scrollbar">
 
-            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
-            </td>
-          <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-          <td width="8%" align="right">Collection Details</td>
-          <td width="1%" align="right">KM</td>
-          <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
-          <td width="2%" align="right">Fuel</td>
-          <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-          <td width="7%" align="left">
-          <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td width="2%" align="right">Date</td>
-          <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
-          <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-          <td width="2%" align="right">Time</td>
-          <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
-          <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-          <td width="7%" align="right">Rental Agent</td>
-          <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
-            <option value="">--Select--</option>
-          </select> --%>
-          <td width="6%" align="left">
-          <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
-          </td>
-          <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
-          <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-          <td width="7%" align="right">Days Used</td>
-          <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
-          <td width="5%" align="right">Hours Used</td>
-          <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
-          <td width="6%" align="center" rowspan="2">
-<button type="button" id="btnprocess" class ="myButton" title="Process"  onclick="funChecking();">Process</button></td>
-        </tr>
-        <tr>
-          <td align="right">In Details</td>
-          <td align="right">KM</td>
-          <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
-          <td align="right">Fuel</td>
-          <td align="left"><select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td align="right">Date</td>
-          <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
-          <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
-          <td align="right">Time</td>
-          <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
-          <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
-          <td align="right">Check In</td>
-          <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
-            <option value="">--Select--</option>
-          </select> --%>
-          <td align="left">
-          <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
-          </td>
-          <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
-          <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
-         <div border="1">
-          <td align="right">Total KM</td>
-          <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
-          <td align="right">Excess KM</td>
-          <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
-          <td width="0%" align="left">&nbsp;</td>
-         </div>
-        </tr>
-      </table>
-    </fieldset></td>
-  </tr>
-  <tr>
-    <td width="66%">
-  <fieldset>
-    <legend>Rental Agreed Rates</legend>
-    
-    <table width="100%">
-      <tr>
-        <td>
-          <div id="agmttarifdiv">
-            <jsp:include page="agreementTarifGrid.jsp"></jsp:include>
-          </div>
-        </td>
-      </tr>
-    </table>
+<!-- ================= AGREEMENT ================= -->
+<div class="modern-panel">
+<span class="modern-panel-title">Agreement</span>
 
-  </fieldset>
-</td>
-    
-    
-    <td width="34%" rowspan="3">
-    <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label></center>
-    <center>
-    	<input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
-    	<input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
-    </center>
-    <fieldset><legend>Calculation Info
-      </legend>
-      <table width="100%">
-        <tr>
-          <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
-          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-          </tr>
-        </table>
-      </fieldset>
-    </td>
-  </tr>
-  <tr id="referencefield">
-  <td>
-    <fieldset>
-      <legend>Reference Tariff Rates</legend>
-      
-      <table width="100%">
-        <tr>
-          <td>
-            <div id="referencetarifdiv">
-              <jsp:include page="referenceTarifGrid.jsp"></jsp:include>
-            </div>
-          </td>
-        </tr>
-      </table>
+<div style="position:absolute; top:-12px; right:15px;">
+<div id='jqxMenuMore' style='visibility:hidden;'>
+<ul>
+<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+<li><a href="#documents" onclick="replacement();">Replacement</a></li>
+<li><a href="#history" onclick="account();">Account Statement</a></li>
+<li><a href="#close" onclick="closing();">Closing Summary</a></li>
+</ul>
+</div>
+</div>
 
-    </fieldset>
-  </td>
-</tr>
-  <tr>
-  <td>
-    <fieldset>
-      <legend>Calculated Tariff Rates</legend>
-      
-      <table width="100%">
-        <tr>
-          <td>
-            <div id="totaldiv">
-              <jsp:include page="totalGrid.jsp"></jsp:include>
-            </div>
-          </td>
-        </tr>
-      </table>
+<div class="top-details-grid">
 
-    </fieldset>
-  </td>
-</tr>
-  <tr>
-  <td>
-    <fieldset>
-      <legend>Traffic Fine</legend>
-      
-      <table width="100%">
-        <tr>
-          <td>
-            <div id="trafficdiv">
-              <jsp:include page="trafficGrid.jsp"></jsp:include>
-            </div>
-          </td>
-        </tr>
-      </table>
+<label class="lbl-right">Branch</label>
+<select name="cmbagmtbranch" id="cmbagmtbranch">
+<option value="">--Select--</option>
+</select>
 
-    </fieldset>
-  </td>
-</tr>
-</table>
+<label class="lbl-right">Agmt No</label>
+<input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onkeydown="getAgmt(event);" placeholder="Press F3 to Search">
+
+<label class="lbl-right">Vehicle</label>
+<input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>'>
+
+<label class="lbl-right">Doc No</label>
+<input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly>
+
+<label class="lbl-right">Client</label>
+<input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>'>
+
+<label class="lbl-right">Client Name</label>
+<input type="text" name="client" id="client" value='<s:property value="client"/>'>
+
+<label class="lbl-right">Date</label>
+<div id="closedate"></div>
+
+<label class="lbl-right">Description</label>
+<input type="text" name="description" id="description" value='<s:property value="description"/>'>
+
+<label class="lbl-right">Location</label>
+<select name="cmbcloseloc" id="cmbcloseloc">
+<option value="">--Select--</option>
+</select>
+
+</div>
+
+<input type="hidden" name="txtaccno" id="txtaccno">
+<input type="hidden" name="hidclosedate" id="hidclosedate">
+<input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch">
+<input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc">
+
+</div>
+
+
+<!-- ================= VEHICLE INFO ================= -->
+<div class="modern-panel">
+<span class="modern-panel-title">Vehicle and Collection Info</span>
+
+<div style="display:flex; gap:20px;">
+
+<!-- LEFT -->
+<div style="width:20%; display:flex; flex-direction:column; gap:10px;">
+<div class="chk-container">
+<label>Collection</label>
+<input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
+</div>
+
+<input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' readonly onkeydown="getChauffer(event);" placeholder="Press F3 to Search">
+
+<input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge">
+
+<input type="hidden" name="hidchkcollection" id="hidchkcollection">
+</div>
+
+<!-- RIGHT -->
+<div style="flex:1; display:flex; flex-direction:column; gap:10px;">
+
+<div style="display:grid; grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr; gap:10px;">
+<label class="lbl-right">Collection KM</label>
+<input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'>
+
+<label class="lbl-right">Fuel</label>
+<select name="cmbcollectfuel" id="cmbcollectfuel"></select>
+
+<label class="lbl-right">Date</label>
+<div id="collectdate"></div>
+
+<label class="lbl-right">Time</label>
+<div id="collecttime"></div>
+</div>
+
+<div style="display:grid; grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr; gap:10px;">
+<label class="lbl-right">In KM</label>
+<input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>'>
+
+<label class="lbl-right">Fuel</label>
+<select name="cmbinfuel" id="cmbinfuel"></select>
+
+<label class="lbl-right">Date</label>
+<div id="indate"></div>
+
+<label class="lbl-right">Time</label>
+<div id="intime"></div>
+</div>
+
+<div style="display:grid; grid-template-columns:120px 1fr 120px 1fr 120px 1fr auto; gap:10px;">
+<label class="lbl-right">Rental Agent</label>
+<input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly onkeydown="getRentalAgent(event);">
+
+<label class="lbl-right">Check In</label>
+<input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly onkeydown="getCheckin(event);">
+
+<label class="lbl-right">Total KM</label>
+<input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' readonly>
+
+<input type="button" class="myButton" value="Process" onclick="funChecking();">
+</div>
+
+</div>
+</div>
+
+<input type="hidden" name="hidrentalagent" id="hidrentalagent">
+<input type="hidden" name="hidcheckin" id="hidcheckin">
+<input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent">
+
+</div>
+
+
+<!-- ================= LOWER ================= -->
+<div style="display:flex; gap:15px;">
+
+<div style="flex:2; display:flex; flex-direction:column; gap:15px;">
+<div class="modern-panel"><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></div>
+<div class="modern-panel"><div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></div>
+<div class="modern-panel"><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></div>
+<div class="modern-panel"><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></div>
+</div>
+
+<div style="flex:1.1; display:flex; flex-direction:column;">
+<div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+<label id="lblinvoicedone" style="color:red; font-weight:bold;"></label>
+<input type="button" class="myButton" value="Calculate" onclick="funCalculate();">
+<input type="button" class="myButton" value="Download" onclick="funDownload();">
+</div>
+
+<div class="modern-panel" style="flex:1;">
+<span class="modern-panel-title">Calculation Info</span>
+<div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
+<input type="hidden" name="hidchkconvert" id="hidchkconvert">
+</div>
+</div>
+
+</div>
+
+
 
 
 

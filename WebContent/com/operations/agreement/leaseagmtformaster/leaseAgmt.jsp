@@ -181,6 +181,7 @@ html, body {
     margin-bottom: 15px;
     margin-top: 12px;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -1376,36 +1377,38 @@ function checkBrandQty(fleetno,masterrefno){
 <div class="accordion-content">
 <div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
 
-    <div class="middle-panel" style="flex:1; background:#ffffff; padding:12px; border-radius:8px;">
-        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
-            Client Info
-        </div>
-
-        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-            <label style="width:90px;">Client</label>
-            <input type="text" id="clientid" name="clientid" style="width:140px;" readonly placeholder="Press F3 To Search" value='<s:property value="clientid"/>' onKeyDown="getclientinfo(event);" ondoubleclick="getclientinfo(event);"/>
-            <input type="text" id="clientname" readonly name="clientname" style="flex:1;" tabindex="-1" value='<s:property value="clientname"/>'/>
-        </div>
-
-        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-            <label style="width:90px;">Salesman</label>
-            <input type="text" id="salesman" name="salesman" style="flex:1;" readonly placeholder="Salesman Name" value='<s:property value="salesman"/>'/>
-            
-            <input type="hidden" id="le_salmanid" name="le_salmanid" value='<s:property value="le_salmanid"/>'/>
-            <input type="hidden" id="le_clcodeno" name="le_clcodeno" value='<s:property value="le_clcodeno"/>'/>
-            <input type="hidden" id="le_clacno" name="le_clacno" value='<s:property value="le_clacno"/>'/>
-        </div>
-
-        <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-            <label style="width:90px;">Address</label>
-            <input type="text" id="cusaddress" placeholder="Mobil NO-Address" readonly name="cusaddress" style="flex:1;" value='<s:property value="cusaddress"/>'>
-        </div>
-
-        <div style="display:flex; gap:10px; align-items:center;">
-            <label style="width:90px;">Description</label>
-            <input type="text" name="description" id="description" placeholder="Description" value='<s:property value="description"/>' style="flex:1;" onblur="fundescvalidate()">
-        </div>
+    <div style="flex:1; background:#ffffff; padding:12px; border-radius:8px; border:1px solid #d9d9d9;">
+        
+    <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
+        Client Info
     </div>
+
+    <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+        <label style="width:90px;">Client</label>
+        <input type="text" id="clientid" name="clientid" style="width:140px;" readonly placeholder="Press F3 To Search" value='<s:property value="clientid"/>' onKeyDown="getclientinfo(event);" ondoubleclick="getclientinfo(event);"/>
+        <input type="text" id="clientname" readonly name="clientname" style="flex:1;" tabindex="-1" value='<s:property value="clientname"/>'/>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+        <label style="width:90px;">Salesman</label>
+        <input type="text" id="salesman" name="salesman" style="flex:1;" readonly placeholder="Salesman Name" value='<s:property value="salesman"/>'/>
+        
+        <input type="hidden" id="le_salmanid" name="le_salmanid" value='<s:property value="le_salmanid"/>'/>
+        <input type="hidden" id="le_clcodeno" name="le_clcodeno" value='<s:property value="le_clcodeno"/>'/>
+        <input type="hidden" id="le_clacno" name="le_clacno" value='<s:property value="le_clacno"/>'/>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+        <label style="width:90px;">Address</label>
+        <input type="text" id="cusaddress" placeholder="Mobil NO-Address" readonly name="cusaddress" style="flex:1;" value='<s:property value="cusaddress"/>'>
+    </div>
+
+    <div style="display:flex; gap:10px; align-items:center;">
+        <label style="width:90px;">Description</label>
+        <input type="text" name="description" id="description" placeholder="Description" value='<s:property value="description"/>' style="flex:1;" onblur="fundescvalidate()">
+    </div>
+
+</div>
 
     <div style="width:340px;">
         <div style="display:flex; flex-direction:column; gap:10px;">
