@@ -159,8 +159,10 @@ select.list1 option {
 
     <script type="text/javascript">
     
-    // Global flag to track if this is a brand new document
+    // Global tracking flags
     var isNewDocument = false; 
+    var isMyTurn = false;
+    var myExpectedApprLevel = "0"; // Force the exact level from the database!
 
     $(document).ready(function(){
         getStatOpt();
@@ -174,14 +176,34 @@ select.list1 option {
         if(document.getElementById("apprdesc")) { document.getElementById("apprdesc").closest("div").style.display = ""; }
         if(document.getElementById("btnSend")) { document.getElementById("btnSend").closest("div").style.display = ""; }
 
+        var currentUserId = '<%=userid%>';
+
         if (!data4 || data4.trim() === "" || data4 === "null" || data4 === "[]") {
             data4 = "[]"; 
             isNewDocument = true; 
-            $("#statusDropdownDiv").hide();
+            isMyTurn = true; 
+            myExpectedApprLevel = "0";
         } else {
             isNewDocument = false; 
-            $("#statusDropdownDiv").show();
-            $("#optname").val(""); 
+            isMyTurn = false; 
+            myExpectedApprLevel = "0";
+            
+            try {
+                var parsedList = JSON.parse(data4);
+                for(var i = 0; i < parsedList.length; i++) {
+                    var rowType = parsedList[i].apprtype || "";
+                    var rowUserId = parsedList[i].userid || parsedList[i].userId || parsedList[i].USERID;
+                    
+                    if(rowType.trim() === "Send To" && String(rowUserId) === String(currentUserId)) {
+                        isMyTurn = true;
+                        // Grab the exact approval level straight from the inbox record!
+                        myExpectedApprLevel = String(parsedList[i].apprlevel);
+                        break;
+                    }
+                }
+            } catch(e) {
+                console.error("Error parsing history data:", e);
+            }
         }
 
         var source =
@@ -346,7 +368,7 @@ select.list1 option {
 
                     // --- FIX: Strict View-Only UI Logic ---
                     if (isNewDocument) {
-                        // 1. BRAND NEW DOCUMENT - Allow Submission to start workflow
+                        // 1. BRAND NEW DOCUMENT
                         apprlevel = "0";
                         $("#apprlevel").val("0");
                         $("#minapprl").val("0"); 
@@ -355,22 +377,20 @@ select.list1 option {
                         $("#statusDropdownDiv").hide();
                         $("#apprdesc").prop("disabled", false);
                         
-                        if ($('#optname option[value="Forward"]').length === 0) {
-                            $('#optname').append('<option value="Forward">Forward</option>');
-                        }
-                        $("#optname").val("Forward"); 
-                        $("#optid").val("0"); 
-                        
-                    } else if (numericLevel === 0) {
-                        // 2. EXISTING DOCUMENT, BUT NOT THIS USER'S TURN - Lock it down!
-                        // This fixes the bug where Level 2 opens it while it's waiting for Level 1.
+                    } else if (!isMyTurn) {
+                        // 2. EXISTING DOCUMENT, BUT NOT THIS USER'S TURN
                         $("#apprlevel").val("0");
                         $("#btnSend").hide();
                         $("#statusDropdownDiv").hide();
                         $("#apprdesc").prop("disabled", true);
                         
                     } else {
-                        // 3. EXISTING DOCUMENT AND IT IS THIS USER'S TURN - Show dropdown
+                        // 3. EXISTING DOCUMENT AND IT IS THEIR TURN
+                        // Force the apprlevel to match the exact inbox level so we never save as "0" accidentally!
+                        if (myExpectedApprLevel !== "0" && myExpectedApprLevel !== "") {
+                            apprlevel = myExpectedApprLevel;
+                        }
+                        
                         $("#apprlevel").val(apprlevel);
                         $("#btnSend").show().text("SUBMIT");
                         $("#statusDropdownDiv").show();
@@ -383,7 +403,6 @@ select.list1 option {
                         }
                     }
                     
-                    // 4. OVERRIDE FOR FULLY APPROVED/REJECTED DOCUMENTS
                     if (globalAprStatus === "3" || globalAprStatus === "4") {
                         document.body.classList.add("approval-locked");
                         $("#btnSend").hide();
@@ -393,7 +412,7 @@ select.list1 option {
                         document.body.classList.remove("approval-locked");
                     }
                     
-                    console.log("isNewDoc=" + isNewDocument + " apprlevel=" + apprlevel + " locked status=" + globalAprStatus);
+                    console.log("isNewDoc=" + isNewDocument + " isMyTurn=" + isMyTurn + " apprlevel=" + apprlevel);
                 }
             }
         }
