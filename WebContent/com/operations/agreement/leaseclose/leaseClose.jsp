@@ -1557,53 +1557,60 @@ if(document.getElementById("rentalagent").value==""){
         </div>
     </div>
 
-    <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
-    <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>
-    <input type="hidden" name="agmtdate" id="agmtdate" value='<s:property value="agmtdate"/>'>
-    <input type="hidden" name="agmtkm" id="agmtkm" value='<s:property value="agmtkm"/>'>
-    <input type="hidden" name="agmtfuel" id="agmtfuel" value='<s:property value="agmtfuel"/>'>
-    <input type="hidden" name="agmtdeliveryfuel" id="agmtdeliveryfuel" value='<s:property value="agmtdeliveryfuel"/>'>
-    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-    <div id="datehidden" name="datehidden" hidden="true"></div>
-    <div id="agmtdeliverydate" name="agmtdeliverydate" hidden="true"></div>
-    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-    <input type="hidden" name="chaufferid" id="chaufferid" value='<s:property value="chaufferid"/>'>
-    <input type="hidden" name="agmtdeliverykm" id="agmtdeliverykm" value='<s:property value="agmtdeliverykm"/>'>
-    <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-    <input type="hidden" name="hidcmbinfuel" id="hidcmbinfuel" value='<s:property value="hidcmbinfuel"/>' >
-    <input type="hidden" name="totkm" id="totkm" value='<s:property value="totkm"/>' >
-    <input type="hidden" name="totfuel" id="totfuel" value='<s:property value="totfuel"/>' >
-    <input type="hidden" name="totalfuel" id="totalfuel" value='<s:property value="totalfuel"/>'>
-    <input type="hidden" name="calcgridlength" id="calcgridlength" value='<s:property value="calcgridlength"/>' >
-    <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>' >
-    <input type="hidden" name="hidfleet" id="hidfleet" value='<s:property value="hidfleet"/>' >
-    <input type="hidden" name="creditnotesum" id="creditnotesum" value='<s:property value="creditnotesum"/>' >
-    <input type="hidden" name="delstatus" id="delstatus" value='<s:property value="delstatus"/>' >
-    <input type="hidden" name="deliverychg" id="deliverychg" value='<s:property value="deliverychg"/>' >
-    <input type="hidden" name="termamt" id="termamt" value='<s:property value="termamt"/>'>
-    <input type="hidden" name="delcheckstatus" id="delcheckstatus" value='<s:property value="delcheckstatus"/>' >
-    <input type="hidden" name="termmonth" id="termmonth" value='<s:property value="termmonth"/>' >
-    <input type="hidden" name="closecalflag" id="closecalflag" value='<s:property value="closecalflag"/>' >
-    <div name="closeinvdate" id="closeinvdate" value='<s:property value="closeinvdate"/>'></div>
-    <div name="closedatehidden" id="closedatehidden" value='<s:property value="closedatehidden"/>' hidden="true"></div>
-    <input type="hidden" name="agreementno" id="agreementno" value='<s:property value="agreementno"/>' onkeydown="getAgmt(event);" placeholder="Press F3 to Search">
-    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
-    <input type="hidden" name="fuel2" id="fuel2" value='<s:property value="fuel2"/>'>
-    <input type="hidden" name="calctype" id="calctype" value='<s:property value="calctype"/>'>
-    <input type="hidden" name="allbranch" id="allbranch" value='<s:property value="allbranch"/>' >
-    <input type="hidden" name="priormethod" id="priormethod">
-    <input type="hidden" name="priorvalue" id="priorvalue">
-    <input type="hidden" name="defaultdate" id="defaultdate">
-    <input type="hidden" name="agmtsat" id="agmtsat">
-
+<input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
+<input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>
+<input type="hidden" name="agmtdate" id="agmtdate" value='<s:property value="agmtdate"/>'>
+<input type="hidden" name="agmtkm" id="agmtkm" value='<s:property value="agmtkm"/>'>
+<input type="hidden" name="agmtfuel" id="agmtfuel" value='<s:property value="agmtfuel"/>'>
+<input type="hidden" name="agmtdeliveryfuel" id="agmtdeliveryfuel" value='<s:property value="agmtdeliveryfuel"/>'>
+<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+<div id="datehidden" name="datehidden" hidden="true"></div>
+<div id="agmtdeliverydate" name="agmtdeliverydate" hidden="true"></div>
+<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+<input type="hidden" name="chaufferid" id="chaufferid" value='<s:property value="chaufferid"/>'>
+<input type="hidden" name="agmtdeliverykm" id="agmtdeliverykm" value='<s:property value="agmtdeliverykm"/>'>
+<input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
+<input type="hidden" name="hidcmbinfuel" id="hidcmbinfuel" value='<s:property value="hidcmbinfuel"/>' >
+<input type="hidden" name="totkm" id="totkm" value='<s:property value="totkm"/>' >
+<input type="hidden" name="totfuel" id="totfuel" value='<s:property value="totfuel"/>' >
+<input type="hidden" name="totalfuel" id="totalfuel" value='<s:property value="totalfuel"/>' >
+<input type="hidden" name="calcgridlength" id="calcgridlength" value='<s:property value="calcgridlength"/>' >
+<input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>' >
+<input type="hidden" name="hidfleet" id="hidfleet" value='<s:property value="hidfleet"/>' >
+<input type="hidden" name="creditnotesum" id="creditnotesum" value='<s:property value="creditnotesum"/>' >
+<input type="hidden" name="delstatus" id="delstatus" value='<s:property value="delstatus"/>' >
+<input type="hidden" name="deliverychg" id="deliverychg" value='<s:property value="deliverychg"/>' >
+<input type="hidden" name="termamt" id="termamt" value='<s:property value="termamt"/>' >
+<input type="hidden" name="delcheckstatus" id="delcheckstatus" value='<s:property value="delcheckstatus"/>' >
+<input type="hidden" name="termmonth" id="termmonth" value='<s:property value="termmonth"/>' >
+<input type="hidden" name="closecalflag" id="closecalflag" value='<s:property value="closecalflag"/>' >
+<div name="closeinvdate" id="closeinvdate" value='<s:property value="closeinvdate"/>' ></div>
+<div name="closedatehidden" id="closedatehidden" value='<s:property value="closedatehidden"/>' hidden="true"></div>
+<input type="hidden" name="agreementno" id="agreementno" value='<s:property value="agreementno"/>' onkeydown="getAgmt(event);" placeholder="Press F3 to Search">
+<input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
+<input type="hidden" name="fuel2" id="fuel2" value='<s:property value="fuel2"/>'>
+<input type="hidden" name="calctype" id="calctype" value='<s:property value="calctype"/>'>
+<input type="hidden" name="allbranch" id="allbranch" value='<s:property value="allbranch"/>' >
+<input type="hidden" name="priormethod" id="priormethod">
+<input type="hidden" name="priorvalue" id="priorvalue">
+<input type="hidden" name="defaultdate" id="defaultdate">
+<input type="hidden" name="agmtsat" id="agmtsat">
 </div>
 </form>
-
-<div id="agmtnowindow"><div></div></div>
-<div id="collectionWindow"><div></div></div>
-<div id="checkinWindow"><div></div></div>
-<div id="rentalAgentWindow"><div></div></div>
-<div id="window1"><div></div></div>
+<div id="agmtnowindow">
+   <div ></div>
+</div>
+<div id="collectionWindow">
+   <div ></div>
+</div>
+<div id="checkinWindow">
+   <div ></div>
+</div>
+<div id="rentalAgentWindow">
+   <div ></div>
+</div>
+<div id="window1">
+   <div ></div>
 
 </div>
 </body>
