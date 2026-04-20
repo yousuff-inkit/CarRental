@@ -10,30 +10,159 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<style>
-form label.error {
-color:red;
-  font-weight:bold;
 
+<style>
+/* =========================================================
+   1. YOUR ORIGINAL PAGE & WRAPPER STYLES (UNTOUCHED)
+========================================================= */
+form label.error {
+    color:red;
+    font-weight:bold;
 }
 
 .style1 {
 	color: #FF0000;
 	font-weight: bold;
 }
+
+.hidden-scrollbar {
+    overflow: visible;
+    height: auto;
+}
+
+html, body {
+    background: #ffffff;                
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    font-size: 12px;                     
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.windowCont,
+#mainBG.homeContent {
+    background: #ffffff !important;
+}
+
+#mainBG {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 16px 18px;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-shadow: none;                    
+}
+
+/* =========================================================
+   2. CASH RECEIPTS UI ELEMENTS (TYPOGRAPHY FIXED)
+========================================================= */
+.middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 15px 15px 15px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 6px; 
+    margin-bottom: 25px;
+    margin-top: 25px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.middle-panel-title { 
+    position: absolute; 
+    top: -12px;
+    left: 15px; 
+    background: #ffffff; 
+    padding: 0 10px; 
+    color: #0056b3;
+    font-weight: 700; 
+    font-size: 15px; 
+    border-left: 4px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
+
+/* Flexbox Layout for Rows & Columns */
+.field-row { 
+    display: flex;
+    align-items: center; 
+    margin-bottom: 12px; 
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* FIXED TYPOGRAPHY TO MATCH OPN IMAGE */
+.lbl-right { 
+    color: #1e293b;
+    font-size: 13px; /* Slightly larger for clarity */
+    font-weight: 600; /* Softer bold, matching OPN image */
+    font-family: 'Segoe UI','Roboto','Arial',sans-serif;
+    white-space: nowrap; 
+    text-align: right;
+    min-width: 100px; 
+}
+
+/* Scoped 26px Inputs with Softer Borders */
+input[type="text"],
+input[type="email"],
+select { 
+    height: 26px !important; 
+    border: 1px solid #d1d5db; /* Softer border color matching OPN */
+    border-radius: 4px; 
+    padding: 4px 8px;
+    font-size: 13px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus { 
+    border-color: #3b82f6; 
+    outline: none;
+    box-shadow: 0 0 0 1px #3b82f6;
+}
+
+input[readonly],
+input:disabled,
+select:disabled { 
+    background-color: #f8f9fa; /* Lighter disabled background */
+    color: #6b7280;
+}
 </style>
+
 <script type="text/javascript">
       $(document).ready(function () {  
-    	  //Date
-          $("#compaccdate1").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"}); 
-          $("#compaccdate2").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-     document.getElementById("datediv").style.display="none";
-     document.getElementById("formdet").innerText="Company(COM)";
-	 document.getElementById("formdetail").value="Company";
-	 document.getElementById("formdetailcode").value="COM";
-	 window.parent.formCode.value="COM";
-	 window.parent.formName.value="Company";
-	 getTimezone();
+          $("#compaccdate1").jqxDateTimeInput({ width: '125px', height: 26, formatString:"dd.MM.yyyy", theme: 'energyblue'}); 
+          $("#compaccdate2").jqxDateTimeInput({ width: '125px', height: 26, formatString:"dd.MM.yyyy", theme: 'energyblue'});
+          
+          /* force internal alignment AFTER render */
+          setTimeout(function () {
+              $("#compaccdate1, #compaccdate2").find("input").css({
+                  "margin-top": "0px",
+                  "line-height": "26px",
+                  "font-size": "13px", 
+                  "font-family": "Arial, sans-serif", 
+                  "padding": "0 8px", 
+                  "box-sizing":"border-box"
+              });
+              $("#compaccdate1, #compaccdate2").find(".jqx-action-button").css({
+                  "top": "0px",
+                  "height": "26px"
+              });
+          }, 0);
+
+          document.getElementById("datediv").style.display="none";
+          document.getElementById("formdet").innerText="Company(COM)";
+          document.getElementById("formdetail").value="Company";
+          document.getElementById("formdetailcode").value="COM";
+          window.parent.formCode.value="COM";
+          window.parent.formName.value="Company";
+          getTimezone();
       });
   
   function funFocus()
@@ -50,14 +179,7 @@ color:red;
             	 maxlength:5
                } ,
               txtcompname:"required",
-              cmbcurr:"required"/* ,
-              txttel1:{
-            	  required:true,
-            	  digits:true,
-            	  maxlength:12,
-            	  minlength:12
-              } */
-              
+              cmbcurr:"required"
                },
                messages: {
             	   txtcompid:{
@@ -65,17 +187,12 @@ color:red;
             		   maxlength:"max 5 chars"
             	   },
             	   txtcompname:" *",
-            	   cmbcurr:" *"/* ,
-            	   txttel1:{
-            		   required:" *",
-            		   digits:'Digits Only',
-            		   maxlength:'Max 12 nos',
-            		   minlength:'Min 12 nos'
-            	   } */
+            	   cmbcurr:" *"
                }
       });});
+      
    function funNotify(){
-  	 var date1 = $('#compaccdate1').jqxDateTimeInput('getDate');
+  	    var date1 = $('#compaccdate1').jqxDateTimeInput('getDate');
 		var date2 = $('#compaccdate2').jqxDateTimeInput('getDate');
   		if(date1>date2){
 				document.getElementById("errormsg").innerText="";
@@ -87,10 +204,10 @@ color:red;
   		return 1;
 	} 
    
-   
   function funSearchLoad(){
 		changeContent('companySearch.jsp', $('#window')); 
 	 }
+     
      function getCurrency()
 	 {
 		var x=new XMLHttpRequest();
@@ -106,20 +223,13 @@ color:red;
 		    	   optionscurr += '<option value="' + curridItems[i] + '">' + currItems[i] + '</option>';
 		        }
 		         $("select#cmbcurr").html(optionscurr);
-		        // alert($('#hidcmbcurr').val());
 			     $('#cmbcurr').val($('#hidcmbcurr').val()) ;
-				   // alert($('#cmbcurr').val());
 			    }
-		       else
-			  {
-			  }
 	     }
 	      x.open("GET","getCurrency.jsp",true);
 	     x.send();
 	    
         }
-     
-     
      
      function getTimezone()
 	 {
@@ -136,16 +246,10 @@ color:red;
 		    	   optionszone += '<option value="' + zoneidItems[i] + '">' + zoneItems[i] + '</option>';
 		        }
 		         $("select#cmbtimezone").html(optionszone);
-		        // alert($('#hidcmbcurr').val());
 		        if($('#hidcmbtimezone').val()!=""){
 		        	$('#cmbtimezone').val($('#hidcmbtimezone').val()) ;	
 		        }
-			     
-				   // alert($('#cmbcurr').val());
 			    }
-		       else
-			  {
-			  }
 	     }
 	      x.open("GET","getTimezone.jsp",true);
 	     x.send();
@@ -159,7 +263,6 @@ function checkcompid(value){
 	if (x.readyState==4 && x.status==200)
 		{
 		 	var items=x.responseText;
-		 	//alert(items.trim()!='undefine');
 		 	if(items.trim()!='undefine'){
 		 		document.getElementById("txtcompid").focus();
 		 		document.getElementById("errormsg").innerText="Company ID Already Exists";
@@ -170,9 +273,6 @@ function checkcompid(value){
 		 		
 		 	}
 		    }
-	       else
-		  {
-		  }
      }
       x.open("GET","checkCompid.jsp?code="+value+"&doc="+document.getElementById("docno").value,true);
      x.send();
@@ -204,99 +304,113 @@ function checkcompid(value){
  </script> 
 </head>
 <body onload="getCurrency();setValues();">
+
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmCompany" action="saveActionCompany" autocomplete="off">
 
-	<jsp:include page="../../../../header.jsp" />
-	<br/> 
+    <jsp:include page="../../../../header.jsp" />
+    <br/> 
   
-<fieldset >
-<table width="100%">
-  <tr>
-    <td width="13%" align="right">Company</td>
-    <td width="11%"><input type="text" id="txtcompid" name="txtcompid" style="width:80%;" value='<s:property value="txtcompid"/>' onblur="checkcompid(this.value);"></td>
-    <td colspan="7"><input type="text" id="txtcompname" name="txtcompname" style="width:40%;" value='<s:property value="txtcompname"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Address</td>
-    <td colspan="8"><input type="text" id="txtaddress" name="txtaddress" style="width:50%;" value='<s:property value="txtaddress"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">P.B.No</td>
-    <td colspan="8"><input type="text" id="txtpbno" name="txtpbno" style="width:50%;" value='<s:property value="txtpbno"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Tel</td>
-    <td colspan="3"><input type="text" id="txttel1" name="txttel1" style="width:50%;" value='<s:property value="txttel1"/>'></td>
-    <td width="11%" align="right">Tel</td>
-    <td colspan="4"><input type="text" id="txttel2" name="txttel2" style="width:40%;" value='<s:property value="txttel2"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Fax</td>
-    <td colspan="3"><input type="text" id="txtfax1"  name="txtfax1" style="width:50%;" value='<s:property value="txtfax1"/>'></td>
-    <td align="right">Fax</td>
-    <td colspan="4"><input type="text" id="txtfax2" name="txtfax2" style="width:40%;" value='<s:property value="txtfax2"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Email</td>
-    <td colspan="8"><input type="email" id="txtemail1" name="txtemail1" style="width:50%;" value='<s:property value="txtemail1"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Website</td>
-    <td colspan="8"><input type="text"  id="txtwebsite" name="txtwebsite" style="width:50%;" value='<s:property value="txtwebsite"/>'></td>
-  </tr>
- <%--  <tr>
-    <td colspan="4" align="center"><input type="checkbox" id="chckdefault" name="chckdefault" value='<s:property value="chckdefault"/>'/>Default</td>
-    <td align="right">SMS No</td>
-    <td width="38%"><input type="text" id="txtsmsno" name="txtsmsno" value='<s:property value="txtsmsno"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">Username</td>
-    <td colspan="3"><input type="text"  id="txtusername" name="txtusername" style="width:50%;" value='<s:property value="txtusername"/>'></td>
-    <td align="right">Password</td>
-    <td><input type="text" id="txtpassword" name="txtpassword" value='<s:property value="txtpassword"/>'></td>
-  </tr>
-  <tr>
-    <td align="right">SMS Url</td>
-    <td colspan="3"><input type="text"  id="txtsmsurl" name="txtsmsurl" style="width:50%;" value='<s:property value="txtsmsurl"/>'></td>
-    <td align="right">Folio Time Delay</td>
-    <td><input type="text"  id="txtfoliotime" name="txtfoliotime" value='<s:property value="txtfoliotime"/>'></td>
-  </tr>
- --%>  <tr>
-    <td align="right">Account Period</td>
-    <td><div id="compaccdate1" name="compaccdate1" value='<s:property value="compaccdate1"/>'></div>
-        <input type="hidden" id="hidcompaccdate1" name="hidcompaccdate1" value='<s:property value="hidcompaccdate1"/>'/></td>
-    <td width="2%" align="center">To</td>
-    <td width="11%"><div id="compaccdate2" name="compaccdate2" value='<s:property value="compaccdate2"/>'></div>
-    <input type="hidden" id="hidcompaccdate2" name="hidcompaccdate2" value='<s:property value="hidcompaccdate2"/>'/></td>
-    <td align="right">Currency</td>
-    <td width="8%"><select name="cmbcurr" id="cmbcurr" value='<s:property value="cmbcurr"/>'>
-      <option value="">--Select--</option></select>
-      </td>
-    <td width="9%" align="right">Time Zone</td>
-    <td width="28%"><select name="cmbtimezone" id="cmbtimezone" style="width:100%;"><option value="">--Select--</option></select></td>
-  </tr>
-  <input type="hidden" id="hidcmbcurr" name="hidcmbcurr" value='<s:property value="hidcmbcurr"/>'/>
-  <tr>
-    <td  align="right">&nbsp;</td>
-    <td colspan="3"><div class="style1" id="datediv">
-      <div align="right">Please select a valid Date</div>
-    </div></td>
-    <td align="right">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td align="left">&nbsp;</td>
-    <td width="7%">&nbsp;</td>
-  </tr>
-</table>
-<input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+    <div class="hidden-scrollbar">
 
-<input type="hidden" id="docno" name="docno" value='<s:property value="docno"/>'>
-<input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
-<input type="hidden" name="hidcmbtimezone" id="hidcmbtimezone" value='<s:property value="hidcmbtimezone"/>' hidden="true"/>
-<input type="hidden" id="mode" name="mode"/><br/>
-</fieldset>
+        <div class="middle-panel" style="max-width: 1000px; margin-top: 30px;">
+            <span class="middle-panel-title">Company Info</span>
+            
+            <div class="field-row">
+                <label class="lbl-right">Company</label>
+                <div style="display: flex; flex: 1; gap: 10px;">
+                    <input type="text" id="txtcompid" name="txtcompid" value='<s:property value="txtcompid"/>' onblur="checkcompid(this.value);" style="width: 100px; flex: none;">
+                    <input type="text" id="txtcompname" name="txtcompname" value='<s:property value="txtcompname"/>' style="flex: 1; max-width: 400px;">
+                </div>
+            </div>
+
+            <div class="field-row">
+                <label class="lbl-right">Address</label>
+                <input type="text" id="txtaddress" name="txtaddress" value='<s:property value="txtaddress"/>' style="flex: 1; max-width: 600px;">
+            </div>
+
+            <div class="field-row">
+                <label class="lbl-right">P.B.No</label>
+                <input type="text" id="txtpbno" name="txtpbno" value='<s:property value="txtpbno"/>' style="flex: 1; max-width: 600px;">
+            </div>
+
+            <div class="field-row">
+                <div style="display: flex; align-items: center; flex: 1; max-width: 350px;">
+                    <label class="lbl-right">Tel</label>
+                    <input type="text" id="txttel1" name="txttel1" value='<s:property value="txttel1"/>' style="flex: 1; margin-left: 15px;">
+                </div>
+                <div style="display: flex; align-items: center; flex: 1; max-width: 350px;">
+                    <label class="lbl-right">Tel</label>
+                    <input type="text" id="txttel2" name="txttel2" value='<s:property value="txttel2"/>' style="flex: 1; margin-left: 15px;">
+                </div>
+            </div>
+
+            <div class="field-row">
+                <div style="display: flex; align-items: center; flex: 1; max-width: 350px;">
+                    <label class="lbl-right">Fax</label>
+                    <input type="text" id="txtfax1"  name="txtfax1" value='<s:property value="txtfax1"/>' style="flex: 1; margin-left: 15px;">
+                </div>
+                <div style="display: flex; align-items: center; flex: 1; max-width: 350px;">
+                    <label class="lbl-right">Fax</label>
+                    <input type="text" id="txtfax2" name="txtfax2" value='<s:property value="txtfax2"/>' style="flex: 1; margin-left: 15px;">
+                </div>
+            </div>
+
+            <div class="field-row">
+                <label class="lbl-right">Email</label>
+                <input type="email" id="txtemail1" name="txtemail1" value='<s:property value="txtemail1"/>' style="flex: 1; max-width: 600px;">
+            </div>
+
+            <div class="field-row">
+                <label class="lbl-right">Website</label>
+                <input type="text" id="txtwebsite" name="txtwebsite" value='<s:property value="txtwebsite"/>' style="flex: 1; max-width: 600px;">
+            </div>
+
+            <div style="border-top: 1px solid #e5e7eb; margin-top: 15px; padding-top: 15px;">
+                <div class="field-row">
+                    <label class="lbl-right">Account Period</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div id="compaccdate1" name="compaccdate1" value='<s:property value="compaccdate1"/>'></div>
+                        <input type="hidden" id="hidcompaccdate1" name="hidcompaccdate1" value='<s:property value="hidcompaccdate1"/>'/>
+                        
+                        <span style="font-weight: 600; color: #444;">To</span>
+                        
+                        <div id="compaccdate2" name="compaccdate2" value='<s:property value="compaccdate2"/>'></div>
+                        <input type="hidden" id="hidcompaccdate2" name="hidcompaccdate2" value='<s:property value="hidcompaccdate2"/>'/>
+                    </div>
+                </div>
+
+                <div class="field-row" style="margin-bottom:0;">
+                    <div style="display: flex; align-items: center; flex: 1; max-width: 300px;">
+                        <label class="lbl-right">Currency</label>
+                        <select name="cmbcurr" id="cmbcurr" value='<s:property value="cmbcurr"/>' style="flex: 1; margin-left: 15px;">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; flex: 1; max-width: 400px;">
+                        <label class="lbl-right">Time Zone</label>
+                        <select name="cmbtimezone" id="cmbtimezone" style="flex: 1; margin-left: 15px;">
+                            <option value="">--Select--</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <input type="hidden" id="hidcmbcurr" name="hidcmbcurr" value='<s:property value="hidcmbcurr"/>'/>
+        <div class="style1" id="datediv" style="display: none;">
+            <div align="right">Please select a valid Date</div>
+        </div>
+
+        <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'>
+        <input type="hidden" id="docno" name="docno" value='<s:property value="docno"/>'>
+        <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>' hidden="true"/>
+        <input type="hidden" name="hidcmbtimezone" id="hidcmbtimezone" value='<s:property value="hidcmbtimezone"/>' hidden="true"/>
+        <input type="hidden" id="mode" name="mode"/>
+
+    </div>
 </form>
- </div>                                  
+ </div>                                   
 </body>
 </html>
