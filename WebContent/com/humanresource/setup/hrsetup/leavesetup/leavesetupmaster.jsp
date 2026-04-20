@@ -6,89 +6,133 @@
 <title>GatewayERP(i)</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <jsp:include page="../../../../../includes.jsp"></jsp:include>
 
 <style>
 /* =========================================================
-SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+   1. 100% SCOPED CSS - GUARANTEED NOT TO BREAK HEADER
 ========================================================= */
 
-.modern-ui {
-    font-family: Arial, sans-serif; 
-    color: #333;
-    font-size: 12px; 
-    padding: 10px 20px;
-    box-sizing: border-box;
+/* Validation Errors */
+form label.error {
+    color: red;
+    font-weight: bold;
+    font-size: 11px;
 }
 
-.modern-ui .erp-form-area {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
-    padding: 15px 10px;
-    margin-bottom: 10px;
-    min-width: 1050px; 
-}
-
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"],
-.modern-ui select { 
-    height: 24px !important; 
-    border: 1px solid #b8c6d8; 
-    border-radius: 3px; 
-    padding: 2px 6px;
-    font-size: 12px;
-    box-sizing: border-box; 
-    background-color: #fff; 
-    color: #333;
+/* Wrapper to isolate our form layout from the header */
+#leavesetup-form-container {
+    padding-top: 15px;
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus,
-.modern-ui select:focus { 
-    border-color: #007bff; 
-    outline: none;
+/* Scoped Fieldsets (Replaces the .middle-panel logic cleanly) */
+#leavesetup-form-container .master-fieldset {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 20px 15px 15px 15px;
+    margin-bottom: 25px;
+    background-color: transparent; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.modern-ui input[readonly],
-.modern-ui input:disabled { 
-    background-color: #f8f9fa; 
+/* The Blue Left-Border Title */
+#leavesetup-form-container .master-legend {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0056b3;
+    padding: 0 10px;
+    border-left: 4px solid #0056b3;
+    width: auto;
+    margin-bottom: 0;
+    border-bottom: none;
+    line-height: 1.2;
+}
+
+/* Flexbox rows */
+#leavesetup-form-container .master-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 15px;
+}
+
+/* Right aligned labels */
+#leavesetup-form-container .master-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: right;
+    min-width: 80px;
+    white-space: nowrap;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* Strict custom class for inputs so it NEVER affects the header */
+#leavesetup-form-container .master-input {
+    height: 26px !important;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 13px;
+    box-sizing: border-box;
+    color: #333;
+    background-color: #fff;
+    width: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+#leavesetup-form-container .master-input:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 1px #3b82f6;
+}
+
+#leavesetup-form-container .master-input[readonly],
+#leavesetup-form-container .master-input:disabled {
+    background-color: #f8f9fa;
     color: #6b7280;
 }
 
-.modern-ui td {
-    padding: 4px 5px;
-    vertical-align: middle;
+/* Search Icon Wrapper */
+#leavesetup-form-container .search-wrapper {
+    position: relative;
+    display: flex;
+    flex: 1;
+}
+#leavesetup-form-container .search-wrapper input {
+    padding-right: 28px !important;
+}
+#leavesetup-form-container .search-wrapper svg {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+#leavesetup-form-container .search-wrapper svg:hover { color: #007bff; }
+
+/* Grid Container */
+.grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    margin-top: 10px;
 }
 
-.modern-ui .lbl-right { 
-    text-align: right; 
-    color: #444;
-    font-size: 12px; 
-    font-weight: bold;
-    white-space: nowrap; 
-    padding-right: 5px;
-}
-
-/* Split Section Styling */
-.modern-ui .section-title {
-    font-size: 13px;
-    font-weight: bold;
-    color: #0056b3;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #c5d3e0;
-    padding-bottom: 3px;
-}
-
-/* Custom UI Buttons matching 24px height */
+/* Custom UI Buttons matching 26px height */
 .myButton1, .myButton4 {
-    height: 24px !important;
-    line-height: 22px !important;
-    padding: 0 12px;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
+    height: 26px !important;
+    line-height: 24px !important;
+    padding: 0 14px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 12px;
     font-weight: bold;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     text-shadow: none;
     transition: all 0.2s;
@@ -124,25 +168,9 @@ SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
     from { -webkit-filter: hue-rotate(0deg); }
     to { -webkit-filter: hue-rotate(-360deg); }
 }
-
-/* Data Grid Container */
-.modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
-    overflow: hidden;
-    background: #fff;
-    margin-bottom: 10px;
-}
-
-.hidden-scrollbar { 
-    overflow: auto; 
-    height: calc(100vh - 100px);
-}
-.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
 
 <script type="text/javascript">
-
 	$(document).ready(function () {   
 		
 	    if(document.getElementById("formdet")) document.getElementById("formdet").innerText="Leave Setup(LSP)";
@@ -165,7 +193,7 @@ SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
 			  $('#refSearchwindow').jqxWindow('open');
 			  refnoSearchContent('refmastersearch.jsp?');
 		});   
-		    
+		   
      });
 	
 	function funSearchLoad(){}
@@ -188,7 +216,7 @@ SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
     /* SAFE READONLY FUNCTION */
 	function funReadOnly() {
 	    try {
-    		$('#frmleavesetup input[type="text"]').attr('readonly', true);
+    		$('#frmleavesetup .master-input').attr('readonly', true);
     		$('#savebtn').attr('disabled', true);
     		$('#deltbtn').attr('disabled', true);
 	    } catch(e) { console.error("Error in funReadOnly: ", e); }
@@ -197,8 +225,8 @@ SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
 	/* SAFE REMOVE READONLY FUNCTION */
 	function funRemoveReadOnly() {
 	    try {
-    		$('#frmleavesetup input[type="text"]').attr('readonly', false);
-    		$('#docno').attr('readonly', true);
+    		$('#frmleavesetup .master-input').attr('readonly', false);
+    		$('#category').attr('readonly', true); 
 	    } catch(e) { console.error("Error in funRemoveReadOnly: ", e); }
 	}
  
@@ -258,7 +286,7 @@ SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
 	        		fundeldata(leaveid,leavetype);
 	        	}
 		     });
- 	  
+    
        }
 
 	   function fundeldata(leaveid,leavetype) {
@@ -343,58 +371,61 @@ SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
 </head>
 <body onLoad="setValues();" >
 
-<div id="mainBG" class="homeContent hidden-scrollbar" data-type="background">
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmleavesetup" action="saveLeavesetup" method="post" autocomplete="off"> 
+
     <jsp:include page="../../../../../header.jsp" />
 	
-    <div class="modern-ui">
+    <div id="leavesetup-form-container">
 
-        <div class="erp-form-area">
-            <div class="section-title">Leave Setup</div>
-            <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                <tr>
-                    <td class="lbl-right" width="5%">Ref No</td> 
-                    <td width="20%">
-                        <input type="text" placeholder="Press F3 To Search" onKeyDown="gethrsetup(event);" name="refno" id="refno" value='<s:property value="refno"/>'>
-                    </td>
-                    <td class="lbl-right" width="8%">Category</td>
-                    <td width="20%">
-                        <input type="text" name="category" id="category" value='<s:property value="category"/>' readonly="readonly">
-                    </td>
-                    <td width="47%" align="center">
-                        <label id="showlabel" class="bounce" value='<s:property value="showlabel"/>'></label>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td width="65%" valign="top" style="padding-right: 10px;">
-                    <div class="erp-form-area" style="height: 100%;">
-                        <div class="section-title">Leave Details</div>
-                        <div class="grid-container" id="lsetup1"> 
-                            <jsp:include page="leavesetupgrid.jsp"></jsp:include>
-                        </div>
-                    </div>
-                </td>
+        <fieldset class="master-fieldset" style="margin-top: 15px;">
+            <legend class="master-legend">Leave Setup</legend>
+            <div class="master-row" style="margin-bottom: 0;">
                 
-                <td width="35%" valign="top">
-                    <div class="erp-form-area" style="height: 100%;">
-                        <div class="section-title">Leave Conditions</div>
-                        <div class="grid-container" id="lsetup2" style="margin-bottom: 15px;"> 
-                            <jsp:include page="condtiongrid.jsp"></jsp:include>
-                        </div>
-                        
-                        <div style="text-align: center;">
-                            <input type="button" id="savebtn" class="myButton1" onclick="funsave();" value="Save">
-                            &nbsp;&nbsp;&nbsp; 
-                            <input type="button" id="deltbtn" onclick="fundel()" class="myButton4" value="Delete">
-                        </div>
+                <label class="master-label" style="width: 50px;">Ref No</label>
+                <div class="search-wrapper" style="max-width: 150px;">
+                    <input type="text" class="master-input" placeholder="Press F3 To Search" onKeyDown="gethrsetup(event);" name="refno" id="refno" value='<s:property value="refno"/>'>
+                    <svg onclick="$('#refSearchwindow').jqxWindow('open'); refnoSearchContent('refmastersearch.jsp?');" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                
+                <label class="master-label" style="width: 80px; margin-left: 20px;">Category</label>
+                <input type="text" class="master-input" name="category" id="category" value='<s:property value="category"/>' readonly="readonly" style="max-width: 250px;">
+                
+                <div style="flex: 1; text-align: center;">
+                    <label id="showlabel" class="bounce" value='<s:property value="showlabel"/>'></label>
+                </div>
+
+            </div>
+        </fieldset>
+        
+        <div style="display: flex; gap: 20px;">
+            
+            <div style="flex: 6.5; min-width: 600px;">
+                <fieldset class="master-fieldset" style="height: 100%; box-sizing: border-box; margin-bottom: 0;">
+                    <legend class="master-legend">Leave Details</legend>
+                    <div class="grid-container" id="lsetup1" style="margin-top: 10px;"> 
+                        <jsp:include page="leavesetupgrid.jsp"></jsp:include>
                     </div>
-                </td>
-            </tr>
-        </table>
+                </fieldset>
+            </div>
+            
+            <div style="flex: 3.5; min-width: 350px;">
+                <fieldset class="master-fieldset" style="height: 100%; box-sizing: border-box; margin-bottom: 0; display: flex; flex-direction: column;">
+                    <legend class="master-legend">Leave Conditions</legend>
+                    
+                    <div class="grid-container" id="lsetup2" style="margin-top: 10px; margin-bottom: 15px; flex: 1;"> 
+                        <jsp:include page="condtiongrid.jsp"></jsp:include>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: auto;">
+                        <input type="button" id="savebtn" class="myButton1" onclick="funsave();" value="Save">
+                        &nbsp;&nbsp;&nbsp; 
+                        <input type="button" id="deltbtn" onclick="fundel()" class="myButton4" value="Delete">
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
         
         <div style="display:none;">
             <input type="hidden" id="docno" name="docno" value='<s:property value="docno"/>' />
