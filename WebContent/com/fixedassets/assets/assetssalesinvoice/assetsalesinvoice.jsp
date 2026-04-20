@@ -11,6 +11,149 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <jsp:include page="../../../../includes.jsp"></jsp:include>
 
+
+<style type="text/css">
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Scrollable Container */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 40px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 8px; 
+}
+
+td {
+    padding: 2px 5px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+td[align="right"] {
+    font-weight: bold;
+    color: #444;
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+input[type="text"], 
+select {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+input[type="text"]:focus, 
+select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+input[readonly] {
+    background-color: #f8f9fa;
+    color: #666;
+}
+
+fieldset {
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    background: #fdfdfd;
+    margin-bottom: 10px;
+}
+
+.myButton {
+    height: 28px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+.myButton:hover { 
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.myButton:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+button.icon {
+    background: transparent;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 3px;
+    transition: background 0.2s;
+}
+button.icon:hover { background: #f0f3f5; }
+button.icon img { width: 20px; height: 20px; }
+
+#divMCPGrid {
+    border: 1px solid #c5d3e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#errormsg, #validrate {
+    color: #d93025;
+    font-size: 11px;
+    font-weight: bold;
+    display: block;
+    padding-top: 2px;
+}
+
+.jqx-datetimeinput {
+    height: 24px !important;
+}
+
+legend {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 10px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+        border-left: 3px solid #0b45a2;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
 	//document.getElementById("btnEdit").disabled=true;  
@@ -239,218 +382,70 @@ function funPrintBtn() {
 
 
 </script>
-
-<style>
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    color: #222;
-    margin: 0;
-    padding: 20px 0;
-    box-sizing: border-box;
-    overflow-y: auto;
-    min-height: auto;
-}
-
-#mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 15px;
-    max-width: 98%;
-    margin: auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    display: inline-block;
-    width: 100%;
-}
-
-input[type="text"], select {
-    height: 30px !important;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 4px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-    font-size: 14px;
-    box-sizing: border-box;
-    width: 100%;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-label {
-    font-weight: 600;
-    color: #253858;
-    white-space: nowrap;
-    text-align: right;
-    padding-right: 8px;
-}
-
-.receipt-header {
-    display: block;
-    margin-bottom: 10px;
-    padding: 0 5px;
-}
-
-.receipt-header table {
-    width: 100%;
-}
-
-.receipt-header td {
-    padding: 2px 4px;
-    vertical-align: middle;
-}
-
-.section-block {
-    background: #f6f8fa;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.1);
-    margin-bottom: 10px;
-}
-
-.section-block h2 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 15px;
-    padding-left: 10px;
-    border-left: 4px solid #007bff;
-    color: #333;
-}
-
-.agmt-info-grid {
-    display: grid;
-    grid-template-columns: 100px 1fr 100px 1fr 100px 1fr;
-    align-items: center;
-    gap: 10px 15px;
-}
-
-.input-group {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
-.myButton {
-    background: #007bff;
-    color: white;
-    padding: 0 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    height: 30px;
-}
-
-.jqx-datetimeinput {
-    height: 30px !important;
-    box-sizing: border-box;
-    width: 130px !important;
-}
-
-.grid-container {
-    margin-top: 10px;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid #e4e7ec;
-}
-
-input[readonly] {
-    background-color: #f3f4f6;
-}
-#formdet {
-    text-align: left !important;
-    display: block;
-}
-
-</style>
 </head>
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
-<form id="frmAssetSalesInvoice" action="saveActionAssetSalesInvoice" autocomplete="off">
+<form id="frmAssetSalesInvoice" action="saveActionAssetSalesInvoice" autocomplete="off" >
 
-    <jsp:include page="../../../../header.jsp" />
-    <br/> 
+	<jsp:include page="../../../../header.jsp" />
+	<br/> 
 
-    <div id="mainBG">
-    <div class="receipt-header">
-        <table width="100%">
-            <tr>
-                <td width="1%"><label>Date</label></td>
-                <td width="100px">
-                    <div id="date" name="date" value='<s:property value="date"/>'></div>
-                    <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
-                </td>
-                <td></td>
-                <td width="1%" align="right"><label>Doc&nbsp;No</label></td>
-                <td width="180px" align="right">
-                    <input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' readonly tabindex="-1" style="width: 180px !important;">
-                </td>
-            </tr>
-        </table>
-    </div>
+<fieldset>
+<legend>Invoice Header</legend>
+<table class="form-table" >
+  <tr>
+    <td width="6%" align="right">Date</td>
+    <td width="8%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
+		
+  
+    <td width="10%" align="right">Doc No</td>
+    <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1"  readonly></td>
 
-    <div class="section-block">
-        <h2>Asset Sales Invoice Information</h2>
-        <div class="agmt-info-grid">
-            <label>Client</label>
-            <div style="grid-column: span 5;">
-                <div class="input-group">
-                    <input type="text" name="client" id="client" style="width: 15% !important;" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);">
-                    <input type="text" name="clientname" id="clientname" style="width: 85% !important;" value='<s:property value="clientname"/>' readonly tabindex="-1">
-                </div>
-            </div>
+  </tr>
+  <tr>
+    <td align="right">Client</td>
+    <td align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);"></td>
+    <td  colspan="2" align="left"><input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' style="width:99%;" readonly></td>
+   <td  align="right">Description</td>
+    <td colspan="2" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' style="width:97.5%;"></td>
+    <td align="right">Type</td>
+    <td align="left"><select name="cmbtype" id="cmbtype" >
+      <option value="">--Select--</option>
+      <option value="S">Sale</option>
+      <option value="L">Total Loss</option>
+    </select></td>
+    <td align="center"><input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate"></td>
+  </tr>
+ 
+  
+  </table>
+  </fieldset>
+  <div class="grid-wrapper">
+<div id="assetInvoicediv"><jsp:include page="assetInvoiceGrid.jsp"></jsp:include></div>
+</div>
 
-            <label>Description</label>
-            <div style="grid-column: span 3;">
-                <input type="text" name="description" id="description" value='<s:property value="description"/>'>
-            </div>
-
-            <label>Type</label>
-            <div class="input-group">
-                <select name="cmbtype" id="cmbtype">
-                    <option value="">--Select--</option>
-                    <option value="S">Sale</option>
-                    <option value="L">Total Loss</option>
-                </select>
-                <input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate">
-            </div>
-        </div>
-    </div>
-
-    <div class="section-block">
-        <h2>Invoice Details</h2>
-        <div class="grid-container">
-            <div id="assetInvoicediv">
-                <jsp:include page="assetInvoiceGrid.jsp"></jsp:include>
-            </div>
-        </div>
-    </div>
-
-    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden="true"></div>
-    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden="true"></div>
+<div style="display:none;">
+    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden=true></div>
+    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden=true></div>
     <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
     <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
     <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+    <input type="hidden" name="hiddate" id="hiddate" value='<s:property value="hiddate"/>'>
     <input type="hidden" name="hidcmbtype" id="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
     <input type="hidden" name="trno" id="trno" value='<s:property value="trno"/>'> 
     <input type="hidden" name="gridlength" id="gridlength" value='<s:property value="gridlength"/>'>
-    <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
-    <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
-    <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
-    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' readonly>
-</div>
+     <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
+     <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
+     <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
+     <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1"  readonly>
+ </div>
 </form>
-
-<div id="clientwindow">
-    <div></div>
+<div id=clientwindow>
+   <div ></div>
 </div>
 <div id="assetwindow">
-    <div></div>
+   <div ></div>
 </div>
-
 </div>
 </body>
 </html>
