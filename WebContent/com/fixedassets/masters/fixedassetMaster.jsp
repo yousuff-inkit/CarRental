@@ -30,9 +30,9 @@ html, body {
 
 /* ---------------- LEFT NAV ---------------- */
 #nav {
-    width: 190px;
+    width: 130px;
     background-color: #E0ECF8;
-    padding: 16px 10px;
+    padding: 8px 5px;
     box-sizing: border-box;
     border-right: 1px solid #c9d9ee;
 }
@@ -46,17 +46,12 @@ html, body {
     width: 100%;
     margin-bottom: 12px;
     padding: 10px 0;
-
     background: linear-gradient(135deg, #4FA8FF, #2F7FD4);
     color: #ffffff;
-
     border: none;
     border-radius: 8px;
-
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.25s ease;
     box-shadow: 0 4px 10px rgba(79,168,255,0.35);

@@ -772,6 +772,164 @@
 #validrate{
  color:red;
  }
+ 
+
+/* =========================================================
+   SCOPED UI: Table-Based Modern Layout 
+   ========================================================= */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#mainBG {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Scrollable Container */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 160px);
+    padding-right: 5px;
+}
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+
+/* Table Reset for Layout */
+table {
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Vertical gap between rows */
+}
+
+td {
+    padding: 2px 5px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+/* Professional Labels */
+td[align="right"] {
+    font-weight: bold;
+    color: #444;
+    white-space: nowrap;
+    padding-right: 5px;
+}
+
+/* Modern Input & Select (Force 24px) */
+input[type="text"], 
+select {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+input[type="text"]:focus, 
+select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+input[readonly] {
+    background-color: #f8f9fa;
+    color: #666;
+}
+
+/* Master Panel (Fieldset) */
+fieldset {
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    background: #fdfdfd;
+    margin-bottom: 10px;
+}
+
+/* Modern Buttons (Blue Gradient) */
+.myButton {
+    height: 28px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+.myButton:hover { 
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+/* Disabled Button state */
+.myButton:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Excel Import/Export Icon Buttons */
+button.icon {
+    background: transparent;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 3px;
+    transition: background 0.2s;
+}
+button.icon:hover { background: #f0f3f5; }
+button.icon img { width: 20px; height: 20px; }
+
+/* Grid Wrapper */
+#divMCPGrid {
+    border: 1px solid #c5d3e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+/* Validation Text */
+#errormsg, #validrate {
+    color: #d93025;
+    font-size: 11px;
+    font-weight: bold;
+    display: block;
+    padding-top: 2px;
+}
+
+/* JQX Overrides to match 24px */
+.jqx-datetimeinput {
+    height: 24px !important;
+}
+
+legend {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 10px;
+    /* This creates the gradient text effect */
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* Adds a professional blue left border to anchor the legend */
+    border-left: 3px solid #0b45a2;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
 </style>
 
 </head>
@@ -781,6 +939,8 @@
 <jsp:include page="../../../../header.jsp"></jsp:include>
 
 <div  class='hidden-scrollbar'>
+<fieldset>
+<legend>Gen. Info</legend>
 <table width="100%">
   <tr>
     <td width="3%" height="42" align="right">Date</td>
@@ -802,8 +962,10 @@
     <!-- <button class="myButton" type="button" id="btnvaluechange" name="btnvaluechange" onclick="funwarningopen();">Value Change</button></td> -->
   </tr>
 </table>
+</fieldset>
 
 <fieldset>
+<legend>Cash</legend>
 <table width="100%">
   <tr>
     <td width="6%" align="right">Cash</td>
