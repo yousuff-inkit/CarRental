@@ -1,242 +1,150 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <% String contextPath=request.getContextPath();%>
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head>
-
 <title>GatewayERP(i)</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../../../../includes.jsp"></jsp:include>
+
 <style>
-#whole
-{
-width:100%;
-}
-#header
-{
-background-color: #E0ECF8;
-color:black;
-text-align:left;
-height:7%;
-width:3%
-padding:0px;
-}
-#nav
-{
-   line-height:30px;
-    background-color: #E0ECF8;
-    height:90.5%;
-    width:5%;
-    float:left;
-    position:absolute;
-    
-    
-}
-
-#comiframe
-{
-float:right;
-width:98.5%;
-height:98%;
-color:#eeeeee;
-
-}
-
-.hidden-scrollbar {
-    overflow: auto;
-    height: 530px;
-}
+/* =========================================================
+   SCOPED UI: Vertical Sidebar Layout (Matches HR Setup Image)
+========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    background: #f7f9fc;
     color: #222;
     margin: 0;
-    padding: 32px 0;
-    min-height: 100vh;
-    box-sizing: border-box;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
 #mainBG {
     background: #fff;
-    border-radius: 16px;
-    /*box-shadow: 0 4px 24px rgba(0,0,0,0.08);*/
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.receipt-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    padding: 0px 24px;
-    font-size: 2vh;
-}
-.receipt-header label {
-    font-weight: 500;
-    color: #333;
-    margin-right: 8px;
-}
-.receipt-header input[type="text"] {
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 1rem;
-    width: 120px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-.receipt-header input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-.receipt-header button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.receipt-header button:hover {
-    background: #0056b3;
-}
-#txtStatus {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e67e22;
-    margin-left: 12px;
-}
-
-.section-row {
-    display: flex;
-    gap: 26px;
-    margin-bottom: 24px;
-}
-.section-block {
-    flex: 1;
-    background: #f6f8fa;
-    border-radius: 10px;
-    padding: 20px 18px;
-    box-shadow: 0 1px 8px rgba(160,177,217,0.05);
-}
-
-.section-block h2 {
-    font-size: 1.09em;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: #253858;
-}
-
-.section-block .form-group {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.section-block label {
-    min-width: 110px;
-    text-align: right;
-    font-weight: 500;
-    color: #253858;
-}
-
-.section-block input[type="text"],
-.section-block select {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    transition: border-color 0.2s;
-}
-
-.section-block input[type="text"]:focus,
-.section-block select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-
-.table-section {
-    margin-bottom: 18px;
-    padding-inline: 1.04em;
-    padding-block: 1.04em;
     border-radius: 8px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: row; /* Aligns Sidebar and Iframe side-by-side */
+    gap: 25px;
+    flex: 1;
 }
-.table-section h3 {
-    color: #253858;
-    font-size: 1.04em;
-    font-weight: 600;
+
+/* Sidebar Navigation Styling */
+#nav-sidebar {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
 }
-.cr-table {
+
+#nav-sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1a2b3c;
+    font-size: 18px;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 8px;
+}
+
+/* Button Styling matching the image */
+input[type="button"].myButton {
     width: 100%;
-    border-collapse: collapse;
-    background: #f9fafb;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px #eef0f6;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 15px;
+    border-radius: 4px;
+    border: none;
+    background: #1d4ed8; /* Solid flat blue matching the image */
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
 }
-.cr-table th, .cr-table td {
-    padding: 9px 10px;
-    border-bottom: 1px solid #e4e7ec;
-    text-align: left;
-    font-size: 1em;
+
+input[type="button"].myButton:hover {
+    background: #1e3a8a; /* Darker blue on hover */
+    transform: translateY(-1px);
 }
-.cr-table th {
-    background: #eef0f6;
-    color: #354B6A;
-    font-weight: 600;
+
+/* Active/Focused state to mimic selection */
+input[type="button"].myButton:focus {
+    background: #1e3a8a;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
 }
-.cr-table tr:last-child td {
-    border-bottom: none;
+
+/* Content Area Styling */
+#comiframe {
+    flex: 1; /* Takes up all remaining width */
+    border-left: 1px solid #e2e8f0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    flex: 1;
+}
+
+/* Hidden inputs logic */
+.hidden-data {
+    display: none;
 }
 </style>
+
 <script type="text/javascript">
-	
-	$(document).ready(function() {
-		//document.getElementById("btnproject").disabled="true";
-		$('#branchid').val(window.parent.branchid.value); 
-	});
-	</script>
-</head>
-<body>
-<div id="mainBG" class="homeContent" data-type="background">
-<div id="header">
-<h3>Company Master</h3>
+$(document).ready(function() {
+    if (window.parent && window.parent.branchid) {
+        $('#branchid').val(window.parent.branchid.value); 
+    }
+});
 
-</div>
-
-<div id="nav">
-<table >
-<tr><td><input type="button" name="btncompany" class="myButton" value="Company" style="width:90px;outline:none;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/company.jsp";'></td></tr>
-<tr><td><input type="button" name="btnbranch" class="myButton" value="Branch" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/branch.jsp";'></td></tr>
-<tr><td><input type="button" name="btnlocation" class="myButton" value="Location" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/location.jsp";'></td></tr>
-<tr><td><input type="button" name="btncurrency" class="myButton" value="Currency" style="width:90px;" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/currency.jsp";'></td></tr>
-
-</table>
-<input type="hidden" id="formName" name="formName"  value='000'/>
-<input type="hidden" id="formCode" name="formCode"  value='COM'/>
-<input type="hidden" id="branchid" name="branchid"  value=''/>
-<input type="hidden" id="mode" name="mode"  />
-</div>
-<div id="comiframe">
-
-	<iframe width="100%" height="100%" id="iframe2" align="right" frameborder="0" marginwidth="100%" scrolling="no" src="<%=contextPath%>/com/controlcentre/settings/companysettings/company.jsp"></iframe>
-</div>
-<script>
 function resizeIframeToFitContent(iframe) {
-    // This function resizes an IFrame object
-    // to fit its content.
-    // The IFrame tag must have a unique ID attribute.
-    iframe.height = document.frames[iframe.iframe2]
-                    .document.body.scrollHeight;
+    if (iframe.contentWindow && iframe.contentWindow.document.body) {
+        iframe.height = iframe.contentWindow.document.body.scrollHeight;
+    }
 }
 </script>
+</head>
+
+<body>
+<div id="mainBG" class="homeContent">
+
+    <div id="nav-sidebar">
+        <h3>Company Master</h3>
+        <input type="button" name="btncompany" class="myButton" value="COMPANY" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/company.jsp";'>
+        <input type="button" name="btnbranch" class="myButton" value="BRANCH" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/branch.jsp";'>
+        <input type="button" name="btnlocation" class="myButton" value="LOCATION" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/location.jsp";'>
+        <input type="button" name="btncurrency" class="myButton" value="CURRENCY" onclick='document.getElementById("iframe2").src="<%=contextPath%>/com/controlcentre/settings/companysettings/currency.jsp";'>
+    </div>
+
+    <div id="comiframe">
+        <iframe id="iframe2" scrolling="auto" src="<%=contextPath%>/com/controlcentre/settings/companysettings/company.jsp" onload="resizeIframeToFitContent(this)"></iframe>
+    </div>
+
+    <div class="hidden-data">
+        <input type="hidden" id="formName" name="formName" value='000'/>
+        <input type="hidden" id="formCode" name="formCode" value='COM'/>
+        <input type="hidden" id="branchid" name="branchid" value=''/>
+        <input type="hidden" id="mode" name="mode" />
+    </div>
+
 </div>
 </body>
 </html>
