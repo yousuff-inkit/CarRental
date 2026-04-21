@@ -155,6 +155,11 @@ body {
 <script type="text/javascript">
 
 $(document).ready(function () {    
+	$('.action-bar').append(
+	        '<button type="button" class="action-btn" id="btnExcel" onclick="funExcelBtn()">' +
+	        '<svg viewBox="0 0 20 20"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.89 2 1.99 2h8c1.1 0 2-.9 2-2V8l-6-6zm-1 12H7v-2h6v2zm0-4H7V8h6v2zm-3-5V3.5L14.5 8H10z"/></svg> ' +
+	        'Excel</button>'
+	    );
     $("#date_accountmaster").jqxDateTimeInput({ width: '125px', height: '15px' ,formatString : "dd.MM.yyyy" });
     
     
