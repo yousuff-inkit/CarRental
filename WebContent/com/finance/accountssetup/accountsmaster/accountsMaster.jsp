@@ -146,6 +146,11 @@ body {
 }
 .hidden-scrollbar::-webkit-scrollbar { width: 6px; }
 .hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
+
+
+.field-row {
+    margin-bottom: 5px; /* or 0 */
+}
 </style>
 <script type="text/javascript">
 
@@ -1019,17 +1024,17 @@ function getConfig() {
                 <div id="main">
                     <div class="field-row">
                         <label class="lbl-right" style="width:100px;">Account Group</label>
-                        <select name="mainaccgroup" id="mainaccgroup" style="flex:1;" value='<s:property value="mainaccgroup"/>' onchange="funclear1();">
+                        <select name="mainaccgroup" id="mainaccgroup" style="flex:0 0 150px;" value='<s:property value="mainaccgroup"/>' onchange="funclear1();">
                             <option value="-1">--Select--</option>
                         </select>
                     </div>
                     <div class="field-row">
                         <label class="lbl-right" style="width:100px;">Account Code</label>
-                        <input type="text" name="mainacccode" id="mainacccode" style="flex:1;" value='<s:property value="mainacccode"/>' onblur="maincheck(this.value)" onkeypress="javascript:return isNumber (event);">
+                        <input type="text" name="mainacccode" id="mainacccode" style="flex:0 0 80px;" value='<s:property value="mainacccode"/>' onblur="maincheck(this.value)" onkeypress="javascript:return isNumber (event);">
                     </div>
                     <div class="field-row">
                         <label class="lbl-right" style="width:100px;">Account Name</label>
-                        <input type="text" name="mainacconame" id="mainacconame" style="flex:1;" value='<s:property value="mainacconame"/>' onblur="dismassge()">
+                        <input type="text" name="mainacconame" id="mainacconame" style="flex:0 0 200px;" value='<s:property value="mainacconame"/>' onblur="dismassge()">
                         <input type="hidden" name="main_account" id="main_account" value='<s:property value="main_account"/>' />
                     </div>
                 </div>
@@ -1077,7 +1082,7 @@ function getConfig() {
                         <select id="tansaccgroup" name="tansaccgroup" style="width:120px;" onChange="getAcgroup(this.value,2);" value='<s:property value="tansaccgroup"/>' onfocus="funclear3();">
                             <option value="-1">--Select--</option>
                         </select>
-                        <input type="text" name="transcaccgpname" id="transcaccgpname" style="flex:1;" value='<s:property value="transcaccgpname"/>'>
+                        <input type="text" name="transcaccgpname" id="transcaccgpname" style="flex:0 0 200px;" value='<s:property value="transcaccgpname"/>'>
                     </div>
 
                     <div class="field-row">
@@ -1085,7 +1090,7 @@ function getConfig() {
                         <input type="text" name="transacccode" id="transacccode" style="width:120px;" value='<s:property value="transacccode"/>' onblur="trancheck(this.value)" onkeypress="javascript:return isNumber (event);">
                         
                         <label class="lbl-right" style="width:70px;">Currency</label>
-<div class="input-search-container" style="flex:1;">
+<div class="input-search-container" style="flex:0 0 200px;">
     <input type="text" 
            name="currs" 
            id="currs" 
@@ -1097,6 +1102,7 @@ function getConfig() {
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
     </svg>
 </div>
+</div>
 
                     <div class="field-row">
                         <label class="lbl-right" style="width:110px;">Account Name</label>
@@ -1104,7 +1110,7 @@ function getConfig() {
                         <input type="hidden" name="tran_account" id="tran_account" value='<s:property value="tran_account"/>' />
                         
                         <label class="lbl-right" style="width:70px;">Rate</label>
-                        <input type="text" name="ratess" id="ratess" value='<s:property value="ratess"/>' onblur="funRoundRate(this.value,this.id);" onkeypress="javascript:return isNumber (event);" style="flex:1; text-align: right;">
+                        <input type="text" name="ratess" id="ratess" value='<s:property value="ratess"/>' onblur="funRoundRate(this.value,this.id);" onkeypress="javascript:return isNumber (event);" style="flex:0 0 200px; text-align: right;">
                     </div>
 
                     <div style="margin: 20px 0; border-top: 1px solid #eef2f7; padding-top: 15px;">
