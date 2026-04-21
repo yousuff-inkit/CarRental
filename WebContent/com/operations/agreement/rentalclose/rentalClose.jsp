@@ -11,246 +11,185 @@
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
 /* =========================================================
-   MASTER UI (SCOPED) — RENTAL CLOSE CONVERSION
+   RENTAL CLOSE - EXACT TEXT & UI MATCH TO CLIENT MASTER
 ========================================================= */
-
-.modern-ui {
-    font-family: Arial, sans-serif;
-    color: #333;
-    font-size: 12px;
-    padding-top: 15px;
+body, .homeContent {
+    background: #f4f6f9 !important;
+    font-family: Arial, sans-serif !important;
+    color: #333 !important;
+    font-size: 12px !important;
+    margin: 0;
     box-sizing: border-box;
 }
 
-/* INPUTS */
-.modern-ui input[type="text"],
-.modern-ui select {
-    height: 24px !important;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 2px 6px;
-    font-size: 12px;
+#mainBG {
+    background: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* FIX: Responsive scroll area so the bottom is never cut off */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 140px);
+    padding-bottom: 80px; 
+    box-sizing: border-box;
+}
+
+form label.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* EXACT Input Styles from Client Master - Forced White 
+   NOTE: Added :not([class*="jqx"]) to prevent this from breaking the Date/Time calendar widgets */
+input[type="text"]:not([class*="jqx"]), select, input[readonly]:not([class*="jqx"]) {
+    height: 24px !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
     box-sizing: border-box;
     width: 100%;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    background: #ffffff !important; 
+    color: #333 !important;
 }
 
-.modern-ui input:focus,
-.modern-ui select:focus {
-    border-color: #007bff;
+input[type="text"]:focus, select:focus {
+    border-color: #007bff !important;
+    outline: none !important;
+}
+
+/* Table adjustments for compact text */
+table td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    color: #444 !important;
+    font-weight: bold !important;
+    vertical-align: middle;
+}
+
+/* =========================================================
+   BUTTON STYLING
+========================================================= */
+input[type="button"].myButton, button.myButton {
+    display: inline-block;
+    width: auto !important; 
+    background: #0056b3 none !important; 
+    color: #ffffff !important;
+    border: 1px solid #004494 !important;
+    border-radius: 3px !important;
+    padding: 4px 20px !important;
+    margin: 0 5px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    height: 28px !important;
+    text-align: center !important;
+}
+
+input[type="button"].myButton:hover, button.myButton:hover {
+    background: #004494 none !important;
+}
+
+/* Action Buttons Container (Flexbox) */
+.action-buttons {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+    padding: 10px;
+    margin: 10px 0;
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    min-height: 50px;
+}
+
+/* =========================================================
+   ERROR MESSAGE STYLING (The Global Header Error)
+========================================================= */
+#errormsg {
+    position: fixed !important;
+    top: 75px !important;       
+    right: 25px !important;     
+    background-color: #fff2f2 !important;
+    color: #d8000c !important;
+    border: 1px solid #ffb3b3 !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    z-index: 10000 !important;  
+    box-shadow: 0 4px 10px rgba(216, 0, 12, 0.15) !important;
+    min-width: 250px;
+    text-align: center;
+}
+
+#errormsg:empty {
+    display: none !important; 
+}
+
+#lblinvoicedone {
+    position: absolute;
+    right: 15px; 
+    color: #cc0000;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#lblinvoicedone:empty {
+    display: none;
+}
+
+/* =========================================================
+   ACCORDION STYLING (Native HTML5 Details/Summary)
+========================================================= */
+details.modern-accordion {
+    border: 1px solid #e1e4e8 !important;
+    background-color: #fff !important;
+    margin-bottom: 10px !important;
+    padding: 5px 10px 10px 10px !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+details.modern-accordion > summary {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #0056b3 !important;
+    padding: 5px 0 5px 6px !important;
+    cursor: pointer !important;
+    list-style: none !important;
+    border-left: 3px solid #0056b3 !important;
     outline: none;
 }
 
-.modern-ui input[readonly] {
-    background-color: #f3f4f6;
-    color: #6b7280;
+details.modern-accordion > summary::-webkit-details-marker {
+    display: none;
 }
 
-/* LABELS */
-.modern-ui .lbl-right {
-    text-align: right;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-/* PANEL */
-.modern-ui .modern-panel {
-    border: 1px solid #e1e4e8;
-    padding: 15px 10px 10px;
-    background: #fff;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    position: relative;
-}
-
-.modern-ui .modern-panel-title {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: #fff;
-    padding: 0 6px;
+details.modern-accordion > summary::before {
+    content: '\25BA  ';
+    display: inline-block;
     color: #0056b3;
-    font-weight: bold;
-    font-size: 13px;
-    border-left: 3px solid #0056b3;
+    font-size: 10px;
+    margin-right: 5px;
+    transition: transform 0.2s ease-in-out;
 }
 
-/* GRID */
-.modern-ui .top-details-grid {
-    display: grid;
-    grid-template-columns: max-content 1fr max-content 1fr max-content 1fr max-content 1fr;
-    gap: 10px;
-    align-items: center;
+details.modern-accordion[open] > summary::before {
+    transform: rotate(90deg);
 }
 
-/* BUTTON */
-.modern-ui .myButton {
-    font-weight: bold;
-    font-size: 12px;
-    height: 24px;
-    padding: 0 14px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-}
-
-/* CHECK */
-.modern-ui .chk-container {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* SCROLL */
-.hidden-scrollbar {
-    overflow: auto;
-    height: calc(100vh - 140px);
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-    width: 0px;
-}
-
-.jqx-grid-header {
-    /* Shifted from #f8f9fa to #e9ecef (subtly darker gradient) */
-    background: linear-gradient(180deg, #e9ecef 0%, #dee2e6 100%) !important;
-    border-color: #ced4da !important;
-    color: #212529 !important;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-}
-
-.jqx-grid-column-header {
-    background: transparent !important;
-    color: #212529 !important;
-    font-weight: 700 !important;
-    font-size: 11px !important;
-    text-align: left !important;
-    border-color: #ced4da !important;
-}
-
-.jqx-grid-column-header a:link,
-.jqx-grid-column-header a:visited {
-    color: #212529 !important;
-    text-align: left !important;
-}
-
-.jqx-grid-column-header > div > div {
-    text-align: left !important;
-    padding-left: 6px !important;
-}
-
-
-.jqx-grid-cell {
-    background: #ffffff;
-    border-color: #dee2e6 !important; 
-    color: #1f2937;
-    font-size: 11px !important;
-    text-align: left !important;
-}
-
-.jqx-grid-cell-left-align {
-    text-align: left !important;
-    padding-left: 6px !important;
-    margin-left: 0px !important;
-}
-
-.jqx-grid-cell-middle-align {
-    text-align: left !important;
-    padding-left: 6px !important;
-}
-
-.jqx-grid-cell-right-align {
-    text-align: right !important;
-    padding-right: 6px !important;
-}
-
-
-.jqx-grid-cell-alt {
-    background: #f1f3f5 !important; 
-}
-
-
-.jqx-grid-cell-hover {
-    background: #dee2e6 !important; 
-    border-color: #ced4da !important;
-    color: #000000 !important;
-}
-
-.jqx-grid-cell-selected {
-    background: #adb5bd !important; 
-    color: #ffffff !important;
-    border-color: #868e96 !important;
-}
-
-.jqx-grid-table .jqx-grid-cell {
-    border-width: 0px 0px 1px 0px !important;
-    border-color: #dee2e6 !important;
-}
-
-
-.jqx-grid {
-    border: 1px solid #adb5bd !important; /* Darker outer border */
-    border-radius: 8px !important;
-    overflow: hidden !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
-}
-
-
-.jqx-grid-cell-sort {
-    background-color: #e9ecef !important;
-}
-.jqx-grid-cell-sort-alt {
-    background-color: #dee2e6 !important;
-}
-
-.jqx-grid-cell-filter,
-.jqx-grid-cell-filter-alt {
-    background-color: #f1f3f5 !important;
-}
-
-.jqx-grid-cell-pinned,
-.jqx-grid-cell-pinned-alt {
-    background-color: #e9ecef !important;
-}
-
-
-.jqx-grid-pager {
-    background: #e9ecef !important; /* Darker pager background */
-    border-top: 1px solid #ced4da !important;
-    padding: 4px !important;
-}
-
-.jqx-grid-column-menubutton {
-    opacity: 0.5;
-    transition: opacity 0.2s;
-}
-.jqx-grid-column-menubutton:hover {
-    opacity: 1;
-}
-
-
-.jqx-scrollbar-state-normal {
-    background: #f1f3f5 !important;
-}
-.jqx-scrollbar-thumb-state-normal,
-.jqx-scrollbar-thumb-state-normal-horizontal {
-    background: #868e96 !important; /* Steel grey thumb */
-    border-color: #868e96 !important;
-    border-radius: 4px !important;
-}
-.jqx-scrollbar-thumb-state-hover,
-.jqx-scrollbar-thumb-state-hover-horizontal {
-    background: #495057 !important; /* Deep grey on hover */
-    border-radius: 4px !important;
+details.modern-accordion[open] > summary {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f4f5f7;
 }
 </style>
 <script type="text/javascript">
@@ -280,21 +219,17 @@ $(document).ready(function () {
 	else{
 		document.getElementById("chkcollection").checked=false;
 	}
-	// setCollection();
-	//$("#tarifreferencegrid").jqxGrid({ disabled: true});
-    
-    /* MODIFIED: Heights changed to 24px to match inputs */
-	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#indate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	// $("#accidentdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	// $("#policecollecteddate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#intime").jqxDateTimeInput({ width: '80%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
-	 $("#collecttime").jqxDateTimeInput({ width: '80%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
+	
+    /* MODIFIED: Widths changed to 100% to fit table cells properly, heights to 24px */
+	 $("#closedate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#indate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null});
+	 $("#collectdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy",value:null});
+	 $("#datehidden").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#closedatehidden").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#closeinvdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#intime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value:null});
+	 $("#collecttime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false,value:null});
 	
     //Minimize Button
 	 $("#jqxMenuMore").jqxMenu({ width: '40%', height: '26px', autoSizeMainItems: true});
@@ -303,7 +238,6 @@ $(document).ready(function () {
      //Common window for minimize button
      $('#window1').jqxWindow({width: '71%', height: '70%',  maxHeight: '70%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
      $('#window1').jqxWindow('close');
-	 //$("#accidenttime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
 	  $('#agmtnowindow').jqxWindow({ width: '60%', height: '68%',  maxHeight: '68%' ,maxWidth: '60%' , title: 'Agreement Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
 	   $('#agmtnowindow').jqxWindow('close');
 	   $('#collectionWindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Collection Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
@@ -431,7 +365,6 @@ $(document).ready(function () {
 		$('#collectionWindow').jqxWindow('focus');
 		 collectSearchContent('collectSearch.jsp', $('#collectionWindow'));
 		});
-	   //alert(document.getElementById("mode").value);
 	   if(document.getElementById("mode").value=='view'){
 		  $('#btnprocess').attr('disabled',true);
 		  $('#btncalculate').attr('disabled',true);
@@ -561,12 +494,9 @@ function account(){
 }
 
 function closing(){
-	//alert($("#mode").val());
 	if (($("#mode").val() == "view") && $("#agreementno").val()!="") {
  	   var url=document.URL;
         var reurl=url.split("saveRentalClose");
-        //$("#docno").prop("disabled", false);                
-
         var win= window.open(reurl[0]+"printRAClosingSummaryNormal?docno="+document.getElementById("agreementno").value,"_blank","top=85,left=150,Width=1020,Height=600,location=no,scrollbars=no,toolbar=yes");
  	   win.focus();
  	   } 
@@ -578,9 +508,6 @@ function closing(){
 }
 
 function getAgmt(event){
-	
-	  /* $('#gridRaSearch').jqxGrid('clear');
-  	 $("#gridRaSearch").jqxGrid("addrow", null, {}); */
 	if(document.getElementById("mode").value=='A'){
   	 if(document.getElementById("cmbagmtbranch").value==""){
 		document.getElementById("errormsg").innerText="";
@@ -635,33 +562,25 @@ function getRentalAgent(event){
 	
 }
  function agmtnoSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
     $('#agmtnowindow').jqxWindow('setContent', data);
 
 }); 
 }
  function checkinSearchContent(url) {
-	    //alert(url);
 	      $.get(url).done(function (data) {
-	//alert(data);
 	    $('#checkinWindow').jqxWindow('setContent', data);
 
 	}); 
 	}
  function rentalSearchContent(url) {
-	    //alert(url);
 	      $.get(url).done(function (data) {
-	//alert(data);
 	    $('#rentalAgentWindow').jqxWindow('setContent', data);
 
 	}); 
 	}
 function collectSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
     $('#collectionWindow').jqxWindow('setContent', data);
 
 }); 
@@ -692,7 +611,6 @@ function setCollection(){
 		x.onreadystatechange = function() {
 			if (x.readyState == 4 && x.status == 200) {
 				 var items=x.responseText.trim();
-				//alert("Response items"+items);
 					if(items=='noconvert'){
 		
 						document.getElementById("referencefield").style.display="none";
@@ -722,8 +640,6 @@ function setCollection(){
 		   $('#tarifagmtgrid').jqxGrid({ disabled: true});
 		    $('#calculationgrid').jqxGrid({ disabled: true});
 		   
-/* getCheckin();
-		getRentalAgent(); */
 	}
 	function funNotify(){
 
@@ -873,19 +789,6 @@ function setCollection(){
 		}
 		
 		
-	/* var validrate=$("#totalgrid").jqxGrid("getcellvalue",0,"rate");
-		if(validrate==="" || validrate===null || validrate==="undefined" || typeof(validrate)==="undefined"){
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Please Process";
-			return 0;
-		}
-		var validdesc=$('#calculationgrid').jqxGrid('getcellvalue',0,'description');
-		if(validdesc==="" || validdesc===null || validdesc==="undefined" || typeof(validdesc)==="undefined"){
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Please Calculate";
-			return 0;
-		} 
- */
  		var invtype=$('#invtype').val();
  		if(invtype!="3"){
  			var validrate=$("#totalgrid").jqxGrid("getcellvalue",0,"rate");
@@ -904,9 +807,7 @@ function setCollection(){
 			return 0;	
 		}
     	$('#gridlength').val(rows.length);
-    		//alert($('#gridlength').val());
     		for(var i=0 ; i < rows.length ; i++){
-			//	var myvar = rows[i].tarif; 
 				newTextBox = $(document.createElement("input"))
 			    .attr("type", "dil")
 			    .attr("id", "test"+i)
@@ -916,11 +817,8 @@ function setCollection(){
 				newTextBox.val(rows[i].rentaltype+"::"+rows[i].rate+"::"+rows[i].cdw+"::"+rows[i].pai+"::"+rows[i].cdw1+"::"+rows[i].pai1+"::"+rows[i].gps+"::"+rows[i].babyseater+"::"+rows[i].cooler+"::"+rows[i].exkmrte+"::"+rows[i].exhrchg+"::"+rows[i].chaufchg);
 			
 			newTextBox.appendTo('form');
-			
-				//alert("ddddd"+$("#test"+i).val());
 			}
     		var rowscalc = $("#calculationgrid").jqxGrid('getrows');
-    		//alert(rows);
     		if(rowscalc.length>0){
 			if(rowscalc[0].description=="undefined" || rowscalc[0].description==""){
     			document.getElementById("errormsg").innerText="";
@@ -931,9 +829,7 @@ function setCollection(){
 			}
     		document.getElementById("errormsg").innerText="";
         	$('#calcgridlength').val(rowscalc.length);
-        		//alert($('#gridlength').val());
         		for(var i=0 ; i < rowscalc.length ; i++){
-    			//	var myvar = rows[i].tarif; 
     				newTextBox = $(document.createElement("input"))
     			    .attr("type", "dil")
     			    .attr("id", "testcalc"+i)
@@ -941,12 +837,9 @@ function setCollection(){
     			    .attr("hidden", "true");
     				  var summaryData= $("#calculationgrid").jqxGrid('getcolumnaggregateddata', 'creditnote', ['sum'],true);
                       document.getElementById("creditnotesum").value=summaryData.sum;
-    				//newTextBox.val(rows[i].idno+"::"+rows[i].account+"::"+rows[i].description+"::"+rows[i].qty+"::"+rows[i].rate+"::"+rows[i].total);
     				newTextBox.val(rowscalc[i].idno+"::"+rowscalc[i].acno+"::"+rowscalc[i].description+"::"+rowscalc[i].qty+"::"+rowscalc[i].invoiced+"::"+rowscalc[i].invoice+"::"+rowscalc[i].creditnote+"::"+rowscalc[i].salamount+"::"+rowscalc[i].salikrate+"::"+rowscalc[i].saliksrvc+"::"+rowscalc[i].salikamt+"::"+rowscalc[i].trafficamt+"::"+rowscalc[i].trafficsrvc+"::"+rowscalc[i].salikauhamt+"::"+rowscalc[i].salikdxbamt+"::"+rowscalc[i].salikauhsrvc+"::"+rowscalc[i].salikdxbsrvc+"::"+rowscalc[i].salikauhcount+"::"+rowscalc[i].salikdxbcount+"::"+rowscalc[i].salikauhrate+"::"+rowscalc[i].salikdxbrate+"::"+rowscalc[i].salikauhsrvcrate+"::"+rowscalc[i].salikdxbsrvcrate+"::"+rowscalc[i].salikparkamt+"::"+rowscalc[i].salikparksrvc+"::"+rowscalc[i].salikparkcount+"::"+rowscalc[i].salikparkrate+"::"+rowscalc[i].salikparksrvcrate);
     			
     			newTextBox.appendTo('form');
-    			
-    				//alert("ddddd"+$("#testcalc"+i).val());
     			}
         	
         	document.getElementById("errormsg").innerText="";
@@ -1620,179 +1513,182 @@ if(document.getElementById("rentalagent").value==""){
 <body onload="setValues();">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmRentalClose" action="saveRentalClose" autocomplete="off">
-	<%-- <script>
-			window.parent.formName.value="Rental Agreement Close";
-			window.parent.formCode.value="RAC";
-	</script> --%>
 	<jsp:include page="../../../../header.jsp" />
 	<br/> 
-<div class="modern-ui hidden-scrollbar">
+<div class='hidden-scrollbar'>
+    
+  <details class="modern-accordion" open>
+    <summary>General Information</summary>
+    <table width="100%">
+      <tr>
+        <td width="4%" align="right">Branch</td>
+        <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
+        <td width="6%" align="right">Agmt No</td>
+        <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search" ></td>
+        <td width="5%" align="right">Vehicle</td>
+        <td width="47%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
+        <td width="6%" align="right">Doc No</td>
+        <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
+        <td width="8%" rowspan="2" align="left">
+          <div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
+            <ul>
+              <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+              <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+              <li><a href="#history" onclick="account();">Account Statement</a></li>   
+              <li><a href="#close" onclick="closing();">Closing Summary</a></li>                  
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">Client</td>
+        <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
+        <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:99%;"></td>
+        <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
+        <td align="right">Date</td>
+        <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
+        <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
+      </tr>
+      <tr>
+        <td align="right">Description</td>
+        <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' ><label id="lblchkorgregcard" for="chkorgregcardcollect" style="margin-left:25px;">Org Reg Card Collected</label>&nbsp;
+        <input type="checkbox" id="chkorgregcardcollect" name="chkorgregcardcollect" onChange="setOrgRegCollect();" style="width:15px;height:15px;">
+        </td>
+        <input type="hidden" name="hidchkorgregcardcollect" id="hidchkorgregcardcollect" value='<s:property value="hidchkorgregcardcollect"/>'>
+        <input type="hidden" name="hidchkorgregcard" id="hidchkorgregcard" value='<s:property value="hidchkorgregcard"/>'>
+        <td align="right">Location</td>
+        <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="cmbcloseloc"/>' style="width:100%;" >
+          <option value="">--Select--</option>
+        </select></td>
+        <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
+        <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc"/>'>
+        <td align="left">&nbsp;</td>
+      </tr>
+    </table>
+  </details>
 
-<!-- ================= AGREEMENT ================= -->
-<div class="modern-panel">
-<span class="modern-panel-title">Agreement</span>
+  <details class="modern-accordion">
+    <summary>In Info</summary>
+    <table width="100%">
+      <tr>
+        <td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 6px !important;">
+          <div style="display: flex; align-items: center; margin-bottom: 5px;">
+            Collection 
+            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();" style="width: 14px !important; height: 14px !important; margin: 0 0 0 5px !important; display: inline-block !important;">
+          </div>
+          <div style="margin-bottom: 5px;">
+            <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search">
+          </div>
+          <div>
+            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
+          </div>
+        </td>
+        <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
+        <td width="8%" align="right">Collection Details</td>
+        <td width="1%" align="right">KM</td>
+        <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
+        <td width="2%" align="right">Fuel</td>
+        <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
+        <td width="7%" align="left">
+          <select name="cmbcollectfuel" id="cmbcollectfuel">
+            <option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+          </select>
+        </td>
+        <td width="2%" align="right">Date</td>
+        <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
+        <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
+        <td width="2%" align="right">Time</td>
+        <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
+        <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
+        <td width="5%" align="right">Rental Agent</td>
+        <td width="6%" align="left">
+        <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
+        </td>
+        <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
+        <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
+        <td width="7%" align="right">Days Used</td>
+        <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
+        <td width="5%" align="right">Hours Used</td>
+        <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
+      </tr>
+      <tr>
+        <td align="right">In Details</td>
+        <td align="right">KM</td>
+        <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+        <td align="right">Fuel</td>
+        <td align="left">
+          <select name="cmbinfuel" id="cmbinfuel">
+            <option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
+          </select>
+        </td>
+        <td align="right">Date</td>
+        <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
+        <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
+        <td align="right">Time</td>
+        <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
+        <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
+        <td align="right">Check In</td>
+        <td align="left">
+          <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
+        </td>
+        <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
+        <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
+        <td align="right">Total KM</td>
+        <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
+        <td align="right">Excess KM</td>
+        <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
+      </tr>
+    </table>
+  </details>
 
-<div style="position:absolute; top:-12px; right:15px;">
-<div id='jqxMenuMore' style='visibility:hidden;'>
-<ul>
-<li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-<li><a href="#documents" onclick="replacement();">Replacement</a></li>
-<li><a href="#history" onclick="account();">Account Statement</a></li>
-<li><a href="#close" onclick="closing();">Closing Summary</a></li>
-</ul>
-</div>
-</div>
+  <div class="action-buttons">
+      
+      <div class="button-group">
+          <input type="button" name="btnprocess" id="btnprocess_standard" class="myButton" value="Process" onclick="funChecking();">
+          <input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">
+          <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
+          
+          <button type="button" id="btnprocess" title="Process" style="display:none;" onclick="funChecking();"></button>
+      </div>
 
-<div class="top-details-grid">
+      <label name="lblinvoicedone" id="lblinvoicedone"></label>
+  </div>
 
-<label class="lbl-right">Branch</label>
-<select name="cmbagmtbranch" id="cmbagmtbranch">
-<option value="">--Select--</option>
-</select>
+  <table width="100%">
+    <tr>
+      <td width="66%" valign="top">
+        <details class="modern-accordion">
+          <summary>Agreement Tariff</summary>
+          <div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div>
+        </details>
+        
+        <div id="referencefield">
+          <details class="modern-accordion">
+            <summary>Reference Tariff</summary>
+            <div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div>
+          </details>
+        </div>
+      </td>
+      
+      <td width="34%" valign="top">
+        <details class="modern-accordion">
+          <summary>Calculation Info</summary>
+          <div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
+          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
+        </details>
+      </td>
+    </tr>
+  </table>
 
-<label class="lbl-right">Agmt No</label>
-<input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onkeydown="getAgmt(event);" placeholder="Press F3 to Search">
+  <details class="modern-accordion">
+    <summary>Total Grid</summary>
+    <div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div>
+  </details>
 
-<label class="lbl-right">Vehicle</label>
-<input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>'>
-
-<label class="lbl-right">Doc No</label>
-<input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly>
-
-<label class="lbl-right">Client</label>
-<input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>'>
-
-<label class="lbl-right">Client Name</label>
-<input type="text" name="client" id="client" value='<s:property value="client"/>'>
-
-<label class="lbl-right">Date</label>
-<div id="closedate"></div>
-
-<label class="lbl-right">Description</label>
-<input type="text" name="description" id="description" value='<s:property value="description"/>'>
-
-<label class="lbl-right">Location</label>
-<select name="cmbcloseloc" id="cmbcloseloc">
-<option value="">--Select--</option>
-</select>
-
-</div>
-
-<input type="hidden" name="txtaccno" id="txtaccno">
-<input type="hidden" name="hidclosedate" id="hidclosedate">
-<input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch">
-<input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc">
-
-</div>
-
-
-<!-- ================= VEHICLE INFO ================= -->
-<div class="modern-panel">
-<span class="modern-panel-title">Vehicle and Collection Info</span>
-
-<div style="display:flex; gap:20px;">
-
-<!-- LEFT -->
-<div style="width:20%; display:flex; flex-direction:column; gap:10px;">
-<div class="chk-container">
-<label>Collection</label>
-<input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
-</div>
-
-<input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' readonly onkeydown="getChauffer(event);" placeholder="Press F3 to Search">
-
-<input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge">
-
-<input type="hidden" name="hidchkcollection" id="hidchkcollection">
-</div>
-
-<!-- RIGHT -->
-<div style="flex:1; display:flex; flex-direction:column; gap:10px;">
-
-<div style="display:grid; grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr; gap:10px;">
-<label class="lbl-right">Collection KM</label>
-<input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'>
-
-<label class="lbl-right">Fuel</label>
-<select name="cmbcollectfuel" id="cmbcollectfuel"></select>
-
-<label class="lbl-right">Date</label>
-<div id="collectdate"></div>
-
-<label class="lbl-right">Time</label>
-<div id="collecttime"></div>
-</div>
-
-<div style="display:grid; grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr; gap:10px;">
-<label class="lbl-right">In KM</label>
-<input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>'>
-
-<label class="lbl-right">Fuel</label>
-<select name="cmbinfuel" id="cmbinfuel"></select>
-
-<label class="lbl-right">Date</label>
-<div id="indate"></div>
-
-<label class="lbl-right">Time</label>
-<div id="intime"></div>
-</div>
-
-<div style="display:grid; grid-template-columns:120px 1fr 120px 1fr 120px 1fr auto; gap:10px;">
-<label class="lbl-right">Rental Agent</label>
-<input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly onkeydown="getRentalAgent(event);">
-
-<label class="lbl-right">Check In</label>
-<input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly onkeydown="getCheckin(event);">
-
-<label class="lbl-right">Total KM</label>
-<input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' readonly>
-
-<input type="button" class="myButton" value="Process" onclick="funChecking();">
-</div>
-
-</div>
-</div>
-
-<input type="hidden" name="hidrentalagent" id="hidrentalagent">
-<input type="hidden" name="hidcheckin" id="hidcheckin">
-<input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent">
-
-</div>
-
-
-<!-- ================= LOWER ================= -->
-<div style="display:flex; gap:15px;">
-
-<div style="flex:2; display:flex; flex-direction:column; gap:15px;">
-<div class="modern-panel"><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></div>
-<div class="modern-panel"><div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div></div>
-<div class="modern-panel"><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></div>
-<div class="modern-panel"><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></div>
-</div>
-
-<div style="flex:1.1; display:flex; flex-direction:column;">
-<div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
-<label id="lblinvoicedone" style="color:red; font-weight:bold;"></label>
-<input type="button" class="myButton" value="Calculate" onclick="funCalculate();">
-<input type="button" class="myButton" value="Download" onclick="funDownload();">
-</div>
-
-<div class="modern-panel" style="flex:1;">
-<span class="modern-panel-title">Calculation Info</span>
-<div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
-<input type="hidden" name="hidchkconvert" id="hidchkconvert">
-</div>
-</div>
-
-</div>
-
-
-
-
-
-
-
-
+  <details class="modern-accordion">
+    <summary>Traffic</summary>
+    <div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div>
+  </details>
 
 <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
 <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>
