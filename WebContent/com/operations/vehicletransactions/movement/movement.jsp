@@ -1,8 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@page import="javax.servlet.http.HttpServletRequest" %>
-<%@page import="javax.servlet.http.HttpSession" %>
 <!DOCTYPE html>
-<html><head>
+<html>
+<head>
+<% String contextPath=request.getContextPath(); %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Input Sizing (Plain Colors)
+   SCOPED UI: Compact Input Sizing (Plain Colors)
 ========================================================= */
 body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -108,7 +108,7 @@ body {
     height: 26px !important;
     padding: 0 16px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
+    color: #ffffff !important; /* GUARANTEED WHITE TEXT */
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -159,7 +159,16 @@ form label.error {
     padding-right: 5px;
 }
 .hidden-scrollbar::-webkit-scrollbar { width: 6px; }
-.hidden-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; } /* Neutralized scrollbar thumb */
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; } 
+
+/* Ensure error spans align nicely */
+#errormsg {
+    display: block;
+    margin-bottom: 10px;
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}
 </style> 
 
 <%
@@ -561,9 +570,9 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 	     }); 
    	 }
      function driverSearchContent(url) {
- 	     $.get(url).done(function (data) {
- 	         $('#driverwindow').jqxWindow('setContent', data);
- 	     }); 
+	     $.get(url).done(function (data) {
+	         $('#driverwindow').jqxWindow('setContent', data);
+	     }); 
    	 }
      function staffSearchContent(url) {
 	     $.get(url).done(function (data) {
@@ -571,20 +580,20 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 	     }); 
 	 }
      function garageSearchContent(url) {
- 	     $.get(url).done(function (data) {
- 	         $('#garagewindow').jqxWindow('setContent', data);
- 	     }); 
+	     $.get(url).done(function (data) {
+	         $('#garagewindow').jqxWindow('setContent', data);
+	     }); 
    	 }
      function maintenanceSearchContent(url) {
- 	     $.get(url).done(function (data) {
- 	         $('#maintenancewindow').jqxWindow('setContent', data);
- 	     }); 
+	     $.get(url).done(function (data) {
+	         $('#maintenancewindow').jqxWindow('setContent', data);
+	     }); 
    	 }
      function getFleet(event){
          var x= event.keyCode;
          if(document.getElementById("mode").value=="A"){
              if(x==114){
-       	         $('#fleetwindow').jqxWindow('open');
+        	     $('#fleetwindow').jqxWindow('open');
        		     $('#fleetwindow').jqxWindow('focus');
        		     fleetSearchContent('masterFleetSearch.jsp?', $('#fleetwindow'));
              }
@@ -657,7 +666,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   		if($('#timeout').jqxDateTimeInput('disabled')==false) $('#timeout').jqxDateTimeInput({ disabled: true});
   		if($('#closetime').jqxDateTimeInput('disabled')==false) $('#closetime').jqxDateTimeInput({ disabled: true});
   		
-   	    checkStaff();
+    	checkStaff();
   	}
   	
   	function funRemoveReadOnly(){
@@ -747,7 +756,6 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
   		$('#closetime').jqxDateTimeInput({ disabled: false});
   	}
   	
-  	/* FIXED: Robust Location Loading callback */
   	function getLocation(value) {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = function() {
@@ -761,7 +769,6 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 				}
 				$("select#cmblocation").html(optionsloc);
 				
-				// Re-bind selected value safely after async fetch
 				if ($('#hidcmblocation').val() != null && $('#hidcmblocation').val() != "") {
 					$('#cmblocation').val($('#hidcmblocation').val());
 				}
@@ -992,9 +999,9 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 		            return false;
 		        } else {
 		    	    $('#cmboutfuel').prop("disabled", false);
-  		            $('#outkm').prop("disabled", false);
-  		            $('#cmblocation').prop("disabled", false);
-  		            $('#cmbbranch').prop("disabled", false);
+ 		            $('#outkm').prop("disabled", false);
+ 		            $('#cmblocation').prop("disabled", false);
+ 		            $('#cmbbranch').prop("disabled", false);
 		    		funSetlabel();
 					$("#overlay, #PleaseWait").show();
 					$('#frmMovement').submit();
@@ -1095,8 +1102,8 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 		}
 		
 		if($('#msg').val()!=""){
- 		   $.messager.alert('Message',$('#extramsg').val());
- 		}
+		   $.messager.alert('Message',$('#extramsg').val());
+		}
 		
 		document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 		
@@ -1167,31 +1174,31 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 		    checkGarageCollection();
 	    }
 	
- 		$('#closedate').jqxDateTimeInput({ disabled: false});
- 		$('#closetime').jqxDateTimeInput({ disabled: false});
- 		$('#cmbclosefuel').attr('disabled', false);
- 		$('#closekm').attr('readonly', false);
- 		$('#closedriver').attr('readonly', true);
- 		$('#closeremarks').attr('readonly', false);
- 		$('#closeuser').attr('readonly', true);
- 		$('#totalkm').attr('readonly', true);
- 		document.getElementById("btnclose").style.display="none";
- 		document.getElementById("btnclosesave").style.display="block";
- 		$('#cmbaccidents').attr('disabled', false);
- 		
- 		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
- 			document.getElementById("closedriver").value="";
- 	 		document.getElementById("hidclosedriver").value="";
- 	 	    $('#garagecollectdate').jqxDateTimeInput('focus');
- 		} else{
- 			document.getElementById("closedriver").value=document.getElementById("driver").value;
- 	 		document.getElementById("hidclosedriver").value=document.getElementById("hiddriver").value;	
- 	 	    document.getElementById("cmbclosebranch").focus();
- 		}
- 		
- 		document.getElementById("closestaff").value=document.getElementById("staff").value;
- 		document.getElementById("hidclosestaff").value=document.getElementById("hidstaff").value;
- 		document.getElementById("mode").value="close";
+		$('#closedate').jqxDateTimeInput({ disabled: false});
+		$('#closetime').jqxDateTimeInput({ disabled: false});
+		$('#cmbclosefuel').attr('disabled', false);
+		$('#closekm').attr('readonly', false);
+		$('#closedriver').attr('readonly', true);
+		$('#closeremarks').attr('readonly', false);
+		$('#closeuser').attr('readonly', true);
+		$('#totalkm').attr('readonly', true);
+		document.getElementById("btnclose").style.display="none";
+		document.getElementById("btnclosesave").style.display="block";
+		$('#cmbaccidents').attr('disabled', false);
+		
+		if($('#hidcmbstatus').val()=="GA" || $('#hidcmbstatus').val()=="GS" || $('#hidcmbstatus').val()=="GM"){
+			document.getElementById("closedriver").value="";
+	 		document.getElementById("hidclosedriver").value="";
+	 	    $('#garagecollectdate').jqxDateTimeInput('focus');
+		} else{
+			document.getElementById("closedriver").value=document.getElementById("driver").value;
+	 		document.getElementById("hidclosedriver").value=document.getElementById("hiddriver").value;	
+	 	    document.getElementById("cmbclosebranch").focus();
+		}
+		
+		document.getElementById("closestaff").value=document.getElementById("staff").value;
+		document.getElementById("hidclosestaff").value=document.getElementById("hidstaff").value;
+		document.getElementById("mode").value="close";
 	}
 	
 	function closeSave(){
@@ -1209,9 +1216,9 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 		}
 		
 		if($('#closetime').jqxDateTimeInput('getDate')==null){
- 	 		document.getElementById("errormsg").innerText="Close Time is Mandatory";
- 	 		$('#closetime').jqxDateTimeInput('focus'); 
- 	 		return false;
+	 		document.getElementById("errormsg").innerText="Close Time is Mandatory";
+	 		$('#closetime').jqxDateTimeInput('focus'); 
+	 		return false;
 		}
 			
 		if($('#closetime').jqxDateTimeInput('getDate')!=null){
@@ -1506,8 +1513,8 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 			return false;
 		}
 		if($('#garagedeliverytime').jqxDateTimeInput('getDate')==null){
- 			document.getElementById("errormsg").innerText="Garage Delivery Time is Mandatory";
- 			return 0;	
+			document.getElementById("errormsg").innerText="Garage Delivery Time is Mandatory";
+			return 0;	
 		}
 		var date1 = new Date($('#garagedeldate').jqxDateTimeInput('getDate'));
 		var date2=new Date($('#dateout').jqxDateTimeInput('getDate'));
@@ -1622,6 +1629,7 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 	<br/> 
 	
 <div class='modern-ui hidden-scrollbar'>
+    <span id="errormsg"></span>
 
     <div class="middle-panel">
         <span class="middle-panel-title">Vehicle Movement Opening Info</span>
@@ -1900,7 +1908,6 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 <div id="garagewindow">
    <div ></div><div></div>
 </div>
-<div id="errormsg"></div>
 </form>
 </div>
 </body>
