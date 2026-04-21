@@ -11,12 +11,12 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout (Table-Based)
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
-    background-color: #fff;
-    font-family: Arial, sans-serif;
+    background-color: #fff; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
@@ -27,14 +27,15 @@ body {
     width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
+/* Master Input Styles */
 .modern-ui input[type="text"],
 .modern-ui select {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
@@ -47,19 +48,19 @@ body {
     outline: none;
 }
 
-/* Panel Styling */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 10px;
 }
 
-/* Restored Table Alignment */
+/* Table Alignment */
 .modern-ui table {
     border-collapse: separate;
-    border-spacing: 5px 8px; /* Replaces row/col gap */
+    border-spacing: 5px 8px; 
     width: 100%;
 }
 
@@ -69,51 +70,47 @@ body {
 
 .modern-ui .lbl-right { 
     text-align: right; 
-    color: #444;
+    color: #222;
     font-size: 12px; 
-    font-weight: bold;
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Modern Blue */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
-    transition: all 0.2s;
-    text-transform: uppercase;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
+    background-color: #004494;
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
+    border: 1px solid #BDBDBD;
     background: #fff;
-    overflow: hidden;
 }
 </style>
 
 <script type="text/javascript">
 $(document).ready(function () {
     /* Upgraded height to 24px for Modern UI */
-    $("#searchdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+    $("#searchdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null, theme: 'energyblue'});
     
     /* Force internal alignment AFTER render */
     setTimeout(function () {
-        $(".jqx-datetimeinput").find("input").css({
+        $("#searchdate").find("input").css({
             "margin-top": "0px", 
             "line-height": "24px", 
             "font-size": "12px", 
@@ -121,7 +118,7 @@ $(document).ready(function () {
             "padding": "0 6px", 
             "box-sizing":"border-box"
         });
-        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        $("#searchdate").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
     }, 0);
 });
 
@@ -164,6 +161,7 @@ function getdata(client, cmbagmttype, agmtno, docno, searchdate, searchbranch){
 }
 </script>
 </head>
+
 <body style="background-color: #fff; margin: 0;">
 
 <div id="search" class="modern-ui">
@@ -202,7 +200,7 @@ function getdata(client, cmbagmttype, agmtno, docno, searchdate, searchbranch){
                     <input type="text" name="searchdocno" id="searchdocno" value='<s:property value="searchdocno"/>'>
                 </td>
                 
-                <td colspan="2" align="right">
+                <td colspan="2" align="right" style="padding-top: 5px;">
                     <input type="button" name="btninvsearch" id="btninvsearch" class="myButton" value="Search" onClick="mainloadSearch(); return false;">
                 </td>
             </tr>

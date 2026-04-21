@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,182 +9,214 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	 $("#txtdob").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	}); 
-
- 	function loadSearch() {
- 		
- 		var clientid=document.getElementById("txtclientid").value;
- 		var clname=document.getElementById("txtclientname").value;
- 		var clientaccount=document.getElementById("txtclientsaccount").value;
- 		var mob=document.getElementById("txtmobile").value;
- 		var lcno=document.getElementById("txtlicence").value;
- 		var driverid=document.getElementById("txtdriveridsearch").value;
- 		var nation=document.getElementById("txtnation").value;
- 		var dob=document.getElementById("txtdob").value;
-		var check = 1;
-		
- 		getdata(clname,mob,lcno,clientid,driverid,nation,dob,clientaccount,check);
-	}
- 	
-	function getdata(clname,mob,lcno,clientid,driverid,nation,dob,clientaccount,check){	
-		 $("#refreshdiv").load('crmMainSearchGrid.jsp?clname='+clname.replace(/ /g, "%20")+'&mob='+mob+'&lcno='+lcno+'&clientid='+clientid+'&driverid='+driverid.replace(/ /g, "%20")+'&nation='+nation.replace(/ /g, "%20")+'&dob='+dob+'&clientaccount='+clientaccount+'&check='+check);
-	}
-
-	</script>
-<style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 12px 15px; /* Standardized master gap */
+<style>
+/* =========================================================
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 10px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Updated as per request: Grey border */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
+/* Master Input Styles - LOCKED TO 24px */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #95a5a6;
-  outline: none;
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-/* Date field styling */
-#txtdob {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+/* Panel Styling - Clean White Panel */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
 }
 
-.myButton:hover {
-  background-color: #45a049;
+.modern-ui td {
+    vertical-align: middle;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
+
+/* Search Button - LOCKED TO 24px to match inputs */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.modern-ui .myButton:hover {
+    background-color: #004494;
+}
+
+/* Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
+    background: #fff;
 }
 </style>
 
-<body bgcolor="#FFFFFF">
-<div id="search">
+<script type="text/javascript">
+	$(document).ready(function () {
+	    /* LOCKED TO 24px */
+	    $("#txtdob").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null, theme: 'energyblue'});
+	    
+        /* Force internal alignment AFTER render - LOCKED TO 24px */
+        setTimeout(function () {
+            $("#txtdob").find("input").css({
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "Arial, sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
+            });
+            $("#txtdob").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 0);
+	}); 
 
-<table width="100%">
+	function loadSearch() {
+		var clientid = document.getElementById("txtclientid").value || "";
+		var clname = document.getElementById("txtclientname").value || "";
+		var clientaccount = document.getElementById("txtclientsaccount").value || "";
+		var mob = document.getElementById("txtmobile").value || "";
+		var lcno = document.getElementById("txtlicence").value || "";
+		var driverid = document.getElementById("txtdriveridsearch").value || "";
+		var nation = document.getElementById("txtnation").value || "";
+		var dob = $('#txtdob').jqxDateTimeInput('val') || "";
+		var check = 1;
+		
+		getdata(clname, mob, lcno, clientid, driverid, nation, dob, clientaccount, check);
+	}
+	
+	function getdata(clname, mob, lcno, clientid, driverid, nation, dob, clientaccount, check){	
+		 $("#refreshdiv").load('crmMainSearchGrid.jsp?clname=' + encodeURIComponent(clname) + 
+                                                '&mob=' + encodeURIComponent(mob) + 
+                                                '&lcno=' + encodeURIComponent(lcno) + 
+                                                '&clientid=' + encodeURIComponent(clientid) + 
+                                                '&driverid=' + encodeURIComponent(driverid) + 
+                                                '&nation=' + encodeURIComponent(nation) + 
+                                                '&dob=' + dob + 
+                                                '&clientaccount=' + encodeURIComponent(clientaccount) + 
+                                                '&check=' + check);
+	}
+</script>
+</head>
 
-<tr>
-    <td width="8%" align="right">Client#</td>
-    <td width="18%">
-        <input type="text" name="txtclientid" id="txtclientid"
-        value='<s:property value="txtclientid"/>'>
-    </td>
+<body style="background-color: #fff; margin: 0;">
 
-    <td width="8%" align="right">Name</td>
-    <td width="30%">
-        <input type="text" name="txtclientname" id="txtclientname"
-        value='<s:property value="txtclientname"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td width="10%" align="right">Account</td>
-    <td width="18%">
-        <input type="text" name="txtclientsaccount" id="txtclientsaccount"
-        value='<s:property value="txtclientsaccount"/>'>
-    </td>
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="8%">Client#</td>
+                <td width="15%">
+                    <input type="text" name="txtclientid" id="txtclientid" value='<s:property value="txtclientid"/>'>
+                </td>
+                
+                <td class="lbl-right" width="8%">Name</td>
+                <td width="25%">
+                    <input type="text" name="txtclientname" id="txtclientname" value='<s:property value="txtclientname"/>'>
+                </td>
+                
+                <td class="lbl-right" width="8%">Account</td>
+                <td width="20%">
+                    <input type="text" name="txtclientsaccount" id="txtclientsaccount" value='<s:property value="txtclientsaccount"/>'>
+                </td>
+                
+                <td width="16%" align="center" rowspan="3" style="vertical-align: middle;">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">Licence#</td>
+                <td>
+                    <input type="text" name="txtlicence" id="txtlicence" value='<s:property value="txtlicence"/>'>
+                </td>
+                
+                <td class="lbl-right">Mob</td>
+                <td>
+                    <input type="text" name="txtmobile" id="txtmobile" value='<s:property value="txtmobile"/>'>
+                </td>
+                
+                <td class="lbl-right">DOB</td>
+                <td>
+                    <div id="txtdob" name="txtdob" value='<s:property value="txtdob"/>'></div>
+                    <input type="hidden" name="hidtxtdob" id="hidtxtdob" value='<s:property value="hidtxtdob"/>'>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">ID#</td>
+                <td>
+                    <input type="text" name="txtdriveridsearch" id="txtdriveridsearch" value='<s:property value="txtdriveridsearch"/>'>
+                </td>
+                
+                <td class="lbl-right">Nationality</td>
+                <td>
+                    <input type="text" id="txtnation" name="txtnation" value='<s:property value="txtnation"/>'>
+                </td>
+                
+                <td colspan="2"></td>
+            </tr>
+        </table>
+    </div>
 
-    <td width="8%" align="center" rowspan="2">
-        <input type="button" name="btnsearch" id="btnsearch"
-        class="myButton" value="Search" onclick="loadSearch();">
-    </td>
-</tr>
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="crmMainSearchGrid.jsp" />
+        </div>
+    </div>
 
-<tr>
-    <td align="right">Licence#</td>
-    <td>
-        <input type="text" name="txtlicence" id="txtlicence"
-        value='<s:property value="txtlicence"/>'>
-    </td>
-
-    <td align="right">Mob</td>
-    <td>
-        <input type="text" name="txtmobile" id="txtmobile"
-        value='<s:property value="txtmobile"/>'>
-    </td>
-
-    <td align="right">DOB</td>
-    <td>
-        <div id="txtdob" name="txtdob"
-        value='<s:property value="txtdob"/>'></div>
-        <input type="hidden" name="hidtxtdob" id="hidtxtdob"
-        value='<s:property value="hidtxtdob"/>'>
-    </td>
-</tr>
-
-<tr>
-    <td align="right">ID#</td>
-    <td>
-        <input type="text" name="txtdriveridsearch" id="txtdriveridsearch"
-        value='<s:property value="txtdriveridsearch"/>'>
-    </td>
-
-    <td align="right">Nationality</td>
-    <td>
-        <input type="text" id="txtnation" name="txtnation"
-        value='<s:property value="txtnation"/>'>
-    </td>
-
-    <td colspan="3"></td>
-</tr>
-
-<tr>
-<td colspan="7">
-<div id="refreshdiv">
-<jsp:include page="crmMainSearchGrid.jsp" />
 </div>
-</td>
-</tr>
 
-</table>
-
-</div>
 </body>
 </html>
