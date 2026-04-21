@@ -7,11 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
+
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+SCOPED UI: Compact Search Modal Layout (Pure White)
 ========================================================= */
 body {
     margin: 0;
@@ -47,9 +48,9 @@ body {
     outline: none;
 }
 
-/* Panel Styling */
+/* Panel Styling - Pure White */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
+    background-color: #fff !important; /* Removed blue background */
     border: 1px solid #c5d3e0;
     border-radius: 4px;
     padding: 15px;
