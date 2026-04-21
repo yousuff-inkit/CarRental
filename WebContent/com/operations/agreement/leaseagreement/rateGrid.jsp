@@ -3,7 +3,7 @@
 <%@page import="javax.servlet.http.HttpSession" %>
 <style>
 .column{
-background-color: #D6FFEA;
+
 }
 </style>
  <%@page import="com.operations.agreement.leaseagreement.ClsLeaseAgreementDAO" %>
