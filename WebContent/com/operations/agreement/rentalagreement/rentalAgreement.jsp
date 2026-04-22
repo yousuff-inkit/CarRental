@@ -3267,10 +3267,10 @@ html, body {
             <label style="width:90px;">OUT : KM</label>
 
             <input type="text" id="re_Km" name="re_Km"
-                   style="width:120px;"
+                   style="width:140px;"
                    value='<s:property value="re_Km"/>'/>
 
-           <label>Date</label>
+           <label style="padding-left: 110px">Date</label>
 <div id='jqxDateOut' name='jqxDateOut'
      style="width:140px;"
      value='<s:property value="jqxDateOut"/>'></div>
@@ -3290,10 +3290,10 @@ html, body {
             <label style="width:90px;">Fuel</label>
 
             <input type="text" id="ratariff_fuel" name="ratariff_fuel"
-                   style="width:120px;"
+                   style="width:140px;"
                    value='<s:property value="ratariff_fuel"/>'/>
 
-            <label>Due Date</label>
+            <label style="padding-left: 85px">Due Date</label>
             <div id='jqxOnDate' name='jqxOnDate'
                  value='<s:property value="jqxOnDate"/>'></div>
             <input type="hidden" id="hidjqxOnDate" name="hidjqxOnDate"
