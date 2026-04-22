@@ -2,279 +2,157 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- <link href="../../../../css/body.css" rel="stylesheet" type="text/css"> -->
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link rel="stylesheet" type="text/css" href="../../../../css/body.css">
+ <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
-
 <style>
-/* =========================================================
-SCOPED UI: Compact Input Sizing & Bulletproof Grids
-* All rules are scoped inside .modern-ui to protect header.jsp *
-========================================================= */
-
-.modern-ui {
-    font-family: Arial, sans-serif; 
-    color: #333;
-    font-size: 12px; 
-    padding-top: 15px;
-    box-sizing: border-box;
+body {
+    background-color: #fff;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 11px; /* Smaller font to eliminate horizontal scrollbar */
+    margin: 0;
+    padding: 10px;
+}
+#mainBG{background-color: #fff;}
+/* 2. Style the original Table Structure */
+table {
+    border-collapse: separate;
+    border-spacing: 0 5px; /* Adds subtle spacing between rows */
+    width: 100%;
 }
 
-/* Master Input Heights - Set to 24px */
-.modern-ui input[type="text"],
-.modern-ui select,
-.modern-ui textarea { 
-    height: 24px !important; 
-    border: 1px solid #ccc; 
-    border-radius: 3px; 
-    padding: 2px 6px;
-    font-size: 12px;
-    box-sizing: border-box; 
-    background-color: #fff; 
-    color: #333;
-    width: 100%;
-    /* Safety constraint to prevent long text from breaking grid */
-    min-width: 0; 
-    text-overflow: ellipsis;
+td {
+    padding: 3px 5px;
+    vertical-align: middle;
+}
+
+/* Label Styling (Right aligned cells) */
+td[align="right"] {
+    font-weight: bold;
+    color: #555;
     white-space: nowrap;
+}
+
+/* 3. Master UI Input Styling */
+input[type="text"], 
+select, 
+.jqx-datetimeinput {
+    height: 22px !important; /* Compact height */
+    border: 1px solid #ccd0d4 !important;
+    border-radius: 3px !important;
+    padding: 2px 5px !important;
+    font-size: 11px !important;
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 100%; /* Ensures they fill their table cell */
+}
+
+input[readonly] {
+    background-color: #f0f2f5 !important;
+    color: #666;
+}
+
+/* 4. Master UI Fieldset & Legend (The Panel Look) */
+fieldset {
+    border: 1px solid #d1d9e1 !important;
+    border-radius: 6px !important;
+    padding: 10px !important;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+legend {
+    width: auto;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: #007bbd; /* Master Blue */
+    padding: 0 8px;
+    margin-bottom: 0;
+    border-left: 3px solid #007bbd; /* Left accent line */
+}
+
+
+
+/* 6. Grid & Container Styling */
+.borderStyle, 
+#agmttarifdiv, 
+#totaldiv, 
+#trafficdiv, 
+#calcdiv {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background-color: #fff;
     overflow: hidden;
 }
 
-.modern-ui input[type="text"]:focus,
-.modern-ui select:focus,
-.modern-ui textarea:focus { 
-    border-color: #007bff; 
-    outline: none;
+/* 7. Scrollbar Management */
+.hidden-scrollbar {
+    overflow-x: hidden; /* Removes the horizontal scrollbar */
+    width: 100%;
 }
 
-.modern-ui input[readonly],
-.modern-ui textarea[readonly],
-.modern-ui select:disabled,
-.modern-ui input:disabled { 
-    background-color: #f3f4f6; 
-    color: #6b7280;
-}
-
-/* Labels */
-.modern-ui .lbl-right { 
-    text-align: right; 
-    color: #444;
-    font-size: 12px; 
+#errormsg, #lblinvoicedone {
     font-weight: bold;
-    white-space: nowrap; 
-    padding-right: 2px;
+    color: #d32f2f;
+    font-size: 11px;
 }
-
-/* Panels */
-.modern-ui .modern-panel { 
-    border: 1px solid #e1e4e8; 
-    padding: 15px 10px 10px 10px; 
-    background: #fff;
-    position: relative; 
-    border-radius: 4px; 
-    margin-bottom: 15px;
-}
-
-.modern-ui .modern-panel-title { 
-    position: absolute;
-    top: -10px; 
-    left: 10px;
-    background: #fff; 
-    padding: 0 5px 0 6px; 
-    color: #0056b3;
-    font-weight: bold; 
-    font-size: 13px;
-    border-left: 3px solid #0056b3;
-}
-
-/* Specific Grid Alignments */
-.modern-ui .top-details-grid {
-    display: grid;
-    grid-template-columns: max-content minmax(100px, 1.5fr) max-content minmax(100px, 2fr) max-content minmax(80px, 1fr);
-    gap: 12px 10px;
-    align-items: center;
-}
-
-.modern-ui .chk-container { 
-    display: flex;
-    align-items: center; 
-    gap: 4px;
-    cursor: pointer; 
-}
-
-.modern-ui .align-right-input { 
-    text-align: right !important;
-}
-
-/* Updated Button Styles to match the Search Popup exactly */
-.modern-ui .myButton {
-    font-weight: bold;
-    font-size: 12px;
+ .myButton {
     height: 24px !important;
-    padding: 0px 16px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
     border-radius: 3px;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
-    transition: all 0.2s ease;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+.input-search-container {
+    position: relative;
+    display: block; 
+    width: 100%;
+    min-width: 150px; 
+    margin-right: 15px;
 }
 
-
-.modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
+.input-search-container input {
+    padding-right: 30px !important; 
+    width: 100% !important;
+    display: block;
+    box-sizing: border-box !important;
 }
 
-.hidden-scrollbar { 
-    overflow: auto; 
-    height: 600px;
-    box-sizing: border-box;
+.magnifier-icon {
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+    pointer-events: all; 
+    
 }
-.hidden-scrollbar::-webkit-scrollbar { width: 0px; }
-
-.jqx-menu-wrapper { border-radius: 3px; }
-
-
-.jqx-grid-header {
-    /* Shifted from #f8f9fa to #e9ecef (subtly darker gradient) */
-    background: linear-gradient(180deg, #e9ecef 0%, #dee2e6 100%) !important;
-    border-color: #ced4da !important;
-    color: #212529 !important;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-}
-
-.jqx-grid-column-header {
-    background: transparent !important;
-    color: #212529 !important;
-    font-weight: 700 !important;
-    font-size: 11px !important;
-    text-align: left !important;
-    border-color: #ced4da !important;
-}
-
-.jqx-grid-column-header a:link,
-.jqx-grid-column-header a:visited {
-    color: #212529 !important;
-    text-align: left !important;
-}
-
-.jqx-grid-column-header > div > div {
-    text-align: left !important;
-    padding-left: 6px !important;
-}
-
-
-.jqx-grid-cell {
-    background: #ffffff;
-    border-color: #dee2e6 !important; 
-    color: #1f2937;
-    font-size: 11px !important;
-    text-align: left !important;
-}
-
-.jqx-grid-cell-left-align {
-    text-align: left !important;
-    padding-left: 6px !important;
-    margin-left: 0px !important;
-}
-
-.jqx-grid-cell-middle-align {
-    text-align: left !important;
-    padding-left: 6px !important;
-}
-
-.jqx-grid-cell-right-align {
-    text-align: right !important;
-    padding-right: 6px !important;
-}
-
-
-.jqx-grid-cell-alt {
-    background: #f1f3f5 !important; 
-}
-
-
-.jqx-grid-cell-hover {
-    background: #dee2e6 !important; 
-    border-color: #ced4da !important;
-    color: #000000 !important;
-}
-
-.jqx-grid-cell-selected {
-    background: #adb5bd !important; 
-    color: #ffffff !important;
-    border-color: #868e96 !important;
-}
-
-.jqx-grid-table .jqx-grid-cell {
-    border-width: 0px 0px 1px 0px !important;
-    border-color: #dee2e6 !important;
-}
-
-
-.jqx-grid {
-    border: 1px solid #adb5bd !important; /* Darker outer border */
-    border-radius: 8px !important;
-    overflow: hidden !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
-}
-
-
-.jqx-grid-cell-sort {
-    background-color: #e9ecef !important;
-}
-.jqx-grid-cell-sort-alt {
-    background-color: #dee2e6 !important;
-}
-
-.jqx-grid-cell-filter,
-.jqx-grid-cell-filter-alt {
-    background-color: #f1f3f5 !important;
-}
-
-.jqx-grid-cell-pinned,
-.jqx-grid-cell-pinned-alt {
-    background-color: #e9ecef !important;
-}
-
-
-.jqx-grid-pager {
-    background: #e9ecef !important; /* Darker pager background */
-    border-top: 1px solid #ced4da !important;
-    padding: 4px !important;
-}
-
-.jqx-grid-column-menubutton {
-    opacity: 0.5;
-    transition: opacity 0.2s;
-}
-.jqx-grid-column-menubutton:hover {
-    opacity: 1;
-}
-
-
-.jqx-scrollbar-state-normal {
-    background: #f1f3f5 !important;
-}
-.jqx-scrollbar-thumb-state-normal,
-.jqx-scrollbar-thumb-state-normal-horizontal {
-    background: #868e96 !important; /* Steel grey thumb */
-    border-color: #868e96 !important;
-    border-radius: 4px !important;
-}
-.jqx-scrollbar-thumb-state-hover,
-.jqx-scrollbar-thumb-state-hover-horizontal {
-    background: #495057 !important; /* Deep grey on hover */
-    border-radius: 4px !important;
+.magnifier-icon:hover {
+    color: #2563eb; 
+    transform: translateY(-50%) scale(1.1);
 }
 </style>
-
 <script type="text/javascript">
 $(document).ready(function () {
 	$('#btndownload').hide();
@@ -299,8 +177,8 @@ $(document).ready(function () {
 	//$("#tarifreferencegrid").jqxGrid({ disabled: true});
 	$("#closeinvdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	 $("#closedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#indate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	 $("#collectdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+	 $("#indate").jqxDateTimeInput({ width: '90px', height: '15px',formatString:"dd.MM.yyyy",value:null});
+	 $("#collectdate").jqxDateTimeInput({ width: '90px', height: '15px',formatString:"dd.MM.yyyy",value:null});
 	 $("#datehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	 $("#agmtdeliverydate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	 $("#closedatehidden").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
@@ -1452,245 +1330,196 @@ if(document.getElementById("rentalagent").value==""){
   		}
   	}
 </script>
-
-
 </head>
 <body onload="setValues();">
-<div class="homeContent" data-type="background" >
+<div id="mainBG" class="homeContent" data-type="background" >
 <form id="frmLeaseClose" action="saveLeaseClose" autocomplete="off">
-
-<jsp:include page="../../../../header.jsp" />
-
-<div class="modern-ui hidden-scrollbar">
-
-    <div class="modern-panel" style="padding-top: 15px;">
-        <span class="modern-panel-title">Close Details</span>
-        
-        <div style="position: absolute; top: -12px; right: 15px;">
-            <div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
-                <ul>
-                    <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
-                    <li><a href="#documents" onclick="replacement();">Replacement</a></li>
-                    <li><a href="#history" onclick="account();">Account Statement</a></li>
-                    <li><a href="#close" onclick="closing();">Closing Summary</a></li>
-                    <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>
-                </ul>
-            </div>
+<%-- 	<script>
+			window.parent.formName.value="Lease Agreement Close";
+			window.parent.formCode.value="LAC";
+	</script> --%>
+	<jsp:include page="../../../../header.jsp" />
+	<br/> 
+<div class='hidden-scrollbar'>
+<table width="100%">
+  <tr>
+    <td colspan="2"><fieldset><legend>Gen. Info</legend>
+      <table width="100%">
+        <tr>
+          <td width="5%" align="right">Branch</td>
+          <td width="8%" align="left"><select name="cmbagmtbranch" id="cmbagmtbranch" value='<s:property value="cmbagmtbranch"/>' style="width:100%;"><option value="">--Select--</option></select></td>
+          <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
+          <td width="7%" align="right">Agreement No</td>
+          <td width="15%" align="left"><div class="input-search-container"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        </div></td>
+          <td width="4%" align="right">Vehicle</td>
+          <td width="41%" align="left"><input type="text" name="vehicle" id="vehicle" value='<s:property value="vehicle"/>' style="width:98.8%;"></td>
+          <td width="4%" align="right">Doc No</td>
+          <td width="8%" align="left"><input type="text" name="voucherno" id="voucherno" value='<s:property value="voucherno"/>' readonly></td>
+          <td width="8%" rowspan="2" align="center"><div id='jqxMenuMore' title="More" align="center" style='visibility: hidden;'>
+        <ul>
+         <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
+            <li><a href="#documents" onclick="replacement();">Replacement</a></li>
+            <li><a href="#history" onclick="account();">Account Statement</a></li>                  
+            <li><a href="#close" onclick="closing();">Closing Summary</a></li> 
+            <li><a href="#kmdetails" onclick="funKmDetails();">KM Details</a></li>         
+        </ul>
+     </div></td>
+        </tr>
+        <tr>
+          <td align="right">Client</td>
+          <td align="left"><input type="text" name="clientid" id="clientid" value='<s:property value="clientid"/>' ></td>
+          <td colspan="4" align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' style="width:98.8%;"></td>
+          <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
+          <td align="right">Date</td>
+          <td align="left"><div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div></td>
+          <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
+        </tr>
+        <tr>
+          <td align="right">Descriprtion</td>
+          <td colspan="5" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' style="width:98.8%;"></td>
+            <td align="right">Location</td>
+          <td align="left"><select name="cmbcloseloc" id="cmbcloseloc" value='<s:property value="description" />' style="width:100%;"><option value="">--Select--</option></select></td>
+          <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc" />' />
+          <td align="center">&nbsp;</td>
+        </tr>
+      </table>
+    </fieldset></td>
+  </tr>
+  <tr>
+    <td colspan="2"><fieldset>
+      <legend>In Info</legend>
+      <table width="100%">
+        <tr>
+          <td width="11%" rowspan="2">Collection
+            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
+            &nbsp;
+           <div class="input-search-container"> <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        </div><br>
+            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge" style="text-align:right;"/>
+            </td>
+          <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
+          <td width="8%" align="right">Collection Details</td>
+          <td width="1%" align="right">KM</td>
+          <td width="5%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
+          <td width="2%" align="right">Fuel</td>
+          <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
+          <td width="7%" align="left">
+          <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
+          <td width="2%" align="right">Date</td>
+          <td width="4%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
+          <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
+          <td width="2%" align="right">Time</td>
+          <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
+          <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
+          <td width="5%" align="right">Rental Agent</td>
+          <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
+            <option value="">--Select--</option>
+          </select> --%>
+          <td width="10%" align="left">
+          <div class="input-search-container"><input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
         </div>
-
-        <div class="erp-panel-grid" style="display: grid; gap: 10px 15px; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%;">
-            
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
-                <label class="lbl-right" style="width:70px">Branch</label>
-                <select name="cmbagmtbranch" id="cmbagmtbranch" style="width: 100%;" value='<s:property value="cmbagmtbranch"/>'>
-                    <option value="">--Select--</option>
-                </select>
-                <input type="hidden" name="hidcmbagmtbranch" id="hidcmbagmtbranch" value='<s:property value="hidcmbagmtbranch"/>'>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
-                <label class="lbl-right" style="width:100px">Agreement No</label>
-                <input type="text" name="vocno" id="vocno" style="width: 100%;" value='<s:property value="vocno"/>' onKeyDown="getAgmt(event);" placeholder="Press F3 to Search">
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
-                <label class="lbl-right" style="width:70px">Vehicle</label>
-                <input type="text" name="vehicle" id="vehicle" style="width: 100%;" value='<s:property value="vehicle"/>'>
-                
-                <label class="lbl-right" style="width:50px; margin-left:10px;">Doc No</label>
-                <input type="text" name="voucherno" id="voucherno" style="width: 100%;" value='<s:property value="voucherno"/>' readonly>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
-                <label class="lbl-right" style="width:70px">Client</label>
-                <input type="text" name="clientid" id="clientid" style="width: 100%;" value='<s:property value="clientid"/>' >
-                <input type="hidden" name="txtaccno" id="txtaccno" value='<s:property value="txtaccno"/>'>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%; grid-column: span 2;">
-                <input type="text" name="client" id="client" style="width: 100%;" value='<s:property value="client"/>' >
-                
-                <label class="lbl-right" style="width:40px; margin-left:10px;">Date</label>
-                <div style="width:125px;">
-                    <div id="closedate" name="closedate" value='<s:property value="closedate"/>'></div>
-                </div>
-                <input type="hidden" name="hidclosedate" id="hidclosedate" value='<s:property value="hidclosedate"/>'>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%; grid-column: span 2;">
-                <label class="lbl-right" style="width:70px">Description</label>
-                <input type="text" name="description" id="description" style="width: 100%;" value='<s:property value="description"/>'>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
-                <label class="lbl-right" style="width:70px">Location</label>
-                <select name="cmbcloseloc" id="cmbcloseloc" style="width: 100%;" value='<s:property value="description" />'>
-                    <option value="">--Select--</option>
-                </select>
-                <input type="hidden" name="hidcmbcloseloc" id="hidcmbcloseloc" value='<s:property value="hidcmbcloseloc" />' />
-            </div>
-
+          </td>
+          <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
+          <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
+          <td width="7%" align="right">Days Used</td>
+          <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
+          <td width="5%" align="right">Hours Used</td>
+          <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
+          <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  class="myButton" onclick="funChecking();">
+							Process</button></td>
+        </tr>
+        <tr>
+          <td align="right">In Details</td>
+          <td align="right">KM</td>
+          <td align="left"><input type="text" name="inkm" id="inkm" value='<s:property value="inkm"/>' onkeypress="javascript:return isNumber (event,id)"></td>
+          <td align="right">Fuel</td>
+          <td align="left"><!--<input type="text" name="infuel" id="infuel" value='<s:property value="infuel"/>'>-->
+          <select name="cmbinfuel" id="cmbinfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
+    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
+          <td align="right">Date</td>
+          <td align="left"><div id="indate" name="indate" value='<s:property value="indate"/>'></div></td>
+          <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
+          <td align="right">Time</td>
+          <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
+          <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
+          <td align="right">Check In</td>
+          <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
+            <option value="">--Select--</option>
+          </select> --%>
+          <td align="left">
+          <div class="input-search-container"><input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
         </div>
-    </div>
-
-    <div class="modern-panel">
-        <span class="modern-panel-title">In Info</span>
-        
-        <div style="display: flex; gap: 20px; padding-top: 10px; align-items: flex-start; width: 100%;">
-
-            <div style="width: 18%; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; min-width: 0;">
-                <div class="chk-container">
-                    <label class="lbl-right" style="width:70px; text-align:left;">Collection</label>
-                    <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
-                </div>
-                <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search">
-                <input type="text" name="collectchg" id="collectchg" class="align-right-input" value='<s:property value="collectchg"/>' placeholder="Collection Charge">
-                <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-            </div>
-
-            <div style="width:100%; display:flex; flex-direction:column; gap:10px;">
-
-    <!-- COMMON GRID (8 columns = 4 pairs) -->
-
-    <!-- ROW 1 -->
-    <div style="display:grid;
-                grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr;
-                gap:10px; align-items:center;">
-
-        <label class="lbl-right">Collection Details KM</label>
-        <input type="text" name="collectkm" id="collectkm" class="align-right-input" value='<s:property value="collectkm"/>'>
-
-        <label class="lbl-right">Fuel</label>
-        <select name="cmbcollectfuel" id="cmbcollectfuel">
-            <option value="">-Select-</option>
-            <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option>
-            <option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
-            <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option>
-            <option value=1.000>Level 8/8</option>
-        </select>
-        <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-
-        <label class="lbl-right">Date</label>
-        <div>
-            <div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div>
-            <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-        </div>
-
-        <label class="lbl-right">Time</label>
-        <div>
-            <div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div>
-            <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-        </div>
-    </div>
-
-    <!-- ROW 2 -->
-    <div style="display:grid;
-                grid-template-columns:120px 1fr 120px 1fr 120px 1fr 120px 1fr;
-                gap:10px; align-items:center;">
-
-        <label class="lbl-right">In Details KM</label>
-        <input type="text" name="inkm" id="inkm" class="align-right-input"
-               value='<s:property value="inkm"/>'
-               onkeypress="javascript:return isNumber(event,id)">
-
-        <label class="lbl-right">Fuel</label>
-        <select name="cmbinfuel" id="cmbinfuel">
-            <option value="">-Select-</option>
-            <option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option>
-            <option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option>
-            <option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option>
-            <option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option>
-            <option value=1.000>Level 8/8</option>
-        </select>
-
-        <label class="lbl-right">Date</label>
-        <div>
-            <div id="indate" name="indate" value='<s:property value="indate"/>'></div>
-            <input type="hidden" name="hidindate" id="hidindate" value='<s:property value="hidindate"/>'>
-        </div>
-
-        <label class="lbl-right">Time</label>
-        <div>
-            <div id="intime" name="intime" value='<s:property value="intime"/>'></div>
-            <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
-        </div>
-    </div>
-
-    <!-- ROW 3 -->
-    <div style="display:grid;
-                grid-template-columns:110px 1fr 110px 1fr 110px 1fr auto;
-                gap:10px; align-items:center;">
-
-        <label class="lbl-right">Rental Agent</label>
-        <input type="text" name="rentalagent" id="rentalagent"
-               value='<s:property value="rentalagent"/>'
-               readonly placeholder="Press F3 to search"
-               onkeydown="getRentalAgent(event);">
-
-        <input type="hidden" name="hidrentalagent" id="hidrentalagent"
-               value='<s:property value="hidrentalagent"/>'>
-        <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin"
-               value='<s:property value="hidcmbcheckin"/>'>
-
-        <label class="lbl-right">Check In</label>
-        <input type="text" name="checkin" id="checkin"
-               value='<s:property value="checkin"/>'
-               readonly placeholder="Press F3 to search"
-               onkeydown="getCheckin(event);">
-
-        <input type="hidden" name="hidcheckin" id="hidcheckin"
-               value='<s:property value="hidcheckin"/>'>
-        <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent"
-               value='<s:property value="hidcmbrentalagent"/>'>
-
-        <label class="lbl-right">Total KM</label>
-        <input type="text" name="totalkm" id="totalkm"
-               class="align-right-input"
-               value='<s:property value="totalkm"/>' readonly>
-
-        <!-- PROCESS BUTTON -->
-        <input type="button" name="btnprocess" id="btnprocess"
-               class="myButton"
-               value="Process"
-               onclick="checkAgmtDelivery();">
-    </div>
-
-</div>
-
-        </div>
-    </div>
-
-    <div style="display:flex; gap:15px;">
-        <div style="flex: 2; display:flex; flex-direction:column; gap:15px;">
-            <div class="modern-panel" style="margin-bottom:0; padding: 10px;">
-                <div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div>
-            </div>
-            <div class="modern-panel" style="margin-bottom:0; padding: 10px;">
-                <div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div>
-            </div>
-            <div class="modern-panel" style="margin-bottom:0; padding: 10px;">
-                <div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div>
-            </div>
-        </div>
-
-        <div style="flex: 1.1; display:flex; flex-direction:column;">
-            <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin-bottom: 10px;">
-                <label name="lblinvoicedone" id="lblinvoicedone" style="color:red; font-weight:bold; font-size:14px; margin:0;"></label>
-                <input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">
-                <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
-            </div>
-
-            <div class="modern-panel" style="margin-bottom:0; flex:1;">
-                <span class="modern-panel-title">Calculation Info</span>
-                <div style="padding-top: 5px; height: 100%;">
-                    <div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
-                    <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-                </div>
-            </div>
-        </div>
-    </div>
-
+          </td>
+          <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
+          <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
+         <div border="1">
+          <td align="right">Total KM</td>
+          <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
+          <td align="right">Excess KM</td>
+          <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
+          <td width="0%" align="left">&nbsp;</td>
+         </div>
+        </tr>
+      </table>
+    </fieldset></td>
+  </tr>
+  <tr>
+    <td width="66%"><fieldset>
+      
+      <table width="100%">
+        <tr>
+          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
+        </tr>
+      </table>
+    </fieldset></td>
+    <td width="34%" rowspan="3">
+    <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label>    </center>
+    <center><input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
+    <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();"></center>
+    <fieldset><legend>Calculation Info
+      </legend>
+      <table width="100%">
+        <tr>
+          <td><div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div></td>
+          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
+          </tr>
+        </table>
+      </fieldset>
+    </td>
+  </tr>
+ 
+  <tr>
+    <td><fieldset><table width="100%">
+      <tr>
+        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
+        </tr>
+      </table>
+    </fieldset></td>
+    </tr>
+  <tr>
+    <td><fieldset><table width="100%">
+      <tr>
+        <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
+        </tr>
+      </table>
+    </fieldset></td>
+    </tr>
+</table>
+<br><br><br><br><br><br>
 <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
 <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>
 <input type="hidden" name="agmtdate" id="agmtdate" value='<s:property value="agmtdate"/>'>
@@ -1745,7 +1574,7 @@ if(document.getElementById("rentalagent").value==""){
 </div>
 <div id="window1">
    <div ></div>
-
+</div>
 </div>
 </body>
 </html>
