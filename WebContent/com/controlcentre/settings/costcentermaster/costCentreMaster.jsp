@@ -140,7 +140,7 @@ $(document).ready(function () {
 	$('.action-bar').append(
 	        '<button type="button" class="action-btn" id="btnExcel" onclick="funExcelBtn()">' +
 	        '<svg viewBox="0 0 20 20"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.89 2 1.99 2h8c1.1 0 2-.9 2-2V8l-6-6zm-1 12H7v-2h6v2zm0-4H7V8h6v2zm-3-5V3.5L14.5 8H10z"/></svg> ' +
-	        'Excel</button>'
+	        'CoC</button>'
 	    );
     /* Upgraded JQX Date to match 24px inputs */
     $("#date_costmaster").jqxDateTimeInput({ width: '130px', height: '24px' ,formatString : "dd.MM.yyyy" });
