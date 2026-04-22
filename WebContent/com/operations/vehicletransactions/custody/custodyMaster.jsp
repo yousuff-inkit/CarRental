@@ -120,7 +120,7 @@
     height: 24px !important;
     padding: 0px 16px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
+    color: #ffffff !important; /* FIXED: Guaranteed white text inside the button */
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -148,7 +148,6 @@
 }
 .hidden-scrollbar::-webkit-scrollbar { width: 0px; }
 </style>
-
 <script type="text/javascript">
 $(document).ready(function () { 
 
