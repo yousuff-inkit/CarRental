@@ -9,16 +9,126 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
+<style>
+/* =========================================================
+   SCOPED UI: Compact Search Modal Layout (Pure White & Segoe UI)
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+}
 
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+}
+
+/* Master Input Heights - Forced to 24px and Font Enforced */
+.modern-ui input[type="text"],
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Panel Styling - Pure White */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.modern-ui table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.modern-ui td {
+    padding: 4px 5px;
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Modern Search Button - Font Enforced */
+.modern-ui .myButton {
+    height: 24px !important; 
+    line-height: 22px !important;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff !important;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+</style>
 
 <script type="text/javascript">
 $(document).ready(function () {
+    /* COMPACT DATE/TIME SIZING - FIXED WIDTH TO PREVENT SQUISHING */
     $("#txtdob").jqxDateTimeInput({
-        width: '110px',
-        height: '15px',
+        width: '110px', /* CHANGED from 100% to 110px */
+        height: '24px',
         formatString:"dd.MM.yyyy",
         value:null
     });
+    
+    /* Force internal alignment AFTER render - Font Enforced */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+            "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
+
     getEmpDesignation();
     getEmpDepartment();
 }); 
@@ -62,149 +172,89 @@ function getEmpDepartment() {
 }
 
 function loadSearch() {
-    var empname            = document.getElementById("txtempname").value;
-    var mob                = document.getElementById("txtmobile").value;
-    var employeedesignation= document.getElementById("employeedesignation").value;
-    var employeedepartment = document.getElementById("employeedepartment").value;
-    var empid              = document.getElementById("txtempid").value;
-    var dob                = document.getElementById("txtdob").value;
-    var employeebranchchk  = window.parent.employeebranchchk.value;
-    var branch             = document.getElementById("brchName").value;
-    getdata(empname, mob, employeedesignation, employeedepartment, empid, dob,
-            employeebranchchk, branch);
+    var empname            = document.getElementById("txtempname").value || "";
+    var mob                = document.getElementById("txtmobile").value || "";
+    var employeedesignation= document.getElementById("employeedesignation").value || "";
+    var employeedepartment = document.getElementById("employeedepartment").value || "";
+    var empid              = document.getElementById("txtempid").value || "";
+    var dob                = $('#txtdob').jqxDateTimeInput('val') || "";
+    
+    /* Safety check for parent window elements */
+    var employeebranchchk  = (window.parent && window.parent.employeebranchchk) ? window.parent.employeebranchchk.value : "0";
+    var branchElem         = document.getElementById("brchName");
+    var branch             = branchElem ? branchElem.value : "";
+    
+    getdata(empname, mob, employeedesignation, employeedepartment, empid, dob, employeebranchchk, branch);
 }
 
-function getdata(empname, mob, employeedesignation, employeedepartment,
-                 empid, dob, employeebranchchk, branch){
+function getdata(empname, mob, employeedesignation, employeedepartment, empid, dob, employeebranchchk, branch){
+    /* Used encodeURIComponent to safely handle spaces and special characters */
     $("#refreshdiv").load(
-        'empMainSearchGrid.jsp?empname=' + empname.replace(/ /g, "%20") +
-        '&mob=' + mob +
-        '&employeedesignation=' + employeedesignation +
-        '&employeedepartment=' + employeedepartment +
-        '&empid=' + empid +
+        'empMainSearchGrid.jsp?empname=' + encodeURIComponent(empname) +
+        '&mob=' + encodeURIComponent(mob) +
+        '&employeedesignation=' + encodeURIComponent(employeedesignation) +
+        '&employeedepartment=' + encodeURIComponent(employeedepartment) +
+        '&empid=' + encodeURIComponent(empid) +
         '&dob=' + dob +
-        '&branch=' + branch +
-        '&employeebranchchk=' + employeebranchchk
+        '&branch=' + encodeURIComponent(branch) +
+        '&employeebranchchk=' + encodeURIComponent(employeebranchchk)
     );
 }
 </script>
 </head>
 
-<style type="text/css">
-#search {
-    width: 900px;
-    margin: 0 auto;
-    background: #ffffff;
-    border: 1px solid #ccc;
-    font-family: Tahoma, Geneva, sans-serif;
-}
+<body style="background-color: #fff; margin: 0;">
+<div id="search" class="modern-ui">
 
-#search table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 12px 10px; 
-}
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+            <tr>
+                <td class="lbl-right" width="8%">Name</td>
+                <td width="20%">
+                    <input type="text" name="txtempname" id="txtempname" value='<s:property value="txtempname"/>'>
+                </td>
+                
+                <td class="lbl-right" width="8%">Mob</td>
+                <td width="20%">
+                    <input type="text" name="txtmobile" id="txtmobile" value='<s:property value="txtmobile"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Designation</td>
+                <td width="20%">
+                    <select id="employeedesignation" name="employeedesignation">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right" style="padding-top: 8px;">Department</td>
+                <td style="padding-top: 8px;">
+                    <select id="employeedepartment" name="employeedepartment">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+                
+                <td class="lbl-right" style="padding-top: 8px;">Emp#</td>
+                <td style="padding-top: 8px;">
+                    <input type="text" name="txtempid" id="txtempid" value='<s:property value="txtempid"/>'>
+                </td>
+                
+                <td class="lbl-right" style="padding-top: 8px;">DOB</td>
+                <td style="padding-top: 8px; display: flex; gap: 10px; align-items: center; border: none;">
+                    <div id="txtdob" name="txtdob"></div>
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-td[align="right"] {
-    font-size: 13px;
-    font-weight: 700;
-    color: #333;
-    white-space: nowrap;
-}
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="empMainSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
 
-input[type="text"], select {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 600;
-    font-size: 12px;
-    padding: 4px 8px;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    height: 28px;
-}
-
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
-}
-
-.myButton:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    transform: translateY(-1px);
-}
-
-#refreshdiv {
-    margin-top: 10px;
-    border-top: 1px solid #e0e4ee;
-}
-</style>
-
-<body bgcolor="#E0ECF8">
-<div id="search">
-    <table border="0">
-        <tr>
-            <td width="10%" align="right">Name</td>
-            <td width="30%">
-                <input type="text" name="txtempname" id="txtempname" value='<s:property value="txtempname"/>'>
-            </td>
-            <td width="10%" align="right">Mob</td>
-            <td width="20%">
-                <input type="text" name="txtmobile" id="txtmobile" value='<s:property value="txtmobile"/>'>
-            </td>
-            <td width="30%" rowspan="2" align="center" valign="middle">
-                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-            </td>
-        </tr>
-        <tr>
-            <td align="right">Designation</td>
-            <td>
-                <select id="employeedesignation" name="employeedesignation">
-                    <option value="">--Select--</option>
-                </select>
-            </td>
-            <td align="right">Department</td>
-            <td>
-                <select id="employeedepartment" name="employeedepartment">
-                    <option value="">--Select--</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">Emp#</td>
-            <td>
-                <input type="text" name="txtempid" id="txtempid" value='<s:property value="txtempid"/>'>
-            </td>
-            <td align="right">DOB</td>
-            <td>
-                <div id="txtdob" name="txtdob"></div>
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="5">
-                <div id="refreshdiv">
-                    <jsp:include page="empMainSearchGrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
-    </table>
 </div>
 </body>
 </html>
