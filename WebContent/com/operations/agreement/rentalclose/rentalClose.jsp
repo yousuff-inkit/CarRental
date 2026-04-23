@@ -103,7 +103,7 @@ input[type="button"].myButton:hover, button.myButton:hover {
     align-items: center;
     position: relative;
     padding: 10px;
-    margin: 10px 0;
+    margin: 15px 0;
     background: #f8f9fa;
     border: 1px solid #e1e4e8;
     border-radius: 4px;
@@ -148,48 +148,26 @@ input[type="button"].myButton:hover, button.myButton:hover {
 }
 
 /* =========================================================
-   ACCORDION STYLING (Native HTML5 Details/Summary)
+   NORMAL FORM STYLING (Fieldset & Legend)
 ========================================================= */
-details.modern-accordion {
+fieldset {
     border: 1px solid #e1e4e8 !important;
     background-color: #fff !important;
-    margin-bottom: 10px !important;
-    padding: 5px 10px 10px 10px !important;
+    margin-bottom: 15px !important;
+    padding: 10px 15px 15px 15px !important;
     border-radius: 4px !important;
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
-details.modern-accordion > summary {
+legend {
     font-size: 13px !important;
     font-weight: bold !important;
     color: #0056b3 !important;
-    padding: 5px 0 5px 6px !important;
-    cursor: pointer !important;
-    list-style: none !important;
+    padding: 0 8px 0 6px !important;
     border-left: 3px solid #0056b3 !important;
-    outline: none;
-}
-
-details.modern-accordion > summary::-webkit-details-marker {
-    display: none;
-}
-
-details.modern-accordion > summary::before {
-    content: '\25BA  ';
-    display: inline-block;
-    color: #0056b3;
-    font-size: 10px;
-    margin-right: 5px;
-    transition: transform 0.2s ease-in-out;
-}
-
-details.modern-accordion[open] > summary::before {
-    transform: rotate(90deg);
-}
-
-details.modern-accordion[open] > summary {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #f4f5f7;
+    margin-bottom: 5px !important;
+    background: #fff;
+    width: auto;
 }
 </style>
 <script type="text/javascript">
@@ -1517,8 +1495,8 @@ if(document.getElementById("rentalagent").value==""){
 	<br/> 
 <div class='hidden-scrollbar'>
     
-  <details class="modern-accordion" open>
-    <summary>General Information</summary>
+  <fieldset>
+    <legend>General Information</legend>
     <table width="100%">
       <tr>
         <td width="4%" align="right">Branch</td>
@@ -1565,10 +1543,10 @@ if(document.getElementById("rentalagent").value==""){
         <td align="left">&nbsp;</td>
       </tr>
     </table>
-  </details>
+  </fieldset>
 
-  <details class="modern-accordion">
-    <summary>In Info</summary>
+  <fieldset>
+    <legend>In Info</legend>
     <table width="100%">
       <tr>
         <td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 6px !important;">
@@ -1639,7 +1617,7 @@ if(document.getElementById("rentalagent").value==""){
         <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
       </tr>
     </table>
-  </details>
+  </fieldset>
 
   <div class="action-buttons">
       
@@ -1657,38 +1635,38 @@ if(document.getElementById("rentalagent").value==""){
   <table width="100%">
     <tr>
       <td width="66%" valign="top">
-        <details class="modern-accordion">
-          <summary>Agreement Tariff</summary>
+        <fieldset>
+          <legend>Agreement Tariff</legend>
           <div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div>
-        </details>
+        </fieldset>
         
         <div id="referencefield">
-          <details class="modern-accordion">
-            <summary>Reference Tariff</summary>
+          <fieldset>
+            <legend>Reference Tariff</legend>
             <div id="referencetarifdiv"><jsp:include page="referenceTarifGrid.jsp"></jsp:include></div>
-          </details>
+          </fieldset>
         </div>
       </td>
       
       <td width="34%" valign="top">
-        <details class="modern-accordion">
-          <summary>Calculation Info</summary>
+        <fieldset>
+          <legend>Calculation Info</legend>
           <div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
           <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-        </details>
+        </fieldset>
       </td>
     </tr>
   </table>
 
-  <details class="modern-accordion">
-    <summary>Total Grid</summary>
+  <fieldset>
+    <legend>Total Grid</legend>
     <div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div>
-  </details>
+  </fieldset>
 
-  <details class="modern-accordion">
-    <summary>Traffic</summary>
+  <fieldset>
+    <legend>Traffic</legend>
     <div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div>
-  </details>
+  </fieldset>
 
 <input type="hidden" name="agmttime" id="agmttime" value='<s:property value="agmttime"/>'>
 <input type="hidden" name="agmtdeliverytime" id="agmtdeliverytime" value='<s:property value="agmtdeliverytime"/>'>

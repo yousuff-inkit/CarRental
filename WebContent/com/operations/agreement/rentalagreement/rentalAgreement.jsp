@@ -2776,12 +2776,13 @@ function funResetExcessInsur(){
 ========================================================= */
 body {
     background: #f4f6f9;
-    font-family: Arial, sans-serif;
-    color: #333;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    
     font-size: 12px;
     margin: 0;
     padding: 10px;
     box-sizing: border-box;
+    font-weight:700;
 }
 
 #mainBG {
@@ -2792,6 +2793,7 @@ body {
     margin: auto;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
+    font-weight:700;
 }
 
 /* Master Input Heights - Set to 24px as requested */
@@ -2823,17 +2825,15 @@ fieldset {
 
 legend {
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 700;
     color: #0056b3;
     padding: 0 0 0 6px;
     border-left: 3px solid #0056b3;
     margin-bottom: 5px;
 }
 
-/* Strict Full-Width CSS Grid for Top Section */
 .top-grid {
     display: grid;
-    /* 5 strict columns + inputs. Stretches perfectly across. */
     grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
     column-gap: 8px;
     row-gap: 8px;
@@ -2846,7 +2846,7 @@ legend {
     text-align: right;
     color: #444;
     font-size: 12px;
-    font-weight: bold;
+	font-weight: 700;
     white-space: nowrap;
 }
 
@@ -2873,7 +2873,6 @@ legend {
     padding: 0;
 }
 
-/* Middle Section Split */
 .middle-section {
     display: flex;
     gap: 10px;
@@ -2900,7 +2899,6 @@ legend {
     border-left: 3px solid #0056b3;
 }
 
-/* Clean Tables mapping requested colors */
 .cr-table {
     width: 100%;
     border-collapse: collapse;
@@ -2914,19 +2912,38 @@ legend {
 }
 .cr-table th {
     background: #f0f3f5;
-    font-weight: bold;
+    font-weight: 500;
     color: #333;
     text-align: left;
 }
 .lbl-right {
     text-align: right;
     color: #444;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12px;
     padding-right: 5px;
 }
 
-/* Tabs Override */
+.myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+
 #tabs { margin-top: 5px; margin-bottom: 0px; }
 #content { padding-top: 10px; }
 
@@ -2938,7 +2955,6 @@ legend {
 #jqxTimeOut, #jqxOnTime, #jqxDelTimeOut {
     width: 90px !important;
 }
-/* Safe hide for JQX grids to prevent infinite loading spinners */
 .jqx-safe-hide {
     height: 0px !important;
     overflow: hidden !important;
@@ -2947,8 +2963,140 @@ legend {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     border: none !important;
-    display: block !important; /* Keeps it in the DOM flow so JQX gets the correct width */
+    display: block !important; 
     opacity: 0;
+}
+
+.jqx-grid-header {
+    background: linear-gradient(180deg, #e9ecef 0%, #dee2e6 100%) !important;
+    border-color: #ced4da !important;
+    color: #212529 !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.jqx-grid-column-header {
+    background: transparent !important;
+    color: #212529 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    text-align: left !important;
+    border-color: #ced4da !important;
+}
+
+.jqx-grid-column-header a:link,
+.jqx-grid-column-header a:visited {
+    color: #212529 !important;
+    text-align: left !important;
+}
+
+.jqx-grid-column-header > div > div {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+
+.jqx-grid-cell {
+    background: #ffffff;
+    border-color: #dee2e6 !important; 
+    color: #1f2937;
+    font-size: 11px !important;
+    text-align: left !important;
+}
+
+.jqx-grid-cell-left-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+    margin-left: 0px !important;
+}
+
+.jqx-grid-cell-middle-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+.jqx-grid-cell-right-align {
+    text-align: right !important;
+    padding-right: 6px !important;
+}
+
+
+.jqx-grid-cell-alt {
+    background: #f1f3f5 !important; 
+}
+
+
+.jqx-grid-cell-hover {
+    background: #dee2e6 !important; 
+    border-color: #ced4da !important;
+    color: #000000 !important;
+}
+
+.jqx-grid-cell-selected {
+    background: #adb5bd !important; 
+    color: #ffffff !important;
+    border-color: #868e96 !important;
+}
+
+.jqx-grid-table .jqx-grid-cell {
+    border-width: 0px 0px 1px 0px !important;
+    border-color: #dee2e6 !important;
+}
+
+
+.jqx-grid {
+    border: 1px solid #adb5bd !important; 
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.jqx-grid-cell-sort {
+    background-color: #e9ecef !important;
+}
+.jqx-grid-cell-sort-alt {
+    background-color: #dee2e6 !important;
+}
+
+.jqx-grid-cell-filter,
+.jqx-grid-cell-filter-alt {
+    background-color: #f1f3f5 !important;
+}
+
+.jqx-grid-cell-pinned,
+.jqx-grid-cell-pinned-alt {
+    background-color: #e9ecef !important;
+}
+
+
+.jqx-grid-pager {
+    background: #e9ecef !important; 
+    border-top: 1px solid #ced4da !important;
+    padding: 4px !important;
+}
+
+.jqx-grid-column-menubutton {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.jqx-grid-column-menubutton:hover {
+    opacity: 1;
+}
+
+
+.jqx-scrollbar-state-normal {
+    background: #f1f3f5 !important;
+}
+.jqx-scrollbar-thumb-state-normal,
+.jqx-scrollbar-thumb-state-normal-horizontal {
+    background: #868e96 !important; 
+    border-color: #868e96 !important;
+    border-radius: 4px !important;
+}
+.jqx-scrollbar-thumb-state-hover,
+.jqx-scrollbar-thumb-state-hover-horizontal {
+    background: #495057 !important; 
+    border-radius: 4px !important;
 }
 
 </style>
@@ -3116,7 +3264,7 @@ html, body {
     <!-- ================= VEHICLE SECTION ================= -->
     <div class="middle-panel" style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
 
-        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
+        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:700; margin-bottom:10px;">
             Vehicle Info
         </div>
 
@@ -3141,10 +3289,10 @@ html, body {
             <label style="width:90px;">OUT : KM</label>
 
             <input type="text" id="re_Km" name="re_Km"
-                   style="width:120px;"
+                   style="width:140px;"
                    value='<s:property value="re_Km"/>'/>
 
-           <label>Date</label>
+           <label style="padding-left: 110px">Date</label>
 <div id='jqxDateOut' name='jqxDateOut'
      style="width:140px;"
      value='<s:property value="jqxDateOut"/>'></div>
@@ -3164,10 +3312,10 @@ html, body {
             <label style="width:90px;">Fuel</label>
 
             <input type="text" id="ratariff_fuel" name="ratariff_fuel"
-                   style="width:120px;"
+                   style="width:140px;"
                    value='<s:property value="ratariff_fuel"/>'/>
 
-            <label>Due Date</label>
+            <label style="padding-left: 85px">Due Date</label>
             <div id='jqxOnDate' name='jqxOnDate'
                  value='<s:property value="jqxOnDate"/>'></div>
             <input type="hidden" id="hidjqxOnDate" name="hidjqxOnDate"

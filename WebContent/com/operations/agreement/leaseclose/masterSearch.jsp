@@ -8,153 +8,175 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 
-<style>
-/* =========================================================
-SCOPED UI: Clean UI Panel Design for Search Modal
-* Renamed to .search-popup-ui to prevent breaking the main page! *
-========================================================= */
-
-.search-popup-ui {
-    font-family: Arial, sans-serif;
-    color: #333;
-    font-size: 12px;
-    padding: 10px;
-    background-color: #f4f6f9;
-    height: 100%;
+<style type="text/css">
+#search {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 11px;
+    color: #404040;
+    padding: 15px;
+    background-color: #fff;
     box-sizing: border-box;
+    width: 100%;
 }
 
-/* Master Input Heights - Set to 24px */
-.search-popup-ui input[type="text"], 
-.search-popup-ui select {
+#search .modern-panel {
+    background-color: #fff !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+}
+
+/* Shared input reset */
+#search input[type="text"],
+#search select {
     height: 24px !important;
-    border: 1px solid #ccc;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 11px;
+    font-family: Tahoma, sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
+    width: 100%;
 }
 
-/* Checkbox specific fix */
-.search-popup-ui input[type="checkbox"] {
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
-}
-
-/* Compact Width Classes */
-.search-popup-ui .input-xs { width: 60px !important; }
-.search-popup-ui .input-sm { width: 100px !important; }
-.search-popup-ui .input-md { width: 140px !important; }
-.search-popup-ui .input-lg { width: 200px !important; }
-.search-popup-ui .input-xl { width: 300px !important; }
-.search-popup-ui .input-full { width: 100% !important; flex: 1; }
-
-.search-popup-ui input[type="text"]:focus, 
-.search-popup-ui select:focus {
+#search input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF;
 }
 
-/* Layout Utilities */
-.search-popup-ui .field-row {
-    display: flex;
+/* Base row */
+.field-row {
+    display: grid;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-bottom: 8px;
 }
 
-.search-popup-ui .lbl-right {
+/* ROW 1: Name | MOB | Date — all columns fixed so nothing overflows */
+.field-row.row1 {
+    grid-template-columns: 42px minmax(80px, 1fr) 34px 110px 34px 125px;
+}
+
+/* ROW 2: Agmt NO | Fleet NO | Reg NO | actions */
+.field-row.row2 {
+    grid-template-columns: 50px 60px 50px 60px 44px 60px auto;
+    margin-bottom: 0;
+}
+
+#search .lbl-right {
     text-align: right;
-    color: #444;
-    font-size: 12px;
     font-weight: bold;
     white-space: nowrap;
-    padding-right: 5px;
 }
 
-/* Panel Styling */
-.search-popup-ui .modern-panel {
-    border: 1px solid #e1e4e8;
-    padding: 15px;
-    background: #fff;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+/* Keeps jqx date widget from stretching */
+.date-wrap {
+    width: 130px;
+    max-width: 130px;
+    overflow: hidden;
 }
 
-/* Search Button */
-.search-popup-ui .myButton {
+/* Checkbox + Search button cell */
+.action-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+    white-space: nowrap;
+}
+
+.action-cell label {
+    font-size: 11px;
     font-weight: bold;
-    font-size: 12px;
-    height: 24px !important;
-    padding: 0px 16px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #444;
+    cursor: pointer;
+    margin: 0;
+}
+
+#search .myButton {
+    height: 26px;
+    padding: 0 18px;
+    background-color: #0056b3;
     color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
-    transition: all 0.2s ease;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+    transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
-.search-popup-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
-}
+#search .myButton:hover { background-color: #004494; }
 
-/* Grid Container */
-.search-popup-ui .grid-container {
+#search .grid-container {
+    border: 1px solid #BDBDBD;
     background: #fff;
-    border: 1px solid #e1e4e8;
-    padding: 2px;
     min-height: 200px;
 }
+
+#search .jqx-datetimeinput { height: 24px !important; }
 </style>
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $("#searchdate").jqxDateTimeInput({ width: '125px', height: '24px',formatString:"dd.MM.yyyy",value:null});
-    
+    $("#searchdate").jqxDateTimeInput({
+        width: '130px',
+        height: '24px',
+        formatString: "dd.MM.yyyy",
+        value: null
+    });
+
     setTimeout(function () {
         $("#searchdate").find("input").css({
-            "margin-top": "0px", 
-            "line-height": "24px", 
-            "font-size": "12px", 
-            "font-family": "Arial, sans-serif",
-            "padding": "0 6px", 
-            "box-sizing":"border-box"
+            "margin-top": "0px",
+            "line-height": "24px",
+            "font-size": "11px",
+            "font-family": "Tahoma, sans-serif",
+            "padding": "0 6px",
+            "box-sizing": "border-box"
         });
-        $("#searchdate").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        $("#searchdate").find(".jqx-action-button").css({ "top": "0px", "height": "24px" });
     }, 0);
 });
 
 function mainloadSearch() {
-    var sclname=document.getElementById("SCl_name").value;
-    var smob=document.getElementById("Sl_mob").value;
-    var rno=document.getElementById("rno").value;
-    var flno=document.getElementById("flno").value;
-    var sregno=document.getElementById("sregno").value;
-    var searchdate=$('#searchdate').jqxDateTimeInput('val');
-    
+    var sclname    = document.getElementById("SCl_name").value;
+    var smob       = document.getElementById("Sl_mob").value;
+    var rno        = document.getElementById("rno").value;
+    var flno       = document.getElementById("flno").value;
+    var sregno     = document.getElementById("sregno").value;
+    var searchdate = $('#searchdate').jqxDateTimeInput('val');
+
     var branch = "";
-    if(document.getElementById("brchName")){
-        branch=document.getElementById("brchName").value;
+    if (document.getElementById("brchName")) {
+        branch = document.getElementById("brchName").value;
     }
-    
-    var allbranch = "";
-    if(document.getElementById("branch_chk")){
-        allbranch=document.getElementById("branch_chk").value;
+
+    var allbranch = "0";
+    if (document.getElementById("branch_chk")) {
+        allbranch = document.getElementById("branch_chk").value;
     }
-    
-    getdata(sclname,smob,rno,flno,sregno,searchdate,branch,allbranch);
+
+    getdata(sclname, smob, rno, flno, sregno, searchdate, branch, allbranch);
 }
 
-function getdata(sclname,smob,rno,flno,sregno,searchdate,branch,allbranch){
-    $("#srefreshdiv").load('submainSearch.jsp?sclname='+sclname+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&searchdate='+searchdate+'&branch='+branch+'&allbranch='+allbranch);
+function getdata(sclname, smob, rno, flno, sregno, searchdate, branch, allbranch) {
+    $("#srefreshdiv").load(
+        'submainSearch.jsp?sclname=' + sclname +
+        '&smob='        + smob +
+        '&rno='         + rno +
+        '&flno='        + flno +
+        '&sregno='      + sregno +
+        '&searchdate='  + searchdate +
+        '&branch='      + branch +
+        '&allbranch='   + allbranch
+    );
 }
 </script>
 </head>
@@ -163,37 +185,43 @@ function getdata(sclname,smob,rno,flno,sregno,searchdate,branch,allbranch){
 <div id="search" class="search-popup-ui">
 
     <div class="modern-panel">
-        
-        <div class="field-row">
-            <label class="lbl-right" style="width: 60px;">Name</label>
-            <input type="text" name="SCl_name" id="SCl_name" class="input-lg" style="flex: 1; max-width: 350px;" value='<s:property value="SCl_name"/>'>
 
-            <label class="lbl-right" style="width: 40px; margin-left: 10px;">MOB</label>
-            <input type="text" name="Sl_mob" id="Sl_mob" class="input-md" value='<s:property value="Sl_mob"/>'>
+        <!-- ROW 1: Name | MOB | Date -->
+        <div class="field-row row1">
+            <label class="lbl-right" for="SCl_name">Name</label>
+            <input type="text" name="SCl_name" id="SCl_name"
+                   value='<s:property value="SCl_name"/>'>
 
-            <label class="lbl-right" style="width: 40px; margin-left: 10px;">Date</label>
-            <div style="width: 125px;">
+            <label class="lbl-right" for="Sl_mob">MOB</label>
+            <input type="text" name="Sl_mob" id="Sl_mob"
+                   value='<s:property value="Sl_mob"/>'>
+
+            <label class="lbl-right" for="searchdate">Date</label>
+            <div class="date-wrap">
                 <div id="searchdate" name="searchdate"></div>
             </div>
         </div>
 
-        <div class="field-row" style="margin-bottom: 0;">
-            <label class="lbl-right" style="width: 60px;">Agmt NO</label>
-            <input type="text" name="rno" id="rno" class="input-md" value='<s:property value="rno"/>'>
+        <!-- ROW 2: Agmt NO | Fleet NO | Reg NO | All Branch + Search -->
+        <div class="field-row row2">
+            <label class="lbl-right" for="rno">Agmt NO</label>
+            <input type="text" name="rno" id="rno"
+                   value='<s:property value="rno"/>'>
 
-            <label class="lbl-right" style="width: 60px; margin-left: 10px;">Fleet NO</label>
-            <input type="text" name="flno" id="flno" class="input-md" value='<s:property value="flno"/>'>
+            <label class="lbl-right" for="flno">Fleet NO</label>
+            <input type="text" name="flno" id="flno"
+                   value='<s:property value="flno"/>'>
 
-            <label class="lbl-right" style="width: 50px; margin-left: 10px;">Reg NO</label>
-            <input type="text" id="sregno" name="sregno" class="input-md" value='<s:property value="sregno"/>'>
+            <label class="lbl-right" for="sregno">Reg NO</label>
+            <input type="text" id="sregno" name="sregno"
+                   value='<s:property value="sregno"/>'>
 
-            <div style="margin-left: auto; display: flex; align-items: center; gap: 15px;">
-                <div style="display: flex; align-items: center; gap: 5px;">
-                    <input type="checkbox" id="branch_chk" name="branch_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)">   
-                    <label for="branch_chk" style="margin: 0; font-size: 12px; font-weight: bold; color: #444; cursor: pointer;">All Branch</label>
-                </div>
-                
-                <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();">
+            <div class="action-cell">
+                <input type="checkbox" id="branch_chk" name="branch_chk" value="0"
+                       onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                <label for="branch_chk">All Branch</label>
+                <input type="button" name="mbtnrasearch" id="mbtnrasearch"
+                       class="myButton" value="Search" onclick="mainloadSearch();">
             </div>
         </div>
 
@@ -201,7 +229,7 @@ function getdata(sclname,smob,rno,flno,sregno,searchdate,branch,allbranch){
 
     <div class="grid-container">
         <div id="srefreshdiv">
-            <jsp:include page="submainSearch.jsp"></jsp:include> 
+            <jsp:include page="submainSearch.jsp"></jsp:include>
         </div>
     </div>
 

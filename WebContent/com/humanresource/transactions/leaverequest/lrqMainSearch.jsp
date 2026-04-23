@@ -1,22 +1,22 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
-    background-color: #fff;
-    font-family: Arial, sans-serif;
+    background-color: #fff; /* Main background white */
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
@@ -27,120 +27,110 @@ body {
     width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"],
-.modern-ui select {
+/* Master Input Styles */
+.modern-ui input[type="text"] {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus,
-.modern-ui select:focus {
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 10px;
 }
 
+/* Table Alignment */
 .modern-ui table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
     width: 100%;
 }
 
 .modern-ui td {
-    padding: 4px 5px;
     vertical-align: middle;
 }
 
 .modern-ui .lbl-right { 
     text-align: right; 
-    color: #444;
+    color: #222;
     font-size: 12px; 
-    font-weight: bold;
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Modern Blue matched to Client Master */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
-    transition: all 0.2s;
-    text-transform: uppercase;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
+    background-color: #004494;
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
+    border: 1px solid #BDBDBD;
     background: #fff;
-    overflow: hidden;
 }
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		$("#txtdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
-		
-		/* Force internal alignment AFTER render */
-        setTimeout(function () {
-            $(".jqx-datetimeinput").find("input").css({
-                "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
-                "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
-            });
-            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-        }, 0);
-	}); 
+    $(document).ready(function () {
+        /* Date left untouched at 15px height, exactly matching the DNO reference */
+        $("#txtdate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
+    }); 
 
-	function loadSearch() {
-		var docNo = document.getElementById("txtdocno").value || "";
-		var dates = $('#txtdate').jqxDateTimeInput('val') || "";
-		var check = 1;
-		var employeebranchchk = "";
-		if(window.parent && window.parent.employeebranchchk) {
-		    employeebranchchk = window.parent.employeebranchchk.value; 
-		}
-		var branch = "";
-		if(document.getElementById("brchName")){
-		    branch = document.getElementById("brchName").value;
-		}
-		getdata(docNo, dates, check, employeebranchchk, branch);
-	}
-	
-	function getdata(docNo, dates, check, employeebranchchk, branch) { 
-		$("#refreshdiv").load('lrqMainSearchGrid.jsp?docNo=' + docNo + 
-		                      '&dates=' + dates + 
-		                      '&check=' + check + 
-		                      '&branch=' + branch + 
-		                      '&employeebranchchk=' + employeebranchchk);
-	}
+    function loadSearch() {
+        var docNo = document.getElementById("txtdocno").value || "";
+        var dates = $('#txtdate').jqxDateTimeInput('val') || "";
+        var check = 1;
+        var employeebranchchk = "";
+        
+        if(window.parent && window.parent.employeebranchchk) {
+            employeebranchchk = window.parent.employeebranchchk.value; 
+        }
+        var branch = "";
+        if(document.getElementById("brchName")){
+            branch = document.getElementById("brchName").value;
+        }
+        getdata(docNo, dates, check, employeebranchchk, branch);
+    }
+    
+    function getdata(docNo, dates, check, employeebranchchk, branch) { 
+        $("#refreshdiv").load('lrqMainSearchGrid.jsp?docNo=' + encodeURIComponent(docNo) + 
+                              '&dates=' + encodeURIComponent(dates) + 
+                              '&check=' + check + 
+                              '&branch=' + encodeURIComponent(branch) + 
+                              '&employeebranchchk=' + encodeURIComponent(employeebranchchk));
+    }
 </script>
 
 </head>
@@ -149,20 +139,23 @@ body {
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td class="lbl-right" width="10%">Doc No</td>
-                <td width="30%">
+                <td width="20%">
                     <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
                 </td>
                 
                 <td class="lbl-right" width="10%">Date</td>
-                <td width="30%">
+                <td width="15%">
                     <div id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'></div>
                     <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'>
                 </td>
                 
-                <td width="20%" align="center" valign="middle">
+                <td class="lbl-right" width="10%"></td>
+                <td width="20%"></td>
+                
+                <td width="15%" align="center">
                     <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
                 </td>
             </tr>
