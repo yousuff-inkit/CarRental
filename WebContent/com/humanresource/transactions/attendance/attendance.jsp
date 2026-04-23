@@ -85,7 +85,7 @@ body {
 }
 
 input[type="text"], select {
-    height: 30px !important;
+    height: 24px !important;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 4px 10px;
