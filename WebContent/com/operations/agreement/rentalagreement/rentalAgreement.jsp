@@ -2776,12 +2776,13 @@ function funResetExcessInsur(){
 ========================================================= */
 body {
     background: #f4f6f9;
-    font-family: Arial, sans-serif;
-    color: #333;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    
     font-size: 12px;
     margin: 0;
     padding: 10px;
     box-sizing: border-box;
+    font-weight:700;
 }
 
 #mainBG {
@@ -2792,6 +2793,7 @@ body {
     margin: auto;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     box-sizing: border-box;
+    font-weight:700;
 }
 
 /* Master Input Heights - Set to 24px as requested */
@@ -2823,7 +2825,7 @@ fieldset {
 
 legend {
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 700;
     color: #0056b3;
     padding: 0 0 0 6px;
     border-left: 3px solid #0056b3;
@@ -2844,7 +2846,7 @@ legend {
     text-align: right;
     color: #444;
     font-size: 12px;
-    font-weight: bold;
+	font-weight: 700;
     white-space: nowrap;
 }
 
@@ -2910,17 +2912,37 @@ legend {
 }
 .cr-table th {
     background: #f0f3f5;
-    font-weight: bold;
+    font-weight: 500;
     color: #333;
     text-align: left;
 }
 .lbl-right {
     text-align: right;
     color: #444;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12px;
     padding-right: 5px;
 }
+
+.myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff;
+    white-space: nowrap;
+}
+.myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
 
 #tabs { margin-top: 5px; margin-bottom: 0px; }
 #content { padding-top: 10px; }
@@ -3242,7 +3264,7 @@ html, body {
     <!-- ================= VEHICLE SECTION ================= -->
     <div class="middle-panel" style="flex:1; background:##ffffff; padding:12px; border-radius:8px;">
 
-        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
+        <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:700; margin-bottom:10px;">
             Vehicle Info
         </div>
 
