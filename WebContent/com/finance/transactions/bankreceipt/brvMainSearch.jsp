@@ -11,17 +11,17 @@
 
 <style>
 /* =========================================================
-   SCOPED UI: Tahoma Font & Clean White Search Panel
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
-    background-color: #fff; /* Main background white */
-    font-family: Tahoma, Geneva, sans-serif; 
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
-    font-size: 11px;
-    color: #404040;
+    font-size: 12px;
+    color: #333;
     padding: 10px;
     box-sizing: border-box;
     width: 100%;
@@ -33,8 +33,8 @@ body {
     border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 11px; 
-    font-family: Tahoma, sans-serif;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
@@ -44,10 +44,10 @@ body {
 .modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
-    background-color: #FFD6FF; /* Purple focus color from your body.css */
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling - Clean White Panel (Blue Removed) */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
     background-color: #fff !important; 
     border: 1px solid #BDBDBD;
@@ -69,15 +69,15 @@ body {
 
 .modern-ui .lbl-right { 
     text-align: right; 
-    color: #404040;
-    font-size: 11px; 
-    font-weight: bold;
-    font-family: Tahoma, sans-serif;
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Search Button - Modern Blue matched to Client Master */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
@@ -86,9 +86,10 @@ body {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
-    font-family: Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    transition: all 0.2s;
 }
 
 .modern-ui .myButton:hover {
@@ -99,37 +100,49 @@ body {
 .modern-ui .grid-container {
     border: 1px solid #BDBDBD;
     background: #fff;
+    overflow: hidden;
 }
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-        /* Dates left at 15px height as requested */
-		$("#bankdate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
-		$("#chqdate").jqxDateTimeInput({ width: '110px', height: '15px', formatString:"dd.MM.yyyy", value:null});
-	}); 
+    $(document).ready(function () {
+        /* Aligning Date Widget with modern 24px height standard */
+        $("#bankdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        $("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        
+        // Force internal alignment AFTER render
+        setTimeout(function () {
+            $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#BDBDBD", "border-radius": "3px"});
+            $(".jqx-datetimeinput").find("input").css({
+                "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+            });
+            $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+        }, 100);
+    }); 
 
-	function loadSearch() {
-		var partyname = document.getElementById("txtpartyname").value || "";
-		var docNo = document.getElementById("txtdocno").value || "";
-		var date = $('#bankdate').jqxDateTimeInput('val') || "";
-		var amount = document.getElementById("txtamount").value || "";
-		var chequeNo = document.getElementById("txtchqno").value || "";
-		var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
-		var check = 1;
-		
-		getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
-	}
+    function loadSearch() {
+        var partyname = document.getElementById("txtpartyname").value || "";
+        var docNo = document.getElementById("txtdocno").value || "";
+        var date = $('#bankdate').jqxDateTimeInput('val') || "";
+        var amount = document.getElementById("txtamount").value || "";
+        var chequeNo = document.getElementById("txtchqno").value || "";
+        var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
+        var check = 1;
+        
+        getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
+    }
 
-	function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
-		 $("#refreshdiv").load('brvMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
+    function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
+         /* Safely encoding URI components to prevent breakages on special characters */
+         $("#refreshdiv").load('brvMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
                                '&docNo=' + encodeURIComponent(docNo) + 
                                '&date=' + date + 
                                '&amount=' + encodeURIComponent(amount) + 
                                '&chequeNo=' + encodeURIComponent(chequeNo) + 
                                '&chequeDt=' + chequeDt + 
                                '&check=' + check);
-	}
+    }
 </script>
 </head>
 
@@ -150,7 +163,7 @@ body {
                     <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
                 </td>
                 
-                <td colspan="2" align="center">
+                <td colspan="2" align="center" valign="middle">
                     <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
                 </td>
             </tr>

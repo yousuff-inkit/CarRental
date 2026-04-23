@@ -12,90 +12,94 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
+}
+
 .modern-ui {
-    font-family: Arial, sans-serif;
     font-size: 12px;
     color: #333;
     padding: 10px;
     box-sizing: border-box;
+    width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
+/* Master Input Styles */
 .modern-ui input[type="text"] {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
+    width: 100%;
 }
 
 .modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 10px;
 }
 
-/* Unbreakable Row Layouts */
-.modern-ui .form-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 20px;
-    flex-wrap: nowrap;
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
 }
 
-.modern-ui .field-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.modern-ui td {
+    vertical-align: middle;
 }
 
-/* Fixed Label Alignments */
-.modern-ui .fixed-lbl {
-    width: 85px;
-    text-align: right;
-    font-weight: bold;
-    color: #444;
-    white-space: nowrap;
-    flex-shrink: 0;
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
     height: 26px;
-    padding: 0 16px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    background-color: #004494;
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
+    border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
 }
@@ -116,29 +120,26 @@ SCOPED UI: Compact Search Modal Layout
     }); 
     
     function loadAccountSearch() {
-        var accountsno = document.getElementById("txtaccountsno").value;
-        var accountsname = document.getElementById("txtaccountsname").value;
-        var currs = document.getElementById("txtaccountcurrency").value;
-        var formcode = document.getElementById("txtdoctypes").value;
-        var searchtype = document.getElementById("txtsearchtype").value;
-        var dates = document.getElementById("txtnewdates").value;
+        var accountsno = document.getElementById("txtaccountsno").value || "";
+        var accountsname = document.getElementById("txtaccountsname").value || "";
+        var currs = document.getElementById("txtaccountcurrency").value || "";
+        var formcode = document.getElementById("txtdoctypes").value || "";
+        var searchtype = document.getElementById("txtsearchtype").value || "";
+        var dates = document.getElementById("txtnewdates").value || "";
         var check = 1;
 
         getAccountDetails(accountsno, accountsname, currs, formcode, searchtype, dates, check);
     }
         
     function getAccountDetails(accountsno, accountsname, currs, formcode, searchtype, dates, check){
-        console.log("../../accountDetailsSearchGrid.jsp?accountno="+accountsno+'&accountname='+accountsname.replace(/ /g, "%20")+'&currency='+currs+'&dtype='+formcode+'&searchtype='+searchtype+'&dates='+dates+'&check='+check);
-        
-        $("#refreshAccountDetailsDiv").load(
-            "../../accountDetailsSearchGrid.jsp?accountno=" + accountsno + 
-            '&accountname=' + encodeURIComponent(accountsname.replace(/ /g, "%20")) + 
-            '&currency=' + currs + 
-            '&dtype=' + encodeURIComponent(formcode.trim()) + 
-            '&searchtype=' + searchtype + 
-            '&dates=' + dates + 
-            '&check=' + check
-        );
+        /* Safely encoding URI components to prevent breakages on special characters */
+        $("#refreshAccountDetailsDiv").load("../../accountDetailsSearchGrid.jsp?accountno=" + encodeURIComponent(accountsno) + 
+                                            '&accountname=' + encodeURIComponent(accountsname) + 
+                                            '&currency=' + encodeURIComponent(currs) + 
+                                            '&dtype=' + encodeURIComponent(formcode.trim()) + 
+                                            '&searchtype=' + encodeURIComponent(searchtype) + 
+                                            '&dates=' + encodeURIComponent(dates) + 
+                                            '&check=' + check);
     }
 </script>
 </head>
@@ -148,34 +149,34 @@ SCOPED UI: Compact Search Modal Layout
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        
-        <div class="form-row">
-            <div class="field-group">
-                <label class="fixed-lbl">Account No</label>
-                <input type="text" name="txtaccountsno" id="txtaccountsno" style="width: 140px;" value='<s:property value="txtaccountsno"/>'>
-            </div>
-            
-            <div class="field-group">
-                <label class="fixed-lbl" style="width: 60px;">Currency</label>
-                <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" style="width: 80px;" value='<s:property value="txtaccountcurrency"/>'>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="15%">Account No</td>
+                <td width="20%">
+                    <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
+                </td>
                 
-                <input type="hidden" name="txtdoctypes" id="txtdoctypes" value='<s:property value="txtdoctypes"/>'>
-                <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
-                <input type="hidden" name="txtnewdates" id="txtnewdates" value='<s:property value="txtnewdates"/>'>
-            </div>
+                <td class="lbl-right" width="10%">Currency</td>
+                <td width="15%">
+                    <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" value='<s:property value="txtaccountcurrency"/>'>
+                    
+                    <input type="hidden" name="txtdoctypes" id="txtdoctypes" value='<s:property value="txtdoctypes"/>'>
+                    <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
+                    <input type="hidden" name="txtnewdates" id="txtnewdates" value='<s:property value="txtnewdates"/>'>
+                </td>
+                
+                <td width="20%" rowspan="2" align="center" valign="middle">
+                    <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
+                </td>
+            </tr>
             
-            <div style="margin-left: auto;">
-                <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
-            </div>
-        </div>
-        
-        <div class="form-row" style="margin-bottom: 0;">
-            <div class="field-group" style="width: 100%; max-width: 500px;">
-                <label class="fixed-lbl">Account Name</label>
-                <input type="text" name="txtaccountsname" id="txtaccountsname" style="flex: 1;" value='<s:property value="txtaccountsname"/>'>
-            </div>
-        </div>
-        
+            <tr>
+                <td class="lbl-right">Account Name</td>
+                <td colspan="3">
+                    <input type="text" name="txtaccountsname" id="txtaccountsname" value='<s:property value="txtaccountsname"/>'>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="grid-container">
