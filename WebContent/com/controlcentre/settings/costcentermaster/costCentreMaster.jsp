@@ -137,6 +137,11 @@ SCOPED UI: Client Master Style (Compact, Fixed Widths, Aligned)
 
 <script type="text/javascript">
 $(document).ready(function () {  
+	$('.action-bar').append(
+	        '<button type="button" class="action-btn" id="btnExcel" onclick="funExcelBtn()">' +
+	        '<svg viewBox="0 0 20 20"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.89 2 1.99 2h8c1.1 0 2-.9 2-2V8l-6-6zm-1 12H7v-2h6v2zm0-4H7V8h6v2zm-3-5V3.5L14.5 8H10z"/></svg> ' +
+	        'CoC</button>'
+	    );
     /* Upgraded JQX Date to match 24px inputs */
     $("#date_costmaster").jqxDateTimeInput({ width: '130px', height: '24px' ,formatString : "dd.MM.yyyy" });
 
@@ -664,7 +669,7 @@ function funExcelBtn(){
                             <td style="padding-bottom: 10px;">
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 80px;">Cost Group</label>
-                                    <select name="mainaccgroup" id="mainaccgroup" value='<s:property value="mainaccgroup"/>' onchange="funclear1();" style="flex: 1;">
+                                    <select name="mainaccgroup" id="mainaccgroup" value='<s:property value="mainaccgroup"/>' onchange="funclear1();" style="flex: 0 0 150px;">
                                         <option value="-1">--Select--</option>
                                     </select>
                                 </div>
@@ -674,7 +679,7 @@ function funExcelBtn(){
                             <td style="padding-bottom: 10px;">
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 80px;">Cost Code</label>
-                                    <input type="text" id="mainacccode" name="mainacccode" value='<s:property value="mainacccode"/>' onblur="maincheck(this.value)" style="flex: 1;" />
+                                    <input type="text" id="mainacccode" name="mainacccode" value='<s:property value="mainacccode"/>' onblur="maincheck(this.value)" style="flex: 0 0 50px" />
                                 </div>
                             </td>
                         </tr>
@@ -682,7 +687,7 @@ function funExcelBtn(){
                             <td>
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 80px;">Cost Name</label>
-                                    <input type="text" id="mainacconame" name="mainacconame" value='<s:property value="mainacconame"/>' onblur="dismassge()" style="flex: 1;" />
+                                    <input type="text" id="mainacconame" name="mainacconame" value='<s:property value="mainacconame"/>' onblur="dismassge()" style="flex: 0 0 150px;" />
                                     <input type="hidden" name="main_account" id="main_account" value='<s:property value="main_account"/>' />
                                 </div>
                             </td>
@@ -710,7 +715,7 @@ function funExcelBtn(){
                             <td style="padding-bottom: 10px;">
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 100px;">Cost Code</label>
-                                    <input type="text" id="subacccode" name="subacccode" value='<s:property value="subacccode"/>' onblur="subcheck(this.value)" style="flex: 1;" />
+                                    <input type="text" id="subacccode" name="subacccode" value='<s:property value="subacccode"/>' onblur="subcheck(this.value)" style="flex: 0 0 50px;" />
                                 </div>
                             </td>
                         </tr>
@@ -718,7 +723,7 @@ function funExcelBtn(){
                             <td>
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 100px;">Cost Name</label>
-                                    <input type="text" id="subaccname" name="subaccname" value='<s:property value="subaccname"/>' onblur="dismassge()" style="flex: 1;" />
+                                    <input type="text" id="subaccname" name="subaccname" value='<s:property value="subaccname"/>' onblur="dismassge()" style="flex: 0 0 150px;" />
                                     <input type="hidden" name="sub_account" id="sub_account" value='<s:property value="sub_account"/>' />
                                 </div>
                             </td>
@@ -732,7 +737,7 @@ function funExcelBtn(){
                         <tr>
                             <td style="padding-bottom: 10px;">
                                 <div class="field-row" style="margin-bottom: 0;">
-                                    <label class="lbl-right" style="width: 100px;">Sub Cost Grp</label>
+                                    <label class="lbl-right" style="width: 100px;">Main Cost Grp</label>
                                     <div style="display: flex; gap: 5px; flex: 1; min-width: 0;">
                                         <select id="tansaccgroup" name="tansaccgroup" onChange="getAcgroup(this.value,2);" onfocus="funclear3();" style="width: 40%;">
                                             <option value="-1">--Select--</option>
@@ -746,7 +751,7 @@ function funExcelBtn(){
                             <td style="padding-bottom: 10px;">
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 100px;">Cost Code</label>
-                                    <input type="text" id="transacccode" name="transacccode" value='<s:property value="transacccode"/>' onblur="trancheck(this.value)" style="flex: 1;" />
+                                    <input type="text" id="transacccode" name="transacccode" value='<s:property value="transacccode"/>' onblur="trancheck(this.value)" style="flex: 0 0 50px;" />
                                 </div>
                             </td>
                         </tr>
@@ -754,7 +759,7 @@ function funExcelBtn(){
                             <td>
                                 <div class="field-row" style="margin-bottom: 0;">
                                     <label class="lbl-right" style="width: 100px;">Cost Name</label>
-                                    <input type="text" id="transaccname" name="transaccname" value='<s:property value="transaccname"/>' onblur="dismassge()" style="flex: 1;" />
+                                    <input type="text" id="transaccname" name="transaccname" value='<s:property value="transaccname"/>' onblur="dismassge()" style="flex: 0 0 150px;" />
                                     <input type="hidden" name="tran_account" id="tran_account" value='<s:property value="tran_account"/>' />
                                 </div>
                             </td>

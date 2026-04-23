@@ -203,6 +203,7 @@
             <div class="header-right">
                 <button id="btnReload" title="Reload Data" onclick="funload();">
                     <img src="<%=contextPath%>/icons/icon-reload.png" style="width: 14px; height: 14px; vertical-align: middle;">
+              		<span style="padding: 6px; font-weight: bold;">REFRESH</span>  
                 </button>
             </div>
         </header>
