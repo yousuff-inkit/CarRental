@@ -25,29 +25,25 @@ String candidateid=request.getParameter("candidateid")==null?"0":request.getPara
 SCOPED UI: Modern Layout (Matches Cash Receipts / Client Master)
 ========================================================= */
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-color: #f8fafc; /* Changed to a solid, clean color to match the screenshot perfectly */
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     color: #222;
     margin: 0;
-    padding: 24px 0;
+    padding: 15px; /* Reduced padding so the top doesn't push down too far */
     box-sizing: border-box;
-    overflow-y: auto !important;
 }
 
 #mainBG {
-    background: #fff;
-    border-radius: 16px;
-    padding: 15px;
+    background: transparent; /* Removed the forced white box here so it blends naturally */
     max-width: 100%;
     margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
 .modern-ui {
     font-family: Arial, sans-serif; 
     color: #333;
     font-size: 12px; 
-    padding: 5px 15px;
+    padding: 5px 0px;
     box-sizing: border-box;
     width: 100%;
 }
@@ -175,14 +171,12 @@ body {
 form label.error { color: red; font-weight: bold; font-size: 11px; }
 #errormsg { color: red; font-weight: bold; font-size: 12px; margin-bottom: 10px; display: block; padding-left: 15px; }
 
-/* Scrollbar Logic */
+/* Scrollbar Logic FIX */
 .hidden-scrollbar {
-    overflow-y: auto;
-    height: calc(100vh - 150px);
+    /* REMOVED height: calc(100vh - 150px); and overflow-y: auto; 
+       This was forcing the page to chop off the bottom content and create that empty white gap! */
     padding-right: 5px;
 }
-.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
-.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
 </style>
 
 <script type="text/javascript">
@@ -810,7 +804,7 @@ function compSearchContent(url) {
                     var reurl=url.split("saveEmployeeMaster");
                     var brhid=<%=session.getAttribute("BRANCHID").toString()%>
                     var dtype=$('#formdetailcode').val();
-                   var win= window.open(reurl[0]+"printEmployeeMasterJrxml?docno="+document.getElementById("docno").value+"&dtype="+dtype+"&brhid="+brhid,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");    
+                   var win= window.open(reurl[0]+"printEmployeeMasterJrxml?docno="+document.getElementById("docno").value+"&dtype="+dtype+"&brhid="+brhid,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");   
                    win.focus(); 
                    }else {
                        $.messager.alert('Message','Select a Document....!','warning');
@@ -841,8 +835,8 @@ function compSearchContent(url) {
                         }
                 } 
             }
-            x.open("GET", "linkchk.jsp", true);    
-            x.send();    
+            x.open("GET", "linkchk.jsp", true);   
+            x.send();   
         }
 </script>
 </head>
@@ -1146,9 +1140,9 @@ function compSearchContent(url) {
 <div id="accountDetailsWindow"><div></div></div>
 <div id="nationalityWindow"><div></div></div>
 <div id="printWindow"><div></div></div>
-<div id="brchWindow"><div></div></div>    
+<div id="brchWindow"><div></div></div>   
 <div id="ifsccodeWindow"><div></div></div>
-<div id="establishedCodeDetailsWindow"><div></div></div>    
+<div id="establishedCodeDetailsWindow"><div></div></div>   
 <div id="compWindow"><div></div></div>
 
 </div>
