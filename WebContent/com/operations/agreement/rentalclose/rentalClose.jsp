@@ -116,7 +116,7 @@ legend {
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     border: none;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
+    color: #ffffff ! important;
     white-space: nowrap;
 }
 .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
