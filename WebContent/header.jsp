@@ -157,9 +157,19 @@ button.icon:disabled { opacity: 0.5; };
 }
 
 #errormsg {
-   color: #e11d48;
-   font-weight: bold;
-   margin-left: 16px;
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif !important;
+
+    width: 100%;
+    min-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
 }
 
 .action-bar {

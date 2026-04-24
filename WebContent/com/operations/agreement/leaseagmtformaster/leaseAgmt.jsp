@@ -1377,7 +1377,7 @@ function checkBrandQty(fleetno,masterrefno){
 <div class="accordion-content">
 <div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
 
-    <div style="flex:1; background:#ffffff; padding:12px; border-radius:8px; border:1px solid #d9d9d9;">
+    <div style="flex:0 0 750px; background:#ffffff; padding:12px; border-radius:8px; border:1px solid #d9d9d9;">
         
     <div style="border-left:3px solid #1a4fa3; padding-left:8px; font-weight:600; margin-bottom:10px;">
         Client Info
@@ -1386,26 +1386,28 @@ function checkBrandQty(fleetno,masterrefno){
     <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
         <label style="width:90px;">Client</label>
         <input type="text" id="clientid" name="clientid" style="width:140px;" readonly placeholder="Press F3 To Search" value='<s:property value="clientid"/>' onKeyDown="getclientinfo(event);" ondoubleclick="getclientinfo(event);"/>
-        <input type="text" id="clientname" readonly name="clientname" style="flex:1;" tabindex="-1" value='<s:property value="clientname"/>'/>
+        <input type="text" id="clientname" readonly name="clientname" style="flex:0 0 600px;" tabindex="-1" value='<s:property value="clientname"/>'/>
+    </div>
+    
+      <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+        <label style="width:90px;">Address</label>
+        <input type="text" id="cusaddress" placeholder="Mobil NO-Address" readonly name="cusaddress" style="flex:0 0 750px;" value='<s:property value="cusaddress"/>'>
     </div>
 
     <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
         <label style="width:90px;">Salesman</label>
-        <input type="text" id="salesman" name="salesman" style="flex:1;" readonly placeholder="Salesman Name" value='<s:property value="salesman"/>'/>
+        <input type="text" id="salesman" name="salesman" style="flex:0 0 200px;" readonly placeholder="Salesman Name" value='<s:property value="salesman"/>'/>
         
         <input type="hidden" id="le_salmanid" name="le_salmanid" value='<s:property value="le_salmanid"/>'/>
         <input type="hidden" id="le_clcodeno" name="le_clcodeno" value='<s:property value="le_clcodeno"/>'/>
         <input type="hidden" id="le_clacno" name="le_clacno" value='<s:property value="le_clacno"/>'/>
     </div>
 
-    <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
-        <label style="width:90px;">Address</label>
-        <input type="text" id="cusaddress" placeholder="Mobil NO-Address" readonly name="cusaddress" style="flex:1;" value='<s:property value="cusaddress"/>'>
-    </div>
+  
 
     <div style="display:flex; gap:10px; align-items:center;">
         <label style="width:90px;">Description</label>
-        <input type="text" name="description" id="description" placeholder="Description" value='<s:property value="description"/>' style="flex:1;" onblur="fundescvalidate()">
+        <input type="text" name="description" id="description" placeholder="Description" value='<s:property value="description"/>' style="flex:0 0 750px;" onblur="fundescvalidate()">
     </div>
 
 </div>
@@ -1610,7 +1612,7 @@ function checkBrandQty(fleetno,masterrefno){
         <div style="flex:1;">
             <fieldset style="margin-bottom:0;">
             <legend>Termination Clauses</legend>
-            <table width="100%" cellpadding="3">
+<table width=40%" cellpadding="3" style="margin-left:10px;">
                 <tr>
                     <td align="right" width="60%">
                         <input type="text" name="m1" id="m1" value='<s:property value="m1"/>' onkeypress="javascript:return isNumber (event)" style="width:50px; text-align:center;"> to 
