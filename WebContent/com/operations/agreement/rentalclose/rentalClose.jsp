@@ -1593,7 +1593,7 @@ if(document.getElementById("rentalagent").value==""){
 </td>
 
 <td width="2%" align="right">Date</td>
-<td width="7%" align="left">
+<td width="8%" align="left">
     <div id="collectdate" name="collectdate"
          value='<s:property value="collectdate"/>'
          style="pointer-events:none; opacity:0.6;"></div>
@@ -1837,5 +1837,22 @@ function toggleCollection() {
    <div ></div>
 </div>
 </div>
+<script>
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+
+        var formElements = Array.from(document.querySelectorAll(
+            'input:not([type=hidden]):not([disabled]), select:not([disabled]), textarea:not([disabled])'
+        )).filter(el => el.offsetParent !== null);
+
+        var index = formElements.indexOf(document.activeElement);
+
+        if (index > -1 && index < formElements.length - 1) {
+            formElements[index + 1].focus();
+        }
+    }
+});
+</script>
 </body>
 </html>
