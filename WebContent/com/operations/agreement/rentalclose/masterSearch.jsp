@@ -60,12 +60,13 @@ body {
 }
 
 .modern-ui table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 5px 8px; /* Restored spacing to prevent squishing */
     width: 100%;
 }
 
 .modern-ui td {
-    padding: 4px 5px;
+    padding: 2px 5px;
     vertical-align: middle;
 }
 
@@ -89,6 +90,7 @@ body {
     color: #444;
     cursor: pointer;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    margin-right: 15px; /* Push button away from checkbox */
 }
 
 .modern-ui input[type="checkbox"] {
@@ -98,8 +100,8 @@ body {
 
 /* Modern Search Button - Font Enforced */
 .modern-ui .myButton {
-    height: 24px !important; 
-    line-height: 22px !important;
+    height: 26px !important; /* Slightly taller than input for visual hierarchy */
+    line-height: 24px !important;
     padding: 0 20px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
     color: #fff !important;
@@ -129,30 +131,30 @@ body {
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-	
-	}); 
+    $(document).ready(function () {
+    
+    }); 
 
-	function mainloadSearch() {
-		var sclname = document.getElementById("SCl_name").value || "";
-		var smob = document.getElementById("Sl_mob").value || "";
-		var rno = document.getElementById("rno").value || "";
-		var flno = document.getElementById("flno").value || "";
-		var sregno = document.getElementById("sregno").value || "";
-		var smra = document.getElementById("smra").value || "";
-		
+    function mainloadSearch() {
+        var sclname = document.getElementById("SCl_name").value || "";
+        var smob = document.getElementById("Sl_mob").value || "";
+        var rno = document.getElementById("rno").value || "";
+        var flno = document.getElementById("flno").value || "";
+        var sregno = document.getElementById("sregno").value || "";
+        var smra = document.getElementById("smra").value || "";
+        
         /* Added safety check in case brchName doesn't exist on this popup */
         var branchElem = document.getElementById("brchName");
-		var branch = branchElem ? branchElem.value : "";
-		
+        var branch = branchElem ? branchElem.value : "";
+        
         var allbranch = document.getElementById("branch_chk").value || "0";
         
-		getdata(sclname, smob, rno, flno, sregno, smra, branch, allbranch);
-	}
+        getdata(sclname, smob, rno, flno, sregno, smra, branch, allbranch);
+    }
     
-	function getdata(sclname, smob, rno, flno, sregno, smra, branch, allbranch){
+    function getdata(sclname, smob, rno, flno, sregno, smra, branch, allbranch){
         /* Used encodeURIComponent to safely handle spaces and special characters */
-		$("#srefreshdiv").load('submainSearch.jsp?sclname=' + encodeURIComponent(sclname) + 
+        $("#srefreshdiv").load('submainSearch.jsp?sclname=' + encodeURIComponent(sclname) + 
                                 '&smob=' + encodeURIComponent(smob) + 
                                 '&rno=' + encodeURIComponent(rno) + 
                                 '&flno=' + encodeURIComponent(flno) + 
@@ -160,7 +162,7 @@ body {
                                 '&smra=' + encodeURIComponent(smra) + 
                                 '&branch=' + encodeURIComponent(branch) + 
                                 '&allbranch=' + allbranch);
-	}
+    }
 </script>
 
 </head>
@@ -169,41 +171,41 @@ body {
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td class="lbl-right" width="8%">Name</td>
-                <td width="40%" colspan="3">
+                <td width="30%" colspan="3">
                     <input type="text" name="SCl_name" id="SCl_name" value='<s:property value="SCl_name"/>'>
                 </td>
                 
                 <td class="lbl-right" width="8%">MOB</td>
-                <td width="20%">
+                <td width="15%">
                     <input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'>
                 </td>
                 
                 <td class="lbl-right" width="8%">MRA</td>
-                <td width="16%">
+                <td width="15%">
                     <input type="text" id="smra" name="smra" value='<s:property value="smra"/>'>
                 </td>
             </tr>
 
             <tr>
-                <td class="lbl-right" style="padding-top: 8px;">Doc NO</td>
-                <td width="15%" style="padding-top: 8px;">
+                <td class="lbl-right">Doc NO</td>
+                <td width="15%">
                     <input type="text" name="rno" id="rno" value='<s:property value="rno"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%" style="padding-top: 8px;">Fleet NO</td>
-                <td width="15%" style="padding-top: 8px;">
+                <td class="lbl-right" width="10%">Fleet NO</td>
+                <td width="15%">
                     <input type="text" name="flno" id="flno" value='<s:property value="flno"/>'>
                 </td>
                 
-                <td class="lbl-right" style="padding-top: 8px;">Reg NO</td>
-                <td style="padding-top: 8px;">
+                <td class="lbl-right">Reg NO</td>
+                <td>
                     <input type="text" id="sregno" name="sregno" value='<s:property value="sregno"/>'>
                 </td>
                 
-                <td colspan="2" align="right" valign="middle" style="padding-top: 8px; display: flex; justify-content: flex-end; align-items: center; gap: 15px;">
+                <td colspan="2" align="right" valign="middle">
                     <label class="chk-label">
                         <input type="checkbox" id="branch_chk" name="branch_chk" value="0" onclick="$(this).attr('value', this.checked ? 1 : 0)">
                         All Branch
