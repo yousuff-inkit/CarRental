@@ -2,737 +2,601 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.Statement"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
- 
 <!DOCTYPE html>
 <html>
 <head>
 <s:head/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>GatewayERP(i)</title>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <jsp:include page="../../../../includes.jsp"></jsp:include>
-
-<style>
-.hidden-scrollbar {
-    overflow: auto;
-    height: 520px;
-}
-</style>
+<jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style>
 /* =========================================================
-   MODERN ERP LAYOUT - EXACT ALIGNMENT & FULL WIDTH GRID 
-   (Fuses tight horizontal alignment with modern clean UI)
+SCOPED UI: Modern Layout (Matches Cash Receipts / Client Master)
 ========================================================= */
 body {
-    background: #f4f6f9;
-    font-family: Arial, sans-serif;
-    color: #333;
-    font-size: 12px;
+    background-color: #f8fafc; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #222;
     margin: 0;
-    padding: 10px;
+    padding: 15px; 
     box-sizing: border-box;
 }
 
 #mainBG {
-    background: #fff;
-    border-radius: 4px;
-    padding: 15px;
+    background: transparent; 
     max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box;
+    margin: 0 auto;
 }
 
-/* Master Input Heights - Set to 24px as requested */
-input[type="text"], select {
-    height: 24px !important;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 2px 6px;
-    font-size: 12px;
+#formdet {
+    text-align: left !important;
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 12px;
+    padding-left: 5px;
+}
+
+.modern-ui {
+    font-family: Arial, sans-serif; 
+    color: #333;
+    font-size: 12px; 
+    padding: 5px 0px;
     box-sizing: border-box;
     width: 100%;
-    background-color: #fff;
-    color: #333;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: #007bff;
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select { 
+    height: 24px !important; 
+    border: 1px solid #b8c6d8; 
+    border-radius: 3px; 
+    padding: 2px 6px;
+    font-size: 12px;
+    box-sizing: border-box; 
+    background-color: #fff; 
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus { 
+    border-color: #007bff; 
     outline: none;
 }
 
-/* Clean Panels mapping to fieldsets */
-fieldset {
-    border: 1px solid #e1e4e8;
-    background-color: #fff;
-    margin-bottom: 10px;
-    padding: 12px 10px 10px 10px;
-    border-radius: 4px;
+.modern-ui input[readonly],
+.modern-ui input:disabled,
+.modern-ui select:disabled { 
+    background-color: #f8f9fa; 
+    color: #6b7280;
 }
 
-legend {
-    font-size: 13px;
-    font-weight: bold;
-    color: #0056b3;
-    padding: 0 0 0 6px;
-    border-left: 3px solid #0056b3;
-    margin-bottom: 5px;
-}
-
-/* Strict Full-Width CSS Grid for Top Section */
-.top-grid {
-    display: grid;
-    /* 5 strict columns + inputs. Stretches perfectly across. */
-    grid-template-columns: 80px minmax(100px, 1fr) 70px minmax(100px, 1fr) 50px minmax(150px, 2fr) 110px minmax(100px, 1fr) 90px minmax(100px, 1fr);
-    column-gap: 8px;
-    row-gap: 8px;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-.top-grid > label {
-    text-align: right;
-    color: #444;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.flex-row {
+/* Layout Utilities */
+.modern-ui .field-row { 
     display: flex;
-    align-items: center;
-    gap: 5px;
-    width: 100%;
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 10px; 
+    flex-wrap: wrap;
 }
 
-.chk-container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
+.modern-ui .lbl-right { 
+    text-align: right; 
     color: #444;
-    font-size: 12px;
+    font-size: 12px; 
     font-weight: bold;
-    white-space: nowrap;
-}
-
-.chk-container input {
-    margin: 0;
-    padding: 0;
-}
-
-/* Middle Section Split */
-.middle-section {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.middle-panel {
-    border: 1px solid #e1e4e8;
-    padding: 15px 10px 10px 10px;
-    background: #fff;
-    position: relative;
-    border-radius: 4px;
-}
-
-.middle-panel-title {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: #fff;
-    padding: 0 5px 0 6px;
-    color: #0056b3;
-    font-weight: bold;
-    font-size: 13px;
-    border-left: 3px solid #0056b3;
-}
-
-/* Clean Tables mapping requested colors */
-.cr-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border: 1px solid #ddd;
-}
-.cr-table th, .cr-table td {
-    padding: 4px 6px;
-    border: 1px solid #ddd;
-    font-size: 12px;
-}
-.cr-table th {
-    background: #f0f3f5;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-}
-.lbl-right {
-    text-align: right;
-    color: #444;
-    font-weight: bold;
-    font-size: 12px;
+    white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Tabs Override */
-#tabs { margin-top: 5px; margin-bottom: 0px; }
-#content { padding-top: 10px; }
+/* Middle Section Panels */
+.modern-ui .middle-panel {
+    border: 1px solid #c5d3e0; 
+    padding: 20px 10px 10px 10px; 
+    background: #ffffff; 
+    position: relative; 
+    border-radius: 4px; 
+    margin-bottom: 25px;
+    margin-top: 12px;
+}
 
-/* =========================================================
-   COMPACT OVERRIDE (DO NOT CHANGE ORIGINAL CSS ABOVE)
-========================================================= */
+.modern-ui .middle-panel-title { 
+    position: absolute; 
+    top: -12px;
+    left: 10px; 
+    background: #ffffff; 
+    padding: 0 8px; 
+    color: #0056b3;
+    font-weight: bold; 
+    font-size: 14px; 
+    border-left: 3px solid #0056b3;
+    z-index: 2; 
+    line-height: normal; 
+}
 
-/* Reduce overall spacing */
-body {
+/* Custom UI Buttons */
+.modern-ui .myButton, .modern-ui .myButtonss, .modern-ui .myButtonp {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
     font-size: 11px;
-    padding: 5px;
-}
-
-/* Tighten main container */
-#mainBG {
-    padding: 8px;
-}
-
-/* Reduce fieldset spacing */
-fieldset {
-    padding: 6px 8px !important;
-    margin-bottom: 6px !important;
-}
-
-/* Reduce legend spacing */
-legend {
-    font-size: 12px;
-    margin-bottom: 2px;
-}
-
-/* Make inputs compact */
-input[type="text"], select {
-    height: 20px !important;
-    font-size: 11px;
-    padding: 1px 4px;
-}
-
-/* Buttons compact */
-input[type="button"], .myButton {
-    height: 22px;
-    font-size: 11px;
-    padding: 2px 8px;
-}
-
-/* TABLE FIX (IMPORTANT for your case) */
-table td {
-    padding: 2px 4px !important;
-    font-size: 11px;
-    line-height: 1.2;
-    vertical-align: middle;
-}
-
-/* Reduce label spacing */
-td[align="right"] {
-    padding-right: 4px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff !important;
     white-space: nowrap;
 }
-
-/* Remove extra row height */
-tr {
-    height: auto;
+.modern-ui .myButton:hover, .modern-ui .myButtonss:hover, .modern-ui .myButtonp:hover { 
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); 
 }
 
-/* Tighten included JSP grids */
-#disposaldiv,
-#jvdiv {
-    margin-top: 4px;
+/* Search Icon Wrapper */
+.modern-ui .input-search-container {
+    position: relative;
+    display: flex;
+}
+.modern-ui .input-search-container input {
+    padding-right: 25px !important;
+}
+.modern-ui .magnifier-icon {
+    position: absolute;
+    right: 6px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+}
+.modern-ui .magnifier-icon:hover { color: #2563eb; }
+
+/* Grid Wrappers */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
 }
 
-/* Compact inner tables */
-.cr-table th, .cr-table td {
-    padding: 3px 4px;
-    font-size: 11px;
-}
+/* Validation Label */
+form label.error { color: red; font-weight: bold; font-size: 11px; }
+#errormsg { color: red; font-weight: bold; font-size: 12px; margin-bottom: 10px; display: block; padding-left: 5px; }
 
-/* Reduce grid gaps (if used anywhere) */
-.top-grid {
-    column-gap: 6px;
-    row-gap: 6px;
+/* Scrollbar Logic */
+.hidden-scrollbar {
+    overflow-y: auto;
+    height: calc(100vh - 80px);
+    padding-right: 5px;
 }
-
-/* Tabs tighter */
-#tabs {
-    margin-top: 4px;
-}
-
-#content {
-    padding-top: 5px;
-}
-
+.hidden-scrollbar::-webkit-scrollbar { width: 6px; }
+.hidden-scrollbar::-webkit-scrollbar-thumb { background: #c5d3e0; border-radius: 3px; }
 </style>
+
 <script type="text/javascript">
 var configs={};
 $(document).ready(function() {
-	document.getElementById("btnEdit").disabled=false;  
-	document.getElementById("btnDelete").disabled=false;
-	 $('#clientwindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '53%' ,maxWidth: '50%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-	   $('#clientwindow').jqxWindow('close');
-	   $('#fleetwindow').jqxWindow({ width: '60%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-	   $('#fleetwindow').jqxWindow('close');
-	   $('#detailwindow').jqxWindow({ autoOpen:false,width: '90%', height: '70%',  maxHeight: '70%' ,maxWidth: '90%' , title: 'Asset List' ,position: { x: 100, y: 60 }, keyboardCloseKey: 27});
-	   
-$("#date").jqxDateTimeInput({
-	width : '125px',
-	height : '15px',
-	formatString : "dd.MM.yyyy"
-});
-$("#fromdate").jqxDateTimeInput({
-	width : '125px',
-	height : '15px',
-	formatString : "dd.MM.yyyy"
-});
-$("#todate").jqxDateTimeInput({
-	width : '125px',
-	height : '15px',
-	formatString : "dd.MM.yyyy"
-});
-$('#client').dblclick(function(){
-    $('#clientwindow').jqxWindow('open');
-$('#clientwindow').jqxWindow('focus');
-clientSearchContent('masterClientSearch.jsp');
-});
+    document.getElementById("btnEdit").disabled=false;  
+    document.getElementById("btnDelete").disabled=false;
+    
+    $('#clientwindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '53%' ,maxWidth: '50%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#clientwindow').jqxWindow('close');
+    
+    $('#fleetwindow').jqxWindow({ width: '60%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Fleet Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#fleetwindow').jqxWindow('close');
+    
+    $('#detailwindow').jqxWindow({ autoOpen:false,width: '90%', height: '70%',  maxHeight: '70%' ,maxWidth: '90%' , title: 'Asset List' ,position: { x: 100, y: 60 }, keyboardCloseKey: 27});
+    
+    var dateSettings = { width: '100%', height: 24, formatString:"dd.MM.yyyy" };
+    $("#date").jqxDateTimeInput(dateSettings);
+    $("#fromdate").jqxDateTimeInput(dateSettings);
+    $("#todate").jqxDateTimeInput(dateSettings);
 
-$('#date').on('change', function (event) 
-{  
-    var jsDate = event.args.date; 
-    var type = event.args.type; // keyboard, mouse or null depending on how the date was selected.
-	if(configs.vehsaleinvfuturedate=="1"){
-		//Restricts Future Date
-		var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-		if(docdateval==0){
-			$('#date').jqxDateTimeInput('focus');
-			return false;
-		}
-	}
-	if(configs.forceDate=="1" && $('#mode').val()=="A"){
-		var basedate=new Date();
-		var docdate=new Date($('#date').jqxDateTimeInput('getDate'));
-		basedate.setHours(0,0,0,0);
-		docdate.setHours(0,0,0,0);
-		if(docdate<basedate){
-			$('#date').jqxDateTimeInput('setDate', new Date());
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Back Dates not allowed";
-			return false;
-		}
-		else{
-			document.getElementById("errormsg").innerText="";
-		}
-		
-	}
-});
+    setTimeout(function () {
+        $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#b8c6d8", "border-radius": "3px"});
+        $(".jqx-datetimeinput").find("input").css({
+            "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+            "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 100);
+
+    $('#client').dblclick(function(){
+        $('#clientwindow').jqxWindow('open');
+        $('#clientwindow').jqxWindow('focus');
+        clientSearchContent('masterClientSearch.jsp');
+    });
+
+    $('#date').on('change', function (event) {  
+        var jsDate = event.args.date; 
+        var type = event.args.type; 
+        
+        if(configs.vehsaleinvfuturedate=="1"){
+            var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+            if(docdateval==0){
+                $('#date').jqxDateTimeInput('focus');
+                return false;
+            }
+        }
+        
+        if(configs.forceDate=="1" && $('#mode').val()=="A"){
+            var basedate=new Date();
+            var docdate=new Date($('#date').jqxDateTimeInput('getDate'));
+            basedate.setHours(0,0,0,0);
+            docdate.setHours(0,0,0,0);
+            if(docdate<basedate){
+                $('#date').jqxDateTimeInput('setDate', new Date());
+                document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="Back Dates not allowed";
+                return false;
+            } else {
+                document.getElementById("errormsg").innerText="";
+            }
+        }
+    });
  
 });
+
 function getClient(event){
-	 var x= event.keyCode;
+     var x= event.keyCode;
      if(x==114){
-    	 $('#clientwindow').jqxWindow('open');
-    	 $('#clientwindow').jqxWindow('focus');
-    	 clientSearchContent('masterClientSearch.jsp');
+         $('#clientwindow').jqxWindow('open');
+         $('#clientwindow').jqxWindow('focus');
+         clientSearchContent('masterClientSearch.jsp');
      }
-     else{
-      }
 }
+
 function funSearchLoad(){
-	 changeContent('mainSearch.jsp', $('#window')); 
+     changeContent('mainSearch.jsp', $('#window')); 
 }
+
 function clientSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
-    $('#clientwindow').jqxWindow('setContent', data);
-
-}); 
+        $('#clientwindow').jqxWindow('setContent', data);
+    }); 
 }
-function fleetnoSearchContent(url) {
-    //alert(url);
-      $.get(url).done(function (data) {
-//alert(data);
-    $('#fleetwindow').jqxWindow('setContent', data);
 
-}); 
+function fleetnoSearchContent(url) {
+      $.get(url).done(function (data) {
+        $('#fleetwindow').jqxWindow('setContent', data);
+    }); 
 }
 
 function detailSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
-    $('#detailwindow').jqxWindow('setContent', data);
+        $('#detailwindow').jqxWindow('setContent', data);
+    }); 
+}
 
-}); 
-}
-function funChkButton(){
-	
-}
+function funChkButton(){}
+
 function funReadOnly(){
-	 $('#date').jqxDateTimeInput({ disabled: true}); 
-	  $('#disposalGrid').jqxGrid({ disabled: true});
-		$('#frmVehicleDisposal input').attr('readonly', true );
-		 $('#frmVehicleDisposal select').attr('disabled', true );
-		 $('#frmVehicleDisposal textarea').attr('readonly', true );
-		 $('#btncalculate').prop('disabled',true);
-
+     $('#date').jqxDateTimeInput({ disabled: true}); 
+      $('#disposalGrid').jqxGrid({ disabled: true});
+        $('#frmVehicleDisposal input').attr('readonly', true );
+         $('#frmVehicleDisposal select').attr('disabled', true );
+         $('#frmVehicleDisposal textarea').attr('readonly', true );
+         $('#btncalculate').prop('disabled',true);
 }
+
 function funRemoveReadOnly(){  
-	$('#date').jqxDateTimeInput({ disabled: false});
-	$('#disposalGrid').jqxGrid({ disabled: false});
-	$('#frmVehicleDisposal input').attr('readonly', false );
-	$('#frmVehicleDisposal select').attr('disabled', false );
-	$('#frmVehicleDisposal textarea').attr('readonly', false );
-	$('#btncalculate').prop('disabled',false);
-	$('#client').prop('readonly',true);
-	$('#clientname').prop('readonly',true);
-	$('#docno').prop('readonly',true);
-	if(document.getElementById("mode").value=='A'){
-		$("#disposalGrid").jqxGrid('clear');
-		$("#disposalGrid").jqxGrid('addrow', null, {});
-		$("#jvGrid").jqxGrid('clear');
-	}
-	 
-	if(configs.forceDate=="1" && $('#mode').val()=="A"){
-		var basedate=new Date();
-		basedate=new Date(basedate.setDate(basedate.getDate()-1));
-		$('#date').jqxDateTimeInput('setMinDate', basedate);
-	}
+    $('#date').jqxDateTimeInput({ disabled: false});
+    $('#disposalGrid').jqxGrid({ disabled: false});
+    $('#frmVehicleDisposal input').attr('readonly', false );
+    $('#frmVehicleDisposal select').attr('disabled', false );
+    $('#frmVehicleDisposal textarea').attr('readonly', false );
+    $('#btncalculate').prop('disabled',false);
+    $('#client').prop('readonly',true);
+    $('#clientname').prop('readonly',true);
+    $('#docno').prop('readonly',true);
+    
+    if(document.getElementById("mode").value=='A'){
+        $("#disposalGrid").jqxGrid('clear');
+        $("#disposalGrid").jqxGrid('addrow', null, {});
+        $("#jvGrid").jqxGrid('clear');
+    }
+     
+    if(configs.forceDate=="1" && $('#mode').val()=="A"){
+        var basedate=new Date();
+        basedate=new Date(basedate.setDate(basedate.getDate()-1));
+        $('#date').jqxDateTimeInput('setMinDate', basedate);
+    }
 }
-function funFocus(){
-	document.getElementById("client").focus();
-}
-function setValues(){
-funSetlabel();
-	
-	 if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
-	 if ($('#hidcmbtype').val() != null) {
-			$('#cmbtype').val($('#hidcmbtype').val());
-		}
-	 document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
 
-	if(document.getElementById("docno").value!=""){
-		document.getElementById("brchName").disabled=false;
-		$('#disposaldiv').load('vehDisposalGrid.jsp?docno='+document.getElementById("docno").value+'&branch='+document.getElementById("hidbranch").value+'&id=1');
-		$('#jvdiv').load('jvGrid.jsp?trno='+document.getElementById("trno").value+'&id=1');
-	}
-	//alert(document.getElementById("mode").value);
+function funFocus(){
+    document.getElementById("client").focus();
 }
+
+function setValues(){
+    funSetlabel();
+    
+    if($('#msg').val()!=""){
+        $.messager.alert('Message',$('#msg').val());
+    }
+    
+    if ($('#hidcmbtype').val() != null) {
+        $('#cmbtype').val($('#hidcmbtype').val());
+    }
+    
+    document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+
+    if(document.getElementById("docno").value!=""){
+        document.getElementById("brchName").disabled=false;
+        $('#disposaldiv').load('vehDisposalGrid.jsp?docno='+document.getElementById("docno").value+'&branch='+document.getElementById("hidbranch").value+'&id=1');
+        $('#jvdiv').load('jvGrid.jsp?trno='+document.getElementById("trno").value+'&id=1');
+    }
+}
+
 function funNotify(){
-	if(configs.vehsaleinvfuturedate=="1"){
-		//Restricts Future Date
-		var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-		if(docdateval==0){
-			$('#date').jqxDateTimeInput('focus');
-			return false;
-		}
-		
-	}
-	if(document.getElementById("cmbtype").value==""){
-		document.getElementById("errormsg").innerText="";
-		document.getElementById("errormsg").innerText="Type is Mandatory";
-		document.getElementById("cmbtype").focus();
-		return 0;
-	}
-	var rows = $("#disposalGrid").jqxGrid('getrows');
-	if(!((rows[0].fleet_no=="undefined") || (rows[0].fleet_no==null) || (rows[0].fleet_no==""))){
-	
-		var rowlength=0;
-		for(var i=0 ; i < rows.length ; i++){
-		
-			newTextBox = $(document.createElement("input"))
-		    .attr("type", "dil")
-		    .attr("id", "test"+i)
-		    .attr("name", "test"+i)
-		    .attr("hidden", "true");
-			
-			if((rows[i].pur_value=="0") && configs.vsinopurchasecost=="0"){
-				document.getElementById("errormsg").innerText="";
-				document.getElementById("errormsg").innerText="Purchase value can not be zero";
-				return 0;
-			}
-			if(rows[i].fleet_no!="" && rows[i].fleet_no!="undefined" && rows[i].fleet_no!=null){
-				
-		newTextBox.val(rows[i].fleet_no+"::"+rows[i].flname+"::"+rows[i].salesprice+"::"+rows[i].dep_posted+"::"+rows[i].pur_value+"::"+rows[i].acc_dep+"::"+rows[i].cur_dep+"::"+rows[i].net_pl+"::"+rows[i].netbook);
-		
-		newTextBox.appendTo('form');
-		rowlength++;
-			}
-			
-			//alert("ddddd"+$("#test"+i).val());
-		}
-		
-		$('#gridlength').val(rowlength);
-		// alert($('#gridlength').val());
-		
-	}
- return 1;	
+    if(configs.vehsaleinvfuturedate=="1"){
+        var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+        if(docdateval==0){
+            $('#date').jqxDateTimeInput('focus');
+            return false;
+        }
+    }
+    
+    if(document.getElementById("cmbtype").value==""){
+        document.getElementById("errormsg").innerText="";
+        document.getElementById("errormsg").innerText="Type is Mandatory";
+        document.getElementById("cmbtype").focus();
+        return 0;
+    }
+    
+    var rows = $("#disposalGrid").jqxGrid('getrows');
+    if(!((rows[0].fleet_no=="undefined") || (rows[0].fleet_no==null) || (rows[0].fleet_no==""))){
+        var rowlength=0;
+        for(var i=0 ; i < rows.length ; i++){
+            newTextBox = $(document.createElement("input"))
+            .attr("type", "dil")
+            .attr("id", "test"+i)
+            .attr("name", "test"+i)
+            .attr("hidden", "true");
+            
+            if((rows[i].pur_value=="0") && configs.vsinopurchasecost=="0"){
+                document.getElementById("errormsg").innerText="";
+                document.getElementById("errormsg").innerText="Purchase value can not be zero";
+                return 0;
+            }
+            if(rows[i].fleet_no!="" && rows[i].fleet_no!="undefined" && rows[i].fleet_no!=null){
+                newTextBox.val(rows[i].fleet_no+"::"+rows[i].flname+"::"+rows[i].salesprice+"::"+rows[i].dep_posted+"::"+rows[i].pur_value+"::"+rows[i].acc_dep+"::"+rows[i].cur_dep+"::"+rows[i].net_pl+"::"+rows[i].netbook);
+                newTextBox.appendTo('form');
+                rowlength++;
+            }
+        }
+        $('#gridlength').val(rowlength);
+    }
+    return 1;   
 }
 
 function deleteTempData(value){
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText;
-			
-		} else {
-		}
-	}
-	x.open("GET", "deleteTempData.jsp?mdoc="+value, true);
-	x.send();
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText;
+        } 
+    }
+    x.open("GET", "deleteTempData.jsp?mdoc="+value, true);
+    x.send();
 }
 
 function funCalculate(){
-	
-	
-		deleteTempData(document.getElementById("mdoc").value);
-	
-	var date=$('#date').jqxDateTimeInput('val');
-	if(configs.vehsaleinvfuturedate=="1"){
-		//Restricts Future Date
-		var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
-		if(docdateval==0){
-			$('#date').jqxDateTimeInput('focus');
-			return false;
-		}
-	}
-	var rows=$('#disposalGrid').jqxGrid('getrows');
-	var temp=0;
-	var count=0;
-	for(var i=0;i<rows.length;i++){
-		var fleet=$("#disposalGrid").jqxGrid('getcellvalue',i,'fleet_no');
-		temp=1;
-		document.getElementById("errormsg").innerText="";
-		if(fleet=="" || fleet=="undefined"){
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Fleet is Mandatory";
-			$('#disposalGrid').jqxGrid('selectcell', i, 'fleet_no');
-			return false;
-		}
-		var salesprice=$("#disposalGrid").jqxGrid('getcellvalue',i,'salesprice');
-		if(salesprice=="" || salesprice=="undefined"){
-			document.getElementById("errormsg").innerText="";
-			document.getElementById("errormsg").innerText="Sales Price is Mandatory";
-			$('#disposalGrid').jqxGrid('selectcell', i, 'salesprice');
-			return false;
-		}
-		
-		if(document.getElementById("errormsg").innerText=="" && fleet!="" && fleet!="undefined" && fleet!=null){
-			getCalData(fleet,salesprice,i,date);
-			count++;
-		}
-			
-	}
-	
-
-	if(temp==0){
-		document.getElementById("errormsg").innerText="";
-		document.getElementById("errormsg").innerText="Please Select Fleet";
-		return false;
-	}
-	
+    deleteTempData(document.getElementById("mdoc").value);
+    
+    var date=$('#date').jqxDateTimeInput('val');
+    if(configs.vehsaleinvfuturedate=="1"){
+        var docdateval=funDateInPeriod($('#date').jqxDateTimeInput('getDate'));
+        if(docdateval==0){
+            $('#date').jqxDateTimeInput('focus');
+            return false;
+        }
+    }
+    
+    var rows=$('#disposalGrid').jqxGrid('getrows');
+    var temp=0;
+    var count=0;
+    for(var i=0;i<rows.length;i++){
+        var fleet=$("#disposalGrid").jqxGrid('getcellvalue',i,'fleet_no');
+        temp=1;
+        document.getElementById("errormsg").innerText="";
+        if(fleet=="" || fleet=="undefined"){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Fleet is Mandatory";
+            $('#disposalGrid').jqxGrid('selectcell', i, 'fleet_no');
+            return false;
+        }
+        var salesprice=$("#disposalGrid").jqxGrid('getcellvalue',i,'salesprice');
+        if(salesprice=="" || salesprice=="undefined"){
+            document.getElementById("errormsg").innerText="";
+            document.getElementById("errormsg").innerText="Sales Price is Mandatory";
+            $('#disposalGrid').jqxGrid('selectcell', i, 'salesprice');
+            return false;
+        }
+        
+        if(document.getElementById("errormsg").innerText=="" && fleet!="" && fleet!="undefined" && fleet!=null){
+            getCalData(fleet,salesprice,i,date);
+            count++;
+        }
+    }
+    
+    if(temp==0){
+        document.getElementById("errormsg").innerText="";
+        document.getElementById("errormsg").innerText="Please Select Fleet";
+        return false;
+    }
 }
 
 
 function getCalData(fleet,salesprice,row,date){
-	var client=document.getElementById("client").value;
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText;
-			items=items.split("::");
-			
-			$('#disposalGrid').jqxGrid('setcellvalue', row, 'dep_posted',items[0]); 
-			$('#disposalGrid').jqxGrid('setcellvalue', row, 'pur_value',items[1]);
-			$('#disposalGrid').jqxGrid('setcellvalue', row, 'acc_dep',items[2]);
-			$('#disposalGrid').jqxGrid('setcellvalue', row, 'cur_dep',items[3]);
-			$('#disposalGrid').jqxGrid('setcellvalue', row, 'net_pl',items[4]);
-			$('#disposalGrid').jqxGrid('setcellvalue', row, 'netbook',items[5]);
-			var dep_posted=$('#disposalGrid').jqxGrid('getcelltext', row, 'dep_posted'); 
-			var pur_value=$('#disposalGrid').jqxGrid('getcelltext', row, 'pur_value').replace(/,/g , "");
-			var acc_dep=$('#disposalGrid').jqxGrid('getcelltext', row, 'acc_dep').replace(/,/g , "");
-			var cur_dep=$('#disposalGrid').jqxGrid('getcelltext', row, 'cur_dep').replace(/,/g , "");
-			var net_pl=$('#disposalGrid').jqxGrid('getcelltext', row, 'net_pl').replace(/,/g , "");
-			var netbook=$('#disposalGrid').jqxGrid('getcelltext', row, 'netbook').replace(/,/g , "");
-			var salesprice=$('#disposalGrid').jqxGrid('getcelltext', row, 'salesprice').replace(/,/g , "");
-			var fleetno=$('#disposalGrid').jqxGrid('getcelltext', row, 'fleet_no').replace(/,/g , "");
-			var dtype=document.getElementById("formdetailcode").value;
-			//alert(dtype);
-			document.getElementById("days").value=items[3];
-			if(pur_value!=null && typeof(pur_value)!="undefined"){
-				
-				funLoadTempJv(dep_posted,pur_value,acc_dep,cur_dep,net_pl,netbook,client,salesprice,fleetno,dtype,date);	
-			}
-			
-		} else {
-		}
-	}
-	x.open("GET", "getCalData.jsp?fleet="+fleet+"&salesprice="+salesprice+"&date="+date, true);
-	x.send();
-}
-function funLoadTempJv(dep_posted,pur_value,acc_dep,cur_dep,net_pl,netbook,client,salesprice,fleetno,dtype,date){
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.trim();
-			//alert(items);
-			document.getElementById("mdoc").value=items;
-			$('#jvdiv').load('jvGrid.jsp?trno='+document.getElementById("mdoc").value+'&id=2');
-		} else {
-		}
-	}
-	x.open("GET", "loadTempJv.jsp?salesprice="+salesprice+"&dep_posted="+dep_posted+"&purvalue="+pur_value+"&accdep="+acc_dep+"&curdep="+cur_dep+"&netpl="+net_pl+"&netbook="+netbook+"&client="+client+"&fleetno="+fleetno+"&dtype="+dtype+"&date="+date, true);
-	x.send();
+    var client=document.getElementById("client").value;
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText;
+            items=items.split("::");
+            
+            $('#disposalGrid').jqxGrid('setcellvalue', row, 'dep_posted',items[0]); 
+            $('#disposalGrid').jqxGrid('setcellvalue', row, 'pur_value',items[1]);
+            $('#disposalGrid').jqxGrid('setcellvalue', row, 'acc_dep',items[2]);
+            $('#disposalGrid').jqxGrid('setcellvalue', row, 'cur_dep',items[3]);
+            $('#disposalGrid').jqxGrid('setcellvalue', row, 'net_pl',items[4]);
+            $('#disposalGrid').jqxGrid('setcellvalue', row, 'netbook',items[5]);
+            var dep_posted=$('#disposalGrid').jqxGrid('getcelltext', row, 'dep_posted'); 
+            var pur_value=$('#disposalGrid').jqxGrid('getcelltext', row, 'pur_value').replace(/,/g , "");
+            var acc_dep=$('#disposalGrid').jqxGrid('getcelltext', row, 'acc_dep').replace(/,/g , "");
+            var cur_dep=$('#disposalGrid').jqxGrid('getcelltext', row, 'cur_dep').replace(/,/g , "");
+            var net_pl=$('#disposalGrid').jqxGrid('getcelltext', row, 'net_pl').replace(/,/g , "");
+            var netbook=$('#disposalGrid').jqxGrid('getcelltext', row, 'netbook').replace(/,/g , "");
+            var salesprice=$('#disposalGrid').jqxGrid('getcelltext', row, 'salesprice').replace(/,/g , "");
+            var fleetno=$('#disposalGrid').jqxGrid('getcelltext', row, 'fleet_no').replace(/,/g , "");
+            var dtype=document.getElementById("formdetailcode").value;
+            
+            document.getElementById("days").value=items[3];
+            if(pur_value!=null && typeof(pur_value)!="undefined"){
+                funLoadTempJv(dep_posted,pur_value,acc_dep,cur_dep,net_pl,netbook,client,salesprice,fleetno,dtype,date); 
+            }
+        } 
+    }
+    x.open("GET", "getCalData.jsp?fleet="+fleet+"&salesprice="+salesprice+"&date="+date, true);
+    x.send();
 }
 
+function funLoadTempJv(dep_posted,pur_value,acc_dep,cur_dep,net_pl,netbook,client,salesprice,fleetno,dtype,date){
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.trim();
+            document.getElementById("mdoc").value=items;
+            $('#jvdiv').load('jvGrid.jsp?trno='+document.getElementById("mdoc").value+'&id=2');
+        } 
+    }
+    x.open("GET", "loadTempJv.jsp?salesprice="+salesprice+"&dep_posted="+dep_posted+"&purvalue="+pur_value+"&accdep="+acc_dep+"&curdep="+cur_dep+"&netpl="+net_pl+"&netbook="+netbook+"&client="+client+"&fleetno="+fleetno+"&dtype="+dtype+"&date="+date, true);
+    x.send();
+}
 
 function getDetail(){
-	if(document.getElementById("docno").value==""){
-		document.getElementById("errormsg").innerText="";
-		document.getElementById("errormsg").innerText="Please Select a Document";
-		return false;
-	}
-	var detail="";
-	
-	if(document.getElementById("rdosummary").checked==false && document.getElementById("rdodetail").checked==false && document.getElementById("rdotabular").checked==false){
-		document.getElementById("errormsg").innerText="";
-		document.getElementById("errormsg").innerText="Please Select any Valid Option";
-		return false;
-	}
-	$('#detailwindow').jqxWindow('open');
-	 $('#detailwindow').jqxWindow('focus');
-	if(document.getElementById("rdosummary").checked==true){
-		detailSearchContent('getGridSummary.jsp');
-	}
-	else if(document.getElementById("rdodetail").checked==true){
-		detailSearchContent('getGridDetail.jsp');
-	}
-	else{
-		detailSearchContent('getGridTabular.jsp?docno='+document.getElementById("docno").value+'&fromdate='+$('#fromdate').jqxGrid('val')+'&todate='+$('#todate').jqxGrid('val'));
-	}
-	
+    if(document.getElementById("docno").value==""){
+        document.getElementById("errormsg").innerText="";
+        document.getElementById("errormsg").innerText="Please Select a Document";
+        return false;
+    }
+    
+    if(document.getElementById("rdosummary").checked==false && document.getElementById("rdodetail").checked==false && document.getElementById("rdotabular").checked==false){
+        document.getElementById("errormsg").innerText="";
+        document.getElementById("errormsg").innerText="Please Select any Valid Option";
+        return false;
+    }
+    
+    $('#detailwindow').jqxWindow('open');
+    $('#detailwindow').jqxWindow('focus');
+    if(document.getElementById("rdosummary").checked==true){
+        detailSearchContent('getGridSummary.jsp');
+    } else if(document.getElementById("rdodetail").checked==true){
+        detailSearchContent('getGridDetail.jsp');
+    } else{
+        detailSearchContent('getGridTabular.jsp?docno='+document.getElementById("docno").value+'&fromdate='+$('#fromdate').jqxGrid('val')+'&todate='+$('#todate').jqxGrid('val'));
+    }
 }
-/* function funPrintBtn(){
-	var url=document.URL;
-	var reurl=url.split("saveActionVehicleDisposal");
-    var win= window.open(reurl[0]+"printSaleInvoice?doc_no="+document.getElementById("doc_no").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-    win.focus();
-}
- */
+
 function funPrintBtn() {
- 	   if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-		 $.messager.alert('Warning','Select a Document');
-		 return false;
-	}
-	 var url=document.URL;
-         //alert(url);
-		 var reurl=url.split("com/");	
-		 //alert(reurl);
-		 var dtype=document.getElementById("formdetailcode").value;
-		// alert(dtype);
-	 	 var win= window.open(reurl[0]+"printSaleInvoice.action?docno="+document.getElementById("docno").value+"&trno="+document.getElementById("trno").value+"&dtype="+dtype,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-		 win.focus();      
-	 
-	 }
-	 function getConfigs(){
-	 	$.get('getConfigs.jsp',function(data){
-	 		configs=JSON.parse(data);
-	 		console.log(configs);
-	 	});
-	 }
+    if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
+         $.messager.alert('Warning','Select a Document');
+         return false;
+    }
+     var url=document.URL;
+     var reurl=url.split("com/");    
+     var dtype=document.getElementById("formdetailcode").value;
+     var win= window.open(reurl[0]+"printSaleInvoice.action?docno="+document.getElementById("docno").value+"&trno="+document.getElementById("trno").value+"&dtype="+dtype,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
+     win.focus();      
+}
+
+function getConfigs(){
+    $.get('getConfigs.jsp',function(data){
+        configs=JSON.parse(data);
+        console.log(configs);
+    });
+}
 </script>
 </head>
 <body onload="setValues();getConfigs();">
 <div id="mainBG" class="homeContent" data-type="background">
+
 <form id="frmVehicleDisposal" action="saveActionVehicleDisposal" autocomplete="off" >
-
-	<jsp:include page="../../../../header.jsp" />
-	<br/> 
+    <jsp:include page="../../../../header.jsp" />
+    <br/> 
+    
 <div class="hidden-scrollbar">
-<fieldset>
-<table width="100%" >
-  <tr>
-    <td width="6%" align="right">Date</td>
-    <td width="11%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-    <td width="29%">&nbsp;</td>
-    <td width="4%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="9%" align="right">Doc No</td>
-    <td width="11%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1"  readonly></td>
-    <td colspan="2" align="left">&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">Client</td>
-    <td align="left"><input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3 to Search" onkeydown="getClient(event);"></td>
-    <td colspan="3" align="left"><input type="text" name="clientname" id="clientname" value='<s:property value="clientname"/>' style="width:99%;" readonly></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td al align="right">Description</td>
-    <td colspan="2" align="left"><input type="text" name="description" id="description" value='<s:property value="description"/>' style="width:97.5%;"></td>
-    <td align="left">Type</td>
-    <td align="left"><select name="cmbtype" id="cmbtype" >
-      <option value="">--Select--</option>
-      <option value="S">Sale</option>
-      <option value="L">Total Loss</option>
-    </select></td>
-    <td align="center"><input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate"></td>
-    <td>&nbsp;</td>
-    <td colspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="right">&nbsp;</td>
-    <td colspan="7" align="left"><div id="disposaldiv"><jsp:include page="vehDisposalGrid.jsp"></jsp:include></div></td>
-    <td width="10%" align="left">&nbsp;</td>
-  	
-  </tr>
-  
-  <tr>
-    
- <td align="right">&nbsp;</td>
-    <td colspan="7" align="left"><div id="jvdiv"><jsp:include page="jvGrid.jsp"></jsp:include></div></td>
-    <td width="10%" align="left">&nbsp;</td>
-  </tr>
-</table>
 
+<div class="modern-ui">
 
+    <div class="middle-panel">
+        <span class="middle-panel-title">General Info</span>
+        
+        <div class="field-row">
+            <label class="lbl-right" style="width:80px;">Date</label>
+            <div style="width:120px;">
+                <div id="date" name="date" value='<s:property value="date"/>'></div>
+            </div>
+            
+            <div style="flex:1;"></div>
+            
+            <label class="lbl-right" style="width:100px;">Doc No</label>
+            <input type="text" name="vocno" id="vocno" style="width:150px; background-color:#fff;" value='<s:property value="vocno"/>' tabindex="-1" readonly>
+        </div>
 
-   <%--  <td><fieldset>
-    <table width="100%">
-  <tr>
-    <td width="50%"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-    <td width="50%"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-  </tr>
-  <tr>
-    <td align="left"><input type="radio" id="rdosummary" name="rdo" value="rdosummary"><label for="rdosummary">Summarised</label></td>
-    <td align="left">&nbsp;</td>
-    </tr>
-  <tr>
-    <td align="left"><input type="radio" id="rdodetail" name="rdo" value="rdodetail" ><label for="rdodetail">Detailed</label></td>
-    <td align="center"><input type="button" name="btnList" id="btnList" value="get Detail" class="myButton" onclick="getDetail();"></td>
-    </tr>
-  <tr>
-    <td align="left"><input type="radio" id="rdotabular" name="rdo" value="rdotabular" ><label for="rdotabular">Tabular</label></td>
-    <td align="left">&nbsp;</td>
-    </tr>
-</table>
+        <div class="field-row">
+            <label class="lbl-right" style="width:80px;">Client</label>
+            <div class="input-search-container" style="width:120px;">
+                <input type="text" name="client" id="client" value='<s:property value="client"/>' readonly placeholder="Press F3" onkeydown="getClient(event);">
+                <svg class="magnifier-icon" onclick="$('#clientwindow').jqxWindow('open'); $('#clientwindow').jqxWindow('focus'); clientSearchContent('masterClientSearch.jsp');" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            
+            <input type="text" name="clientname" id="clientname" style="flex:1;" value='<s:property value="clientname"/>' readonly>
+        </div>
 
-    </fieldset> --%>
-    
-    
-    
-    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden=true></div>
-    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden=true></div>
+        <div class="field-row" style="margin-bottom:0;">
+            <label class="lbl-right" style="width:80px;">Description</label>
+            <input type="text" name="description" id="description" style="width:50%;" value='<s:property value="description"/>'>
+            
+            <label class="lbl-right" style="width:100px;">Type</label>
+            <select name="cmbtype" id="cmbtype" style="width:150px;">
+                <option value="">--Select--</option>
+                <option value="S">Sale</option>
+                <option value="L">Total Loss</option>
+            </select>
+            
+            <input type="button" name="btncalculate" id="btncalculate" class="myButton" onclick="funCalculate();" value="Calculate" style="margin-left: 15px;">
+        </div>
+    </div>
+
+    <div class="middle-panel" style="padding-top:25px;">
+        <span class="middle-panel-title">Disposal Details</span>
+        
+        <div class="grid-container">
+            <div id="disposaldiv"><jsp:include page="vehDisposalGrid.jsp"></jsp:include></div>
+        </div>
+    </div>
+
+    <div class="middle-panel" style="padding-top:25px;">
+        <span class="middle-panel-title">JV Details</span>
+        
+        <div class="grid-container">
+            <div id="jvdiv"><jsp:include page="jvGrid.jsp"></jsp:include></div>
+        </div>
+    </div>
+
+    <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>' hidden="true"></div>
+    <div id="todate" name="todate" value='<s:property value="todate"/>' hidden="true"></div>
     <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
     <input type="hidden" name="deleted" id="deleted" value='<s:property value="deleted"/>'>
     <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
@@ -743,19 +607,17 @@ function funPrintBtn() {
     <input type="hidden" name="clientacno" id="clientacno" value='<s:property value="clientacno"/>'>
     <input type="hidden" name="hidbranch" id="hidbranch" value='<s:property value="hidbranch"/>'>
     <input type="hidden" name="days" id="days" value='<s:property value="days"/>'>
-    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1"  readonly>
-    <input type="hidden" name="mdoc" id="mdoc" value='<s:property value="mdoc"/>' tabindex="-1"  readonly><!-- Temperory jv docno -->
-  </div>
+    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' tabindex="-1" readonly>
+    <input type="hidden" name="mdoc" id="mdoc" value='<s:property value="mdoc"/>' tabindex="-1" readonly>
+
+</div>
+</div>
 </form>
-<div id=clientwindow>
-   <div ></div>
-</div>
-<div id="fleetwindow">
-   <div ></div>
-</div>
-<div id="detailwindow">
-   <div ></div>
-</div>
+
+<div id="clientwindow"><div></div></div>
+<div id="fleetwindow"><div></div></div>
+<div id="detailwindow"><div></div></div>
+
 </div>
 </body>
 </html>
