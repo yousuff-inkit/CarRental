@@ -7,20 +7,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style>
 /* =========================================================
-SCOPED UI: Bulletproof Search Modal Table Layout
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
     background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
-    font-family: Arial, sans-serif;
     font-size: 12px;
     color: #333;
     padding: 10px;
@@ -28,72 +27,82 @@ body {
     width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"] {
+/* Master Input Styles */
+.modern-ui input[type="text"],
+.modern-ui select {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus {
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 12px 10px;
+    padding: 12px;
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Table alignment */
+/* Table Alignment - Strict Grid Mapping */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
 .modern-ui td {
-    padding: 4px 5px;
     vertical-align: middle;
 }
 
-.modern-ui .lbl-right {
-    text-align: right;
-    font-weight: bold;
-    color: #444;
-    white-space: nowrap;
-    font-size: 12px;
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    background-color: #004494;
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
+    border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
     width: 100%;
@@ -102,94 +111,92 @@ body {
 
 <script type="text/javascript">
     $(document).ready(function () {
-        /* 100% width allows JQX to perfectly fill the newly expanded table cells */
+        /* Force width to 100% so it perfectly fits the table cell */
         $("#unclearchequedate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
         $("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
         
         /* Force internal alignment AFTER render */
         setTimeout(function () {
+            $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#BDBDBD", "border-radius": "3px"});
             $(".jqx-datetimeinput").find("input").css({
-                "margin-top": "0px", 
-                "line-height": "24px", 
-                "font-size": "12px", 
-                "font-family": "Arial, sans-serif",
-                "padding": "0 6px", 
-                "box-sizing":"border-box"
+                "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif", "padding": "0 6px", "box-sizing":"border-box"
             });
             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-        }, 0);
+        }, 100);
     }); 
 
     function loadSearch() {
-        var partyname = document.getElementById("txtpartyname").value;
-        var docNo = document.getElementById("txtdocno").value;
-        var date = document.getElementById("unclearchequedate").value;
-        var amount = document.getElementById("txtamount").value;
-        var chequeNo = document.getElementById("txtchqno").value;
-        var chequeDt = document.getElementById("chqdate").value;
+        var partyname = document.getElementById("txtpartyname").value || "";
+        var docNo = document.getElementById("txtdocno").value || "";
+        var date = $('#unclearchequedate').jqxDateTimeInput('val') || "";
+        var amount = document.getElementById("txtamount").value || "";
+        var chequeNo = document.getElementById("txtchqno").value || "";
+        var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
         var check = 1;
         
         getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
     }
     
     function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
-         $("#refreshdiv").load(
-             'ucrMainSearchGrid.jsp?partyname=' + partyname.replace(/ /g, "%20") + 
-             '&docNo=' + docNo + 
-             '&date=' + date + 
-             '&amount=' + amount + 
-             '&chequeNo=' + chequeNo + 
-             '&chequeDt=' + chequeDt + 
-             '&check=' + check
-         );
+        /* Safely encoding URI components to prevent breakages on special characters */
+        $("#refreshdiv").load('ucrMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
+                              '&docNo=' + encodeURIComponent(docNo) + 
+                              '&date=' + date + 
+                              '&amount=' + encodeURIComponent(amount) + 
+                              '&chequeNo=' + encodeURIComponent(chequeNo) + 
+                              '&chequeDt=' + chequeDt + 
+                              '&check=' + check);
     }
 </script>
 </head>
 
-<body>
+<body style="background-color: #fff; margin: 0;">
+
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 8px;">
-            <tr>
-                <td class="lbl-right" width="6%">Name</td>
-                <td width="46%">
-                    <input type="text" name="txtpartyname" id="txtpartyname" autocomplete="off" value='<s:property value="txtpartyname"/>'>
-                </td>
-                <td class="lbl-right" width="10%">Doc No</td>
-                <td width="20%">
-                    <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
-                </td>
-                <td width="18%" align="right" style="padding-right: 5px;">
-                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-                </td>
-            </tr>
-        </table>
-
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-                <td class="lbl-right" width="6%">Date</td>
-                <td width="17%">
-                    <div id="unclearchequedate" name="unclearchequedate" value='<s:property value="unclearchequedate"/>'></div>
-                    <input type="hidden" name="hidunclearchequedate" id="hidunclearchequedate" value='<s:property value="hidunclearchequedate"/>'>
+                <td class="lbl-right" width="6%">Name</td>
+                <td width="20%">
+                    <input type="text" name="txtpartyname" id="txtpartyname" autocomplete="off" value='<s:property value="txtpartyname"/>'>
                 </td>
-                <td class="lbl-right" width="8%">Amount</td>
+                
+                <td class="lbl-right" width="10%">Doc No</td>
+                <td width="15%">
+                    <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Amount</td>
                 <td width="15%">
                     <input type="text" name="txtamount" id="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
                 </td>
-                <td class="lbl-right" width="10%">Cheque No</td>
-                <td width="15%">
+                
+                <td width="24%" align="center" rowspan="2" valign="middle">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">Date</td>
+                <td>
+                    <div id="unclearchequedate" name="unclearchequedate" value='<s:property value="unclearchequedate"/>'></div>
+                    <input type="hidden" name="hidunclearchequedate" id="hidunclearchequedate" value='<s:property value="hidunclearchequedate"/>'>
+                </td>
+                
+                <td class="lbl-right">Cheque No</td>
+                <td>
                     <input type="text" id="txtchqno" name="txtchqno" autocomplete="off" value='<s:property value="txtchqno"/>'>
                 </td>
-                <td class="lbl-right" width="12%">Cheque Date</td>
-                <td width="17%">
+                
+                <td class="lbl-right">Cheque Date</td>
+                <td>
                     <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
                     <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'>
                 </td>
             </tr>
         </table>
-
     </div>
 
     <div class="grid-container">
@@ -199,5 +206,6 @@ body {
     </div>
 
 </div>
+
 </body>
 </html>
