@@ -10,164 +10,146 @@
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
-/* =========================================================
-   RENTAL CLOSE - EXACT TEXT & UI MATCH TO CLIENT MASTER
-========================================================= */
-body, .homeContent {
-    background: #f4f6f9 !important;
-    font-family: Arial, sans-serif !important;
-    color: #333 !important;
-    font-size: 12px !important;
+body {
+    background-color: #fff;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 11px; /* Smaller font to eliminate horizontal scrollbar */
     margin: 0;
-    box-sizing: border-box;
+    padding: 10px;
 }
-
-#mainBG {
-    background: #fff;
-    border-radius: 4px;
-    padding: 15px;
-    max-width: 100%;
-    margin: auto;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-}
-
-/* FIX: Responsive scroll area so the bottom is never cut off */
-.hidden-scrollbar {
-    overflow-y: auto;
-    height: calc(100vh - 140px);
-    padding-bottom: 80px; 
-    box-sizing: border-box;
-}
-
-form label.error {
-    color: red;
-    font-weight: bold;
-}
-
-/* EXACT Input Styles from Client Master - Forced White 
-   NOTE: Added :not([class*="jqx"]) to prevent this from breaking the Date/Time calendar widgets */
-input[type="text"]:not([class*="jqx"]), select, input[readonly]:not([class*="jqx"]) {
-    height: 24px !important; 
-    border: 1px solid #ccc !important;
-    border-radius: 3px !important;
-    padding: 2px 6px !important;
-    font-size: 12px !important;
-    box-sizing: border-box;
+#mainBG{background-color: #fff;}
+/* 2. Style the original Table Structure */
+table {
+    border-collapse: separate;
+    border-spacing: 0 5px; /* Adds subtle spacing between rows */
     width: 100%;
-    background: #ffffff !important; 
-    color: #333 !important;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: #007bff !important;
-    outline: none !important;
-}
-
-/* Table adjustments for compact text */
-table td {
-    padding: 4px 6px !important;
-    font-size: 12px !important;
-    color: #444 !important;
-    font-weight: bold !important;
+td {
+    padding: 3px 5px;
     vertical-align: middle;
 }
 
-/* =========================================================
-   BUTTON STYLING
-========================================================= */
-input[type="button"].myButton, button.myButton {
-    display: inline-block;
-    width: auto !important; 
-    background: #0056b3 none !important; 
-    color: #ffffff !important;
-    border: 1px solid #004494 !important;
-    border-radius: 3px !important;
-    padding: 4px 20px !important;
-    margin: 0 5px !important;
-    font-weight: bold !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    height: 28px !important;
-    text-align: center !important;
-}
-
-input[type="button"].myButton:hover, button.myButton:hover {
-    background: #004494 none !important;
-}
-
-/* Action Buttons Container (Flexbox) */
-.action-buttons {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    position: relative;
-    padding: 10px;
-    margin: 15px 0;
-    background: #f8f9fa;
-    border: 1px solid #e1e4e8;
-    border-radius: 4px;
-    min-height: 50px;
-}
-
-/* =========================================================
-   ERROR MESSAGE STYLING (The Global Header Error)
-========================================================= */
-#errormsg {
-    position: fixed !important;
-    top: 75px !important;       
-    right: 25px !important;     
-    background-color: #fff2f2 !important;
-    color: #d8000c !important;
-    border: 1px solid #ffb3b3 !important;
-    padding: 10px 20px !important;
-    border-radius: 5px !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    z-index: 10000 !important;  
-    box-shadow: 0 4px 10px rgba(216, 0, 12, 0.15) !important;
-    min-width: 250px;
-    text-align: center;
-}
-
-#errormsg:empty {
-    display: none !important; 
-}
-
-#lblinvoicedone {
-    position: absolute;
-    right: 15px; 
-    color: #cc0000;
-    font-size: 13px;
+/* Label Styling (Right aligned cells) */
+td[align="right"] {
     font-weight: bold;
-    margin: 0;
+    color: #555;
+    white-space: nowrap;
 }
 
-#lblinvoicedone:empty {
-    display: none;
+/* 3. Master UI Input Styling */
+input[type="text"], 
+select, 
+.jqx-datetimeinput {
+    height: 22px !important; /* Compact height */
+    border: 1px solid #ccd0d4 !important;
+    border-radius: 3px !important;
+    padding: 2px 5px !important;
+    font-size: 11px !important;
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 100%; /* Ensures they fill their table cell */
 }
 
-/* =========================================================
-   NORMAL FORM STYLING (Fieldset & Legend)
-========================================================= */
+input[readonly] {
+    background-color: #f0f2f5 !important;
+    color: #666;
+}
+
+/* 4. Master UI Fieldset & Legend (The Panel Look) */
 fieldset {
-    border: 1px solid #e1e4e8 !important;
-    background-color: #fff !important;
-    margin-bottom: 15px !important;
-    padding: 10px 15px 15px 15px !important;
-    border-radius: 4px !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    border: 1px solid #d1d9e1 !important;
+    border-radius: 6px !important;
+    padding: 10px !important;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 legend {
-    font-size: 13px !important;
-    font-weight: bold !important;
-    color: #0056b3 !important;
-    padding: 0 8px 0 6px !important;
-    border-left: 3px solid #0056b3 !important;
-    margin-bottom: 5px !important;
-    background: #fff;
     width: auto;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: #007bbd; /* Master Blue */
+    padding: 0 8px;
+    margin-bottom: 0;
+    border-left: 3px solid #007bbd; /* Left accent line */
+}
+
+
+
+/* 6. Grid & Container Styling */
+.borderStyle, 
+#agmttarifdiv, 
+#totaldiv, 
+#trafficdiv, 
+#calcdiv {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+/* 7. Scrollbar Management */
+.hidden-scrollbar {
+    overflow-x: hidden; /* Removes the horizontal scrollbar */
+    width: 100%;
+}
+
+#errormsg, #lblinvoicedone {
+    font-weight: bold;
+    color: #d32f2f;
+    font-size: 11px;
+}
+ .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    text-shadow: none;
+    transition: all 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    border: none;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff ! important;
+    white-space: nowrap;
+}
+.myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
+
+.input-search-container {
+    position: relative;
+    display: block; 
+    width: 100%;
+    min-width: 150px; 
+    margin-right: 15px;
+}
+
+.input-search-container input {
+    padding-right: 30px !important; 
+    width: 100% !important;
+    display: block;
+    box-sizing: border-box !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+    pointer-events: all; 
+    
+}
+.magnifier-icon:hover {
+    color: #2563eb; 
+    transform: translateY(-50%) scale(1.1);
 }
 </style>
 <script type="text/javascript">
@@ -1549,44 +1531,133 @@ if(document.getElementById("rentalagent").value==""){
     <legend>In Info</legend>
     <table width="100%">
       <tr>
-        <td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 6px !important;">
-          <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            Collection 
-            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();" style="width: 14px !important; height: 14px !important; margin: 0 0 0 5px !important; display: inline-block !important;">
-          </div>
-          <div style="margin-bottom: 5px;">
-            <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search">
-          </div>
-          <div>
-            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge"/>
-          </div>
-        </td>
-        <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-        <td width="8%" align="right">Collection Details</td>
-        <td width="1%" align="right">KM</td>
-        <td width="8%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
-        <td width="2%" align="right">Fuel</td>
-        <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-        <td width="7%" align="left">
-          <select name="cmbcollectfuel" id="cmbcollectfuel">
-            <option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option><option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option>
-          </select>
-        </td>
-        <td width="2%" align="right">Date</td>
-        <td width="7%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
-        <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-        <td width="2%" align="right">Time</td>
-        <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
-        <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
-        <td width="5%" align="right">Rental Agent</td>
-        <td width="6%" align="left">
-        <input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);">
-        </td>
+<td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 6px !important;">
+    <div style="display: flex; align-items: center; margin-bottom: 5px;">
+        Collection
+        <input type="checkbox" name="chkcollection" id="chkcollection"
+               onchange="setCollection();toggleCollection();"
+               style="width:14px !important; height:14px !important; margin:0 0 0 5px !important; display:inline-block !important;">
+    </div>
+
+    <div style="margin-bottom: 5px;">
+        <input type="text" name="chauffer" id="chauffer"
+               value='<s:property value="chauffer"/>'
+               onkeydown="getChauffer(event);"
+               readonly
+               disabled
+               placeholder="Press F3 to Search"
+               style="background-color:#e9ecef !important;">
+    </div>
+
+    <div>
+        <input type="text" name="collectchg" id="collectchg"
+               value='<s:property value="collectchg"/>'
+               placeholder="Collection Charge"
+               disabled
+               style="background-color:#e9ecef !important;">
+    </div>
+</td>
+
+<input type="hidden" name="hidchkcollection" id="hidchkcollection"
+       value='<s:property value="hidchkcollection"/>'>
+
+<td width="5%" align="right">Collection Details</td>
+
+<td width="1%" align="right">KM</td>
+<td width="8%" align="left">
+    <input type="text" name="collectkm" id="collectkm"
+           value='<s:property value="collectkm"/>'
+           disabled
+           style="background-color:#e9ecef !important;">
+</td>
+
+<td width="2%" align="right">Fuel</td>
+<input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel"
+       value='<s:property value="hidcmbcollectfuel"/>'>
+
+<td width="7%" align="left">
+    <select name="cmbcollectfuel" id="cmbcollectfuel"
+            disabled
+            style="background-color:#e9ecef !important;">
+        <option value="">-Select-</option>
+        <option value="0.000">Level 0/8</option>
+        <option value="0.125">Level 1/8</option>
+        <option value="0.250">Level 2/8</option>
+        <option value="0.375">Level 3/8</option>
+        <option value="0.500">Level 4/8</option>
+        <option value="0.625">Level 5/8</option>
+        <option value="0.750">Level 6/8</option>
+        <option value="0.875">Level 7/8</option>
+        <option value="1.000">Level 8/8</option>
+    </select>
+</td>
+
+<td width="2%" align="right">Date</td>
+<td width="8%" align="left">
+    <div id="collectdate" name="collectdate"
+         value='<s:property value="collectdate"/>'
+         style="pointer-events:none; opacity:0.6;"></div>
+</td>
+
+<input type="hidden" name="hidcollectdate" id="hidcollectdate"
+       value='<s:property value="hidcollectdate"/>'>
+
+<td width="2%" align="right">Time</td>
+<td width="5%" align="left">
+    <div id="collecttime" name="collecttime"
+         value='<s:property value="collecttime"/>'
+         style="pointer-events:none; opacity:0.6;"></div>
+</td>
+
+<input type="hidden" id="hidcollecttime" name="hidcollecttime"
+       value='<s:property value="hidcollecttime"/>'>
+
+<script>
+function toggleCollection() {
+    var checked = document.getElementById("chkcollection").checked;
+
+    var ids = ["chauffer", "collectchg", "collectkm", "cmbcollectfuel"];
+    ids.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.disabled = !checked;
+            el.style.setProperty("background-color", checked ? "#ffffff" : "#e9ecef", "important");
+        }
+    });
+
+    document.getElementById("collectdate").style.pointerEvents = checked ? "auto" : "none";
+    document.getElementById("collectdate").style.opacity = checked ? "1" : "0.6";
+
+    document.getElementById("collecttime").style.pointerEvents = checked ? "auto" : "none";
+    document.getElementById("collecttime").style.opacity = checked ? "1" : "0.6";
+}
+</script>
+          <td width="5%" align="right">Rental Agent</td>
+
+<td width="10%" align="left">
+    <div class="input-search-container" style="background-color:#fff !important;">
+        <input type="text" name="rentalagent" id="rentalagent"
+               value='<s:property value="rentalagent"/>'
+               readonly
+               placeholder="Press F3 to Search"
+               onkeydown="getRentalAgent(event);"
+               style="background-color:#fff !important;">
+
+        <svg class="magnifier-icon" onclick="triggerToSearch();"
+             width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </div>
+</td>
+
         <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
         <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-        <td width="7%" align="right">Days Used</td>
+        <td width="5%" align="right">Days Used</td>
         <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
-        <td width="5%" align="right">Hours Used</td>
+        <td width="3%" align="right">Hours Used</td>
         <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
       </tr>
       <tr>
@@ -1606,15 +1677,41 @@ if(document.getElementById("rentalagent").value==""){
         <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
         <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
         <td align="right">Check In</td>
-        <td align="left">
-          <input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);">
-        </td>
-        <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
+<td align="left">
+    <div class="input-search-container" style="background-color:#fff !important;">
+        <input type="text" name="checkin" id="checkin"
+               value='<s:property value="checkin"/>'
+               readonly
+               placeholder="Press F3 to Search"
+               onkeydown="getCheckin(event);"
+               style="background-color:#fff !important;">
+
+        <svg class="magnifier-icon" onclick="triggerToSearch();"
+             width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </div>
+</td>        <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
         <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
         <td align="right">Total KM</td>
         <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
         <td align="right">Excess KM</td>
         <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
+           <td align="right" style="vertical-align:middle; position:relative;">
+    <input type="button" name="btnprocess" id="btnprocess_standard"
+           class="myButton"
+           value="Process"
+           onclick="funChecking();"
+           style="position:relative; top:-25px;">
+              <button type="button" id="btnprocess"
+            title="Process"
+            style="display:none;"
+            onclick="funChecking();"></button>
+            
+</td>
       </tr>
     </table>
   </fieldset>
@@ -1622,11 +1719,9 @@ if(document.getElementById("rentalagent").value==""){
   <div class="action-buttons">
       
       <div class="button-group">
-          <input type="button" name="btnprocess" id="btnprocess_standard" class="myButton" value="Process" onclick="funChecking();">
-          <input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">
-          <input type="button" name="btndownload" id="btndownload" class="myButton" value="Download" onclick="funDownload();">
           
-          <button type="button" id="btnprocess" title="Process" style="display:none;" onclick="funChecking();"></button>
+          
+          
       </div>
 
       <label name="lblinvoicedone" id="lblinvoicedone"></label>
@@ -1648,13 +1743,30 @@ if(document.getElementById("rentalagent").value==""){
         </div>
       </td>
       
-      <td width="34%" valign="top">
-        <fieldset>
-          <legend>Calculation Info</legend>
-          <div id="calcdiv"><jsp:include page="calculationGrid.jsp"></jsp:include></div>
-          <input type="hidden" name="hidchkconvert" id="hidchkconvert" value='<s:property value="hidchkconvert"/>'>
-        </fieldset>
-      </td>
+     <td width="34%" valign="top">
+    <fieldset>
+        <legend>Calculation Info</legend>
+
+<div style="margin-bottom:8px; text-align:center;">
+    <input type="button" name="btncalculate" id="btncalculate"
+           class="myButton"
+           value="Calculate"
+           onclick="funCalculate();">
+
+    <input type="button" name="btndownload" id="btndownload"
+           class="myButton"
+           value="Download"
+           onclick="funDownload();">
+</div>
+
+        <div id="calcdiv">
+            <jsp:include page="calculationGrid.jsp"></jsp:include>
+        </div>
+
+        <input type="hidden" name="hidchkconvert" id="hidchkconvert"
+               value='<s:property value="hidchkconvert"/>'>
+    </fieldset>
+</td>
     </tr>
   </table>
 
@@ -1725,5 +1837,22 @@ if(document.getElementById("rentalagent").value==""){
    <div ></div>
 </div>
 </div>
+<script>
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+
+        var formElements = Array.from(document.querySelectorAll(
+            'input:not([type=hidden]):not([disabled]), select:not([disabled]), textarea:not([disabled])'
+        )).filter(el => el.offsetParent !== null);
+
+        var index = formElements.indexOf(document.activeElement);
+
+        if (index > -1 && index < formElements.length - 1) {
+            formElements[index + 1].focus();
+        }
+    }
+});
+</script>
 </body>
 </html>

@@ -11,12 +11,12 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
     background-color: #fff;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
@@ -27,122 +27,122 @@ body {
     width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"],
-.modern-ui select {
+/* Master Input Styles */
+.modern-ui input[type="text"] {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus,
-.modern-ui select:focus {
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 10px;
 }
 
+/* Table Alignment */
 .modern-ui table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
     width: 100%;
 }
 
 .modern-ui td {
-    padding: 4px 5px;
     vertical-align: middle;
 }
 
 .modern-ui .lbl-right { 
     text-align: right; 
-    color: #444;
+    color: #222;
     font-size: 12px; 
-    font-weight: bold;
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
-    text-transform: uppercase;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
+    background-color: #004494;
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
+    border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
 }
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function () {
+    $(document).ready(function () {
         /* Force width to 100% so it perfectly fits the table cell */
-		$("#bankdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
-		$("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
-		
-		/* Force internal alignment AFTER render */
+        $("#bankdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        $("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        
+        /* Force internal alignment AFTER render */
         setTimeout(function () {
+            $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#BDBDBD", "border-radius": "3px"});
             $(".jqx-datetimeinput").find("input").css({
                 "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
-                "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+                "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif", "padding": "0 6px", "box-sizing":"border-box"
             });
             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-        }, 0);
-	}); 
+        }, 100);
+    }); 
 
-	function loadSearch() {
-		var partyname = document.getElementById("txtpartyname").value || "";
-		var docNo = document.getElementById("txtdocno").value || "";
-		var date = $('#bankdate').jqxDateTimeInput('val') || "";
-		var amount = document.getElementById("txtamount").value || "";
-		var chequeNo = document.getElementById("txtchqno").value || "";
-		var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
-	    var check = 1;
-	    
-		getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
-	}
-	
-	function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check) {
+    function loadSearch() {
+        var partyname = document.getElementById("txtpartyname").value || "";
+        var docNo = document.getElementById("txtdocno").value || "";
+        var date = $('#bankdate').jqxDateTimeInput('val') || "";
+        var amount = document.getElementById("txtamount").value || "";
+        var chequeNo = document.getElementById("txtchqno").value || "";
+        var chequeDt = $('#chqdate').jqxDateTimeInput('val') || "";
+        var check = 1;
+        
+        getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check);
+    }
+    
+    function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check) {
         /* Used encodeURIComponent to safely handle spaces and special characters */
-		$("#refreshdiv").load('bpvMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
-                              '&docNo=' + docNo + 
+        $("#refreshdiv").load('bpvMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
+                              '&docNo=' + encodeURIComponent(docNo) + 
                               '&date=' + date + 
-                              '&amount=' + amount + 
+                              '&amount=' + encodeURIComponent(amount) + 
                               '&chequeNo=' + encodeURIComponent(chequeNo) + 
                               '&chequeDt=' + chequeDt + 
                               '&check=' + check);
-	}
+    }
 </script>
 
 </head>
@@ -151,7 +151,7 @@ body {
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td class="lbl-right" width="8%">Name</td>
                 <td width="25%">
@@ -175,18 +175,18 @@ body {
             </tr>
 
             <tr>
-                <td class="lbl-right" style="padding-top: 8px;">Amount</td>
-                <td style="padding-top: 8px;">
+                <td class="lbl-right">Amount</td>
+                <td>
                     <input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'>
                 </td>
                 
-                <td class="lbl-right" style="padding-top: 8px;">Cheque No</td>
-                <td style="padding-top: 8px;">
+                <td class="lbl-right">Cheque No</td>
+                <td>
                     <input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'>
                 </td>
                 
-                <td class="lbl-right" style="padding-top: 8px;">Cheque Date</td>
-                <td style="padding-top: 8px;">
+                <td class="lbl-right">Cheque Date</td>
+                <td>
                     <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
                     <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'>
                 </td>
