@@ -1374,8 +1374,8 @@ function checkBrandQty(fleetno,masterrefno){
     <div class="accordion-arrow"></div>
 </div>
 
-<div class="accordion-content">
-<div style="width:100%; display:flex; gap:20px; align-items:flex-start;">
+<div class="accordion-content" style="display: block;padding: 0 15px;">
+<div style="width:100%; display:flex; gap:20px; justify-content: space-between;">
 
     <div style="flex:0 0 750px; background:#ffffff; padding:12px; border-radius:8px; border:1px solid #d9d9d9;">
         
@@ -1451,6 +1451,7 @@ function checkBrandQty(fleetno,masterrefno){
             </div>
             
             <div style="text-align:right;">
+            Quick Navigation Bar
                 <div id='jqxMenuMore'>
                     <ul>
                         <li><a href="#trafficFines" onclick="fine();">Traffic Fines</a></li>
