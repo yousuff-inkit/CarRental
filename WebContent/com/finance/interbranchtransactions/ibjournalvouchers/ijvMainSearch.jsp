@@ -12,15 +12,15 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
 body {
     margin: 0;
     background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
 .modern-ui {
-    font-family: Arial, sans-serif;
     font-size: 12px;
     color: #333;
     padding: 10px;
@@ -28,124 +28,123 @@ body {
     width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
-.modern-ui input[type="text"] {
+/* Master Input Styles */
+.modern-ui input[type="text"],
+.modern-ui select {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
+    width: 100%;
 }
 
-.modern-ui input[type="text"]:focus {
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling */
+/* Panel Styling - Clean White Panel */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
-    border: 1px solid #c5d3e0;
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Unbreakable Row Layouts */
-.modern-ui .form-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 20px;
-    flex-wrap: nowrap;
+/* Table Alignment - Strict Grid Mapping */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
 }
 
-.modern-ui .field-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.modern-ui td {
+    vertical-align: middle;
 }
 
-/* Fixed Label Alignments for perfect vertical stacking */
-.modern-ui .fixed-lbl {
-    width: 75px;
-    text-align: right;
-    font-weight: bold;
-    color: #444;
-    white-space: nowrap;
-    flex-shrink: 0;
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
     height: 26px;
-    padding: 0 16px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    background-color: #004494;
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
+    border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
+    width: 100%;
 }
 </style>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        /* Upgraded JQX Date to match 24px inputs */
-        $("#txtdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        /* Force width to 100% so it perfectly fits the expanded table cell */
+        $("#txtdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
         
         /* Force internal alignment AFTER render */
         setTimeout(function () {
+            $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#BDBDBD", "border-radius": "3px"});
             $(".jqx-datetimeinput").find("input").css({
-                "margin-top": "0px", 
-                "line-height": "24px", 
-                "font-size": "12px", 
-                "font-family": "Arial, sans-serif",
-                "padding": "0 6px", 
-                "box-sizing":"border-box"
+                "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+                "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif", "padding": "0 6px", "box-sizing":"border-box"
             });
             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-        }, 0);
+        }, 100);
     }); 
 
     function loadSearch() {
-        var docNo = document.getElementById("txtdocno").value;
-        var dates = document.getElementById("txtdate").value;
-        var descriptions = document.getElementById("txtmaindescription").value;
-        var refNo = document.getElementById("txtreference").value;
-        var amounts = document.getElementById("txtamount").value;
+        var docNo = document.getElementById("txtdocno").value || "";
+        var dates = $('#txtdate').jqxDateTimeInput('val') || "";
+        var descriptions = document.getElementById("txtmaindescription").value || "";
+        var refNo = document.getElementById("txtreference").value || "";
+        var amounts = document.getElementById("txtamount").value || "";
         var check = 1;
         
         getdata(docNo, dates, descriptions, refNo, amounts, check);
     }
     
     function getdata(docNo, dates, descriptions, refNo, amounts, check){
-         $("#refreshdiv").load(
-             'ijvMainSearchGrid.jsp?docNo=' + docNo + 
-             '&dates=' + dates + 
-             '&descriptions=' + encodeURIComponent(descriptions.replace(/ /g, "%20")) + 
-             '&refNo=' + refNo + 
-             '&amounts=' + amounts + 
-             '&check=' + check
-         );
+        /* Safely encoding URI components */
+        $("#refreshdiv").load('ijvMainSearchGrid.jsp?docNo=' + encodeURIComponent(docNo) + 
+                              '&dates=' + dates + 
+                              '&descriptions=' + encodeURIComponent(descriptions) + 
+                              '&refNo=' + encodeURIComponent(refNo) + 
+                              '&amounts=' + encodeURIComponent(amounts) + 
+                              '&check=' + check);
     }
 </script>
 </head>
@@ -155,41 +154,41 @@ body {
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        
-        <div class="form-row">
-            <div class="field-group">
-                <label class="fixed-lbl">Doc No</label>
-                <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" style="width: 140px;" value='<s:property value="txtdocno"/>'>
-            </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="8%">Doc No</td>
+                <td width="20%">
+                    <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">Ref. No.</td>
+                <td width="20%">
+                    <input type="text" name="txtreference" id="txtreference" autocomplete="off" value='<s:property value="txtreference"/>'>
+                </td>
+                
+                <td class="lbl-right" width="8%">Date</td>
+                <td width="20%">
+                    <div id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'></div>
+                    <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'>
+                </td>
+                
+                <td width="14%" align="center" rowspan="2" valign="middle">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
             
-            <div class="field-group">
-                <label class="fixed-lbl">Ref. No.</label>
-                <input type="text" name="txtreference" id="txtreference" autocomplete="off" style="width: 140px;" value='<s:property value="txtreference"/>'>
-            </div>
-
-            <div class="field-group">
-                <label class="fixed-lbl" style="width: 50px;">Date</label>
-                <div id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'></div>
-                <input type="hidden" name="hidtxtdate" id="hidtxtdate" value='<s:property value="hidtxtdate"/>'>
-            </div>
-        </div>
-        
-        <div class="form-row" style="margin-bottom: 0;">
-            <div class="field-group">
-                <label class="fixed-lbl">Amount</label>
-                <input type="text" id="txtamount" name="txtamount" autocomplete="off" style="width: 140px;" value='<s:property value="txtamount"/>'>
-            </div>
-
-            <div class="field-group" style="flex: 1; max-width: 450px;">
-                <label class="fixed-lbl">Description</label>
-                <input type="text" id="txtmaindescription" name="txtmaindescription" autocomplete="off" style="flex: 1;" value='<s:property value="txtmaindescription"/>'>
-            </div>
-
-            <div style="margin-left: auto;">
-                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-            </div>
-        </div>
-        
+            <tr>
+                <td class="lbl-right">Amount</td>
+                <td>
+                    <input type="text" id="txtamount" name="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
+                </td>
+                
+                <td class="lbl-right">Description</td>
+                <td colspan="3">
+                    <input type="text" id="txtmaindescription" name="txtmaindescription" autocomplete="off" value='<s:property value="txtmaindescription"/>'>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="grid-container">

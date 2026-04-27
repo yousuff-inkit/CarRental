@@ -9,17 +9,18 @@
 <title>GatewayERP(i)</title>
 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Bulletproof Search Modal Table Layout
 ========================================================= */
 body {
     margin: 0;
     background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 .modern-ui {
-    font-family: Arial, sans-serif;
     font-size: 12px;
     color: #333;
     padding: 10px;
@@ -34,6 +35,7 @@ body {
     border-radius: 3px;
     padding: 2px 6px;
     font-size: 12px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
@@ -43,32 +45,42 @@ body {
 .modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
 /* Panel Styling */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
+    background-color: #fff;
     border: 1px solid #c5d3e0;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px 10px;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Table alignment - STRICT GRID */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
 }
 
 .modern-ui td {
-    padding: 4px 5px;
+    padding: 0px 5px;
     vertical-align: middle;
 }
 
-.modern-ui .lbl-right { 
-    text-align: right; 
-    color: #444;
-    font-size: 12px; 
-    font-weight: bold;
-    white-space: nowrap; 
-    padding-right: 5px;
+.modern-ui .lbl-right {
+    text-align: right;
+    font-weight: 600;
+    color: #222;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
-/* Modern Search Button */
+/* Modern Search Button - natural compact sizing */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
@@ -81,12 +93,11 @@ body {
     font-weight: bold;
     box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
     transition: all 0.2s;
-    text-transform: uppercase;
+    /* width: 100%; removed to make it small */
 }
 
 .modern-ui .myButton:hover {
     background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
 }
 
 /* Data Grid Container */
@@ -95,68 +106,85 @@ body {
     border-radius: 4px;
     background: #fff;
     overflow: hidden;
+    width: 100%;
 }
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-        /* COMPACT DATE/TIME SIZING (120px width, 24px height) */
-	    $("#receiptdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
-	    
+    $(document).ready(function () {
+        /* FIXED WIDTH: 100% fits the colgroup width safely without squishing the calendar */
+        $("#receiptdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        
         /* Force internal alignment AFTER render */
         setTimeout(function () {
+            $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#b8c6d8", "border-radius": "3px"});
             $(".jqx-datetimeinput").find("input").css({
-                "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
-                "font-family": "Arial, sans-serif", "padding": "0 6px", "box-sizing":"border-box"
+                "margin-top": "0px", 
+                "line-height": "24px", 
+                "font-size": "12px", 
+                "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif",
+                "padding": "0 6px", 
+                "box-sizing":"border-box"
             });
             $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
-        }, 0);
-	}); 
+        }, 100);
+    }); 
 
-    /* FIXED: Using exact original JS logic to prevent any backend variable errors */
-	function loadSearch() {
-		var partyname = document.getElementById("txtpartyname").value;
-		var docNo = document.getElementById("txtdocno").value;
-		var date = document.getElementById("receiptdate").value;
-		var amount = document.getElementById("txtamount").value;
-	    var check = 1;
-		getdata(partyname, docNo, date, amount, check);
-	}
-	
-	function getdata(partyname, docNo, date, amount, check){
-		 $("#refreshdiv").load('icrvMainSearchGrid.jsp?partyname='+partyname.replace(/ /g, "%20")+'&docNo='+docNo+'&date='+date+'&amount='+amount+'&check='+check);
-	}
+    function loadSearch() {
+        var partyname = document.getElementById("txtpartyname").value || "";
+        var docNo = document.getElementById("txtdocno").value || "";
+        var date = $('#receiptdate').jqxDateTimeInput('val') || "";
+        var amount = document.getElementById("txtamount").value || "";
+        var check = 1;
+        
+        getdata(partyname, docNo, date, amount, check);
+    }
+    
+    function getdata(partyname, docNo, date, amount, check){
+        /* Safely encoding URI components */
+        $("#refreshdiv").load('icrvMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
+                              '&docNo=' + encodeURIComponent(docNo) + 
+                              '&date=' + date + 
+                              '&amount=' + encodeURIComponent(amount) + 
+                              '&check=' + check);
+    }
 </script>
-
 </head>
+
 <body style="background-color: #fff; margin: 0;">
 
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="10%" /> <col width="25%" /> <col width="12%" /> <col width="28%" /> <col width="25%" /> </colgroup>
+            
             <tr>
-                <td class="lbl-right" width="10%">Date</td>
-                <td width="25%">
+                <td class="lbl-right">Date</td>
+                <td>
                     <div id="receiptdate" name="receiptdate" value='<s:property value="receiptdate"/>'></div>
                     <input type="hidden" name="hidreceiptdate" id="hidreceiptdate" value='<s:property value="hidreceiptdate"/>'>
                 </td>
-                <td class="lbl-right" width="10%">Doc No</td>
-                <td width="30%">
+                
+                <td class="lbl-right">Doc No</td>
+                <td>
                     <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
                 </td>
-                <td width="25%" rowspan="2" align="center" valign="middle">
+                
+                <td align="center" rowspan="2" valign="middle" style="padding-left: 10px;">
                     <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
                 </td>
             </tr>
             
             <tr>
-                <td class="lbl-right" style="padding-top: 10px;">Name</td>
-                <td style="padding-top: 10px;">
+                <td class="lbl-right">Name</td>
+                <td>
                     <input type="text" name="txtpartyname" id="txtpartyname" autocomplete="off" value='<s:property value="txtpartyname"/>'>
                 </td>
-                <td class="lbl-right" style="padding-top: 10px;">Amount</td>
-                <td style="padding-top: 10px;">
+                
+                <td class="lbl-right">Amount</td>
+                <td>
                     <input type="text" name="txtamount" id="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
                 </td>
             </tr>
@@ -170,6 +198,5 @@ body {
     </div>
 
 </div>
-
 </body>
 </html>
