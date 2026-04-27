@@ -1,110 +1,112 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+
 <style>
 /* =========================================================
-SCOPED UI: Clean UI Panel Design for Search Modal
-* All rules are prefixed with .modern-ui to prevent bleeding! *
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
 ========================================================= */
-
-.modern-ui {
-    font-family: Arial, sans-serif;
-    color: #333;
-    font-size: 12px;
-    padding: 10px;
-    background-color: #f4f6f9;
-    height: 100%;
-    box-sizing: border-box;
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
-/* Master Input Heights - Set to 24px */
-.modern-ui input[type="text"], 
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Master Input Styles */
+.modern-ui input[type="text"],
 .modern-ui select {
     height: 24px !important;
-    border: 1px solid #ccc;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
+    width: 100%;
 }
 
-/* Compact Width Classes */
-.modern-ui .input-xs { width: 60px !important; }
-.modern-ui .input-sm { width: 100px !important; }
-.modern-ui .input-md { width: 140px !important; }
-.modern-ui .input-lg { width: 200px !important; }
-.modern-ui .input-xl { width: 300px !important; }
-.modern-ui .input-full { width: 100% !important; flex: 1; }
-
-.modern-ui input[type="text"]:focus, 
+.modern-ui input[type="text"]:focus,
 .modern-ui select:focus {
     border-color: #007bff;
     outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Layout Utilities */
-.modern-ui .field-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
+/* Panel Styling - Clean White Panel */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.modern-ui .lbl-right {
-    text-align: right;
-    color: #444;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
+/* Table Alignment - Strict Grid Mapping */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
     padding-right: 5px;
 }
 
-/* Panel Styling */
-.modern-ui .modern-panel {
-    border: 1px solid #e1e4e8;
-    padding: 15px;
-    background: #fff;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-/* Search Button */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
-    font-weight: bold;
-    font-size: 12px;
-    height: 24px !important;
-    padding: 0px 16px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    height: 26px;
+    padding: 0 20px;
+    background-color: #0056b3;
     color: #ffffff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
-    transition: all 0.2s ease;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    transition: all 0.2s;
 }
 
 .modern-ui .myButton:hover {
-    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-    transform: translateY(-1px);
+    background-color: #004494;
 }
 
 /* Grid Container */
 .modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
     background: #fff;
-    border: 1px solid #e1e4e8;
-    padding: 2px;
-    min-height: 200px;
+    overflow: hidden;
+    width: 100%;
 }
 </style>
 
@@ -112,46 +114,58 @@ SCOPED UI: Clean UI Panel Design for Search Modal
 $(document).ready(function () {}); 
 
 function loadSearch() {
-    var vndname=document.getElementById("txtvendorsname").value;
-    var vndaccno=document.getElementById("txtaccountno").value;
-    var vndmob=document.getElementById("txtmobile").value;
-    var vndtel=document.getElementById("txttelephone").value;
+    var vndname=document.getElementById("txtvendorsname").value || "";
+    var vndaccno=document.getElementById("txtaccountno").value || "";
+    var vndmob=document.getElementById("txtmobile").value || "";
+    var vndtel=document.getElementById("txttelephone").value || "";
 
     getdata(vndname,vndaccno,vndmob,vndtel);
 }
 
 function getdata(vndname,vndaccno,vndmob,vndtel){
-    $("#refreshdiv").load('vndMainSearchGrid.jsp?vndname='+vndname.replace(/ /g, "%20")+'&vndaccno='+vndaccno+'&vndmob='+vndmob+'&vndtel='+vndtel);
+    /* Upgraded to encodeURIComponent for safe parameter passing */
+    $("#refreshdiv").load('vndMainSearchGrid.jsp?vndname=' + encodeURIComponent(vndname) + 
+                          '&vndaccno=' + encodeURIComponent(vndaccno) + 
+                          '&vndmob=' + encodeURIComponent(vndmob) + 
+                          '&vndtel=' + encodeURIComponent(vndtel));
 }
 </script>
 
 </head>
-<body>
+<body style="background-color: #fff; margin: 0;">
 
 <div id="search" class="modern-ui">
 
-    <div class="modern-panel">
-        
-        <div class="field-row">
-            <label class="lbl-right" style="width: 50px;">Name</label>
-            <input type="text" name="txtvendorsname" id="txtvendorsname" class="input-lg" style="flex: 1; max-width: 350px;" value='<s:property value="txtvendorsname"/>'>
-
-            <label class="lbl-right" style="width: 60px; margin-left: 10px;">A/C No.</label>
-            <input type="text" name="txtaccountno" id="txtaccountno" class="input-md" value='<s:property value="txtaccountno"/>'>
-
-            <div style="margin-left: auto;">
-                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-            </div>
-        </div>
-
-        <div class="field-row" style="margin-bottom: 0;">
-            <label class="lbl-right" style="width: 50px;">Mob No.</label>
-            <input type="text" name="txtmobile" id="txtmobile" class="input-lg" style="flex: 1; max-width: 350px;" value='<s:property value="txtmobile"/>'>
-
-            <label class="lbl-right" style="width: 60px; margin-left: 10px;">Tel No.</label>
-            <input type="text" name="txttelephone" id="txttelephone" class="input-md" value='<s:property value="txttelephone"/>'>
-        </div>
-
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="8%">Name</td>
+                <td width="35%">
+                    <input type="text" name="txtvendorsname" id="txtvendorsname" autocomplete="off" value='<s:property value="txtvendorsname"/>'>
+                </td>
+                
+                <td class="lbl-right" width="10%">A/C No.</td>
+                <td width="22%">
+                    <input type="text" name="txtaccountno" id="txtaccountno" autocomplete="off" value='<s:property value="txtaccountno"/>'>
+                </td>
+                
+                <td width="25%" align="center" rowspan="2" valign="middle">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">Mob No.</td>
+                <td>
+                    <input type="text" name="txtmobile" id="txtmobile" autocomplete="off" value='<s:property value="txtmobile"/>'>
+                </td>
+                
+                <td class="lbl-right">Tel No.</td>
+                <td>
+                    <input type="text" name="txttelephone" id="txttelephone" autocomplete="off" value='<s:property value="txttelephone"/>'>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="grid-container">
