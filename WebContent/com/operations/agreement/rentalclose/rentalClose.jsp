@@ -1531,15 +1531,17 @@ if(document.getElementById("rentalagent").value==""){
     <legend>In Info</legend>
     <table width="100%">
       <tr>
-<td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 6px !important;">
-    <div style="display: flex; align-items: center; margin-bottom: 5px;">
-        Collection
-        <input type="checkbox" name="chkcollection" id="chkcollection"
-               onchange="setCollection();toggleCollection();"
-               style="width:14px !important; height:14px !important; margin:0 0 0 5px !important; display:inline-block !important;">
-    </div>
+<td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 0 !important;">
+    <div style="position: relative; top: -14px; display: flex; flex-direction: column; align-items: center;">
+        
+        <div style="display: flex; align-items: center; margin-bottom: 5px; font-weight: bold; font-size: 13px; white-space: nowrap;">
+            Collection
+            <input type="checkbox" name="chkcollection" id="chkcollection"
+                   onchange="setCollection();toggleCollection();"
+                   style="width:14px !important; height:14px !important; margin:0 0 0 5px !important; display:inline-block !important; cursor: pointer;">
+        </div>
 
-    <div style="margin-bottom: 5px;">
+    <div style="margin-bottom: 10px;">
         <input type="text" name="chauffer" id="chauffer"
                value='<s:property value="chauffer"/>'
                onkeydown="getChauffer(event);"
@@ -1776,7 +1778,7 @@ function toggleCollection() {
   </fieldset>
 
   <fieldset>
-    <legend>Traffic</legend>
+    <legend>Traffic Fine</legend>
     <div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div>
   </fieldset>
 

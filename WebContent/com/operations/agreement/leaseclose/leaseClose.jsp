@@ -1394,12 +1394,13 @@ if(document.getElementById("rentalagent").value==""){
       <legend>In Info</legend>
       <table width="100%">
         <tr>
-<td width="11%" rowspan="2">
-    Collection
+<td width="11%" rowspan="2" style="text-align:center; vertical-align:top; position:relative; top:-12px; padding-top:0px;">
+    <span style="font-weight:bold; font-size:12px; display:inline-block; margin-top:0;">Collection</span>
     <input type="checkbox" name="chkcollection" id="chkcollection"
-           onchange="setCollection();toggleCollection();">
+           onchange="setCollection();toggleCollection();"
+           style="vertical-align:middle; margin-left:3px;">
+    
     &nbsp;
-
     <div class="input-search-container">
         <input type="text" name="chauffer" id="chauffer"
                value='<s:property value="chauffer"/>'
@@ -1461,7 +1462,7 @@ if(document.getElementById("rentalagent").value==""){
 </td>
 
 <td width="2%" align="right">Date</td>
-<td width="4%" align="left">
+<td width="5%" align="left">
     <div id="collectdate" name="collectdate"
          value='<s:property value="collectdate"/>'></div>
 </td>
@@ -1616,14 +1617,28 @@ function toggleCollection() {
     </fieldset></td>
   </tr>
   <tr>
-    <td width="66%"><fieldset>
+    <td width="66%">
       
-      <table width="100%">
+      <fieldset>
+    <legend>Agreement Tariff</legend>
+    <table width="100%">
         <tr>
-          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
+            <td>
+                <div id="agmttarifdiv">
+                    <jsp:include page="agreementTarifGrid.jsp"></jsp:include>
+                </div>
+            </td>
         </tr>
-      </table>
-    </fieldset></td>
+        <tr>
+            <td>
+                <div id="totaldiv">
+                    <jsp:include page="totalGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+    </td>
     <td width="34%" rowspan="3">
     <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label>    </center>
     <center><input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
@@ -1640,16 +1655,9 @@ function toggleCollection() {
     </td>
   </tr>
  
-  <tr>
+
     <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
-        </tr>
-      </table>
-    </fieldset></td>
-    </tr>
-  <tr>
-    <td><fieldset><table width="100%">
+    <legend>Traffic Fine</legend>
       <tr>
         <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
         </tr>
