@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,124 +7,165 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
+<%-- <jsp:include page="../../../../includes.jsp"></jsp:include> --%>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">
-	
-	
-	function loadAccountSearch() {
-		var masterdate=document.getElementById("vehpurorderDate").value;
-		
-
-			var accountsno=document.getElementById("txtaccountsno").value;
-			var accountsname=document.getElementById("txtaccountsname").value;
-			var currs=document.getElementById("txtaccountcurrency").value;
-		
-			var check = 1;
-	
-			getAccountDetails(accountsno,accountsname,currs,check,masterdate);
-	}
-		
-	function getAccountDetails(accountsno,accountsname,currs,check,masterdate){
-
-		 $("#refreshAccountDetailsDiv").load("accountsDetailsFromGrid.jsp?accountno="+accountsno+'&accountname='+accountsname.replace(/ /g, "%20")+'&currency='+currs+'&check='+check+'&masterdate='+masterdate);
-	}
-
-</script>
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 15px; /* Standardized master gap */
+/* =========================================================
+   SCOPED UI: Cash Receipts Style (Bulletproofed)
+========================================================= */
+body {
+    margin: 0;
+    background: #fff;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+/* UI WRAPPER: Bulletproofed with ID to block legacy CSS leaks */
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
 }
 
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border as requested */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
+#search.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 15px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #007bff;
-  outline: none;
+/* Table rules locked to exact font sizes */
+#search.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 4px 10px;
+    width: 100%;
+}
+
+#search.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+#search.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 5px;
+}
+
+/* Master Input Heights - Forced to 24px and standard font */
+#search.modern-ui input[type="text"],
+#search.modern-ui select {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.2s;
+    background-color: #ffffff;
+}
+
+#search.modern-ui input[type="text"]:focus,
+#search.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
 /* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+#search.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 26px !important;
+    line-height: 24px !important;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-transform: uppercase;
 }
 
-/* No color change on hover as per instructions */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
+#search.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+#search.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 6px;
+    overflow: hidden;
 }
 </style>
 
+<script type="text/javascript">
+    function loadAccountSearch() {
+        var masterdate = document.getElementById("vehpurorderDate") ? document.getElementById("vehpurorderDate").value : "";
+        var accountsno = document.getElementById("txtaccountsno").value || "";
+        var accountsname = document.getElementById("txtaccountsname").value || "";
+        var currs = document.getElementById("txtaccountcurrency").value || "";
+        var check = 1;
+
+        getAccountDetails(accountsno, accountsname, currs, check, masterdate);
+    }
+        
+    function getAccountDetails(accountsno, accountsname, currs, check, masterdate){
+        /* Using encodeURIComponent for safest handling of spaces/chars in URLs */
+        $("#refreshAccountDetailsDiv").load("accountsDetailsFromGrid.jsp?accountno=" + encodeURIComponent(accountsno) + 
+                                            '&accountname=' + encodeURIComponent(accountsname) + 
+                                            '&currency=' + encodeURIComponent(currs) + 
+                                            '&check=' + check + 
+                                            '&masterdate=' + encodeURIComponent(masterdate));
+    }
+</script>
+</head>
+
 <body bgcolor="#FFFFFF">
-<div id="search">
-<table width="100%">
-  <tr>
-    <td width="10%" align="right">Account No</td>
-    <td width="30%">
-      <input type="text" name="txtaccountsno" id="txtaccountsno" style="width:85%;" value='<s:property value="txtaccountsno"/>'>
-    </td>
-    <td width="10%" align="right">Currency</td>
-    <td width="27%">
-      <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" style="width:50%;" value='<s:property value="txtaccountcurrency"/>'>
-      <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
-    </td>
-    <td width="23%" rowspan="2" align="center">
-      <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Account Name</td>
-    <td colspan="3">
-      <input type="text" name="txtaccountsname" id="txtaccountsname" style="width:80%;" value='<s:property value="txtaccountsname"/>'>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="5">
-      <div id="refreshAccountDetailsDiv">
-        <jsp:include page="accountsDetailsFromGrid.jsp" />
-      </div>
-    </td>
-  </tr>
-</table>
+
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%">
+            <tr>
+                <td width="10%" align="right">Account No</td>
+                <td width="30%">
+                    <input type="text" name="txtaccountsno" id="txtaccountsno" style="width:85%;" value='<s:property value="txtaccountsno"/>'>
+                </td>
+                <td width="10%" align="right">Currency</td>
+                <td width="27%">
+                    <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" style="width:50%;" value='<s:property value="txtaccountcurrency"/>'>
+                    <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
+                </td>
+                <td width="23%" rowspan="2" align="center">
+                    <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Account Name</td>
+                <td colspan="3">
+                    <input type="text" name="txtaccountsname" id="txtaccountsname" style="width:80%;" value='<s:property value="txtaccountsname"/>'>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
+        <div id="refreshAccountDetailsDiv">
+            <jsp:include page="accountsDetailsFromGrid.jsp" />
+        </div>
+    </div>
+
 </div>
 </body>
 </html>
