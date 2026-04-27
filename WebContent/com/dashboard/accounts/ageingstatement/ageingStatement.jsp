@@ -15,6 +15,7 @@
 <script type="text/javascript"
 	src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <style type="text/css">
     /* Layout & Sidebar Structure */
@@ -194,8 +195,40 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    
-    
+
+/* ---- View Toggle Bar ---- */
+.view-btn{padding:7px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:#e5e7eb;color:#374151;transition:background .15s}
+.view-btn.active,.view-btn:hover{background:#2563eb;color:#fff}
+
+/* ---- Dashboard Container ---- */
+#agDashboard { padding:14px 2px 0; }
+.d-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+.d-tab {
+    padding:7px 18px; border:1px solid #ccd6e0; border-radius:20px;
+    background:#f8fafc; color:#4e5e71; font-size:12px; font-weight:600;
+    cursor:pointer; transition:all .15s;
+}
+.d-tab:hover { background:#e8f0fe; color:#185FA5; border-color:#185FA5; }
+.d-tab.active { background:#185FA5; color:#fff; border-color:#185FA5; }
+.d-panel { display:none; }
+.d-panel.active { display:block; }
+.d-metric-grid { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px; }
+.d-metric {
+    flex:1; min-width:130px; background:#f8fafc;
+    border:1px solid #e3e8ee; border-radius:10px; padding:14px 16px;
+}
+.d-metric-val { font-size:20px; font-weight:700; line-height:1.2; color:#185FA5; }
+.d-metric-sub { font-size:11px; color:#888; margin-top:4px; }
+.d-chart-box {
+    background:#fff; border:1px solid #e3e8ee; border-radius:10px;
+    padding:16px; margin-bottom:12px;
+}
+.d-chart-row { display:flex; gap:14px; flex-wrap:wrap; }
+.d-chart-title { font-size:13px; font-weight:700; color:#2d3e50; margin-bottom:10px; }
+.d-table-box {
+    background:#fff; border:1px solid #e3e8ee; border-radius:10px;
+    padding:14px; overflow:auto; max-height:340px; margin-bottom:12px;
+}
 </style>
 
 <script type="text/javascript">
@@ -590,8 +623,9 @@
 		 if(level4from==''){$.messager.alert('Message','Level 4 is Mandatory.','warning');return 0;}
 		 if(level4to==''){$.messager.alert('Message','Level 4 is Mandatory.','warning');return 0;}
 		 if(level5from==''){$.messager.alert('Message','Level 5 is Mandatory.','warning');return 0;}
+		 _agData = null;
 		 $("#overlay, #PleaseWait").show();
-		 
+
 		 $("#ageingStatementDiv").load("ageingStatementGrid.jsp?branchval="+branchval+'&uptodate='+uptodate+'&atype='+atype+'&accdocno='+accdocno+'&salesperson='+salesperson+'&category='+category+'&level1from='+level1from+'&level1to='+level1to+'&level2from='+level2from+'&level2to='+level2to
 				 +'&level3from='+level3from+'&level3to='+level3to+'&level4from='+level4from+'&level4to='+level4to+'&level5from='+level5from+'&clientstatus='+clientstatus+'&check='+check);
 		 
@@ -766,6 +800,334 @@
 		}
 		
 
+		/* ===================== AGEING DASHBOARD ===================== */
+		var _agData = null;
+		var _agCharts = {};
+		var _AC = {T:'#1D9E75',B:'#185FA5',B2:'#378ADD',A:'#EF9F27',C:'#D85A30',R:'#E24B4A',G:'#888780',P:'#7F77DD'};
+		var _PALETTE = [_AC.B,_AC.T,_AC.A,_AC.C,_AC.P,_AC.B2,_AC.R,_AC.G,'#9B59B6','#2ECC71','#F39C12','#1ABC9C','#E74C3C','#3498DB','#8E44AD'];
+
+		function showAgView(v){
+			if(v==='dash'){
+				document.getElementById('agBtnGrid').classList.remove('active');
+				document.getElementById('agBtnDash').classList.add('active');
+				document.getElementById('ageingStatementGridWrap').style.display='none';
+				document.getElementById('agDashboard').style.display='block';
+				buildAgDashboard();
+			} else {
+				document.getElementById('agBtnDash').classList.remove('active');
+				document.getElementById('agBtnGrid').classList.add('active');
+				document.getElementById('agDashboard').style.display='none';
+				document.getElementById('ageingStatementGridWrap').style.display='block';
+			}
+		}
+
+		function switchAgTab(tab){
+			document.querySelectorAll('.d-tab[id^="agt_"]').forEach(function(b){b.classList.remove('active');});
+			document.querySelectorAll('.d-panel[id^="agp_"]').forEach(function(p){p.classList.remove('active');});
+			document.getElementById('agt_'+tab).classList.add('active');
+			document.getElementById('agp_'+tab).classList.add('active');
+		}
+
+		function _agDcDestroy(){
+			Object.keys(_agCharts).forEach(function(k){try{_agCharts[k].destroy();}catch(e){}});
+			_agCharts={};
+		}
+
+		function _agFmt(v){
+			v=parseFloat(v)||0;
+			if(Math.abs(v)>=1000000) return (v/1000000).toFixed(2)+'M';
+			if(Math.abs(v)>=1000) return (v/1000).toFixed(1)+'K';
+			return v.toFixed(2);
+		}
+
+		function _agPct(v,t){ return t>0?((v/t)*100).toFixed(1)+'%':'0%'; }
+
+		function _agSetKpi(id,val,sub,color){
+			var el=document.getElementById(id); if(!el) return;
+			var c=color?'color:'+color+';':'';
+			el.innerHTML='<div class="d-metric-val" style="'+c+'">'+val+'</div><div class="d-metric-sub">'+sub+'</div>';
+		}
+
+		function _agGrpBy(rows,field){
+			var grp={};
+			rows.forEach(function(r){
+				var k=r[field]||'(None)';
+				if(!grp[k]) grp[k]={balance:0,advance:0,unapplied:0,total:0,l1:0,l2:0,l3:0,l4:0,l5:0,count:0,creditlimit:0};
+				grp[k].balance   +=parseFloat(r.balance)  ||0;
+				grp[k].advance   +=parseFloat(r.advance)  ||0;
+				grp[k].unapplied +=parseFloat(r.unapplied)||0;
+				grp[k].total     +=parseFloat(r.total)    ||0;
+				grp[k].l1        +=parseFloat(r.level_1)  ||0;
+				grp[k].l2        +=parseFloat(r.level_2)  ||0;
+				grp[k].l3        +=parseFloat(r.level_3)  ||0;
+				grp[k].l4        +=parseFloat(r.level_4)  ||0;
+				grp[k].l5        +=parseFloat(r.level_5)  ||0;
+				grp[k].creditlimit+=parseFloat(r.creditlimit)||0;
+				grp[k].count++;
+			});
+			return grp;
+		}
+
+		function _agLbls(){
+			return [
+				($('#txtlevel1from').val()||'0')+'-'+($('#txtlevel1to').val()||'30')+'d',
+				($('#txtlevel2from').val()||'31')+'-'+($('#txtlevel2to').val()||'60')+'d',
+				($('#txtlevel3from').val()||'61')+'-'+($('#txtlevel3to').val()||'90')+'d',
+				($('#txtlevel4from').val()||'91')+'-'+($('#txtlevel4to').val()||'120')+'d',
+				'>'+($('#txtlevel5from').val()||'121')+'d'
+			];
+		}
+
+		function buildAgDashboard(){
+			var rows=$('#ageingStatement').jqxGrid('getrows');
+			var msg=document.getElementById('agDashMsg');
+			var tabs=document.getElementById('agDashTabs');
+			if(!rows||rows.length===0){
+				msg.style.display='block'; tabs.style.display='none';
+				msg.innerHTML='<div style="padding:60px;text-align:center;color:#aaa;">No data loaded. Load the grid first then switch to dashboard.</div>';
+				return;
+			}
+			if(_agData){
+				msg.style.display='none'; tabs.style.display='block'; return;
+			}
+			msg.style.display='block'; tabs.style.display='none';
+			msg.innerHTML='<div style="padding:40px;text-align:center;color:#888;">Building analytics...</div>';
+			_agDcDestroy();
+			_agData=rows;
+			setTimeout(function(){
+				_agRenderOverview(rows);
+				_agRenderByCategory(rows);
+				_agRenderBySP(rows);
+				_agRenderBuckets(rows);
+				_agRenderCredit(rows);
+				_agRenderTopDebtors(rows);
+				msg.style.display='none'; tabs.style.display='block';
+			},60);
+		}
+
+		function _agRenderOverview(rows){
+			var totBal=0,totAdv=0,totUnap=0,totL1=0,totL2=0,totL3=0,totL4=0,totL5=0;
+			rows.forEach(function(r){
+				totBal  +=parseFloat(r.balance)  ||0;
+				totAdv  +=parseFloat(r.advance)  ||0;
+				totUnap +=parseFloat(r.unapplied)||0;
+				totL1   +=parseFloat(r.level_1)  ||0;
+				totL2   +=parseFloat(r.level_2)  ||0;
+				totL3   +=parseFloat(r.level_3)  ||0;
+				totL4   +=parseFloat(r.level_4)  ||0;
+				totL5   +=parseFloat(r.level_5)  ||0;
+			});
+			var totOverdue=totL3+totL4+totL5;
+			var netRec=totBal-totAdv;
+			_agSetKpi('ag_ov_count',  rows.length,        'Total Accounts');
+			_agSetKpi('ag_ov_balance',_agFmt(totBal),     'Total Balance',_AC.B);
+			_agSetKpi('ag_ov_advance',_agFmt(totAdv),     'Total Advance',_AC.A);
+			_agSetKpi('ag_ov_net',    _agFmt(netRec),     'Net Receivable',netRec>=0?_AC.T:_AC.R);
+			_agSetKpi('ag_ov_overdue',_agFmt(totOverdue), 'Overdue >60 days',_AC.R);
+			_agSetKpi('ag_ov_unap',   _agFmt(totUnap),    'Unapplied',_AC.C);
+
+			var ctxD=document.getElementById('ag_ch_ov_donut').getContext('2d');
+			_agCharts['ov_donut']=new Chart(ctxD,{type:'doughnut',data:{
+				labels:['Balance','Advance','Unapplied','Overdue >60d'],
+				datasets:[{data:[totBal,totAdv,totUnap,totOverdue],
+					backgroundColor:[_AC.B,_AC.A,_AC.C,_AC.R],borderWidth:2}]
+			},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}}}});
+
+			var ll=_agLbls();
+			var ctxB=document.getElementById('ag_ch_ov_bucket').getContext('2d');
+			_agCharts['ov_bucket']=new Chart(ctxB,{type:'bar',data:{
+				labels:ll,
+				datasets:[{label:'Amount',data:[totL1,totL2,totL3,totL4,totL5],
+					backgroundColor:[_AC.T,_AC.B2,_AC.A,_AC.C,_AC.R]}]
+			},options:{responsive:true,plugins:{legend:{display:false}},
+				scales:{y:{beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+		}
+
+		function _agRenderByCategory(rows){
+			var grp=_agGrpBy(rows,'catname');
+			var keys=Object.keys(grp).sort(function(a,b){return grp[b].balance-grp[a].balance;});
+			var topCat=keys[0]||'-';
+			var mostOD=keys.slice().sort(function(a,b){return (grp[b].l3+grp[b].l4+grp[b].l5)-(grp[a].l3+grp[a].l4+grp[a].l5);})[0]||'-';
+			var bestCat=keys.slice().sort(function(a,b){
+				var pa=grp[a].balance>0?(grp[a].l3+grp[a].l4+grp[a].l5)/grp[a].balance:0;
+				var pb=grp[b].balance>0?(grp[b].l3+grp[b].l4+grp[b].l5)/grp[b].balance:0;
+				return pa-pb;
+			})[0]||'-';
+			_agSetKpi('ag_cat_count',keys.length,   'Categories');
+			_agSetKpi('ag_cat_top',  topCat,        'Largest by Balance',_AC.B);
+			_agSetKpi('ag_cat_od',   mostOD,        'Most Overdue >60d',_AC.R);
+			_agSetKpi('ag_cat_best', bestCat,       'Lowest Overdue %',_AC.T);
+
+			var ctxH=document.getElementById('ag_ch_cat_bar').getContext('2d');
+			_agCharts['cat_bar']=new Chart(ctxH,{type:'bar',data:{
+				labels:keys,
+				datasets:[{label:'Balance',data:keys.map(function(k){return grp[k].balance;}),
+					backgroundColor:keys.map(function(k,i){return _PALETTE[i%_PALETTE.length];})}]
+			},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},
+				scales:{x:{beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+
+			var ll=_agLbls();
+			var ctxS=document.getElementById('ag_ch_cat_stacked').getContext('2d');
+			_agCharts['cat_stacked']=new Chart(ctxS,{type:'bar',data:{labels:keys,datasets:[
+				{label:ll[0],data:keys.map(function(k){return grp[k].l1;}),backgroundColor:_AC.T},
+				{label:ll[1],data:keys.map(function(k){return grp[k].l2;}),backgroundColor:_AC.B2},
+				{label:ll[2],data:keys.map(function(k){return grp[k].l3;}),backgroundColor:_AC.A},
+				{label:ll[3],data:keys.map(function(k){return grp[k].l4;}),backgroundColor:_AC.C},
+				{label:ll[4],data:keys.map(function(k){return grp[k].l5;}),backgroundColor:_AC.R}
+			]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+				scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+		}
+
+		function _agRenderBySP(rows){
+			var grp=_agGrpBy(rows,'sal_name');
+			var keys=Object.keys(grp).filter(function(k){return k!='(None)';}).sort(function(a,b){return grp[b].balance-grp[a].balance;});
+			if(grp['(None)']) keys.push('(None)');
+			var topSP=keys[0]||'-';
+			var mostOD=keys.slice().sort(function(a,b){return (grp[b].l3+grp[b].l4+grp[b].l5)-(grp[a].l3+grp[a].l4+grp[a].l5);})[0]||'-';
+			var totBal=keys.reduce(function(s,k){return s+grp[k].balance;},0);
+			var avgBal=keys.length>0?totBal/keys.length:0;
+			_agSetKpi('ag_sp_count',keys.length,    'Sales Persons');
+			_agSetKpi('ag_sp_top',  topSP,          'Largest Portfolio',_AC.B);
+			_agSetKpi('ag_sp_od',   mostOD,         'Most Overdue >60d',_AC.R);
+			_agSetKpi('ag_sp_avg',  _agFmt(avgBal), 'Avg Receivable / SP',_AC.A);
+
+			var disp=keys.slice(0,12);
+			var ctxH=document.getElementById('ag_ch_sp_bar').getContext('2d');
+			_agCharts['sp_bar']=new Chart(ctxH,{type:'bar',data:{
+				labels:disp,
+				datasets:[{label:'Balance',data:disp.map(function(k){return grp[k].balance;}),
+					backgroundColor:disp.map(function(k,i){return _PALETTE[i%_PALETTE.length];})}]
+			},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},
+				scales:{x:{beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+
+			var ll=_agLbls();
+			var ctxS=document.getElementById('ag_ch_sp_stacked').getContext('2d');
+			_agCharts['sp_stacked']=new Chart(ctxS,{type:'bar',data:{labels:disp,datasets:[
+				{label:ll[0],data:disp.map(function(k){return grp[k].l1;}),backgroundColor:_AC.T},
+				{label:ll[1],data:disp.map(function(k){return grp[k].l2;}),backgroundColor:_AC.B2},
+				{label:ll[2],data:disp.map(function(k){return grp[k].l3;}),backgroundColor:_AC.A},
+				{label:ll[3],data:disp.map(function(k){return grp[k].l4;}),backgroundColor:_AC.C},
+				{label:ll[4],data:disp.map(function(k){return grp[k].l5;}),backgroundColor:_AC.R}
+			]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+				scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+		}
+
+		function _agRenderBuckets(rows){
+			var ll=_agLbls();
+			var t1=0,t2=0,t3=0,t4=0,t5=0;
+			rows.forEach(function(r){
+				t1+=parseFloat(r.level_1)||0; t2+=parseFloat(r.level_2)||0;
+				t3+=parseFloat(r.level_3)||0; t4+=parseFloat(r.level_4)||0; t5+=parseFloat(r.level_5)||0;
+			});
+			var grand=t1+t2+t3+t4+t5;
+			_agSetKpi('ag_bk_l1',_agFmt(t1)+' ('+_agPct(t1,grand)+')',ll[0]+' (Current)',_AC.T);
+			_agSetKpi('ag_bk_l2',_agFmt(t2)+' ('+_agPct(t2,grand)+')',ll[1],_AC.B2);
+			_agSetKpi('ag_bk_l3',_agFmt(t3)+' ('+_agPct(t3,grand)+')',ll[2],_AC.A);
+			_agSetKpi('ag_bk_l4',_agFmt(t4)+' ('+_agPct(t4,grand)+')',ll[3],_AC.C);
+			_agSetKpi('ag_bk_l5',_agFmt(t5)+' ('+_agPct(t5,grand)+')',ll[4]+' (Oldest)',_AC.R);
+
+			var ctxD=document.getElementById('ag_ch_bk_donut').getContext('2d');
+			_agCharts['bk_donut']=new Chart(ctxD,{type:'doughnut',data:{labels:ll,datasets:[{
+				data:[t1,t2,t3,t4,t5],backgroundColor:[_AC.T,_AC.B2,_AC.A,_AC.C,_AC.R],borderWidth:2}]
+			},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+
+			var top10=rows.slice().sort(function(a,b){
+				var oa=(parseFloat(a.level_3)||0)+(parseFloat(a.level_4)||0)+(parseFloat(a.level_5)||0);
+				var ob=(parseFloat(b.level_3)||0)+(parseFloat(b.level_4)||0)+(parseFloat(b.level_5)||0);
+				return ob-oa;
+			}).slice(0,10);
+			var ctxT=document.getElementById('ag_ch_bk_top').getContext('2d');
+			_agCharts['bk_top']=new Chart(ctxT,{type:'bar',data:{
+				labels:top10.map(function(r){return r.account_name||r.accno||'?';}),
+				datasets:[
+					{label:ll[2],data:top10.map(function(r){return parseFloat(r.level_3)||0;}),backgroundColor:_AC.A,stack:'s'},
+					{label:ll[3],data:top10.map(function(r){return parseFloat(r.level_4)||0;}),backgroundColor:_AC.C,stack:'s'},
+					{label:ll[4],data:top10.map(function(r){return parseFloat(r.level_5)||0;}),backgroundColor:_AC.R,stack:'s'}
+				]
+			},options:{indexAxis:'y',responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}},
+				scales:{x:{stacked:true,beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}},y:{stacked:true}}}});
+		}
+
+		function _agRenderCredit(rows){
+			var withLim=rows.filter(function(r){return parseFloat(r.creditlimit)>0;});
+			var overLim=0,nearLim=0,healthy=0,noLim=rows.length-withLim.length;
+			var totCL=0,totBal=0;
+			withLim.forEach(function(r){
+				var bal=parseFloat(r.balance)||0,lim=parseFloat(r.creditlimit)||0;
+				totCL+=lim; totBal+=bal;
+				var u=lim>0?bal/lim:0;
+				if(u>1) overLim++; else if(u>=0.8) nearLim++; else healthy++;
+			});
+			var avgUtil=totCL>0?(totBal/totCL*100).toFixed(1)+'%':'-';
+			_agSetKpi('ag_cr_overlimit',overLim,          'Over Credit Limit',_AC.R);
+			_agSetKpi('ag_cr_nearlimit',nearLim,          'Near Limit (>80%)',_AC.A);
+			_agSetKpi('ag_cr_util',     avgUtil,          'Avg Utilisation',  _AC.B);
+			_agSetKpi('ag_cr_total',    _agFmt(totCL),    'Total Credit Limit',_AC.T);
+
+			var top15=withLim.slice().sort(function(a,b){return (parseFloat(b.balance)||0)-(parseFloat(a.balance)||0);}).slice(0,15);
+			var ctxB=document.getElementById('ag_ch_cr_bar').getContext('2d');
+			_agCharts['cr_bar']=new Chart(ctxB,{type:'bar',data:{
+				labels:top15.map(function(r){return r.account_name||r.accno||'?';}),
+				datasets:[
+					{label:'Balance',     data:top15.map(function(r){return parseFloat(r.balance)||0;}),     backgroundColor:_AC.B},
+					{label:'Credit Limit',data:top15.map(function(r){return parseFloat(r.creditlimit)||0;}), backgroundColor:_AC.G}
+				]
+			},options:{indexAxis:'y',responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
+				scales:{x:{beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+
+			var ctxD=document.getElementById('ag_ch_cr_donut').getContext('2d');
+			_agCharts['cr_donut']=new Chart(ctxD,{type:'doughnut',data:{
+				labels:['Over Limit','Near Limit (>80%)','Healthy','No Limit Set'],
+				datasets:[{data:[overLim,nearLim,healthy,noLim],
+					backgroundColor:[_AC.R,_AC.A,_AC.T,_AC.G],borderWidth:2}]
+			},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10}}}}}});
+		}
+
+		function _agRenderTopDebtors(rows){
+			var sorted=rows.slice().sort(function(a,b){return (parseFloat(b.total)||0)-(parseFloat(a.total)||0);});
+			var totAll=rows.reduce(function(s,r){return s+(parseFloat(r.total)||0);},0);
+			var top5Tot=sorted.slice(0,5).reduce(function(s,r){return s+(parseFloat(r.total)||0);},0);
+			var zeroCount=rows.filter(function(r){return (parseFloat(r.total)||0)===0;}).length;
+			var totUnap=rows.reduce(function(s,r){return s+(parseFloat(r.unapplied)||0);},0);
+			_agSetKpi('ag_td_top',    sorted.length>0?(sorted[0].account_name||sorted[0].accno||'-'):'-','Largest Debtor',_AC.R);
+			_agSetKpi('ag_td_top5pct',_agPct(top5Tot,totAll),'Top 5 Concentration',_AC.A);
+			_agSetKpi('ag_td_zero',   zeroCount,             'Zero Balance Accounts',_AC.T);
+			_agSetKpi('ag_td_unap',   _agFmt(totUnap),       'Total Unapplied',_AC.C);
+
+			var top15=sorted.slice(0,15);
+			var ctxB=document.getElementById('ag_ch_td_bar').getContext('2d');
+			_agCharts['td_bar']=new Chart(ctxB,{type:'bar',data:{
+				labels:top15.map(function(r){return r.account_name||r.accno||'?';}),
+				datasets:[{label:'Total Balance',data:top15.map(function(r){return parseFloat(r.total)||0;}),
+					backgroundColor:top15.map(function(r){
+						var od=(parseFloat(r.level_3)||0)+(parseFloat(r.level_4)||0)+(parseFloat(r.level_5)||0);
+						var tot=parseFloat(r.total)||0;
+						if(tot>0&&od/tot>0.5) return _AC.R;
+						if(tot>0&&od/tot>0.25) return _AC.A;
+						return _AC.B;
+					})
+				}]
+			},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},
+				scales:{x:{beginAtZero:true,ticks:{callback:function(v){return _agFmt(v);}}}}}});
+
+			var ll=_agLbls();
+			var tbl='<table style="width:100%;font-size:11px;border-collapse:collapse;">';
+			tbl+='<tr style="background:#f0f4f8;font-weight:700;"><td style="padding:6px 4px;">Account</td><td style="padding:6px 4px;">Category</td><td style="padding:6px 4px;text-align:right;">Balance</td><td style="padding:6px 4px;text-align:right;">Overdue</td></tr>';
+			sorted.slice(0,12).forEach(function(r,i){
+				var od=(parseFloat(r.level_3)||0)+(parseFloat(r.level_4)||0)+(parseFloat(r.level_5)||0);
+				var tot=parseFloat(r.total)||0;
+				var bg=i%2===0?'#fff':'#f8fafc';
+				var oc=od>0?_AC.R:'#333';
+				tbl+='<tr style="background:'+bg+';"><td style="padding:5px 4px;">'+(r.account_name||r.accno||'?')+'</td>';
+				tbl+='<td style="padding:5px 4px;color:#888;">'+(r.catname||'-')+'</td>';
+				tbl+='<td style="padding:5px 4px;text-align:right;font-weight:600;">'+_agFmt(tot)+'</td>';
+				tbl+='<td style="padding:5px 4px;text-align:right;color:'+oc+';">'+_agFmt(od)+' ('+_agPct(od,tot)+')</td></tr>';
+			});
+			tbl+='</table>';
+			document.getElementById('ag_td_table').innerHTML=tbl;
+		}
+		/* ===================== END DASHBOARD ===================== */
+
 		  function getconfig() {
 					var x = new XMLHttpRequest();
 					x.onreadystatechange = function() {
@@ -924,7 +1286,20 @@
     </div>
 
     <div class="main-content-wrapper">
+
+        <!-- View Toggle Bar -->
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#fff;border-bottom:1px solid #e1e8ed;flex-wrap:wrap;">
+            <button type="button" id="agBtnGrid" onclick="showAgView('grid')" class="view-btn active">Grid View</button>
+            <button type="button" id="agBtnDash" onclick="showAgView('dash')" class="view-btn">Analytics Dashboard</button>
+            <div style="margin-left:auto;display:flex;gap:8px;">
+                <button type="button" onclick="funExportBtn()" class="view-btn" style="background:#059669;color:#fff;">Export Excel</button>
+                <button type="button" onclick="funreload('')" class="view-btn" style="background:#2563eb;color:#fff;">Load / Refresh</button>
+            </div>
+        </div>
+
         <div class="scrollable-grid-area">
+            <!-- Grid -->
+            <div id="ageingStatementGridWrap">
             <table width="100%">
                 <tr>
                     <td>
@@ -934,6 +1309,146 @@
                     </td>
                 </tr>
             </table>
+            </div>
+
+            <!-- Analytics Dashboard -->
+            <div id="agDashboard" style="display:none;">
+                <div id="agDashMsg"></div>
+                <div id="agDashTabs" style="display:none;">
+                    <div class="d-tabs">
+                        <button type="button" class="d-tab active" id="agt_ov"  onclick="switchAgTab('ov')">Overview</button>
+                        <button type="button" class="d-tab"        id="agt_cat" onclick="switchAgTab('cat')">By Category</button>
+                        <button type="button" class="d-tab"        id="agt_sp"  onclick="switchAgTab('sp')">By Sales Person</button>
+                        <button type="button" class="d-tab"        id="agt_bk"  onclick="switchAgTab('bk')">Ageing Buckets</button>
+                        <button type="button" class="d-tab"        id="agt_cr"  onclick="switchAgTab('cr')">Credit Analysis</button>
+                        <button type="button" class="d-tab"        id="agt_td"  onclick="switchAgTab('td')">Top Debtors</button>
+                    </div>
+
+                    <!-- Panel: Overview -->
+                    <div class="d-panel active" id="agp_ov">
+                        <div class="d-metric-grid">
+                            <div class="d-metric" id="ag_ov_count"></div>
+                            <div class="d-metric" id="ag_ov_balance"></div>
+                            <div class="d-metric" id="ag_ov_advance"></div>
+                            <div class="d-metric" id="ag_ov_net"></div>
+                            <div class="d-metric" id="ag_ov_overdue"></div>
+                            <div class="d-metric" id="ag_ov_unap"></div>
+                        </div>
+                        <div class="d-chart-row">
+                            <div class="d-chart-box" style="flex:1;min-width:260px;max-width:340px;">
+                                <div class="d-chart-title">Receivables Breakdown</div>
+                                <canvas id="ag_ch_ov_donut" height="220"></canvas>
+                            </div>
+                            <div class="d-chart-box" style="flex:2;min-width:340px;">
+                                <div class="d-chart-title">Ageing Bucket Totals</div>
+                                <canvas id="ag_ch_ov_bucket" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: By Category -->
+                    <div class="d-panel" id="agp_cat">
+                        <div class="d-metric-grid">
+                            <div class="d-metric" id="ag_cat_count"></div>
+                            <div class="d-metric" id="ag_cat_top"></div>
+                            <div class="d-metric" id="ag_cat_od"></div>
+                            <div class="d-metric" id="ag_cat_best"></div>
+                        </div>
+                        <div class="d-chart-row">
+                            <div class="d-chart-box" style="flex:1;min-width:300px;">
+                                <div class="d-chart-title">Balance by Category</div>
+                                <canvas id="ag_ch_cat_bar" height="230"></canvas>
+                            </div>
+                            <div class="d-chart-box" style="flex:1;min-width:300px;">
+                                <div class="d-chart-title">Ageing Buckets by Category</div>
+                                <canvas id="ag_ch_cat_stacked" height="230"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: By Sales Person -->
+                    <div class="d-panel" id="agp_sp">
+                        <div class="d-metric-grid">
+                            <div class="d-metric" id="ag_sp_count"></div>
+                            <div class="d-metric" id="ag_sp_top"></div>
+                            <div class="d-metric" id="ag_sp_od"></div>
+                            <div class="d-metric" id="ag_sp_avg"></div>
+                        </div>
+                        <div class="d-chart-row">
+                            <div class="d-chart-box" style="flex:1;min-width:300px;">
+                                <div class="d-chart-title">Balance by Sales Person (Top 12)</div>
+                                <canvas id="ag_ch_sp_bar" height="270"></canvas>
+                            </div>
+                            <div class="d-chart-box" style="flex:1;min-width:300px;">
+                                <div class="d-chart-title">Ageing Buckets by Sales Person</div>
+                                <canvas id="ag_ch_sp_stacked" height="270"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: Ageing Buckets -->
+                    <div class="d-panel" id="agp_bk">
+                        <div class="d-metric-grid">
+                            <div class="d-metric" id="ag_bk_l1"></div>
+                            <div class="d-metric" id="ag_bk_l2"></div>
+                            <div class="d-metric" id="ag_bk_l3"></div>
+                            <div class="d-metric" id="ag_bk_l4"></div>
+                            <div class="d-metric" id="ag_bk_l5"></div>
+                        </div>
+                        <div class="d-chart-row">
+                            <div class="d-chart-box" style="flex:1;min-width:260px;max-width:340px;">
+                                <div class="d-chart-title">Bucket Distribution</div>
+                                <canvas id="ag_ch_bk_donut" height="230"></canvas>
+                            </div>
+                            <div class="d-chart-box" style="flex:2;min-width:340px;">
+                                <div class="d-chart-title">Top 10 Most Overdue Accounts (&gt;60 days)</div>
+                                <canvas id="ag_ch_bk_top" height="230"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: Credit Analysis -->
+                    <div class="d-panel" id="agp_cr">
+                        <div class="d-metric-grid">
+                            <div class="d-metric" id="ag_cr_overlimit"></div>
+                            <div class="d-metric" id="ag_cr_nearlimit"></div>
+                            <div class="d-metric" id="ag_cr_util"></div>
+                            <div class="d-metric" id="ag_cr_total"></div>
+                        </div>
+                        <div class="d-chart-row">
+                            <div class="d-chart-box" style="flex:2;min-width:340px;">
+                                <div class="d-chart-title">Credit Limit vs Balance (Top 15)</div>
+                                <canvas id="ag_ch_cr_bar" height="250"></canvas>
+                            </div>
+                            <div class="d-chart-box" style="flex:1;min-width:260px;max-width:340px;">
+                                <div class="d-chart-title">Credit Utilisation Status</div>
+                                <canvas id="ag_ch_cr_donut" height="230"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel: Top Debtors -->
+                    <div class="d-panel" id="agp_td">
+                        <div class="d-metric-grid">
+                            <div class="d-metric" id="ag_td_top"></div>
+                            <div class="d-metric" id="ag_td_top5pct"></div>
+                            <div class="d-metric" id="ag_td_zero"></div>
+                            <div class="d-metric" id="ag_td_unap"></div>
+                        </div>
+                        <div class="d-chart-row">
+                            <div class="d-chart-box" style="flex:2;min-width:360px;">
+                                <div class="d-chart-title">Top 15 Debtors by Balance <span style="font-weight:400;font-size:11px;color:#888;">(red = >50% overdue, amber = >25%)</span></div>
+                                <canvas id="ag_ch_td_bar" height="290"></canvas>
+                            </div>
+                            <div class="d-table-box" style="flex:1;min-width:280px;">
+                                <div class="d-chart-title">Top Debtors Summary</div>
+                                <div id="ag_td_table"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end agDashTabs -->
+            </div><!-- end agDashboard -->
         </div>
 
         <div class="totals-bar">
