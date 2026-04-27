@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style>
@@ -45,7 +44,6 @@ body {
 .modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
-    background-color: #FFD6FF; /* Client master focus color */
 }
 
 /* Panel Styling - Clean White Panel */
@@ -53,15 +51,18 @@ body {
     background-color: #fff !important; 
     border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 12px;
+    padding: 12px 10px;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Table Alignment */
+/* Table Alignment - STRICT PERCENTAGE GRID */
 .modern-ui table {
     border-collapse: separate;
     border-spacing: 5px 8px; 
     width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
 }
 
 .modern-ui td {
@@ -91,6 +92,7 @@ body {
     font-weight: bold;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
+    /* width: 100% removed so it sizes naturally */
 }
 
 .modern-ui .myButton:hover {
@@ -102,6 +104,7 @@ body {
     border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
+    width: 100%;
 }
 </style>
 
@@ -150,14 +153,17 @@ body {
 
     <div class="search-panel">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="12%" /> <col width="28%" /> <col width="12%" /> <col width="28%" /> <col width="20%" /> </colgroup>
+            
             <tr>
-                <td class="lbl-right" width="15%">Account No</td>
-                <td width="20%">
+                <td class="lbl-right">Account No</td>
+                <td>
                     <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Currency</td>
-                <td width="15%">
+                <td class="lbl-right">Currency</td>
+                <td>
                     <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" value='<s:property value="txtaccountcurrency"/>'>
                     
                     <input type="hidden" name="txtdoctypes" id="txtdoctypes" value='<s:property value="txtdoctypes"/>'>
@@ -165,7 +171,7 @@ body {
                     <input type="hidden" name="txtnewdates" id="txtnewdates" value='<s:property value="txtnewdates"/>'>
                 </td>
                 
-                <td width="20%" rowspan="2" align="center" valign="middle">
+                <td align="center" rowspan="2" valign="middle">
                     <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
                 </td>
             </tr>

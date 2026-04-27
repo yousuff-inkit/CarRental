@@ -11,7 +11,7 @@
 
 <style>
 /* =========================================================
-   SCOPED UI: Segoe UI Font & Clean White Search Panel
+   SCOPED UI: Strict Pixel Grid Alignment
 ========================================================= */
 body {
     margin: 0;
@@ -46,29 +46,29 @@ body {
 .modern-ui select:focus {
     border-color: #007bff;
     outline: none;
-    background-color: #FFD6FF; /* Client master focus color */
 }
 
-/* Panel Styling - Clean White Panel */
+/* Panel Styling */
 .modern-ui .search-panel {
     background-color: #fff !important; 
     border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 12px;
+    padding: 12px 10px;
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Table Alignment - Strict Grid Mapping */
+/* Table Alignment - STRICT PIXEL GRID */
 .modern-ui table {
-    border-collapse: separate;
-    border-spacing: 5px 8px; 
+    border-collapse: collapse;
     width: 100%;
+    table-layout: fixed; 
 }
 
 .modern-ui td {
     vertical-align: middle;
+    padding: 4px 5px; /* Unified cell padding */
 }
 
 .modern-ui .lbl-right { 
@@ -78,10 +78,14 @@ body {
     font-weight: 600;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
-    padding-right: 5px;
+    width: 70px; /* STRICT LABEL WIDTH */
 }
 
-/* Search Button - Standard Blue */
+.modern-ui .input-cell {
+    width: 130px; /* STRICT INPUT WIDTH (Fits 120px JQX widget safely) */
+}
+
+/* Search Button */
 .modern-ui .myButton {
     height: 26px;
     padding: 0 20px;
@@ -111,9 +115,9 @@ body {
 
 <script type="text/javascript">
     $(document).ready(function () {
-        /* Force width to 100% so it perfectly fits the table cell */
-        $("#unclearchequedate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
-        $("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        /* FIXED 120px WIDTH */
+        $("#unclearchequedate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        $("#chqdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
         
         /* Force internal alignment AFTER render */
         setTimeout(function () {
@@ -139,7 +143,6 @@ body {
     }
     
     function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
-        /* Safely encoding URI components to prevent breakages on special characters */
         $("#refreshdiv").load('ucrMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
                               '&docNo=' + encodeURIComponent(docNo) + 
                               '&date=' + date + 
@@ -156,42 +159,42 @@ body {
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <table border="0" cellspacing="0" cellpadding="0">
             <tr>
-                <td class="lbl-right" width="6%">Name</td>
-                <td width="20%">
+                <td class="lbl-right">Name</td>
+                <td class="input-cell">
                     <input type="text" name="txtpartyname" id="txtpartyname" autocomplete="off" value='<s:property value="txtpartyname"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Doc No</td>
-                <td width="15%">
+                <td class="lbl-right">Doc No</td>
+                <td class="input-cell">
                     <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Amount</td>
-                <td width="15%">
+                <td class="lbl-right">Amount</td>
+                <td class="input-cell">
                     <input type="text" name="txtamount" id="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
                 </td>
                 
-                <td width="24%" align="center" rowspan="2" valign="middle">
+                <td align="left" rowspan="2" style="padding-left: 15px;">
                     <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
                 </td>
             </tr>
             
             <tr>
                 <td class="lbl-right">Date</td>
-                <td>
+                <td class="input-cell">
                     <div id="unclearchequedate" name="unclearchequedate" value='<s:property value="unclearchequedate"/>'></div>
                     <input type="hidden" name="hidunclearchequedate" id="hidunclearchequedate" value='<s:property value="hidunclearchequedate"/>'>
                 </td>
                 
                 <td class="lbl-right">Cheque No</td>
-                <td>
+                <td class="input-cell">
                     <input type="text" id="txtchqno" name="txtchqno" autocomplete="off" value='<s:property value="txtchqno"/>'>
                 </td>
                 
-                <td class="lbl-right">Cheque Date</td>
-                <td>
+                <td class="lbl-right" style="width: 80px;">Cheque Date</td>
+                <td class="input-cell">
                     <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
                     <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'>
                 </td>

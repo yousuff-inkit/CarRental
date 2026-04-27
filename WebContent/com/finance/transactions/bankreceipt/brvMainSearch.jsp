@@ -28,7 +28,8 @@ body {
 }
 
 /* Master Input Styles */
-.modern-ui input[type="text"] {
+.modern-ui input[type="text"],
+.modern-ui select {
     height: 24px !important;
     border: 1px solid #BDBDBD;
     border-radius: 3px;
@@ -41,10 +42,10 @@ body {
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus {
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
     border-color: #007bff;
     outline: none;
-    background-color: #FFD6FF; /* Client master focus color */
 }
 
 /* Panel Styling - Clean White Panel */
@@ -52,15 +53,18 @@ body {
     background-color: #fff !important; 
     border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 12px;
+    padding: 12px 10px;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Table Alignment */
+/* Table Alignment - STRICT PERCENTAGE GRID */
 .modern-ui table {
     border-collapse: separate;
     border-spacing: 5px 8px; 
     width: 100%;
+    table-layout: fixed; 
 }
 
 .modern-ui td {
@@ -101,16 +105,17 @@ body {
     border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
+    width: 100%;
 }
 </style>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        /* Aligning Date Widget with modern 24px height standard */
+        /* Widened JQX widgets to fit safely */
         $("#bankdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
         $("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
         
-        // Force internal alignment AFTER render
+        /* Force internal alignment AFTER render */
         setTimeout(function () {
             $(".jqx-datetimeinput").css({"margin-top": "0px", "border-color": "#BDBDBD", "border-radius": "3px"});
             $(".jqx-datetimeinput").find("input").css({
@@ -152,44 +157,51 @@ body {
 
     <div class="search-panel">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="10%" /> <col width="30%" /> <col width="10%" /> <col width="30%" /> <col width="20%" /> </colgroup>
+            
             <tr>
-                <td class="lbl-right" width="8%">Name</td>
-                <td colspan="3">
+                <td class="lbl-right">Name</td>
+                <td>
                     <input type="text" name="txtpartyname" id="txtpartyname" value='<s:property value="txtpartyname"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Doc No</td>
-                <td width="20%">
+                <td class="lbl-right">Doc No</td>
+                <td>
                     <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
                 </td>
                 
-                <td colspan="2" align="center" valign="middle">
+                <td align="center" rowspan="3" valign="middle">
                     <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
                 </td>
             </tr>
+            
             <tr>
                 <td class="lbl-right">Date</td>
-                <td width="15%">
+                <td>
                     <div id="bankdate" name="bankdate" value='<s:property value="bankdate"/>'></div>
                     <input type="hidden" name="hidbankdate" id="hidbankdate" value='<s:property value="hidbankdate"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Amount</td>
-                <td width="15%">
+                <td class="lbl-right">Amount</td>
+                <td>
                     <input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'>
                 </td>
-                
-                <td class="lbl-right" width="10%">Cheque No</td>
-                <td width="15%">
+            </tr>
+
+            <tr>
+                <td class="lbl-right">Cheque No</td>
+                <td>
                     <input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'>
                 </td>
                 
-                <td class="lbl-right" width="12%">Cheque Date</td>
+                <td class="lbl-right">Cheque Date</td>
                 <td>
                     <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
                     <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'>
                 </td>
             </tr>
+
         </table>
     </div>
 
