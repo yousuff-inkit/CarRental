@@ -11,12 +11,12 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Strict Pixel Grid Alignment & Modern Inputs
 ========================================================= */
 body {
     margin: 0;
     background-color: #fff;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 .modern-ui {
@@ -25,9 +25,10 @@ body {
     padding: 10px;
     box-sizing: border-box;
     width: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-/* Master Input Heights - Forced to 24px */
+/* Master Input Heights - Explicit Font Family Added */
 .modern-ui input[type="text"],
 .modern-ui select {
     height: 24px !important;
@@ -35,6 +36,8 @@ body {
     border-radius: 3px;
     padding: 2px 6px;
     font-size: 12px;
+    font-weight: normal !important; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
@@ -47,45 +50,51 @@ body {
     outline: none;
 }
 
-/* Panel Styling */
+/* Panel Styling - Pure White */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
+    background-color: #fff !important; 
     border: 1px solid #c5d3e0;
     border-radius: 4px;
-    padding: 15px;
+    padding: 15px 10px;
     margin-bottom: 10px;
 }
 
+/* Table Alignment - STRICT PERCENTAGE GRID */
 .modern-ui table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
     width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
 }
 
 .modern-ui td {
-    padding: 4px 5px;
     vertical-align: middle;
+    padding: 0;
 }
 
 .modern-ui .lbl-right { 
     text-align: right; 
     color: #444;
     font-size: 12px; 
-    font-weight: bold;
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     white-space: nowrap; 
     padding-right: 5px;
 }
 
 /* Modern Search Button */
 .modern-ui .myButton {
-    height: 26px;
-    padding: 0 20px;
+    height: 26px !important; 
+    line-height: 24px !important;
+    padding: 0 30px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    color: #fff !important;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: bold; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
     transition: all 0.2s;
     text-transform: uppercase;
@@ -106,11 +115,13 @@ body {
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		 document.getElementById("txtnewdate").value = $('#masterdate').val() || "";
-	}); 
-	
-	function loadClientAccountSearch() {
+    $(document).ready(function () {
+         if(document.getElementById("masterdate")) {
+             document.getElementById("txtnewdate").value = $('#masterdate').val() || "";
+         }
+    }); 
+    
+    function loadClientAccountSearch() {
         var clientaccountno = document.getElementById("accountsno").value || "";
         var clientaccountname = document.getElementById("accountsname").value || "";
         var clientmobile = document.getElementById("clientmobileno").value || "";
@@ -119,17 +130,17 @@ body {
         var checked = 1;
 
         getClientAccountDetails(clientaccountno, clientaccountname, clientmobile, curr, date, checked);
-	}
-		
-	function getClientAccountDetails(clientaccountno, clientaccountname, clientmobile, curr, date, checked){
+    }
+        
+    function getClientAccountDetails(clientaccountno, clientaccountname, clientmobile, curr, date, checked){
         /* Used encodeURIComponent to safely handle spaces and special characters */
-		 $("#refreshClientAccountDiv").load("accountDetailsSearchGrid.jsp?accountno=" + encodeURIComponent(clientaccountno) + 
+         $("#refreshClientAccountDiv").load("accountDetailsSearchGrid.jsp?accountno=" + encodeURIComponent(clientaccountno) + 
                                             '&accountname=' + encodeURIComponent(clientaccountname) + 
                                             '&mobile=' + encodeURIComponent(clientmobile) + 
                                             '&currency=' + encodeURIComponent(curr) + 
-                                            '&date=' + date + 
+                                            '&date=' + encodeURIComponent(date) + 
                                             '&check=' + checked);
-	}
+    }
 </script>
 
 </head>
@@ -138,35 +149,42 @@ body {
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        <table width="100%" border="0" cellspacing="0" cellpadding="2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="10%" /> <col width="23%" /> <col width="10%" /> <col width="15%" /> <col width="10%" /> <col width="32%" /> </colgroup>
+            
             <tr>
-                <td class="lbl-right" width="10%">Account No</td>
-                <td width="25%">
-                    <input type="text" name="accountsno" id="accountsno" value='<s:property value="accountsno"/>'>
+                <td class="lbl-right">Account No</td>
+                <td>
+                    <input type="text" name="accountsno" id="accountsno" autocomplete="off" value='<s:property value="accountsno"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Currency</td>
-                <td width="15%">
-                    <input type="text" name="txtcurrencies" id="txtcurrencies" value='<s:property value="txtcurrencies"/>'>
+                <td class="lbl-right">Currency</td>
+                <td>
+                    <input type="text" name="txtcurrencies" id="txtcurrencies" autocomplete="off" value='<s:property value="txtcurrencies"/>'>
+                    
                     <input type="hidden" name="txtatypes" id="txtatypes" value='<s:property value="txtatypes"/>'>
                     <input type="hidden" name="txtdocumenttypes" id="txtdocumenttypes" value='<s:property value="txtdocumenttypes"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Mobile</td>
-                <td width="30%">
-                    <input type="text" name="clientmobileno" id="clientmobileno" value='<s:property value="clientmobileno"/>'>
+                <td class="lbl-right">Mobile</td>
+                <td>
+                    <input type="text" name="clientmobileno" id="clientmobileno" autocomplete="off" value='<s:property value="clientmobileno"/>'>
+                    
                     <input type="hidden" name="txtcreditdebit" id="txtcreditdebit" value='<s:property value="txtcreditdebit"/>'>
                     <input type="hidden" name="txtnewdate" id="txtnewdate" value='<s:property value="txtnewdate"/>'>
                 </td>
             </tr>
 
             <tr>
-                <td class="lbl-right" style="padding-top: 8px;">Account Name</td>
-                <td colspan="3" style="padding-top: 8px;">
-                    <input type="text" name="accountsname" id="accountsname" value='<s:property value="accountsname"/>'>
+                <td class="lbl-right">Account Name</td>
+                <td colspan="3">
+                    <input type="text" name="accountsname" id="accountsname" autocomplete="off" value='<s:property value="accountsname"/>'>
                 </td>
                 
-                <td colspan="2" align="center" valign="middle" style="padding-top: 8px;">
+                <td></td>
+                
+                <td align="right" valign="middle">
                     <input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search" onclick="loadClientAccountSearch(); return false;">
                 </td>
             </tr>
