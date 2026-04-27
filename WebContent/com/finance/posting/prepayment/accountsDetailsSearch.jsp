@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,122 +7,185 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
+
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">
-	$(document).ready(function () {
-		 document.getElementById("txtsearchtype").value=document.getElementById("txtforsearch").value;
-		 document.getElementById("txtnewdates").value=$('#maindate').val();
-	}); 
-	
-	function loadAccountSearch() {
-			var accountsno=document.getElementById("txtaccountsno").value;
-			var accountsname=document.getElementById("txtaccountsname").value;
-			var currs=document.getElementById("txtaccountcurrency").value;
-			var searchtype=document.getElementById("txtsearchtype").value;
-			var dates=document.getElementById("txtnewdates").value; 
-			var check = 1;
-	
-			getAccountDetails(accountsno,accountsname,currs,searchtype,dates,check);
-	}
-		
-	function getAccountDetails(accountsno,accountsname,currs,searchtype,dates,check){
-		 $("#refreshAccountDetailsDiv").load("accountDetailsSearchGrid.jsp?accountno="+accountsno+'&accountname='+accountsname.replace(/ /g, "%20")+'&currency='+currs+'&searchtype='+searchtype+'&dates='+dates+'&check='+check);
-	}
-
-</script>
-<style type="text/css">
-/* Master UI Styles */
-#search {
-  background-color: #ffffff;
-  padding: 5px;
+<style>
+/* =========================================================
+   MODERN ERP UI - STRICT TABLE LAYOUT (NO CLIPPING)
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-#search table {
-  border-collapse: separate;
-  border-spacing: 15px 18px;  
-  background-color: #ffffff;
+.modern-ui {
+    font-size: 12px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-#search td[align="right"] {
-  font-weight: 700;
-  font-size: 14px;
-  color: #222;
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+/* Master Inputs */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    border: 1px solid #c5d3e0;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
 }
 
-input[type="text"] {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;                
-  max-width: 100%;
-  box-sizing: border-box;   
-  border: 1px solid #ccc;
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-#search tr {
-  line-height: 1.6;
+/* Table Settings */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+    table-layout: fixed;
 }
 
-.myButton {
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+.modern-ui td {
+    vertical-align: middle;
+    padding: 0;
+}
+
+.modern-ui .lbl-right {
+    text-align: right;
+    font-weight: 600;
+    color: #222;
+    padding-right: 5px;
     white-space: nowrap;
-    text-align: center;
+    font-size: 12px;
 }
 
-.myButton:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
+/* Panel Containers */
+.modern-ui .search-panel {
+    background-color: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+    width: 100%;
 }
 </style>
 
-<body bgcolor="#ffffff">
-<div id="search">
-<table width="100%" border="0">
-  <tr>
-    <td width="15%" align="right">Account No</td>
-    <td width="25%">
-        <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
-    </td>
-    <td width="15%" align="right">Currency</td>
-    <td width="20%">
-        <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" value='<s:property value="txtaccountcurrency"/>'>
-        <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
-        <input type="hidden" name="txtnewdates" id="txtnewdates" value='<s:property value="txtnewdates"/>'>
-    </td>
-    <td width="25%" rowspan="2" align="center">
-        <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Account Name</td>
-    <td colspan="3">
-        <input type="text" name="txtaccountsname" id="txtaccountsname" style="width: 98%;" value='<s:property value="txtaccountsname"/>'>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="5">
+<script type="text/javascript">
+    $(document).ready(function () {
+        /* Safely check for elements to prevent JS errors if they load slowly */
+        if(document.getElementById("txtforsearch")) {
+            document.getElementById("txtsearchtype").value = document.getElementById("txtforsearch").value;
+        }
+        if($('#maindate').length) {
+            document.getElementById("txtnewdates").value = $('#maindate').val();
+        }
+    }); 
+    
+    function loadAccountSearch() {
+        var accountsno = document.getElementById("txtaccountsno").value || "";
+        var accountsname = document.getElementById("txtaccountsname").value || "";
+        var currs = document.getElementById("txtaccountcurrency").value || "";
+        var searchtype = document.getElementById("txtsearchtype").value || "";
+        var dates = document.getElementById("txtnewdates").value || ""; 
+        var check = 1;
+    
+        getAccountDetails(accountsno, accountsname, currs, searchtype, dates, check);
+    }
+        
+    function getAccountDetails(accountsno, accountsname, currs, searchtype, dates, check){
+        /* Safely encoding URI components to prevent backend breakages */
+        $("#refreshAccountDetailsDiv").load("accountDetailsSearchGrid.jsp?accountno=" + encodeURIComponent(accountsno) + 
+                                            "&accountname=" + encodeURIComponent(accountsname) + 
+                                            "&currency=" + encodeURIComponent(currs) + 
+                                            "&searchtype=" + encodeURIComponent(searchtype) + 
+                                            "&dates=" + encodeURIComponent(dates) + 
+                                            "&check=" + check);
+    }
+</script>
+
+</head>
+
+<body style="background-color: #fff; margin: 0;">
+
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="12%" /> <col width="28%" /> <col width="10%" /> <col width="25%" /> <col width="25%" /> </colgroup>
+            
+            <tr>
+                <td class="lbl-right">Account No</td>
+                <td>
+                    <input type="text" name="txtaccountsno" id="txtaccountsno" autocomplete="off" value='<s:property value="txtaccountsno"/>'>
+                </td>
+                
+                <td class="lbl-right">Currency</td>
+                <td>
+                    <input type="text" name="txtaccountcurrency" id="txtaccountcurrency" autocomplete="off" value='<s:property value="txtaccountcurrency"/>'>
+                    <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'>
+                    <input type="hidden" name="txtnewdates" id="txtnewdates" value='<s:property value="txtnewdates"/>'>
+                </td>
+                
+                <td align="center" rowspan="2" valign="middle">
+                    <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">Account Name</td>
+                <td colspan="3">
+                    <input type="text" name="txtaccountsname" id="txtaccountsname" autocomplete="off" value='<s:property value="txtaccountsname"/>'>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
         <div id="refreshAccountDetailsDiv">
             <jsp:include page="accountDetailsSearchGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
-</table>
+    </div>
+
 </div>
 </body>
-</html>
