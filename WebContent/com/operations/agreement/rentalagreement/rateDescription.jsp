@@ -184,6 +184,7 @@ var source =
       rowsheight:20,
       disabled:true,
       editable:true,
+      altRows: true,
       selectionmode: 'singlecell',
       pagermode: 'default',
       theme: theme,
