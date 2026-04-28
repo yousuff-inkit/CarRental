@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath(); %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,124 +9,178 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
+<script type="text/javascript">
+$(document).ready(function () {
+    document.getElementById("txtatype").value = $('#cmbtype').val();
+}); 
+
+function loadSearch() {
+    var partyname = document.getElementById("txtpartyname").value || "";
+    var accNo = document.getElementById("txtaccountno").value || "";
+    var contactNo = document.getElementById("txtcontactno").value || "";
+    var atype = document.getElementById("txtatype").value || "";
+    
+    getdata(atype, partyname, accNo, contactNo);
+}
+
+function getdata(atype, partyname, accNo, contactNo){
+    /* Safely encode URI components instead of basic string replace */
+    $("#refreshdiv").load('accountsDetailsGrid.jsp?atype=' + encodeURIComponent(atype) + 
+                                          '&partyname=' + encodeURIComponent(partyname) + 
+                                          '&accNo=' + encodeURIComponent(accNo) + 
+                                          '&contactNo=' + encodeURIComponent(contactNo));
+}
+</script>
+
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px; /* Standardized master gap */
+/* =========================================================
+   SCOPED UI: Cash Receipts Style (Bulletproofed with Borders)
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; /* Soft background so the white panels pop */
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-  white-space: nowrap;
+/* UI WRAPPER: Bulletproofed with ID to block legacy CSS leaks */
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
 }
 
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600; /* Font weight 600 as requested */
-  font-size: 14px;
-  padding: 8px 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
+/* THE BORDERS: White Panel for Search Inputs */
+#search.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 15px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #007bff;
-  outline: none;
+/* THE BORDERS: White Panel for Results */
+#search.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Blue Button Color */
-  color: white;
-  padding: 8px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+/* Table rules locked to exact spacing and font sizes */
+#search.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 4px 10px; /* Modern compact spacing */
+    width: 100%;
 }
 
-/* No color change on hover */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
+#search.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+/* KILLS ANY EXTERNAL COLORS FROM BODY.CSS & ENSURES NORMAL WEIGHT */
+#search.modern-ui td[align="right"] {
+    color: #000000 !important; 
+    font-weight: normal !important;
+    background-color: transparent !important; 
+    background: none !important;
+    padding-right: 5px;
+    white-space: nowrap;
+    cursor: default;
 }
 
-/* Remove original background color */
-#search {
-    background-color: #FFFFFF;
+/* Master Input Heights - Forced to 24px and standard font */
+#search.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    background-color: #ffffff !important;
+    max-width: 100%;
+}
+
+#search.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* Master Button Appearance - MADE SMALL AND COMPACT */
+#search.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 11px !important; /* Slightly smaller text for compact button */
+    height: 24px !important; /* Matched exactly to input height */
+    line-height: 22px !important;
+    padding: 0 15px !important;
+    width: 80px !important; /* Locked small width */
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a !important;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#search.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+    transform: translateY(-1px);
+}
+
+#refreshdiv {
+    margin-top: 5px;
 }
 </style>
+</head>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
- 		document.getElementById("txtatype").value=$('#cmbtype').val();
-	}); 
+<body bgcolor="#f5f7fa">
 
- 	function loadSearch() {
+<div id="search" class="modern-ui">
 
- 		var partyname=document.getElementById("txtpartyname").value;
- 		var accNo=document.getElementById("txtaccountno").value;
- 		var contactNo=document.getElementById("txtcontactno").value;
- 		var atype=document.getElementById("txtatype").value;
- 		
-		getdata(atype,partyname,accNo,contactNo);
-	}
-	function getdata(atype,partyname,accNo,contactNo){
-		 $("#refreshdiv").load('accountsDetailsGrid.jsp?atype='+atype+'&partyname='+partyname.replace(/ /g, "%20")+'&accNo='+accNo+'&contactNo='+contactNo);
-		}
+    <div class="search-panel">
+        <table width="100%">
+          <tr>
+            <td align="right" width="7%">Name</td>
+            <td colspan="2">
+                <input type="text" name="txtpartyname" id="txtpartyname" style="width:100%;" value='<s:property value="txtpartyname"/>'>
+            </td>
+            <td width="49%" align="left" style="padding-left: 8px;">
+                <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
+            </td>
+          </tr>
+          <tr>
+            <td align="right">Account</td>
+            <td width="26%">
+                <input type="text" name="txtaccountno" id="txtaccountno" style="width:100%;" value='<s:property value="txtaccountno"/>'>
+            </td>
+            <td width="18%" align="right">Contact No.</td>
+            <td width="49%">
+                <input type="text" name="txtcontactno" id="txtcontactno" style="width:50%;" value='<s:property value="txtcontactno"/>'>
+                <input type="hidden" name="txtatype" id="txtatype" value='<s:property value="txtatype"/>'>
+            </td>   
+          </tr>
+        </table>
+    </div>
 
-	</script>
-<body bgcolor="#FFFFFF">
-<div id="search">
-<table width="100%">
-  <tr>
-    <td align="right" width="7%">Name</td>
-    <td colspan="2">
-        <input type="text" name="txtpartyname" id="txtpartyname" style="width:100%;" value='<s:property value="txtpartyname"/>'>
-    </td>
-    <td width="49%" align="center">
-        <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td width="26%">
-        <input type="text" name="txtaccountno" id="txtaccountno" style="width:100%;" value='<s:property value="txtaccountno"/>'>
-    </td>
-    <td width="18%" align="right">Contact No.</td>
-    <td width="49%">
-        <input type="text" name="txtcontactno" id="txtcontactno" style="width:50%;" value='<s:property value="txtcontactno"/>'>
-        <input type="hidden" name="txtatype" id="txtatype" value='<s:property value="txtatype"/>'>
-    </td>   
-  </tr>
-  <tr>
-    <td colspan="4">
+    <div class="grid-container">
         <div id="refreshdiv">
             <jsp:include page="accountsDetailsGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
-</table>
+    </div>
+
 </div>
-</body></html>
+
+</body>
+</html>

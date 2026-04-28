@@ -1,3 +1,4 @@
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
@@ -8,15 +9,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 <style type="text/css">
-      .master-container {
+      
+/* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
     background-color: #f4f7f9;
 }
 
@@ -56,464 +64,449 @@
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px; /* Uniform 12px label */
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;             /* Enforced 24px height */
+    padding: 2px 8px;         /* Tighter padding for 24px */
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;       /* Sharper corners */
+    font-size: 12px;          /* Adjusted font to fit 24px box */
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
-.btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: not-allowed;
 }
 
-.btn-submit:hover {
-    background: #1d4ed8;
-}
-
-
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
-}
+/* ===== BUTTONS ===== */
 .myButtons, .myButton {
     background-color: #2563eb !important;
     color: #ffffff !important;
     border: none !important;
-    border-radius: 6px;
-    padding: 10px 15px;
+    border-radius: 4px;
+    padding: 0 12px;
+    height: 30px;            /* Scaled button height */
+    line-height: 30px;
     width: 100%;
     font-weight: 600;
+    font-size: 13px;
     cursor: pointer;
+    margin-top: 8px;
+    white-space: nowrap;
 }
 
 .myButtons:hover, .myButton:hover {
     background-color: #1d4ed8 !important;
 }
-.main-content-wrapper{
-    flex:1;
-    width:100%;
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: #fff;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-.scrollable-grid-area{
-    width:100%;
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
 }
 
-#delupdiv{
-    width:100%;
+.totals-bar {
+    padding: 10px 0;
+    border-top: 1px solid #e1e8ed;
+    background: #fff;
+}
+
+#delupdiv {
+    width: 100%;
 }
 </style>
-	<%
-	String mod = request.getParameter("mod")==null?"":request.getParameter("mod").toString();   
-	String acno = request.getParameter("acno")==null?"":request.getParameter("acno").toString();   
-	String account = request.getParameter("account")==null?"":request.getParameter("account").toString();   
-	String acname = request.getParameter("acname")==null?"":request.getParameter("acname").toString();
-	%>
+    <%
+    String mod = request.getParameter("mod")==null?"":request.getParameter("mod").toString();   
+    String acno = request.getParameter("acno")==null?"":request.getParameter("acno").toString();   
+    String account = request.getParameter("account")==null?"":request.getParameter("account").toString();   
+    String acname = request.getParameter("acname")==null?"":request.getParameter("acname").toString();
+    %>
 <script type="text/javascript">
     var modd1 = '<%=mod%>';
-	$(document).ready(function () {
-		 var name='<%=request.getParameter("name")==null?"":request.getParameter("name")%>';
-		
-		 $("#fromdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-		 $("#todate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-		 
-		 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-	     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
-	     
-		 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-		 $('#accountDetailsWindow').jqxWindow('close');
-		 
-		 var year = window.parent.txtaccountperiodfrom.value;
-		 var newDate = year.split('-');
-		 year = newDate[1] + "-" + newDate[0] + "-" + newDate[2];
-		 $('#fromdate ').jqxDateTimeInput('setDate', new Date(year));
-		 
-		 $('#txtaccid').dblclick(function(){
-			  accountsSearchContent('accountsDetailsSearch.jsp');
-	     });
-		 document.getElementById("chckopnprint").checked=true;$('#hidchckopnprint').val(1);opnprintcheck();
-		// alert($("#lbldetailname").val()+" ---  "+$("#detailname").val()+" ---- "+$("#detail").val());
-	     getConfigs();
-	     setlink();
-	});
-	
-	function accountsSearchContent(url) {
-	    $('#accountDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#accountDetailsWindow').jqxWindow('setContent', data);
-		$('#accountDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function funExportBtn(){ 
-		var accname=$('#txtaccid').val()+" - "+$('#txtaccname').val(); 
-		/*if(($('#lbldetailname').text()=='Accounts Statement AP')){  
-			JSONToCSVCon(dataExcelExport,'AccountsStatementAP              '+' '+accname, true);    
-        }else if(($('#lbldetailname').text()=='Accounts Statement AR')){
-			JSONToCSVCon(dataExcelExport,'AccountsStatementAR              '+' '+accname, true);
-        }else if(($('#lbldetailname').text()=='Accounts Statement GL')){             
-			JSONToCSVCon(dataExcelExport,'AccountsStatementGL              '+' '+accname, true);
-        }else if(($('#lbldetailname').text()=='Accounts Statement HR')){
-			JSONToCSVCon(dataExcelExport,'AccountsStatementHR              '+' '+accname, true);
-        }*/
+    $(document).ready(function () {
+         var name='<%=request.getParameter("name")==null?"":request.getParameter("name")%>';
+        
+         // UPDATED: Standardized height to 24px and width to 100%
+         $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+         $("#todate").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+         
+         $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
+         $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+         
+         $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+         $('#accountDetailsWindow').jqxWindow('close');
+         
+         var year = window.parent.txtaccountperiodfrom.value;
+         var newDate = year.split('-');
+         year = newDate[1] + "-" + newDate[0] + "-" + newDate[2];
+         $('#fromdate ').jqxDateTimeInput('setDate', new Date(year));
+         
+         $('#txtaccid').dblclick(function(){
+             accountsSearchContent('accountsDetailsSearch.jsp');
+         });
+         document.getElementById("chckopnprint").checked=true;$('#hidchckopnprint').val(1);opnprintcheck();
+         getConfigs();
+         setlink();
+    });
+    
+    function accountsSearchContent(url) {
+        $('#accountDetailsWindow').jqxWindow('open');
+        $.get(url).done(function (data) {
+        $('#accountDetailsWindow').jqxWindow('setContent', data);
+        $('#accountDetailsWindow').jqxWindow('bringToFront');
+    }); 
+    }
+    
+    function funExportBtn(){ 
+        var accname=$('#txtaccid').val()+" - "+$('#txtaccname').val(); 
         accname = $('#lbldetailname').text() + "    "+accname;
-		$("#accountsStatementDiv").excelexportjs({
-			containerid: "accountsStatementDiv", 
-			datatype: 'json', 
-			dataset: null, 
-			gridId: "accountsStatement", 
-			columns: getColumns("accountsStatement") ,     
-			worksheetName:accname,
-			enableColumnGroups:false
-			}); 
-	} 
-	
-	function getAccTypeFrom(event){
+        $("#accountsStatementDiv").excelexportjs({
+            containerid: "accountsStatementDiv", 
+            datatype: 'json', 
+            dataset: null, 
+            gridId: "accountsStatement", 
+            columns: getColumns("accountsStatement") ,     
+            worksheetName:accname,
+            enableColumnGroups:false
+            }); 
+    } 
+    
+    function getAccTypeFrom(event){
         var x= event.keyCode;
         if(x==114){
-      		accountsSearchContent('accountsDetailsSearch.jsp');
+            accountsSearchContent('accountsDetailsSearch.jsp');
         }
         else{}
         }
-	
-	function getAccountingPeriod(date){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  			    $('#txtaccountperiodfrom').val(items);
-  		}
-  		}
-  		x.open("GET", "getAccountingPeriod.jsp?fromDate="+date, true);
-  		x.send();
+    
+    function getAccountingPeriod(date){
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText;
+                $('#txtaccountperiodfrom').val(items);
+        }
+        }
+        x.open("GET", "getAccountingPeriod.jsp?fromDate="+date, true);
+        x.send();
  }
-	
-	function getAccountFromPeriod(){
-		
-		 var date = $('#fromdate').val();
-		 getAccountingPeriod(date);
-			  
-	 		if($('#txtaccountperiodfrom').val()<0){
-			  $.messager.alert('Message','Not in Account-Period.','warning');
-			  return;
-		   }
-		
-	}
-	
-	function setlink(){
-		if(modd1=='A'){
-			//alert("Entered");
-	    	 $('#txtaccname').val('<%=acname%>');
-	    	 $('#txtaccid').val('<%=account%>');
-	    	 $('#txtdocno').val('<%=acno%>');
-	    	 document.getElementById("lbldetailname").innerText="Accounts Statement HR";
-			 document.getElementById("lbldetail").innerText="Accounts";
-	    	 $('#detail').val("Accounts");
-			 $('#detailname').val("Accounts Statement HR");
-	    	// funreload();
-	    	let checkInterval = setInterval(function () {
-        		let value = $("#cmbbranch").val(); // Get input value
-        			if (value) { // Check if value is set
-            			clearInterval(checkInterval); // Stop checking
-	    				$('#btnSubmit').trigger("click");
-        			}
-    		}, 100); // Check every 500ms
-		}
-	}
-	
-	function funreload(event){
-		
-		if($('#txtaccountperiodfrom').val()<0){
-			  $.messager.alert('Message','Not in Account-Period.','warning');
-			  return;
-		   }
-		
-		 var branchval = document.getElementById("cmbbranch").value;
-		 var fromdate = $('#fromdate').val();
-		 var todate = $('#todate').val();
-		 var accdocno = $('#txtdocno').val();
-		 var atype = $('#txtatype').val();
-		 if(accdocno==''){
-			 $.messager.alert('Message','Account is Mandatory.','warning');
-			 return 0;
-		 }
-		var formname=$('#lbldetailname').text();
-		 $("#overlay, #PleaseWait").show();
-		 
-		 document.getElementById("lblaccountname").innerText=$('#txtaccname').val(); 
-		 $("#accountsStatementDiv").load("accountsStatementTypeGrid.jsp?formname="+encodeURIComponent(formname)+"&branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&accdocno='+accdocno+'&atype='+atype+'&check=1');
-		}
-	function funxlshowcheck(){
- 		if(document.getElementById("rdbnxlshow").checked){
- 				$('#xlstat').val("0");
- 			}
- 			if(document.getElementById("rdbnxlhide").checked){
- 				$('#xlstat').val("1");
- 			}
- 	}
- 	function funtotshowcheck(){
- 		if(document.getElementById("rdbntotalshow").checked){
- 				$('#totalstat').val("1");
- 			}
- 			if(document.getElementById("rdbntotalhide").checked){
- 				$('#totalstat').val("0");
- 			}
- 	}
-	
-	function funPrintAccountStatement(){
-    	if ($("#txtdocno").val()!="") {
-	        var url=document.URL;
-	        var xlstat=$('#xlstat').val();
-	        var reurl=url.split("accountsStatementType.jsp");
-	        $("#txtdocno").prop("disabled", false);
-	        if(xlstat==""){
-	  			$.messager.alert('Message','Select a Brand option...','warning');
-	  		}
-	        var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printAccountsStatement?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&allcase=0'+'&toDate='+$('#todate').val()+'&xlstat='+xlstat+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");	        win.focus();
-	     }
-	    else {
-			$.messager.alert('Message','Account is Mandatory.','warning');
-			return;
-		}
+    
+    function getAccountFromPeriod(){
+        
+         var date = $('#fromdate').val();
+         getAccountingPeriod(date);
+            
+            if($('#txtaccountperiodfrom').val()<0){
+              $.messager.alert('Message','Not in Account-Period.','warning');
+              return;
+           }
+        
     }
-	function funPrintAccountStatementAll(){
-		//const arr=["11369","11366","11357","11343","11331","11329","11326"];
-		//for (var i=0;i<7;i++)
-			{
-			//alert("array=="+arr[i]);
-    	if ($("#txtdocno").val()!="") {
-	        var url=document.URL;
-	       // var Allstat=$("#Allstat").val();
-	        //var type='ALL';
-	        var xlstat=$("#xlstat").val();
-	        var reurl=url.split("accountsStatementType.jsp");
-	        $("#txtdocno").prop("disabled", false);
-	        if(xlstat==""){
-	  			$.messager.alert('Message','Select a Brand option...','warning');
-	  		}
-	        var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printAccountsStatement?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&xlstat='+xlstat+'&fromDate='+document.getElementById("fromdate").value+'&allcase=1'+'&toDate='+$('#todate').val()+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	        win.focus();
-    	}
-    	
-	    else {
-			$.messager.alert('Message','Account is Mandatory.','warning');
-			return;
-		}
-			}
+    
+    function setlink(){
+        if(modd1=='A'){
+             $('#txtaccname').val('<%=acname%>');
+             $('#txtaccid').val('<%=account%>');
+             $('#txtdocno').val('<%=acno%>');
+             document.getElementById("lbldetailname").innerText="Accounts Statement HR";
+             document.getElementById("lbldetail").innerText="Accounts";
+             $('#detail').val("Accounts");
+             $('#detailname').val("Accounts Statement HR");
+            let checkInterval = setInterval(function () {
+                let value = $("#cmbbranch").val(); 
+                    if (value) { 
+                        clearInterval(checkInterval); 
+                        $('#btnSubmit').trigger("click");
+                    }
+            }, 100); 
+        }
     }
-	function funPrintRAwise(){
-    	if ($("#txtdocno").val()!="") {
-	        var url=document.URL;
-	        var reurl=url.split("accountsStatementType.jsp");
-	        $("#txtdocno").prop("disabled", false);
-	        var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printRAWise?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$('#todate').val()+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	        win.focus();
-	     }
-	    else {
-			$.messager.alert('Message','Account is Mandatory.','warning');
-			return;
-		}
+    
+    function funreload(event){
+        
+        if($('#txtaccountperiodfrom').val()<0){
+              $.messager.alert('Message','Not in Account-Period.','warning');
+              return;
+           }
+        
+         var branchval = document.getElementById("cmbbranch").value;
+         var fromdate = $('#fromdate').val();
+         var todate = $('#todate').val();
+         var accdocno = $('#txtdocno').val();
+         var atype = $('#txtatype').val();
+         if(accdocno==''){
+             $.messager.alert('Message','Account is Mandatory.','warning');
+             return 0;
+         }
+        var formname=$('#lbldetailname').text();
+         $("#overlay, #PleaseWait").show();
+         
+         document.getElementById("lblaccountname").innerText=$('#txtaccname').val(); 
+         $("#accountsStatementDiv").load("accountsStatementTypeGrid.jsp?formname="+encodeURIComponent(formname)+"&branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&accdocno='+accdocno+'&atype='+atype+'&check=1');
+        }
+    function funxlshowcheck(){
+        if(document.getElementById("rdbnxlshow").checked){
+                $('#xlstat').val("0");
+            }
+            if(document.getElementById("rdbnxlhide").checked){
+                $('#xlstat').val("1");
+            }
     }
-	function funSendingEmail() {  
-		
-	    var email = document.getElementById("txtaccemail").value;
-	    var res;var part1;var part2;var dotsplt;
-	    if(email.indexOf("@")>=0) {
-		    res = email.split('@');
-		    part1=res[0];
-		    part2=res[1];
-		    dotsplt=part2.split('.');
-	    }
-	    
-	   if ($("#txtdocno").val().trim()=="" || typeof($("#txtdocno").val().trim())=="undefined" || typeof($("#txtdocno").val().trim())=="NaN") {
-		    $('#txtaccid').val('');$('#txtaccname').val('');$('#txtdocno').val('');$('#txtaccemail').val('');
-			
-			if (document.getElementById("txtaccid").value == "") {
-		        $('#txtaccid').attr('placeholder', 'Press F3 to Search'); 
-		    }
-			$.messager.alert('Message','Account is Mandatory.','warning');
-			return;
-	  } else  if(email.trim()=="" || typeof(email.trim())=="undefined" || typeof(email.trim())=="NaN") {
-		    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
-	  } else if(email.indexOf("@")<0) {
-		    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
-	  } else if(email.split('@').length!=2) {
-		    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
-	  } else if(part1.length==0) {
-		    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
-	  } else if(part1.split(" ").length>2) {
-		    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
+    function funtotshowcheck(){
+        if(document.getElementById("rdbntotalshow").checked){
+                $('#totalstat').val("1");
+            }
+            if(document.getElementById("rdbntotalhide").checked){
+                $('#totalstat').val("0");
+            }
+    }
+    
+    function funPrintAccountStatement(){
+        if ($("#txtdocno").val()!="") {
+            var url=document.URL;
+            var xlstat=$('#xlstat').val();
+            var reurl=url.split("accountsStatementType.jsp");
+            $("#txtdocno").prop("disabled", false);
+            if(xlstat==""){
+                $.messager.alert('Message','Select a Brand option...','warning');
+            }
+            var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printAccountsStatement?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&allcase=0'+'&toDate='+$('#todate').val()+'&xlstat='+xlstat+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");       win.focus();
+         }
+        else {
+            $.messager.alert('Message','Account is Mandatory.','warning');
+            return;
+        }
+    }
+    function funPrintAccountStatementAll(){
+        if ($("#txtdocno").val()!="") {
+            var url=document.URL;
+            var xlstat=$("#xlstat").val();
+            var reurl=url.split("accountsStatementType.jsp");
+            $("#txtdocno").prop("disabled", false);
+            if(xlstat==""){
+                $.messager.alert('Message','Select a Brand option...','warning');
+            }
+            var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printAccountsStatement?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&xlstat='+xlstat+'&fromDate='+document.getElementById("fromdate").value+'&allcase=1'+'&toDate='+$('#todate').val()+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+            win.focus();
+        }
+        
+        else {
+            $.messager.alert('Message','Account is Mandatory.','warning');
+            return;
+        }
+            
+    }
+    function funPrintRAwise(){
+        if ($("#txtdocno").val()!="") {
+            var url=document.URL;
+            var reurl=url.split("accountsStatementType.jsp");
+            $("#txtdocno").prop("disabled", false);
+            var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printRAWise?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$('#todate').val()+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+            win.focus();
+         }
+        else {
+            $.messager.alert('Message','Account is Mandatory.','warning');
+            return;
+        }
+    }
+    function funSendingEmail() {  
+        
+        var email = document.getElementById("txtaccemail").value;
+        var res;var part1;var part2;var dotsplt;
+        if(email.indexOf("@")>=0) {
+            res = email.split('@');
+            part1=res[0];
+            part2=res[1];
+            dotsplt=part2.split('.');
+        }
+        
+       if ($("#txtdocno").val().trim()=="" || typeof($("#txtdocno").val().trim())=="undefined" || typeof($("#txtdocno").val().trim())=="NaN") {
+            $('#txtaccid').val('');$('#txtaccname').val('');$('#txtdocno').val('');$('#txtaccemail').val('');
+            
+            if (document.getElementById("txtaccid").value == "") {
+                $('#txtaccid').attr('placeholder', 'Press F3 to Search'); 
+            }
+            $.messager.alert('Message','Account is Mandatory.','warning');
+            return;
+      } else  if(email.trim()=="" || typeof(email.trim())=="undefined" || typeof(email.trim())=="NaN") {
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
+      } else if(email.indexOf("@")<0) {
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
+      } else if(email.split('@').length!=2) {
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
+      } else if(part1.length==0) {
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
+      } else if(part1.split(" ").length>2) {
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
       } else if(part2.split(".").length<2) {
-    	    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
       } else if(dotsplt[0].length==0 ) {
-    	    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
       } else if(dotsplt[1].length<2 ||dotsplt[1].length>4) {
-    	    $.messager.alert('Message','Email is not Configured Properly.','warning');
-			return;
+            $.messager.alert('Message','Email is not Configured Properly.','warning');
+            return;
       } else {
- 		
-		    $("#overlay, #PleaseWait").show();
-		   
-	 		$.ajaxFileUpload ({  
-	    	    	
-	    	    	  url: 'printAccountsStatement.action?acno='+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$('#todate').val()+'&email='+$('#txtaccemail').val()+'&print=0chckopn&chckopn=1',  
-	    	          secureuri:false,//false  
-	    	          fileElementId:'file', //id  <input type="file" id="file" name="file" />  
-	    	          dataType: 'string',// json  
-	    	          success: function (data, status) {  
-	
-	    	             if(status=='success'){
-							$("#overlay, #PleaseWait").hide();
-							$.messager.alert('Message','E-Mail Send Successfully');
-	    	              }
-	    	             if(status=='error'){
-	    	            	 $("#overlay, #PleaseWait").hide();
-	    	            	 $.messager.alert('Message','E-Mail Sending failed');
-	    	             }
-	    	             
-	    	              $("#testImg").attr("src",data.message);
-	    	              if(typeof(data.error) != 'undefined')  
-	    	              {  
-	    	                  if(data.error != '')  
-	    	                  {  
-	    	                      alert(data.error);  
-	    	                  }else  
-	    	                  {  
-	    	                      alert(data.message);  
-	    	                  }  
-	    	              }  
-	    	          },  
-	    	           error: function (data, status, e)
-	    	          {  
-	    	              alert(e);  
-	    	          }  
-	    	      }) 
-	    	     return false;
- 		
-		  } 
+        
+             $("#overlay, #PleaseWait").show();
+            
+            $.ajaxFileUpload ({  
+                    
+                      url: 'printAccountsStatement.action?acno='+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$('#todate').val()+'&email='+$('#txtaccemail').val()+'&print=0chckopn&chckopn=1',  
+                      secureuri:false,//false  
+                      fileElementId:'file', //id  <input type="file" id="file" name="file" />  
+                      dataType: 'string',// json  
+                      success: function (data, status) {  
+    
+                         if(status=='success'){
+                            $("#overlay, #PleaseWait").hide();
+                            $.messager.alert('Message','E-Mail Send Successfully');
+                          }
+                         if(status=='error'){
+                             $("#overlay, #PleaseWait").hide();
+                             $.messager.alert('Message','E-Mail Sending failed');
+                         }
+                         
+                          $("#testImg").attr("src",data.message);
+                          if(typeof(data.error) != 'undefined')  
+                          {  
+                              if(data.error != '')  
+                              {  
+                                  alert(data.error);  
+                              }else  
+                              {  
+                                  alert(data.message);  
+                              }  
+                          }  
+                      },  
+                       error: function (data, status, e)
+                      {  
+                          alert(e);  
+                      }  
+                  }) 
+                 return false;
+        
+          } 
       }
-	  
-	  function getClientStatus(){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				items = items.split('####');
-  			    $('#lblclientstatus').html(items[0]);
-  		}
-  		}
-  		x.open("GET", "getClientStatus.jsp?accountno="+$("#txtdocno").val().trim(), true);
-  		x.send();
- 	}
-	
-	  function opnprintcheck(){
-			 if(document.getElementById("chckopnprint").checked){
-				 document.getElementById("hidchckopnprint").value = 1;
-			 }
-			 else{
-				 document.getElementById("hidchckopnprint").value = 0;
-			 }
-		 }
-	  
-	  function funPrintARProjectWise(){
-	    	if ($("#txtdocno").val()!="") {
-		        var url=document.URL;
-		        var reurl=url.split("accountsStatementType.jsp");
-		        $("#txtdocno").prop("disabled", false);
-		        var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printARProjectWise?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$('#todate').val()+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-		        win.focus();
-		     }
-		    else {
-				$.messager.alert('Message','Account is Mandatory.','warning');
-				return;
-			}
-	    }
-	  function getConfigs(){
-		    var dname=document.getElementById("lbldetailname").innerText;
-	  		var x = new XMLHttpRequest();
-	  		x.onreadystatechange = function() {
-	  			if (x.readyState == 4 && x.status == 200) {
-	  			
-	  				var items = x.responseText.split("####");
-	  				//alert(parseInt(items[4]));
-	  				if(parseInt(items[0]) == 1){  
-	  				    $('#btnPrintAccountStmt').show();
-	  				} else {
-	  					$('#btnPrintAccountStmt').hide();
-	  				}
-	  				
-	  				if(parseInt(items[1]) == 1 && dname=="Accounts Statement AR"){
-						  $('#btnRAPrintAccount').show();
-					}else{
-						  $('#btnRAPrintAccount').hide();  
-					}
-	  				if(parseInt(items[2]) == 1){  
-	  				    $('#hidbalanceinconfig').val(1);
-	  				} else {
-	  					$('#hidbalanceinconfig').val(0);      
-	  				}
-	  				if(parseInt(items[3])>0){  
-	  				    $('#hidacStmtgmtDetailsConfig').val(parseInt(items[3]));   
-	  				} else {
-	  					$('#hidacStmtgmtDetailsConfig').val(0);      
-	  				}
-	  				if(parseInt(items[4]) == 1){  
-	  				    $('#btnPrintAccountAll').show();
-	  				} else {
-	  					$('#btnPrintAccountAll').hide();
-	  				}
-	  				if(parseInt(items[5]) == 1){ 
-		  			    $('#rdbnxlshow').show();
-		  			  $('#lblwithoutxl').show();
-		  			  $('#lblwithxl').show();
-	  				} else {
-	  					$('#rdbnxlshow').hide();
-	  					$('#lblwithoutxl').hide();
-	  					$('#lblwithxl').hide();
-	  				}
-		  				if(parseInt(items[5]) == 1){ 
-			  			    $('#rdbnxlhide').show();
-		  				} else {
-		  					$('#rdbnxlhide').hide();
-		  				}
-	  				
-	  				
-	  		}
-	  		}
-	  		x.open("GET", "getConfigs.jsp", true);  
-	  		x.send();
-	 	}
+      
+      function getClientStatus(){
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText;
+                items = items.split('####');
+                $('#lblclientstatus').html(items[0]);
+        }
+        }
+        x.open("GET", "getClientStatus.jsp?accountno="+$("#txtdocno").val().trim(), true);
+        x.send();
+    }
+    
+      function opnprintcheck(){
+             if(document.getElementById("chckopnprint").checked){
+                 document.getElementById("hidchckopnprint").value = 1;
+             }
+             else{
+                 document.getElementById("hidchckopnprint").value = 0;
+             }
+         }
+      
+      function funPrintARProjectWise(){
+        if ($("#txtdocno").val()!="") {
+            var url=document.URL;
+            var reurl=url.split("accountsStatementType.jsp");
+            $("#txtdocno").prop("disabled", false);
+            var win= window.open(reurl[0]+"../../../../com/dashboard/accounts/accountsstatement/printARProjectWise?acno="+document.getElementById("txtdocno").value+'&netamount='+document.getElementById("txtnetamount").value+'&branch='+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$('#todate').val()+'&chckopn='+$('#hidchckopnprint').val()+'&email=Nil&print=1',"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+            win.focus();
+         }
+        else {
+                $.messager.alert('Message','Account is Mandatory.','warning');
+                return;
+            }
+        }
+      function getConfigs(){
+            var dname=document.getElementById("lbldetailname").innerText;
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                
+                    var items = x.responseText.split("####");
+                    if(parseInt(items[0]) == 1){  
+                        $('#btnPrintAccountStmt').show();
+                    } else {
+                        $('#btnPrintAccountStmt').hide();
+                    }
+                    
+                    if(parseInt(items[1]) == 1 && dname=="Accounts Statement AR"){
+                          $('#btnRAPrintAccount').show();
+                    }else{
+                          $('#btnRAPrintAccount').hide();  
+                    }
+                    if(parseInt(items[2]) == 1){  
+                        $('#hidbalanceinconfig').val(1);
+                    } else {
+                        $('#hidbalanceinconfig').val(0);      
+                    }
+                    if(parseInt(items[3])>0){  
+                        $('#hidacStmtgmtDetailsConfig').val(parseInt(items[3]));   
+                    } else {
+                        $('#hidacStmtgmtDetailsConfig').val(0);      
+                    }
+                    if(parseInt(items[4]) == 1){  
+                        $('#btnPrintAccountAll').show();
+                    } else {
+                        $('#btnPrintAccountAll').hide();
+                    }
+                    if(parseInt(items[5]) == 1){ 
+                        $('#rdbnxlshow').show();
+                      $('#lblwithoutxl').show();
+                      $('#lblwithxl').show();
+                    } else {
+                        $('#rdbnxlshow').hide();
+                        $('#lblwithoutxl').hide();
+                        $('#lblwithxl').hide();
+                    }
+                        if(parseInt(items[5]) == 1){ 
+                            $('#rdbnxlhide').show();
+                        } else {
+                            $('#rdbnxlhide').hide();
+                        }
+                    
+                    
+            }
+            }
+            x.open("GET", "getConfigs.jsp", true);  
+            x.send();
+        }
 </script>
 </head>
 <body onload="getBranch();">      
@@ -527,6 +520,7 @@ td[width="80%"] {
         </div>
 
         <div class="sidebar-scroll-content">
+            
             <div class="filter-card">
                 <table class="filter-table">
                     <tr>
@@ -549,14 +543,14 @@ td[width="80%"] {
                     <tr>
                         <td></td>
                         <td>
-                            <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1" style="margin-top:-5px;"/>
+                            <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1"/>
                             <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
                             <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>'/>
                         </td>
                     </tr>
                 </table>
                 <div align="center" style="margin-top:10px;">
-                    <label class="status" id="lblclientstatus"><s:property value="lblclientstatus"/></label>
+                    <label class="status" id="lblclientstatus" style="font-size:12px; font-weight:bold; color:#2563eb;"><s:property value="lblclientstatus"/></label>
                 </div>
             </div>
 
@@ -565,18 +559,18 @@ td[width="80%"] {
                     <tr>
                         <td align="center">
                             <input type="radio" id="rdbnxlshow" name="rdbnxl" onchange="funxlshowcheck();" value="Show xl" checked="checked">
-                            <label class="branch" for="rdbnxlshow" id="lblwithoutxl">Print</label>
+                            <label class="branch" for="rdbnxlshow" id="lblwithoutxl" style="font-size: 12px; font-weight: 600; color: #4e5e71; padding-left: 4px;">Print</label>
                         </td>
                         <td align="center">
                             <input type="radio" id="rdbnxlhide" name="rdbnxl" onchange="funxlshowcheck();" value="Hide xl">
-                            <label class="branch" for="rdbnxlhide" id="lblwithxl">With Excel</label>
+                            <label class="branch" for="rdbnxlhide" id="lblwithxl" style="font-size: 12px; font-weight: 600; color: #4e5e71; padding-left: 4px;">With Excel</label>
                             <input type="hidden" id="xlstat" name="xlstat" value="0" />
                         </td>
                     </tr>
                 </table>
-                <div align="center" style="margin-top:15px; border-top: 1px solid #eee; padding-top: 10px;">
-                    <input type="checkbox" id="chckopnprint" name="chckopnprint" onchange="opnprintcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" />
-                    <label class="branch" id="lblopn">OPN</label>
+                <div align="center" style="margin-top:15px; border-top: 1px solid #e1e8ed; padding-top: 10px; background-color: transparent !important;">
+                    <input type="checkbox" id="chckopnprint" name="chckopnprint" onchange="opnprintcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" style="background: transparent;" />
+                    <label class="branch" id="lblopn" style="font-size: 12px; font-weight: 600; color: #4e5e71; padding-left: 4px; background: transparent !important;">OPN</label>
                     <input type="hidden" id="hidchckopnprint" name="hidchckopnprint" value='<s:property value="hidchckopnprint"/>'/>
                 </div>
             </div>
@@ -594,8 +588,8 @@ td[width="80%"] {
     <div class="main-content-wrapper">
         <div class="scrollable-grid-area">
             <div style="margin-bottom:15px; border-bottom: 1px solid #e1e8ed; padding-bottom: 10px;">
-                <label style="color:#1a3a5f; font-weight:bold; font-size:14px;">Account :</label>
-                <label style="color:#2563eb; font-weight:bold;" name="lblaccountname" id="lblaccountname"></label>
+                <label style="color:#4e5e71; font-weight:600; font-size:13px;">Account :</label>
+                <label style="color:#2563eb; font-weight:bold; font-size:13px;" name="lblaccountname" id="lblaccountname"></label>
             </div>
             <div id="accountsStatementDiv">
                 <jsp:include page="accountsStatementTypeGrid.jsp"></jsp:include>
@@ -605,10 +599,10 @@ td[width="80%"] {
         <div class="totals-bar">
             <table width="100%">
                 <tr>
-                    <td align="right" style="font-size:13px; font-weight:bold; color:#1a3a5f;">Net Amount :&nbsp;</td>
+                    <td align="right" style="font-size:12px; font-weight:600; color:#4e5e71;">Net Amount :&nbsp;</td>
                     <td width="150px">
                         <input type="text" id="txtnetamount" name="txtnetamount" readonly 
-                               style="text-align: right; font-weight: bold; color: #2563eb; background: #f8fafc !important; border: 1px solid #ccd6e0; border-radius: 4px; height: 30px;" 
+                               style="text-align: right; font-weight: bold; color: #2563eb; height: 24px; font-size: 12px; border: 1px solid #ccd6e0; border-radius: 4px; box-sizing: border-box;" 
                                value='<s:property value="txtnetamount"/>'/>
                     </td>
                 </tr>
@@ -621,7 +615,7 @@ td[width="80%"] {
 </div>
 </form>
 <div id="accountDetailsWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
 </div> 
 </body>
