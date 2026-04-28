@@ -3098,6 +3098,9 @@ legend {
     background: #495057 !important; 
     border-radius: 4px !important;
 }
+.jqx-grid, .jqx-grid-content {
+    opacity: 1 !important;
+}
 
 </style>
 
