@@ -1,242 +1,259 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
- 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
- <%-- <jsp:include page="../../../../includes.jsp"></jsp:include>  --%> 
-<style type="text/css">
-/* Master UI Styles */
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-table {
-  border-collapse: separate;
-  border-spacing: 15px 18px; /* Standard master gap */
+<style>
+/* =========================================================
+   SCOPED UI: Strict Pixel Grid Alignment & Modern Inputs
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-
-td[align="right"] {
-  font-family: Tahoma, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-
-input[type="text"], select {
-  font-family: Tahoma, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%; /* Prevent overflow */
-  max-width: 100%;
-  box-sizing: border-box; /* Include padding in width */
+/* Master Input Heights - Forced to 24px with Max Width */
+.modern-ui input[type="text"],
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: normal !important; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    max-width: 180px; /* Limits the box length */
 }
 
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
+/* Panel Styling - Pure White */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 12px 10px;
+    margin-bottom: 10px;
+}
+
+/* Table Alignment - Adjusted for Shorter Inputs */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+    table-layout: fixed; 
+}
+
+.modern-ui td {
+    vertical-align: middle;
+    padding: 0;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Modern Search Button */
+.modern-ui .myButton {
+    height: 26px !important; 
+    line-height: 24px !important;
+    padding: 0 25px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff !important;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
+
+/* Specific size for Date picker wrapper to match max-width */
 #searchdate {
-  font-family: Tahoma, Arial, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+    max-width: 180px;
 }
-
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Arial, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Master green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background-color 0.3s;
-}
-
-/* Button Hover Effects */
-.myButton:hover {
-  background-color: #45a049;
-}
-
-/* Additional spacing for rows */
-tr {
-  line-height: 1.8;
-}
-#search td[align="right"]{
-    font-weight:700;
-    font-size:14px;
-    color:#222;
-}
-
 </style>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-		 $("#searchdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-		getGroup();
-		getColor();
-	
-	}); 
+<script type="text/javascript">
+$(document).ready(function () {
+    /* Standardized Date Input size */
+    $("#searchdate").jqxDateTimeInput({ 
+        width: '100%', 
+        height: '24px', 
+        formatString: "dd.MM.yyyy", 
+        value: null 
+    });
+
+    /* Force internal alignment for JQX Date Input */
+    setTimeout(function () {
+        $(".jqx-datetimeinput").css({"border-color": "#b8c6d8", "border-radius": "3px"});
+        $(".jqx-datetimeinput").find("input").css({
+            "line-height": "24px", "font-size": "12px", 
+            "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif", "padding": "0 6px"
+        });
+        $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 100);
+
+    getGroup();
+    getColor();
+}); 
+
 function getGroup() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				items = items.split('####');
-				var groupItems = items[0].split(",");
-				var groupIdItems = items[1].split(",");
-			
-				var optionsgroup = '<option value="">--Select--</option>';
-				for (var i = 0; i < groupItems.length; i++) {
-					optionsgroup += '<option value="' + groupIdItems[i] + '">'
-							+ groupItems[i] + '</option>';
-				}
-		
-				$("select#searchgroup").html(optionsgroup);
-				
-				
-			} else {
-			}
-		}
-		x.open("GET", "../../../../com/controlcentre/masters/vehiclemaster/getGroup.jsp", true);
-		x.send();
-	}
-	
-	
-	function getColor() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;
-				//alert(items);
-				items = items.split('####');
-				var colorItems = items[0].split(",");
-				var colorIdItems = items[1].split(",");
-				var optionscolor = '<option value="">--Select--</option>';
-				for (var i = 0; i < colorItems.length; i++) {
-					optionscolor += '<option value="' + colorIdItems[i] + '">'
-							+ colorItems[i] + '</option>';
-				}
-				$("select#searchcolor").html(optionscolor);
-			} else {
-			}
-		}
-		x.open("GET", "../../../../com/controlcentre/masters/vehiclemaster/getColor.jsp", true);
-		x.send();
-	}
- 	function mainloadSearch() {
- 		
- 		//var client=document.getElementById("searchclient").value;
- 	//	var reftype=document.getElementById("cmbsearchrtype").value;
- 		var searchdate=$('#searchdate').jqxDateTimeInput('val');
- 		//var agmtno=document.getElementById("searchagmtno").value;
- 		var fleetno=document.getElementById("searchfleetno").value;
- 		var docno=document.getElementById("searchdocno").value;
- 		var regno=document.getElementById("searchregno").value;
- 		//var status=document.getElementById("cmbsearchstatus").value;
-		var color=document.getElementById("searchcolor").value;
-		var group=document.getElementById("searchgroup").value;
- 		
-		getdata(searchdate,fleetno,docno,regno,color,group);
- 
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.split('####');
+            var groupItems = items[0].split(",");
+            var groupIdItems = items[1].split(",");
+            var optionsgroup = '<option value="">--Select--</option>';
+            for (var i = 0; i < groupItems.length; i++) {
+                optionsgroup += '<option value="' + groupIdItems[i] + '">' + groupItems[i] + '</option>';
+            }
+            $("select#searchgroup").html(optionsgroup);
+        }
+    }
+    x.open("GET", "../../../../com/controlcentre/masters/vehiclemaster/getGroup.jsp", true);
+    x.send();
+}
 
-	}
+function getColor() {
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.split('####');
+            var colorItems = items[0].split(",");
+            var colorIdItems = items[1].split(",");
+            var optionscolor = '<option value="">--Select--</option>';
+            for (var i = 0; i < colorItems.length; i++) {
+                optionscolor += '<option value="' + colorIdItems[i] + '">' + colorItems[i] + '</option>';
+            }
+            $("select#searchcolor").html(optionscolor);
+        }
+    }
+    x.open("GET", "../../../../com/controlcentre/masters/vehiclemaster/getColor.jsp", true);
+    x.send();
+}
 
-	 function getdata(searchdate,fleetno,docno,regno,color,group){
-		
-		// $("#tariffDivId").load('rateDescription.jsp?txtrentaldocno='+indexVal1+'&revehGroup='+revehGroup);
-		
-		 $("#srefreshdiv").load('nonPoolSearch.jsp?searchdate='+searchdate+'&fleetno='+fleetno+'&docno='+docno+'&regno='+regno+'&color='+color+'&group='+group);
-		 
+function mainloadSearch() {
+    var searchdate = $('#searchdate').jqxDateTimeInput('val') || "";
+    var fleetno = document.getElementById("searchfleetno").value || "";
+    var docno = document.getElementById("searchdocno").value || "";
+    var regno = document.getElementById("searchregno").value || "";
+    var color = document.getElementById("searchcolor").value || "";
+    var group = document.getElementById("searchgroup").value || "";
+    
+    getdata(searchdate, fleetno, docno, regno, color, group);
+}
 
-		  
-/* x.open("GET", "dissearch.jsp?sclname="+sclname+"&smob="+smob+"&rno="+rno+"&flno="+flno+"&sregno="+sregno+"&smra="+smra, true);
-		x.send(); */
-		}
- 
-	</script>
-<body bgcolor="#E0ECF8">
+function getdata(searchdate, fleetno, docno, regno, color, group){
+    $("#srefreshdiv").load('nonPoolSearch.jsp?searchdate=' + encodeURIComponent(searchdate) + 
+                          '&fleetno=' + encodeURIComponent(fleetno) + 
+                          '&docno=' + encodeURIComponent(docno) + 
+                          '&regno=' + encodeURIComponent(regno) + 
+                          '&color=' + encodeURIComponent(color) + 
+                          '&group=' + encodeURIComponent(group));
+}
+</script>
+</head>
 
-<div id="search">
+<body style="background-color: #fff; margin: 0;">
+<div id="search" class="modern-ui">
 
-<table width="100%">
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="8%" />  <col width="15%" /> <col width="8%" />  <col width="15%" /> <col width="8%" />  <col width="15%" /> <col width="10%" /> <col width="21%" /> </colgroup>
+            
+            <tr>
+                <td class="lbl-right">Doc No</td>
+                <td><input type="text" name="searchdocno" id="searchdocno" autocomplete="off"></td>
+                
+                <td class="lbl-right">Date</td>
+                <td><div id="searchdate"></div></td>
+                
+                <td class="lbl-right">Color</td>
+                <td>
+                    <select name="searchcolor" id="searchcolor">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
+                
+                <td colspan="2"></td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">Fleet No</td>
+                <td><input type="text" name="searchfleetno" id="searchfleetno" autocomplete="off"></td>
+                
+                <td class="lbl-right">Reg No</td>
+                <td><input type="text" name="searchregno" id="searchregno" autocomplete="off"></td>
+                
+                <td class="lbl-right">Group</td>
+                <td>
+                    <select name="searchgroup" id="searchgroup">
+                        <option value="">--Select--</option>
+                    </select>
+                </td>
 
-<tr>
+                <td colspan="2" align="right" style="padding-right: 15px;">
+                    <input type="button" name="btnSearchExt" id="btnSearchExt" class="myButton" value="Search" onclick="mainloadSearch();">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-<td width="8%" align="right"><b>Doc No</b></td>
-<td width="15%">
-<input type="text" name="searchdocno" id="searchdocno" style="width:95%;">
-</td>
-
-<td width="8%" align="right"><b>Date</b></td>
-<td width="15%">
-<div id="searchdate" name="searchdate"></div>
-</td>
-
-<td width="8%" align="right"><b>Color</b></td>
-<td width="15%">
-<select name="searchcolor" id="searchcolor" style="width:95%;">
-<option value="">--Select--</option>
-</select>
-</td>
-
-<td width="8%"></td>
-<td width="13%"></td>
-
-</tr>
-
-
-<tr>
-
-<td align="right"><b>Fleet No</b></td>
-<td>
-<input type="text" name="searchfleetno" id="searchfleetno" style="width:95%;">
-</td>
-
-<td align="right"><b>Reg No</b></td>
-<td>
-<input type="text" name="searchregno" id="searchregno" style="width:95%;">
-</td>
-
-<td align="right"><b>Group</b></td>
-<td>
-<select name="searchgroup" id="searchgroup" style="width:95%;">
-<option value="">--Select--</option>
-</select>
-</td>
-
-<td></td>
-
-<td align="center">
-<input type="button"
-name="btnSearchExt"
-id="btnSearchExt"
-class="myButton"
-value="Search"
-onclick="mainloadSearch();">
-</td>
-
-</tr>
-
-
-<tr>
-<td colspan="8">
-
-<div id="srefreshdiv">
-<jsp:include page="nonPoolSearch.jsp" />
-</div>
-
-</td>
-</tr>
-
-</table>
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="nonPoolSearch.jsp" />
+        </div>
+    </div>
 
 </div>
-
 </body>
 </html>

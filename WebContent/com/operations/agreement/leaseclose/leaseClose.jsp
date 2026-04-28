@@ -14,15 +14,14 @@
 body {
     background-color: #fff;
     font-family: 'Tahoma', sans-serif;
-    font-size: 11px; /* Smaller font to eliminate horizontal scrollbar */
+    font-size: 11px; 
     margin: 0;
     padding: 10px;
 }
 #mainBG{background-color: #fff;}
-/* 2. Style the original Table Structure */
 table {
     border-collapse: separate;
-    border-spacing: 0 5px; /* Adds subtle spacing between rows */
+    border-spacing: 0 5px; 
     width: 100%;
 }
 
@@ -31,25 +30,23 @@ td {
     vertical-align: middle;
 }
 
-/* Label Styling (Right aligned cells) */
 td[align="right"] {
     font-weight: bold;
     color: #555;
     white-space: nowrap;
 }
 
-/* 3. Master UI Input Styling */
 input[type="text"], 
 select, 
 .jqx-datetimeinput {
-    height: 22px !important; /* Compact height */
+    height: 22px !important; 
     border: 1px solid #ccd0d4 !important;
     border-radius: 3px !important;
     padding: 2px 5px !important;
     font-size: 11px !important;
     background-color: #fff;
     box-sizing: border-box;
-    width: 100%; /* Ensures they fill their table cell */
+    width: 100%; 
 }
 
 input[readonly] {
@@ -57,7 +54,6 @@ input[readonly] {
     color: #666;
 }
 
-/* 4. Master UI Fieldset & Legend (The Panel Look) */
 fieldset {
     border: 1px solid #d1d9e1 !important;
     border-radius: 6px !important;
@@ -72,15 +68,14 @@ legend {
     border: none;
     font-size: 12px;
     font-weight: bold;
-    color: #007bbd; /* Master Blue */
+    color: #007bbd; 
     padding: 0 8px;
     margin-bottom: 0;
-    border-left: 3px solid #007bbd; /* Left accent line */
+    border-left: 3px solid #007bbd; 
 }
 
 
 
-/* 6. Grid & Container Styling */
 .borderStyle, 
 #agmttarifdiv, 
 #totaldiv, 
@@ -92,9 +87,8 @@ legend {
     overflow: hidden;
 }
 
-/* 7. Scrollbar Management */
 .hidden-scrollbar {
-    overflow-x: hidden; /* Removes the horizontal scrollbar */
+    overflow-x: hidden; 
     width: 100%;
 }
 
@@ -151,6 +145,140 @@ legend {
 .magnifier-icon:hover {
     color: #2563eb; 
     transform: translateY(-50%) scale(1.1);
+}
+
+
+.jqx-grid-header {
+    background: linear-gradient(180deg, #e9ecef 0%, #dee2e6 100%) !important;
+    border-color: #ced4da !important;
+    color: #212529 !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.jqx-grid-column-header {
+    background: transparent !important;
+    color: #212529 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    text-align: left !important;
+    border-color: #ced4da !important;
+}
+
+.jqx-grid-column-header a:link,
+.jqx-grid-column-header a:visited {
+    color: #212529 !important;
+    text-align: left !important;
+}
+
+.jqx-grid-column-header > div > div {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+
+.jqx-grid-cell {
+    background: #ffffff;
+    border-color: #dee2e6 !important; 
+    border-width: 0px 0px 1px 0px !important;
+    color: #1f2937;
+    font-size: 11px !important;
+    text-align: left !important;
+}
+
+.jqx-grid-cell-left-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+    margin-left: 0px !important;
+}
+
+.jqx-grid-cell-middle-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+.jqx-grid-cell-right-align {
+    text-align: right !important;
+    padding-right: 6px !important;
+}
+
+
+.jqx-grid-cell-alt {
+    background: #f1f3f5 !important; 
+}
+
+
+.jqx-grid-cell-hover {
+    background: #dee2e6 !important; 
+    border-color: #ced4da !important;
+    color: #000000 !important;
+}
+
+.jqx-grid-cell-selected {
+    background: #adb5bd !important; 
+    color: #ffffff !important;
+    border-color: #868e96 !important;
+}
+
+.jqx-grid-table .jqx-grid-cell {
+    border-width: 0px 0px 1px 0px !important;
+    border-color: #dee2e6 !important;
+}
+
+
+.jqx-grid {
+    border: 1px solid #adb5bd !important; 
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.jqx-grid-cell-sort {
+    background-color: #e9ecef !important;
+}
+.jqx-grid-cell-sort-alt {
+    background-color: #dee2e6 !important;
+}
+
+.jqx-grid-cell-filter,
+.jqx-grid-cell-filter-alt {
+    background-color: #f1f3f5 !important;
+}
+
+.jqx-grid-cell-pinned,
+.jqx-grid-cell-pinned-alt {
+    background-color: #e9ecef !important;
+}
+
+
+.jqx-grid-pager {
+    background: #e9ecef !important; 
+    border-top: 1px solid #ced4da !important;
+    padding: 4px !important;
+}
+
+.jqx-grid-column-menubutton {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.jqx-grid-column-menubutton:hover {
+    opacity: 1;
+}
+
+
+.jqx-scrollbar-state-normal {
+    background: #f1f3f5 !important;
+}
+.jqx-scrollbar-thumb-state-normal,
+.jqx-scrollbar-thumb-state-normal-horizontal {
+    background: #868e96 !important; 
+    border-color: #868e96 !important;
+    border-radius: 4px !important;
+}
+.jqx-scrollbar-thumb-state-hover,
+.jqx-scrollbar-thumb-state-hover-horizontal {
+    background: #495057 !important; 
+    border-radius: 4px !important;
 }
 </style>
 <script type="text/javascript">
@@ -1394,12 +1522,13 @@ if(document.getElementById("rentalagent").value==""){
       <legend>In Info</legend>
       <table width="100%">
         <tr>
-<td width="11%" rowspan="2">
-    Collection
+<td width="11%" rowspan="2" style="text-align:center; vertical-align:top; position:relative; top:-12px; padding-top:0px;">
+    <span style="font-weight:bold; font-size:12px; display:inline-block; margin-top:0;">Collection</span>
     <input type="checkbox" name="chkcollection" id="chkcollection"
-           onchange="setCollection();toggleCollection();">
+           onchange="setCollection();toggleCollection();"
+           style="vertical-align:middle; margin-left:3px;">
+    
     &nbsp;
-
     <div class="input-search-container">
         <input type="text" name="chauffer" id="chauffer"
                value='<s:property value="chauffer"/>'
@@ -1461,7 +1590,7 @@ if(document.getElementById("rentalagent").value==""){
 </td>
 
 <td width="2%" align="right">Date</td>
-<td width="4%" align="left">
+<td width="5%" align="left">
     <div id="collectdate" name="collectdate"
          value='<s:property value="collectdate"/>'></div>
 </td>
@@ -1616,14 +1745,28 @@ function toggleCollection() {
     </fieldset></td>
   </tr>
   <tr>
-    <td width="66%"><fieldset>
+    <td width="66%">
       
-      <table width="100%">
+      <fieldset>
+    <legend>Agreement Tariff</legend>
+    <table width="100%">
         <tr>
-          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
+            <td>
+                <div id="agmttarifdiv">
+                    <jsp:include page="agreementTarifGrid.jsp"></jsp:include>
+                </div>
+            </td>
         </tr>
-      </table>
-    </fieldset></td>
+        <tr>
+            <td>
+                <div id="totaldiv">
+                    <jsp:include page="totalGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+    </td>
     <td width="34%" rowspan="3">
     <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label>    </center>
     <center><input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
@@ -1640,16 +1783,9 @@ function toggleCollection() {
     </td>
   </tr>
  
-  <tr>
+
     <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
-        </tr>
-      </table>
-    </fieldset></td>
-    </tr>
-  <tr>
-    <td><fieldset><table width="100%">
+    <legend>Traffic Fine</legend>
       <tr>
         <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
         </tr>

@@ -10,6 +10,8 @@
  <link rel="stylesheet" type="text/css" href="../../../../css/body.css"> 
 <jsp:include page="../../../../includeso.jsp"></jsp:include>
 <style>
+
+
 body {
     background-color: #fff;
     font-family: 'Tahoma', sans-serif;
@@ -150,6 +152,140 @@ legend {
 .magnifier-icon:hover {
     color: #2563eb; 
     transform: translateY(-50%) scale(1.1);
+}
+
+
+.jqx-grid-header {
+    background: linear-gradient(180deg, #e9ecef 0%, #dee2e6 100%) !important;
+    border-color: #ced4da !important;
+    color: #212529 !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.jqx-grid-column-header {
+    background: transparent !important;
+    color: #212529 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    text-align: left !important;
+    border-color: #ced4da !important;
+}
+
+.jqx-grid-column-header a:link,
+.jqx-grid-column-header a:visited {
+    color: #212529 !important;
+    text-align: left !important;
+}
+
+.jqx-grid-column-header > div > div {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+
+.jqx-grid-cell {
+    background: #ffffff;
+    border-color: #dee2e6 !important; 
+    border-width: 0px 0px 1px 0px !important;
+    color: #1f2937;
+    font-size: 11px !important;
+    text-align: left !important;
+}
+
+.jqx-grid-cell-left-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+    margin-left: 0px !important;
+}
+
+.jqx-grid-cell-middle-align {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+.jqx-grid-cell-right-align {
+    text-align: right !important;
+    padding-right: 6px !important;
+}
+
+
+.jqx-grid-cell-alt {
+    background: #f1f3f5 !important; 
+}
+
+
+.jqx-grid-cell-hover {
+    background: #dee2e6 !important; 
+    border-color: #ced4da !important;
+    color: #000000 !important;
+}
+
+.jqx-grid-cell-selected {
+    background: #adb5bd !important; 
+    color: #ffffff !important;
+    border-color: #868e96 !important;
+}
+
+.jqx-grid-table .jqx-grid-cell {
+    border-width: 0px 0px 1px 0px !important;
+    border-color: #dee2e6 !important;
+}
+
+
+.jqx-grid {
+    border: 1px solid #adb5bd !important; 
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.jqx-grid-cell-sort {
+    background-color: #e9ecef !important;
+}
+.jqx-grid-cell-sort-alt {
+    background-color: #dee2e6 !important;
+}
+
+.jqx-grid-cell-filter,
+.jqx-grid-cell-filter-alt {
+    background-color: #f1f3f5 !important;
+}
+
+.jqx-grid-cell-pinned,
+.jqx-grid-cell-pinned-alt {
+    background-color: #e9ecef !important;
+}
+
+
+.jqx-grid-pager {
+    background: #e9ecef !important; 
+    border-top: 1px solid #ced4da !important;
+    padding: 4px !important;
+}
+
+.jqx-grid-column-menubutton {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.jqx-grid-column-menubutton:hover {
+    opacity: 1;
+}
+
+
+.jqx-scrollbar-state-normal {
+    background: #f1f3f5 !important;
+}
+.jqx-scrollbar-thumb-state-normal,
+.jqx-scrollbar-thumb-state-normal-horizontal {
+    background: #868e96 !important; 
+    border-color: #868e96 !important;
+    border-radius: 4px !important;
+}
+.jqx-scrollbar-thumb-state-hover,
+.jqx-scrollbar-thumb-state-hover-horizontal {
+    background: #495057 !important; 
+    border-radius: 4px !important;
 }
 </style>
 <script type="text/javascript">
@@ -1531,15 +1667,17 @@ if(document.getElementById("rentalagent").value==""){
     <legend>In Info</legend>
     <table width="100%">
       <tr>
-<td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 6px !important;">
-    <div style="display: flex; align-items: center; margin-bottom: 5px;">
-        Collection
-        <input type="checkbox" name="chkcollection" id="chkcollection"
-               onchange="setCollection();toggleCollection();"
-               style="width:14px !important; height:14px !important; margin:0 0 0 5px !important; display:inline-block !important;">
-    </div>
+<td width="11%" rowspan="2" style="vertical-align: top !important; padding-top: 0 !important;">
+    <div style="position: relative; top: -14px; display: flex; flex-direction: column; align-items: center;">
+        
+        <div style="display: flex; align-items: center; margin-bottom: 5px; font-weight: bold; font-size: 13px; white-space: nowrap;">
+            Collection
+            <input type="checkbox" name="chkcollection" id="chkcollection"
+                   onchange="setCollection();toggleCollection();"
+                   style="width:14px !important; height:14px !important; margin:0 0 0 5px !important; display:inline-block !important; cursor: pointer;">
+        </div>
 
-    <div style="margin-bottom: 5px;">
+    <div style="margin-bottom: 10px;">
         <input type="text" name="chauffer" id="chauffer"
                value='<s:property value="chauffer"/>'
                onkeydown="getChauffer(event);"
@@ -1776,7 +1914,7 @@ function toggleCollection() {
   </fieldset>
 
   <fieldset>
-    <legend>Traffic</legend>
+    <legend>Traffic Fine</legend>
     <div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div>
   </fieldset>
 

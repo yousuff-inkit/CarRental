@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style>
 /* =========================================================
@@ -28,7 +28,8 @@ body {
 }
 
 /* Master Input Styles */
-.modern-ui input[type="text"] {
+.modern-ui input[type="text"],
+.modern-ui select {
     height: 24px !important;
     border: 1px solid #BDBDBD;
     border-radius: 3px;
@@ -41,10 +42,10 @@ body {
     width: 100%;
 }
 
-.modern-ui input[type="text"]:focus {
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
     border-color: #007bff;
     outline: none;
-    background-color: #FFD6FF; /* Client master focus color */
 }
 
 /* Panel Styling - Clean White Panel */
@@ -52,15 +53,18 @@ body {
     background-color: #fff !important; 
     border: 1px solid #BDBDBD;
     border-radius: 4px;
-    padding: 12px;
+    padding: 12px 10px;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Table Alignment - Strict Grid Mapping */
+/* Table Alignment - STRICT PERCENTAGE GRID */
 .modern-ui table {
     border-collapse: separate;
     border-spacing: 5px 8px; 
     width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
 }
 
 .modern-ui td {
@@ -90,6 +94,7 @@ body {
     font-weight: bold;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
+    /* REMOVED width: 100% so button stays naturally compact */
 }
 
 .modern-ui .myButton:hover {
@@ -101,14 +106,15 @@ body {
     border: 1px solid #BDBDBD;
     background: #fff;
     overflow: hidden;
+    width: 100%;
 }
 </style>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        /* Force width to 100% so it perfectly fits the table cell */
-        $("#unclearchequedate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
-        $("#chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        /* FIXED 120px WIDTH: Kept wide enough so calendar icons don't crush text */
+        $("#unclearchequedate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
+        $("#chqdate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy", value:null});
         
         /* Force internal alignment AFTER render */
         setTimeout(function () {
@@ -134,7 +140,7 @@ body {
     }
     
     function getdata(partyname, docNo, date, amount, chequeNo, chequeDt, check){
-        /* Used encodeURIComponent to safely handle spaces and special characters */
+        /* Safely encoding URI components */
         $("#refreshdiv").load('ucpMainSearchGrid.jsp?partyname=' + encodeURIComponent(partyname) + 
                               '&docNo=' + encodeURIComponent(docNo) + 
                               '&date=' + date + 
@@ -152,23 +158,27 @@ body {
 
     <div class="search-panel">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="6%" />  <col width="18%" /> <col width="8%" />  <col width="17%" /> <col width="9%" />  <col width="18%" /> <col width="24%" /> 
+            </colgroup>
+            
             <tr>
-                <td class="lbl-right" width="8%">Name</td>
-                <td width="20%">
-                    <input type="text" name="txtpartyname" id="txtpartyname" value='<s:property value="txtpartyname"/>'>
+                <td class="lbl-right">Name</td>
+                <td>
+                    <input type="text" name="txtpartyname" id="txtpartyname" autocomplete="off" value='<s:property value="txtpartyname"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Doc No</td>
-                <td width="15%">
-                    <input type="text" name="txtdocno" id="txtdocno" value='<s:property value="txtdocno"/>'>
+                <td class="lbl-right">Doc No</td>
+                <td>
+                    <input type="text" name="txtdocno" id="txtdocno" autocomplete="off" value='<s:property value="txtdocno"/>'>
                 </td>
                 
-                <td class="lbl-right" width="10%">Amount</td>
-                <td width="15%">
-                    <input type="text" name="txtamount" id="txtamount" value='<s:property value="txtamount"/>'>
+                <td class="lbl-right">Amount</td>
+                <td>
+                    <input type="text" name="txtamount" id="txtamount" autocomplete="off" value='<s:property value="txtamount"/>'>
                 </td>
                 
-                <td width="22%" align="center" rowspan="2" valign="middle">
+                <td align="center" rowspan="2" valign="middle">
                     <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch(); return false;">
                 </td>
             </tr>
@@ -177,16 +187,18 @@ body {
                 <td class="lbl-right">Date</td>
                 <td>
                     <div id="unclearchequedate" name="unclearchequedate" value='<s:property value="unclearchequedate"/>'></div>
+                    <input type="hidden" name="hidunclearchequedate" id="hidunclearchequedate" value='<s:property value="hidunclearchequedate"/>'>
                 </td>
                 
                 <td class="lbl-right">Chq No</td>
                 <td>
-                    <input type="text" id="txtchqno" name="txtchqno" value='<s:property value="txtchqno"/>'>
+                    <input type="text" id="txtchqno" name="txtchqno" autocomplete="off" value='<s:property value="txtchqno"/>'>
                 </td>
                 
                 <td class="lbl-right">Chq Date</td>
                 <td>
                     <div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div>
+                    <input type="hidden" name="hidchqdate" id="hidchqdate" value='<s:property value="hidchqdate"/>'>
                 </td>
             </tr>
         </table>
