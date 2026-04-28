@@ -22,7 +22,7 @@ html, body, #mainBG, .hidden-scrollbar {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
     background-color: #f4f7f9;
 }
 
@@ -58,60 +58,73 @@ html, body, #mainBG, .hidden-scrollbar {
     margin-bottom: 10px;
 }
 
-/* Form Alignment Fix: Bringing labels closer to inputs */
+/* Form Alignment Fix */
 .filter-table {
     width: 100%;
-    border-collapse: collapse;
-}
-
-.filter-table td {
-    padding: 5px 0;
+    border-spacing: 0 10px; /* Matched spacing to previous pages */
 }
 
 .label-cell {
-    text-align: left;
+    text-align: right; /* Reverted to right align for uniformity */
+    padding-right: 12px;
     vertical-align: middle; 
-    font-size: 13px; /* Same as Branch label */
-    font-weight: 500;
+    font-size: 12px; /* Uniform 12px label */
+    font-weight: 600;
     color: #4e5e71;
-    width: 65px; /* Fixed width to pull inputs closer */
+    width: 90px;
     white-space: nowrap;
 }
 
-/* Input Consistency */
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
 input[type="text"], 
-select, 
-.jqx-datetimeinput {
-    width: 100% !important;
-    height: 32px !important; /* Matches Branch dropdown height */
-    padding: 4px 8px;
+select {
+    width: 100%;
+    height: 24px !important;    /* Enforced 24px height */
+    padding: 2px 8px;           /* Tighter padding for 24px */
     border: 1px solid #ccd6e0;
-    border-radius: 4px;
-    font-size: 13px !important; /* Matches Branch font size */
+    border-radius: 4px;         /* Sharper corners */
+    font-size: 12px !important; /* Adjusted font to fit 24px box */
     box-sizing: border-box;
     outline: none;
     font-family: inherit;
     background-color: #fff;
+    color: #333;
 }
 
-/* Button Styling: Perfectly matching the "Submit" button */
+/* Readonly fields */
+input[readonly] {
+    background-color: #f3f6f9;
+    color: #555;
+}
+
+/* ===== BUTTONS ===== */
 .button-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     margin-top: 5px;
 }
 
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
 .btn-submit {
+    flex: 1;                 /* Allows side-by-side sharing */
     width: 100%;
-    height: 38px; /* Matches standard submit button height */
-    background: #2563eb; /* Primary Blue */
+    height: 30px;            /* Scaled down to 30px */
+    padding: 0 12px;
+    background: #2563eb; 
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;      /* Matched border-radius */
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;       /* Aligns text inside button */
+    white-space: nowrap;
     transition: all 0.2s ease;
 }
 
@@ -136,9 +149,9 @@ td[width="80%"] {
   
 <script type="text/javascript">
 $(document).ready(function () {
-    // Standardize jQWidgets
-    $("#fleetdate").jqxDateTimeInput({ width: '100%', height: '32px', formatString:"dd.MM.yyyy"});
-    $("#fleettime").jqxDateTimeInput({ width: '100%', height: '32px', formatString: 'HH:mm', showCalendarButton: false , value: new Date()});
+    // Standardize jQWidgets (Updated to 24px)
+    $("#fleetdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    $("#fleettime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false , value: new Date()});
     
     // Hidden Trackers
     $("#curdate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy", value: new Date()});
@@ -154,42 +167,42 @@ $(document).ready(function () {
 });
 
 function getStatus() {
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.split('***');
-			var status = items[0].split(",");
-			var statusid = items[1].split(",");
-			var optionsstatus = '<option value="">--Select--</option>';
-			for (var i = 0; i < status.length; i++) {
-				optionsstatus += '<option value="' + statusid[i] + '">' + status[i] + '</option>';
-			}
-			$("#cmbstatus").html(optionsstatus);
-		}
-	}
-	x.open("GET", "../../../operations/saleofvehicle/vehiclestatuschange/getStatus.jsp", true);
-	x.send();
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.split('***');
+            var status = items[0].split(",");
+            var statusid = items[1].split(",");
+            var optionsstatus = '<option value="">--Select--</option>';
+            for (var i = 0; i < status.length; i++) {
+                optionsstatus += '<option value="' + statusid[i] + '">' + status[i] + '</option>';
+            }
+            $("#cmbstatus").html(optionsstatus);
+        }
+    }
+    x.open("GET", "../../../operations/saleofvehicle/vehiclestatuschange/getStatus.jsp", true);
+    x.send();
 }
 
 function updateStatus(){
-	var testdate= $('#fleetdate').jqxDateTimeInput('val');
-	var testtime2=$('#fleettime').jqxDateTimeInput('val');
-	if($("#fleetno").val()==""){
-		 $.messager.alert('Message',"Please Select Fleet");
-		 return false;
-	}
-	// ... rest of validation logic ...
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			if(x.responseText.trim()=="1"){
-				$.messager.alert('Message',"Successfully Saved");
-				funreload();
-			}
-		}
-	}
-	x.open("GET", "updateStatus.jsp?fleetdate="+testdate+"&fleettime="+testtime2+"&fleetno="+$("#fleetno").val()+"&status="+$("#cmbstatus").val()+"&branch="+$("#hidbranch").val(), true);
-	x.send();
+    var testdate= $('#fleetdate').jqxDateTimeInput('val');
+    var testtime2=$('#fleettime').jqxDateTimeInput('val');
+    if($("#fleetno").val()==""){
+         $.messager.alert('Message',"Please Select Fleet");
+         return false;
+    }
+    // ... rest of validation logic ...
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            if(x.responseText.trim()=="1"){
+                $.messager.alert('Message',"Successfully Saved");
+                funreload();
+            }
+        }
+    }
+    x.open("GET", "updateStatus.jsp?fleetdate="+testdate+"&fleettime="+testtime2+"&fleetno="+$("#fleetno").val()+"&status="+$("#cmbstatus").val()+"&branch="+$("#hidbranch").val(), true);
+    x.send();
 }
 
 function funreload() {
@@ -200,14 +213,14 @@ function funreload() {
 }
 
 function getVehicleMov(){
-	 $('#movementwindow').jqxWindow('open');	 
+     $('#movementwindow').jqxWindow('open');    
      $.get("<%=contextPath%>/com/dashboard/vehicle/vehiclemovement/vehiclemovementGrid.jsp?fleetno="+$("#fleetno").val()).done(function (data) {
         $('#movementwindow').jqxWindow('setContent', data);
     }); 
 }
 
 function getAttach(){
-	$.get("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+$("#docno").val()).done(function (data) {
+    $.get("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+$("#docno").val()).done(function (data) {
         $('#clientAttachWindow').jqxWindow('open').jqxWindow('setContent',data);
     }); 
 }
@@ -226,7 +239,7 @@ function getAttach(){
         <div class="sidebar-filters">
 
             <div class="sidebar-fixed-top">
-                <div class="filter-card" style="border:none; padding:0;">
+                <div class="filter-card" style="border:none; padding:0; margin-bottom:0;">
                     <jsp:include page="../../heading.jsp"></jsp:include>
                 </div>
             </div>
@@ -259,8 +272,11 @@ function getAttach(){
 
                 <div class="button-container">
                     <button type="button" class="btn-submit action-btn" id="btnUpdate" onclick="updateStatus();">Update Status</button>
-                    <button type="button" class="btn-submit action-btn" id="btnattach" onclick="getAttach();">Attach</button>
-                    <button type="button" class="btn-submit action-btn" id="btnmove" onclick="getVehicleMov();">Movement</button>
+                    
+                    <div class="button-group">
+                        <button type="button" class="btn-submit action-btn" id="btnattach" onclick="getAttach();">Attach</button>
+                        <button type="button" class="btn-submit action-btn" id="btnmove" onclick="getVehicleMov();">Movement</button>
+                    </div>
                 </div>
             </div>
         </div>

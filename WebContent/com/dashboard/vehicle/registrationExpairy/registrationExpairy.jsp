@@ -1,4 +1,3 @@
-
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
@@ -17,7 +16,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UPDATED FONT FAMILY */
     background-color: #f4f7f9;
 }
 
@@ -58,32 +57,40 @@
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;             /* Enforced 24px height */
+    padding: 2px 8px;         /* Tighter padding for 24px */
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;       /* Sharper corners for ERP feel */
+    font-size: 12px;          /* Adjusted font to fit 24px box */
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
+/* ===== BUTTONS ===== */
 .btn-submit {
     width: 100%;
-    padding: 11px;
+    height: 30px;            /* Scaled button height */
+    padding: 0 12px;         /* Center text vertically */
     margin-top: 10px;
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;      /* Matched border-radius */
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;       /* Aligns text inside button */
 }
 
 .btn-submit:hover {
@@ -106,95 +113,100 @@ td[width="80%"] {
 <script type="text/javascript">
 
 $(document).ready(function () {
-	$("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:200;right:600;'><img src='../../../../icons/31load.gif'/></div>");    
-	$("#regexpdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	$("#fromdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	var curfromdate=$('#fromdate').jqxDateTimeInput('getDate');
-	var onemonthbackdate=new Date(curfromdate.setMonth(curfromdate.getMonth()-1));
-	$('#fromdate').jqxDateTimeInput('setDate', onemonthbackdate);
-	$('#clientwindow').jqxWindow({ width: '62%', height: '65%',  maxHeight: '85%' ,maxWidth: '80%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
-	$('#clientwindow').jqxWindow('close'); 
-	$('#client').dblclick(function(){
-		$('#clientwindow').jqxWindow('open');
-		$('#clientwindow').jqxWindow('focus');
-	 	clientSearchContent('clientMasterSearch.jsp', $('#clientwindow'));
-	});
-	getConfigs();
+    
+    // UPDATED: Standardized height to 24px and width to 100%
+    $("#regexpdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    
+    var curfromdate=$('#fromdate').jqxDateTimeInput('getDate');
+    var onemonthbackdate=new Date(curfromdate.setMonth(curfromdate.getMonth()-1));
+    $('#fromdate').jqxDateTimeInput('setDate', onemonthbackdate);
+    
+    $('#clientwindow').jqxWindow({ width: '62%', height: '65%',  maxHeight: '85%' ,maxWidth: '80%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
+    $('#clientwindow').jqxWindow('close'); 
+    
+    $('#client').dblclick(function(){
+        $('#clientwindow').jqxWindow('open');
+        $('#clientwindow').jqxWindow('focus');
+        clientSearchContent('clientMasterSearch.jsp', $('#clientwindow'));
+    });
+    getConfigs();
 });
 
 function getClient(event){
-	var x= event.keyCode;
-   	if(x==114){
-   		$('#clientwindow').jqxWindow('open');
- 		$('#clientwindow').jqxWindow('focus');
- 		clientSearchContent('clientMasterSearch.jsp', $('#clientwindow'));
+    var x= event.keyCode;
+    if(x==114){
+        $('#clientwindow').jqxWindow('open');
+        $('#clientwindow').jqxWindow('focus');
+        clientSearchContent('clientMasterSearch.jsp', $('#clientwindow'));
    }
    else{
    }
 }
 function clientSearchContent(url) {
-	$.get(url).done(function (data) {
-   		$('#clientwindow').jqxWindow('setContent', data);
-	}); 
+    $.get(url).done(function (data) {
+        $('#clientwindow').jqxWindow('setContent', data);
+    }); 
 }
 function funreload(event)
 {
-	 var barchval = document.getElementById("cmbbranch").value;
-	 var exdate = $('#regexpdate').val();
-	 var fromdate = $('#fromdate').jqxDateTimeInput('val');
-	 var cldocno=$('#cldocno').val();
-	 $("#overlay, #PleaseWait").show(); 
-	 $("#explistdiv").load("registrationExpairyGrid.jsp?barchval="+barchval+'&exdate='+exdate+'&fromdate='+fromdate+'&id=1&cldocno='+cldocno);
+     var barchval = document.getElementById("cmbbranch").value;
+     var exdate = $('#regexpdate').val();
+     var fromdate = $('#fromdate').jqxDateTimeInput('val');
+     var cldocno=$('#cldocno').val();
+     $("#overlay, #PleaseWait").show(); 
+     $("#explistdiv").load("registrationExpairyGrid.jsp?barchval="+barchval+'&exdate='+exdate+'&fromdate='+fromdate+'&id=1&cldocno='+cldocno);
 }
-	
+    
 function changeAttachContent(url) {
-	$.get(url).done(function (data) {
-		    $('#windowattach').jqxWindow('open');
-		  
-			$('#windowattach').jqxWindow('setContent',data);
-			 $('#windowattach').jqxWindow('bringToFront');
+    $.get(url).done(function (data) {
+            $('#windowattach').jqxWindow('open');
+          
+            $('#windowattach').jqxWindow('setContent',data);
+             $('#windowattach').jqxWindow('bringToFront');
 }); 
 }
 var configid=0;
 function getConfigs(){
     //var dname=document.getElementById("lbldetailname").innerText;
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText.split("####");
-				if(parseInt(items[0]) == 1){  
-					configid=1;
-				} else {
-					
-				}
-			
-		}
-		}
-		x.open("GET", "getConfig.jsp", true);  
-		x.send();
-	}
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.split("####");
+                if(parseInt(items[0]) == 1){  
+                    configid=1;
+                } else {
+                    
+                }
+            
+        }
+        }
+        x.open("GET", "getConfig.jsp", true);  
+        x.send();
+    }
 function funExportBtn(){
-	if(configid==1){
-		JSONToCSVConvertor(expdata, 'Registration Expiry', true);
-		
-	}else{
-		$("#explistdiv").excelexportjs({
-			containerid: "explistdiv", 
-			datatype: 'json', 
-			dataset: null, 
-			gridId: "regexpgrid", 
-			columns: getColumns("regexpgrid") ,   
-			worksheetName:"Registration Expiry"
-			});
-	}
-	  
-	
-	   
-	 }
-	 
+    if(configid==1){
+        JSONToCSVConvertor(expdata, 'Registration Expiry', true);
+        
+    }else{
+        $("#explistdiv").excelexportjs({
+            containerid: "explistdiv", 
+            datatype: 'json', 
+            dataset: null, 
+            gridId: "regexpgrid", 
+            columns: getColumns("regexpgrid") ,   
+            worksheetName:"Registration Expiry"
+            });
+    }
+     
+    
+     
+     }
+    
 function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
-	
+    
     var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
     
    // alert("arrData");
