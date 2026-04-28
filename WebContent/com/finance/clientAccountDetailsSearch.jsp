@@ -12,26 +12,34 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Compact Search Modal Layout
+   SCOPED UI: Strict Pixel Grid Alignment
 ========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
+}
+
 .modern-ui {
-    font-family: Arial, sans-serif;
     font-size: 12px;
     color: #333;
     padding: 10px;
     box-sizing: border-box;
+    width: 100%;
 }
 
-/* Master Input Heights - Forced to 24px */
+/* Master Input Styles */
 .modern-ui input[type="text"] {
     height: 24px !important;
-    border: 1px solid #b8c6d8;
+    border: 1px solid #BDBDBD;
     border-radius: 3px;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     box-sizing: border-box;
     background-color: #fff;
     color: #333;
+    width: 100%;
 }
 
 .modern-ui input[type="text"]:focus {
@@ -41,42 +49,41 @@ SCOPED UI: Compact Search Modal Layout
 
 /* Panel Styling */
 .modern-ui .search-panel {
-    background-color: #f4f7fb;
+    background-color: #f4f7fb; 
     border: 1px solid #c5d3e0;
     border-radius: 4px;
-    padding: 15px;
+    padding: 12px 10px;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Unbreakable Row Layouts */
-.modern-ui .form-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 20px;
-    flex-wrap: nowrap;
+/* Table Alignment - STRICT PERCENTAGE GRID */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
 }
 
-.modern-ui .field-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.modern-ui td {
+    vertical-align: middle;
 }
 
-/* Fixed Label Alignments */
-.modern-ui .fixed-lbl {
-    width: 85px;
-    text-align: right;
-    font-weight: bold;
-    color: #444;
-    white-space: nowrap;
-    flex-shrink: 0;
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
 }
 
-/* Modern Search Button */
+/* Search Button - Standard Blue */
 .modern-ui .myButton {
     height: 26px;
-    padding: 0 16px;
+    padding: 0 20px;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
     color: #fff;
     border: none;
@@ -84,15 +91,16 @@ SCOPED UI: Compact Search Modal Layout
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     transition: all 0.2s;
+    /* width: 100% removed to ensure natural compact size */
 }
 
 .modern-ui .myButton:hover {
     background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
 }
 
-/* Data Grid Container */
+/* Grid Container */
 .modern-ui .grid-container {
     border: 1px solid #c5d3e0;
     border-radius: 4px;
@@ -126,14 +134,14 @@ SCOPED UI: Compact Search Modal Layout
     }); 
     
     function loadClientAccountSearch() {
-        var clientaccountno = document.getElementById("accountsno").value;
-        var clientaccountname = document.getElementById("accountsname").value;
-        var clientmobile = document.getElementById("clientmobileno").value;
-        var curr = document.getElementById("txtcurrencies").value;
-        var accounttype = document.getElementById("txtatypes").value;
-        var code = document.getElementById("txtdocumenttypes").value;
-        var debitcredit = document.getElementById("txtcreditdebit").value;
-        var date = document.getElementById("txtnewdate").value;
+        var clientaccountno = document.getElementById("accountsno").value || "";
+        var clientaccountname = document.getElementById("accountsname").value || "";
+        var clientmobile = document.getElementById("clientmobileno").value || "";
+        var curr = document.getElementById("txtcurrencies").value || "";
+        var accounttype = document.getElementById("txtatypes").value || "";
+        var code = document.getElementById("txtdocumenttypes").value || "";
+        var debitcredit = document.getElementById("txtcreditdebit").value || "";
+        var date = document.getElementById("txtnewdate").value || "";
         var checked = 1;
         
         if(typeof checkapprvl === 'function') {
@@ -144,15 +152,16 @@ SCOPED UI: Compact Search Modal Layout
     }
         
     function getClientAccountDetails(clientaccountno, clientaccountname, clientmobile, curr, accounttype, code, debitcredit, date, checked){
+        /* Safely encoding all URI components to prevent breakages */
         $("#refreshClientAccountDiv").load(
-            "../../clientAccountDetailsSearchGrid.jsp?accountno=" + clientaccountno + 
-            '&accountname=' + encodeURIComponent(clientaccountname.replace(/ /g, "%20")) + 
-            '&mobile=' + clientmobile + 
-            '&currency=' + curr + 
-            '&atype=' + accounttype + 
-            '&dtype=' + code + 
-            '&debitcredit=' + debitcredit + 
-            '&date=' + date + 
+            "../../clientAccountDetailsSearchGrid.jsp?accountno=" + encodeURIComponent(clientaccountno) + 
+            '&accountname=' + encodeURIComponent(clientaccountname) + 
+            '&mobile=' + encodeURIComponent(clientmobile) + 
+            '&currency=' + encodeURIComponent(curr) + 
+            '&atype=' + encodeURIComponent(accounttype) + 
+            '&dtype=' + encodeURIComponent(code) + 
+            '&debitcredit=' + encodeURIComponent(debitcredit) + 
+            '&date=' + encodeURIComponent(date) + 
             '&check=' + checked
         );
     }
@@ -164,42 +173,45 @@ SCOPED UI: Compact Search Modal Layout
 <div id="search" class="modern-ui">
 
     <div class="search-panel">
-        
-        <div class="form-row">
-            <div class="field-group">
-                <label class="fixed-lbl">Account No</label>
-                <input type="text" name="accountsno" id="accountsno" style="width: 140px;" value='<s:property value="accountsno"/>'>
-            </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="12%" /> <col width="28%" /> <col width="10%" /> <col width="25%" /> <col width="25%" /> </colgroup>
             
-            <div class="field-group">
-                <label class="fixed-lbl" style="width: 60px;">Currency</label>
-                <input type="text" name="txtcurrencies" id="txtcurrencies" style="width: 80px;" value='<s:property value="txtcurrencies"/>'>
+            <tr>
+                <td class="lbl-right">Account No</td>
+                <td>
+                    <input type="text" name="accountsno" id="accountsno" value='<s:property value="accountsno"/>'>
+                </td>
                 
-                <input type="hidden" name="txtatypes" id="txtatypes" value='<s:property value="txtatypes"/>'>
-                <input type="hidden" name="txtdocumenttypes" id="txtdocumenttypes" value='<s:property value="txtdocumenttypes"/>'>
-            </div>
-            
-            <div style="margin-left: auto;">
-                <input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search" onclick="loadClientAccountSearch();">
-            </div>
-        </div>
-        
-        <div class="form-row" style="margin-bottom: 0;">
-            <div class="field-group">
-                <label class="fixed-lbl">Account Name</label>
-                <input type="text" name="accountsname" id="accountsname" style="width: 200px;" value='<s:property value="accountsname"/>'>
-            </div>
-            
-            <div class="field-group">
-                <label class="fixed-lbl" style="width: 50px;">Mobile</label>
-                <input type="text" name="clientmobileno" id="clientmobileno" style="width: 120px;" value='<s:property value="clientmobileno"/>'>
+                <td class="lbl-right">Currency</td>
+                <td>
+                    <input type="text" name="txtcurrencies" id="txtcurrencies" value='<s:property value="txtcurrencies"/>'>
+                    
+                    <input type="hidden" name="txtatypes" id="txtatypes" value='<s:property value="txtatypes"/>'>
+                    <input type="hidden" name="txtdocumenttypes" id="txtdocumenttypes" value='<s:property value="txtdocumenttypes"/>'>
+                </td>
                 
-                <input type="hidden" name="txtcreditdebit" id="txtcreditdebit" value='<s:property value="txtcreditdebit"/>'>
-                <input type="hidden" name="txtnewdate" id="txtnewdate" value='<s:property value="txtnewdate"/>'>
-                <input type="hidden" id="hidapprvlcheck"/>
-            </div>
-        </div>
-        
+                <td align="center" rowspan="2" valign="middle">
+                    <input type="button" name="btnClientAccountSearch" id="btnClientAccountSearch" class="myButton" value="Search" onclick="loadClientAccountSearch();">
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">Account Name</td>
+                <td>
+                    <input type="text" name="accountsname" id="accountsname" value='<s:property value="accountsname"/>'>
+                </td>
+                
+                <td class="lbl-right">Mobile</td>
+                <td>
+                    <input type="text" name="clientmobileno" id="clientmobileno" value='<s:property value="clientmobileno"/>'>
+                    
+                    <input type="hidden" name="txtcreditdebit" id="txtcreditdebit" value='<s:property value="txtcreditdebit"/>'>
+                    <input type="hidden" name="txtnewdate" id="txtnewdate" value='<s:property value="txtnewdate"/>'>
+                    <input type="hidden" id="hidapprvlcheck"/>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="grid-container">

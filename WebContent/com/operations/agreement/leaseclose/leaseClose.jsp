@@ -1522,48 +1522,161 @@ if(document.getElementById("rentalagent").value==""){
       <legend>In Info</legend>
       <table width="100%">
         <tr>
-          <td width="11%" rowspan="2">Collection
-            <input type="checkbox" name="chkcollection" id="chkcollection" onchange="setCollection();">
-            &nbsp;
-           <div class="input-search-container"> <input type="text" name="chauffer" id="chauffer" value='<s:property value="chauffer"/>' onkeydown="getChauffer(event);" readonly placeholder="Press F3 to Search"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<td width="11%" rowspan="2" style="text-align:center; vertical-align:top; position:relative; top:-12px; padding-top:0px;">
+    <span style="font-weight:bold; font-size:12px; display:inline-block; margin-top:0;">Collection</span>
+    <input type="checkbox" name="chkcollection" id="chkcollection"
+           onchange="setCollection();toggleCollection();"
+           style="vertical-align:middle; margin-left:3px;">
+    
+    &nbsp;
+    <div class="input-search-container">
+        <input type="text" name="chauffer" id="chauffer"
+               value='<s:property value="chauffer"/>'
+               onkeydown="getChauffer(event);"
+               readonly
+               disabled
+               placeholder="Press F3 to Search"
+               style="background-color:#e9ecef;">
+
+        <svg class="magnifier-icon" onclick="triggerToSearch();"
+             width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        </div><br>
-            <input type="text" name="collectchg" id="collectchg" value='<s:property value="collectchg"/>' placeholder="Collection Charge" style="text-align:right;"/>
-            </td>
-          <input type="hidden" name="hidchkcollection" id="hidchkcollection" value='<s:property value="hidchkcollection"/>'>
-          <td width="8%" align="right">Collection Details</td>
-          <td width="1%" align="right">KM</td>
-          <td width="5%" align="left"><input type="text" name="collectkm" id="collectkm" value='<s:property value="collectkm"/>'></td>
-          <td width="2%" align="right">Fuel</td>
-          <input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel" value='<s:property value="hidcmbcollectfuel"/>'>
-          <td width="7%" align="left">
-          <select name="cmbcollectfuel" id="cmbcollectfuel"><option value="">-Select-</option><option value=0.000>Level 0/8</option><option value=0.125>Level 1/8</option><option value=0.250>Level 2/8</option><option value=0.375>Level 3/8</option><option value=0.500>Level 4/8</option>
-    <option value=0.625>Level 5/8</option><option value=0.750>Level 6/8</option><option value=0.875>Level 7/8</option><option value=1.000>Level 8/8</option></select></td>
-          <td width="2%" align="right">Date</td>
-          <td width="4%" align="left"><div id="collectdate" name="collectdate" value='<s:property value="collectdate"/>'></div></td>
-          <input type="hidden" name="hidcollectdate" id="hidcollectdate" value='<s:property value="hidcollectdate"/>'>
-          <td width="2%" align="right">Time</td>
-          <td width="5%" align="left"><div id="collecttime" name="collecttime" value='<s:property value="collecttime"/>'></div></td>
-          <input type="hidden" id="hidcollecttime" name="hidcollecttime" value='<s:property value="hidcollecttime"/>'>
+    </div>
+    <br>
+
+    <input type="text" name="collectchg" id="collectchg"
+           value='<s:property value="collectchg"/>'
+           placeholder="Collection Charge"
+           style="text-align:right; background-color:#e9ecef;"
+           disabled />
+</td>
+
+<input type="hidden" name="hidchkcollection" id="hidchkcollection"
+       value='<s:property value="hidchkcollection"/>'>
+
+<td width="8%" align="right">Collection Details</td>
+
+<td width="1%" align="right">KM</td>
+<td width="5%" align="left">
+    <input type="text" name="collectkm" id="collectkm"
+           value='<s:property value="collectkm"/>'
+           style="background-color:#e9ecef;"
+           disabled>
+</td>
+
+<td width="2%" align="right">Fuel</td>
+<input type="hidden" name="hidcmbcollectfuel" id="hidcmbcollectfuel"
+       value='<s:property value="hidcmbcollectfuel"/>'>
+
+<td width="7%" align="left">
+    <select name="cmbcollectfuel" id="cmbcollectfuel"
+            style="background-color:#e9ecef;"
+            disabled>
+        <option value="">-Select-</option>
+        <option value="0.000">Level 0/8</option>
+        <option value="0.125">Level 1/8</option>
+        <option value="0.250">Level 2/8</option>
+        <option value="0.375">Level 3/8</option>
+        <option value="0.500">Level 4/8</option>
+        <option value="0.625">Level 5/8</option>
+        <option value="0.750">Level 6/8</option>
+        <option value="0.875">Level 7/8</option>
+        <option value="1.000">Level 8/8</option>
+    </select>
+</td>
+
+<td width="2%" align="right">Date</td>
+<td width="5%" align="left">
+    <div id="collectdate" name="collectdate"
+         value='<s:property value="collectdate"/>'></div>
+</td>
+
+<input type="hidden" name="hidcollectdate" id="hidcollectdate"
+       value='<s:property value="hidcollectdate"/>'>
+
+<td width="2%" align="right">Time</td>
+<td width="5%" align="left">
+    <div id="collecttime" name="collecttime"
+         value='<s:property value="collecttime"/>'></div>
+</td>
+
+<input type="hidden" id="hidcollecttime" name="hidcollecttime"
+       value='<s:property value="hidcollecttime"/>'>
+
+<script>
+function toggleCollection() {
+    var checked = document.getElementById("chkcollection").checked;
+
+    var chauffer = document.getElementById("chauffer");
+    var collectchg = document.getElementById("collectchg");
+    var collectkm = document.getElementById("collectkm");
+    var cmbcollectfuel = document.getElementById("cmbcollectfuel");
+
+    chauffer.disabled = !checked;
+    chauffer.style.setProperty("background-color", checked ? "#ffffff" : "#e9ecef", "important");
+    chauffer.parentElement.style.setProperty("background-color", checked ? "#ffffff" : "#e9ecef", "important");
+
+    collectchg.disabled = !checked;
+    collectchg.style.setProperty("background-color", checked ? "#ffffff" : "#e9ecef", "important");
+
+    collectkm.disabled = !checked;
+    collectkm.style.setProperty("background-color", checked ? "#ffffff" : "#e9ecef", "important");
+
+    cmbcollectfuel.disabled = !checked;
+    cmbcollectfuel.style.setProperty("background-color", checked ? "#ffffff" : "#e9ecef", "important");
+
+    document.getElementById("collectdate").style.pointerEvents = checked ? "auto" : "none";
+    document.getElementById("collectdate").style.opacity = checked ? "1" : "0.6";
+
+    document.getElementById("collecttime").style.pointerEvents = checked ? "auto" : "none";
+    document.getElementById("collecttime").style.opacity = checked ? "1" : "0.6";
+}
+</script>
           <td width="5%" align="right">Rental Agent</td>
-          <%-- <select name="cmbrentalagent" id="cmbrentalagent" value='<s:property value="cmbrentalagent"/>'>
-            <option value="">--Select--</option>
-          </select> --%>
-          <td width="10%" align="left">
-          <div class="input-search-container"><input type="text" name="rentalagent" id="rentalagent" value='<s:property value="rentalagent"/>' readonly placeholder="Press F3 to Search" onkeydown="getRentalAgent(event);"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+<td width="10%" align="left">
+    <div class="input-search-container" style="background-color:#fff !important;">
+        <input type="text" name="rentalagent" id="rentalagent"
+               value='<s:property value="rentalagent"/>'
+               readonly
+               placeholder="Press F3 to Search"
+               onkeydown="getRentalAgent(event);"
+               style="background-color:#fff !important;">
+
+        <svg class="magnifier-icon" onclick="triggerToSearch();"
+             width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        </div>
-          </td>
-          <input type="hidden" name="hidrentalagent" id="hidrentalagent" value='<s:property value="hidrentalagent"/>'>
-          <input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin" value='<s:property value="hidcmbcheckin"/>'>
-          <td width="7%" align="right">Days Used</td>
-          <td width="8%" align="left"><input type="text" name="useddays" id="useddays" value='<s:property value="useddays"/>' style="width:60%;"  readonly></td>
-          <td width="5%" align="right">Hours Used</td>
-          <td width="10%" align="left"><input type="text" name="usedhours" id="usedhours" value='<s:property value="usedhours"/>' readonly style="width:60%;" ></td>
+    </div>
+</td>
+
+<input type="hidden" name="hidrentalagent" id="hidrentalagent"
+       value='<s:property value="hidrentalagent"/>'>
+<input type="hidden" name="hidcmbcheckin" id="hidcmbcheckin"
+       value='<s:property value="hidcmbcheckin"/>'>
+
+<td width="7%" align="right">Days Used</td>
+<td width="8%" align="left">
+    <input type="text" name="useddays" id="useddays"
+           value='<s:property value="useddays"/>'
+           style="width:60%; background-color:#fff !important;"
+           readonly>
+</td>
+
+<td width="5%" align="right">Hours Used</td>
+<td width="10%" align="left">
+    <input type="text" name="usedhours" id="usedhours"
+           value='<s:property value="usedhours"/>'
+           readonly
+           style="width:60%; background-color:#fff !important;">
+</td>
           <td width="6%" align="center" rowspan="2"> <button type="button" id="btnprocess" title="Process"  class="myButton" onclick="funChecking();">
 							Process</button></td>
         </tr>
@@ -1582,38 +1695,78 @@ if(document.getElementById("rentalagent").value==""){
           <td align="left"><div id="intime" name="intime" value='<s:property value="intime"/>'></div></td>
           <input type="hidden" name="hidintime" id="hidintime" value='<s:property value="hidintime"/>'>
           <td align="right">Check In</td>
-          <%-- <select name="cmbcheckin" id="cmbcheckin" value='<s:property value="cmbcheckin"/>' onchange="checkAgmtDelivery();">
-            <option value="">--Select--</option>
-          </select> --%>
-          <td align="left">
-          <div class="input-search-container"><input type="text" name="checkin" id="checkin" value='<s:property value="checkin"/>' readonly placeholder="Press F3 to Search" onkeydown="getCheckin(event);"><svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+<td align="left">
+    <div class="input-search-container" style="background-color:#fff !important;">
+        <input type="text" name="checkin" id="checkin"
+               value='<s:property value="checkin"/>'
+               readonly
+               placeholder="Press F3 to Search"
+               onkeydown="getCheckin(event);"
+               style="background-color:#fff !important;">
+
+        <svg class="magnifier-icon" onclick="triggerToSearch();"
+             width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        </div>
-          </td>
-          <input type="hidden" name="hidcheckin" id="hidcheckin" value='<s:property value="hidcheckin"/>'>
-          <input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent" value='<s:property value="hidcmbrentalagent"/>'>
-         <div border="1">
-          <td align="right">Total KM</td>
-          <td align="left"><input type="text" name="totalkm" id="totalkm" value='<s:property value="totalkm"/>' style="width:60%;"  readonly></td>
-          <td align="right">Excess KM</td>
-          <td align="left"><input type="text" name="excesskm" id="excesskm" value='<s:property value="excesskm"/>' style="width:60%;" readonly></td>
-          <td width="0%" align="left">&nbsp;</td>
+    </div>
+</td>
+
+<input type="hidden" name="hidcheckin" id="hidcheckin"
+       value='<s:property value="hidcheckin"/>'>
+<input type="hidden" name="hidcmbrentalagent" id="hidcmbrentalagent"
+       value='<s:property value="hidcmbrentalagent"/>'>
+
+<div border="1">
+    <td align="right">Total KM</td>
+    <td align="left">
+        <input type="text" name="totalkm" id="totalkm"
+               value='<s:property value="totalkm"/>'
+               style="width:60%; background-color:#fff !important;"
+               readonly>
+    </td>
+
+    <td align="right">Excess KM</td>
+    <td align="left">
+        <input type="text" name="excesskm" id="excesskm"
+               value='<s:property value="excesskm"/>'
+               style="width:60%; background-color:#fff !important;"
+               readonly>
+    </td>
+
+    <td width="0%" align="left">&nbsp;</td>
+
          </div>
         </tr>
       </table>
     </fieldset></td>
   </tr>
   <tr>
-    <td width="66%"><fieldset>
+    <td width="66%">
       
-      <table width="100%">
+      <fieldset>
+    <legend>Agreement Tariff</legend>
+    <table width="100%">
         <tr>
-          <td><div id="agmttarifdiv"><jsp:include page="agreementTarifGrid.jsp"></jsp:include></div></td>
+            <td>
+                <div id="agmttarifdiv">
+                    <jsp:include page="agreementTarifGrid.jsp"></jsp:include>
+                </div>
+            </td>
         </tr>
-      </table>
-    </fieldset></td>
+        <tr>
+            <td>
+                <div id="totaldiv">
+                    <jsp:include page="totalGrid.jsp"></jsp:include>
+                </div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+    </td>
     <td width="34%" rowspan="3">
     <center><label name="lblinvoicedone" id="lblinvoicedone" style="color:red;font-weight:bold;font-size:14;"></label>    </center>
     <center><input type="button" name="btncalculate" id="btncalculate" class="myButton" value="Calculate" onclick="funCalculate();">&nbsp;
@@ -1630,16 +1783,9 @@ if(document.getElementById("rentalagent").value==""){
     </td>
   </tr>
  
-  <tr>
+
     <td><fieldset><table width="100%">
-      <tr>
-        <td><div id="totaldiv"><jsp:include page="totalGrid.jsp"></jsp:include></div></td>
-        </tr>
-      </table>
-    </fieldset></td>
-    </tr>
-  <tr>
-    <td><fieldset><table width="100%">
+    <legend>Traffic Fine</legend>
       <tr>
         <td><div id="trafficdiv"><jsp:include page="trafficGrid.jsp"></jsp:include></div></td>
         </tr>

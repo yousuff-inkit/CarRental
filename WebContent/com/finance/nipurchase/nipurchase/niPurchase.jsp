@@ -35,7 +35,7 @@ body, .homeContent {
 }
 
 .erp-form-area {
-    background-color: #fff; /* Keep it clean white */
+    background-color: #fff;
     border: 1px solid #e1e4e8;
     border-radius: 4px;
     padding: 15px 10px;
@@ -118,9 +118,18 @@ form label.error {
 <script type="text/javascript">
 $(document).ready(function () {   
     /* EXACT DATE WIDTHS & HEIGHTS (NO CSS HACKS) */  
-    $("#nipurchasedate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
-    $("#deliverydate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
-    $("#invDate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    $("#nipurchasedate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy", theme: 'energyblue'});
+    $("#deliverydate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy", theme: 'energyblue'});
+    $("#invDate").jqxDateTimeInput({  width: '100%', height: '24px', formatString:"dd.MM.yyyy", theme: 'energyblue'});
+
+    /* Force internal jqx styling to align with 24px height */
+    setTimeout(function () {
+        $("#nipurchasedate, #deliverydate, #invDate").find("input").css({
+            "margin-top": "0px", "line-height": "24px", "font-size": "12px", 
+            "padding": "0 6px", "box-sizing":"border-box"
+        });
+        $("#nipurchasedate, #deliverydate, #invDate").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
+    }, 0);
 
     $('#typesearchwindow').jqxWindow({ width : '25%', height : '58%', maxHeight : '70%', maxWidth : '45%', title : ' Search', position : { x : 700, y : 87 }, theme : 'energyblue', showCloseButton : true, keyboardCloseKey : 27 });
     $('#typesearchwindow').jqxWindow('close');
@@ -138,9 +147,7 @@ $(document).ready(function () {
     $('#nipurchslnosearch').jqxWindow({ width: '50%', height: '59%',  maxHeight: '62%' ,maxWidth: '60%' , title: ' Search' ,position: { x: 200, y: 60}, keyboardCloseKey: 27});
     $('#nipurchslnosearch').jqxWindow('close');
 
-    $('#txtproducttype').dblclick(function(){
-        typeFormSearchContent('typeFormSearchGrid.jsp'); 
-    }); 
+    $('#txtproducttype').dblclick(function(){ typeFormSearchContent('typeFormSearchGrid.jsp'); }); 
     
     $('#refno').dblclick(function(){
         if($('#mode').val()!= "view"){
@@ -168,8 +175,7 @@ function typeFormSearchContent(url) {
 
 function getProdType(event){
      var x= event.keyCode;
-     if(x==114){
-         typeFormSearchContent('typeFormSearchGrid.jsp');    }
+     if(x==114){ typeFormSearchContent('typeFormSearchGrid.jsp');  }
 }
 
 function getrefnosearch(event){
@@ -231,20 +237,15 @@ function nipurhsaeslnocontent(url) {
     }); 
 } 
   
-function funFocus(){
-  $('#nipurchasedate').jqxDateTimeInput('focus');         
-}
+function funFocus(){ $('#nipurchasedate').jqxDateTimeInput('focus'); }
 
 function funNotify(){   
     var nipurchasedate = $('#nipurchasedate').jqxDateTimeInput('getDate');
     var validdate=funDateInPeriod(nipurchasedate);
-    if(validdate==0){
-    return 0;   
-    }
+    if(validdate==0){ return 0; }
     
     var txtproducttype= document.getElementById('txtproducttype').value;
     if(txtproducttype==""){
-        var aa=0;
         var selectedrows=$("#nidescdetailsGrid").jqxGrid('getrows');   
         for(var i=0 ; i < selectedrows.length ; i++){
           var tax=$("#nidescdetailsGrid").jqxGrid('getcellvalue',selectedrows[i],'taxper');
@@ -382,7 +383,7 @@ function funchkforedit() {
             if(parseInt(items)>0) {
                  $("#btnEdit").attr('disabled', true );
                  $("#btnDelete").attr('disabled', true ); 
-            } else {}
+            }
         }
     }
     x.open("GET", "linkchk.jsp?masterdoc_no="+document.getElementById("masterdoc_no").value, true);
@@ -390,11 +391,7 @@ function funchkforedit() {
 }
 
 function funChkButton() {}
-
-function funSearchLoad(){
-     changeContent('nipurchaseMastersearch.jsp'); 
-}
-
+function funSearchLoad(){ changeContent('nipurchaseMastersearch.jsp'); }
 function funReset(){}
 
 function funReadOnly(){
@@ -408,6 +405,7 @@ function funReadOnly(){
      $('#acctype').attr('disabled', true);
      $('#refno').attr('disabled', true);
        $('#refslno').attr('disabled', true);
+       $('#interstate').attr('disabled', true);
         $("#nidescdetailsGrid").jqxGrid({ disabled: true});
          $('#txtproducttype').attr('disabled', true);
        combochange();
@@ -415,11 +413,13 @@ function funReadOnly(){
 }
 
 function funRemoveReadOnly(){
+    funinterstate();
     $('#frmNipurchase input').attr('readonly', false );
     $('#frmNipurchase select').attr('disabled', false );
      $('#nipurchasedate').jqxDateTimeInput({ disabled: false});
      $('#deliverydate').jqxDateTimeInput({ disabled: false});
      $('#invDate').jqxDateTimeInput({ disabled: false});
+     $('#interstate').attr('disabled', false);
      $('#txtproducttype').attr('readonly', true);
      $('#nireftype').attr('disabled', false);
       $('#cmbcurr').attr('disabled', false);
@@ -567,6 +567,13 @@ function setValues() {
             $("#invDate").jqxDateTimeInput('val', $('#hidinvDate').val());
         }
 
+        var interstate=document.getElementById("hidinterstate").value;
+        if(interstate>0){
+            document.getElementById("interstate").checked=true;
+        } else{
+            document.getElementById("interstate").checked=false;
+        }
+
         if($('#hidcmbbilltype').val!=""){
             $("#cmbbilltype").val($('#hidcmbbilltype').val());
         }
@@ -675,7 +682,7 @@ function setValues() {
                     <input type="hidden" id="hidinvDate" name="hidinvDate" value='<s:property value="hidinvDate"/>'>
                 </td>
                 <td class="lbl-right" width="5%">Doc No</td>
-                <td width="12%">
+                <td width="7%">
                     <input type="text" name="docno" id="docno" tabindex="-1" value='<s:property value="docno"/>' readonly="readonly">
                 </td>
             </tr>
@@ -722,8 +729,14 @@ function setValues() {
                     <div id="deliverydate" name="deliverydate" value='<s:property value="deliverydate"/>'></div>
                     <input type="hidden" name="hiddeliverydate" id="hiddeliverydate" value='<s:property value="hiddeliverydate"/>'>
                 </td>
+                <td width="9%">
+                    <div id="interdiv" style="display:flex; align-items:center;">
+                        <input type="checkbox" name="interstate" id="interstate" value="interstate" value='<s:property value="interstate"/>' onclick="$(this).attr('value', this.checked ? 1 : 0);" style="width:auto; height:auto!important; margin-right:5px; margin-left: 5px;">
+                        <label style="margin:0;">Interstate</label>
+                    </div>
+                </td>
                 <td class="lbl-right" width="6%">Del Terms</td>
-                <td width="80%">
+                <td width="71%">
                     <input type="text" name="delterms" id="delterms" value='<s:property value="delterms"/>'>
                 </td>
             </tr>
@@ -769,6 +782,12 @@ function setValues() {
         <input type="hidden" id="taxpers" name="taxpers" value='<s:property value="taxpers"/>'/>
         <input type="hidden" id="taxaccount" name="taxaccount" value='<s:property value="taxaccount"/>'/>
         <input type="hidden" id="refslno" name="refslno" value='<s:property value="refslno"/>' >
+        <input type="hidden" id="hidinterstate" name="hidinterstate" value='<s:property value="hidinterstate"/>'/>
+        <input type="hidden" id="tarannumber" name="tarannumber" value='<s:property value="tarannumber"/>'/>
+        <input type="hidden" id="costgropename" name="costgropename" value='<s:property value="costgropename"/>'/>
+        <input type="hidden" id="nidescdetailslenght" name="nidescdetailslenght" value='<s:property value="nidescdetailslenght"/>'/>
+        <input type="hidden" id="acctypegrid" name="acctypegrid" value='<s:property value="acctypegrid"/>'/>
+        <input type="hidden" id="validates" name="validates" value='<s:property value="validates"/>'/>
         <span id="formdet"></span>
     </div>
             

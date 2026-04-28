@@ -113,7 +113,7 @@ public class ClsPrePaymentDAO {
 	        
 	        /* NORMAL SAVE BUTTON CLICK FUNCTION IN DISTRIBUTION*/
 	        else {
-			if(cmbtype.equalsIgnoreCase("1")){	
+	        	if("1".equalsIgnoreCase(cmbtype)){
 				int masterDocno=prepaymentMasterInsertion(conn,formdetailcode,prePaymentDate,docno,txtaccountdocno,txttrno,txttranid,txtdistributiondocno,txtcosttype,txtcostno,txtamount,startDate,cmbfrequency,txtdueafter,txtinstnos,txtinstamt,txtdescription,session, request,txtdecamount);
 				if(masterDocno>0){
 					
@@ -1207,7 +1207,7 @@ public class ClsPrePaymentDAO {
 				String branch=session.getAttribute("BRANCHID").toString().trim();
 				String userid=session.getAttribute("USERID").toString().trim();
 				
-		    	stmtPREP = conn.prepareCall("{CALL prepaymentmDML(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+		    	stmtPREP = conn.prepareCall("{CALL prepaymentmDML(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 				stmtPREP.registerOutParameter(18, java.sql.Types.INTEGER);
 				stmtPREP.setDate(1,prePaymentDate); //date
 				stmtPREP.setInt(2,txtaccountdocno); //acno
@@ -1230,9 +1230,14 @@ public class ClsPrePaymentDAO {
 				
 				stmtPREP.setString(16,branch);
 				stmtPREP.setString(17,userid);
+				
+				stmtPREP.registerOutParameter(18, java.sql.Types.INTEGER);
+				
+				stmtPREP.setInt(18, 0);
+			    
 				stmtPREP.setInt(19, txttrno);
 				stmtPREP.setString(20,"A");
-				stmtPREP.setDouble(21,txtdecamount); // settle amt
+				
 				int prepaymentmastercheck=stmtPREP.executeUpdate();
 				
 				if(prepaymentmastercheck<=0){
@@ -1265,7 +1270,7 @@ public class ClsPrePaymentDAO {
 				String branch=session.getAttribute("BRANCHID").toString().trim();
 				String userid=session.getAttribute("USERID").toString().trim();
 				
-		    	stmtPREP = conn.prepareCall("{CALL prepaymentmDML(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+		    	stmtPREP = conn.prepareCall("{CALL prepaymentmDML(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 				stmtPREP.registerOutParameter(18, java.sql.Types.INTEGER);
 				stmtPREP.setDate(1,prePaymentDate); //date
 				stmtPREP.setInt(2,txtaccountdocno); //acno
@@ -1288,9 +1293,13 @@ public class ClsPrePaymentDAO {
 				
 				stmtPREP.setString(16,branch);
 				stmtPREP.setString(17,userid);
+				
+				stmtPREP.registerOutParameter(18, java.sql.Types.INTEGER);
+			    stmtPREP.setInt(18, 0);
+			    
 				stmtPREP.setInt(19, txttrno);
 				stmtPREP.setString(20,"A");
-				stmtPREP.setDouble(21,txtdecamount); // settle amt
+				
 				
 				int prepaymentmastercheck=stmtPREP.executeUpdate();
 				
@@ -1300,7 +1309,7 @@ public class ClsPrePaymentDAO {
 					conn.close();
 					return 0;
 				 }
-				docno=stmtPREP.getInt("docNo");
+				docno=stmtPREP.getInt(18);
 				
 				stmtPREP.close();
 				return docno;

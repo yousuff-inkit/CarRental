@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,43 +10,171 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
-
-	
 	function loadAccountSearch() {
-			var accountsno=document.getElementById("txtaccountsno4").value;
-			var accountsname=document.getElementById("txtaccountsname4").value;
-			var currs=document.getElementById("txtaccountcurrency4").value;
-		
-			var check ="loanacc";
+		var accountsno = document.getElementById("txtaccountsno4").value || "";
+		var accountsname = document.getElementById("txtaccountsname4").value || "";
+		var currs = document.getElementById("txtaccountcurrency4").value || "";
+		var check = "loanacc";
 	
-			getAccountDetails(accountsno,accountsname,currs,check);
+		getAccountDetails(accountsno, accountsname, currs, check);
 	}
 		
-	function getAccountDetails(accountsno,accountsname,currs,check){
-		 $("#bankdiv").load("bankaccSubgrid.jsp?accountno="+accountsno+'&accountname='+accountsname+'&currency='+currs+'&check='+check);
+	function getAccountDetails(accountsno, accountsname, currs, check){
+        /* Safely encode URI components instead of basic string replace */
+		$("#bankdiv").load("bankaccSubgrid.jsp?accountno=" + encodeURIComponent(accountsno) + 
+                                           '&accountname=' + encodeURIComponent(accountsname) + 
+                                           '&currency=' + encodeURIComponent(currs) + 
+                                           '&check=' + encodeURIComponent(check));
 	}
-
 </script>
-<body>
-<div id=search>
-<table width="100%">
-  <tr>
-    <td width="10%" align="right">Account No</td>
-    <td width="30%"><input type="text" name="txtaccountsno4" id="txtaccountsno4" style="width:85%;" value='<s:property value="txtaccountsno4"/>'></td>
-    <td width="10%" align="right">Currency</td>
-    <td width="27%"><input type="text" name="txtaccountcurrency4" id="txtaccountcurrency4" style="width:50%;" value='<s:property value="txtaccountcurrency4"/>'>
- <%--    <input type="hidden" name="txtdoctypes" id="txtdoctypes" value='<s:property value="txtdoctypes"/>'>
-     <input type="hidden" name="txtsearchtype" id="txtsearchtype" value='<s:property value="txtsearchtype"/>'> --%></td>
-    <td width="23%" rowspan="2" align="center"><input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search"  onclick="loadAccountSearch();"></td>
-  </tr>
-  <tr>
-    <td align="right">Account Name</td>
-    <td colspan="3"><input type="text" name="txtaccountsname4" id="txtaccountsname4" style="width:80%;" value='<s:property value="txtaccountsname4"/>'></td>
-  </tr>
-  <tr>
-    <td colspan="5"><div id="bankdiv"><jsp:include page="bankaccSubgrid.jsp"></jsp:include></div></td>
-  </tr>
-</table>
+
+<style type="text/css">
+/* =========================================================
+   SCOPED UI: Cash Receipts Style (Bulletproofed with Borders)
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; /* Soft background so the white panels pop */
+}
+
+/* UI WRAPPER: Bulletproofed with ID to block legacy CSS leaks */
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
+}
+
+/* THE BORDERS: White Panel for Search Inputs */
+#search.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 15px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* THE BORDERS: White Panel for Results */
+#search.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Table rules locked to exact spacing and font sizes */
+#search.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 4px 10px; /* Modern compact spacing */
+    width: 100%;
+}
+
+#search.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+#search.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 5px;
+    white-space: nowrap;
+}
+
+/* Master Input Heights - Forced to 24px and standard font */
+#search.modern-ui input[type="text"],
+#search.modern-ui select {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.2s;
+    background-color: #ffffff;
+    max-width: 100%;
+}
+
+#search.modern-ui input[type="text"]:focus,
+#search.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* Master Button Appearance */
+#search.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 26px !important;
+    line-height: 24px !important;
+    padding: 0 20px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#search.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+    transform: translateY(-1px);
+}
+
+#bankdiv {
+    margin-top: 5px;
+}
+</style>
+</head>
+
+<body bgcolor="#f5f7fa">
+
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%">
+          <tr>
+            <td width="10%" align="right">Account No</td>
+            <td width="30%">
+                <input type="text" name="txtaccountsno4" id="txtaccountsno4" style="width:85%;" value='<s:property value="txtaccountsno4"/>'>
+            </td>
+            <td width="10%" align="right">Currency</td>
+            <td width="27%">
+                <input type="text" name="txtaccountcurrency4" id="txtaccountcurrency4" style="width:50%;" value='<s:property value="txtaccountcurrency4"/>'>
+            </td>
+            <td width="23%" rowspan="2" align="center">
+                <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search"  onclick="loadAccountSearch();">
+            </td>
+          </tr>
+          <tr>
+            <td align="right">Account Name</td>
+            <td colspan="3">
+                <input type="text" name="txtaccountsname4" id="txtaccountsname4" style="width:80%;" value='<s:property value="txtaccountsname4"/>'>
+            </td>
+          </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
+        <div id="bankdiv">
+            <jsp:include page="bankaccSubgrid.jsp"></jsp:include>
+        </div>
+    </div>
+
 </div>
+
 </body>
 </html>

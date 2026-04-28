@@ -1,5 +1,5 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,119 +10,158 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <% String atype = request.getParameter("atype")==null?"0":request.getParameter("atype"); %>
 
-<script type="text/javascript">
-	$(document).ready(function () {
-		var atype='<%=atype%>';
-		document.getElementById("txttypes").value=atype;
-	}); 
-	
-	function loadAccountSearch() {
-			var accountsno=document.getElementById("txtaccountsno").value;
-			var accountsname=document.getElementById("txtaccountsname").value;
-			var atype=document.getElementById("txttypes").value;
-			var check = 1;
-			
-			getAccountDetails(accountsno,accountsname,atype,check);
-	}
-		
-	function getAccountDetails(accountsno,accountsname,atype,check){
-		 $("#refreshAccountDetailsDiv").load("accountDetailsSearchGrid.jsp?accountno="+accountsno+'&accountname='+accountsname.replace(/ /g, "%20")+'&atype='+atype+'&check='+check);
-	}
-
-</script>
-<style type="text/css">
-#search {
-    width: 850px;
-    margin: 0 auto;
-    background: #ffffff;
-    border: 1px solid #ccc;
-    font-family: Tahoma, Geneva, sans-serif;
+<style>
+/* =========================================================
+   SCOPED UI: Segoe UI Font & Clean White Search Panel
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
-#search table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 12px 10px; 
-}
-
-td[align="right"] {
-    font-size: 13px;
-    font-weight: 700;
-    color: #333;
-    white-space: nowrap;
-}
-
-input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 600;
+.modern-ui {
     font-size: 12px;
-    padding: 4px 8px;
-    width: 100%;
+    color: #333;
+    padding: 10px;
     box-sizing: border-box;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    height: 28px;
+    width: 100%;
 }
 
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    width: 130px;
-    height: 38px;
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+/* Master Input Styles */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #FFD6FF; /* Client master focus color */
+}
+
+/* Panel Styling - Clean White Panel */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+/* Table Alignment */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+}
+
+.modern-ui td {
+    vertical-align: middle;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Search Button - Standard Blue */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background-color: #0056b3;
     color: #ffffff;
     border: none;
-    border-radius: 6px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    transition: all 0.2s;
 }
 
-.myButton:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #0b45a2 100%);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    transform: translateY(-1px);
+.modern-ui .myButton:hover {
+    background-color: #004494;
 }
 
-#refreshAccountDetailsDiv {
-    margin-top: 10px;
-    border-top: 1px solid #e0e4ee;
+/* Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
+    background: #fff;
+    overflow: hidden;
 }
 </style>
 
-<body bgcolor="#E0ECF8">
-<div id="search">
-    <table border="0">
-        <tr>
-            <td width="15%" align="right">Account No.</td>
-            <td width="55%">
-                <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
-                <input type="hidden" name="txttypes" id="txttypes" value='<s:property value="txttypes"/>'>
-            </td>
-            <td width="30%" rowspan="2" align="center" valign="middle">
-                <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
-            </td>
-        </tr>
-        <tr>
-            <td align="right">Account Name</td>
-            <td>
-                <input type="text" name="txtaccountsname" id="txtaccountsname" value='<s:property value="txtaccountsname"/>'>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3">
-                <div id="refreshAccountDetailsDiv">
-                    <jsp:include page="accountDetailsSearchGrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
-    </table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var atype = '<%=atype%>';
+        document.getElementById("txttypes").value = atype;
+    }); 
+    
+    function loadAccountSearch() {
+        var accountsno = document.getElementById("txtaccountsno").value || "";
+        var accountsname = document.getElementById("txtaccountsname").value || "";
+        var atype = document.getElementById("txttypes").value || "";
+        var check = 1;
+        
+        getAccountDetails(accountsno, accountsname, atype, check);
+    }
+        
+    function getAccountDetails(accountsno, accountsname, atype, check){
+        /* Safely encoding URI components to prevent breakages on special characters */
+         $("#refreshAccountDetailsDiv").load("accountDetailsSearchGrid.jsp?accountno=" + encodeURIComponent(accountsno) + 
+                                             "&accountname=" + encodeURIComponent(accountsname) + 
+                                             "&atype=" + encodeURIComponent(atype) + 
+                                             "&check=" + check);
+    }
+</script>
+</head>
+
+<body style="background-color: #fff; margin: 0;">
+
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="lbl-right" width="15%">Account No.</td>
+                <td width="25%">
+                    <input type="text" name="txtaccountsno" id="txtaccountsno" value='<s:property value="txtaccountsno"/>'>
+                    <input type="hidden" name="txttypes" id="txttypes" value='<s:property value="txttypes"/>'>
+                </td>
+                
+                <td class="lbl-right" width="15%">Account Name</td>
+                <td width="30%">
+                    <input type="text" name="txtaccountsname" id="txtaccountsname" value='<s:property value="txtaccountsname"/>'>
+                </td>
+                
+                <td width="15%" align="center">
+                    <input type="button" name="btnAccountSearch" id="btnAccountSearch" class="myButton" value="Search" onclick="loadAccountSearch();">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
+        <div id="refreshAccountDetailsDiv">
+            <jsp:include page="accountDetailsSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
+
 </div>
+
 </body>
 </html>

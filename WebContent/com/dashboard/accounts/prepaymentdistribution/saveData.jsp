@@ -82,7 +82,7 @@
 			stmtPREP = conn.prepareCall("{CALL prepaymentmDML(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			
 			stmtPREP.registerOutParameter(18, java.sql.Types.INTEGER);
-			
+			stmtPREP.setInt(18, 0); // Sets a default value for the missing parameter
 			stmtPREP.setDate(1,prePaymentDate); //date
 			stmtPREP.setInt(2,Integer.parseInt(prepaymentmaster[1].trim())); //acno
 			stmtPREP.setInt(3,Integer.parseInt(prepaymentmaster[2].trim())); //Post acno

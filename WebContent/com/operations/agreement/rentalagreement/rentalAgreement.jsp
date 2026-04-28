@@ -3318,7 +3318,7 @@ html, body {
                    style="width:140px;"
                    value='<s:property value="ratariff_fuel"/>'/>
 
-            <label style="padding-left: 85px">Due Date</label>
+            <label style="padding-left: 83px">Due Date</label>
             <div id='jqxOnDate' name='jqxOnDate'
                  value='<s:property value="jqxOnDate"/>'></div>
             <input type="hidden" id="hidjqxOnDate" name="hidjqxOnDate"
@@ -3357,12 +3357,13 @@ html, body {
                    tabindex="-1"
                    value='<s:property value="client_Name"/>' />
 
-            <label>Salesman</label>
+         <label>Salesman</label>
 
-            <input type="text" id="re_salman" name="re_salman"
-                   placeholder="Salesman Name"
-                   style="width:140px;"
-                   value='<s:property value="re_salman"/>' />
+<input type="text" id="re_salman" name="re_salman"
+       placeholder="Salesman Name"
+       style="width:140px; background-color:#e9ecef; color:#6c757d; cursor:not-allowed;"
+       value='<s:property value="re_salman"/>'
+       readonly />
         </div>
 
         <!-- HIDDEN -->
@@ -3527,7 +3528,7 @@ html, body {
     <div style="display:flex; align-items:center; gap:6px;">
         <label>Additional Driver</label>
         <input type="checkbox" id="additional_driver" name="additional_driver" value="0"
-               onchange="funaddidriverview()"
+               onchange="funaddidriverview();toggleFields();"
                onclick="$(this).attr('value', this.checked ? 1 : 0)">
     </div>
 
@@ -3535,17 +3536,18 @@ html, body {
     <div style="display:flex; align-items:center; gap:6px;">
         <label>Charge</label>
         <input type="text" id="adidrvcharges" name="adidrvcharges"
-               style="width:80px; text-align:right;"
+               style="width:80px; text-align:right; background:#e9ecef;"
                value='<s:property value="adidrvcharges"/>'
                onblur="funRoundAmt(this.value,this.id);"
-               onkeypress="javascript:return isNumber (event);">
+               onkeypress="javascript:return isNumber(event);"
+               disabled>
     </div>
 
     <!-- DELIVERY -->
     <div style="display:flex; align-items:center; gap:6px;">
         <label>Delivery</label>
         <input type="checkbox" id="delivery_chk" name="delivery_chk" value="0"
-               onchange="fundriverdisable()"
+               onchange="fundriverdisable();toggleFields();"
                onfocus="checkReqclient()"
                onclick="$(this).attr('value', this.checked ? 1 : 0)">
     </div>
@@ -3554,7 +3556,7 @@ html, body {
     <div style="display:flex; align-items:center; gap:6px;">
         <label>Chauffeur</label>
         <input type="checkbox" id="radrivercheck" name="radrivercheck" value="0"
-               onchange="funShaffurdisable()"
+               onchange="funShaffurdisable();toggleFields();"
                onfocus="checkReqclient()"
                onclick="$(this).attr('value', this.checked ? 1 : 0)">
     </div>
@@ -3562,10 +3564,11 @@ html, body {
     <!-- DRIVER SEARCH -->
     <div style="display:flex; align-items:center; gap:6px;">
         <input type="text" id="radriverlist" name="radriverlist"
-               style="width:180px;"
+               style="width:180px; background:#e9ecef;"
                placeholder="Press F3 To Search"
                value='<s:property value="radriverlist"/>'
-               onKeyDown="getchauffeur(event);" />
+               onKeyDown="getchauffeur(event);"
+               disabled />
     </div>
 
     <!-- HIDDEN FIELDS -->
@@ -3577,6 +3580,20 @@ html, body {
            value='<s:property value="client_driverdoc"/>'/>
 
 </div>
+
+<script>
+function toggleFields() {
+    var charge = document.getElementById("adidrvcharges");
+    var driver = document.getElementById("radriverlist");
+
+    charge.disabled = !document.getElementById("additional_driver").checked;
+    charge.style.background = charge.disabled ? "#e9ecef" : "#fff";
+
+    driver.disabled = !(document.getElementById("delivery_chk").checked ||
+                        document.getElementById("radrivercheck").checked);
+    driver.style.background = driver.disabled ? "#e9ecef" : "#fff";
+}
+</script>
 
 </td>
 </tr>
@@ -3730,11 +3747,13 @@ html, body {
 <td>Delivery Charges</td>
 <td>
     <input type="text" id="delcharges" name="delcharges"
-           style="width:120px; text-align:right;"
+           style="width:120px; text-align:right; background:#e9ecef;"
            value='<s:property value="delcharges" />'
            onblur="funRoundAmt(this.value,this.id);"
-           onkeypress="javascript:return isNumber (event)">
+           onkeypress="javascript:return isNumber (event)"
+           disabled>
 </td>
+
 
 <!-- 🔹 ICONS MOVED INTO SAME ROW -->
 <td style="white-space:nowrap; text-align:left;">
@@ -3873,35 +3892,48 @@ html, body {
 
         <!-- INSURANCE CHECK -->
         <div style="display:flex; align-items:center; gap:6px;">
-            <input type="checkbox" name="chkinsurcomp" id="chkinsurcomp"
-                   onchange="funChkInsurComp();">
+    <input type="checkbox" name="chkinsurcomp" id="chkinsurcomp"
+           onchange="funChkInsurComp();toggleInsurComp();">
 
-            <label>Insurance Company</label>
+    <label>Insurance Company</label>
 
-            <input type="hidden" name="hidchkinsurcomp" id="hidchkinsurcomp"
-                   value='<s:property value="hidchkinsurcomp"/>'>
-        </div>
+    <input type="hidden" name="hidchkinsurcomp" id="hidchkinsurcomp"
+           value='<s:property value="hidchkinsurcomp"/>'>
+</div>
 
-        <!-- INSURANCE DROPDOWN -->
-        <div>
-            <select name="cmbinsurcomp" id="cmbinsurcomp"
-                    style="width:160px;" disabled>
-                <option value="">--Select--</option>
-            </select>
+<!-- INSURANCE DROPDOWN -->
+<div>
+    <select name="cmbinsurcomp" id="cmbinsurcomp"
+            style="width:160px; background:#e9ecef;" disabled>
+        <option value="">--Select--</option>
+    </select>
 
-            <input type="hidden" name="hidcmbinsurcomp" id="hidcmbinsurcomp"
-                   value='<s:property value="hidcmbinsurcomp"/>'>
-        </div>
+    <input type="hidden" name="hidcmbinsurcomp" id="hidcmbinsurcomp"
+           value='<s:property value="hidcmbinsurcomp"/>'>
+</div>
 
-        <!-- DAYS -->
-        <div style="display:flex; align-items:center; gap:6px;">
-            <label>Days</label>
+<!-- DAYS -->
+<div style="display:flex; align-items:center; gap:6px;">
+    <label>Days</label>
 
-            <input type="text" name="insurcompdays" id="insurcompdays"
-                   style="width:80px;"
-                   value='<s:property value="insurcompdays"/>'
-                   onkeypress="javascript:return isNumber (event)">
-        </div>
+    <input type="text" name="insurcompdays" id="insurcompdays"
+           style="width:80px; background:#e9ecef;"
+           value='<s:property value="insurcompdays"/>'
+           onkeypress="javascript:return isNumber (event)"
+           disabled>
+</div>
+
+<script>
+function toggleInsurComp() {
+    var checked = document.getElementById("chkinsurcomp").checked;
+
+    document.getElementById("cmbinsurcomp").disabled = !checked;
+    document.getElementById("cmbinsurcomp").style.background = checked ? "#fff" : "#e9ecef";
+
+    document.getElementById("insurcompdays").disabled = !checked;
+    document.getElementById("insurcompdays").style.background = checked ? "#fff" : "#e9ecef";
+}
+</script>
 
         <!-- BUTTON -->
         <div>

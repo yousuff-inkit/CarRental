@@ -116,7 +116,11 @@ body {
     font-size: 11px;
     display: block;
     margin-bottom: 5px;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif !important;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>
 
