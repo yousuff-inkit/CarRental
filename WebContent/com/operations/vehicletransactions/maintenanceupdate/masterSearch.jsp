@@ -1,121 +1,187 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
- 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
- <!--    <jsp:include page="../../../../includes.jsp"></jsp:include>   -->
-<style>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
+
+<style>
+/* =========================================================
+   SCOPED UI: Strict Pixel Grid Alignment & Modern Inputs
+========================================================= */
+body {
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+.modern-ui {
+    font-size: 12px;
+    color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* Master Input Heights - Forced to 24px */
+.modern-ui input[type="text"],
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: normal !important; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Panel Styling - Pure White */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    padding: 12px 10px;
+    margin-bottom: 10px;
+}
+
+/* Table Alignment - STRICT PERCENTAGE GRID */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
+}
+
+.modern-ui td {
+    vertical-align: middle;
+    padding: 0;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #444;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Modern Search Button */
+.modern-ui .myButton {
+    height: 26px !important; 
+    line-height: 24px !important;
+    padding: 0 25px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff !important;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+}
+
+/* Data Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #c5d3e0;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+}
 </style>
-	<script type="text/javascript">
 
- 	function loadSearchs() {
- 		var aa="yes";
+<script type="text/javascript">
+    function loadSearchs() {
+        var aa = "yes";
+        var documentno = document.getElementById("documentno").value || "";
+        var regno = document.getElementById("regno").value || "";
+        var fleetno = document.getElementById("fleetno").value || "";     
+        var name = document.getElementById("name").value || "";
+        
+        getdata(documentno, fleetno, regno, name, aa);
+    }
 
- 		var documentno=document.getElementById("documentno").value;
- 		var regno=document.getElementById("regno").value;
- 		var fleetno=document.getElementById("fleetno").value; 	
- 		var name = document.getElementById("name").value;
- 		name=name.replace(/ /g, "%20");
-			 	 getdata(documentno,fleetno,regno,name,aa);
- 	}
-	function getdata(documentno,fleetno,regno,name,aa){
-		 $("#refreshdivs").load('masterSearchGrid.jsp?fleetno='+fleetno+'&regno='+regno+'&name='+name+'&documentno='+documentno+'&aa='+aa);
+    function getdata(documentno, fleetno, regno, name, aa){
+        /* Using encodeURIComponent for secure string handling */
+        $("#refreshdivs").load('masterSearchGrid.jsp?fleetno=' + encodeURIComponent(fleetno) + 
+                              '&regno=' + encodeURIComponent(regno) + 
+                              '&name=' + encodeURIComponent(name) + 
+                              '&documentno=' + encodeURIComponent(documentno) + 
+                              '&aa=' + aa);
+    }
+</script>
+</head>
 
-		}
+<body style="background-color: #fff; margin: 0;">
+<div id="search" class="modern-ui">
 
-	</script>
-<style type="text/css">
-#search table {
-  border-collapse: separate;
-  border-spacing: 15px 18px;  
-}
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="10%" /> <col width="23%" /> <col width="10%" /> <col width="23%" /> <col width="10%" /> <col width="24%" /> </colgroup>
+            
+            <tr>
+                <td class="lbl-right">DOC NO</td>
+                <td>
+                    <input type="text" name="documentno" id="documentno" autocomplete="off" value='<s:property value="documentno"/>'>
+                </td>
+                
+                <td class="lbl-right">FLEET NO</td>
+                <td>
+                    <input type="text" name="fleetno" id="fleetno" autocomplete="off" value='<s:property value="fleetno"/>'>
+                </td>
+                
+                <td class="lbl-right">REG NO</td>
+                <td>
+                    <input type="text" name="regno" id="regno" autocomplete="off" value='<s:property value="regno"/>'>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="lbl-right">NAME</td>
+                <td>
+                    <input type="text" name="name" id="name" autocomplete="off" value='<s:property value="name"/>'>
+                </td>
+                
+                <td colspan="3"></td>
 
-td[align="right"] {
-  font-weight: 600;
-  font-size: 14px;
-  color: #222;
-}
+                <td align="right">
+                    <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearchs(); return false;">
+                </td>
+            </tr>
+        </table>
+    </div>
 
-input[type="text"] {
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 95%;                
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-tr {
-  line-height: 1.6;
-}
-
-#btnsearch {
-  font-weight: 700;
-  font-size: 13px;
-  width: 130px;
-  height: 38px;
-  padding: 8px 12px;
-  background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
-  text-align: center;
-}
-
-#btnsearch:hover {
-  background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%);
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-  transform: translateY(-1px);
-}
-</style>
-
-<body>
-<div id="search">
-  <table width="100%">
-    <tr>
-      <td width="10%" align="right">DOC NO</td>
-      <td width="23%">
-        <input type="text" name="documentno" id="documentno" value='<s:property value="documentno"/>'>
-      </td>
-      <td width="10%" align="right">FLEET NO</td>
-      <td width="23%">
-        <input type="text" name="fleetno" id="fleetno" value='<s:property value="fleetno"/>'>
-      </td>
-      <td width="10%" align="right">REG NO</td>
-      <td width="24%">
-        <input type="text" name="regno" id="regno" value='<s:property value="regno"/>'>
-      </td>
-    </tr>
-    <tr>
-      <td align="right">NAME</td>
-      <td>
-        <input type="text" name="name" id="name" value='<s:property value="name"/>'>
-      </td>
-      <td colspan="3"></td>
-      <td align="left">
-        <input type="button" name="btnsearch" id="btnsearch" value="Search" onclick="loadSearchs(); return false;">
-      </td>
-    </tr>
-    <tr>
-      <td colspan="6">
+    <div class="grid-container">
         <div id="refreshdivs">
-          <jsp:include page="masterSearchGrid.jsp"></jsp:include>
+            <jsp:include page="masterSearchGrid.jsp"></jsp:include>
         </div>
-      </td>
-    </tr>
-  </table>
+    </div>
+
 </div>
 </body>
 </html>

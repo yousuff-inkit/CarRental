@@ -646,8 +646,7 @@ form label.error { color: red; font-weight: bold; font-size: 11px; }
 
 <div class="modern-ui">
 
-    <div id="formdet">Purchase Order</div>
-    <span id="errormsg"></span>
+   
 
     <div class="middle-panel">
         <span class="middle-panel-title">General Info</span>

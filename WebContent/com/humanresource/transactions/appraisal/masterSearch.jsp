@@ -6,103 +6,110 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-
 <title>GatewayERP(i)</title>
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style>
 /* =========================================================
-   EXACT MATCH FOR SCREENSHOT (STRICT 24PX HEIGHT)
+   SCOPED UI: Strict Pixel Grid Alignment & Modern Inputs
 ========================================================= */
-
 body {
-    background-color: #f8fafc; 
     margin: 0;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    background-color: #fff;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; 
 }
 
-#search-wrapper {
-    background: #ffffff;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-/* The bordered box surrounding the search inputs */
-.search-filter-box {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 15px 20px;
-    background-color: #ffffff;
-    margin-bottom: 15px;
-}
-
-.search-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 15px 12px; 
-}
-
-.search-table td.lbl {
+.modern-ui {
     font-size: 12px;
-    font-weight: 700;
-    color: #334155;
-    text-align: right;
-    white-space: nowrap;
-    width: 1%; 
-}
-
-/* STRICT 24px Input styling */
-.search-table input[type="text"] {
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    padding: 2px 8px;
-    width: 100%;
-    min-width: 140px;
-    height: 24px !important;
-    box-sizing: border-box;
-    border: 1px solid #cbd5e1;
-    border-radius: 3px;
     color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.search-table input[type="text"]:focus {
-    border-color: #2563eb;
+/* Master Input Styles */
+.modern-ui input[type="text"],
+.modern-ui select {
+    height: 24px !important;
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 12px; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+}
+
+.modern-ui input[type="text"]:focus,
+.modern-ui select:focus {
+    border-color: #007bff;
     outline: none;
 }
 
-/* STRICT 24px SEARCH button */
-.btn-search {
-    background-color: #1d4ed8; 
-    color: #ffffff !important;
+/* Panel Styling */
+.modern-ui .search-panel {
+    background-color: #fff !important; 
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    padding: 12px 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Table Alignment - STRICT PERCENTAGE GRID */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 5px 8px; 
+    width: 100%;
+    table-layout: fixed; /* Locks columns from squishing */
+}
+
+.modern-ui td {
+    vertical-align: middle;
+    padding: 0;
+}
+
+.modern-ui .lbl-right { 
+    text-align: right; 
+    color: #222;
+    font-size: 12px; 
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    white-space: nowrap; 
+    padding-right: 5px;
+}
+
+/* Search Button - Standard Blue */
+.modern-ui .myButton {
+    height: 26px;
+    padding: 0 20px;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
     border-radius: 3px;
-    height: 24px !important;
-    line-height: 22px;
-    padding: 0 16px;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
     cursor: pointer;
-    margin-left: 10px;
-    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    transition: all 0.2s;
 }
 
-.btn-search:hover {
-    background-color: #1e40af;
+.modern-ui .myButton:hover {
+    background-color: #004494;
 }
 
-.input-row {
-    display: flex;
-    align-items: center;
-}
-
-#srefreshdiv {
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+/* Grid Container */
+.modern-ui .grid-container {
+    border: 1px solid #BDBDBD;
     background: #fff;
-    min-height: 300px;
     overflow: hidden;
+    width: 100%;
 }
 </style>
 
@@ -135,48 +142,57 @@ body {
 </script>
 </head>
 
-<body>
-<div id="search-wrapper">
+<body style="background-color: #fff; margin: 0;">
 
-    <div class="search-filter-box">
-        <table class="search-table" border="0">
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="15%" /> <col width="35%" /> <col width="15%" /> <col width="35%" /> </colgroup>
+            
             <tr>
-                <td class="lbl">Name</td>
+                <td class="lbl-right">Name</td>
                 <td colspan="3">
-                    <input type="text" name="empnames" id="empnames" value='<s:property value="empnames"/>'>
-                </td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td class="lbl">Emp ID</td>
-                <td>
-                    <input type="text" name="empids" id="empids" value='<s:property value="empids"/>'>
-                </td>
-                
-                <td class="lbl">Doc No</td>
-                <td>
-                    <input type="text" name="docnoss" id="docnoss" value='<s:property value="docnoss"/>'>
+                    <input type="text" name="empnames" id="empnames" autocomplete="off" value='<s:property value="empnames"/>'>
                 </td>
             </tr>
 
             <tr>
-                <td class="lbl">Mobile</td>
+                <td class="lbl-right">Emp ID</td>
                 <td>
-                    <input type="text" name="mobnos" id="mobnos" value='<s:property value="mobnos"/>'>
+                    <input type="text" name="empids" id="empids" autocomplete="off" value='<s:property value="empids"/>'>
                 </td>
                 
-                <td colspan="2" style="text-align: right;">
-                    <button type="button" name="mbtnrasearch" id="mbtnrasearch" class="btn-search" onclick="mainloadSearch();">SEARCH</button>
+                <td class="lbl-right">Doc No</td>
+                <td>
+                    <input type="text" name="docnoss" id="docnoss" autocomplete="off" value='<s:property value="docnoss"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="lbl-right">Mobile</td>
+                <td>
+                    <input type="text" name="mobnos" id="mobnos" autocomplete="off" value='<s:property value="mobnos"/>'>
+                </td>
+                
+                <td colspan="2"></td> 
+            </tr>
+
+            <tr>
+                <td colspan="4" align="center" style="padding-top: 15px;">
+                    <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch(); return false;">
                 </td>
             </tr>
         </table>
     </div>
 
-    <div id="srefreshdiv">
-        <jsp:include page="submainSearch.jsp"></jsp:include>
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="submainSearch.jsp"></jsp:include>
+        </div>
     </div>
 
 </div>
+
 </body>
-</html>
