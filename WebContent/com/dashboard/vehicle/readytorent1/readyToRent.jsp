@@ -21,7 +21,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
@@ -65,38 +65,62 @@
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
-/* Inputs */
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;
+    padding: 2px 8px;
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
-/* Buttons */
+/* Readonly fields */
+input[readonly] {
+    background-color: #f3f6f9;
+    color: #555;
+}
+
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
 .btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
+    flex: 1;                 /* Allows buttons to share width equally */
+    height: 30px;            /* Scaled button height */
+    padding: 0 12px;         /* Center text vertically */
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;      /* Matched border-radius */
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;       /* Aligns text inside button */
+    white-space: nowrap;     /* Prevents text wrapping */
 }
 
 .btn-submit:hover {
     background: #1d4ed8;
+}
+
+.btn-submit:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
 }
 
 /* Page height fix */
@@ -118,173 +142,127 @@ td[width="80%"] {
 
 $(document).ready(function () {
  
-	
-	
-	// $('#vehiclewindow1').jqxWindow({ autoOpen: false,width: '80%', height: '80%',  maxHeight: '80%' ,maxWidth: '80%' , title: 'Vehicle Details' ,position: { x: 240, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});
-	  $('#movementwindow').jqxWindow({ autoOpen: false,width: '77%', height: '74%',  maxHeight: '70%' ,maxWidth: '78%' , title: 'Movement Details' ,position: { x: 280, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'}); 
-$('#securitypasswindow').jqxWindow({ autoOpen: false,width: '60%', height: '60%',  maxHeight: '70%' ,maxWidth: '78%' , title: 'Security Pass Details' ,position: { x: 280, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});	  
+    // $('#vehiclewindow1').jqxWindow({ autoOpen: false,width: '80%', height: '80%',  maxHeight: '80%' ,maxWidth: '80%' , title: 'Vehicle Details' ,position: { x: 240, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});
+      $('#movementwindow').jqxWindow({ autoOpen: false,width: '77%', height: '74%',  maxHeight: '70%' ,maxWidth: '78%' , title: 'Movement Details' ,position: { x: 280, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'}); 
+$('#securitypasswindow').jqxWindow({ autoOpen: false,width: '60%', height: '60%',  maxHeight: '70%' ,maxWidth: '78%' , title: 'Security Pass Details' ,position: { x: 280, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});    
 $('#clientreview').click(function(){
-	  	   var url=document.URL;
-	  		var reurl=url.split("com");
-	  		  window.parent.formName.value="Client Review";
-	  		  window.parent.formCode.value="CRW";
+          var url=document.URL;
+            var reurl=url.split("com");
+              window.parent.formName.value="Client Review";
+              window.parent.formCode.value="CRW";
 
-	   top.addTab("Client Review",reurl[0]+"com/operations/clientrelations/clientreview/clientReview.jsp");
+   top.addTab("Client Review",reurl[0]+"com/operations/clientrelations/clientreview/clientReview.jsp");
 
       }); 
-	    $('#rabutton').click(function(){
-	  	   var url=document.URL;
-	  		var reurl=url.split("com");
-	  		  window.parent.formName.value="Rental Agreement Create";
-	  		  window.parent.formCode.value="RAG";
+        $('#rabutton').click(function(){
+           var url=document.URL;
+            var reurl=url.split("com");
+              window.parent.formName.value="Rental Agreement Create";
+              window.parent.formCode.value="RAG";
 
-	   top.addTab("Rental Agreement",reurl[0]+"com/operations/agreement/rentalagreement/rentalAgreement.jsp");
+   top.addTab("Rental Agreement",reurl[0]+"com/operations/agreement/rentalagreement/rentalAgreement.jsp");
 
-	   });  
-	   
-	    $('#bookingbtn').click(function(){
-		  	   var url=document.URL;
-		  		var reurl=url.split("com");
-		  		  window.parent.formName.value="Booking";
-		  		  window.parent.formCode.value="VBR";
+       });  
+       
+        $('#bookingbtn').click(function(){
+               var url=document.URL;
+                var reurl=url.split("com");
+                  window.parent.formName.value="Booking";
+                  window.parent.formCode.value="VBR";
 
-		   top.addTab("Booking",reurl[0]+"com/operations/marketing/booking/booking.jsp");
+       top.addTab("Booking",reurl[0]+"com/operations/marketing/booking/booking.jsp");
 
-		   });  
-		   
-	  //rabutton bookingbtn
+       });  
+           
+     //rabutton bookingbtn
 });
 function securityPassSearchContent(url) {
-	$('#securitypasswindow').jqxWindow('focus'); 
-	$.get(url).done(function (data) {
-		$('#securitypasswindow').jqxWindow('setContent', data);
-	}); 
-	 
+    $('#securitypasswindow').jqxWindow('focus'); 
+    $.get(url).done(function (data) {
+        $('#securitypasswindow').jqxWindow('setContent', data);
+    }); 
+     
  }
 function funreload(event)  
 {     
-	document.getElementById("fleetno").value="";
-	document.getElementById("brach").value="";
-	document.getElementById("grp").value="";
-	 disitems();
-	 
-	 
-	 var barchval = document.getElementById("cmbbranch").value;
+    document.getElementById("fleetno").value="";
+    document.getElementById("brach").value="";
+    document.getElementById("grp").value="";
+     disitems();
      
-	 $("#fleetdiv").load("readyToRentGrid.jsp?brchval="+barchval);
-	 
-	 $("#maintariffGrid").jqxGrid('clear');
-	 $("#jqxgridtarifrr").jqxGrid('clear');
-	
-	}
-	
-	
+     var barchval = document.getElementById("cmbbranch").value;
+     
+     $("#fleetdiv").load("readyToRentGrid.jsp?brchval="+barchval);
+     
+     $("#maintariffGrid").jqxGrid('clear');
+     $("#jqxgridtarifrr").jqxGrid('clear');
+    
+    }
+    
 function funExportBtn()
 {
-	
-//	$("#jqxFleetGrid").jqxGrid('exportdata', 'xls', 'ReadyToRent');
-	
-	
-	
-	 if(parseInt(window.parent.chkexportdata.value)=="1")
-	 {
-	 JSONToCSVCon(sssss, 'ReadyToRent', true);
-	 }
+//  $("#jqxFleetGrid").jqxGrid('exportdata', 'xls', 'ReadyToRent');
+
+     if(parseInt(window.parent.chkexportdata.value)=="1")
+     {
+     JSONToCSVCon(sssss, 'ReadyToRent', true);
+     }
  else
-	 {
-	   $("#jqxFleetGrid").jqxGrid('exportdata', 'xls', 'ReadyToRent');
-	 }
-	
-	
-	
-	}
-	
+     {
+       $("#jqxFleetGrid").jqxGrid('exportdata', 'xls', 'ReadyToRent');
+     }
+    }
+    
 function disitems()
 {
-	 $('#btnvehicle').attr("disabled",true);
-	 $('#btnmove').attr("disabled",true);
-	 $('#btnclient').attr("disabled",true);
-	 
+     $('#btnvehicle').attr("disabled",true);
+     $('#btnmove').attr("disabled",true);
+     $('#btnclient').attr("disabled",true);
 }
-	
+    
  function getVehicleMov(){
-	  var fleetno=document.getElementById("fleetno").value;
-	  var vals=0;
-	  var ready="ready";
-	  $('#movementwindow').jqxWindow('setContent', '');
-	  $('#movementwindow').jqxWindow('open');  
-	  movementSearchContent("<%=contextPath%>/com/dashboard/vehicle/vehiclemovement/vehiclemovementGrid.jsp?fleetno="+fleetno+"&fromdate="+vals+"&todate="+vals+"&ready="+ready);
-	 }
+      var fleetno=document.getElementById("fleetno").value;
+      var vals=0;
+      var ready="ready";
+      $('#movementwindow').jqxWindow('setContent', '');
+      $('#movementwindow').jqxWindow('open');  
+      movementSearchContent("<%=contextPath%>/com/dashboard/vehicle/vehiclemovement/vehiclemovementGrid.jsp?fleetno="+fleetno+"&fromdate="+vals+"&todate="+vals+"&ready="+ready);
+     }
  
  function movementSearchContent(url) {
-	 //$('#vehiclewindow').jqxWindow('open'); 
-	 $('#movementwindow').jqxWindow('focus'); 
-	 $.get(url).done(function (data) {
-	$('#movementwindow').jqxWindow('setContent', data);
-	}); 
-	 
+     //$('#vehiclewindow').jqxWindow('open'); 
+     $('#movementwindow').jqxWindow('focus'); 
+     $.get(url).done(function (data) {
+    $('#movementwindow').jqxWindow('setContent', data);
+    }); 
+     
  }
  function changeClientAttachContent(url) {
-		$.get(url).done(function (data) {
-			    $('#windowattach').jqxWindow('open');
-				$('#windowattach').jqxWindow('setContent',data);
-				$('#windowattach').jqxWindow('bringToFront');
-	}); 
-	}
+        $.get(url).done(function (data) {
+                $('#windowattach').jqxWindow('open');
+                $('#windowattach').jqxWindow('setContent',data);
+                $('#windowattach').jqxWindow('bringToFront');
+    }); 
+    }
  function funClientAttach(){
-	
-	 
-		if ($("#docno").val()!="") {
-			  $("#windowattach").jqxWindow('setTitle',"VEH - "+document.getElementById("docno").value);
-			changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);		
-		} else {
-			$.messager.alert('Message','Select Fleet....!','warning');
-			return;
-		}
-	}
+        if ($("#docno").val()!="") {
+              $("#windowattach").jqxWindow('setTitle',"VEH - "+document.getElementById("docno").value);
+            changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);       
+        } else {
+            $.messager.alert('Message','Select Fleet....!','warning');
+            return;
+        }
+    }
  function openclientreview()
  {
-	   var url=document.URL;
-		var reurl=url.split("com");
-		  window.parent.formName.value="Client Review";
-		  window.parent.formCode.value="CRW";
+       var url=document.URL;
+        var reurl=url.split("com");
+          window.parent.formName.value="Client Review";
+          window.parent.formCode.value="CRW";
 
  top.addTab("Client Review",reurl[0]+"com/operations/clientrelations/clientreview/clientReview.jsp");
 
  }
- /* function getRentalAgreement(){
-	  var docno = $('#txtdocno').val();
-	  
-	  if(docno==''){
-	    $.messager.alert('Message','Choose an Agreement.','warning');
-	    return 0;
-	   }
-	  
-	  var url=document.URL;
-	  var reurl=url.split("com");
-	  
-	  window.parent.formName.value="Client Review";
-	  window.parent.formCode.value="CRW";
-	  
-	  var detName= "Client Review";
-	  var path= "com/operations/clientrelationsclientreviewDetails.action?mode=view&docno="+docno;
-	  top.addTab( detName,reurl[0]+""+path);
-	 }
-  */
-<%--  function getVehicle(){
-	 $('#vehiclewindow1').jqxWindow('setContent', '');
-	 $('#vehiclewindow1').jqxWindow('open'); 
-	  vehicleSearchContent("<%=contextPath%>/com/controlcentre/masters/vehicle/saveVehicle1.action?mode=view&fleetno="+document.getElementById("fleetno").value);
-	}
-	function vehicleSearchContent(url) {
-		 //$('#vehiclewindow').jqxWindow('open'); 
-		 $('#vehiclewindow1').jqxWindow('focus'); 
-		 $.get(url).done(function (data) {
-		$('#vehiclewindow1').jqxWindow('setContent', data);
-		}); 
-		}
-		  --%>
-	
 
 </script>
 </head>
@@ -296,19 +274,16 @@ function disitems()
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL (20%) ================= -->
 <td width="20%">
     <div class="master-container">
         <div class="sidebar-filters">
 
-            <!-- Fixed Heading -->
             <div class="sidebar-fixed-top">
                 <div class="filter-card">
                     <jsp:include page="../../heading.jsp"></jsp:include>
                 </div>
             </div>
 
-            <!-- Scrollable Content -->
             <div class="sidebar-scroll-content">
 
                 <div class="filter-card">
@@ -326,38 +301,33 @@ function disitems()
                     </table>
                 </div>
 
-                <!-- ================= BLUE ACTION BUTTONS ================= -->
-                <button type="button" class="btn-submit" onclick="funClientAttach();">
-                    Attach
-                </button>
-
-                <button type="button" class="btn-submit" onclick="getVehicleMov();">
-                    Movement
-                </button>
-
-                <!-- ================= ICON BUTTONS (UNCHANGED) ================= -->
-                <div style="text-align:center; margin-top:12px;">
-                    <button type="button" title="Rental Agreement" class="icons"
-                            id="rabutton" value='<s:property value="rabutton"/>'>
-                        <img alt="Rental Agreement"
-                             src="<%=contextPath%>/icons/openra.png">
+                <div class="button-group">
+                    <button type="button" class="btn-submit" onclick="funClientAttach();">
+                        Attach
                     </button>
-
-                    <button type="button" title="Booking" class="icons"
-                            id="bookingbtn" value='<s:property value="bookingbtn"/>'>
-                        <img alt="Booking"
-                             src="<%=contextPath%>/icons/openbk.png">
-                    </button>
-
-                    <button type="button" title="Client Review" class="icons"
-                            id="clientreview" value='<s:property value="clientreview"/>'>
-                        <img alt="Client Review"
-                             src="<%=contextPath%>/icons/openclientreview.png">
+                    <button type="button" class="btn-submit" onclick="getVehicleMov();">
+                        Movement
                     </button>
                 </div>
 
-                <!-- ================= MASTER TARIFF GRID ================= -->
-                <div class="filter-card" style="margin-top:10px;">
+                <div style="text-align:center; margin-top:15px; display: flex; justify-content: center; gap: 15px;">
+                    <button type="button" title="Rental Agreement" class="icons"
+                            id="rabutton" value='<s:property value="rabutton"/>' style="border: none; background: transparent; cursor: pointer;">
+                        <img alt="Rental Agreement" src="<%=contextPath%>/icons/openra.png" width="32" height="32">
+                    </button>
+
+                    <button type="button" title="Booking" class="icons"
+                            id="bookingbtn" value='<s:property value="bookingbtn"/>' style="border: none; background: transparent; cursor: pointer;">
+                        <img alt="Booking" src="<%=contextPath%>/icons/openbk.png" width="32" height="32">
+                    </button>
+
+                    <button type="button" title="Client Review" class="icons"
+                            id="clientreview" value='<s:property value="clientreview"/>' style="border: none; background: transparent; cursor: pointer;">
+                        <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png" width="32" height="32">
+                    </button>
+                </div>
+
+                <div class="filter-card" style="margin-top:20px;">
                     <div id="mastertariff">
                         <jsp:include page="masterTariffgrid.jsp"></jsp:include>
                     </div>
@@ -367,7 +337,6 @@ function disitems()
         </div>
     </div>
 
-    <!-- Hidden fields (unchanged) -->
     <input type="hidden" name="brach" id="brach"
            value='<s:property value="brach"/>'>
     <input type="hidden" name="grp" id="grp"
@@ -377,7 +346,6 @@ function disitems()
 
 </td>
 
-<!-- ================= RIGHT CONTENT (80%) ================= -->
 <td width="80%">
     <table width="100%">
         <tr>
@@ -403,7 +371,6 @@ function disitems()
 
 </div>
 
-<!-- ================= HIDDEN VALUES & POPUPS ================= -->
 <label hidden="true" id="trncodeval"></label>
 <label hidden="true" id="statusval"></label>
 

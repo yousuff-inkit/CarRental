@@ -1,7 +1,6 @@
-
-<jsp:include page="../../../../includes.jsp"></jsp:include>    
+<jsp:include page="../../../../includes.jsp"></jsp:include>  
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 
@@ -13,14 +12,22 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style type="text/css">
  
+/* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
     background-color: #f4f7f9;
 }
 
+/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -43,6 +50,7 @@
     padding: 15px 20px 25px;
 }
 
+/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -51,51 +59,61 @@
     margin-bottom: 12px;
 }
 
+/* Tables */
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px;
+    border-spacing: 0 10px; /* Matched spacing */
 }
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px; /* Uniform 12px label */
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;             /* Enforced 24px height */
+    padding: 2px 8px;         /* Tighter padding for 24px */
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;       /* Sharper corners */
+    font-size: 12px;          /* Adjusted font to fit 24px box */
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
+input[readonly] {
+    background-color: #f3f6f9 !important;
+    color: #555;
+}
+
+/* ===== BUTTONS ===== */
 .btn-submit {
     width: 100%;
-    padding: 11px;
+    height: 30px;            /* Scaled button height */
+    padding: 0 12px;
     margin-top: 10px;
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;
+    white-space: nowrap;
 }
 
 .btn-submit:hover {
     background: #1d4ed8;
 }
 
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
+/* Grid Area */
 td[width="80%"] {
     height: 100vh;
     vertical-align: top;
@@ -106,131 +124,125 @@ td[width="80%"] {
 <script type="text/javascript">
 
 $(document).ready(function () {
-	
-	
-	 $("#fromdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#todate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 
-	 $('#fleetwindow').jqxWindow({ width: '30%', height: '65%',  maxHeight: '85%' ,maxWidth: '80%' ,title: 'Fleet Search' , position: { x: 200, y: 60 }, keyboardCloseKey: 27});
-	 $('#fleetwindow').jqxWindow('close');
-	     
-	  $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-	     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+    
+    // UPDATED: Standardized height to 24px and width to 100%
+    $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    $("#todate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    
+    $('#fleetwindow').jqxWindow({ width: '30%', height: '65%',  maxHeight: '85%' ,maxWidth: '80%' ,title: 'Fleet Search' , position: { x: 200, y: 60 }, keyboardCloseKey: 27});
+    $('#fleetwindow').jqxWindow('close');
+        
+    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
+    $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
      
-	     
-	 $('#fleetno').dblclick(function(){
-	  	    $('#fleetwindow').jqxWindow('open');
-	   
-	       fleetSearchContent('fleetsearch.jsp?', $('#fleetwindow')); 
+     
+    $('#fleetno').dblclick(function(){
+         $('#fleetwindow').jqxWindow('open');
+       fleetSearchContent('fleetsearch.jsp?', $('#fleetwindow')); 
     });
-	 
-	 var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
-	 var onemounth=new Date(new Date(fromdates).setMonth(fromdates.getMonth()-1)); 
-	    
-     $('#fromdate').jqxDateTimeInput('setDate', new Date(onemounth));
-	 
-	 
-	 $('#todate').on('change', function (event) {
-			
-		   var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
-		 
-		  // out date
-		 	 var todates=new Date($('#todate').jqxDateTimeInput('getDate')); //del date
-		 	 
-		   if(fromdates>todates){
-			   
-			   $.messager.alert('Message','To Date Less Than From Date  ','warning');   
-			 
-		   return false;
-		  }   
-	 });
+    
+    var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
+    var onemounth=new Date(new Date(fromdates).setMonth(fromdates.getMonth()-1)); 
+      
+    $('#fromdate').jqxDateTimeInput('setDate', new Date(onemounth));
+    
+    
+    $('#todate').on('change', function (event) {
+            
+       var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
+     
+      // out date
+         var todates=new Date($('#todate').jqxDateTimeInput('getDate')); //del date
+         
+       if(fromdates>todates){
+           
+           $.messager.alert('Message','To Date Less Than From Date  ','warning');   
+         
+       return false;
+      }   
+    });
     
 });
 
-
-
-
 function fleetSearchContent(url) {
- 	 //alert(url);
- 		 $.get(url).done(function (data) {
- 			 
- 			 $('#fleetwindow').jqxWindow('open');
- 		$('#fleetwindow').jqxWindow('setContent', data);
+     //alert(url);
+         $.get(url).done(function (data) {
+            
+             $('#fleetwindow').jqxWindow('open');
+        $('#fleetwindow').jqxWindow('setContent', data);
  
- 	}); 
- 	} 
+    }); 
+    } 
 
 function getfleetdata(event){
-	 var x= event.keyCode;
-	 if(x==114){
-	  $('#fleetwindow').jqxWindow('open');
+     var x= event.keyCode;
+     if(x==114){
+      $('#fleetwindow').jqxWindow('open');
 
-
-	  fleetSearchContent('fleetsearch.jsp?', $('#fleetwindow'));     }
-	 else{
-		 }
-	 }
+      fleetSearchContent('fleetsearch.jsp?', $('#fleetwindow'));     }
+     else{
+         }
+     }
 
 function funreload(event)
 {
-	 var fleetno = document.getElementById("fleetno").value;
+     var fleetno = document.getElementById("fleetno").value;
 
-	 if(fleetno=="")
-		 {
-		   $.messager.alert('Message','Search Fleet  ','warning'); 
-		   return 0;
-		 }
-	 else
-		 {
-		 
-		  var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
-			 
-		  // out date
-		 	 var todates=new Date($('#todate').jqxDateTimeInput('getDate')); //del date
-		 	 
-		   if(fromdates>todates){
-			   
-			   $.messager.alert('Message','To Date Less Than From Date  ','warning');   
-			 
-		   return false;
-		  } 
-		   else{
-			   document.getElementById("trncodeval").innerText="";
-			   document.getElementById("statusval").innerText="";
-			   
+     if(fleetno=="")
+         {
+           $.messager.alert('Message','Search Fleet  ','warning'); 
+           return 0;
+         }
+     else
+         {
+        
+          var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
+            
+         // out date
+             var todates=new Date($('#todate').jqxDateTimeInput('getDate')); //del date
+             
+           if(fromdates>todates){
+               
+               $.messager.alert('Message','To Date Less Than From Date  ','warning');   
+             
+           return false;
+          } 
+           else{
+               document.getElementById("trncodeval").innerText="";
+               document.getElementById("statusval").innerText="";
+               
      var fromdate= $("#fromdate").val();
-	 var todate= $("#todate").val();
-	 $("#overlay, #PleaseWait").show();
-	  $("#vehdiv").load("vehiclemovementGrid.jsp?fleetno="+fleetno+"&fromdate="+fromdate+"&todate="+todate);
-		   }
-		 }
-	
-	}
+     var todate= $("#todate").val();
+     $("#overlay, #PleaseWait").show();
+      $("#vehdiv").load("vehiclemovementGrid.jsp?fleetno="+fleetno+"&fromdate="+fromdate+"&todate="+todate);
+           }
+         }
+    
+    }
 function hiddenbrh(){
-	
-	$("#branchlabel").attr('hidden',true);
-	$("#branchdiv").attr('hidden',true);
-	
+    
+    $("#branchlabel").attr('hidden',true);
+    $("#branchdiv").attr('hidden',true);
+    
 }
 function funExportBtn(){
-	   
-	   
-	   
-	   if(parseInt(window.parent.chkexportdata.value)=="1")
-	    {
-	    JSONToCSVCon(datamov, 'Vehicle Movement', true);
-	    }
-	   else
-	    {
-		   $("#vehmovement").jqxGrid('exportdata', 'xls', 'Vehicle Movement');
-	    }
-	   
-	   
-	   
-	   
-	   
-	 }
-
+       
+       
+       
+       if(parseInt(window.parent.chkexportdata.value)=="1")
+        {
+        JSONToCSVCon(datamov, 'Vehicle Movement', true);
+        }
+       else
+        {
+           $("#vehmovement").jqxGrid('exportdata', 'xls', 'Vehicle Movement');
+        }
+       
+       
+       
+       
+       
+     }
 
 </script>
 </head>
@@ -242,23 +254,19 @@ function funExportBtn(){
 <table width="100%">
 <tr>
 
-<!-- ================= LEFT PANEL (20%) ================= -->
 <td width="20%" valign="top">
 
     <div class="master-container">
         <div class="sidebar-filters">
 
-            <!-- Heading -->
             <div class="sidebar-fixed-top">
                 <div class="filter-card">
                     <jsp:include page="../../heading.jsp"></jsp:include>
                 </div>
             </div>
 
-            <!-- Scrollable Content -->
             <div class="sidebar-scroll-content">
 
-                <!-- Fleet & Date Filter -->
                 <div class="filter-card">
                     <table class="filter-table">
 
@@ -288,26 +296,23 @@ function funExportBtn(){
                     </table>
                 </div>
 
-                <!-- Vehicle Info Box -->
                 <div class="filter-card">
                     <p id="vehinfo"
-                       style="background:#fff; height:180px; font:10px Tahoma; overflow:auto; padding:5px;">
+                       style="background:#fff; height:180px; font:12px 'Segoe UI', Tahoma, sans-serif; overflow:auto; padding:8px; border-radius:4px; border:1px solid #ccd6e0; margin:0;">
                         <s:property value="vehinfo"></s:property>
                     </p>
                 </div>
 
-                <!-- Status Labels -->
                 <div class="filter-card" style="text-align:center;">
-                    <font size="3" color="Blue">
+                    <font size="3" color="#2563eb">
                         <b><label id="trncodeval"></label></b>
                     </font>
                     <br><br>
-                    <font size="3" color="Blue">
+                    <font size="3" color="#2563eb">
                         <b><label id="statusval"></label></b>
                     </font>
                 </div>
 
-                <!-- Payment Area -->
                 <div class="filter-card">
                     <div id='paychaaaaa' style="width:100%; height:60px;"></div>
                 </div>
@@ -318,7 +323,6 @@ function funExportBtn(){
 
 </td>
 
-<!-- ================= RIGHT PANEL (80%) ================= -->
 <td width="80%" valign="top">
     <table width="100%">
         <tr>

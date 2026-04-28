@@ -17,7 +17,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
@@ -54,42 +54,71 @@
 }
 
 /* Tables */
-.filter-table {
+.release-filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.release-filter-table .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
-    font-weight: 600;
+    padding-right: 12px;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 90px;
 }
 
-/* Inputs */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.release-filter-table input[type="text"],
+.release-filter-table select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;             /* Enforced 24px height */
+    padding: 2px 8px;         /* Tighter padding for 24px */
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;       /* Sharper corners for ERP feel */
+    font-size: 12px;          /* Adjusted font to fit 24px box */
+    background-color: #ffffff;
     box-sizing: border-box;
+    color: #333;
 }
 
-/* Buttons */
+/* Readonly / disabled look */
+input[readonly],
+input:disabled,
+.release-filter-table input[readonly],
+.release-filter-table input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+}
+
+/* jqx date/time containers */
+.release-filter-table div[id^="dashrelease"] {
+    width: 100%;
+}
+
+/* Warning text */
+#dashfleetwarning {
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* ===== BUTTONS ===== */
 .btn-submit {
     width: 100%;
-    padding: 11px;
-    margin-top: 10px;
+    height: 30px;            /* Scaled button height */
+    padding: 0 12px;         /* Center text vertically */
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;      /* Matched border-radius */
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;       /* Aligns text inside button */
 }
 
 .btn-submit:hover {
@@ -99,6 +128,26 @@ input[type="text"], select {
 .btn-submit:disabled {
     background: #9ca3af;
     cursor: not-allowed;
+}
+
+/* Action buttons layout */
+.release-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.release-actions .btn-submit {
+    width: auto;
+    min-width: 120px;
+}
+
+.release-secondary-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
 }
 
 /* Page height fix */
@@ -113,244 +162,177 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
-/* ================= RELEASE DASHBOARD – FILTER SIDEBAR ================= */
-
-.release-filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
-
-.release-filter-table .label-cell {
-    text-align: right;
-    padding-right: 12px;
-    font-size: 13px;
-    color: #4e5e71;
-    font-weight: 600;
-    width: 90px;
-}
-
-/* Inputs & selects */
-.release-filter-table input[type="text"],
-.release-filter-table select {
-    width: 100%;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    padding: 7px 10px;
-    font-size: 13px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-}
-
-/* jqx date/time containers */
-.release-filter-table div[id^="dashrelease"] {
-    width: 100%;
-}
-
-/* Readonly / disabled look */
-.release-filter-table input[readonly],
-.release-filter-table input:disabled {
-    background-color: #f3f6f9;
-    color: #555;
-}
-
-/* Warning text */
-#dashfleetwarning {
-    color: #dc2626;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 5px;
-}
-
-/* Action buttons */
-.release-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.release-actions .btn-submit {
-    width: auto;
-    min-width: 120px;
-    padding: 10px 16px;
-}
-
-/* Vehicle / Attach buttons */
-.release-secondary-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 5px;
-}
 </style>
  
 <script type="text/javascript">
 $(document).ready(function () {
-	
-	document.getElementById("dashfleetwarning").style.display="none";
-	document.getElementById("dashbtnrelease").disabled=true;
-	document.getElementById("btnvehicle").disabled=true;
-	document.getElementById("btnattach").disabled=true;
-	 $("#dashreleasedate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#dashreleasetime").jqxDateTimeInput({ width: '20%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
+    
+    document.getElementById("dashfleetwarning").style.display="none";
+    document.getElementById("dashbtnrelease").disabled=true;
+    document.getElementById("btnvehicle").disabled=true;
+    document.getElementById("btnattach").disabled=true;
+    
+    // UPDATED: Standardized height to 24px and width to 100%
+    $("#dashreleasedate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    $("#dashreleasetime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
 
-	   $('#vehiclewindow').jqxWindow({width: '80%', height: '70%',  maxHeight: '80%' ,maxWidth: '90%' , title: 'Vehicle Details',position: { x: 250, y: 60} , theme: 'energyblue', showCloseButton: true,closeButtonAction:'hide'});
-	   $('#vehiclewindow').jqxWindow('close');
-	 
-	   $('#clientAttachWindow').jqxWindow({autoOpen: false,width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Attach',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
-	   $('#clientAttachWindow').jqxWindow('close');
-	   $('input[type=text]').val('');
-	   $('select').find('option').prop("selected", false);
-	 $.jqx._jqxDateTimeInput.getDateTime(new Date());
-getBrch();	
-getTestLocation(); 
+    $('#vehiclewindow').jqxWindow({width: '80%', height: '70%',  maxHeight: '80%' ,maxWidth: '90%' , title: 'Vehicle Details',position: { x: 250, y: 60} , theme: 'energyblue', showCloseButton: true,closeButtonAction:'hide'});
+    $('#vehiclewindow').jqxWindow('close');
+ 
+    $('#clientAttachWindow').jqxWindow({autoOpen: false,width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Attach',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true});
+    $('#clientAttachWindow').jqxWindow('close');
+    $('input[type=text]').val('');
+    $('select').find('option').prop("selected", false);
+    $.jqx._jqxDateTimeInput.getDateTime(new Date());
+    
+    getBrch();  
+    getTestLocation(); 
 });
 
 function funExportBtn(){
-	   if(parseInt(window.parent.chkexportdata.value)=="1")
-	    {
-	    JSONToCSVCon(datarelease, 'ToBeReleased', true);
-	    }
-	   else
-	    {
-		   $("#toBeReleasedGrid").jqxGrid('exportdata', 'xls', 'ToBeReleased');
-	    }
+    if(parseInt(window.parent.chkexportdata.value)=="1")
+     {
+     JSONToCSVCon(datarelease, 'ToBeReleased', true);
+     }
+    else
+     {
+       $("#toBeReleasedGrid").jqxGrid('exportdata', 'xls', 'ToBeReleased');
+     }
 }
 
 function getTestLocation(){
-	var x=new XMLHttpRequest();
-	x.onreadystatechange=function(){
-		if (x.readyState==4 && x.status==200)
-			{
-			 	items= x.responseText;
-			 	items=items.split('***');
-		        var locationItems=items[0].split(",");
-		        var locationidItems=items[1].split(",");
-		        	var optionslocation = '<option value="">--Select--</option>';
-		       for ( var i = 0; i < locationItems.length; i++) {
-		    	   optionslocation += '<option value="' + locationidItems[i] + '">' + locationItems[i] + '</option>';
-		        }
-		       $("select#dashcmbrlsloc").html(optionslocation);
-			   	if ($('#dashhidcmbrlsloc').val() != null) {
-			$('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
-		}
-			}
-		else
-			{
-			}
-	}
-	x.open("GET","getTestLocation.jsp",true);
-	x.send();
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+        if (x.readyState==4 && x.status==200)
+            {
+                items= x.responseText;
+                items=items.split('***');
+                var locationItems=items[0].split(",");
+                var locationidItems=items[1].split(",");
+                    var optionslocation = '<option value="">--Select--</option>';
+               for ( var i = 0; i < locationItems.length; i++) {
+                   optionslocation += '<option value="' + locationidItems[i] + '">' + locationItems[i] + '</option>';
+                }
+               $("select#dashcmbrlsloc").html(optionslocation);
+                if ($('#dashhidcmbrlsloc').val() != null) {
+            $('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
+        }
+            }
+        else
+            {
+            }
+    }
+    x.open("GET","getTestLocation.jsp",true);
+    x.send();
 }
 
 function getBrch() {
-	var x = new XMLHttpRequest();
-	var items, brchItems, currItems;
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			items = x.responseText;
-			items = items.split('####');
-			brchIdItems = items[0].split(",");
-			brchItems = items[1].split(",");
-			var optionsbrch = '<option value="">--Select--</option>';
-			for (var i = 0; i < brchItems.length; i++) {
-				optionsbrch += '<option value="' + brchIdItems[i] + '">'
-						+ brchItems[i] + '</option>';
-			}
-			
-			$("select#dashcmbrlsbranch").html(optionsbrch);
-			if ($('#dashhidcmbrlsbranch').val() != null) {
-				$('#dashcmbrlsbranch').val($('#dashhidcmbrlsbranch').val());
-			}
-		} else {
-		}
-	}
-	x.open("GET", "getBranch.jsp", true);
-	x.send();
+    var x = new XMLHttpRequest();
+    var items, brchItems, currItems;
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            items = x.responseText;
+            items = items.split('####');
+            brchIdItems = items[0].split(",");
+            brchItems = items[1].split(",");
+            var optionsbrch = '<option value="">--Select--</option>';
+            for (var i = 0; i < brchItems.length; i++) {
+                optionsbrch += '<option value="' + brchIdItems[i] + '">'
+                        + brchItems[i] + '</option>';
+            }
+            
+            $("select#dashcmbrlsbranch").html(optionsbrch);
+            if ($('#dashhidcmbrlsbranch').val() != null) {
+                $('#dashcmbrlsbranch').val($('#dashhidcmbrlsbranch').val());
+            }
+        } else {
+        }
+    }
+    x.open("GET", "getBranch.jsp", true);
+    x.send();
 }
 
 function getLocation(value)
 {
-	var x=new XMLHttpRequest();
-	x.onreadystatechange=function(){
-		if (x.readyState==4 && x.status==200)
-			{
-			 	items= x.responseText;
-			 	items=items.split('***');
-		        var locationItems=items[0].split(",");
-		        var locationidItems=items[1].split(",");
-		        	var optionslocation = '<option value="">--Select--</option>';
-		       for ( var i = 0; i < locationItems.length; i++) {
-		    	   optionslocation += '<option value="' + locationidItems[i] + '">' + locationItems[i] + '</option>';
-		        }
-		       $("select#dashcmbrlsloc").html(optionslocation);
-			   	if ($('#dashhidcmbrlsloc').val() != null) {
-			$('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
-		}
-			}
-		else
-			{
-			}
-	}
-	x.open("GET","getLocation.jsp?id="+value,true);
-	x.send();
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+        if (x.readyState==4 && x.status==200)
+            {
+                items= x.responseText;
+                items=items.split('***');
+                var locationItems=items[0].split(",");
+                var locationidItems=items[1].split(",");
+                    var optionslocation = '<option value="">--Select--</option>';
+               for ( var i = 0; i < locationItems.length; i++) {
+                   optionslocation += '<option value="' + locationidItems[i] + '">' + locationItems[i] + '</option>';
+                }
+               $("select#dashcmbrlsloc").html(optionslocation);
+                if ($('#dashhidcmbrlsloc').val() != null) {
+            $('#dashcmbrlsloc').val($('#dashhidcmbrlsloc').val());
+        }
+            }
+        else
+            {
+            }
+    }
+    x.open("GET","getLocation.jsp?id="+value,true);
+    x.send();
 }
 
 function funReleaseClick(){
-	document.getElementById("mode").value='R';
-	var testfleet=document.getElementById("dashreleasefleet").value;
-	var testbranch=document.getElementById("dashcmbrlsbranch").value;
-	var testloc=document.getElementById("dashcmbrlsloc").value;
-	var testkm=document.getElementById("dashreleasekm").value;
-	var testfuel=document.getElementById("dashreleasefuel").value;
-	var testdate= $('#dashreleasedate').jqxDateTimeInput('getDate');
-	var testtime= $('#dashreleasetime').jqxDateTimeInput('getDate');
-	var teststatus=document.getElementById("dashcmbrentalstatus").value;
-	
-	var testdate=testdate.setHours(0,0,0,0);
-	var validdate=funDateInPeriod(testdate);
-	if(validdate==0){
-		return 0; 
-	}
-	
-	var curdate=new Date();
-	var curtime=new Date();
-	curdate.setHours(0,0,0,0);
-	
-	if(testdate-curdate==0){
-		if(testtime.getHours()>curtime.getHours()){
-			$.messager.alert('Message',"Future Time Not Allowed");
-			return false;
-		}
-		else if(testtime.getHours()==curtime.getHours()){
-			if(testtime.getMinutes()>curtime.getMinutes()){
-				$.messager.alert('Message',"Future Time Not Allowed");
-				return false;
-			}
-		}
-	}
-	
-	if((testfleet=='')||(testbranch=='')||(testloc=='')||(testkm=='')||(testfuel=='')){
-		document.getElementById("dashfleetwarning").style.display="block";
-		return false;
-	}
-	else{
-		document.getElementById("dashfleetwarning").style.display="none";
-		 
-		 if(document.getElementById("dashreleasefleet").value<=0){
-			 return false;
-		 }
-		 document.getElementById("frmReleaseDashBoard").submit();
-	}
+    document.getElementById("mode").value='R';
+    var testfleet=document.getElementById("dashreleasefleet").value;
+    var testbranch=document.getElementById("dashcmbrlsbranch").value;
+    var testloc=document.getElementById("dashcmbrlsloc").value;
+    var testkm=document.getElementById("dashreleasekm").value;
+    var testfuel=document.getElementById("dashreleasefuel").value;
+    var testdate= $('#dashreleasedate').jqxDateTimeInput('getDate');
+    var testtime= $('#dashreleasetime').jqxDateTimeInput('getDate');
+    var teststatus=document.getElementById("dashcmbrentalstatus").value;
+    
+    var testdate=testdate.setHours(0,0,0,0);
+    var validdate=funDateInPeriod(testdate);
+    if(validdate==0){
+        return 0; 
+    }
+    
+    var curdate=new Date();
+    var curtime=new Date();
+    curdate.setHours(0,0,0,0);
+    
+    if(testdate-curdate==0){
+        if(testtime.getHours()>curtime.getHours()){
+            $.messager.alert('Message',"Future Time Not Allowed");
+            return false;
+        }
+        else if(testtime.getHours()==curtime.getHours()){
+            if(testtime.getMinutes()>curtime.getMinutes()){
+                $.messager.alert('Message',"Future Time Not Allowed");
+                return false;
+            }
+        }
+    }
+    
+    if((testfleet=='')||(testbranch=='')||(testloc=='')||(testkm=='')||(testfuel=='')){
+        document.getElementById("dashfleetwarning").style.display="block";
+        return false;
+    }
+    else{
+        document.getElementById("dashfleetwarning").style.display="none";
+         
+         if(document.getElementById("dashreleasefleet").value<=0){
+             return false;
+         }
+         document.getElementById("frmReleaseDashBoard").submit();
+    }
 }
 
 function setValues(){
-	 if(($('#msg').val()!="")){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
-	  var brchval = document.getElementById("cmbbranch").value;
-	    $("#releasediv").load("toBeReleasedGrid.jsp?brchval="+brchval);
+     if(($('#msg').val()!="")){
+       $.messager.alert('Message',$('#msg').val());
+      }
+  var brchval = document.getElementById("cmbbranch").value;
+    $("#releasediv").load("toBeReleasedGrid.jsp?brchval="+brchval);
 }
 
 function funreload(event)
@@ -360,36 +342,36 @@ function funreload(event)
  }
 
 function getVehicle(){
-	if(document.getElementById("dashreleasefleet").value==""){
-		 $.messager.alert('Message',"Please Select Fleet");
-		 return false;
-	}
-	$('#vehiclewindow').jqxWindow('setContent', '');
-	$('#vehiclewindow').jqxWindow('open');	
-	 vehicleSearchContent("<%=contextPath%>/com/controlcentre/masters/vehicle/saveVehicle1.action?mode=view&fleetno="+document.getElementById("dashreleasefleet").value);
+    if(document.getElementById("dashreleasefleet").value==""){
+         $.messager.alert('Message',"Please Select Fleet");
+         return false;
+    }
+    $('#vehiclewindow').jqxWindow('setContent', '');
+    $('#vehiclewindow').jqxWindow('open');  
+     vehicleSearchContent("<%=contextPath%>/com/controlcentre/masters/vehicle/saveVehicle1.action?mode=view&fleetno="+document.getElementById("dashreleasefleet").value);
 }
 
 function vehicleSearchContent(url) {
-	$('#vehiclewindow').jqxWindow('focus');	
-	$.get(url).done(function (data) {
+    $('#vehiclewindow').jqxWindow('focus'); 
+    $.get(url).done(function (data) {
 $('#vehiclewindow').jqxWindow('setContent', data);
 }); 
 }
 
 function getAttach(){
-	if(document.getElementById("dashreleasefleet").value==""){
-		 $.messager.alert('Message',"Please Select Fleet");
-		 return false;
-	}
-	changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);  
+    if(document.getElementById("dashreleasefleet").value==""){
+         $.messager.alert('Message',"Please Select Fleet");
+         return false;
+    }
+    changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);  
 }
 
 function changeClientAttachContent(url) {
-	   $.get(url).done(function (data) {
-	        $('#clientAttachWindow').jqxWindow('open');
-	     $('#clientAttachWindow').jqxWindow('setContent',data);
-	     $('#clientAttachWindow').jqxWindow('bringToFront');
-	  }); 
+   $.get(url).done(function (data) {
+        $('#clientAttachWindow').jqxWindow('open');
+     $('#clientAttachWindow').jqxWindow('setContent',data);
+     $('#clientAttachWindow').jqxWindow('bringToFront');
+  }); 
 }
 </script>
 
@@ -473,7 +455,7 @@ function changeClientAttachContent(url) {
                 <tr>
                     <td class="label-cell">Fuel</td>
                     <td>
-                        <select name="dashreleasefuel" id="dashreleasefuel" value='<s:property value="dashreleasefuel"/>' style="pointer-events: none; background-color: #f3f6f9;" tabindex="-1">
+                        <select name="dashreleasefuel" id="dashreleasefuel" value='<s:property value="dashreleasefuel"/>' tabindex="-1">
                             <option value="">--Select--</option>
                             <option value="0.000" selected>Level 0/8</option>
                             <option value="0.125">Level 1/8</option>
