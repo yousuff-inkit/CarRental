@@ -17,7 +17,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
@@ -75,6 +75,7 @@ input[type="text"], select {
     border: 1px solid #ccd6e0;
     border-radius: 6px;
     font-size: 13px;
+    height: 24px !important;   
 }
 
 /* Buttons */
@@ -89,6 +90,7 @@ input[type="text"], select {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    height: 30px !important;  
 }
 
 .btn-submit:hover {
