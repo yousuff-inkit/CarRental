@@ -18,191 +18,192 @@
 
 $(document).ready(function () {
  
-	
-	
-	// $('#vehiclewindow1').jqxWindow({ autoOpen: false,width: '80%', height: '80%',  maxHeight: '80%' ,maxWidth: '80%' , title: 'Vehicle Details' ,position: { x: 240, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});
-	  $('#movementwindow').jqxWindow({ autoOpen: false,width: '77%', height: '74%',  maxHeight: '70%' ,maxWidth: '78%' , title: 'Movement Details' ,position: { x: 280, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'}); 
+    
+    
+    // $('#vehiclewindow1').jqxWindow({ autoOpen: false,width: '80%', height: '80%',  maxHeight: '80%' ,maxWidth: '80%' , title: 'Vehicle Details' ,position: { x: 240, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'});
+      $('#movementwindow').jqxWindow({ autoOpen: false,width: '77%', height: '74%',  maxHeight: '70%' ,maxWidth: '78%' , title: 'Movement Details' ,position: { x: 280, y: 15 }, keyboardCloseKey: 27, showCloseButton: true,closeButtonAction:'hide'}); 
  
 });
 
 function funreload(event)  
 {     
-	document.getElementById("fleetno").value="";
-	document.getElementById("brach").value="";
-	document.getElementById("grp").value="";
-	 document.getElementById("docno").value="";
-	 document.getElementById("rentaltype").value="";
-	 document.getElementById("typeingrid").value="";
-	
-	 disitems();
-		 var barchval = document.getElementById("cmbbranch").value;
+    document.getElementById("fleetno").value="";
+    document.getElementById("brach").value="";
+    document.getElementById("grp").value="";
+     document.getElementById("docno").value="";
+     document.getElementById("rentaltype").value="";
+     document.getElementById("typeingrid").value="";
+    
+     disitems();
+         var barchval = document.getElementById("cmbbranch").value;
      
-	 $("#fleetdiv").load("vehlistshowgrid.jsp?brchval="+barchval);
-	 
-	
-	}
-	
- 	
+     $("#fleetdiv").load("vehlistshowgrid.jsp?brchval="+barchval);
+    
+    
+    }
+    
+    
 function disitems()
 {
-	 $('#btnvehicle').attr("disabled",true);
-	 $('#btnmove').attr("disabled",true);
-	 $('#btnupdate').attr("disabled",true);
-	 $('#rentaltype').attr("disabled",true);
-	 $('#fleetno').attr("disabled",true);
-	 
-	  
+     $('#btnvehicle').attr("disabled",true);
+     $('#btnmove').attr("disabled",true);
+     $('#btnupdate').attr("disabled",true);
+     $('#rentaltype').attr("disabled",true);
+     $('#fleetno').attr("disabled",true);
+    
+      
 }
-	
+    
  function getVehicleMov(){
-	  var fleetno=document.getElementById("fleetno").value;
-	  var vals=0;
-	  var ready="ready";
-	  $('#movementwindow').jqxWindow('setContent', '');
-	  $('#movementwindow').jqxWindow('open');  
-	  movementSearchContent("<%=contextPath%>/com/dashboard/vehicle/vehiclemovement/vehiclemovementGrid.jsp?fleetno="+fleetno+"&fromdate="+vals+"&todate="+vals+"&ready="+ready);
-	 }
+      var fleetno=document.getElementById("fleetno").value;
+      var vals=0;
+      var ready="ready";
+      $('#movementwindow').jqxWindow('setContent', '');
+      $('#movementwindow').jqxWindow('open');  
+      movementSearchContent("<%=contextPath%>/com/dashboard/vehicle/vehiclemovement/vehiclemovementGrid.jsp?fleetno="+fleetno+"&fromdate="+vals+"&todate="+vals+"&ready="+ready);
+     }
  
  function movementSearchContent(url) {
-	 //$('#vehiclewindow').jqxWindow('open'); 
-	 $('#movementwindow').jqxWindow('focus'); 
-	 $.get(url).done(function (data) {
-	$('#movementwindow').jqxWindow('setContent', data);
-	}); 
-	 
+     //$('#vehiclewindow').jqxWindow('open'); 
+     $('#movementwindow').jqxWindow('focus'); 
+     $.get(url).done(function (data) {
+    $('#movementwindow').jqxWindow('setContent', data);
+    }); 
+     
  }
  function changeClientAttachContent(url) {
-		$.get(url).done(function (data) {
-			    $('#windowattach').jqxWindow('open');
-				$('#windowattach').jqxWindow('setContent',data);
-				$('#windowattach').jqxWindow('bringToFront');
-	}); 
-	}
+        $.get(url).done(function (data) {
+                $('#windowattach').jqxWindow('open');
+                $('#windowattach').jqxWindow('setContent',data);
+                $('#windowattach').jqxWindow('bringToFront');
+    }); 
+    }
  function funClientAttach(){
-	
-	 
-		if ($("#docno").val()!="") {
-			  $("#windowattach").jqxWindow('setTitle',"VEH - "+document.getElementById("docno").value);
-			changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);		
-		} else {
-			$.messager.alert('Message','Select Fleet....!','warning');
-			return;
-		}
-	}
+    
+     
+        if ($("#docno").val()!="") {
+              $("#windowattach").jqxWindow('setTitle',"VEH - "+document.getElementById("docno").value);
+            changeClientAttachContent("<%=contextPath%>/com/common/attachGrid.jsp?formCode=VEH&docno="+document.getElementById("docno").value);       
+        } else {
+            $.messager.alert('Message','Select Fleet....!','warning');
+            return;
+        }
+    }
 
-	
+    
  function funsamechk()
  {
-	 
-	 if(document.getElementById("rentaltype").value==document.getElementById("typeingrid").value)
-	 {
-		 $.messager.alert('Message','Rent Type Is Same','warning');   
-		 document.getElementById("rentaltype").focus();
-					 
-		 return 0;
-	 }
-	 
+     
+     if(document.getElementById("rentaltype").value==document.getElementById("typeingrid").value)
+     {
+         $.messager.alert('Message','Rent Type Is Same','warning');   
+         document.getElementById("rentaltype").focus();
+                    
+         return 0;
+     }
+    
  }
  
  
  
-		  function funupdate()
-		  
-			{
+          function funupdate()
+          
+            {
 
-			  
-			  if(document.getElementById("rentaltype").value=="")
-				 {
-					 $.messager.alert('Message','Select Rent Type ','warning');   
-								 
-					 return 0;
-				 }
-				
-			  if(document.getElementById("rentaltype").value==document.getElementById("typeingrid").value)
-				 {
-					 $.messager.alert('Message','Rent Type Is Same','warning');   
-					 document.getElementById("rentaltype").focus();
-								 
-					 return 0;
-				 }
-			  var fleetno=document.getElementById("fleetno").value;
-			  
-			  var renttype=document.getElementById("rentaltype").value;
-			  
-			  savegriddata(fleetno,renttype);
-			 
-			}	
-				
-	
-		
-			function savegriddata(fleetno,renttype)
-			{
-				
-				var x=new XMLHttpRequest();
-				x.onreadystatechange=function(){
-				if (x.readyState==4 && x.status==200)
-					{
-					
-						var items=x.responseText;
-						 document.getElementById("rentaltype").value="";
-						 document.getElementById("fleetno").value="";
-						 document.getElementById("brach").value="";
-						 document.getElementById("grp").value="";
-						 document.getElementById("docno").value="";
-						 document.getElementById("typeingrid").value="";
-						  
-			              $.messager.alert('Message', '  Record Successfully Updated ', function(r){
-					 		   
-					     });
-						 funreload(event); 
-						 
-						 disitems();
-						 
-						
-						}
-					
-				}
-					
-			x.open("GET","saverenttype.jsp?fleet="+fleetno+"&renttype="+renttype,true);
+              
+              if(document.getElementById("rentaltype").value=="")
+                 {
+                     $.messager.alert('Message','Select Rent Type ','warning');   
+                                
+                     return 0;
+                 }
+                
+              if(document.getElementById("rentaltype").value==document.getElementById("typeingrid").value)
+                 {
+                     $.messager.alert('Message','Rent Type Is Same','warning');   
+                     document.getElementById("rentaltype").focus();
+                                
+                     return 0;
+                 }
+              var fleetno=document.getElementById("fleetno").value;
+              
+              var renttype=document.getElementById("rentaltype").value;
+              
+              savegriddata(fleetno,renttype);
+             
+            }   
+                
+    
+        
+            function savegriddata(fleetno,renttype)
+            {
+                
+                var x=new XMLHttpRequest();
+                x.onreadystatechange=function(){
+                if (x.readyState==4 && x.status==200)
+                    {
+                    
+                        var items=x.responseText;
+                         document.getElementById("rentaltype").value="";
+                         document.getElementById("fleetno").value="";
+                         document.getElementById("brach").value="";
+                         document.getElementById("grp").value="";
+                         document.getElementById("docno").value="";
+                         document.getElementById("typeingrid").value="";
+                          
+                      $.messager.alert('Message', '  Record Successfully Updated ', function(r){
+                             
+                     });
+                         funreload(event); 
+                        
+                         disitems();
+                        
+                        
+                        }
+                    
+                }
+                    
+            x.open("GET","saverenttype.jsp?fleet="+fleetno+"&renttype="+renttype,true);
 
-			x.send();
-					
-			}
-			
-			
-			function funExportBtn(){
-				
-				   
-				   
-				   
-				   
-				   
-					 if(parseInt(window.parent.chkexportdata.value)=="1")
-					 {
-					 JSONToCSVCon(sssss, 'Rent Status', true);
-					 }
-				 else
-					 {
-					   $("#jqxFleetGrid").jqxGrid('exportdata', 'xls', 'Rent Status');
-					 }
-					   
-					
-				   
-				 }			
-			
-			
-			
-			
-			
+            x.send();
+                    
+            }
+            
+            
+            function funExportBtn(){
+                
+                   
+                   
+                   
+                   
+                   
+                     if(parseInt(window.parent.chkexportdata.value)=="1")
+                     {
+                     JSONToCSVCon(sssss, 'Rent Status', true);
+                     }
+                 else
+                     {
+                       $("#jqxFleetGrid").jqxGrid('exportdata', 'xls', 'Rent Status');
+                     }
+                       
+                    
+                   
+                 }          
+            
+            
+            
+            
+            
 </script>
 </head>
   <style type="text/css">
    
+/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
     background-color: #f4f7f9;
 }
 
@@ -243,36 +244,64 @@ function disitems()
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px; /* Uniform 12px label */
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;             /* Enforced 24px height */
+    padding: 2px 8px;         /* Tighter padding for 24px */
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;       /* Sharper corners */
+    font-size: 12px;          /* Adjusted font to fit 24px box */
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .btn-submit {
+    flex: 1;
     width: 100%;
-    padding: 11px;
+    height: 30px;            /* Scaled button height */
+    padding: 0 12px;
     margin-top: 10px;
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;
+    white-space: nowrap;
 }
 
 .btn-submit:hover {
     background: #1d4ed8;
+}
+
+.btn-submit:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
 }
 
 
@@ -343,21 +372,21 @@ td[width="80%"] {
                     Update
                 </button>
 
-                <button type="button"
-                        class="btn-submit"
-                        id="btnvehicle"
-                        onclick="funClientAttach();"
-                        style="margin-top:8px;">
-                    Attach
-                </button>
+                <div class="button-group" style="margin-top: 0px;">
+                    <button type="button"
+                            class="btn-submit"
+                            id="btnvehicle"
+                            onclick="funClientAttach();">
+                        Attach
+                    </button>
 
-                <button type="button"
-                        class="btn-submit"
-                        id="btnmove"
-                        onclick="getVehicleMov();"
-                        style="margin-top:8px;">
-                    Movement
-                </button>
+                    <button type="button"
+                            class="btn-submit"
+                            id="btnmove"
+                            onclick="getVehicleMov();">
+                        Movement
+                    </button>
+                </div>
 
                 <div class="filter-card" style="margin-top:10px;">
                     <div id='pieChart1' style="width:100%; height:170px;"></div>
