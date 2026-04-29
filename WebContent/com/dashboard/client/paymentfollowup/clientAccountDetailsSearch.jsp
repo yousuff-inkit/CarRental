@@ -1,134 +1,202 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath(); %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
+<link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
-#search {
-    background-color: #E0ECF8;
-}
-</style>
-
-	<script type="text/javascript">
-	$(document).ready(function () {}); 
-
- 	function loadSearch() {
-
- 		var partyname=document.getElementById("txtpartyname").value;
- 		var accNo=document.getElementById("txtaccountno").value;
- 		var contactNo=document.getElementById("txtcontactno").value;
- 		
-		getdata(partyname,accNo,contactNo);
-	}
-	function getdata(partyname,accNo,contactNo){
-		 $("#refreshdiv").load('clientAccountDetailsSearchGrid.jsp?atype=AR&partyname='+partyname.replace(/ /g, "%20")+'&accNo='+accNo+'&contactNo='+contactNo+'&check=1');
-		}
-
-	</script>
-<style type="text/css">
-/* ------------------------------
-    MASTER UI CSS STANDARDS
------------------------------- */
+/* =========================================================
+   SCOPED UI: Modern Search Popup Style
+========================================================= */
 body {
-    background-color: #FFFFFF !important;
-    font-family: Tahoma, Geneva, sans-serif;
     margin: 0;
-    padding: 0;
+    background-color: #f5f7fa; 
 }
 
-#search {
-    background-color: #FFFFFF !important;
-    padding: 15px;
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
 }
 
-/* Table Layout: Standard Master UI Gaps */
-table {
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Table layout */
+.modern-ui table {
     border-collapse: separate;
-    border-spacing: 12px 8px;
+    border-spacing: 4px 8px; 
+    width: 100%;
 }
 
-/* Labels: Tahoma 14px, Weight 600 */
-td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #222;
+.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 8px;
     white-space: nowrap;
 }
 
-/* Master Inputs: Grey Border #bdc3c7, Weight 600 */
-input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
+.modern-ui .formfont {
+    font-size: 12px;
     font-weight: 600;
-    font-size: 14px;
-    padding: 6px 10px;
-    border: 1px solid #bdc3c7; 
-    border-radius: 4px;
-    background-color: #ffffff;
-    box-sizing: border-box; /* Ensures width: % works with padding */
+    cursor: default;
+    color: #444;
 }
 
-input[type="text"]:focus {
+/* Master Input Heights */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.2s;
+    background-color: #ffffff;
+}
+
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
-/* Master Blue Button: #007bff, No Hover Color Change */
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    padding: 8px 25px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.modern-ui input[readonly], .modern-ui input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: not-allowed;
 }
 
-.myButton:hover {
-    background-color: #007bff; /* Stays blue per instructions */
+/* Buttons */
+.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; /* Matched to input height */
+    line-height: 22px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
     cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-align: center;
+    width: 100%;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+}
+
+/* Flexbox utility for Search Button to sit side-by-side with input */
+.inline-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 </style>
 
-<body bgcolor="#FFFFFF">
-<div id="search">
-<table width="100%">
-  <tr>
-    <td width="7%" align="right">Name</td>
-    <td colspan="2">
-        <input type="text" name="txtpartyname" id="txtpartyname" style="width:100%;" value='<s:property value="txtpartyname"/>'>
-    </td>
-    <td width="49%" align="center">
-        <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td width="7%" align="right">Account</td>
-    <td width="26%">
-        <input type="text" name="txtaccountno" id="txtaccountno" style="width:70%;" value='<s:property value="txtaccountno"/>'>
-    </td>
-    <td width="18%" align="right">Contact No.</td>
-    <td width="49%">
-        <input type="text" name="txtcontactno" id="txtcontactno" style="width:50%;" value='<s:property value="txtcontactno"/>'>
-    </td>    
-  </tr>
-  <tr>
-    <td colspan="5">
+<script type="text/javascript">
+    $(document).ready(function () {}); 
+
+    function loadSearch() {
+        var partyname=document.getElementById("txtpartyname").value;
+        var accNo=document.getElementById("txtaccountno").value;
+        var contactNo=document.getElementById("txtcontactno").value;
+        
+        getdata(partyname,accNo,contactNo);
+    }
+    
+    function getdata(partyname,accNo,contactNo){
+         $("#refreshdiv").load('clientAccountDetailsSearchGrid.jsp?atype=AR&partyname='+partyname.replace(/ /g, "%20")+'&accNo='+accNo+'&contactNo='+contactNo+'&check=1');
+    }
+</script>
+</head>
+
+<body bgcolor="#f5f7fa">
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%">
+            <colgroup>
+                <col width="15%"> <col width="85%">
+            </colgroup>
+
+            <tr>
+                <td align="right">
+                    <label class="formfont">Name</label>
+                </td>
+                <td align="left" colspan="3">
+                    <input type="text" name="txtpartyname" id="txtpartyname" value='<s:property value="txtpartyname"/>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="right">
+                    <label class="formfont">Account</label>
+                </td>
+                <td align="left">
+                    <input type="text" name="txtaccountno" id="txtaccountno" value='<s:property value="txtaccountno"/>'>
+                </td>
+
+                <td align="right">
+                    <label class="formfont">Contact No.</label>
+                </td>
+                <td align="left">
+                    <div class="inline-controls">
+                        <input type="text" name="txtcontactno" id="txtcontactno" value='<s:property value="txtcontactno"/>'>
+                        
+                        <input type="button" 
+                               name="btnsearch" 
+                               id="btnsearch" 
+                               class="myButton" 
+                               value="Search" 
+                               onclick="loadSearch();" 
+                               style="width: 120px;">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid-container">
         <div id="refreshdiv">
             <jsp:include page="clientAccountDetailsSearchGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
-</table>
+    </div>
+
 </div>
 </body>
 </html>

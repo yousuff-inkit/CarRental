@@ -9,45 +9,171 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
-<style type="text/css">
-.myButtons {
-	display: inline-block;
-	margin-right:4px;
-	margin-left:4px; 
-  margin-bottom: 0;
-  font-weight: normal;
-  line-height: 1.3;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  color: #fff;
-  background-color: grey;
+<style>
+/* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
 }
-.myButtons:hover {
-	  color: #fff;
-  background-color: #31b0d5;
-  
+
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
+    background-color: #f4f7f9;
 }
-.myButtons:active {
-  color: #fff;
-  background-color: #31b0d5;
-  
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
-.myButtons:focus {
-  color: #fff;
-  background-color: grey;
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 12px; /* Uniform 12px label */
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* ===== UNIFORM 24px TEXT INPUTS ===== */
+input[type="text"], select {
+    width: 100%;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+}
+
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* ===== BUTTONS ===== */
+.btn-submit, .myButton {
+    width: 100%;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;
+    white-space: nowrap;
+    text-align: center;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-submit:hover, .myButton:hover {
+    background: #1d4ed8 !important;
+}
+
+.btn-submit:disabled, .myButton:disabled {
+    background: #9ca3af !important;
+    cursor: not-allowed;
+}
+
+/* Layout Utilities */
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    background: #fff;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+legend {
+    font-size: 11px;
+    font-weight: bold;
+    color: #2563eb;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+fieldset {
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0;
+}
+
+/* Strips inherited green background */
+.sidebar-filters label.branch, 
+.sidebar-filters .filter-card label,
+.sidebar-filters .branch {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+    background: transparent !important;
 }
 </style>
+  
 
 <script type="text/javascript">
 
@@ -422,82 +548,122 @@ $(document).ready(function () {
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%"  >
+<div class="master-container">
+
+<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<table  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>
-	
-	 <tr><td align="right"> <label class="branch">Type</label></td> <td ><select id="type" onchange="changegrid()">
- <option value="summary">Summary</option>
- <option value="detail">Detail</option>
- 
- </select> </td></tr>  
-	   <tr><td align="right"><label class="branch">Status</label></td>
-     <td align="left"><select id="clstatuss" name="clstatuss"  value='<s:property value="clstatuss"/>'>
-     <option value="">--Select--</option><option value=0>Open</option><option value=1>Close</option>
-     </select></td></tr>
-		<tr >
-	  <td align="right"><label class="branch">Filter</label></td>
-	  <td  align="left"><select name="searchby" id="searchby" style="width:50%;">    
-     <option value="">--Select--</option>
-    <option value="RAG">Rental Agreement</option>  
-     <option value="SAG">Sales Agent</option>
- 
-    </select>&nbsp;<button type="button" name="btnadditem" id="additem" class="myButtons" onClick="setSearch();">+</button>&nbsp;&nbsp;<button  type="button" name="btnremoveitem" id="btnremoveitem" class="myButtons" onclick="setRemove();">-</button></td>
-	  </tr>
-	<tr >
-	  <td colspan="2"
-      align="right" ><textarea id="searchdetails" name="searchdetails" style="resize:none;font: 10px Tahoma;" rows="18" cols="45" readonly></textarea></td>
-	  </tr>
-	<tr >
-	<td colspan="2"  ><center><input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();"></center>
-    </td>
-	</tr>
- 
-	</table>
-	</fieldset>
+
+<td width="330px" valign="top">
+
+    <div class="sidebar-filters">
+        
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="sidebar-scroll-content">
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="type" onchange="changegrid()">
+                                <option value="summary">Summary</option>
+                                <option value="detail">Detail</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Status</td>
+                        <td>
+                            <select id="clstatuss" name="clstatuss" value='<s:property value="clstatuss"/>'>
+                                <option value="">--Select--</option>
+                                <option value="0">Open</option>
+                                <option value="1">Close</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Filter</td>
+                        <td>
+                            <div style="display: flex; gap: 4px; align-items: center;">
+                                <select name="searchby" id="searchby" style="flex: 1;">
+                                    <option value="">--Select--</option>
+                                    <option value="RAG">Rental Agreement</option>  
+                                    <option value="SAG">Sales Agent</option>
+                                </select>
+                                <button type="button" name="btnadditem" id="additem" class="btn-submit" style="width: auto; padding: 0 10px; margin: 0; height: 24px !important; line-height: 22px !important;" onClick="setSearch();">+</button>
+                                <button type="button" name="btnremoveitem" id="btnremoveitem" class="btn-submit btn-danger" style="width: auto; padding: 0 10px; margin: 0; height: 24px !important; line-height: 22px !important; background: #ef4444 !important;" onclick="setRemove();">-</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <textarea id="searchdetails" name="searchdetails" style="width: 100%; height: 250px; resize: none; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 12px; padding: 8px; border: 1px solid #ccd6e0; border-radius: 4px; box-sizing: border-box; background-color: #f3f6f9;" readonly></textarea>
+                
+                <button type="button" name="btnclear" id="btnclear" class="btn-submit" onclick="funClearData();">
+                    Clear
+                </button>
+            </div>
+
+            <div style="display:none;">
+                <input type="hidden" name="hidrag" id="hidrag">
+                <input type="hidden" name="hidsag" id="hidsag">
+                <input type="hidden" name="rag" id="rag">
+                <input type="hidden" name="sag" id="sag">
+            </div>
+
+        </div>
+    </div>
+
 </td>
-<td width="80%">
-	<table width="100%"> 
-		<tr>
-			 <td><div id="summarydiv" ><jsp:include page="summarygrid.jsp"></jsp:include></div>
-			 
-			 
-			  <div id="detaildiv" hidden="true"><jsp:include page="detailsgrid.jsp"></jsp:include></div>
-		
-			 </td>
-		</tr>
-	</table>
+
+<td valign="top">
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            
+            <table width="100%"> 
+                <tr>
+                    <td>
+                        <div id="summarydiv">
+                            <jsp:include page="summarygrid.jsp"></jsp:include>
+                        </div>
+                        
+                        <div id="detaildiv" style="display:none;">
+                            <jsp:include page="detailsgrid.jsp"></jsp:include>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</td>
+
 </tr>
 </table>
+
 </div>
-
-	  <input type="hidden" name="hidrag" id="hidrag">
-			   <input type="hidden" name="hidsag" id="hidsag">
-			 
-			  	  <input type="hidden" name="rag" id="rag">
-			  <input type="hidden" name="sag" id="sag">
-			 
-
-
 
 <div id="agentWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
 <div id="agreementDetailsWindow">
-	<div></div><div></div>
+    <div></div><div></div>
 </div>
+
 </div> 
+</div>
 </body>
 </html>
