@@ -86,7 +86,7 @@ input[type="text"], select {
 
 .btn-submit:hover {
     background: #1d4ed8;
-
+}
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -111,7 +111,45 @@ td[width="80%"] {
 .myButtons:hover, .myButton:hover {
     background-color: #1d4ed8 !important;
 }
+/* 🔹 Inputs + Dropdowns → exact 24px */
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 8px !important;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    line-height: 24px;
+}
 
+/* 🔹 Dropdown text */
+select {
+    font-size: 13px !important;
+}
+
+/* 🔹 Buttons → exact 24px */
+.btn-submit,
+.myButtons,
+.myButton,
+input[type="button"],
+button {
+    height: 24px !important;
+    padding: 0 10px !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Fix external library overrides (jqx etc.) */
+.jqx-widget input,
+.jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
+}
 </style>
 
 <script type="text/javascript">
