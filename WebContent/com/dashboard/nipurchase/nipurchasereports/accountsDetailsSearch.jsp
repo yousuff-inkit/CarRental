@@ -8,192 +8,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<style type="text/css">
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
+<style>
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
+/* ===== MASTER UI STRICT ===== */
+
+body {
+    margin: 0;
+    background-color: #f5f7fa;
 }
 
-/* Table layout */
-#search table {
+/* FONT LOCK */
+#search.modern-ui,
+#search.modern-ui * {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+}
+
+/* PANEL */
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+/* GRID */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 6px;
+    min-height: 200px;
+}
+
+/* TABLE */
+.modern-ui table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 15px 12px;
+    border-spacing: 6px 10px;
 }
 
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-}
-
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
+/* LABELS */
+.modern-ui td.label {
     font-weight: 600;
-
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
-    box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    background-color: #ffffff;
-}
-
-/* Input focus */
-#search input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
+    color: #444;
     text-align: right;
+    white-space: nowrap;
 }
 
-/* Input cells */
-.search-form .field {
-    width: 28%;
+/* INPUTS */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    line-height: 20px !important;
+    padding: 2px 6px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-/* Action cell */
-.search-form .action {
-    text-align: center;
-    width: 12%;
-}
-
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
+/* BUTTON */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: 1px solid #083a8a;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 </style>
-<%String cmbtype=request.getParameter("cmbtype")==null?"0":request.getParameter("cmbtype");
-
-
-%>
 
 <script type="text/javascript">
 
-
-$(document).ready(function () {
-	<%--  var temp='<%=cmbtype%>';
-	document.getElementById("acctype1").value=='<%=request.getParameter("cmbtype")%>'; --%>
-	
-}); 
-
-
+$(document).ready(function () { });
 
 function loadAccountSearch() {
- 
-			var accountsno=document.getElementById("txtaccountsno").value;
-			var accountsname=document.getElementById("txtaccountsname").value;
-			 
-			var check = 1;
-	
-			getAccountDetails(accountsno,accountsname,check);
-	}
-		
-	function getAccountDetails(accountsno,accountsname,check){
-		 $("#refreshAccountDetailsDiv").load("accountDetailsSearchGrid.jsp?accountno="+accountsno+'&accountname='+accountsname.replace(/ /g, "%20")+'&check='+check);
-	}
+    var accountsno = document.getElementById("txtaccountsno").value;
+    var accountsname = document.getElementById("txtaccountsname").value;
+    var check = 1;
+
+    getAccountDetails(accountsno, accountsname, check);
+}
+
+function getAccountDetails(accountsno, accountsname, check){
+    $("#refreshAccountDetailsDiv").load(
+        "accountDetailsSearchGrid.jsp?accountno=" + accountsno +
+        '&accountname=' + accountsname.replace(/ /g, "%20") +
+        '&check=' + check
+    );
+}
 
 </script>
+</head>
+
 <body>
-<div id="search">
-<table width="100%">
 
-  <tr>
-    <td class="label">Account No</td>
-    <td class="field">
-        <input type="text" name="txtaccountsno" id="txtaccountsno"
-               value='<s:property value="txtaccountsno"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td class="action" rowspan="2">
-        <input type="button" name="btnAccountSearch" id="btnAccountSearch"
-               class="myButton"
-               value="Search"
-               onclick="loadAccountSearch();">
-    </td>
-  </tr>
+    <!-- SEARCH PANEL -->
+    <div class="search-panel">
 
-  <tr>
-    <td class="label">Account Name</td>
-    <td class="field">
-        <input type="text" name="txtaccountsname" id="txtaccountsname"
-               value='<s:property value="txtaccountsname"/>'>
-    </td>
-  </tr>
+        <table>
+            <colgroup>
+                <col width="10%">
+                <col width="30%">
 
-  <tr>
-    <td colspan="3">
+                <col width="12%">
+                <col width="30%">
+
+                <col width="18%">
+            </colgroup>
+
+            <tr>
+                <td class="label">Account No</td>
+                <td>
+                    <input type="text" name="txtaccountsno" id="txtaccountsno"
+                        value='<s:property value="txtaccountsno"/>'>
+                </td>
+
+                <td class="label">Account Name</td>
+                <td>
+                    <input type="text" name="txtaccountsname" id="txtaccountsname"
+                        value='<s:property value="txtaccountsname"/>'>
+                </td>
+
+                <td>
+                    <input type="button" name="btnAccountSearch" id="btnAccountSearch"
+                        class="myButton"
+                        value="Search"
+                        onclick="loadAccountSearch();">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="refreshAccountDetailsDiv">
             <jsp:include page="accountDetailsSearchGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
+    </div>
 
-</table>
 </div>
+
 </body>
 
 </html>

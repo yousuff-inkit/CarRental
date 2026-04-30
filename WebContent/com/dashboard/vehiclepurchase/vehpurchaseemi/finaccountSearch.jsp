@@ -8,124 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<style type="text/css">
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
-}
-
-/* Table layout */
-#search table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 15px 12px;
-}
-
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-}
-
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
-    box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    background-color: #ffffff;
-}
-
-/* Input focus */
-#search input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
-    text-align: center;
-    width: 12%;
-}
-
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
-}
-
-</style>
 <script type="text/javascript">
 	$(document).ready(function () {
 		 //document.getElementById("txtdoctypes").value=document.getElementById("formdetailcode").value;
@@ -148,37 +31,130 @@
 	}
 
 </script>
+<style type="text/css">
+
+/* ===== MASTER UI STRICT ===== */
+
+body {
+    margin: 0;
+    background-color: #f5f7fa;
+}
+
+/* FONT LOCK */
+#search.modern-ui,
+#search.modern-ui * {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+}
+
+/* PANEL */
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+/* GRID */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 6px;
+    min-height: 200px;
+}
+
+/* TABLE */
+.modern-ui table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 6px 10px;
+}
+
+/* LABELS */
+.modern-ui td.label {
+    font-weight: 600;
+    color: #444;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* INPUTS (STRICT 24px) */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    line-height: 20px !important;
+    padding: 2px 6px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* BUTTON */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: 1px solid #083a8a;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+</style>
+
 <body>
-<div id="search" class="search-popup">
 
-<table class="search-form">
-  <tr>
-    <td class="label">Account No</td>
-    <td class="field">
-      <input type="text" name="txtaccountsno1" id="txtaccountsno1"
-             value='<s:property value="txtaccountsno1"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td class="label">Account Name</td>
-    <td class="field">
-      <input type="text" name="txtaccountsname1" id="txtaccountsname1"
-             value='<s:property value="txtaccountsname1"/>'>
-    </td>
+    <!-- SEARCH PANEL -->
+    <div class="search-panel">
 
-    <td class="action">
-      <input type="button" name="btnAccountSearch1" id="btnAccountSearch1"
-             class="myButton"
-             value="Search"
-             onclick="loadAccountSearch();">
-    </td>
-  </tr>
-</table>
+        <table>
+            <colgroup>
+                <col width="12%">   <!-- Account No -->
+                <col width="28%">
 
-<div class="search-grid">
-  <jsp:include page="finaccsubsearch.jsp"></jsp:include>
+                <col width="12%">   <!-- Account Name -->
+                <col width="28%">
+
+                <col width="20%">   <!-- Button -->
+            </colgroup>
+
+            <tr>
+                <td class="label">Account No</td>
+                <td>
+                    <input type="text" name="txtaccountsno1" id="txtaccountsno1"
+                        value='<s:property value="txtaccountsno1"/>'>
+                </td>
+
+                <td class="label">Account Name</td>
+                <td>
+                    <input type="text" name="txtaccountsname1" id="txtaccountsname1"
+                        value='<s:property value="txtaccountsname1"/>'>
+                </td>
+
+                <td>
+                    <input type="button" name="btnAccountSearch1" id="btnAccountSearch1"
+                        class="myButton"
+                        value="Search"
+                        onclick="loadAccountSearch();">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
+        <jsp:include page="finaccsubsearch.jsp"></jsp:include>
+    </div>
+
 </div>
 
-</div>
 </body>
-
 </html>

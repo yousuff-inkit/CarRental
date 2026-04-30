@@ -206,6 +206,47 @@ td[width="80%"] {
 #delupdiv{
     width:100%;
 }
+
+/* 🔹 Inputs + Dropdowns */
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 8px !important;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Dropdown text */
+select {
+    font-size: 13px !important;
+}
+
+/* 🔹 Buttons */
+.btn-submit,
+.myButtons,
+.myButton,
+input[type="button"],
+button {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 10px !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Fix for any library overriding (like jqx / external CSS) */
+.jqx-widget input,
+.jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
+}
 </style>
 </head>
 <body onload="getBranch();">

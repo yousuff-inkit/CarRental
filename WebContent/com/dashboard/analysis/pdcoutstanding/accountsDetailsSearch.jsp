@@ -34,106 +34,169 @@
 		}
 
 	</script>
+
 <style type="text/css">
-/* Master UI Styles */
-/* Table spacing and layout */
-table {
-  border-collapse: separate;
-  border-spacing: 15px 12px; /* Standardized master gap */
+
+body {
+    margin: 0;
+    background-color: #f5f7fa;
 }
 
-/* Bold labels - Standardized to Master UI 14px Tahoma */
-td[align="right"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
-  white-space: nowrap;
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 12px;
+    padding: 10px;
 }
 
-/* Bold text inside inputs with Grey Borders */
-input[type="text"] {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 600; /* Font weight 600 as requested */
-  font-size: 14px;
-  padding: 8px 12px;
-  max-width: 100%;
-  box-sizing: border-box;
-  /* Grey border */
-  border: 1px solid #bdc3c7; 
-  border-radius: 4px;
-  background-color: #ffffff;
+/* PANEL */
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
 }
 
-/* Focus state for inputs */
-input[type="text"]:focus {
-  border-color: #007bff;
-  outline: none;
+/* GRID */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 200px;
 }
 
-/* Master Button Appearance */
-.myButton {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #007bff; /* Standard Blue */
-  color: white;
-  padding: 8px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: none; /* No hover transition */
+/* TABLE */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 6px 10px;
+    width: 100%;
 }
 
-/* No color change on hover */
-.myButton:hover {
-  background-color: #007bff; 
-  cursor: pointer;
+/* LABELS */
+.modern-ui td[align="right"] {
+    font-weight: 600;
+    color: #444;
+    white-space: nowrap;
 }
 
-/* Row spacing */
-tr {
-  line-height: 1.6;
+/* ===== STRICT MASTER HEIGHT CONTROL ===== */
+
+/* Inputs */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    line-height: 20px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    box-sizing: border-box !important;
+    background-color: #fff;
 }
 
-/* Container background override */
-#search {
-    background-color: #FFFFFF;
+/* Button */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px !important;
+    font-size: 12px !important;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: 1px solid #083a8a;
+    border-radius: 3px;
+    cursor: pointer;
+    box-sizing: border-box !important;
+}
+/* ===== STRICT FONT CONTROL (MASTER UI) ===== */
+
+#search.modern-ui,
+#search.modern-ui * {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+}
+
+/* Labels (extra safety) */
+.modern-ui td[align="right"] {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+/* Inputs */
+.modern-ui input[type="text"] {
+    font-size: 12px !important;
+}
+
+/* Button */
+.modern-ui .myButton {
+    font-size: 12px !important;
+    font-weight: 700 !important;
 }
 </style>
+</head>
 
-<body bgcolor="#FFFFFF">
-<div id="search">
-<table width="100%">
-  <tr>
-    <td align="right" width="7%">Name</td>
-    <td colspan="2">
-        <input type="text" name="txtpartyname" id="txtpartyname" style="width:100%;" value='<s:property value="txtpartyname"/>'>
-    </td>
-    <td width="49%" align="center">
-        <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Search" onclick="loadSearch();">
-    </td>
-  </tr>
-  <tr>
-    <td align="right">Account</td>
-    <td width="26%">
-        <input type="text" name="txtaccountno" id="txtaccountno" style="width:100%;" value='<s:property value="txtaccountno"/>'>
-    </td>
-    <td width="18%" align="right">Contact No.</td>
-    <td width="49%">
-        <input type="text" name="txtcontactno" id="txtcontactno" style="width:50%;" value='<s:property value="txtcontactno"/>'>
-        <input type="hidden" name="txtatype" id="txtatype" value='<s:property value="txtatype"/>'>
-    </td>   
-  </tr>
-  <tr>
-    <td colspan="4">
+<body>
+
+<div id="search" class="modern-ui">
+
+    <!-- SEARCH PANEL -->
+    <div class="search-panel">
+
+        <table>
+            <colgroup>
+                <col width="6%">   <!-- Name label -->
+                <col width="28%">  <!-- Name input -->
+
+                <col width="7%">   <!-- Account label -->
+                <col width="20%">  <!-- Account input -->
+
+                <col width="9%">   <!-- Contact label -->
+                <col width="15%">  <!-- Contact input -->
+
+                <col width="15%">  <!-- Button -->
+            </colgroup>
+
+            <tr>
+                <td align="right">Name</td>
+                <td>
+                    <input type="text" name="txtpartyname" id="txtpartyname"
+                        value='<s:property value="txtpartyname"/>'>
+                </td>
+
+                <td align="right">Account</td>
+                <td>
+                    <input type="text" name="txtaccountno" id="txtaccountno"
+                        value='<s:property value="txtaccountno"/>'>
+                </td>
+
+                <td align="right">Contact No.</td>
+                <td>
+                    <input type="text" name="txtcontactno" id="txtcontactno"
+                        value='<s:property value="txtcontactno"/>'>
+
+                    <!-- Hidden field preserved -->
+                    <input type="hidden" name="txtatype" id="txtatype"
+                        value='<s:property value="txtatype"/>'>
+                </td>
+
+                <td align="left">
+                    <input type="button" name="btnsearch" id="btnsearch"
+                        class="myButton" value="Search"
+                        onclick="loadSearch();">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="refreshdiv">
             <jsp:include page="accountsDetailsGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
-</table>
+    </div>
+
 </div>
+
 </body>
 </html>
