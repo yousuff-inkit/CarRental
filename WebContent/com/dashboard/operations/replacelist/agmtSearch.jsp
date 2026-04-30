@@ -1,266 +1,213 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
- 
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<style>
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
+<style type="text/css">
+/* =========================================================
+   SCOPED UI: Modern Search Popup Style
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; 
+}
+
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
+}
+
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 /* Table layout */
-#search table {
-    width: 100%;
+.modern-ui table {
     border-collapse: separate;
-    border-spacing: 15px 12px;
+    border-spacing: 4px 8px; 
+    width: 100%;
 }
 
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
+.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 8px;
     white-space: nowrap;
 }
 
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
+.modern-ui .formfont {
+    font-size: 12px;
     font-weight: 600;
+    cursor: default;
+    color: #444;
+}
 
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
+/* Master Input Heights */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
     box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
+    width: 100%;
+    transition: border-color 0.2s;
     background-color: #ffffff;
 }
 
-/* Input focus */
-#search input[type="text"]:focus {
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
+/* Buttons */
+.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; 
+    line-height: 22px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
     text-align: center;
-    width: 12%;
+    width: 100%;
 }
 
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
 }
-.myButtons {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    background-color: #007bff;   /* BLUE */
-    color: #ffffff;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-}
-
-/* Keep same blue on hover */
-.myButtons:hover {
-    background-color: #007bff;
-}
-
 </style>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	
-	}); 
+<script type="text/javascript">
+$(document).ready(function () {
+}); 
 
- 	function mainloadSearch() {
- 		
- 		var sclname=document.getElementById("SCl_name").value;
- 		var smob=document.getElementById("Sl_mob").value;
- 		var rno=document.getElementById("rno").value;
- 		var flno=document.getElementById("flno").value;
- 		var sregno=document.getElementById("sregno").value;
- 		var smra=document.getElementById("smra").value;
-		var agmttype='<%=request.getParameter("agmttype")==null?"":request.getParameter("agmttype")%>';
-		var branch='<%=request.getParameter("branch")==null?"":request.getParameter("branch")%>';
-		if(agmttype==''){
-			$.messager.alert('Message','Please Select Agreement Type');
-			
-			return false;
-		}
-		getdata(sclname,smob,rno,flno,sregno,smra,agmttype,branch);
- 
+function mainloadSearch() {
+    var sclname=document.getElementById("SCl_name").value;
+    var smob=document.getElementById("Sl_mob").value;
+    var rno=document.getElementById("rno").value;
+    var flno=document.getElementById("flno").value;
+    var sregno=document.getElementById("sregno").value;
+    var smra=document.getElementById("smra").value;
+    var agmttype='<%=request.getParameter("agmttype")==null?"":request.getParameter("agmttype")%>';
+    var branch='<%=request.getParameter("branch")==null?"":request.getParameter("branch")%>';
+    
+    if(agmttype==''){
+        $.messager.alert('Message','Please Select Agreement Type');
+        return false;
+    }
+    getdata(sclname,smob,rno,flno,sregno,smra,agmttype,branch);
+}
 
-	}
-	 function getdata(sclname,smob,rno,flno,sregno,smra,agmttype,branch){
-		
-		// $("#tariffDivId").load('rateDescription.jsp?txtrentaldocno='+indexVal1+'&revehGroup='+revehGroup);
-		
-		 $("#srefreshdiv").load('submainSearch.jsp?sclname='+sclname+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&smra='+smra+'&agmttype='+agmttype+'&branch='+branch);
-		 
+function getdata(sclname,smob,rno,flno,sregno,smra,agmttype,branch){
+    $("#srefreshdiv").load('submainSearch.jsp?sclname='+sclname+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&smra='+smra+'&agmttype='+agmttype+'&branch='+branch);
+}
+</script>
+</head>
 
-		  
-/* x.open("GET", "dissearch.jsp?sclname="+sclname+"&smob="+smob+"&rno="+rno+"&flno="+flno+"&sregno="+sregno+"&smra="+smra, true);
-		x.send(); */
-		}
- 
-	</script>
-<body bgcolor="#E0ECF8">
-<div id="search">
-<table width="100%">
+<body bgcolor="#f5f7fa">
+<div id="search" class="modern-ui">
 
-  <!-- ROW 1 -->
-  <tr>
-    <td class="label">Name</td>
-    <td class="field">
-        <input type="text"
-               name="SCl_name"
-               id="SCl_name"
-               value='<s:property value="SCl_name"/>'>
-    </td>
+    <!-- SEARCH FORM -->
+    <div class="search-panel">
+        <table width="100%">
+            <colgroup>
+                <col width="8%">  <col width="16%">
+                <col width="8%">  <col width="16%">
+                <col width="8%">  <col width="16%">
+                <col width="12%"> <col width="16%">
+            </colgroup>
 
-    <td class="label">Mob</td>
-    <td class="field">
-        <input type="text"
-               name="Sl_mob"
-               id="Sl_mob"
-               value='<s:property value="Sl_mob"/>'>
-    </td>
+            <!-- Row 1 -->
+            <tr>
+                <td align="right"><label class="formfont">Name</label></td>
+                <td align="left">
+                    <input type="text" name="SCl_name" id="SCl_name" value='<s:property value="SCl_name"/>'>
+                </td>
 
-    <td class="label">MRA</td>
-    <td class="field">
-        <input type="text"
-               name="smra"
-               id="smra"
-               value='<s:property value="smra"/>'>
-    </td>
-  </tr>
+                <td align="right"><label class="formfont">Mob</label></td>
+                <td align="left">
+                    <input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'>
+                </td>
 
-  <!-- ROW 2 -->
-  <tr>
-    <td class="label">Doc No</td>
-    <td class="field">
-        <input type="text"
-               name="rno"
-               id="rno"
-               value='<s:property value="rno"/>'>
-    </td>
+                <td align="right"><label class="formfont">MRA</label></td>
+                <td align="left">
+                    <input type="text" name="smra" id="smra" value='<s:property value="smra"/>'>
+                </td>
+                
+                <td colspan="2">
+                    <!-- Blank for balance -->
+                </td>
+            </tr>
 
-    <td class="label">Fleet No</td>
-    <td class="field">
-        <input type="text"
-               name="flno"
-               id="flno"
-               value='<s:property value="flno"/>'>
-    </td>
+            <!-- Row 2 -->
+            <tr>
+                <td align="right"><label class="formfont">Doc No</label></td>
+                <td align="left">
+                    <input type="text" name="rno" id="rno" value='<s:property value="rno"/>'>
+                </td>
 
-    <td class="label">Reg No</td>
-    <td class="field">
-        <input type="text"
-               name="sregno"
-               id="sregno"
-               value='<s:property value="sregno"/>'>
-    </td>
+                <td align="right"><label class="formfont">Fleet No</label></td>
+                <td align="left">
+                    <input type="text" name="flno" id="flno" value='<s:property value="flno"/>'>
+                </td>
 
-    <td class="action">
-        <input type="button"
-               name="mbtnrasearch"
-               id="mbtnrasearch"
-               class="myButton"
-               value="Search"
-               onclick="mainloadSearch();">
-    </td>
-  </tr>
+                <td align="right"><label class="formfont">Reg No</label></td>
+                <td align="left">
+                    <input type="text" name="sregno" id="sregno" value='<s:property value="sregno"/>'>
+                </td>
 
-  <!-- GRID -->
-  <tr>
-    <td colspan="7">
+                <td align="right" colspan="2">
+                    <input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search" onclick="mainloadSearch();" style="width: 120px; float: right;">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="srefreshdiv">
             <jsp:include page="submainSearch.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
+    </div>
 
-</table>
 </div>
 </body>
-
 </html>

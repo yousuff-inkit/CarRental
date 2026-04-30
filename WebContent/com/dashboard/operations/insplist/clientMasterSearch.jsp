@@ -1,231 +1,202 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head> 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<style>
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
+<style type="text/css">
+/* =========================================================
+   SCOPED UI: Modern Search Popup Style
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; 
+}
+
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
+}
+
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 /* Table layout */
-#search table {
-    width: 100%;
+.modern-ui table {
     border-collapse: separate;
-    border-spacing: 15px 12px;
+    border-spacing: 4px 8px; 
+    width: 100%;
 }
 
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
+.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 8px;
     white-space: nowrap;
 }
 
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
+.modern-ui .formfont {
+    font-size: 12px;
     font-weight: 600;
+    cursor: default;
+    color: #444;
+}
 
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
+/* Master Input Heights */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
     box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
+    width: 100%;
+    transition: border-color 0.2s;
     background-color: #ffffff;
 }
 
-/* Input focus */
-#search input[type="text"]:focus {
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
+/* Buttons */
+.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; 
+    line-height: 22px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
     text-align: center;
-    width: 12%;
+    width: 100%;
 }
 
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
-}
-.myButtons {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    background-color: #007bff;   /* BLUE */
-    color: #ffffff;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
 }
 
-/* Keep same blue on hover */
-.myButtons:hover {
-    background-color: #007bff;
+.inline-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 </style>
+
 <script type="text/javascript">
 $(document).ready(function(){
-	
-	$("#clientdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	//$('body').css('background-color','#E0ECF8');
+    // Standardized height to 24px and width to 100%
+    $("#clientdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
 });
 
 function loadClients(){
-	var name=document.getElementById("clients").value;
-	var cldocno=document.getElementById("cldocno").value;
-	var telephone=document.getElementById("telephone").value;
-	var clientdate=$('#clientdate').jqxDateTimeInput('val');
-	var mobile=document.getElementById("mobile").value;
-	$("#overlay, #PleaseWait").show();
-	$('#clientdiv').load('clientSearch.jsp?name='+name+'&cldocno='+cldocno+'&telephone='+telephone+'&clientdate='+clientdate+'&mobile='+mobile+'&id=1');
+    var name=document.getElementById("clients").value;
+    var cldocno=document.getElementById("cldocno").value;
+    var telephone=document.getElementById("telephone").value;
+    var clientdate=$('#clientdate').jqxDateTimeInput('val');
+    var mobile=document.getElementById("mobile").value;
+    
+    $("#overlay, #PleaseWait").show();
+    $('#clientdiv').load('clientSearch.jsp?name='+name+'&cldocno='+cldocno+'&telephone='+telephone+'&clientdate='+clientdate+'&mobile='+mobile+'&id=1');
 }
-
-
 </script>
 </head>
-<body>
-<div id="search" style="background-color:#FFFFFF;">
-<table width="100%">
 
-  <!-- ROW 1 -->
-  <tr>
-    <td class="label">Name</td>
-    <td class="field" colspan="3">
-        <input type="text"
-               name="clients"
-               id="clients">
-    </td>
+<body bgcolor="#f5f7fa">
+<div id="search" class="modern-ui">
 
-    <td class="label">Telephone</td>
-    <td class="field">
-        <input type="text"
-               name="telephone"
-               id="telephone">
-    </td>
-  </tr>
+    <!-- SEARCH FORM -->
+    <div class="search-panel">
+        <table width="100%">
+            <colgroup>
+                <col width="10%"> <col width="23%">
+                <col width="10%"> <col width="23%">
+                <col width="10%"> <col width="24%">
+            </colgroup>
 
-  <!-- ROW 2 -->
-  <tr>
-    <td class="label">Doc No</td>
-    <td class="field">
-        <input type="text"
-               name="cldocno"
-               id="cldocno">
-    </td>
+            <!-- Row 1 -->
+            <tr>
+                <td align="right"><label class="formfont">Name</label></td>
+                <td align="left" colspan="3">
+                    <input type="text" name="clients" id="clients">
+                </td>
 
-    <td class="label">Date</td>
-    <td class="field">
-        <div id="clientdate"></div>
-    </td>
+                <td align="right"><label class="formfont">Telephone</label></td>
+                <td align="left">
+                    <input type="text" name="telephone" id="telephone">
+                </td>
+            </tr>
 
-    <td class="label">Mobile</td>
-    <td class="field">
-        <input type="text"
-               name="mobile"
-               id="mobile">
-    </td>
+            <!-- Row 2 -->
+            <tr>
+                <td align="right"><label class="formfont">Doc No</label></td>
+                <td align="left">
+                    <input type="text" name="cldocno" id="cldocno">
+                </td>
 
-    <td class="action">
-        <button type="button"
-                name="btnclientsearch"
-                id="btnclientsearch"
-                class="myButtons"
-                onclick="loadClients();">
-            Search
-        </button>
-    </td>
-  </tr>
+                <td align="right"><label class="formfont">Date</label></td>
+                <td align="left">
+                    <div id="clientdate"></div>
+                </td>
 
-  <!-- GRID -->
-  <tr>
-    <td colspan="7">
+                <td align="right"><label class="formfont">Mobile</label></td>
+                <td align="left">
+                    <div class="inline-controls">
+                        <input type="text" name="mobile" id="mobile">
+                        <button type="button" name="btnclientsearch" id="btnclientsearch" class="myButton" onclick="loadClients();" style="width: 100px;">
+                            Search
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="clientdiv">
             <jsp:include page="clientSearch.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
+    </div>
 
-</table>
 </div>
 </body>
-
 </html>
