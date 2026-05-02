@@ -146,23 +146,31 @@ var source =
     				var row1=rowval-1;
     				var row2=rowval-2;
     				
+    				var element = $(defaultHtml);
+    				
+    				if (column === "rentaltype") {
+    			        element.css({ 
+    			            'text-align': 'left', 
+    			            'padding-left': '10px', 
+    			            'margin-top': '2px' 
+    			        });
+    			    } else {
+    			        element.css({ 
+    			            'text-align': 'right', 
+    			            'padding-right': '8px', 
+    			            'margin-top': '2px' 
+    			        });
+    			    }
+    				
     				
     			    if ( row == row1 || row == row2) {
-    			    	//alert("row3"+row3);
-    			        var element = $(defaultHtml);
-    			        element.css({  'width': '100%', 'height': '100%', 'margin': '0px' });
-    			        return element[0].outerHTML;
+    			    	element.css({ 'font-weight': 'bold' });
+    			        
     			    }
-    			    var row3=rowval-3;
-    			   
-    			    if (row == row3) {
-    			    	//alert(row3);
-    			        var element = $(defaultHtml);
-    			        element.css({ 'width': '100%', 'height': '100%', 'margin': '0px' });
-    			        return element[0].outerHTML;
-    			    }
-    			    return defaultHtml;
-    			}
+    			    return element[0].outerHTML;
+    			    
+    			    
+    			};
 
 
  var dataAdapter = new $.jqx.dataAdapter(source,
@@ -195,21 +203,21 @@ var source =
       
        columns: [  
             
-					{ text: '   '+document.getElementById("mainrentaltype").value,   datafield: 'rentaltype', editable:false, cellsalign: 'center', align:'center',cellsrenderer: cellsrenderer },
-					 { text: '      '+document.getElementById("mainrate").value,     datafield: 'rate', editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer },
-					{ text: '      '+document.getElementById("maincdw").value,        datafield: 'cdw',  editable:true ,cellsformat: 'd2' , cellsalign: 'center', align:'center',cellbeginedit: rowEdit, cellsrenderer: cellsrenderer},
-					{ text: '      '+document.getElementById("mainpai").value,     	 datafield: 'pai',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit, cellsrenderer: cellsrenderer},
-					{ text: '      '+document.getElementById("maincdw1").value,    	 datafield: 'cdw1',  editable:true ,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: '      '+document.getElementById("mainpai1").value,    	 datafield: 'pai1',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: '      '+document.getElementById("maingps").value,      	 datafield: 'gps',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: '      '+document.getElementById("mainbabyseater").value,  	 datafield: 'babyseater',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: '      '+document.getElementById("maincooler").value,          datafield: 'cooler',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: '  '+document.getElementById("mainkmrest").value,          datafield: 'kmrest',  editable:true, cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: ''+document.getElementById("mainexkmrte").value,         datafield: 'exkmrte', editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: ''+document.getElementById("mainoinschg").value,         datafield: 'oinschg',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: ''+document.getElementById("mainexhrchg").value,         datafield: 'exhrchg',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: ''+document.getElementById("mainchaufchg").value,        datafield: 'chaufchg',  editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
-					{ text: ''+document.getElementById("mainchaufexchg").value,      datafield: 'chaufexchg', editable:true,cellsformat: 'd2', cellsalign: 'center', align:'center',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: '   '+document.getElementById("mainrentaltype").value,   datafield: 'rentaltype', editable:false, width:100, cellsalign: 'left', align:'left',cellsrenderer: cellsrenderer },
+					 { text: '      '+document.getElementById("mainrate").value,     datafield: 'rate', editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer },
+					{ text: '      '+document.getElementById("maincdw").value,        datafield: 'cdw',  editable:true ,cellsformat: 'd2' , cellsalign: 'right', align:'right',cellbeginedit: rowEdit, cellsrenderer: cellsrenderer},
+					{ text: '      '+document.getElementById("mainpai").value,     	 datafield: 'pai',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit, cellsrenderer: cellsrenderer},
+					{ text: '      '+document.getElementById("maincdw1").value,    	 datafield: 'cdw1',  editable:true ,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: '      '+document.getElementById("mainpai1").value,    	 datafield: 'pai1',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: '      '+document.getElementById("maingps").value,      	 datafield: 'gps',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: '      '+document.getElementById("mainbabyseater").value,  	 datafield: 'babyseater',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: '      '+document.getElementById("maincooler").value,          datafield: 'cooler',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: '  '+document.getElementById("mainkmrest").value,          datafield: 'kmrest',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: ''+document.getElementById("mainexkmrte").value,         datafield: 'exkmrte', editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: ''+document.getElementById("mainoinschg").value,         datafield: 'oinschg',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: ''+document.getElementById("mainexhrchg").value,         datafield: 'exhrchg',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: ''+document.getElementById("mainchaufchg").value,        datafield: 'chaufchg',  editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
+					{ text: ''+document.getElementById("mainchaufexchg").value,      datafield: 'chaufexchg', editable:true,cellsformat: 'd2', cellsalign: 'right', align:'right',cellbeginedit: rowEdit,cellsrenderer: cellsrenderer},
 					{ text: 'Status', datafield: 'status', editable:false,hidden:true},
 					{ text: 'disclevel', datafield: 'disclevel', editable:false,hidden:true},
 					

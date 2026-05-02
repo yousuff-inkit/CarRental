@@ -442,23 +442,37 @@ $(document).ready(function ()
 				}
 			}
 		}
+		
+		var urlBase = document.URL.split("/com")[0];
+
+	    
+		var openAndPrint = function(url) {
+	        var win = window.open(url, "_blank", "top=100,left=100,width=1000,height=800");
+	        if (win) {
+	            var checkReady = setInterval(function() {
+	                if (win.document.readyState === 'complete') {
+	                    clearInterval(checkReady);
+	                    setTimeout(function() {
+	                        win.focus();
+	                        win.print();
+	                    }, 1000); // 1 second delay for the report to render
+	                }
+	            }, 500);
+	        }
+	    };
 		if(cnodocarray.length>1){
 			$.messager.alert('Warning','Cannot select multiple CNO');
 			return false;
 		}
 		if(cnodocarray.length>0){
-			var url=document.URL;
-			var docno="";
-			var reurl=url.split("/com");
-	    	var win= window.open(reurl[0]+"/com/finance/transactions/creditnote/printCreditNote?docno="+cnodocarray[0].split("::")[0]+"&branch="+cnodocarray[0].split("::")[1]+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-			win.focus();
+			
+			var cnoUrl = urlBase + "/com/finance/transactions/creditnote/printCreditNote?docno=" + cnodocarray[0].split("::")[0] + "&branch=" + cnodocarray[0].split("::")[1] + "&header=1";
+			openAndPrint(cnoUrl);
 		}
 		if(invdocarray.length>0){
-			var url=document.URL;
-			var docno="";
-			var reurl=url.split("/com");
-	    	var win= window.open(reurl[0]+"/com/operations/commtransactions/invoice/printManualInvoice?allbranch=1&printdocno="+document.getElementById("printdocno").value+"&hidheader=1&chkdeletedinvprint=0&bankdocno=1","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	    	win.focus();	
+			document.getElementById("printdocno").value = invdocarray.join(",");
+			var invUrl = urlBase + "/com/operations/commtransactions/invoice/printManualInvoice?allbranch=1&printdocno=" + document.getElementById("printdocno").value + "&hidheader=1&chkdeletedinvprint=0&bankdocno=1";
+			openAndPrint(invUrl);
 		}
 		 
 		
