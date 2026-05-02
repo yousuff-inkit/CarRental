@@ -165,6 +165,32 @@ td[width="80%"] {
 .d-bar-val{width:46px;font-size:11px;color:#5c5c5c;flex-shrink:0;text-align:right}
 .d-loading{text-align:center;padding:50px 20px;color:#9a9a9a;font-size:13px}
 @media(max-width:520px){.d-chart-row{grid-template-columns:1fr}}
+
+/* 🔹 Inputs + Dropdowns */
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 8px !important;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Dropdown text */
+select {
+    font-size: 13px !important;
+}
+
+
+/* 🔹 Fix for any library overriding (like jqx / external CSS) */
+.jqx-widget input,
+.jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
+}
 </style>
 
 <script type="text/javascript">
@@ -586,7 +612,7 @@ function funreload(event)
 
 	/* -- BRAND -- */
 	function _renderBrand(brd){
-		if(!brd||!brd.length){document.getElementById('dp_brand').innerHTML='<div class="d-loading">No brand data — load data first.</div>';return;}
+		if(!brd||!brd.length){document.getElementById('dp_brand').innerHTML='<div class="d-loading">No brand data â load data first.</div>';return;}
 		var s=brd.slice().sort(function(a,b){return _fld(b,'total')-_fld(a,'total');});
 		var bU=s.slice().sort(function(a,b){return _pct(_fld(b,'rental'),_fld(b,'total'))-_pct(_fld(a,'rental'),_fld(a,'total'));})[0];
 		var mG=s.slice().sort(function(a,b){return _fld(b,'garage')-_fld(a,'garage');})[0];
@@ -615,7 +641,7 @@ function funreload(event)
 
 	/* -- MODEL -- */
 	function _renderModel(mo){
-		if(!mo||!mo.length){document.getElementById('dp_model').innerHTML='<div class="d-loading">No model data — load data first.</div>';return;}
+		if(!mo||!mo.length){document.getElementById('dp_model').innerHTML='<div class="d-loading">No model data â load data first.</div>';return;}
 		var s=mo.slice().sort(function(a,b){return _fld(b,'total')-_fld(a,'total');});
 		var bM=s.slice().sort(function(a,b){return _pct(_fld(b,'rental'),_fld(b,'total'))-_pct(_fld(a,'rental'),_fld(a,'total'));})[0];
 		_setKpi('mo_largest',_lbl(s[0]),_fmt(s[0].total)+' live days');
@@ -641,14 +667,14 @@ function funreload(event)
 
 	/* -- YOM -- */
 	function _renderYOM(yo){
-		if(!yo||!yo.length){document.getElementById('dp_yom').innerHTML='<div class="d-loading">No YOM data — load data first.</div>';return;}
+		if(!yo||!yo.length){document.getElementById('dp_yom').innerHTML='<div class="d-loading">No YOM data â load data first.</div>';return;}
 		yo.sort(function(a,b){return (parseFloat(b.description)||0)-(parseFloat(a.description)||0);});
 		var yL=yo.map(_lbl),yU=yo.map(function(r){return _pct(_fld(r,'rental'),_fld(r,'total'));});
 		var older=yo.filter(function(r){return parseInt(r.description||0)<2022;});
 		_setKpi('yo_newest',_lbl(yo[0]),_pct(_fld(yo[0],'rental'),_fld(yo[0],'total'))+'% util');
 		_setKpi('yo_second',yo[1]?_lbl(yo[1]):'-',yo[1]?_pct(_fld(yo[1],'rental'),_fld(yo[1],'total'))+'% util':'');
 		_setKpi('yo_older',older.length+' YOM groups',older.length?'pre-2022':'all recent');
-		_setKpi('yo_oldest',yo[yo.length-1]?_lbl(yo[yo.length-1]):'-',yo[yo.length-1]?_pct(_fld(yo[yo.length-1],'rental'),_fld(yo[yo.length-1],'total'))+'% — oldest':'');
+		_setKpi('yo_oldest',yo[yo.length-1]?_lbl(yo[yo.length-1]):'-',yo[yo.length-1]?_pct(_fld(yo[yo.length-1],'rental'),_fld(yo[yo.length-1],'total'))+'% â oldest':'');
 		if(_dc.yo1)_dc.yo1.destroy();
 		_dc.yo1=new Chart(document.getElementById('ch_yo_fleetbar').getContext('2d'),{type:'bar',
 			data:{labels:yL,datasets:[{label:'Live days',data:yo.map(function(r){return _fld(r,'total');}),backgroundColor:_DC.B2,borderRadius:4}]},
@@ -670,7 +696,7 @@ function funreload(event)
 
 	/* -- GROUP -- */
 	function _renderGroup(grp){
-		if(!grp||!grp.length){document.getElementById('dp_group').innerHTML='<div class="d-loading">No group data — load data first.</div>';return;}
+		if(!grp||!grp.length){document.getElementById('dp_group').innerHTML='<div class="d-loading">No group data â load data first.</div>';return;}
 		grp.sort(function(a,b){return _fld(b,'total')-_fld(a,'total');});
 		var gC=[_DC.B,_DC.T,_DC.A,_DC.C,_DC.P,_DC.B2,_DC.R,_DC.G];
 		document.getElementById('gr_kpis').innerHTML='<div class="d-metric-grid">'+grp.slice(0,6).map(function(r){var p2=_pct(_fld(r,'rental'),_fld(r,'total'));
@@ -695,12 +721,12 @@ function funreload(event)
 
 	/* -- LOW UTIL -- */
 	function _renderLowUtil(veh){
-		if(!veh||!veh.length){document.getElementById('dp_lowutil').innerHTML='<div class="d-loading">No vehicle data — load data first.</div>';return;}
+		if(!veh||!veh.length){document.getElementById('dp_lowutil').innerHTML='<div class="d-loading">No vehicle data â load data first.</div>';return;}
 		var aU=veh.map(function(r){return _pct(_fld(r,'rental'),_fld(r,'total'));});
 		var low=veh.filter(function(r,i){return aU[i]<50&&_fld(r,'total')>0;});
 		var zero=veh.filter(function(r,i){return aU[i]===0&&_fld(r,'total')>0;});
 		_setKpi('lu_count',low.length,'<50% rental rate');
-		_setKpi('lu_zero',zero.length,'0% — investigate');
+		_setKpi('lu_zero',zero.length,'0% â investigate');
 		_setKpi('lu_idle',_fmt(low.reduce(function(s,r){return s+_fld(r,'other');},0)),'idle days opportunity');
 		_setKpi('lu_garage',_fmt(low.reduce(function(s,r){return s+_fld(r,'garage');},0)),'days in maintenance');
 		var bkts=[0,10,20,30,40,50,60,70,80,90,100];
@@ -831,9 +857,13 @@ function funreload(event)
     </td>
 </tr>
                     <tr>
-                        <td colspan="2" style="padding-top: 10px;">
-                            <textarea id="searchdetails" name="searchdetails" rows="10" readonly style="resize:none; font-size: 11px;"></textarea>
-                        </td>
+<td colspan="2" style="padding-top: 10px;">
+    <textarea id="searchdetails"
+              name="searchdetails"
+              rows="10"
+              readonly
+              style="resize:none; font-size:11px; width:100%; box-sizing:border-box;"></textarea>
+</td>
                     </tr>
                 </table>
             </div>

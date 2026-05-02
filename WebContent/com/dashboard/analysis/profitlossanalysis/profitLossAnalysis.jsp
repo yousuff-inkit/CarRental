@@ -123,6 +123,64 @@ td[width="80%"] {
 #delupdiv{
     width:100%;
 }
+
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px;
+    padding: 0 8px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+select option {
+    font-size: 13px;
+}
+
+.btn-submit,
+.myButtons,
+.myButton,
+input[type="button"],
+button {
+    width: 100%;
+    height: 24px;
+    padding: 0 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.btn-submit:hover,
+.myButtons:hover,
+.myButton:hover,
+input[type="button"]:hover,
+button:hover {
+    background-color: #1d4ed8 !important;
+}
+
+select {
+    width: 100%;
+    height: 24px;
+    padding: 0 8px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px !important;
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+    line-height: 24px;
+    box-sizing: border-box;
+}
+
+select option {
+    font-size: 13px !important;
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+}
 </style>
 <script type="text/javascript">
     

@@ -138,6 +138,66 @@ td[width="80%"] {
 #delupdiv{
     width:100%;
 }
+
+/* 🔹 Inputs + Dropdowns */
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 8px !important;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Dropdown text */
+select {
+    font-size: 13px !important;
+}
+
+/* 🔹 Buttons */
+.btn-submit,
+.myButtons,
+.myButton,
+input[type="button"],
+button {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 10px !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Fix for any library overriding (like jqx / external CSS) */
+.jqx-widget input,
+.jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
+}
+
+.myButtons1 {
+    height: 24px !important;
+    width: 32px;
+    padding: 0;
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    line-height: 24px;
+}
+
+.myButtons1:hover {
+    background-color: #1d4ed8 !important;
+}
 </style>
 
 <script type="text/javascript">
@@ -623,16 +683,20 @@ td[width="80%"] {
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center" style="padding-top: 5px;">
-                            <button type="button" id="additem" class="myButtons1" onClick="setSearch();">+</button>
-                            &nbsp;
-                            <button type="button" id="btnremoveitem" class="myButtons1" onclick="setRemove();">-</button>
-                        </td>
+                      <td colspan="2" align="center" style="padding-top: 6px;">
+    <button type="button" id="additem" class="myButtons1" onclick="setSearch();">+</button>
+    <button type="button" id="btnremoveitem" class="myButtons1" onclick="setRemove();" style="margin-left:6px;">-</button>
+</td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="padding-top: 10px;">
-                            <textarea id="searchdetails" name="searchdetails" readonly="readonly" style="height:120px;"><s:property value="searchdetails"></s:property></textarea>
-                        </td>
+<td colspan="2" style="padding-top: 10px;">
+    <textarea id="searchdetails"
+              name="searchdetails"
+              readonly="readonly"
+              style="height:120px; width:100%; box-sizing:border-box;">
+        <s:property value="searchdetails"></s:property>
+    </textarea>
+</td>
                     </tr>
                 </table>
             </div>

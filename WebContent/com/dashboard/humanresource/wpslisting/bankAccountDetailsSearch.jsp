@@ -9,124 +9,7 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-<style type="text/css">
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
-}
-
-/* Table layout */
-#search table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 15px 12px;
-}
-
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-}
-
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
-    box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    background-color: #ffffff;
-}
-
-/* Input focus */
-#search input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
-    text-align: center;
-    width: 12%;
-}
-
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
-}
-
-</style>
 
 <script type="text/javascript">
 	$(document).ready(function () {}); 
@@ -143,49 +26,138 @@
 		}
 
 	</script>
+<style type="text/css">
+
+/* ===== MASTER UI STRICT ===== */
+
+body {
+    margin: 0;
+    background-color: #f5f7fa;
+}
+
+/* FONT LOCK */
+#search.modern-ui,
+#search.modern-ui * {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+}
+
+/* PANEL */
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* GRID */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+/* TABLE */
+.modern-ui table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 4px 8px;
+}
+
+/* LABELS */
+.modern-ui td.label {
+    font-weight: 600;
+    color: #444;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* INPUTS */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    padding: 2px 6px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* BUTTON */
+.modern-ui .myButton {
+    height: 24px !important;
+    padding: 0 14px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: 1px solid #083a8a;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+</style>
+
 <body>
-<div id="search">
-<table width="100%">
 
-  <tr>
-    <td class="label">Account</td>
-    <td class="field">
-        <input type="text"
-               name="txtbankaccountsno"
-               id="txtbankaccountsno"
-               value='<s:property value="txtbankaccountsno"/>'>
-    </td>
+<div id="search" class="modern-ui">
 
-    <td class="action" rowspan="2">
-        <input type="button"
-               name="btnbanksearch"
-               id="btnbanksearch"
-               class="myButton"
-               value="Search"
-               onclick="loadBankSearch();">
-    </td>
-  </tr>
+    <!-- SEARCH PANEL -->
+    <div class="search-panel">
 
-  <tr>
-    <td class="label">Name</td>
-    <td class="field">
-        <input type="text"
-               name="txtbankaccountsname"
-               id="txtbankaccountsname"
-               value='<s:property value="txtbankaccountsname"/>'>
-    </td>
-  </tr>
+        <table>
+            <colgroup>
+                <col width="10%">  <!-- Account -->
+                <col width="35%">
 
-  <tr>
-    <td colspan="3">
+                <col width="10%">  <!-- Name -->
+                <col width="35%">
+
+                <col width="10%">  <!-- Button -->
+            </colgroup>
+
+            <tr>
+                <!-- Account -->
+                <td class="label">Account</td>
+                <td>
+                    <input type="text"
+                        name="txtbankaccountsno"
+                        id="txtbankaccountsno"
+                        value='<s:property value="txtbankaccountsno"/>'>
+                </td>
+
+                <!-- Name -->
+                <td class="label">Name</td>
+                <td>
+                    <input type="text"
+                        name="txtbankaccountsname"
+                        id="txtbankaccountsname"
+                        value='<s:property value="txtbankaccountsname"/>'>
+                </td>
+
+                <!-- Button -->
+                <td>
+                    <input type="button"
+                        name="btnbanksearch"
+                        id="btnbanksearch"
+                        class="myButton"
+                        value="Search"
+                        onclick="loadBankSearch();">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="refreshbankdiv">
             <jsp:include page="bankAccountDetailsSearchGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
+    </div>
 
-</table>
 </div>
-</body>
 
+</body>
 </html>

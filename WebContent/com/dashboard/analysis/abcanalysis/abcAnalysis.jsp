@@ -9,7 +9,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <style type="text/css">
-      .master-container {
+.master-container {
     display: flex;
     width: 100%;
     height: 100%;
@@ -38,17 +38,18 @@
     overflow-y: auto;
     padding: 15px 20px 25px;
 }
+
 .filter-card {
-    background: #f8fafc;
     border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 15px;
+    border-radius: 8px;
+    padding: 12px;
     margin-bottom: 12px;
+    background: #fff;
 }
 
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px;
+    border-spacing: 0 8px;
 }
 
 .label-cell {
@@ -58,33 +59,69 @@
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
+    vertical-align: middle;
 }
 
-input[type="text"], select {
+input[type="text"],
+select,
+textarea {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;
+    padding: 0 8px;
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;
+    font-size: 13px !important;
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+    box-sizing: border-box;
 }
 
-.btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
+select option {
+    font-size: 13px !important;
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+}
+
+textarea {
+    height: 120px;
+    padding: 6px 8px;
+    resize: none;
+}
+
+.btn-submit,
+.myButtons,
+.myButton,
+.myButtons1,
+input[type="button"],
+button {
+    height: 24px;
+    padding: 0 10px;
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
-.btn-submit:hover {
-    background: #1d4ed8;
+.myButtons {
+    width: 100%;
 }
 
+.myButtons1 {
+    width: 35px;
+    text-align: center;
+    padding: 0;
+}
+
+.btn-submit:hover,
+.myButtons:hover,
+.myButton:hover,
+.myButtons1:hover,
+input[type="button"]:hover,
+button:hover {
+    background-color: #1d4ed8 !important;
+}
 
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
@@ -97,33 +134,26 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
-.myButtons, .myButton {
-    background-color: #2563eb !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 6px;
-    padding: 10px 15px;
+
+.main-content-wrapper {
+    flex: 1;
     width: 100%;
-    font-weight: 600;
-    cursor: pointer;
 }
 
-.myButtons:hover, .myButton:hover {
-    background-color: #1d4ed8 !important;
-}
-.main-content-wrapper{
-    flex:1;
-    width:100%;
+.scrollable-grid-area {
+    width: 100%;
 }
 
-.scrollable-grid-area{
-    width:100%;
+#delupdiv {
+    width: 100%;
 }
 
-#delupdiv{
-    width:100%;
+.branch {
+    font-size: 13px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 </style>
+
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -480,85 +510,106 @@ td[width="80%"] {
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From</td>
-                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To</td>
-                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-                    </tr>
-                </table>
+         <div class="sidebar-scroll-content">
+
+                    <div class="filter-card">
+                        <table class="filter-table">
+                            <tr>
+                                <td class="label-cell">From</td>
+                                <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell">To</td>
+                                <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="filter-card">
+                        <span class="branch" style="display:block; margin-bottom:8px; text-align:center; font-weight:bold;">Report Type</span>
+                        <table width="100%" class="filter-table">
+                            <tr>
+                                <td colspan="2">
+                                    <input type="radio" id="rdall" name="rdo" onclick="summaryDisable();" value="rdall">
+                                    <label for="rdall" class="branch">All</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%">
+                                    <input type="radio" id="rdsummary" name="rdo" onclick="summaryDisable();" value="rdsummary">
+                                    <label for="rdsummary" class="branch">Summary</label>
+                                </td>
+                                <td width="60%">
+                                    <select id="cmbsummarytype" name="cmbsummarytype" onchange="clearAccountInfo();" value='<s:property value="cmbsummarytype"/>'>
+                                        <option value="">--Select--</option>
+                                        <option value="CRM">Client</option>
+                                        <option value="CAT">Client Category</option>
+                                        <option value="PCASE">Client Status</option>
+                                        <option value="SLM">Salesman</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="filter-card">
+                        <table class="filter-table">
+                            <tr>
+                                <td class="label-cell">Search By</td>
+                                <td>
+                                    <select name="searchby" id="searchby">
+                                        <option value="">--Select--</option>
+                                        <option value="client">Client</option>
+                                        <option value="clientcat">Client Category</option>
+                                        <option value="clientstatus">Client Status</option>
+                                        <option value="clientslm">Salesman</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center" style="padding-top:5px;">
+                                    <button type="button" id="additem" class="myButtons1" onClick="setSearch();">+</button>
+                                    &nbsp;
+                                    <button type="button" id="btnremoveitem" class="myButtons1" onclick="setRemove();">-</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top:10px;">
+                                    <textarea id="searchdetails" name="searchdetails" readonly="readonly"><s:property value="searchdetails"></s:property></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="padding:0 5px;">
+                        <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">
+                    </div>
+
+                    <input type="hidden" name="client" id="client">
+                    <input type="hidden" name="hidclient" id="hidclient">
+
+                    <input type="hidden" name="clientcat" id="clientcat">
+                    <input type="hidden" name="hidclientcat" id="hidclientcat">
+
+                    <input type="hidden" name="clientstatus" id="clientstatus">
+                    <input type="hidden" name="hidclientstatus" id="hidclientstatus">
+
+                    <input type="hidden" name="clientslm" id="clientslm">
+                    <input type="hidden" name="hidclientslm" id="hidclientslm">
+
+                </div>
             </div>
 
-            <div class="filter-card">
-                <span class="branch" style="display:block; margin-bottom:8px; text-align:center; font-weight:bold;">Report Type</span>
-                <table width="100%">
-                    <tr>
-                        <td colspan="2">
-                            <input type="radio" id="rdall" name="rdo" onclick="summaryDisable();" value="rdall">
-                            <label for="rdall" class="branch">All</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="40%">
-                            <input type="radio" id="rdsummary" name="rdo" onclick="summaryDisable();" value="rdsummary">
-                            <label for="rdsummary" class="branch">Summary</label>
-                        </td>
-                        <td width="60%">
-                            <select id="cmbsummarytype" name="cmbsummarytype" onchange="clearAccountInfo();" value='<s:property value="cmbsummarytype"/>'>
-                                <option value="">--Select--</option>
-                                <option value="CRM">Client</option>
-                                <option value="CAT">Client Category</option>
-                                <option value="PCASE">Client Status</option>
-                                <option value="SLM">Salesman</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <td width="80%">
+                <div class="main-content-wrapper">
+                    <div class="scrollable-grid-area">
+                        <div id="delupdiv"></div>
+                    </div>
+                </div>
+            </td>
 
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Search By</td>
-                        <td>
-                            <select name="searchby" id="searchby">
-                                <option value="">--Select--</option>
-                                <option value="client">Client</option>
-                                <option value="clientcat">Client Category</option>
-                                <option value="clientstatus">Client Status</option>
-                                <option value="clientslm">Salesman</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center" style="padding-top: 5px;">
-                            <button type="button" id="additem" class="myButtons1" onClick="setSearch();">+</button>
-                            &nbsp;
-                            <button type="button" id="btnremoveitem" class="myButtons1" onclick="setRemove();">-</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="padding-top: 10px;">
-                            <textarea id="searchdetails" name="searchdetails" readonly="readonly" style="height:120px;"><s:property value="searchdetails"></s:property></textarea>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div style="padding: 0 5px;">
-                <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">
-            </div>
-
-            <input type="hidden" name="client" id="client"><input type="hidden" name="hidclient" id="hidclient">
-            <input type="hidden" name="clientcat" id="clientcat"><input type="hidden" name="hidclientcat" id="hidclientcat">
-            <input type="hidden" name="clientstatus" id="clientstatus"><input type="hidden" name="hidclientstatus" id="hidclientstatus">
-            <input type="hidden" name="clientslm" id="clientslm"><input type="hidden" name="hidclientslm" id="hidclientslm">
         </div>
+    
     </div>
 
     <div class="main-content-wrapper">

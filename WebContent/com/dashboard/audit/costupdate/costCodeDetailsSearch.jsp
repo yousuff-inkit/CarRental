@@ -9,140 +9,7 @@
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 <title>GatewayERP(i)</title>
 
-<style type="text/css">
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
-}
-
-/* Table layout */
-#search table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 15px 12px;
-}
-
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-}
-
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
-    box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    background-color: #ffffff;
-}
-
-/* Input focus */
-#search input[type="text"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
-    text-align: center;
-    width: 12%;
-}
-
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
-}
-.myButtons {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    background-color: #007bff;   /* BLUE */
-    color: #ffffff;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-}
-
-/* Keep same blue on hover */
-.myButtons:hover {
-    background-color: #007bff;
-}
-</style>
 
 	<script type="text/javascript">
 	$(document).ready(function () {
@@ -170,65 +37,149 @@
 		}
 
 	</script>
+<style type="text/css">
+
+/* ===== MASTER UI STRICT ===== */
+
+body {
+    margin: 0;
+    background-color: #f5f7fa;
+}
+
+/* FONT LOCK */
+#search.modern-ui,
+#search.modern-ui * {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+}
+
+/* PANEL */
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+/* GRID */
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 6px;
+    min-height: 200px;
+}
+
+/* TABLE */
+.modern-ui table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 6px 10px;
+}
+
+/* LABELS */
+.modern-ui td.label {
+    font-weight: 600;
+    color: #444;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* INPUTS (STRICT 24px) */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    line-height: 20px !important;
+    padding: 2px 6px !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* BUTTON */
+.modern-ui .myButton {
+    height: 24px !important;
+    line-height: 22px !important;
+    padding: 0 16px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
+    color: #fff;
+    border: 1px solid #083a8a;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+</style>
+
 <body>
-<div id="search">
-<table width="100%">
 
-  <!-- ROW 1 -->
-  <tr>
-    <td class="label">Cost Code</td>
-    <td class="field">
-        <input type="text"
-               name="txtcostcodes"
-               id="txtcostcodes"
-               value='<s:property value="txtcostcodes"/>'>
+<div id="search" class="modern-ui">
 
-        <input type="hidden"
-               name="txtcosttype"
-               id="txtcosttype"
-               value='<s:property value="txtcosttype"/>'>
-    </td>
+    <!-- SEARCH PANEL -->
+    <div class="search-panel">
 
-    <td class="label">Reg No</td>
-    <td class="field">
-        <input type="text"
-               name="txtregno"
-               id="txtregno"
-               value='<s:property value="txtregno"/>'>
-    </td>
+        <table>
+            <colgroup>
+                <col width="10%">   <!-- Cost Code label -->
+                <col width="20%">   <!-- Cost Code input -->
 
-    <td class="action">
-        <input type="button"
-               name="btnsearch"
-               id="btnsearch"
-               class="myButton"
-               value="Search"
-               onclick="loadSearch();">
-    </td>
-  </tr>
+                <col width="8%">    <!-- Reg No label -->
+                <col width="15%">   <!-- Reg No input -->
 
-  <!-- ROW 2 -->
-  <tr>
-    <td class="label">Name</td>
-    <td class="field" colspan="3">
-        <input type="text"
-               name="txtcostcodesname"
-               id="txtcostcodesname"
-               value='<s:property value="txtcostcodesname"/>'>
-    </td>
-  </tr>
+                <col width="8%">    <!-- Name label -->
+                <col width="25%">   <!-- Name input -->
 
-  <!-- GRID -->
-  <tr>
-    <td colspan="5">
+                <col width="14%">   <!-- Button -->
+            </colgroup>
+
+            <tr>
+                <!-- Cost Code -->
+                <td class="label">Cost Code</td>
+                <td>
+                    <input type="text" name="txtcostcodes" id="txtcostcodes"
+                        value='<s:property value="txtcostcodes"/>'>
+
+                    <!-- Hidden preserved -->
+                    <input type="hidden" name="txtcosttype" id="txtcosttype"
+                        value='<s:property value="txtcosttype"/>'>
+                </td>
+
+                <!-- Reg No -->
+                <td class="label">Reg No</td>
+                <td>
+                    <input type="text" name="txtregno" id="txtregno"
+                        value='<s:property value="txtregno"/>'>
+                </td>
+
+                <!-- Name -->
+                <td class="label">Name</td>
+                <td>
+                    <input type="text" name="txtcostcodesname" id="txtcostcodesname"
+                        value='<s:property value="txtcostcodesname"/>'>
+                </td>
+
+                <!-- Button -->
+                <td>
+                    <input type="button" name="btnsearch" id="btnsearch"
+                        class="myButton"
+                        value="Search"
+                        onclick="loadSearch();">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="refreshdiv">
             <jsp:include page="costCodeDetailsSearchGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
+    </div>
 
-</table>
 </div>
-</body>
 
+</body>
 </html>
