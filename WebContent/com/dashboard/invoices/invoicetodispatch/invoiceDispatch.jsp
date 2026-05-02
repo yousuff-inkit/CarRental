@@ -96,6 +96,108 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
+.btn-whatsapp {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-whatsapp:hover {
+    background: #1ebe5d;
+}
+
+.btn-wa-direct {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #128C7E;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-wa-direct:hover { background: #0e7268; }
+
+#waDirectModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.52);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+#waDirectModal.open { display: flex; }
+
+.wa-modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    width: 350px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+
+.wa-modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #128C7E;
+    margin-bottom: 14px;
+}
+
+.wa-modal-box input[type="text"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.wa-modal-hint {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.wa-modal-preview {
+    width: 100%;
+    height: 130px;
+    font-size: 12px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 14px;
+    resize: none;
+    background: #f8fafc;
+    color: #333;
+    font-family: monospace;
+}
+
+.wa-modal-actions { display: flex; gap: 8px; }
+.wa-modal-actions button {
+    flex: 1; padding: 10px; border: none;
+    border-radius: 6px; font-size: 13px;
+    font-weight: 600; cursor: pointer;
+}
+
+.wa-send-btn { background: #25D366; color: #fff; }
+.wa-send-btn:hover { background: #1ebe5d; }
+.wa-cancel-btn { background: #f0f4f8; color: #4e5e71; }
+.wa-cancel-btn:hover { background: #e1e8ed; }
+
 /* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
@@ -361,7 +463,90 @@ $(document).ready(function ()
 		 
 		
 	}
-	function funDispatchData(){
+	function funSendWhatsApp(){
+	var selectedrows=$('#rentalInvoiceGrid').jqxGrid('selectedrowindexes');
+	if(selectedrows.length==0){
+		$.messager.alert('Warning','Please select valid invoice');
+		return false;
+	}
+	var lines=[];
+	lines.push('*Invoice Details*');
+	lines.push('─────────────────');
+	for(var i=0;i<selectedrows.length;i++){
+		var r=selectedrows[i];
+		var docno  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'doc_no')  ||'';
+		var vocno  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'voc_no')  ||'';
+		var acname =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'acname')  ||'';
+		var amount =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'amount')  ||'';
+		var dtype  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'dtype')   ||'';
+		var fdate  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'fromdate')||'';
+		var tdate  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'todate')  ||'';
+		if(selectedrows.length>1) lines.push('*#'+(i+1)+'*');
+		lines.push('Doc No : '+docno+(vocno?'  ('+vocno+')':''));
+		lines.push('Client : '+acname);
+		lines.push('Type   : '+dtype);
+		lines.push('Amount : '+amount);
+		if(fdate||tdate) lines.push('Period : '+fdate+' – '+tdate);
+		if(i<selectedrows.length-1) lines.push('─────────────────');
+	}
+	var msg=lines.join('\n');
+	window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+function funSendWhatsAppDirect(){
+	var selectedrows=$('#rentalInvoiceGrid').jqxGrid('selectedrowindexes');
+	if(selectedrows.length==0){
+		$.messager.alert('Warning','Please select valid invoice');
+		return false;
+	}
+	var lines=['*Invoice Details*','─────────────────'];
+	for(var i=0;i<selectedrows.length;i++){
+		var r=selectedrows[i];
+		var docno  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'doc_no')  ||'';
+		var vocno  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'voc_no')  ||'';
+		var acname =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'acname')  ||'';
+		var amount =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'amount')  ||'';
+		var dtype  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'dtype')   ||'';
+		var fdate  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'fromdate')||'';
+		var tdate  =$('#rentalInvoiceGrid').jqxGrid('getcellvalue',r,'todate')  ||'';
+		if(selectedrows.length>1) lines.push('*#'+(i+1)+'*');
+		lines.push('Doc No : '+docno+(vocno?'  ('+vocno+')':''));
+		lines.push('Client : '+acname);
+		lines.push('Type   : '+dtype);
+		lines.push('Amount : '+amount);
+		if(fdate||tdate) lines.push('Period : '+fdate+' – '+tdate);
+		if(i<selectedrows.length-1) lines.push('─────────────────');
+	}
+	document.getElementById('waDirectMsg').value=lines.join('\n');
+	document.getElementById('waDirectModal').classList.add('open');
+	setTimeout(function(){ document.getElementById('waDirectPhone').focus(); },100);
+}
+
+function funWaDirectSend(){
+	var phone=document.getElementById('waDirectPhone').value.trim();
+	var msg=document.getElementById('waDirectMsg').value.trim();
+	if(!phone){
+		alert('Please enter a WhatsApp number with country code');
+		return;
+	}
+	document.getElementById('waDirectModal').classList.remove('open');
+	$("#overlay, #PleaseWait").show();
+	$.post('sendWhatsAppDirect.jsp',{phone:phone,message:msg},function(data){
+		$("#overlay, #PleaseWait").hide();
+		try{ data=JSON.parse(data); }catch(e){ data={success:false,error:'Invalid response'}; }
+		if(data && data.success){
+			$.messager.alert('Message','WhatsApp message sent successfully');
+		} else {
+			$.messager.alert('Warning','Failed: '+(data.error||'Check API credentials in sendWhatsAppDirect.jsp'));
+		}
+	});
+}
+
+function funWaDirectCancel(){
+	document.getElementById('waDirectModal').classList.remove('open');
+}
+
+function funDispatchData(){
 		var selectedrows=$('#rentalInvoiceGrid').jqxGrid('selectedrowindexes');
 		if(selectedrows.length==0){
 			$.messager.alert('Warning','Please select valid invoice');
@@ -682,6 +867,18 @@ function funSendingEmail() {
                 </button>
 
                 <button type="button"
+                        class="btn-whatsapp"
+                        onclick="funSendWhatsApp();">
+                    &#128904; WhatsApp
+                </button>
+
+                <button type="button"
+                        class="btn-wa-direct"
+                        onclick="funSendWhatsAppDirect();">
+                    &#128222; WhatsApp Direct
+                </button>
+
+                <button type="button"
                         class="btn-submit"
                         onclick="funDispatchData();">
                     Dispatch
@@ -716,6 +913,22 @@ function funSendingEmail() {
 <!-- POPUPS -->
 <div id="clientDetailsWindow"><div></div><div></div></div>
 <div id="agreementDetailsWindow"><div></div><div></div></div>
+
+<!-- WhatsApp Direct Modal -->
+<div id="waDirectModal">
+    <div class="wa-modal-box">
+        <div class="wa-modal-title">&#128904; Send via WhatsApp</div>
+        <input type="text" id="waDirectPhone"
+               placeholder="e.g. 971501234567 (country code, no +)"
+               onkeydown="if(event.keyCode==13)funWaDirectSend();">
+        <div class="wa-modal-hint">Country code + number, no spaces or + symbol&nbsp;&nbsp;(UAE: 971xxxxxxxxx)</div>
+        <textarea id="waDirectMsg" class="wa-modal-preview"></textarea>
+        <div class="wa-modal-actions">
+            <button class="wa-cancel-btn" onclick="funWaDirectCancel();">Cancel</button>
+            <button class="wa-send-btn"   onclick="funWaDirectSend();">Send</button>
+        </div>
+    </div>
+</div>
 
 </div>
 </body>
