@@ -1,5 +1,6 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,20 +11,24 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-
 /* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+/* Sidebar dynamically fills the left TD */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 100%;
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
@@ -37,22 +42,21 @@
     border-bottom: 1px solid #f0f4f8;
 }
 
+/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 20px 15px; 
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -60,274 +64,293 @@
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px; 
     font-weight: 600;
     color: #4e5e71;
-    width: 90px;
+    width: 80px;
 }
 
-/* Inputs */
+/* ===== UNIFORM 24px TEXT INPUTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-/* Buttons */
-.btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+input[readonly] {
+    background-color: #f3f6f9 !important;
+    color: #555;
     cursor: pointer;
 }
 
+/* Checkbox & Radio Alignment */
+input[type="radio"] {
+    margin: 0 6px 0 0;
+    vertical-align: middle;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+    padding: 10px 0;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.card-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e3e8ee;
+    text-transform: uppercase;
+}
+
+/* ===== BUTTONS ===== */
+.btn-submit {
+    width: 100%;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s ease;
+    margin-top: 5px;
+}
+
 .btn-submit:hover {
-    background: #1d4ed8;
+    background: #1d4ed8 !important;
 }
 
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
+/* Layout Utilities */
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
     background: #fff;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
 
+.bottom-total-row {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
 </style>
-<script type="text/javascript">
 
-	$(document).ready(function () {
-		 $("#uptodate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-		 
-		 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Client Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-		 $('#accountDetailsWindow').jqxWindow('close');
-		 
-		 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-	     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
-		 
-		 $('#txtclientaccount').dblclick(function(){
-			  accountsSearchContent('accountsDetailsSearch.jsp');
-			  });
-		 
-		 document.getElementById("rdopen").checked=true;
-	});
-	
-	function accountsSearchContent(url) {
-	    $('#accountDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#accountDetailsWindow').jqxWindow('setContent', data);
-		$('#accountDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function getClient(event){
-    var x= event.keyCode;
-    if(x==114){
-  	  accountsSearchContent('accountsDetailsSearch.jsp');
+<script type="text/javascript">
+$(document).ready(function () {
+    // Standardized height to 24px and width to 100%
+    $("#uptodate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+    
+    $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Client Search', position: { x: 300, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+    $('#accountDetailsWindow').jqxWindow('close');
+    
+    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+    $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+    
+    $('#txtclientaccount').dblclick(function(){
+        accountsSearchContent('accountsDetailsSearch.jsp');
+    });
+    
+    document.getElementById("rdopen").checked=true;
+});
+
+function accountsSearchContent(url) {
+    $('#accountDetailsWindow').jqxWindow('open');
+    $.get(url).done(function (data) {
+        $('#accountDetailsWindow').jqxWindow('setContent', data);
+        $('#accountDetailsWindow').jqxWindow('bringToFront');
+    }); 
+}
+
+function getClient(event){
+    var x = event.keyCode;
+    if(x == 114){
+        accountsSearchContent('accountsDetailsSearch.jsp');
     }
-    else{
-     }
+}
+
+function funreload(event){
+    var branchval = document.getElementById("cmbbranch").value;
+    var uptodate = $('#uptodate').val();
+    var clientaccount = $('#txtclientaccount').val();
+    var agreementtype = "OPEN";
+    
+    if(document.getElementById("rdopen").checked == true){
+        agreementtype = "OPEN";
+    } else if(document.getElementById("rdclose").checked == true){
+        agreementtype = "CLOSE";
     }
-	
-	function funreload(event){
-		
-		 var branchval = document.getElementById("cmbbranch").value;
-		 var uptodate = $('#uptodate').val();
-		 var clientaccount = $('#txtclientaccount').val();
-		 var agreementtype = "OPEN";
-		 if(document.getElementById("rdopen").checked==true){
-			 agreementtype = "OPEN";
-		 }else if(document.getElementById("rdclose").checked==true){
-			 agreementtype = "CLOSE";
-		 }
-		 
-		 $("#overlay, #PleaseWait").show();
-		 
-		 $("#balanceDiv").load("balanceGrid.jsp?branchval="+branchval+'&uptodate='+uptodate+'&clientaccount='+clientaccount+'&agreementtype='+agreementtype);
-		}
-	
-	function  funClearInfo(){
-		
-		$('#uptodate').val(new Date());
-	    
-		document.getElementById("txtclientaccount").value="";
-		document.getElementById("txtclientname").value="";
-		document.getElementById("txtcldocno").value="";
-		document.getElementById("rdopen").checked=true;
-		$('#txtnetamount').val(0);
-		
-		$("#jqxBalance").jqxGrid('clear');$("#jqxBalance").jqxGrid('addrow', null, {});
-		
-		 if (document.getElementById("txtclientaccount").value == "") {
-		        $('#txtclientaccount').attr('placeholder', 'Press F3 to Search'); 
-		    }
-		
-		}
-		
-		function funExportBtn(){
-		 if(parseInt(window.parent.chkexportdata.value)=="1") {
-		  	JSONToCSVCon(data, 'SecurityBalance', true);
-		 } else {
-			 $("#jqxBalance").jqxGrid('exportdata', 'xls', 'SecurityBalance');
-		 }
-	 }
-	
+    
+    $("#overlay, #PleaseWait").show();
+    $("#balanceDiv").load("balanceGrid.jsp?branchval="+branchval+'&uptodate='+uptodate+'&clientaccount='+clientaccount+'&agreementtype='+agreementtype);
+}
+
+function funClearInfo(){
+    $('#uptodate').val(new Date());
+    document.getElementById("txtclientaccount").value="";
+    document.getElementById("txtclientname").value="";
+    document.getElementById("txtcldocno").value="";
+    document.getElementById("rdopen").checked=true;
+    $('#txtnetamount').val(0);
+    
+    $("#jqxBalance").jqxGrid('clear');
+    $("#jqxBalance").jqxGrid('addrow', null, {});
+    
+    if (document.getElementById("txtclientaccount").value == "") {
+        $('#txtclientaccount').attr('placeholder', 'Press F3 to Search'); 
+    }
+}
+    
+function funExportBtn(){
+    if(parseInt(window.parent.chkexportdata.value)=="1") {
+        JSONToCSVCon(data, 'SecurityBalance', true);
+    } else {
+        $("#jqxBalance").jqxGrid('exportdata', 'xls', 'SecurityBalance');
+    }
+}
 </script>
 </head>
-<body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background">
-<div class="hidden-scrollbar">
 
-<table width="100%">
+<body onload="getBranch();">
+
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+<div class="master-container">
+
+<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 
-<!-- ===== LEFT PANEL ===== -->
-<td width="20%" valign="top">
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="330px" valign="top">
+    <div class="sidebar-filters">
+        
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-<fieldset class="filter-card scrollable-left">
-<table width="100%" class="filter-table">
-
-    <!-- HEADING (UNCHANGED) -->
-    <jsp:include page="../../heading.jsp"></jsp:include>
-
-    <tr>
-        <td class="label-cell">Up To</td>
-        <td>
-            <div id="uptodate" name="uptodate"
-                 value='<s:property value="uptodate"/>'></div>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="label-cell">Client</td>
-        <td>
-            <input type="text"
-                   id="txtclientaccount"
-                   name="txtclientaccount"
-                   class="master-input"
-                   readonly
-                   placeholder="Press F3 to Search"
-                   value='<s:property value="txtclientaccount"/>'
-                   onkeydown="getClient(event);">
-        </td>
-    </tr>
-
-    <tr>
-        <td></td>
-        <td>
-            <input type="text"
-                   id="txtclientname"
-                   name="txtclientname"
-                   class="master-input"
-                   readonly
-                   value='<s:property value="txtclientname"/>'
-                   tabindex="-1">
-            <input type="hidden"
-                   id="txtcldocno"
-                   name="txtcldocno"
-                   value='<s:property value="txtcldocno"/>'>
-        </td>
-    </tr>
-
-    <!-- AGREEMENT TYPE (NO GREEN BORDER) -->
-    <tr>
-        <td colspan="2">
-            <div class="filter-card" style="margin-top:10px;">
-                <div style="font-weight:600;color:#1a3a5f;margin-bottom:6px;">
-                    Agreement Type
-                </div>
-
-                <table width="100%">
+        <div class="sidebar-scroll-content">
+            
+            <div class="filter-card">
+                <table class="filter-table">
                     <tr>
-                        <td align="center">
-                            <input type="radio"
-                                   id="rdopen"
-                                   name="rdo"
-                                   value="rdopen">
-                            <label for="rdopen" class="branch">Open</label>
+                        <td class="label-cell">Up To</td>
+                        <td>
+                            <div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div>
                         </td>
-                        <td align="center">
-                            <input type="radio"
-                                   id="rdclose"
-                                   name="rdo"
-                                   value="rdclose">
-                            <label for="rdclose" class="branch">Close</label>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td>
+                            <input type="text" id="txtclientaccount" name="txtclientaccount" readonly
+                                   placeholder="Press F3 to Search"
+                                   value='<s:property value="txtclientaccount"/>'
+                                   onkeydown="getClient(event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="text" id="txtclientname" name="txtclientname" readonly tabindex="-1"
+                                   value='<s:property value="txtclientname"/>'>
+                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'>
                         </td>
                     </tr>
                 </table>
             </div>
-        </td>
-    </tr>
 
-    <tr>
-        <td colspan="2" align="center">
-            <button type="button"
-                    class="btn-submit"
-                    id="clear"
-                    onclick="funClearInfo();">
+            <!-- AGREEMENT TYPE CARD -->
+            <div class="filter-card">
+                <div class="card-title">Agreement Type</div>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" id="rdopen" name="rdo" value="rdopen">
+                        Open
+                    </label>
+                    <label>
+                        <input type="radio" id="rdclose" name="rdo" value="rdclose">
+                        Close
+                    </label>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <button type="button" class="btn-submit" id="clear" onclick="funClearInfo();">
                 Clear
             </button>
-        </td>
-    </tr>
 
-</table>
-</fieldset>
-
-</td>
-
-<!-- ===== RIGHT PANEL ===== -->
-<td width="80%" valign="top">
-
-<table width="100%">
-<tr>
-    <td>
-        <div id="balanceDiv">
-            <jsp:include page="balanceGrid.jsp"></jsp:include>
         </div>
-    </td>
-</tr>
-</table>
-
-<table width="100%">
-<tr>
-    <td align="right" style="font-weight:bold;">Net Balance :</td>
-    <td>
-        <input type="text"
-               class="textbox"
-               id="txtnetamount"
-               name="txtnetamount"
-               style="text-align:right;"
-               value='<s:property value="txtnetamount"/>'>
-    </td>
-</tr>
-</table>
-
+    </div>
 </td>
+
+<!-- ================= RIGHT SIDE (GRIDS) ================= -->
+<td valign="top">
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            
+            <div id="balanceDiv">
+                <jsp:include page="balanceGrid.jsp"></jsp:include>
+            </div>
+            
+            <div class="bottom-total-row">
+                <span style="font-size: 13px; font-weight: bold; color: #333;">Net Balance :</span>
+                <input type="text" id="txtnetamount" name="txtnetamount" readonly
+                       style="width: 150px; text-align: right; background-color: #f8fafc;"
+                       value='<s:property value="txtnetamount"/>'>
+            </div>
+
+        </div>
+    </div>
+</td>
+
 </tr>
 </table>
 
 </div>
+</div>
 
+<!-- POPUPS -->
 <div id="accountDetailsWindow">
     <div></div><div></div>
 </div>
 
 </div>
 </body>
-
 </html>
