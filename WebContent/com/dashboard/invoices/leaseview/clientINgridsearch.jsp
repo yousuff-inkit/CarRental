@@ -1,94 +1,214 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 <head>
- 
 <% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<style>
-.formfont {
-	font: 10px Tahoma;
-	color: #404040;
-	background: #E0ECF8;
-	overflow:hidden;
-}
-</style>
-<%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-	 $("#dr_DOB").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-	}); 
+<style type="text/css">
+/* =========================================================
+   SCOPED UI: Modern Search Popup Style
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; 
+}
 
- 	function loadSearch() {
- 		
- 		var clname=document.getElementById("Cl_name").value;
- 		var mob=document.getElementById("Cl_mob").value;
- 		var lcno=document.getElementById("dr_Licence").value;
- 		var passno=document.getElementById("dr_Passport").value;
- 		var nation=document.getElementById("dr_Nation").value;
- 		var dob=$('#dr_DOB').jqxDateTimeInput('val');
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
+}
 
-		getdata(clname,mob,lcno,passno,nation,dob);
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
 
-	}
-	function getdata(clname,mob,lcno,passno,nation,dob){
-		
-		 $("#refreshdiv").load('clientinfo.jsp?clname='+clname+'&mob='+mob+'&lcno='+lcno+'&passno='+passno+'&nation='+nation+'&dob='+dob+'&mode=1');
-	
-		}
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
 
-	</script>
-<body bgcolor="#E0ECF8">
-<div id="search">
-<table width="100%" >
-  <tr >
-   <td>
-   <table>
-   <tr>
-    <td align="right"><label class="formfont">Name</label></td>
-    <td align="left" width="73.7%"><input type="text" name="Cl_name" id="Cl_name"  style="width:99%;height:18px;" value='<s:property value="Cl_name"/>'></td>
-    <td align="left"><label class="formfont">MOB</label></td>
-    <td align="left"><input type="text" name="Cl_mob" id="Cl_mob" value='<s:property value="Cl_mob"/>'></td>
-    <tr>
-    </table>
-    </td>
-  </tr>
-  
-  <table>
-  <tr>
-   <td align="right"><label class="formfont">Licence#</label></td>
-    <td align="left"><input type="text" name="dr_Licence" id="dr_Licence" value='<s:property value="dr_Licence"/>' style="height:18px;">
-    <td align="right"><label class="formfont">Passport#</label></td>
-    <td align="left"><input type="text" name="dr_Passport" id="dr_Passport" value='<s:property value="dr_Passport"/>' style="height:18px;"></td>
-    <td align="right"><label class="formfont">Nationality</label></td>
-    <td align="left"><input type="text" id="dr_Nation" name="dr_Nation" value='<s:property value="dr_Nation"/>' style="height:18px;"></td>
-    
-    <td align="right"><label class="formfont">DOB</label></td>
-    <td align="left"><div id="dr_DOB" name="dr_DOB"  value='<s:property value="dr_DOB"/>'></div>
+/* Table layout */
+.modern-ui table {
+    border-collapse: separate;
+    border-spacing: 4px 8px; 
+    width: 100%;
+}
 
-        <input type="hidden" name="hiddr_DOB" id="hiddr_DOB" value='<s:property value="hiddr_DOB"/>'>
-    </td>
-    <td colspan="2" align="center"><input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  </table>
-  </td>
+.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdiv">
-      
-   <jsp:include  page="clientinfo.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
+.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 8px;
+    white-space: nowrap;
+}
+
+.modern-ui .formfont {
+    font-size: 12px;
+    font-weight: 600;
+    cursor: default;
+    color: #444;
+}
+
+/* Master Input Heights */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.2s;
+    background-color: #ffffff;
+}
+
+.modern-ui input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* Buttons */
+.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; 
+    line-height: 22px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-align: center;
+    width: 100%;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+}
+
+.inline-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    // Uniform 24px date input width to match field cell
+    $("#dr_DOB").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value:null});
+}); 
+
+function loadSearch() {
+    var clname=document.getElementById("Cl_name").value;
+    var mob=document.getElementById("Cl_mob").value;
+    var lcno=document.getElementById("dr_Licence").value;
+    var passno=document.getElementById("dr_Passport").value;
+    var nation=document.getElementById("dr_Nation").value;
+    var dob=$('#dr_DOB').jqxDateTimeInput('val');
+
+    getdata(clname,mob,lcno,passno,nation,dob);
+}
+
+function getdata(clname,mob,lcno,passno,nation,dob){
+    $("#refreshdiv").load('clientinfo.jsp?clname='+clname+'&mob='+mob+'&lcno='+lcno+'&passno='+passno+'&nation='+nation+'&dob='+dob+'&mode=1');
+}
+</script>
+</head>
+
+<body bgcolor="#f5f7fa">
+<div id="search" class="modern-ui">
+
+    <div class="search-panel">
+        <table width="100%">
+            <colgroup>
+                <col width="8%">  <col width="16%">
+                <col width="8%">  <col width="16%">
+                <col width="8%">  <col width="16%">
+                <col width="8%">  <col width="20%">
+            </colgroup>
+
+            <!-- Row 1 -->
+            <tr>
+                <td align="right"><label class="formfont">Name</label></td>
+                <td align="left" colspan="3">
+                    <input type="text" name="Cl_name" id="Cl_name" value='<s:property value="Cl_name"/>'>
+                </td>
+                
+                <td align="right"><label class="formfont">MOB</label></td>
+                <td align="left">
+                    <input type="text" name="Cl_mob" id="Cl_mob" value='<s:property value="Cl_mob"/>'>
+                </td>
+                
+                <td align="right" colspan="2">
+                    <!-- Blank to balance grid -->
+                </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr>
+                <td align="right"><label class="formfont">Licence#</label></td>
+                <td align="left">
+                    <input type="text" name="dr_Licence" id="dr_Licence" value='<s:property value="dr_Licence"/>'>
+                </td>
+                
+                <td align="right"><label class="formfont">Passport#</label></td>
+                <td align="left">
+                    <input type="text" name="dr_Passport" id="dr_Passport" value='<s:property value="dr_Passport"/>'>
+                </td>
+                
+                <td align="right"><label class="formfont">Nationality</label></td>
+                <td align="left">
+                    <input type="text" id="dr_Nation" name="dr_Nation" value='<s:property value="dr_Nation"/>'>
+                </td>
+                
+                <td align="right"><label class="formfont">DOB</label></td>
+                <td align="left">
+                    <div class="inline-controls">
+                        <div id="dr_DOB" name="dr_DOB" value='<s:property value="dr_DOB"/>'></div>
+                        <input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search" onclick="loadSearch();" style="width: 100px;">
+                    </div>
+                    <input type="hidden" name="hiddr_DOB" id="hiddr_DOB" value='<s:property value="hiddr_DOB"/>'>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
+        <div id="refreshdiv">
+            <jsp:include page="clientinfo.jsp"></jsp:include> 
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

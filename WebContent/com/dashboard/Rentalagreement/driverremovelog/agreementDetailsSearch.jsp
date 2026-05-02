@@ -1,182 +1,219 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+ <% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
- 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
-<%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
 
-
-	<script type="text/javascript">
-	$(document).ready(function () {
-	
-	}); 
-
- 	function mainloadSearch() {
- 		
- 		var sclname=document.getElementById("SCl_name").value;
- 		var smob=document.getElementById("Sl_mob").value;
- 		var rno=document.getElementById("rno").value;
- 		var flno=document.getElementById("flno").value;
- 		var sregno=document.getElementById("sregno").value;
- 		
- 	 
- 		  var branchval = document.getElementById("cmbbranch").value; 
-	
-		getdata(sclname,smob,rno,flno,sregno,branchval);
-
-	}
-	 function getdata(sclname,smob,rno,flno,sregno,branchval){
-		 $("#srefreshdiv").load('agreementDetailsSearchGrid.jsp?sclname='+sclname+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&branchval='+branchval);
-		}
- 
-	</script>
 <style type="text/css">
-/* ------------------------------
-    MASTER UI CSS STANDARDS
------------------------------- */
+/* =========================================================
+   SCOPED UI: Modern Search Popup Style
+========================================================= */
 body {
-    background-color: #FFFFFF !important;
-    font-family: Tahoma, Geneva, sans-serif;
     margin: 0;
-    padding: 0;
+    background-color: #f5f7fa; 
 }
 
-#search {
-    background-color: #FFFFFF !important;
-    padding: 15px;
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
 }
 
-/* Table Layout: Standard Master UI Gaps */
-table {
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Table layout */
+.modern-ui table {
     border-collapse: separate;
-    border-spacing: 12px 8px;
+    border-spacing: 4px 8px; 
+    width: 100%;
 }
 
-/* Labels: Tahoma 14px, Weight 600 */
-.textdetail, td[align="right"], td[align="left"] label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #222;
+.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 5px;
     white-space: nowrap;
 }
 
-/* Master Inputs: Grey Border #bdc3c7, Weight 600 */
-input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
+.modern-ui .formfont {
+    font-size: 12px;
     font-weight: 600;
-    font-size: 14px;
-    padding: 6px 10px;
-    border: 1px solid #bdc3c7; 
-    border-radius: 4px;
-    background-color: #ffffff;
-    box-sizing: border-box; /* Ensures width: % works with padding */
+    cursor: default;
+    color: #444;
 }
 
-input[type="text"]:focus {
+/* Master Input Heights */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.2s;
+    background-color: #ffffff;
+}
+
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
-/* Master Blue Button: #007bff, No Hover Color Change */
-.myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    background-color: #007bff;
-    color: white;
-    padding: 8px 25px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.modern-ui input[readonly], .modern-ui input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: not-allowed;
 }
 
-.myButton:hover {
-    background-color: #007bff; /* Stays blue per instructions */
+/* Buttons */
+.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; /* Matched to input height */
+    line-height: 22px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
     cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    text-align: center;
+}
+
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+}
+
+/* Flexbox utility for Search Button to sit side-by-side with input */
+.inline-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 </style>
 
-<body bgcolor="#FFFFFF">
-<div id="search">
+<script type="text/javascript">
+    $(document).ready(function () {
+    
+    }); 
 
-<table width="100%" cellspacing="4" cellpadding="2">
+    function mainloadSearch() {
+        var sclname = document.getElementById("SCl_name").value;
+        var smob = document.getElementById("Sl_mob").value;
+        var rno = document.getElementById("rno").value;
+        var flno = document.getElementById("flno").value;
+        var sregno = document.getElementById("sregno").value;
+        
+        var branchval = document.getElementById("cmbbranch").value; 
+    
+        getdata(sclname,smob,rno,flno,sregno,branchval);
+    }
+    
+    function getdata(sclname,smob,rno,flno,sregno,branchval){
+         $("#srefreshdiv").load('agreementDetailsSearchGrid.jsp?sclname='+sclname+'&smob='+smob+'&rno='+rno+'&flno='+flno+'&sregno='+sregno+'&branchval='+branchval);
+    }
+</script>
+</head>
 
-<tr>
+<body bgcolor="#f5f7fa">
+<div id="search" class="modern-ui">
 
-<td width="8%">
-<label class="textdetail">Name</label>
-</td>
+    <div class="search-panel">
+        <table width="100%">
+            <colgroup>
+                <col width="8%">  <col width="25%"> <col width="8%">  <col width="25%"> <col width="8%">  <col width="26%">
+            </colgroup>
 
-<td width="32%">
-<input type="text" name="SCl_name" id="SCl_name" style="width:95%;" value='<s:property value="SCl_name"/>'>
-</td>
+            <tr>
+                <td align="right">
+                    <label class="formfont">Name</label>
+                </td>
+                <td align="left">
+                    <input type="text" name="SCl_name" id="SCl_name" value='<s:property value="SCl_name"/>'>
+                </td>
 
-<td width="6%" align="right">
-<label class="textdetail">Mob</label>
-</td>
+                <td align="right">
+                    <label class="formfont">Mob</label>
+                </td>
+                <td align="left">
+                    <input type="text" name="Sl_mob" id="Sl_mob" value='<s:property value="Sl_mob"/>'>
+                </td>
 
-<td width="16%">
-<input type="text" name="Sl_mob" id="Sl_mob" style="width:95%;" value='<s:property value="Sl_mob"/>'>
-</td>
+                <td align="right">
+                    <label class="formfont">Reg No</label>
+                </td>
+                <td align="left">
+                    <input type="text" id="sregno" name="sregno" value='<s:property value="sregno"/>'>
+                </td>
+            </tr>
 
-<td width="8%" align="right">
-<label class="textdetail">Reg No</label>
-</td>
+            <tr>
+                <td align="right">
+                    <label class="formfont">Doc No</label>
+                </td>
+                <td align="left">
+                    <input type="text" name="rno" id="rno" value='<s:property value="rno"/>'>
+                </td>
 
-<td width="16%">
-<input type="text" id="sregno" name="sregno" style="width:95%;" value='<s:property value="sregno"/>'>
-</td>
+                <td align="right">
+                    <label class="formfont">Fleet No</label>
+                </td>
+                <td colspan="3" align="left">
+                    <div class="inline-controls">
+                        <input type="text" name="flno" id="flno" style="width: 200px;" value='<s:property value="flno"/>'>
+                        
+                        <input type="button" 
+                               name="mbtnrasearch" 
+                               id="mbtnrasearch" 
+                               class="myButton" 
+                               value="Search" 
+                               onclick="mainloadSearch();">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-<td width="14%"></td>
-
-</tr>
-
-
-<tr>
-
-<td>
-<label class="textdetail">Doc No</label>
-</td>
-
-<td>
-<input type="text" name="rno" id="rno" style="width:95%;" value='<s:property value="rno"/>'>
-</td>
-
-<td align="right">
-<label class="textdetail">Fleet No</label>
-</td>
-
-<td>
-<input type="text" name="flno" id="flno" style="width:95%;" value='<s:property value="flno"/>'>
-</td>
-
-<td colspan="3">
-<input type="button" name="mbtnrasearch" id="mbtnrasearch"
-class="myButton" value="Search" onclick="mainloadSearch();">
-</td>
-
-</tr>
-
-
-<tr>
-<td colspan="7">
-
-<div id="srefreshdiv">
-<jsp:include page="agreementDetailsSearchGrid.jsp"></jsp:include>
-</div>
-
-</td>
-</tr>
-
-</table>
+    <div class="grid-container">
+        <div id="srefreshdiv">
+            <jsp:include page="agreementDetailsSearchGrid.jsp"></jsp:include>
+        </div>
+    </div>
 
 </div>
 </body>
