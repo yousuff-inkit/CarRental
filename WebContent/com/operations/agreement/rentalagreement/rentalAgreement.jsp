@@ -3102,6 +3102,23 @@ legend {
     opacity: 1 !important;
 }
 
+/* Specifically target the numerical cells in your Tariff Grid */
+#jqxgridtarif .jqx-grid-cell-right-align {
+    padding-right: 8px !important;
+}
+
+/* Optional: Make the Net Total row stand out */
+#jqxgridtarif .jqx-grid-cell:contains("Net Total") {
+    font-weight: bold;
+}
+#jqxgridtarif .jqx-grid-column-header > div > div {
+   text-align: inherit !important;
+    padding-right: 8px !important;
+}
+#jqxgridtarif .jqx-grid-column-header:not(:first-child) > div > div {
+    text-align: right !important;
+    padding-right: 8px !important;
+}
 </style>
 
 <style>

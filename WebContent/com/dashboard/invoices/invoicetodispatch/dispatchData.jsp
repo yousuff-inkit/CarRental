@@ -18,7 +18,7 @@ ClsCommon ClsCommon=new ClsCommon();
 Connection conn=null;
 try{	
 String strdocarray=request.getParameter("docarray")==null?"":request.getParameter("docarray");
-ArrayList<String> docarray=new ArrayList<>();
+ArrayList<String> docarray=new ArrayList<String>();
 if(strdocarray.contains(",")){
 	for(int i=0;i<strdocarray.split(",").length;i++){
 		docarray.add(strdocarray.split(",")[i]);
