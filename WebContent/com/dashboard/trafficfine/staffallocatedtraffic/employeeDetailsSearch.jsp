@@ -1,250 +1,216 @@
- <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
- 
-<% String contextPath=request.getContextPath();%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
-<%--   <jsp:include page="../../../../includes.jsp"></jsp:include>   --%> 
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<style>
-/* ================================
-   SEARCH POPUP – COMMON MASTER CSS
-   ================================ */
+<title>GatewayERP(i)</title>
 
-#search {
-    background-color: #ffffff;
-    padding: 8px;
+<style type="text/css">
+/* =========================================================
+   SCOPED UI: Modern Search Popup Style
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; 
+}
+
+#search.modern-ui {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-size: 12px !important;
+    color: #333;
+    padding: 10px;
+    background-color: #f5f7fa;
+}
+
+.modern-ui .search-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 /* Table layout */
-#search table {
-    width: 100%;
+.modern-ui table {
     border-collapse: separate;
-    border-spacing: 15px 12px;
+    border-spacing: 4px 8px; 
+    width: 100%;
 }
 
-/* Labels */
-#search td[align="right"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
+.modern-ui td {
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    vertical-align: middle;
+}
+
+.modern-ui td[align="right"] {
+    color: #444 !important;
+    font-weight: 600 !important;
+    padding-right: 8px;
     white-space: nowrap;
 }
 
-/* Text inputs */
-#search input[type="text"] {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
+.modern-ui .formfont {
+    font-size: 12px;
     font-weight: 600;
+    cursor: default;
+    color: #444;
+}
 
-    padding: 6px 10px;
-    height: 34px;
-    width: 100%;
-
+/* Master Input Heights */
+.modern-ui input[type="text"] {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: normal !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
     box-sizing: border-box;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
+    width: 100%;
+    transition: border-color 0.2s;
     background-color: #ffffff;
 }
 
-/* Input focus */
-#search input[type="text"]:focus {
+.modern-ui input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
-/* Button */
-#search .myButton {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-
-    background-color: #007bff;
-    color: #ffffff;
-
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-
+/* Buttons */
+.modern-ui .myButton {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; 
+    line-height: 22px !important;
+    padding: 0 15px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#search .myButton:hover {
-    background-color: #007bff;
-}
-
-/* Result grid spacing */
-#refreshdiv {
-    margin-top: 10px;
-}
-/* ================================
-   SEARCH POPUP – REFINED LAYOUT
-   ================================ */
-
-.search-popup {
-    padding: 14px;
-}
-
-/* Search form table */
-.search-form {
-    width: 100%;
-    border-spacing: 18px 12px;
-}
-
-/* Labels */
-.search-form .label {
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #222;
-    white-space: nowrap;
-    text-align: right;
-}
-
-/* Input cells */
-.search-form .field {
-    width: 28%;
-}
-
-/* Action cell */
-.search-form .action {
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
     text-align: center;
-    width: 12%;
+    width: 100%;
 }
 
-/* Grid wrapper */
-.search-grid {
-    margin-top: 14px;
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    background: #ffffff;
-    padding: 6px;
+.modern-ui .myButton:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
 }
-
-
 </style>
 
-	<script type="text/javascript">
-	$(document).ready(function () {
-		$("#empdate").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-		$("#led").jqxDateTimeInput({ width: '110px', height: '15px',formatString:"dd.MM.yyyy",value:null});
-		
-		document.getElementById("txttype").value=document.getElementById("emptype").value;
-	}); 
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#empdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value: null});
+    $("#led").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy", value: null});
+    
+    // Safety check in case 'emptype' is coming from the parent window
+    if(document.getElementById("emptype")) {
+        document.getElementById("txttype").value = document.getElementById("emptype").value;
+    }
+}); 
 
- 	function mainloadSearch() {
- 		
- 		var salesman=document.getElementById("txtsalname").value;
- 		var smob=document.getElementById("txtmob").value;
- 		var salescode=document.getElementById("txtcode").value;
- 		var docno=document.getElementById("txtempdocno").value;
- 		var date=document.getElementById("empdate").value;
- 		var led=document.getElementById("led").value;
-	    var type=document.getElementById("txttype").value;
-	    
-		getdata(salesman,smob,salescode,docno,date,led,type);
+function mainloadSearch() {
+    var salesman = document.getElementById("txtsalname").value;
+    var smob = document.getElementById("txtmob").value;
+    var salescode = document.getElementById("txtcode").value;
+    var docno = document.getElementById("txtempdocno").value;
+    var date = document.getElementById("empdate").value;
+    var led = document.getElementById("led").value;
+    var type = document.getElementById("txttype").value;
+    
+    getdata(salesman, smob, salescode, docno, date, led, type);
+}
 
-	}
-	 function getdata(salesman,smob,salescode,docno,date,led,type){
-		 $("#refreshdiv").load('employeeDetailsSearchGrid.jsp?salesman='+salesman+'&smob='+smob+'&salescode='+salescode+'&docno='+docno+'&date='+date+'&led='+led+'&type='+type);
-		}
- 
-	</script>
-<body bgcolor="#E0ECF8">
-<div id="search">
-<table width="100%">
+function getdata(salesman, smob, salescode, docno, date, led, type){
+    $("#refreshdiv").load('employeeDetailsSearchGrid.jsp?salesman='+encodeURIComponent(salesman)+'&smob='+encodeURIComponent(smob)+'&salescode='+encodeURIComponent(salescode)+'&docno='+encodeURIComponent(docno)+'&date='+encodeURIComponent(date)+'&led='+encodeURIComponent(led)+'&type='+encodeURIComponent(type));
+}
+</script>
+</head>
 
-  <!-- ROW 1 -->
-  <tr>
-    <td class="label">Name</td>
-    <td class="field">
-        <input type="text"
-               name="txtsalname"
-               id="txtsalname"
-               value='<s:property value="txtsalname"/>'>
+<body bgcolor="#f5f7fa">
+<div id="search" class="modern-ui">
 
-        <input type="hidden"
-               name="txttype"
-               id="txttype"
-               value='<s:property value="txttype"/>'>
-    </td>
+    <!-- SEARCH FORM -->
+    <div class="search-panel">
+        <table width="100%">
+            <colgroup>
+                <col width="8%">  <col width="22%">
+                <col width="8%">  <col width="22%">
+                <col width="8%">  <col width="20%">
+                <col width="12%">
+            </colgroup>
 
-    <td class="label">Code</td>
-    <td class="field">
-        <input type="text"
-               name="txtcode"
-               id="txtcode"
-               value='<s:property value="txtcode"/>'>
-    </td>
+            <!-- Row 1 -->
+            <tr>
+                <td align="right"><label class="formfont">Name</label></td>
+                <td align="left">
+                    <input type="text" name="txtsalname" id="txtsalname" value='<s:property value="txtsalname"/>'>
+                    <input type="hidden" name="txttype" id="txttype" value='<s:property value="txttype"/>'>
+                </td>
 
-    <td class="label">Mob</td>
-    <td class="field">
-        <input type="text"
-               name="txtmob"
-               id="txtmob"
-               value='<s:property value="txtmob"/>'>
-    </td>
-  </tr>
+                <td align="right"><label class="formfont">Code</label></td>
+                <td align="left">
+                    <input type="text" name="txtcode" id="txtcode" value='<s:property value="txtcode"/>'>
+                </td>
 
-  <!-- ROW 2 -->
-  <tr>
-    <td class="label">Doc No</td>
-    <td class="field">
-        <input type="text"
-               name="txtempdocno"
-               id="txtempdocno"
-               value='<s:property value="txtempdocno"/>'>
-    </td>
+                <td align="right"><label class="formfont">Mob</label></td>
+                <td align="left" colspan="2">
+                    <input type="text" name="txtmob" id="txtmob" value='<s:property value="txtmob"/>'>
+                </td>
+            </tr>
 
-    <td class="label">Date</td>
-    <td class="field">
-        <div id="empdate" name="empdate"
-             value='<s:property value="empdate"/>'></div>
+            <!-- Row 2 -->
+            <tr>
+                <td align="right"><label class="formfont">Doc No</label></td>
+                <td align="left">
+                    <input type="text" name="txtempdocno" id="txtempdocno" value='<s:property value="txtempdocno"/>'>
+                </td>
 
-        <input type="hidden"
-               name="hidempdate"
-               id="hidempdate"
-               value='<s:property value="hidempdate"/>'>
-    </td>
+                <td align="right"><label class="formfont">Date</label></td>
+                <td align="left">
+                    <div id="empdate" name="empdate" value='<s:property value="empdate"/>'></div>
+                    <input type="hidden" name="hidempdate" id="hidempdate" value='<s:property value="hidempdate"/>'>
+                </td>
 
-    <td class="label">L/C Exp.</td>
-    <td class="field">
-        <div id="led" name="led"
-             value='<s:property value="led"/>'></div>
+                <td align="right"><label class="formfont">L/C Exp.</label></td>
+                <td align="left">
+                    <div id="led" name="led" value='<s:property value="led"/>'></div>
+                    <input type="hidden" name="hidled" id="hidled" value='<s:property value="hidled"/>'>
+                </td>
 
-        <input type="hidden"
-               name="hidled"
-               id="hidled"
-               value='<s:property value="hidled"/>'>
-    </td>
+                <td align="right">
+                    <button type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" onclick="mainloadSearch();">
+                        Search
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-    <td class="action">
-        <input type="button"
-               name="mbtnrasearch"
-               id="mbtnrasearch"
-               class="myButton"
-               value="Search"
-               onclick="mainloadSearch();">
-    </td>
-  </tr>
-
-  <!-- GRID -->
-  <tr>
-    <td colspan="7">
+    <!-- GRID -->
+    <div class="grid-container">
         <div id="refreshdiv">
             <jsp:include page="employeeDetailsSearchGrid.jsp"></jsp:include>
         </div>
-    </td>
-  </tr>
+    </div>
 
-</table>
 </div>
 </body>
-
 </html>
