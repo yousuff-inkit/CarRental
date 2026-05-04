@@ -535,28 +535,45 @@ table td {
 			       }
 			       
 			       function funPrintBtn() {
-						
-						if (($("#mode").val() == "view") && $("#docno").val()!="") {
-					        var url=document.URL;
-					        var reurl=url.split("saveDebitNote");
-					        $("#docno").prop("disabled", false);  
-					     
-					        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
-								if (r){
-									 var win= window.open(reurl[0]+"printDebitNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-								     win.focus();
-								 }
-								else{
-									var win= window.open(reurl[0]+"printDebitNote?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-								    win.focus();
-								}
-							   });
-					     }
-					    else {
-							$.messager.alert('Message','Select a Document....!','warning');
-							return;
-						}
-			      }
+			    	    if (($("#mode").val() == "view") && $("#docno").val() != "") {
+			    	        var url = document.URL;
+			    	        var reurl = url.split("saveDebitNote");
+			    	        $("#docno").prop("disabled", false);
+
+			    	        // Helper function to handle the new window and auto-trigger print
+			    	        var openAndAutoPrint = function(printUrl) {
+			    	            var win = window.open(printUrl, "_blank", "top=150,left=250,Width=1020,Height=800,location=no,scrollbars=yes,toolbar=yes");
+			    	            if (win) {
+			    	                var checkReady = setInterval(function() {
+			    	                    if (win.document.readyState === 'complete') {
+			    	                        clearInterval(checkReady);
+			    	                        // Delay to ensure server-side Jasper/Crystal reports render components
+			    	                        setTimeout(function() {
+			    	                            win.focus();
+			    	                            win.print();
+			    	                        }, 1000);
+			    	                    }
+			    	                }, 500);
+			    	            }
+			    	        };
+
+			    	        $.messager.confirm('Confirm', 'Do you want to have header?', function(r) {
+			    	            var baseUrl = reurl[0] + "printDebitNote?docno=" + document.getElementById("docno").value + 
+			    	                          "&branch=" + document.getElementById("brchName").value;
+			    	            
+			    	            if (r) {
+			    	                // With Header
+			    	                openAndAutoPrint(baseUrl + "&header=1");
+			    	            } else {
+			    	                // Without Header
+			    	                openAndAutoPrint(baseUrl + "&header=0");
+			    	            }
+			    	        });
+			    	    } else {
+			    	        $.messager.alert('Message', 'Select a Document....!', 'warning');
+			    	        return;
+			    	    }
+			    	}
 	
 			       function clearClientInfo(){
 				 		  $("#txtdocno").val('');$("#txtaccid").val('');$("#txtaccname").val('');
