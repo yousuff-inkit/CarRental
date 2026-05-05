@@ -543,6 +543,75 @@ button {
     height: 24px !important;
     line-height: 24px !important;
 }
+
+/* 🔹 Button row (side-by-side) */
+.button-row {
+    display: flex;
+    gap: 6px;
+}
+
+/* 🔹 Override full width */
+.button-row .myButton {
+    width: 50% !important;
+    margin: 0 !important;
+}
+/* 🔹 Inputs smaller width */
+.input-cell input {
+    width: 160px;   /* adjust: 140px / 160px / 180px */
+    height: 24px;
+    padding: 0 8px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.input-cell select {
+    width: 160px;   /* same as your input fields */
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+/* 🔹 inline card (does NOT break layout) */
+.inline-card {
+    display: inline-block;
+    width: 300px; /* 🔥 increased card width */
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin: 10px 0;
+}
+
+/* 🔹 table spacing */
+.form-table {
+    border-spacing: 0 8px;
+}
+
+/* 🔹 labels */
+.form-table td:first-child {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px; /* 🔥 slightly increased for better spacing */
+}
+
+/* 🔹 inputs */
+.form-table input,
+.form-table select {
+    width: 130px; /* 🔥 increased field width */
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
 </style>
 
 
@@ -558,34 +627,91 @@ button {
 		<jsp:include page="../../heading.jsp"></jsp:include>
 		
 	 <tr><td colspan="2">&nbsp;</td></tr>
+<tr>
+<td colspan="2">
 
-<tr><td align="right"><label class="branch">Fleet</label></td><td  align="left" ><input type="text" name="fleetno" id="fleetno" style="height:20px;width:70%;" value='<s:property value="fleetno"/>'  readonly="readonly">
- <tr><td align="right"><label class="branch">Driver</label></td><td  align="left" ><input type="text" name="del_Driver" id="del_Driver" style="height:20px;width:70%;" value='<s:property value="del_Driver"/>' readonly="readonly" onKeyDown="getchauffeur(event);">
-<tr> <td  align="right"><label class="branch">KM</label></td> <td align="left"><input type="text" name="del_KM" id="del_KM"  style="height:20px;width:70%;" value='<s:property value="del_KM"/>'   onkeypress="javascript:return isNumber (event);" onblur="funchkkm();"></td></tr>
+<div class="inline-card">
+
+<table class="form-table">
+<tr>
+    <td class="label-cell">Fleet</td>
+    <td class="input-cell">
+        <input type="text" name="fleetno" id="fleetno"
+               value='<s:property value="fleetno"/>'
+               readonly="readonly">
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">Driver</td>
+    <td class="input-cell">
+        <input type="text" name="del_Driver" id="del_Driver"
+               value='<s:property value="del_Driver"/>'
+               readonly="readonly"
+               onkeydown="getchauffeur(event);">
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">KM</td>
+    <td class="input-cell">
+        <input type="text" name="del_KM" id="del_KM"
+               value='<s:property value="del_KM"/>'
+               onkeypress="return isNumber(event);"
+               onblur="funchkkm();">
+    </td>
+</tr>
  
-<tr> <td  align="right"><label class="branch">Fuel</label></td><td align="left">
- <select name="del_Fuel" id="del_Fuel" style="width:70%;" name="del_Fuel"  value='<s:property value="del_Fuel"/>'>
-       <option value="" selected>-Select-</option>  
-     <option value=0.000 >Level 0/8</option>
-     <option value=0.125>Level 1/8</option>
-     <option value=0.250>Level 2/8</option>
-     <option value=0.375>Level 3/8</option>
-           <option value=0.500>Level 4/8</option>
-               <option value=0.625>Level 5/8</option>
-               <option value=0.750>Level 6/8</option>
-                   <option value=0.875>Level 7/8</option>
-                   <option value=1.000>Level 8/8</option>
+<tr>
+    <td class="label-cell">Fuel</td>
+    <td class="input-cell">
+        <select name="del_Fuel" id="del_Fuel">
+            <option value="">-Select-</option>  
+            <option value="0.000">Level 0/8</option>
+            <option value="0.125">Level 1/8</option>
+            <option value="0.250">Level 2/8</option>
+            <option value="0.375">Level 3/8</option>
+            <option value="0.500">Level 4/8</option>
+            <option value="0.625">Level 5/8</option>
+            <option value="0.750">Level 6/8</option>
+            <option value="0.875">Level 7/8</option>
+            <option value="1.000">Level 8/8</option>
+        </select>
+    </td>
+</tr>
 
+ <tr>
+    <td class="label-cell">Date</td>
+    <td class="input-cell">
+        <div id="jqxDeliveryOut"></div>
+        <input type="hidden" id="hidjqxDeliveryOut" name="hidjqxDeliveryOut"
+               value='<s:property value="hidjqxDeliveryOut"/>'>
+    </td>
+</tr>
 
-</select></td></tr>
+<tr>
+    <td class="label-cell">Time</td>
+    <td class="input-cell">
+        <div id="jqxDelTimeOut"></div>
+        <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut"
+               value='<s:property value="hidjqxDelTimeOut"/>'>
+    </td>
+</tr>
+</table>
 
- <tr><td  align="right" ><label class="branch">Date</label></td><td align="left"><div id='jqxDeliveryOut' name='jqxDeliveryOut' value='<s:property value="jqxDeliveryOut"/>'></div>
-                    <input type="hidden" id="hidjqxDeliveryOut" name="hidjqxDeliveryOut" value='<s:property value="hidjqxDeliveryOut"/>'/></td></tr>
-  <tr><td  align="right"><label class="branch">Time</label></td><td align="left" ><div id='jqxDelTimeOut' name='jqxDelTimeOut' value='<s:property value="jqxDelTimeOut"/>'  ></div>
-                   <input type="hidden" id="hidjqxDelTimeOut" name="hidjqxDelTimeOut" value='<s:property value="hidjqxDelTimeOut"/>'/></td></tr>
-                    <tr><td colspan="2">&nbsp;</td></tr>
- <tr><td  align="center" colspan="2"><input type="Button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()">
- <input type="Button" name="attachbtns" id="attachbtns" class="myButton" value="Attach" onclick="funAttachBtn()"></td> </tr>
+</div>
+
+</td>
+</tr>
+ <tr><td colspan="2" style="padding-top:10px;">
+    <div class="button-row">
+        <input type="button" name="driverUpdate" id="driverUpdate"
+               class="myButton" value="Update" onclick="funupdate()">
+
+        <input type="button" name="attachbtns" id="attachbtns"
+               class="myButton" value="Attach" onclick="funAttachBtn()">
+    </div>
+</td> </tr>
   
     
  	 <tr><td colspan="2">&nbsp;</td></tr>

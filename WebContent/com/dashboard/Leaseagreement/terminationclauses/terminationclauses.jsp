@@ -307,6 +307,443 @@ function funreload(event)
 	 }
 	 
 </script>
+
+<style>
+.myButtons {
+	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	box-shadow:inset 0px -1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	
+	font-size:8pt;
+	
+	padding:3px 17px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+}
+.myButtons:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
+	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
+	background-color:#6c7c7c;
+}
+.myButtons:active {
+	position:relative;
+	top:1px;
+}
+
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
+/* 🔹 Inputs + Dropdowns */
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 8px !important;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Dropdown text */
+select {
+    font-size: 13px !important;
+}
+
+/* 🔹 Buttons */
+.btn-submit,
+.myButtons,
+.myButton,
+input[type="button"],
+button {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 10px !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Fix for any library overriding (like jqx / external CSS) */
+.jqx-widget input,
+.jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
+}
+
+/* 🔹 Button row (side-by-side) */
+.button-row {
+    display: flex;
+    gap: 6px;
+}
+
+/* 🔹 Override full width */
+.button-row .myButton {
+    width: 50% !important;
+    margin: 0 !important;
+}
+/* 🔹 Inputs smaller width */
+.input-cell input {
+    width: 160px;   /* adjust: 140px / 160px / 180px */
+    height: 24px;
+    padding: 0 8px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.input-cell select {
+    width: 160px;   /* same as your input fields */
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+/* 🔹 inline card (does NOT break layout) */
+.inline-card {
+    display: inline-block;
+    width: 250px; /* 🔥 increased card width */
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin: 10px 0;
+}
+
+/* 🔹 table spacing */
+.form-table {
+    border-spacing: 0 8px;
+}
+
+/* 🔹 labels */
+.form-table td:first-child {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px; /* 🔥 slightly increased for better spacing */
+}
+
+/* 🔹 inputs */
+.form-table input,
+.form-table select {
+    width: 100px; /* 🔥 increased field width */
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* 🔹 radio row layout */
+.radio-row {
+    text-align: center;
+    padding-top: 6px;
+}
+
+/* 🔹 spacing between options */
+.radio-row label {
+    margin: 0 12px;
+    font-size: 13px;
+    color: #4e5e71;
+    cursor: pointer;
+}
+
+/* 🔹 align radio + text nicely */
+.radio-row input[type="radio"] {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+/* 🔹 label */
+.label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+    vertical-align: middle;
+}
+
+/* 🔹 input cell */
+.input-cell {
+    text-align: left;
+}
+
+/* 🔹 fields */
+.input-cell input,
+.input-cell select {
+    width: 180px;
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+/* 🔹 main button style */
+.myButtons {
+    background-color: #2563eb !important;  /* blue */
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 4px;
+    height: 24px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 🔹 hover */
+.myButtons:hover {
+    background-color: #1d4ed8 !important;
+}/* 🔹 force button style */
+input.myButtons {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    height: 24px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    appearance: none;           /* 🔥 removes browser default grey */
+    -webkit-appearance: none;
+}
+
+/* 🔹 hover */
+input.myButtons:hover {
+    background-color: #1d4ed8 !important;
+}
+
+/* 🔥 strongest override */
+input[type="button"].myButtons,
+#clear.myButtons {
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    height: 24px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+
+/* hover */
+input[type="button"].myButtons:hover,
+#clear.myButtons:hover {
+    background: #1d4ed8 !important;
+}
+
+/* 🔹 center button cleanly */
+.button-cell {
+    text-align: center;
+    padding-top: 8px;
+}
+
+/* 🔹 fix button width (not full width) */
+.button-cell .myButtons {
+    width: 120px !important;
+    height: 24px !important;
+    padding: 0 10px !important;
+    background-color: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 🔹 hover */
+.button-cell .myButtons:hover {
+    background-color: #1d4ed8 !important;
+}
+
+/* 🔹 reduce legend (title) font */
+fieldset legend {
+    font-size: 16px;   /* 🔻 reduced */
+    font-weight: 600;
+    color: #4e5e71;
+}
+
+/* 🔹 optional: reduce inside text slightly */
+fieldset {
+    font-size: 12px;
+}
+
+/* 🔹 card */
+.simple-card {
+    display: inline-block;
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin: 10px 0;
+}
+
+/* 🔹 spacing */
+.form-table {
+    border-spacing: 0 8px;
+}
+
+/* 🔹 labels */
+.label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* 🔹 inputs */
+.input-cell input,
+.input-cell select {
+    width: 150px;
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* 🔹 button */
+.button-cell {
+    text-align: center;
+    padding-top: 8px;
+}
+
+
+</style>
 </head>
 <body onload="getBranch();disitems()">
 <div id="mainBG" class="homeContent" data-type="background"> 
@@ -314,17 +751,38 @@ function funreload(event)
 <table width="100%" >
 <tr>
 <td width="20%" >
-    <fieldset style="background: #ECF8E0;">
+    <fieldset style="background: #FFFFFF;">
 	<table width="100%"  >
 	<jsp:include page="../../heading.jsp"></jsp:include>
 		
 	 <tr><td colspan="2">&nbsp;</td></tr>
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                    
-                    
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
+	  <tr>
+<td colspan="2" align="center">
+
+    <div class="simple-card">
+
+        <table class="form-table">
+
+            <tr>
+                <td class="label-cell">From</td>
+                <td class="input-cell">
+                    <div id="fromdate"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label-cell">To</td>
+                <td class="input-cell">
+                    <div id="todate"></div>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</td>
+</tr>
 <%-- 	 <table width="100%">
 	 <tr>
 	<td  align="right"><label class="branch" >From Date</label></td><td><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div></td>
@@ -337,53 +795,177 @@ function funreload(event)
      </table>
 	</td> --%>      
 	
-	 <tr><td colspan="2">&nbsp;</td></tr>
- <tr><td align="right"> <label class="branch">LA NO</label></td> <td ><input type="text"  id="lano" name="lano" style="height:20px;width:70%;" value='<s:property value="lano"/>' > </td></tr> 
- <tr><td colspan="2">&nbsp;</td></tr> 
- <tr><td colspan="2">
+	  <tr><td colspan="2">
          
-          <table width="100%"  > 
           <tr>
-            <td  width="50%" ><input type="text" name="m1" id="m1"   value='<s:property value="m1"/>'  onkeypress="javascript:return isNumber (event)" style="width:38%;height:20px;text-align: center;">
-              <label class="branch">to</label>
-              <input type="text" name="m2"  id="m2" value='<s:property value="m2"/>' style="width:38%;height:20px;text-align: center;" onkeypress="javascript:return isNumber (event)" onblur="change1();"></td>
-            <td  width="50%"  align="left"><input type="text" id="amt1" name="amt1"  style="width:100%;height:21px;text-align: right;" value='<s:property value="amt1"/>' onblur="funRoundAmt(this.value,this.id);"  onkeypress="javascript:return isNumber (event)"/></td>
-          </tr>
-          <tr>
-            <td  ><input type="text" name="m3" id="m3"   value='<s:property value="m3"/>' onkeypress="javascript:return isNumber (event)" readonly="readonly" style="width:38%;height:20px;text-align: center;">
-                       <label class="branch">to</label>
-              <input type="text" name="m4" id="m4" value='<s:property value="m4"/>' onkeypress="javascript:return isNumber (event)"  style="width:38%;height:20px;text-align: center;" onblur="change2();"></td>
-            <td align="left"><input type="text" id="amt2" name="amt2"   style="width:100%;height:21px;text-align: right;"   value='<s:property value="amt2"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event)" /></td>
-          </tr>
-          <tr>
-            <td  ><input type="text" name="m5" id="m5"  value='<s:property value="m5"/>' onkeypress="javascript:return isNumber (event)"  readonly="readonly" style="width:38%;height:20px;text-align: center;">
-                     <label class="branch">to</label>
-              <input type="text" name="m6" id="m6" value='<s:property value="m6"/>' onkeypress="javascript:return isNumber (event)" style="width:38%;height:20px;text-align: center;" onblur="change3();"></td>
-            <td align="left"><input type="text" id="amt3" name="amt3"   style="width:100%;height:21px;text-align: right;"   value='<s:property value="amt3"/>' onblur="funRoundAmt(this.value,this.id);" onkeypress="javascript:return isNumber (event)" /></td>
-          </tr>
-          <tr>
-            <td  ><input type="text" name="m7" id="m7" value='<s:property value="m7"/>' onkeypress="javascript:return isNumber (event)"  readonly="readonly" style="width:38%;height:20px;text-align: center;">
-                <label class="branch">to</label>
-              <input type="text"  value='<s:property value="m8"/>' name="m8" id="m8" onkeypress="javascript:return isNumber (event)"  style="width:38%;height:20px;text-align: center;" onblur="change4();"></td>
-            <td align="left"><input type="text" id="amt4" name="amt4"   style="width:100%;height:21px;text-align: right;"   onblur="funRoundAmt(this.value,this.id);" value='<s:property value="amt4"/>' onkeypress="javascript:return isNumber (event)" /></td>
-          </tr>
-          <tr>
-            <td ><input type="text" name="m9" id="m9" value='<s:property value="m9"/>' onkeypress="javascript:return isNumber (event)" readonly="readonly" style="width:38%;height:20px;text-align: center;">
-              <label class="branch">to</label>
-              <input type="text" name="m10"  id="m10" value='<s:property value="m10"/>' onkeypress="javascript:return isNumber (event)"  style="width:38%;height:20px;text-align: center;" ></td>
-            <td align="left"><input type="text" id="amt5" name="amt5"   style="width:100%;height:21px;text-align: right;"  onblur="funRoundAmt(this.value,this.id);" value='<s:property value="amt5"/>' onkeypress="javascript:return isNumber (event)" /></td>
-          </tr>
-          
+<td colspan="2" align="center">
+
+    <!-- 🔹 CARD WRAPPER -->
+    <div style="
+        background:#f8fafc;
+        border:1px solid #e3e8ee;
+        border-radius:12px;
+        padding:18px 20px;
+        width:320px;
+        box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    ">
+
+        <!-- 🔹 LA NO -->
+        <table style="width:100%; margin-bottom:12px;">
+            <tr>
+                <td style="text-align:right; padding-right:10px; width:90px;">
+                    <label class="branch">LA NO</label>
+                </td>
+                <td>
+                    <input type="text" id="lano" name="lano"
+                           value='<s:property value="lano"/>'
+                           style="width:160px;height:24px;">
+                </td>
+            </tr>
         </table>
- 
+
+        <!-- 🔹 RANGE TABLE -->
+        <table style="width:100%; border-spacing:0 10px;">
+
+            <!-- ROW 1 -->
+            <tr>
+                <td>
+                    <input type="text" name="m1" id="m1"
+                           value='<s:property value="m1"/>'
+                           onkeypress="return isNumber(event)"
+                           style="width:55px;height:24px;text-align:center;">
+
+                    <span style="margin:0 6px;">to</span>
+
+                    <input type="text" name="m2" id="m2"
+                           value='<s:property value="m2"/>'
+                           onkeypress="return isNumber(event)"
+                           onblur="change1();"
+                           style="width:55px;height:24px;text-align:center;">
+                </td>
+
+                <td>
+                    <input type="text" id="amt1" name="amt1"
+                           value='<s:property value="amt1"/>'
+                           onblur="funRoundAmt(this.value,this.id);"
+                           onkeypress="return isNumber(event)"
+                           style="width:120px;height:24px;text-align:right;">
+                </td>
+            </tr>
+
+            <!-- ROW 2 -->
+            <tr>
+                <td>
+                    <input type="text" name="m3" id="m3"
+                           value='<s:property value="m3"/>'
+                           readonly
+                           style="width:55px;height:24px;text-align:center;">
+
+                    <span style="margin:0 6px;">to</span>
+
+                    <input type="text" name="m4" id="m4"
+                           value='<s:property value="m4"/>'
+                           onblur="change2();"
+                           style="width:55px;height:24px;text-align:center;">
+                </td>
+
+                <td>
+                    <input type="text" id="amt2" name="amt2"
+                           value='<s:property value="amt2"/>'
+                           style="width:120px;height:24px;text-align:right;">
+                </td>
+            </tr>
+
+            <!-- ROW 3 -->
+            <tr>
+                <td>
+                    <input type="text" name="m5" id="m5"
+                           value='<s:property value="m5"/>'
+                           readonly
+                           style="width:55px;height:24px;text-align:center;">
+
+                    <span style="margin:0 6px;">to</span>
+
+                    <input type="text" name="m6" id="m6"
+                           value='<s:property value="m6"/>'
+                           onblur="change3();"
+                           style="width:55px;height:24px;text-align:center;">
+                </td>
+
+                <td>
+                    <input type="text" id="amt3" name="amt3"
+                           value='<s:property value="amt3"/>'
+                           style="width:120px;height:24px;text-align:right;">
+                </td>
+            </tr>
+
+            <!-- ROW 4 -->
+            <tr>
+                <td>
+                    <input type="text" name="m7" id="m7"
+                           value='<s:property value="m7"/>'
+                           readonly
+                           style="width:55px;height:24px;text-align:center;">
+
+                    <span style="margin:0 6px;">to</span>
+
+                    <input type="text" name="m8" id="m8"
+                           value='<s:property value="m8"/>'
+                           onblur="change4();"
+                           style="width:55px;height:24px;text-align:center;">
+                </td>
+
+                <td>
+                    <input type="text" id="amt4" name="amt4"
+                           value='<s:property value="amt4"/>'
+                           style="width:120px;height:24px;text-align:right;">
+                </td>
+            </tr>
+
+            <!-- ROW 5 -->
+            <tr>
+                <td>
+                    <input type="text" name="m9" id="m9"
+                           value='<s:property value="m9"/>'
+                           readonly
+                           style="width:55px;height:24px;text-align:center;">
+
+                    <span style="margin:0 6px;">to</span>
+
+                    <input type="text" name="m10" id="m10"
+                           value='<s:property value="m10"/>'
+                           style="width:55px;height:24px;text-align:center;">
+                </td>
+
+                <td>
+                    <input type="text" id="amt5" name="amt5"
+                           value='<s:property value="amt5"/>'
+                           style="width:120px;height:24px;text-align:right;">
+                </td>
+            </tr>
+
+        </table>
+
+        <!-- 🔹 BUTTON -->
+        <div style="text-align:center; margin-top:15px;">
+            <input type="button"
+                   class="myButtons"
+                   value="Update"
+                   onclick="funupdate()"
+                   style="width:140px;">
+        </div>
+
+    </div>
+
+</td>
+</tr>
 
  
 
 	
 </td></tr> 
  	 <tr><td colspan="2">&nbsp;</td></tr> 
-	 	 <tr><td colspan="2" align="center"><input type="Button" name="terUpdate" id="terUpdate" class="myButton" value="Update" onclick="funupdate()"></td></tr> 
-	 	 	 <tr><td colspan="2">&nbsp;</td></tr> 
+	 	 <tr><td colspan="2">&nbsp;</td></tr> 
 	 	 	 	 	 <tr><td colspan="2">&nbsp;</td></tr> 
 	 	 	 <tr><td colspan="2">&nbsp;</td></tr> 
 	</table>

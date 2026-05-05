@@ -346,10 +346,358 @@ function  funcleardata()
 	top:1px;
 }
 
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f4f7f9;
+}
 
-	
-      
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
 
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+}
+
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+td[width="80%"] {
+    height: 100vh;
+    vertical-align: top;
+    background: #fff;
+}
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
+/* 🔹 Inputs + Dropdowns */
+input[type="text"],
+select {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 8px !important;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Dropdown text */
+select {
+    font-size: 13px !important;
+}
+
+/* 🔹 Buttons */
+.btn-submit,
+.myButtons,
+.myButton,
+input[type="button"],
+button {
+    width: 100%;
+    height: 24px !important;
+    padding: 0 10px !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    box-sizing: border-box;
+    line-height: 24px;
+}
+
+/* 🔹 Fix for any library overriding (like jqx / external CSS) */
+.jqx-widget input,
+.jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
+}
+
+/* 🔹 Button row (side-by-side) */
+.button-row {
+    display: flex;
+    gap: 6px;
+}
+
+/* 🔹 Override full width */
+.button-row .myButton {
+    width: 50% !important;
+    margin: 0 !important;
+}
+/* 🔹 Inputs smaller width */
+.input-cell input {
+    width: 160px;   /* adjust: 140px / 160px / 180px */
+    height: 24px;
+    padding: 0 8px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.input-cell select {
+    width: 160px;   /* same as your input fields */
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+/* 🔹 inline card (does NOT break layout) */
+.inline-card {
+    display: inline-block;
+    width: 250px; /* 🔥 increased card width */
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin: 10px 0;
+}
+
+/* 🔹 table spacing */
+.form-table {
+    border-spacing: 0 8px;
+}
+
+/* 🔹 labels */
+.form-table td:first-child {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px; /* 🔥 slightly increased for better spacing */
+}
+
+/* 🔹 inputs */
+.form-table input,
+.form-table select {
+    width: 100px; /* 🔥 increased field width */
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* 🔹 radio row layout */
+.radio-row {
+    text-align: center;
+    padding-top: 6px;
+}
+
+/* 🔹 spacing between options */
+.radio-row label {
+    margin: 0 12px;
+    font-size: 13px;
+    color: #4e5e71;
+    cursor: pointer;
+}
+
+/* 🔹 align radio + text nicely */
+.radio-row input[type="radio"] {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+/* 🔹 label */
+.label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+    vertical-align: middle;
+}
+
+/* 🔹 input cell */
+.input-cell {
+    text-align: left;
+}
+
+/* 🔹 fields */
+.input-cell input,
+.input-cell select {
+    width: 180px;
+    height: 24px;
+    padding: 0 6px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+/* 🔹 main button style */
+.myButtons {
+    background-color: #2563eb !important;  /* blue */
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 4px;
+    height: 24px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 🔹 hover */
+.myButtons:hover {
+    background-color: #1d4ed8 !important;
+}/* 🔹 force button style */
+input.myButtons {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    height: 24px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    appearance: none;           /* 🔥 removes browser default grey */
+    -webkit-appearance: none;
+}
+
+/* 🔹 hover */
+input.myButtons:hover {
+    background-color: #1d4ed8 !important;
+}
+
+/* 🔥 strongest override */
+input[type="button"].myButtons,
+#clear.myButtons {
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    height: 24px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+
+/* hover */
+input[type="button"].myButtons:hover,
+#clear.myButtons:hover {
+    background: #1d4ed8 !important;
+}
+
+/* 🔹 center button cleanly */
+.button-cell {
+    text-align: center;
+    padding-top: 8px;
+}
+
+/* 🔹 fix button width (not full width) */
+.button-cell .myButtons {
+    width: 120px !important;
+    height: 24px !important;
+    padding: 0 10px !important;
+    background-color: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 🔹 hover */
+.button-cell .myButtons:hover {
+    background-color: #1d4ed8 !important;
+}
+
+/* 🔹 reduce legend (title) font */
+fieldset legend {
+    font-size: 16px;   /* 🔻 reduced */
+    font-weight: 600;
+    color: #4e5e71;
+}
+
+/* 🔹 optional: reduce inside text slightly */
+fieldset {
+    font-size: 12px;
+}
 </style>
 <script>
 
@@ -439,49 +787,137 @@ document.getElementById("ra_no").value="";
 <table width="100%" >
 <tr>
 <td width="20%" >
-    <fieldset style="background: #ECF8E0;">
+    <fieldset style="background: #FFFFFF;">
 	<table width="100%" >
 	<jsp:include page="../../heading.jsp"></jsp:include>
 		
 	 <tr><td colspan="2">&nbsp;</td></tr>
 	
-	  <tr><td  align="right" ><label class="branch">From</label></td><td align="left"><div id='fromdate' name='fromdate' value='<s:property value="fromdate"/>'></div>
-                    </td></tr>
-                     <tr><td  align="right" ><label class="branch">To</label></td><td align="left"><div id='todate' name='todate' value='<s:property value="todate"/>'></div>
-                    </td></tr>
+	  <tr>
+    <td class="label-cell">From</td>
+    <td class="input-cell">
+        <div id="fromdate"></div>
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">To</td>
+    <td class="input-cell">
+        <div id="todate"></div>
+    </td>
+</tr>
      
 	
-	 <tr><td align="right"><label class="branch">Status</label></td><td align="left"><select id="status" name="status" style="height:20px;width:70%;" value='<s:property value="status"/>'>
-    <option value="" selected>All</option>  
-       <option value=0>Open</option>
-    <option value=1>Close</option>  
-	 </select></td></tr> 
- <tr><td align="right"><label class="branch">Client</label></td><td align="left"><input type="text" name="clientname" id="clientname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclinfo(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="clientname"/>'></td></tr> 
- 
- <tr><td align="right"><label class="branch">Category</label></td><td align="left"><input type="text" name="catname" id="catname" placeholder="Press F3 TO Search" readonly="readonly" onKeyDown="getclcat(event);" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="catname"/>'></td></tr>
- 
-  <tr><td align="right"><label class="branch">Fleet</label></td><td align="left"><input type="text" name="fleet" id="fleet"  placeholder="Press F3 TO Search" readonly="readonly"    onkeydown="getfleet(event)" onclick="this.placeholder='' "  style="height:20px;width:70%;" value='<s:property value="fleet"/>' ></td></tr> 
-   <tr><td align="right"><label class="branch">Salesman</label></td><td align="left"><input type="text" name="salesman" id="salesman" placeholder="Press F3 TO Search" readonly="readonly" onkeydown="getsalesman(event)" onclick="this.placeholder='' " style="height:20px;width:70%;" value='<s:property value="salesman"/>' ></td></tr> 
-     
+	 <tr>
+    <td class="label-cell">Status</td>
+    <td class="input-cell">
+        <select id="status" name="status">
+            <option value="">All</option>  
+            <option value="0">Open</option>
+            <option value="1">Close</option>  
+        </select>
+    </td>
+</tr>
+ <tr>
+    <td class="label-cell">Client</td>
+    <td class="input-cell">
+        <input type="text" name="clientname" id="clientname"
+               placeholder="Press F3 TO Search"
+               readonly
+               onkeydown="getclinfo(event);"
+               onclick="this.placeholder=''"
+               value='<s:property value="clientname"/>'>
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">Category</td>
+    <td class="input-cell">
+        <input type="text" name="catname" id="catname"
+               placeholder="Press F3 TO Search"
+               readonly
+               onkeydown="getclcat(event);"
+               onclick="this.placeholder=''"
+               value='<s:property value="catname"/>'>
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">Fleet</td>
+    <td class="input-cell">
+        <input type="text" name="fleet" id="fleet"
+               placeholder="Press F3 TO Search"
+               readonly
+               onkeydown="getfleet(event)"
+               onclick="this.placeholder=''"
+               value='<s:property value="fleet"/>'>
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">Salesman</td>
+    <td class="input-cell">
+        <input type="text" name="salesman" id="salesman"
+               placeholder="Press F3 TO Search"
+               readonly
+               onkeydown="getsalesman(event)"
+               onclick="this.placeholder=''"
+               value='<s:property value="salesman"/>'>
+    </td>
+</tr>
       
       <tr><td align="right"><label class="branch">&nbsp;</label></td><td align="left">
        <select id="rentaltype" name="rentaltype" style="height:20px;width:70%;" value='<s:property value="rentaltype"/>' hidden="true">
       </select> </td></tr> 
 	 <tr><td colspan="2"></td></tr>
 	 <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funcleardata()"></td></tr>
-     <tr><td colspan="2">
+	 <tr>
+    <td colspan="2" class="button-cell">
+        <input type="button"
+               class="myButtons"
+               name="clear"
+               id="clear"
+               value="Clear"
+               onclick="funcleardata()">
+    </td>
+</tr>
+<tr><td colspan="2">
 	  <tr>
-	<td colspan="2"><div><fieldset><legend >LPO NO change</legend> 
-	<table width="100%" id="lpochange">
-<tr><td align="right"><label class="branch">LPO NO</label></td><td align="left"><input type="text" name="lpo" id="lpo"   placeholder="Enter LPO No" style="height:20px;width:70%;" value='<s:property value="lpo"/>' ></td></tr>
-<tr><input type="hidden" name="ra_no" id="ra_no"  style="height:20px;width:50%;" value='<s:property value="ra_no"/>'></tr> 
-<tr><input type="hidden" name="oldlpo" id="oldlpo"  style="height:20px;width:50%;" value='<s:property value="oldlpo"/>'></tr> 
+<td colspan="2" align="center">
+    <div class="lpo-card">
+        <fieldset>
+            <legend>LPO NO change</legend>
 
+            <table width="100%" id="lpochange">
+<tr>
+    <td class="label-cell">LPO NO</td>
+    <td class="input-cell">
+        <input type="text"
+               name="lpo"
+               id="lpo"
+               placeholder="Enter LPO No"
+               value='<s:property value="lpo"/>'>
+    </td>
+</tr>
+
+<!-- 🔹 hidden fields (FIXED STRUCTURE, NO CHANGE IN FUNCTIONALITY) -->
+<input type="hidden" name="ra_no" id="ra_no"
+       value='<s:property value="ra_no"/>'>
+
+<input type="hidden" name="oldlpo" id="oldlpo"
+       value='<s:property value="oldlpo"/>'>
       
       <tr>
-	 <td colspan="2" align="center"><input type="button" class="myButtons" name="update" id="update"  value="Update" onclick="funupdate()"></td></tr>
-     <tr><td colspan="2"></td></tr>                 
+	<tr>
+    <td colspan="2" class="button-cell">
+        <input type="button"
+               class="myButtons"
+               name="update"
+               id="update"
+               value="Update"
+               onclick="funupdate()">
+    </td>
+</tr><tr><td colspan="2"></td></tr>                 
     </table>               
       </fieldset> 
 	<tr>
