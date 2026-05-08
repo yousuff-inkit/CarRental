@@ -1,6 +1,6 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<% String contextPath=request.getContextPath();%>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,20 +11,24 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-
 /* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+/* Sidebar dynamically fills the left TD */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 100%;
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
@@ -38,22 +42,21 @@
     border-bottom: 1px solid #f0f4f8;
 }
 
+/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 20px 15px; 
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -61,324 +64,306 @@
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px; 
     font-weight: 600;
     color: #4e5e71;
-    width: 90px;
+    width: 80px;
 }
 
-/* Inputs */
+/* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-/* Buttons */
-.btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
     cursor: pointer;
 }
 
-.btn-submit:hover {
-    background: #1d4ed8;
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
 }
 
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
+.btn-submit {
+    flex: 1;
+    height: 30px !important;            
+    padding: 0 5px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;
+    text-align: center;
+    transition: all 0.2s ease;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
+.btn-submit:hover { background: #1d4ed8 !important; }
+
+/* Layout Utilities */
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
     background: #fff;
-}
-.scrollable-left {
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
 </style>
 
 <script type="text/javascript">
-
 $(document).ready(function () {
-	 $("#fromdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#todate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
+    $("#fromdate, #todate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 
-	 $('#clientDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Client Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#clientDetailsWindow').jqxWindow('close');
-	 
-	 $('#agreementDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Agreement Search',position: { x: 250, y: 120 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#agreementDetailsWindow').jqxWindow('close');
-	 
-	 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
-	 
-	 var curfromdate= $('#fromdate').jqxDateTimeInput('getDate');
-     var oneyeardate=new Date(new Date(curfromdate).setMonth(curfromdate.getMonth()-1));
-     var oneyearbackdate=new Date(new Date(oneyeardate).setDate(oneyeardate.getDate()));
-     $('#fromdate ').jqxDateTimeInput('setDate', new Date(oneyearbackdate));
+    $('#clientDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Client Search', position: { x: 300, y: 87 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+    $('#clientDetailsWindow').jqxWindow('close');
+    
+    $('#agreementDetailsWindow').jqxWindow({width: '51%', height: '58%', maxHeight: '70%', maxWidth: '51%', title: 'Agreement Search', position: { x: 250, y: 120 }, theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+    $('#agreementDetailsWindow').jqxWindow('close');
+    
+    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+    $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+    
+    // Initialize Dates
+    var curfromdate = $('#fromdate').jqxDateTimeInput('getDate');
+    var oneyeardate = new Date(new Date(curfromdate).setMonth(curfromdate.getMonth()-1));
+    var oneyearbackdate = new Date(new Date(oneyeardate).setDate(oneyeardate.getDate()));
+    $('#fromdate').jqxDateTimeInput('setDate', new Date(oneyearbackdate));
+    
+    funSearchdblclick(); // Initialize double-click handlers
 });
 
-	function clientSearchContent(url) {
-	    $('#clientDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#clientDetailsWindow').jqxWindow('setContent', data);
-		$('#clientDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function agreementSearchContent(url) {
-	 	$('#agreementDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#agreementDetailsWindow').jqxWindow('setContent', data);
-		$('#agreementDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function getClient(event){
-	    var x= event.keyCode;
-	    if(x==114){
-	    	clientSearchContent('clientDetailsSearch.jsp');
-	    }
-	    else{}
-	    }
-	
-	function getAgreement(event){
-	    var x= event.keyCode;
-	    if(x==114){
-	    	if($('#rentaltype').val()==""){
-	   	         $.messager.alert('Message','Choose a Type.','warning');   
-	   	         return false;
-	   	        }
-	    	var branchval = document.getElementById("cmbbranch").value; 
-  		    agreementSearchContent('agreementDetailsSearch.jsp?branchval='+branchval);
-	    }
-	    else{}
-	    }
-	function funExportBtn(){
-	
-	 
-
-        $("#invoicedDiv").excelexportjs({
-				containerid: "invoicedDiv",   
-				datatype: 'json',
-				dataset: null,
-				gridId: "jqxInvoiced",
-				columns: getColumns("jqxInvoiced") ,   
-				worksheetName:"Traffic-Fine-Invoiced"  
-			});   
-	 /* if(parseInt(window.parent.chkexportdata.value)=="1")
-	  {
-	  	JSONToCSVCon(data1, 'Traffic-Fine-Invoiced', true);
-	  }
-	 else
-	  {
-	                 
-	    	$("#jqxInvoiced").jqxGrid('exportdata', 'xls', 'Traffic-Fine-Invoiced');
-	  } */
-	 
+function clientSearchContent(url) {
+    $('#clientDetailsWindow').jqxWindow('open');
+    $.get(url).done(function (data) {
+        $('#clientDetailsWindow').jqxWindow('setContent', data);
+        $('#clientDetailsWindow').jqxWindow('bringToFront');
+    }); 
 }
-	function funSearchdblclick(){
-		  $('#txtclientname').dblclick(function(){
-			  clientSearchContent('clientDetailsSearch.jsp');
-			});
-		  
-		  $('#txtagreementvoucherno').dblclick(function(){
-			  if($('#rentaltype').val()==""){
-		   	         $.messager.alert('Message','Choose a Type.','warning');   
-		   	         return false;
-		   	        }
-			  var branchval = document.getElementById("cmbbranch").value; 
-			  agreementSearchContent('agreementDetailsSearch.jsp?branchval='+branchval); 
-			});
-	}
-	
-	function  funClearData(){
-		 $('#txtclientname').val('');$('#txtcldocno').val('');$('#rentaltype').val('');$('#txtagreementvoucherno').val('');$('#txtagreementno').val('');$('#fromdate').val(new Date());$('#todate').val(new Date());
-		
-		 $('#fromdate').val(new Date());
-		 var curfromdate= $('#fromdate').jqxDateTimeInput('getDate');
-	     var oneyeardate=new Date(new Date(curfromdate).setMonth(curfromdate.getMonth()-1));
-	     var oneyearbackdate=new Date(new Date(oneyeardate).setDate(oneyeardate.getDate()));
-	     $('#fromdate ').jqxDateTimeInput('setDate', new Date(oneyearbackdate));
-	     
-		 if (document.getElementById("txtclientname").value == "") {
-		        $('#txtclientname').attr('placeholder', 'Press F3 to Search'); 
-		    }
-		 if (document.getElementById("txtagreementvoucherno").value == "") {
-		        $('#txtagreementvoucherno').attr('placeholder', 'Press F3 to Search'); 
-		    }
-	 }
-	
-	function funTrafficInvoicePrint(){
-        var url=document.URL;
-        var reurl=url.split("invoiced.jsp");
-        var win= window.open(reurl[0]+"printTrafficInvoice?&branch="+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$("#todate").val()+'&txtcldocno='+$("#txtcldocno").val(),"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-        win.focus();
-   }
-	
-	function funreload(event){
-		 var branchval = document.getElementById("cmbbranch").value;
-		 var fromdate = $('#fromdate').val();
-		 var todate = $('#todate').val();
-		 var cldocno = $('#txtcldocno').val();
-		 var rentaltype = $('#rentaltype').val();
-		 var agmtno = $('#txtagreementno').val();
-		 $("#overlay, #PleaseWait").show();
-		 
-		 $("#invoicedDiv").load("invoicedGrid.jsp?branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&cldocno='+cldocno+'&rentaltype='+rentaltype+'&agmtno='+agmtno);
-	}
-	
+
+function agreementSearchContent(url) {
+    $('#agreementDetailsWindow').jqxWindow('open');
+    $.get(url).done(function (data) {
+        $('#agreementDetailsWindow').jqxWindow('setContent', data);
+        $('#agreementDetailsWindow').jqxWindow('bringToFront');
+    }); 
+}
+
+function getClient(event){
+    if(event.keyCode == 114){
+        clientSearchContent('clientDetailsSearch.jsp');
+    }
+}
+
+function getAgreement(event){
+    if(event.keyCode == 114){
+        if($('#rentaltype').val()==""){
+            $.messager.alert('Message','Choose a Type.','warning');   
+            return false;
+        }
+        var branchval = document.getElementById("cmbbranch").value; 
+        agreementSearchContent('agreementDetailsSearch.jsp?branchval='+branchval);
+    }
+}
+
+function funExportBtn(){
+    $("#invoicedDiv").excelexportjs({
+        containerid: "invoicedDiv",   
+        datatype: 'json',
+        dataset: null,
+        gridId: "jqxInvoiced",
+        columns: getColumns("jqxInvoiced"),   
+        worksheetName: "Traffic-Fine-Invoiced"  
+    });   
+}
+
+function funSearchdblclick(){
+    $('#txtclientname').dblclick(function(){
+        clientSearchContent('clientDetailsSearch.jsp');
+    });
+        
+    $('#txtagreementvoucherno').dblclick(function(){
+        if($('#rentaltype').val() == ""){
+            $.messager.alert('Message','Choose a Type.','warning');   
+            return false;
+        }
+        var branchval = document.getElementById("cmbbranch").value; 
+        agreementSearchContent('agreementDetailsSearch.jsp?branchval='+branchval); 
+    });
+}
+
+function funClearData(){
+    $('#txtclientname').val(''); $('#txtcldocno').val(''); $('#rentaltype').val('');
+    $('#txtagreementvoucherno').val(''); $('#txtagreementno').val('');
+    $('#fromdate').val(new Date()); $('#todate').val(new Date());
+    
+    $('#fromdate').val(new Date());
+    var curfromdate = $('#fromdate').jqxDateTimeInput('getDate');
+    var oneyeardate = new Date(new Date(curfromdate).setMonth(curfromdate.getMonth()-1));
+    var oneyearbackdate = new Date(new Date(oneyeardate).setDate(oneyeardate.getDate()));
+    $('#fromdate').jqxDateTimeInput('setDate', new Date(oneyearbackdate));
+     
+    if (document.getElementById("txtclientname").value == "") {
+        $('#txtclientname').attr('placeholder', 'Press F3 to Search'); 
+    }
+    if (document.getElementById("txtagreementvoucherno").value == "") {
+        $('#txtagreementvoucherno').attr('placeholder', 'Press F3 to Search'); 
+    }
+}
+
+function funTrafficInvoicePrint(){
+    var url = document.URL;
+    var reurl = url.split("invoiced.jsp");
+    var win = window.open(reurl[0]+"printTrafficInvoice?&branch="+document.getElementById("cmbbranch").value+'&fromDate='+document.getElementById("fromdate").value+'&toDate='+$("#todate").val()+'&txtcldocno='+$("#txtcldocno").val(),"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+    win.focus();
+}
+
+function funreload(event){
+    var branchval = document.getElementById("cmbbranch").value;
+    var fromdate = $('#fromdate').val();
+    var todate = $('#todate').val();
+    var cldocno = $('#txtcldocno').val();
+    var rentaltype = $('#rentaltype').val();
+    var agmtno = $('#txtagreementno').val();
+    
+    $("#overlay, #PleaseWait").show();
+    $("#invoicedDiv").load("invoicedGrid.jsp?branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&cldocno='+cldocno+'&rentaltype='+rentaltype+'&agmtno='+agmtno);
+}
 </script>
-
 </head>
-<body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class="hidden-scrollbar">
 
-<table width="100%">
+<body onload="getBranch();">
+
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
+<div class="master-container">
+
+<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 
-<!-- ===== LEFT PANEL ===== -->
-<td width="20%" valign="top">
+<!-- ================= LEFT SIDEBAR ================= -->
+<td width="330px" valign="top">
+    <div class="sidebar-filters">
+        <div class="sidebar-fixed-top">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-<fieldset class="filter-card scrollable-left">
-<table width="100%" class="filter-table">
+        <div class="sidebar-scroll-content">
+            
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td>
+                            <input type="text" id="txtclientname" name="txtclientname" readonly
+                                   placeholder="Press F3 to Search"
+                                   onkeydown="getClient(event);" value='<s:property value="txtclientname"/>'>
+                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
+                                <option value="">--Select--</option>
+                                <option value="RAG">Rental</option>
+                                <option value="LAG">Lease</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Agreement</td>
+                        <td>
+                            <input type="text" id="txtagreementvoucherno" name="txtagreementvoucherno" readonly
+                                   placeholder="Press F3 to Search"
+                                   onkeydown="getAgreement(event);" value='<s:property value="txtagreementvoucherno"/>'>
+                            <input type="hidden" id="txtagreementno" name="txtagreementno" value='<s:property value="txtagreementno"/>'>
+                        </td>
+                    </tr>
+                </table>
 
-    <!-- HEADING (UNCHANGED – WILL APPEAR) -->
-    <jsp:include page="../../heading.jsp"></jsp:include>
+                <div class="button-group" style="margin-top: 15px;">
+                    <button type="button" id="clear" class="btn-submit" onclick="funClearData();" style="background:#64748b !important;">
+                        Clear
+                    </button>
+                    <button type="button" id="btnTrafficInvoicePrint" class="btn-submit" onclick="funTrafficInvoicePrint();">
+                        Print
+                    </button>
+                </div>
+            </div>
 
-    <tr>
-        <td class="label-cell">From</td>
-        <td>
-            <div id="fromdate" name="fromdate"
-                 value='<s:property value="fromdate"/>'></div>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="label-cell">To</td>
-        <td>
-            <div id="todate" name="todate"
-                 value='<s:property value="todate"/>'></div>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="label-cell">Client</td>
-        <td>
-            <input type="text"
-                   id="txtclientname"
-                   name="txtclientname"
-                   class="master-input"
-                   readonly
-                   placeholder="Press F3 to Search"
-                   ondblclick="funSearchdblclick();"
-                   onkeydown="getClient(event);"
-                   value='<s:property value="txtclientname"/>'>
-            <input type="hidden"
-                   id="txtcldocno"
-                   name="txtcldocno"
-                   value='<s:property value="txtcldocno"/>'>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="label-cell">Type</td>
-        <td>
-            <select id="rentaltype"
-                    name="rentaltype"
-                    class="master-input"
-                    value='<s:property value="rentaltype"/>'>
-                <option value="">--Select--</option>
-                <option value="RAG">Rental</option>
-                <option value="LAG">Lease</option>
-            </select>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="label-cell">Agreement</td>
-        <td>
-            <input type="text"
-                   id="txtagreementvoucherno"
-                   name="txtagreementvoucherno"
-                   class="master-input"
-                   readonly
-                   placeholder="Press F3 to Search"
-                   ondblclick="funSearchdblclick();"
-                   onkeydown="getAgreement(event);"
-                   value='<s:property value="txtagreementvoucherno"/>'>
-            <input type="hidden"
-                   id="txtagreementno"
-                   name="txtagreementno"
-                   value='<s:property value="txtagreementno"/>'>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2" align="center">
-            <button type="button"
-                    id="clear"
-                    class="btn-submit"
-                    onclick="funClearData();">
-                Clear
-            </button>
-
-            <button type="button"
-                    id="btnTrafficInvoicePrint"
-                    class="btn-submit"
-                    onclick="funTrafficInvoicePrint();">
-                Print
-            </button>
-        </td>
-    </tr>
-
-</table>
-</fieldset>
-
+        </div>
+    </div>
 </td>
 
-<!-- ===== RIGHT GRID ===== -->
-<td width="80%" valign="top">
-<table width="100%">
-<tr>
-    <td>
-        <div id="invoicedDiv">
-            <jsp:include page="invoicedGrid.jsp"></jsp:include>
+<!-- ================= RIGHT SIDE (GRID) ================= -->
+<td valign="top">
+    <div class="main-content-wrapper">
+        <div class="scrollable-grid-area">
+            
+            <div id="invoicedDiv">
+                <jsp:include page="invoicedGrid.jsp"></jsp:include>
+            </div>
+
         </div>
-    </td>
-</tr>
-</table>
+    </div>
 </td>
 
 </tr>
 </table>
 
 </div>
+</div>
 
+<!-- POPUPS -->
 <div id="clientDetailsWindow"><div></div><div></div></div>
 <div id="agreementDetailsWindow"><div></div><div></div></div>
 
 </div> 
 </body>
-
 </html>
