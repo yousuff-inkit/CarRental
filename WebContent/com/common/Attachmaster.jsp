@@ -1,7 +1,5 @@
- 
-
 <%@ taglib prefix="s" uri="/struts-tags" %>
- <% String contextPath=request.getContextPath();%>
+<% String contextPath=request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,537 +10,464 @@
 <title>INK IT Business Solutions</title>
 <jsp:include page="../../includes.jsp"></jsp:include>
 <link href="<%=contextPath%>/css/body.css" media="screen" rel="stylesheet" type="text/css" />
-<%-- <script  src="<%=contextPath%>/js/scanner.js"></script> --%>
+
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 
- <% 
+<% 
  String docNo = request.getParameter("docno")==null?"0":request.getParameter("docno"); 
  String jobname = request.getParameter("jobname")==null?"":request.getParameter("jobname"); 
  String formcode = request.getParameter("formCode")==null?"NA":request.getParameter("formCode"); 
  String brchid = request.getParameter("brchid")==null?"0":request.getParameter("brchid"); 
  String frmname = request.getParameter("frmname")==null?"":request.getParameter("frmname"); 
- %>
- 
- <style type="text/css">
- .icon {
-	width: 2.5em;
-	height: 2em;
-	border: none;
-	background-color: #E0ECF8;
+%>
+
+<style type="text/css">
+/* =========================================================
+   SCOPED UI: Modern Attachment Popup Style
+========================================================= */
+body {
+    margin: 0;
+    background-color: #f5f7fa; 
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-.btns {
-  background: #d9344a;
-  background-image: -webkit-linear-gradient(top, #d9344a, #b82b4e);
-  background-image: -moz-linear-gradient(top, #d9344a, #b82b4e);
-  background-image: -ms-linear-gradient(top, #d9344a, #b82b4e);
-  background-image: -o-linear-gradient(top, #d9344a, #b82b4e);
-  background-image: linear-gradient(to bottom, #d9344a, #b82b4e);
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 12px;
-  padding: 3px 8px 2px 8px;
-  text-decoration: none;
+.modern-ui {
+    padding: 15px;
 }
 
-.btns:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
+/* Panels */
+.modern-ui .header-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
- .icons {
-	width: 1em;
-	height: 1em;
-	border: none;
-	background-color: #E0ECF8;
+.modern-ui .upload-panel {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
+.modern-ui .grid-container {
+    background: #fff;
+    border: 1px solid #c5d3e0;
+    border-radius: 8px;
+    padding: 5px;
+    min-height: 100px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
 
- </style>
+/* Typography & Layout */
+.modern-ui .header-title {
+    color: #0b45a2;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-	<script type="text/javascript"> 
-	$(document).ready(function(){
-		  $("body").prepend('<div id="attachoverlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-		     $("body").prepend("<div id='attachPleaseWait' style='display: none;position:absolute; z-index: 1;top:200px;right:400px;'><img src='../../icons/31load.gif'/></div>");
-		var masterdocno='<%=docNo%>';
-		var formcode='<%=formcode%>';
-		var jobname='<%=jobname%>';
-		var brchid='<%=brchid%>';
-		var frmname='<%=frmname%>';
-		if(jobname!=null && jobname!="" && jobname!="undefined" && typeof(jobname)!="undefined" && jobname!="null"){
-			document.getElementById("jobname").value=jobname;
-		}
-		if(masterdocno>0)
-			{
-			document.getElementById("docno").value=masterdocno;
-			}
-		if(formcode!='NA')
-			{
-			document.getElementById("formdetailcode").value=formcode;
-			}
-		if(brchid>0)
-		{
-		document.getElementById("brchid").value=brchid;
-		}
-		if(frmname!="")
-			{
-			document.getElementById("frmnames").innerText=frmname;
-			document.getElementById("formnames").value=frmname;
-			
-			}
-		
-		
-		getRefType();
-		 var indexVal2 = document.getElementById("docno").value;
-         $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&brchid="+brchid+"&jobname="+jobname);
-			});	
-	
-	 
-	 function ajaxFileUpload()  
-	      {
-		   	 var reftypid=document.getElementById("reftypid").value;
-			    //check whether browser fully supports all File API
-			    if (window.File && window.FileReader && window.FileList && window.Blob)
-			    {
-			        //get the file size and file type from file input field
-			        var fsize = $('#file')[0].files[0].size;
-			        
-			         
-			    }else{
-			    	//$.messager.alert('Message','Please upgrade your browser, because your current browser lacks some new features we need!','warning');
-			    	 $.messager.show({title:'Message',msg:'Please upgrade your browser, because your current browser lacks some new features we need!',showType:'show',
-	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	                        }); 
-			        return;
-			    }
-			
-	          $.ajaxFileUpload  
-	          (  
-	              {  
-	                  url:'fileAttachAction.action?formCode=<%=request.getParameter("formCode")%>&doc_no=<%=request.getParameter("docno")%>&jobname=<%=request.getParameter("jobname")%>&descpt='+$("#txtdesc").val()+'&reftypid='+$("#reftypid").val() ,
-	                  secureuri:false,//false  
-	                  fileElementId:'file',//id  <input type="file" id="file" name="file" />  
-	                  dataType: 'json',// json  
-	                  success: function (data, status)  //  
-	                  {  
-	                      //alert(data.message);//jsonmessage,messagestruts2
-	                 	
-	               //       $('#refreshdiv').load();
-	                      <%-- var data='<%= com.common.ClsAttach.reload(docNo) %>';
-	                      alert("============="+data); --%>
-	                     if(status=='success'){
-	                        // funAttachBtn();
-	                         $.messager.show({title:'Message',msg:'Successfully Uploaded',showType:'show',
-	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	                        }); 
-	                      }
-	                     
-	                      $("#testImg").attr("src",data.message);
-	                      if(typeof(data.error) != 'undefined')  
-	                      {  
-	                          if(data.error != '')  
-	                          {  
-	                              //$.messager.alert('Message',data.error);
-	                              $.messager.show({title:'Message',msg: data.error,showType:'show',
-	  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-	  	                        }); 
-	                          }else  
-	                          {  
-	                              //$.messager.alert('Message',data.message);
-	                              $.messager.show({title:'Message',msg: data.message,showType:'show',
-		  	                            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-		  	                        }); 
-	                          }  
-	                      }  
-	                  },  
-	                  error: function (data, status, e)//  
-	                  {  
-	                      //alert(e);  
-	                      $.messager.alert('Message',e);
-	                  }  
-	              }  
-	          )  
-	          return false;  
-	      }
-	
-	 function reload(){
-		$("#jqxDocumentsAttach").jqxGrid('updatebounddata', 'sort');
-		
-		<%--  $('#jqxDocumentsAttach').jqxGrid('refreshdata');
-		 //Thread.sleep(10000);
-		 $("#jqxDocumentsAttach").jqxGrid('addrow', null, <%= com.common.ClsAttach.reload(docNo)%>);
-		 $("#jqxDocumentsAttach").jqxGrid('addrow', null, <%= com.common.ClsAttach.reload(docNo)%>); --%>
-	 }
- 
-	function SaveToDisk(fileURL, fileName) {
-		
-		
-		
-	 //  alert(fileURL);
-	   //fileName='';
-	   var host = window.location.origin;
-	   //alert("hooosssst"+host);
-	  
-	   var splt = fileURL.split("webapps"); 
-	  //alert("after split"+splt[1]);
-	   var repl = splt[1].replace( /;/g, "/");
-	   //alert("repl"+repl);
-	   //alert("after replace===="+repl);
-	   fileURL=host+repl;
-	   //alert("fileURL===="+fileURL);
-	    // for non-IE
-	    if (!window.ActiveXObject) {
-	        var save = document.createElement('a');
-	        //alert(save);
-	       // alert(fileURL);
-	        save.href = fileURL;
-	        save.target = '_blank';
-	        save.download = fileName || 'unknown';
-			
-	        window.open(save.href,"mywindow","menubar=1,resizable=1,width=500,height=500");
-	        
-	        //var event = document.createEvent('Event');
-	       // alert(event);
-	        //event.initEvent('click', true, true);
-	        //save.dispatchEvent(event);
-	        //(window.URL || window.webkitURL).revokeObjectURL(save.href);
-	    }
+.modern-ui .header-actions {
+    display: flex;
+    gap: 12px;
+}
 
-	    // for IE
-	    else if ( !! window.ActiveXObject && document.execCommand)     {
-	        var _window = window.open(fileURL, '_blank');
-	        _window.document.close();
-	        _window.document.execCommand('SaveAs', true, fileName || fileURL)
-	        _window.close();
-	    }
-	}
-	
-	function Delete(){
-	    var filename=document.getElementById("filename").value;
-	    /* var spltname = filename.split(".");
-	    alert("==spltname==="+spltname[0]); */
-	    <%-- alert("==filename=="+filename);
-	    var dtype=<%=request.getParameter("formCode")%>;
-	    alert("==dtype=="+dtype);
-	    var doc_no=<%=request.getParameter("docno")%>;
-	     --%>
-	   
-	    //alert("==doc_no=="+doc_no);
-	 var x=new XMLHttpRequest();
-	 var items,brchItems,currItems,mcloseItems;
-	 x.onreadystatechange=function(){
-	  if (x.readyState==4 && x.status==200)
-	   {
-	         items= x.responseText;
-	         if(items>0){
-	        	 var indexVal2 = document.getElementById("docno").value;
-	    		 
+.modern-ui table {
+    width: 100%;
+    border-spacing: 8px;
+}
 
-	       	  
-	             $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
-	        	  $.messager.alert('Message','Successfully Deleted');
-	        	/*  $.messager.show({title:'Message',msg:'Successfully Deleted',showType:'show',
-                     style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                 }); */ 
-	         }
-	         else{
-	  		  $.messager.alert('Message','Not Deleted');
-	  	/* 	 $.messager.show({title:'Message',msg:'Not Deleted',showType:'show',
-                 style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-             });  */
-	  	     }
-	      }
-	  else
-	   {}
-	 }
-	 x.open("GET",<%=contextPath+"/"%>+"fileAttachDelete.jsp?filename="+filename,true);
-	 x.send();
-	}
-	
-	 function saveViaAJAX()
-	 {
-		 
-		
-		 var testCanvas =null;
-		 var formname=document.getElementById("formdetailcode").value;
-		 var docno=document.getElementById("docno").value;
-		 var reftypid=document.getElementById("reftype").value;
-		 if(docno==""){
-			 document.getElementById("errormsg").innerText="Please Select a Document Number";
-	  		 return false;
-		 }
-		 var iscapture=document.getElementById("iscapture").value;
-			
-			if(iscapture==1){
-				 testCanvas = document.getElementById("canvasids"); 
-			}
-			else{
-				testCanvas = document.getElementById("canvasid");  
-				
-			}
-			
-		  
-		 	var canvasData = testCanvas.toDataURL("image/png");
-		 
-		 	var postData = "canvasData="+canvasData;
-	 	//var canvasData = testCanvas.toDataURL("image/png");
-	 	
-	 	
-	 	var ajax = new XMLHttpRequest();
-	 	ajax.open("POST",<%=contextPath+"/"%>+'saveImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid,true);    
-	 	ajax.setRequestHeader('Content-Type', 'canvas/upload');
-	 	
-	 	ajax.onreadystatechange=function()
-	   	{
-	 		if (ajax.readyState == 4)
-	 		{ 
-	 			//document.getElementById("savemsg").innerText="Successfully Attached";
-	 			/*  
-	 			 $.messager.show({title:'Message',msg:'Successfully Attached',showType:'show',
-                     style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                 });
-	 			 
-	 			 
-	 			  */
-	 			 var indexVal2 = document.getElementById("docno").value;
-	 			   
-	 	         $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
-	 			 
-	    	 $.messager.alert('Message',"Successfully Attached");
-	    		 
-	 			//alert(ajax.responseText);
-	 			// Write out the filename.
-	     		
-	 		}
-	   	}
- 
-	 	ajax.send(postData);  
-	 }
+.modern-ui td.label {
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: #444;
+    padding-right: 8px;
+    white-space: nowrap;
+}
+
+/* Inputs & Selects (24px standardized) */
+.modern-ui input[type="text"], 
+.modern-ui select {
+    height: 24px !important;
+    font-size: 12px !important;
+    font-family: 'Segoe UI', sans-serif !important;
+    border: 1px solid #b8c6d8;
+    border-radius: 3px;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modern-ui input[type="text"]:focus, 
+.modern-ui select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.modern-ui select {
+    padding-right: 24px !important;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+}
+
+/* Standardize File Input Text */
+.modern-ui input[type="file"] {
+    font-size: 12px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #444;
+    outline: none;
+}
+
+/* Master UI Custom File Choose Button */
+.modern-ui input[type="file"]::file-selector-button {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 24px !important; 
+    line-height: 20px !important; 
+    padding: 0 15px;
+    margin-right: 10px;
+    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #083a8a; 
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s;
+}
+
+.modern-ui input[type="file"]::file-selector-button:hover {
+    background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%) !important;
+}
+
+/* Icon Buttons */
+.modern-ui .icon-btn {
+    background: #f4f7f9;
+    border: 1px solid #dce4ec;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.modern-ui .icon-btn:hover {
+    background: #e1e8ed;
+    border-color: #b8c6d8;
+}
+
+.modern-ui .icon-btn img {
+    height: 20px;
+    object-fit: contain;
+}
+
+.scanned {
+    height: 100px;
+    width: 100px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin: 5px;
+}
+</style>
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+    $("body").prepend('<div id="attachoverlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+    $("body").prepend("<div id='attachPleaseWait' style='display: none;position:absolute; z-index: 1002;top:200px;right:400px;'><img src='../../icons/31load.gif'/></div>");
+    
+    var masterdocno='<%=docNo%>';
+    var formcode='<%=formcode%>';
+    var jobname='<%=jobname%>';
+    var brchid='<%=brchid%>';
+    var frmname='<%=frmname%>';
+    
+    if(jobname!=null && jobname!="" && jobname!="undefined" && typeof(jobname)!="undefined" && jobname!="null"){
+        document.getElementById("jobname").value=jobname;
+    }
+    if(masterdocno>0) { document.getElementById("docno").value=masterdocno; }
+    if(formcode!='NA') { document.getElementById("formdetailcode").value=formcode; }
+    if(brchid>0) { document.getElementById("brchid").value=brchid; }
+    if(frmname!="") {
+        document.getElementById("frmnames").innerText=frmname;
+        document.getElementById("formnames").value=frmname;
+    }
+    
+    getRefType();
+    var indexVal2 = document.getElementById("docno").value;
+    $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&brchid="+brchid+"&jobname="+jobname);
+}); 
+
+function ajaxFileUpload() {
+    var reftypid=document.getElementById("reftypid").value;
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        var fsize = $('#file')[0].files[0].size;
+    } else {
+        $.messager.show({title:'Message',msg:'Please upgrade your browser, because your current browser lacks some new features we need!',showType:'show',
+            style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+        }); 
+        return;
+    }
+        
+    $.ajaxFileUpload({  
+        url:'fileAttachAction.action?formCode=<%=request.getParameter("formCode")%>&doc_no=<%=request.getParameter("docno")%>&jobname=<%=request.getParameter("jobname")%>&descpt='+$("#txtdesc").val()+'&reftypid='+$("#reftypid").val() ,
+        secureuri:false, 
+        fileElementId:'file', 
+        dataType: 'json',
+        success: function (data, status) {  
+            if(status=='success'){
+                $.messager.show({title:'Message',msg:'Successfully Uploaded',showType:'show',
+                    style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                }); 
+            }
+            $("#testImg").attr("src",data.message);
+            if(typeof(data.error) != 'undefined') {  
+                if(data.error != '') {  
+                    $.messager.show({title:'Message',msg: data.error,showType:'show',
+                        style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                    }); 
+                } else {  
+                    $.messager.show({title:'Message',msg: data.message,showType:'show',
+                        style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                    }); 
+                }  
+            }  
+        },  
+        error: function (data, status, e) {  
+            $.messager.alert('Message',e);
+        }  
+    })  
+    return false;  
+}
+
+function reload(){
+    $("#jqxDocumentsAttach").jqxGrid('updatebounddata', 'sort');
+}
+
+function SaveToDisk(fileURL, fileName) {
+    var host = window.location.origin;
+    var splt = fileURL.split("webapps"); 
+    var repl = splt[1].replace( /;/g, "/");
+    fileURL=host+repl;
+    
+    if (!window.ActiveXObject) {
+        var save = document.createElement('a');
+        save.href = fileURL;
+        save.target = '_blank';
+        save.download = fileName || 'unknown';
+        window.open(save.href,"mywindow","menubar=1,resizable=1,width=500,height=500");
+    } else if ( !! window.ActiveXObject && document.execCommand) {
+        var _window = window.open(fileURL, '_blank');
+        _window.document.close();
+        _window.document.execCommand('SaveAs', true, fileName || fileURL)
+        _window.close();
+    }
+}
+
+function Delete(){
+    var filename=document.getElementById("filename").value;
+    var x=new XMLHttpRequest();
+    var items,brchItems,currItems,mcloseItems;
+    x.onreadystatechange=function(){
+        if (x.readyState==4 && x.status==200) {
+            items= x.responseText;
+            if(items>0){
+                var indexVal2 = document.getElementById("docno").value;
+                $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
+                $.messager.alert('Message','Successfully Deleted');
+            } else {
+                $.messager.alert('Message','Not Deleted');
+            }
+        }
+    }
+    x.open("GET",<%=contextPath+"/"%>+"fileAttachDelete.jsp?filename="+filename,true);
+    x.send();
+}
+
+function saveViaAJAX() {
+    var testCanvas =null;
+    var formname=document.getElementById("formdetailcode").value;
+    var docno=document.getElementById("docno").value;
+    var reftypid=document.getElementById("reftype").value;
+    if(docno==""){
+        document.getElementById("errormsg").innerText="Please Select a Document Number";
+        return false;
+    }
+    var iscapture=document.getElementById("iscapture").value;
+    if(iscapture==1){
+        testCanvas = document.getElementById("canvasids"); 
+    } else {
+        testCanvas = document.getElementById("canvasid");  
+    }
+    
+    var canvasData = testCanvas.toDataURL("image/png");
+    var postData = "canvasData="+canvasData;
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST",<%=contextPath+"/"%>+'saveImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid,true);    
+    ajax.setRequestHeader('Content-Type', 'canvas/upload');
+    
+    ajax.onreadystatechange=function() {
+        if (ajax.readyState == 4) { 
+            var indexVal2 = document.getElementById("docno").value;
+            $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
+            $.messager.alert('Message',"Successfully Attached");
+        }
+    }
+    ajax.send(postData);  
+}
 
 function upload(){
-	var iscapture=document.getElementById("iscapture").value;
-	
-	if(iscapture==1){
-		saveViaAJAX();
-	}
-	else if(iscapture==2){
-		savedata();
-	}
-	
-	else{
-		
-		 var path=document.getElementById("file").value;
-		 var fsize = $('#file')[0].files[0].size;
-		 //alert(fsize);
-		 var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
-		 //alert(extn);
-		 if((extn=='jpg')||(extn=='png')||(extn=='jpeg')||(extn=='gif')||(extn=='bmp')||(extn=='JPG')||(extn=='PNG')||(extn=='JPEG')||(extn=='GIF')||(extn=='BMP'))
-	        {
-			 
-			 if(fsize>1048576)
-				 { 
-				 saveViaAJAX();
-				 }
-			 else{
-		        	ajaxFileUpload();	
-		        }
-			 
-			 
-	        }
-	        else{
-	        	ajaxFileUpload();	
-	        }
-	}
-		 
-	 }
-	 
-	 
-	 
+    var iscapture=document.getElementById("iscapture").value;
+    if(iscapture==1){
+        saveViaAJAX();
+    } else if(iscapture==2){
+        savedata();
+    } else {
+        var path=document.getElementById("file").value;
+        var fsize = $('#file')[0].files[0].size;
+        var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
+        if((extn=='jpg')||(extn=='png')||(extn=='jpeg')||(extn=='gif')||(extn=='bmp')||(extn=='JPG')||(extn=='PNG')||(extn=='JPEG')||(extn=='GIF')||(extn=='BMP')) {
+            if(fsize>1048576) { 
+                saveViaAJAX();
+            } else {
+                ajaxFileUpload();   
+            }
+        } else {
+            ajaxFileUpload();   
+        }
+    }
+}
+ 
 function loading(){
-	document.getElementById("iscapture").value=0;
-	var path=document.getElementById("file").value;
-	 var fsize = $('#file')[0].files[0].size;
-	 //alert(fsize);
-	 var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
-	
-	 if((extn=='jpg')||(extn=='png')||(extn=='jpeg')||(extn=='gif')||(extn=='bmp')||(extn=='JPG')||(extn=='PNG')||(extn=='JPEG')||(extn=='GIF')||(extn=='BMP'))
-       {
-		 
-		 if(fsize>1048576)
-			 {
-			 document.getElementById("errormsg").innerText="Please Wait......";
-			 }
-		 
-		 
-		 
-       }
-      
-	
-	
+    document.getElementById("iscapture").value=0;
+    var path=document.getElementById("file").value;
+    var fsize = $('#file')[0].files[0].size;
+    var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
+    if((extn=='jpg')||(extn=='png')||(extn=='jpeg')||(extn=='gif')||(extn=='bmp')||(extn=='JPG')||(extn=='PNG')||(extn=='JPEG')||(extn=='GIF')||(extn=='BMP')) {
+        if(fsize>1048576) {
+            document.getElementById("errormsg").innerText="Please Wait......";
+        }
+    }
 }
 
-function comonsnapshotWindow()
-{
-
-	 document.getElementById("iscapture").value=1;
-	 
+function comonsnapshotWindow() {
+    document.getElementById("iscapture").value=1;
     window.open(<%=contextPath+"/"%>+"com/common/snapshot.jsp", "CommonCamera",'menubar=0,resizable=1,width=400,height=440, top=50, left=380');
-     
-    
 }
 
-
-function getRefType()
-{	
-	
-	var dtype=document.getElementById("formdetailcode").value;
-	
-var x=new XMLHttpRequest();
-var items,refname,refcode,refdocno;
-x.onreadystatechange=function(){
-	if (x.readyState==4 && x.status==200)
-		{  
-        items= x.responseText;
-        items=items.split('####');
-
-        
-        
-        refname=items[0].split(",");
-        refcode=items[1].split(",");
-        refdocno=items[2].split(",");
-        	var optionref = '';
-        	var optionscurr = '';
-       for ( var i = 0; i < refname.length; i++) {
-    	   
-    	   
-    	   getRef(refname[0]);
-    	   optionref += '<option value="' + refdocno[i] + '">' + refname[i] + '</option>';
-    	  
+function getRefType() {   
+    var dtype=document.getElementById("formdetailcode").value;
+    var x=new XMLHttpRequest();
+    var items,refname,refcode,refdocno;
+    x.onreadystatechange=function(){
+        if (x.readyState==4 && x.status==200) {  
+            items= x.responseText;
+            items=items.split('####');
+            refname=items[0].split(",");
+            refcode=items[1].split(",");
+            refdocno=items[2].split(",");
+            var optionref = '';
+            for ( var i = 0; i < refname.length; i++) {
+                getRef(refname[0]);
+                optionref += '<option value="' + refdocno[i] + '">' + refname[i] + '</option>';
+            }
+            $("select#reftype").html(optionref); 
         }
-       $("select#reftype").html(optionref); 
-       
-        	
-        }
-	else
-		{
-		}
+    }
+    x.open("GET",<%=contextPath+"/"%>+"com/common/getRefType.jsp?dtype="+dtype,true);
+    x.send();
 }
-x.open("GET",<%=contextPath+"/"%>+"com/common/getRefType.jsp?dtype="+dtype,true);
-x.send();
-}
-
 
 function getRef(c){
+    var x=new XMLHttpRequest();
+    x.onreadystatechange=function(){
+        if (x.readyState==4 && x.status==200) {
+            var items= x.responseText;
+            items = items.split('####');
+            var reftype = items[0].split(",");
+            var refcode  = items[1].split(",");
+            var refdocno  = items[2].split(",");
+            document.getElementById("reftypid").value=refdocno;
+        }
+    }
+    x.open("GET", <%=contextPath+"/"%>+"com/common/getRef.jsp?reftype="+c,true);
+    x.send();
+}
 
-	var x=new XMLHttpRequest();
-	x.onreadystatechange=function(){
-	if (x.readyState==4 && x.status==200)
-		{
-		 	var items= x.responseText;
-		 	items = items.split('####');
-		 	
-		 		var reftype = items[0].split(",");
-		 		var refcode  = items[1].split(",");
-		 		var refdocno  = items[2].split(",");
-		 		document.getElementById("reftypid").value=refdocno;
-		    }
-	       else
-		  {}
-     }
-      x.open("GET", <%=contextPath+"/"%>+"com/common/getRef.jsp?reftype="+c,true);
-     x.send();
-    
-   }
-function formsub()
-{
-var iscapture=document.getElementById("iscapture").value;
- 
-	if(iscapture==1){
-		saveViaAJAX();
-	}
-	else if(iscapture==2){
-		
-	 
-					  $( "#from1").submit();
-				   
-		
-		 
-	}
-	else
-		{
-	
-	 
-    if (window.File && window.FileReader && window.FileList && window.Blob)
-	    {
-    		var fileInput = document.getElementById("file");
-			var file = fileInput.files[0];
-	        var fsize = $('#file')[0].files[0].size;
-	        
-	        if(fsize>10380902) //do something if file size more than 1 mb (1048576)
-	        {
-	        	 
-	            $.messager.alert('Message',fsize +' bytes too big ! Maximum Size 9.9 MB!','warning');
-	              
-	            return false;
-	        }
-	     // Check if the selected file is an image
-            if (file.type.startsWith("image/")) {
-            	 if (fsize < 307200) { // Skip compression if less than 300KB (300 * 1024)
-                     $("#from1").submit();
-                     return;
-            	 }
-            	 
-            	  // Wait for compression to complete before submitting
-                 resizeAndCompressImage(file).then(compressedFile => {
-                     if (!compressedFile) {
-                         $.messager.alert("Message", "Error processing image!", "error");
-                         return false;
-                     }
-
-                     // Replace original file with compressed file
-                     var dataTransfer = new DataTransfer();
-                     dataTransfer.items.add(compressedFile);
-                     fileInput.files = dataTransfer.files;
-
-                     // Submit the form after compression
-                     $("#from1").submit();
-                 });
-
-                 return false; // Prevent form submission until compression is done
-            } else {
-                $("#from1").submit(); // Submit if it's not an image
+function formsub() {
+    var iscapture=document.getElementById("iscapture").value;
+    if(iscapture==1){
+        saveViaAJAX();
+    } else if(iscapture==2){
+        $( "#from1").submit();
+    } else {
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            var fileInput = document.getElementById("file");
+            var file = fileInput.files[0];
+            var fsize = $('#file')[0].files[0].size;
+            
+            if(fsize>10380902) {
+                $.messager.alert('Message',fsize +' bytes too big ! Maximum Size 9.9 MB!','warning');
+                return false;
             }
-	        
-	    } 
-	  
-		}
-	}
-	
-//Function to resize and compress an image (returns a Promise)
+            
+            if (file.type.startsWith("image/")) {
+                if (fsize < 307200) { 
+                    $("#from1").submit();
+                    return;
+                }
+                
+                resizeAndCompressImage(file).then(compressedFile => {
+                    if (!compressedFile) {
+                        $.messager.alert("Message", "Error processing image!", "error");
+                        return false;
+                    }
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(compressedFile);
+                    fileInput.files = dataTransfer.files;
+                    $("#from1").submit();
+                });
+                return false; 
+            } else {
+                $("#from1").submit(); 
+            }
+        } 
+    }
+}
+    
 function resizeAndCompressImage(file) {
     return new Promise((resolve, reject) => {
         var reader = new FileReader();
         reader.readAsDataURL(file);
-
         reader.onload = function (event) {
             var img = new Image();
             img.src = event.target.result;
             img.onload = function () {
                 var canvas = document.createElement("canvas");
                 var ctx = canvas.getContext("2d");
-
-                var maxWidth = 1024; // Max width
-                var maxHeight = 1024; // Max height
+                var maxWidth = 1024; 
+                var maxHeight = 1024; 
                 var width = img.width;
                 var height = img.height;
 
-                // Maintain aspect ratio
                 if (width > height) {
                     if (width > maxWidth) {
                         height *= maxWidth / width;
@@ -559,167 +484,100 @@ function resizeAndCompressImage(file) {
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Convert to Blob with correct MIME type
                 canvas.toBlob(blob => {
                     if (!blob) {
-                        resolve(null); // Handle errors
+                        resolve(null); 
                         return;
                     }
-
                     var compressedFile = new File([blob], file.name, { type: file.type });
                     resolve(compressedFile);
-                }, file.type, 0.7); // 70% quality
+                }, file.type, 0.7); 
             };
-
-            img.onerror = () => resolve(null); // Handle image load errors
+            img.onerror = () => resolve(null); 
         };
-
-        reader.onerror = () => resolve(null); // Handle file read errors
+        reader.onerror = () => resolve(null); 
     });
 }
 
-	 
-	function setValuess()
-	{
-		
-		if($('#msgs').val()!=""){
-	 		   $.messager.alert('Message',$('#msgs').val());
-	 		  $('#msgs').val('');
-	 		  }
-		
-	}
-	
-	
-	function scans(paths) {
-		
-	 
-		   scanner.scan(displayResponseOnPage,
-		       {
-		           "output_settings": [
-		               {
-		                   "type": "save",
-		                   "format": "jpg",
-		                   "save_path": ""+paths
-		               }
-		           ]
-		       }
-		   );
-		   
-			/*  var indexVal2 = document.getElementById("docno").value;
-			   
- 	         $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value);
- 			 
-    	 $.messager.alert('Message',"Successfully Attached"); */
-		   
-		}
+function setValuess() {
+    if($('#msgs').val()!=""){
+        $.messager.alert('Message',$('#msgs').val());
+        $('#msgs').val('');
+    }
+}
+    
+function scans(paths) {
+    scanner.scan(displayResponseOnPage, {
+        "output_settings": [{
+            "type": "save",
+            "format": "jpg",
+            "save_path": ""+paths
+        }]
+    });
+}
 
-		function displayResponseOnPage(successful, mesg, response) {
-		   document.getElementById('response').innerHTML = scanner.getSaveResponse(response);
-		}
-		
-		
-	 
-		
-		
-		function savedata()
- 	    {
+function displayResponseOnPage(successful, mesg, response) {
+    document.getElementById('response').innerHTML = scanner.getSaveResponse(response);
+}
+        
+function savedata() {
+    var formname=document.getElementById("formdetailcode").value;
+    var docno=document.getElementById("docno").value;
+    var reftypid=document.getElementById("reftype").value;
+    var typeid=2;
+    if(docno==""){
+        document.getElementById("errormsg").innerText="Please Select a Document Number";
+        return false;
+    }
+    
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.trim();  
+            if(parseInt(items)) {
+                var indexVal2 = document.getElementById("docno").value;
+                $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
+                $.messager.alert('Message',"Successfully Attached"); 
+                document.getElementById("iscapture").value=0;
+            } else {
+                $.messager.alert('Message',"Not Attached"); 
+                document.getElementById("iscapture").value=0;
+            }
+        } 
+    }
+    x.open("POST",'savescanImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid+'&typeid='+typeid,true);   
+    x.send();
+}
 
-			 var formname=document.getElementById("formdetailcode").value;
-			 var docno=document.getElementById("docno").value;
-			 var reftypid=document.getElementById("reftype").value;
-			 
-			 var typeid=2;
-			 if(docno==""){
-				 document.getElementById("errormsg").innerText="Please Select a Document Number";
-		  		 return false;
-			 }
-			 
-				
-			 
-		
-			var x = new XMLHttpRequest();
-			x.onreadystatechange = function() {
-				if (x.readyState == 4 && x.status == 200) {
-					var items = x.responseText.trim();	
-					
-		 
-					
-					 if(parseInt(items))
-						 {
-						 var indexVal2 = document.getElementById("docno").value;
-						   
-			 	         $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
-			 			 
-			    	 $.messager.alert('Message',"Successfully Attached"); 
-			    	 document.getElementById("iscapture").value=0;
-						 }
-					 else
-						 {
-						 
-						 $.messager.alert('Message',"Not Attached"); 
-						 document.getElementById("iscapture").value=0;
-						 
-						 }
-					 
-					
-					
-					
-				} else {
-				}
-			}
-			x.open("POST",'savescanImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid+'&typeid='+typeid,true);   
-			x.send();
-		
- 	    }
-
- 		function scansdata()
- 	    {
- 		
- 			
- 			 var formname=document.getElementById("formdetailcode").value;
-			 var docno=document.getElementById("docno").value;
-			 var reftypid=document.getElementById("reftype").value;
-			 var typeid=1;
-			 if(docno==""){
-				 document.getElementById("errormsg").innerText="Please Select a Document Number";
-		  		 return false;
-			 }
-			 
-				
- 			 
- 		
- 			var x = new XMLHttpRequest();
- 			x.onreadystatechange = function() {
- 				if (x.readyState == 4 && x.status == 200) {
- 					var items = x.responseText.trim();	
- 					document.getElementById("iscapture").value=2;
- 					scans(items);
- 					
- 					
- 					
- 				} else {
- 				}
- 			}
- 			x.open("POST",'savescanImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid+'&typeid='+typeid,true);   
- 			x.send();
- 		
- 		
- 		}
- 		 
- 	
- 		
- 	 
-	</script>
-	
+function scansdata() {
+    var formname=document.getElementById("formdetailcode").value;
+    var docno=document.getElementById("docno").value;
+    var reftypid=document.getElementById("reftype").value;
+    var typeid=1;
+    if(docno==""){
+        document.getElementById("errormsg").innerText="Please Select a Document Number";
+        return false;
+    }
+    
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.trim();  
+            document.getElementById("iscapture").value=2;
+            scans(items);
+        }
+    }
+    x.open("POST",'savescanImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid+'&typeid='+typeid,true);   
+    x.send();
+}
+</script>
+    
 <script type="text/javascript" >
-// Need to upload scanned images to server or save them on hard disk? Please refer to the dev guide: http://asprise.com/document-scan-upload-image-browser/ie-chrome-firefox-scanner-docs.html
-// For more scanning code samples, please visit https://github.com/Asprise/scannerjs.javascript-scanner-access-in-browsers-chrome-ie.scanner.js
- 
 var scanRequest = {
-    "use_asprise_dialog": true, // Whether to use Asprise Scanning Dialog 
-    "show_scanner_ui": false, // Whether scanner UI should be shown 
-    "twain_cap_setting": { // Optional scanning settings 
-        "ICAP_PIXELTYPE": "TWPT_RGB" // Color 
+    "use_asprise_dialog": true, 
+    "show_scanner_ui": false, 
+    "twain_cap_setting": { 
+        "ICAP_PIXELTYPE": "TWPT_RGB" 
     },
     "output_settings": [{
         "type": "return-base64",
@@ -727,25 +585,21 @@ var scanRequest = {
     }]
 };
  
-/** Triggers the scan */
 function scan() {
-
     scanner.scan(displayImagesOnPage, scanRequest);
 }
  
-/** Processes the scan result */
 function displayImagesOnPage(successful, mesg, response) {
-    if (!successful) { // On error 
+    if (!successful) { 
         console.error('Failed: ' + mesg);
         return;
     }
-    if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User cancelled. 
+    if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { 
         console.info('User cancelled');
         return;
     }
-    var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage 
-    for (var i = 0;
-        (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+    var scannedImages = scanner.getScannedImages(response, true, false); 
+    for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
         var scannedImage = scannedImages[i];
         var elementImg = scanner.createDomElementFromModel({
             'name': 'img',
@@ -755,348 +609,187 @@ function displayImagesOnPage(successful, mesg, response) {
                 'src': scannedImage.src
             }
         });
-         
-        // alert(scannedImage.src);
         (document.getElementById('images') ? document.getElementById('images') : document.body).appendChild(elementImg);
-       // alert(scannedImage.src);
-      
     }
-	 $("#attachoverlay, #attachPleaseWait").show();
-  // saveViaAJAX1(scannedImage.src);
+    $("#attachoverlay, #attachPleaseWait").show();
+    
+    document.getElementById("scansrc").value=scannedImage.src;
+    document.getElementById("iscapture").value=2;
+    document.getElementById("scansrcid").value=1;
   
-  document.getElementById("scansrc").value=scannedImage.src;
-  document.getElementById("iscapture").value=2;
-  document.getElementById("scansrcid").value=1;
-  
-  
-	setTimeout(
-			  function() 
-			  {
-				  $("#attachoverlay, #attachPleaseWait").hide();
-			  }, 2000);
-  
-  
-  
- 
+    setTimeout(function() {
+        $("#attachoverlay, #attachPleaseWait").hide();
+    }, 2000);
 }
 
- 
-
- 
-
-
- function saveViaAJAX1(scannedImages)
-{
-	
-	
-	 var testCanvas =null;
-	 var formname=document.getElementById("formdetailcode").value;
-	 var docno=document.getElementById("docno").value;
-	 var reftypid=document.getElementById("reftype").value;
-	 if(docno==""){
-		 document.getElementById("errormsg").innerText="Please Select a Document Number";
- 		 return false;
-	 }
-	 
-		
-	  
-	 /* 	var canvasData = testCanvas.toDataURL("image/png"); */
-	// alert(scannedImages);
-	 	var postData = "canvasData="+scannedImages;
-	//var canvasData = testCanvas.toDataURL("image/png");
-	
-	
-	var ajax = new XMLHttpRequest();
-	
-	
-	
-	ajax.open("POST",'savescanImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid,true);    
-	ajax.setRequestHeader('Content-Type', 'canvas/upload');
-	
-	ajax.onreadystatechange=function()
-  	{
-		if (ajax.readyState == 4)
-		{ 
-			//document.getElementById("savemsg").innerText="Successfully Attached";
-			/*  
-			 $.messager.show({title:'Message',msg:'Successfully Attached',showType:'show',
-                style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-            });
-			 
-			 
-			  */
-			 var indexVal2 = document.getElementById("docno").value;
-			   
-	         $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
-			 
-   	 $.messager.alert('Message',"Successfully Attached");
-   	 
- 	$("#attachoverlay, #attachPleaseWait").hide();
-   	// document.getElementById("errormsg").innerText="";
-			//alert(ajax.responseText);
-			// Write out the filename.
-    		
-		}
-  	}
- 
-	ajax.send(postData);  
+function saveViaAJAX1(scannedImages) {
+    var testCanvas =null;
+    var formname=document.getElementById("formdetailcode").value;
+    var docno=document.getElementById("docno").value;
+    var reftypid=document.getElementById("reftype").value;
+    if(docno==""){
+        document.getElementById("errormsg").innerText="Please Select a Document Number";
+        return false;
+    }
+    var postData = "canvasData="+scannedImages;
+    var ajax = new XMLHttpRequest();
+    
+    ajax.open("POST",'savescanImages.jsp?formname='+formname+'&docno='+docno+'&descpt='+$("#txtdesc").val()+'&reftypid='+reftypid,true);    
+    ajax.setRequestHeader('Content-Type', 'canvas/upload');
+    
+    ajax.onreadystatechange=function() {
+        if (ajax.readyState == 4) { 
+            var indexVal2 = document.getElementById("docno").value;
+            $("#attachs").load("Attachgridmaster.jsp?docno="+indexVal2+"&formc="+document.getElementById("formdetailcode").value+"&jobname="+jobname);
+            $.messager.alert('Message',"Successfully Attached");
+            $("#attachoverlay, #attachPleaseWait").hide();
+        }
+    }
+    ajax.send(postData);  
 }
- 
-
-
-
 </script> 
-	
-<style type="text/css">
-.scanned
-{
-height:100px;
-width:100px
-}
+</head>
 
-
-</style>
 <body onload="setValuess();">
+<div class="modern-ui">
 
- <table width="50%">
- <tr><td>
-<!--  <button type="button" onclick="scan();">Scan</button> 
-  -->
+    <div id="images" hidden="true" style="border: 1px" height="480" width="640"></div>
 
-<div id="images" hidden="true"  style=" border: 1px"  height="480" width="640"></div>
- 
+    <!-- HEADER PANEL -->
+    <div class="header-panel">
+        <div class="header-title" id="frmnames"><s:property value="frmnames"/></div>
+        
+        <div class="header-actions">
+            <button class="icon-btn" id="btnAttachDelete" title="Delete current Document" type="button" onclick="Delete();">
+                <img alt="deleteDocument" src="<%=contextPath%>/icons/attachdelete.png">
+            </button>
+            <button class="icon-btn" id="click" title="Take SnapShot" type="button" onclick="comonsnapshotWindow();">
+                <img alt="take snapshot" src="<%=contextPath%>/icons/asnapshot.png">
+            </button>   
+        </div>
+    </div>
 
-	
-	 
+    <!-- MAIN UPLOAD FORM -->
+    <form action="fileAttachActionmaster" id="from1" method="post" enctype="multipart/form-data">
+        
+        <div class="upload-panel">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <colgroup>
+                    <col width="10%">  <col width="30%">
+                    <col width="10%">  <col width="20%">
+                    <col width="22%">  <col width="8%">
+                </colgroup>
+                <tr>
+                    <td class="label">Description</td>
+                    <td>
+                        <input type="text" name="txtdesc" id="txtdesc" value='<s:property value="txtdesc"/>'>
+                    </td>
+                    
+                    <td class="label">Ref Type</td>
+                    <td>
+                        <select name="reftype" id="reftype"></select>
+                    </td>
+                    
+                    <td style="padding-left: 15px;">
+                        <input type="file" id="file" name="file" onChange="return loading();" />
+                    </td>
+                    
+                    <td align="center">
+                        <button class="icon-btn" id="alttachsss" title="Attach" type="button" onclick="formsub()">
+                            <img alt="Attach" src="<%=contextPath%>/icons/attachicon.png">
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
+        <!-- GRID DATA -->
+        <div class="grid-container">
+            <div id="attachs">
+                <jsp:include page="Attachgridmaster.jsp"></jsp:include>
+            </div>
+        </div>
 
- </td></tr>
- </table>
+        <!-- HIDDEN FIELDS & CANVAS DATA -->
+        <input type="hidden" name="scansrc" id="scansrc" value='<s:property value="scansrc"/>'>
+        <input type="hidden" name="scansrcid" id="scansrcid" value='<s:property value="scansrcid"/>'>
+        <input type="hidden" name="formnames" id="formnames" value='<s:property value="formnames"/>'/>
+        <input type="hidden" name="filename" id="filename" value='<s:property value="filename"/>'/>
+        <input type="hidden" name="msgs" id="msgs" value='<s:property value="msgs"/>'/>
+        <input type="hidden" name="formdetailcode" id="formdetailcode" value='<s:property value="formdetailcode"/>'/> 
+        <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'/>
+        <input type="hidden" name="brchid" id="brchid" value='<s:property value="brchid"/>'/>
+        <input type="text" hidden="true" name="jobname" id="jobname">
+        <input id="reftypid" type="hidden" />                                   
+        <input id="width" type="hidden" value="640" />
+        <input id="height" type="hidden" />
+        <input id="data" type="hidden" />
+        <input id="iscapture" type="hidden" />
+        
+        <br /><span id="message"></span><br />
+        <span id="errormsg" style="color:red; font-size:12px; font-weight:bold;"></span>
 
-
-<fieldset>
-<table width="100%"   >
-<tr><td width="5%" ></td> <td width="70%" align="center">
-<label id="frmnames" name="frmnames" style="color:blue;font-weight:bold;font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s:property value="frmnames"/></label> </td>
-<td  width="30%">
-
- <button class="icon" id="btnAttachDelete" title="Delete current Document" onclick="Delete();">
-							<img alt="deleteDocument" src="<%=contextPath%>/icons/attachdelete.png">
-						</button>
-						&nbsp;&nbsp;
-		<button class="icon" id="click" title="Take SnapShot " onclick="comonsnapshotWindow();">
-							<img alt="deleteDocument" src="<%=contextPath%>/icons/asnapshot.png">
-						</button>	
-			<!--	<button class="icon"  id="click" title="scanner " onclick="scan();">
-							<img alt="scanner" src="<%=contextPath%>/icons/Scanner.png">
-						</button>			
-						
-						  <button type="button" onclick="scansdata();">Scan</button> -->
-						
-						</td></tr></table>
-						</fieldset>
-						<br>
-  <form action="fileAttachActionmaster" id="from1" method="post" enctype="multipart/form-data">
-
-<div id=search>
-<fieldset>
-<table width="100%"   >
-  <tr>
-    <td width="7%" align="right">Description</td>
-    <td colspan="2"><input type="text" name="txtdesc" id="txtdesc" style="width:95%" value='<s:property value="txtdesc"/>'></td>
+        <canvas id="canvasid" hidden="true" height="480" width="640"></canvas>
+        <canvas id="canvasids" hidden="true" height="240" width="320"></canvas>
+        <div id="img"></div>
+    </form>
     
-    <td width="23%"  align="left"> Ref Type:
-      <select name="reftype" id="reftype"  style="width:50%"  > 
-					</select> </td>     
-      <td width="21%"><input type="file" id="file" name="file" onChange="return loading();" /></td>  
-    <td width="20%" align="center"><!-- <input type="button" name="btnsearch" id="btnsearch" class="myButton" value="Attach"  onclick="return ajaxFileUpload();"> -->
-    
-    <input type="hidden" name="scansrc" id="scansrc" style="width:95%" value='<s:property value="scansrc"/>'>
-    
-    
-      <input type="hidden" name="scansrcid" id="scansrcid" style="width:95%" value='<s:property value="scansrcid"/>'>
-  
-   <button class="icon" id="alttachsss" title="Attach"  type="button" onclick="formsub()">
-							<img alt="" src="<%=contextPath%>/icons/attachicon.png">
-						</button>  
-   			
-   			 
-   			
-						</td>
-		</tr>				
-						
-		</table>
-		</fieldset>				
- <table width="100%"  >
-  <tr>
-   <td width="100%" ><div id="attachs">  <jsp:include page="Attachgridmaster.jsp"></jsp:include></div></td>
-  </tr></table>
-  <input type="hidden" name="formnames" id="formnames" value='<s:property value="formnames"/>'/>
-<input type="hidden" name="filename" id="filename" value='<s:property value="filename"/>'/>
-<input type="hidden" name="msgs" id="msgs" value='<s:property value="msgs"/>'/>
+</div>
 
-<input type="hidden" name="formdetailcode" id="formdetailcode" value='<s:property value="formdetailcode"/>'/> 
-<input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'/>
-<input type="hidden" name="brchid" id="brchid" value='<s:property value="brchid"/>'/>
-	<input id="reftypid" type="hidden"  />									
-		<input id="width" type="hidden" value="640" />
-		<input id="height" type="hidden" />
-		<input id="data" type="hidden" />
-		<input id="iscapture" type="hidden" />
-		<br /><span id="message"></span><br />
-		<canvas id="canvasid" hidden="true"  height="480" width="640"></canvas>
-		<canvas id="canvasids" hidden="true"  height="240" width="320"></canvas>
-		<div id="img">
-		</div>
-  </div>
-  <input type="text" hidden="true" name="jobname" id="jobname">
-  </form>
-  
+<script>
+    (function ( $width, $height, $file) {
+        function resampled(data) {
+            document.getElementById("data").value=data;
+            var imgid = new Image();
+            imgid.src =data;
+            var temp_paint = $('#canvasid');
+            var temp_ctx = temp_paint[0].getContext('2d');
+            document.getElementById("errormsg").innerText=" ";
+            temp_ctx.drawImage(imgid, 0, 0,640, 480);
+        }
+        
+        function load(e) {
+            Resample(
+                this.result,
+                this._width || null,
+                this._height || null,
+                resampled
+            );
+        }
+        
+        function abort(e) {}
+        function error(e) {}
+        
+        $file.addEventListener("change", function change() {
+            var width = parseInt($width.value, 10),
+                height = parseInt($height.value, 10),
+                file;
+            if (!width && !height) {
+                $file.parentNode.replaceChild(
+                    file = $file.cloneNode(false),
+                    $file
+                );
+                $file.removeEventListener("change", change, false);
+                ($file = file).addEventListener("change", change, false);
+            } else if(
+                ($file.files || []).length &&
+                /^image\//.test((file = $file.files[0]).type)
+            ) {
+                file = new FileReader;
+                file.onload = load;
+                file.onabort = abort;
+                file.onerror = error;
+                file._width = width;
+                file._height = height;
+                file.readAsDataURL($file.files[0]);
+            } 
+        }, false);
+    }(
+        document.getElementById("width"),
+        document.getElementById("height"),
+        document.getElementById("file")
+    ));
+</script>
+
 </body>
- <script>
-	(function ( $width, $height, $file) {
-		
-		// (C) WebReflection Mit Style License
-		
-		// simple FileReader detection
-		
-		
-		// async callback, received the
-		// base 64 encoded resampled image
-		function resampled(data) {
-			//$message.innerHTML = "done";
-			
-		/* 	  ($img.lastChild || $img.appendChild(new Image)
-			).src = data; */
-			document.getElementById("data").value=data;
-			/* var img = document.getElementById('imgid').src;
-
-			alert(img.getAttribute('src')); // foo.jpg
-			alert(img.src); */
-			
-			/* document.getElementById('imgid').src=data; */
-			
-			var imgid = new Image();
-			imgid.src =data;
-			
-			var temp_paint = $('#canvasid');
-			var temp_ctx = temp_paint[0].getContext('2d');
-			
-			  //var img = document.getElementById('imgid').src;
-			//alert(img);
-			 document.getElementById("errormsg").innerText=" ";
-			  temp_ctx.drawImage(imgid, 0, 0,640, 480);
-	     
-		}
-		
-		// async callback, fired when the image
-		// file has been loaded
-		function load(e) {
-			//$message.innerHTML = "resampling ...";
-			// see resample.js
-			Resample(
-					this.result,
-					this._width || null,
-					this._height || null,
-					resampled
-			);
-			
-		}
-		
-		// async callback, fired if the operation
-		// is aborted ( for whatever reason )
-		function abort(e) {
-			//$message.innerHTML = "operation aborted";
-		}
-		
-		// async callback, fired
-		// if an error occur (i.e. security)
-		function error(e) {
-			//$message.innerHTML = "Error: " + (this.result || e);
-		}
-		
-		// listener for the input@file onchange
-		$file.addEventListener("change", function change() {
-			var
-				// retrieve the width in pixel
-				width = parseInt($width.value, 10),
-				// retrieve the height in pixels
-				height = parseInt($height.value, 10),
-				// temporary variable, different purposes
-				file
-			;
-			// no width and height specified
-			// or both are NaN
-			if (!width && !height) {
-				// reset the input simply swapping it
-				$file.parentNode.replaceChild(
-					file = $file.cloneNode(false),
-					$file
-				);
-				// remove the listener to avoid leaks, if any
-				$file.removeEventListener("change", change, false);
-				// reassign the $file DOM pointer
-				// with the new input text and
-				// add the change listener
-				($file = file).addEventListener("change", change, false);
-				// notify user there was something wrong
-				//$message.innerHTML = "please specify width or height";
-			} else if(
-				// there is a files property
-				// and this has a length greater than 0
-				($file.files || []).length &&
-				// the first file in this list 
-				// has an image type, hopefully
-				// compatible with canvas and drawImage
-				// not strictly filtered in this example
-				/^image\//.test((file = $file.files[0]).type)
-			) {
-				// reading action notification
-				//$message.innerHTML = "reading ...";
-				// create a new object
-				file = new FileReader;
-				// assign directly events
-				// as example, Chrome does not
-				// inherit EventTarget yet
-				// so addEventListener won't
-				// work as expected
-				file.onload = load;
-				file.onabort = abort;
-				file.onerror = error;
-				// cheap and easy place to store
-				// desired width and/or height
-				file._width = width;
-				file._height = height;
-				// time to read as base 64 encoded
-				// data te selected image
-				file.readAsDataURL($file.files[0]);
-				// it will notify onload when finished
-				// An onprogress listener could be added
-				// as well, not in this demo tho (I am lazy)
-			} else if (file) {
-				// if file variable has been created
-				// during precedent checks, there is a file
-				// but the type is not the expected one
-				// wrong file type notification
-				//$message.innerHTML = "please chose an image";
-			} else {
-				// no file selected ... or no files at all
-				// there is really nothing to do here ...
-				//$message.innerHTML = "nothing to do";
-			}
-		}, false);
-	}(
-	
-		// all required fields ...
-		document.getElementById("width"),
-		document.getElementById("height"),
-		document.getElementById("file")
-	));
-	</script>
-
-
-
-
 </html>
- 
