@@ -153,6 +153,40 @@ button {
     height: 24px !important;
     line-height: 24px !important;
 }
+
+.report-type-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 8px 0;
+}
+
+.report-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4e5e71;
+    font-size: 13px;
+}
+
+.report-options {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: nowrap;
+}
+
+.report-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.report-options input[type="radio"] {
+    margin: 0;
+}
 </style>
 
 <script type="text/javascript">
@@ -409,25 +443,23 @@ button {
         </table>
         </div>
 
-        <div class="filter-card">
-            <div style="font-weight:bold;margin-bottom:6px;">Report Type</div>
+        <div class="filter-card report-type-card">
+    <div class="report-title">Report Type</div>
 
-            <div style="display:flex;justify-content:space-around;">
-                <label class="branch">
-                    <input type="radio" id="rdall" name="rdo"> All
-                </label>
+    <div class="report-options">
+        <label class="branch">
+            <input type="radio" id="rdall" name="rdo"> All
+        </label>
 
-                <label class="branch">
-                    <input type="radio" id="rdpending" name="rdo"> Pending
-                </label>
-            </div>
+        <label class="branch">
+            <input type="radio" id="rdpending" name="rdo"> Pending
+        </label>
 
-            <div style="text-align:center;margin-top:6px;">
-                <label class="branch">
-                    <input type="radio" id="rdapproved" name="rdo"> Approved
-                </label>
-            </div>
-        </div>
+        <label class="branch">
+            <input type="radio" id="rdapproved" name="rdo"> Approved
+        </label>
+    </div>
+</div>
 
     
         <div class="filter-card">
