@@ -2571,37 +2571,60 @@ function setValues() {
           } */
 
 
-function funPrintBtn() {
-    if (($("#mode").val() == "view") && $("#masterdoc_no").val() != "") {
+          function funPrintBtn() {
+        	    if (($("#mode").val() == "view") && $("#masterdoc_no").val() != "") {
+        	        var url = document.URL;
+        	        $("#docno").prop("disabled", false);
 
+        	        var openAndAutoPrint = function(printUrl) {
+        	            var win = window.open(printUrl, "_blank", "top=100,left=100,width=1000,height=800,location=no,scrollbars=yes,toolbar=yes");
+        	            if (win) {
+        	                var checkReady = setInterval(function() {
+        	                    if (win.document.readyState === 'complete') {
+        	                        clearInterval(checkReady);
+        	                        setTimeout(function() {
+        	                            win.focus();
+        	                            win.print();
+        	                        }, 1000);
+        	                    }
+        	                }, 500);
+        	            }
+        	        };
 
-        var url = document.URL;
+        	        if (mth == 1 || ratehideprintchk == 1) {
+        	            var originalOpen = window.open;
+        	            window.open = function(url, name, specs) {
+        	                var win = originalOpen.call(window, url, name, specs || "top=100,left=100,width=1000,height=800,scrollbars=yes");
+        	                if (win) {
+        	                    var checkReady = setInterval(function() {
+        	                        if (win.document.readyState === 'complete') {
+        	                            clearInterval(checkReady);
+        	                            setTimeout(function() {
+        	                                win.focus();
+        	                                win.print();
+        	                            }, 1000);
+        	                        }
+        	                    }, 500);
+        	                }
+        	                return win;
+        	            };
 
-       
-        if (mth == 1) {
-
-
-            $("#docno").prop("disabled", false);
-
-            
-            PrintContent('printVoucherWindow.jsp');
-        }else  if (ratehideprintchk == 1) {
-            $("#docno").prop("disabled", false);    
-
-            PrintContent('printVoucherWindowEpic.jsp');
-        } else {
-        	
-        	 var reurl = url.split("saveRentalAgreement");
-            $("#docno").prop("disabled", false);
-            var win = window.open(reurl[0] + "printRA?docno=" + document.getElementById("masterdoc_no").value + "&formdetailcode=RAG", "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-
-        }
-    } else {
-        $.messager.alert('Message', 'Select a Document....!', 'warning');
-        return false;
-    }
-
-}
+        	            if (mth == 1) {
+        	                PrintContent('printVoucherWindow.jsp');
+        	            } else {
+        	                PrintContent('printVoucherWindowEpic.jsp');
+        	            }
+        	        } 
+        	        else {
+        	            var reurl = url.split("saveRentalAgreement");
+        	            var directPrintUrl = reurl[0] + "printRA?docno=" + document.getElementById("masterdoc_no").value + "&formdetailcode=RAG";
+        	            openAndAutoPrint(directPrintUrl);
+        	        }
+        	    } else {
+        	        $.messager.alert('Message', 'Select a Document....!', 'warning');
+        	        return false;
+        	    }
+        	}
 
 function isNumber(evt) {
     var iKeyCode = (evt.which) ? evt.which : evt.keyCode

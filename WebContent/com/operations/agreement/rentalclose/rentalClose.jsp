@@ -1422,16 +1422,44 @@ if(document.getElementById("rentalagent").value==""){
 					 agmtnoSearchContent('vehReplaceGrid.jsp?docno='+document.getElementById("agreementno").value, $('#agmtnowindow'));
 			}
 			function funPrintBtn() {
-				//Function for Print the Agreement
-		    	if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-		    		 $.messager.alert('Warning','Select a Document');
-		    		 return false;
-		    	}
-		    	var url=document.URL;
-		    	  var reurl=url.split("saveRentalClose");
-		    	    	var win= window.open(reurl[0]+"printRentalClose?docno="+document.getElementById("agreementno").value+"&formdetailcode=RAC","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-		    	win.focus();
-		    	 }
+			    // 1. Validation
+			    if (document.getElementById("docno").value == '' || document.getElementById("docno").value == '0') {
+			        $.messager.alert('Warning', 'Select a Document');
+			        return false;
+			    }
+
+			    // 2. Build URL
+			    var currentPath = window.location.pathname;
+			    var directoryPath = currentPath.substring(0, currentPath.lastIndexOf("/") + 1);
+			    var printUrl = directoryPath + "printRentalClose?docno=" + document.getElementById("agreementno").value + "&formdetailcode=RAC";
+
+			    // 3. Open window
+			    var win = window.open(printUrl, "_blank", "top=250,left=310,Width=900,Height=800,scrollbars=yes,toolbar=yes");
+
+			    if (win) {
+			        var checkReady = setInterval(function() {
+			            try {
+			                
+			                if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+			                    clearInterval(checkReady);
+			                    
+			                    setTimeout(function() {
+			                        win.focus();
+			                        win.print();
+			                        
+			                        win.onafterprint = function () {
+			                            win.close();
+			                        };
+			                    }, 2500); 
+			                }
+			            } catch (e) {
+			                clearInterval(checkReady);
+			            }
+			        }, 500);
+			    } else {
+			        $.messager.alert('Message', 'Popup blocked by browser.', 'warning');
+			    }
+			}
 
 			
 			
