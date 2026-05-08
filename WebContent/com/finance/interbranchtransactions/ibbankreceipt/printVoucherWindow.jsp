@@ -11,55 +11,74 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-	getChequePrintConfig();
+        getChequePrintConfig();
     });
-	
 
- 	function printHeaderVoucher() {
-
-        var url=document.URL;
-        var reurl=url.split("saveIbBankReceipt");
+    // Consolidated function to open and auto-trigger the print dialog
+    function openAndPrint(url) {
+        var win = window.open(url, "_blank", "top=150,left=250,Width=1020,Height=800,location=no,scrollbars=yes,toolbar=yes");
+        if (win) {
+            var checkReady = setInterval(function() {
+                if (win.document.readyState === 'complete') {
+                    clearInterval(checkReady);
+                    // 1-second delay ensures all ERP report data is rendered before printing
+                    setTimeout(function() {
+                        win.focus();
+                        win.print();
+                    }, 1000);
+                }
+            }, 500);
+        }
+    }
+    
+    function printHeaderVoucher() {
+        var url = document.URL;
+        var reurl = url.split("saveIbBankReceipt");
         $("#docno").prop("disabled", false);  
         
-        var win= window.open(reurl[0]+"printIBBankReceipt?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	     win.focus();
-				
- 	}
- 	
- 	function printCheque(){
- 		
-        var url=document.URL;
-        var reurl=url.split("com");
+        var finalUrl = reurl[0] + "printIBBankReceipt?docno=" + document.getElementById("docno").value + 
+                       "&branch=" + document.getElementById("brchName").value + "&header=1";
+        
+        openAndPrint(finalUrl);
+    }
+    
+    function printCheque(){
+        var url = document.URL;
+        var reurl = url.split("com");
         $("#docno").prop("disabled", false);  
         
-        var win= window.open(reurl[0]+"printIBBankReceiptCheque?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value,"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	    win.focus();
- 	}
- 	
- 	function printWithOutHeader(){
- 		
- 		var url=document.URL;
-        var reurl=url.split("saveIbBankReceipt");
+        var finalUrl = reurl[0] + "printIBBankReceiptCheque?docno=" + document.getElementById("docno").value + 
+                       "&branch=" + document.getElementById("brchName").value;
+        
+        openAndPrint(finalUrl);
+    }
+    
+    function printWithOutHeader(){
+        var url = document.URL;
+        var reurl = url.split("saveIbBankReceipt");
         $("#docno").prop("disabled", false); 
         
-        var win= window.open(reurl[0]+"printIBBankReceipt?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-	    win.focus();
- 	}
- 	function getChequePrintConfig(){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText.trim();
-  			   if(parseInt(items)>0){
-			   		$("#btncheque").hide();
-			   }else{
-				   $("#btncheque").show();
-			   }
-  		}
-  		}
-  		x.open("GET", <%=contextPath+"/"%>+"com/finance/getChequePrintConfig.jsp", true);  
-  		x.send();
-}
+        var finalUrl = reurl[0] + "printIBBankReceipt?docno=" + document.getElementById("docno").value + 
+                       "&branch=" + document.getElementById("brchName").value + "&header=0";
+        
+        openAndPrint(finalUrl);
+    }
+
+    function getChequePrintConfig(){
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim();
+                if(parseInt(items) > 0){
+                    $("#btncheque").hide();
+                } else {
+                    $("#btncheque").show();
+                }
+            }
+        }
+        x.open("GET", "<%=contextPath%>" + "/com/finance/getChequePrintConfig.jsp", true);  
+        x.send();
+    }
 </script>
 
 <body>
