@@ -74,7 +74,7 @@ function funExportBtn(){
 <table width="100%" >
 <tr>
 <td width="20%" >
-    <fieldset style="background: #ECF8E0;">
+    <fieldset style="background: #FFFFFF;">
 	<table width="100%">
 	<jsp:include page="../../heading.jsp"></jsp:include>
 		
