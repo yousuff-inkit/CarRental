@@ -389,18 +389,42 @@ function setValues() {
     funSetlabel();
 } 
 
-function funPrintBtn(){
-    if (($("#mode").val() == "view") && $("#masterdoc_no").val()!="") {
-        var url=document.URL;
-        var reurl=url.split("saveActionNipurOrder");
+function funPrintBtn() {
+    if (($("#mode").val() == "view") && $("#masterdoc_no").val() != "") {
+        
+        var url = document.URL;
+        var reurl = url.split("saveActionNipurOrder");
         $("#docno").prop("disabled", false);                
-        var brhid=<%= session.getAttribute("BRANCHID").toString()%>
-        var dtype=$('#formdetailcode').val();
-    
-        var win= window.open(reurl[0]+"printniphOrder?docno="+document.getElementById("masterdoc_no").value+"&brhid="+brhid+"&dtype="+dtype,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-        win.focus();
+        
+        var brhid = <%= session.getAttribute("BRANCHID").toString()%>;
+        var dtype = $('#formdetailcode').val();
+        
+        var printUrl = reurl[0] + "printniphOrder?docno=" + document.getElementById("masterdoc_no").value + 
+                       "&brhid=" + brhid + "&dtype=" + dtype;
+
+        var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=yes,toolbar=yes");
+        
+        if (win) {
+            var checkReady = setInterval(function() {
+                if (win.document.readyState === 'complete') {
+                    clearInterval(checkReady);
+                    
+                    setTimeout(function() {
+                        win.focus();
+                        win.print();
+                        
+                        win.onafterprint = function () {
+                            win.close();
+                        };
+                    }, 1000); 
+                }
+            }, 500);
+        } else {
+            $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+        }
+        
     } else {
-        $.messager.alert('Message','Select a Document....!','warning');
+        $.messager.alert('Message', 'Select a Document....!', 'warning');
         return false;
     }
 }

@@ -263,30 +263,50 @@
 	 }
 	
 	function funPrintBtn() {
-		
-		if (($("#mode").val() == "view") && $("#docno").val()!="") {
-			
-			 var url=document.URL;
-		     var reurl=url.split("saveBankReconciliation");
-		     $("#docno").prop("disabled", false);
-			
-				   $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
-					if (r){
-						 var win= window.open(reurl[0]+"printBankReconciliation?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					     win.focus();
-					 }
-					else{
-						var win= window.open(reurl[0]+"printBankReconciliation?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					    win.focus();
-					}
-				   });
-	     }
-	    else {
-			$.messager.alert('Message','Select a Document....!','warning');
-			return;
-		}
-	  }
-	
+	    if (($("#mode").val() == "view") && $("#docno").val() != "") {
+	        
+	        var url = document.URL;
+	        var reurl = url.split("saveBankReconciliation");
+	        $("#docno").prop("disabled", false);
+
+	        var openAndAutoPrint = function(printUrl) {
+	            var win = window.open(printUrl, "_blank", "top=150,left=250,Width=1020,Height=800,location=no,scrollbars=yes,toolbar=yes");
+	            if (win) {
+	                var checkReady = setInterval(function() {
+	                    if (win.document.readyState === 'complete') {
+	                        clearInterval(checkReady);
+	                        
+	                        setTimeout(function() {
+	                            win.focus();
+	                            win.print();
+	                            
+	                            win.onafterprint = function () {
+	                                win.close();
+	                            };
+	                        }, 1000); 
+	                    }
+	                }, 500);
+	            } else {
+	                $.messager.alert('Message', 'Popup blocked by browser. Please allow popups.', 'warning');
+	            }
+	        };
+
+	        $.messager.confirm('Confirm', 'Do you want to have header?', function(r) {
+	            var baseUrl = reurl[0] + "printBankReconciliation?docno=" + document.getElementById("docno").value + 
+	                          "&branch=" + document.getElementById("brchName").value;
+	            
+	            if (r) {
+	                openAndAutoPrint(baseUrl + "&header=1");
+	            } else {
+	                openAndAutoPrint(baseUrl + "&header=0");
+	            }
+	        });
+	        
+	    } else {
+	        $.messager.alert('Message', 'Select a Document....!', 'warning');
+	        return;
+	    }
+	}
 	function datechange(){
 		  var date = $('#jqxBankReconciliationDate').jqxDateTimeInput('getDate');
 		  $("#maindate").jqxDateTimeInput('val', date);

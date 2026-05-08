@@ -1585,27 +1585,42 @@ if(document.getElementById("advance_chkval").value==1)
 	        });});
 	
 
-	   function funPrintBtn(){
-	 	   if (($("#mode").val() == "view") && $("#masterdoc_no").val()!="") {
-	 	  
-	 	   var url=document.URL;
+	   function funPrintBtn() {
+		    if (($("#mode").val() == "view") && $("#masterdoc_no").val() != "") {
+		        
+		        var url = document.URL;
+		        var reurl = url.split("saveBooking");
+		        
+		        $("#docno").prop("disabled", false);                
+		        
+		        var printUrl = reurl[0] + "printBooking?docno=" + document.getElementById("masterdoc_no").value;
 
-	         var reurl=url.split("saveBooking");
-	         
-	         $("#docno").prop("disabled", false);                
-	         
-	   
-	 var win= window.open(reurl[0]+"printBooking?docno="+document.getElementById("masterdoc_no").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	      
-	 win.focus();
-	 	   } 
-	 	  
-	 	   else {
-	 	    	      $.messager.alert('Message','Select a Document....!','warning');
-	 	    	      return false;
-	 	    	     }
-	 	    	
-	 	}
+		        var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=yes,toolbar=yes");
+		        
+		        if (win) {
+		            var checkReady = setInterval(function() {
+		                if (win.document.readyState === 'complete') {
+		                    clearInterval(checkReady);
+		                    
+		                    setTimeout(function() {
+		                        win.focus();
+		                        win.print();
+		                        
+		                        win.onafterprint = function () {
+		                            win.close();
+		                        };
+		                    }, 1000); 
+		                }
+		            }, 500);
+		        } else {
+		            $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+		        }
+		        
+		    } else {
+		        $.messager.alert('Message', 'Select a Document....!', 'warning');
+		        return false;
+		    }
+		}
 	   function isNumber(evt) {
             var iKeyCode = (evt.which) ? evt.which : evt.keyCode
             if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
