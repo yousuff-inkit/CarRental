@@ -736,29 +736,35 @@ table td {
       }
 	  
 	  function funPrintBtn() {
-			
-			if (($("#mode").val() == "view") && $("#docno").val()!="") {
-		        var url=document.URL;
-		        var reurl=url.split("saveIbCashPayment");
-		        $("#docno").prop("disabled", false);  
-		     
-		        $.messager.confirm('Confirm', 'Do you want to have header?', function(r){
-					if (r){
-						 var win= window.open(reurl[0]+"printIBCashPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					     win.focus();
-					 }
-					else{
-						var win= window.open(reurl[0]+"printIBCashPayment?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value+"&header=0","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					    win.focus();
-					}
-				   });
-		     }
-		    else {
-				$.messager.alert('Message','Select a Document....!','warning');
-				return;
-			}
-	    }
-	  
+		    if ($("#mode").val() !== "view" || $("#docno").val() === "") {
+		        $.messager.alert('Message', 'Select a Document....!', 'warning');
+		        return;
+		    }
+
+		    CashSearchContent('printVoucherWindow.jsp');
+
+		    var originalWindowOpen = window.open;
+
+		    window.open = function(url, name, specs) {
+		        var windowSpecs = specs || "top=150,left=250,width=1020,height=800,scrollbars=yes,toolbar=yes";
+		        
+		        var win = originalWindowOpen.call(window, url, name, windowSpecs);
+
+		        if (win && (url.includes("print") || url.includes("Voucher"))) {
+		            var checkReady = setInterval(function() {
+		                if (win.document.readyState === 'complete') {
+		                    clearInterval(checkReady);
+		                    setTimeout(function() {
+		                        win.focus();
+		                        win.print();
+		                        win.onafterprint = function () { win.close(); };
+		                    }, 1000); 
+		                }
+		            }, 500);
+		        }
+		        return win;
+		    };
+		}
 	  function clearClientInfo(){
 		  $("#txttodocno").val('');$("#txttoaccid").val('');$("#txttoaccname").val('');$("#txtapplyinvoiceapply").val(0.00);
 		  $("#jqxApplyIbCashInvoicing").jqxGrid('clear');
