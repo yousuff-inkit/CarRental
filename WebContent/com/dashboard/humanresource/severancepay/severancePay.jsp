@@ -274,25 +274,43 @@ button {
                     </div>
                 </td>
             </tr>
+<tr>
+    <td colspan="2">
 
-            <tr>
-                <td colspan="2">
-                    <div style="font-weight:bold;margin:8px 0;">Report Type</div>
-                    <div style="text-align:center;">
-                        <input type="radio"
-                               id="rdactive"
-                               name="rdo"
-                               value="rdactive">
-                        <label for="rdactive" class="branch">Active</label>
-                        &nbsp;&nbsp;
-                        <input type="radio"
-                               id="rdinactive"
-                               name="rdo"
-                               value="rdinactive">
-                        <label for="rdinactive" class="branch">Inactive</label>
-                    </div>
-                </td>
-            </tr>
+        <!-- Heading -->
+        <div style="font-weight:bold; margin-bottom:10px;">
+            Report Type
+        </div>
+
+        <!-- Radio Buttons -->
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:40px;
+            padding-top:4px;
+        ">
+            
+            <label class="branch" style="display:flex; align-items:center; gap:6px;">
+                <input type="radio"
+                       id="rdactive"
+                       name="rdo"
+                       value="rdactive">
+                Active
+            </label>
+
+            <label class="branch" style="display:flex; align-items:center; gap:6px;">
+                <input type="radio"
+                       id="rdinactive"
+                       name="rdo"
+                       value="rdinactive">
+                Inactive
+            </label>
+
+        </div>
+
+    </td>
+</tr>
 
             <tr>
                 <td class="label-cell">Employee</td>

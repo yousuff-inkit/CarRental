@@ -475,12 +475,12 @@ button {
             Clear
         </button>
 
-        <button type="button"
-                class="myButton"
-                onclick="funConfirm();"
-                style="flex:1;">
-            Confirm
-        </button>
+    <button type="button"
+        class="myButton"
+        onclick="return funConfirm();"
+        style="flex:1;">
+    Confirm
+</button>
 
     </div>
 </div>

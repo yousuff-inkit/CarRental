@@ -612,6 +612,13 @@ button {
     border-radius: 4px;
     font-size: 13px;
 }
+
+#jqxDelTimeOut,
+#jqxDelTimeOut .jqx-input,
+#jqxDelTimeOut input {
+    width: 50px !important;
+    min-width: 50px !important;
+}
 </style>
 
 
