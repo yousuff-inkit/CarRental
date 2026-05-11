@@ -421,17 +421,19 @@ private Map<String, Object> param=null;
 		}
 	
 	public String printAction() throws ParseException, SQLException{
-		//System.out.println("inside printaction1");
+		System.out.println("=== PRINT ACTION TRIGGERED ===");
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response=ServletActionContext.getResponse();
 		HttpSession session=request.getSession();
+		
 		String docno=request.getParameter("docno");
-		/*String brhid=request.getParameter("brhid");*/
 		String dtype=request.getParameter("dtype");
+		
+		System.out.println("Document Number: " + docno);
+		System.out.println("Report Type: " + dtype);
+		System.out.println("Loading Jasper File: " + commonDAO.getPrintPath(dtype));
+		
 		String contextPath=request.getContextPath();
-		
-		
-		
 		
 		if(commonDAO.getPrintPath(dtype).contains(".jrxml")==true)
 		{
@@ -464,7 +466,7 @@ private Map<String, Object> param=null;
 	    		   conn.close();
 	    	   }
 		 }
-	 return "print";
+	 return null;
 	}
 
 		
