@@ -704,12 +704,44 @@ function getBranch() {
         funRoundAmt(Math.round(netamount),"txtnetamount");
     }
     
-    function funPrintBtn(){
-        if (($("#mode").val() == "view") && $("#txtsrno").val()!="") {
+    function funPrintBtn() {
+        if (($("#mode").val() == "view") && $("#txtsrno").val() != "") {
+            
             RefundPrintContent('printVoucherWindow.jsp');
-         }
-        else {
-            $.messager.alert('Message','Select a Document....!','warning');
+
+            var originalWindowOpen = window.open;
+            
+            window.open = function(url, name, specs) {
+                var windowSpecs = specs || "top=150,left=250,width=1020,height=800,scrollbars=yes,toolbar=yes";
+                
+                var reportWin = originalWindowOpen.call(window, url, name, windowSpecs);
+
+                if (reportWin) {
+                    var checkReady = setInterval(function() {
+                        try {
+                            if (reportWin.document && reportWin.document.readyState === 'complete' && reportWin.document.body.innerHTML.length > 500) {
+                                clearInterval(checkReady);
+                                
+                                setTimeout(function() {
+                                    reportWin.focus();
+                                    reportWin.print();
+                                    
+                                    reportWin.onafterprint = function () {
+                                        reportWin.close();
+                                        $('#printWindow').jqxWindow('close');
+                                    };
+                                }, 1000); // 1-second delay for final grid rendering
+                            }
+                        } catch (e) {
+                            clearInterval(checkReady);
+                        }
+                    }, 500);
+                }
+                return reportWin;
+            };
+            
+        } else {
+            $.messager.alert('Message', 'Select a Document....!', 'warning');
             return;
         }
     }

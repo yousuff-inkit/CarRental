@@ -735,19 +735,44 @@ form label.error {
             
             return true;
         }
-    function funPrintBtn() {
-        if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-         $.messager.alert('Warning','Select a Document');
-         return false;
-            }
-        var url=document.URL;
-         var reurl=url.split("com/");
+      function funPrintBtn() {
+    	    if (document.getElementById("docno").value == '' || document.getElementById("docno").value == '0') {
+    	        $.messager.alert('Warning', 'Select a Document');
+    	        return false;
+    	    }
 
-            var win= window.open(reurl[0]+"com/controlcentre/masters/tarifmgmt/tarifPrint.action?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-        win.focus();  
+    	    var url = document.URL;
+    	    var reurl = url.split("com/");
+    	    
+    	    var printUrl = reurl[0] + "com/controlcentre/masters/tarifmgmt/tarifPrint.action?docno=" + 
+    	                   document.getElementById("docno").value;
 
+    	    var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=yes,toolbar=yes");
 
-     }
+    	    if (win) {
+    	        var checkReady = setInterval(function() {
+    	            try {
+    	                
+    	                if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+    	                    clearInterval(checkReady);
+    	                    
+    	                    setTimeout(function() {
+    	                        win.focus();
+    	                        win.print();
+    	                        
+    	                        win.onafterprint = function () {
+    	                            win.close();
+    	                        };
+    	                    }, 1500); 
+    	                }
+    	            } catch (e) {
+    	                clearInterval(checkReady);
+    	            }
+    	        }, 500);
+    	    } else {
+    	        $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+    	    }
+    	}
     
     function getTariftype(){
         var x = new XMLHttpRequest();

@@ -1606,14 +1606,41 @@ String staffid=request.getParameter("staffid")==null?"":request.getParameter("st
 	}
 	
 	function funPrintBtn() {
-	   if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-	       $.messager.alert('Warning','Select a Document');
-	       return false;
-	   }
-	   var url=document.URL;
-	   var reurl=url.split("saveMovement");
-	   var win= window.open(reurl[0]+"printMovement.action?docno="+document.getElementById("docno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-	   win.focus();
+	    if (document.getElementById("docno").value == '' || document.getElementById("docno").value == '0') {
+	        $.messager.alert('Warning', 'Select a Document');
+	        return false;
+	    }
+
+	    var url = document.URL;
+	    var reurl = url.split("saveMovement");
+	    
+	    var printUrl = reurl[0] + "printMovement.action?docno=" + document.getElementById("docno").value;
+
+	    var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=yes,toolbar=yes");
+
+	    if (win) {
+	        var checkReady = setInterval(function() {
+	            try {
+	                
+	                if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+	                    clearInterval(checkReady);
+	                    
+	                    setTimeout(function() {
+	                        win.focus();
+	                        win.print();
+	                        
+	                        win.onafterprint = function () {
+	                            win.close();
+	                        };
+	                    }, 1500); 
+	                }
+	            } catch (e) {
+	                clearInterval(checkReady);
+	            }
+	        }, 500);
+	    } else {
+	        $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+	    }
 	}
 </script>
 

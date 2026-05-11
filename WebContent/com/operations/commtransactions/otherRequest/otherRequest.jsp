@@ -450,19 +450,47 @@ form label.error { color: red; font-weight: bold; font-size: 11px; }
 	}
   
   function funPrintBtn() {
-		if (($("#mode").val() == "view") && $("#docno").val()!="") {
-	        var url=document.URL;
-	        var reurl=url.split("saveOtherRequest");
+	    if (($("#mode").val() == "view") && $("#docno").val() != "") {
+	        
+	        var url = document.URL;
+	        var reurl = url.split("saveOtherRequest");
+	        
 	        $("#docno").prop("disabled", false);  
 	     
-			var win= window.open(reurl[0]+"printExtraServiceRequest?docno="+document.getElementById("docno").value+"&branch="+document.getElementById("brchName").value,"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-		    win.focus();
-	     }
-	    else {
-			$.messager.alert('Message','Select a Document....!','warning');
-			return;
-		}
-    }
+	        var printUrl = reurl[0] + "printExtraServiceRequest?docno=" + document.getElementById("docno").value + 
+	                       "&branch=" + document.getElementById("brchName").value;
+
+	        var win = window.open(printUrl, "_blank", "top=150,left=250,Width=1020,Height=600,location=no,scrollbars=yes,toolbar=yes");
+
+	        if (win) {
+	            var checkReady = setInterval(function() {
+	                try {
+	                    
+	                    if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+	                        clearInterval(checkReady);
+	                        
+	                        setTimeout(function() {
+	                            win.focus();
+	                            win.print();
+	                            
+	                            win.onafterprint = function () {
+	                                win.close();
+	                            };
+	                        }, 1000); 
+	                    }
+	                } catch (e) {
+	                    clearInterval(checkReady);
+	                }
+	            }, 500);
+	        } else {
+	            $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+	        }
+	        
+	    } else {
+	        $.messager.alert('Message', 'Select a Document....!', 'warning');
+	        return;
+	    }
+	}
   
   function checkAdditionalDriver(){
   	if(document.getElementById("chkadddriver").checked==true){

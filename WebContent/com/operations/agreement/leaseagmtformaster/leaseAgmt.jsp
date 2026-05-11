@@ -1283,18 +1283,43 @@ function fundelivarytick(){
     }
 } 
 
-function funPrintBtn(){
-    if (($("#mode").val() != "A") && $("#masterdoc_no").val()!="") {
-        var url=document.URL;
-        var reurl=url.split("saveLeaseAgreementForMaster");
-        $("#docno").prop("disabled", false);                
-        var win= window.open(reurl[0]+"Leasemainprint?docno="+document.getElementById("masterdoc_no").value+"&formdetailcode=LAG","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-        win.focus(); 
+function funPrintBtn() {
+    if (($("#mode").val() != "A") && $("#masterdoc_no").val() != "") {
+        
+        var url = document.URL;
+        var reurl = url.split("saveLeaseAgreementForMaster");
+        
+        var printUrl = reurl[0] + "Leasemainprint?docno=" + document.getElementById("masterdoc_no").value + "&formdetailcode=LAG&header=1";
+
+        var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=yes,toolbar=yes");
+
+        if (win) {
+            var checkReady = setInterval(function() {
+                try {
+                    if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+                        clearInterval(checkReady);
+                        
+                        setTimeout(function() {
+                            win.focus();
+                            win.print();
+                            
+                            win.onafterprint = function () {
+                                win.close();
+                            };
+                        }, 1500); 
+                    }
+                } catch (e) {
+                    clearInterval(checkReady);
+                }
+            }, 500);
+        } else {
+            $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+        }
     } else {
-        $.messager.alert('Message','Select a Document....!','warning');
+        $.messager.alert('Message', 'Select a Document....!', 'warning');
         return false;
     }
-}  
+}
 
 function funPrintdown(){ 
     if (($("#mode").val() != "A") && $("#masterdoc_no").val()!="") {

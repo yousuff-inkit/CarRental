@@ -1342,15 +1342,51 @@ if(document.getElementById("rentalagent").value==""){
 		changeContent('masterSearch.jsp', $('#window'));
 	}
 	function funPrintBtn() {
-    	if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-    		 $.messager.alert('Warning','Select a Document');
-    		 return false;
-    	}
-    	var url=document.URL;
-    	  var reurl=url.split("saveLeaseClose");
-    	    	var win= window.open(reurl[0]+"printLeaseClose?docno="+document.getElementById("agreementno").value+"&formdetailcode=LAC","_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-    	win.focus();
-    	 }
+	    // 1. Validation: Ensure a document is selected
+	    if (document.getElementById("docno").value == '' || document.getElementById("docno").value == '0') {
+	        $.messager.alert('Warning', 'Select a Document');
+	        return false;
+	    }
+
+	    // 2. Safe URL construction using the context path
+	    var currentPath = window.location.pathname;
+	    var directoryPath = currentPath.substring(0, currentPath.lastIndexOf("/") + 1);
+	    var printUrl = directoryPath + "printLeaseClose?docno=" + document.getElementById("agreementno").value + "&formdetailcode=LAC";
+
+	    // 3. Open the report window
+	    var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,scrollbars=yes,toolbar=yes");
+
+	    if (win) {
+	        // Monitor the report window's loading state
+	        var checkReady = setInterval(function() {
+	            try {
+	                /** * FIX: We check if readyState is 'complete' 
+	                 * AND ensure the document body length > 500. 
+	                 * This prevents the print dialog from appearing while only the loader gif is visible.
+	                 */
+	                if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+	                    clearInterval(checkReady);
+	                    
+	                    // Small additional delay to allow total grids to finalize rendering
+	                    setTimeout(function() {
+	                        win.focus();
+	                        win.print();
+	                        
+	                        // Automatically close the report tab after the user finishes
+	                        win.onafterprint = function () {
+	                            win.close();
+	                        };
+	                    }, 1500); 
+	                }
+	            } catch (e) {
+	                // Handle potential cross-origin access issues if the tab redirects
+	                clearInterval(checkReady);
+	            }
+	        }, 500);
+	    } else {
+	        $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+	    }
+	}
 	
 	
 	function resetvalues(){
