@@ -78,8 +78,8 @@ function funreload(event)
 
 </script>
 </head>
-<style>
-/* ===== MASTER LAYOUT ===== */
+<style type="text/css">
+
 .master-container {
     display: flex;
     width: 100%;
@@ -88,7 +88,6 @@ function funreload(event)
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -111,7 +110,6 @@ function funreload(event)
     padding: 15px 20px 25px;
 }
 
-/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -120,7 +118,6 @@ function funreload(event)
     margin-bottom: 12px;
 }
 
-/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
@@ -135,7 +132,6 @@ function funreload(event)
     width: 90px;
 }
 
-/* Inputs */
 input[type="text"], select {
     width: 100%;
     padding: 7px 10px;
@@ -144,7 +140,6 @@ input[type="text"], select {
     font-size: 13px;
 }
 
-/* Buttons */
 .btn-submit {
     width: 100%;
     padding: 11px;
@@ -162,7 +157,6 @@ input[type="text"], select {
     background: #1d4ed8;
 }
 
-/* Page height fix */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -174,7 +168,20 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+.myButtons, .myButton {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 10px 15px;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+}
 
+.myButtons:hover, .myButton:hover {
+    background-color: #1d4ed8 !important;
+}
 /* 🔹 Inputs + Dropdowns */
 input[type="text"],
 select {
@@ -214,6 +221,31 @@ button {
 .jqx-widget select {
     height: 24px !important;
     line-height: 24px !important;
+}
+
+/* 🔹 Master UI font fix */
+.branch,
+.label-cell,
+label.branch {
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #4e5e71 !important;
+}
+
+/* 🔹 jqx date text */
+.jqx-widget,
+.jqx-input,
+.jqx-input-content {
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+    font-size: 13px !important;
+}
+
+/* 🔹 dropdown font */
+select,
+option {
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+    font-size: 13px !important;
 }
 </style>
 <body onload="getBranch();">

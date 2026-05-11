@@ -86,12 +86,13 @@ input[type="text"], select {
     outline: none;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
+input[readonly],
+input:disabled,
+select:disabled {
+    background-color: #ffffff !important;
     color: #555;
-    cursor: not-allowed;
+    cursor: text !important;
 }
-
 /* Checkbox & Radio Alignment */
 input[type="radio"], input[type="checkbox"] {
     margin: 0 4px 0 0;
@@ -402,23 +403,34 @@ function setAll(){
                         <td><div id="periodupto"></div></td>
                     </tr>
                     <tr>
-                        <td class="label-cell">Client</td>
-                        <td>
-                            <input type="text" name="client" id="client" readonly
-                                   placeholder="Press F3 to Search"
-                                   onkeydown="getClient(event);" 
-                                   value='<s:property value="client"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Agmt No</td>
-                        <td>
-                            <input type="text" name="agmtno" id="agmtno" readonly
-                                   placeholder="Press F3 to Search"
-                                   onkeydown="getAgmt(event);" 
-                                   value='<s:property value="agmtno"/>'>
-                        </td>
-                    </tr>
+    <td class="label-cell">Client</td>
+
+    <td>
+        <input type="text"
+               name="client"
+               id="client"
+               readonly="readonly"
+               placeholder="Press F3 to Search"
+               onkeydown="getClient(event);"
+               value='<s:property value="client"/>'
+               style="background:#ffffff !important; color:#333;">
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">Agmt No</td>
+
+    <td>
+        <input type="text"
+               name="agmtno"
+               id="agmtno"
+               readonly="readonly"
+               placeholder="Press F3 to Search"
+               onkeydown="getAgmt(event);"
+               value='<s:property value="agmtno"/>'
+               style="background:#ffffff !important; color:#333;">
+    </td>
+</tr>
                 </table>
                 
                 <div class="radio-group" style="justify-content: flex-start; margin-left: 20px;">
