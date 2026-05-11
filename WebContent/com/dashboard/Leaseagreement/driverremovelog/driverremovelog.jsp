@@ -97,12 +97,13 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
+input[readonly],
+input:disabled,
+select:disabled {
+    background-color: #ffffff !important;
     color: #555;
-    cursor: not-allowed;
+    cursor: text !important;
 }
-
 /* ===== BUTTONS ===== */
 .button-group {
     display: flex;
@@ -298,27 +299,46 @@ function funExportBtn(){
                         <td class="label-cell">To</td>
                         <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
                     </tr>
-                    <tr>
-                        <td class="label-cell">Client</td>
-                        <td>
-                            <input type="text" id="txtclientname" name="txtclientname" 
-                                   readonly="readonly" placeholder="Press F3 to Search"  
-                                   onkeydown="getClient(event);" 
-                                   value='<s:property value="txtclientname"/>'/>
-                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Agreement</td>
-                        <td>
-                            <input type="text" id="vocnos" name="vocnos" 
-                                   readonly="readonly" onfocus="chktype()" 
-                                   placeholder="Press F3 to Search" 
-                                   onkeydown="getAgreement(event);" 
-                                   value='<s:property value="vocnos"/>'/>
-                            <input type="hidden" id="txtagreementno" name="txtagreementno" value='<s:property value="txtagreementno"/>'/>
-                        </td>
-                    </tr>
+<tr>
+    <td class="label-cell">Client</td>
+
+    <td>
+        <input type="text"
+               id="txtclientname"
+               name="txtclientname"
+               readonly="readonly"
+               placeholder="Press F3 to Search"
+               onkeydown="getClient(event);"
+               value='<s:property value="txtclientname"/>'
+               style="background:#ffffff !important; cursor:pointer !important;"/>
+
+        <input type="hidden"
+               id="txtcldocno"
+               name="txtcldocno"
+               value='<s:property value="txtcldocno"/>'/>
+    </td>
+</tr>
+
+<tr>
+    <td class="label-cell">Agreement</td>
+
+    <td>
+        <input type="text"
+               id="vocnos"
+               name="vocnos"
+               readonly="readonly"
+               onfocus="chktype()"
+               placeholder="Press F3 to Search"
+               onkeydown="getAgreement(event);"
+               value='<s:property value="vocnos"/>'
+               style="background:#ffffff !important; cursor:pointer !important;"/>
+
+        <input type="hidden"
+               id="txtagreementno"
+               name="txtagreementno"
+               value='<s:property value="txtagreementno"/>'/>
+    </td>
+</tr>
                 </table>
                 
                 <div style="margin-top: 15px;">

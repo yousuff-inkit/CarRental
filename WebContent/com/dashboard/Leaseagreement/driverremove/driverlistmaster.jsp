@@ -155,6 +155,27 @@ input[readonly], input:disabled, select:disabled {
     width: 100%;
     overflow: auto;
 }
+/* 🔹 White input fields */
+input[type="text"],
+input[readonly],
+select,
+textarea {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    opacity: 1 !important;
+}
+
+/* 🔹 Prevent browser/jqx grey readonly look */
+input[readonly] {
+    background-color: #ffffff !important;
+    cursor: pointer;
+}
+
+/* 🔹 Placeholder styling */
+input::placeholder {
+    color: #9aa4b2;
+    opacity: 1;
+}
 </style>
 
 <script type="text/javascript">

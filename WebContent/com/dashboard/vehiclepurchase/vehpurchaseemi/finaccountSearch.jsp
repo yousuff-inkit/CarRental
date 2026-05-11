@@ -47,29 +47,28 @@ body {
     font-size: 12px !important;
 }
 
-/* PANEL */
+/* SEARCH PANEL */
 .modern-ui .search-panel {
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #c5d3e0;
     border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 /* GRID */
 .modern-ui .grid-container {
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #c5d3e0;
     border-radius: 8px;
-    padding: 6px;
-    min-height: 200px;
+    padding: 5px;
 }
 
 /* TABLE */
 .modern-ui table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 6px 10px;
+    border-spacing: 4px 8px;
 }
 
 /* LABELS */
@@ -80,25 +79,24 @@ body {
     white-space: nowrap;
 }
 
-/* INPUTS (STRICT 24px) */
+/* INPUTS */
 .modern-ui input[type="text"] {
     height: 24px !important;
-    line-height: 20px !important;
     padding: 2px 6px !important;
     border: 1px solid #b8c6d8;
     border-radius: 3px;
     box-sizing: border-box;
     width: 100%;
+    background: #ffffff;
 }
 
 /* BUTTON */
 .modern-ui .myButton {
     height: 24px !important;
-    line-height: 22px !important;
-    padding: 0 16px;
+    padding: 0 14px;
     font-weight: 700;
     background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #fff;
+    color: #ffffff;
     border: 1px solid #083a8a;
     border-radius: 3px;
     cursor: pointer;
@@ -116,42 +114,58 @@ body {
 
         <table>
             <colgroup>
-                <col width="12%">   <!-- Account No -->
-                <col width="28%">
+                <col width="10%">  <!-- Account No -->
+                <col width="22%">
 
-                <col width="12%">   <!-- Account Name -->
-                <col width="28%">
+                <col width="10%">  <!-- Account Name -->
+                <col width="48%">
 
-                <col width="20%">   <!-- Button -->
+                <col width="10%">  <!-- Button -->
             </colgroup>
 
             <tr>
+
+                <!-- Account No -->
                 <td class="label">Account No</td>
                 <td>
-                    <input type="text" name="txtaccountsno1" id="txtaccountsno1"
+                    <input type="text"
+                        name="txtaccountsno1"
+                        id="txtaccountsno1"
                         value='<s:property value="txtaccountsno1"/>'>
                 </td>
 
+                <!-- Account Name -->
                 <td class="label">Account Name</td>
                 <td>
-                    <input type="text" name="txtaccountsname1" id="txtaccountsname1"
+                    <input type="text"
+                        name="txtaccountsname1"
+                        id="txtaccountsname1"
                         value='<s:property value="txtaccountsname1"/>'>
                 </td>
 
-                <td>
-                    <input type="button" name="btnAccountSearch1" id="btnAccountSearch1"
+                <!-- Button -->
+                <td align="center">
+                    <input type="button"
+                        name="btnAccountSearch1"
+                        id="btnAccountSearch1"
                         class="myButton"
                         value="Search"
                         onclick="loadAccountSearch();">
                 </td>
+
+            </tr>
+
+            <!-- GRID -->
+            <tr>
+                <td colspan="5">
+                    <div id="findiv">
+                        <jsp:include page="finaccsubsearch.jsp"></jsp:include>
+                    </div>
+                </td>
             </tr>
 
         </table>
-    </div>
 
-    <!-- GRID -->
-    <div class="grid-container">
-        <jsp:include page="finaccsubsearch.jsp"></jsp:include>
     </div>
 
 </div>
