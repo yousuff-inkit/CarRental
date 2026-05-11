@@ -588,26 +588,56 @@ form label.error { color: red; font-weight: bold; font-size: 11px; }
             }
  
  function funPrintBtn() {
-     var value=$('#hidconfig').val();
-     if(value=="1"){
-         mobilePrintContent(
-                  'mobileprintWindow.jsp?docno=' + document.getElementById("docno").value.trim() +
-                  '&rfleet=' + document.getElementById("rfleet").value.trim() +
-                  '&cmbreftype=' + document.getElementById("cmbreftype").value.trim() +
-                  '&rdocno=' + document.getElementById("rdocno").value.trim()
-                );
-     }
-     else{  
-        if(document.getElementById("docno").value=='' || document.getElementById("docno").value=='0'){
-         $.messager.alert('Warning','Select a Document');
-         return false;
-        }
-        var url=document.URL;
-     var reurl=url.split("/com/");
-        var win= window.open(reurl[0]+"/com/operations/vehicletransactions/vehicleinspection/inspectionPrint.action?docno="+document.getElementById("docno").value+"&fleetno="+document.getElementById("rfleet").value+"&lblurl="+window.location.origin,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-        win.focus();
-     }
- }
+	    var value = $('#hidconfig').val();
+	    
+	    if (value == "1") {
+	        mobilePrintContent(
+	            'mobileprintWindow.jsp?docno=' + document.getElementById("docno").value.trim() +
+	            '&rfleet=' + document.getElementById("rfleet").value.trim() +
+	            '&cmbreftype=' + document.getElementById("cmbreftype").value.trim() +
+	            '&rdocno=' + document.getElementById("rdocno").value.trim()
+	        );
+	    } 
+	    else {
+	        if (document.getElementById("docno").value == '' || document.getElementById("docno").value == '0') {
+	            $.messager.alert('Warning', 'Select a Document');
+	            return false;
+	        }
+
+	        var url = document.URL;
+	        var reurl = url.split("/com/");
+	        var printUrl = reurl[0] + "/com/operations/vehicletransactions/vehicleinspection/inspectionPrint.action?docno=" + 
+	                       document.getElementById("docno").value + 
+	                       "&fleetno=" + document.getElementById("rfleet").value + 
+	                       "&lblurl=" + window.location.origin;
+
+	        var win = window.open(printUrl, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=yes,toolbar=yes");
+
+	        if (win) {
+	            var checkReady = setInterval(function() {
+	                try {
+	                   
+	                    if (win.document && win.document.readyState === 'complete' && win.document.body.innerHTML.length > 500) {
+	                        clearInterval(checkReady);
+	                        
+	                        setTimeout(function() {
+	                            win.focus();
+	                            win.print();
+	                            
+	                            win.onafterprint = function () {
+	                                win.close();
+	                            };
+	                        }, 1500); 
+	                    }
+	                } catch (e) {
+	                    clearInterval(checkReady);
+	                }
+	            }, 500);
+	        } else {
+	            $.messager.alert('Message', 'Popup blocked by browser. Please allow popups for this site.', 'warning');
+	        }
+	    }
+	}
 
  function mobilePrintContent(url) {
         $('#printWindow').jqxWindow('open');
