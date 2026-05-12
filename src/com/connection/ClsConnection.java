@@ -14,25 +14,19 @@ import javax.sql.DataSource;
 public class ClsConnection {
 	Statement stmt=null;
 	
-	public  Connection getMyConnection()
+	public Connection getMyConnection()
 	{
-		Connection conn=null;
+		Connection conn = null;
 		try {  
-            Context ctx = new InitialContext();  
-            DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/carrental");  
-            conn = ds.getConnection();  
-          
+            // Bypass Tomcat XML completely and force the direct connection
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = java.sql.DriverManager.getConnection("jdbc:mysql://172.17.0.111:3306/drivus_new?useSSL=false", "root", "gateway");
         }    
-        catch (NamingException ex) {  
-            Logger.getLogger(ClsConnection.class.getName()).log(Level.SEVERE, null, ex);  
+        catch (Exception ex) {  
+            ex.printStackTrace();  
         }  
-        catch (SQLException sqle) {  
-            sqle.printStackTrace();  
-        }  
-		// System.out.println("----conn---"+conn);
         return conn;  
 	}
-
 	public String execute ()
 	{
 		try{

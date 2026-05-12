@@ -13,7 +13,7 @@
                  left join hr_empm m on r.empid=m.doc_no and m.active=1 left join hr_setdesig dsg on m.desc_id=dsg.doc_no
                  left join hr_setdept dep on m.dept_id=dep.doc_no left join hr_setpaycat cat on m.pay_catid=cat.doc_no
                  left join hr_setleave sl on r.leavetype=sl.doc_no
-                 where r.status<>7 and r.doc_no=$P{docno};]]>
+                 where r.status<>7 and r.doc_no=$P!{docno};]]>
 	</queryString>
 	<field name="name" class="java.lang.String"/>
 	<field name="date" class="java.lang.String"/>

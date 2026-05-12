@@ -491,7 +491,7 @@ body {
 			    var reurl=url.split("saveLeaveRequests"); 
 			     $("#docno").prop("disabled", false);
 				 var dtype=$('#formdetailcode').val();
-				var win= window.open(reurl[0]+"printLeaveRequests?docno="+document.getElementById("docno").value+"&dtype="+dtype+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+				var win= window.open(reurl[0]+"printLeaveRequests.action?docno="+document.getElementById("docno").value+"&dtype="+dtype+"&header=1","_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
 				win.focus();
 			
 			   }
