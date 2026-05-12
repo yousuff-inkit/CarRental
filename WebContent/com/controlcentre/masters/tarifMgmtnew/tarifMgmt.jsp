@@ -22,14 +22,14 @@ body {
     color: #333;
     font-size: 12px;
     margin: 0;
-    padding: 10px;
+    padding: 5px;
     box-sizing: border-box;
 }
 
 #mainBG {
     background: #fff;
     border-radius: 4px;
-    padding: 15px;
+    padding: 5px;
     max-width: 100%;
     margin: 0 auto;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
@@ -69,7 +69,7 @@ fieldset {
     border: 1px solid #e1e4e8;
     background-color: #fff;
     margin-bottom: 10px;
-    padding: 12px 10px 10px 10px;
+    padding: 6px 5px 5px 5px;
     border-radius: 4px;
 }
 
@@ -79,7 +79,7 @@ legend {
     color: #0056b3;
     padding: 0 0 0 6px;
     border-left: 3px solid #0056b3;
-    margin-bottom: 5px;
+   
     background: #fff;
 }
 
@@ -810,7 +810,8 @@ form label.error {
     <div style="height: 20px;"></div>
 
 <div class='modern-ui hidden-scrollbar'>
-
+<fieldset>
+<legend>General Info</legend>
     <div class="top-grid">
         <label>Date</label>
         <div>
@@ -878,6 +879,7 @@ form label.error {
             </button>
         </div>
     </div>
+    </fieldset>
 
 <input type="hidden" id="mode" name="mode"/>
 <input type="text" name="delete" id="delete" value='<s:property value="delete"/>' hidden="true"/>
