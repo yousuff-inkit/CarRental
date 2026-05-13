@@ -350,9 +350,12 @@ input[readonly], input:disabled, select:disabled {
     background: #1d4ed8 !important;
 }
 
-.btn-submit:disabled {
-    background: #9ca3af !important;
-    cursor: not-allowed;
+input[readonly],
+input:disabled,
+select:disabled {
+    background-color: #ffffff !important;
+    color: #555;
+    cursor: text !important;
 }
 
 /* Layout Utilities */

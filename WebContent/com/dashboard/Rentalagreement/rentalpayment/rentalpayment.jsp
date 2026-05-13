@@ -95,10 +95,12 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
+input[readonly],
+input:disabled,
+select:disabled {
+    background-color: #ffffff !important;
     color: #555;
-    cursor: not-allowed;
+    cursor: text !important;
 }
 
 /* ===== BUTTONS ===== */
