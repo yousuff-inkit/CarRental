@@ -17,15 +17,15 @@ public class ClsConnection {
 	public Connection getMyConnection()
 	{
 		Connection conn = null;
-		try {  
-            // Bypass Tomcat XML completely and force the direct connection
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = java.sql.DriverManager.getConnection("jdbc:mysql://172.17.0.111:3306/drivus_new?useSSL=false", "root", "gateway");
-        }    
-        catch (Exception ex) {  
-            ex.printStackTrace();  
-        }  
-        return conn;  
+		try {
+			Context initCtx = new InitialContext();
+			DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/carrental");
+			conn = ds.getConnection();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return conn;
 	}
 	public String execute ()
 	{

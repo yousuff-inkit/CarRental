@@ -729,7 +729,7 @@ body::-webkit-scrollbar {
                 // Create a jqxMenu
                 $("#jqxMenu").jqxMenu({ width: '100%', height: '20', mode: 'horizontal', showTopLevelArrows: true});
                 // Set up the open directions.
-                $("#jqxMenu").css('visibility', 'visible');
+                $("#jqxMenu").css('visibility', 'hidden');
                 
             });
 			
@@ -741,7 +741,7 @@ body::-webkit-scrollbar {
         </script>
         <div>
         
-         <div id='jqxMenu' style="visibility: hidden;margin-top:-9px;margin-left:-8px;">
+         <div id='jqxMenu' style="visibility: hidden;display:none;margin-top:-9px;margin-left:-8px;">
 			<ul >
 				<s:iterator var="first" status="status" value="%{#request.MenuMap}">
 					<li><s:property value="key"></s:property>
