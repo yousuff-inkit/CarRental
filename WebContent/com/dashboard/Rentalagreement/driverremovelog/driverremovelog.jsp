@@ -85,11 +85,7 @@ input[type="text"], select {
     outline: none;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
-    color: #555;
-    cursor: not-allowed;
-}
+
 
 /* ===== BUTTONS ===== */
 .button-group {

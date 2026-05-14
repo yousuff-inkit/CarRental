@@ -65,10 +65,10 @@
 
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    padding: 1px 1px;
     border: 1px solid #ccd6e0;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 13px !important;
     height: 24px !important;  
 }
 

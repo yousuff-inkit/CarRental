@@ -14,14 +14,22 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-    .master-container {
+/* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
+/* Sidebar Styling - Matched to 2nd CSS */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -43,11 +51,12 @@
     overflow-y: auto;
     padding: 15px 20px 25px;
 }
+
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 12px;
 }
 
@@ -58,82 +67,108 @@
 
 .label-cell {
     text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
+    padding-right: 12px;
+    font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
+/* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
-.btn-submit {
+/* ===== UNIFORM BUTTONS ===== */
+.btn-submit, .myButton, .myButtons {
     width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.btn-submit:hover {
-    background: #1d4ed8;
-}
-
-
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
-}
-.myButtons, .myButton {
-    background-color: #2563eb !important;
-    color: #ffffff !important;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
     border: none !important;
-    border-radius: 6px;
-    padding: 10px 15px;
-    width: 100%;
-    font-weight: 600;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     cursor: pointer;
+    line-height: 30px !important;
+    text-align: center;
+    margin-top: 8px;
+    transition: all 0.2s ease;
 }
 
-.myButtons:hover, .myButton:hover {
-    background-color: #1d4ed8 !important;
-}
-.main-content-wrapper{
-    flex:1;
-    width:100%;
+.btn-submit:hover, .myButton:hover {
+    background: #1d4ed8 !important;
 }
 
-.scrollable-grid-area{
-    width:100%;
+/* Content Area */
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    background: #fff;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-#delupdiv{
-    width:100%;
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+.input-search-container {
+    position: relative;
+    display: block; 
+    width: 100%;
+    min-width: 150px; 
+    margin-right: 15px;
+}
+
+.input-search-container input {
+    padding-right: 30px !important; 
+    width: 100% !important;
+    display: block;
+    box-sizing: border-box !important;
+}
+
+.magnifier-icon {
+    position: absolute;
+    right: 8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #64748b; 
+    z-index: 10;
+    pointer-events: all; 
+    
+}
+.magnifier-icon:hover {
+    color: #2563eb; 
+    transform: translateY(-50%) scale(1.1);
 }
 </style>
+
+
 
 
 <script type="text/javascript">
 
 $(document).ready(function () {
+	
+	$("#jqxDeliveryOut").jqxDateTimeInput({ width: '100%', height: '24px', formatString: "dd.MM.yyyy"});
+    $("#jqxDelTimeOut").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false, value: new Date()});
+    $("#jqxDateOut").jqxDateTimeInput({ width: '100%', height: '24px', formatString: "dd.MM.yyyy"});
+    $("#jqxTimeOut").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
 	$("#del_Driver").attr('disabled',false);
 	  $('#ratariff_checkout').dblclick(function(){
 	  	    $('#Checkoutinfowindow').jqxWindow('open');
@@ -143,7 +178,7 @@ $(document).ready(function () {
 	
 	 $("#jqxDeliveryOut").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	 
-	 $("#jqxDelTimeOut").jqxDateTimeInput({  width: '20%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
+	 $("#jqxDelTimeOut").jqxDateTimeInput({  width: '30%', height: '17px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
 	 $("#jqxDateOut").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
 	 $("#jqxTimeOut").jqxDateTimeInput({  width: '20%', height: '17px', formatString: 'HH:mm', showCalendarButton: false });
 	  $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
@@ -583,7 +618,12 @@ function funupdate()
                     <tr>
                         <td class="label-cell">Driver</td>
                         <td>
-                            <input type="text" name="del_Driver" id="del_Driver" readonly="readonly" onKeyDown="getchauffeur(event);" value='<s:property value="del_Driver"/>'>
+                           <div class="input-search-container"> <input type="text" name="del_Driver" id="del_Driver"   onKeyDown="getchauffeur(event);" value='<s:property value="del_Driver"/>' readonly placeholder="Press F3 To Search"/>
+                       <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        </div>
                         </td>
                     </tr>
                     <tr>
