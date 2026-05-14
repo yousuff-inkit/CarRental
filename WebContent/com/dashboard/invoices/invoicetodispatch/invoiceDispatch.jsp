@@ -63,33 +63,42 @@
 .label-cell {
     text-align: right;
     padding-right: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
+    height: 24px;
 }
 
 /* Inputs */
-input[type="text"], select {
+input[type="text"],
+select {
     width: 100%;
-    padding: 7px 10px;
     border: 1px solid #ccd6e0;
     border-radius: 6px;
-    font-size: 13px;
-}
+    font-size: 12px;
+    height: 24px;
+    padding: 0 10px;
 
+    display: flex;
+    align-items: center;
+}
 /* Buttons */
 .btn-submit {
     width: 100%;
-    padding: 11px;
     margin-top: 10px;
     background: #2563eb;
     color: #fff;
     border: none;
     border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-submit:hover {
@@ -98,15 +107,18 @@ input[type="text"], select {
 
 .btn-whatsapp {
     width: 100%;
-    padding: 11px;
-    margin-top: 10px;
     background: #25D366;
     color: #fff;
     border: none;
     border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-whatsapp:hover {
@@ -114,18 +126,20 @@ input[type="text"], select {
 }
 
 .btn-wa-direct {
-    width: 100%;
-    padding: 11px;
+   
     margin-top: 10px;
     background: #128C7E;
     color: #fff;
     border: none;
     border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
-}
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .btn-wa-direct:hover { background: #0e7268; }
 
 #waDirectModal {
@@ -211,6 +225,54 @@ td[width="80%"] {
     background: #fff;
 }
 
+.mail-type-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: nowrap;
+}
+.dispatch-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.btn-wa-direct,
+.btn-whatsapp,
+.btn-submit {
+    height: 36px;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dispatch-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.dispatch-actions button {
+    height: 36px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.dispatch-actions button:last-child {
+    grid-column: span 2;
+}
 </style>
 
 <script type="text/javascript">
@@ -760,19 +822,15 @@ function funSendingEmail() {
         <!-- Mail Settings -->
         <div class="filter-card">
             <div class="mail-type-group">
-                <div class="mail-type-row">
-                    <input type="radio" name="chkmailtype" id="chkclientwise" value="CRM" checked>
-                    <label class="branch" for="chkclientwise">Client Wise</label>
+    <input type="radio" name="chkmailtype" id="chkclientwise" value="CRM" checked>
+    <label class="branch" for="chkclientwise">Client Wise</label>
 
-                    <input type="radio" name="chkmailtype" id="chkagmtwise" value="AGMT">
-                    <label class="branch" for="chkagmtwise">Agreement Wise</label>
-                </div>
+    <input type="radio" name="chkmailtype" id="chkagmtwise" value="AGMT">
+    <label class="branch" for="chkagmtwise">Agreement Wise</label>
 
-                <div class="mail-type-row">
-                    <input type="radio" name="chkmailtype" id="chksaperate" value="SEP">
-                    <label class="branch" for="chksaperate">Separate</label>
-                </div>
-            </div>
+    <input type="radio" name="chkmailtype" id="chksaperate" value="SEP">
+    <label class="branch" for="chksaperate">Separate</label>
+</div>
         </div>
 
         <!-- Filters -->
