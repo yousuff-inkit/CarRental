@@ -38,6 +38,34 @@
              background-color: #ffc0cb; 
          /*  background-color: #FFEBEB; */
         }
+        #detailsgrid {
+    margin-top: 0 !important;
+    vertical-align: top !important;
+}
+
+.main-content-wrapper,
+.scrollable-grid-area {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+#detailsgrid {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#detailsgrid > div {
+    margin-top: 0 !important;
+}
+
+td,
+div,
+.main-content-wrapper,
+.scrollable-grid-area {
+    vertical-align: top !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
  </style> 
  <script type="text/javascript">
  
@@ -107,7 +135,7 @@
             	
             	
             	width: '100%',
-                height: 750,
+                height: 500,
                 source: dataAdapter,
                 showaggregates:true,
                 enableAnimations: true,

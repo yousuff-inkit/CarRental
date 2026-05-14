@@ -155,7 +155,7 @@ var source =
    $("#rtaiff").jqxGrid(
    {
       width: '100%',
-      height: 86,
+      height: 60,
       source: dataAdapter,
       columnsresize: true,
       rowsheight:20,
