@@ -96,11 +96,7 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
-    color: #555;
-    cursor: not-allowed;
-}
+
 
 /* ===== BUTTONS ===== */
 .btn-submit, .myButton {
