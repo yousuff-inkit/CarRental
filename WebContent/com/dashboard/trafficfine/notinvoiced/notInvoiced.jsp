@@ -99,9 +99,9 @@
     }
 
     input[readonly], input:disabled, select:disabled {
-        background-color: #f3f6f9 !important;
+        background-color: #ffffff !important;
         color: #555;
-        cursor: pointer;
+        cursor: text;
     }
 
     input[type="checkbox"] {
