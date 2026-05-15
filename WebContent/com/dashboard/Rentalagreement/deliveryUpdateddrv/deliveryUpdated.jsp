@@ -14,7 +14,7 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
+
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
@@ -29,7 +29,7 @@ html, body, #mainBG, .hidden-scrollbar {
     background-color: #f4f7f9;
 }
 
-/* Sidebar Styling - Matched to 2nd CSS */
+
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -74,7 +74,6 @@ html, body, #mainBG, .hidden-scrollbar {
     width: 90px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
 input[type="text"], select {
     width: 100%;
     height: 24px !important;             
@@ -87,7 +86,6 @@ input[type="text"], select {
     color: #333;
 }
 
-/* ===== UNIFORM BUTTONS ===== */
 .btn-submit, .myButton, .myButtons {
     width: 100%;
     height: 30px !important;            
@@ -109,7 +107,6 @@ input[type="text"], select {
     background: #1d4ed8 !important;
 }
 
-/* Content Area */
 .main-content-wrapper {
     flex: 1;
     width: 100%;
