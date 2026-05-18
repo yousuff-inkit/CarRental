@@ -44,52 +44,258 @@
 		}
 
 	</script>
-<body bgcolor="#E0ECF8">
-<div id="search">
-<table width="100%" >
-  <tr >
-   <td>
-   <table>
-   <tr>
-    <td align="right"><label class="formfont">Name</label></td>
-    <td align="left" width="73.7%"><input type="text" name="Cl_name" id="Cl_name"  style="width:99%;height:18px;" value='<s:property value="Cl_name"/>'></td>
-    <td align="left"><label class="formfont">MOB</label></td>
-    <td align="left"><input type="text" name="Cl_mob" id="Cl_mob" value='<s:property value="Cl_mob"/>'></td>
-    <tr>
-    </table>
-    </td>
-  </tr>
-  
-  <table>
-  <tr>
-   <td align="right"><label class="formfont">Licence#</label></td>
-    <td align="left"><input type="text" name="dr_Licence" id="dr_Licence" value='<s:property value="dr_Licence"/>' style="height:18px;">
-    <td align="right"><label class="formfont">Passport#</label></td>
-    <td align="left"><input type="text" name="dr_Passport" id="dr_Passport" value='<s:property value="dr_Passport"/>' style="height:18px;"></td>
-    <td align="right"><label class="formfont">Nationality</label></td>
-    <td align="left"><input type="text" id="dr_Nation" name="dr_Nation" value='<s:property value="dr_Nation"/>' style="height:18px;"></td>
-    
-    <td align="right"><label class="formfont">DOB</label></td>
-    <td align="left"><div id="dr_DOB" name="dr_DOB"  value='<s:property value="dr_DOB"/>'></div>
+<style type="text/css">
 
-        <input type="hidden" name="hiddr_DOB" id="hiddr_DOB" value='<s:property value="hiddr_DOB"/>'>
-    </td>
-    <td colspan="2" align="center"><input type="button" name="btnrasearch" id="btnrasearch" class="myButton" value="Search"  onclick="loadSearch();"></td>
-  </tr>
-  </table>
-  </td>
+/* ===== MASTER UI STRICT ===== */
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="refreshdiv">
-      
-   <jsp:include  page="clientinfo.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
-</body>
-</html>
+body{
+    margin:0;
+    background:#f5f7fa;
+}
+
+/* MAIN */
+#search.modern-ui{
+    width:96%;
+    margin:8px auto;
+    font-family:'Segoe UI','Roboto','Arial',sans-serif !important;
+    font-size:12px !important;
+    color:#333;
+}
+
+/* SEARCH PANEL */
+.modern-ui .search-panel{
+    background:#ffffff;
+    border:1px solid #c5d3e0;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* GRID PANEL */
+.modern-ui .grid-container{
+    background:#ffffff;
+    border:1px solid #c5d3e0;
+    border-radius:8px;
+    padding:5px;
+}
+
+/* TABLE */
+.modern-ui table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:4px 8px;
+}
+
+/* LABELS */
+.modern-ui .formfont{
+    font-size:12px !important;
+    font-weight:600;
+    color:#000 !important;
+    white-space:nowrap;
+}
+
+/* LABEL TD */
+.modern-ui td.label{
+    text-align:right;
+    white-space:nowrap;
+    vertical-align:middle;
+    color:#000 !important;
+}
+
+/* LABEL TEXT */
+.modern-ui .formfont{
+    font-size:12px !important;
+    font-weight:600;
+    color:#000 !important;
+    white-space:nowrap;
+}
+
+/* INPUT */
+.modern-ui input[type="text"]{
+    width:100%;
+    height:24px !important;
+    padding:2px 6px !important;
+    border:1px solid #b8c6d8;
+    border-radius:3px;
+    background:#fff;
+    box-sizing:border-box;
+    font-size:12px !important;
+}
+
+/* DATE FIELD */
+.modern-ui #dr_DOB{
+    height:24px;
+    display:flex;
+    align-items:center;
+}
+
+/* BUTTON */
+.modern-ui .myButton{
+    height:24px !important;
+    line-height:22px !important;
+    padding:0 14px;
+    font-size:12px !important;
+    font-weight:700;
+    background:linear-gradient(135deg,#0b45a2 0%,#2563eb 100%);
+    color:#fff;
+    border:1px solid #083a8a;
+    border-radius:3px;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+/* INLINE DOB + BUTTON */
+.modern-ui .dob-wrapper{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+</style>
+
+<body>
+
+<div id="search" class="modern-ui">
+
+    <!-- SEARCH PANEL -->
+    <div class="search-panel">
+
+        <table>
+
+            <colgroup>
+
+                <!-- ROW 1 -->
+                <col width="7%">
+                <col width="43%">
+
+                <col width="6%">
+                <col width="14%">
+
+                <!-- ROW 2 -->
+                <col width="7%">
+                <col width="13%">
+
+                <col width="7%">
+                <col width="13%">
+
+                <col width="7%">
+                <col width="13%">
+
+                <col width="5%">
+                <col width="18%">
+
+            </colgroup>
+
+            <!-- ROW 1 -->
+            <tr>
+
+                <td class="label">
+                    <label class="formfont">Name</label>
+                </td>
+
+                <td colspan="3">
+                    <input type="text"
+                           name="Cl_name"
+                           id="Cl_name"
+                           value='<s:property value="Cl_name"/>'>
+                </td>
+
+                <td class="label">
+                    <label class="formfont">MOB</label>
+                </td>
+
+                <td>
+                    <input type="text"
+                           name="Cl_mob"
+                           id="Cl_mob"
+                           value='<s:property value="Cl_mob"/>'>
+                </td>
+
+            </tr>
+
+            <!-- ROW 2 -->
+            <tr>
+
+                <td class="label">
+                    <label class="formfont">Licence#</label>
+                </td>
+
+                <td>
+                    <input type="text"
+                           name="dr_Licence"
+                           id="dr_Licence"
+                           value='<s:property value="dr_Licence"/>'>
+                </td>
+
+                <td class="label">
+                    <label class="formfont">Passport#</label>
+                </td>
+
+                <td>
+                    <input type="text"
+                           name="dr_Passport"
+                           id="dr_Passport"
+                           value='<s:property value="dr_Passport"/>'>
+                </td>
+
+                <td class="label">
+                    <label class="formfont">Nationality</label>
+                </td>
+
+                <td>
+                    <input type="text"
+                           id="dr_Nation"
+                           name="dr_Nation"
+                           value='<s:property value="dr_Nation"/>'>
+                </td>
+
+                <td class="label">
+                    <label class="formfont">DOB</label>
+                </td>
+
+                <td>
+
+                    <div class="dob-wrapper">
+
+                        <div id="dr_DOB"
+                             name="dr_DOB"
+                             value='<s:property value="dr_DOB"/>'>
+                        </div>
+
+                        <input type="hidden"
+                               name="hiddr_DOB"
+                               id="hiddr_DOB"
+                               value='<s:property value="hiddr_DOB"/>'>
+
+                        <input type="button"
+                               name="btnrasearch"
+                               id="btnrasearch"
+                               class="myButton"
+                               value="Search"
+                               onclick="loadSearch();">
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-container">
+
+        <div id="refreshdiv">
+
+            <jsp:include page="clientinfo.jsp"></jsp:include>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body></html>

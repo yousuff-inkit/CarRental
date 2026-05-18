@@ -261,7 +261,6 @@ html, body, #mainBG, .hidden-scrollbar {
     border-bottom: 1px solid #f0f4f8;
 }
 
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
@@ -287,10 +286,10 @@ html, body, #mainBG, .hidden-scrollbar {
     font-size: 12px; 
     font-weight: 600;
     color: #4e5e71;
-    width: 80px;
+    width: 90px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
+/* ===== UNIFORM 24px TEXT INPUTS ===== */
 input[type="text"], select {
     width: 100%;
     height: 24px !important;             
@@ -302,7 +301,6 @@ input[type="text"], select {
     box-sizing: border-box;
     color: #333;
     outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 select {
@@ -317,53 +315,43 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
+input[readonly],
+input:disabled,
+select:disabled {
+    background-color: #ffffff !important;
     color: #555;
-    cursor: pointer;
-}
-
-/* Radio Button Layout Customization */
-.radio-group {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    font-size: 12px;
-    color: #4e5e71;
-    font-weight: 500;
-    padding: 5px 0;
-}
-
-.radio-group input[type="radio"] {
-    margin: 0 4px 0 0;
-    vertical-align: middle;
+    cursor: text !important;
 }
 
 /* ===== BUTTONS ===== */
 .button-group {
     display: flex;
-    gap: 8px;
-    margin-top: 5px;
+    gap: 10px;
+    justify-content: center;
 }
 
 .btn-submit {
     flex: 1;
+    width: 100%;
     height: 30px !important;            
-    padding: 0 5px !important;
+    padding: 0 12px !important;
     background: #2563eb !important;
     color: #fff !important;
     border: none !important;
     border-radius: 4px !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
     font-weight: 600 !important;
     cursor: pointer;
     line-height: 30px !important;
+    white-space: nowrap;
     text-align: center;
+    margin-top: 8px;
     transition: all 0.2s ease;
-    width: 100%;
 }
 
-.btn-submit:hover { background: #1d4ed8 !important; }
+.btn-submit:hover {
+    background: #1d4ed8 !important;
+}
 
 /* Layout Utilities */
 .main-content-wrapper {
@@ -382,42 +370,151 @@ input[readonly], input:disabled, select:disabled {
     width: 100%;
     overflow: auto;
 }
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-filters label.branch {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+    background: transparent !important;
+}
 </style>
+
 </head>
 <body onload="getBranch();setValues();">
 <form id="frmProforma" action="saveProforma" method="post">
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
-<table width="100%">
-	<tr>
-		<td width="20%">
-    		<fieldset style="background: #ffffff;">
-				<table width="100%">
-					<jsp:include page="../../heading.jsp"></jsp:include>
-					<tr><td width="40%" align="right"><label class="branch">Period Upto</label></td><td width="60%"><div id="periodupto" name="periodupto"></div></td></tr>
-					<tr>
-						<td colspan="2"><center><input type="button" name="btninvoicesave" id="btninvoicesave" class="myButton" value="Generate" onclick="funNotify();"></center></td>
-					</tr>
-					<tr><td colspan="2"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></td></tr>	
-				</table>
-			</fieldset>
-		</td>
-		<td width="80%">
-			<table width="100%">
-				<tr>
-			 		<td>
-			 			<div id="imgdiv" style="position:absolute; z-index: 1;top:200;right:600;">
-							<img id="imgloading" alt="" src="../../../../icons/29load.gif"/>
-						</div>
-						<div id="invoicediv">
-							<jsp:include page="invoiceGrid.jsp"></jsp:include>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
+<div class="master-container">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar-filters" style="
+        width:320px;
+        min-width:320px;
+    ">
+
+        <!-- HEADER -->
+        <div class="sidebar-fixed-top">
+
+            <jsp:include page="../../heading.jsp"></jsp:include>
+
+        </div>
+
+
+        <!-- SIDEBAR CONTENT -->
+        <div class="sidebar-scroll-content">
+
+            <!-- FILTER CARD -->
+            <div class="filter-card" style="
+                padding:16px;
+                border-radius:18px;
+            ">
+
+                <table class="filter-table">
+
+                    <!-- PERIOD -->
+                    <tr>
+
+                        <td class="label-cell">
+                            <label class="branch">Period Upto</label>
+                        </td>
+
+                        <td>
+
+                            <div 
+                                id="periodupto"
+                                name="periodupto">
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+
+                <!-- BUTTON -->
+                <div style="margin-top:18px;">
+
+                    <input 
+                        type="button"
+                        name="btninvoicesave"
+                        id="btninvoicesave"
+                        class="btn-submit"
+                        value="Generate"
+                        onclick="funNotify();">
+
+                </div>
+
+            </div>
+
+
+            <!-- SPACER -->
+            <div style="height:40px;"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RIGHT CONTENT -->
+    <div class="main-content-wrapper">
+
+        <div class="scrollable-grid-area">
+
+            <!-- LOADER -->
+            <div id="imgdiv" style="
+                position:absolute;
+                z-index:1;
+                top:200px;
+                right:600px;
+            ">
+
+                <img 
+                    id="imgloading"
+                    alt=""
+                    src="../../../../icons/29load.gif"/>
+
+            </div>
+
+
+
+            <!-- GRID -->
+            <div id="invoicediv" class="filter-card" style="
+                padding:0;
+                overflow:hidden;
+            ">
+
+                <jsp:include page="invoiceGrid.jsp"></jsp:include>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 </div>
 </div>
 <input type="hidden" name="invgridlength" id="invgridlength" >
