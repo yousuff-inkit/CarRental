@@ -188,16 +188,11 @@ body {
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		 $('#btnCreate').attr('disabled', true );$('#btnClose').attr('disabled', true );
-		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );
-		 $('#btnSearch').attr('disabled', true );$('#btnExcel').attr('disabled', true );
-		 $('#btnPrint').attr('disabled', true );
-		 $('#btnHeaderUpdate').hide();
-		 $('#btnHeaderDelete').hide();
+		 // Bulletproof disabling ALL buttons entirely
+		 $('#btnNew, #btnCreate, #btnSave, #btnEdit, #btnDelete, #btnSearch, #btnExcel, #btnPrint, #btnClose, #btnAttach, #btnAttachment, #attachBtn, #btnHeaderAdd, #btnHeaderUpdate, #btnHeaderDelete, #btnFooterAdd, #btnFooterUpdate, #btnFooterDelete').prop('disabled', true)
+			.css({'pointer-events': 'none', 'opacity': '0.5'})
+			.attr('tabindex', '-1');
 		 
-		 $('#btnFooterUpdate').hide();
-		 $('#btnFooterDelete').hide();
-		
 		 $("#jqxItacDate").jqxDateTimeInput({ width: '125px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});
          
          /* force internal alignment AFTER render */
@@ -250,13 +245,16 @@ body {
                 $("#jqxFooter").jqxGrid({ disabled: true});
                 $("#jqxHeader").jqxGrid({ disabled: false});
 				$('#txtfooterdescription').attr('disabled', true);
+				
+				// Keep buttons disabled
                 $('#btnFooterAdd').attr('disabled', true);
                 $('#btnFooterUpdate').attr('disabled', true);
 				$('#btnFooterDelete').attr('disabled', true);
                 $('#txtheaderdescription').attr('disabled', false);
-                $('#btnHeaderAdd').attr('disabled', false);
-				$('#btnHeaderUpdate').attr('disabled', false);
-                $('#btnHeaderDelete').attr('disabled', false);
+                $('#btnHeaderAdd').attr('disabled', true);
+				$('#btnHeaderUpdate').attr('disabled', true);
+                $('#btnHeaderDelete').attr('disabled', true);
+                
  				document.getElementById("rheader").checked = true;
 				document.getElementById("rfooter").checked = false;
 				
@@ -272,13 +270,16 @@ body {
                 $("#jqxHeader").jqxGrid({ disabled: true});
                 $("#jqxFooter").jqxGrid({ disabled: false});
 				$('#txtheaderdescription').attr('disabled', true);
+				
+				// Keep buttons disabled
                 $('#btnHeaderAdd').attr('disabled', true);
                 $('#btnHeaderUpdate').attr('disabled', true);
 				$('#btnHeaderDelete').attr('disabled', true);
                 $('#txtfooterdescription').attr('disabled', false);
-                $('#btnFooterAdd').attr('disabled', false);
-				$('#btnFooterUpdate').attr('disabled', false);
-                $('#btnFooterDelete').attr('disabled', false);
+                $('#btnFooterAdd').attr('disabled', true);
+				$('#btnFooterUpdate').attr('disabled', true);
+                $('#btnFooterDelete').attr('disabled', true);
+                
 				document.getElementById("rheader").checked = false;
 				document.getElementById("rfooter").checked = true;
 				$("#txthdoctype").val('');
@@ -309,9 +310,12 @@ body {
 	
 	function headercheck(){
 		$("#hidrheader").val(1);$("#hidrfooter").val('0');$("#txtfooterdescription").val('');$("#jqxFooter").jqxGrid({ disabled: true});$("#jqxHeader").jqxGrid({ disabled: false});
-		$('#txtfooterdescription').attr('disabled', true)    ;$('#btnFooterAdd').attr('disabled', true);$('#btnFooterUpdate').attr('disabled', true);
-		$('#btnFooterDelete').attr('disabled', true);$('#txtheaderdescription').attr('disabled', false);$('#btnHeaderAdd').attr('disabled', false);
-		$('#btnHeaderUpdate').attr('disabled', false);$('#btnHeaderDelete').attr('disabled', false);
+		$('#txtfooterdescription').attr('disabled', true);
+		
+		// Keep buttons disabled
+		$('#btnFooterAdd').attr('disabled', true);$('#btnFooterUpdate').attr('disabled', true);
+		$('#btnFooterDelete').attr('disabled', true);$('#txtheaderdescription').attr('disabled', false);
+		$('#btnHeaderAdd').attr('disabled', true);$('#btnHeaderUpdate').attr('disabled', true);$('#btnHeaderDelete').attr('disabled', true);
 		
 		$("#txtfdoctype").val('');
 		$("#txtfheaderdescription").val('');
@@ -319,9 +323,13 @@ body {
 	
 	function footercheck(){
 		$("#hidrfooter").val(2);$("#hidrheader").val('0');$("#txtheaderdescription").val('');$("#jqxHeader").jqxGrid({ disabled: true});$("#jqxFooter").jqxGrid({ disabled: false});
-		$('#txtheaderdescription').attr('disabled', true);$('#btnHeaderAdd').attr('disabled', true);$('#btnHeaderUpdate').attr('disabled', true);
-		$('#btnHeaderDelete').attr('disabled', true);$('#txtfooterdescription').attr('disabled', false);$('#btnFooterAdd').attr('disabled', false);
-		$('#btnFooterUpdate').attr('disabled', false);$('#btnFooterDelete').attr('disabled', false);
+		$('#txtheaderdescription').attr('disabled', true);
+		
+		// Keep buttons disabled
+		$('#btnHeaderAdd').attr('disabled', true);$('#btnHeaderUpdate').attr('disabled', true);
+		$('#btnHeaderDelete').attr('disabled', true);$('#txtfooterdescription').attr('disabled', false);
+		$('#btnFooterAdd').attr('disabled', true);$('#btnFooterUpdate').attr('disabled', true);$('#btnFooterDelete').attr('disabled', true);
+		
 		$("#txthdoctype").val('');
 	}
 	

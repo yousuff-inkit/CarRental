@@ -170,13 +170,15 @@ body {
 		     });
 		 }, 0);
 
-		 $("#btnEdit").attr('disabled', true );
-		 $("#btnPrint").attr('disabled', true );
-		 $("#btnExcel").attr('disabled', true );
-		 $("#btnDelete").attr('disabled', true );
-		 $("#btnCancel").attr('disabled', true );
-		 $("#btnSearch").attr('disabled', true );
-		 $("#btnClose").attr('disabled', true );
+		 // Bulletproof button disabling logic for requested buttons + existing original ones
+		 $('#btnClose, #btnEdit, #btnPrint, #btnDelete, #btnAttach, #btnAttachment, #attachBtn, #btnExcel, #btnCancel, #btnSearch').prop('disabled', true)
+			.css({'pointer-events': 'none', 'opacity': '0.5'})
+			.attr('tabindex', '-1');
+			
+		 // Ensure Create/Save stay alive
+		 $('#btnNew, #btnCreate, #btnSave').prop('disabled', false)
+			.css({'pointer-events': 'auto', 'opacity': '1'})
+			.removeAttr('tabindex');
     });
 	
 	function funReadOnly(){

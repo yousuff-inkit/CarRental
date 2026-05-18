@@ -191,6 +191,11 @@ body {
 <script type="text/javascript">
 	$(document).ready(function() {
 		 
+		// Bulletproof button disabling logic for Edit and Approval buttons
+		$('#btnEdit, #btnApprove, #btnApproval').prop('disabled', true)
+			.css({'pointer-events': 'none', 'opacity': '0.5'})
+			.attr('tabindex', '-1');
+
 		$('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		$('#accountDetailsWindow').jqxWindow('close');
 		
