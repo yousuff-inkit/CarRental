@@ -29,13 +29,13 @@ html, body, #mainBG, .hidden-scrollbar {
 
 .sidebar-filters {
     width: 330px;
-    flex: 0 0 330px;
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
     height: 100vh;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    margin-top:-60px;
 }
 
 .sidebar-fixed-top {
@@ -46,7 +46,7 @@ html, body, #mainBG, .hidden-scrollbar {
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+ 
 }
 
 .filter-card {
@@ -54,7 +54,7 @@ html, body, #mainBG, .hidden-scrollbar {
     border: 1px solid #e3e8ee;
     border-radius: 12px;
     padding: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .filter-table {
@@ -71,7 +71,7 @@ html, body, #mainBG, .hidden-scrollbar {
     width: 90px;
 }
 
-legend {
+.card-title {
     font-size: 11px;
     font-weight: bold;
     color: #2563eb;
@@ -841,7 +841,7 @@ function change()
 <div id="mainBG" class="homeContent" data-type="background">
 <div class="hidden-scrollbar">
 
-<table width="100%">
+<table >
 <tr>
 
 <!-- ================= LEFT PANEL (20%) ================= -->
@@ -863,7 +863,7 @@ function change()
         <!-- ===== TYPE ===== -->
         <div class="filter-card">
             <table class="filter-table">
-                <tr>
+                <tr> <div class="card-title">In Details</div>
                     <td class="label-cell">Type</td>
                     <td>
                         <select id="eorc" name="eorc" onchange="change()">
@@ -874,15 +874,12 @@ function change()
                     </td>
                 </tr>
             </table>
-        </div>
-
-        <!-- ===== IN DETAILS ===== -->
-        <div class="filter-card">
-            <div class="card-title">In Details</div>
+      
+           
             <table class="filter-table">
                 <tr>
                     <td class="label-cell">Driver</td>
-                    <td><input type="text" id="indriver" name="indriver" readonly
+                    <td><input type="text" id="indriver" name="indriver" placeholder="Press F3 Search"
                                value='<s:property value="indriver"/>'></td>
                 </tr>
 
@@ -943,7 +940,7 @@ function change()
                     <td class="label-cell">Fleet</td>
                     <td>
                         <input type="text" id="outfleet" name="outfleet"
-                               readonly placeholder="Press F3 Search"
+                                placeholder="Press F3 Search"
                                onkeydown="getvehinfo(event)"
                                value='<s:property value="outfleet"/>'>
                     </td>
