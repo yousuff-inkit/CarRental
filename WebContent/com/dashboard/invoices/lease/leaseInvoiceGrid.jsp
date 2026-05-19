@@ -138,7 +138,7 @@ $(document).ready(function () {
     $("#leaseInvoiceGrid").jqxGrid(
     {
         width: '98%',
-        height: 510,
+        height: 630,
         source: dataAdapter,
         showaggregates:true,
         filtermode:'excel',
