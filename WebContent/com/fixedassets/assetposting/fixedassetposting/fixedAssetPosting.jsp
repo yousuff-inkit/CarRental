@@ -174,10 +174,11 @@ body {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		 $('#btnEdit').attr('disabled', true );
-         $('#btnDelete').attr('disabled', true );
-         $('#btnAttach').attr('disabled', true );
-		 
+         // Disable Approval, Edit, Attach, and Delete buttons
+         $('#btnApprove, #btnApproval, #btnEdit, #btnAttach, #btnAttachment, #attachBtn, #btnDelete').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
+		
          /* COMPACT DATE/TIME SIZING */
 		 $("#jqxFixedAssetDepreciationPostingDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
          
@@ -194,25 +195,25 @@ body {
 	});
 	
 	function getLastMonthDepreciation(date){
-  		var x = new XMLHttpRequest();
-  		x.onreadystatechange = function() {
-  			if (x.readyState == 4 && x.status == 200) {
-  				var items = x.responseText;
-  				 items = items.split('***');
-  			     $('#txtchkgridload').val(items[0]);
-  			     $('#txtchkdate').val(items[1]);
-  			     
-  			     document.getElementById("errormsg").innerText="Depreciation done till "+items[2]+".";
-  			     
-  			   if(parseInt($('#txtchkdate').val())==0){
-  				  if(parseInt($('#txtchkgridload').val())==1){
-  					  $("#overlay, #PleaseWait").show();
-  					  $("#vehiclesDetailsDiv").load("assetDetailsGrid.jsp?check=1&deprdate="+date+"&branch="+document.getElementById("brchName").value);
-  					  $('#txtchkgridload').val('');
-  					  $('#txtgridload').val(1);
-  					  $('#btnExcelExporter').show();
-  				  }else if(parseInt($('#txtchkgridload').val())==0) {
-  						$.messager.alert('Message','Depreciation Pending for Last-Month.','warning');
+ 		var x = new XMLHttpRequest();
+ 		x.onreadystatechange = function() {
+ 			if (x.readyState == 4 && x.status == 200) {
+ 				var items = x.responseText;
+ 				 items = items.split('***');
+ 			     $('#txtchkgridload').val(items[0]);
+ 			     $('#txtchkdate').val(items[1]);
+ 			     
+ 			     document.getElementById("errormsg").innerText="Depreciation done till "+items[2]+".";
+ 			     
+ 			   if(parseInt($('#txtchkdate').val())==0){
+ 				  if(parseInt($('#txtchkgridload').val())==1){
+ 					  $("#overlay, #PleaseWait").show();
+ 					  $("#vehiclesDetailsDiv").load("assetDetailsGrid.jsp?check=1&deprdate="+date+"&branch="+document.getElementById("brchName").value);
+ 					  $('#txtchkgridload').val('');
+ 					  $('#txtgridload').val(1);
+ 					  $('#btnExcelExporter').show();
+ 				  }else if(parseInt($('#txtchkgridload').val())==0) {
+ 						$.messager.alert('Message','Depreciation Pending for Last-Month.','warning');
 						$("#jqxvehicleDetails").jqxGrid('clear'); 
                         $("#jqxvehicleDetails").jqxGrid('addrow', null, {});
                         $("#jqxVehicleAccounts").jqxGrid('clear');
@@ -220,8 +221,8 @@ body {
 						$('#txtdeprtotal').val('');
 						$('#txtdrtotal').val('');
 						$('#txtcrtotal').val('');
-  						return;
-  					}else if(parseInt($('#txtchkgridload').val())==2) {
+ 						return;
+ 					}else if(parseInt($('#txtchkgridload').val())==2) {
 							$.messager.alert('Message','Depreciation Already Done.','warning');
 						$("#jqxvehicleDetails").jqxGrid('clear'); 
                         $("#jqxvehicleDetails").jqxGrid('addrow', null, {});
@@ -232,8 +233,8 @@ body {
 						$('#txtcrtotal').val('');
 							return;
 					}
-  			  }else {
-  						$.messager.alert('Message','Depreciation date should be Month-End.','warning');
+ 			  }else {
+ 						$.messager.alert('Message','Depreciation date should be Month-End.','warning');
 						$("#jqxvehicleDetails").jqxGrid('clear'); 
                         $("#jqxvehicleDetails").jqxGrid('addrow', null, {});
                         $("#jqxVehicleAccounts").jqxGrid('clear');
@@ -241,12 +242,12 @@ body {
 						$('#txtdeprtotal').val('');
 						$('#txtdrtotal').val('');
 						$('#txtcrtotal').val('');
-  						return;
-  					}
-  		}
+ 						return;
+ 					}
  		}
- 		x.open("GET", "getLastMonthDepreciation.jsp?date="+date+"&branch="+document.getElementById("brchName").value, true);
- 		x.send();
+		}
+		x.open("GET", "getLastMonthDepreciation.jsp?date="+date+"&branch="+document.getElementById("brchName").value, true);
+		x.send();
     }
 	
 	 function funReadOnly(){
@@ -327,8 +328,8 @@ body {
 				 }
 				}
 	 		 $('#gridlength').val(length);
- 		   /* Vehicle Details Grid  Saving Ends*/	
- 		   
+		   /* Vehicle Details Grid  Saving Ends*/	
+		   
 	 		/* Account Details Grid Saving */
     	 var rows = $("#jqxVehicleAccounts").jqxGrid('getrows');
     	 var journallength=0;
@@ -368,7 +369,7 @@ body {
 			 }
 			 $('#journalgridlength').val(journallength);
 	 		/* Account Details Grid Saving Ends */
- 		   
+		   
     		return 1;
 	} 
   

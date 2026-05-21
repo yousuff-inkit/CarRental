@@ -169,12 +169,19 @@ body {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );$('#btnExcel').attr('disabled', true );
 		 
+         // Disable Approval, Edit, Attach, and Delete buttons
+         $('#btnApprove, #btnApproval, #btnEdit, #btnAttach, #btnAttachment, #attachBtn, #btnDelete').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
+            
+         // Maintain existing Excel button disable
+         $('#btnExcel').attr('disabled', true );
+		
          /* COMPACT DATE SIZING */
 		 $("#leaveTravelDisbursementDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
 		 $("#notifyDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
-		 
+		
          /* Force internal alignment AFTER render */
          setTimeout(function () {
              $(".jqx-datetimeinput").find("input").css({
@@ -185,7 +192,7 @@ body {
          }, 0);
 
 		 $('#employeeDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Employees Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
- 		 $('#employeeDetailsWindow').jqxWindow('close');
+		 $('#employeeDetailsWindow').jqxWindow('close');
 	    
 	     $('#txtemployeeid').dblclick(function(){
 	 			employeeSearchContent("employeeDetailsSearch.jsp");
@@ -202,160 +209,160 @@ body {
 	}
 	
 	function getLeaveTravelDetails(a,b){
- 		var x = new XMLHttpRequest();
- 		x.onreadystatechange = function() {
- 			if (x.readyState == 4 && x.status == 200) {
- 				var items = x.responseText;
- 				items = items.split('####');
- 				var leavesalaryeligibledaysItems = items[0];
- 				var leavesalarypostedItems  = items[1];
- 				var leavesalarycurrentProvisionItems = items[2];
- 				var leavesalarycalculatedItems = items[3];
- 				var travelstobepostedItems = items[4];
- 			
- 			    funRoundAmt(leavesalaryeligibledaysItems,"txtalreadyprovisioneligibledays");
- 			    funRoundAmt(leavesalarypostedItems,"txtleavesalaryalreadyprovided");
- 			    funRoundAmt(leavesalarycurrentProvisionItems,"txtcurrentprovisioneligibledays");
- 			    funRoundAmt(leavesalarycalculatedItems,"txtleavesalarycalculated");
- 			    funRoundAmt(travelstobepostedItems,"txttravelalreadyposted");
- 			    funRoundAmt(leavesalarycalculatedItems,"txtleavesalarytobepaid");
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				items = items.split('####');
+				var leavesalaryeligibledaysItems = items[0];
+				var leavesalarypostedItems  = items[1];
+				var leavesalarycurrentProvisionItems = items[2];
+				var leavesalarycalculatedItems = items[3];
+				var travelstobepostedItems = items[4];
+			
+			    funRoundAmt(leavesalaryeligibledaysItems,"txtalreadyprovisioneligibledays");
+			    funRoundAmt(leavesalarypostedItems,"txtleavesalaryalreadyprovided");
+			    funRoundAmt(leavesalarycurrentProvisionItems,"txtcurrentprovisioneligibledays");
+			    funRoundAmt(leavesalarycalculatedItems,"txtleavesalarycalculated");
+			    funRoundAmt(travelstobepostedItems,"txttravelalreadyposted");
+			    funRoundAmt(leavesalarycalculatedItems,"txtleavesalarytobepaid");
 			    funRoundAmt(travelstobepostedItems,"txttravelcurrentexpenses");
- 			    
+			  
 			    funRoundAmt(parseFloat($('#txtalreadyprovisioneligibledays').val())+parseFloat($('#txtcurrentprovisioneligibledays').val()),"txttotaleligibledays");
 			    funRoundAmt(parseFloat($('#txtalreadyprovisioneligibledays').val())+parseFloat($('#txtcurrentprovisioneligibledays').val()),"txtleavesalarypaideligibledays");
 			    funRoundAmt(parseFloat($('#txtleavesalarycalculated').val())-parseFloat($('#txtleavesalaryalreadyprovided').val()),"txtleavesalarynettobeprovided");
 			    funRoundAmt("0.00","txttravelticketvalue");document.getElementById("txtleavesalarytobepaid").focus();
- 			    $("#overlay, #PleaseWait").hide();
- 			  
- 		}
- 		}
- 		x.open("GET", "getLeaveTravelDetails.jsp?empid="+a+"&date="+b, true);
- 		x.send();
+			    $("#overlay, #PleaseWait").hide();
+			  
+		}
+		}
+		x.open("GET", "getLeaveTravelDetails.jsp?empid="+a+"&date="+b, true);
+		x.send();
     }
 	
 	function getLeavePaidEligibleDays(a,b){
- 		var x = new XMLHttpRequest();
- 		x.onreadystatechange = function() {
- 			if (x.readyState == 4 && x.status == 200) {
- 				var items = x.responseText;
- 				items = items.split('####');
- 				var leavesalarypaideligibledaysItems = items[0];
- 			    
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				items = items.split('####');
+				var leavesalarypaideligibledaysItems = items[0];
+			    
 			    funRoundAmt(leavesalarypaideligibledaysItems,"txtleavesalarypaideligibledays");
- 			    $("#overlay, #PleaseWait").hide();
- 			  
- 		}
- 		}
- 		x.open("GET", "getLeavePaidEligibleDays.jsp?empid="+a+"&leavesalarypaid="+b, true);
- 		x.send();
+			    $("#overlay, #PleaseWait").hide();
+			  
+		}
+		}
+		x.open("GET", "getLeavePaidEligibleDays.jsp?empid="+a+"&leavesalarypaid="+b, true);
+		x.send();
     }
   
 	function getAccounts(a,b){
- 		var x = new XMLHttpRequest();
- 		x.onreadystatechange = function() {
- 			if (x.readyState == 4 && x.status == 200) {
- 				var items = x.responseText;
- 				items = items.split('####');
- 				var docNoItems = items[0];
- 				var accountIdItems  = items[1];
- 				var accountItems = items[2];
- 				var accountTypeItems = items[3];
- 				var accountCurIdItems  = items[4];
- 				var accountRateItems = items[5];
- 				var accCurrTypeItems = items[6];
- 				
- 				var lsexpensedocNoItems = items[7];
- 				var lsexpenseaccountIdItems  = items[8];
- 				var lsexpenseaccountItems = items[9];
- 				var lsexpenseaccountTypeItems = items[10];
- 				var lsexpenseaccountCurIdItems  = items[11];
- 				var lsexpenseaccountRateItems = items[12];
- 				var lsexpenseaccCurrTypeItems = items[13];
- 				
- 				var lsprovisiondocNoItems = items[14];
- 				var lsprovisionaccountIdItems  = items[15];
- 				var lsprovisionaccountItems = items[16];
- 				var lsprovisionaccountTypeItems = items[17];
- 				var lsprovisionaccountCurIdItems  = items[18];
- 				var lsprovisionaccountRateItems = items[19];
- 				var lsprovisionaccCurrTypeItems = items[20];
- 				
- 				var travelexpensedocNoItems = items[21];
- 				var travelexpenseaccountIdItems  = items[22];
- 				var travelexpenseaccountItems = items[23];
- 				var travelexpenseaccountTypeItems = items[24];
- 				var travelexpenseaccountCurIdItems  = items[25];
- 				var travelexpenseaccountRateItems = items[26];
- 				var travelexpenseaccCurrTypeItems = items[27];
- 				
- 				var travelprovisiondocNoItems = items[28];
- 				var travelprovisionaccountIdItems  = items[29];
- 				var travelprovisionaccountItems = items[30];
- 				var travelprovisionaccountTypeItems = items[31];
- 				var travelprovisionaccountCurIdItems  = items[32];
- 				var travelprovisionaccountRateItems = items[33];
- 				var travelprovisionaccCurrTypeItems = items[34];
- 				
- 				var lsexpensebalancedocNoItems = items[35];
- 				var lsexpensebalanceaccountIdItems  = items[36];
- 				var lsexpensebalanceaccountItems = items[37];
- 				var lsexpensebalanceaccountTypeItems = items[38];
- 				var lsexpensebalanceaccountCurIdItems  = items[39];
- 				var lsexpensebalanceaccountRateItems = items[40];
- 				var lsexpensebalanceaccCurrTypeItems = items[41];
- 			
- 			    $('#txtempaccdocno').val(docNoItems);	
- 			    $('#txtempaccid').val(accountIdItems);
- 			    $('#txtempaccname').val(accountItems);
- 			 	$('#txtempaccatype').val(accountTypeItems);
+		var x = new XMLHttpRequest();
+		x.onreadystatechange = function() {
+			if (x.readyState == 4 && x.status == 200) {
+				var items = x.responseText;
+				items = items.split('####');
+				var docNoItems = items[0];
+				var accountIdItems  = items[1];
+				var accountItems = items[2];
+				var accountTypeItems = items[3];
+				var accountCurIdItems  = items[4];
+				var accountRateItems = items[5];
+				var accCurrTypeItems = items[6];
+				
+				var lsexpensedocNoItems = items[7];
+				var lsexpenseaccountIdItems  = items[8];
+				var lsexpenseaccountItems = items[9];
+				var lsexpenseaccountTypeItems = items[10];
+				var lsexpenseaccountCurIdItems  = items[11];
+				var lsexpenseaccountRateItems = items[12];
+				var lsexpenseaccCurrTypeItems = items[13];
+				
+				var lsprovisiondocNoItems = items[14];
+				var lsprovisionaccountIdItems  = items[15];
+				var lsprovisionaccountItems = items[16];
+				var lsprovisionaccountTypeItems = items[17];
+				var lsprovisionaccountCurIdItems  = items[18];
+				var lsprovisionaccountRateItems = items[19];
+				var lsprovisionaccCurrTypeItems = items[20];
+				
+				var travelexpensedocNoItems = items[21];
+				var travelexpenseaccountIdItems  = items[22];
+				var travelexpenseaccountItems = items[23];
+				var travelexpenseaccountTypeItems = items[24];
+				var travelexpenseaccountCurIdItems  = items[25];
+				var travelexpenseaccountRateItems = items[26];
+				var travelexpenseaccCurrTypeItems = items[27];
+				
+				var travelprovisiondocNoItems = items[28];
+				var travelprovisionaccountIdItems  = items[29];
+				var travelprovisionaccountItems = items[30];
+				var travelprovisionaccountTypeItems = items[31];
+				var travelprovisionaccountCurIdItems  = items[32];
+				var travelprovisionaccountRateItems = items[33];
+				var travelprovisionaccCurrTypeItems = items[34];
+				
+				var lsexpensebalancedocNoItems = items[35];
+				var lsexpensebalanceaccountIdItems  = items[36];
+				var lsexpensebalanceaccountItems = items[37];
+				var lsexpensebalanceaccountTypeItems = items[38];
+				var lsexpensebalanceaccountCurIdItems  = items[39];
+				var lsexpensebalanceaccountRateItems = items[40];
+				var lsexpensebalanceaccCurrTypeItems = items[41];
+			
+			    $('#txtempaccdocno').val(docNoItems);	
+			    $('#txtempaccid').val(accountIdItems);
+			    $('#txtempaccname').val(accountItems);
+			 	$('#txtempaccatype').val(accountTypeItems);
 			    $('#txtempacccurid').val(accountCurIdItems);
 			    $('#txtempaccrate').val(accountRateItems);
 			    $('#txtempacctype').val(accCurrTypeItems);
 			    
 			    $('#txtlsexpenseaccdocno').val(lsexpensedocNoItems);	
- 			    $('#txtlsexpenseaccid').val(lsexpenseaccountIdItems);
- 			    $('#txtlsexpenseaccname').val(lsexpenseaccountItems);
- 			 	$('#txtlsexpenseaccatype').val(lsexpenseaccountTypeItems);
+			    $('#txtlsexpenseaccid').val(lsexpenseaccountIdItems);
+			    $('#txtlsexpenseaccname').val(lsexpenseaccountItems);
+			 	$('#txtlsexpenseaccatype').val(lsexpenseaccountTypeItems);
 			    $('#txtlsexpenseacccurid').val(lsexpenseaccountCurIdItems);
 			    $('#txtlsexpenseaccrate').val(lsexpenseaccountRateItems);
 			    $('#txtlsexpenseacctype').val(lsexpenseaccCurrTypeItems);
 			    
 			    $('#txtlsprovisionaccdocno').val(lsprovisiondocNoItems);	
- 			    $('#txtlsprovisionaccid').val(lsprovisionaccountIdItems);
- 			    $('#txtlsprovisionaccname').val(lsprovisionaccountItems);
- 			 	$('#txtlsprovisionaccatype').val(lsprovisionaccountTypeItems);
+			    $('#txtlsprovisionaccid').val(lsprovisionaccountIdItems);
+			    $('#txtlsprovisionaccname').val(lsprovisionaccountItems);
+			 	$('#txtlsprovisionaccatype').val(lsprovisionaccountTypeItems);
 			    $('#txtlsprovisionacccurid').val(lsprovisionaccountCurIdItems);
 			    $('#txtlsprovisionaccrate').val(lsprovisionaccountRateItems);
 			    $('#txtlsprovisionacctype').val(lsprovisionaccCurrTypeItems);
 			    
 			    $('#txttravelexpenseaccdocno').val(travelexpensedocNoItems);	
- 			    $('#txttravelexpenseaccid').val(travelexpenseaccountIdItems);
- 			    $('#txttravelexpenseaccname').val(travelexpenseaccountItems);
- 			 	$('#txttravelexpenseaccatype').val(travelexpenseaccountTypeItems);
+			    $('#txttravelexpenseaccid').val(travelexpenseaccountIdItems);
+			    $('#txttravelexpenseaccname').val(travelexpenseaccountItems);
+			 	$('#txttravelexpenseaccatype').val(travelexpenseaccountTypeItems);
 			    $('#txttravelexpenseacccurid').val(travelexpenseaccountCurIdItems);
 			    $('#txttravelexpenseaccrate').val(travelexpenseaccountRateItems);
 			    $('#txttravelexpenseacctype').val(travelexpenseaccCurrTypeItems);
 			    
 			    $('#txttravelprovisionaccdocno').val(travelprovisiondocNoItems);	
- 			    $('#txttravelprovisionaccid').val(travelprovisionaccountIdItems);
- 			    $('#txttravelprovisionaccname').val(travelprovisionaccountItems);
- 			 	$('#txttravelprovisionaccatype').val(travelprovisionaccountTypeItems);
+			    $('#txttravelprovisionaccid').val(travelprovisionaccountIdItems);
+			    $('#txttravelprovisionaccname').val(travelprovisionaccountItems);
+			 	$('#txttravelprovisionaccatype').val(travelprovisionaccountTypeItems);
 			    $('#txttravelprovisionacccurid').val(travelprovisionaccountCurIdItems);
 			    $('#txttravelprovisionaccrate').val(travelprovisionaccountRateItems);
 			    $('#txttravelprovisionacctype').val(travelprovisionaccCurrTypeItems);
 			    
 			    $('#txtlsexpensebalanceaccdocno').val(lsexpensebalancedocNoItems);	
- 			    $('#txtlsexpensebalanceaccid').val(lsexpensebalanceaccountIdItems);
- 			    $('#txtlsexpensebalanceaccname').val(lsexpensebalanceaccountItems);
- 			 	$('#txtlsexpensebalanceaccatype').val(lsexpensebalanceaccountTypeItems);
+			    $('#txtlsexpensebalanceaccid').val(lsexpensebalanceaccountIdItems);
+			    $('#txtlsexpensebalanceaccname').val(lsexpensebalanceaccountItems);
+			 	$('#txtlsexpensebalanceaccatype').val(lsexpensebalanceaccountTypeItems);
 			    $('#txtlsexpensebalanceacccurid').val(lsexpensebalanceaccountCurIdItems);
 			    $('#txtlsexpensebalanceaccrate').val(lsexpensebalanceaccountRateItems);
 			    $('#txtlsexpensebalanceacctype').val(lsexpensebalanceaccCurrTypeItems);
 			    
- 		}
- 		}
- 		x.open("GET", "getAccounts.jsp?empId="+a+"&date="+b, true);
- 		x.send();
+		}
+		}
+		x.open("GET", "getAccounts.jsp?empId="+a+"&date="+b, true);
+		x.send();
     }
 	
 	function getLastTerminalBenefitsDone(date){
@@ -422,7 +429,7 @@ body {
      function getEmployeeDetails(event){
         var x= event.keyCode;
         if(x==114){
-    	  employeeSearchContent("employeeDetailsSearch.jsp");
+      	  employeeSearchContent("employeeDetailsSearch.jsp");
         }
      }
      
@@ -446,7 +453,7 @@ body {
 	 }
      
      function funLeaveSalaryToBePaid(){
-    	  $("#leaveTravelDisbursementGridID").jqxGrid('clear');
+      	  $("#leaveTravelDisbursementGridID").jqxGrid('clear');
 		  $("#leaveTravelDisbursementGridID").jqxGrid({ disabled: true});
 		  funRoundAmt(0,"txtdrtotal");
 		  funRoundAmt(0,"txtcrtotal");
@@ -667,7 +674,7 @@ body {
 			$('#chckpartialpayment').attr('disabled', true);
 			$('#btnProcessing').hide();$('#btnCalculate').hide();$('#btnExcelExporter').hide();
 	 }
-	 
+	
 	 function funRemoveReadOnly(){
 		 	$('#btnProcessing').show();$('#btnCalculate').show();$('#btnExcelExporter').hide();
 		 	$('#frmleaveTravelDisbursement input').attr('readonly', false );
@@ -702,13 +709,13 @@ body {
 			}
 			
 	 }
-	 
+	
 	 function funSearchLoad(){
 		 changeContent('ltdMainSearch.jsp'); 
 	 }
 		
 	 function funChkButton() { }
-	 
+	
 	 function funFocus(){
 	    	$('#leaveTravelDisbursementDate').jqxDateTimeInput('focus'); 	    		
 	 }
