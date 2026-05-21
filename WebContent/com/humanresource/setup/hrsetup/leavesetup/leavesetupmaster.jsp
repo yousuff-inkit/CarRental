@@ -184,10 +184,15 @@ form label.error {
 		$('#refSearchwindow').jqxWindow({ width: '60%', height: '62%',  maxHeight: '75%' ,maxWidth: '60%' , title: 'Ref No Search' ,position: { x: 150, y: 60 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
 		$('#refSearchwindow').jqxWindow('close');
 		
-		$('#btnCreate').attr('disabled', true);
-		$('#btnDelete').attr('disabled', true);
-		$('#btnSearch').attr('disabled', true);
-		$('#btnEdit').attr('disabled', true);
+		// Bulletproof disabling ALL buttons EXCEPT Close and Approval
+		$('#btnNew, #btnCreate, #btnSave, #btnEdit, #btnDelete, #btnSearch, #btnExcel, #btnPrint, #btnAttach, #btnAttachment, #attachBtn, #savebtn, #deltbtn').prop('disabled', true)
+			.css({'pointer-events': 'none', 'opacity': '0.5'})
+			.attr('tabindex', '-1');
+
+		// Keep strictly Close and Approval alive
+		$('#btnClose, #btnApprove, #btnApproval').prop('disabled', false)
+			.css({'pointer-events': 'auto', 'opacity': '1'})
+			.removeAttr('tabindex');
 		
 		$('#refno').dblclick(function(){
 			  $('#refSearchwindow').jqxWindow('open');
@@ -266,11 +271,11 @@ form label.error {
 	 function fundel() {
 		 var leavetype="";
 		 var rows = $("#leavesetupgrid").jqxGrid('getrows');      
- 		 for(var i=0;i<rows.length;i++){
+		 for(var i=0;i<rows.length;i++){
 		     if(parseInt(rows[i].checkclick)==1){
 		    	leavetype=rows[i].leavetype; 
 		     }
- 		 }
+		 }
 		 
          $.messager.confirm('Message', 'Do you want to delete all records of '+leavetype, function(r){
 	        	if(r==false) {

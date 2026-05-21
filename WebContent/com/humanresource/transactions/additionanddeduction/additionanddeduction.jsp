@@ -162,6 +162,11 @@ input[type="file"] {
 
  $(document).ready(function () {
      
+      // Disable ONLY the approval button(s)
+      $('#btnApprove, #btnApproval').prop('disabled', true)
+         .css({'pointer-events': 'none', 'opacity': '0.5'})
+         .attr('tabindex', '-1');
+     
       /* Formatted jqxDateTimeInput heights to match modern UI 24px */
       $("#masterdate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy"});   
       
@@ -291,7 +296,7 @@ input[type="file"] {
                }
                $('#descdetailsGridlenght').val(length);
            /* Addition and Deduction Grid  Saving Ends*/
-            
+           
            document.getElementById("errormsg").innerText="";
            
         return 1;

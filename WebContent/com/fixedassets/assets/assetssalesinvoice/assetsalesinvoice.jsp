@@ -1,7 +1,7 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
- 
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
+<% String contextPath=request.getContextPath();%>
 <head>
 <s:head/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <jsp:include page="../../../../includes.jsp"></jsp:include>
-
 
 <style type="text/css">
 body {
@@ -156,8 +155,10 @@ legend {
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-	//document.getElementById("btnEdit").disabled=true;  
-	//document.getElementById("btnDelete").disabled=true;
+    // Disable Approval button
+    $('#btnApprove, #btnApproval').prop('disabled', true)
+        .css({'pointer-events': 'none', 'opacity': '0.5'});
+
 	 $('#clientwindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '53%' ,maxWidth: '50%' , title: 'Client Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
 	   $('#clientwindow').jqxWindow('close');
 	   $('#assetwindow').jqxWindow({ width: '30%', height: '58%',  maxHeight: '58%' ,maxWidth: '50%' , title: 'Asset Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
@@ -199,26 +200,20 @@ function funSearchLoad(){
 	 changeContent('mainSearch.jsp', $('#window')); 
 }
 function clientSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
     $('#clientwindow').jqxWindow('setContent', data);
 
 }); 
 }
 function assetSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
     $('#assetwindow').jqxWindow('setContent', data);
 
 }); 
 }
 
 function detailSearchContent(url) {
-    //alert(url);
       $.get(url).done(function (data) {
-//alert(data);
     $('#detailwindow').jqxWindow('setContent', data);
 
 }); 
@@ -296,8 +291,6 @@ function funNotify(){
 		newTextBox.appendTo('form');
 		rowlength++;
 			}
-			
-			//alert("ddddd"+$("#test"+i).val());
 		}
 		
 		$('#gridlength').val(rowlength);
@@ -374,9 +367,9 @@ function funPrintBtn() {
 	}
 	 var url=document.URL;
 
-		 var reurl=url.split("com/");	 
+		 var reurl=url.split("com/");   
 	 	 var win= window.open(reurl[0]+"com/fixedassets/assets/assetssalesinvoice/printAssetsInvoice.action?docno="+document.getElementById("docno").value+"&trno="+document.getElementById("trno").value,"_blank","top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
-		 win.focus();      
+		 win.focus();       
 	 
 	 }
 
@@ -396,7 +389,7 @@ function funPrintBtn() {
   <tr>
     <td width="6%" align="right">Date</td>
     <td width="8%" align="left"><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-		
+        
   
     <td width="10%" align="right">Doc No</td>
     <td width="8%" align="left"><input type="text" name="vocno" id="vocno" value='<s:property value="vocno"/>' tabindex="-1"  readonly></td>

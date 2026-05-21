@@ -146,6 +146,11 @@ body {
 <script type="text/javascript">
 	$(document).ready(function() {
 		
+         // Disable ONLY the approval button(s)
+         $('#btnApprove, #btnApproval').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
+
          /* COMPACT DATE SIZING */
 		 $("#leaveRequestDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
 		 $("#fromDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
@@ -345,7 +350,7 @@ body {
 			$('#halfDayDate').jqxDateTimeInput({disabled: true});
 			$('#chckhalfday').attr('disabled', true);
 	 }
-	 
+	
 	 function funRemoveReadOnly(){
 			$('#frmLeaveRequest input').attr('readonly', false );
 			$('#frmLeaveRequest select').attr('disabled', false);
@@ -375,17 +380,17 @@ body {
 			}
 			
 	 }
-	 
+	
 	 function funSearchLoad(){
 		 changeContent('lrqMainSearch.jsp'); 
 	 }
 		
 	 function funChkButton() { }
-	 
+	
 	 function funFocus(){
 	    $('#leaveRequestDate').jqxDateTimeInput('focus'); 	    		
 	 }
-	 
+	
 	  $(function(){
 	        $('#frmLeaveRequest').validate({
 	                rules: {

@@ -158,10 +158,16 @@ body {
 
 <script type="text/javascript">
 $(document).ready(function () {
+
+     // Disable ONLY the approval button(s)
+     $('#btnApprove, #btnApproval').prop('disabled', true)
+        .css({'pointer-events': 'none', 'opacity': '0.5'})
+        .attr('tabindex', '-1');
+
      /* COMPACT DATE SIZING */
- 	 $("#masterdate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});    
- 	 $("#purchasedate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});  
-	 $("#warexpdate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});  
+     $("#masterdate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});    
+     $("#purchasedate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});  
+     $("#warexpdate").jqxDateTimeInput({ width: '120px', height: 24, formatString:"dd.MM.yyyy", theme: 'energyblue'});  
 
      /* Force internal alignment AFTER render */
      setTimeout(function () {
@@ -172,744 +178,744 @@ $(document).ready(function () {
          $(".jqx-datetimeinput").find(".jqx-action-button").css({"top": "0px", "height": "24px"});
      }, 0);
 
-	 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '60%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#accountDetailsWindow').jqxWindow('close');
-	 
-	 $('#fixaccountDetailsWindow').jqxWindow({width: '51%', height: '60%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#fixaccountDetailsWindow').jqxWindow('close');
-	 
-	    $('#supplieraccId').dblclick(function(){
-	    	   if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
-		 	    $('#accountDetailsWindow').jqxWindow('open');
-		 	    accountSearchContent('accountsDetailsSearch.jsp');
-		       }
-	  }); 
-	    
-	    $('#masterdate').on('change', function (event) {
-	        var maindate = $('#masterdate').jqxDateTimeInput('getDate');
-	      	 if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
-	        funDateInPeriod(maindate);
-	      	 }
-	       });
-	    
-	    $('#fixedassetaccId').dblclick(function(){
-	    	   if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
-		 	    $('#fixaccountDetailsWindow').jqxWindow('open');
-		 	    accountSearchContent1('depaccountsDetailsSearch.jsp?value='+1);
-		       }
-	  }); 
-	    $('#accdepraccId').dblclick(function(){
-	    	   if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
-		 	    $('#fixaccountDetailsWindow').jqxWindow('open');
-		 	    accountSearchContent1('depaccountsDetailsSearch.jsp?value='+2);
-		       }
-	  }); 
-	    $('#depraccId').dblclick(function(){
-	    	   if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
-		 	    $('#fixaccountDetailsWindow').jqxWindow('open');
-		 	    accountSearchContent1('depaccountsDetailsSearch.jsp?value='+3);
-		       }
-	  }); 
-	 
-		  $('#purchasedate').on('change', function (event) {
-		      	 if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
-			   var purchsedate=new Date($('#purchasedate').jqxDateTimeInput('getDate'));     
-			  var masterdate=new Date($('#masterdate').jqxDateTimeInput('getDate')); 
-			  
-			   if(purchsedate>masterdate){
-			   document.getElementById("errormsg").innerText="Purchase Date Cannot be Greater Than Document Date";
-			   $('#purchasedate').jqxDateTimeInput('focus'); 
-			   return false;
-			  }   
-			   else{
-			   document.getElementById("errormsg").innerText="";  
-			   }
-			  }
-		       });
-  	 
+     $('#accountDetailsWindow').jqxWindow({width: '51%', height: '60%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+     $('#accountDetailsWindow').jqxWindow('close');
+    
+     $('#fixaccountDetailsWindow').jqxWindow({width: '51%', height: '60%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+     $('#fixaccountDetailsWindow').jqxWindow('close');
+    
+    $('#supplieraccId').dblclick(function(){
+           if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
+             $('#accountDetailsWindow').jqxWindow('open');
+             accountSearchContent('accountsDetailsSearch.jsp');
+           }
+    }); 
+        
+    $('#masterdate').on('change', function (event) {
+        var maindate = $('#masterdate').jqxDateTimeInput('getDate');
+         if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
+        funDateInPeriod(maindate);
+         }
+       });
+        
+    $('#fixedassetaccId').dblclick(function(){
+           if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
+             $('#fixaccountDetailsWindow').jqxWindow('open');
+             accountSearchContent1('depaccountsDetailsSearch.jsp?value='+1);
+           }
+    }); 
+    $('#accdepraccId').dblclick(function(){
+           if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
+             $('#fixaccountDetailsWindow').jqxWindow('open');
+             accountSearchContent1('depaccountsDetailsSearch.jsp?value='+2);
+           }
+    }); 
+    $('#depraccId').dblclick(function(){
+           if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
+             $('#fixaccountDetailsWindow').jqxWindow('open');
+             accountSearchContent1('depaccountsDetailsSearch.jsp?value='+3);
+           }
+    }); 
+    
+      $('#purchasedate').on('change', function (event) {
+             if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
+           var purchsedate=new Date($('#purchasedate').jqxDateTimeInput('getDate'));     
+          var masterdate=new Date($('#masterdate').jqxDateTimeInput('getDate')); 
+          
+           if(purchsedate>masterdate){
+           document.getElementById("errormsg").innerText="Purchase Date Cannot be Greater Than Document Date";
+           $('#purchasedate').jqxDateTimeInput('focus'); 
+           return false;
+          }   
+           else{
+           document.getElementById("errormsg").innerText="";  
+           }
+          }
+           });
+    
 });
 
 function getaccountdetails1(value){
-	  if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
-	 var x= event.keyCode;
-	 if(x==114){
-	  $('#fixaccountDetailsWindow').jqxWindow('open');
-	 accountSearchContent1('depaccountsDetailsSearch.jsp?value='+value);    }
-	 else{
-		 }
+      if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
+     var x= event.keyCode;
+     if(x==114){
+      $('#fixaccountDetailsWindow').jqxWindow('open');
+     accountSearchContent1('depaccountsDetailsSearch.jsp?value='+value);    }
+     else{
+         }
     }
 }  
-	 
+    
 function getaccountdetails(event){
-	  if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
-	 var x= event.keyCode;
-	 if(x==114){
-	  $('#accountDetailsWindow').jqxWindow('open');
-	 accountSearchContent('accountsDetailsSearch.jsp');    }
-	 else{
-		 }
+      if($('#mode').val()=="A" || $('#mode').val()=="E" ) {
+     var x= event.keyCode;
+     if(x==114){
+      $('#accountDetailsWindow').jqxWindow('open');
+     accountSearchContent('accountsDetailsSearch.jsp');    }
+     else{
+         }
   }
 }  
-	 
+    
 function accountSearchContent1(url) {
     $.get(url).done(function (data) {
   $('#fixaccountDetailsWindow').jqxWindow('setContent', data);
-	}); 
-	}
-	 
+    }); 
+    }
+    
 function accountSearchContent(url) {
        $.get(url).done(function (data) {
      $('#accountDetailsWindow').jqxWindow('setContent', data);
-	}); 
-	}
+    }); 
+    }
 
 function funReset(){ }
 
-function funReadOnly(){ 	
-	$('#frmassetmastrer input').attr('readonly',true);   
-	$('#frmassetmastrer select').attr('disabled',true);  
-	$('#warexpdate').jqxDateTimeInput({ disabled: true});
-	$('#masterdate').jqxDateTimeInput({ disabled: true});
-	$('#purchasedate').jqxDateTimeInput({ disabled: true});
-	$('#subgriddis').attr('disabled',true); 
-	$('#opening').attr('disabled',true); 
+function funReadOnly(){     
+    $('#frmassetmastrer input').attr('readonly',true);   
+    $('#frmassetmastrer select').attr('disabled',true);  
+    $('#warexpdate').jqxDateTimeInput({ disabled: true});
+    $('#masterdate').jqxDateTimeInput({ disabled: true});
+    $('#purchasedate').jqxDateTimeInput({ disabled: true});
+    $('#subgriddis').attr('disabled',true); 
+    $('#opening').attr('disabled',true); 
 }
 
 function funRemoveReadOnly(){
-	$('#frmassetmastrer input').attr('readonly',false);  
-	$('#frmassetmastrer select').attr('disabled',false); 
-	$('#subgriddis').attr('disabled',false); 
-	$('#opening').attr('disabled',false); 
-	$('#accumdepr').attr('disabled',true); 
-	$('#docno').attr('readonly',true);  
-	$('#warexpdate').jqxDateTimeInput({ disabled: false});
-	$('#masterdate').jqxDateTimeInput({ disabled: false});
-	$('#purchasedate').jqxDateTimeInput({ disabled: false});
-	
-	$('#fixedassetaccId').attr('readonly',true);  
-	$('#accdepraccId').attr('readonly',true);  
-	$('#depraccId').attr('readonly',true);  
-	
-	$('#fixedassetaccName').attr('readonly',true);  
-	$('#accdepraccIdName').attr('readonly',true);  
-	
-	 $('#supplieraccId').attr('readonly',true);  
-	 $('#supplieraccName').attr('readonly',true);  
-	   
-	if ($("#mode").val() == "A") {
-		$('#subdetail').hide();
-		$('#freespace').show();
-		$('#accumdepr').attr('disabled',true); 
-		
-		 $('#warexpdate').val(new Date());
-		 $('#masterdate').val(new Date());
-		 $('#purchasedate').val(new Date());
-	     $("#jqxsubdetails").jqxGrid('clear');
-	    $("#jqxsubdetails").jqxGrid('addrow', null, {});
-	    $("#jqxsubdetails").jqxGrid('addrow', null, {});
-	    $("#jqxsubdetails").jqxGrid('addrow', null, {});
-	    
-		document.getElementById("masteredit").value="";
-	   }
-	
-	if($('#mode').val()=='E') {
-				if(document.getElementById("openingval").value==1) {
-				document.getElementById("opening").checked =true;
-				$('#accumdepr').attr('disabled',false); 
-				$('#accumdepr').attr('readonly',false);
-				}
-			else {
-				document.getElementById("opening").checked =false;
-				$('#accumdepr').attr('disabled',true); 
-				}
-				
-				var rows = $('#jqxsubdetails').jqxGrid('getrows');
-		         var rowlength= rows.length;
-		         if (rowlength == 0) {
-		             $("#jqxsubdetails").jqxGrid('addrow', null, {});	
-		             $("#jqxsubdetails").jqxGrid('addrow', null, {});	
-		             $("#jqxsubdetails").jqxGrid('addrow', null, {});	
-		             }	
-		         else {
-		         	 $("#jqxsubdetails").jqxGrid('addrow', null, {});	
-		         	 }
-				
-			funchkforedit(document.getElementById("srno").value);	
-	}
-	
-	if($('#mode').val()=='D') {
-		$('#frmassetmastrer input').attr('readonly',false);  
-		$('#frmassetmastrer select').attr('disabled',false); 
-		$('#warexpdate').jqxDateTimeInput({ disabled: false});
-		$('#masterdate').jqxDateTimeInput({ disabled: false});
-		$('#purchasedate').jqxDateTimeInput({ disabled: false});
-		$('#accumdepr').attr('disabled',false); 
-		
-		funchkfordel(document.getElementById("srno").value);	
-		funReadOnly();
-		exit();
+    $('#frmassetmastrer input').attr('readonly',false);  
+    $('#frmassetmastrer select').attr('disabled',false); 
+    $('#subgriddis').attr('disabled',false); 
+    $('#opening').attr('disabled',false); 
+    $('#accumdepr').attr('disabled',true); 
+    $('#docno').attr('readonly',true);  
+    $('#warexpdate').jqxDateTimeInput({ disabled: false});
+    $('#masterdate').jqxDateTimeInput({ disabled: false});
+    $('#purchasedate').jqxDateTimeInput({ disabled: false});
+    
+    $('#fixedassetaccId').attr('readonly',true);  
+    $('#accdepraccId').attr('readonly',true);  
+    $('#depraccId').attr('readonly',true);  
+    
+    $('#fixedassetaccName').attr('readonly',true);  
+    $('#accdepraccIdName').attr('readonly',true);  
+    
+     $('#supplieraccId').attr('readonly',true);  
+     $('#supplieraccName').attr('readonly',true);  
+       
+    if ($("#mode").val() == "A") {
+        $('#subdetail').hide();
+        $('#freespace').show();
+        $('#accumdepr').attr('disabled',true); 
+        
+         $('#warexpdate').val(new Date());
+         $('#masterdate').val(new Date());
+         $('#purchasedate').val(new Date());
+         $("#jqxsubdetails").jqxGrid('clear');
+        $("#jqxsubdetails").jqxGrid('addrow', null, {});
+        $("#jqxsubdetails").jqxGrid('addrow', null, {});
+        $("#jqxsubdetails").jqxGrid('addrow', null, {});
+        
+        document.getElementById("masteredit").value="";
+       }
+    
+    if($('#mode').val()=='E') {
+                if(document.getElementById("openingval").value==1) {
+                document.getElementById("opening").checked =true;
+                $('#accumdepr').attr('disabled',false); 
+                $('#accumdepr').attr('readonly',false);
+                }
+            else {
+                document.getElementById("opening").checked =false;
+                $('#accumdepr').attr('disabled',true); 
+                }
+                
+                var rows = $('#jqxsubdetails').jqxGrid('getrows');
+                 var rowlength= rows.length;
+                 if (rowlength == 0) {
+                     $("#jqxsubdetails").jqxGrid('addrow', null, {});   
+                     $("#jqxsubdetails").jqxGrid('addrow', null, {});   
+                     $("#jqxsubdetails").jqxGrid('addrow', null, {});   
+                     }  
+                 else {
+                     $("#jqxsubdetails").jqxGrid('addrow', null, {});   
+                     }
+                
+            funchkforedit(document.getElementById("srno").value);   
+    }
+    
+    if($('#mode').val()=='D') {
+        $('#frmassetmastrer input').attr('readonly',false);  
+        $('#frmassetmastrer select').attr('disabled',false); 
+        $('#warexpdate').jqxDateTimeInput({ disabled: false});
+        $('#masterdate').jqxDateTimeInput({ disabled: false});
+        $('#purchasedate').jqxDateTimeInput({ disabled: false});
+        $('#accumdepr').attr('disabled',false); 
+        
+        funchkfordel(document.getElementById("srno").value);    
+        funReadOnly();
+        exit();
        }
 }
 
 function funchkfordel(srno) {
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.trim();	
-			if(parseInt(items)>0) {
-				$.messager.alert('Message',' Transaction Already Exists','warning');  
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.trim();  
+            if(parseInt(items)>0) {
+                $.messager.alert('Message',' Transaction Already Exists','warning');  
                 return 0;
-				}
-			else {
-				$('#frmassetmastrer').submit(); 
-				}
-		}
-	}
-	x.open("GET", "geteditcasechk.jsp?srno="+document.getElementById("srno").value, true);
-	x.send();
+                }
+            else {
+                $('#frmassetmastrer').submit(); 
+                }
+        }
+    }
+    x.open("GET", "geteditcasechk.jsp?srno="+document.getElementById("srno").value, true);
+    x.send();
 }
-	
+    
 function fundeleterestriction() {
 var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.trim();	
-			if(parseInt(items)>0) {
-				 $('#btnDelete').attr('disabled',true); 
-				}
-			else {
-				 $('#btnDelete').attr('disabled',false); 
-				}
-		 }
-	}
-	x.open("GET", "getdeleterestriction.jsp?srno="+document.getElementById("srno").value, true);
-	x.send();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.trim();  
+            if(parseInt(items)>0) {
+                 $('#btnDelete').attr('disabled',true); 
+                }
+            else {
+                 $('#btnDelete').attr('disabled',false); 
+                }
+         }
+    }
+    x.open("GET", "getdeleterestriction.jsp?srno="+document.getElementById("srno").value, true);
+    x.send();
 }
 
 function funchkforedit(srno) {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText.trim();	
-				if(parseInt(items)>0) {
-					document.getElementById("masteredit").value="master";
-					 $('#supplieraccId').attr('disabled',true); 
-					 $('#totalpuchvalue').attr('disabled',true); 
-					 $('#opening').attr('disabled',true); 
-					 $('#accumdepr').attr('disabled',true); 
-					 $('#fixedassetaccId').attr('disabled',true); 
-					 $('#accdepraccId').attr('disabled',true); 
-					 $('#depraccId').attr('disabled',true); 
-					}
-				else {
-					document.getElementById("masteredit").value="do";
-					}
-			}
-		}
-		x.open("GET", "geteditcasechk.jsp?srno="+srno, true);
-		x.send();
-	}
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim();  
+                if(parseInt(items)>0) {
+                    document.getElementById("masteredit").value="master";
+                     $('#supplieraccId').attr('disabled',true); 
+                     $('#totalpuchvalue').attr('disabled',true); 
+                     $('#opening').attr('disabled',true); 
+                     $('#accumdepr').attr('disabled',true); 
+                     $('#fixedassetaccId').attr('disabled',true); 
+                     $('#accdepraccId').attr('disabled',true); 
+                     $('#depraccId').attr('disabled',true); 
+                    }
+                else {
+                    document.getElementById("masteredit").value="do";
+                    }
+            }
+        }
+        x.open("GET", "geteditcasechk.jsp?srno="+srno, true);
+        x.send();
+    }
 
-function funNotify(){	
-	 if(document.getElementById("lifetimeyear").value==0) {
-    	document.getElementById("errormsg").innerText="Life time Year cannot be 0";  
-    	document.getElementById("lifetimeyear").focus();
-    	return 0;
-	 }
-	 if(document.getElementById("depper").value==0) {
-    	document.getElementById("errormsg").innerText="Depreciation % cannot be 0";     
-    	document.getElementById("depper").focus();
-    	return 0;
-	 }
-	var maindate = $('#masterdate').jqxDateTimeInput('getDate');
-	   var validdate=funDateInPeriod(maindate);
-	   if(validdate==0){
-	   return 0; 
-	   }
-	   	   
-			 var purchsedate=new Date($('#purchasedate').jqxDateTimeInput('getDate'));  
-			 var masterdate=new Date($('#masterdate').jqxDateTimeInput('getDate')); 
-					  
-			 if(purchsedate>masterdate){
-			 document.getElementById("errormsg").innerText="Purchase Date Cannot be Greater Than Document Date";
-			 $('#purchasedate').jqxDateTimeInput('focus'); 
-			 return false;
-					     }   
-			
-	      else {
-	              document.getElementById("errormsg").innerText="";  
-			  }
-			 
-		if($('#mode').val()=='E') {
-			if(document.getElementById("masteredit").value=="master") {
-		 $('#supplieraccId').attr('disabled',false); 
-		 $('#totalpuchvalue').attr('disabled',false); 
-		 $('#opening').attr('disabled',false); 
-		 $('#accumdepr').attr('disabled',false); 
-		 $('#fixedassetaccId').attr('disabled',false); 
-		 $('#accdepraccId').attr('disabled',false); 
-		 $('#depraccId').attr('disabled',false); 
-				}
-			else {
-				 if(document.getElementById("supplieraccId").value=="") {
-			    	document.getElementById("errormsg").innerText="Search Supplier Account";  
-			    	document.getElementById("supplieraccId").focus();
-			    	return 0;
-				 }
-			
-			 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-		    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-		    	document.getElementById("totalpuchvalue").focus();
-		    	return 0;
-			 }
-		
-			 if(document.getElementById("openingval").value==1) {
-				 if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
-				 document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
-				 document.getElementById("accumdepr").focus();
-			    	return 0;
-				 }
-				 var total= document.getElementById("totalpuchvalue").value;
-				 var accdepn=document.getElementById("accumdepr").value;
-				 if(parseFloat(accdepn)>parseFloat(total))  {
-					 document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
-				    	document.getElementById("accumdepr").focus();
-				    	return 0;
-					 } 
-				}
-			
-			 if(document.getElementById("depper").value=="") {
-		    	document.getElementById("errormsg").innerText="Enter Depreciation %";  
-		    	document.getElementById("depper").focus();
-		    	return 0;
-			 }
-			 if(document.getElementById("fixedassetaccId").value=="") {
-		    	document.getElementById("errormsg").innerText="Search Fixed Asset Account";  
-		    	 document.getElementById("fixedassetaccId").focus();
-		    	return 0;
-			 }
-			 if(document.getElementById("accdepraccId").value=="") {
-		    	document.getElementById("errormsg").innerText="Search Accumulated Depreciation Account";  
-		    	 document.getElementById("accdepraccId").focus();
-		    	return 0;
-			 }
-			 if(document.getElementById("depraccId").value=="") {
-		    	document.getElementById("errormsg").innerText="Search Depreciation Account";  
-		    	 document.getElementById("depraccId").focus();
-		    	return 0;
-			 }
-				}
-			}
-	   
-	if($('#mode').val()=='A') {
-	 if(document.getElementById("supplieraccId").value=="") {
-	    	document.getElementById("errormsg").innerText="Search Supplier Account";  
-	    	document.getElementById("supplieraccId").focus();
-	    	return 0;
-		 }
-			
-	 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-    	document.getElementById("totalpuchvalue").focus();
-    	return 0;
-	 }
-	
-	 if(document.getElementById("openingval").value==1) {
-		 if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
-		 document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
-		 document.getElementById("accumdepr").focus();
-	    	return 0;
-		 }
-		
-		 var total= document.getElementById("totalpuchvalue").value;
-		 var accdepn=document.getElementById("accumdepr").value;
-		 if(parseFloat(accdepn)>parseFloat(total)) {
-			 document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
-		    	document.getElementById("accumdepr").focus();
-		    	return 0;
-			 } 
-		}
-	
-	 if(document.getElementById("depper").value=="") {
-    	document.getElementById("errormsg").innerText="Enter Depreciation %";  
-    	document.getElementById("depper").focus();
-    	return 0;
-	 }
-	
-	 if(document.getElementById("fixedassetaccId").value=="") {
-    	document.getElementById("errormsg").innerText="Search Fixed Asset Account";  
-    	 document.getElementById("fixedassetaccId").focus();
-    	return 0;
-	 }
-	
-	 if(document.getElementById("accdepraccId").value=="") {
-    	document.getElementById("errormsg").innerText="Search Accumulated Depreciation Account";  
-    	 document.getElementById("accdepraccId").focus();
-    	return 0;
-	 }
-	 if(document.getElementById("depraccId").value=="") {
-    	document.getElementById("errormsg").innerText="Search Depreciation Account";  
-    	 document.getElementById("depraccId").focus();
-    	return 0;
-	 }
-	 }
-	
-	 var rows = $("#jqxsubdetails").jqxGrid('getrows');
-	    $('#gridval').val(rows.length);
-	  
-	   for(var i=0 ; i < rows.length ; i++){
-	    newTextBox = $(document.createElement("input"))
-	       .attr("type", "dil")
-	       .attr("id", "paytest"+i)
-	       .attr("name", "paytest"+i)
-	       .attr("hidden", "true"); 
-	
-	   newTextBox.val(rows[i].sr_no+"::"+rows[i].desc1+" :: "+rows[i].qty+" :: ");
-	   newTextBox.appendTo('form');
-	   }
-	
+function funNotify(){   
+     if(document.getElementById("lifetimeyear").value==0) {
+        document.getElementById("errormsg").innerText="Life time Year cannot be 0";  
+        document.getElementById("lifetimeyear").focus();
+        return 0;
+     }
+     if(document.getElementById("depper").value==0) {
+        document.getElementById("errormsg").innerText="Depreciation % cannot be 0";     
+        document.getElementById("depper").focus();
+        return 0;
+     }
+    var maindate = $('#masterdate').jqxDateTimeInput('getDate');
+       var validdate=funDateInPeriod(maindate);
+       if(validdate==0){
+       return 0; 
+       }
+               
+             var purchsedate=new Date($('#purchasedate').jqxDateTimeInput('getDate'));  
+             var masterdate=new Date($('#masterdate').jqxDateTimeInput('getDate')); 
+                    
+             if(purchsedate>masterdate){
+             document.getElementById("errormsg").innerText="Purchase Date Cannot be Greater Than Document Date";
+             $('#purchasedate').jqxDateTimeInput('focus'); 
+             return false;
+                     }   
+            
+          else {
+                  document.getElementById("errormsg").innerText="";  
+              }
+            
+        if($('#mode').val()=='E') {
+            if(document.getElementById("masteredit").value=="master") {
+         $('#supplieraccId').attr('disabled',false); 
+         $('#totalpuchvalue').attr('disabled',false); 
+         $('#opening').attr('disabled',false); 
+         $('#accumdepr').attr('disabled',false); 
+         $('#fixedassetaccId').attr('disabled',false); 
+         $('#accdepraccId').attr('disabled',false); 
+         $('#depraccId').attr('disabled',false); 
+                }
+            else {
+                 if(document.getElementById("supplieraccId").value=="") {
+                    document.getElementById("errormsg").innerText="Search Supplier Account";  
+                    document.getElementById("supplieraccId").focus();
+                    return 0;
+                 }
+            
+             if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+                document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+                document.getElementById("totalpuchvalue").focus();
+                return 0;
+             }
+        
+             if(document.getElementById("openingval").value==1) {
+                 if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
+                 document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
+                 document.getElementById("accumdepr").focus();
+                    return 0;
+                 }
+                 var total= document.getElementById("totalpuchvalue").value;
+                 var accdepn=document.getElementById("accumdepr").value;
+                 if(parseFloat(accdepn)>parseFloat(total))  {
+                     document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
+                    document.getElementById("accumdepr").focus();
+                    return 0;
+                     } 
+                }
+            
+             if(document.getElementById("depper").value=="") {
+                document.getElementById("errormsg").innerText="Enter Depreciation %";  
+                document.getElementById("depper").focus();
+                return 0;
+             }
+             if(document.getElementById("fixedassetaccId").value=="") {
+                document.getElementById("errormsg").innerText="Search Fixed Asset Account";  
+                 document.getElementById("fixedassetaccId").focus();
+                return 0;
+             }
+             if(document.getElementById("accdepraccId").value=="") {
+                document.getElementById("errormsg").innerText="Search Accumulated Depreciation Account";  
+                 document.getElementById("accdepraccId").focus();
+                return 0;
+             }
+             if(document.getElementById("depraccId").value=="") {
+                document.getElementById("errormsg").innerText="Search Depreciation Account";  
+                 document.getElementById("depraccId").focus();
+                return 0;
+             }
+                }
+            }
+       
+    if($('#mode').val()=='A') {
+     if(document.getElementById("supplieraccId").value=="") {
+        document.getElementById("errormsg").innerText="Search Supplier Account";  
+        document.getElementById("supplieraccId").focus();
+        return 0;
+         }
+            
+     if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+        document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+        document.getElementById("totalpuchvalue").focus();
+        return 0;
+     }
+    
+     if(document.getElementById("openingval").value==1) {
+         if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
+         document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
+         document.getElementById("accumdepr").focus();
+            return 0;
+         }
+        
+         var total= document.getElementById("totalpuchvalue").value;
+         var accdepn=document.getElementById("accumdepr").value;
+         if(parseFloat(accdepn)>parseFloat(total)) {
+             document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
+            document.getElementById("accumdepr").focus();
+            return 0;
+             } 
+        }
+    
+     if(document.getElementById("depper").value=="") {
+        document.getElementById("errormsg").innerText="Enter Depreciation %";  
+        document.getElementById("depper").focus();
+        return 0;
+     }
+    
+     if(document.getElementById("fixedassetaccId").value=="") {
+        document.getElementById("errormsg").innerText="Search Fixed Asset Account";  
+         document.getElementById("fixedassetaccId").focus();
+        return 0;
+     }
+    
+     if(document.getElementById("accdepraccId").value=="") {
+        document.getElementById("errormsg").innerText="Search Accumulated Depreciation Account";  
+         document.getElementById("accdepraccId").focus();
+        return 0;
+     }
+     if(document.getElementById("depraccId").value=="") {
+        document.getElementById("errormsg").innerText="Search Depreciation Account";  
+         document.getElementById("depraccId").focus();
+        return 0;
+     }
+     }
+    
+     var rows = $("#jqxsubdetails").jqxGrid('getrows');
+        $('#gridval').val(rows.length);
+      
+       for(var i=0 ; i < rows.length ; i++){
+        newTextBox = $(document.createElement("input"))
+           .attr("type", "dil")
+           .attr("id", "paytest"+i)
+           .attr("name", "paytest"+i)
+           .attr("hidden", "true"); 
+    
+       newTextBox.val(rows[i].sr_no+"::"+rows[i].desc1+" :: "+rows[i].qty+" :: ");
+       newTextBox.appendTo('form');
+       }
+    
 return 1;
 }
 
 function funChkButton() { }
 
 function funFocus(){
-	$('#masterdate').jqxDateTimeInput('focus'); 
+    $('#masterdate').jqxDateTimeInput('focus'); 
 }
 
 function setValues() {
-	if($('#hidmasterdate').val()){
-		$("#masterdate").jqxDateTimeInput('val', $('#hidmasterdate').val());
-	}
-	if($('#hidpurchasedate').val()){
-		$("#purchasedate").jqxDateTimeInput('val', $('#hidpurchasedate').val());
-	}
-	if($('#hidwarexpdate').val()){
-		$("#warexpdate").jqxDateTimeInput('val', $('#hidwarexpdate').val());
-	}
-	var docnos=document.getElementById("docno").value;
-	  if(parseInt(docnos)>0) {
-		  if(document.getElementById("subgriddisval").value==1) {
-		    $("#subdetail").load("subdetails.jsp?docno="+docnos);
-			}
-	 }
-	  
-	if($('#msg').val()!=""){
-		   $.messager.alert('Message',$('#msg').val());
-		  }
-	
-	  funSetlabel();  
-	  funsetdatas();
-	 fundeleterestriction()
+    if($('#hidmasterdate').val()){
+        $("#masterdate").jqxDateTimeInput('val', $('#hidmasterdate').val());
+    }
+    if($('#hidpurchasedate').val()){
+        $("#purchasedate").jqxDateTimeInput('val', $('#hidpurchasedate').val());
+    }
+    if($('#hidwarexpdate').val()){
+        $("#warexpdate").jqxDateTimeInput('val', $('#hidwarexpdate').val());
+    }
+    var docnos=document.getElementById("docno").value;
+      if(parseInt(docnos)>0) {
+          if(document.getElementById("subgriddisval").value==1) {
+            $("#subdetail").load("subdetails.jsp?docno="+docnos);
+            }
+     }
+      
+    if($('#msg').val()!=""){
+           $.messager.alert('Message',$('#msg').val());
+          }
+    
+      funSetlabel();  
+      funsetdatas();
+     fundeleterestriction()
 }
 
 function funsetdatas() {
-	if(document.getElementById("subgriddisval").value==1) {
-		document.getElementById("subgriddis").checked=true;
-		$('#subdetail').show();
-		$('#freespace').hide();
-	}
-	else {
-		document.getElementById("subgriddis").checked=false;
-		$('#subdetail').hide();
-		$('#freespace').show();
-		}
-	
-	if(document.getElementById("openingval").value==1) {
-		document.getElementById("opening").checked =true;
-		if($('#mode').val()!='view') {
-		$('#accumdepr').attr('disabled',false); 
-		$('#accumdepr').attr('readonly',false);
-			}
-		}
-	else {
-		document.getElementById("opening").checked =false;
-		$('#accumdepr').attr('disabled',true); 
-		}
-	
-	if($('#assetGroupval').val()!=""){
-		$("#assetGroup").val($('#assetGroupval').val());
-	}
-	if($('#locationval').val()!=""){
-		$("#location").val($('#location').val());
-	}
-	}
+    if(document.getElementById("subgriddisval").value==1) {
+        document.getElementById("subgriddis").checked=true;
+        $('#subdetail').show();
+        $('#freespace').hide();
+    }
+    else {
+        document.getElementById("subgriddis").checked=false;
+        $('#subdetail').hide();
+        $('#freespace').show();
+        }
+    
+    if(document.getElementById("openingval").value==1) {
+        document.getElementById("opening").checked =true;
+        if($('#mode').val()!='view') {
+        $('#accumdepr').attr('disabled',false); 
+        $('#accumdepr').attr('readonly',false);
+            }
+        }
+    else {
+        document.getElementById("opening").checked =false;
+        $('#accumdepr').attr('disabled',true); 
+        }
+    
+    if($('#assetGroupval').val()!=""){
+        $("#assetGroup").val($('#assetGroupval').val());
+    }
+    if($('#locationval').val()!=""){
+        $("#location").val($('#location').val());
+    }
+    }
 
 function fundisgrid() {
-				if(document.getElementById("subgriddis").checked == true) {
-					$('#subdetail').show();
-					$('#freespace').hide();
-					document.getElementById("subgriddisval").value=1;
-					}
-				else {
-				$('#subdetail').hide();
-				$('#freespace').show();
-				document.getElementById("subgriddisval").value=0;
-					}
-	}
-	
-	function funopening() {
-		if(document.getElementById("opening").checked == true) {
-			document.getElementById("openingval").value=1;
-			$('#accumdepr').attr('disabled',false); 	
-			$('#accumdepr').attr('readonly',false); 
-		}
-		else {
-			document.getElementById("openingval").value=0;
-			document.getElementById("accumdepr").value="";
-			$('#accumdepr').attr('disabled',true); 	
-			$('#accumdepr').attr('readonly',false);
-			}
-	}
-	
-	function funSearchLoad(){
-		changeContent('mastersearch.jsp', $('#window'));
-	}
-	
-	function getAssetgp() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;	
-				items = items.split('***');
-				var branchItems = items[0].split(",");
-				var branchIdItems = items[1].split(",");
-				var optionsbranch = '<option value="">--Select--</option>';
-				for (var i = 0; i < branchItems.length; i++) {
-					optionsbranch += '<option value="' + branchIdItems[i] + '">'
-							+ branchItems[i] + '</option>';
-				}
-				$("select#assetGroup").html(optionsbranch);
-				
-				if ($('#assetGroupval').val() != null) {
-					$('#assetGroup').val($('#assetGroupval').val());
-				}
-			} 
-		}
-		x.open("GET", "getAssetgp.jsp", true);
-		x.send();
-	}
+                if(document.getElementById("subgriddis").checked == true) {
+                    $('#subdetail').show();
+                    $('#freespace').hide();
+                    document.getElementById("subgriddisval").value=1;
+                    }
+                else {
+                $('#subdetail').hide();
+                $('#freespace').show();
+                document.getElementById("subgriddisval").value=0;
+                    }
+    }
+    
+    function funopening() {
+        if(document.getElementById("opening").checked == true) {
+            document.getElementById("openingval").value=1;
+            $('#accumdepr').attr('disabled',false);     
+            $('#accumdepr').attr('readonly',false); 
+        }
+        else {
+            document.getElementById("openingval").value=0;
+            document.getElementById("accumdepr").value="";
+            $('#accumdepr').attr('disabled',true);  
+            $('#accumdepr').attr('readonly',false);
+            }
+    }
+    
+    function funSearchLoad(){
+        changeContent('mastersearch.jsp', $('#window'));
+    }
+    
+    function getAssetgp() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText; 
+                items = items.split('***');
+                var branchItems = items[0].split(",");
+                var branchIdItems = items[1].split(",");
+                var optionsbranch = '<option value="">--Select--</option>';
+                for (var i = 0; i < branchItems.length; i++) {
+                    optionsbranch += '<option value="' + branchIdItems[i] + '">'
+                            + branchItems[i] + '</option>';
+                }
+                $("select#assetGroup").html(optionsbranch);
+                
+                if ($('#assetGroupval').val() != null) {
+                    $('#assetGroup').val($('#assetGroupval').val());
+                }
+            } 
+        }
+        x.open("GET", "getAssetgp.jsp", true);
+        x.send();
+    }
 
-	function getloc() {
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText;	
-				items = items.split('***');
-				var branchItems1 = items[0].split(",");
-				var branchIdItems1 = items[1].split(",");
-				var optionsbranch1 = '<option value="">--Select--</option>';
-				for (var i = 0; i < branchItems1.length; i++) {
-					optionsbranch1 += '<option value="' + branchIdItems1[i] + '">'
-							+ branchItems1[i] + '</option>';
-				}
-				$("select#location").html(optionsbranch1);
-				
-				if ($('#locationval').val() != null) {
-					$('#location').val($('#locationval').val());
-				}
-			} 
-		}
-		x.open("GET", "getLocatons.jsp", true);
-		x.send();
-	}
+    function getloc() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText; 
+                items = items.split('***');
+                var branchItems1 = items[0].split(",");
+                var branchIdItems1 = items[1].split(",");
+                var optionsbranch1 = '<option value="">--Select--</option>';
+                for (var i = 0; i < branchItems1.length; i++) {
+                    optionsbranch1 += '<option value="' + branchIdItems1[i] + '">'
+                            + branchItems1[i] + '</option>';
+                }
+                $("select#location").html(optionsbranch1);
+                
+                if ($('#locationval').val() != null) {
+                    $('#location').val($('#locationval').val());
+                }
+            } 
+        }
+        x.open("GET", "getLocatons.jsp", true);
+        x.send();
+    }
 
-	function isNumber(evt) {
-	    var iKeyCode = (evt.which) ? evt.which : evt.keyCode
-	    if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57)) {
-	    	document.getElementById("errormsg").innerText="Enter Numbers Only";  
-	        return false;
-	     }
-	    document.getElementById("errormsg").innerText="";  
-	    return true;
-	}
-	
-	function funcalculatedep() {
-		 if ($("#mode").val() == "A" ) {
-		 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-	    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-	    	document.getElementById("lifetimeyear").value="";
-	    	document.getElementById("totalpuchvalue").focus();
-	    	return 0;
-		 }
-		 else {
-		 document.getElementById("errormsg").innerText="";
-		 }
-			 }
-		
-			if($('#mode').val()=='E') {
-				if(document.getElementById("masteredit").value=="master") {
-					
-					}
-				else {
-							 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-						    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-						    	document.getElementById("lifetimeyear").value="";
-						    	document.getElementById("totalpuchvalue").focus();
-						    	return 0;
-							 }
-							 else {
-							 document.getElementById("errormsg").innerText="";
-							 }
-					}
-			}
-		
-		 if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
-		var year=document.getElementById("lifetimeyear").value;
-		var depval=((1/parseFloat(year))*100);
-		
-		funRoundAmt(depval,"depper");
-		 }
-	}
-	
-	function funcalcuyear() {
-		 if ($("#mode").val() == "A" ) {
-	 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-      	document.getElementById("depper").value="";
-    	document.getElementById("totalpuchvalue").focus();
-    	return 0;
-	 }
-	 else {
-	 document.getElementById("errormsg").innerText="";
-	 }
-		 }
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57)) {
+            document.getElementById("errormsg").innerText="Enter Numbers Only";  
+            return false;
+         }
+        document.getElementById("errormsg").innerText="";  
+        return true;
+    }
+    
+    function funcalculatedep() {
+         if ($("#mode").val() == "A" ) {
+         if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+            document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+            document.getElementById("lifetimeyear").value="";
+            document.getElementById("totalpuchvalue").focus();
+            return 0;
+         }
+         else {
+         document.getElementById("errormsg").innerText="";
+         }
+             }
+        
+            if($('#mode').val()=='E') {
+                if(document.getElementById("masteredit").value=="master") {
+                    
+                    }
+                else {
+                             if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+                                document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+                                document.getElementById("lifetimeyear").value="";
+                                document.getElementById("totalpuchvalue").focus();
+                                return 0;
+                             }
+                             else {
+                             document.getElementById("errormsg").innerText="";
+                             }
+                    }
+            }
+        
+         if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
+        var year=document.getElementById("lifetimeyear").value;
+        var depval=((1/parseFloat(year))*100);
+        
+        funRoundAmt(depval,"depper");
+         }
+    }
+    
+    function funcalcuyear() {
+         if ($("#mode").val() == "A" ) {
+     if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+        document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+        document.getElementById("depper").value="";
+        document.getElementById("totalpuchvalue").focus();
+        return 0;
+     }
+     else {
+     document.getElementById("errormsg").innerText="";
+     }
+         }
 
-			if($('#mode').val()=='E') {
-				if(document.getElementById("masteredit").value=="master") {
-					}
-				else {
-					         
-					 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-				    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-				      	document.getElementById("depper").value="";
-				    	document.getElementById("totalpuchvalue").focus();
-				    	return 0;
-					 }
-					 else {
-					 document.getElementById("errormsg").innerText="";
-					 }
-					}
-			}
-		
-		 if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
-				var dep=document.getElementById("depper").value;
-				var yearval=(100/parseFloat(dep));
-				funRoundAmt(yearval,"lifetimeyear");
-				 }
-	}
+            if($('#mode').val()=='E') {
+                if(document.getElementById("masteredit").value=="master") {
+                    }
+                else {
+                         
+                     if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+                        document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+                        document.getElementById("depper").value="";
+                        document.getElementById("totalpuchvalue").focus();
+                        return 0;
+                     }
+                     else {
+                     document.getElementById("errormsg").innerText="";
+                     }
+                    }
+            }
+        
+         if ($("#mode").val() == "A" || $("#mode").val() == "E") {   
+                var dep=document.getElementById("depper").value;
+                var yearval=(100/parseFloat(dep));
+                funRoundAmt(yearval,"lifetimeyear");
+                 }
+    }
 
-	function funchktotal() {
-		 if ($("#mode").val() == "A" ) {
-			 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-		    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-		    	document.getElementById("totalpuchvalue").focus();
-		    	return 0;
-			 }
-			 else {
-				 document.getElementById("errormsg").innerText="";
-				 }
-			
-			var total= document.getElementById("totalpuchvalue").value;
-			 var accdepn=document.getElementById("accumdepr").value;
-			 if(parseFloat(accdepn)>parseFloat(total)) {
-				 document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
-			    	document.getElementById("accumdepr").focus();
-			    	return 0;
-				 }
-			 else {
-				 document.getElementById("errormsg").innerText="";
-				 }
-		 }
-		
-			if($('#mode').val()=='E') {
-				if(document.getElementById("masteredit").value=="master") {
-					}
-				else {
-									 if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
-								    	document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
-								    	document.getElementById("totalpuchvalue").focus();
-								    	return 0;
-									 }
-									 else {
-										 document.getElementById("errormsg").innerText="";
-										 }
-									
-						var total= document.getElementById("totalpuchvalue").value;
-						 var accdepn=document.getElementById("accumdepr").value;
-						 if(parseFloat(accdepn)>parseFloat(total)) {
-							 document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
-						    	document.getElementById("accumdepr").focus();
-						    	return 0;
-							 }
-						 else {
-							 document.getElementById("errormsg").innerText="";
-							 }
-					}
-			}
-	}
-	
-	function funchkaccum() {
-		 if ($("#mode").val() == "A" ) {
-			 if(document.getElementById("openingval").value==1) {
-					 if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
-					 document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
-					 document.getElementById("accumdepr").focus();
-				    	return 0;
-					 }
-					
-					 var total= document.getElementById("totalpuchvalue").value;
-					 var accdepn=document.getElementById("accumdepr").value;
-					 if(parseFloat(accdepn)>parseFloat(total)) {
-						    document.getElementById("errormsg").innerText="Purchase Value Canot Less Than Accum.Depreciation  ";  
-					    	document.getElementById("totalpuchvalue").focus();
-					    	return 0;
-						 } 
-					 else {
-						 document.getElementById("errormsg").innerText="";
-						 }
-		     }
-		 }
-			
-			 if($('#mode').val()=='E') {
-					if(document.getElementById("masteredit").value=="master") {
-						}
-					else {
-						if(document.getElementById("openingval").value==1) {
-							 if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
-							 document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
-							 document.getElementById("accumdepr").focus();
-						    	return 0;
-							 }
-							
-							 var total= document.getElementById("totalpuchvalue").value;
-							 var accdepn=document.getElementById("accumdepr").value;
-							 if(parseFloat(accdepn)>parseFloat(total)) {
-								    document.getElementById("errormsg").innerText="Purchase Value Canot Less Than Accum.Depreciation  ";  
-							    	document.getElementById("totalpuchvalue").focus();
-							    	return 0;
-								 } 
-							 else {
-								 document.getElementById("errormsg").innerText="";
-								 }
-				     }
-						}
-				}
-	}
+    function funchktotal() {
+         if ($("#mode").val() == "A" ) {
+             if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+                document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+                document.getElementById("totalpuchvalue").focus();
+                return 0;
+             }
+             else {
+                 document.getElementById("errormsg").innerText="";
+                 }
+            
+            var total= document.getElementById("totalpuchvalue").value;
+             var accdepn=document.getElementById("accumdepr").value;
+             if(parseFloat(accdepn)>parseFloat(total)) {
+                 document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
+                document.getElementById("accumdepr").focus();
+                return 0;
+                 }
+             else {
+                 document.getElementById("errormsg").innerText="";
+                 }
+         }
+        
+            if($('#mode').val()=='E') {
+                if(document.getElementById("masteredit").value=="master") {
+                    }
+                else {
+                                     if(document.getElementById("totalpuchvalue").value=="" || parseFloat(document.getElementById("totalpuchvalue").value)==0) {
+                                        document.getElementById("errormsg").innerText="Enter Total Purchase Value";  
+                                        document.getElementById("totalpuchvalue").focus();
+                                        return 0;
+                                     }
+                                     else {
+                                         document.getElementById("errormsg").innerText="";
+                                         }
+                                    
+                        var total= document.getElementById("totalpuchvalue").value;
+                         var accdepn=document.getElementById("accumdepr").value;
+                         if(parseFloat(accdepn)>parseFloat(total)) {
+                             document.getElementById("errormsg").innerText="Accum.Depreciation Canot More Than Purchase Value";  
+                            document.getElementById("accumdepr").focus();
+                            return 0;
+                             }
+                         else {
+                             document.getElementById("errormsg").innerText="";
+                             }
+                    }
+            }
+    }
+    
+    function funchkaccum() {
+         if ($("#mode").val() == "A" ) {
+             if(document.getElementById("openingval").value==1) {
+                     if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
+                     document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
+                     document.getElementById("accumdepr").focus();
+                        return 0;
+                     }
+                    
+                     var total= document.getElementById("totalpuchvalue").value;
+                     var accdepn=document.getElementById("accumdepr").value;
+                     if(parseFloat(accdepn)>parseFloat(total)) {
+                            document.getElementById("errormsg").innerText="Purchase Value Canot Less Than Accum.Depreciation  ";  
+                        document.getElementById("totalpuchvalue").focus();
+                        return 0;
+                         } 
+                     else {
+                         document.getElementById("errormsg").innerText="";
+                         }
+             }
+         }
+            
+             if($('#mode').val()=='E') {
+                    if(document.getElementById("masteredit").value=="master") {
+                        }
+                    else {
+                        if(document.getElementById("openingval").value==1) {
+                             if(document.getElementById("accumdepr").value=="" || parseFloat(document.getElementById("accumdepr").value)==0) {
+                             document.getElementById("errormsg").innerText="Enter Accumulated Depreciation";  
+                             document.getElementById("accumdepr").focus();
+                                return 0;
+                             }
+                            
+                             var total= document.getElementById("totalpuchvalue").value;
+                             var accdepn=document.getElementById("accumdepr").value;
+                             if(parseFloat(accdepn)>parseFloat(total)) {
+                                    document.getElementById("errormsg").innerText="Purchase Value Canot Less Than Accum.Depreciation  ";  
+                                document.getElementById("totalpuchvalue").focus();
+                                return 0;
+                                 } 
+                             else {
+                                 document.getElementById("errormsg").innerText="";
+                                 }
+                     }
+                        }
+                }
+    }
 
-	 function funPrintBtn() {
-			if (($("#mode").val() == "view") && $("#docno").val()!="") {
-		        var url=document.URL;
-		        var reurl=url.split("saveAssetmaster");
-		        $("#docno").prop("disabled", false);  
-		       var branch=<%=session.getAttribute("BRANCHID").toString()%>
-						 var win= window.open(reurl[0]+"printassetmaster?docno="+document.getElementById("docno").value+"&branch="+branch,"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
-					     win.focus();
-					 }
-		    else {
-				$.messager.alert('Message','Select a Document....!','warning');
-				return;
-			}
+     function funPrintBtn() {
+            if (($("#mode").val() == "view") && $("#docno").val()!="") {
+                var url=document.URL;
+                var reurl=url.split("saveAssetmaster");
+                $("#docno").prop("disabled", false);  
+               var branch=<%=session.getAttribute("BRANCHID").toString()%>
+                         var win= window.open(reurl[0]+"printassetmaster?docno="+document.getElementById("docno").value+"&branch="+branch,"_blank","top=150,left=250,Width=1020,Height=500,location=no,scrollbars=no,toolbar=yes");
+                         win.focus();
+                     }
+            else {
+                $.messager.alert('Message','Select a Document....!','warning');
+                return;
+            }
    }
    
 </script>
