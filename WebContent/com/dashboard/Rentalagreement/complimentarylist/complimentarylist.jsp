@@ -16,6 +16,7 @@
     height: 100%;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
+    margin-top:-70px;
 }
 
 /* Sidebar */
