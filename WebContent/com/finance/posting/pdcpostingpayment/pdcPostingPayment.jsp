@@ -171,6 +171,11 @@ body, .homeContent {
 <script type="text/javascript">
 	$(document).ready(function() {      
 		
+         // Disable Approval, Edit, Delete, and Search buttons
+         $('#btnApprove, #btnApproval, #btnEdit, #btnDelete, #btnSearch').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
+
          /* Adjusted Date fields to perfectly match the 24px inputs */
 		 $("#jqxDate").jqxDateTimeInput({ width: '100px', height: '24px', formatString:"dd.MM.yyyy", value: null });
 		 $("#jqxFromDate").jqxDateTimeInput({ width: '100px', height: '24px', formatString:"dd.MM.yyyy"});
