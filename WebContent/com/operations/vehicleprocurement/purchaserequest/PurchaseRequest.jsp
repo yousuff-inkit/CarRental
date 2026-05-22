@@ -234,7 +234,7 @@ table td {
 		if($("#purchasedetails").length) $("#purchasedetails").jqxGrid({ disabled: true});
 	}
 	
-	function funRemoveReadOnly(){
+	/*function funRemoveReadOnly(){
 		$('#frmvehpurReq input').attr('readonly', false );
 		$('#frmvehpurReq textarea').attr('readonly', false );
 		$('#frmvehpurReq select').attr('disabled', false);
@@ -271,6 +271,52 @@ table td {
 		x.open("GET", "reqlinkchk.jsp?masterdoc_no="+document.getElementById("masterdoc_no").value, true);
 		x.send();
 	}
+	*/
+	
+	function funRemoveReadOnly(){
+	    $('#frmvehpurReq input').attr('readonly', false );
+	    $('#frmvehpurReq textarea').attr('readonly', false );
+	    $('#frmvehpurReq select').attr('disabled', false);
+
+	    $('#vehpurreqDate').jqxDateTimeInput({ disabled: false});
+	    $('#vehexpDate').jqxDateTimeInput({ disabled: false});
+	    if($("#purchasedetails").length) $("#purchasedetails").jqxGrid({ disabled: false});
+	    $('#docno').attr('readonly', true);
+	    
+	    if ($("#mode").val() == "A") {
+	        // FIX: Corrected jqWidgets syntax
+	        $('#vehpurreqDate').jqxDateTimeInput('setDate', new Date());
+	        $('#vehexpDate').jqxDateTimeInput('setDate', new Date());
+	        
+	        if($("#purchasedetails").length) {
+	            $("#purchasedetails").jqxGrid('clear');
+	            $("#purchasedetails").jqxGrid('addrow', null, {});
+	        }
+	    }
+	}
+
+	function funchkforedit() {
+	    var x = new XMLHttpRequest();
+	    x.onreadystatechange = function() {
+	        if (x.readyState == 4 && x.status == 200) {
+	            var items = x.responseText.trim();	
+	            if(parseInt(items) > 0) {
+	                 $("#btnEdit").attr('disabled', true );
+	                 $("#btnDelete").attr('disabled', true ); 
+	                 // FIX: Added Attach button to the lock logic
+	                 $("#btnAttach").attr('disabled', true ); 
+	            } else {
+	                 $("#btnEdit").attr('disabled', false);
+	                 $("#btnDelete").attr('disabled', false);
+	                 // FIX: Re-enable Attach button if document is unlocked
+	                 $("#btnAttach").attr('disabled', false); 
+	            }
+	        }
+	    }
+	    x.open("GET", "reqlinkchk.jsp?masterdoc_no=" + document.getElementById("masterdoc_no").value, true);
+	    x.send();
+	}
+	
 	
 	function funNotify(){	
 		if ($("#mode").val() == "A") {
