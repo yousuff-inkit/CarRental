@@ -11,7 +11,7 @@
 
 <style>
 /* =========================================================
-SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
+   SCOPED UI: Bulletproof Table Layout (Does NOT affect header.jsp)
 ========================================================= */
 
 .modern-ui {
@@ -521,9 +521,10 @@ form label.error {
 	 }
 	  
 	  function headerbtndisable(){
-		  $('#btnEdit').attr('disabled', true);
-		  $('#btnDelete').attr('disabled', true);
-		  $('#btnSearch').attr('disabled', true);
+		  // Disable all standard header buttons except Create/Add
+          $('#btnEdit, #btnDelete, #btnSearch, #btnApprove, #btnApproval, #btnAttach, #btnAttachment, #btnPrint').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
 	  }
 	  
 	  function clearClientInfo(){

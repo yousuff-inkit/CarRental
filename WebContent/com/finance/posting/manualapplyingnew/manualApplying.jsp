@@ -14,8 +14,11 @@
 	$(document).ready(function() {
 		 $('#fileexcelimport').attr('hidden', true );
 		 $('#btnsearch').attr('hidden', true );
-		 $('#btnClose').attr('disabled', true );$('#btnCreate').attr('disabled', true );$('#btnEdit').attr('disabled', true );$('#btnPrint').attr('disabled', true );
-		 $('#btnExcel').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnSearch').attr('disabled', true );$('#btnAttach').attr('disabled', true );
+		 
+         // Disable all standard header buttons except Create/Add/Save
+         $('#btnClose, #btnEdit, #btnPrint, #btnExcel, #btnDelete, #btnSearch, #btnAttach, #btnApprove, #btnApproval, #btnAttachment').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
 
 		 $("#maindate").jqxDateTimeInput({ width: '125px', height: '15px', formatString:"dd.MM.yyyy"});
 		 
@@ -91,10 +94,6 @@
               }
 		    } 
 		    applyinvoiceamt=document.getElementById("txtapplyinvoiceamt").value;
-		    // alert(applyinvoiceamt+"=="+appliedamount)
-		  //  alert(parseFloat(document.getElementById("txtapplyinvoiceamt").value)+"==="+parseFloat(appliedamount));
-		// if(parseFloat(appliedamount).toFixed(2)<parseFloat(applyinvoiceamt).toFixed(2)){
-//			if(parseFloat(document.getElementById("txtapplyinvoiceamt").value).toFixed(2)<parseFloat(appliedamount).toFixed(2)){
           if(parseFloat(parseFloat(document.getElementById("txtapplyinvoiceamt").value).toFixed(2))<parseFloat(parseFloat(appliedamount).toFixed(2))){
 		    	document.getElementById("errormsg").innerText="Limit Already Reached,Invalid Outstanding Amount !!!";
 				return 0;

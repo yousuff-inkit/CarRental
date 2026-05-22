@@ -156,9 +156,10 @@ legend {
 		 fundecreaseamt();funinstallment();
 		 $("#btnpost").hide();$("#btndist").hide();
 			
-		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );
-		 $('#btnSearch').attr('disabled', true );$('#btnExcel').attr('disabled', true );
-		 $('#btnPrint').attr('disabled', true );
+         // Disable all standard header buttons except Create/Add/Save
+         $('#btnEdit, #btnDelete, #btnSearch, #btnApprove, #btnApproval, #btnAttach, #btnAttachment, #btnPrint, #btnExcel').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
 		 
 		 $("#jqxFromDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 		 $("#jqxToDate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});

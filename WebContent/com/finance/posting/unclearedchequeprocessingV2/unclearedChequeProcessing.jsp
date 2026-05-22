@@ -419,10 +419,10 @@
 		  }
 	  
 	  function headerbtndisable(){
-		  $('#btnCreate,#btnPrint').attr('disabled',true);
-		  $('#btnEdit').attr('disabled', true);
-		  $('#btnDelete').attr('disabled', true);
-		  $('#btnSearch').attr('disabled', true);
+		  // Disable all standard header buttons except Create/Add/Save
+          $('#btnClose, #btnEdit, #btnPrint, #btnExcel, #btnDelete, #btnSearch, #btnAttach, #btnApprove, #btnApproval, #btnAttachment').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
 	  }
 	  
 	   function datechange(){
@@ -633,7 +633,7 @@ legend {
 <fieldset>
 <table width="100%">
   <tr>
-    <td width="3%" align="right"><!-- Date --> &nbsp;</td>
+    <td width="3%" align="right">&nbsp;</td>
     <td width="12%"><div id="jqxUnclearedChequeProcessingDate" hidden="true" name="jqxUnclearedChequeProcessingDate" value='<s:property value="jqxUnclearedChequeProcessingDate"/>'></div>
     <input type="hidden" id="hidjqxUnclearedChequeProcessingDate" name="hidjqxUnclearedChequeProcessingDate" value='<s:property value="hidjqxUnclearedChequeProcessingDate"/>'/></td>
     <td width="14%" align="right">Uncleared P.D.C From</td>
