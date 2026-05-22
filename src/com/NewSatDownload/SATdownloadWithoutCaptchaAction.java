@@ -1,6 +1,7 @@
 package com.NewSatDownload;
 
 import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -657,8 +658,8 @@ public class SATdownloadWithoutCaptchaAction extends ActionSupport {
 					while(rsgetchromepath.next()){
 						chromepath=rsgetchromepath.getString("chromedriverpath");
 					}
-					
-					System.setProperty("webdriver.chrome.driver",chromepath);
+					// 1. Tell the manager to automatically download and setup the driver from the internet
+					io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 					try{
 				        ChromeOptions options=new ChromeOptions();
 	                    options.addArguments("--ignore-certificate-error");
@@ -1241,7 +1242,8 @@ public class SATdownloadWithoutCaptchaAction extends ActionSupport {
 					profile.setPreference("network.proxy.http", "localhost");
 					profile.setPreference("network.proxy.http_port", "3128");
 					driver = new FirefoxDriver();*/
-					System.setProperty("webdriver.chrome.driver",chromepath);  
+					// 1. Tell the manager to automatically download and setup the driver from the internet
+					io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 		            // Instantiate a ChromeDriver class.     
 				    try{
 				        ChromeOptions options=new ChromeOptions();
@@ -1683,49 +1685,60 @@ public class SATdownloadWithoutCaptchaAction extends ActionSupport {
 			reloaddata();
 			setCmbsaliksite(getCmbsaliksite());
 			setCmbtype(getCmbtype());
-			String  path="";
-			if(conn!=null){
-				Statement stmt1 = conn.createStatement();
-				String strSql1 = "select captchaPath from my_comp ";
-				//System.out.println("==strSql1===="+strSql1);
-				ResultSet rs1 = stmt1.executeQuery(strSql1);
-				while(rs1.next ()) {
-					path=rs1.getString("captchaPath");
-
-				}
-
-				String imgPath = path+"/captcha.png";
-
-				try
-				{
-					File temp=new File(imgPath);
-					if (temp.exists()){
-
-
-						temp.delete();
-
+			String path="";
+			
+			// 1. Safely check the database ONLY if the connection is still open
+			try {
+				if(conn != null && !conn.isClosed()){
+					Statement stmt1 = conn.createStatement();
+					String strSql1 = "select captchaPath from my_comp ";
+					ResultSet rs1 = stmt1.executeQuery(strSql1);
+					while(rs1.next()) {
+						path = rs1.getString("captchaPath");
 					}
+					rs1.close();
+					stmt1.close();
 				}
-				catch(Exception e){
-					conn.close();
-					e.printStackTrace();
-
-				}
+			} catch (Exception e) {
+				System.out.println("Skipped captcha path lookup: Connection was closed.");
 			}
-			if(conn!=null){
-				conn.close();
+
+			// 2. Safely delete the captcha image if we found the path
+			if (!path.equals("")) {
+				String imgPath = path + "/captcha.png";
+				try {
+					File temp = new File(imgPath);
+					if (temp.exists()){
+						temp.delete();
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 			
-			if(driver!=null){
-				driver.quit();
+			// 3. Safely close the connection and browser
+			try {
+				if(conn != null && !conn.isClosed()){
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				if(driver != null){
+					driver.quit();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+		
 		setItemcount(getItemcount());
 		setItemtotalcount(getItemtotalcount());
 		setItemtype(getItemtype());
 		return "success";
 	}
-
 
 
 	@SuppressWarnings("deprecation")
@@ -1816,7 +1829,8 @@ public class SATdownloadWithoutCaptchaAction extends ActionSupport {
 					DesiredCapabilities cap = DesiredCapabilities.chrome();
 					cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 					cap.setCapability(ChromeOptions.CAPABILITY, options);
-					System.setProperty("webdriver.chrome.driver",chromepath);
+					// 1. Tell the manager to automatically download and setup the driver from the internet
+					io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 					/* options.addArguments("--ignore-ssl-errors");
 	                    options.addArguments("--disable-infobars");
 	                    Map<String, Object> prefs = new HashMap<>();
@@ -1839,7 +1853,8 @@ public class SATdownloadWithoutCaptchaAction extends ActionSupport {
 			}
 			else if(!SATEXCELCONFIG.equalsIgnoreCase("1") && getCategory().equalsIgnoreCase("salik")){
 			    //System.out.println(chromepath);
-				System.setProperty("webdriver.chrome.driver",chromepath);  
+				// 1. Tell the manager to automatically download and setup the driver from the internet
+				io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 	            // Instantiate a ChromeDriver class.     
 			    try{
 			        ChromeOptions options=new ChromeOptions();
@@ -1885,7 +1900,8 @@ public class SATdownloadWithoutCaptchaAction extends ActionSupport {
 				profile.setPreference("network.proxy.http", "localhost");
 				profile.setPreference("network.proxy.http_port", "3128");
 				driver = new FirefoxDriver();*/
-				System.setProperty("webdriver.chrome.driver",chromepath);
+				// 1. Tell the manager to automatically download and setup the driver from the internet
+				io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
 				try{
 				    ChromeOptions options=new ChromeOptions();
                     options.addArguments("--ignore-certificate-error");

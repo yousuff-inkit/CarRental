@@ -304,6 +304,176 @@ $(document).ready(function () {
       
 
 </style>
+<style type="text/css">
+/* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    background-color: #f4f7f9;
+}
+
+/* Sidebar dynamically fills the left TD */
+.sidebar-filters {
+    width: 100%;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.sidebar-fixed-top {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 15px; 
+}
+
+.filter-card {
+    background: #f8fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px;
+}
+
+.label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 12px; 
+    font-weight: 600;
+    color: #4e5e71;
+    width: 90px;
+}
+
+/* ===== UNIFORM 24px TEXT INPUTS ===== */
+input[type="text"], select {
+    width: 100%;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+}
+
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+}
+
+input[readonly],
+input:disabled,
+select:disabled {
+    background-color: #ffffff !important;
+    color: #555;
+    cursor: text !important;
+}
+
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-submit {
+    flex: 1;
+    width: 100%;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;
+    white-space: nowrap;
+    text-align: center;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8 !important;
+}
+
+/* Layout Utilities */
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    background: #fff;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-filters label.branch {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+    background: transparent !important;
+}
+</style>
 
 </head>
 <body onload="getBranch();">
@@ -313,59 +483,243 @@ $(document).ready(function () {
 <tr>
 <td width="20%" >
     <fieldset style="background: #ECF8E0;">
-	<table width="100%"  >
-	<jsp:include page="../../heading.jsp"></jsp:include>
-		
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr>
-	 <td align="right"><label class="branch">From</label></td>
-     <td align="left"><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td></tr> 
-	<tr>
-	<td align="right"><label class="branch">To</label></td>
-    <td align="left"><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-	</tr>
-	<tr><td align="right"><label class="branch">Client</label></td>
-	<td align="left"><input type="text" id="txtclientname" name="txtclientname" style="width:100%;height:20px;" readonly="readonly" placeholder="Press F3 to Search"  onkeydown="getClient(event);" value='<s:property value="txtclientname"/>'/>
-    <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'/></td></tr>
-  <!--    <tr><td align="right"><label class="branch">Status</label></td>
-     <td align="left"><select id="clstatuss" name="clstatuss"  value='<s:property value="clstatuss"/>'>
-     <option value="">--Select--</option><option value=0>Open</option><option value=1>Close</option>
-     </select></td></tr>-->
-	<!-- <tr><td align="right"><label class="branch">Type</label></td>
-     <td align="left"><select id="rentaltype" name="rentaltype" onchange="clearagno()" value='<s:property value="rentaltype"/>'>
-     <option value="">--Select--</option><option value="RAG">Rental</option><option value="LAG">Lease</option>
-     </select></td></tr>
-     <tr><td align="right"><label class="branch">Tarif Type</label></td>
-     <td align="left"><select id="cmbtariftype" name="cmbtariftype" value='<s:property value="cmbtariftype"/>'>
-     <option value="">--Select--</option>
-     <option value="Daily">Daily</option>
-     <option value="Weekly">Weekly</option>
-     <option value="Monthly">Monthly</option>
-     <option value="Lease">Lease</option>
-     </select></td></tr>
-	<tr><td align="right"><label class="branch">Agreement</label></td>
-	<td align="left"><input type="text" id="vocnos" name="vocnos" style="width:100%;height:20px;" readonly="readonly" onfocus="chktype()" placeholder="Press F3 to Search" ondblclick="funSearchdblclick();" onkeydown="getAgreement(event);" value='<s:property value="vocnos"/>'/>
-	</td></tr>
-	<tr><td colspan="2"><input type="hidden" id="txtagreementno" name="txtagreementno" style="width:100%;height:20px;"  value='<s:property value="txtagreementno"/>'/></td></tr>
-	<tr><td colspan="2" align="center"><input type="button" class="myButtons" name="clear" id="clear"  value="Clear" onclick="funClearData();"> -->
-<!-- 	<button class="myButton" type="button" id="btnSalikInvoicePrint" name="btnSalikInvoicePrint" onclick="funSalikInvoicePrint();">Print</button> --></td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-		<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr> 
-	<tr><td colspan="2">&nbsp;</td></tr>
-	<tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
-    
-    
-    
-     
-	</table>
+	<div class="sidebar-filters">
+
+    <!-- HEADER -->
+    <div class="sidebar-fixed-top">
+
+        <jsp:include page="../../heading.jsp"></jsp:include>
+
+    </div>
+
+
+    <!-- SCROLL CONTENT -->
+    <div class="sidebar-scroll-content">
+
+        <!-- FILTER CARD -->
+        <div class="filter-card" style="
+            padding:16px;
+            border-radius:16px;
+        ">
+
+            <table class="filter-table">
+
+                <!-- FROM DATE -->
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">From</label>
+                    </td>
+
+                    <td>
+                        <div 
+                            id="fromdate"
+                            name="fromdate"
+                            value='<s:property value="fromdate"/>'>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+                <!-- TO DATE -->
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">To</label>
+                    </td>
+
+                    <td>
+                        <div 
+                            id="todate"
+                            name="todate"
+                            value='<s:property value="todate"/>'>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+                <!-- CLIENT -->
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">Client</label>
+                    </td>
+
+                    <td>
+
+                        <input 
+                            type="text"
+                            id="txtclientname"
+                            name="txtclientname"
+                            readonly="readonly"
+                            placeholder="Press F3 to Search"
+                            onkeydown="getClient(event);"
+                            value='<s:property value="txtclientname"/>'>
+
+                        <input 
+                            type="hidden"
+                            id="txtcldocno"
+                            name="txtcldocno"
+                            value='<s:property value="txtcldocno"/>'/>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- STATUS -->
+                <!--
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">Status</label>
+                    </td>
+
+                    <td>
+
+                        <select 
+                            id="clstatuss"
+                            name="clstatuss"
+                            value='<s:property value="clstatuss"/>'>
+
+                            <option value="">--Select--</option>
+                            <option value="0">Open</option>
+                            <option value="1">Close</option>
+
+                        </select>
+
+                    </td>
+
+                </tr>
+                -->
+
+
+                <!-- RENTAL TYPE -->
+                <!--
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">Type</label>
+                    </td>
+
+                    <td>
+
+                        <select 
+                            id="rentaltype"
+                            name="rentaltype"
+                            onchange="clearagno()"
+                            value='<s:property value="rentaltype"/>'>
+
+                            <option value="">--Select--</option>
+                            <option value="RAG">Rental</option>
+                            <option value="LAG">Lease</option>
+
+                        </select>
+
+                    </td>
+
+                </tr>
+                -->
+
+
+                <!-- TARIF TYPE -->
+                <!--
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">Tarif Type</label>
+                    </td>
+
+                    <td>
+
+                        <select 
+                            id="cmbtariftype"
+                            name="cmbtariftype"
+                            value='<s:property value="cmbtariftype"/>'>
+
+                            <option value="">--Select--</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Lease">Lease</option>
+
+                        </select>
+
+                    </td>
+
+                </tr>
+                -->
+
+
+                <!-- AGREEMENT -->
+                <!--
+                <tr>
+
+                    <td class="label-cell">
+                        <label class="branch">Agreement</label>
+                    </td>
+
+                    <td>
+
+                        <input 
+                            type="text"
+                            id="vocnos"
+                            name="vocnos"
+                            readonly="readonly"
+                            onfocus="chktype()"
+                            placeholder="Press F3 to Search"
+                            ondblclick="funSearchdblclick();"
+                            onkeydown="getAgreement(event);"
+                            value='<s:property value="vocnos"/>'/>
+
+                    </td>
+
+                </tr>
+                -->
+
+
+                <!-- HIDDEN AGREEMENT -->
+                <!--
+                <tr>
+
+                    <td colspan="2">
+
+                        <input 
+                            type="hidden"
+                            id="txtagreementno"
+                            name="txtagreementno"
+                            value='<s:property value="txtagreementno"/>'/>
+
+                    </td>
+
+                </tr>
+                -->
+
+            </table>
+
+
+            <!-- ACTION BUTTON -->
+            <!--
+            <div style="margin-top:16px;">
+
+                <input 
+                    type="button"
+                    class="btn-submit"
+                    name="clear"
+                    id="clear"
+                    value="Clear"
+                    onclick="funClearData();">
+
+            </div>
+            -->
+
+        </div>
+
+    </div>
+
+</div>
 	</fieldset>
 </td>
 <td width="80%">

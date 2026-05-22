@@ -45,55 +45,210 @@
 		}
  
 	</script>
-<body bgcolor="#E0ECF8">
-<div id=search>
-<table width="100%" >
-  <tr >
-   <td>
-   <table >
-   <tr>
-    <td align="left" width="6.5%"><label class="textdetail">Name</label></td>
-    <td align="left" width="54%"><input type="text" name="SCl_name" id="SCl_name"  style="width:96.5%;height:20px;" value='<s:property value="SCl_name"/>'></td>
-    <td align="right"><label class="textdetail">Mob</label></td>
-    <td align="left"><input type="text" name="Sl_mob" id="Sl_mob" style="height:20px;" value='<s:property value="Sl_mob"/>'></td>
-      <td align="right" width="10%"><label class="textdetail">Reg No</label></td>
-    <td align="left"><input type="text" id="sregno" name="sregno" style="height:20px;" value='<s:property value="sregno"/>'></td>
-    <tr>
-    </table>
-    </td>
-  </tr>
- <tr>
- <td>
-		
-  <table >
-  <tr>
- 
-     <td align="left" width="7%"><label class="textdetail">Doc No</label></td>
-    <td align="left" width="54%"><input type="text" name="rno" id="rno" style="height:20px;" value='<s:property value="rno"/>'>
-  &nbsp;<label class="textdetail">Fleet No</label>
-    <input type="text" name="flno" id="flno" style="width:34%;height:20px;" value='<s:property value="flno"/>'></td>
-<!--     <td align="right"><label class="textdetail"></label></td>
-    <td align="left"></td> -->
-    
-    <td  align="left">&nbsp;&nbsp;<input type="button" name="mbtnrasearch" id="mbtnrasearch" class="myButton" value="Search"  onclick="mainloadSearch();"></td>
-  <td>&nbsp;</td>
-  <td>&nbsp;</td>
-  <td>&nbsp;</td>
-  </tr>
-  </table>
-  </td>
+<style type="text/css">
 
-  <tr>
-    <td colspan="8" align="right">
-    
-    <div id="srefreshdiv">
-      
-   <jsp:include  page="agreementDetailsSearchGrid.jsp"></jsp:include> 
-   
-   </div>
-    </td>
-  </tr>
-</table>
-  </div>
+/* ===== CLEAN MASTER UI ===== */
+
+body{
+    margin:0;
+    background:#f5f7fa;
+}
+
+/* MAIN */
+#search{
+    width:96%;
+    margin:8px auto;
+    font-family:Segoe UI, Arial, sans-serif;
+    font-size:12px;
+}
+
+/* TOP PANEL */
+.search-panel{
+    background:#ffffff;
+    border:1px solid #cfd9e2;
+    border-radius:6px;
+    padding:8px 10px;
+    margin-bottom:8px;
+}
+
+/* GRID PANEL */
+.grid-panel{
+    background:#ffffff;
+    border:1px solid #cfd9e2;
+    border-radius:6px;
+    padding:4px;
+}
+
+/* TABLE */
+#search table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:6px 6px;
+}
+
+/* LABELS */
+.label{
+    font-size:12px;
+    font-weight:600;
+    color:#000;
+    white-space:nowrap;
+    text-align:right;
+}
+
+/* INPUTS */
+#search input[type="text"]{
+    height:24px;
+    border:1px solid #bcc8d6;
+    border-radius:3px;
+    padding:2px 6px;
+    font-size:12px;
+    box-sizing:border-box;
+    background:#fff;
+}
+
+/* BUTTON */
+.myButton{
+    height:24px;
+    padding:0 16px;
+    font-size:12px;
+    font-weight:600;
+    color:#fff;
+    border:1px solid #0a3d91;
+    border-radius:3px;
+    background:#1f5fd1;
+    cursor:pointer;
+}
+
+/* WIDTHS */
+.name-box{
+    width:100%;
+}
+
+.mob-box{
+    width:130px;
+}
+
+.reg-box{
+    width:130px;
+}
+
+.doc-box{
+    width:120px;
+}
+
+.fleet-box{
+    width:150px;
+}
+
+/* INLINE */
+.inline-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+</style>
+
+<body>
+
+<div id="search">
+
+    <!-- SEARCH AREA -->
+    <div class="search-panel">
+
+        <table>
+
+            <!-- ROW 1 -->
+            <tr>
+
+                <td class="label" width="6%">Name</td>
+
+                <td width="44%">
+                    <input type="text"
+                           class="name-box"
+                           name="SCl_name"
+                           id="SCl_name"
+                           value='<s:property value="SCl_name"/>'>
+                </td>
+
+                <td class="label" width="5%">Mob</td>
+
+                <td width="14%">
+                    <input type="text"
+                           class="mob-box"
+                           name="Sl_mob"
+                           id="Sl_mob"
+                           value='<s:property value="Sl_mob"/>'>
+                </td>
+
+                <td class="label" width="7%">Reg No</td>
+
+                <td width="14%">
+                    <input type="text"
+                           class="reg-box"
+                           id="sregno"
+                           name="sregno"
+                           value='<s:property value="sregno"/>'>
+                </td>
+
+            </tr>
+
+            <!-- ROW 2 -->
+            <tr>
+
+                <td class="label">Doc No</td>
+
+                <td colspan="3">
+
+                    <div class="inline-row">
+
+                        <input type="text"
+                               class="doc-box"
+                               name="rno"
+                               id="rno"
+                               value='<s:property value="rno"/>'>
+
+                        <label class="label">Fleet No</label>
+
+                        <input type="text"
+                               class="fleet-box"
+                               name="flno"
+                               id="flno"
+                               value='<s:property value="flno"/>'>
+
+                    </div>
+
+                </td>
+
+                <td colspan="2" align="left">
+
+                    <input type="button"
+                           name="mbtnrasearch"
+                           id="mbtnrasearch"
+                           class="myButton"
+                           value="Search"
+                           onclick="mainloadSearch();">
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-panel">
+
+        <div id="srefreshdiv">
+
+            <jsp:include page="agreementDetailsSearchGrid.jsp"></jsp:include>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>

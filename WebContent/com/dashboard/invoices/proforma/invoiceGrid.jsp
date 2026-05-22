@@ -129,7 +129,7 @@ $(document).ready(function(){
     $("#invoiceGrid").jqxGrid(
     {
         width: '98%',
-        height: 510,
+        height: 630,
         source: dataAdapter,
         showaggregates:true,
 	showstatusbar:true,

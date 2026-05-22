@@ -86,7 +86,7 @@ body {
     padding-right: 5px;
 }
 
-/* FIXED: Middle Section Panels with Solid Backgrounds to hide the line */
+/* Middle Section Panels - No clipped headings */
 .modern-ui .middle-panel {
     border: 1px solid #c5d3e0; 
     padding: 20px 10px 10px 10px; 
@@ -94,12 +94,12 @@ body {
     position: relative; 
     border-radius: 4px; 
     margin-bottom: 15px;
-    margin-top: 12px; /* Fix for panel hitting the ceiling */
+    margin-top: 12px;
 }
 
 .modern-ui .middle-panel-title { 
     position: absolute; 
-    top: -12px; /* Set directly on the border line */
+    top: -12px;
     left: 10px; 
     background: #ffffff; 
     padding: 0 8px; 
@@ -108,28 +108,8 @@ body {
     font-size: 14px; 
     border-left: 3px solid #0056b3;
     z-index: 2; 
-    line-height: normal; /* Fix for sliced text */
+    line-height: normal; 
 }
-
-/* Custom UI Buttons matching 24px height */
-.modern-ui .myButton {
-    height: 24px !important;
-    line-height: 22px !important;
-    padding: 0 12px;
-    font-family: Arial, sans-serif;
-    font-size: 11px;
-    font-weight: bold;
-    border-radius: 3px;
-    cursor: pointer;
-    text-shadow: none;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    border: none;
-    background: linear-gradient(135deg, #0b45a2 0%, #2563eb 100%);
-    color: #ffffff;
-    white-space: nowrap;
-}
-.modern-ui .myButton:hover { background: linear-gradient(135deg, #083a8a 0%, #1d4ed8 100%); }
 
 /* Search Icon Wrapper */
 .modern-ui .input-search-container {
@@ -150,13 +130,8 @@ body {
 }
 .modern-ui .magnifier-icon:hover { color: #2563eb; }
 
-/* Grid Wrapper */
-.modern-ui .grid-container {
-    border: 1px solid #c5d3e0;
-    border-radius: 4px;
-    background: #fff;
-    overflow: hidden;
-}
+/* Validation Label */
+.modern-ui .val-error { color: red; font-size: 11px; font-weight:bold; }
 
 /* Scrollbar Logic */
 .hidden-scrollbar {
@@ -170,8 +145,12 @@ body {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
-		 
+         
+         // Disable Approval, Edit, Attach, and Delete buttons
+         $('#btnApprove, #btnApproval, #btnEdit, #btnAttach, #btnAttachment, #attachBtn, #btnDelete').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
+		
          /* COMPACT DATE SIZING */
 		 $("#terminationBenefitsPostingDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
 		 
@@ -279,7 +258,7 @@ body {
  		}
  		x.open("GET", "getLastMonthDepreciation.jsp?date="+date+"&branch="+document.getElementById("brchName").value, true);
  		x.send();
-    }
+ 	    }
 	
 	 function funReadOnly(){
 			$('#frmTerminalBenefitsPosting input').attr('readonly', true );
@@ -320,7 +299,7 @@ body {
 	 function funFocus(){
 	    $('#terminationBenefitsPostingDate').jqxDateTimeInput('focus'); 	    		
 	 }
-	   
+	    
 	  function funNotify(){	
 	        	/* Validation */
 	        	var rows = $("#terminationBenefitsAccounts").jqxGrid('getrows');
@@ -392,6 +371,7 @@ body {
 	    		return 1;
 		} 
 	  
+	  
 	  function setValues(){
 		  if($('#hidterminationBenefitsPostingDate').val()){
 				 $("#terminationBenefitsPostingDate").jqxDateTimeInput('val', $('#hidterminationBenefitsPostingDate').val());
@@ -407,12 +387,12 @@ body {
 			 if(indexVal>0){
 	         $("#accountsDetailsDiv").load("accountsDetailsGrid.jsp?trno="+indexVal);
 			 }
-	         
+		     
 			 var indexVal1 = document.getElementById("docno").value;
 	         var indexVal2 = document.getElementById("txttrno").value;
 	         if(indexVal1>0){
 	         	 var employeebranchchk=window.parent.employeebranchchk.value; 
-	       		 var branch=document.getElementById("brchName").value;  
+	         	 var branch=document.getElementById("brchName").value;   
 	         	$("#terminationBenefitsDetailsDiv").load("terminationBenefitsGrid.jsp?docno="+indexVal1+"&trno="+indexVal2+'&branch='+branch+'&employeebranchchk='+employeebranchchk);
 	         } 
 		}	

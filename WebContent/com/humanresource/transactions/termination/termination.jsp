@@ -170,7 +170,10 @@ body {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		 $('#btnEdit').attr('disabled', true );$('#btnDelete').attr('disabled', true );$('#btnAttach').attr('disabled', true );
+         // Disable ONLY approval, edit, delete, and attach buttons
+         $('#btnApprove, #btnApproval, #btnEdit, #btnDelete, #btnAttach, #btnAttachment, #attachBtn').prop('disabled', true)
+            .css({'pointer-events': 'none', 'opacity': '0.5'})
+            .attr('tabindex', '-1');
 		
          /* COMPACT DATE SIZING */
 		 $("#terminationDate").jqxDateTimeInput({ width: '120px', height: '24px', formatString:"dd.MM.yyyy"});
@@ -188,10 +191,10 @@ body {
          }, 0);
 
 		 $('#employeeDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Employees Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
- 		 $('#employeeDetailsWindow').jqxWindow('close');
- 		 
- 		 $('#txtemployeeid').dblclick(function(){
- 			employeeSearchContent("employeeDetailsSearch.jsp");
+		 $('#employeeDetailsWindow').jqxWindow('close');
+		
+		 $('#txtemployeeid').dblclick(function(){
+			employeeSearchContent("employeeDetailsSearch.jsp");
 		  });
 		 
 	});
@@ -207,7 +210,7 @@ body {
   function getEmployeeDetails(event){
       var x= event.keyCode;
       if(x==114){
-    	  employeeSearchContent("employeeDetailsSearch.jsp");
+      	  employeeSearchContent("employeeDetailsSearch.jsp");
       }
       else{}
       }
@@ -326,7 +329,7 @@ body {
 			$("#terminationAccountsGridID").jqxGrid({ disabled: true});
 			$('#btnProcessing').hide();$('#btnCalculate').hide();
 	 }
-	 
+	
 	 function funRemoveReadOnly(){
 			$('#frmTermination input').attr('readonly', false );
 			$('#cmbtype').attr('disabled', false );
@@ -362,17 +365,17 @@ body {
 			}
 			
 	 }
-	 
+	
 	 function funSearchLoad(){
 		changeContent('htreMainSearch.jsp');  
 	 }
 		
 	 function funChkButton() { }
-	 
+	
 	 function funFocus(){
 	    	$('#terminationDate').jqxDateTimeInput('focus'); 	    		
 	    }
-	 
+	
 	    $(function(){
 	        $('#frmTermination').validate({
 	                rules: {
@@ -385,7 +388,7 @@ body {
 	   
 	  function funNotify(){	
 		  
-		        /* Validation */
+	        /* Validation */
 	    	      document.getElementById("errormsg").innerText="";
 	    		
 	    	    /* Validation Ends*/
@@ -409,7 +412,7 @@ body {
 					  }
 		 			 $('#gridlength').val(length); 
 	 	 		/* Termination Grid  Saving Ends*/	
-	 	 
+	 	
 	 			/* Account Details Grid Saving */
 		    	 var accountsrows = $("#terminationAccountsGridID").jqxGrid('getrows');
 		    	 var journalslength=0;

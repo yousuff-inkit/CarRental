@@ -906,38 +906,33 @@ public  JSONArray sat_colorsearch(String source,String site) throws SQLException
 	}
 
 
+	public JSONArray loadSalikData(String xdocs) throws SQLException {
 
-	public  JSONArray loadSalikData(String xdocs) throws SQLException {
+		JSONArray RESULTDATA = new JSONArray();
 
-		JSONArray RESULTDATA=new JSONArray();
-
+		// THE FIX: Stop the MySQL crash if there are no new documents
+		if (xdocs == null || xdocs.trim().isEmpty() || xdocs.equals("''")) {
+			return RESULTDATA;
+		}
 
 		Connection conn = null;
-		Statement stmt =null;
+		Statement stmt = null;
 
 		try {
-
-//			System.out.println("=====sat_unamesearch");
-			 conn = connobj.getMyConnection();
-			stmt = conn.createStatement ();
-
-			ResultSet resultSet = stmt.executeQuery ("Select Salik_User,trans,salik_date,salik_time,sal_date,regno,source,tagno,location,direction,amount,date from gl_salik where Doc_no in ("+xdocs+")");
-//			System.out.println("============"+stmt);
+			conn = connobj.getMyConnection();
+			stmt = conn.createStatement();
+			ResultSet resultSet = stmt.executeQuery("Select Salik_User,trans,salik_date,salik_time,sal_date,regno,source,tagno,location,direction,amount,date from gl_salik where Doc_no in ("+xdocs+")");
 			RESULTDATA=convertToJSON(resultSet);
-//			System.out.println("=====RESULTDATA"+RESULTDATA);
-
 		}
 		catch(Exception e){
-			conn.close();
 			e.printStackTrace();
 		}
 		finally{
-			stmt.close();
-			conn.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
 		}
 		return RESULTDATA;
 	}
-
 	public String  loadCaptchatext(String txtcaptcha) throws SQLException {
 
 
@@ -969,42 +964,33 @@ public  JSONArray sat_colorsearch(String source,String site) throws SQLException
 	}
 
 
+	public JSONArray loadTrafficData(String xdocs) throws SQLException {
 
-	public  JSONArray loadTrafficData(String xdocs) throws SQLException {
+		JSONArray RESULTDATA = new JSONArray();
 
-//		System.out.println("==xdocs===="+xdocs);
-
-		JSONArray RESULTDATA=new JSONArray();
+		// THE FIX: Stop the MySQL crash
+		if (xdocs == null || xdocs.trim().isEmpty() || xdocs.equals("''")) {
+			return RESULTDATA;
+		}
 
 		Connection conn = null;
-		Statement stmt =null;
+		Statement stmt = null;
 
 		try {
-
-//			System.out.println("=====loadtraffic");
-			 conn = connobj.getMyConnection();
-			stmt = conn.createStatement ();
-
-
-
-
-			ResultSet resultSet = stmt.executeQuery ("Select blackpoints,tcno,ticket_no,traffic_date,time,fine_source,amount,regno,Pcolor,licence_no,licence_from,tick_violat,tick_location from gl_traffic where Doc_no in ("+xdocs+")");
-//			System.out.println("Select tcno,ticket_no,traffic_date,time,fine_source,amount,regno,Pcolor,licence_no,licence_from,tick_violat,tick_location from gl_traffic where Doc_no in ("+xdocs+")");
+			conn = connobj.getMyConnection();
+			stmt = conn.createStatement();
+			ResultSet resultSet = stmt.executeQuery ("Select tcno,ticket_no,traffic_date,time,fine_source,amount,regno,Pcolor,licence_no,licence_from,tick_violat,tick_location from gl_traffic where Doc_no in ("+xdocs+")");
 			RESULTDATA=convertToJSON(resultSet);
-//			System.out.println("==loadTrafficData===RESULTDATA"+RESULTDATA);
-
 		}
 		catch(Exception e){
-			conn.close();
 			e.printStackTrace();
 		}
 		finally{
-			stmt.close();
-			conn.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();
 		}
 		return RESULTDATA;
 	}
-	
     public   JSONArray vehSearch(HttpSession session,String fleetno,String regno,String flname,String stag,String pcode,String aa) throws SQLException {
 
 

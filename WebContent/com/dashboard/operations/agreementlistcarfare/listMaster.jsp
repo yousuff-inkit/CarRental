@@ -99,7 +99,7 @@ select {
 }
 
 input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
+    background-color: #fff !important;
     color: #555;
     cursor: pointer; /* Pointer because they are search lookups */
 }
