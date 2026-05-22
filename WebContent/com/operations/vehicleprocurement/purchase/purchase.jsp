@@ -1917,42 +1917,44 @@ else{
         x.send();
         }
         
-        function getAttachDocumentNo(){
-            var x=new XMLHttpRequest();
-            x.onreadystatechange=function(){
-            if (x.readyState==4 && x.status==200)
-                {
-                    var items=x.responseText.trim();
-                    
-                    if(items>0){
-                        
-                        var path=document.getElementById("file").value;
-                        var fsize = $('#file')[0].files[0].size;
-                        var extn = path.substring(path.lastIndexOf(".") + 1, path.length);
-                        
-                        if((extn=='xls') || (extn=='csv')){ 
-                            ajaxFileUpload(items);  
-                     }else{
-                             $.messager.show({title:'Message',msg: 'File of xlsx Format is not Supported.',showType:'show',
-                                 style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
-                             }); 
-                            return;
-                     } 
-                    }
-                    
-              }
-            }
-                
-        x.open("GET","getAttachDocumentNo.jsp",true);
-        x.send();
-        }
-        
         function upload(){
+            var fileInput = $('#file')[0];
+            if(fileInput.files.length === 0) {
+                $.messager.alert('Warning', 'Please choose a file to upload before clicking the attach button.', 'warning');
+                return false;
+            }
             
             $('#txtexcelvalidation').val(1);
             getAttachDocumentNo();
-            
-         }
+        }
+        
+        function getAttachDocumentNo(){
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function(){
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText.trim();
+                    
+                    if(items > 0){
+                        var path = document.getElementById("file").value;
+                        var extn = path.substring(path.lastIndexOf(".") + 1, path.length).toLowerCase();
+                        
+                        if(extn == 'xls' || extn == 'xlsx' || extn == 'csv'){ 
+                            ajaxFileUpload(items);  
+                        } else {
+                            $.messager.show({
+                                title:'Message',
+                                msg: 'Only Excel (xls/xlsx) or CSV formats are supported.',
+                                showType:'show',
+                                style:{left:'',right:27,top:document.body.scrollTop+document.documentElement.scrollTop,bottom:''}
+                            }); 
+                        } 
+                    }
+                }
+            }
+                
+            x.open("GET", "getAttachDocumentNo.jsp", true);
+            x.send();
+        }
         
         function ajaxFileUpload(docNo) {  
           
@@ -2380,6 +2382,7 @@ else{
     <input type="hidden" id="restructure" name="restructure" value='<s:property value="restructure"/>'/>
     <input type="hidden" id="txtnontaxableentity" name="txtnontaxableentity" value='<s:property value="txtnontaxableentity"/>'/>
     <input type="hidden" id="txttaxpercentage" name="txttaxpercentage" value='<s:property value="txttaxpercentage"/>'/>
+    <input type="hidden" id="txtexcelvalidation" name="txtexcelvalidation" value="0"/>
 </form>
 
 <div id="colorsearchwndow"><div></div></div>
