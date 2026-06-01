@@ -23,43 +23,39 @@
         background-color: var(--bg-light);
         margin: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 12px; /* Base font scaled down */
     }
 
-    /* Main Layout Container */
+    /* Main Layout Container - Scaled down paddings */
     .layout-container {
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        padding: 15px;
+        gap: 16px;
+        padding: 12px;
     }
 
-    /* TOP ACTION BAR: Strictly One Horizontal Line, NO Scrollbars */
+    /* TOP ACTION BAR - Scaled down footprint */
     .top-bar {
         display: flex;
         flex-direction: row;
-        flex-wrap: nowrap; /* Forces a single line */
+        flex-wrap: nowrap;
         align-items: center;
         justify-content: flex-start;
         background: var(--card-bg);
-        padding: 10px 20px;
+        padding: 8px 16px;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         border-top: 3px solid var(--primary-teal);
-        gap: 20px;
-        overflow: hidden; /* Kills the scrollbar */
-        white-space: nowrap;
+        gap: 16px;
+        overflow-x: auto; 
     }
 
-    /* ULTIMATE FLATTENER FOR heading.jsp
-       Aggressively strips block layouts, fieldsets, and tables 
-       inside the imported file and kills internal scrollbars.
-    */
     .heading-container {
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        gap: 15px !important;
-        overflow: hidden !important;
+        gap: 12px !important;
+        flex-shrink: 0; 
     }
 
     .heading-container fieldset,
@@ -81,71 +77,69 @@
         margin: 0 !important;
         background: transparent !important;
         box-shadow: none !important;
-        gap: 10px !important;
-        overflow: hidden !important; /* Forces injected elements to not scroll */
+        gap: 8px !important;
     }
 
-    /* Hide any line breaks or horizontal rules from the imported file */
     .heading-container br,
     .heading-container hr {
         display: none !important;
     }
 
-    /* Style the heading text itself to sit nicely inline */
     .heading-container h1, 
     .heading-container h2, 
     .heading-container h3 {
         margin: 0 !important;
-        font-size: 16px !important;
+        font-size: 13px !important; /* Scaled down heading */
         color: var(--primary-teal);
         white-space: nowrap !important;
     }
 
-    /* From/To Date Filters in Horizontal Line */
     .horizontal-filters {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
+        flex-shrink: 0;
     }
 
     .filter-group {
         display: flex;
         align-items: center;
-        gap: 8px;
-        font-size: 13px;
+        gap: 6px;
+        font-size: 11px; /* Scaled down label */
         font-weight: 600;
         color: #555;
     }
 
-    /* Action Logos / Buttons */
     .action-logos {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 15px;
-        margin-left: auto; /* Pushes the logos to the far right */
+        gap: 12px;
+        margin-left: auto; 
+        flex-shrink: 0;
     }
 
     .logo-btn {
         display: flex;
-        flex-direction: row; /* Horizontal text and icon */
+        flex-direction: row; 
         align-items: center;
         justify-content: center;
         background: transparent;
         border: 1px solid var(--primary-teal);
         border-radius: 6px;
-        padding: 6px 15px;
+        padding: 5px 12px; /* Scaled down button padding */
         cursor: pointer;
         color: var(--primary-teal);
         font-weight: bold;
         transition: all 0.2s ease-in-out;
-        gap: 8px;
+        gap: 6px;
+        font-size: 11px; /* Scaled down button text */
         white-space: nowrap;
     }
 
     .logo-btn span.icon {
-        font-size: 18px;
+        font-size: 14px; /* Scaled down icon */
     }
 
     .logo-btn:hover {
@@ -154,11 +148,10 @@
         box-shadow: 0 4px 10px rgba(32,178,170,0.3);
     }
 
-    /* GRIDS CONTAINER: Forced Vertical Stacking */
     .grids-container {
         display: flex;
-        flex-direction: column; /* This stacks Grid 1 and Grid 2 one after another */
-        gap: 20px;
+        flex-direction: column; 
+        gap: 16px;
         width: 100%;
     }
 
@@ -166,20 +159,22 @@
         background: var(--card-bg);
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        padding: 15px;
+        padding: 12px;
         overflow: hidden;
         width: 100%;
         box-sizing: border-box;
     }
 
-    /* Modal Form Styling */
+    /* Modal Form Styling - SCALED DOWN */
     .popup-window-content {
-        padding: 10px 15px;
+        padding: 8px 12px 30px 12px; 
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        overflow-y: auto;
-        height: calc(100% - 10px);
+        gap: 6px; 
+        overflow-y: auto; 
+        overflow-x: hidden;
+        height: 100%;
+        box-sizing: border-box;
     }
 
     .input-row {
@@ -188,20 +183,20 @@
     }
 
     .input-row label {
-        font-size: 12px;
+        font-size: 10px; /* Scaled down label */
         color: #555;
         font-weight: 600;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
     }
 
     .input-row input[type="text"], 
     .input-row select {
         width: 100%;
-        padding: 6px 0;
+        padding: 3px 0; /* Scaled down inputs */
         border: none;
         border-bottom: 1px solid var(--border-color);
         background: transparent;
-        font-size: 13px;
+        font-size: 11px;
         outline: none;
         transition: border-color 0.3s ease;
         box-sizing: border-box;
@@ -216,14 +211,15 @@
         background-color: var(--primary-teal);
         color: white;
         border: none;
-        padding: 10px 15px;
+        padding: 6px 12px; /* Scaled down button */
         border-radius: 4px;
         cursor: pointer;
         width: 100%;
         font-weight: bold;
-        font-size: 13px;
+        font-size: 11px;
         transition: background-color 0.2s;
-        margin-top: 10px;
+        margin-top: 4px;
+        flex-shrink: 0;
     }
 
     .myButton:hover {
@@ -232,23 +228,25 @@
 
     .checkbox-group {
         display: flex;
-        gap: 15px;
+        gap: 12px;
         align-items: center;
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 600;
         color: #555;
+        margin-top: 3px;
+        margin-bottom: 3px;
     }
 </style>
 
 <script type="text/javascript">
 $(document).ready(function () {
     // Initialize Primary Modals
-    $('#updateActionWindow').jqxWindow({ width: '380px', height: '360px', resizable: false, isModal: true, autoOpen: false, title: 'Update Follow-up Information' });
-    $('#rentalActionWindow').jqxWindow({ width: '480px', height: '620px', resizable: false, isModal: true, autoOpen: false, title: 'Create Rental Agreement' });
+    $('#updateActionWindow').jqxWindow({ width: '380px', height: '320px', resizable: false, isModal: true, autoOpen: false, title: 'Update Follow-up Information' });
+    $('#rentalActionWindow').jqxWindow({ width: '480px', height: '600px', resizable: false, isModal: true, autoOpen: false, title: 'Create Rental Agreement' });
 
-    // Initialize DateTime Inputs
-	 $("#jqxDateOut").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
-     $("#jqxTimeOut").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false });
+    // Initialize DateTime Inputs - HEIGHT SCALED TO 20px
+	 $("#jqxDateOut").jqxDateTimeInput({ width: '100%', height: '20px', formatString:"dd.MM.yyyy"});
+     $("#jqxTimeOut").jqxDateTimeInput({ width: '100%', height: '20px', formatString: 'HH:mm', showCalendarButton: false });
      $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
 	 $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
 
@@ -264,13 +262,13 @@ $(document).ready(function () {
      $('#driverinfowindow').jqxWindow({ width: '50%', height: '58%',  maxHeight: '62%' ,maxWidth: '50%' , title: 'Driver Search' ,position: { x: 250, y: 60 }, keyboardCloseKey: 27});
      $('#driverinfowindow').jqxWindow('close'); 	 	
 	
-	 $("#fromdate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
-	 $("#todate").jqxDateTimeInput({ width: '120px', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#fromdate").jqxDateTimeInput({ width: '110px', height: '20px',formatString:"dd.MM.yyyy"});
+	 $("#todate").jqxDateTimeInput({ width: '110px', height: '20px',formatString:"dd.MM.yyyy"});
 	 var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
 	 var onemounth=new Date(new Date(fromdates).setMonth(fromdates.getMonth()-1)); 
 	    
      $('#fromdate').jqxDateTimeInput('setDate', new Date(onemounth));
-	 $("#date").jqxDateTimeInput({ width: '100%', height: '24px',formatString:"dd.MM.yyyy"});
+	 $("#date").jqxDateTimeInput({ width: '100%', height: '20px',formatString:"dd.MM.yyyy"});
 	 
 	 $('#todate').on('change', function (event) {
 		   var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
@@ -377,7 +375,7 @@ function chauffeurSearchContent(url) {
     }); 
 }       
 
-function funreload(event) {
+function funreload() {
 	var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
     var todates=new Date($('#todate').jqxDateTimeInput('getDate')); 
 		 
@@ -413,6 +411,33 @@ function getinfo() {
 	x.send();
 }
 
+function funConfirmBooking() {
+    var rdocno = document.getElementById("rdocno").value;
+    var branchids = document.getElementById("branchids").value;
+
+    if(rdocno == "") {
+        $.messager.alert('Message', 'Please select a booking to confirm.', 'warning');
+        return false;
+    }
+
+    $.messager.confirm('Message', 'Do you want to confirm this booking and update status?', function(r) {
+        if(r == true) {
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                    document.getElementById("rdocno").value = "";
+                    $.messager.alert('Message', 'Booking Confirmed Successfully!');
+                    funreload(); 
+                    $("#duedetailsgrid").jqxGrid('clear');
+                    disitems();
+                }
+            };
+            x.open("GET", "confirmBookingStatus.jsp?rdocno=" + rdocno + "&branchids=" + branchids, true);
+            x.send();
+        }
+    });
+}
+
 function funupdate() {
 	if(document.getElementById("cmbinfo").value=="") {
 		 $.messager.alert('Message','Select Process ','warning');   
@@ -439,11 +464,9 @@ function funupdate() {
  	var folldate =  $('#date').val();
 
     $.messager.confirm('Message', 'Do you want to save changes?', function(r){
-        if(r==false) {
-	     	return false; 
-	    } else {
-	     	savegriddata(rdocno,branchids,remarks,cmbinfo,folldate,clname,reftype);	
+        if(r==true) {
             $('#updateActionWindow').jqxWindow('close');
+	     	savegriddata(rdocno,branchids,remarks,cmbinfo,folldate,clname,reftype);	
 	    }
     });
 }
@@ -451,8 +474,7 @@ function funupdate() {
 function savegriddata(rdocno,branchids,remarks,cmbinfo,folldate,clname,reftype) {
 	var x=new XMLHttpRequest();
 	x.onreadystatechange=function(){
-	if (x.readyState==4 && x.status==200) {
-			var items=x.responseText;
+	    if (x.readyState==4 && x.status==200) {
 			 document.getElementById("rdocno").value="";
 			 document.getElementById("branchids").value="";
 			 document.getElementById("remarks").value="";
@@ -460,8 +482,9 @@ function savegriddata(rdocno,branchids,remarks,cmbinfo,folldate,clname,reftype) 
 			 document.getElementById("clname").value="";
 			 document.getElementById("reftype").value=""; 
 			 $('#date').val(new Date());
+
 			 $.messager.alert('Message', '  Record Successfully Updated ', function(r){});
-			 funreload(event); 
+			 funreload(); 
 			 $("#duedetailsgrid").jqxGrid('clear');
 			 disitems();
 		}
@@ -678,7 +701,7 @@ function creategriddata(rdocno,deldrvss,clientdrs,rantalagt,chkout,delivery,chue
 
             $.messager.alert('Message', ' Successfully Created '+'RA NO Is '+items);
             $('#rentalActionWindow').jqxWindow('close');
-            funreload(event); 
+            funreload(); 
             disitems();
         }
     }
@@ -719,6 +742,10 @@ function isNumber(evt) {
             </div>
 
             <div class="action-logos">
+                <button class="logo-btn" onclick="funConfirmBooking()" title="Confirm Booking">
+                    <span class="icon">&#x2714;</span> Confirm
+                </button>
+                
                 <button class="logo-btn" onclick="$('#updateActionWindow').jqxWindow('open');" title="Update Follow-up Process">
                     <span class="icon">&#x1F4DD;</span> Update Info
                 </button>
