@@ -72,27 +72,26 @@ if(!(folldate.equalsIgnoreCase("undefined"))&&!(folldate.equalsIgnoreCase(""))&&
 			 
 			  }
 
-	   else  if(cmbinfo.equalsIgnoreCase("21"))
+	   else if(cmbinfo.equalsIgnoreCase("34"))
 	   {
+		   // 1. Update the master booking status to 3 (Confirmed)
+		   upsql="update gl_bookingm set status=3 where doc_no='"+rdocno+"' ";
+		   val= stmt.executeUpdate(upsql);
 		   
-		   upsql="update  gl_bookingm  set clstatus=2,status=6 where doc_no='"+rdocno+"' ";
-		//   System.out.println("----upsql---"+upsql);
-		   
-		     val= stmt.executeUpdate(upsql);
-		     upsql="select coalesce(max(doc_no)+1,1) doc_no from gl_bvbr";
-			   ResultSet resultSet = stmt.executeQuery(upsql);
-			   
-			    if (resultSet.next()) {
-			    	docval=resultSet.getInt("doc_no");
-			    }    
+		   // 2. Fetch the next ID for the log history
+		   upsql="select coalesce(max(doc_no)+1,1) doc_no from gl_bvbr";
+		   ResultSet resultSet = stmt.executeQuery(upsql);
+		   if (resultSet.next()) {
+		       docval=resultSet.getInt("doc_no");
+		   }    
 	
-			     
-		     upsql="insert into gl_bvbr (doc_no,date, rdocno, bibpid, ddate,reftype, name, remarks, userid, status)values('"+docval+"',now(),'"+rdocno+"','"+cmbinfo+"','"+sqlprocessdate+"','"+reftype+"','"+clname+"','"+remarks+"','"+session.getAttribute("USERID").toString()+"',3) ";
-			 val= stmt.executeUpdate(upsql);
+		   // 3. Save the specific Remarks/Notes to the history log
+		   upsql="insert into gl_bvbr (doc_no,date, rdocno, bibpid, fdate,reftype, name, remarks, userid, status)values('"+docval+"',now(),'"+rdocno+"','"+cmbinfo+"','"+sqlprocessdate+"','"+reftype+"','"+clname+"','"+remarks+"','"+session.getAttribute("USERID").toString()+"',3) ";
+		   val= stmt.executeUpdate(upsql);
 			 
-					 upsql="insert into gl_biblog (doc_no, brhId, dtype, edate, userId, ENTRY) values ('"+docval+"','"+branchids+"','BVBR',now(),'"+session.getAttribute("USERID").toString()+"','A')";
-					 int aaa= stmt.executeUpdate(upsql);
-			 
+		   // 4. Save the audit trail
+		   upsql="insert into gl_biblog (doc_no, brhId, dtype, edate, userId, ENTRY) values ('"+docval+"','"+branchids+"','BVBR',now(),'"+session.getAttribute("USERID").toString()+"','A')";
+		   stmt.executeUpdate(upsql);
 	   }
 	  
 		 				

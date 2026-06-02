@@ -520,77 +520,70 @@ public class ClsMarketingDAO {
 		
 	public JSONArray bookingfollowsearch(String brnchval,String fromdate,String todate) throws SQLException {
 
-        JSONArray RESULTDATA=new JSONArray();
-        
-        java.sql.Date sqlfromdate = null;
-     	if(!(fromdate.equalsIgnoreCase("undefined"))&&!(fromdate.equalsIgnoreCase(""))&&!(fromdate.equalsIgnoreCase("0")))
-     	{
-     		sqlfromdate=ClsCommon.changeStringtoSqlDate(fromdate);
-     		
-     	}
-     	else{
-     
-     	}
+	    JSONArray RESULTDATA=new JSONArray();
+	    
+	    java.sql.Date sqlfromdate = null;
+	    if(!(fromdate.equalsIgnoreCase("undefined"))&&!(fromdate.equalsIgnoreCase(""))&&!(fromdate.equalsIgnoreCase("0"))) {
+	        sqlfromdate=ClsCommon.changeStringtoSqlDate(fromdate);
+	    }
 
-        java.sql.Date sqltodate = null;
-     	if(!(todate.equalsIgnoreCase("undefined"))&&!(todate.equalsIgnoreCase(""))&&!(todate.equalsIgnoreCase("0")))
-     	{
-     		sqltodate=ClsCommon.changeStringtoSqlDate(todate);
-     		
-     	}
-     	else{
-     
-     	}
+	    java.sql.Date sqltodate = null;
+	    if(!(todate.equalsIgnoreCase("undefined"))&&!(todate.equalsIgnoreCase(""))&&!(todate.equalsIgnoreCase("0"))) {
+	        sqltodate=ClsCommon.changeStringtoSqlDate(todate);
+	    }
 
-        
-        
-     	Connection conn = null;
-        
-		try {
-				 conn = ClsConnection.getMyConnection();
-				Statement stmtVeh = conn.createStatement ();
-				//String sql="";
-				//ResultSet resultSet ;
-				//System.out.println("========="+brnchval);
-            	if(brnchval.equalsIgnoreCase("a"))
-            	{
-            		String sql="select convert(if(b.delivery=1,round(b.delchg,2),''),char(50)) delchg,b.voc_no,convert(if(b.fleet_no='0','',b.fleet_no),char(20)) fleet_no,b.grpid,b.delivery,b.chuef,DATE_FORMAT(bv.fdate, '%d.%m.%Y') fdate,b.cldocno,b.brhid, b.DOC_NO, DATE_FORMAT(b.date, '%d.%m.%Y') date,  b.REFNO, if(b.REFTYPE='DIR','Direct',if(b.REFTYPE='ONL','Online','Quotation')) type,b.REFTYPE,"
-            				+ "b.CONTACTNO mob ,b.remarks,b.rtype, DATE_FORMAT(b.frmdate, '%d.%m.%Y') frmdate,b.frmtime,DATE_FORMAT(b.todate, '%d.%m.%Y') todate,concat(br.brand_name,' ',mo.vtype) brmodel,"
-            				+ "a.refname name from  gl_bookingm b left join gl_vehmodel mo on mo.doc_no=b.modid "
-            				+ "  left join gl_vehbrand br on br.doc_no=b.brdid left join gl_quotm q on q.doc_no=b.refno "
-            				+ " left join gl_enqm e on e.doc_no=q.ref_no left join my_acbook a on a.cldocno=b.cldocno and a.dtype='CRM'   "
-            				+ "left join (select max(s.doc_no) doc_no,rdocno from gl_bvbr s group by  rdocno) s on(s.rdocno=b.doc_no) left join "
-            				+ "gl_bvbr bv on s.doc_no=bv.doc_no where b.status=3 and b.rano<=0 and b.clstatus<2 and b.DATE between '"+sqlfromdate+"' and  '"+sqltodate+"'  ";
-           System.out.println("------------11---------"+sql);
-            		ResultSet resultSet = stmtVeh.executeQuery(sql);
-            		 RESULTDATA=ClsCommon.convertToJSON(resultSet);
-     				stmtVeh.close();
-     				
-            	}
-            	else{	
-            		String sql="select   convert(if(b.delivery=1,round(b.delchg,2),''),char(50)) delchg,b.voc_no,convert(if(b.fleet_no='0','',b.fleet_no),char(20)) fleet_no,b.grpid,b.delivery,b.chuef,DATE_FORMAT(bv.fdate, '%d.%m.%Y') fdate,b.brhid, b.DOC_NO, DATE_FORMAT(b.date, '%d.%m.%Y') date,  b.REFNO, if(b.REFTYPE='DIR','Direct',if(b.REFTYPE='ONL','Online','Quotation')) type,b.REFTYPE,"
-            				+ "b.CONTACTNO mob ,b.remarks,b.rtype, DATE_FORMAT(b.frmdate, '%d.%m.%Y') frmdate,b.frmtime,DATE_FORMAT(b.todate, '%d.%m.%Y') todate,concat(br.brand_name,' ',mo.vtype) brmodel,"
-            				+ "a.refname name from  gl_bookingm b left join gl_vehmodel mo on mo.doc_no=b.modid "
-            				+ "  left join gl_vehbrand br on br.doc_no=b.brdid left join gl_quotm q on q.doc_no=b.refno "
-            				+ " left join gl_enqm e on e.doc_no=q.ref_no left join my_acbook a on a.cldocno=b.cldocno and a.dtype='CRM'   "
-            				+ "left join (select max(s.doc_no) doc_no,rdocno from gl_bvbr s group by  rdocno) s on(s.rdocno=b.doc_no) left join "
-            				+ "gl_bvbr bv on s.doc_no=bv.doc_no where b.status=3 and b.rano<=0 and b.clstatus<2 and b.DATE between '"+sqlfromdate+"' and  '"+sqltodate+"' and  b.brhid='"+brnchval+"' ";
-            		System.out.println("---------------------"+sql);
-            		   
-            		ResultSet resultSet = stmtVeh.executeQuery(sql);
-            	 RESULTDATA=ClsCommon.convertToJSON(resultSet);
- 				stmtVeh.close();
- 				
-            	}
-            	conn.close();
+	    Connection conn = null;
+	    
+	    try {
+	        conn = ClsConnection.getMyConnection();
+	        Statement stmtVeh = conn.createStatement();
+	        
+	        if(brnchval.equalsIgnoreCase("a")) {
+	            // Added b.status to SELECT and changed WHERE to b.status IN (2, 3)
+	            String sql="select b.status, convert(if(b.delivery=1,round(b.delchg,2),''),char(50)) delchg,b.voc_no,convert(if(b.fleet_no='0','',b.fleet_no),char(20)) fleet_no,b.grpid,b.delivery,b.chuef,DATE_FORMAT(bv.fdate, '%d.%m.%Y') fdate,b.cldocno,b.brhid, b.DOC_NO, DATE_FORMAT(b.date, '%d.%m.%Y') date,  b.REFNO, if(b.REFTYPE='DIR','Direct',if(b.REFTYPE='ONL','Online','Quotation')) type,b.REFTYPE,"
+	                    + "b.CONTACTNO mob ,b.remarks,b.rtype, DATE_FORMAT(b.frmdate, '%d.%m.%Y') frmdate,b.frmtime,DATE_FORMAT(b.todate, '%d.%m.%Y') todate,concat(br.brand_name,' ',mo.vtype) brmodel,"
+	                    + "a.refname name from  gl_bookingm b left join gl_vehmodel mo on mo.doc_no=b.modid "
+	                    + "left join gl_vehbrand br on br.doc_no=b.brdid left join gl_quotm q on q.doc_no=b.refno "
+	                    + "left join gl_enqm e on e.doc_no=q.ref_no left join my_acbook a on a.cldocno=b.cldocno and a.dtype='CRM' "
+	                    + "left join (select max(s.doc_no) doc_no,rdocno from gl_bvbr s group by rdocno) s on(s.rdocno=b.doc_no) left join "
+	                    + "gl_bvbr bv on s.doc_no=bv.doc_no where b.status IN (2, 3) and b.rano<=0 and b.clstatus<2 and b.DATE between '"+sqlfromdate+"' and '"+sqltodate+"' ";
+	            
+	            System.out.println("------------11---------"+sql);
+	            ResultSet resultSet = stmtVeh.executeQuery(sql);
+	            RESULTDATA=ClsCommon.convertToJSON(resultSet);
+	            stmtVeh.close();
+	            
+	        } else {	
+	            // Added b.status to SELECT and changed WHERE to b.status IN (2, 3)
+	            String sql="select b.status, convert(if(b.delivery=1,round(b.delchg,2),''),char(50)) delchg,b.voc_no,convert(if(b.fleet_no='0','',b.fleet_no),char(20)) fleet_no,b.grpid,b.delivery,b.chuef,DATE_FORMAT(bv.fdate, '%d.%m.%Y') fdate,b.brhid, b.DOC_NO, DATE_FORMAT(b.date, '%d.%m.%Y') date,  b.REFNO, if(b.REFTYPE='DIR','Direct',if(b.REFTYPE='ONL','Online','Quotation')) type,b.REFTYPE,"
+	                    + "b.CONTACTNO mob ,b.remarks,b.rtype, DATE_FORMAT(b.frmdate, '%d.%m.%Y') frmdate,b.frmtime,DATE_FORMAT(b.todate, '%d.%m.%Y') todate,concat(br.brand_name,' ',mo.vtype) brmodel,"
+	                    + "a.refname name from  gl_bookingm b left join gl_vehmodel mo on mo.doc_no=b.modid "
+	                    + "left join gl_vehbrand br on br.doc_no=b.brdid left join gl_quotm q on q.doc_no=b.refno "
+	                    + "left join gl_enqm e on e.doc_no=q.ref_no left join my_acbook a on a.cldocno=b.cldocno and a.dtype='CRM' "
+	                    + "left join (select max(s.doc_no) doc_no,rdocno from gl_bvbr s group by rdocno) s on(s.rdocno=b.doc_no) left join "
+	                    + "gl_bvbr bv on s.doc_no=bv.doc_no where b.status IN (2, 3) and b.rano<=0 and b.clstatus<2 and b.DATE between '"+sqlfromdate+"' and '"+sqltodate+"' and b.brhid='"+brnchval+"' ";
+	            
+	            System.out.println("---------------------"+sql);
+	            ResultSet resultSet = stmtVeh.executeQuery(sql);
+	            RESULTDATA=ClsCommon.convertToJSON(resultSet);
+	            stmtVeh.close();
+	        }
+	        conn.close();
 
-		}
-		catch(Exception e){
-			conn.close();
-		}
-		//System.out.println(RESULTDATA);
-        return RESULTDATA;
-    } 
+	    } catch(Exception e) {
+	        // It's good practice to print the stack trace so you can see if something fails in the Tomcat logs.
+	        e.printStackTrace(); 
+	        try {
+	            if (conn != null && !conn.isClosed()) {
+	                conn.close();
+	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    
+	    return RESULTDATA;
+	}
     public JSONArray vehSearchbooking(String brid,String group) throws SQLException {
     	  JSONArray RESULTDATA=new JSONArray();
 
@@ -1030,6 +1023,33 @@ public JSONArray subGrids(String brnchval,String fromdate,String todate) throws 
         return RESULTDATA;
     
     }
+
+public String confirmBooking(String rdocno, String branchids) throws SQLException {
+    Connection conn = null;
+    try {
+        conn = ClsConnection.getMyConnection();
+        Statement stmt = conn.createStatement();
+        
+        // Update the status to 3 (Confirmed) for the specific booking
+        String sql = "UPDATE gl_bookingm SET status = 3 WHERE DOC_NO = '" + rdocno + "'";
+        
+        int result = stmt.executeUpdate(sql);
+        stmt.close();
+        conn.close();
+        
+        if (result > 0) {
+            return "SUCCESS";
+        }
+        return "FAIL";
+        
+    } catch(Exception e) {
+        e.printStackTrace();
+        if (conn != null && !conn.isClosed()) {
+            conn.close();
+        }
+        return "ERROR";
+    }
+}
 	public JSONArray BookingDetails(String brnchval,String fromdate,String todate) throws SQLException {
 
         JSONArray RESULTDATA=new JSONArray();
