@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<% String contextPath=request.getContextPath();%>
+<% String contextPath = request.getContextPath(); %>
 
 <!DOCTYPE html>
 <html>
@@ -11,9 +11,11 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <link href="../../../../css/body.css" rel="stylesheet" type="text/css">
 
+<script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
+
 <style>
 /* =========================================================
-   SCOPED UI: Cash Receipts Style (Safe Version)
+   SCOPED UI: Modern Layout 
 ========================================================= */
 body {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -40,14 +42,12 @@ form label.error {
     font-weight: bold;
 }
 
-/* This class protects your header from being affected by the new CSS */
 .modern-ui {
     font-size: 12px;
     color: #333;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-/* Fieldset & Legend */
 .modern-ui fieldset {
     border-radius: 6px;
     border: 1px solid #c5d3e0;
@@ -64,7 +64,6 @@ form label.error {
     color: #0b45a2;
 }
 
-/* Table Settings (Preserving your original structure) */
 .modern-ui table {
     width: 100%;
     border-collapse: separate;
@@ -83,7 +82,6 @@ form label.error {
     padding-right: 5px;
 }
 
-/* Master Input Heights - Forced to 24px */
 .modern-ui input[type="text"], 
 .modern-ui select {
     height: 24px !important;
@@ -101,7 +99,6 @@ form label.error {
     color: #666;
 }
 
-/* Search Icon Wrapper */
 .search-wrapper {
     position: relative;
     display: inline-block;
@@ -125,13 +122,12 @@ form label.error {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    /* JQX Date Pickers - Set to 24px */
+    /* JQX Date Pickers */
     $("#nonpooldate").jqxDateTimeInput({ width : '100%', height : '24px', formatString : "dd.MM.yyyy" });
     $("#regexpiry").jqxDateTimeInput({ width : '100%', height : '24px', formatString : "dd.MM.yyyy" });  
     $("#insurexpiry").jqxDateTimeInput({ width : '100%', height : '24px', formatString : "dd.MM.yyyy" });
     $("#lstsrvcdate").jqxDateTimeInput({ width : '100%', height : '24px', formatString : "dd.MM.yyyy" });
     
-    /* Force internal JQX styling */
     setTimeout(function () {
         $(".jqx-datetimeinput").css({"border-color": "#b8c6d8", "border-radius": "3px"});
         $(".jqx-datetimeinput input").css({"line-height": "24px", "font-size": "12px", "font-family": "'Segoe UI', 'Roboto', 'Arial', sans-serif"});
@@ -229,7 +225,25 @@ function checkRegNo(){
     x.send();
 }
 
-function funReset(){}
+// ---------------------------------------------------------
+// UI STATE FUNCTIONS (CREATE / EDIT / READONLY)
+// ---------------------------------------------------------
+
+function funReset() {
+    // Clear all inputs and resets mode for a new record
+    $('#frmNonpoolvehicle input[type="text"]').val('');
+    $('#frmNonpoolvehicle textarea').val('');
+    $('#frmNonpoolvehicle select').val('');
+    
+    $('#nonpooldate').jqxDateTimeInput('setDate', null);
+    $('#regexpiry').jqxDateTimeInput('setDate', null);
+    $('#insurexpiry').jqxDateTimeInput('setDate', null);
+    $('#lstsrvcdate').jqxDateTimeInput('setDate', null);
+
+    funRemoveReadOnly();
+    $('#mode').val('I'); 
+    $('#docno').val('');
+}
 
 function funReadOnly(){
     $('#frmNonpoolvehicle input').attr('readonly', true);
@@ -251,6 +265,10 @@ function funRemoveReadOnly(){
     $('#lstsrvcdate').jqxDateTimeInput({ disabled: false}); 
     $('#docno').attr('readonly', true);
 }
+
+// ---------------------------------------------------------
+// DROPDOWN DATA LOADERS
+// ---------------------------------------------------------
 
 function getAuthority() {
     var x=new XMLHttpRequest();
@@ -457,19 +475,76 @@ function getFleetname() {
     document.getElementById("fleetname").value = r+" "+r1;
 }
 
-function funNotify(){
-    return 1;
+// ---------------------------------------------------------
+// HEADER BUTTON LOGIC (SAVE / PRINT / ATTACH)
+// ---------------------------------------------------------
+
+function funNotify() {
+    // Validates form before allowing save
+    if ($('#frmNonpoolvehicle').valid()) {
+        return 1; 
+    } else {
+        return 0; 
+    }
 }
 
+function funPrint() { funPrintBtn(); } // Fallback for header
+
+function funPrintBtn() {
+    var docNo = $.trim($("#docno").val());
+    if (docNo === "" || docNo === "0") {
+        alert("Please Save the document first before printing!");
+        return false;
+    }
+
+    var path = window.location.pathname;
+    var basePath = path.substring(0, path.lastIndexOf('/') + 1);
+    var win = window.open(basePath + "printNonPoolVehicle?docno=" + docNo, "_blank", "top=250,left=310,Width=800,Height=800,location=no,scrollbars=no,toolbar=yes");
+    win.focus();
+}
+
+function funAttach() {
+    var docNo = $.trim($("#docno").val());
+    if (docNo === "" || docNo === "0") {
+        alert("Please Save the document first before attaching files!");
+        return false;
+    }
+    
+    // Change this URL if your generic attach popup uses a different file name
+    var attachUrl = "attachmentScreen.jsp?docno=" + docNo + "&module=NonPoolVehicle";
+    var win = window.open(attachUrl, "_blank", "top=200,left=300,Width=600,Height=400,location=no,scrollbars=no,toolbar=yes");
+    win.focus();
+}
+
+// ---------------------------------------------------------
+// INITIALIZATION
+// ---------------------------------------------------------
+
 function setValues() {
-    document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
-    funSetlabel();
+    if($('#formdetail').length > 0 && $('#formdetailcode').length > 0) {
+        document.getElementById("formdet").innerText=$('#formdetail').val()+" ("+$('#formdetailcode').val().trim()+")";
+    }
+
+    var mode = $('#mode').val();
+    if(mode === 'view' || mode === 'D') {
+        funReadOnly();
+    } else if (mode === 'E') {
+        funRemoveReadOnly();
+    }
+
+    funSetlabel(); 
     getAuthority();
     getBrand();
     getGroup();
     getYom();
     getBranch();
     getColor();
+
+    /* Load saved dates into inputs */
+    if($('#hidnonpooldate').val()){ $("#nonpooldate").jqxDateTimeInput('val', $('#hidnonpooldate').val()); }
+    if($('#hidregexpiry').val()){ $("#regexpiry").jqxDateTimeInput('val', $('#hidregexpiry').val()); }
+    if($('#hidinsurexpiry').val()){ $("#insurexpiry").jqxDateTimeInput('val', $('#hidinsurexpiry').val()); }
+    if($('#hidlstsrvcdate').val()){ $("#lstsrvcdate").jqxDateTimeInput('val', $('#hidlstsrvcdate').val()); }
 
     if ($('#hidcmbfuel').val() != null && $('#hidcmbfuel').val() != "") {
         $('#cmbfuel').val($('#hidcmbfuel').val());
@@ -532,6 +607,56 @@ $(function(){
 function funSearchLoad(){
     changeContent('masterSearch.jsp', $('#window')); 
 }
+
+function funConfirmBooking() {
+    var rdocno = document.getElementById("rdocno").value;
+    var branchids = document.getElementById("branchids").value;
+
+    if(rdocno == "") {
+        $.messager.alert('Message', 'Please select a booking to confirm.', 'warning');
+        return false;
+    }
+
+    $.messager.confirm('Message', 'Do you want to confirm this booking and update status?', function(r) {
+        if(r == true) {
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                    // 1. Success Message & UI Reset
+                    $.messager.alert('Message', 'Booking Confirmed Successfully!');
+                    funreload(); 
+                    $("#duedetailsgrid").jqxGrid('clear');
+                    disitems();
+                    
+                    // 2. NEW: Trigger Notification Logic in the background
+                    sendCustomerNotifications(rdocno);
+                    
+                    // Clear docno after triggering
+                    document.getElementById("rdocno").value = "";
+                }
+            };
+            x.open("GET", "confirmBookingStatus.jsp?rdocno=" + rdocno + "&branchids=" + branchids, true);
+            x.send();
+        }
+    });
+}
+
+// NEW FUNCTION: Background call to check contact info and send alerts
+function sendCustomerNotifications(docNumber) {
+    var notifReq = new XMLHttpRequest();
+    notifReq.onreadystatechange = function() {
+        if (notifReq.readyState == 4) {
+            if (notifReq.status == 200) {
+                console.log("Notification process completed for booking: " + docNumber);
+            } else {
+                console.error("Failed to send notifications.");
+            }
+        }
+    };
+    // Calls a new backend script that handles the email/whatsapp logic
+    notifReq.open("GET", "sendNotifications.jsp?rdocno=" + docNumber, true);
+    notifReq.send();
+}
 </script>
 
 </head>
@@ -550,7 +675,7 @@ function funSearchLoad(){
                     <tr>
                         <td align="right">Date</td>
                         <td colspan="3" align="left">
-                            <div id="nonpooldate" name="nonpooldate"></div>
+                            <div id="nonpooldate" name="nonpooldate" value='<s:property value="nonpooldate"/>'></div>
                         </td>
                         <td align="right">&nbsp;</td>
                         <td align="left">&nbsp;</td>
@@ -631,11 +756,11 @@ function funSearchLoad(){
                     </tr>
                     <tr>
                         <td align="right">Reg Expiry</td>
-                        <td align="left"><div id="regexpiry"></div></td>
+                        <td align="left"><div id="regexpiry" name="regexpiry" value='<s:property value="regexpiry"/>'></div></td>
                         <td align="right">&nbsp;</td>
                         <td align="left">&nbsp;</td>
                         <td align="right">Ins Expiry</td>
-                        <td align="left"><div id="insurexpiry"></div></td>
+                        <td align="left"><div id="insurexpiry" name="insurexpiry" value='<s:property value="insurexpiry"/>'></div></td>
                         <td align="right">Avail Branch </td>
                         <td align="left">
                             <select name="cmbavailbranch" id="cmbavailbranch" style="width:100%;" onchange="getLocation(this.value);">
@@ -700,7 +825,7 @@ function funSearchLoad(){
                         <td width="7%" align="right">Last Service KM</td>
                         <td width="8%" align="left"><input type="text" name="lastservicekm" id="lastservicekm" value='<s:property value="lastservicekm"/>'></td>
                         <td width="6%" align="right">Last srvc.Date</td>
-                        <td width="12%" align="left"><div id="lstsrvcdate"></div></td>
+                        <td width="12%" align="left"><div id="lstsrvcdate" name="lstsrvcdate" value='<s:property value="lstsrvcdate"/>'></div></td>
                         <td width="6%" align="right">Current KM</td>
                         <td width="46%" align="left"><input type="text" name="currentkm" id="currentkm" value='<s:property value="currentkm"/>' ></td>
                     </tr>
