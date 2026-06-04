@@ -817,7 +817,7 @@ public class ClsCashReceiptAction extends ActionSupport{
 		setApproved(cashReceiptBean.getApproved());
 		setVerified(cashReceiptBean.getVerified());
 		setStatus(cashReceiptBean.getStatus());
-		if(commonDAO.getPrintPath("CRV").contains(".jrxml"));
+		if(commonDAO.getPrintPath("CRV").contains(".jrxml"))
 		{
 			System.out.println("printpath");
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -905,9 +905,9 @@ public class ClsCashReceiptAction extends ActionSupport{
 		         param.put("printby", session.getAttribute("USERNAME").toString());
 		     	 param.put("applyingqry",cashReceiptBean.getApplyquery()==null?"":cashReceiptBean.getApplyquery());
 		     	
-		     	 String path[]=commonDAO.getPrintPath("CRV").split("cashreceipt/");
-		     	System.out.println("CRV--------1-----"+path);
-		     	 setUrl(path[1]);
+		     	 String path[]=commonDAO.getPrintPath("CRV").split("cashreceipt[\\\\\\\\/]");
+		     	System.out.println("CRV--------1-----" + java.util.Arrays.toString(path));
+		     	setUrl(path[1]);
 		    System.out.println("CRV--------2-----"+commonDAO.getPrintPath("CRV"));
 		         JasperDesign design = JRXmlLoader.load(request.getSession().getServletContext().getRealPath(commonDAO.getPrintPath("CRV")));
 	     	 
