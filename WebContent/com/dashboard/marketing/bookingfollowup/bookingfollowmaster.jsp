@@ -425,17 +425,38 @@ function funConfirmBooking() {
             var x = new XMLHttpRequest();
             x.onreadystatechange = function() {
                 if (x.readyState == 4 && x.status == 200) {
-                    document.getElementById("rdocno").value = "";
                     $.messager.alert('Message', 'Booking Confirmed Successfully!');
                     funreload(); 
                     $("#duedetailsgrid").jqxGrid('clear');
                     disitems();
+                    
+                    // NEW: Trigger Notification Logic in the background
+                    sendCustomerNotifications(rdocno);
+                    
+                    // Clear docno after triggering
+                    document.getElementById("rdocno").value = "";
                 }
             };
             x.open("GET", "confirmBookingStatus.jsp?rdocno=" + rdocno + "&branchids=" + branchids, true);
             x.send();
         }
     });
+}
+
+//NEW FUNCTION: Background call to check contact info and send alerts
+function sendCustomerNotifications(docNumber) {
+    var notifReq = new XMLHttpRequest();
+    notifReq.onreadystatechange = function() {
+        if (notifReq.readyState == 4) {
+            if (notifReq.status == 200) {
+                console.log("Notification process triggered for booking: " + docNumber);
+            } else {
+                console.error("Failed to trigger notifications.");
+            }
+        }
+    };
+    notifReq.open("GET", "sendNotifications.jsp?rdocno=" + docNumber, true);
+    notifReq.send();
 }
 
 function funupdate() {
