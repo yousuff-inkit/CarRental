@@ -224,7 +224,7 @@ fieldset {
 </table><br/><br/>
 <table width="100%">
   <tr>
-    <td style="color: #D8D8D8;"><b><center>Powered by GATEWAY ERP</center></b></td>
+    <td style="color: #D8D8D8;"><b><center></center></b></td>
   </tr>
 </table><br/><br/>
 </div>

@@ -1,4 +1,3 @@
-
 <%@page import="javax.servlet.http.HttpSession.*"%>
 <%@page import="javax.servlet.http.HttpServletRequest.*"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -10,48 +9,153 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
- <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
-   <jsp:include page="../../../../includes.jsp"></jsp:include>  
-<style media="print">
- .hidden-scrollbar {
-  overflow: auto;
-  height: 800px;
-} 
- fieldSet {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(139,136,120);
-
- }
- .saliktable{
- border:1px solid;
- border-collapse:collapse;
-
- }
- 
- table:last-of-type {
-    page-break-after: auto
+<link rel="stylesheet" type="text/css" href="../../../../css/body.css">
+<jsp:include page="../../../../includes.jsp"></jsp:include>  
+<style type="text/css">
+:root {
+    --border-color: #333;
+    --bg-header: #f4f7fb;
+    --text-main: #222;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 11px;
+    color: var(--text-main);
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+}
 
+.document-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.section-title {
+    background-color: var(--border-color);
+    color: #fff;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.grid-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 4px;
+}
+
+.grid-label {
+    font-weight: bold;
+    width: 130px;
+    flex-shrink: 0;
+    color: #444;
+}
+
+.grid-value {
+    flex-grow: 1;
+    color: #000;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.cr-table th, .cr-table td {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    text-align: left;
+}
+
+.cr-table th {
+    background-color: var(--bg-header);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+.signature-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 40px;
+}
+
+.sig-block {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.footer-section {
+    margin-top: 40px;
+    font-size: 10px;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+}
 
 #pageFooter {
     display: table-footer-group;
 }
 
 #pageFooter:after {
-      counter-increment: page;
-      counter-reset: pages 1;
-      content: "Page " counter(page) " / " counter(pages);
+    counter-increment: page;
+    counter-reset: pages 1;
+    content: "Page " counter(page) " / " counter(pages);
 }
 
+@media print {
+    body { padding: 0; }
+    .document-container { max-width: 100%; }
+    @page { size: A4; margin: 15mm; }
+}
 </style> 
-
 
 <script>
 $(document).ready(function () {
-	
 });
 function getPrint(){
 	document.getElementById("mode").value="print";
@@ -59,213 +163,166 @@ function getPrint(){
 }
 </script>
 </head>
-<body onload=""  style="font-size:12px;background-color:white;">
+<body>
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmManualInvoicePrint" action="printSaleInvoice" autocomplete="off" target="_blank" >
-<%--  <jsp:include page="../../../common/printHeader.jsp"></jsp:include>  --%>
- <table width="100%" class="normaltable" >
-  <tr>
-    <td width="25%" rowspan="6"><img src="<%=contextPath%>/icons/epic.jpg" width="100" height="91"  alt=""/></td>
-    <td width="45%" rowspan="2">&nbsp;</td>
-    <td width="30%"><font size="3"><label id="lblcompname" name="lblcompname" ><s:property value="lblcompname"/></label></font></td>
-  </tr>
-  <tr>
-    <td><b><label id="lblcompaddress" name="lblcompaddress"><s:property value="lblcompaddress"/></label></b></td>
-  </tr>
-  <tr>
-    <td rowspan="2"  align="center"><b><font size="5"><label id="lblprintname" name="lblprintname">Vehicle Sales Tax Invoice</label></font></b></td>
-    <td align="left"><b>Tel :</b>&nbsp;<label id="lblcomptel" name="lblcomptel"><s:property value="lblcomptel"/></label></td>
-  </tr>
-  <tr>
-    <td align="left"><b>Fax :</b>&nbsp;<label name="lblcompfax" id="lblcompfax" ><s:property value="lblcompfax"/></label></td>
-  </tr>
-  <tr>
-    <td rowspan="2" align="center"><b><font size="2"><label id="lblprintname1" name="lblprintname1"><s:property value="lblprintname1"/></label></font></b></td>
-    <td align="left"><b>Branch :</b>&nbsp;<label id="lblbranch" name="lblbranch" ><s:property value="lblbranch"/></label></td>
-  </tr>
-  <tr>
-    <td align="left"><b>Location :</b>&nbsp;<label id="lbllocation" name="lbllocation" ><s:property value="lbllocation"/></label></td>
-  </tr>
-  <tr>
-  	<td>&nbsp;</td>
-  	<td>&nbsp;</td>
-    <td align="left"><b>TRN :</b>&nbsp;<label id="lblcomptrn" name="lblcomptrn" ><s:property value="lblcomptrn"/></label></td>
-  </tr>
-  <tr>
-  	<td>&nbsp;</td>
-  	<td>&nbsp;</td>
-    <td align="left"></td>
-  </tr>
-  <tr>
-    <td colspan="3"><hr noshade size=1 width="100%"></td>
-  </tr>
-   <tr>
-    <td colspan="3"></td></tr></table>
-    
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="16%" align="left">Client Name </td>
-    <td colspan="3">: <label name="lblclientname" id="lblclientname" ><s:property value="lblclientname"/></label></td>
-    <td width="18%" align="left">Doc No </td>
-    <td width="20%"> : <label name="lbldocno" id="lbldocno" ><s:property value="lbldocno"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Client TRN</td>
-    <td width="18%">: <label name="lblclienttrn" id="lblclienttrn" ><s:property value="lblclienttrn"/></label></td>
-    <td width="12%" align="left">&nbsp;</td>
-    <td width="16%"></td>
-    <td align="left">Date </td>
-    <td>: <label name="lbldate" id="lbldate" ><s:property value="lbldate"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Client Code </td>
-    <td colspan="3">: <label name="lblclientcode" id="lblclientcode" ><s:property value="lblclientcode"/></label></td>
-    <td align="left">Mobile </td>
-    <td>: <label name="lblphone" id="lblphone" ><s:property value="lblphone"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Address</td>
-    <td colspan="3">: <label name="lbladdress1" id="lbladdress1" ><s:property value="lbladdress1"/></label></td>
-    <td align="left">Phone</td>
-    <td>: <label name="lblmobile" id="lblmobile" ><s:property value="lblmobile"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;</td>
-    <td colspan="3">: <label name="lbladdress2" id="lbladdress2" ><s:property value="lbladdress2"/></label></td>
-    <td align="left">Type </td>
-    <td>: <label name="lbltype" id="lbltype" ><s:property value="lbltype"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Description </td>
-    <td colspan="3">: <label name="lbldesc" id="lbldesc" ><s:property value="lbldesc"/></label></td>
-    <td align="left">&nbsp;</td>
-    <td></td>
-    
-  </tr>
-  
-</table>
-</fieldset>
-<br>
 
-<hr>
-<table width="100%">
- <tr>
-    <td align="left" width="20%"><b>SI No</b></td>
-    <td align="left" width="25%"><b>Fleet</b></td>
-    <td align="left" width="35%"><b>Fleet Name</b></td>
-    <td align="left" width="35%"><b>Chassis No </b></td>
-    <!-- <td align="left"><b>Dep Posted</b></td> -->
-    <td align="right" width="20%"><b>Gross</b></td>
-    <!-- <td align="right"><b>Pur Value</b></td>
-    <td align="right"><b>Acc Dep</b></td>
-    <td align="right"><b>Cur Dep</b></td>
-    <td align="right"><b>Net Book</b></td>
-    <td align="right"><b>Net P/(L)</b></td> -->
-  </tr>
-  
-  
-  </tr>
- <s:iterator var="stat1" status="arr" value="%{#request.INVPRINT}" >
-	
-		<s:iterator status="arr" value="#stat1" var="stat" >
-        	<tr>   
-				
-     				<s:iterator status="arr" value="#stat.split('::')" var="des" begin="0" end="5">
-     				<s:if test="#arr.index!=3">
-    					<s:if test="#arr.index<=4">  
-  							<td  align="left">
-  						</s:if>
-  						<s:else>
-  							<td  align="right">
-  						</s:else>
-  						
-								<s:property value="#des"/>
-						</s:if>
-							</td>
-   					
- 					</s:iterator>
-			</tr>
-		</s:iterator>
-	
-</s:iterator>
+<div class="document-container">
 
-</table>
+    <div class="header-section">
+        <div style="flex: 0 0 150px;">
+            <img src="<%=contextPath%>/icons/epic.jpg" style="width:100px; height:auto;" alt=""/>
+        </div>
+        <div style="flex: 1; text-align: center;">
+            <div style="font-size: 20px; font-weight: bold; text-transform: uppercase;">
+                <label id="lblprintname" name="lblprintname">Vehicle Sales Tax Invoice</label>
+            </div>
+            <div style="font-size: 14px; margin-top: 5px;">
+                <b><label id="lblprintname1" name="lblprintname1"><s:property value="lblprintname1"/></label></b>
+            </div>
+        </div>
+        <div style="flex: 0 0 250px; text-align: right; font-size: 11px; line-height: 1.5;">
+            <div style="font-weight: bold; font-size: 14px;"><label id="lblcompname" name="lblcompname"><s:property value="lblcompname"/></label></div>
+            <div><b><label id="lblcompaddress" name="lblcompaddress"><s:property value="lblcompaddress"/></label></b></div>
+            <div><b>Tel:</b> <label id="lblcomptel" name="lblcomptel"><s:property value="lblcomptel"/></label></div>
+            <div><b>Fax:</b> <label name="lblcompfax" id="lblcompfax"><s:property value="lblcompfax"/></label></div>
+            <div><b>Branch:</b> <label id="lblbranch" name="lblbranch"><s:property value="lblbranch"/></label></div>
+            <div><b>Location:</b> <label id="lbllocation" name="lbllocation"><s:property value="lbllocation"/></label></div>
+            <div><b>TRN:</b> <label id="lblcomptrn" name="lblcomptrn"><s:property value="lblcomptrn"/></label></div>
+        </div>
+    </div>
 
+    <div class="section-title">Client Details</div>
+    <div class="info-grid">
+        <div class="grid-row">
+            <span class="grid-label">Client Name:</span>
+            <span class="grid-value"><label name="lblclientname" id="lblclientname"><s:property value="lblclientname"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Doc No:</span>
+            <span class="grid-value"><label name="lbldocno" id="lbldocno"><s:property value="lbldocno"/></label></span>
+        </div>
 
-<hr>
-<table width="100%" >
-  <tr>
-    <td width="197" align="left"><b>Total :</b></td>
-    <td width="752">&nbsp;</td>
-    <td width="163">&nbsp;</td>
-    <td width="146" align="right"><b><label id="lbltotal" name="lbltotal"><s:property value="lbltotal"/></label></b></td>
-  </tr>
-  <tr>
-    <td width="197" align="left"><b>VAT (5%) :</b></td>
-    <td width="752">&nbsp;</td>
-    <td width="163">&nbsp;</td>
-    <td width="146" align="right"><b><label id="lbltaxtotal" name="lbltaxtotal"><s:property value="lbltaxtotal"/></label></b></td>
-  </tr>
-  <tr>
-    <td width="197" align="left"><b>Net Total :</b></td>
-    <td width="752">&nbsp;</td>
-    <td width="163">&nbsp;</td>
-    <td width="146" align="right"><b><label id="lblnettaxtotal" name="lblnettaxtotal"><s:property value="lblnettaxtotal"/></label></b></td>
-  </tr>
-  <tr>
-    <td align="left"><b>Amount In Words : </b></td>
-    <td colspan="3" align="right"><b><label id="lblamountwords" name="lblamountwords"><s:property value="lblamountwords"/></label></b></td>
-    </tr>
-</table>
+        <div class="grid-row">
+            <span class="grid-label">Client TRN:</span>
+            <span class="grid-value"><label name="lblclienttrn" id="lblclienttrn"><s:property value="lblclienttrn"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Date:</span>
+            <span class="grid-value"><label name="lbldate" id="lbldate"><s:property value="lbldate"/></label></span>
+        </div>
 
-<hr>
-<div id="bottompage">
-<table width="100%" >
-  <tr>
-    <td width="13%">Processed By</td>
-    <td width="20%"><label id="lblcheckedby" name="lblcheckedby"><s:property value="lblcheckedby"/></label></td>
-    <td width="13%">Received By</td>
-    <td width="29%"><label id="lblrecievedby" name="lblrecievedby"><s:property value="lblrecievedby"/></label></td>
-    <td width="4%">Date</td>
-    <td width="21%"><label id="lblfinaldate" name="lblfinaldate"><s:property value="lblfinaldate"/></label></td>
-   
-    </tr>
-  <tr>
-    <td colspan="6">&nbsp;</td>
-    
-    </tr>
-</table>
+        <div class="grid-row">
+            <span class="grid-label">Client Code:</span>
+            <span class="grid-value"><label name="lblclientcode" id="lblclientcode"><s:property value="lblclientcode"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Mobile:</span>
+            <span class="grid-value"><label name="lblphone" id="lblphone"><s:property value="lblphone"/></label></span>
+        </div>
+
+        <div class="grid-row" style="grid-column: 1 / -1;">
+            <span class="grid-label">Address:</span>
+            <span class="grid-value">
+                <label name="lbladdress1" id="lbladdress1"><s:property value="lbladdress1"/></label>
+                <label name="lbladdress2" id="lbladdress2"><s:property value="lbladdress2"/></label>
+            </span>
+        </div>
+
+        <div class="grid-row">
+            <span class="grid-label">Phone:</span>
+            <span class="grid-value"><label name="lblmobile" id="lblmobile"><s:property value="lblmobile"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Type:</span>
+            <span class="grid-value"><label name="lbltype" id="lbltype"><s:property value="lbltype"/></label></span>
+        </div>
+
+        <div class="grid-row" style="grid-column: 1 / -1;">
+            <span class="grid-label">Description:</span>
+            <span class="grid-value"><label name="lbldesc" id="lbldesc"><s:property value="lbldesc"/></label></span>
+        </div>
+    </div>
+
+    <div class="section-title">Invoice Items</div>
+    <table class="cr-table">
+        <thead>
+            <tr>
+                <th width="10%">SI No</th>
+                <th width="20%">Fleet</th>
+                <th width="30%">Fleet Name</th>
+                <th width="25%">Chassis No</th>
+                <th width="15%" class="text-right">Gross</th>
+            </tr>
+        </thead>
+        <tbody>
+            <s:iterator var="stat1" status="arr" value="%{#request.INVPRINT}">
+                <s:iterator status="arr" value="#stat1" var="stat">
+                    <tr>   
+                        <s:iterator status="arr" value="#stat.split('::')" var="des" begin="0" end="5">
+                            <s:if test="#arr.index!=3">
+                                <s:if test="#arr.index<=4">  
+                                    <td><s:property value="#des"/></td>
+                                </s:if>
+                                <s:else>
+                                    <td class="text-right"><s:property value="#des"/></td>
+                                </s:else>
+                            </s:if>
+                        </s:iterator>
+                    </tr>
+                </s:iterator>
+            </s:iterator>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right"><b>Total:</b></td>
+                <td class="text-right"><b><label id="lbltotal" name="lbltotal"><s:property value="lbltotal"/></label></b></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right"><b>VAT (5%):</b></td>
+                <td class="text-right"><b><label id="lbltaxtotal" name="lbltaxtotal"><s:property value="lbltaxtotal"/></label></b></td>
+            </tr>
+            <tr style="background-color: var(--bg-header);">
+                <td colspan="4" class="text-right"><b>NET TOTAL:</b></td>
+                <td class="text-right"><b><label id="lblnettaxtotal" name="lblnettaxtotal"><s:property value="lblnettaxtotal"/></label></b></td>
+            </tr>
+            <tr>
+                <td colspan="5" class="text-right" style="padding-top: 15px;">
+                    <b>Amount In Words:</b> <b><label id="lblamountwords" name="lblamountwords"><s:property value="lblamountwords"/></label></b>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="signature-wrapper">
+        <div class="sig-block">
+            <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Processed By</div>
+            <div style="margin-top: 10px;"><label id="lblcheckedby" name="lblcheckedby"><s:property value="lblcheckedby"/></label></div>
+        </div>
+        <div class="sig-block">
+            <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Received By</div>
+            <div style="margin-top: 10px;"><label id="lblrecievedby" name="lblrecievedby"><s:property value="lblrecievedby"/></label></div>
+        </div>
+        <div class="sig-block">
+            <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Date</div>
+            <div style="margin-top: 10px;"><label id="lblfinaldate" name="lblfinaldate"><s:property value="lblfinaldate"/></label></div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <div style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 5px; border-top: 1px solid #eee; padding-top: 10px;">
+            System Generated Document Signature & Stamp Not Required.
+        </div>
+        <div class="footer-row">
+            <span>Printed by <%=session.getAttribute("USERNAME")%> <label id="lblfooter"></label></span>
+            <span style="font-weight: bold; color: #bbb;"></span>
+        </div>
+        <div id="content" style="display:none;"><div id="pageFooter"></div></div>
+    </div>
+
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
 </div>
-<div style="margin: 0; padding: 10px;">
-<%--<p><b>VAT NOTE</b></p>--%>
+</form>
 </div>
-<br/><br/><br/><br/>
-
-<div class="divFooter">
- 
-<table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table>
-
-</div>
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
- </form>
-</div>
- 
 </body>
 </html>

@@ -8,216 +8,182 @@
 <meta charset="UTF-8">
 <title>GatewayERP(i)</title>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
-<style>
- .hidden-scrollbar {
-  overflow: auto;
-  height: 800px;
-} 
- fieldSet {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(139,136,120);
 
- }
- .tablereceipt {
-    border: 1px solid black;
-    border-collapse: collapse;
+<style type="text/css">
+:root {
+    --border-color: #333;
+    --bg-header: #f4f7fb;
+    --text-main: #222;
 }
- 
- hr { 
-   border-top: 1px solid #e1e2df  ;
-    
-    }
 
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 11px;
+    color: var(--text-main);
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+}
+
+.document-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-title {
+    background-color: var(--border-color);
+    color: #fff;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.grid-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 4px;
+}
+
+.grid-label {
+    font-weight: bold;
+    width: 130px;
+    flex-shrink: 0;
+    color: #444;
+}
+
+.grid-value {
+    flex-grow: 1;
+    color: #000;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.cr-table th, .cr-table td {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    text-align: left;
+}
+
+.cr-table th {
+    background-color: var(--bg-header);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+@media print {
+    body { padding: 0; }
+    .document-container { max-width: 100%; }
+    @page { size: A4; margin: 15mm; }
+}
 </style> 
-  <%-- <style type="text/css">
-    @media screen {
-        div.divFooter {
-            display: none;
-        }
-    }
-    @media print {
-        div.divFooter {
-            position: fixed;
-            bottom: 0;
-        }
-    }
- </style>  --%>
-<script>
 
+<script>
 </script>
 </head>
-<body style="font-size:10px;"  bgcolor="white">
+
+<body>
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="fmnq" action="priInvoice" autocomplete="off" target="_blank">
-<%-- <jsp:include page="../../../../../header.jsp"></jsp:include> --%> <br/> 
 
- <div style="background-color:white;">
-<table width="100%">
-  <tr>
+<div class="document-container">
 
-  <td><jsp:include page="../../../common/printHeader.jsp"></jsp:include></td>
-    
-  </tr>
-</table>
-<fieldset>
-<%-- <table width="100%">
-<tr>
-<td width="60%">
+    <jsp:include page="../../../common/printHeader.jsp"></jsp:include>
 
+    <div class="section-title">Customer Information</div>
+    <div class="info-grid">
+        <div class="grid-row">
+            <span class="grid-label">Customer Name:</span>
+            <span class="grid-value"><label id="lblclient" name="lblclient"><s:property value="lblclient"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Doc No:</span>
+            <span class="grid-value"><label id="docvals" name="docvals"><s:property value="docvals"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Address:</span>
+            <span class="grid-value"><label name="lblclientaddress" id="lblclientaddress"><s:property value="lblclientaddress"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Date:</span>
+            <span class="grid-value"><label name="lbldate" id="lbldate"><s:property value="lbldate"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">MOB:</span>
+            <span class="grid-value"><label name="lblmob" id="lblmob"><s:property value="lblmob"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Type:</span>
+            <span class="grid-value"><label name="lbltypep" id="lbltypep"><s:property value="lbltypep"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Email:</span>
+            <span class="grid-value"><label name="lblemail" id="lblemail"><s:property value="lblemail"/></label></span>
+        </div>
+        <div class="grid-row" style="border-bottom: none;"></div>
+    </div>
 
+    <div class="section-title">Vehicle Details</div>
+    <table class="cr-table">
+        <thead>
+            <tr>
+                <th width="5%">Sl No</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Specification</th>
+                <th>Color</th>
+                <th>Rent Type</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <s:iterator var="stat" value='#request.details'>
+            <tr>   
+                <%int i=0; %>
+                <s:iterator status="arr" value="#stat.split('::')" var="des">   
+                    <% if(i>1){%>
+                        <td align="left"><s:property value="#des"/></td>
+                    <%} else{ %>
+                        <td align="left"><s:property value="#des"/></td>
+                    <% } i++;  %>
+                </s:iterator>
+            </tr>
+            </s:iterator>
+        </tbody>
+    </table>
 
-  
-<table width="100%" > 
-  <tr>
-    <td width="25%" align="left">Customer Name </td>
-    <td colspan="2">: <label id="lblclient" name="lblclient"><s:property value="lblclient"/></label></td>
-    </tr>
-    <tr>
-    <td align="left">Address </td>
-    <td >: <label name="lblclientaddress" id="lblclientaddress" ><s:property value="lblclientaddress"/></label></td>
-  </tr>
-  <tr>
-   
-    <td align="left">MOB </td>
-    <td>: <label name="lblmob" id="lblmob" ><s:property value="lblmob"/></label></td>
-  </tr>
-  <tr>
-
-    <td align="left">Email</td>
-    <td>: <label name="lblemail" id="lblemail" ><s:property value="lblemail"/></label></td>
-  </tr>
- 
-     
-</table>
-</td>
-
-<td width="40%">
-<table width="100%" >
-  <tr>
-    <td width="20%" align="left">Doc No</td>
-    <td colspan="2">: <label id="docvals" name="docvals"><s:property value="docvals"/></label></td>
-    </tr>
-    <tr>
-    <td align="left">Date </td>
-    <td >: <label name="lbldate" id="lbldate" ><s:property value="lbldate"/></label></td>
-  </tr>
-  <tr>
-   
-    <td align="left">Type</td>
-    <td>: <label name="lbltypep" id="lbltypep" ><s:property value="lbltypep"/></label></td>
-  </tr>
-  <tr>
-
-    <td align="left">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-   <tr>
-
-    <td align="left">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-    <tr>
-
-    <td align="left">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-     
-</table>
-
-
-</td>
-</tr>
-
-
-</table> --%>
-<table width="100%" > 
-  <tr>
-    <td width="15%" align="left">Customer Name </td>
-    <td width="61%">: <label id="lblclient" name="lblclient"><s:property value="lblclient"/></label></td>
-    <td width="8%" align="left">Doc No</td>
-    <td  width="16%">: <label id="docvals" name="docvals"><s:property value="docvals"/></label></td>
-    </tr>
-    <tr>
-    <td align="left">Address </td>
-    <td >: <label name="lblclientaddress" id="lblclientaddress" ><s:property value="lblclientaddress"/></label></td>
-    <td align="left">Date </td>
-    <td >: <label name="lbldate" id="lbldate" ><s:property value="lbldate"/></label></td>
-  </tr>
-  <tr>
-   
-    <td align="left">MOB </td>
-    <td>: <label name="lblmob" id="lblmob" ><s:property value="lblmob"/></label></td>
-        <td align="left">Type</td>
-    <td>: <label name="lbltypep" id="lbltypep" ><s:property value="lbltypep"/></label></td>
-  </tr>
-  <tr>
-
-    <td align="left">Email</td>
-    <td>: <label name="lblemail" id="lblemail" ><s:property value="lblemail"/></label></td>
-      <td align="left">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
- 
-   </table>
-</fieldset>
-<br>
-<%-- <fieldset>
-  <table width="100%" >
-    <tr>
-      <td width="15%" align="right"> Contract Vehicle  </td>
-      <td width="85%">: <label name="lblcontractvehicle" id="lblcontractvehicle" >
-        <s:property value="lblcontractvehicle"/>
-      </label></td>
-    </tr>
-  
-  </table>
-</fieldset> --%>
-
- <fieldset> 
-<table style="border-collapse: collapse;" width="100%"  >
-
- <tr height="25" style="background-color: #D8D8D8;border-collapse: collapse;">
-    <td align="left" style="border-collapse: collapse;"><b>Sl No</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>Brand</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>Model</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>Specification</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>Color</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>Rent Type</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>From Date</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>To Date</b></td>
-    <td align="left" style="border-collapse: collapse;"><b>Unit</b></td>
- 
-  </tr>
-
-<s:iterator var="stat" value='#request.details' >
-<tr>   
-<%int i=0; %>
-    <s:iterator status="arr" value="#stat.split('::')" var="des">   
-    <%
-    if(i>1){%>
-    
-  <td  align="left" >
-  <s:property value="#des"/>
-  </td>
-   <%} else{ %>
-    
-  <td  align="left" >
-  <s:property value="#des"/>
-  </td>
-  <% } i++;  %>
- </s:iterator>
-</tr>
-</s:iterator>
-
-</table>
- </fieldset> 
-<br>
-<jsp:include page="../../../common/printFooter.jsp"></jsp:include>
-
+    <div style="margin-top: 30px;">
+        <jsp:include page="../../../common/printFooter.jsp"></jsp:include>
+    </div>
 
 </div>
+
 </form>
 </div>
 </body>

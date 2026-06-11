@@ -339,7 +339,7 @@ UAE Ministry of finance Federal Decree Law NO.(8) of 2017 of "VAT LAW"</td>
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -410,7 +410,7 @@ UAE Ministry of finance Federal Decree Law NO.(8) of 2017 of "VAT LAW"</td>
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -493,7 +493,7 @@ UAE Ministry of finance Federal Decree Law NO.(8) of 2017 of "VAT LAW"</td>
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -571,7 +571,7 @@ UAE Ministry of finance Federal Decree Law NO.(8) of 2017 of "VAT LAW"</td>
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -594,7 +594,7 @@ UAE Ministry of finance Federal Decree Law NO.(8) of 2017 of "VAT LAW"</td>
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #D8D8D8;" align="left"><b>Powered by GATEWAY ERP</b></td>
+  <td width="43%" style="color: #D8D8D8;" align="left"><b></b></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 

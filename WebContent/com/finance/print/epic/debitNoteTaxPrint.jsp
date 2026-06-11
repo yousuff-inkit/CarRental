@@ -10,262 +10,352 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style type="text/css">
-.tablereceipt {
-    border: 1px solid rgb(139,136,120);
-    border-collapse: collapse;
+:root {
+    --border-color: #333;
+    --bg-header: #f4f7fb;
+    --text-main: #222;
 }
 
-fieldSet {
-  		  -webkit-border-radius: 8px;
-  		  -moz-border-radius: 8px;
-  		  border-radius: 8px;
-  		  border: 1px solid rgb(139,136,120);
- 	   }
- 
-legend {
-        border-style:none;
-        background-color:#FFF;
-        padding-left:1px;
-    }
-    
- hr { 
-   	   border-top: 1px solid #e1e2df  ;
-    } 
-    
-#preparedby table { page-break-inside:avoid; }
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 11px;
+    color: var(--text-main);
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+}
 
+.document-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-title {
+    background-color: var(--border-color);
+    color: #fff;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.grid-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 4px;
+}
+
+.grid-label {
+    font-weight: bold;
+    width: 130px;
+    flex-shrink: 0;
+    color: #444;
+}
+
+.grid-value {
+    flex-grow: 1;
+    color: #000;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.cr-table th, .cr-table td {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    text-align: left;
+}
+
+.cr-table th {
+    background-color: var(--bg-header);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+.signature-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 40px;
+}
+
+.sig-block {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.sig-internal-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sig-column {
+    flex: 1;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.sig-line {
+    border-top: 1px dashed var(--border-color);
+    margin-top: 40px;
+    padding-top: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.footer-section {
+    margin-top: 40px;
+    font-size: 10px;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media print {
+    body { padding: 0; }
+    .document-container { max-width: 100%; }
+    @page { size: A4; margin: 15mm; }
+}
 </style>
 
 <script type="text/javascript">
-
-function hidedata(){
-	
-	var first=document.getElementById("firstarray").value;
-	var header=document.getElementById("txtheader").value;
-	
-	if(parseInt(header)==1){
-	   $("#headerdiv").prop("hidden", false);
-	   $("#withoutHeaderDiv").attr("hidden", true);
-	}
-	else{
-		$("#headerdiv").prop("hidden", true);
-		$("#withoutHeaderDiv").attr("hidden", false);
-	}
-	
-	if(parseInt(first)==1){
-		   $("#firstdiv").prop("hidden", false);
-		}
-	else{
-		   $("#firstdiv").prop("hidden", true);
+	function hidedata(){
+		
+		var first = document.getElementById("firstarray").value;
+		var sec = document.getElementById("secarray").value;
+		var header = document.getElementById("txtheader").value;
+		
+		if(parseInt(header) == 1){
+		   $("#headerdiv").prop("hidden", false);
+		   $("#withoutHeaderDiv").attr("hidden", true);
+		} else {
+			$("#headerdiv").prop("hidden", true);
+			$("#withoutHeaderDiv").attr("hidden", false);
 		}
 	
+		if(parseInt(first) == 1){
+			$("#firstdiv").prop("hidden", false);
+		} else {
+			$("#firstdiv").prop("hidden", true);
+		}
+		
+		if(parseInt(sec) == 2){
+			$("#secdiv").prop("hidden", false);
+		} else {
+			$("#secdiv").prop("hidden", true);
+		}
 	}
-
 </script>
 
-
-
 </head>
-<body bgcolor="white" style="font-size:10px;" onload="hidedata();">
+<body onload="hidedata()">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmCreditDebitVoucherPrint" action="creditDebitVoucherPrint" method="post" autocomplete="off" target="_blank">
 
-<div style="background-color:white;">
-<div id="headerdiv" hidden="true" >
+<div class="document-container">
 
-<table width="100%" class="normaltable" >
-  <tr>
-    <td width="25%" rowspan="6"><img src="<%=contextPath%>/icons/epic.jpg" width="100" height="91"  alt=""/></td>
-    <td width="50%" rowspan="2">&nbsp;</td>
-    <td width="25%"><font size="3"><label id="lblcompname" name="lblcompname" ><s:property value="lblcompname"/></label></font></td>
-  </tr>
-  <tr>
-    <td><b><label id="lblcompaddress" name="lblcompaddress"><s:property value="lblcompaddress"/></label></b></td>
-  </tr>
-  <tr>
-    <td rowspan="2"  align="center"><b><font size="5">Tax Debit Note</font></b></td>
-    <td align="left"><b>Tel :</b>&nbsp;<label id="lblcomptel" name="lblcomptel"><s:property value="lblcomptel"/></label></td>
-  </tr>
-  <tr>
-    <td align="left"><b>Fax :</b>&nbsp;<label name="lblcompfax" id="lblcompfax" ><s:property value="lblcompfax"/></label></td>
-  </tr>
-  <tr>
-    <td rowspan="2" align="center"><b><font size="2"><label id="lblprintname1" name="lblprintname1"><s:property value="lblprintname1"/></label></font></b></td>
-    <td align="left"><b>Branch :</b>&nbsp;<label id="lblbranch" name="lblbranch" ><s:property value="lblbranch"/></label></td>
-  </tr>
-  <tr>
-    <td align="left"><b>Location :</b>&nbsp;<label id="lbllocation" name="lbllocation" ><s:property value="lbllocation"/></label></td>
-  </tr>
-  <tr>
-  	<td>&nbsp;</td>
-  	<td>&nbsp;</td>
-    <td align="left"><b>TRN :</b>&nbsp;<label id="lblcomptrn" name="lblcomptrn" ><s:property value="lblcomptrn"/></label></td>
-  </tr>
-  <tr>
-    <td colspan="3"><hr noshade size=1 width="100%"></td>
-  </tr>
-   <tr>
-    <td colspan="3"></td></tr>
-    </table>
-</div>
-<div id="withoutHeaderDiv" hidden="true" style="height: 100px;" >
-<br/><br/>
-<center><b><font size="5"><label id="lblprintname" name="lblprintname"><s:property value="lblprintname"/></label></font></b></center>
-</div>
-
-<fieldset>
-<table width="100%">
-  <tr>
-    <td colspan="2" align="left">Your Account has been <label id="lblcreditordebit" name="lblcreditordebit"><s:property value="lblcreditordebit"/></label></td>
-    <td width="49%">: <label id="lblaccountname" name="lblaccountname"><s:property value="lblaccountname"/></label></td>
-    <td width="13%" align="right">Voucher No</td>
-    <td width="14%">: <label id="lbldocumentno" name="lbldocumentno"><s:property value="lbldocumentno"/></label></td>
+    <div id="headerdiv" hidden="true">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 15px; border-bottom: 2px solid var(--border-color); margin-bottom: 20px;">
+            <div style="flex: 0 0 150px;">
+                <img src="<%=contextPath%>/icons/epic.jpg" style="width:100px; height:auto;" alt=""/>
+            </div>
+            <div style="flex: 1; text-align: center;">
+                <div style="font-size: 20px; font-weight: bold; text-transform: uppercase;">
+                    <label id="lblprintname" name="lblprintname">Tax Debit Note</label>
+                </div>
+                <div style="font-size: 14px; margin-top: 5px;">
+                    <b><label id="lblprintname1" name="lblprintname1"><s:property value="lblprintname1"/></label></b>
+                </div>
+            </div>
+            <div style="flex: 0 0 250px; text-align: right; font-size: 11px; line-height: 1.5;">
+                <div style="font-weight: bold; font-size: 14px;"><label id="lblcompname" name="lblcompname"><s:property value="lblcompname"/></label></div>
+                <div><b><label id="lblcompaddress" name="lblcompaddress"><s:property value="lblcompaddress"/></label></b></div>
+                <div><b>Tel:</b> <label id="lblcomptel" name="lblcomptel"><s:property value="lblcomptel"/></label></div>
+                <div><b>Fax:</b> <label name="lblcompfax" id="lblcompfax"><s:property value="lblcompfax"/></label></div>
+                <div><b>Branch:</b> <label id="lblbranch" name="lblbranch"><s:property value="lblbranch"/></label></div>
+                <div><b>Location:</b> <label id="lbllocation" name="lbllocation"><s:property value="lbllocation"/></label></div>
+                <div><b>TRN:</b> <label id="lblcomptrn" name="lblcomptrn"><s:property value="lblcomptrn"/></label></div>
+            </div>
+        </div>
+    </div>
     
-  </tr>
-  <tr>
-    <td width="13%" align="left">Description</td>
-    <td colspan="2">: <label id="lbldescription" name="lbldescription"><s:property value="lbldescription"/></label></td>
-    <td width="13%" align="right">Voucher Date</td>
-    <td width="14%">: <label id="lbldate" name="lbldate"><s:property value="lbldate"/></label></td>
-  </tr>
-   <tr>
-   <td width="13%" align="left">Amount in words </td>
-   <td colspan="2">: <label id="lblnetamountwords" name="lblnetamountwords"><s:property value="lblnetamountwords"/></label></td>
-   <td width="13%" align="right">Amount </td>
-   <td width="14%">: <label id="lblnetamount" name="lblnetamount"><s:property value="lblnetamount"/></label></td>
-  </tr>
-  <s:set name="agreement" value="lblagreement" />
-  <s:if test="#agreement == 0"> 
-  </s:if> 
-  <s:else>
-  <tr>
-   <td width="13%" align="left">Agreement Vehicle </td>
-   <td colspan="2">: <label id="lblvehicleinfo" name="lblvehicleinfo"><s:property value="lblvehicleinfo"/></label></td>
-   <td width="13%" align="right">Agreement </td>
-   <td width="14%">: <label id="lblagreement" name="lblagreement"><s:property value="lblagreement"/></label></td>
-  </tr>
-  </s:else>
-</table><br/>
-</fieldset>
+    <div id="withoutHeaderDiv" hidden="true" style="text-align: center; padding: 20px 0; border-bottom: 2px solid #333; margin-bottom: 20px;">
+        <h2 style="margin: 0; font-size: 24px; text-transform: uppercase;">
+            <label id="lblprintname" name="lblprintname"><s:property value="lblprintname"/></label>
+        </h2>
+    </div>
+
+    <div class="section-title">Voucher Details</div>
+    <div class="info-grid">
+        <div class="grid-row" style="grid-column: 1 / -1;">
+            <span class="grid-label" style="width: auto; margin-right: 10px;">Your Account has been <label id="lblcreditordebit" name="lblcreditordebit"><s:property value="lblcreditordebit"/></label>:</span>
+            <span class="grid-value"><label id="lblaccountname" name="lblaccountname"><s:property value="lblaccountname"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Description:</span>
+            <span class="grid-value"><label id="lbldescription" name="lbldescription"><s:property value="lbldescription"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Voucher No:</span>
+            <span class="grid-value"><label id="lbldocumentno" name="lbldocumentno"><s:property value="lbldocumentno"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Amount in words:</span>
+            <span class="grid-value"><label id="lblnetamountwords" name="lblnetamountwords"><s:property value="lblnetamountwords"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Voucher Date:</span>
+            <span class="grid-value"><label id="lbldate" name="lbldate"><s:property value="lbldate"/></label></span>
+        </div>
+        <s:set name="agreement" value="lblagreement" />
+        <s:if test="#agreement == 0"> 
+        </s:if> 
+        <s:else>
+            <div class="grid-row">
+                <span class="grid-label">Agreement Vehicle:</span>
+                <span class="grid-value"><label id="lblvehicleinfo" name="lblvehicleinfo"><s:property value="lblvehicleinfo"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Agreement:</span>
+                <span class="grid-value"><label id="lblagreement" name="lblagreement"><s:property value="lblagreement"/></label></span>
+            </div>
+        </s:else>
+        <div class="grid-row" style="border-bottom: none;">
+            <span class="grid-label">Amount:</span>
+            <span class="grid-value"><label id="lblnetamount" name="lblnetamount"><s:property value="lblnetamount"/></label></span>
+        </div>
+    </div>
   
-<div id="firstdiv" hidden="true" >
-<fieldset>
-<legend>Accounting</legend>
-<table id="accounting" style="border-collapse: collapse;" width="98%" align="center">
-  <thead>
-  <tr height="25" style="background-color: #D8D8D8;border-collapse: collapse;">
-    <th width="5%" align="center" style="border-collapse: collapse;"><b>Sl No</b></th>
-    <th width="8%" align="center" style="border-collapse: collapse;"><b>Acc. No</b></th>
-    <th width="28%" align="left" style="border-collapse: collapse;"><b>Acc. Head</b></th>
-    <th width="30%" align="left" style="border-collapse: collapse;"><b>Description</b></th>
-    <th width="7%" align="center" style="border-collapse: collapse;"><b>Currency</b></th> 
-    <th width="11%" align="right" style="border-collapse: collapse;"><b>Debit</b></th>
-    <th width="11%" align="right" style="border-collapse: collapse;"><b>Credit</b></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-      <td colspan="7"><hr noshade size=1 color="#e1e2df" width="100%"></td>
-  </tr>
-    <%int i=0,l=0; %>
-    <s:iterator var="stat" value='#request.printingarray' >
-   <%l=l+1;i=0;%>
-	<tr height="20">   
-		<td width="5%" align="center"><%=l%></td>
-    	<s:iterator status="arr" value="#stat.split('::')" var="des">   
-    	<% if(i==1 || i==2){%>
-    	<td align="left">
-		    <s:property value="#des"/>
-    	</td>
-     	<%} else if(i>3){%>
-  		<td align="right">
-		    <s:property value="#des"/>
-  			</td>
-   		<%} else{ %>
-  		<td align="center">
-		  <s:property value="#des"/>
-  		</td>
-  		<% } i++;  %>
- 		</s:iterator>
-	</tr>
-	</s:iterator> 
-	</tbody>	
-<tr><td colspan="7">&nbsp;</td></tr>
-<tr>
-		<td  align="right" colspan="5"><b>Total </b>&nbsp;</td>
-        <td width="8%" align="right"><label id="lbldebittotal" name="lbldebittotal"><s:property value="lbldebittotal"/></label></td>
-        <td width="7%" align="right"><label id="lblcredittotal" name="lblcredittotal"><s:property value="lblcredittotal"/></label></td>
-</tr>
-</table>
-</fieldset>
-</div><br/>
+    <div id="firstdiv" hidden="true">
+        <div class="section-title">Accounting</div>
+        <table class="cr-table" id="accounting">
+            <thead>
+                <tr>
+                    <th class="text-center" width="5%">Sl No</th>
+                    <th class="text-center" width="8%">Acc. No</th>
+                    <th width="28%">Acc. Head</th>
+                    <th width="30%">Description</th>
+                    <th class="text-center" width="7%">Currency</th> 
+                    <th class="text-right" width="11%">Debit</th>
+                    <th class="text-right" width="11%">Credit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%int i=0,l=0; %>
+                <s:iterator var="stat" value='#request.printingarray'>
+                <%l=l+1;i=0;%>
+                <tr>   
+                    <td class="text-center"><%=l%></td>
+                    <s:iterator status="arr" value="#stat.split('::')" var="des">   
+                    <% if(i==1 || i==2){%>
+                        <td><s:property value="#des"/></td>
+                    <%} else if(i>3){%>
+                        <td class="text-right"><s:property value="#des"/></td>
+                    <%} else{ %>
+                        <td class="text-center"><s:property value="#des"/></td>
+                    <% } i++;  %>
+                    </s:iterator>
+                </tr>
+                </s:iterator> 
+            </tbody>    
+            <tfoot>
+                <tr style="background-color: var(--bg-header); font-weight: bold;">
+                    <td colspan="5" class="text-right">TOTAL:</td>
+                    <td class="text-right"><label id="lbldebittotal" name="lbldebittotal"><s:property value="lbldebittotal"/></label></td>
+                    <td class="text-right"><label id="lblcredittotal" name="lblcredittotal"><s:property value="lblcredittotal"/></label></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
-<table id="preparedby" width="100%" class="tablereceipt">
-<tr>
-<td width="60%">
-<table width="100%">
-  <tr>
-    <td width="39%" align="left" height="25"><b>Prepared</b></td>
-    <td width="35%" align="center"><b>Verified</b></td>
-    <td width="26%" align="center"><b>Approved</b></td>
-  </tr>
-  <tr>
-    <td><b>by</b>&nbsp;<label name="lblpreparedby" id="lblpreparedby" ><s:property value="lblpreparedby"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><b>on</b>&nbsp;<label name="lblpreparedon" id="lblpreparedon" ><s:property value="lblpreparedon"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><b>at</b>&nbsp;<label name="lblpreparedat" id="lblpreparedat" ><s:property value="lblpreparedat"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-</td>
+    <div class="signature-wrapper">
+        <div class="sig-block" style="flex: 1.5;">
+            <div style="font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Internal Processing</div>
+            <div class="sig-internal-grid">
+                <div class="sig-column">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Prepared</div>
+                    <div><b>by</b> <label name="lblpreparedby" id="lblpreparedby"><s:property value="lblpreparedby"/></label></div>
+                    <div><b>on</b> <label name="lblpreparedon" id="lblpreparedon"><s:property value="lblpreparedon"/></label></div>
+                    <div><b>at</b> <label name="lblpreparedat" id="lblpreparedat"><s:property value="lblpreparedat"/></label></div>
+                </div>
+                <div class="sig-column">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Verified</div>
+                    <div><b>by</b> &nbsp;</div>
+                    <div><b>on</b> &nbsp;</div>
+                    <div><b>at</b> &nbsp;</div>
+                </div>
+                <div class="sig-column">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Approved</div>
+                    <div><b>by</b> &nbsp;</div>
+                    <div><b>on</b> &nbsp;</div>
+                    <div><b>at</b> &nbsp;</div>
+                </div>
+            </div>
+        </div>
 
-<td width="40%" class="tablereceipt">
-<table width="100%">
-  <tr>
-    <td height="25" colspan="4"><b>Received By</b></td>
-  </tr>
-  <tr>
-    <td width="5%"><b>Name</b></td>
-    <td colspan="3">:<hr style="border:0;border-bottom: 1px dashed #ccc;" size=1 width="100%"></td>
-  </tr>
-  <tr>
-    <td><b>Date</b></td>
-    <td width="48%">:&nbsp;</td>
-    <td width="5%"><b>Time</b></td>
-    <td width="42%">:&nbsp;</td>
-  </tr>
-</table>
-</td></tr>
-</table><br/>
+        <div class="sig-block" style="flex: 1;">
+            <div style="font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Received By</div>
+            <div style="height: 40px;"></div>
+            <div class="sig-line">Name, Signature & Stamp</div>
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px;">
+                <span>Date: ____/____/______</span>
+                <span>Time: ____:____</span>
+            </div>
+        </div>
+    </div>
 
-<table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table>
+    <div class="footer-section">
+        <div style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 5px; border-top: 1px solid #eee; padding-top: 10px;">
+            System Generated Document Signature & Stamp Not Required.
+        </div>
+        <div class="footer-row">
+            <span>Printed by <%=session.getAttribute("USERNAME")%> <label id="lblfooter"></label></span>
+            <span style="font-weight: bold; color: #bbb;"></span>
+        </div>
+        <div id="content" style="display:none;"><div id="pageFooter"></div></div>
+    </div>
 
-<input type="hidden" id="firstarray" name="firstarray" value='<s:property value="firstarray"/>'>  
-<input type="hidden" id="txtheader" name="txtheader" value='<s:property value="txtheader"/>'>
+    <div style="display:none;">
+        <input type="hidden" id="firstarray" name="firstarray" value='<s:property value="firstarray"/>'>  
+        <input type="hidden" id="txtheader" name="txtheader" value='<s:property value="txtheader"/>'>
+    </div>
+
 </div>
 
 </form>
