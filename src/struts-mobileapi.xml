@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+    <package name="mobile-api" namespace="/api" extends="json-default">
+
+        <action name="getCompany" class="com.api.MobileApiAction" method="fetchCompanies">
+            <result type="json">
+                <param name="includeProperties">status, companyList\[\d+\]\..*</param>
+            </result>
+        </action>
+
+        <action name="login" class="com.api.MobileApiAction" method="processLogin">
+            <result type="json">
+                <param name="includeProperties">status, token</param>
+            </result>
+        </action>
+
+        <action name="getDashboard" class="com.api.MobileApiAction" method="fetchDashboard">
+            <result type="json">
+                <param name="includeProperties">status, dashboardData.*</param>
+            </result>
+        </action>
+
+    </package>
+</struts>
