@@ -446,6 +446,6 @@
   	                              <!-- OPERATIONS - SET UP -->
                             	
 <include file="com/operations/setup/questionnaire/struts-questionnaire.xml"></include>      
-					
+					<include file="struts-mobileapi.xml"></include>
  </struts>    
 
