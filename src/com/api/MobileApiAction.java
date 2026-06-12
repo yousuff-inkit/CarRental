@@ -115,14 +115,81 @@ public class MobileApiAction extends ActionSupport {
     // ==========================================
     // ENDPOINT 3: Dashboard
     // ==========================================
-    public String fetchDashboard() {
-        dashboardData = new HashMap<>();
-        // TODO: Query your database for deliveries and bookings here
-        
-        dashboardData.put("deliveryCount", 0);
-        dashboardData.put("bookingCount", 0);
-        
-        status = "success";
-        return SUCCESS;
-    }
+//==========================================
+//ENDPOINT 3: Dashboard Data (Bookings & Deliveries)
+//==========================================
+public String fetchDashboard() {
+  Connection conn = null;
+  Statement stmt = null;
+  ResultSet rs = null;
+  
+  // Initialize the maps and lists to hold our JSON data
+  dashboardData = new HashMap<>();
+  List<Map<String, String>> bookingsList = new ArrayList<>();
+  List<Map<String, String>> deliveriesList = new ArrayList<>();
+
+  try {
+      ClsConnection clsConn = new ClsConnection();
+      conn = clsConn.getMyConnection();
+      stmt = conn.createStatement();
+
+      // --- 1. GET ALL ACTIVE BOOKINGS ---
+      // Joining gl_bookingm with my_acbook to grab the client's actual name
+      String bookingSql = "SELECT b.voc_no, a.refname, b.frmDate, b.contactno " +
+                          "FROM gl_bookingm b " +
+                          "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
+                          "WHERE b.status = 3"; 
+      
+      rs = stmt.executeQuery(bookingSql);
+      
+      int bCount = 0;
+      while (rs.next()) {
+          bCount++;
+          Map<String, String> booking = new HashMap<>();
+          booking.put("id", rs.getString("voc_no"));
+          booking.put("client", rs.getString("refname"));
+          booking.put("date", rs.getString("frmDate"));
+          booking.put("contact", rs.getString("contactno"));
+          bookingsList.add(booking);
+      }
+      rs.close(); // Close before reusing the ResultSet
+
+      // --- 2. GET ACTIVE DELIVERIES ---
+      // Filtering the exact same table, but looking for the delivery=1 flag
+      String deliverySql = "SELECT b.voc_no, a.refname, b.delloc, b.frmDate " +
+                           "FROM gl_bookingm b " +
+                           "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
+                           "WHERE b.status = 3 AND b.delivery = 1";
+                           
+      rs = stmt.executeQuery(deliverySql);
+      
+      int dCount = 0;
+      while (rs.next()) {
+          dCount++;
+          Map<String, String> delivery = new HashMap<>();
+          delivery.put("id", rs.getString("voc_no"));
+          delivery.put("client", rs.getString("refname"));
+          delivery.put("location", rs.getString("delloc"));
+          delivery.put("date", rs.getString("frmDate"));
+          deliveriesList.add(delivery);
+      }
+
+      // --- 3. PACK IT ALL INTO THE DASHBOARD VARIABLE ---
+      dashboardData.put("bookingCount", bCount);
+      dashboardData.put("deliveryCount", dCount);
+      dashboardData.put("bookings", bookingsList);
+      dashboardData.put("deliveries", deliveriesList);
+
+      status = "success";
+
+  } catch (Exception e) {
+      status = "error: " + e.toString();
+      e.printStackTrace(); // Prints the exact line number to Eclipse if it crashes
+  } finally {
+      // Always close database connections to prevent memory leaks
+      try { if(rs != null) rs.close(); if(stmt != null) stmt.close(); if(conn != null) conn.close(); } catch(Exception ex) {}
+  }
+  
+  return SUCCESS;
+}
 }

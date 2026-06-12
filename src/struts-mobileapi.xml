@@ -22,6 +22,10 @@
                 <param name="includeProperties">status, dashboardData.*</param>
             </result>
         </action>
+        
+        <action name="fetchDashboard" class="com.api.MobileApiAction" method="fetchDashboard">
+    <result type="json"></result>
+</action>
 
     </package>
 </struts>
