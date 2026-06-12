@@ -231,7 +231,7 @@ float:right;
 <img src='<s:property value="#statpic"/>'  height="25%" width="25%">
 </s:iterator>
 <center>
-  <label style="color: #D8D8D8;"><b>Powered by GATEWAY ERP</b></label></center>
+  <label style="color: #D8D8D8;"><b></b></label></center>
   <label name="lblhidexisting" id="lblhidexisting" hidden="true"><s:property value="lblhidexisting"/></label>
   <label name="lblhidnew" id="lblhidnew" hidden="true"><s:property value="lblhidnew"/></label>
   <label name="lblurl" id="lblurl" hidden="true"><s:property value="lblurl" /></label>

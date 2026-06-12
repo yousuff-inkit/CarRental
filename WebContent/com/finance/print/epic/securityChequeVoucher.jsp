@@ -10,191 +10,273 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 
 <style type="text/css">
-.tablereceipt {
-    border: 1px solid rgb(139,136,120);
-    border-collapse: collapse;
+:root {
+    --border-color: #333;
+    --bg-header: #f4f7fb;
+    --text-main: #222;
 }
- fieldSet {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(139,136,120);
 
- }
- legend{
-        border-style:none;
-        background-color:#FFF;
-        padding-left:1px;
-    }
- hr { 
-   border-top: 1px solid #e1e2df  ;
-    } 
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 11px;
+    color: var(--text-main);
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+}
 
+.document-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-title {
+    background-color: var(--border-color);
+    color: #fff;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.grid-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 4px;
+}
+
+.grid-label {
+    font-weight: bold;
+    width: 130px;
+    flex-shrink: 0;
+    color: #444;
+}
+
+.grid-value {
+    flex-grow: 1;
+    color: #000;
+}
+
+.signature-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 40px;
+}
+
+.sig-block {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.sig-internal-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sig-column {
+    flex: 1;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.sig-line {
+    border-top: 1px dashed var(--border-color);
+    margin-top: 40px;
+    padding-top: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.footer-section {
+    margin-top: 40px;
+    font-size: 10px;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media print {
+    body { padding: 0; }
+    .document-container { max-width: 100%; }
+    @page { size: A4; margin: 15mm; }
+}
 </style>
 
 <script type="text/javascript">
-
 	function hidedata(){
-		
-		var first=document.getElementById("firstarray").value;
-		var header=document.getElementById("txtheader").value;
-		
-		if(parseInt(header)==1){
+		var first = document.getElementById("firstarray").value;
+		var header = document.getElementById("txtheader").value;
+	
+		if(parseInt(header) == 1){
 		   $("#headerdiv").prop("hidden", false);
 		   $("#withoutHeaderDiv").attr("hidden", true);
-		}
-		else{
+		} else {
 			$("#headerdiv").prop("hidden", true);
 			$("#withoutHeaderDiv").attr("hidden", false);
 		}
 		
-		if(parseInt(first)==1){
-			   $("#firstdiv").prop("hidden", true);
-			}
-		else{
-			$("#firstdiv").prop("hidden", false);
-			}
-		
+		if(parseInt(first) == 1){
+		   $("#firstdiv").prop("hidden", false);
+		} else {
+			$("#firstdiv").prop("hidden", true);
 		}
-
+	}
 </script>
+
 </head>
-<body bgcolor="white" style="font-size:10px;" onload="hidedata();">
+<body onload="hidedata()">
 <div id="mainBG" class="homeContent" data-type="background">
 <form id="frmSecurityChequeVoucherPrint" action="securityChequeVoucherPrint" method="post" autocomplete="off" target="_blank">
 
-<div style="background-color:white;">
-<div id="headerdiv" hidden="true" >
-<jsp:include page="../../../common/printHeader.jsp"></jsp:include>
-</div>
-<div id="withoutHeaderDiv" hidden="true" style="height: 100px;" >
-<br/><br/>
-<center><b><font size="5"><label id="lblprintname" name="lblprintname"><s:property value="lblprintname"/></label></font></b></center>
-</div>
+<div class="document-container">
 
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="12%" align="left">Voucher Date </td>
-    <td>: <label id="lbldate" name="lbldate" ><s:property value="lbldate"/></label></td>
-    <td width="12%" align="left">Voucher No. </td>
-    <td width="20%">: <label name="lblvoucherno" id="lblvoucherno" ><s:property value="lblvoucherno"/></label></td>
-  </tr>
-  <tr>
-   <td align="left">Amount in words </td>
-   <td>: <label id="lblnetamountwords" name="lblnetamountwords"><s:property value="lblnetamountwords"/></label></td>
-   <td align="left">Amount </td>
-   <td>: <label id="lblnetamount" name="lblnetamount"><s:property value="lblnetamount"/></label></td>
-  </tr>
-</table>
-</fieldset><br/>
+    <div id="headerdiv" hidden="true">
+        <jsp:include page="../../../common/printHeader.jsp"></jsp:include>
+    </div>
+    
+    <div id="withoutHeaderDiv" hidden="true" style="text-align: center; padding: 20px 0; border-bottom: 2px solid #333; margin-bottom: 20px;">
+        <h2 style="margin: 0; font-size: 24px; text-transform: uppercase;">
+            <label id="lblprintname" name="lblprintname"><s:property value="lblprintname"/></label>
+        </h2>
+    </div>
 
-<table width="100%">
-<tr>
- <td width="50%">
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="22%">Paid To</td>
-    <td width="78%">: <label id="lblpaidtoname" name="lblpaidtoname"><s:property value="lblpaidtoname"/></label></td>
-  </tr>
-  <tr>
-    <td>Cheque No</td>
-    <td>: <label id="lblchqno" name="lblchqno"><s:property value="lblchqno"/></label></td>
-  </tr>
-  <tr>
-    <td>Cheque Date</td>
-    <td>: <label id="lblchqdate" name="lblchqdate"><s:property value="lblchqdate"/></label></td>
-  </tr>
-   <tr>
-    <td>Valid Up To</td>
-    <td>: <label id="lblvalidupto" name="lblvalidupto"><s:property value="lblvalidupto"/></label></td>
-  </tr>
-</table>
-</fieldset>
-</td>
- <td width="50%">
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="22%">Received From</td>
-    <td width="78%">: <label id="lblreceivedname" name="lblreceivedname"><s:property value="lblreceivedname"/></label></td>
-  </tr>
-  <tr>
-    <td>Description</td>
-    <td>: <label id="lbldescription" name="lbldescription" ><s:property value="lbldescription"/></label></td>
-  </tr>
-</table><br/><br/>
-</fieldset>
-</td></tr></table><br/>
+    <div class="section-title">Voucher Details</div>
+    <div class="info-grid">
+        <div class="grid-row">
+            <span class="grid-label">Voucher Date:</span>
+            <span class="grid-value"><label id="lbldate" name="lbldate"><s:property value="lbldate"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Voucher No:</span>
+            <span class="grid-value"><label name="lblvoucherno" id="lblvoucherno"><s:property value="lblvoucherno"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Amount:</span>
+            <span class="grid-value"><label id="lblnetamount" name="lblnetamount"><s:property value="lblnetamount"/></label></span>
+        </div>
+        <div class="grid-row" style="grid-column: 1 / -1;">
+            <span class="grid-label">Amount in Words:</span>
+            <span class="grid-value"><label id="lblnetamountwords" name="lblnetamountwords"><s:property value="lblnetamountwords"/></label></span>
+        </div>
+    </div>
 
-<table width="100%" class="tablereceipt">
-<tr>
-<td width="60%">
-<table width="100%">
-  <tr>
-    <td width="39%" align="left" height="25"><b>Prepared</b></td>
-    <td width="35%" align="center"><b>Verified</b></td>
-    <td width="26%" align="center"><b>Approved</b></td>
-  </tr>
-  <tr>
-    <td><b>by</b>&nbsp;<label name="lblpreparedby" id="lblpreparedby" ><s:property value="lblpreparedby"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><b>on</b>&nbsp;<label name="lblpreparedon" id="lblpreparedon" ><s:property value="lblpreparedon"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><b>at</b>&nbsp;<label name="lblpreparedat" id="lblpreparedat" ><s:property value="lblpreparedat"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-</td>
+    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+        <div style="flex: 1;">
+            <div class="section-title">Cheque Information</div>
+            <div class="info-grid" style="grid-template-columns: 1fr; margin-bottom: 0;">
+                <div class="grid-row">
+                    <span class="grid-label">Paid To:</span>
+                    <span class="grid-value"><label id="lblpaidtoname" name="lblpaidtoname"><s:property value="lblpaidtoname"/></label></span>
+                </div>
+                <div class="grid-row">
+                    <span class="grid-label">Cheque No:</span>
+                    <span class="grid-value"><label id="lblchqno" name="lblchqno"><s:property value="lblchqno"/></label></span>
+                </div>
+                <div class="grid-row">
+                    <span class="grid-label">Cheque Date:</span>
+                    <span class="grid-value"><label id="lblchqdate" name="lblchqdate"><s:property value="lblchqdate"/></label></span>
+                </div>
+                <div class="grid-row" style="border-bottom: none;">
+                    <span class="grid-label">Valid Up To:</span>
+                    <span class="grid-value"><label id="lblvalidupto" name="lblvalidupto"><s:property value="lblvalidupto"/></label></span>
+                </div>
+            </div>
+        </div>
 
-<td width="40%" class="tablereceipt">
-<table width="100%">
-  <tr>
-    <td height="25" colspan="4"><b>Received By</b></td>
-  </tr>
-  <tr>
-    <td width="5%"><b>Name</b></td>
-    <td colspan="3">:<hr style="border:0;border-bottom: 1px dashed #ccc;" size=1 width="100%"></td>
-  </tr>
-  <tr>
-    <td><b>Date</b></td>
-    <td width="48%">:&nbsp;</td>
-    <td width="5%"><b>Time</b></td>
-    <td width="42%">:&nbsp;</td>
-  </tr>
-</table>
-</td></tr>
-</table><br/>
+        <div style="flex: 1;">
+            <div class="section-title">Receipt Information</div>
+            <div class="info-grid" style="grid-template-columns: 1fr; margin-bottom: 0; height: calc(100% - 65px);">
+                <div class="grid-row">
+                    <span class="grid-label">Received From:</span>
+                    <span class="grid-value"><label id="lblreceivedname" name="lblreceivedname"><s:property value="lblreceivedname"/></label></span>
+                </div>
+                <div class="grid-row" style="border-bottom: none;">
+                    <span class="grid-label">Description:</span>
+                    <span class="grid-value"><label id="lbldescription" name="lbldescription"><s:property value="lbldescription"/></label></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table>
+    <div class="signature-wrapper">
+        <div class="sig-block" style="flex: 1.5;">
+            <div style="font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Internal Processing</div>
+            <div class="sig-internal-grid">
+                <div class="sig-column">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Prepared</div>
+                    <div><b>by</b> <label name="lblpreparedby" id="lblpreparedby"><s:property value="lblpreparedby"/></label></div>
+                    <div><b>on</b> <label name="lblpreparedon" id="lblpreparedon"><s:property value="lblpreparedon"/></label></div>
+                    <div><b>at</b> <label name="lblpreparedat" id="lblpreparedat"><s:property value="lblpreparedat"/></label></div>
+                </div>
+                <div class="sig-column">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Verified</div>
+                    <div><b>by</b> &nbsp;</div>
+                    <div><b>on</b> &nbsp;</div>
+                    <div><b>at</b> &nbsp;</div>
+                </div>
+                <div class="sig-column">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Approved</div>
+                    <div><b>by</b> &nbsp;</div>
+                    <div><b>on</b> &nbsp;</div>
+                    <div><b>at</b> &nbsp;</div>
+                </div>
+            </div>
+        </div>
 
-<input type="hidden" id="firstarray" name="firstarray" value='<s:property value="firstarray"/>'>  
-<input type="hidden" id="txtheader" name="txtheader" value='<s:property value="txtheader"/>'>
-<br/><br/><br/><br/>
+        <div class="sig-block" style="flex: 1;">
+            <div style="font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Received By</div>
+            <div style="height: 40px;"></div>
+            <div class="sig-line">Name, Signature & Stamp</div>
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px;">
+                <span>Date: ____/____/______</span>
+                <span>Time: ____:____</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <div style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 5px; border-top: 1px solid #eee; padding-top: 10px;">
+            System Generated Document Signature & Stamp Not Required.
+        </div>
+        <div class="footer-row">
+            <span>Printed by <%=session.getAttribute("USERNAME")%> <label id="lblfooter"></label></span>
+            <span style="font-weight: bold; color: #bbb;"></span>
+        </div>
+        <div id="content" style="display:none;"><div id="pageFooter"></div></div>
+    </div>
+
+    <div style="display:none;">
+        <input type="hidden" id="firstarray" name="firstarray" value='<s:property value="firstarray"/>'>  
+        <input type="hidden" id="txtheader" name="txtheader" value='<s:property value="txtheader"/>'>
+    </div>
+
 </div>
 
 </form>

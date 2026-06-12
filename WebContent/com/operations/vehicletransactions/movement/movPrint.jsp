@@ -7,28 +7,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
- <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
 <jsp:include page="../../../../includes.jsp"></jsp:include>  
-<style>
- .hidden-scrollbar {
-  overflow: auto;
-  height: 800px;
-} 
- fieldSet {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(139,136,120);
-
- }
-
- .tablereceipt {
-    border: 1px solid black;
-    border-collapse: collapse;
+<style type="text/css">
+:root {
+    --border-color: #333;
+    --bg-header: #f4f7fb;
+    --text-main: #222;
 }
 
- table:last-of-type {
-    page-break-after: auto
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 11px;
+    color: var(--text-main);
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
+}
+
+.document-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-title {
+    background-color: var(--border-color);
+    color: #fff;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+.info-grid.col-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.info-grid.col-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 4px;
+}
+
+.grid-label {
+    font-weight: bold;
+    width: auto;
+    margin-right: 10px;
+    flex-shrink: 0;
+    color: #444;
+}
+
+.grid-value {
+    flex-grow: 1;
+    color: #000;
+}
+
+.grid-col-span-2 { grid-column: span 2; }
+.grid-col-span-3 { grid-column: span 3; }
+.grid-col-span-4 { grid-column: span 4; }
+
+.footer-section {
+    margin-top: 40px;
+    font-size: 10px;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: space-between;
 }
 
 #pageFooter {
@@ -36,319 +104,286 @@
 }
 
 #pageFooter:after {
-      counter-increment: page;
-      counter-reset: pages 1;
-      content: "Page " counter(page) " / " counter(pages);
+    counter-increment: page;
+    counter-reset: pages 1;
+    content: "Page " counter(page) " / " counter(pages);
 }
- 
-body {
-    background-color: white;
+
+@media print {
+    body { padding: 0; }
+    .document-container { max-width: 100%; }
+    @page { margin: 15mm; size: A4; }
 }
 </style> 
 <script type="text/javascript">
-$(document).ready(function ()
-		 {
-document.getElementById("collectionfield").style.display="none";
-document.getElementById("deliveryfield").style.display="none";
-if(document.getElementById("lblhiddelivery").innerText=="1"){
-	document.getElementById("deliveryfield").style.display="block";	
-}
-if(document.getElementById("lblhidcollection").innerText=="1"){
-	document.getElementById("collectionfield").style.display="block";	
-}
-		 }); 
+$(document).ready(function () {
+    document.getElementById("collectionfield").style.display="none";
+    document.getElementById("deliveryfield").style.display="none";
+    if(document.getElementById("lblhiddelivery").innerText=="1"){
+        document.getElementById("deliveryfield").style.display="block";	
+    }
+    if(document.getElementById("lblhidcollection").innerText=="1"){
+        document.getElementById("collectionfield").style.display="block";	
+    }
+}); 
+
 function getPrint(){
-	//alert("hgchjh");
-	 document.getElementById("mode").value="print";
-	document.getElementById("frmMovementPrint").submit(); 
-	
+    document.getElementById("mode").value="print";
+    document.getElementById("frmMovementPrint").submit(); 
 }
 </script>
 </head>
-<body onload="" bcolor="white">
-<div id="mainBG" class="homeContent" data-type="background"  style="background-color:white;">
+<body>
+<div id="mainBG" class="homeContent" data-type="background">
 <form id="frmMovementPrint" action="printMovement" autocomplete="off" target="_blank">
-<%-- <jsp:include page="../../../../../header.jsp"></jsp:include> --%> <br/> 
-<jsp:include page="../../../common/printHeader.jsp"></jsp:include>
 
-<fieldset>
-<legend><b>Opening Details</b></legend>
+<div class="document-container">
 
-<table width="100%" >
-<tr>
-<td width="100%">
-<table width="100%"  >
-<tr>
-<td align="left" width="156">Branch</td ><td align="left" width="168">:&nbsp;<label id="lblopenbranch" name="lblopenbranch"><s:property value="lblopenbranch"/></label></td>
-<td align="left" width="92">Location</td>
-<td align="left" width="242">:&nbsp;<label name="lblopenlocation" id="lblopenlocation"><s:property value="lblopenbranch"/></label></td>
-<td align="left" width="115">&nbsp;</td>
-<td align="left" width="176">&nbsp;</td>
-<td align="left" width="87">Doc No </td>
-<td align="left" width="208">:&nbsp;
-  <label id="lbldocno" name="lbldocno">
-    <s:property value="lbldocno"/>
-  </label></td>
-</tr>
-<tr>
-<td align="left">Fleet NO </td><td align="left">:&nbsp;<label id="lblfleetno" name="lblfleetno"><s:property value="lblfleetno"/></label></td>
-<td align="right">&nbsp;</td><td align="left">&nbsp;</td>
-<td align="right">&nbsp;</td>
-<td align="left">&nbsp;</td>
-<td align="left">Date</td>
-<td align="left">:&nbsp;
-  <label id="lbldate" name="lbldate">
-    <s:property value="lbldate"/>
-  </label></td>
+    <jsp:include page="../../../common/printHeader.jsp"></jsp:include>
 
-</tr>
-<tr>
-  <td align="left">Fleet Details</td>
-  <td colspan="5" align="left">:&nbsp;<label name="lblfleetdetails" id="lblfleetdetails"><s:property value="lblfleetdetails"/></label></td>
-  <td align="left">Mov Type </td>
-  <td align="left">:&nbsp;
-    <label id="lblmovtype" name="lblmovtype">
-      <s:property value="lblmovtype"/>
-    </label></td>
-  </tr>
-<tr>
-<td align="left">Date Out </td><td align="left">:&nbsp;<label id="lbldateout" name="lbldateout"><s:property value="lbldateout"/></label></td>
-<td align="left">Time Out</td><td align="left">:&nbsp;<label id="lbltimeout" name="lbltimeout"><s:property value="lbltimeout"/></label></td>
-<td align="left">KM Out</td>
-<td align="left">:&nbsp;
-  <label id="lblkmout" name="lblkmout">
-    <s:property value="lblkmout"/>
-  </label></td>
-<td align="left">Fuel Out </td>
-<td align="left">:&nbsp;
-  <label id="lblfuelout" name="lblfuelout">
-    <s:property value="lblfuelout"/>
-  </label></td>
-
-</tr>
-<tr>
-  <td align="left">Garage</td><td align="left">:&nbsp;
-    <label id="lblgaragename" name="lblgaragename" >
-      <s:property value="lblgaragename"/>
-    </label></td>
-  <td align="left">Driver</td>
-  <td align="left">:&nbsp;
-    <label name="lblopendriver" id="lblopendriver">
-      <s:property value="lblopendriver"/>
-    </label></td>
-  <td align="left">Staff</td>
-  <td align="left">:&nbsp;
-    <label name="lblopenstaff" id="lblopenstaff">
-      <s:property value="lblopenstaff"/>
-    </label></td>
-  <td align="left">User</td>
-  <td align="left">:&nbsp;
-    <label id="lblopenuser" name="lblopenuser">
-      <s:property value="lblopenuser"/>
-    </label></td>
-</tr>
-<tr><td align="left">Remarks</td>
-	<td align="left"  colspan="7">:&nbsp;<label id="lblopenremarks" name="lblopenremarks"><s:property value="lblopenremarks"/></label></td>
-</tr>
-</table>
-
-</td>
-
-<td width="0%">&nbsp;</td>
-</table>
-</fieldset>
-
-<table width="100%">
-<tr>
-<td>
-  <fieldset id="deliveryfield" ><legend><b>Delivery Details</b></legend>
-  <table width="100%">
-  <tr>
-    <td align="left" width="5%">Date</td><td align="left" width="20%">:&nbsp;<label id="lbldeldate" name="lbldeldate"><s:property value="lbldeldate"/></label></td>
-    <td align="left" width="5%">Time</td><td align="left" width="20%">:&nbsp;<label id="lbldeltime" name="lbldeltime"><s:property value="lbldeltime"/></label></td>
-  <td align="left" width="5%">KM</td><td align="left" width="20%">:&nbsp;<label id="lbldelkm" name="lbldelkm">
-    <s:property value="lbldelkm"/>
-  </label></td>
-  <td align="left" width="5%">Fuel</td><td align="left" width="20%">:&nbsp;<label id="lbldelfuel" name="lbldelfuel"><s:property value="lbldelfuel"/>
-  </label>
-    </td>
-  </tr>
-  </table>
-  </fieldset>
-</td>
-</table>
-</fieldset>
-<div id="driverdetailsfield">
-<fieldset  ><legend><b>Driver Details</b></legend>
-<table width="100%" >
-<tr>
-  <td align="left" width="8">Driver Name</td><td align="left" width="20%">:&nbsp;<label id="lbldrvdrivername" name="lbldrvdrivername">
-    <s:property value="lbldrvdrivername"/>
-  </label></td>
-  <td align="left" width="8%">License No.</td><td align="left" width="15%">:&nbsp;<label id="lbldrvlicenseno" name="lbldrvlicenseno"><s:property value="lbldrvlicenseno"/>
-  </label></td>
-<td align="left" width="8%">Expiry</td><td align="left" width="15%">:&nbsp;<label id="lbldrvexpiry" name="lbldrvexpiry">
-  <s:property value="lbldrvexpiry"/>
-</label></td>
-<td align="left" width="8%">Issued from</td><td align="left" width="15%">:&nbsp;<label id="lbldrvissuedfrom" name="lbldrvissuedfrom"><s:property value="lbldrvissuedfrom"/></label></td>
-</tr>
-</table>
-</fieldset>
-</div>
-<div id="collectionfield">
-<fieldset  ><legend><b>Collection Details</b></legend>
-<table width="100%" >
-<tr>
-  <td align="left" width="5">Date</td><td align="left" width="20%">:&nbsp;<label id="lblcoldate" name="lblcoldate">
-    <s:property value="lblcoldate"/>
-  </label></td>
-  <td align="left" width="5%">Time</td><td align="left" width="20">:&nbsp;<label id="lblcoltime" name="lblcoltime"><s:property value="lblcoltime"/>
-  </label></td>
-<td align="left"  width="5">KM</td><td align="left" width="20%">:&nbsp;<label id="lblcolkm" name="lblcolkm">
-  <s:property value="lblcolkm"/>
-</label></td>
-<td align="left" width="5%">Fuel</td><td align="left" width="20%">:&nbsp;<label id="lblcolfuel" name="lblcolfuel"><s:property value="lblcolfuel"/></label></td>
-</tr>
-</table>
-</fieldset>
-</div>
-<fieldset>
-<legend><b>Closing Details</b></legend>
-
-<table width="100%" >
-<tr>
-<td width="100%">
-<table width="100%"  >
-<tr>
-<td align="left" width="151">Branch</td ><td align="left" width="171">:&nbsp;<label id="lblclosebranch" name="lblclosebranch"><s:property value="lblclosebranch"/></label></td>
-<td align="left" width="92">Location</td>
-<td align="left" width="243">:&nbsp;<label name="lblcloselocation" id="lblcloselocation"><s:property value="lblcloselocation"/></label></td>
-<td align="left" width="122">&nbsp;</td>
-<td align="left" width="175">&nbsp;</td>
-<td align="left" width="92">&nbsp;</td>
-<td align="left" width="198">&nbsp;</td>
-</tr>
-<tr>
-<td align="left">Date In </td><td align="left">:&nbsp;
-  <label id="lblclosedate" name="lblclosedate">
-    <s:property value="lblclosedate"/>
-  </label></td>
-<td align="left">Time In</td><td align="left">:&nbsp;
-  <label id="lblclosetime" name="lblclosetime">
-    <s:property value="lblclosetime"/>
-  </label></td>
-<td align="left">KM</td>
-<td align="left">:&nbsp;
-  <label id="lblclosekm" name="lblclosekm">
-    <s:property value="lblclosekm"/>
-  </label></td>
-<td align="left">Fuel </td>
-<td align="left">:&nbsp;
-  <label id="lblclosefuel" name="lblclosefuel">
-    <s:property value="lblclosefuel"/>
-  </label></td>
-
-</tr>
-<tr>
-  <td align="left">Garage</td><td align="left">:&nbsp;
-    <label id="lblclosegarage" name="lblclosegarage">
-      <s:property value="lblclosegarage"/>
-    </label></td>
-  <td align="left">Driver</td><td align="left">:&nbsp;
-    <label id="lblclosedriver" name="lblclosedriver">
-      <s:property value="lblclosedriver"/>
-    </label></td>
-  <td align="left">Staff</td>
-  <td align="left">:&nbsp;
-    <label id="lblclosestaff" name="lblclosestaff">
-      <s:property value="lblclosestaff"/>
-    </label></td>
-  <td align="left">User</td>
-  <td align="left">:&nbsp;
-    <label name="lblcloseuser" id="lblcloseuser">
-      <s:property value="lblcloseuser"/>
-    </label></td>
-  
-</tr>
-<tr>
-  <td align="left">Accident Details</td>
-  <td colspan="3" align="left">:&nbsp;
-    <label id="lblaccdetails" name="lblaccdetails">
-      <s:property value="lblaccdetails"/>
-    </label></td>
-  <td align="left"> Accident Fines</td>
-  <td align="left">:&nbsp;
-    <label name="lblaccfines" id="lblaccfines">
-      <s:property value="lblaccfines"/>
-    </label></td>
-  <td align="left">Total Km</td>
-  <td align="left">:&nbsp;
-    <label name="lbltotalkm" id="lbltotalkm">
-      <s:property value="lbltotalkm"/>
-    </label></td>
-</tr>
-<tr><td align="left">Remarks</td>
-	<td align="left" colspan="7">:&nbsp;<label id="lblcloseremarks" name="lblcloseremarks"><s:property value="lblcloseremarks"/></label></td>
-</tr>
-</table>
-
-</td>
-
-<td width="0%">&nbsp;</td>
-</table>
-</fieldset>
-<br>
-<table width="100%"  >
-<tr><td width="50%">
-<fieldset><legend><b>Vehicle In Details</b></legend>
-<table width="100%" >
-  <tr>
-   
-   <td width="53%" ><img src="<%=contextPath%>/icons/replacevehiclenew.jpg" width="100%" height="1%" /></td>
-    </tr>
-  
-</table>
-
-</fieldset>
-</td>
-<td width="50%">
-
-<fieldset><legend><b>Vehicle Out Details</b></legend>
-<table width="100%"  >
-  <tr>
+    <div class="section-title">Opening Details</div>
     
-   <td width="53%" ><img src="<%=contextPath%>/icons/replacevehiclenew.jpg" width="100%" height="1%" /></td>
-    </tr>
+    <div class="info-grid col-3" style="margin-bottom: 0; border-bottom: none; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+        <div class="grid-row">
+            <span class="grid-label">Branch:</span>
+            <span class="grid-value"><label id="lblopenbranch" name="lblopenbranch"><s:property value="lblopenbranch"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Location:</span>
+            <span class="grid-value"><label name="lblopenlocation" id="lblopenlocation"><s:property value="lblopenbranch"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Doc No:</span>
+            <span class="grid-value"><label id="lbldocno" name="lbldocno"><s:property value="lbldocno"/></label></span>
+        </div>
 
-</table>
-</fieldset>
-</td></tr>
-</table>
-<div class="divFooter">
- 
-<table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table>
+        <div class="grid-row">
+            <span class="grid-label">Fleet NO:</span>
+            <span class="grid-value"><label id="lblfleetno" name="lblfleetno"><s:property value="lblfleetno"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Date:</span>
+            <span class="grid-value"><label id="lbldate" name="lbldate"><s:property value="lbldate"/></label></span>
+        </div>
+        <div></div>
+
+        <div class="grid-row grid-col-span-2">
+            <span class="grid-label">Fleet Details:</span>
+            <span class="grid-value"><label name="lblfleetdetails" id="lblfleetdetails"><s:property value="lblfleetdetails"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Mov Type:</span>
+            <span class="grid-value"><label id="lblmovtype" name="lblmovtype"><s:property value="lblmovtype"/></label></span>
+        </div>
+    </div>
+    
+    <div class="info-grid col-4" style="border-top-left-radius: 0; border-top-right-radius: 0; border-top: 1px dashed #ccc;">
+        <div class="grid-row">
+            <span class="grid-label">Date Out:</span>
+            <span class="grid-value"><label id="lbldateout" name="lbldateout"><s:property value="lbldateout"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Time Out:</span>
+            <span class="grid-value"><label id="lbltimeout" name="lbltimeout"><s:property value="lbltimeout"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">KM Out:</span>
+            <span class="grid-value"><label id="lblkmout" name="lblkmout"><s:property value="lblkmout"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Fuel Out:</span>
+            <span class="grid-value"><label id="lblfuelout" name="lblfuelout"><s:property value="lblfuelout"/></label></span>
+        </div>
+
+        <div class="grid-row">
+            <span class="grid-label">Garage:</span>
+            <span class="grid-value"><label id="lblgaragename" name="lblgaragename"><s:property value="lblgaragename"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Driver:</span>
+            <span class="grid-value"><label name="lblopendriver" id="lblopendriver"><s:property value="lblopendriver"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Staff:</span>
+            <span class="grid-value"><label name="lblopenstaff" id="lblopenstaff"><s:property value="lblopenstaff"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">User:</span>
+            <span class="grid-value"><label id="lblopenuser" name="lblopenuser"><s:property value="lblopenuser"/></label></span>
+        </div>
+
+        <div class="grid-row grid-col-span-4">
+            <span class="grid-label">Remarks:</span>
+            <span class="grid-value"><label id="lblopenremarks" name="lblopenremarks"><s:property value="lblopenremarks"/></label></span>
+        </div>
+    </div>
+
+    <div id="deliveryfield">
+        <div class="section-title">Delivery Details</div>
+        <div class="info-grid col-4">
+            <div class="grid-row">
+                <span class="grid-label">Date:</span>
+                <span class="grid-value"><label id="lbldeldate" name="lbldeldate"><s:property value="lbldeldate"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Time:</span>
+                <span class="grid-value"><label id="lbldeltime" name="lbldeltime"><s:property value="lbldeltime"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">KM:</span>
+                <span class="grid-value"><label id="lbldelkm" name="lbldelkm"><s:property value="lbldelkm"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Fuel:</span>
+                <span class="grid-value"><label id="lbldelfuel" name="lbldelfuel"><s:property value="lbldelfuel"/></label></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="driverdetailsfield">
+        <div class="section-title">Driver Details</div>
+        <div class="info-grid col-4">
+            <div class="grid-row">
+                <span class="grid-label">Driver Name:</span>
+                <span class="grid-value"><label id="lbldrvdrivername" name="lbldrvdrivername"><s:property value="lbldrvdrivername"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">License No:</span>
+                <span class="grid-value"><label id="lbldrvlicenseno" name="lbldrvlicenseno"><s:property value="lbldrvlicenseno"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Expiry:</span>
+                <span class="grid-value"><label id="lbldrvexpiry" name="lbldrvexpiry"><s:property value="lbldrvexpiry"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Issued from:</span>
+                <span class="grid-value"><label id="lbldrvissuedfrom" name="lbldrvissuedfrom"><s:property value="lbldrvissuedfrom"/></label></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="collectionfield">
+        <div class="section-title">Collection Details</div>
+        <div class="info-grid col-4">
+            <div class="grid-row">
+                <span class="grid-label">Date:</span>
+                <span class="grid-value"><label id="lblcoldate" name="lblcoldate"><s:property value="lblcoldate"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Time:</span>
+                <span class="grid-value"><label id="lblcoltime" name="lblcoltime"><s:property value="lblcoltime"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">KM:</span>
+                <span class="grid-value"><label id="lblcolkm" name="lblcolkm"><s:property value="lblcolkm"/></label></span>
+            </div>
+            <div class="grid-row">
+                <span class="grid-label">Fuel:</span>
+                <span class="grid-value"><label id="lblcolfuel" name="lblcolfuel"><s:property value="lblcolfuel"/></label></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Closing Details</div>
+    
+    <div class="info-grid col-2" style="margin-bottom: 0; border-bottom: none; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+        <div class="grid-row">
+            <span class="grid-label">Branch:</span>
+            <span class="grid-value"><label id="lblclosebranch" name="lblclosebranch"><s:property value="lblclosebranch"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Location:</span>
+            <span class="grid-value"><label name="lblcloselocation" id="lblcloselocation"><s:property value="lblcloselocation"/></label></span>
+        </div>
+    </div>
+    
+    <div class="info-grid col-4" style="margin-bottom: 0; border-bottom: none; border-radius: 0; border-top: 1px dashed #ccc;">
+        <div class="grid-row">
+            <span class="grid-label">Date In:</span>
+            <span class="grid-value"><label id="lblclosedate" name="lblclosedate"><s:property value="lblclosedate"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Time In:</span>
+            <span class="grid-value"><label id="lblclosetime" name="lblclosetime"><s:property value="lblclosetime"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">KM:</span>
+            <span class="grid-value"><label id="lblclosekm" name="lblclosekm"><s:property value="lblclosekm"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Fuel:</span>
+            <span class="grid-value"><label id="lblclosefuel" name="lblclosefuel"><s:property value="lblclosefuel"/></label></span>
+        </div>
+
+        <div class="grid-row">
+            <span class="grid-label">Garage:</span>
+            <span class="grid-value"><label id="lblclosegarage" name="lblclosegarage"><s:property value="lblclosegarage"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Driver:</span>
+            <span class="grid-value"><label id="lblclosedriver" name="lblclosedriver"><s:property value="lblclosedriver"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Staff:</span>
+            <span class="grid-value"><label id="lblclosestaff" name="lblclosestaff"><s:property value="lblclosestaff"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">User:</span>
+            <span class="grid-value"><label name="lblcloseuser" id="lblcloseuser"><s:property value="lblcloseuser"/></label></span>
+        </div>
+    </div>
+
+    <div class="info-grid col-3" style="border-top-left-radius: 0; border-top-right-radius: 0; border-top: 1px dashed #ccc;">
+        <div class="grid-row">
+            <span class="grid-label">Accident Details:</span>
+            <span class="grid-value"><label id="lblaccdetails" name="lblaccdetails"><s:property value="lblaccdetails"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Accident Fines:</span>
+            <span class="grid-value"><label name="lblaccfines" id="lblaccfines"><s:property value="lblaccfines"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Total Km:</span>
+            <span class="grid-value"><label name="lbltotalkm" id="lbltotalkm"><s:property value="lbltotalkm"/></label></span>
+        </div>
+        <div class="grid-row grid-col-span-3">
+            <span class="grid-label">Remarks:</span>
+            <span class="grid-value"><label id="lblcloseremarks" name="lblcloseremarks"><s:property value="lblcloseremarks"/></label></span>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+        <div style="flex: 1;">
+            <div class="section-title">Vehicle In Details</div>
+            <div style="border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; text-align: center;">
+                <img src="<%=contextPath%>/icons/replacevehiclenew.jpg" style="max-width: 100%; height: auto;" />
+            </div>
+        </div>
+        <div style="flex: 1;">
+            <div class="section-title">Vehicle Out Details</div>
+            <div style="border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; text-align: center;">
+                <img src="<%=contextPath%>/icons/replacevehiclenew.jpg" style="max-width: 100%; height: auto;" />
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <div style="text-align: center; font-size: 11px; color: #aaa; margin-bottom: 5px; border-top: 1px solid #eee; padding-top: 10px;">
+            System Generated Document Signature & Stamp Not Required.
+        </div>
+        <div class="footer-row">
+            <span>Printed by <%=session.getAttribute("USERNAME")%> <label id="lblfooter"></label></span>
+            <span style="font-weight: bold; color: #bbb;"></span>
+        </div>
+        <div id="content" style="display:none;"><div id="pageFooter"></div></div>
+    </div>
+
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
+    <label id="lblhiddelivery" name="lblhiddelivery" hidden="true"><s:property value="lblhiddelivery"/></label>
+    <label id="lblhidcollection" name="lblhidcollection" hidden="true"><s:property value="lblhidcollection"/></label>
 
 </div>
 
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
-<label id="lblhiddelivery" name="lblhiddelivery" hidden="true"><s:property value="lblhiddelivery"/></label>
-<label id="lblhidcollection" name="lblhidcollection" hidden="true"><s:property value="lblhidcollection"/></label>
 </form>
 </div>
 </body>

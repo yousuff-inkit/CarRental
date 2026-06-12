@@ -123,7 +123,7 @@ function getPrint(){
 		<!-- <tfoot>
 <tr>
 <td align="center">
-<label style="color: #D8D8D8;"><b>Powered by GATEWAY ERP</b></label>
+<label style="color: #D8D8D8;"><b></b></label>
 </td>
 </tr>
 </tfoot> -->

@@ -553,7 +553,7 @@ $(document).ready(function(){
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -625,7 +625,7 @@ $(document).ready(function(){
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -698,7 +698,7 @@ $(document).ready(function(){
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -774,7 +774,7 @@ $(document).ready(function(){
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -850,7 +850,7 @@ $(document).ready(function(){
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #FAFAFA;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 
@@ -873,7 +873,7 @@ $(document).ready(function(){
   <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
   <label id="lblfooter"></label></i></td>
   
-  <td width="43%" style="color: #D8D8D8;" align="left">Powered by GATEWAY ERP</td>
+  <td width="43%" style="color: #D8D8D8;" align="left"></td>
   
  <td width="10%" style="color: #D8D8D8;">
     <div id="content"> 

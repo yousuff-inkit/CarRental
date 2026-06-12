@@ -1,906 +1,584 @@
+<%@page import="javax.servlet.http.HttpSession.*"%>
+<%@page import="javax.servlet.http.HttpServletRequest.*"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
-<% String contextPath=request.getContextPath();%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<% String contextPath=request.getContextPath();%>
 <title>GatewayERP(i)</title>
- <link rel="stylesheet" type="text/css" href="../../../../css/body.css">
-<%--  <jsp:include page="../../../../../includes.jsp"></jsp:include>  --%>
-<script type="text/javascript" src="<%=contextPath%>/js/jquery-1.11.1.min.js"></script> 
-<style>
- .hidden-scrollbar {
-  overflow: auto;
-  height: 800px;
-} 
- fieldSet {
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  border: 1px solid rgb(139,136,120);
+<jsp:include page="../../../../includes.jsp"></jsp:include>  
+<style type="text/css">
+:root {
+    --border-color: #333;
+    --bg-header: #f4f7fb;
+    --text-main: #222;
+}
 
- }
-   #pageFooter {
-    display: table-footer-group;
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 11px;
+    color: var(--text-main);
+    background-color: #fff;
+    margin: 0;
+    padding: 20px;
 }
- table:last-of-type {
-    page-break-after: auto
-	font-size:12px;
-}
-#pageFooter:after {
-      counter-increment: page;
-      counter-reset: pages 1;
-      content: "Page " counter(page) " / " counter(pages);
-}
-/*    .divFooter
-{
-    position:absolute;
-    left:0;
-    bottom:0;
-    width:100%;
-} */
-/*  .divFooter {
 
-  }
-  @media print {
-thead { display: table-header-group; }
-tfoot { display: table-footer-group; }
+.document-container {
+    max-width: 900px;
+    margin: 0 auto;
 }
-*/
 
-@media screen {
-	body{
-		overflow:auto;
-	}
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 20px;
 }
-#pageFooter:after {
-      counter-increment: page;
-      counter-reset: pages 1;
-      content: "Page " counter(page) " / " counter(pages);
+
+.section-title {
+    background-color: var(--border-color);
+    color: #fff;
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
-.complogo{
-padding-bottom:100px;
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin-bottom: 15px;
+    padding: 0 5px;
 }
-body{
-font-size:12px;
+
+.grid-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 4px;
+}
+
+.grid-label {
+    font-weight: bold;
+    width: 130px;
+    flex-shrink: 0;
+    color: #444;
+}
+
+.grid-value {
+    flex-grow: 1;
+    color: #000;
+}
+
+.cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.cr-table th, .cr-table td {
+    padding: 6px 8px;
+    border: 1px solid #d1d5db;
+    text-align: left;
+    font-size: 10px;
+}
+
+.cr-table th {
+    background-color: var(--bg-header);
+    font-weight: bold;
+    color: var(--border-color);
+    text-transform: uppercase;
+    font-size: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+.signature-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 40px;
+}
+
+.sig-block {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.sig-line {
+    border-top: 1px dashed var(--border-color);
+    margin-top: 40px;
+    padding-top: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.footer-section {
+    margin-top: 30px;
+    font-size: 10px;
+    color: #888;
+    text-align: center;
+}
+
+@media print {
+    body { padding: 0; }
+    .document-container { max-width: 100%; }
+    @page { margin: 15mm; size: A4; }
+    .page-break { page-break-after: always; }
 }
 </style> 
-
-<script>
-function getPrint(){
-	//alert("hgchjh");
-	 document.getElementById("mode").value="print";
-	document.getElementById("frmManualInvoicePrint").submit(); 
-}
-$(document).ready(function(){
-	
-	if(document.getElementById("lblhidheader").value=="1"){
-		$(".invheader").hide();
-		$(".commonheader").show();
-	}
-	else{
-		$(".invheader").show();
-		$(".commonheader").hide();
-	}
+<script type="text/javascript">
+$(document).ready(function () {
 });
+function getPrint(){
+	document.getElementById("mode").value="print";
+	document.getElementById("frmSaleInvoicePrint").submit(); 
+}
 </script>
 </head>
-<body onload="" style="background-color:white;">
+<body>
 <div id="mainBG" class="homeContent" data-type="background">
+
+<form id="frmSaleInvoicePrint" action="printSaleInvoice" autocomplete="off" target="_blank">
 <s:set name="counter" value="0"></s:set>
-<s:set name="salik" value="#lblsalikcount"></s:set>
+<input type="hidden" name="jvsize" id="jvsize" value='<s:property value="jvsize"/>'/>
+<s:set name="jvcounter" value="jvsize"></s:set>
 <s:iterator value='#request.TRIAL' var="#aa" status="arr">
-<form id="frmManualInvoicePrint" action="printManualInvoice" autocomplete="off" target="_blank">
-<%-- <jsp:include page="../../../../../header.jsp"></jsp:include> --%> <br/> 
-<div class="commonheader">
-<jsp:include page="../../../common/printGlobeHeader.jsp"></jsp:include> <br/> 
-</div>
- <div style="background-color:white;">
-<%--  <jsp:include page="../../../common/printDrivenHeader.jsp"></jsp:include> --%>
-<div class="invheader">
-<table width="100%" class="normaltable">
-  <tr>
-  <td align="center" colspan="2" class="complogo"><%-- <img src="<%=contextPath%>/icons/epic.jpg" width="100%" height="91"  alt=""/> --%></td>
-  </tr>
-  <tr>
-  <td align="center" colspan="4"><font size="6"><b><label id="lblprintname" name="lblprintname"><s:property value="lblprintname"/></label></b></font></td>
-  </tr>
-  
-  <tr>
-  	<td width="7%" align="left">Location </td>
-  	<td width="59%" align="left"><label id="lbllocation" name="lbllocation" >: <s:property value="lbllocation"/></label></td>
- 	<td width="7%" align="left"> <b>TRN</b></td>
-  	<td width="27%" align="left"><b>: <label id="lblcomptrn" name="lblcomptrn" ><s:property value="lblcomptrn"/></label></b></td>
-  </tr>
-  
-  <tr>
-  	<td align="left">Branch </td>
-  	<td colspan="3" align="left"><label id="lblbranch" name="lblbranch" >: <s:property value="lblbranch"/></label></td>
-  </tr>
-  </table>
-  </div>
-<fieldset>
-<table width="100%">
-  <tr>
-    <td width="8%" align="left">Customer </td>
-    <td colspan="3">: <label id="lblclient" name="lblclient"><s:property value="lblclient"/></label></td>
-    <td width="13%" align="left">INV No </td>
-    <td width="27%">: <label name="lblinvno" id="lblinvno" ><s:property value="lblinvno"/></label>   <label name="lblinvtype" id="lblinvtype" >(<s:property value="lblinvtype"/>)</label></td>
-  </tr>
-  <tr>
-    <td align="left">Code </td>
-    <td width="26%">: <label id="lblaccount" name="lblaccount" ><s:property value="lblaccount"/></label></td>
-    <td width="12%" align="left">&nbsp;</td>
-    <td width="14%"></td>
-    <td align="left">Date </td>
-    <td>: <label name="lbldate" id="lbldate" ><s:property value="lbldate"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Address </td>
-    <td colspan="3">: <label name="lbladdress1" id="lbladdress1" ><s:property value="lbladdress1"/></label></td>
-    <td align="left">RA No </td>
-    <td>: <label name="lblrano" id="lblrano" ><s:property value="lblrano"/></label>&nbsp;&nbsp;&nbsp;MRA No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <label name="Lblmrano" id="Lblmrano" ><s:property value="Lblmrano"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">&nbsp;</td>
-    <td colspan="3">: <label name="lbladdress2" id="lbladdress2" ><s:property value="lbladdress2"/></label></td>
-    <td align="left">LPO No</td>
-    <td>: <label name="lbllpono" id="lbllpono" ><s:property value="lbllpono"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">TRN</td>
-    <td>: <label name="lblclienttrn" id="lblclienttrn" ><s:property value="lblclienttrn"/></label></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td align="left">Branch</td>
-    <td>: <label id="lblbranch" name="lblbranch" ><s:property value="lblbranch"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Mobile </td>
-    <td>: <label name="lblmobile" id="lblmobile" ><s:property value="lblmobile"/></label></td>
-    <td align="left">&nbsp;</td>
-    <td></td>
-    <td align="left">Type </td>
-    <td>: <label name="lblratype" id="lblratype" ><s:property value="lblratype"/></label></td>
-  </tr>
-  <tr>
-    <td align="left"> Phone </td>
-    <td>: <label name="lblphone" id="lbltelphone" ><s:property value="lbltelphone"/></label></td>
-    <td align="left">&nbsp;</td>
-    <td></td>
-    <td align="left">Contract Start </td>
-    <td>: <label id="lblcontractstart" name="lblcontractstart"><s:property value="lblcontractstart"/></label></td>
-  </tr>
-  <tr>
-    <td align="left">Driven </td>
-    <td colspan="3">: <label id="lbldriven" name="lbldriven" ><s:property value="lbldriven"/></label></td>
-    <td colspan="2">Inv From : <label name="lblinvfrom" id="lblinvfrom" ><s:property value="lblinvfrom"/></label> To :<label name="lblinvto" id="lblinvto" ><s:property value="lblinvto"/></label></td>
-    </tr>
-    <tr>
-    <td align="left">Salesman </td>
-    <td colspan="3">: <label id="lblsalesman" name="lblsalesman" ><s:property value="lblsalesman"/></label></td>
-    <td><%-- Inv From : <label name="lblinvfromtime" id="lblinvfromtime" ><s:property value="lblinvfromtime"/></label> To :<label name="lblinvtotime" id="lblinvtotime" ><s:property value="lblinvtotime"/></label> --%>
-    Currency</td>
-    <td> :
-      <label name="lblcurrencycode" id="lblcurrencycode">
-        <s:property value="lblcurrencycode" />
-      </label></td>
-    </tr>
-     
-</table>
-</fieldset>
-<br>
-<fieldset>
-  <table width="100%" >
-    <tr>
-      <td width="15%" align="left">Contract Vehicle  </td>
-      <td width="85%">: <label name="lblcontractvehicle" id="lblcontractvehicle" >
-        <s:property value="lblcontractvehicle"/>
-      </label></td>
-    </tr>
-  <tr>
-      <td width="15%" align="left">Current Vehicle  </td>
-      <td width="85%">: <label name="lblcurrentvehicle" id="lblcurrentvehicle" >
-        <s:property value="lblcurrentvehicle"/>
-      </label></td>
-    </tr>
-  </table>
-</fieldset>
 
-<hr>
-
-<table width="100%">
- <tr>
-    <!-- <td align="left">SI No</td>
-    <td align="left">Charge Description</td>
-    <td align="right">Agreed Rate</td>
-    <td align="right">Units</td>
-    <td align="right">Rate</td>
-    <td align="right">Total</td> -->
-    <td align="left">SI No</td>
-    <td align="left">Charge Description</td>
-    <td align="right">Qty</td>
-    <td align="right">Rate</td>
-    <td align="right">Amount</td>
-    <td align="right">Tax Percent</td>
-    <td align="right">Tax Amount</td>
-    <td align="right">Total</td>
-  </tr>
-  
- <s:iterator var="stat1" status="arr" value="%{#request.INVPRINT}" >
-		 <s:if test="#arr.index==#counter">
-		
-		    <s:iterator status="arr" value="#stat1" var="stat">    
-<tr>   
-<%int i=0; %>
-    <s:iterator status="arr" value="#stat.split('::')" var="des">   
-    <%
-    if(i>1){%>
+<div class="document-container">
     
-  <td  align="right">
-  
-  <s:property value="#des"/>
-  </td>
-   <%} else{ %>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); margin-bottom: 20px;">
+        <jsp:include page="../../../common/printHeader.jsp"></jsp:include>
+    </div>
+
+    <div class="info-grid">
+        <div class="grid-row" style="grid-column: 1 / -1;">
+            <span class="grid-value" style="font-weight: bold; font-size: 14px;">
+                <label name="lblclientcode" id="lblclientcode"></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label name="lblclientname" id="lblclientname"></label>
+            </span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Doc No:</span>
+            <span class="grid-value"><label name="lbldocno" id="lbldocno"><s:property value="lbldocno"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Date:</span>
+            <span class="grid-value"><label name="lbldate" id="lbldate"><s:property value="lbldate"/></label></span>
+        </div>
+        <div class="grid-row">
+            <span class="grid-label">Type:</span>
+            <span class="grid-value"><label name="lbltype" id="lbltype"><s:property value="lbltype"/></label></span>
+        </div>
+        <div class="grid-row" style="grid-column: 1 / -1; border-bottom: none;">
+            <span class="grid-label">Description:</span>
+            <span class="grid-value"><label name="lbldesc" id="lbldesc"><s:property value="lbldesc"/></label></span>
+        </div>
+    </div>
+
+    <div class="section-title">Invoice Items</div>
+    <table class="cr-table">
+        <thead>
+            <tr>
+                <th width="5%">SI No</th>
+                <th width="10%">Asset ID</th>
+                <th width="20%">Asset Name</th>
+                <th width="10%">Dep Posted</th>
+                <th class="text-right" width="11%">Pur Value</th>
+                <th class="text-right" width="11%">Acc Dep</th>
+                <th class="text-right" width="11%">Cur Dep</th>
+                <th class="text-right" width="11%">Net Book</th>
+                <th class="text-right" width="11%">Net P/(L)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <s:iterator var="stat1" status="arr" value="%{#request.INVPRINT}">
+                <s:iterator status="arr" value="#stat1" var="stat">
+                    <tr>   
+                        <s:iterator status="arr" value="#stat.split('::')" var="des">
+                            <s:if test="#arr.index<=3">
+                                <td><s:property value="#des"/></td>
+                            </s:if>
+                            <s:else>
+                                <td class="text-right"><s:property value="#des"/></td>
+                            </s:else>
+                        </s:iterator>
+                    </tr>
+                </s:iterator>
+            </s:iterator>
+        </tbody>
+    </table>
+
+    <input type="hidden" name="lblsalikcount" id="lblsalikcount" value='<s:property value="lblsalikcount"/>'/>
+    <input type="hidden" name="lblsalikauhcount" id="lblsalikauhcount" value='<s:property value="lblsalikauhcount"/>'/>
+    <input type="hidden" name="lblsalikdxbcount" id="lblsalikdxbcount" value='<s:property value="lblsalikdxbcount"/>'/>
+    <input type="hidden" name="lbltrafficcount" id="lbltrafficcount" value='<s:property value="lbltrafficcountdubai"/>'/>
+    <input type="hidden" name="lbltrafficcountelse" id="lbltrafficcountelse" value='<s:property value="lbltrafficcountelse"/>'/>
+    <input type="hidden" name="lblfleetcount" id="lblfleetcount" value='<s:property value="lblfleetcount"/>'/>
+    <input type="hidden" name="lbldamagecount" id="lbldamagecount" value='<s:property value="lbldamagecount"/>'/>
+    <input type="hidden" name="lblshowfees" id="lblshowfees" value='<s:property value="lblshowfees"/>'/>
+    <input type="hidden" name="lblextrasrvcstatus" id="lblextrasrvcstatus" value='<s:property value="lblextrasrvcstatus"/>'/>
     
-  <td  align="left">
-  <s:property value="#des"/>
-  </td>
-  <% } i++;  %>
- </s:iterator>
-</tr>
+    <s:set name="saliktemp" value="lblsalikcount" />
+    <s:set name="salikauhcount" value="lblsalikauhcount" />
+    <s:set name="salikdxbcount" value="lblsalikdxbcount" />
+    <s:set name="trafficdubai" value="lbltrafficcountdubai" />
+    <s:set name="trafficelse" value="lbltrafficcountelse" />
+    <s:set name="fleetcount" value="lblfleetcount" />
+    <s:set name="damagecount" value="lbldamagecount" />
+    <s:set name="showfees" value="lblshowfees" />
+    <s:set name="remarks" value="lblextrasrvcstatus" />
+
+    <s:if test="#trafficdubai > 0 || #trafficelse > 0"> 
+        <div class="section-title">Traffic Fines</div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="5%">Sr No</th>
+                    <th width="10%">Reg No</th>
+                    <th width="15%">Ticket No</th>
+                    <th width="10%">Date</th>
+                    <th width="10%">Time</th>
+                    <th width="10%">Amount</th>
+                    <th width="15%">Location</th>
+                    <th width="25%">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTDUBAI'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
+                                    <td><s:property value="#destraffic"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+                <s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTELSE'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
+                                    <td><s:property value="#destraffic"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+        <s:if test="#showfees > 0">
+            <div style="font-weight: bold; margin-bottom: 15px;">**Govt. Knowledge Fees for Dubai Traffic fine AED 20/-</div>
+        </s:if>
+    </s:if>
+
+    <s:if test="#damagecount > 0">
+        <div class="section-title">Damage Details</div>
+        <div style="margin-bottom: 10px; font-weight: bold;">
+            Inspection Doc No: <label name="lblinspno" id="lblinspno"><s:property value="lblinspno"/></label> | 
+            Vehicle Reg No: <label name="lblinspregno" id="lblinspregno"><s:property value="lblinspregno"/></label>
+        </div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="10%">Sr No</th>
+                    <th width="10%">Code</th>
+                    <th width="30%">Name</th>
+                    <th width="10%">Type</th>
+                    <th width="40%">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="statdamage" status="arr" value='#request.DAMAGEPRINT'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#statdamage" var="statdamage2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#statdamage2.split('::')" var="desdamage"> 
+                                    <td><s:property value="#desdamage"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+    </s:if>
+
+    <s:if test="#remarks > 0">
+        <div class="section-title">Extra Services</div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="10%">Sr No</th>
+                    <th width="30%">Description</th>
+                    <th width="40%">Remarks</th>
+                    <th width="20%">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="remarkgrid" status="arr" value='#request.REMARKS'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#remarkgrid" var="remarkgrid2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#remarkgrid2.split('::')" var="grid"> 
+                                    <td><s:property value="#grid"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+    </s:if> 
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <div style="width: 50%;">
+            <table class="cr-table" style="margin-bottom: 0;">
+                <tbody>
+                    <tr style="background-color: var(--bg-header); font-weight: bold;">
+                        <td>TOTAL:</td>
+                        <td class="text-right"><label id="lbltotal" name="lbltotal"><s:property value="lbltotal"/></label></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align: right; font-weight: bold; margin-top: 5px;">
+                Amount In Words: <label id="lblamountwords" name="lblamountwords"><s:property value="lblamountwords"/></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Bank Details</div>
+    <div class="info-grid" style="grid-template-columns: 1fr;">
+        <div class="grid-row"><span class="grid-label">Bank Name:</span> <span class="grid-value"><label id="lblbankdetails" name="lblbankdetails"><s:property value="lblbankdetails"/></label></span></div>
+        <div class="grid-row"><span class="grid-label">Bank Address:</span> <span class="grid-value"><label id="lblcompbranchaddress" name="lblcompbranchaddress"><s:property value="lblcompbranchaddress"/></label></span></div>
+        <div class="grid-row"><span class="grid-label">Account Name:</span> <span class="grid-value"><label id="lblbankbeneficiary1" name="lblbankbeneficiary1"><s:property value="lblbankbeneficiary1"/></label></span></div>
+        <div class="grid-row"><span class="grid-label">Account Number:</span> <span class="grid-value"><label id="lblbankaccountno" name="lblbankaccountno"><s:property value="lblbankaccountno"/></label></span></div>
+        <div class="grid-row"><span class="grid-label">IBAN:</span> <span class="grid-value"><label id="lblbankibanno1" name="lblbankibanno1"><s:property value="lblbankibanno1"/></label></span></div>
+        <div class="grid-row" style="border-bottom: none;"><span class="grid-label">Swift Code:</span> <span class="grid-value"><label id="lblbeneficiarybank" name="lblbeneficiarybank"><s:property value="lblbeneficiarybank"/></label></span></div>
+    </div>
+
+    <s:if test="#fleetcount > 0">
+        <div class="section-title">Other Fleets</div>
+        <ul style="margin-top: 0; padding-left: 20px;">
+            <s:iterator var="stat2" status="arr" value='#request.FLEETPRINT'>
+                <s:if test="#arr.index==#counter">
+                    <s:iterator status="arr" value="#stat2" var="des2"> 
+                        <li><s:property value="#des2"/></li>
+                    </s:iterator>
+                </s:if>
+            </s:iterator>
+        </ul>
+    </s:if>
+
+    <div class="signature-wrapper">
+        <div class="sig-block">
+            <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Checked By</div>
+            <div style="margin-top: 10px;"><label id="lblcheckedby" name="lblcheckedby"><s:property value="lblcheckedby"/></label></div>
+        </div>
+        <div class="sig-block">
+            <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Received By</div>
+            <div style="margin-top: 10px;"><label id="lblrecievedby" name="lblrecievedby"><s:property value="lblrecievedby"/></label></div>
+        </div>
+        <div class="sig-block">
+            <div style="font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Date</div>
+            <div style="margin-top: 10px;"><label id="lblfinaldate" name="lblfinaldate"><s:property value="lblfinaldate"/></label></div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include>
+    </div>
+
+    <s:if test="#salikdxbcount > 0">
+        <div class="page-break"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <img alt="Dubai Gov Logo" src="<%=contextPath%>/icons/dubaigovlogo.jpg" style="height: 50px;"/>
+            <img alt="RTA Logo" src="<%=contextPath%>/icons/rtalogo.jpg" style="height: 50px;"/>
+        </div>
+        
+        <div class="section-title">Salik Details (Dubai)</div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="8%">Sr No</th>
+                    <th width="12%">Transaction ID</th>
+                    <th width="15%">Trip Date/Time</th>
+                    <th width="15%">Post Date</th>
+                    <th width="20%">Plate Info</th>
+                    <th width="10%">Location</th>
+                    <th width="10%">Direction</th>
+                    <th width="10%">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="statsalik" status="arr" value='#request.SALIKDXBPRINT'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#statsalik" var="statsalik2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#statsalik2.split('::')" var="dessalik"> 
+                                    <td><s:property value="#dessalik"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+        <div class="footer-section">
+            <jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include>
+        </div>
+    </s:if>
+
+    <s:if test="#salikauhcount > 0">
+        <div class="page-break"></div>
+        <div style="margin-bottom: 20px; text-align: left;">
+            <img alt="Abu Dhabi Logo" src="<%=contextPath%>/icons/auhsalik.jpeg" style="height: 60px;">
+        </div>
+        
+        <div class="section-title">Salik Details (Abu Dhabi)</div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="8%">Sr No</th>
+                    <th width="12%">Transaction ID</th>
+                    <th width="15%">Trip Date/Time</th>
+                    <th width="15%">Post Date</th>
+                    <th width="20%">Plate Info</th>
+                    <th width="10%">Location</th>
+                    <th width="10%">Direction</th>
+                    <th width="10%">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="statsalik" status="arr" value='#request.SALIKAUHPRINT'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#statsalik" var="statsalik2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#statsalik2.split('::')" var="dessalik"> 
+                                    <td><s:property value="#dessalik"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+        <div class="footer-section">
+            <jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include>
+        </div>
+    </s:if>
+
+    <s:if test="#trafficdubai > 0"> 
+        <div class="page-break"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <img alt="Dubai Gov Logo" src="<%=contextPath%>/icons/dubaigovlogo.jpg" style="height: 50px;"/>
+            <img alt="RTA Logo" src="<%=contextPath%>/icons/rtalogo.jpg" style="height: 50px;"/>
+        </div>
+        
+        <div class="section-title">Traffic Details (Dubai)</div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="5%">Sr No</th>
+                    <th width="10%">Reg No</th>
+                    <th width="15%">Ticket No</th>
+                    <th width="10%">Date</th>
+                    <th width="10%">Time</th>
+                    <th width="10%">Amount</th>
+                    <th width="15%">Fine Source</th>
+                    <th width="25%">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTDUBAI'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
+                                    <td><s:property value="#destraffic"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+        <div class="footer-section">
+            <jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include>
+        </div>
+    </s:if>
+
+    <s:if test="#trafficelse > 0"> 
+        <div class="page-break"></div>
+        <div style="margin-bottom: 20px; text-align: center;">
+            <img alt="Traffic Logo" src="<%=contextPath%>/icons/traffic_banner.jpg" style="max-width: 100%; height: auto;" />
+        </div>
+        
+        <div class="section-title">Traffic Details (Other)</div>
+        <table class="cr-table">
+            <thead>
+                <tr>
+                    <th width="5%">Sr No</th>
+                    <th width="10%">Reg No</th>
+                    <th width="15%">Ticket No</th>
+                    <th width="10%">Date</th>
+                    <th width="10%">Time</th>
+                    <th width="10%">Amount</th>
+                    <th width="15%">Location</th>
+                    <th width="25%">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTELSE'>
+                    <s:if test="#arr.index==#counter">
+                        <s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
+                            <tr>
+                                <s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
+                                    <td><s:property value="#destraffic"/></td>
+                                </s:iterator>
+                            </tr>	
+                        </s:iterator>
+                    </s:if>
+                </s:iterator>
+            </tbody>
+        </table>
+        <div class="footer-section">
+            <jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include>
+        </div>
+    </s:if>
+
+    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
+    <input type="hidden" name="lblhidheader" id="lblhidheader" value='<s:property value="lblhidheader"/>'/>
+
+</div>
+
+<s:if test="#arr.index!=#request.TRIAL.size-1">
+    <div class="page-break"></div>
+</s:if>
+
+<s:set name="counter" value="%{#counter+1}" />
 </s:iterator>
-</s:if>
-</s:iterator>
-</table><hr>
 
-<table width="100%" border="0">
-  <tr>
-    <td>Tax Summary</td>
-    <td align="right">Amount</td>
-    <td align="right">Tax</td>
-    <td align="right">Total</td>
-  </tr>
-  <tr>
-    <td>VAT 5%</td>
-    <td align="right"><label name="lblwithtaxvalue" id="lblwithtaxvalue" >
-        <s:property value="lblwithtaxvalue"/></label></td>
-    <td align="right"><label name="lblwithtaxamount" id="lblwithtaxamount" >
-        <s:property value="lblwithtaxamount"/></label></td>
-    <td align="right"><label name="lblwithtaxtotal" id="lblwithtaxtotal" >
-        <s:property value="lblwithtaxtotal"/></label></td>
-  </tr>
-  <tr>
-    <td>VAT 0%</td>
-    <td align="right"><label name="lblwithouttaxtotal" id="lblwithouttaxtotal" >
-        <s:property value="lblwithouttaxtotal"/></label></td>
-    <td align="right"><label name="lblwithouttaxamount" id="lblwithouttaxamount" >
-        <s:property value="lblwithouttaxamount"/></label></td>
-    <td align="right"><label name="lblwithouttaxtotal" id="lblwithouttaxtotal" >
-        <s:property value="lblwithouttaxtotal"/></label></td>
-  </tr>
-  <tr>
-    <td>VAT Group</td>
-    <td align="right"><label name="lbltaxgrouptotal" id="lbltaxgrouptotal" >
-        <s:property value="lbltaxgrouptotal"/></label></td>
-    <td align="right"><label name="lblwithouttaxtotal" id="lblwithouttaxtotal" >
-        0.00</label></td>
-    <td align="right"><label name="lbltaxgrouptotal" id="lbltaxgrouptotal" >
-        <s:property value="lbltaxgrouptotal"/></label></td>
-  </tr>
-  <tr>
-    <td>Total</td>
-    <td align="right"><label name="lblnettaxvalue" id="lblnettaxvalue" >
-        <s:property value="lblnettaxvalue"/></label></td>
-    <td align="right"><label name="lblnettaxamount" id="lblnettaxamount" >
-        <s:property value="lblnettaxamount"/></label></td>
-    <td align="right"><label name="lblnettaxtotal" id="lblnettaxtotal" >
-        <s:property value="lblnettaxtotal"/></label></td>
-  </tr>
-</table>
-<input type="hidden" name="lblsalikcount" id="lblsalikcount" value='<s:property value="lblsalikcount"/>'/>
-
-<input type="hidden" name="lblsalikauhcount" id="lblsalikauhcount" value='<s:property value="lblsalikauhcount"/>'/>
-<input type="hidden" name="lblsalikdxbcount" id="lblsalikdxbcount" value='<s:property value="lblsalikdxbcount"/>'/>
-
-<input type="hidden" name="lbltrafficcount" id="lbltrafficcount" value='<s:property value="lbltrafficcountdubai"/>'/>
-<input type="hidden" name="lbltrafficcountelse" id="lbltrafficcountelse" value='<s:property value="lbltrafficcountelse"/>'/>
-<input type="hidden" name="lblfleetcount" id="lblfleetcount" value='<s:property value="lblfleetcount"/>'/>
-<input type="hidden" name="lbldamagecount" id="lbldamagecount" value='<s:property value="lbldamagecount"/>'/>
-<input type="hidden" name="lblshowfees" id="lblshowfees" value='<s:property value="lblshowfees"/>'/>
-<input type="hidden" name="lblextrasrvcstatus" id="lblextrasrvcstatus" value='<s:property value="lblextrasrvcstatus"/>'/>
-<s:set name="saliktemp" value="lblsalikcount" />
-
-<s:set name="salikauhcount" value="lblsalikauhcount" />
-<s:set name="salikdxbcount" value="lblsalikdxbcount" />
-
-
-<s:set name="trafficdubai" value="lbltrafficcountdubai" />
-<s:set name="trafficelse" value="lbltrafficcountelse" />
-<s:set name="fleetcount" value="lblfleetcount" />
-<s:set name="damagecount" value="lbldamagecount" />
-<s:set name="showfees" value="lblshowfees" />
-<s:set name="remarks" value="lblextrasrvcstatus" />
-<hr>
-
-<s:if test="#trafficdubai > 0 || #trafficelse > 0"> 
-
-<div class="trafficdiv" id="trafficdiv">
-	<table width="100%">
-  			
-  			<tr><td colspan="4"><hr noshade size=1 width="100%"></td></tr> 
-  			<tr>
-  				<td colspan="4"><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  						<td width="10%" class="saliktable" align="left"><b>Sr No</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Reg No</b></td>
-							  <td width="15%" class="saliktable" align="left"><b>Ticket No</b></td>
-							  <td width="15%" class="saliktable" align="left"><b>Traffic Date</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Time</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Amount</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Fine Source/Location</b></td>
-							  <td width="30%" class="saliktable" align="left"><b>Description</b></td>
-  						</tr>
-  								
-     					<s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTDUBAI' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
-									<tr class="saliktable">
-									
- 										<s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
-											
-  											<td class="saliktable"><s:property value="#destraffic"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  						
-  					
-  						<s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTELSE' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
-									<tr class="saliktable">
-									
- 										<s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
-											
-  											<td class="saliktable"><s:property value="#destraffic"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  					
-  			</table>
-  			</td></tr>
-			<s:if test="#showfees > 0">
-  				<tr><td>
-  				<br>
-  				**Govt. Knowledge Fees for Dubai Traffic fine AED 20/-</td></tr>
-  			</s:if>
-</table>
-</div>
-</s:if>
-<s:if test="#damagecount > 0">
-	<div class="damagediv">
-		<fieldset><legend>Damage Details</legend>
-		<table width="100%">
-  			
-  			<!-- <tr><td colspan="4"><hr noshade size=1 width="100%"></td></tr> --> 
-  			<tr><td width="20%">Inspection Doc No :<label name="lblinspno" id="lblinspno"><s:property value="lblinspno"/>
-  			</label></td><td width="80%">Vehicle Reg No :<label name="lblinspregno" id="lblinspregno"><s:property value="lblinspregno"/></label></b></td> 
-  			<tr>
-  				<td colspan="4"><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  							  <td width="10%" class="saliktable" align="left"><b>Sr No</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Code</b></td>
-							  <td width="30%" class="saliktable" align="left"><b>Name</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Type</b></td>
-							  <td width="40%" class="saliktable" align="left"><b>Remarks</b></td>
-  						</tr>
-  					
-  					 					
-     					<s:iterator var="statdamage" status="arr" value='#request.DAMAGEPRINT' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#statdamage" var="statdamage2"> 
-									<tr class="saliktable">
- 										<s:iterator status="arr" value="#statdamage2.split('::')" var="desdamage"> 
-  											<td class="saliktable"><s:property value="#desdamage"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  					
-  					</tbody>
-  			</table>
-  			</td></tr>
-</table>
-		</fieldset>
-	</div>
-</s:if>
-<hr>
- <s:if test="#remarks > 0">
-<div class="rediv">
-<fieldset><legend>Extra Services</legend>
-		<table width="100%">
-  			
-  			<!-- <tr><td colspan="4"><hr noshade size=1 width="100%"></td></tr> --> 
-  			<%-- <tr><td width="20%">Inspection Doc No :<label name="lblinspno" id="lblinspno"><s:property value="lblinspno"/>
-  			</label></td><td width="80%">Vehicle Reg No :<label name="lblinspregno" id="lblinspregno"><s:property value="lblinspregno"/></label></b></td> 
-  			<tr> --%>
-  			<tr>
-  				<td colspan="4"><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  							  <td width="10%" class="saliktable" align="left"><b>Sr No</b></td>
-							  <td width="30%" class="saliktable" align="left"><b>Extra Service Request Description </b></td>
-							  <td width="40%" class="saliktable" align="left"><b>Remarks</b></td>
-							  <td width="30%" class="saliktable" align="left"><b>Amount</b></td>
-  						</tr>
-  					
-  					 					
-     					<s:iterator var="remarkgrid" status="arr" value='#request.REMARKS' >
-     					<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#remarkgrid" var="remarkgrid2"> 
-									<tr class="saliktable">
- 										<s:iterator status="arr" value="#remarkgrid2.split('::')" var="grid"> 
-  											<td class="saliktable"><s:property value="#grid"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							</s:if>
-  						</s:iterator>
-  					
-  					</tbody>
-  			</table>
-  			</td></tr>
-</table>
-		</fieldset>
-		 </div>
-</s:if> 
-<table width="100%" >
-  <tr>
-    <td width="211" align="left">Total </td>
-    <td width="10" align="right">:</td>
-    <td width="731">&nbsp;</td>
-    <td width="161">&nbsp;</td>
-    <td width="147" align="right"><label id="lbltotal" name="lbltotal"><s:property value="lbltotal"/></label></td>
-  </tr>
-  
-  <tr>
-    <td align="left">Amount In Words  </td>
-    <td align="right">:</td>
-    <td colspan="3" align="right"><label id="lblamountwords" name="lblamountwords"><s:property value="lblamountwords"/></label></td>
-    </tr>
-</table>
-<table width="100%" >
-  <tr>
-    <td width="197" align="left"><h3><b>Bank Details :</b></h3></td>
-   </tr>
-  <tr>
-    <td width="20%" align="left"><b>Bank Name :</b></td>
-    <td width="146" align="left"><label id="lblbankdetails" name="lblbankdetails"><s:property value="lblbankdetails"/></label></td>
-  </tr>
-  <tr>
-    <td width="20%" align="left"><b>Bank Address :</b></td>
-    <td width="146" align="left"><label id="lblcompbranchaddress" name="lblcompbranchaddress"><s:property value="lblcompbranchaddress"/></label></td>
-  </tr>
-  <tr>
-    <td width="20%" align="left"><b>Account Name :</b></td>
-    <td align="left"><label id="lblbankbeneficiary1" name="lblbankbeneficiary1"><s:property value="lblbankbeneficiary1"/></label></td>
-  </tr>
-  <tr>
-    <td width="20%" align="left"><b>Account Number :</b></td>
-    <td align="left"><label id="lblbankaccountno" name="lblbankaccountno"><s:property value="lblbankaccountno"/></label></td>
-  </tr>
- <tr>
-    <td width="20%" align="left"><b>IBAN :</b></td>
-    <td align="left"><label id="lblbankibanno1" name="lblbankibanno1"><s:property value="lblbankibanno1"/></label></td>
-  </tr>
-  <tr>
-    <td width="20%" align="left"><b>Swift Code :</b></td>
-    <td align="left"><label id="lblbeneficiarybank" name="lblbeneficiarybank"><s:property value="lblbeneficiarybank"/></label></td>
-  </tr>
-</table>
-
-<s:if test="#fleetcount > 0">
-<table width="100%">
-
-   <s:iterator var="stat2" status="arr" value='#request.FLEETPRINT' >
-   <s:if test="#arr.index==#counter">
-<tr>
-<td align="left">Other Fleets : </td></tr>
- <s:iterator status="arr" value="#stat2" var="des2"> 
-<tr>
-  <td>    <s:property value="#des2"/> </td>
-
-  </tr>
-  </s:iterator>
-  </s:if>
-  </s:iterator>
-  
-</table>
-</s:if>
-<hr>
-<div id="bottompage">
-<table width="100%" >
-  <tr>
-    <td width="13%">Checked By</td>
-    <td width="20%"><label id="lblcheckedby" name="lblcheckedby"><s:property value="lblcheckedby"/></label></td>
-    <td width="13%">Received By</td>
-    <td width="29%"><label id="lblrecievedby" name="lblrecievedby"><s:property value="lblrecievedby"/></label></td>
-    <td width="4%">Date</td>
-    <td width="21%"><label id="lblfinaldate" name="lblfinaldate"><s:property value="lblfinaldate"/></label></td>
-    </tr>
-  <tr>
-    <td colspan="6">&nbsp;</td>
-    </tr>
-</table>
-</div>
-
-<div class="divFooter">
- 
-<%-- <table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>   
-</table> --%>
-<table style="width:100%;">
-		<tr>
-		<jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include> 
-		</tr>
-	</table>
-</div>
-
-
-<s:if test="#salikdxbcount > 0">
-
-<!-- <DIV style="page-break-after:auto"></DIV> -->
-	<div class="salikdiv" id="salikdiv">
-	<DIV style="page-break-after:always"></DIV>
-		<table width="100%">
-  			<tr>
-			    <td width="18%"><img alt="Dubai Gov Logo" src="<%=contextPath%>/icons/dubaigovlogo.jpg"/></td>
-			    <td width="25%">&nbsp;</td>
-			    <td width="34%">&nbsp;</td>
-			    <td width="23%"><img alt="RTA Logo" src="<%=contextPath%>/icons/rtalogo.jpg"/></td>
-  			</tr>
-  			<tr><td colspan="4"><hr noshade size=1 width="100%"></td></tr> 
-  			<tr>
-  				<td colspan="4"><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  							<td width="10%" class="saliktable"><b>Sr No</b></td>
-							  <td width="10%" class="saliktable"><b>Transaction ID</b></td>
-							  <td width="20%" class="saliktable"><b>Trip Date/Time</b></td>
-							  <td width="15%" class="saliktable"><b>Transaction Post Date</b></td>
-							  <td width="30%" class="saliktable"><b>Plate Info</b></td>
-							  <td width="10%" class="saliktable"><b>Toll Gate Location</b></td>
-							  <td width="10%" class="saliktable"><b>Toll Gate Direction</b></td>
-							  <td width="10%" class="saliktable"><b>Amount<br>(AED)</b></td>
-  						</tr>
-  					
-  					 					
-     					<s:iterator var="statsalik" status="arr" value='#request.SALIKDXBPRINT' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#statsalik" var="statsalik2"> 
-									<tr class="saliktable">
-									
- 										<s:iterator status="arr" value="#statsalik2.split('::')" var="dessalik"> 
-											
-  											<td class="saliktable"><s:property value="#dessalik"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  					
-  			</table>
-  			</td></tr>
-</table>
-
-</div>
-<br/><br/><br/><br/><br/><br/>
-<div class="divFooter">
- 
-<%-- <table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table> --%>
-<table style="width:100%;">
-		<tr>
-		<jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include> 
-		</tr>
-	</table>
-</div>
-</s:if>
-
-
-<s:if test="#salikauhcount > 0">
-
-<!-- <DIV style="page-break-after:auto"></DIV> -->
-	<div class="salikdiv" id="salikdiv">
-	<DIV style="page-break-after:always"></DIV>
-		<table width="100%">
-  			<tr>
-			    <td width="90%" colspan=4>&nbsp; <img alt="Abu Dhabi Logo" src="<%=contextPath%>/icons/auhsalik.jpeg" > </td>
-		<!-- 	    <td width="25%">&nbsp;</td>
-			    <td width="34%">&nbsp;</td>
-			    <td width="23%">&nbsp;</td> -->
-  			</tr>
-  			<tr><td colspan="4"><hr noshade size=1 width="100%"></td></tr> 
-  			<tr>
-  				<td colspan="4"><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  							<td width="10%" class="saliktable"><b>Sr No</b></td>
-							  <td width="10%" class="saliktable"><b>Transaction ID</b></td>
-							  <td width="20%" class="saliktable"><b>Trip Date/Time</b></td>
-							  <td width="15%" class="saliktable"><b>Transaction Post Date</b></td>
-							  <td width="30%" class="saliktable"><b>Plate Info</b></td>
-							  <td width="10%" class="saliktable"><b>Toll Gate Location</b></td>
-							  <td width="10%" class="saliktable"><b>Toll Gate Direction</b></td>
-							  <td width="10%" class="saliktable"><b>Amount<br>(AED)</b></td>
-  						</tr>
-  					
-  					 					
-     					<s:iterator var="statsalik" status="arr" value='#request.SALIKAUHPRINT' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#statsalik" var="statsalik2"> 
-									<tr class="saliktable">
-									
- 										<s:iterator status="arr" value="#statsalik2.split('::')" var="dessalik"> 
-											
-  											<td class="saliktable"><s:property value="#dessalik"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  					
-  			</table>
-  			</td></tr>
-</table>
-
-</div>
-<br/><br/><br/><br/><br/><br/>
-<div class="divFooter">
- 
-<%-- <table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table> --%>
-<table style="width:100%;">
-		<tr>
-		<jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include> 
-		</tr>
-	</table>
-</div>
-</s:if>
-
-
-
-<s:if test="#trafficdubai > 0"> 
-
-<div class="trafficdiv" id="trafficdiv">
-<DIV style="page-break-after:always"></DIV>
-	<table width="100%">
-  			<tr>
-  			 	
-  				<td width="18%"><img alt="Dubai Gov Logo" src="<%=contextPath%>/icons/dubaigovlogo.jpg"/></td>
-			    <td width="25%">&nbsp;</td>
-			    <td width="34%">&nbsp;</td>
-			    <td width="23%"><img alt="RTA Logo" src="<%=contextPath%>/icons/rtalogo.jpg"/></td>
-  				
-			    <%-- <td><s:property value="#trafficbanner"/><img alt="Traffic Logo" src="<%=contextPath%>/icons/traffic_banner.jpg"/></td> --%>
-			     
-			    <%-- <td><s:property value="#trafficbanner"/><img alt="Traffic Logo" src="<%=contextPath%>/icons/traffic_banner.jpg"/></td> --%>
-		    </tr>
-  			<tr><td colspan="4"><hr noshade size=1 width="100%"></td></tr> 
-  			<tr>
-  				<td colspan="4"><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  						<td width="10%" class="saliktable" align="left"><b>Sr No</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Reg No</b></td>
-							  <td width="15%" class="saliktable" align="left"><b>Ticket No</b></td>
-							  <td width="15%" class="saliktable" align="left"><b>Traffic Date</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Time</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Amount</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Fine Source</b></td>
-							  <td width="30%" class="saliktable" align="left"><b>Description</b></td>
-  						</tr>
-  					
-     					<s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTDUBAI' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
-									<tr class="saliktable">
-									
- 										<s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
-											
-  											<td class="saliktable"><s:property value="#destraffic"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  					</tbody>
-  			</table>
-  			</td></tr>
-</table>
-</div>
-<br/><br/><br/><br/><br/><br/>
-<div class="divFooter">
- 
-<%-- <table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table> --%>
-<table style="width:100%;">
-		<tr>
-		<jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include> 
-		</tr>
-	</table>
-</div>
-</s:if>
-
-
-<s:if test="#trafficelse > 0"> 
-
-<div class="trafficdiv" id="trafficdiv">
-<DIV style="page-break-after:always"></DIV>
-	<table width="100%">
-  			<tr>
-  			 	
-  			<%-- 	<td width="18%"><img alt="Dubai Gov Logo" src="<%=contextPath%>/icons/dubaigovlogo.jpg"/></td>
-			    <td width="25%">&nbsp;</td>
-			    <td width="34%">&nbsp;</td>
-			    <td width="23%"><img alt="RTA Logo" src="<%=contextPath%>/icons/rtalogo.jpg"/></td>
-  				
-			    <td><s:property value="#trafficbanner"/><img alt="Traffic Logo" src="<%=contextPath%>/icons/traffic_banner.jpg"/></td> --%>
-			     
-			    <td><s:property value="#trafficbanner"/><img alt="Traffic Logo" src="<%=contextPath%>/icons/traffic_banner.jpg" width="100%" /></td> 
-		    </tr>
-  			<tr><td><hr noshade size=1 width="100%"></td></tr> 
-  			<tr>
-  				<td><table width="100%" class="saliktable">
-  					
-  						<tr class="saliktable">
-  						<td width="10%" class="saliktable" align="left"><b>Sr No</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Reg No</b></td>
-							  <td width="15%" class="saliktable" align="left"><b>Ticket No</b></td>
-							  <td width="15%" class="saliktable" align="left"><b>Traffic Date</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Time</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Amount</b></td>
-							  <td width="10%" class="saliktable" align="left"><b>Fine Source/Location</b></td>
-							  <td width="30%" class="saliktable" align="left"><b>Description</b></td>
-  						</tr>
-  					
-     					<s:iterator var="stattraffic" status="arr" value='#request.TRAFFICPRINTELSE' >
-      						<s:if test="#arr.index==#counter">
-								<s:iterator status="arr" value="#stattraffic" var="stattraffic2"> 
-									<tr class="saliktable">
-									
- 										<s:iterator status="arr" value="#stattraffic2.split('::')" var="destraffic"> 
-											
-  											<td class="saliktable"><s:property value="#destraffic"/></td>
-  										</s:iterator>
-  									</tr>	
-  								</s:iterator>
-  							
-  							</s:if>
-  						</s:iterator>
-  					</tbody>
-  			</table>
-  			</td></tr>
-</table>
-</div>
-
-<br/><br/><br/><br/><br/><br/>
- <div class="divFooter">
- 
-<%-- <table width="100%">
- <tr>
-     <td colspan="3" align="center"><fieldset><font style="color: #D8D8D8;font-size: 11px;">System Generated Document Signature & Stamp Not Required.</font></fieldset></td>
-  </tr>
-  <tr>
-  <td width="47%" style="color: #D8D8D8;" align="left"><i>Printed by <%=session.getAttribute("USERNAME")%> 
-  <label id="lblfooter"></label></i></td>
-  
-  <td width="43%" style="color: #FAFAFA;" align="left">Powered by GATEWAY ERP</td>
-  
- <td width="10%" style="color: #D8D8D8;">
-    <div id="content"> 
-  <div id="pageFooter"></div>
-   </div>  
-  </td>
-  </tr>
-</table> --%>
-<table style="width:100%;">
-		<tr>
-		<jsp:include page="../../../common/printFooterGlobal.jsp"></jsp:include> 
-		</tr>
-	</table>
-</div>
-</s:if>
- <br/>
- 
-
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'/>
-<input type="hidden" name="lblhidheader" id="lblhidheader" value='<s:property value="lblhidheader"/>'/>
-
-
-
-</div>
- <s:if test="#arr.index!=#request.TRIAL.size-1">
-<DIV style="page-break-after:always"></DIV>
-</s:if>
 </form>
-
- <s:set name="counter" value="%{#counter+1}" />
-</s:iterator>
 </div>
 </body>
 </html>

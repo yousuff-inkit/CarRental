@@ -344,7 +344,7 @@ var watermark=document.getElementById("watermark").value;
     <div class="footer-section">
         <div class="footer-row">
             <span>Printed by <%=session.getAttribute("USERNAME")%> <label id="lblfooter"></label></span>
-            <span style="font-weight: bold; color: #bbb;">System Generated Document Signature & Stamp Not Required - Powered by GATEWAY ERP</span>
+            <span style="font-weight: bold; color: #bbb;">System Generated Document Signature & Stamp Not Required - </span>
         </div>
         <div id="content" style="display:none;"><div id="pageFooter"></div></div>
     </div>
