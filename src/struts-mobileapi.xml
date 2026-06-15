@@ -27,5 +27,11 @@
     <result type="json"></result>
 </action>
 
+
+<action name="updateState" class="com.api.MobileApiAction" method="updateStateToCollection">
+    <result type="json">
+        <param name="includeProperties">status</param>
+    </result>
+</action>
     </package>
 </struts>

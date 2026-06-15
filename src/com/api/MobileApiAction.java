@@ -27,6 +27,15 @@ public class MobileApiAction extends ActionSupport {
     public String getToken() { return token; }
     public List<Map<String, String>> getCompanyList() { return companyList; }
     public Map<String, Object> getDashboardData() { return dashboardData; }
+    
+    private String bookingId;
+
+    public String getBookingId() {
+        return bookingId;
+    }
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
 
     // ==========================================
     // ENDPOINT 1: Fetch Companies
@@ -112,50 +121,24 @@ public class MobileApiAction extends ActionSupport {
      
      return SUCCESS;
  }
-    // ==========================================
-    // ENDPOINT 3: Dashboard
-    // ==========================================
-//==========================================
-//ENDPOINT 3: Dashboard Data (Bookings & Deliveries)
+    
+//ENDPOINT 3: Dashboard Data (Deliveries & Collections)
 //==========================================
 public String fetchDashboard() {
   Connection conn = null;
   Statement stmt = null;
   ResultSet rs = null;
   
-  // Initialize the maps and lists to hold our JSON data
   dashboardData = new HashMap<>();
-  List<Map<String, String>> bookingsList = new ArrayList<>();
   List<Map<String, String>> deliveriesList = new ArrayList<>();
+  List<Map<String, String>> collectionsList = new ArrayList<>();
 
   try {
       ClsConnection clsConn = new ClsConnection();
       conn = clsConn.getMyConnection();
       stmt = conn.createStatement();
 
-      // --- 1. GET ALL ACTIVE BOOKINGS ---
-      // Joining gl_bookingm with my_acbook to grab the client's actual name
-      String bookingSql = "SELECT b.voc_no, a.refname, b.frmDate, b.contactno " +
-                          "FROM gl_bookingm b " +
-                          "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
-                          "WHERE b.status = 3"; 
-      
-      rs = stmt.executeQuery(bookingSql);
-      
-      int bCount = 0;
-      while (rs.next()) {
-          bCount++;
-          Map<String, String> booking = new HashMap<>();
-          booking.put("id", rs.getString("voc_no"));
-          booking.put("client", rs.getString("refname"));
-          booking.put("date", rs.getString("frmDate"));
-          booking.put("contact", rs.getString("contactno"));
-          bookingsList.add(booking);
-      }
-      rs.close(); // Close before reusing the ResultSet
-
-      // --- 2. GET ACTIVE DELIVERIES ---
-      // Filtering the exact same table, but looking for the delivery=1 flag
+      // --- 1. GET ACTIVE DELIVERIES ---
       String deliverySql = "SELECT b.voc_no, a.refname, b.delloc, b.frmDate " +
                            "FROM gl_bookingm b " +
                            "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
@@ -170,26 +153,89 @@ public String fetchDashboard() {
           delivery.put("id", rs.getString("voc_no"));
           delivery.put("client", rs.getString("refname"));
           delivery.put("location", rs.getString("delloc"));
-          delivery.put("date", rs.getString("frmDate"));
+          delivery.put("date", rs.getString("frmDate")); // frmDate = Delivery Date
           deliveriesList.add(delivery);
+      }
+      rs.close(); 
+
+      // --- 2. GET ACTIVE COLLECTIONS ---
+      // NOTE: We are using 'todate' (Return Date) for collections. 
+      String collectionSql = "SELECT b.voc_no, a.refname, b.todate, b.contactno " +
+                             "FROM gl_bookingm b " +
+                             "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
+                             "WHERE b.status = 3"; 
+      
+      rs = stmt.executeQuery(collectionSql);
+      
+      int cCount = 0;
+      while (rs.next()) {
+          cCount++;
+          Map<String, String> collection = new HashMap<>();
+          collection.put("id", rs.getString("voc_no"));
+          collection.put("client", rs.getString("refname"));
+          collection.put("date", rs.getString("todate")); // todate = Collection Date
+          collection.put("contact", rs.getString("contactno"));
+          collectionsList.add(collection);
       }
 
       // --- 3. PACK IT ALL INTO THE DASHBOARD VARIABLE ---
-      dashboardData.put("bookingCount", bCount);
       dashboardData.put("deliveryCount", dCount);
-      dashboardData.put("bookings", bookingsList);
+      dashboardData.put("collectionCount", cCount);
       dashboardData.put("deliveries", deliveriesList);
+      dashboardData.put("collections", collectionsList);
 
       status = "success";
 
   } catch (Exception e) {
       status = "error: " + e.toString();
-      e.printStackTrace(); // Prints the exact line number to Eclipse if it crashes
+      e.printStackTrace(); 
   } finally {
-      // Always close database connections to prevent memory leaks
       try { if(rs != null) rs.close(); if(stmt != null) stmt.close(); if(conn != null) conn.close(); } catch(Exception ex) {}
   }
   
   return SUCCESS;
+}
+
+//==========================================
+//ENDPOINT 4: Form Submission (Delivery to Collection)
+//==========================================
+public String updateStateToCollection() {
+ Connection conn = null;
+ PreparedStatement pstmt = null;
+
+ try {
+     // Safety check: Make sure the mobile app sent an ID
+     if (bookingId == null || bookingId.trim().isEmpty()) {
+         status = "error: bookingId is required.";
+         return SUCCESS;
+     }
+
+     ClsConnection clsConn = new ClsConnection();
+     conn = clsConn.getMyConnection();
+
+     // Flip the delivery flag from 1 to 0. 
+     // This moves it off the Delivery list and leaves it on the Collection list.
+     String sql = "UPDATE gl_bookingm SET delivery = 0 WHERE voc_no = ?";
+
+     pstmt = conn.prepareStatement(sql);
+     pstmt.setString(1, bookingId); 
+
+     // Execute the update
+     int rowsAffected = pstmt.executeUpdate();
+
+     if (rowsAffected > 0) {
+         status = "success";
+     } else {
+         status = "error: No booking found with that ID.";
+     }
+
+ } catch (Exception e) {
+     status = "error: " + e.toString();
+     e.printStackTrace(); 
+ } finally {
+     try { if(pstmt != null) pstmt.close(); if(conn != null) conn.close(); } catch(Exception ex) {}
+ }
+ 
+ return SUCCESS;
 }
 }
