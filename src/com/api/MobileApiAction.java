@@ -1,10 +1,16 @@
 package com.api;
 
 import com.opensymphony.xwork2.ActionSupport;
+
 import java.sql.*;
 import java.util.*;
 import com.connection.ClsConnection;
 import java.util.UUID;
+import org.apache.struts2.ServletActionContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import com.operations.marketing.booking.ClsbookingDAO;
+
 
 public class MobileApiAction extends ActionSupport {
 
@@ -36,7 +42,53 @@ public class MobileApiAction extends ActionSupport {
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
     }
+ // String parameters for the Booking Form
+    private String sqlStartDate, vehfromdate, vehtodate, cmbreftype, bookrefno, bookclientno;
+    private String bookcontactno, bookattention, bookremark, renttype, jqxVehicleToTime, jqxVehicleFromTime;
+    private String dellocation, guestremark, email, bookslno, mode, formcode, clientname, clacno;
+    private String delchg, invex, invtype, vehloc, codeno, refclientdet;
 
+    // Integer parameters for the Booking Form
+    private int bookbrandid, bookmodelid, bookcolorid, bookgroupid, delivery_chkval;
+    private int chauffeur_chkval, salagtid, tdocno, fleetno, advchk;
+
+    // Arrays for Tariffs and Payments
+    private List<String> qtarifarray = new ArrayList<>();
+    private List<String> paymentarray = new ArrayList<>();
+    
+ // Variables for Dropdown Searches
+    private String brandval;
+    private String clname;
+    private String mob;
+
+    // Output variable for the dropdown lists
+    private Object dropdownData; 
+
+    public Object getDropdownData() { return dropdownData; }
+    public void setDropdownData(Object dropdownData) { this.dropdownData = dropdownData; }
+ // Getters and Setters so Struts can inject the URL data
+    public String getBrandval() {
+        return brandval;
+    }
+    public void setBrandval(String brandval) {
+        this.brandval = brandval;
+    }
+
+    public String getClname() {
+        return clname;
+    }
+    public void setClname(String clname) {
+        this.clname = clname;
+    }
+
+    public String getMob() {
+        return mob;
+    }
+    public void setMob(String mob) {
+        this.mob = mob;
+    }
+    
+    
     // ==========================================
     // ENDPOINT 1: Fetch Companies
     // ==========================================
@@ -236,6 +288,110 @@ public String updateStateToCollection() {
      try { if(pstmt != null) pstmt.close(); if(conn != null) conn.close(); } catch(Exception ex) {}
  }
  
+ return SUCCESS;
+}
+
+//==========================================
+//ENDPOINT 5: Submit New Booking Form
+//==========================================
+public String submitBooking() {
+ try {
+     // We need the Request and Session because your DAO specifically asks for them
+     HttpServletRequest request = ServletActionContext.getRequest();
+     HttpSession session = request.getSession();
+
+     // Security/Session Check: The DAO requires USERID and BRANCHID to be in the session
+     if (session.getAttribute("USERID") == null || session.getAttribute("BRANCHID") == null) {
+         status = "error: Unauthorized. Mobile app must send a valid session cookie.";
+         return SUCCESS;
+     }
+
+     // Convert the date strings sent by the mobile app (e.g., "2026-06-15") into SQL Dates
+     java.sql.Date startDt = java.sql.Date.valueOf(sqlStartDate);
+     java.sql.Date fromDt = java.sql.Date.valueOf(vehfromdate);
+     java.sql.Date toDt = java.sql.Date.valueOf(vehtodate);
+
+     ClsbookingDAO bookingDAO = new ClsbookingDAO();
+
+     // Call your massive DAO insert method with the 40 variables
+     int newDocNo = bookingDAO.insert(
+         startDt, fromDt, toDt, cmbreftype, bookrefno, bookclientno, bookcontactno,
+         bookattention, bookremark, bookbrandid, bookmodelid, bookcolorid, bookgroupid,
+         renttype, jqxVehicleToTime, jqxVehicleFromTime, delivery_chkval, chauffeur_chkval,
+         dellocation, guestremark, salagtid, email, (ArrayList<String>) qtarifarray,
+         (ArrayList<String>) paymentarray, bookslno, mode, session, formcode, request,
+         clientname, clacno, tdocno, fleetno, delchg, invex, advchk, invtype, vehloc,
+         codeno, refclientdet
+     );
+
+     if (newDocNo > 0) {
+         status = "success";
+         // Send the newly created database ID back to the mobile app
+         dashboardData = new HashMap<>();
+         dashboardData.put("newBookingId", String.valueOf(newDocNo)); 
+     } else {
+         status = "error: Database rejected the insertion. Check your parameters.";
+     }
+
+ } catch (Exception e) {
+     status = "error: " + e.getMessage();
+     e.printStackTrace();
+ }
+ 
+ return SUCCESS;
+}
+
+//==========================================
+//ENDPOINT SET 6: Form Dropdown Data
+//==========================================
+
+public String fetchBrands() {
+ try {
+     ClsbookingDAO dao = new ClsbookingDAO();
+     // Grabs the full list of vehicle brands directly from your DAO
+     dropdownData = dao.searchBrand(); 
+     status = "success";
+ } catch (Exception e) {
+     status = "error: " + e.getMessage();
+     e.printStackTrace();
+ }
+ return SUCCESS;
+}
+
+public String fetchModels() {
+ try {
+     if (brandval == null || brandval.trim().isEmpty()) {
+         status = "error: brandval is required to fetch models.";
+         return SUCCESS;
+     }
+     ClsbookingDAO dao = new ClsbookingDAO();
+     // Grabs models specific to the brand ID sent by the mobile app
+     dropdownData = dao.searchModel(brandval); 
+     status = "success";
+ } catch (Exception e) {
+     status = "error: " + e.getMessage();
+     e.printStackTrace();
+ }
+ return SUCCESS;
+}
+
+public String fetchClients() {
+ try {
+     HttpServletRequest request = ServletActionContext.getRequest();
+     HttpSession session = request.getSession();
+     
+     // Prevent null pointer exceptions if mobile app sends empty searches
+     String searchName = (clname == null) ? "" : clname;
+     String searchMob = (mob == null) ? "" : mob;
+
+     ClsbookingDAO dao = new ClsbookingDAO();
+     // Searches for clients based on name or mobile number
+     dropdownData = dao.searchClient(session, searchName, searchMob);
+     status = "success";
+ } catch (Exception e) {
+     status = "error: " + e.getMessage();
+     e.printStackTrace();
+ }
  return SUCCESS;
 }
 }
