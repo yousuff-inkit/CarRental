@@ -33,5 +33,29 @@
         <param name="includeProperties">status</param>
     </result>
 </action>
+
+<action name="submitBooking" class="com.api.MobileApiAction" method="submitBooking">
+    <result type="json">
+        <param name="includeProperties">status, dashboardData.*</param>
+    </result>
+</action>
+
+<action name="getBrands" class="com.api.MobileApiAction" method="fetchBrands">
+    <result type="json">
+        <param name="includeProperties">status, dropdownData.*</param>
+    </result>
+</action>
+
+<action name="getModels" class="com.api.MobileApiAction" method="fetchModels">
+    <result type="json">
+        <param name="includeProperties">status, dropdownData.*</param>
+    </result>
+</action>
+
+<action name="getClients" class="com.api.MobileApiAction" method="fetchClients">
+    <result type="json">
+        <param name="includeProperties">status, dropdownData.*</param>
+    </result>
+</action>
     </package>
 </struts>
