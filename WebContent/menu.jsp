@@ -12,7 +12,9 @@
 <link rel="shortcut icon" href="<%=contextPath+"/"%>icons/ink_new_logo_2025.png" >
 <title>INK IT Business solutions</title>
 <jsp:include page="includes.jsp"></jsp:include>
-<link href='http://fonts.googleapis.com/css?family=Mr+Dafoe' rel='stylesheet' type='text/css'> 
+<link href='http://fonts.googleapis.com/css?family=Mr+Dafoe' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link href="css/modern-theme.css" rel="stylesheet" type="text/css">
 
 <script type = "text/javascript">
 if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
@@ -463,23 +465,19 @@ function funClear(){
 }
 
   #menuBody {
-    font-family: Tahoma;
-    font-size: 10px;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
 	width: 100%;
 	height: 100%;
-	/* background: url("icons/gatewaybg-1.png"); */
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
+	background: #f1f5f9;
 }
  
  #HeadIcons {
-   /*  font: 12px Tahoma;
-    margin-top: 0px;
-	line-height: 30px; */
-	background-color: #f0f0f0;
-	height: 27px;
 	width: 100%;
-	/* position:inherit; */
+	height: auto;
+	padding: 0;
+	margin: 0;
+	background: transparent;
 }
 
 select{
@@ -785,109 +783,183 @@ body::-webkit-scrollbar {
 		
         
     
-		<div id="HeadIcons" style='margin-top:0px;margin-left:-8px; width: 100%;'>
-				<!-- <button id="icon" title="Quit Application" onClick="funexit();">
-			<img alt="exit" src="icons/exit_new.png">
-		</button> -->
-		
-		<button type="button" class="bicon" id="qa" title="Quit Application" onClick="funexit();"> 
-							<img alt="qa" src="<%=contextPath%>/icons/exit_new.png">
-						</button>
-		
-		
-		<!-- <button id="icon" title="User">
-			<img alt="user" src="icons/user__new.png">
-		</button> -->
-		
-		<!--<button type="button" class="bicon" id="user" title="User" > 
-							<img alt="User" src="<%=contextPath%>/icons/user__new.png">
-						</button> -->
-		
-		<!-- <button id="icon" title="Change Password">
-			<img alt="chgPass" src="icons/PasswordChange_new.png">
-		</button> -->
-		
-		<button type="button" class="bicon" id="passchange" title="Change Password" onClick="funchgpass();"> 
-							<img alt="passchange" src="<%=contextPath%>/icons/PasswordChange_new.png">
-						</button>
+		<!-- MODERN TOP BAR -->
+		<div id="HeadIcons" style="width:100%;margin:0;padding:0;">
+		<style>
+		#modern-topbar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			background: #1e293b;
+			padding: 0 16px;
+			height: 46px;
+			width: 100%;
+			box-sizing: border-box;
+		}
+		#modern-topbar .tb-left {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+		#modern-topbar .tb-right {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+		.tb-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			padding: 5px 11px;
+			border: none;
+			background: transparent;
+			color: #94a3b8;
+			font-size: 11.5px;
+			font-weight: 500;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: background 0.15s, color 0.15s;
+			white-space: nowrap;
+		}
+		.tb-btn:hover { background: rgba(255,255,255,0.08); color: #f1f5f9; }
+		.tb-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+		.tb-btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+		.tb-divider {
+			width: 1px; height: 22px;
+			background: rgba(255,255,255,0.1);
+			margin: 0 4px;
+		}
+		.tb-company-label {
+			font-size: 13px;
+			font-weight: 700;
+			color: #f1f5f9;
+			letter-spacing: 0.5px;
+			padding: 0 8px;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			text-transform: uppercase;
+		}
+		.tb-user-block {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 4px 10px;
+			background: rgba(255,255,255,0.06);
+			border-radius: 8px;
+		}
+		.tb-avatar {
+			width: 28px; height: 28px;
+			background: #2563eb;
+			border-radius: 50%;
+			display: flex; align-items: center; justify-content: center;
+			font-size: 11px; font-weight: 700; color: #fff;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			flex-shrink: 0;
+		}
+		.tb-user-info { display: flex; flex-direction: column; }
+		.tb-username {
+			font-size: 12px; font-weight: 600;
+			color: #f1f5f9;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			line-height: 1.2;
+		}
+		.tb-period {
+			font-size: 10px; color: #64748b;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			line-height: 1.2;
+		}
+		.tb-logout-btn {
+			display: inline-flex; align-items: center; gap: 5px;
+			padding: 5px 12px;
+			background: rgba(239,68,68,0.1);
+			border: 1px solid rgba(239,68,68,0.3);
+			color: #fca5a5;
+			border-radius: 6px;
+			font-size: 11.5px; font-weight: 600;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			cursor: pointer; transition: all 0.15s;
+		}
+		.tb-logout-btn:hover { background: rgba(239,68,68,0.2); color: #fecaca; }
+		.tb-logout-btn svg { width: 13px; height: 13px; fill: currentColor; }
+		.tb-licence {
+			font-size: 10px; color: #f59e0b;
+			font-family: 'Inter','Segoe UI',Arial,sans-serif;
+			font-weight: 600;
+		}
+		/* keep hidden messenger buttons with IDs the JS needs */
+		#iconym, #iconnm { display: none !important; }
+		</style>
 
-		<!-- <button id="icon" title="Attachment">
-			<img alt="addAttachment" src="icons/attachment_new.png">
-		</button> -->
-         
-        <!--  <button id="icon" name="email" title="Mail" onclick="funSendEmail()">
-			<img alt="mail" src="icons/mail_new.png">
-		</button> -->
-		
-		<button type="button" class="bicon" id="email" title="E-Mail" onclick="funSendEmail()"> 
-							<img alt="email" src="<%=contextPath%>/icons/mail_new.png">
-						</button>
+		<div id="modern-topbar">
+			<!-- LEFT: company label + action buttons -->
+			<div class="tb-left">
+				<span class="tb-company-label"><%=session.getAttribute("COMPANYNAME") %></span>
+				<div class="tb-divider"></div>
 
-		<!-- <button id="icon" name="sms" title="SMS">
-			<img alt="SMS" src="icons/SMS_new.png">
-		</button> -->
-		
-		<button type="button" class="bicon" id="sms" title="SMS" onclick="funSendSms()">   
-							<img alt="SMS" src="<%=contextPath%>/icons/SMS_new.png">
-						</button>
+				<button type="button" class="tb-btn" id="approve" title="Executive Folio" onclick="funApprove()">
+					<svg viewBox="0 0 20 20"><path d="M7.629 15.314l-4.71-4.71 1.414-1.415 3.296 3.296 8.042-8.042 1.414 1.414z"/></svg>
+					Approvals
+				</button>
 
-		<button id="iconym" class="animated wobble"  title="Messenger" onclick="funMsngr()">
-			<img alt="Messenger" src="icons/chat3.png">
-		</button>
-		<!-- blink-image -->
-		<button id="iconnm" title="Messenger" onclick="funMsngr()">
-			<img alt="Messenger" src="icons/chat1.png">
-		</button>
+				<button type="button" class="tb-btn" id="email" title="Send E-Mail" onclick="funSendEmail()">
+					<svg viewBox="0 0 20 20"><path d="M2 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4zm2 0v.511l6 4.8 6-4.8V4H4zm0 2.489V16h12V6.489l-6 4.8-6-4.8z"/></svg>
+					E-Mail
+				</button>
 
-		<!-- <button id="icon"  name="support" title="Need Help,Contact Support Center" onclick="funSupport()">
-			<img alt="Messenger" src="icons/support.png">
-		</button> -->
-		
-		<button type="button" class="bicon" id="support" title="Need Help,Contact Support Center" onclick="funSupport()">  
-							<img alt="Approval" src="<%=contextPath%>/icons/support.png">
-						</button>
+				<button type="button" class="tb-btn" id="sms" title="Send SMS" onclick="funSendSms()">
+					<svg viewBox="0 0 20 20"><path d="M2 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V4zm5 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm3 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm3 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+					SMS
+				</button>
 
-<!-- 		<button id="icon" name="approve"  title="Executive Folio" onclick="funApprove()">
-			<img alt="Approval" src="icons/app16.png">
-		</button> -->
-		<button id="icon" name="clear"  title="Data Clear" onclick="funClear()">
-			<img alt="Data Clear" src="icons/clear.png">
-		</button>
-		<button type="button" class="bicon" id="approve" title="Executive Folio" onclick="funApprove()">  
-							<img alt="Approval" src="<%=contextPath%>/icons/app16.png">
-						</button>
-		<button type="button" class="bicon" id="btnquery" title="Query Builder" onclick="funQueryBuilder()" style="display:none;">  
-			<img alt="Query-Builder" src="<%=contextPath%>/icons/query-build.png" style="width:1.2rem;">
-		</button>
-		<button type="button" class="bicon" id="btnsalik" title="Auto Salik" onclick="funAutoSalik()">  
-			<img alt="Auto Salik" src="<%=contextPath%>/icons/toll.png" style="width:1.2rem;">
-		</button>
-		<%-- <button type="button" class="bicon" id="help" title="Help" onclick="funHelp();">  
-							<img alt="Help" src="<%=contextPath%>/icons/menuhelp.png">
-						</button>
-		 --%>				
-		<!-- <button id="icon" title="Move to First Form">
-			<img alt="moveFirstForm" src="icons/left_new.png">
-		</button>
-	    <button id="icon" title="Move to Last Form">
-			<img alt="moveLaststForm" src="icons/right_new.png">
-		</button>
-		 <button id="icon" title="Running Forms">
-			<img alt="runningForms" src="icons/refresh_new.png">
-		</button> -->
-		
-		<label class="space">&nbsp;</label>
-		<label class="user"> Welcome</label><label class="user1">&nbsp;&nbsp;<%=session.getAttribute("USERNAME")%></label>
-		<label class="logTime"> <%=session.getAttribute("LOGGEDIN").toString().substring(0,19)%> </label>
-		<label class="period">Period&nbsp;&nbsp;<input type="text" id="txtaccountperiodfrom" name="txtaccountperiodfrom" readonly style="width:7%;height:15px;border:none;text-align: center;" value='<%=session.getAttribute("STYEAR")%>'></label>&nbsp;
-		<label class="period1">To&nbsp;&nbsp;<input type="text" id="txtaccountperiodto" name="txtaccountperiodto" readonly style="width:7%;height:15px;border:none;text-align: center;" value='<%=session.getAttribute("EDYEAR")%>'></label>
-		<label class="licenceExpiry"><b><%=session.getAttribute("ERA") %></b></label>
-		
-	    <button id="icon1" title="Logout" onclick="location.href='logout';" >
-			<img alt="Logout" src="icons/Log-Out_new.png" >
-		   </button> 
-    	
-	   </div>
+				<button type="button" class="tb-btn" id="support" title="Support Center" onclick="funSupport()">
+					<svg viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm-.75-5h1.5v4h-1.5v-4zm0-6h1.5v4h-1.5V5z"/></svg>
+					Support
+				</button>
+
+				<button type="button" class="tb-btn" id="passchange" title="Change Password" onclick="funchgpass()">
+					<svg viewBox="0 0 20 20"><path d="M10 2a4 4 0 0 0-4 4v1H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V6a4 4 0 0 0-4-4zm0 2a2 2 0 0 1 2 2v1H8V6a2 2 0 0 1 2-2zm0 7a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+					Password
+				</button>
+
+				<button type="button" class="tb-btn" id="btnsalik" title="Auto Salik" onclick="funAutoSalik()">
+					<svg viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12A6 6 0 0 1 10 4zm0 2a4 4 0 0 0-4 4h2a2 2 0 1 1 4 0h2a4 4 0 0 0-4-4z"/></svg>
+					Salik
+				</button>
+
+				<button type="button" class="tb-btn" id="btnquery" title="Query Builder" onclick="funQueryBuilder()" style="display:none;">
+					<svg viewBox="0 0 20 20"><path d="M3 4h14v2H3V4zm0 4h14v2H3V8zm0 4h8v2H3v-2z"/></svg>
+					Query
+				</button>
+
+				<button type="button" class="tb-btn" id="qa" title="Quit Application" onclick="funexit()">
+					<svg viewBox="0 0 20 20"><path d="M14.348 5.652l-1.414-1.414L10 7.172 7.066 4.238 5.652 5.652 8.586 8.586 5.652 11.52l1.414 1.414L10 10l2.934 2.934 1.414-1.414L11.414 8.586z"/></svg>
+					Quit
+				</button>
+
+				<!-- hidden messenger buttons – IDs kept for JS compatibility -->
+				<button id="iconym" class="animated wobble" title="Messenger" onclick="funMsngr()"><img alt="Messenger" src="icons/chat3.png"></button>
+				<button id="iconnm" title="Messenger" onclick="funMsngr()"><img alt="Messenger" src="icons/chat1.png"></button>
+				<button id="icon" name="clear" title="Data Clear" onclick="funClear()" style="display:none;"><img alt="Data Clear" src="icons/clear.png"></button>
+			</div>
+
+			<!-- RIGHT: period + user info + logout -->
+			<div class="tb-right">
+				<span class="tb-licence"><b><%=session.getAttribute("ERA") %></b></span>
+				<div class="tb-user-block">
+					<div class="tb-avatar"><%=session.getAttribute("USERNAME").toString().trim().substring(0,1).toUpperCase()%></div>
+					<div class="tb-user-info">
+						<span class="tb-username"><%=session.getAttribute("USERNAME")%></span>
+						<span class="tb-period">Period: <input type="text" id="txtaccountperiodfrom" name="txtaccountperiodfrom" readonly value='<%=session.getAttribute("STYEAR")%>' style="border:none;background:transparent;color:#64748b;font-size:10px;width:62px;padding:0;"> – <input type="text" id="txtaccountperiodto" name="txtaccountperiodto" readonly value='<%=session.getAttribute("EDYEAR")%>' style="border:none;background:transparent;color:#64748b;font-size:10px;width:62px;padding:0;"></span>
+					</div>
+				</div>
+				<button class="tb-logout-btn" title="Logout" onclick="location.href='logout';">
+					<svg viewBox="0 0 20 20"><path d="M3 3h8v2H5v10h6v2H3V3zm10.293 4.293l3 3a1 1 0 0 1 0 1.414l-3 3-1.414-1.414L13.586 11H7V9h6.586l-1.707-1.707 1.414-1.414z"/></svg>
+					Logout
+				</button>
+			</div>
+		</div>
+		</div>
+		<!-- END MODERN TOP BAR -->
 	</div>
 			
 </div>
