@@ -57,5 +57,17 @@
         <param name="includeProperties">status, dropdownData.*</param>
     </result>
 </action>
+
+<action name="submitDelivery" class="com.api.MobileApiAction" method="submitDelivery">
+    <result type="json">
+        <param name="includeProperties">status, dashboardData.*</param>
+    </result>
+</action>
+
+<action name="submitCollection" class="com.api.MobileApiAction" method="submitCollection">
+    <result type="json">
+        <param name="includeProperties">status, dashboardData.*</param>
+    </result>
+</action>
     </package>
 </struts>

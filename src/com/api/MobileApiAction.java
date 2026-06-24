@@ -10,6 +10,9 @@ import org.apache.struts2.ServletActionContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import com.operations.marketing.booking.ClsbookingDAO;
+import com.operations.agreement.rentalclose.ClsRentalCloseDAO;
+import com.operations.agreement.rentalagreement.ClsRentalAgreementDAO;
+import com.operations.agreement.rentalagreement.ClsRentalAgreementAction;
 
 
 public class MobileApiAction extends ActionSupport {
@@ -34,6 +37,108 @@ public class MobileApiAction extends ActionSupport {
     public List<Map<String, String>> getCompanyList() { return companyList; }
     public Map<String, Object> getDashboardData() { return dashboardData; }
     
+ // Variables for Collection (Check-In) Form
+    private String agreementno, clientid, hidchkcollection, collectkm, cmbcollectfuel;
+    private String sqlCollectDate, collecttime, cmbcheckin, inkm, cmbinfuel;
+    private String sqlInDate, intime, cmbrentalagent, useddays, usedhours, totalkm, excesskm;
+    private String sqlCloseDate, chaufferid, sqlOutDate, clientacno, hidfleet, creditnotesum;
+    private String collectchg, brchname, branchsearch, closelocation, description, hidchkorgregcardcollect;
+
+    // Arrays for Collection Tariffs and Calculations
+    private List<String> closearray = new ArrayList<>();
+    private List<String> calcarray = new ArrayList<>();
+    
+    
+ // ==========================================
+ // VARIABLES FOR DELIVERY (DISPATCH) API
+ // ==========================================
+ private String sqlrentalDate, fleetNO, clientId, clcodeno, adddrvcharges;
+ private String sqloutDate, outTime, sqldueDate, dueTime;
+ private String tasystem, tadocno, invoice, exessinsu, paymentMra, paymentPo;
+ private String origFleetno, Vehlocationid, fleetgroup, rentalType;
+ private String delcharge, rentaldesc, hidchkorgregcard, hidchkigst, hidrentalproject;
+ private int salesmanid, addrvchk, delchk, chfchk, deldriverid, salesagentid;
+ private int rentalagentid, checkoutid, advancechk, weekend;
+
+ private List<String> deliveryDriverArray = new ArrayList<>();
+ private List<String> deliveryTariffArray = new ArrayList<>();
+ private List<String> deliveryPaymentArray = new ArrayList<>();
+
+ // GETTERS AND SETTERS
+ public String getSqlrentalDate() { return sqlrentalDate; }
+ public void setSqlrentalDate(String sqlrentalDate) { this.sqlrentalDate = sqlrentalDate; }
+ public String getFleetNO() { return fleetNO; }
+ public void setFleetNO(String fleetNO) { this.fleetNO = fleetNO; }
+ public String getClientId() { return clientId; }
+ public void setClientId(String clientId) { this.clientId = clientId; }
+ public String getClcodeno() { return clcodeno; }
+ public void setClcodeno(String clcodeno) { this.clcodeno = clcodeno; }
+ public String getAdddrvcharges() { return adddrvcharges; }
+ public void setAdddrvcharges(String adddrvcharges) { this.adddrvcharges = adddrvcharges; }
+ public String getSqloutDate() { return sqloutDate; }
+ public void setSqloutDate(String sqloutDate) { this.sqloutDate = sqloutDate; }
+ public String getOutTime() { return outTime; }
+ public void setOutTime(String outTime) { this.outTime = outTime; }
+ public String getSqldueDate() { return sqldueDate; }
+ public void setSqldueDate(String sqldueDate) { this.sqldueDate = sqldueDate; }
+ public String getDueTime() { return dueTime; }
+ public void setDueTime(String dueTime) { this.dueTime = dueTime; }
+ public String getTasystem() { return tasystem; }
+ public void setTasystem(String tasystem) { this.tasystem = tasystem; }
+ public String getTadocno() { return tadocno; }
+ public void setTadocno(String tadocno) { this.tadocno = tadocno; }
+ public String getInvoice() { return invoice; }
+ public void setInvoice(String invoice) { this.invoice = invoice; }
+ public String getExessinsu() { return exessinsu; }
+ public void setExessinsu(String exessinsu) { this.exessinsu = exessinsu; }
+ public String getPaymentMra() { return paymentMra; }
+ public void setPaymentMra(String paymentMra) { this.paymentMra = paymentMra; }
+ public String getPaymentPo() { return paymentPo; }
+ public void setPaymentPo(String paymentPo) { this.paymentPo = paymentPo; }
+ public String getOrigFleetno() { return origFleetno; }
+ public void setOrigFleetno(String origFleetno) { this.origFleetno = origFleetno; }
+ public String getVehlocationid() { return Vehlocationid; }
+ public void setVehlocationid(String Vehlocationid) { this.Vehlocationid = Vehlocationid; }
+ public String getFleetgroup() { return fleetgroup; }
+ public void setFleetgroup(String fleetgroup) { this.fleetgroup = fleetgroup; }
+ public String getRentalType() { return rentalType; }
+ public void setRentalType(String rentalType) { this.rentalType = rentalType; }
+ public String getDelcharge() { return delcharge; }
+ public void setDelcharge(String delcharge) { this.delcharge = delcharge; }
+ public String getRentaldesc() { return rentaldesc; }
+ public void setRentaldesc(String rentaldesc) { this.rentaldesc = rentaldesc; }
+ public String getHidchkorgregcard() { return hidchkorgregcard; }
+ public void setHidchkorgregcard(String hidchkorgregcard) { this.hidchkorgregcard = hidchkorgregcard; }
+ public String getHidchkigst() { return hidchkigst; }
+ public void setHidchkigst(String hidchkigst) { this.hidchkigst = hidchkigst; }
+ public String getHidrentalproject() { return hidrentalproject; }
+ public void setHidrentalproject(String hidrentalproject) { this.hidrentalproject = hidrentalproject; }
+ public int getSalesmanid() { return salesmanid; }
+ public void setSalesmanid(int salesmanid) { this.salesmanid = salesmanid; }
+ public int getAddrvchk() { return addrvchk; }
+ public void setAddrvchk(int addrvchk) { this.addrvchk = addrvchk; }
+ public int getDelchk() { return delchk; }
+ public void setDelchk(int delchk) { this.delchk = delchk; }
+ public int getChfchk() { return chfchk; }
+ public void setChfchk(int chfchk) { this.chfchk = chfchk; }
+ public int getDeldriverid() { return deldriverid; }
+ public void setDeldriverid(int deldriverid) { this.deldriverid = deldriverid; }
+ public int getSalesagentid() { return salesagentid; }
+ public void setSalesagentid(int salesagentid) { this.salesagentid = salesagentid; }
+ public int getRentalagentid() { return rentalagentid; }
+ public void setRentalagentid(int rentalagentid) { this.rentalagentid = rentalagentid; }
+ public int getCheckoutid() { return checkoutid; }
+ public void setCheckoutid(int checkoutid) { this.checkoutid = checkoutid; }
+ public int getAdvancechk() { return advancechk; }
+ public void setAdvancechk(int advancechk) { this.advancechk = advancechk; }
+ public int getWeekend() { return weekend; }
+ public void setWeekend(int weekend) { this.weekend = weekend; }
+ public List<String> getDeliveryDriverArray() { return deliveryDriverArray; }
+ public void setDeliveryDriverArray(List<String> deliveryDriverArray) { this.deliveryDriverArray = deliveryDriverArray; }
+ public List<String> getDeliveryTariffArray() { return deliveryTariffArray; }
+ public void setDeliveryTariffArray(List<String> deliveryTariffArray) { this.deliveryTariffArray = deliveryTariffArray; }
+ public List<String> getDeliveryPaymentArray() { return deliveryPaymentArray; }
+ public void setDeliveryPaymentArray(List<String> deliveryPaymentArray) { this.deliveryPaymentArray = deliveryPaymentArray; }
     private String bookingId;
 
     public String getBookingId() {
@@ -388,6 +493,112 @@ public String fetchClients() {
      // Searches for clients based on name or mobile number
      dropdownData = dao.searchClient(session, searchName, searchMob);
      status = "success";
+ } catch (Exception e) {
+     status = "error: " + e.getMessage();
+     e.printStackTrace();
+ }
+ return SUCCESS;
+}
+
+//==========================================
+//ENDPOINT 7: Submit Collection (Vehicle Check-in)
+//==========================================
+public String submitCollection() {
+ try {
+     HttpServletRequest request = ServletActionContext.getRequest();
+     HttpSession session = request.getSession();
+
+     // Security Check
+     if (session.getAttribute("USERID") == null || session.getAttribute("BRANCHID") == null) {
+         status = "error: Unauthorized. Mobile app must send a valid session cookie.";
+         return SUCCESS;
+     }
+
+     // Convert Dates
+     java.sql.Date collectDt = (sqlCollectDate != null && !sqlCollectDate.isEmpty()) ? java.sql.Date.valueOf(sqlCollectDate) : null;
+     java.sql.Date inDt = (sqlInDate != null && !sqlInDate.isEmpty()) ? java.sql.Date.valueOf(sqlInDate) : null;
+     java.sql.Date closeDt = (sqlCloseDate != null && !sqlCloseDate.isEmpty()) ? java.sql.Date.valueOf(sqlCloseDate) : null;
+     java.sql.Date outDt = (sqlOutDate != null && !sqlOutDate.isEmpty()) ? java.sql.Date.valueOf(sqlOutDate) : null;
+
+     // Force mode to "A" (Add) if mobile app forgets to send it
+     if(mode == null || mode.isEmpty()) mode = "A";
+
+     ClsRentalCloseDAO closeDAO = new ClsRentalCloseDAO();
+
+     // Feed the beast
+     int result = closeDAO.insert(
+         agreementno, clientid, hidchkcollection, collectkm, cmbcollectfuel, collectDt, collecttime, 
+         cmbcheckin, inkm, cmbinfuel, inDt, intime, cmbrentalagent, useddays, usedhours, totalkm, excesskm, 
+         session, (ArrayList<String>) closearray, closeDt, mode, chaufferid, (ArrayList<String>) calcarray, 
+         outDt, clientacno, hidfleet, creditnotesum, request, collectchg, brchname, branchsearch, 
+         closelocation, description, hidchkorgregcardcollect
+     );
+
+     if (result > 0) {
+         status = "success";
+         dashboardData = new HashMap<>();
+         dashboardData.put("closedDocumentNo", String.valueOf(result)); 
+     } else {
+         status = "error: Database rejected the Collection check-in.";
+     }
+
+ } catch (Exception e) {
+     status = "error: " + e.getMessage();
+     e.printStackTrace();
+ }
+ return SUCCESS;
+}
+
+//==========================================
+//ENDPOINT 8: Submit Delivery (Vehicle Dispatch)
+//==========================================
+public String submitDelivery() {
+ try {
+     HttpServletRequest request = ServletActionContext.getRequest();
+     HttpSession session = request.getSession();
+
+     if (session.getAttribute("USERID") == null) {
+         status = "error: Unauthorized. Missing JSESSIONID.";
+         return SUCCESS;
+     }
+
+     // Convert Dates
+     java.sql.Date rentalDt = (sqlrentalDate != null && !sqlrentalDate.isEmpty()) ? java.sql.Date.valueOf(sqlrentalDate) : null;
+     java.sql.Date outDt = (sqloutDate != null && !sqloutDate.isEmpty()) ? java.sql.Date.valueOf(sqloutDate) : null;
+     java.sql.Date dueDt = (sqldueDate != null && !sqldueDate.isEmpty()) ? java.sql.Date.valueOf(sqldueDate) : null;
+
+     if(mode == null || mode.isEmpty()) mode = "A"; // Default to Add
+     if(tasystem == null || tasystem.isEmpty()) tasystem = "Manual"; 
+
+     // Create a dummy action object to prevent NullPointerExceptions in the DAO
+     ClsRentalAgreementAction dummyAction = new ClsRentalAgreementAction();
+     dummyAction.setHidchkinsurcomp("0");
+     dummyAction.setCmbinsurcomp("0");
+     dummyAction.setInsurcompdays("0");
+     dummyAction.setCmbenqtype("0");
+     dummyAction.setRacrate("0");
+     dummyAction.setActualcldocno("0");
+
+     ClsRentalAgreementDAO deliveryDAO = new ClsRentalAgreementDAO();
+
+     int result = deliveryDAO.insert(
+         rentalDt, fleetNO, clientId, salesmanid, clcodeno, clacno, addrvchk, adddrvcharges, 
+         delchk, chfchk, deldriverid, (ArrayList<String>) driverarray, inkm, infuel, outDt, 
+         outTime, salesagentid, rentalagentid, checkoutid, dueDt, dueTime, 
+         (ArrayList<String>) ragmttariffarray, tasystem, tadocno, invoice, exessinsu, 
+         (ArrayList<String>) paymentarray, paymentMra, paymentPo, origFleetno, Vehlocationid, 
+         fleetgroup, rentalType, advancechk, mode, session, formcode, request, clientname, 
+         delcharge, rentaldesc, weekend, hidchkorgregcard, hidchkigst, hidrentalproject, dummyAction
+     );
+
+     if (result > 0) {
+         status = "success";
+         dashboardData = new HashMap<>();
+         dashboardData.put("newRentalAgreementNo", String.valueOf(result)); 
+     } else {
+         status = "error: Database rejected the Delivery dispatch. Check duplicate constraints.";
+     }
+
  } catch (Exception e) {
      status = "error: " + e.getMessage();
      e.printStackTrace();
