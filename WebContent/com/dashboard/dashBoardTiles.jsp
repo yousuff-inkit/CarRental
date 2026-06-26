@@ -54,6 +54,30 @@
     List<List<ClsDashBoardBean>> allTilesList = new ArrayList<List<ClsDashBoardBean>>();
     for (int i = 0; i < moduleDefs.length; i++) allTilesList.add(new ArrayList<ClsDashBoardBean>());
 
+    // =========================================================================
+    // ISOLATED SAFE DUE DATE COUNT BLOCK (Uses exact gl_ragmt table from DAO)
+    // =========================================================================
+    int totalDueCount = 0;
+    Connection countConn = null; 
+    Statement countStmt = null; 
+    ResultSet countRs = null;
+    try {
+        countConn = new ClsConnection().getMyConnection();
+        countStmt = countConn.createStatement();
+        String countSql = "SELECT COUNT(*) AS totalCount FROM gl_ragmt WHERE clstatus=0 AND dispute=0 AND ddate <= CURDATE()"; 
+        countRs = countStmt.executeQuery(countSql);
+        if (countRs.next()) {
+            totalDueCount = countRs.getInt("totalCount");
+        }
+    } catch (Exception e) {
+        System.out.println("Could not load due date count: " + e.getMessage());
+    } finally {
+        if (countRs != null) try { countRs.close(); } catch(Exception e){}
+        if (countStmt != null) try { countStmt.close(); } catch(Exception e){}
+        if (countConn != null) try { countConn.close(); } catch(Exception e){}
+    }
+    // =========================================================================
+
     Connection conn = null; Statement stmt = null; ResultSet rs = null;
     try {
         conn = new ClsConnection().getMyConnection();
@@ -267,7 +291,6 @@
 </head>
 <body>
 
-<!-- Banner -->
 <div class="banner">
     <div class="banner-inner">
         <div>
@@ -298,10 +321,8 @@
     </div>
 </div>
 
-<!-- Main app body -->
 <div class="app-body">
 
-    <!-- ── Left Navigation ── -->
     <div class="left-nav">
         <div class="left-nav-header">Modules</div>
         <div class="nav-list">
@@ -342,7 +363,6 @@
         </div>
     </div>
 
-    <!-- ── Right Content Panels ── -->
     <div class="right-content">
     <%
         for (int mi = 0; mi < moduleDefs.length; mi++) {
@@ -398,6 +418,18 @@
 
 </div>
 
+<div onclick="openDueDateDirectly()"
+     style="position: fixed; bottom: 20px; right: 20px; background: #fff; border: 1px solid #e0e4ea; border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.2s, box-shadow 0.2s;"
+     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';"
+     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
+    <div style="background: #fff3e0; color: #b75d00; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+        <%= svgCalendar %>
+    </div>
+    <div>
+        <div style="font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase;">Due Date Rentals</div>
+        <div style="font-size: 20px; font-weight: 800; color: #b75d00; line-height: 1;"><%= totalDueCount %></div>
+    </div>
+</div>
 <script>
     $(function() {
         var h = new Date().getHours();
@@ -434,6 +466,27 @@
 
     function openParentMenu(title) {
         if (window.parent && window.parent.geturl) window.parent.geturl(title);
+    }
+    
+    function openDueDateDirectly() {
+        // Corrected path with capital 'R' in Rentalagreement
+        var actionUrl = "<%= request.getContextPath() %>/com/dashboard/Rentalagreement/dueDate/duedateMaster.jsp?name=Due%20Date&main=Rental%20Agreement&docno=24&value=1087";
+        var tabTitle = "Due Date";
+        
+        // Attempt to open it in a new native tab in your layout
+        if (window.parent) {
+            if (typeof window.parent.addTab === 'function') {
+                window.parent.addTab(tabTitle, actionUrl);
+                return;
+            } 
+            if (typeof window.parent.openTab === 'function') {
+                window.parent.openTab(tabTitle, actionUrl);
+                return;
+            }
+        }
+        
+        // Fallback: Redirect the current frame if no tab function is found
+        window.location.href = actionUrl;
     }
 </script>
 </body>
