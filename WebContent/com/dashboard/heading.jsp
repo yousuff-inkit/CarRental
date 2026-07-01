@@ -14,6 +14,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="../../../../css/body.css"/>
 <style>
+/* ===== NEW HORIZONTAL LAYOUT ===== */
 .dashboard-header-wrapper {
     --primary: #2563eb;
     --text-main: #1e293b;
@@ -22,33 +23,65 @@
     font-family: 'Inter', 'Poppins', sans-serif;
     padding: 10px 24px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    overflow-y: auto;
+    overflow-y: hidden;
+    
+    /* Flexbox settings for horizontal alignment */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-
 .dashboard-header-wrapper .header-container {
-    padding: 5px 0;
+    padding: 0;
     background: transparent; 
     border: none;
     box-shadow: none;
-    margin-bottom: 5px; 
-    text-align: center;
-     font-size: 18px;
+    margin-bottom: 0; 
+    text-align: left;
+    font-size: 18px;
     font-weight: 700;
     color: var(--text-main);
+    white-space: nowrap;
 }
 
+/* Groups the buttons and dropdown together on the right */
+.dashboard-header-wrapper .actions-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
-
-/* One-line Button Row */
 .dashboard-header-wrapper .btn-grid {
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 6px;
-    margin: 5px 0; 
+    margin: 0; 
 }
 
+.dashboard-header-wrapper .branch-section {
+    background: transparent; 
+    border: none;
+    padding: 0;
+    margin-bottom: 0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+#btnSubmit {
+    margin: 0;
+}
+
+/* ===== EXISTING BUTTON & ICON STYLES ===== */
 .dashboard-header-wrapper .nbtn {
     flex: 0 0 auto;
     max-width: 90px;
@@ -73,22 +106,10 @@
     border: none;
 }
 
-
 #btnSendingEmail {
     opacity: 1 !important;
     cursor: pointer !important;
     pointer-events: auto !important;
-}
-
-.dashboard-header-wrapper .branch-section {
-    background: transparent; 
-    border: none;
-    padding: 5px 0;
-    margin-bottom: 10px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
 }
 
 .dashboard-header-wrapper .styled-select {
@@ -96,7 +117,10 @@
     background: #ffffff;
     border: 1px solid #cbd5e1;
     border-radius: 6px;
-    padding: 4px 8px;
+    height: 36px;                
+    padding: 0 8px;              
+    display: flex;
+    align-items: center;          
 }
 
 .dashboard-header-wrapper .styled-select select {
@@ -104,17 +128,20 @@
     width: 100%;
     font-size: 13px;
     outline: none;
+    height: 100%;
+    padding: 0;                    
+    background: transparent;
+    box-sizing: border-box;
 }
+
 #btnGuideline svg, 
 #btnCalculate svg {
     width: 15px;  
     height: 15px; 
     stroke-width: 2.5px; 
 }
-#btnSubmit {
-    margin: 0 auto;
-}
-/* ===== BLUE ICON STYLE (copied from dashboard) ===== */
+
+/* ===== BLUE ICON STYLE ===== */
 .nbtn svg {
     width: 16px;
     height: 16px;
@@ -128,10 +155,11 @@
     fill: #005c97;
 }
 
-/* Hover effect (optional but recommended) */
+/* Hover effect */
 .nbtn:hover svg {
     stroke: #2563eb;
 }
+
 /* ===== BUTTON HOVER EFFECT ===== */
 .dashboard-header-wrapper .nbtn {
     border: 1.5px solid #e2e8f0;        
@@ -141,36 +169,14 @@
         box-shadow 0.2s ease;
 }
 
-
 .dashboard-header-wrapper .nbtn:hover {
     border-color: #2563eb;                
-    transform: scale(1.08);               
+    transform: scale(1.08);                
     box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
-    z-index: 2;                           
+    z-index: 2;                            
 }
-
-.dashboard-header-wrapper .styled-select {
-    height: 36px;                
-    padding: 0 8px;              
-    display: flex;
-    align-items: center;          
-}
-
-
-.dashboard-header-wrapper .styled-select select {
-    height: 100%;
-    width: 100%;
-    border: none;
-    font-size: 13px;
-    padding: 0;                   
-    background: transparent;
-    outline: none;
-    box-sizing: border-box;
-}
-
-
-
 </style>
+
         <script type="text/javascript">
             $(document).ready(function () {
 
@@ -183,7 +189,6 @@
                 String name2=request.getParameter("name")==null?"":request.getParameter("name");
                 String docno=request.getParameter("docno")==null?"":request.getParameter("docno");
                 String value=request.getParameter("value")==null?"":request.getParameter("value");%>
-
 
                 document.getElementById("txtallbrch").value = '<%=value%>';
                 if ($('#detailname').val() == "") {
@@ -459,7 +464,6 @@
                             $("#btnExcel").attr('disabled', false);
                         }
 
-
                     } else {
                     }
                 }
@@ -491,7 +495,6 @@
                             window.parent.document.getElementById("iconnm").style.display = 'inline-block';
 
                         }
-
 
                     } else {
                     }
@@ -635,60 +638,48 @@
 </head>
 <body onclick="getformbranch();">
 <div class="dashboard-header-wrapper">
-    <!-- ===== HEADER ===== -->
+    
     <div class="header-container">
         <label id="lbldetail"></label>
         <span class="separator"> - </span>
         <label id="lbldetailname"></label>
     </div>
 
-    <!-- ===== BUTTON GRID ===== -->
-    <div class="btn-grid">
-   <!-- <button type="button" class="nbtn" id="btnGuideline" onclick="funGuideline();">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20m10-10H2"/></svg>
-        Guideline
-    </button> -->
-
-    <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Email
-    </button>
-
-    <button type="button" class="nbtn" id="btnExcel" onclick="funExportBtn();">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-        Export
-    </button>
-
-    <button type="button" class="nbtn" id="btnCalculate" onclick="funCalculate();">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-        Calculate
-    </button>
-    
-    
-</div>
-
-    <!-- ===== BRANCH SECTION ===== -->
-    <div class="branch-section">
-        <div class="branch-label-wrapper">
-            <label id="branchlabel">Branch</label>
+    <div class="actions-container">
+        
+        <div class="btn-grid">
+            <button type="button" class="nbtn" id="btnSendingEmail" onclick="funSendingEmail();">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email
+            </button>
+            <button type="button" class="nbtn" id="btnExcel" onclick="funExportBtn();">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                Export
+            </button>
+            <button type="button" class="nbtn" id="btnCalculate" onclick="funCalculate();">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+                Calculate
+            </button>
         </div>
 
-        <div class="branch-select-wrapper">
-            <div class="styled-select" id="branchdiv">
-                <select id="cmbbranch" name="cmbbranch" onchange="funMclose(this.value);getformbranch();">
-                    <option value="">--Select--</option>
-                </select>
+        <div class="branch-section">
+            <div class="branch-label-wrapper">
+                <label id="branchlabel">Branch</label>
+            </div>
+            <div class="branch-select-wrapper">
+                <div class="styled-select" id="branchdiv">
+                    <select id="cmbbranch" name="cmbbranch" onchange="funMclose(this.value);getformbranch();">
+                        <option value="">--Select--</option>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- ===== SUBMIT BUTTON ===== -->
-   <button type="button" class="nbtn btn-primary" id="btnSubmit" onclick="funreload(event);">
-                Submit
-    </button>
-
-    <!-- ===== REMAINING HIDDEN FIELDS & WINDOWS ===== -->
-    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'/>
+        <button type="button" class="nbtn btn-primary" id="btnSubmit" onclick="funreload(event);">
+            Submit
+        </button>
+        
+    </div> <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'/>
     <input type="hidden" name="detail" id="detail" value="<s:property value="detail"/>" />
     <input type="hidden" name="detailname" id="detailname" value="<s:property value="detailname"/>" />
     <input type="hidden" name="txtdetailpermissiondocno" id="txtdetailpermissiondocno" value="<s:property value="txtdetailpermissiondocno"/>" />
@@ -698,3 +689,4 @@
     <div id="windowguideline"><div></div></div>
 </div>
 </body>
+</html>

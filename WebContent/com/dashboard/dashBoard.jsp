@@ -1,4 +1,3 @@
-
 <%@page import="com.dashboard.ClsDashBoardDAO"%>
 <%ClsDashBoardDAO DAO= new ClsDashBoardDAO(); %>
 <!DOCTYPE html>
@@ -380,8 +379,8 @@
             };
              
              var dataAdapter = new $.jqx.dataAdapter(source,
-           		 {
-               		loadError: function (xhr, status, error) {
+            		 {
+                		loadError: function (xhr, status, error) {
 	                    alert(error);    
 	                    }
 			            
@@ -462,7 +461,7 @@
             
             /* Stacked Chart Starts */
             /* ----------------------------- */
-            <%-- var data5= '<%= DAO.stackedchart() %>';
+             <%-- var data5= '<%= DAO.stackedchart() %>';
            // alert(data5);  
             var source =
             {
@@ -597,6 +596,11 @@
     
 </head>
 <body style="background-color: #fff;" onclick="getMessengerCount();">
+
+    <div id="top-toolbar" style="width: 100%; padding: 0 10px; margin-bottom: 10px;">
+        <jsp:include page="dashboardGridMaster.jsp"></jsp:include>
+    </div>
+
 	<div class='hidden-scrollbar'>
 		<table  width="100%">
 			<tr>
@@ -613,18 +617,16 @@
 						<tr><td>&nbsp;</td></tr>
 			    		<tr><td colspan="2" align="center"><img src="../../icons/gw.png" onclick="location.reload ();" style="width:50%;height:30px;"></td></tr>  
 			 	 		<tr>
-			 	 			<td width="50%"><div><jsp:include page="dashboardGridMaster.jsp"></jsp:include></div></td>
-			  				<td width="50%">
-			  					<div id="dashboardGridDetail1"><jsp:include page="dashboardGridDetails.jsp"></jsp:include></div>
-			  				</td> 
-			  			</tr>
-			  		</table>
+			 	 			<td colspan="2">
+			 					<div id="dashboardGridDetail1"><jsp:include page="dashboardGridDetails.jsp"></jsp:include></div>
+			 				</td> 
+			 			</tr>
+			 		</table>
 				</td>
 				<td width="30%">
 					<table  width="100%">
 						<tr><td>&nbsp;</td></tr>
-						<tr><td><!-- <div id='idleDays' style="width: 97%; height: 190px;"></div> -->
-						<div id="brandGarageDiv"><jsp:include page="brandGarageGrid.jsp"></jsp:include></div></td></tr>
+						<tr><td><div id="brandGarageDiv"><jsp:include page="brandGarageGrid.jsp"></jsp:include></div></td></tr>
 						<tr rowspan="2" id="todolisttd">
 							<td class="todo-container">
 								<fieldset style="background-color: #E8E8E8;">
@@ -645,9 +647,7 @@
 								</fieldset>
 							</td>
 						</tr>   
-	    				<!-- <tr><td><div id="chart1" style="width: 97%; height: 170px;"></div></td></tr>
-						<tr><td><div id='stackedChart' style="width: 97%; height: 170px;"></div></td></tr> -->
-					</table>
+	    				</table>
 				</td>
 			</tr>
 		</table> 

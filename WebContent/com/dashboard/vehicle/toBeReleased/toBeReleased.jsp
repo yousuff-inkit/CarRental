@@ -12,36 +12,38 @@
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-/* ===== MASTER LAYOUT ===== */
-.master-container {
-    display: flex;
-    width: 100%;
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    margin: 0;
+    overflow: hidden;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 280px; /* Reduced from 330px to give the right panel more width */
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 15px 25px; /* Slightly tighter padding to fit the new 280px width */
 }
 
 /* Cards */
@@ -61,11 +63,11 @@
 
 .release-filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
+    padding-right: 10px;
     font-size: 12px;
     color: #4e5e71;
     font-weight: 600;
-    width: 90px;
+    width: 80px;
 }
 
 /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
@@ -73,11 +75,11 @@ input[type="text"], select,
 .release-filter-table input[type="text"],
 .release-filter-table select {
     width: 100%;
-    height: 24px;             /* Enforced 24px height */
-    padding: 2px 8px;         /* Tighter padding for 24px */
+    height: 24px;             
+    padding: 2px 8px;         
     border: 1px solid #ccd6e0;
-    border-radius: 4px;       /* Sharper corners for ERP feel */
-    font-size: 12px;          /* Adjusted font to fit 24px box */
+    border-radius: 4px;       
+    font-size: 12px;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
@@ -90,6 +92,7 @@ input:disabled,
 .release-filter-table input:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
+    border-color: #e1e8ed;
 }
 
 /* jqx date/time containers */
@@ -109,16 +112,17 @@ input:disabled,
 /* ===== BUTTONS ===== */
 .btn-submit {
     width: 100%;
-    height: 30px;            /* Scaled button height */
-    padding: 0 12px;         /* Center text vertically */
+    height: 30px;            
+    padding: 0 12px;         
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 4px;      /* Matched border-radius */
+    border-radius: 4px;      
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    line-height: 30px;       /* Aligns text inside button */
+    line-height: 30px;       
+    transition: background 0.2s;
 }
 
 .btn-submit:hover {
@@ -131,7 +135,7 @@ input:disabled,
 }
 
 /* Action buttons layout */
-.release-actions {
+.release-secondary-actions, .release-actions {
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -139,28 +143,32 @@ input:disabled,
 }
 
 .release-actions .btn-submit {
-    width: auto;
     min-width: 120px;
 }
 
-.release-secondary-actions {
+/* ===== RIGHT CONTENT AREA (Dynamically fills screen) ===== */
+.main-content-area {
+    flex: 1; /* This tells the right side to expand and take up all remaining width */
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto; /* Allows scrolling inside the grid area if needed */
+    box-sizing: border-box;
 }
 </style>
  
@@ -172,7 +180,6 @@ $(document).ready(function () {
     document.getElementById("btnvehicle").disabled=true;
     document.getElementById("btnattach").disabled=true;
     
-    // UPDATED: Standardized height to 24px and width to 100%
     $("#dashreleasedate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
     $("#dashreleasetime").jqxDateTimeInput({ width: '100%', height: '24px', formatString: 'HH:mm', showCalendarButton: false ,value: new Date()});
 
@@ -379,154 +386,128 @@ function changeClientAttachContent(url) {
 <body onload="getBranch();setValues();">
 <form id="frmReleaseDashBoard" action="saveReleaseDashBoard">
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
 
-<table width="100%">
-<tr>
+    <div class="master-container">
 
-<td width="20%">
-<div class="master-container">
-<div class="sidebar-filters">
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                <div class="filter-card">
 
-    <div class="sidebar-fixed-top">
-        <div class="filter-card">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+                    <table class="release-filter-table">
+                        <tr>
+                            <td class="label-cell">Fleet No</td>
+                            <td><input type="text" name="dashreleasefleet" id="dashreleasefleet" value='<s:property value="dashreleasefleet"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Branch</td>
+                            <td>
+                                <select name="dashcmbrlsbranch" id="dashcmbrlsbranch" onChange="getLocation(this.value);">
+                                    <option value="">--Select--</option>
+                                </select>
+                                <input type="hidden" name="dashhidcmbrlsbranch" id="dashhidcmbrlsbranch" value='<s:property value="dashhidcmbrlsbranch"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Location</td>
+                            <td>
+                                <select name="dashcmbrlsloc" id="dashcmbrlsloc">
+                                    <option value="">--Select--</option>
+                                </select>
+                                <input type="hidden" name="dashhidcmbrlsloc" id="dashhidcmbrlsloc" value='<s:property value="dashhidcmbrlsloc"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Rental</td>
+                            <td>
+                                <select name="dashcmbrentalstatus" id="dashcmbrentalstatus">
+                                    <option value="R" selected>Rental</option>
+                                    <option value="L">Lease</option>
+                                    <option value="LM">Limousine</option>
+                                    <option value="A">All</option>
+                                </select>
+                                <input type="hidden" name="dashhidcmbrentalstatus" id="dashhidcmbrentalstatus" value='<s:property value="dashhidcmbrentalstatus"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td><div id="dashreleasedate" name="dashreleasedate" value='<s:property value="dashreleasedate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Time</td>
+                            <td><div id="dashreleasetime" name="dashreleasetime" value='<s:property value="dashreleasetime"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">KM</td>
+                            <td><input type="text" name="dashreleasekm" id="dashreleasekm" value='<s:property value="dashreleasekm"/>' tabindex="-1" readonly></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Fuel</td>
+                            <td>
+                                <select name="dashreleasefuel" id="dashreleasefuel" value='<s:property value="dashreleasefuel"/>' tabindex="-1">
+                                    <option value="">--Select--</option>
+                                    <option value="0.000" selected>Level 0/8</option>
+                                    <option value="0.125">Level 1/8</option>
+                                    <option value="0.250">Level 2/8</option>
+                                    <option value="0.375">Level 3/8</option>
+                                    <option value="0.500">Level 4/8</option>
+                                    <option value="0.625">Level 5/8</option>
+                                    <option value="0.750">Level 6/8</option>
+                                    <option value="0.875">Level 7/8</option>
+                                    <option value="1.000">Level 8/8</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Op. Status</td>
+                            <td><input type="text" name="dashopstatus" id="dashopstatus" value='IN' tabindex="-1" readonly></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Ast status</td>
+                            <td><input type="text" name="dashaststatus" id="dashaststatus" value='<s:property value="dashaststatus"/>' tabindex="-1" readonly></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div id="dashfleetwarning">All fields are Mandatory</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input type="hidden" name="hidclient" id="hidclient" >
+                    
+                    <div class="release-secondary-actions">
+                        <button type="button" class="btn-submit" id="btnvehicle" onclick="getVehicle()">Vehicle</button>
+                        <button type="button" class="btn-submit" id="btnattach" onclick="getAttach()">Attach</button>
+                    </div>
+
+                    <div class="release-actions">
+                        <button type="button" class="btn-submit" id="dashbtnrelease" onclick="funReleaseClick()">Release</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="sidebar-scroll-content">
-        <div class="filter-card">
-
-            <table class="release-filter-table">
-
-                <tr>
-                    <td class="label-cell">Fleet No</td>
-                    <td><input type="text" name="dashreleasefleet" id="dashreleasefleet" value='<s:property value="dashreleasefleet"/>'></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Branch</td>
-                    <td>
-                        <select name="dashcmbrlsbranch" id="dashcmbrlsbranch" onChange="getLocation(this.value);">
-                            <option value="">--Select--</option>
-                        </select>
-                        <input type="hidden" name="dashhidcmbrlsbranch" id="dashhidcmbrlsbranch" value='<s:property value="dashhidcmbrlsbranch"/>'>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Location</td>
-                    <td>
-                        <select name="dashcmbrlsloc" id="dashcmbrlsloc">
-                            <option value="">--Select--</option>
-                        </select>
-                        <input type="hidden" name="dashhidcmbrlsloc" id="dashhidcmbrlsloc" value='<s:property value="dashhidcmbrlsloc"/>'>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Rental</td>
-                    <td>
-                        <select name="dashcmbrentalstatus" id="dashcmbrentalstatus">
-                            <option value="R" selected>Rental</option>
-                            <option value="L">Lease</option>
-                            <option value="LM">Limousine</option>
-                            <option value="A">All</option>
-                        </select>
-                        <input type="hidden" name="dashhidcmbrentalstatus" id="dashhidcmbrentalstatus" value='<s:property value="dashhidcmbrentalstatus"/>'>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Date</td>
-                    <td><div id="dashreleasedate" name="dashreleasedate" value='<s:property value="dashreleasedate"/>'></div></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Time</td>
-                    <td><div id="dashreleasetime" name="dashreleasetime" value='<s:property value="dashreleasetime"/>'></div></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">KM</td>
-                    <td><input type="text" name="dashreleasekm" id="dashreleasekm" value='<s:property value="dashreleasekm"/>' tabindex="-1" readonly></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Fuel</td>
-                    <td>
-                        <select name="dashreleasefuel" id="dashreleasefuel" value='<s:property value="dashreleasefuel"/>' tabindex="-1">
-                            <option value="">--Select--</option>
-                            <option value="0.000" selected>Level 0/8</option>
-                            <option value="0.125">Level 1/8</option>
-                            <option value="0.250">Level 2/8</option>
-                            <option value="0.375">Level 3/8</option>
-                            <option value="0.500">Level 4/8</option>
-                            <option value="0.625">Level 5/8</option>
-                            <option value="0.750">Level 6/8</option>
-                            <option value="0.875">Level 7/8</option>
-                            <option value="1.000">Level 8/8</option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Op. Status</td>
-                    <td><input type="text" name="dashopstatus" id="dashopstatus" value='IN' tabindex="-1" readonly></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Ast status</td>
-                    <td><input type="text" name="dashaststatus" id="dashaststatus" value='<s:property value="dashaststatus"/>' tabindex="-1" readonly></td>
-                </tr>
-
-                <tr>
-                    <td colspan="2">
-                        <div id="dashfleetwarning">All fields are Mandatory</div>
-                    </td>
-                </tr>
-
-            </table>
-
-            <input type="hidden" name="hidclient" id="hidclient" >
+        <div class="main-content-area">
             
-            <div class="release-secondary-actions">
-                <button type="button" class="btn-submit" id="btnvehicle" onclick="getVehicle()">Vehicle</button>
-                <button type="button" class="btn-submit" id="btnattach" onclick="getAttach()">Attach</button>
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
             </div>
 
-            <div class="release-actions">
-                <button type="button" class="btn-submit" id="dashbtnrelease" onclick="funReleaseClick()">Release</button>
+            <div class="grid-content-container">
+                <div id="releasediv"><jsp:include page="toBeReleasedGrid.jsp"></jsp:include></div>
+                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>' > 
+                <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' >
             </div>
 
         </div>
+
+    </div> <div id="vehiclewindow">
+        <div></div>
     </div>
-
-</div>
-</div>
-</td>
-
-<td width="80%">
-    <table width="100%">
-        <tr>
-             <td><div id="releasediv"><jsp:include page="toBeReleasedGrid.jsp"></jsp:include></div></td>
-             <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>' > 
-             <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>' >
-        </tr>
-    </table>
-</td>
-
-</tr>
-</table>
-
-</div>
-
-<div id="vehiclewindow">
-<div></div>
-</div>
-<div id="clientAttachWindow">
-   <div></div>
-</div>
+    
+    <div id="clientAttachWindow">
+       <div></div>
+    </div>
 
 </div>
 </form>
