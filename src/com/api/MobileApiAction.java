@@ -605,4 +605,59 @@ public String submitDelivery() {
  }
  return SUCCESS;
 }
+//==========================================
+// DROPDOWN LOOKUP APIS (Matching your message to the mobile team)
+// ==========================================
+
+public String getClientList() { 
+    try {
+        dropdownData = new ClsRentalAgreementDAO().getActualclientSearch(null, clname, mob, "", "", "", "", "1", ""); 
+        status="success"; 
+    } catch (Exception e) { e.printStackTrace(); status = "error"; }
+    return SUCCESS; 
+}
+
+public String getFleetList() { 
+    try {
+        dropdownData = new ClsRentalAgreementDAO().vehSearch(ServletActionContext.getRequest().getSession(), "", "", "", "", "", "yes"); 
+        status="success"; 
+    } catch (Exception e) { e.printStackTrace(); status = "error"; }
+    return SUCCESS; 
+}
+
+public String getSalesAgentList() { 
+    try {
+        dropdownData = new ClsRentalAgreementDAO().SalesgentSearch();
+        status = "success";
+    } catch (Exception e) { e.printStackTrace(); status = "error"; }
+    return SUCCESS; 
+}
+
+public String getDriverList() { 
+    try {
+        dropdownData = new ClsRentalAgreementDAO().chufferinfo(); 
+        status="success"; 
+    } catch (Exception e) { e.printStackTrace(); status = "error"; }
+    return SUCCESS; 
+}
+
+public String getLocationList() {
+    try {
+        // Simple direct JDBC call to fetch active locations for the dropdown
+        List<Map<String, String>> locs = new ArrayList<>();
+        Connection conn = new ClsConnection().getMyConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT doc_no, loc_name FROM my_locm WHERE status=3");
+        while(rs.next()){
+            Map<String, String> map = new HashMap<>();
+            map.put("doc_no", rs.getString("doc_no"));
+            map.put("loc_name", rs.getString("loc_name"));
+            locs.add(map);
+        }
+        rs.close(); stmt.close(); conn.close();
+        dropdownData = locs;
+        status = "success";
+    } catch (Exception e) { e.printStackTrace(); status = "error"; }
+    return SUCCESS;
+}
 }

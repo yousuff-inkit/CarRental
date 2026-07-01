@@ -69,5 +69,25 @@
         <param name="includeProperties">status, dashboardData.*</param>
     </result>
 </action>
+
+<action name="getClientList" class="com.api.MobileApiAction" method="getClientList">
+    <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
+</action>
+
+<action name="getFleetList" class="com.api.MobileApiAction" method="getFleetList">
+    <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
+</action>
+
+<action name="getSalesAgentList" class="com.api.MobileApiAction" method="getSalesAgentList">
+    <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
+</action>
+
+<action name="getDriverList" class="com.api.MobileApiAction" method="getDriverList">
+    <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
+</action>
+
+<action name="getLocationList" class="com.api.MobileApiAction" method="getLocationList">
+    <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
+</action>
     </package>
 </struts>
