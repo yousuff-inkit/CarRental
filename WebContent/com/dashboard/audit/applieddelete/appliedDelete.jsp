@@ -9,36 +9,38 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" /> 
 <style>
-/* ===== MASTER LAYOUT ===== */
-.master-container {
-    display: flex;
-    width: 100%;
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    overflow: hidden;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 280px; 
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 15px 25px; 
 }
 
 /* Cards */
@@ -56,126 +58,144 @@
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
     padding-right: 10px;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12px;
     color: #4e5e71;
-    width: 90px;
+    font-weight: 600;
+    width: 80px;
 }
 
-/* Inputs */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, textarea,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;              
+    padding: 2px 8px;          
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;        
+    font-size: 12px;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
-/* Buttons */
+/* Textarea exception for height */
+textarea#applyinfo {
+    height: 60px;
+    resize: none;
+    margin-top: 5px;
+}
+
+/* Readonly / disabled look */
+input[readonly],
+input:disabled,
+textarea[readonly],
+textarea:disabled,
+.filter-table input[readonly],
+.filter-table input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    border-color: #e1e8ed;
+}
+
+/* jqx date/time containers */
+div[id^="date"] {
+    width: 100%;
+}
+
+/* ===== BUTTONS ===== */
 .btn-submit {
     width: 100%;
-    padding: 11px;
-    margin-top: 10px;
+    height: 30px;            
+    padding: 0 12px;         
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;      
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;       
+    transition: background 0.2s;
 }
 
 .btn-submit:hover {
     background: #1d4ed8;
 }
 
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
+.btn-submit:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* ===== RIGHT CONTENT AREA ===== */
+.main-content-area {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
-}
-
-/* 🔹 Inputs + Dropdowns */
-input[type="text"],
-select {
+.top-toolbar-container {
     width: 100%;
-    height: 24px !important;
-    padding: 0 8px !important;
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;
-    font-size: 13px;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
-    line-height: 24px;
 }
 
-/* 🔹 Dropdown text */
-select {
-    font-size: 13px !important;
-}
-
-/* 🔹 Buttons */
-.btn-submit,
-.myButtons,
-.myButton,
-input[type="button"],
-button {
-    width: 100%;
-    height: 24px !important;
-    padding: 0 10px !important;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto; 
     box-sizing: border-box;
-    line-height: 24px;
-}
-
-/* 🔹 Fix for any library overriding (like jqx / external CSS) */
-.jqx-widget input,
-.jqx-widget select {
-    height: 24px !important;
-    line-height: 24px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 </style>
  
-
 <script type="text/javascript">
 
-	$(document).ready(function () {
-		 $("#date").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-		 
-		 $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-		 $('#accountDetailsWindow').jqxWindow('close');
-		 
-		 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-	     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
-	     
-	     $('#txtaccid').dblclick(function(){
-			  accountsSearchContent('accountsDetailsSearch.jsp');
-		 });
-	     
-	     $('#date').jqxDateTimeInput({disabled: true});$('#txtreason').attr("readonly",true);$('#chckremoveall').attr("disabled",true);$('#btndelete').attr("disabled",true);
-	     $("#appliedDetailsGrid").jqxGrid({ disabled: true}); 
-	});
-	
-	function accountsSearchContent(url) {
-	    $('#accountDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#accountDetailsWindow').jqxWindow('setContent', data);
-		$('#accountDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	function isNumber(evt) {
+    $(document).ready(function () {
+         // Standardized JQX Date Input
+         $("#date").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+         
+         $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
+         $('#accountDetailsWindow').jqxWindow('close');
+         
+         $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
+         $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+         
+         $('#txtaccid').dblclick(function(){
+             accountsSearchContent('accountsDetailsSearch.jsp');
+         });
+         
+         $('#date').jqxDateTimeInput({disabled: true});$('#txtreason').attr("readonly",true);$('#chckremoveall').attr("disabled",true);$('#btndelete').attr("disabled",true);
+         $("#appliedDetailsGrid").jqxGrid({ disabled: true}); 
+    });
+    
+    function accountsSearchContent(url) {
+        $('#accountDetailsWindow').jqxWindow('open');
+        $.get(url).done(function (data) {
+        $('#accountDetailsWindow').jqxWindow('setContent', data);
+        $('#accountDetailsWindow').jqxWindow('bringToFront');
+    }); 
+    }
+    
+    function isNumber(evt) {
         var iKeyCode = (evt.which) ? evt.which : evt.keyCode
         if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
          {
@@ -184,347 +204,320 @@ button {
          }
         return true;
     }
-	
-	function funreload(event){
-		 var branchval = document.getElementById("cmbbranch").value;
-		 var atype = $('#cmbtype').val();
-		 var accountno = $('#txtdocno').val();
-		 
-		 $('#date').val(new Date());$('#txtreason').val('');$('#txttrno').val();
-		 $('#txtoutamount').val('');$('#txtdtype').val('');$('#txtbranchid').val('');$('#applyinfo').val(' ');
-  	     $("#appliedDetailsGrid").jqxGrid({ disabled: true});$("#appliedDetailsGrid").jqxGrid('clear'); 
-  	     $('#date').jqxDateTimeInput({disabled: true});
-  	     $('#txtreason').attr("readonly",true);$('#btndelete').attr("disabled",true);$('#chckremoveall').attr("disabled",true);
-  	     document.getElementById("chckremoveall").checked=false;$('#hidchckremoveall').val('0');
-		
-  	     if(accountno==''){
-			 $.messager.alert('Message','Account is Mandatory.','warning');
-			 return 0;
-		 }
-  	   
-		 $("#overlay, #PleaseWait").show();
-		 
-		 $("#appliedDiv").load("appliedGrid.jsp?branchval="+branchval+'&atype='+atype+'&accountno='+accountno+'&check=1');
-		}
-	
-	function funDelete(event){
-		
-		var trno =  $('#txttrno').val();
-		var accountno =  $('#txtdocno').val();
-		var outamount =  $('#txtoutamount').val();
-		var dtype =  $('#txtdtype').val();
-		var branchid =  $('#txtbranchid').val();
-		var date =  $('#date').val();
-		var reason =  $('#txtreason').val();
-		var removeall = $('#hidchckremoveall').val();
-		var gridindex=$('#gridindex').val();
-		var selectedrows=$('#appliedDetailsGrid').jqxGrid('selectedrowindexes');
-		var confirmtext="";
-		var deletearray="";
-		var tranid=$('#appliedDelete').jqxGrid('getcellvalue',gridindex,'tranid');
-		var transno=$('#appliedDelete').jqxGrid('getcellvalue',gridindex,'transno');
-		var transtype=$('#appliedDelete').jqxGrid('getcellvalue',gridindex,'transtype');
-		
-		if(selectedrows.length==0){
-			confirmtext="Do you want to delete all entries of "+transtype+" #"+transno;
-		}
-		else{
-			confirmtext="Do you want to delete "+selectedrows.length+" entries of "+transtype+" #"+transno;
-			for(var i=0;i<selectedrows.length;i++){
-				var dettranid=$('#appliedDetailsGrid').jqxGrid('getcellvalue',selectedrows[i],'tranid');
-				var appliedamt=$('#appliedDetailsGrid').jqxGrid('getcellvalue',selectedrows[i],'applying');
-				if(i==0){
-					deletearray+=dettranid+"::"+appliedamt+"::";
-				}
-				else{
-					deletearray+=","+dettranid+"::"+appliedamt+"::";
-				}
-			}
-		}
-		if(reason==''){
-			 $.messager.alert('Message','Please Enter the Reason.','warning');
-			 return 0;
-		}
-		
-		 $.messager.confirm('Message', confirmtext+'?', function(r){
-		        
-		     	if(r==false)
-		     	  {
-		     		return false; 
-		     	  }
-		     	else{
-		     		if(selectedrows.length==0){
-		     			saveGridData(trno,accountno,outamount,dtype,branchid,date,reason,removeall);	
-		     		}
-		     		else{
-		     			deleteAppliedSaperate(trno,accountno,outamount,dtype,branchid,date,reason,removeall,deletearray,tranid);
-		     		}
-		     			
-		     	}
-		});
-	}
-	    
-	function deleteAppliedSaperate(trno,accountno,outamount,dtype,branchid,date,reason,removeall,deletearray,tranid){
-		$.post('deleteAppliedSaperate.jsp',
-				{	'trno':trno,
-					'accountno':accountno,
-					'outamount':outamount,
-					'dtype':dtype,
-					'branchid':branchid,
-					'date':date,
-					'reason':reason,
-					'removeall':removeall,
-					'deletearray':deletearray,
-					'tranid':tranid
-				},
-				function(data,status){
-					data=JSON.parse(data);
-					if(data.errorstatus=="0"){
-						$('#txttrno,#txtoutamount,#txtdtype,#txtbranchid,#txtreason,#applyinfo').val('');
-						$('#date').jqxDateTimeInput('setDate',new Date());
-						document.getElementById("chckremoveall").checked=false;
-						$('#hidchckremoveall').val('0');
-						$.messager.alert('Message','Successfully Deleted');
-						funreload("");
-					}
-					else{
-						$.messager.alert('Message','Not Deleted');
-					}
-				});
-	}
-	function saveGridData(trno,accountno,outamount,dtype,branchid,date,reason,removeall){
+    
+    function funreload(event){
+         var branchval = document.getElementById("cmbbranch").value;
+         var atype = $('#cmbtype').val();
+         var accountno = $('#txtdocno').val();
+         
+         $('#date').val(new Date());$('#txtreason').val('');$('#txttrno').val();
+         $('#txtoutamount').val('');$('#txtdtype').val('');$('#txtbranchid').val('');$('#applyinfo').val(' ');
+         $("#appliedDetailsGrid").jqxGrid({ disabled: true});$("#appliedDetailsGrid").jqxGrid('clear'); 
+         $('#date').jqxDateTimeInput({disabled: true});
+         $('#txtreason').attr("readonly",true);$('#btndelete').attr("disabled",true);$('#chckremoveall').attr("disabled",true);
+         document.getElementById("chckremoveall").checked=false;$('#hidchckremoveall').val('0');
+        
+         if(accountno==''){
+             $.messager.alert('Message','Account is Mandatory.','warning');
+             return 0;
+         }
+       
+         $("#overlay, #PleaseWait").show();
+         
+         $("#appliedDiv").load("appliedGrid.jsp?branchval="+branchval+'&atype='+atype+'&accountno='+accountno+'&check=1');
+        }
+    
+    function funDelete(event){
+        
+        var trno =  $('#txttrno').val();
+        var accountno =  $('#txtdocno').val();
+        var outamount =  $('#txtoutamount').val();
+        var dtype =  $('#txtdtype').val();
+        var branchid =  $('#txtbranchid').val();
+        var date =  $('#date').val();
+        var reason =  $('#txtreason').val();
+        var removeall = $('#hidchckremoveall').val();
+        var gridindex=$('#gridindex').val();
+        var selectedrows=$('#appliedDetailsGrid').jqxGrid('selectedrowindexes');
+        var confirmtext="";
+        var deletearray="";
+        var tranid=$('#appliedDelete').jqxGrid('getcellvalue',gridindex,'tranid');
+        var transno=$('#appliedDelete').jqxGrid('getcellvalue',gridindex,'transno');
+        var transtype=$('#appliedDelete').jqxGrid('getcellvalue',gridindex,'transtype');
+        
+        if(selectedrows.length==0){
+            confirmtext="Do you want to delete all entries of "+transtype+" #"+transno;
+        }
+        else{
+            confirmtext="Do you want to delete "+selectedrows.length+" entries of "+transtype+" #"+transno;
+            for(var i=0;i<selectedrows.length;i++){
+                var dettranid=$('#appliedDetailsGrid').jqxGrid('getcellvalue',selectedrows[i],'tranid');
+                var appliedamt=$('#appliedDetailsGrid').jqxGrid('getcellvalue',selectedrows[i],'applying');
+                if(i==0){
+                    deletearray+=dettranid+"::"+appliedamt+"::";
+                }
+                else{
+                    deletearray+=","+dettranid+"::"+appliedamt+"::";
+                }
+            }
+        }
+        if(reason==''){
+             $.messager.alert('Message','Please Enter the Reason.','warning');
+             return 0;
+        }
+        
+         $.messager.confirm('Message', confirmtext+'?', function(r){
+                
+            if(r==false)
+             {
+                return false; 
+             }
+            else{
+                if(selectedrows.length==0){
+                    saveGridData(trno,accountno,outamount,dtype,branchid,date,reason,removeall);   
+                }
+                else{
+                    deleteAppliedSaperate(trno,accountno,outamount,dtype,branchid,date,reason,removeall,deletearray,tranid);
+                }
+                    
+            }
+        });
+    }
+        
+    function deleteAppliedSaperate(trno,accountno,outamount,dtype,branchid,date,reason,removeall,deletearray,tranid){
+        $.post('deleteAppliedSaperate.jsp',
+                {   'trno':trno,
+                    'accountno':accountno,
+                    'outamount':outamount,
+                    'dtype':dtype,
+                    'branchid':branchid,
+                    'date':date,
+                    'reason':reason,
+                    'removeall':removeall,
+                    'deletearray':deletearray,
+                    'tranid':tranid
+                },
+                function(data,status){
+                    data=JSON.parse(data);
+                    if(data.errorstatus=="0"){
+                        $('#txttrno,#txtoutamount,#txtdtype,#txtbranchid,#txtreason,#applyinfo').val('');
+                        $('#date').jqxDateTimeInput('setDate',new Date());
+                        document.getElementById("chckremoveall").checked=false;
+                        $('#hidchckremoveall').val('0');
+                        $.messager.alert('Message','Successfully Deleted');
+                        funreload("");
+                    }
+                    else{
+                        $.messager.alert('Message','Not Deleted');
+                    }
+                });
+    }
+    function saveGridData(trno,accountno,outamount,dtype,branchid,date,reason,removeall){
 
-		var x=new XMLHttpRequest();
-		x.onreadystatechange=function(){
-		if (x.readyState==4 && x.status==200){
-	     			
-				var items=x.responseText;
-				var trno =  $('#txttrno').val(' ');
-				var outamount =  $('#txtoutamount').val(' ');
-				var dtype =  $('#txtdtype').val(' ');
-				var branchid =  $('#txtbranchid').val(' ');
-				var date =  $('#date').val(new Date());
-				var reason =  $('#txtreason').val(' ');
-				var applyinfo = $('#applyinfo').val(' ');
-				document.getElementById("chckremoveall").checked=false;
-				$('#hidchckremoveall').val('0');
-				
-				$.messager.alert('Message', '  Record Successfully Deleted ', function(r){
-			    });
-				funreload(event); 
-				}
-		}
-			
-	x.open("GET","saveData.jsp?trno="+trno+"&accountno="+accountno+"&outamount="+outamount+"&dtype="+dtype+"&branchid="+branchid+"&date="+date+"&reason="+reason+"&removeall="+removeall,true);
-	x.send();
-			
-	}
-	
-	function clearAccountInfo(){
-		$('#txtdocno').val('');$('#txtaccid').val('');$('#txtaccname').val('');
-		$('#txttrno').val(' ');$('#txtoutamount').val(' ');$('#txtdtype').val(' ');
-		$('#txtbranchid').val(' ');$('#date').val(new Date());$('#txtreason').val(' ');
-		$('#applyinfo').val(' ');
-		$("#appliedDetailsGrid").jqxGrid({ disabled: true});$("#appliedDetailsGrid").jqxGrid('clear'); 
-		$("#appliedDelete").jqxGrid('clear');$('#date').jqxDateTimeInput({disabled: true});
-  	    $('#txtreason').attr("readonly",true);$('#btndelete').attr("disabled",true);$('#chckremoveall').attr("disabled",true);
-  	    document.getElementById("chckremoveall").checked=false;$('#hidchckremoveall').val('0');
-  	  
-  	  if (document.getElementById("txtaccid").value == "") {
-	        $('#txtaccid').attr('placeholder', 'Press F3 to Search'); 
-	    }
-	}
-	
-	function getAccTypeFrom(event){
+        var x=new XMLHttpRequest();
+        x.onreadystatechange=function(){
+        if (x.readyState==4 && x.status==200){
+                
+                var items=x.responseText;
+                var trno =  $('#txttrno').val(' ');
+                var outamount =  $('#txtoutamount').val(' ');
+                var dtype =  $('#txtdtype').val(' ');
+                var branchid =  $('#txtbranchid').val(' ');
+                var date =  $('#date').val(new Date());
+                var reason =  $('#txtreason').val(' ');
+                var applyinfo = $('#applyinfo').val(' ');
+                document.getElementById("chckremoveall").checked=false;
+                $('#hidchckremoveall').val('0');
+                
+                $.messager.alert('Message', '  Record Successfully Deleted ', function(r){
+                });
+                funreload(event); 
+                }
+        }
+            
+    x.open("GET","saveData.jsp?trno="+trno+"&accountno="+accountno+"&outamount="+outamount+"&dtype="+dtype+"&branchid="+branchid+"&date="+date+"&reason="+reason+"&removeall="+removeall,true);
+    x.send();
+            
+    }
+    
+    function clearAccountInfo(){
+        $('#txtdocno').val('');$('#txtaccid').val('');$('#txtaccname').val('');
+        $('#txttrno').val(' ');$('#txtoutamount').val(' ');$('#txtdtype').val(' ');
+        $('#txtbranchid').val(' ');$('#date').val(new Date());$('#txtreason').val(' ');
+        $('#applyinfo').val(' ');
+        $("#appliedDetailsGrid").jqxGrid({ disabled: true});$("#appliedDetailsGrid").jqxGrid('clear'); 
+        $("#appliedDelete").jqxGrid('clear');$('#date').jqxDateTimeInput({disabled: true});
+        $('#txtreason').attr("readonly",true);$('#btndelete').attr("disabled",true);$('#chckremoveall').attr("disabled",true);
+        document.getElementById("chckremoveall").checked=false;$('#hidchckremoveall').val('0');
+      
+      if (document.getElementById("txtaccid").value == "") {
+            $('#txtaccid').attr('placeholder', 'Press F3 to Search'); 
+        }
+    }
+    
+    function getAccTypeFrom(event){
         var x= event.keyCode;
         if(x==114){
-      		accountsSearchContent('accountsDetailsSearch.jsp');
+            accountsSearchContent('accountsDetailsSearch.jsp');
         }
        
       }
-	
-	function removeallcheck(){
-		 if(document.getElementById("chckremoveall").checked){
-			 document.getElementById("hidchckremoveall").value = 1;
-		 }
-		 else{
-			 document.getElementById("hidchckremoveall").value = 0;
-		 }
-	 }
-	
-	function funExportBtn(){
-		//JSONToCSVCon(datas, 'Remove Applied', true);
-		//JSONToCSVCon(exceldata, 'Remove Applied', true);
-	} 
-	
-	
-	
+    
+    function removeallcheck(){
+         if(document.getElementById("chckremoveall").checked){
+             document.getElementById("hidchckremoveall").value = 1;
+         }
+         else{
+             document.getElementById("hidchckremoveall").value = 0;
+         }
+     }
+    
+    function funExportBtn(){
+        //JSONToCSVCon(datas, 'Remove Applied', true);
+        //JSONToCSVCon(exceldata, 'Remove Applied', true);
+    } 
+    
 </script>
 </head>
 <body onload="getBranch();">
 <div id="mainBG" class="homeContent" data-type="background"> 
-<div class="hidden-scrollbar">
 
-<table width="100%">
-<tr>
+    <div class="master-container">
 
-<!-- ===== LEFT PANEL ===== -->
-<td width="20%" valign="top">
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="cmbtype"
+                                        name="cmbtype"
+                                        onchange="clearAccountInfo();"
+                                        value='<s:property value="cmbtype"/>'>
+                                    <option value="AR">AR</option>
+                                    <option value="AP">AP</option>
+                                </select>
+                            </td>
+                        </tr>
 
-<fieldset class="filter-card scrollable-left">
-<table width="100%" class="filter-table">
+                        <tr>
+                            <td class="label-cell">Account</td>
+                            <td>
+                                <input type="text"
+                                       id="txtaccid"
+                                       name="txtaccid"
+                                       readonly
+                                       placeholder="Press F3 to Search"
+                                       value='<s:property value="txtaccid"/>'
+                                       ondblclick="funSearchdblclick();"
+                                       onkeydown="getAccTypeFrom(event);">
+                            </td>
+                        </tr>
 
-    <!-- HEADING (UNCHANGED â WILL APPEAR) -->
-    <jsp:include page="../../heading.jsp"></jsp:include>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="text"
+                                       id="txtaccname"
+                                       name="txtaccname"
+                                       readonly
+                                       tabindex="-1"
+                                       value='<s:property value="txtaccname"/>'>
+                                <input type="hidden"
+                                       id="txtdocno"
+                                       name="txtdocno"
+                                       value='<s:property value="txtdocno"/>'>
+                            </td>
+                        </tr>
 
-    <tr>
-        <td class="label-cell">Type</td>
-        <td>
-            <select id="cmbtype"
-                    name="cmbtype"
-                    class="master-input"
-                    onchange="clearAccountInfo();"
-                    value='<s:property value="cmbtype"/>'>
-                <option value="AR">AR</option>
-                <option value="AP">AP</option>
-            </select>
-        </td>
-    </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <textarea id="applyinfo"
+                                          name="applyinfo"
+                                          readonly><s:property value="applyinfo"/></textarea>
+                            </td>
+                        </tr>
 
-    <tr>
-        <td class="label-cell">Account</td>
-        <td>
-            <input type="text"
-                   id="txtaccid"
-                   name="txtaccid"
-                   class="master-input"
-                   readonly
-                   placeholder="Press F3 to Search"
-                   value='<s:property value="txtaccid"/>'
-                   ondblclick="funSearchdblclick();"
-                   onkeydown="getAccTypeFrom(event);">
-        </td>
-    </tr>
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td>
+                                <div id="date"
+                                     name="date"
+                                     value='<s:property value="date"/>'></div>
+                            </td>
+                        </tr>
 
-    <tr>
-        <td></td>
-        <td>
-            <input type="text"
-                   id="txtaccname"
-                   name="txtaccname"
-                   class="master-input"
-                   readonly
-                   tabindex="-1"
-                   value='<s:property value="txtaccname"/>'>
-            <input type="hidden"
-                   id="txtdocno"
-                   name="txtdocno"
-                   value='<s:property value="txtdocno"/>'>
-        </td>
-    </tr>
+                        <tr>
+                            <td class="label-cell">Reason</td>
+                            <td>
+                                <input type="text"
+                                       id="txtreason"
+                                       name="txtreason"
+                                       value='<s:property value="txtreason"/>'>
+                            </td>
+                        </tr>
 
-    <tr>
-        <td colspan="2" align="center">
-            <textarea id="applyinfo"
-                      name="applyinfo"
-                      class="master-textarea"
-                      readonly>
-                <s:property value="applyinfo"/>
-            </textarea>
-        </td>
-    </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 5px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox"
+                                           id="chckremoveall"
+                                           name="chckremoveall"
+                                           style="width: auto; height: auto;"
+                                           onchange="removeallcheck();"
+                                           onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                                    <input type="hidden"
+                                           id="hidchckremoveall"
+                                           name="hidchckremoveall"
+                                           value='<s:property value="hidchckremoveall"/>'>
+                                    <label class="branch" style="font-size: 12px;">Remove All</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-    <tr>
-        <td class="label-cell">Date</td>
-        <td>
-            <div id="date"
-                 name="date"
-                 value='<s:property value="date"/>'></div>
-        </td>
-    </tr>
+                <div class="action-buttons">
+                    <button type="button"
+                            id="btndelete"
+                            class="btn-submit"
+                            onclick="funDelete(event);">
+                        Delete
+                    </button>
+                </div>
 
-    <tr>
-        <td class="label-cell">Reason</td>
-        <td>
-            <input type="text"
-                   id="txtreason"
-                   name="txtreason"
-                   class="master-input"
-                   value='<s:property value="txtreason"/>'>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2">
-            <input type="checkbox"
-                   id="chckremoveall"
-                   name="chckremoveall"
-                   onchange="removeallcheck();"
-                   onclick="$(this).attr('value', this.checked ? 1 : 0)">
-            <input type="hidden"
-                   id="hidchckremoveall"
-                   name="hidchckremoveall"
-                   value='<s:property value="hidchckremoveall"/>'>
-            <label class="branch">Remove All</label>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2" align="center">
-            <button type="button"
-                    id="btndelete"
-                    class="btn-submit"
-                    onclick="funDelete(event);">
-                Delete
-            </button>
-        </td>
-    </tr>
-
-    <!-- HIDDEN FIELDS (UNCHANGED) -->
-    <tr>
-        <td colspan="2">
-            <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'>
-            <input type="hidden" id="txtoutamount" name="txtoutamount" value='<s:property value="txtoutamount"/>'>
-            <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'>
-            <input type="hidden" id="txtbranchid" name="txtbranchid" value='<s:property value="txtbranchid"/>'>
-        </td>
-    </tr>
-
-</table>
-</fieldset>
-
-</td>
-
-<!-- ===== RIGHT GRIDS ===== -->
-<td width="80%" valign="top">
-<table width="100%">
-<tr>
-    <td>
-        <div id="appliedDiv">
-            <jsp:include page="appliedGrid.jsp"></jsp:include>
+                <input type="hidden" id="txttrno" name="txttrno" value='<s:property value="txttrno"/>'>
+                <input type="hidden" id="txtoutamount" name="txtoutamount" value='<s:property value="txtoutamount"/>'>
+                <input type="hidden" id="txtdtype" name="txtdtype" value='<s:property value="txtdtype"/>'>
+                <input type="hidden" id="txtbranchid" name="txtbranchid" value='<s:property value="txtbranchid"/>'>
+                
+            </div>
         </div>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div id="detailDiv">
-            <jsp:include page="appliedDetailGrid.jsp"></jsp:include>
+
+        <div class="main-content-area">
+            
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
+
+            <div class="grid-content-container">
+                <div id="appliedDiv">
+                    <jsp:include page="appliedGrid.jsp"></jsp:include>
+                </div>
+                <div id="detailDiv">
+                    <jsp:include page="appliedDetailGrid.jsp"></jsp:include>
+                </div>
+            </div>
+
         </div>
-    </td>
-</tr>
-</table>
-</td>
 
-</tr>
-</table>
+    </div>
 
-</div>
-
-<div id="accountDetailsWindow">
-    <div></div><div></div>
-</div>
+    <div id="accountDetailsWindow">
+        <div></div><div></div>
+    </div>
 
 </div> 
 </body>
-
 </html>

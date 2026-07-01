@@ -107,7 +107,7 @@ body {
     cursor: pointer;
     box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
     text-align: center;
-    width: 100%;
+    width: 50%;
 }
 
 .modern-ui .myButton:hover {
