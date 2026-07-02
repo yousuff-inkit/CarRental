@@ -11,89 +11,89 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 100%;
+    width: 280px; 
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; 
 }
 
+/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
+/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
-    width: 90px;
+    font-weight: 600;
+    width: 80px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select, textarea {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, textarea,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
+    height: 24px;              
+    padding: 2px 8px;          
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;        
+    font-size: 12px;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
     outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: inherit;
 }
 
-textarea {
+textarea#vehinfo {
     height: 80px !important;
     resize: none;
+    margin-top: 5px;
 }
 
 select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
+    padding-right: 24px; 
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -103,10 +103,18 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled, textarea[readonly] {
+/* Readonly / disabled look */
+input[readonly], input:disabled, select:disabled, textarea[readonly],
+.filter-table input[readonly], .filter-table input:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
+    border-color: #e1e8ed;
     cursor: not-allowed;
+}
+
+/* jqx date/time containers */
+div[id^="fromdate"], div[id^="todate"] {
+    width: 100%;
 }
 
 /* ===== BUTTONS ===== */
@@ -114,47 +122,58 @@ input[readonly], input:disabled, select:disabled, textarea[readonly] {
     display: flex;
     gap: 10px;
     justify-content: center;
+    margin-top: 15px;
 }
 
 .btn-submit {
     flex: 1;
-    width: 100%;
-    height: 30px !important;            
-    padding: 0 12px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
+    height: 30px;            
+    padding: 0 12px;         
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;      
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
+    line-height: 30px;       
     text-align: center;
-    margin-top: 8px;
-    transition: all 0.2s ease;
+    transition: background 0.2s;
 }
 
-.btn-submit:hover {
-    background: #1d4ed8 !important;
-}
+.btn-submit:hover { background: #1d4ed8; }
+.btn-submit.btn-secondary { background: #64748b; }
+.btn-submit.btn-secondary:hover { background: #475569; }
 
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
+/* ===== RIGHT CONTENT AREA ===== */
+.main-content-area {
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
-.scrollable-grid-area {
+/* Block layout required for JQX grids to calculate percentage height properly */
+.grid-content-container {
     flex: 1;
-    width: 100%;
-    overflow: auto;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
+    display: block;
+}
+
+.grid-content-container > div {
+    margin-bottom: 15px;
 }
 </style>
 
@@ -217,9 +236,8 @@ input[readonly], input:disabled, select:disabled, textarea[readonly] {
             });
     }
 
-    function  funClearData(){
+    function funClearData(){
          $('#emptype').val('');$('#txtempname').val('');$('#txtempid').val('');$('#fromdate').val(new Date());$('#todate').val(new Date());
-         $('#fromdate').val(new Date());
          
          var curfromdate= $('#fromdate').jqxDateTimeInput('getDate');
          var oneyeardate=new Date(new Date(curfromdate).setMonth(curfromdate.getMonth()-1));
@@ -309,108 +327,95 @@ input[readonly], input:disabled, select:disabled, textarea[readonly] {
 
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
-<div class="master-container">
+<div id="mainBG" class="homeContent" data-type="background">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
+    <div class="master-container">
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">From</td>
+                            <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">To</td>
+                            <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="emptype" name="emptype">
+                                    <option value="">--Select--</option>
+                                    <option value="STF" <s:if test="emptype == 'STF'">selected</s:if>>Staff</option>
+                                    <option value="DRV" <s:if test="emptype == 'DRV'">selected</s:if>>Driver</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Employee</td>
+                            <td>
+                                <input type="text" id="txtempname" name="txtempname" 
+                                       placeholder="Press F3 to Search" readonly="readonly" 
+                                       ondblclick="funSearchdblclick();" 
+                                       onkeydown="getEmployee(event);" 
+                                       value='<s:property value="txtempname"/>'>
+                                <input type="hidden" id="txtempid" name="txtempid" value='<s:property value="txtempid"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <textarea id="vehinfo" name="vehinfo" readonly="readonly" placeholder="Vehicle Info..."><s:property value="vehinfo"/></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-submit btn-secondary" type="button" id="clear" onclick="funClearData();">Clear</button>
+                    <button class="btn-submit" type="button" id="btnupdate" onclick="funUpdate(event);">Update</button>
+                </div>
+
+                <div style="display:none;">
+                    <input type="hidden" id="txtsalikaccount" name="txtsalikaccount" value='<s:property value="txtsalikaccount"/>'>
+                    <input type="hidden" id="txtexpenseaccount" name="txtexpenseaccount" value='<s:property value="txtexpenseaccount"/>'>
+                    <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'>
+                    <input type="hidden" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>'>
+                    <input type="hidden" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>'>
+                    <input type="hidden" id="txtamountcount" name="txtamountcount" value='<s:property value="txtamountcount"/>'>
+                    <input type="hidden" id="txtmainbranch" name="txtmainbranch" value='<s:property value="txtmainbranch"/>'>
+                    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'>
+                    <input type="hidden" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>'>
+                    <input type="hidden" id="txtemployeeid" name="txtemployeeid" value='<s:property value="txtemployeeid"/>'>
+                    <input type="hidden" id="accfines" name="accfines" value='<s:property value="accfines"/>'>
+                    <input type="hidden" id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'>
+                </div>
+
+            </div>
         </div>
 
-        <div class="sidebar-scroll-content">
+        <div class="main-content-area">
             
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From</td>
-                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To</td>
-                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="emptype" name="emptype" value='<s:property value="emptype"/>'>
-                                <option value="">--Select--</option>
-                                <option value="STF">Staff</option>
-                                <option value="DRV">Driver</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Employee</td>
-                        <td>
-                            <input type="text" id="txtempname" name="txtempname" 
-                                   placeholder="Press F3 to Search" readonly="readonly" 
-                                   ondblclick="funSearchdblclick();" 
-                                   onkeydown="getEmployee(event);" 
-                                   value='<s:property value="txtempname"/>'>
-                            <input type="hidden" id="txtempid" name="txtempid" value='<s:property value="txtempid"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <textarea id="vehinfo" name="vehinfo" rows="4" readonly="readonly" placeholder="Vehicle Info..."><s:property value="vehinfo"/></textarea>
-                        </td>
-                    </tr>
-                </table>
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
             </div>
 
-            <!-- BUTTONS -->
-            <div class="button-group">
-                <button class="btn-submit" type="button" id="clear" onclick="funClearData();">Clear</button>
-                <button class="btn-submit" type="button" id="btnupdate" onclick="funUpdate(event);">Update</button>
-            </div>
-
-            <!-- HIDDEN FIELDS -->
-            <div style="display:none;">
-                <input type="hidden" id="txtsalikaccount" name="txtsalikaccount" value='<s:property value="txtsalikaccount"/>'>
-                <input type="hidden" id="txtexpenseaccount" name="txtexpenseaccount" value='<s:property value="txtexpenseaccount"/>'>
-                <input type="hidden" id="txtrano" name="txtrano" value='<s:property value="txtrano"/>'>
-                <input type="hidden" id="txtfleetno" name="txtfleetno" value='<s:property value="txtfleetno"/>'>
-                <input type="hidden" id="txtamount" name="txtamount" value='<s:property value="txtamount"/>'>
-                <input type="hidden" id="txtamountcount" name="txtamountcount" value='<s:property value="txtamountcount"/>'>
-                <input type="hidden" id="txtmainbranch" name="txtmainbranch" value='<s:property value="txtmainbranch"/>'>
-                <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'>
-                <input type="hidden" id="txtsrno" name="txtsrno" value='<s:property value="txtsrno"/>'>
-                <input type="hidden" id="txtemployeeid" name="txtemployeeid" value='<s:property value="txtemployeeid"/>'>
-                <input type="hidden" id="accfines" name="accfines" value='<s:property value="accfines"/>'>
-                <input type="hidden" id="txtdate" name="txtdate" value='<s:property value="txtdate"/>'>
+            <div class="grid-content-container">
+                <div id="staffAllocatedDiv">
+                    <jsp:include page="staffallocateddamageGrid.jsp"></jsp:include>
+                </div>
             </div>
 
         </div>
+
     </div>
-</td>
 
-<!-- ================= RIGHT SIDE (GRIDS) ================= -->
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="staffAllocatedDiv">
-                <jsp:include page="staffallocateddamageGrid.jsp"></jsp:include>
-            </div>
-        </div>
+    <div id="employeeDetailsWindow">
+        <div></div><div></div>
     </div>
-</td>
-
-</tr>
-</table>
 
 </div>
-</div>
-
-<!-- POPUPS -->
-<div id="employeeDetailsWindow">
-    <div></div><div></div>
-</div>
-
 </body>
 </html>
