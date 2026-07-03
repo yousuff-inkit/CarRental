@@ -11,91 +11,89 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 100%;
+    width: 280px; 
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; 
 }
 
+/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
+/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
-    width: 90px;
+    font-weight: 600;
+    width: 80px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS & TEXTAREA ===== */
-input[type="text"], select, textarea {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, textarea,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
+    height: 24px;              
+    padding: 2px 8px;          
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;        
+    font-size: 12px;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
     outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: inherit;
 }
 
-textarea {
-    height: auto !important;
-    min-height: 45px;
-    resize: vertical;
-    line-height: 1.4;
+textarea#clientinfo {
+    height: 80px !important;
+    resize: none;
+    margin-top: 5px;
 }
 
 select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
+    padding-right: 24px; 
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -105,10 +103,13 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled, textarea[readonly] {
+/* Readonly / disabled look */
+input[readonly], input:disabled, select:disabled, textarea[readonly],
+.filter-table input[readonly], .filter-table input:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
-    cursor: pointer;
+    border-color: #e1e8ed;
+    cursor: not-allowed;
 }
 
 input[type="checkbox"] {
@@ -145,48 +146,64 @@ input[type="checkbox"] {
 .btn-icon:disabled { cursor: not-allowed; opacity: 0.6; }
 .btn-icon img { height: 14px; width: 14px; }
 
+/* jqx date/time containers */
+div[id^="uptodate"], div[id^="date"], div[id^="chqdate"] {
+    width: 100%;
+}
+
 /* ===== BUTTONS ===== */
 .button-group {
     display: flex;
     gap: 8px;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 .btn-submit {
     flex: 1;
-    height: 30px !important;            
-    padding: 0 5px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
+    height: 30px;            
+    padding: 0 5px;         
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;      
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-    line-height: 30px !important;
+    line-height: 30px;       
     text-align: center;
-    transition: all 0.2s ease;
+    transition: background 0.2s;
 }
 
-.btn-submit:hover { background: #1d4ed8 !important; }
+.btn-submit:hover:not(:disabled) { background: #1d4ed8; }
+.btn-submit.btn-secondary { background: #64748b; }
+.btn-submit.btn-secondary:hover:not(:disabled) { background: #475569; }
 .btn-submit:disabled { background: #94a3b8 !important; cursor: not-allowed; }
 
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
+/* ===== RIGHT CONTENT AREA ===== */
+.main-content-area {
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
-.scrollable-grid-area {
+/* Block layout required for JQX grids to calculate percentage height properly */
+.grid-content-container {
     flex: 1;
-    width: 100%;
-    overflow: auto;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
+    display: block; 
 }
 
 .bottom-total-row {
@@ -195,6 +212,15 @@ input[type="checkbox"] {
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Fix for jqx widget overrides */
+.jqx-widget input, .jqx-widget select {
+    height: 24px !important;
+    line-height: 24px !important;
 }
 </style>
 
@@ -203,7 +229,7 @@ $(document).ready(function () {
     // Standardized UI Controls
     $("#uptodate, #date, #chqdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
     
-    // Popup Windows Setup
+    // Popup Windows Setup (Using exactly 2 nested divs)
     const winOpts = { height: '58%', theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27 };
     $('#accountDetailsWindow').jqxWindow({ ...winOpts, width: '51%', maxHeight: '70%', maxWidth: '51%', title: 'Search', position: { x: 300, y: 87 } }).jqxWindow('close');
     $('#branchSearchWindow').jqxWindow({ ...winOpts, width: '20%', maxHeight: '60%', maxWidth: '30%', title: 'Branch Search', position: { x: 250, y: 120 } }).jqxWindow('close');
@@ -503,192 +529,183 @@ function funExportBtn(){
 
 <body onload="getBranch();getCardTypes();getPayTypes();">
 
-<div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
-<div class="master-container">
+<div id="mainBG" class="homeContent" data-type="background">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
+    <div class="master-container">
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+        <!-- ================= LEFT SIDEBAR ================= -->
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                
+                <!-- Filter Group 1 -->
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Up To</td>
+                            <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Closed Before</td>
+                            <td>
+                                <input type="text" id="txtagreementcloseddays" name="txtagreementcloseddays"
+                                       placeholder="Agreement Closed Days" onkeypress="javascript:return isNumber(event)"
+                                       value='<s:property value="txtagreementcloseddays"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Client</td>
+                            <td>
+                                <div class="inline-controls">
+                                    <input type="text" id="txtclientaccount" name="txtclientaccount" readonly
+                                           placeholder="Press F3 to Search" value='<s:property value="txtclientaccount"/>'
+                                           onkeydown="getClient(event);">
+                                    <button type="button" class="btn-icon" title="Change Agreement" onclick="funChangeAgreement();">
+                                        <img src="<%=contextPath%>/icons/add_new.png" alt="">
+                                    </button>
+                                </div>
+                                <input type="hidden" id="hiddocno" name="hiddocno" value='<s:property value="hiddocno"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="text" id="txtclientname" name="txtclientname" readonly tabindex="-1" value='<s:property value="txtclientname"/>'>
+                                <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <textarea id="clientinfo" readonly><s:property value="clientinfo"/></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Filter Group 2 -->
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td>
+                                <div id="date" name="date" value='<s:property value="date"/>'></div>
+                                <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Branch</td>
+                            <td>
+                                <div class="inline-controls">
+                                    <input type="text" id="txtibbranch" name="txtibbranch" readonly
+                                           placeholder="Press F3 to Search" value='<s:property value="txtibbranch"/>'
+                                           onkeydown="getIbBranch(event);">
+                                    <input type="checkbox" id="chckibbranch" name="chckibbranch" onchange="ibbranchcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                                </div>
+                                <input type="hidden" id="txtibbranchid" name="txtibbranchid" value='<s:property value="txtibbranchid"/>'>
+                                <input type="hidden" id="hidchckibbranch" name="hidchckibbranch" value='<s:property value="hidchckibbranch"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="cmbtype" name="cmbtype" onchange="bankAccountSearch();getAccounts(this.value,$('#date').val());" value='<s:property value="cmbtype"/>'></select>
+                                <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Account</td>
+                            <td>
+                                <input type="text" id="txttypeaccid" name="txttypeaccid" readonly value='<s:property value="txttypeaccid"/>' onkeydown="getAccType(event);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="text" id="txttypeaccname" name="txttypeaccname" readonly value='<s:property value="txttypeaccname"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Card Type</td>
+                            <td>
+                                <div class="inline-controls">
+                                    <select id="cmbcardtype" name="cmbcardtype" value='<s:property value="cmbcardtype"/>'>
+                                        <option value="">--Select--</option>
+                                    </select>
+                                    <button type="button" id="btnCardSearch" class="btn-icon" onclick="funCardSearch();">
+                                        <img src="<%=contextPath%>/icons/cardsearch.png" alt="">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Chq/Card No.</td>
+                            <td><input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Chq/Card Dt</td>
+                            <td><div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Remarks</td>
+                            <td><input type="text" id="txtremarks" name="txtremarks" value='<s:property value="txtremarks"/>'></td>
+                        </tr>
+                    </table>
+
+                    <!-- Action Buttons -->
+                    <div class="button-group">
+                        <button class="btn-submit" type="button" id="btnRefund" onclick="funRefund(event);">Refund</button>
+                        <button class="btn-submit btn-secondary" type="button" id="clear" onclick="funClearInfo();">Clear</button>
+                        <button class="btn-submit" type="button" id="btnRelease" onclick="funRelease(event);">Release</button>
+                    </div>
+
+                </div>
+
+                <!-- Global Hidden Data -->
+                <div style="display:none;">
+                    <input type="hidden" id="txtclientdocno" name="txtclientdocno">
+                    <input type="hidden" id="txtclaccount" name="txtclaccount">
+                    <input type="hidden" id="txtclname" name="txtclname">
+                    <input type="hidden" id="txtrano" name="txtrano">
+                    <input type="hidden" id="txtrtype" name="txtrtype">
+                    <input type="hidden" id="txtmainbrhid" name="txtmainbrhid">
+                    <input type="hidden" id="txtsecurityamount" name="txtsecurityamount">
+                    <input type="hidden" id="txtbalanceamount" name="txtbalanceamount">
+                    <input type="hidden" id="txtibvalidation" name="txtibvalidation">
+                    <input type="hidden" id="txthidtype" name="txthidtype">
+                    <input type="hidden" id="txthidtrno" name="txthidtrno">
+                    <input type="hidden" id="txthidvoc" name="txthidvoc">
+                    <div id="paychaaaaa"></div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="sidebar-scroll-content">
+        <!-- ================= RIGHT CONTENT AREA ================= -->
+        <div class="main-content-area">
             
-            <!-- Filter Group 1 -->
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Up To</td>
-                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Closed Before</td>
-                        <td>
-                            <input type="text" id="txtagreementcloseddays" name="txtagreementcloseddays"
-                                   placeholder="Agreement Closed Days" onkeypress="javascript:return isNumber(event)"
-                                   value='<s:property value="txtagreementcloseddays"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Client</td>
-                        <td>
-                            <div class="inline-controls">
-                                <input type="text" id="txtclientaccount" name="txtclientaccount" readonly
-                                       placeholder="Press F3 to Search" value='<s:property value="txtclientaccount"/>'
-                                       onkeydown="getClient(event);">
-                                <button type="button" class="btn-icon" title="Change Agreement" onclick="funChangeAgreement();">
-                                    <img src="<%=contextPath%>/icons/add_new.png" alt="">
-                                </button>
-                            </div>
-                            <input type="hidden" id="hiddocno" name="hiddocno" value='<s:property value="hiddocno"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="text" id="txtclientname" name="txtclientname" readonly tabindex="-1" value='<s:property value="txtclientname"/>'>
-                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <textarea id="clientinfo" readonly><s:property value="clientinfo"/></textarea>
-                        </td>
-                    </tr>
-                </table>
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
             </div>
 
-            <!-- Filter Group 2 -->
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Date</td>
-                        <td>
-                            <div id="date" name="date" value='<s:property value="date"/>'></div>
-                            <input type="hidden" id="hiddate" name="hiddate" value='<s:property value="hiddate"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Branch</td>
-                        <td>
-                            <div class="inline-controls">
-                                <input type="text" id="txtibbranch" name="txtibbranch" readonly
-                                       placeholder="Press F3 to Search" value='<s:property value="txtibbranch"/>'
-                                       onkeydown="getIbBranch(event);">
-                                <input type="checkbox" id="chckibbranch" name="chckibbranch" onchange="ibbranchcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                            </div>
-                            <input type="hidden" id="txtibbranchid" name="txtibbranchid" value='<s:property value="txtibbranchid"/>'>
-                            <input type="hidden" id="hidchckibbranch" name="hidchckibbranch" value='<s:property value="hidchckibbranch"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="cmbtype" name="cmbtype" onchange="bankAccountSearch();getAccounts(this.value,$('#date').val());" value='<s:property value="cmbtype"/>'></select>
-                            <input type="hidden" id="hidcmbtype" name="hidcmbtype" value='<s:property value="hidcmbtype"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Account</td>
-                        <td>
-                            <input type="text" id="txttypeaccid" name="txttypeaccid" readonly value='<s:property value="txttypeaccid"/>' onkeydown="getAccType(event);">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="text" id="txttypeaccname" name="txttypeaccname" readonly value='<s:property value="txttypeaccname"/>'></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Card Type</td>
-                        <td>
-                            <div class="inline-controls">
-                                <select id="cmbcardtype" name="cmbcardtype" value='<s:property value="cmbcardtype"/>'>
-                                    <option value="">--Select--</option>
-                                </select>
-                                <button type="button" id="btnCardSearch" class="btn-icon" onclick="funCardSearch();">
-                                    <img src="<%=contextPath%>/icons/cardsearch.png" alt="">
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Chq/Card No.</td>
-                        <td><input type="text" id="txtchequeno" name="txtchequeno" value='<s:property value="txtchequeno"/>'></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Chq/Card Dt</td>
-                        <td><div id="chqdate" name="chqdate" value='<s:property value="chqdate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Remarks</td>
-                        <td><input type="text" id="txtremarks" name="txtremarks" value='<s:property value="txtremarks"/>'></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="button-group">
-                <button class="btn-submit" type="button" id="btnRefund" onclick="funRefund(event);">Refund</button>
-                <button class="btn-submit" type="button" id="clear" onclick="funClearInfo();" style="background: #64748b !important;">Clear</button>
-                <button class="btn-submit" type="button" id="btnRelease" onclick="funRelease(event);">Release</button>
-            </div>
-
-            <!-- Global Hidden Data -->
-            <div style="display:none;">
-                <input type="hidden" id="txtclientdocno" name="txtclientdocno">
-                <input type="hidden" id="txtclaccount" name="txtclaccount">
-                <input type="hidden" id="txtclname" name="txtclname">
-                <input type="hidden" id="txtrano" name="txtrano">
-                <input type="hidden" id="txtrtype" name="txtrtype">
-                <input type="hidden" id="txtmainbrhid" name="txtmainbrhid">
-                <input type="hidden" id="txtsecurityamount" name="txtsecurityamount">
-                <input type="hidden" id="txtbalanceamount" name="txtbalanceamount">
-                <input type="hidden" id="txtibvalidation" name="txtibvalidation">
-                <input type="hidden" id="txthidtype" name="txthidtype">
-                <input type="hidden" id="txthidtrno" name="txthidtrno">
-                <input type="hidden" id="txthidvoc" name="txthidvoc">
+            <div class="grid-content-container">
+                <div id="refundableDiv">
+                    <jsp:include page="refundGrid.jsp"></jsp:include>
+                </div>
+                
+                <div class="bottom-total-row">
+                    <label style="font-size: 13px; font-weight: bold; color: #333;">Net Balance :</label>
+                    <input type="text" id="txtnetamount" class="textbox" readonly
+                           style="width: 150px; text-align: right; background-color: #f8fafc;"
+                           value='<s:property value="txtnetamount"/>'>
+                </div>
             </div>
 
         </div>
+
     </div>
-</td>
 
-<!-- ================= RIGHT SIDE (GRID) ================= -->
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            
-            <div id="refundableDiv">
-                <jsp:include page="refundGrid.jsp"></jsp:include>
-            </div>
-            
-            <div class="bottom-total-row">
-                <span style="font-size: 13px; font-weight: bold; color: #333;">Net Balance :</span>
-                <input type="text" id="txtnetamount" class="textbox" readonly
-                       style="width: 150px; text-align: right; background-color: #f8fafc;"
-                       value='<s:property value="txtnetamount"/>'>
-            </div>
-
-        </div>
-    </div>
-</td>
-
-</tr>
-</table>
-
-</div>
-</div>
-
-<!-- POPUPS -->
-<div id="accountDetailsWindow"><div></div><div></div></div>
-<div id="branchSearchWindow"><div></div><div></div></div>
-<div id="cardDetailsWindow"><div></div><div></div></div>
-<div id="agmtDetailsWindow"><div></div><div></div></div>
+    <!-- POPUPS -->
+    <div id="accountDetailsWindow"><div></div><div></div></div>
+    <div id="branchSearchWindow"><div></div><div></div></div>
+    <div id="cardDetailsWindow"><div></div><div></div></div>
+    <div id="agmtDetailsWindow"><div></div><div></div></div>
 
 </div>
 </body>
