@@ -31,8 +31,8 @@
 
     String cPath = request.getContextPath();
     String roleId = (session.getAttribute("ROLEID") != null) ? session.getAttribute("ROLEID").toString() : "0";
+    String userId = (session.getAttribute("USERID") != null) ? session.getAttribute("USERID").toString() : "";
 
-    // [displayName, searchTerm, paramKey, accentColor, bgColor, iconVar, description]
     String[][] moduleDefs = {
         {"Finance",          "Fin",     "Finance",   "#0056b3", "#e8f0fe", "bank",     "Manage accounts, payments, receipts and financial transactions"},
         {"Operations",       "Oper",    "Operation", "#1a7340", "#e8f5e9", "car",      "Handle bookings, movements, agreements and client workflows"},
@@ -42,7 +42,6 @@
         {"Control Centre",   "Control", "Control",   "#b71c1c", "#fce4ec", "settings", "System configuration, user roles and administrative controls"}
     };
 
-    // Determine active module
     String selectedParam = request.getParameter("module");
     if (selectedParam == null || selectedParam.trim().isEmpty()) selectedParam = "Finance";
     int activeIdx = 0;
@@ -50,31 +49,167 @@
         if (moduleDefs[i][2].equalsIgnoreCase(selectedParam)) { activeIdx = i; break; }
     }
 
-    // Fetch tiles for ALL modules
     List<List<ClsDashBoardBean>> allTilesList = new ArrayList<List<ClsDashBoardBean>>();
     for (int i = 0; i < moduleDefs.length; i++) allTilesList.add(new ArrayList<ClsDashBoardBean>());
 
     // =========================================================================
-    // ISOLATED SAFE DUE DATE COUNT BLOCK (Uses exact gl_ragmt table from DAO)
+    // MASTER KPI BLOCK (Phase 1, 2, 3, 4 & 5)
     // =========================================================================
-    int totalDueCount = 0;
-    Connection countConn = null; 
-    Statement countStmt = null; 
-    ResultSet countRs = null;
+    // P1 & P2: Fleet & Agreements
+    int readyToRent = 0, inGarage = 0, regExpiry = 0, insExpiry = 0;
+    int totalDueCount = 0, myTasks = 0, assignedTasks = 0;
+    int laDueDate = 0, bookingFollowUp = 0, quotationFollowUp = 0, agreementCloseReview = 0;
+    
+    // P3: Finance
+    int invoicesToDispatch = 0, damageInvoices = 0, paymentFollowup = 0;
+    int pdcOutstanding = 0, refundableSecurity = 0, collectionClosure = 0;
+
+    // P4: Traffic Fines
+    int unallocatedFines = 0, staffFines = 0, salikPending = 0, toBeInvoicedTraffic = 0;
+
+    // P5: Human Resources
+    int pendingLeaves = 0, pendingWps = 0, pendingPayroll = 0, empDocExpiries = 0;
+
+    Connection kpiConn = null;
+    Statement kpiStmt = null;
+    ResultSet kpiRs = null;
     try {
-        countConn = new ClsConnection().getMyConnection();
-        countStmt = countConn.createStatement();
-        String countSql = "SELECT COUNT(*) AS totalCount FROM gl_ragmt WHERE clstatus=0 AND dispute=0 AND ddate <= CURDATE()"; 
-        countRs = countStmt.executeQuery(countSql);
-        if (countRs.next()) {
-            totalDueCount = countRs.getInt("totalCount");
+        kpiConn = new ClsConnection().getMyConnection();
+        kpiStmt = kpiConn.createStatement();
+
+        // 1. Fleet KPIs & Expiries
+        try {
+            String fleetSql = "SELECT " +
+                "SUM(CASE WHEN tran_code = 'RR' THEN 1 ELSE 0 END) AS rtr, " +
+                "SUM(CASE WHEN tran_code IN ('GM','GA','GS') THEN 1 ELSE 0 END) AS ig, " +
+                "SUM(CASE WHEN reg_exp <= (CURDATE() + INTERVAL 10 DAY) THEN 1 ELSE 0 END) AS re, " +
+                "SUM(CASE WHEN ins_exp <= (CURDATE() + INTERVAL 10 DAY) THEN 1 ELSE 0 END) AS ie " +
+                "FROM gl_vehmaster";
+            kpiRs = kpiStmt.executeQuery(fleetSql);
+            if (kpiRs.next()) {
+                readyToRent = kpiRs.getInt("rtr");
+                inGarage = kpiRs.getInt("ig");
+                regExpiry = kpiRs.getInt("re");
+                insExpiry = kpiRs.getInt("ie");
+            }
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        // 2. Agreements
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS totalCount FROM gl_ragmt WHERE clstatus=0 AND dispute=0 AND ddate <= CURDATE()");
+            if (kpiRs.next()) totalDueCount = kpiRs.getInt("totalCount");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_lagmt WHERE clstatus=0 AND ddate <= CURDATE()");
+            if (kpiRs.next()) laDueDate = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        // 3. Marketing & Operations
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_bookingm WHERE status=0");
+            if (kpiRs.next()) bookingFollowUp = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_quotation WHERE status=0");
+            if (kpiRs.next()) quotationFollowUp = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_ragmt WHERE clstatus=1 AND audit_status=0");
+            if (kpiRs.next()) agreementCloseReview = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        // 4. Finance & Invoicing
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_invoice WHERE status=0"); 
+            if (kpiRs.next()) invoicesToDispatch = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_invoice WHERE inv_type LIKE '%Damage%' AND status=0");
+            if (kpiRs.next()) damageInvoices = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+        
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_invoice WHERE paid_status=0 AND due_date < CURDATE()");
+            if (kpiRs.next()) paymentFollowup = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+        
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_pdc WHERE status=0 AND chq_date <= CURDATE()");
+            if (kpiRs.next()) pdcOutstanding = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        // 5. Traffic Fines & Salik
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_trafficfines WHERE invoice_status=0 OR alloc_status=0");
+            if (kpiRs.next()) unallocatedFines = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_trafficfines WHERE staff_allocated=1 AND status=0");
+            if (kpiRs.next()) staffFines = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_salik WHERE status=0");
+            if (kpiRs.next()) salikPending = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        // 6. Human Resources
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM hr_leave WHERE status=0");
+            if (kpiRs.next()) pendingLeaves = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM hr_wps WHERE status=0");
+            if (kpiRs.next()) pendingWps = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        try {
+            kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM im_employee WHERE visa_exp <= (CURDATE() + INTERVAL 30 DAY) OR pass_exp <= (CURDATE() + INTERVAL 30 DAY)");
+            if (kpiRs.next()) empDocExpiries = kpiRs.getInt("cnt");
+            kpiRs.close();
+        } catch(Exception ignored){}
+
+        // 7. Tasks
+        if (!userId.isEmpty()) {
+            try {
+                kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM my_todolist WHERE status=3 AND userid='" + userId + "'");
+                if (kpiRs.next()) myTasks = kpiRs.getInt("cnt");
+                kpiRs.close();
+            } catch(Exception ignored){}
+
+            try {
+                kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM an_taskcreation WHERE ass_user='" + userId + "' AND act_status!='Confirmed' AND close_status=0");
+                if (kpiRs.next()) assignedTasks = kpiRs.getInt("cnt");
+                kpiRs.close();
+            } catch(Exception ignored){}
         }
     } catch (Exception e) {
-        System.out.println("Could not load due date count: " + e.getMessage());
+        System.out.println("Could not load Master KPIs: " + e.getMessage());
     } finally {
-        if (countRs != null) try { countRs.close(); } catch(Exception e){}
-        if (countStmt != null) try { countStmt.close(); } catch(Exception e){}
-        if (countConn != null) try { countConn.close(); } catch(Exception e){}
+        if (kpiRs != null) try { kpiRs.close(); } catch(Exception e){}
+        if (kpiStmt != null) try { kpiStmt.close(); } catch(Exception e){}
+        if (kpiConn != null) try { kpiConn.close(); } catch(Exception e){}
     }
     // =========================================================================
 
@@ -142,148 +277,95 @@
     ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #aaa; }
 
-    /* ── Banner ── */
-    .banner {
-        height: 115px; background-image: url("<%= cPath %>/icons/banner_image.png");
-        background-size: cover; background-position: center; margin: 10px 15px 0;
-        border-radius: 8px; position: relative; display: flex; align-items: center;
-        padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
+    .banner { height: 115px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px 0; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .banner::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.22); border-radius: 8px; }
     .banner-inner { z-index: 2; color: #fff; display: flex; align-items: center; width: 100%; justify-content: space-between; }
     .banner-title { font-size: 22px; font-weight: 700; text-shadow: 1px 1px 4px rgba(0,0,0,0.4); }
     .banner-sub   { font-size: 13px; opacity: 0.9; margin-top: 2px; }
 
-    /* Switch Dashboard dropdown */
     .home-dropdown { position: relative; display: inline-block; z-index: 100; }
     .dropbtn { background: rgba(255,255,255,0.18); color: #fff; padding: 7px 14px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.2s; }
     .dropbtn:hover { background: rgba(255,255,255,0.28); }
     .dropdown-content { display: none; position: absolute; right: 0; background: #fff; min-width: 200px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border-radius: 6px; top: 38px; overflow: hidden; }
     .dropdown-content a { color: #333; padding: 11px 15px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
-    .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background: #f5f7ff; color: #0056b3; }
     .home-dropdown:hover .dropdown-content { display: block; }
 
-    /* ── Main layout ── */
-    .app-body {
-        display: flex; gap: 0;
-        margin: 10px 15px 10px;
-        height: calc(100vh - 148px);
-        background: #fff;
-        border-radius: 8px;
-        border: 1px solid #e0e4ea;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-        overflow: hidden;
-    }
+    .app-body { display: flex; gap: 0; margin: 10px 15px 10px; height: calc(100vh - 148px); background: #fff; border-radius: 8px; border: 1px solid #e0e4ea; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
 
-    /* ── Left Navigation ── */
-    .left-nav {
-        width: 240px; min-width: 240px;
-        border-right: 1px solid #e8eaed;
-        display: flex; flex-direction: column;
-        background: #fafbfc;
-    }
-    .left-nav-header {
-        padding: 14px 16px 10px;
-        font-size: 10px; font-weight: 700; color: #999;
-        letter-spacing: 1px; text-transform: uppercase;
-        border-bottom: 1px solid #eee;
-        flex: 0 0 auto;
-    }
+    .left-nav { width: 240px; min-width: 240px; border-right: 1px solid #e8eaed; display: flex; flex-direction: column; background: #fafbfc; }
+    .left-nav-header { padding: 14px 16px 10px; font-size: 10px; font-weight: 700; color: #999; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #eee; flex: 0 0 auto; }
     .nav-list { flex: 1; overflow-y: auto; }
-
     .module-item { border-bottom: 1px solid #eef0f3; }
-    .module-header {
-        display: flex; align-items: center; gap: 10px;
-        padding: 11px 14px; cursor: pointer;
-        transition: background 0.15s;
-        user-select: none;
-    }
+    .module-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; transition: background 0.15s; user-select: none; }
     .module-header:hover { background: #f0f4ff; }
     .module-item.active > .module-header { background: #e8f0fe; }
-
-    .module-icon-wrap {
-        width: 30px; height: 30px; border-radius: 7px;
-        display: flex; align-items: center; justify-content: center;
-        flex: 0 0 30px;
-    }
+    .module-icon-wrap { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex: 0 0 30px; }
     .module-icon-wrap svg { width: 16px; height: 16px; }
-
     .module-label { flex: 1; font-size: 13px; font-weight: 600; color: #3c3c3c; }
     .module-item.active > .module-header .module-label { color: #0056b3; }
-
-    .module-count {
-        font-size: 10px; font-weight: 700; padding: 2px 7px;
-        border-radius: 10px; margin-right: 4px;
-    }
+    .module-count { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-right: 4px; }
     .module-arrow { font-size: 9px; color: #aaa; transition: transform 0.2s; line-height: 1; }
     .module-item.active > .module-header .module-arrow { transform: rotate(90deg); color: #0056b3; }
 
     .submenu { display: none; background: #fff; border-top: 1px solid #f0f0f0; }
     .module-item.active .submenu { display: block; }
-    .submenu-link {
-        display: flex; align-items: center; gap: 8px;
-        padding: 8px 14px 8px 22px; font-size: 12px; color: #555;
-        text-decoration: none; cursor: pointer;
-        transition: background 0.12s, color 0.12s;
-        border: none; background: none; width: 100%; text-align: left;
-    }
+    .submenu-link { display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 22px; font-size: 12px; color: #555; text-decoration: none; cursor: pointer; transition: background 0.12s, color 0.12s; border: none; background: none; width: 100%; text-align: left; }
     .submenu-link::before { content: "·"; color: #bbb; font-size: 16px; line-height: 1; }
     .submenu-link:hover { background: #f5f7ff; color: #0056b3; }
     .submenu-link:hover::before { color: #0056b3; }
     .submenu-empty { padding: 10px 22px; font-size: 12px; color: #bbb; font-style: italic; }
 
-    /* ── Right Content Panel ── */
     .right-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* HORIZONTAL SCROLL FOR KPIs */
+    .kpi-master-header {
+        flex: 0 0 auto;
+        padding: 12px 20px;
+        background: #f8f9fb;
+        border-bottom: 1px solid #eef0f3;
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .kpi-stat-card {
+        background: #fff;
+        border: 1px solid #eaecf0;
+        border-radius: 8px;
+        padding: 10px 15px;
+        min-width: 150px;
+        flex: 0 0 auto;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        border-bottom: 3px solid transparent;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+    
+    .kpi-stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.06); border-color: #c0cfe8;}
 
     .module-panel { display: none; flex-direction: column; height: 100%; }
     .module-panel.active { display: flex; }
-
-    .panel-header {
-        flex: 0 0 auto; padding: 16px 20px 14px;
-        border-bottom: 1px solid #eef0f3;
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 14px;
-    }
+    .panel-header { flex: 0 0 auto; padding: 16px 20px 14px; border-bottom: 1px solid #eef0f3; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
     .panel-header-left { display: flex; align-items: center; gap: 14px; }
-    .panel-module-icon {
-        width: 42px; height: 42px; border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
-        flex: 0 0 42px;
-    }
+    .panel-module-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex: 0 0 42px; }
     .panel-module-icon svg { width: 22px; height: 22px; }
     .panel-module-name { font-size: 17px; font-weight: 700; color: #222; line-height: 1.2; }
     .panel-module-desc { font-size: 12px; color: #888; margin-top: 2px; }
     .panel-meta { display: flex; align-items: center; gap: 10px; }
-    .badge-count {
-        font-size: 11px; font-weight: 700; padding: 4px 10px;
-        border-radius: 12px; white-space: nowrap;
-    }
-    .panel-search input {
-        padding: 6px 14px; border: 1px solid #dde; border-radius: 16px;
-        font-size: 12px; outline: none; width: 150px; background: #f8f9fb;
-        transition: border-color 0.2s, box-shadow 0.2s, width 0.3s;
-    }
+    .badge-count { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; white-space: nowrap; }
+    .panel-search input { padding: 6px 14px; border: 1px solid #dde; border-radius: 16px; font-size: 12px; outline: none; width: 150px; background: #f8f9fb; transition: border-color 0.2s, box-shadow 0.2s, width 0.3s; }
     .panel-search input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); width: 200px; background: #fff; }
-
     .tiles-area { flex: 1; overflow-y: auto; padding: 16px 20px; }
-    .tiles-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-        gap: 12px;
-    }
-    .tile-card {
-        background: #fff; border: 1px solid #eaecf0; border-radius: 9px;
-        padding: 14px 10px 12px; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; min-height: 90px;
-        cursor: pointer; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-        text-align: center;
-    }
+    .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+    .tile-card { background: #fff; border: 1px solid #eaecf0; border-radius: 9px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px; cursor: pointer; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; text-align: center; }
     .tile-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: #c0cfe8; }
     .tile-icon { width: 26px; height: 26px; margin-bottom: 8px; }
     .tile-icon svg { width: 100%; height: 100%; }
     .tile-name { font-size: 11px; font-weight: 600; color: #4a4a5a; line-height: 1.3; }
-
     .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; color: #bbb; }
     .empty-state svg { width: 48px; height: 48px; margin-bottom: 10px; opacity: 0.4; }
     .empty-state p { font-size: 13px; margin: 0; }
@@ -327,7 +409,6 @@
         <div class="left-nav-header">Modules</div>
         <div class="nav-list">
         <%
-            // SVG icons per module type for nav icons
             String[] navIcons = {svgBank, svgCar, svgCar, svgBuilding, svgUser, svgSettings};
             String[] navColors = {"#0056b3","#1a7340","#b75d00","#4a148c","#00695c","#b71c1c"};
             String[] navBgs    = {"#e8f0fe","#e8f5e9","#fff3e0","#f3e5f5","#e0f2f1","#fce4ec"};
@@ -364,7 +445,114 @@
     </div>
 
     <div class="right-content">
-    <%
+        
+        <div class="kpi-master-header">
+            
+            <% if (!"SNDriver".equals(roleId)) { %>
+                <div class="kpi-stat-card" style="border-bottom-color: #28a745;" onclick="openParentMenu('Ready To Rent')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Ready to Rent</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #28a745; line-height: 1.2;"><%= readyToRent %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #dc3545;" onclick="openParentMenu('UnRentable')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">In Garage</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #dc3545; line-height: 1.2;"><%= inGarage %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #b75d00; background: #fff3e0;" onclick="openDueDateDirectly()">
+                    <div style="font-size: 11px; color: #b75d00; font-weight: 600; text-transform: uppercase;">RA Due Date</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #b75d00; line-height: 1.2;"><%= totalDueCount %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #e67e22;" onclick="openParentMenu('LA Due Date')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">LA Due Date</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #e67e22; line-height: 1.2;"><%= laDueDate %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #8e44ad;" onclick="openParentMenu('Booking Follow Up')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Bookings</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #8e44ad; line-height: 1.2;"><%= bookingFollowUp %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #f39c12;" onclick="openParentMenu('Quotation Follow Up')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Quotes</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #f39c12; line-height: 1.2;"><%= quotationFollowUp %></div>
+                </div>
+                
+                <div class="kpi-stat-card" style="border-bottom-color: #34495e;" onclick="openParentMenu('Agreement Close Review')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">RA Close Review</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #34495e; line-height: 1.2;"><%= agreementCloseReview %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #4CAF50;" onclick="openParentMenu('Invoices to be Dispatched')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Un-Dispatched Inv</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #4CAF50; line-height: 1.2;"><%= invoicesToDispatch %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #f44336;" onclick="openParentMenu('Damage Invoice List')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Damage Invoices</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #f44336; line-height: 1.2;"><%= damageInvoices %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #e91e63;" onclick="openParentMenu('Payment Followup')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Payment Followup</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #e91e63; line-height: 1.2;"><%= paymentFollowup %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #9c27b0;" onclick="openParentMenu('PDC Outstanding')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">PDC Outstanding</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #9c27b0; line-height: 1.2;"><%= pdcOutstanding %></div>
+                </div>
+                
+                <div class="kpi-stat-card" style="border-bottom-color: #FF5722;" onclick="openParentMenu('Unallocated')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Unallocated Fines</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #FF5722; line-height: 1.2;"><%= unallocatedFines %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #FF9800;" onclick="openParentMenu('Staff-Allocated Traffic')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Staff Fines</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #FF9800; line-height: 1.2;"><%= staffFines %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #795548;" onclick="openParentMenu('Salik Traffic Daily list')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Salik Pending</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #795548; line-height: 1.2;"><%= salikPending %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #00BCD4;" onclick="openParentMenu('Leave Acceptance')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Leaves</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #00BCD4; line-height: 1.2;"><%= pendingLeaves %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #3F51B5;" onclick="openParentMenu('WPS Listing')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending WPS</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #3F51B5; line-height: 1.2;"><%= pendingWps %></div>
+                </div>
+
+                <div class="kpi-stat-card" style="border-bottom-color: #E91E63;" onclick="openParentMenu('Employee Detailed List')">
+                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Staff Doc Expiries</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #E91E63; line-height: 1.2;"><%= empDocExpiries %></div>
+                </div>
+            <% } %>
+
+            <div class="kpi-stat-card" style="border-bottom-color: #6f42c1;" onclick="openParentMenu('Registration Expiry')">
+                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Fleet Doc Expiries</div>
+                <div style="font-size: 22px; font-weight: 800; color: #6f42c1; line-height: 1.2;"><%= (regExpiry + insExpiry) %></div>
+            </div>
+
+            <div class="kpi-stat-card" style="border-bottom-color: #007bff;" onclick="openParentMenu('Task Management')">
+                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">My Pending Tasks</div>
+                <div style="font-size: 22px; font-weight: 800; color: #007bff; line-height: 1.2;"><%= myTasks %></div>
+            </div>
+            
+            <div class="kpi-stat-card" style="border-bottom-color: #17a2b8;" onclick="openParentMenu('Task Management')">
+                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Assigned to Me</div>
+                <div style="font-size: 22px; font-weight: 800; color: #17a2b8; line-height: 1.2;"><%= assignedTasks %></div>
+            </div>
+
+        </div>
+
+        <%
         for (int mi = 0; mi < moduleDefs.length; mi++) {
             String modName   = moduleDefs[mi][0];
             String modDesc   = moduleDefs[mi][6];
@@ -374,7 +562,7 @@
             String bg        = navBgs[mi];
             String navIcon   = navIcons[mi];
             String safeId    = "panel_" + mi;
-    %>
+        %>
         <div class="module-panel <%= isActive ? "active" : "" %>" id="<%= safeId %>">
             <div class="panel-header">
                 <div class="panel-header-left">
@@ -418,18 +606,6 @@
 
 </div>
 
-<div onclick="openDueDateDirectly()"
-     style="position: fixed; bottom: 20px; right: 20px; background: #fff; border: 1px solid #e0e4ea; border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999; transition: transform 0.2s, box-shadow 0.2s;"
-     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';"
-     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
-    <div style="background: #fff3e0; color: #b75d00; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-        <%= svgCalendar %>
-    </div>
-    <div>
-        <div style="font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase;">Due Date Rentals</div>
-        <div style="font-size: 20px; font-weight: 800; color: #b75d00; line-height: 1;"><%= totalDueCount %></div>
-    </div>
-</div>
 <script>
     $(function() {
         var h = new Date().getHours();
@@ -440,16 +616,13 @@
         var clicked = document.querySelector('.module-item[data-idx="' + idx + '"]');
         var isAlreadyActive = clicked.classList.contains('active');
 
-        // Collapse all
         document.querySelectorAll('.module-item').forEach(function(el) { el.classList.remove('active'); });
         document.querySelectorAll('.module-panel').forEach(function(el) { el.classList.remove('active'); });
 
-        // If it wasn't active before, expand it
         if (!isAlreadyActive) {
             clicked.classList.add('active');
             document.getElementById('panel_' + idx).classList.add('active');
 
-            // Clear search on panel switch
             document.querySelectorAll('.panel-search input').forEach(function(el) { el.value = ''; });
             document.querySelectorAll('.tile-card').forEach(function(el) { el.style.display = ''; });
         }
@@ -469,11 +642,9 @@
     }
     
     function openDueDateDirectly() {
-        // Corrected path with capital 'R' in Rentalagreement
         var actionUrl = "<%= request.getContextPath() %>/com/dashboard/Rentalagreement/dueDate/duedateMaster.jsp?name=Due%20Date&main=Rental%20Agreement&docno=24&value=1087";
         var tabTitle = "Due Date";
         
-        // Attempt to open it in a new native tab in your layout
         if (window.parent) {
             if (typeof window.parent.addTab === 'function') {
                 window.parent.addTab(tabTitle, actionUrl);
@@ -485,7 +656,6 @@
             }
         }
         
-        // Fallback: Redirect the current frame if no tab function is found
         window.location.href = actionUrl;
     }
 </script>
