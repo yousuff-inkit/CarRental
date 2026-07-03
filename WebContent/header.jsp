@@ -200,12 +200,14 @@ button.icon:disabled { opacity: 0.5; };
 .action-btn:active {
    background: #b6bfcc;
 }
-
+#btnSave[hidden], #btnCancel[hidden] {
+   display: none !important;
+}
 /* SVG ICON SIZE */
 .action-btn svg {
    width: 14px;
    height: 14px;
-   fill: currentColor;   /* icon uses button text color */
+   fill: currentColor;   
 }
 
 
@@ -606,8 +608,8 @@ $(document).ready(function () {
 	$("#mode").val("view");		funReadOnly(); initViewButtons();
 	
 	function initViewButtons() {
-	    $("#btnSave").hide();
-	    $("#btnCancel").hide();
+	    $("#btnSave").attr('hidden', true).hide();
+	    $("#btnCancel").attr('hidden', true).hide();
 	    $("#btnStart").hide();   
 
 	    $("#btnCreate").show();
@@ -714,7 +716,7 @@ function funCreateBtn(){
 	 showGWValidation();
 	 funRemoveReadOnly();
 	 $("#btnSendmail").hide();
-	 $("#status").val(1);	 $("#btnSave").show();		 $("#btnCancel").show();
+	 $("#status").val(1);	 $("#btnSave").removeAttr('hidden').show();		 $("#btnCancel").removeAttr('hidden').show();
 	 $("#btnApproval").hide();	 $("#btnCreate").hide();	funFocus();
 	 $("#btnEdit").hide();	 $("#btnPrint").hide();	 $("#btnExcel").hide();		 $("#btnDelete").hide();
 	 $("#btnSearch").hide(); 		 $("#btnAttach").hide();  $("#btnCosting").hide(); $("#btnTerms").hide(); $("#btnGuideLine").hide();
@@ -731,7 +733,7 @@ function funCloseBtn(){
 		 $("#btnSendmail").show();
 		 $("#btnApproval").show();		 $("#btnCreate").show();		 $("#btnEdit").show(); 		 $("#btnPrint").show();
 		 $("#btnExcel").show();		 $("#btnDelete").show();		 $("#btnSearch").show();	 $("#status").val(0);	
-		 $("#btnSave").hide();		 $("#btnCancel").hide();		 funReadOnly();      $("#btnAttach").show();  $("#btnCosting").show(); $("#btnTerms").show(); $("#btnGuideLine").show();
+		 $("#btnSave").attr('hidden', true).hide();		 $("#btnCancel").attr('hidden', true).hide();		 funReadOnly();      $("#btnAttach").show();  $("#btnCosting").show(); $("#btnTerms").show(); $("#btnGuideLine").show();
 		 $('#brchName').attr('disabled', false);                     $('#currency').attr('disabled', false);
 		 document.getElementById("errormsg").innerText="";         document.getElementById("savemsg").innerText="";
 		 $("#brchName").show(); $("#brchNames").hide();  $('#brchNames').attr('readonly', true ); $("#brchNames").val($("#brchName option:selected").text());
@@ -758,7 +760,7 @@ function funCloseBtn(){
 			$('#brchName').attr('disabled', true);             $('#currency').attr('disabled', true);
 			$("#status").val(1);			$("#btnApproval").hide();			$("#btnCreate").hide();
 			$("#btnEdit").hide();			$("#btnPrint").hide();			$("#btnExcel").hide();				$("#btnDelete").hide();
-			$("#btnSearch").hide();			$("#btnSave").show();		 $("#btnCancel").show();                $("#btnAttach").hide();   $("#btnCosting").hide(); $("#btnTerms").hide();  $("#btnGuideLine").hide();
+			$("#btnSearch").hide();			$("#btnSave").removeAttr('hidden').show();		 $("#btnCancel").removeAttr('hidden').show();                $("#btnAttach").hide();   $("#btnCosting").hide(); $("#btnTerms").hide();  $("#btnGuideLine").hide();
 			$("#brchName").hide();  $("#brchNames").show(); $('#brchNames').attr('readonly', true ); $("#brchNames").val($("#brchName option:selected").text());
 			$("#currency").hide();  $("#currencys").show(); $('#currencys').attr('readonly', true ); $("#currencys").val($("#currency option:selected").text());
 			$('.delete-img-container').remove();	
@@ -1114,7 +1116,7 @@ document.getElementById("termstatus").value=0;
 				 $("#msg").val("");
 				 funRemoveReadOnly();
 				 $("#btnSendmail").hide();
-				 $("#status").val(1);	 $("#btnSave").show();		 $("#btnCancel").show();
+				 $("#status").val(1);	 $("#btnSave").attr('hidden', true).hide();		 $("#btnCancel").attr('hidden', true).hide();
 				 $("#btnApproval").hide();	 $("#btnCreate").hide();	funFocus();
 				 $("#btnEdit").hide();	 $("#btnPrint").hide();	 $("#btnExcel").hide();		 $("#btnDelete").hide();
 				 $("#btnSearch").hide();  $("#btnAttach").hide(); 	$("#btnCosting").hide(); $("#btnTerms").hide();  $("#btnGuideLine").hide();	 
