@@ -17,219 +17,7 @@
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-<style type="text/css">
-    /* Layout & Sidebar Structure */
-    .master-container {
-        display: flex;
-        font-family: 'Segoe UI', Tahoma, sans-serif !important;
-        background-color: #f4f7f9;
-        width: 100%;
-        height: 100% !important;
-    }
 
-    .sidebar-filters {
-        width: 330px; 
-        flex: 0 0 330px;
-        background-color: #ffffff;
-        border-right: 1px solid #e1e8ed;
-        display: flex;
-        flex-direction: column;
-        z-index: 10;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.05);
-        height: 100vh !important;
-    }
-
-    /* Fixed Top Section */
-    .sidebar-fixed-top {
-        padding: 20px 20px 15px 20px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f4f8;
-        flex-shrink: 0;
-    }
-
-    /* Filter Cards */
-    .filter-card {
-        background-color: #f8fafc !important;
-        border: 1px solid #e3e8ee !important;
-        border-radius: 12px !important;
-        padding: 15px;
-        margin-bottom: 10px;
-    }
-
-    /* Scrollable Form Area */
-    .sidebar-scroll-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px 20px 25px 20px;
-    }
-
-    .filter-table { 
-        width: 100%; 
-        border-spacing: 0 10px; 
-    }
-
-    .label-cell {
-        text-align: right;
-        padding-right: 12px;
-        font-size: 13px;
-        color: #4e5e71;
-        font-weight: 600;
-        width: 95px;
-    }
-
-    /* Input & Select Styling */
-    input[type="text"], select {
-        width: 100%;
-        border: 1px solid #ccd6e0;
-        border-radius: 6px;
-        padding: 7px 10px;
-        font-size: 13px;
-        color: #333;
-        box-sizing: border-box;
-        background-color: #ffffff;
-    }
-
-    .level-row { display: flex; align-items: center; gap: 6px; }
-    .level-input { width: 55px !important; text-align: center; }
-
-    /* Action Buttons (myButton style updated for Sidebar) */
-    .myButton {
-        background-color: #2563eb !important;
-        color: #ffffff !important;
-        border: none !important;
-        padding: 12px !important;
-        border-radius: 6px !important;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-        width: 100%;
-        margin-top: 10px;
-        transition: background 0.2s;
-        display: block;
-    }
-
-    .myButton:hover { background-color: #1d4ed8 !important; }
-
-    /* RHS Visibility Fix */
-    .main-content-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-        position: relative;
-        background-color: #ffffff;
-    }
-
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px 20px 100px 20px; /* Space to clear the totals bar */
-    }
-
-    .totals-bar {
-        background: #ffffff;
-        border-top: 1px solid #e1e8ed;
-        padding: 12px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 20;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    }
-
-    .textbox {
-        border: 1px solid #ccd6e0;
-        height: 25px;
-        border-radius: 5px;
-        padding: 0 5px;
-        outline: 0;
-        background-color: #ffffff;
-    }
-
-    /* Global Resets */
-    html, body, #mainBG, .hidden-scrollbar {
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-    }
-
-    #tabledata { display: none; }
-    .branch { font-size: 13px; color: #4e5e71; font-weight: 600; }
-    
-    /* 1. Prevent horizontal overflow on the root and main containers */
-    html, body, .master-container, .main-content-wrapper {
-        overflow-x: hidden !important;
-        width: 100%;
-    }
-
-    /* 2. Force the grid area to handle only vertical scrolling */
-    .scrollable-grid-area {
-        flex: 1;
-        overflow-y: auto;
-        overflow-x: hidden; /* This kills the horizontal scrollbar */
-        padding: 20px 20px 140px 20px;
-    }
-
-    /* 3. Force tables to stay within their parent's width */
-    .scrollable-grid-area table, 
-    .totals-bar table {
-        table-layout: fixed; /* This prevents columns from pushing the width out */
-        width: 100% !important;
-        word-wrap: break-word;
-    }
-
-    /* 4. Ensure the totals bar doesn't cause an overflow */
-    .totals-bar {
-        width: 100%;
-        box-sizing: border-box; /* Includes padding in the width calculation */
-        overflow: hidden;
-    }
-
-    /* 5. Handle long text in cells so they don't force width expansion */
-    .scrollable-grid-area td, 
-    .totals-bar td {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-/* ---- View Toggle Bar ---- */
-.view-btn{padding:7px 16px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:#e5e7eb;color:#374151;transition:background .15s}
-.view-btn.active,.view-btn:hover{background:#2563eb;color:#fff}
-
-/* ---- Dashboard Container ---- */
-#agDashboard { padding:14px 2px 0; }
-.d-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
-.d-tab {
-    padding:7px 18px; border:1px solid #ccd6e0; border-radius:20px;
-    background:#f8fafc; color:#4e5e71; font-size:12px; font-weight:600;
-    cursor:pointer; transition:all .15s;
-}
-.d-tab:hover { background:#e8f0fe; color:#185FA5; border-color:#185FA5; }
-.d-tab.active { background:#185FA5; color:#fff; border-color:#185FA5; }
-.d-panel { display:none; }
-.d-panel.active { display:block; }
-.d-metric-grid { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px; }
-.d-metric {
-    flex:1; min-width:130px; background:#f8fafc;
-    border:1px solid #e3e8ee; border-radius:10px; padding:14px 16px;
-}
-.d-metric-val { font-size:20px; font-weight:700; line-height:1.2; color:#185FA5; }
-.d-metric-sub { font-size:11px; color:#888; margin-top:4px; }
-.d-chart-box {
-    background:#fff; border:1px solid #e3e8ee; border-radius:10px;
-    padding:16px; margin-bottom:12px;
-}
-.d-chart-row { display:flex; gap:14px; flex-wrap:wrap; }
-.d-chart-title { font-size:13px; font-weight:700; color:#2d3e50; margin-bottom:10px; }
-.d-table-box {
-    background:#fff; border:1px solid #e3e8ee; border-radius:10px;
-    padding:14px; overflow:auto; max-height:340px; margin-bottom:12px;
-}
-</style>
 
 <script type="text/javascript">
 
@@ -1153,165 +941,399 @@
 		
 		
 </script>
+
+<style type="text/css">
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
+}
+
+/* Force layout tables to white */
+.master-layout-table, 
+.master-layout-table > tbody > tr, 
+.master-layout-table > tbody > tr > td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+/* Forcefully kill all hover states on tables applied by external CSS */
+table tr:hover, 
+table td:hover, 
+table th:hover, 
+tbody tr:hover {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* ===== MASTER LAYOUT ===== */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    background-color: #ffffff !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Sidebar */
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #ffffff !important;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    border-right: 1px solid #e1e8ed;
+}
+
+/* Flex 1 allows this middle section to scroll while keeping bottom fixed */
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px; 
+}
+
+/* Fixed bottom panel so buttons are always visible */
+.sidebar-fixed-bottom {
+    padding: 15px 20px;
+    border-top: 1px solid #e1e8ed;
+    background: #ffffff !important;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc !important;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 15px; 
+    margin-bottom: 12px;
+}
+
+/* Tables within the card */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px; 
+    background: transparent !important;
+}
+
+.filter-table tr, .filter-table td {
+    background: transparent !important;
+    border: none !important;
+}
+
+.filter-table .label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 12px;
+    color: #4e5e71;
+    font-weight: 600;
+    width: 90px;
+    white-space: nowrap; 
+}
+
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
+    width: 100%;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff !important;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+}
+
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+}
+
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-submit, .myButton, .myButtons {
+    flex: 1;
+    height: 30px !important;            
+    padding: 0 12px !important;         
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;      
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;       
+    text-align: center;
+    transition: background 0.2s;
+    width: 100%;
+    margin-top: 0;
+}
+
+.btn-submit:hover, .myButton:hover, .myButtons:hover {
+    background: #1d4ed8 !important;
+}
+
+/* Layout Utilities */
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: #fff !important;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+/* Global Overrides for Labels */
+.sidebar-filters label.branch, 
+.sidebar-filters .filter-card label,
+.sidebar-filters .branch {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+    padding-left: 4px;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* View Toggle Bar specific styles */
+.view-btn {
+    padding: 6px 12px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    background: #fff;
+    color: #4e5e71;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.view-btn:hover { background: #f3f6f9; }
+.view-btn.active { background: #e0f2fe; color: #1d4ed8; border-color: #93c5fd; }
+
+/* Dashboard Styles (placeholder for the layout you provided) */
+.d-tabs { display:flex; gap:10px; margin-bottom:15px; border-bottom:1px solid #e1e8ed; padding-bottom:10px; }
+.d-tab { padding:6px 12px; border:none; background:none; cursor:pointer; font-size:13px; font-weight:600; color:#4e5e71; border-radius:4px; }
+.d-tab.active { background:#e0f2fe; color:#1d4ed8; }
+.d-panel { display:none; }
+.d-panel.active { display:block; }
+.d-metric-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:15px; margin-bottom:20px; }
+.d-metric { background:#f8fafc; border:1px solid #e3e8ee; padding:15px; border-radius:8px; text-align:center; }
+.d-chart-row { display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap; }
+.d-chart-box { background:#fff; border:1px solid #e3e8ee; border-radius:8px; padding:15px; }
+.d-chart-title { font-size:13px; font-weight:bold; color:#4e5e71; margin-bottom:10px; text-align:center; }
+.totals-bar { background:#f8fafc; border-top:1px solid #e1e8ed; padding:10px 15px; margin-top:auto; }
+
+	
+</style>
 </head>
 <body onload="getBranch();getSalesPerson();getCategory();">
-	<div id="mainBG" class="homeContent" data-type="background">
-		<div class='hidden-scrollbar'>
-		<div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <div class="filter-card" style="background: none !important; border: none !important;">
-                <jsp:include page="../../heading.jsp"></jsp:include>
+
+<div id="mainBG" class="homeContent" data-type="background">
+<div class='hidden-scrollbar'>
+
+<table class="master-layout-table" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff !important;">
+<tr>
+
+<td width="330px" valign="top" style="vertical-align: top; padding: 0 !important; margin: 0 !important; background: #ffffff !important; border-right: 1px solid #e1e8ed;">
+    <div class="master-container">
+        <div class="sidebar-filters">
+            
+            <div class="sidebar-scroll-content">
+                
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Up To</td>
+                            <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="cmbtype" name="cmbtype" onchange="clearAccountInfo();getCategory();" value='<s:property value="cmbtype"/>'>
+                                    <option value="">--Select--</option>
+                                    <option value="AR" selected>AR</option>
+                                    <option value="AP">AP</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Account</td>
+                            <td>
+                                <input type="text" id="txtaccid" name="txtaccid" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1" style="background-color: #f3f6f9 !important; border: 1px solid #e3e8ee !important;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Sales Person</td>
+                            <td>
+                                <select id="cmbsalesperson" name="cmbsalesperson" value='<s:property value="cmbsalesperson"/>'>
+                                    <option value="">--Select--</option>
+                                </select>
+                                <input type="hidden" id="hidcmbsalesperson" name="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Category</td>
+                            <td>
+                                <select id="cmbcategory" name="cmbcategory" value='<s:property value="cmbcategory"/>'>
+                                    <option value="">--Select--</option>
+                                </select>
+                                <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Status</td>
+                            <td>
+                                <select id="cmbclientstatus" name="cmbclientstatus" value='<s:property value="cmbclientstatus"/>'>
+                                    <option value=''>-- Select --</option>
+                                    <option value='0'>Active</option>
+                                    <option value='1'>Litigation</option>
+                                    <option value='2'>Dispute</option>
+                                    <option value='3'>Over Due</option>
+                                </select>
+                                <input type="hidden" id="hidcmbclientstatus" name="hidcmbclientstatus" value='<s:property value="hidcmbclientstatus"/>' />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Level 1</td>
+                            <td style="display:flex; gap:6px; align-items:center;">
+                                <input type="text" id="txtlevel1from" name="txtlevel1from" readonly value='0' style="flex:1; text-align:center; background-color: #f3f6f9 !important;" />
+                                <span style="font-weight:bold; color:#4e5e71;">-</span>
+                                <input type="text" id="txtlevel1to" name="txtlevel1to" onblur="changelevel1();" value='30' style="flex:1; text-align:center;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Level 2</td>
+                            <td style="display:flex; gap:6px; align-items:center;">
+                                <input type="text" id="txtlevel2from" name="txtlevel2from" readonly value='31' style="flex:1; text-align:center; background-color: #f3f6f9 !important;" />
+                                <span style="font-weight:bold; color:#4e5e71;">-</span>
+                                <input type="text" id="txtlevel2to" name="txtlevel2to" onblur="changelevel2();" value='60' style="flex:1; text-align:center;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Level 3</td>
+                            <td style="display:flex; gap:6px; align-items:center;">
+                                <input type="text" id="txtlevel3from" name="txtlevel3from" readonly value='61' style="flex:1; text-align:center; background-color: #f3f6f9 !important;" />
+                                <span style="font-weight:bold; color:#4e5e71;">-</span>
+                                <input type="text" id="txtlevel3to" name="txtlevel3to" onblur="changelevel3();" value='90' style="flex:1; text-align:center;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Level 4</td>
+                            <td style="display:flex; gap:6px; align-items:center;">
+                                <input type="text" id="txtlevel4from" name="txtlevel4from" readonly value='91' style="flex:1; text-align:center; background-color: #f3f6f9 !important;" />
+                                <span style="font-weight:bold; color:#4e5e71;">-</span>
+                                <input type="text" id="txtlevel4to" name="txtlevel4to" onblur="changelevel4();" value='120' style="flex:1; text-align:center;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Level 5</td>
+                            <td style="display:flex; gap:6px; align-items:center;">
+                                <input type="text" id="txtlevel5from" name="txtlevel5from" value='121' style="flex:1; text-align:center;" />
+                                <span style="font-weight:bold; color:#4e5e71; font-size:14px; width:100%; text-align:center;">&ge;</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="display:none;">
+                    <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>' />
+                    <input type="hidden" id="txtacountno" name="txtacountno" value='<s:property value="txtacountno"/>' />
+                    <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>' />
+                    <input type="hidden" id="txtbalance" name="txtbalance" value='<s:property value="txtbalance"/>' />
+                    <input type="hidden" id="txtbranch" name="txtbranch" value='<s:property value="txtbranch"/>' />
+                    <button type="button" onclick="funauditletterprint();">Audit Balance Letter</button>
+                </div>
+
             </div>
-        </div>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Up To</td>
-                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="cmbtype" name="cmbtype" onchange="clearAccountInfo();getCategory();" value='<s:property value="cmbtype"/>'>
-                                <option value="">--Select--</option>
-                                <option value="AR" selected>AR</option>
-                                <option value="AP">AP</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Account</td>
-                        <td>
-                            <input type="text" id="txtaccid" name="txtaccid" readonly="readonly" placeholder="Press F3 to Search" value='<s:property value="txtaccid"/>' onkeydown="getAccType(event);" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="text" id="txtaccname" name="txtaccname" readonly="readonly" value='<s:property value="txtaccname"/>' tabindex="-1" style="margin-top:-5px;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Sales Person</td>
-                        <td>
-                            <select id="cmbsalesperson" name="cmbsalesperson" value='<s:property value="cmbsalesperson"/>'>
-                                <option value="">--Select--</option>
-                            </select>
-                            <input type="hidden" id="hidcmbsalesperson" name="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Category</td>
-                        <td>
-                            <select id="cmbcategory" name="cmbcategory" value='<s:property value="cmbcategory"/>'>
-                                <option value="">--Select--</option>
-                            </select>
-                            <input type="hidden" id="hidcmbcategory" name="hidcmbcategory" value='<s:property value="hidcmbcategory"/>' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Status</td>
-                        <td>
-                            <select id="cmbclientstatus" name="cmbclientstatus" value='<s:property value="cmbclientstatus"/>'>
-                                <option value=''>-- Select --</option>
-                                <option value='0'>Active</option>
-                                <option value='1'>Litigation</option>
-                                <option value='2'>Dispute</option>
-                                <option value='3'>Over Due</option>
-                            </select>
-                            <input type="hidden" id="hidcmbclientstatus" name="hidcmbclientstatus" value='<s:property value="hidcmbclientstatus"/>' />
-                        </td>
-                    </tr>
-                </table>
+            <div class="sidebar-fixed-bottom" style="display:flex; flex-direction:column; gap:5px;">
+                <button class="myButton" type="button" onclick="funOutStandingStatement();">Outstanding Statement</button>
+                <button class="myButton" type="button" onclick="funApplyingCrrct();" style="background:#059669 !important;">Applying Correct</button>
+                <button class="myButton" type="button" onclick="funAutoApply();" style="background:#4e5e71 !important;">Auto Apply</button>
             </div>
 
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Level 1</td>
-                        <td class="level-row">
-                            <input type="text" id="txtlevel1from" name="txtlevel1from" class="level-input" readonly value='0' />
-                            <span>-</span>
-                            <input type="text" id="txtlevel1to" name="txtlevel1to" class="level-input" onblur="changelevel1();" value='30' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Level 2</td>
-                        <td class="level-row">
-                            <input type="text" id="txtlevel2from" name="txtlevel2from" class="level-input" readonly value='31' />
-                            <span>-</span>
-                            <input type="text" id="txtlevel2to" name="txtlevel2to" class="level-input" onblur="changelevel2();" value='60' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Level 3</td>
-                        <td class="level-row">
-                            <input type="text" id="txtlevel3from" name="txtlevel3from" class="level-input" readonly value='61' />
-                            <span>-</span>
-                            <input type="text" id="txtlevel3to" name="txtlevel3to" class="level-input" onblur="changelevel3();" value='90' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Level 4</td>
-                        <td class="level-row">
-                            <input type="text" id="txtlevel4from" name="txtlevel4from" class="level-input" readonly value='91' />
-                            <span>-</span>
-                            <input type="text" id="txtlevel4to" name="txtlevel4to" class="level-input" onblur="changelevel4();" value='120' />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Level 5</td>
-                        <td class="level-row">
-                            <input type="text" id="txtlevel5from" name="txtlevel5from" class="level-input" value='121' />
-                            <span style="font-weight: bold;">&ge;</span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <button class="myButton" type="button" onclick="funOutStandingStatement();">Outstanding Statement</button>
-            <button class="myButton" type="button" onclick="funApplyingCrrct();">Applying Correct</button>
-            <button class="myButton" type="button" onclick="funAutoApply();">Auto Apply</button>
-
-            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>' />
-            <input type="hidden" id="txtacountno" name="txtacountno" value='<s:property value="txtacountno"/>' />
-            <input type="hidden" id="txtaccemail" name="txtaccemail" value='<s:property value="txtaccemail"/>' />
-            <input type="hidden" id="txtbalance" name="txtbalance" value='<s:property value="txtbalance"/>' />
-            <input type="hidden" id="txtbranch" name="txtbranch" value='<s:property value="txtbranch"/>' />
-            <div hidden="true"><button type="button" onclick="funauditletterprint();">Audit Balance Letter</button></div>
         </div>
     </div>
+</td>
 
-    <div class="main-content-wrapper">
+<td class="right-panel" valign="top" style="padding: 0; background: #ffffff !important; display:flex; flex-direction:column; height:100vh;">
 
-        <!-- View Toggle Bar -->
-        <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#fff;border-bottom:1px solid #e1e8ed;flex-wrap:wrap;">
+    <div style="padding: 15px 20px 0 20px; background: #ffffff !important;">
+        <jsp:include page="../../heading.jsp"></jsp:include>
+    </div>
+
+    <div class="main-content-wrapper" style="padding: 0; flex:1;">
+        
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 20px;background:#fff;border-bottom:1px solid #e1e8ed;flex-wrap:wrap;">
             <button type="button" id="agBtnGrid" onclick="showAgView('grid')" class="view-btn active">Grid View</button>
             <button type="button" id="agBtnDash" onclick="showAgView('dash')" class="view-btn">Analytics Dashboard</button>
             <div style="margin-left:auto;display:flex;gap:8px;">
                 <button type="button" onclick="funExportBtn()" class="view-btn" style="background:#059669;color:#fff;">Export Excel</button>
-                <button type="button" onclick="funreload('')" class="view-btn" style="background:#2563eb;color:#fff;">Load / Refresh</button>
+                <button type="button" onclick="funreload('')" class="view-btn" style="background:#2563eb;color:#fff;border:none;">Load / Refresh</button>
             </div>
         </div>
 
-        <div class="scrollable-grid-area">
-            <!-- Grid -->
+        <div class="scrollable-grid-area" style="padding: 15px 20px;">
             <div id="ageingStatementGridWrap">
-            <table width="100%">
-                <tr>
-                    <td>
-                        <div id="ageingStatementDiv">
-                            <jsp:include page="ageingStatementGrid.jsp"></jsp:include>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: transparent !important;">
+                    <tr>
+                         <td valign="top" style="background: transparent !important;">
+                             <div id="ageingStatementDiv">
+                                 <jsp:include page="ageingStatementGrid.jsp"></jsp:include>
+                             </div>
+                         </td>
+                    </tr>
+                </table>
             </div>
 
-            <!-- Analytics Dashboard -->
             <div id="agDashboard" style="display:none;">
                 <div id="agDashMsg"></div>
                 <div id="agDashTabs" style="display:none;">
@@ -1324,7 +1346,6 @@
                         <button type="button" class="d-tab"        id="agt_td"  onclick="switchAgTab('td')">Top Debtors</button>
                     </div>
 
-                    <!-- Panel: Overview -->
                     <div class="d-panel active" id="agp_ov">
                         <div class="d-metric-grid">
                             <div class="d-metric" id="ag_ov_count"></div>
@@ -1346,7 +1367,6 @@
                         </div>
                     </div>
 
-                    <!-- Panel: By Category -->
                     <div class="d-panel" id="agp_cat">
                         <div class="d-metric-grid">
                             <div class="d-metric" id="ag_cat_count"></div>
@@ -1366,7 +1386,6 @@
                         </div>
                     </div>
 
-                    <!-- Panel: By Sales Person -->
                     <div class="d-panel" id="agp_sp">
                         <div class="d-metric-grid">
                             <div class="d-metric" id="ag_sp_count"></div>
@@ -1386,7 +1405,6 @@
                         </div>
                     </div>
 
-                    <!-- Panel: Ageing Buckets -->
                     <div class="d-panel" id="agp_bk">
                         <div class="d-metric-grid">
                             <div class="d-metric" id="ag_bk_l1"></div>
@@ -1407,7 +1425,6 @@
                         </div>
                     </div>
 
-                    <!-- Panel: Credit Analysis -->
                     <div class="d-panel" id="agp_cr">
                         <div class="d-metric-grid">
                             <div class="d-metric" id="ag_cr_overlimit"></div>
@@ -1427,7 +1444,6 @@
                         </div>
                     </div>
 
-                    <!-- Panel: Top Debtors -->
                     <div class="d-panel" id="agp_td">
                         <div class="d-metric-grid">
                             <div class="d-metric" id="ag_td_top"></div>
@@ -1440,48 +1456,58 @@
                                 <div class="d-chart-title">Top 15 Debtors by Balance <span style="font-weight:400;font-size:11px;color:#888;">(red = >50% overdue, amber = >25%)</span></div>
                                 <canvas id="ag_ch_td_bar" height="290"></canvas>
                             </div>
-                            <div class="d-table-box" style="flex:1;min-width:280px;">
+                            <div class="d-table-box" style="flex:1;min-width:280px;background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:15px;">
                                 <div class="d-chart-title">Top Debtors Summary</div>
                                 <div id="ag_td_table"></div>
                             </div>
                         </div>
                     </div>
 
-                </div><!-- end agDashTabs -->
-            </div><!-- end agDashboard -->
+                </div>
+            </div>
         </div>
 
         <div class="totals-bar">
-            <table width="100%">
+            <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td width="10%" align="right" style="font-family: Myriad Pro; font-size: 12px; font-weight: bold;">Net Total:</td>
-                    <td width="10%"><input type="text" class="textbox" id="txtnetbalance" name="txtnetbalance" readonly value='<s:property value="txtnetbalance"/>' /></td>
+                    <td width="10%" align="right" style="font-size: 13px; font-weight: bold; color: #4e5e71; padding-right:10px;">Net Total:</td>
+                    <td width="10%">
+                        <input type="text" id="txtnetbalance" name="txtnetbalance" readonly value='<s:property value="txtnetbalance"/>' style="background-color: #f3f6f9 !important;" />
+                    </td>
 
-                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">AED:</td>
-                    <td width="8%"><label class="textbox" id="aedbalance" style="display:block; line-height:25px;"></label></td>
+                    <td width="8%" align="right" style="font-size: 12px; font-weight: bold; color: #4e5e71; padding-right:6px;">AED:</td>
+                    <td width="8%"><label id="aedbalance" style="font-size: 12px; color: #333; font-weight:600; display:block; padding: 2px 8px; border: 1px solid #ccd6e0; border-radius: 4px; background:#fff; height:24px; box-sizing:border-box;"></label></td>
 
-                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">CAD:</td>
-                    <td width="8%"><label class="textbox" id="cadbalance" style="display:block; line-height:25px;"></label></td>
+                    <td width="8%" align="right" style="font-size: 12px; font-weight: bold; color: #4e5e71; padding-right:6px;">CAD:</td>
+                    <td width="8%"><label id="cadbalance" style="font-size: 12px; color: #333; font-weight:600; display:block; padding: 2px 8px; border: 1px solid #ccd6e0; border-radius: 4px; background:#fff; height:24px; box-sizing:border-box;"></label></td>
 
-                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">CHF:</td>
-                    <td width="8%"><label class="textbox" id="chfbalance" style="display:block; line-height:25px;"></label></td>
+                    <td width="8%" align="right" style="font-size: 12px; font-weight: bold; color: #4e5e71; padding-right:6px;">CHF:</td>
+                    <td width="8%"><label id="chfbalance" style="font-size: 12px; color: #333; font-weight:600; display:block; padding: 2px 8px; border: 1px solid #ccd6e0; border-radius: 4px; background:#fff; height:24px; box-sizing:border-box;"></label></td>
 
-                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">EUR:</td>
-                    <td width="8%"><label class="textbox" id="eurbalance" style="display:block; line-height:25px;"></label></td>
+                    <td width="8%" align="right" style="font-size: 12px; font-weight: bold; color: #4e5e71; padding-right:6px;">EUR:</td>
+                    <td width="8%"><label id="eurbalance" style="font-size: 12px; color: #333; font-weight:600; display:block; padding: 2px 8px; border: 1px solid #ccd6e0; border-radius: 4px; background:#fff; height:24px; box-sizing:border-box;"></label></td>
 
-                    <td width="8%" align="right" style="font-family: Myriad Pro; font-size: 11px; font-weight: bold;">USD:</td>
-                    <td width="8%"><label class="textbox" id="usdbalance" style="display:block; line-height:25px;"></label></td>
+                    <td width="8%" align="right" style="font-size: 12px; font-weight: bold; color: #4e5e71; padding-right:6px;">USD:</td>
+                    <td width="8%"><label id="usdbalance" style="font-size: 12px; color: #333; font-weight:600; display:block; padding: 2px 8px; border: 1px solid #ccd6e0; border-radius: 4px; background:#fff; height:24px; box-sizing:border-box;"></label></td>
                 </tr>
             </table>
         </div>
-    </div>
-</div>
-		</div>
 
-		<div id="accountDetailsWindow">
-			<div></div>
-			<div></div>
-		</div>
-	</div>
+    </div>
+
+</td>
+
+</tr>
+</table>
+
+</div>
+</div>
+
+<div id="accountDetailsWindow">
+    <div></div>
+    <div></div>
+</div>
+
 </body>
+</html>
 </html>

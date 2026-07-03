@@ -1,5 +1,6 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,84 +9,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
     height: 100%;
-    margin: 0;
-    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
 }
 
+/* Force layout tables to white */
+.master-layout-table, 
+.master-layout-table > tbody > tr, 
+.master-layout-table > tbody > tr > td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+/* Forcefully kill all hover states on tables applied by external CSS */
+table tr:hover, 
+table td:hover, 
+table th:hover, 
+tbody tr:hover {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
-    background-color: #f4f7f9;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    background-color: #ffffff !important; 
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* Sidebar */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
+    background: #ffffff !important;
     display: flex;
     flex-direction: column;
     height: 100vh;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top and bottom fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 20px; 
 }
 
-/* New fixed bottom panel so buttons are always visible */
-.sidebar-fixed-bottom {
-    padding: 15px 20px;
-    border-top: 1px solid #f0f4f8;
-    background: #fff;
-}
-
+/* Cards */
 .filter-card {
-    background: #f8fafc;
+    background: #f8fafc !important;
     border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 15px;
+    border-radius: 8px;
+    padding: 15px; 
     margin-bottom: 12px;
 }
 
+/* Tables within the card */
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px;
+    border-spacing: 0 10px; 
+    background: transparent !important;
 }
 
-.label-cell {
+.filter-table tr, .filter-table td {
+    background: transparent !important;
+    border: none !important;
+}
+
+.filter-table .label-cell {
     text-align: right;
     padding-right: 12px;
-    font-size: 12px; /* Uniform 12px label */
-    font-weight: 600;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 90px;
+    white-space: nowrap; 
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"] {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
     height: 24px !important;             
     padding: 2px 8px !important;         
     border: 1px solid #ccd6e0 !important;
     border-radius: 4px !important;       
     font-size: 12px !important;          
-    background-color: #ffffff;
+    background-color: #ffffff !important;
     box-sizing: border-box;
     color: #333;
     outline: none;
@@ -99,6 +122,7 @@ input[type="text"] {
 }
 .input-range-row input {
     flex: 1;
+    min-width: 0;
 }
 .input-range-row span {
     font-size: 12px;
@@ -106,25 +130,12 @@ input[type="text"] {
     font-weight: bold;
 }
 
-/* ===== UNIFORM 24px SELECT DROPDOWNS (FIXED) ===== */
 select {
-    width: 100%;
-    height: 24px !important;
     padding: 2px 24px 2px 8px !important; 
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
     font-family: inherit;
     cursor: pointer;
-    
     appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
-    
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 6px center;
@@ -134,7 +145,7 @@ select {
 input[readonly], input:disabled, select:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
-    cursor: not-allowed;
+    cursor: pointer;
 }
 
 /* ===== BUTTONS ===== */
@@ -142,51 +153,37 @@ input[readonly], input:disabled, select:disabled {
     display: flex;
     gap: 10px;
     justify-content: center;
+    margin-top: 15px; 
 }
 
 .btn-submit, .myButton, .myButtons {
     flex: 1;
-    width: 100%;
-    height: 30px !important;            /* Scaled button height */
-    padding: 0 12px !important;
+    height: 30px !important;            
+    padding: 0 12px !important;         
     background: #2563eb !important;
     color: #fff !important;
     border: none !important;
-    border-radius: 4px !important;
+    border-radius: 4px !important;      
     font-size: 13px !important;
     font-weight: 600 !important;
     cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
+    line-height: 30px !important;       
     text-align: center;
-    margin-top: 8px;
+    transition: background 0.2s;
+    width: 100%;
+    margin-top: 0;
 }
 
 .btn-submit:hover, .myButton:hover, .myButtons:hover {
     background: #1d4ed8 !important;
 }
 
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
+.btn-submit:disabled, .myButton:disabled, .myButtons:disabled {
+    background: #9ca3af !important;
+    cursor: not-allowed;
 }
 
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-}
-
-/* =========================================================================
-   GLOBAL OVERRIDE: Strips inherited green background from all external css 
-========================================================================= */
+/* Global Overrides for Labels */
 .sidebar-filters label.branch, 
 .sidebar-filters .filter-card label,
 .sidebar-filters .branch {
@@ -199,7 +196,7 @@ input[readonly], input:disabled, select:disabled {
 }
 
 .grid-heading-lbl {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #2563eb;
     margin-bottom: 15px;
@@ -217,8 +214,8 @@ input[readonly], input:disabled, select:disabled {
          $('#accountDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Accounts Search',position: { x: 300, y: 87 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
          $('#accountDetailsWindow').jqxWindow('close');
         
-         $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-         $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+         $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+         $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
         
          var curfromdate= $('#fromdate').jqxDateTimeInput('getDate');
          var oneyeardate=new Date(new Date(curfromdate).setMonth(curfromdate.getMonth()-1));
@@ -238,6 +235,27 @@ input[readonly], input:disabled, select:disabled {
              accountsSearchContent('accountsDetailsSearch.jsp');
          });
     });
+
+    // Targeted function to populate the native dropdown inside heading.jsp
+    function getBranch() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim().split('####');
+                if (items.length > 1) {
+                    var brchIdItems = items[0].split(",");
+                    var brchItems = items[1].split(",");
+                    var optionsbrch = '<option value="">--Select--</option>';
+                    for (var i = 0; i < brchItems.length; i++) {
+                        optionsbrch += '<option value="' + brchIdItems[i] + '">' + brchItems[i] + '</option>';
+                    }
+                    $("select#cmbbranch").html(optionsbrch);
+                }
+            }
+        }
+        x.open("GET", "getBranch.jsp", true);
+        x.send();
+    }
     
     function accountsSearchContent(url) {
         $('#accountDetailsWindow').jqxWindow('open');
@@ -682,7 +700,7 @@ input[readonly], input:disabled, select:disabled {
              $("#mcpDiv").prop("hidden", true);$("#unclearedChqDiv").prop("hidden", true);$("#securityChqDiv").prop("hidden", true);$("#journalDiv").prop("hidden", false);$("#contraDiv").prop("hidden", true);$("#creditDiv").prop("hidden", true);$("#bankDiv").prop("hidden", true);$("#cashDiv").prop("hidden", true);$("#propertyDiv").prop("hidden", true);
              $("#journalDiv").load("journalVoucher.jsp?branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&accdocno='+accdocno+'&dtype='+dtype
                      +'&docrangefrom='+docrangefrom+'&docrangeto='+docrangeto+'&amtrangefrom='+amtrangefrom+'&amtrangeto='+amtrangeto+'&chk='+chk);
-         }else if(dtype=='MCP'){    
+         }else if(dtype=='MCP'){   
              $("#unclearedChqDiv").prop("hidden", true);$("#securityChqDiv").prop("hidden", true);$("#contraDiv").prop("hidden", true);$("#creditDiv").prop("hidden", true);$("#bankDiv").prop("hidden", true);$("#cashDiv").prop("hidden", true);$("#journalDiv").prop("hidden", true);$("#propertyDiv").prop("hidden", true);$("#mcpDiv").prop("hidden", false);
              $("#mcpDiv").load("multipleCashPurchaseGrid.jsp?branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&accdocno='+accdocno+'&dtype='+dtype
                                  +'&docrangefrom='+docrangefrom+'&docrangeto='+docrangeto+'&amtrangefrom='+amtrangefrom+'&amtrangeto='+amtrangeto+'&chk='+chk);
@@ -699,192 +717,206 @@ input[readonly], input:disabled, select:disabled {
 <body onload="getBranch();getDocumentType();">
 <div id="mainBG" class="homeContent" data-type="background">
 <div class='hidden-scrollbar'>
-<div class="master-container">
 
-    <div class="sidebar-filters">
-        
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
+<table class="master-layout-table" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff !important;">
+<tr>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
+<td width="330px" valign="top" style="vertical-align: top; padding: 0 !important; margin: 0 !important; background: #ffffff !important; border-right: 1px solid #e1e8ed;">
+    <div class="master-container">
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                
+                <div class="filter-card">
+                    <table class="filter-table">
 
-                    <tr>
-                        <td class="label-cell">Period</td>
-                        <td>
-                            <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="label-cell">Period</td>
+                            <td>
+                                <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td class="label-cell">To</td>
-                        <td>
-                            <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="label-cell">To</td>
+                            <td>
+                                <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td class="label-cell">Dtype</td>
-                        <td>
-                            <select id="cmbdoctype"
-                                    name="cmbdoctype"
-                                    onchange="docTypeInfo();"
-                                    value='<s:property value="cmbdoctype"/>'>
-                                <option value="">--Select--</option>
-                            </select>
-                            <input type="hidden"
-                                   id="hidcmbdoctype"
-                                   name="hidcmbdoctype"
-                                   value='<s:property value="hidcmbdoctype"/>'>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="label-cell">Dtype</td>
+                            <td>
+                                <select id="cmbdoctype"
+                                        name="cmbdoctype"
+                                        onchange="docTypeInfo();"
+                                        value='<s:property value="cmbdoctype"/>'>
+                                    <option value="">--Select--</option>
+                                </select>
+                                <input type="hidden"
+                                       id="hidcmbdoctype"
+                                       name="hidcmbdoctype"
+                                       value='<s:property value="hidcmbdoctype"/>'>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td class="label-cell">Doc. Range</td>
-                        <td>
-                            <div class="input-range-row">
+                        <tr>
+                            <td class="label-cell">Doc. Range</td>
+                            <td>
+                                <div class="input-range-row">
+                                    <input type="text"
+                                           id="txtdocrangefrom"
+                                           name="txtdocrangefrom"
+                                           onkeypress="javascript:return isNumber(event)"
+                                           value='<s:property value="txtdocrangefrom"/>'>
+                                    <span>-</span>
+                                    <input type="text"
+                                           id="txtdocrangeto"
+                                           name="txtdocrangeto"
+                                           onkeypress="javascript:return isNumber(event)"
+                                           value='<s:property value="txtdocrangeto"/>'>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Amount Range</td>
+                            <td>
+                                <div class="input-range-row">
+                                    <input type="text"
+                                           id="txtamtrangefrom"
+                                           name="txtamtrangefrom"
+                                           style="text-align:right;"
+                                           onkeypress="javascript:return isNumber(event)"
+                                           onblur="funRoundAmt(this.value,this.id);"
+                                           value='<s:property value="txtamtrangefrom"/>'>
+                                    <span>-</span>
+                                    <input type="text"
+                                           id="txtamtrangeto"
+                                           name="txtamtrangeto"
+                                           style="text-align:right;"
+                                           onkeypress="javascript:return isNumber(event)"
+                                           onblur="funRoundAmt(this.value,this.id);"
+                                           value='<s:property value="txtamtrangeto"/>'>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="cmbtype"
+                                        name="cmbtype"
+                                        onchange="clearAccountInfo();"
+                                        value='<s:property value="cmbtype"/>'>
+                                    <option value="">--Select--</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AR">AR</option>
+                                    <option value="GL">GL</option>
+                                    <option value="HR">HR</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Account</td>
+                            <td>
                                 <input type="text"
-                                       id="txtdocrangefrom"
-                                       name="txtdocrangefrom"
-                                       onkeypress="javascript:return isNumber(event)"
-                                       value='<s:property value="txtdocrangefrom"/>'>
-                                <span>-</span>
+                                       id="txtaccid"
+                                       name="txtaccid"
+                                       readonly
+                                       placeholder="Press F3 to Search"
+                                       value='<s:property value="txtaccid"/>' 
+                                       onkeydown="getAccTypeFrom(event);">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
                                 <input type="text"
-                                       id="txtdocrangeto"
-                                       name="txtdocrangeto"
-                                       onkeypress="javascript:return isNumber(event)"
-                                       value='<s:property value="txtdocrangeto"/>'>
-                            </div>
-                        </td>
-                    </tr>
+                                       id="txtaccname"
+                                       name="txtaccname"
+                                       readonly
+                                       value='<s:property value="txtaccname"/>'
+                                       tabindex="-1">
+                                <input type="hidden"
+                                       id="txtdocno"
+                                       name="txtdocno"
+                                       value='<s:property value="txtdocno"/>'>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <div class="button-group">
+                        <input type="button"
+                               class="myButtons"
+                               id="clear"
+                               value="Clear"
+                               onclick="funClearInfo();">
+                    </div>
+                </div>
 
-                    <tr>
-                        <td class="label-cell">Amount Range</td>
-                        <td>
-                            <div class="input-range-row">
-                                <input type="text"
-                                       id="txtamtrangefrom"
-                                       name="txtamtrangefrom"
-                                       style="text-align:right;"
-                                       onkeypress="javascript:return isNumber(event)"
-                                       onblur="funRoundAmt(this.value,this.id);"
-                                       value='<s:property value="txtamtrangefrom"/>'>
-                                <span>-</span>
-                                <input type="text"
-                                       id="txtamtrangeto"
-                                       name="txtamtrangeto"
-                                       style="text-align:right;"
-                                       onkeypress="javascript:return isNumber(event)"
-                                       onblur="funRoundAmt(this.value,this.id);"
-                                       value='<s:property value="txtamtrangeto"/>'>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="cmbtype"
-                                    name="cmbtype"
-                                    onchange="clearAccountInfo();"
-                                    value='<s:property value="cmbtype"/>'>
-                                <option value="">--Select--</option>
-                                <option value="AP">AP</option>
-                                <option value="AR">AR</option>
-                                <option value="GL">GL</option>
-                                <option value="HR">HR</option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label-cell">Account</td>
-                        <td>
-                            <input type="text"
-                                   id="txtaccid"
-                                   name="txtaccid"
-                                   readonly
-                                   placeholder="Press F3 to Search"
-                                   value='<s:property value="txtaccid"/>' 
-                                   onkeydown="getAccTypeFrom(event);">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="text"
-                                   id="txtaccname"
-                                   name="txtaccname"
-                                   readonly
-                                   value='<s:property value="txtaccname"/>'
-                                   tabindex="-1">
-                            <input type="hidden"
-                                   id="txtdocno"
-                                   name="txtdocno"
-                                   value='<s:property value="txtdocno"/>'>
-                        </td>
-                    </tr>
-                </table>
             </div>
-            
-            <div class="button-group" style="margin-top: 15px;">
-                <input type="button"
-                       class="myButtons"
-                       id="clear"
-                       value="Clear"
-                       onclick="funClearInfo();">
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            
-            <label class="grid-heading-lbl" id="lbldoctype" name="lbldoctype"></label>
-
-            <div id="cashDiv">
-                <jsp:include page="cashVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="bankDiv" hidden="true">
-                <jsp:include page="bankVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="creditDiv" hidden="true">
-                <jsp:include page="creditVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="journalDiv" hidden="true">
-                <jsp:include page="journalVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="contraDiv" hidden="true">
-                <jsp:include page="contraTransVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="securityChqDiv" hidden="true">
-                <jsp:include page="securityCheque.jsp"></jsp:include>
-            </div>
-
-            <div id="propertyDiv" hidden="true">
-                <jsp:include page="propertyVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="unclearedChqDiv" hidden="true">
-                <jsp:include page="unclearedVoucher.jsp"></jsp:include>
-            </div>
-
-            <div id="mcpDiv" hidden="true">
-                <jsp:include page="multipleCashPurchaseGrid.jsp"></jsp:include>
-            </div>
-
         </div>
     </div>
+</td>
+
+<td class="right-panel" valign="top" style="padding: 15px; background: #ffffff !important;">
+
+    <div style="width: 100%; margin-bottom: 10px;">
+        <jsp:include page="../../heading.jsp"></jsp:include>
+    </div>
+
+    <label class="grid-heading-lbl" id="lbldoctype" name="lbldoctype"></label>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: transparent !important;">
+        <tr>
+             <td valign="top" style="background: transparent !important;">
+
+                 <div id="cashDiv">
+                     <jsp:include page="cashVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="bankDiv" hidden="true">
+                     <jsp:include page="bankVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="creditDiv" hidden="true">
+                     <jsp:include page="creditVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="journalDiv" hidden="true">
+                     <jsp:include page="journalVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="contraDiv" hidden="true">
+                     <jsp:include page="contraTransVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="securityChqDiv" hidden="true">
+                     <jsp:include page="securityCheque.jsp"></jsp:include>
+                 </div>
+
+                 <div id="propertyDiv" hidden="true">
+                     <jsp:include page="propertyVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="unclearedChqDiv" hidden="true">
+                     <jsp:include page="unclearedVoucher.jsp"></jsp:include>
+                 </div>
+
+                 <div id="mcpDiv" hidden="true">
+                     <jsp:include page="multipleCashPurchaseGrid.jsp"></jsp:include>
+                 </div>
+
+             </td>
+        </tr>
+    </table>
+
+</td>
+
+</tr>
+</table>
 
 </div>
 </div>
@@ -893,6 +925,5 @@ input[readonly], input:disabled, select:disabled {
     <div></div><div></div>
 </div>
 
-</div>
 </body>
 </html>

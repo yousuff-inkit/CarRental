@@ -11,96 +11,107 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
     height: 100%;
-    margin: 0;
-    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
 }
 
+/* Force layout tables to white, but avoid targeting pure divs to protect color boxes */
+.master-layout-table, 
+.master-layout-table > tbody > tr, 
+.master-layout-table > tbody > tr > td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+/* Forcefully kill all hover states on tables applied by external CSS */
+table tr:hover, 
+table td:hover, 
+table th:hover, 
+tbody tr:hover {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
+    background-color: #ffffff !important; 
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* Sidebar */
 .sidebar-filters {
-    width: 100%;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
+    width: 330px;
+    flex: 0 0 330px;
+    background: #ffffff !important;
     display: flex;
     flex-direction: column;
     height: 100vh;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 20px; 
 }
 
+/* Cards */
 .filter-card {
-    background: #f8fafc;
+    background: #f8fafc !important;
     border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 12px;
+    border-radius: 8px;
+    padding: 15px; 
     margin-bottom: 12px;
 }
 
+/* Tables within the card */
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px;
+    border-spacing: 0 10px; 
+    background: transparent !important;
 }
 
-.label-cell {
+.filter-table tr, .filter-table td {
+    background: transparent !important;
+    border: none !important;
+}
+
+.filter-table .label-cell {
     text-align: right;
     padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
-    color: #4e5e71;
-    width: 90px;
-}
-
-.legend-label {
-    text-align: left;
-    padding-left: 10px;
     font-size: 12px;
-    font-weight: 600;
     color: #4e5e71;
+    font-weight: 600;
+    width: 90px;
+    white-space: nowrap; 
 }
 
-.color-box {
-    width: 16px; 
-    height: 16px; 
-    border-radius: 3px; 
-    border: 1px solid #d1d9e2;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
     height: 24px !important;             
     padding: 2px 8px !important;         
     border: 1px solid #ccd6e0 !important;
     border-radius: 4px !important;       
     font-size: 12px !important;          
-    background-color: #ffffff;
+    background-color: #ffffff !important;
     box-sizing: border-box;
     color: #333;
     outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 select {
@@ -121,47 +132,7 @@ input[readonly], input:disabled, select:disabled {
     cursor: not-allowed;
 }
 
-/* ===== BUTTONS ===== */
-.btn-submit {
-    width: 100%;
-    height: 30px !important;            
-    padding: 0 12px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
-    text-align: center;
-    margin-top: 8px;
-    transition: all 0.2s ease;
-}
-
-.btn-submit:hover {
-    background: #1d4ed8 !important;
-}
-
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
-}
-
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-}
-
+/* ===== LEGEND STYLING ===== */
 legend {
     font-size: 11px;
     font-weight: bold;
@@ -172,6 +143,24 @@ legend {
     padding-bottom: 4px;
     display: block;
     width: 100%;
+    background: transparent !important;
+}
+
+.legend-label {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4e5e71;
+}
+
+.color-box {
+    width: 16px; 
+    height: 16px; 
+    border-radius: 3px; 
+    border: 1px solid #d1d9e2;
+    display: inline-block;
+    vertical-align: middle;
 }
 </style>
 
@@ -203,92 +192,92 @@ legend {
 
 <div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
-<div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+<table class="master-layout-table" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff !important;">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+<td width="330px" valign="top" style="vertical-align: top; padding: 0 !important; margin: 0 !important; background: #ffffff !important; border-right: 1px solid #e1e8ed;">
+<div class="master-container">
+<div class="sidebar-filters">
+
+    <div class="sidebar-scroll-content">
+        
+        <div class="filter-card">
+            <table class="filter-table">
+                <tr>
+                    <td class="label-cell">Type</td>
+                    <td>
+                        <select id="cmbtype" name="cmbtype" onchange="funreload(event);">
+                            <option value="">--Select--</option>
+                            <option value="SLM">Sales Man</option>
+                            <option value="SLA">Sales Agent</option>
+                            <option value="RLA">Rental Agent</option>
+                            <option value="DRV">Driver</option>
+                            <option value="CHK">Check In</option>
+                            <option value="STF">Staff</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
         </div>
 
-        <div class="sidebar-scroll-content">
-            
-            <!-- Filter Options -->
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="cmbtype" name="cmbtype" onchange="funreload(event);">
-                                <option value="">--Select--</option>
-                                <option value="SLM">Sales Man</option>
-                                <option value="SLA">Sales Agent</option>
-                                <option value="RLA">Rental Agent</option>
-                                <option value="DRV">Driver</option>
-                                <option value="CHK">Check In</option>
-                                <option value="STF">Staff</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Modernized Legend -->
-            <div class="filter-card">
-                <legend>Legend</legend>
-                <table class="filter-table" style="margin-top: 10px;">
-                    <tr>
-                        <td style="width: 20px; text-align: center;"><div class="color-box" style="background:#FFEBEB;"></div></td>
-                        <td class="legend-label">Sales Man</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;"><div class="color-box" style="background:#FFFFD1;"></div></td>
-                        <td class="legend-label">Sales Agent</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;"><div class="color-box" style="background:#FFFAFA;"></div></td>
-                        <td class="legend-label">Rental Agent</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;"><div class="color-box" style="background:#F0FFFF;"></div></td>
-                        <td class="legend-label">Driver</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;"><div class="color-box" style="background:#F8E0F7;"></div></td>
-                        <td class="legend-label">Staff</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;"><div class="color-box" style="background:#F7F2E0;"></div></td>
-                        <td class="legend-label">Check In</td>
-                    </tr>
-                </table>
-            </div>
-
+        <div class="filter-card">
+            <legend>Legend</legend>
+            <table class="filter-table" style="margin-top: 10px;">
+                <tr>
+                    <td style="width: 20px; text-align: center;"><div class="color-box" style="background:#FFEBEB !important;"></div></td>
+                    <td class="legend-label">Sales Man</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><div class="color-box" style="background:#FFFFD1 !important;"></div></td>
+                    <td class="legend-label">Sales Agent</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><div class="color-box" style="background:#FFFAFA !important;"></div></td>
+                    <td class="legend-label">Rental Agent</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><div class="color-box" style="background:#F0FFFF !important;"></div></td>
+                    <td class="legend-label">Driver</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><div class="color-box" style="background:#F8E0F7 !important;"></div></td>
+                    <td class="legend-label">Staff</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><div class="color-box" style="background:#F7F2E0 !important;"></div></td>
+                    <td class="legend-label">Check In</td>
+                </tr>
+            </table>
         </div>
+
     </div>
+
+</div>
+</div>
 </td>
 
-<!-- ================= RIGHT SIDE (GRID) ================= -->
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            
-            <div id="staffListDiv">
-                <jsp:include page="staffListGrid.jsp"></jsp:include>
-            </div>
-            
-        </div>
+<td class="right-panel" valign="top" style="padding: 15px; background: #ffffff !important;">
+
+    <div style="width: 100%; margin-bottom: 10px;">
+        <jsp:include page="../../heading.jsp"></jsp:include>
     </div>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: transparent !important;">
+        <tr>
+             <td valign="top" style="background: transparent !important;">
+                 <div id="staffListDiv">
+                     <jsp:include page="staffListGrid.jsp"></jsp:include>
+                 </div>
+             </td>
+        </tr>
+    </table>
+
 </td>
 
 </tr>
 </table>
 
-</div>
 </div>
 </div>
 

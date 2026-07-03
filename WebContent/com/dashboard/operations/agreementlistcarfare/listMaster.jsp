@@ -11,79 +11,107 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
     height: 100%;
-    margin: 0;
-    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
 }
 
+/* Force layout tables to white */
+.master-layout-table, 
+.master-layout-table > tbody > tr, 
+.master-layout-table > tbody > tr > td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+/* Forcefully kill all hover states on tables applied by external CSS */
+table tr:hover, 
+table td:hover, 
+table th:hover, 
+tbody tr:hover {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* ===== MASTER LAYOUT ===== */
 .master-container {
     display: flex;
     width: 100%;
     height: 100%;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
+    background-color: #ffffff !important; 
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* Sidebar */
 .sidebar-filters {
-    width: 100%;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
+    width: 330px;
+    flex: 0 0 330px;
+    background: #ffffff !important;
     display: flex;
     flex-direction: column;
     height: 100vh;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 20px; 
 }
 
+/* Cards */
 .filter-card {
-    background: #f8fafc;
+    background: #f8fafc !important;
     border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 12px;
+    border-radius: 8px;
+    padding: 15px; 
     margin-bottom: 12px;
 }
 
+/* Tables within the card */
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px;
+    border-spacing: 0 10px; 
+    background: transparent !important;
 }
 
-.label-cell {
+.filter-table tr, .filter-table td {
+    background: transparent !important;
+    border: none !important;
+}
+
+.filter-table .label-cell {
     text-align: right;
     padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 85px;
+    white-space: nowrap; 
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
     height: 24px !important;             
     padding: 2px 8px !important;         
     border: 1px solid #ccd6e0 !important;
     border-radius: 4px !important;       
     font-size: 12px !important;          
-    background-color: #ffffff;
+    background-color: #ffffff !important;
     box-sizing: border-box;
     color: #333;
     outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
 select {
@@ -128,43 +156,24 @@ input[type="radio"], input[type="checkbox"] {
 
 /* ===== BUTTONS ===== */
 .btn-submit {
-    width: 100%;
+    flex: 1;
     height: 30px !important;            
-    padding: 0 12px !important;
+    padding: 0 12px !important;         
     background: #2563eb !important;
     color: #fff !important;
     border: none !important;
-    border-radius: 4px !important;
+    border-radius: 4px !important;      
     font-size: 13px !important;
     font-weight: 600 !important;
     cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
+    line-height: 30px !important;       
     text-align: center;
-    transition: all 0.2s ease;
-    margin-top: 5px;
+    transition: background 0.2s;
+    width: 100%;
 }
 
 .btn-submit:hover {
     background: #1d4ed8 !important;
-}
-
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
-}
-
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
 }
 
 /* Summary Box */
@@ -173,11 +182,13 @@ input[type="radio"], input[type="checkbox"] {
     border-radius: 8px;
     padding: 10px;
     background: #f8fafc;
+    margin-top: 15px;
 }
 .summary-fieldset table td {
     font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
+    background: transparent !important;
 }
 </style>
 
@@ -219,6 +230,27 @@ $(document).ready(function () {
     $('#brand').dblclick(function(){ $('#brandwindow').jqxWindow('open'); brandSearchContent('brandsearch.jsp?'); });
     $('#model').dblclick(function(){ $('#modelwindow').jqxWindow('open'); modelSearchContent('modelsearch.jsp?'); });
 });
+
+// Targeted function to populate the native dropdown inside heading.jsp
+function getBranch() {
+    var x = new XMLHttpRequest();
+    x.onreadystatechange = function() {
+        if (x.readyState == 4 && x.status == 200) {
+            var items = x.responseText.trim().split('####');
+            if (items.length > 1) {
+                var brchIdItems = items[0].split(",");
+                var brchItems = items[1].split(",");
+                var optionsbrch = '<option value="">--Select--</option>';
+                for (var i = 0; i < brchItems.length; i++) {
+                    optionsbrch += '<option value="' + brchIdItems[i] + '">' + brchItems[i] + '</option>';
+                }
+                $("select#cmbbranch").html(optionsbrch);
+            }
+        }
+    }
+    x.open("GET", "getBranch.jsp", true);
+    x.send();
+}
 
 function funExportBtn(){
     $("#detlist").excelexportjs({
@@ -318,143 +350,144 @@ function funchkval(){
 
 <div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
-<div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+<table class="master-layout-table" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff !important;">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
-        <div class="sidebar-scroll-content">
+<td width="330px" valign="top" style="vertical-align: top; padding: 0 !important; margin: 0 !important; background: #ffffff !important; border-right: 1px solid #e1e8ed;">
+    <div class="master-container">
+        <div class="sidebar-filters">
             
-            <div class="radio-group">
-                <label><input type="radio" name="chk" id="outchk" value="out" checked onchange="funchkval()"> Out Date</label>
-                <label><input type="radio" name="chk" id="inchk" value="in" onchange="funchkval()"> In Date</label>
+            <div class="sidebar-scroll-content">
+                
+                <div class="radio-group">
+                    <label><input type="radio" name="chk" id="outchk" value="out" checked onchange="funchkval()"> Out Date</label>
+                    <label><input type="radio" name="chk" id="inchk" value="in" onchange="funchkval()"> In Date</label>
+                </div>
+
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">From</td>
+                            <td><div id="fromdate" name="fromdate"></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">To</td>
+                            <td><div id="todate" name="todate"></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Status</td>
+                            <td>
+                                <select id="status" name="status">
+                                    <option value="" selected>All</option>  
+                                    <option value="0">Open</option>
+                                    <option value="1">Close</option>  
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Client</td>
+                            <td>
+                                <input type="text" name="clientname" id="clientname" 
+                                       placeholder="Press F3 TO Search" readonly 
+                                       onKeyDown="getclinfo(event);" onclick="this.placeholder=''">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Category</td>
+                            <td>
+                                <input type="text" name="catname" id="catname" 
+                                       placeholder="Press F3 TO Search" readonly 
+                                       onKeyDown="getclcat(event);" onclick="this.placeholder=''">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Fleet</td>
+                            <td>
+                                <input type="text" name="fleet" id="fleet" 
+                                       placeholder="Press F3 TO Search" readonly 
+                                       onkeydown="getfleet(event)" onclick="this.placeholder=''">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Group</td>
+                            <td>
+                                <input type="text" name="group" id="group" 
+                                       placeholder="Press F3 TO Search" readonly 
+                                       onkeydown="getgroup(event)" onclick="this.placeholder=''">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Brand</td>
+                            <td>
+                                <input type="text" name="brand" id="brand" 
+                                       placeholder="Press F3 TO Search" readonly 
+                                       onkeydown="getbrand(event)" onclick="this.placeholder=''">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Model</td>
+                            <td>
+                                <input type="text" name="model" id="model" 
+                                       placeholder="Press F3 TO Search" readonly 
+                                       onkeydown="getmodel(event)" onclick="this.placeholder=''">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="rentaltype" name="rentaltype"></select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <button type="button" class="btn-submit" name="clear" id="clear" onclick="funcleardata()">Clear Filters</button>
+
+                <div class="summary-fieldset">
+                    <table width="100%" style="background: transparent !important;">
+                        <tr>
+                            <td align="right" width="40%" style="padding-right:10px;">Rental</td>
+                            <td><input type="text" name="rt" id="rt" readonly style="background-color: #FFEBEB !important; border: 1px solid #e3e8ee !important;"></td>
+                        </tr>
+                        <tr>
+                            <td align="right" width="40%" style="padding-right:10px; padding-top:8px;">Lease</td>
+                            <td style="padding-top:8px;"><input type="text" name="lt" id="lt" readonly style="background-color: #ffffff !important; border: 1px solid #e3e8ee !important;"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="display:none;">
+                    <input type="hidden" name="outchks" id="outchks">
+                    <input type="hidden" name="inchks" id="inchks">
+                    <input type="hidden" name="cldocno" id="cldocno">
+                    <input type="hidden" name="groupdoc" id="groupdoc">
+                    <input type="hidden" name="brandid" id="brandid">
+                    <input type="hidden" name="modelid" id="modelid">
+                    <input type="hidden" name="catid" id="catid">
+                </div>
+
             </div>
-
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From</td>
-                        <td><div id="fromdate" name="fromdate"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To</td>
-                        <td><div id="todate" name="todate"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Status</td>
-                        <td>
-                            <select id="status" name="status">
-                                <option value="" selected>All</option>  
-                                <option value="0">Open</option>
-                                <option value="1">Close</option>  
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Client</td>
-                        <td>
-                            <input type="text" name="clientname" id="clientname" 
-                                   placeholder="Press F3 TO Search" readonly 
-                                   onKeyDown="getclinfo(event);" onclick="this.placeholder=''">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Category</td>
-                        <td>
-                            <input type="text" name="catname" id="catname" 
-                                   placeholder="Press F3 TO Search" readonly 
-                                   onKeyDown="getclcat(event);" onclick="this.placeholder=''">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Fleet</td>
-                        <td>
-                            <input type="text" name="fleet" id="fleet" 
-                                   placeholder="Press F3 TO Search" readonly 
-                                   onkeydown="getfleet(event)" onclick="this.placeholder=''">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Group</td>
-                        <td>
-                            <input type="text" name="group" id="group" 
-                                   placeholder="Press F3 TO Search" readonly 
-                                   onkeydown="getgroup(event)" onclick="this.placeholder=''">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Brand</td>
-                        <td>
-                            <input type="text" name="brand" id="brand" 
-                                   placeholder="Press F3 TO Search" readonly 
-                                   onkeydown="getbrand(event)" onclick="this.placeholder=''">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Model</td>
-                        <td>
-                            <input type="text" name="model" id="model" 
-                                   placeholder="Press F3 TO Search" readonly 
-                                   onkeydown="getmodel(event)" onclick="this.placeholder=''">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="rentaltype" name="rentaltype"></select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <button type="button" class="btn-submit" name="clear" id="clear" onclick="funcleardata()">Clear Filters</button>
-
-            <!-- Summary Table -->
-            <div class="summary-fieldset">
-                <table width="100%">
-                    <tr>
-                        <td align="right" width="40%" style="padding-right:10px;">Rental</td>
-                        <td><input type="text" name="rt" id="rt" readonly style="background-color: #FFEBEB; border: 1px solid #e3e8ee;"></td>
-                    </tr>
-                    <tr>
-                        <td align="right" width="40%" style="padding-right:10px; padding-top:8px;">Lease</td>
-                        <td style="padding-top:8px;"><input type="text" name="lt" id="lt" readonly style="background-color: #ffffff; border: 1px solid #e3e8ee;"></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- HIDDEN FIELDS -->
-            <div style="display:none;">
-                <input type="hidden" name="outchks" id="outchks">
-                <input type="hidden" name="inchks" id="inchks">
-                <input type="hidden" name="cldocno" id="cldocno">
-                <input type="hidden" name="groupdoc" id="groupdoc">
-                <input type="hidden" name="brandid" id="brandid">
-                <input type="hidden" name="modelid" id="modelid">
-                <input type="hidden" name="catid" id="catid">
-            </div>
-
         </div>
     </div>
 </td>
 
-<!-- ================= RIGHT SIDE (GRID) ================= -->
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="detlist">
-                <jsp:include page="detailsGrid.jsp"></jsp:include>
-            </div>
-        </div>
+<td class="right-panel" valign="top" style="padding: 15px; background: #ffffff !important;">
+    
+    <div style="width: 100%; margin-bottom: 10px;">
+        <jsp:include page="../../heading.jsp"></jsp:include>
     </div>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: transparent !important;">
+        <tr>
+             <td valign="top" style="background: transparent !important;">
+                 <div id="detlist">
+                     <jsp:include page="detailsGrid.jsp"></jsp:include>
+                 </div>
+             </td>
+        </tr>
+    </table>
+
 </td>
 
 </tr>
@@ -463,7 +496,6 @@ function funchkval(){
 </div>
 </div>
 
-<!-- POPUPS -->
 <div id="catwindow"><div></div></div>
 <div id="clientwindow"><div></div></div>
 <div id="fleetwindow"><div></div></div>
@@ -471,6 +503,5 @@ function funchkval(){
 <div id="brandwindow"><div></div></div>
 <div id="modelwindow"><div></div></div>
 
-</div>
 </body>
 </html>
