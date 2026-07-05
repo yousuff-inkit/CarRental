@@ -34,11 +34,11 @@
     String userId = (session.getAttribute("USERID") != null) ? session.getAttribute("USERID").toString() : "";
 
     String[][] moduleDefs = {
-        {"Finance",          "Fin",     "Finance",   "#0056b3", "#e8f0fe", "bank",     "Manage accounts, payments, receipts and financial transactions"},
-        {"Operations",       "Oper",    "Operation", "#1a7340", "#e8f5e9", "car",      "Handle bookings, movements, agreements and client workflows"},
-        {"Fleet Management", "Fleet",   "Fleet",     "#b75d00", "#fff3e0", "car",      "Track vehicle assignments, maintenance and fleet utilization"},
+        {"Finance",          "Fin",     "Finance",   "#0056b3", "#e8f0fe", "bank",      "Manage accounts, payments, receipts and financial transactions"},
+        {"Operations",       "Oper",    "Operation", "#1a7340", "#e8f5e9", "car",       "Handle bookings, movements, agreements and client workflows"},
+        {"Fleet Management", "Fleet",   "Fleet",     "#b75d00", "#fff3e0", "car",       "Track vehicle assignments, maintenance and fleet utilization"},
         {"Fixed Assets",     "Asset",   "Asset",     "#4a148c", "#f3e5f5", "building", "Manage company assets, depreciation and asset tracking"},
-        {"Human Resource",   "Hum",     "Human",     "#00695c", "#e0f2f1", "user",     "Employee management, attendance and payroll operations"},
+        {"Human Resource",   "Hum",     "Human",     "#00695c", "#e0f2f1", "user",      "Employee management, attendance and payroll operations"},
         {"Control Centre",   "Control", "Control",   "#b71c1c", "#fce4ec", "settings", "System configuration, user roles and administrative controls"}
     };
 
@@ -53,26 +53,17 @@
     for (int i = 0; i < moduleDefs.length; i++) allTilesList.add(new ArrayList<ClsDashBoardBean>());
 
     // =========================================================================
-    // MASTER KPI BLOCK (Phase 1, 2, 3, 4 & 5)
+    // MASTER KPI BLOCK
     // =========================================================================
-    // P1 & P2: Fleet & Agreements
     int readyToRent = 0, inGarage = 0, regExpiry = 0, insExpiry = 0;
     int totalDueCount = 0, myTasks = 0, assignedTasks = 0;
     int laDueDate = 0, bookingFollowUp = 0, quotationFollowUp = 0, agreementCloseReview = 0;
-    
-    // P3: Finance
     int invoicesToDispatch = 0, damageInvoices = 0, paymentFollowup = 0;
     int pdcOutstanding = 0, refundableSecurity = 0, collectionClosure = 0;
-
-    // P4: Traffic Fines
     int unallocatedFines = 0, staffFines = 0, salikPending = 0, toBeInvoicedTraffic = 0;
-
-    // P5: Human Resources
     int pendingLeaves = 0, pendingWps = 0, pendingPayroll = 0, empDocExpiries = 0;
 
-    Connection kpiConn = null;
-    Statement kpiStmt = null;
-    ResultSet kpiRs = null;
+    Connection kpiConn = null; Statement kpiStmt = null; ResultSet kpiRs = null;
     try {
         kpiConn = new ClsConnection().getMyConnection();
         kpiStmt = kpiConn.createStatement();
@@ -447,109 +438,72 @@
     <div class="right-content">
         
         <div class="kpi-master-header">
-            
-            <% if (!"SNDriver".equals(roleId)) { %>
-                <div class="kpi-stat-card" style="border-bottom-color: #28a745;" onclick="openParentMenu('Ready To Rent')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Ready to Rent</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #28a745; line-height: 1.2;"><%= readyToRent %></div>
-                </div>
+        <%
+            // Definition of all KPIs inside a structured format:
+            // { Label, Value, Border Color, Background/Style, Click Function Name, Target Menu Name, Category Module, Allowed User Types }
+            // User types setting: "Driver" (SN Driver), "Ops" (Operations/Front Desk), "Super" (Super User)
+            String[][] kpiDefinitions = {
+                {"Ready to Rent",              String.valueOf(readyToRent),         "#28a745", "",                       "openParentMenu",        "Available Fleet",          "Fleet Management", "Ops,Super,Driver"},
+                {"In Garage",                  String.valueOf(inGarage),            "#dc3545", "",                       "openParentMenu",        "Vehicle Master",           "Fleet Management", "Ops,Super"},
+                {"RA Due Date",                String.valueOf(totalDueCount),       "#b75d00", "background:#fff3e0;",    "openDueDateDirectly",   "",                         "Operations",       "Ops,Super"},
+                {"LA Due Date",                String.valueOf(laDueDate),           "#e67e22", "",                       "openParentMenu",        "Lease Agreement Create",   "Operations",       "Ops,Super"},
+                {"Pending Bookings",           String.valueOf(bookingFollowUp),     "#8e44ad", "",                       "openParentMenu",        "Booking",                  "Operations",       "Ops,Super"},
+                {"Pending Quotes",             String.valueOf(quotationFollowUp),   "#f39c12", "",                       "openParentMenu",        "Quote",                    "Operations",       "Ops,Super"},
+                {"RA Close Review",            String.valueOf(agreementCloseReview),"#34495e", "",                       "openParentMenu",        "Rental Agreement Close",   "Operations",       "Super"},
+                {"Un-Dispatched Inv",          String.valueOf(invoicesToDispatch),  "#4CAF50", "",                       "openParentMenu",        "Invoice",                  "Finance",          "Ops,Super"},
+                {"Damage Invoices",            String.valueOf(damageInvoices),      "#f44336", "",                       "openParentMenu",        "Invoice",                  "Finance",          "Super"},
+                {"Payment Followup",           String.valueOf(paymentFollowup),     "#e91e63", "",                       "openParentMenu",        "Cash Receipts",            "Finance",          "Ops,Super"},
+                {"PDC Outstanding",            String.valueOf(pdcOutstanding),      "#9c27b0", "",                       "openParentMenu",        "PDC Posting - Receipts",   "Finance",          "Super"},
+                {"Unallocated Fines",          String.valueOf(unallocatedFines),    "#FF5722", "",                       "openParentMenu",        "Traffic fine Entry",       "Operations",       "Ops,Super"},
+                {"Staff Fines",                String.valueOf(staffFines),          "#FF9800", "",                       "openParentMenu",        "Traffic fine Entry",       "Operations",       "Super"},
+                {"Salik Pending",              String.valueOf(salikPending),        "#795548", "",                       "openParentMenu",        "SAT Download",             "Operations",       "Ops,Super"},
+                {"Pending Leaves",             String.valueOf(pendingLeaves),       "#00BCD4", "",                       "openParentMenu",        "Leave Request",            "Human Resource",   "Super"},
+                {"Pending WPS",                String.valueOf(pendingWps),          "#3F51B5", "",                       "openParentMenu",        "Monthly Payroll",          "Human Resource",   "Super"},
+                {"Staff Doc Expiries",         String.valueOf(empDocExpiries),      "#E91E63", "",                       "openParentMenu",        "Employee Master",           "Human Resource",   "Super"},
+                {"Fleet Doc Expiries",         String.valueOf(regExpiry + insExpiry),"#6f42c1", "",                      "openParentMenu",        "Vehicle Master",           "Fleet Management", "Ops,Super"},
+                {"My Pending Tasks",           String.valueOf(myTasks),             "#007bff", "",                       "openParentMenu",        "General",                  "Control Centre",   "Ops,Super,Driver"},
+                {"Assigned to Me",             String.valueOf(assignedTasks),       "#17a2b8", "",                       "openParentMenu",        "General",                  "Control Centre",   "Ops,Super,Driver"}
+            };
 
-                <div class="kpi-stat-card" style="border-bottom-color: #dc3545;" onclick="openParentMenu('UnRentable')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">In Garage</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #dc3545; line-height: 1.2;"><%= inGarage %></div>
-                </div>
+            // Identify current user category context
+            String userType = "Ops"; // Default safety fallback
+            if ("SNDriver".equalsIgnoreCase(roleId)) {
+                userType = "Driver";
+            } else if ("1".equalsIgnoreCase(roleId) || "Super".equalsIgnoreCase(roleId)) { 
+                // Adjust if your database super user role contains a different code string
+                userType = "Super";
+            }
 
-                <div class="kpi-stat-card" style="border-bottom-color: #b75d00; background: #fff3e0;" onclick="openDueDateDirectly()">
-                    <div style="font-size: 11px; color: #b75d00; font-weight: 600; text-transform: uppercase;">RA Due Date</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #b75d00; line-height: 1.2;"><%= totalDueCount %></div>
-                </div>
+            // Print filtered cards
+            for (String[] kpi : kpiDefinitions) {
+                String kpiLabel    = kpi[0];
+                String kpiValue    = kpi[1];
+                String bColor      = kpi[2];
+                String styleAttr   = kpi[3];
+                String clickFunc   = kpi[4];
+                String targetMenu  = kpi[5];
+                String kpiCategory = kpi[6];
+                String allowedRoles= kpi[7];
 
-                <div class="kpi-stat-card" style="border-bottom-color: #e67e22;" onclick="openParentMenu('LA Due Date')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">LA Due Date</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #e67e22; line-height: 1.2;"><%= laDueDate %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #8e44ad;" onclick="openParentMenu('Booking Follow Up')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Bookings</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #8e44ad; line-height: 1.2;"><%= bookingFollowUp %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #f39c12;" onclick="openParentMenu('Quotation Follow Up')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Quotes</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #f39c12; line-height: 1.2;"><%= quotationFollowUp %></div>
-                </div>
-                
-                <div class="kpi-stat-card" style="border-bottom-color: #34495e;" onclick="openParentMenu('Agreement Close Review')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">RA Close Review</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #34495e; line-height: 1.2;"><%= agreementCloseReview %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #4CAF50;" onclick="openParentMenu('Invoices to be Dispatched')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Un-Dispatched Inv</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #4CAF50; line-height: 1.2;"><%= invoicesToDispatch %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #f44336;" onclick="openParentMenu('Damage Invoice List')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Damage Invoices</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #f44336; line-height: 1.2;"><%= damageInvoices %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #e91e63;" onclick="openParentMenu('Payment Followup')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Payment Followup</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #e91e63; line-height: 1.2;"><%= paymentFollowup %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #9c27b0;" onclick="openParentMenu('PDC Outstanding')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">PDC Outstanding</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #9c27b0; line-height: 1.2;"><%= pdcOutstanding %></div>
-                </div>
-                
-                <div class="kpi-stat-card" style="border-bottom-color: #FF5722;" onclick="openParentMenu('Unallocated')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Unallocated Fines</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #FF5722; line-height: 1.2;"><%= unallocatedFines %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #FF9800;" onclick="openParentMenu('Staff-Allocated Traffic')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Staff Fines</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #FF9800; line-height: 1.2;"><%= staffFines %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #795548;" onclick="openParentMenu('Salik Traffic Daily list')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Salik Pending</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #795548; line-height: 1.2;"><%= salikPending %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #00BCD4;" onclick="openParentMenu('Leave Acceptance')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Leaves</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #00BCD4; line-height: 1.2;"><%= pendingLeaves %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #3F51B5;" onclick="openParentMenu('WPS Listing')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending WPS</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #3F51B5; line-height: 1.2;"><%= pendingWps %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #E91E63;" onclick="openParentMenu('Employee Detailed List')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Staff Doc Expiries</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #E91E63; line-height: 1.2;"><%= empDocExpiries %></div>
-                </div>
-            <% } %>
-
-            <div class="kpi-stat-card" style="border-bottom-color: #6f42c1;" onclick="openParentMenu('Registration Expiry')">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Fleet Doc Expiries</div>
-                <div style="font-size: 22px; font-weight: 800; color: #6f42c1; line-height: 1.2;"><%= (regExpiry + insExpiry) %></div>
-            </div>
-
-            <div class="kpi-stat-card" style="border-bottom-color: #007bff;" onclick="openParentMenu('Task Management')">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">My Pending Tasks</div>
-                <div style="font-size: 22px; font-weight: 800; color: #007bff; line-height: 1.2;"><%= myTasks %></div>
-            </div>
-            
-            <div class="kpi-stat-card" style="border-bottom-color: #17a2b8;" onclick="openParentMenu('Task Management')">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Assigned to Me</div>
-                <div style="font-size: 22px; font-weight: 800; color: #17a2b8; line-height: 1.2;"><%= assignedTasks %></div>
-            </div>
-
+                // Rule 1: Validate User Type Role Rights
+                if (allowedRoles.contains(userType)) {
+                    // Rule 2: Validate Module Category selection matching the left active window menu panel
+                    if (kpiCategory.equalsIgnoreCase(selectedParam)) {
+                        
+                        String clickAction = clickFunc + "('" + targetMenu + "')";
+                        if ("openDueDateDirectly".equals(clickFunc)) {
+                            clickAction = "openDueDateDirectly()";
+                        }
+        %>
+                        <div class="kpi-stat-card" style="border-bottom-color: <%= bColor %>; <%= styleAttr %>" onclick="<%= clickAction %>">
+                            <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;"><%= kpiLabel %></div>
+                            <div style="font-size: 22px; font-weight: 800; color: <%= bColor %>; line-height: 1.2;"><%= kpiValue %></div>
+                        </div>
+        <%
+                    }
+                }
+            }
+        %>
         </div>
 
         <%
@@ -625,6 +579,10 @@
 
             document.querySelectorAll('.panel-search input').forEach(function(el) { el.value = ''; });
             document.querySelectorAll('.tile-card').forEach(function(el) { el.style.display = ''; });
+            
+            // Reload dashboard page filtering content to change url parameter context and reload the targeted modules KPI set
+            var targetModule = clicked.querySelector('.module-label').textContent.trim();
+            window.location.href = "?module=" + encodeURIComponent(targetModule);
         }
     }
 
