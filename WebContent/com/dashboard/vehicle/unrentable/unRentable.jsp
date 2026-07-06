@@ -11,6 +11,7 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
+
 /* ===== MASTER LAYOUT ===== */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
@@ -21,12 +22,12 @@ html, body, #mainBG, .hidden-scrollbar {
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+/* Sidebar Component */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -34,70 +35,113 @@ html, body, #mainBG, .hidden-scrollbar {
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 50px); 
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 10px 15px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 2;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 10px 15px 20px;
+    padding: 15px 20px 25px;
 }
 
-/* Cards */
+/* Cards Layout Rules */
 .filter-card {
-    background: #fff;
+    background: #f8fafc;
     border: 1px solid #e3e8ee;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
-/* Form Alignment Fix */
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px; /* Matched spacing to previous pages */
+    border-spacing: 0 10px;
 }
 
-.label-cell {
-    text-align: right; /* Reverted to right align for uniformity */
+.filter-table .label-cell {
+    text-align: right;
     padding-right: 12px;
-    vertical-align: middle; 
-    font-size: 12px; /* Uniform 12px label */
-    font-weight: 600;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 90px;
-    white-space: nowrap;
 }
 
 /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
-input[type="text"], 
-select {
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    height: 24px !important;    /* Enforced 24px height */
-    padding: 2px 8px;           /* Tighter padding for 24px */
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;         /* Sharper corners */
-    font-size: 12px !important; /* Adjusted font to fit 24px box */
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
     box-sizing: border-box;
-    outline: none;
-    font-family: inherit;
-    background-color: #fff;
     color: #333;
+    outline: none;
 }
 
-/* Readonly fields */
-input[readonly] {
-    background-color: #f3f6f9;
-    color: #555;
+/* Select specific styling */
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
 }
 
-/* ===== BUTTONS ===== */
+/* Readonly fields override */
+input[readonly],
+input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #7e8c9a;
+    cursor: not-allowed;
+}
+
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="fleetdate"],
+.filter-table div[id^="fleettime"] {
+    width: 100%;
+}
+
+/* ===== MASTER 30px BUTTON SYSTEM OVERRIDES ===== */
+.btn-submit {
+    width: 100%;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    display: block;
+    box-sizing: border-box;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8 !important;
+}
+
+
+
+/* Button Group Alignment */
 .button-container {
     display: flex;
     flex-direction: column;
@@ -107,43 +151,38 @@ input[readonly] {
 
 .button-group {
     display: flex;
-    gap: 10px;
-    justify-content: center;
+    gap: 8px;
 }
 
-.btn-submit {
-    flex: 1;                 /* Allows side-by-side sharing */
+.button-group .btn-submit {
+    flex: 1;
+}
+
+/* ===== RIGHT CONTENT AREA ===== */
+.main-content-wrapper {
+    flex: 1;
     width: 100%;
-    height: 30px;            /* Scaled down to 30px */
-    padding: 0 12px;
-    background: #2563eb; 
-    color: #fff;
-    border: none;
-    border-radius: 4px;      /* Matched border-radius */
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    line-height: 30px;       /* Aligns text inside button */
-    white-space: nowrap;
-    transition: all 0.2s ease;
-}
-
-.btn-submit:hover {
-    background: #1d4ed8;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.btn-submit:disabled {
-    background: #cbd5e1;
-    cursor: not-allowed;
-    opacity: 0.8;
-}
-
-/* Grid Area */
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
+    display: flex;
+    flex-direction: column;
     background: #fff;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    padding: 15px 20px;
+    overflow: auto;
+    box-sizing: border-box;
 }
 </style>
   
@@ -232,44 +271,39 @@ function getAttach(){
 <div id="mainBG" class="homeContent"> 
 <div class="hidden-scrollbar">
 
-<table width="100%" cellpadding="0" cellspacing="0">
-<tr>
-<td width="20%" style="vertical-align: top;">
-    <div class="master-container">
-        <div class="sidebar-filters">
+<div class="master-container">
 
-            <div class="sidebar-fixed-top">
-                <div class="filter-card" style="border:none; padding:0; margin-bottom:0;">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
+    <!-- ================= LEFT PANEL (SIDEBAR) ================= -->
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Fleet</td>
+                        <td><input type="text" name="fleetno" id="fleetno" readonly></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Status</td>
+                        <td>
+                            <select name="cmbstatus" id="cmbstatus">
+                                <option value="">--Select--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id="fleetdate"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Time</td>
+                        <td><div id="fleettime"></div></td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="sidebar-scroll-content">
-                <div class="filter-card">
-                    <table class="filter-table">
-                        <tr>
-                            <td class="label-cell">Fleet</td>
-                            <td><input type="text" name="fleetno" id="fleetno" readonly></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Status</td>
-                            <td>
-                                <select name="cmbstatus" id="cmbstatus">
-                                    <option value="">--Select--</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Date</td>
-                            <td><div id="fleetdate"></div></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Time</td>
-                            <td><div id="fleettime"></div></td>
-                        </tr>
-                    </table>
-                </div>
-
+            <!-- Action Buttons Card -->
+            <div class="filter-card">
                 <div class="button-container">
                     <button type="button" class="btn-submit action-btn" id="btnUpdate" onclick="updateStatus();">Update Status</button>
                     
@@ -279,18 +313,29 @@ function getAttach(){
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-</td>
 
-<td width="80%" style="vertical-align: top;">
-    <div id="fleetdiv" style="padding: 10px;">
-        <jsp:include page="unRentableGrid.jsp"></jsp:include>
+    <!-- ================= RIGHT PANEL (WORKSPACE GRIDS) ================= -->
+    <div class="main-content-wrapper">
+        
+        <!-- Horizontally Aligned Heading -->
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
+        <div class="scrollable-grid-area">
+            <div id="fleetdiv">
+                <jsp:include page="unRentableGrid.jsp"></jsp:include>
+            </div>
+        </div>
+
     </div>
-</td>
-</tr>
-</table>
 
+</div>
+
+<!-- Labels and Modals restored exactly to their original position at the bottom -->
 <div id="hiddate" style="display:none;"></div>
 <div id="hidtime" style="display:none;"></div>
 <div id="curdate" style="display:none;"></div>
