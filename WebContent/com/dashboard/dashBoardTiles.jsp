@@ -2,8 +2,36 @@
 <%@ page import="java.sql.*,java.util.*" %>
 <%@ page import="com.connection.ClsConnection" %>
 <%@ page import="com.dashboard.ClsDashBoardDAO,com.dashboard.ClsDashBoardBean" %>
+<%@ page import="net.sf.json.JSONArray, net.sf.json.JSONObject" %>
 
 <%
+    String cPath = request.getContextPath();
+    String roleId = (session.getAttribute("ROLEID") != null) ? session.getAttribute("ROLEID").toString() : "0";
+    String userId = (session.getAttribute("USERID") != null) ? session.getAttribute("USERID").toString() : "";
+
+    // =========================================================================
+    // 1. AJAX HANDLER FOR DAO RIGHT PANEL (STATUS & UPDATES)
+    // =========================================================================
+    ClsDashBoardDAO tileDao = new ClsDashBoardDAO();
+    String ajaxId = request.getParameter("ajaxId");
+    if(ajaxId != null && !ajaxId.trim().isEmpty()) {
+        out.clear(); 
+        try {
+            JSONArray jsonResult = tileDao.detailSearch(ajaxId, session);
+            out.print((jsonResult == null || jsonResult.isEmpty()) ? "[]" : jsonResult.toString());
+        } catch (Exception e) { out.print("[]"); }
+        return; 
+    }
+
+    // =========================================================================
+    // 2. FETCH DAO LEFT NAV MODULES (APPLICATION LIST)
+    // =========================================================================
+    JSONArray appDataArray = tileDao.masterSearch(session);
+    if(appDataArray == null) appDataArray = new JSONArray();
+
+    // =========================================================================
+    // 3. ORIGINAL SQL MODULES & SVG DECLARATIONS
+    // =========================================================================
     String svgBank      = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M11.5 1L2 6v2h19V6l-9.5-5zM4 8v10h3V8H4zm5 0v10h3V8H9zm5 0v10h3V8h-3zM2 20v2h19v-2H2z'/></svg>";
     String svgCard      = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z'/></svg>";
     String svgCash      = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z'/></svg>";
@@ -15,6 +43,14 @@
     String svgWrench    = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z'/></svg>";
     String svgBuilding  = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/></svg>";
     String svgSettings  = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'/></svg>";
+    
+    // Application Icons
+    String svgBullhorn  = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z'/></svg>";
+    String svgShield    = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z'/></svg>";
+    String svgChart     = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/></svg>";
+    String svgClipboard = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/></svg>";
+    String svgCart      = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z'/></svg>";
+    String svgTraffic   = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M21.5 5.5l-2-2c-.39-.39-1.02-.39-1.41 0L17 4.59v-1.1C17 2.12 15.88 1 14.5 1h-5C8.12 1 7 2.12 7 3.49v1.1L5.91 3.5c-.39-.39-1.02-.39-1.41 0l-2 2c-.39.39-.39 1.02 0 1.41l2.58 2.58v6.02l-2.58 2.58c-.39.39-.39 1.02 0 1.41l2 2c.39.39 1.02.39 1.41 0L7 20.41v1.1c0 1.37 1.12 2.49 2.5 2.49h5c1.38 0 2.5-1.12 2.5-2.49v-1.1l1.09 1.09c.39.39 1.02.39 1.41 0l2-2c.39-.39.39-1.02 0-1.41l-2.58-2.58v-6.02l2.58-2.58c.39-.39.39-1.02 0-1.41zM9.5 5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S11.83 6.5 11 6.5 9.5 5.83 9.5 5zm0 7c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm0 7c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5z'/></svg>";
 
     Map<String, String> iconMap = new HashMap<String, String>();
     iconMap.put("Accounts Master", svgBuilding);
@@ -29,16 +65,12 @@
     iconMap.put("Maintenance Update", svgWrench);
     iconMap.put("Rental Agreement Create", svgHandshake);
 
-    String cPath = request.getContextPath();
-    String roleId = (session.getAttribute("ROLEID") != null) ? session.getAttribute("ROLEID").toString() : "0";
-    String userId = (session.getAttribute("USERID") != null) ? session.getAttribute("USERID").toString() : "";
-
     String[][] moduleDefs = {
-        {"Finance",          "Fin",     "Finance",   "#0056b3", "#e8f0fe", "bank",     "Manage accounts, payments, receipts and financial transactions"},
-        {"Operations",       "Oper",    "Operation", "#1a7340", "#e8f5e9", "car",      "Handle bookings, movements, agreements and client workflows"},
-        {"Fleet Management", "Fleet",   "Fleet",     "#b75d00", "#fff3e0", "car",      "Track vehicle assignments, maintenance and fleet utilization"},
+        {"Finance",          "Fin",     "Finance",   "#0056b3", "#e8f0fe", "bank",      "Manage accounts, payments, receipts and financial transactions"},
+        {"Operations",       "Oper",    "Operation", "#1a7340", "#e8f5e9", "car",       "Handle bookings, movements, agreements and client workflows"},
+        {"Fleet Management", "Fleet",   "Fleet",     "#b75d00", "#fff3e0", "car",       "Track vehicle assignments, maintenance and fleet utilization"},
         {"Fixed Assets",     "Asset",   "Asset",     "#4a148c", "#f3e5f5", "building", "Manage company assets, depreciation and asset tracking"},
-        {"Human Resource",   "Hum",     "Human",     "#00695c", "#e0f2f1", "user",     "Employee management, attendance and payroll operations"},
+        {"Human Resource",   "Hum",     "Human",     "#00695c", "#e0f2f1", "user",      "Employee management, attendance and payroll operations"},
         {"Control Centre",   "Control", "Control",   "#b71c1c", "#fce4ec", "settings", "System configuration, user roles and administrative controls"}
     };
 
@@ -53,31 +85,21 @@
     for (int i = 0; i < moduleDefs.length; i++) allTilesList.add(new ArrayList<ClsDashBoardBean>());
 
     // =========================================================================
-    // MASTER KPI BLOCK (Phase 1, 2, 3, 4 & 5)
+    // 4. MASTER KPI BLOCK
     // =========================================================================
-    // P1 & P2: Fleet & Agreements
     int readyToRent = 0, inGarage = 0, regExpiry = 0, insExpiry = 0;
     int totalDueCount = 0, myTasks = 0, assignedTasks = 0;
     int laDueDate = 0, bookingFollowUp = 0, quotationFollowUp = 0, agreementCloseReview = 0;
-    
-    // P3: Finance
     int invoicesToDispatch = 0, damageInvoices = 0, paymentFollowup = 0;
     int pdcOutstanding = 0, refundableSecurity = 0, collectionClosure = 0;
-
-    // P4: Traffic Fines
     int unallocatedFines = 0, staffFines = 0, salikPending = 0, toBeInvoicedTraffic = 0;
-
-    // P5: Human Resources
     int pendingLeaves = 0, pendingWps = 0, pendingPayroll = 0, empDocExpiries = 0;
 
-    Connection kpiConn = null;
-    Statement kpiStmt = null;
-    ResultSet kpiRs = null;
+    Connection kpiConn = null; Statement kpiStmt = null; ResultSet kpiRs = null;
     try {
         kpiConn = new ClsConnection().getMyConnection();
         kpiStmt = kpiConn.createStatement();
 
-        // 1. Fleet KPIs & Expiries
         try {
             String fleetSql = "SELECT " +
                 "SUM(CASE WHEN tran_code = 'RR' THEN 1 ELSE 0 END) AS rtr, " +
@@ -95,7 +117,6 @@
             kpiRs.close();
         } catch(Exception ignored){}
 
-        // 2. Agreements
         try {
             kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS totalCount FROM gl_ragmt WHERE clstatus=0 AND dispute=0 AND ddate <= CURDATE()");
             if (kpiRs.next()) totalDueCount = kpiRs.getInt("totalCount");
@@ -108,7 +129,6 @@
             kpiRs.close();
         } catch(Exception ignored){}
 
-        // 3. Marketing & Operations
         try {
             kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_bookingm WHERE status=0");
             if (kpiRs.next()) bookingFollowUp = kpiRs.getInt("cnt");
@@ -127,7 +147,6 @@
             kpiRs.close();
         } catch(Exception ignored){}
 
-        // 4. Finance & Invoicing
         try {
             kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_invoice WHERE status=0"); 
             if (kpiRs.next()) invoicesToDispatch = kpiRs.getInt("cnt");
@@ -152,7 +171,6 @@
             kpiRs.close();
         } catch(Exception ignored){}
 
-        // 5. Traffic Fines & Salik
         try {
             kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_trafficfines WHERE invoice_status=0 OR alloc_status=0");
             if (kpiRs.next()) unallocatedFines = kpiRs.getInt("cnt");
@@ -171,7 +189,6 @@
             kpiRs.close();
         } catch(Exception ignored){}
 
-        // 6. Human Resources
         try {
             kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM hr_leave WHERE status=0");
             if (kpiRs.next()) pendingLeaves = kpiRs.getInt("cnt");
@@ -190,7 +207,6 @@
             kpiRs.close();
         } catch(Exception ignored){}
 
-        // 7. Tasks
         if (!userId.isEmpty()) {
             try {
                 kpiRs = kpiStmt.executeQuery("SELECT COUNT(*) AS cnt FROM my_todolist WHERE status=3 AND userid='" + userId + "'");
@@ -211,7 +227,6 @@
         if (kpiStmt != null) try { kpiStmt.close(); } catch(Exception e){}
         if (kpiConn != null) try { kpiConn.close(); } catch(Exception e){}
     }
-    // =========================================================================
 
     Connection conn = null; Statement stmt = null; ResultSet rs = null;
     try {
@@ -275,40 +290,44 @@
     body, html { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, sans-serif; background: #f0f2f5; height: 100%; overflow: hidden; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #aaa; }
 
-    .banner { height: 115px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px 0; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .banner { height: 115px; background-image: url("<%= cPath %>/icons/banner_image.png"); background-size: cover; background-position: center; margin: 10px 15px 0; border-radius: 8px; position: relative; display: flex; align-items: center; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); flex-shrink: 0; }
     .banner::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.22); border-radius: 8px; }
     .banner-inner { z-index: 2; color: #fff; display: flex; align-items: center; width: 100%; justify-content: space-between; }
     .banner-title { font-size: 22px; font-weight: 700; text-shadow: 1px 1px 4px rgba(0,0,0,0.4); }
     .banner-sub   { font-size: 13px; opacity: 0.9; margin-top: 2px; }
 
-    .home-dropdown { position: relative; display: inline-block; z-index: 100; }
-    .dropbtn { background: rgba(255,255,255,0.18); color: #fff; padding: 7px 14px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.35); border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.2s; }
-    .dropbtn:hover { background: rgba(255,255,255,0.28); }
-    .dropdown-content { display: none; position: absolute; right: 0; background: #fff; min-width: 200px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border-radius: 6px; top: 38px; overflow: hidden; }
-    .dropdown-content a { color: #333; padding: 11px 15px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
-    .dropdown-content a:hover { background: #f5f7ff; color: #0056b3; }
-    .home-dropdown:hover .dropdown-content { display: block; }
+    .kpi-master-header { margin: 10px 15px 0; padding: 12px 20px; background: #fff; border: 1px solid #e0e4ea; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; gap: 15px; overflow-x: auto; white-space: nowrap; flex-shrink: 0; }
+    .kpi-stat-card { background: #f8f9fb; border: 1px solid #eaecf0; border-radius: 8px; padding: 10px 15px; min-width: 150px; flex: 0 0 auto; display: inline-flex; flex-direction: column; justify-content: center; border-bottom: 3px solid transparent; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+    .kpi-stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.06); border-color: #c0cfe8;}
 
-    .app-body { display: flex; gap: 0; margin: 10px 15px 10px; height: calc(100vh - 148px); background: #fff; border-radius: 8px; border: 1px solid #e0e4ea; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
+    /* App Body layout */
+    .app-body { display: flex; gap: 0; margin: 10px 15px 15px; height: calc(100vh - 235px); background: #fff; border-radius: 8px; border: 1px solid #e0e4ea; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
 
-    .left-nav { width: 240px; min-width: 240px; border-right: 1px solid #e8eaed; display: flex; flex-direction: column; background: #fafbfc; }
-    .left-nav-header { padding: 14px 16px 10px; font-size: 10px; font-weight: 700; color: #999; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #eee; flex: 0 0 auto; }
-    .nav-list { flex: 1; overflow-y: auto; }
-    .module-item { border-bottom: 1px solid #eef0f3; }
-    .module-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; transition: background 0.15s; user-select: none; }
-    .module-header:hover { background: #f0f4ff; }
-    .module-item.active > .module-header { background: #e8f0fe; }
+    /* Left Nav Flex Splitting exactly 50/50 */
+    .left-nav { width: 250px; min-width: 250px; border-right: 1px solid #e8eaed; display: flex; flex-direction: column; background: #fafbfc; height: 100%; overflow: hidden; }
+    .accordion-header { flex: 0 0 auto; padding: 14px 16px 10px; font-size: 10px; font-weight: 700; color: #999; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #eee; background: #f4f6f9; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+    .accordion-header:hover { background: #eef1f6; color: #555; }
+    .acc-arrow { font-size: 12px; transition: transform 0.2s; color: #bbb; }
+    .accordion-header.collapsed .acc-arrow { transform: rotate(-90deg); }
+    
+    /* When both open, flex: 1 makes them divide exactly half */
+    .nav-section-content { flex: 1; overflow-y: auto; display: block; min-height: 0; }
+    .nav-section-content.collapsed { display: none; }
+    
+    .module-item { border-bottom: 1px solid #eef0f3; cursor: pointer; transition: background 0.15s; }
+    .module-item:hover { background: #f0f4ff; }
+    .module-item.active { background: #e8f0fe; border-left: 3px solid #0056b3; }
+    .module-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; user-select: none; }
     .module-icon-wrap { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex: 0 0 30px; }
     .module-icon-wrap svg { width: 16px; height: 16px; }
     .module-label { flex: 1; font-size: 13px; font-weight: 600; color: #3c3c3c; }
-    .module-item.active > .module-header .module-label { color: #0056b3; }
-    .module-count { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-right: 4px; }
-    .module-arrow { font-size: 9px; color: #aaa; transition: transform 0.2s; line-height: 1; }
-    .module-item.active > .module-header .module-arrow { transform: rotate(90deg); color: #0056b3; }
-
-    .submenu { display: none; background: #fff; border-top: 1px solid #f0f0f0; }
+    .module-item.active .module-label { color: #0056b3; }
+    
+    .module-arrow { font-size: 18px; color: #ccc; transition: transform 0.2s; line-height: 1; opacity: 0; }
+    .module-item.active .module-arrow { opacity: 1; transform: rotate(90deg); color: #0056b3; }
+    
+    .submenu { display: none; background: #fff; border-top: 1px solid #f0f0f0; cursor: default; }
     .module-item.active .submenu { display: block; }
     .submenu-link { display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 22px; font-size: 12px; color: #555; text-decoration: none; cursor: pointer; transition: background 0.12s, color 0.12s; border: none; background: none; width: 100%; text-align: left; }
     .submenu-link::before { content: "·"; color: #bbb; font-size: 16px; line-height: 1; }
@@ -316,57 +335,28 @@
     .submenu-link:hover::before { color: #0056b3; }
     .submenu-empty { padding: 10px 22px; font-size: 12px; color: #bbb; font-style: italic; }
 
-    .right-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-
-    /* HORIZONTAL SCROLL FOR KPIs */
-    .kpi-master-header {
-        flex: 0 0 auto;
-        padding: 12px 20px;
-        background: #f8f9fb;
-        border-bottom: 1px solid #eef0f3;
-        display: flex;
-        gap: 15px;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-    
-    .kpi-stat-card {
-        background: #fff;
-        border: 1px solid #eaecf0;
-        border-radius: 8px;
-        padding: 10px 15px;
-        min-width: 150px;
-        flex: 0 0 auto;
-        display: inline-flex;
-        flex-direction: column;
-        justify-content: center;
-        border-bottom: 3px solid transparent;
-        transition: transform 0.2s, box-shadow 0.2s;
-        cursor: pointer;
-    }
-    
-    .kpi-stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.06); border-color: #c0cfe8;}
-
+    .right-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #fff;}
     .module-panel { display: none; flex-direction: column; height: 100%; }
-    .module-panel.active { display: flex; }
+    .module-panel.active-panel { display: flex; }
     .panel-header { flex: 0 0 auto; padding: 16px 20px 14px; border-bottom: 1px solid #eef0f3; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
     .panel-header-left { display: flex; align-items: center; gap: 14px; }
     .panel-module-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex: 0 0 42px; }
     .panel-module-icon svg { width: 22px; height: 22px; }
     .panel-module-name { font-size: 17px; font-weight: 700; color: #222; line-height: 1.2; }
-    .panel-module-desc { font-size: 12px; color: #888; margin-top: 2px; }
     .panel-meta { display: flex; align-items: center; gap: 10px; }
     .badge-count { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; white-space: nowrap; }
     .panel-search input { padding: 6px 14px; border: 1px solid #dde; border-radius: 16px; font-size: 12px; outline: none; width: 150px; background: #f8f9fb; transition: border-color 0.2s, box-shadow 0.2s, width 0.3s; }
     .panel-search input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); width: 200px; background: #fff; }
+    
     .tiles-area { flex: 1; overflow-y: auto; padding: 16px 20px; }
-    .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
-    .tile-card { background: #fff; border: 1px solid #eaecf0; border-radius: 9px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px; cursor: pointer; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; text-align: center; }
-    .tile-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: #c0cfe8; }
-    .tile-icon { width: 26px; height: 26px; margin-bottom: 8px; }
+    .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+    .tile-card { background: #fff; border: 1px solid #eaecf0; border-radius: 9px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 95px; cursor: pointer; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; text-align: center; }
+    .tile-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: #c0cfe8; background: #f8faff; }
+    .tile-icon { width: 28px; height: 28px; margin-bottom: 8px; color: #0056b3; }
     .tile-icon svg { width: 100%; height: 100%; }
-    .tile-name { font-size: 11px; font-weight: 600; color: #4a4a5a; line-height: 1.3; }
-    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; color: #bbb; }
+    .tile-name { font-size: 11.5px; font-weight: 600; color: #4a4a5a; line-height: 1.3; }
+    
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; color: #bbb; width: 100%; grid-column: 1 / -1; }
     .empty-state svg { width: 48px; height: 48px; margin-bottom: 10px; opacity: 0.4; }
     .empty-state p { font-size: 13px; margin: 0; }
 </style>
@@ -379,191 +369,182 @@
             <div class="banner-title">Welcome, ${sessionScope.USERNAME}</div>
             <div class="banner-sub" id="greeting"></div>
         </div>
-        <div class="home-dropdown">
-            <button class="dropbtn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Switch Dashboard
-                <span style="font-size:9px;">&#9660;</span>
-            </button>
-            <div class="dropdown-content">
-                <a href="<%= cPath %>/com/dashboard/dashBoardTiles.jsp">
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                        <div><strong>Standard View</strong><br><small style="color:#888;">Module Tiles</small></div>
-                    </div>
-                </a>
-                <a href="<%= cPath %>/com/v2/dashBoardnew.jsp">
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0056b3" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M21 9H3"/><path d="M21 15H3"/><path d="M12 3v18"/></svg>
-                        <div><strong>My Dashboard</strong><br><small style="color:#888;">Analytics View</small></div>
-                    </div>
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 
-<div class="app-body">
+<div class="kpi-master-header" id="kpiContainer">
+<%
+    String[][] kpiDefinitions = {
+        {"Ready to Rent",              String.valueOf(readyToRent),         "#28a745", "",                       "openParentMenu",        "Available Fleet",          "Fleet Management", "Ops,Super,Driver"},
+        {"In Garage",                  String.valueOf(inGarage),            "#dc3545", "",                       "openParentMenu",        "Vehicle Master",           "Fleet Management", "Ops,Super"},
+        {"RA Due Date",                String.valueOf(totalDueCount),       "#b75d00", "background:#fff3e0;",    "openDueDateDirectly",   "",                         "Operations",       "Ops,Super"},
+        {"LA Due Date",                String.valueOf(laDueDate),           "#e67e22", "",                       "openParentMenu",        "Lease Agreement Create",   "Operations",       "Ops,Super"},
+        {"Pending Bookings",           String.valueOf(bookingFollowUp),     "#8e44ad", "",                       "openParentMenu",        "Booking",                  "Operations",       "Ops,Super"},
+        {"Pending Quotes",             String.valueOf(quotationFollowUp),   "#f39c12", "",                       "openParentMenu",        "Quote",                    "Operations",       "Ops,Super"},
+        {"RA Close Review",            String.valueOf(agreementCloseReview),"#34495e", "",                       "openParentMenu",        "Rental Agreement Close",   "Operations",       "Super"},
+        {"Un-Dispatched Inv",          String.valueOf(invoicesToDispatch),  "#4CAF50", "",                       "openParentMenu",        "Invoice",                  "Finance",          "Ops,Super"},
+        {"Damage Invoices",            String.valueOf(damageInvoices),      "#f44336", "",                       "openParentMenu",        "Invoice",                  "Finance",          "Super"},
+        {"Payment Followup",           String.valueOf(paymentFollowup),     "#e91e63", "",                       "openParentMenu",        "Cash Receipts",            "Finance",          "Ops,Super"},
+        {"PDC Outstanding",            String.valueOf(pdcOutstanding),      "#9c27b0", "",                       "openParentMenu",        "PDC Posting - Receipts",   "Finance",          "Super"},
+        {"Unallocated Fines",          String.valueOf(unallocatedFines),    "#FF5722", "",                       "openParentMenu",        "Traffic fine Entry",       "Operations",       "Ops,Super"},
+        {"Staff Fines",                String.valueOf(staffFines),          "#FF9800", "",                       "openParentMenu",        "Traffic fine Entry",       "Operations",       "Super"},
+        {"Salik Pending",              String.valueOf(salikPending),        "#795548", "",                       "openParentMenu",        "SAT Download",             "Operations",       "Ops,Super"},
+        {"Pending Leaves",             String.valueOf(pendingLeaves),       "#00BCD4", "",                       "openParentMenu",        "Leave Request",            "Human Resource",   "Super"},
+        {"Pending WPS",                String.valueOf(pendingWps),          "#3F51B5", "",                       "openParentMenu",        "Monthly Payroll",          "Human Resource",   "Super"},
+        {"Staff Doc Expiries",         String.valueOf(empDocExpiries),      "#E91E63", "",                       "openParentMenu",        "Employee Master",           "Human Resource",   "Super"},
+        {"Fleet Doc Expiries",         String.valueOf(regExpiry + insExpiry),"#6f42c1", "",                      "openParentMenu",        "Vehicle Master",           "Fleet Management", "Ops,Super"},
+        {"My Pending Tasks",           String.valueOf(myTasks),             "#007bff", "",                       "openParentMenu",        "General",                  "Control Centre",   "Ops,Super,Driver"},
+        {"Assigned to Me",             String.valueOf(assignedTasks),       "#17a2b8", "",                       "openParentMenu",        "General",                  "Control Centre",   "Ops,Super,Driver"}
+    };
 
-    <div class="left-nav">
-        <div class="left-nav-header">Modules</div>
-        <div class="nav-list">
-        <%
-            String[] navIcons = {svgBank, svgCar, svgCar, svgBuilding, svgUser, svgSettings};
-            String[] navColors = {"#0056b3","#1a7340","#b75d00","#4a148c","#00695c","#b71c1c"};
-            String[] navBgs    = {"#e8f0fe","#e8f5e9","#fff3e0","#f3e5f5","#e0f2f1","#fce4ec"};
+    String userType = "Ops"; 
+    if ("SNDriver".equalsIgnoreCase(roleId)) {
+        userType = "Driver";
+    } else if ("1".equalsIgnoreCase(roleId) || "Super".equalsIgnoreCase(roleId)) { 
+        userType = "Super";
+    }
 
-            for (int mi = 0; mi < moduleDefs.length; mi++) {
-                String modName = moduleDefs[mi][0];
-                boolean isActive = (mi == activeIdx);
-                int tileCount = allTilesList.get(mi).size();
-                String color = navColors[mi];
-                String bg    = navBgs[mi];
-                String navIcon = navIcons[mi];
-        %>
-            <div class="module-item <%= isActive ? "active" : "" %>" data-idx="<%= mi %>">
-                <div class="module-header" onclick="selectModule(<%= mi %>)">
-                    <div class="module-icon-wrap" style="background:<%= bg %>; color:<%= color %>;">
-                        <%= navIcon %>
-                    </div>
-                    <span class="module-label"><%= modName %></span>
-                    <% if (tileCount > 0) { %>
-                    <span class="module-count" style="background:<%= bg %>; color:<%= color %>;"><%= tileCount %></span>
-                    <% } %>
-                    <span class="module-arrow">&#9654;</span>
-                </div>
-                <div class="submenu">
-                    <% if (tileCount == 0) { %>
-                        <div class="submenu-empty">No forms available</div>
-                    <% } else { for (ClsDashBoardBean t : allTilesList.get(mi)) { %>
-                        <button class="submenu-link" onclick="openParentMenu('<%= t.getTxttitle().replace("'", "\\'") %>')"><%= t.getTxttitle() %></button>
-                    <% } } %>
-                </div>
+    for (String[] kpi : kpiDefinitions) {
+        String kpiLabel    = kpi[0];
+        String kpiValue    = kpi[1];
+        String bColor      = kpi[2];
+        String styleAttr   = kpi[3];
+        String clickFunc   = kpi[4];
+        String targetMenu  = kpi[5];
+        String kpiCategory = kpi[6].replaceAll("\\s+", "").toUpperCase();
+        String allowedRoles= kpi[7];
+
+        if (allowedRoles.contains(userType)) {
+            String clickAction = clickFunc + "('" + targetMenu + "')";
+            if ("openDueDateDirectly".equals(clickFunc)) {
+                clickAction = "openDueDateDirectly()";
+            }
+%>
+            <div class="kpi-stat-card kpi-cat-<%= kpiCategory %>" style="border-bottom-color: <%= bColor %>; <%= styleAttr %> display: none;" onclick="<%= clickAction %>">
+                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;"><%= kpiLabel %></div>
+                <div style="font-size: 22px; font-weight: 800; color: <%= bColor %>; line-height: 1.2;"><%= kpiValue %></div>
             </div>
-        <% } %>
-        </div>
-    </div>
+<%
+        }
+    }
+%>
+</div>
 
-    <div class="right-content">
+<div class="app-body">
+    <!-- LEFT NAVIGATION -->
+    <div class="left-nav">
         
-        <div class="kpi-master-header">
-            
-            <% if (!"SNDriver".equals(roleId)) { %>
-                <div class="kpi-stat-card" style="border-bottom-color: #28a745;" onclick="openParentMenu('Ready To Rent')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Ready to Rent</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #28a745; line-height: 1.2;"><%= readyToRent %></div>
-                </div>
+        <!-- SECTION 1: CORE MODULES ACCORDION -->
+        <div class="accordion-header" onclick="toggleAccordion('coreModulesContent', this)">
+            <span>Core Modules</span>
+            <span class="acc-arrow">&#9660;</span>
+        </div>
+        
+        <div class="nav-section-content" id="coreModulesContent">
+            <%
+                String[] navIcons = {svgBank, svgCar, svgCar, svgBuilding, svgUser, svgSettings};
+                String[] navColors = {"#0056b3","#1a7340","#b75d00","#4a148c","#00695c","#b71c1c"};
+                String[] navBgs    = {"#e8f0fe","#e8f5e9","#fff3e0","#f3e5f5","#e0f2f1","#fce4ec"};
 
-                <div class="kpi-stat-card" style="border-bottom-color: #dc3545;" onclick="openParentMenu('UnRentable')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">In Garage</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #dc3545; line-height: 1.2;"><%= inGarage %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #b75d00; background: #fff3e0;" onclick="openDueDateDirectly()">
-                    <div style="font-size: 11px; color: #b75d00; font-weight: 600; text-transform: uppercase;">RA Due Date</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #b75d00; line-height: 1.2;"><%= totalDueCount %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #e67e22;" onclick="openParentMenu('LA Due Date')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">LA Due Date</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #e67e22; line-height: 1.2;"><%= laDueDate %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #8e44ad;" onclick="openParentMenu('Booking Follow Up')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Bookings</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #8e44ad; line-height: 1.2;"><%= bookingFollowUp %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #f39c12;" onclick="openParentMenu('Quotation Follow Up')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Quotes</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #f39c12; line-height: 1.2;"><%= quotationFollowUp %></div>
-                </div>
-                
-                <div class="kpi-stat-card" style="border-bottom-color: #34495e;" onclick="openParentMenu('Agreement Close Review')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">RA Close Review</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #34495e; line-height: 1.2;"><%= agreementCloseReview %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #4CAF50;" onclick="openParentMenu('Invoices to be Dispatched')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Un-Dispatched Inv</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #4CAF50; line-height: 1.2;"><%= invoicesToDispatch %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #f44336;" onclick="openParentMenu('Damage Invoice List')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Damage Invoices</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #f44336; line-height: 1.2;"><%= damageInvoices %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #e91e63;" onclick="openParentMenu('Payment Followup')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Payment Followup</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #e91e63; line-height: 1.2;"><%= paymentFollowup %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #9c27b0;" onclick="openParentMenu('PDC Outstanding')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">PDC Outstanding</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #9c27b0; line-height: 1.2;"><%= pdcOutstanding %></div>
-                </div>
-                
-                <div class="kpi-stat-card" style="border-bottom-color: #FF5722;" onclick="openParentMenu('Unallocated')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Unallocated Fines</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #FF5722; line-height: 1.2;"><%= unallocatedFines %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #FF9800;" onclick="openParentMenu('Staff-Allocated Traffic')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Staff Fines</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #FF9800; line-height: 1.2;"><%= staffFines %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #795548;" onclick="openParentMenu('Salik Traffic Daily list')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Salik Pending</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #795548; line-height: 1.2;"><%= salikPending %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #00BCD4;" onclick="openParentMenu('Leave Acceptance')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending Leaves</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #00BCD4; line-height: 1.2;"><%= pendingLeaves %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #3F51B5;" onclick="openParentMenu('WPS Listing')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Pending WPS</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #3F51B5; line-height: 1.2;"><%= pendingWps %></div>
-                </div>
-
-                <div class="kpi-stat-card" style="border-bottom-color: #E91E63;" onclick="openParentMenu('Employee Detailed List')">
-                    <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Staff Doc Expiries</div>
-                    <div style="font-size: 22px; font-weight: 800; color: #E91E63; line-height: 1.2;"><%= empDocExpiries %></div>
+                for (int mi = 0; mi < moduleDefs.length; mi++) {
+                    String modName = moduleDefs[mi][0];
+                    int tileCount = allTilesList.get(mi).size();
+                    String color = navColors[mi];
+                    String bg    = navBgs[mi];
+                    String navIcon = navIcons[mi];
+            %>
+                <div class="module-item sql-module" data-idx="<%= mi %>" data-category="<%= modName.replaceAll("\\s+", "").toUpperCase() %>">
+                    <!-- Dropdown Header -->
+                    <div class="module-header" onclick="selectSqlModule(this, <%= mi %>)">
+                        <div class="module-icon-wrap" style="background:<%= bg %>; color:<%= color %>;">
+                            <%= navIcon %>
+                        </div>
+                        <span class="module-label"><%= modName %></span>
+                        <span class="module-arrow">&#8250;</span>
+                    </div>
+                    <!-- Dropdown List -->
+                    <div class="submenu">
+                        <% if (tileCount == 0) { %>
+                            <div class="submenu-empty">No forms available</div>
+                        <% } else { for (ClsDashBoardBean t : allTilesList.get(mi)) { %>
+                            <button type="button" class="submenu-link" onclick="event.stopPropagation(); openParentMenu('<%= t.getTxttitle().replace("'", "\\'") %>')"><%= t.getTxttitle() %></button>
+                        <% } } %>
+                    </div>
                 </div>
             <% } %>
-
-            <div class="kpi-stat-card" style="border-bottom-color: #6f42c1;" onclick="openParentMenu('Registration Expiry')">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Fleet Doc Expiries</div>
-                <div style="font-size: 22px; font-weight: 800; color: #6f42c1; line-height: 1.2;"><%= (regExpiry + insExpiry) %></div>
-            </div>
-
-            <div class="kpi-stat-card" style="border-bottom-color: #007bff;" onclick="openParentMenu('Task Management')">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">My Pending Tasks</div>
-                <div style="font-size: 22px; font-weight: 800; color: #007bff; line-height: 1.2;"><%= myTasks %></div>
-            </div>
-            
-            <div class="kpi-stat-card" style="border-bottom-color: #17a2b8;" onclick="openParentMenu('Task Management')">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Assigned to Me</div>
-                <div style="font-size: 22px; font-weight: 800; color: #17a2b8; line-height: 1.2;"><%= assignedTasks %></div>
-            </div>
-
+        </div> 
+        
+        <!-- SECTION 2: APPLICATIONS ACCORDION -->
+        <div class="accordion-header" onclick="toggleAccordion('applicationsContent', this)">
+            <span>Applications</span>
+            <span class="acc-arrow">&#9660;</span>
         </div>
+        
+        <div class="nav-section-content" id="applicationsContent">
+            <%
+                String[] appColors = {"#0056b3", "#1a7340", "#b75d00", "#4a148c", "#00695c", "#b71c1c", "#d35400", "#2980b9", "#8e44ad", "#27ae60"};
+                String[] appBgs    = {"#e8f0fe", "#e8f5e9", "#fff3e0", "#f3e5f5", "#e0f2f1", "#fce4ec", "#fbeee6", "#ebf5fb", "#f5eef8", "#e9f7ef"};
 
+                for (int i = 0; i < appDataArray.size(); i++) {
+                    JSONObject item = appDataArray.getJSONObject(i);
+                    String docNo = item.optString("doc_no", "");
+                    String description = item.optString("description", "Unknown");
+                    
+                    // Assign specific colors for App list sequentially
+                    String appColor = appColors[i % appColors.length];
+                    String appBg = appBgs[i % appBgs.length];
+
+                    // EXPANDED DYNAMIC ICON LOGIC
+                    String listIcon = svgFile; 
+                    String descLower = description.toLowerCase();
+                    if(descLower.contains("vehicle")) { listIcon = svgCar; }
+                    else if(descLower.contains("rental") || descLower.contains("lease")) { listIcon = svgHandshake; }
+                    else if(descLower.contains("client") || descLower.contains("customer")) { listIcon = svgUser; }
+                    else if(descLower.contains("invoice") || descLower.contains("finance") || descLower.contains("account")) { listIcon = svgBank; }
+                    else if(descLower.contains("marketing")) { listIcon = svgBullhorn; }
+                    else if(descLower.contains("setting") || descLower.contains("control")) { listIcon = svgSettings; }
+                    else if(descLower.contains("traffic") || descLower.contains("fine")) { listIcon = svgTraffic; }
+                    else if(descLower.contains("security")) { listIcon = svgShield; }
+                    else if(descLower.contains("operation")) { listIcon = svgWrench; }
+                    else if(descLower.contains("analysis")) { listIcon = svgChart; }
+                    else if(descLower.contains("audit")) { listIcon = svgClipboard; }
+                    else if(descLower.contains("asset")) { listIcon = svgBuilding; }
+                    else if(descLower.contains("purchase")) { listIcon = svgCart; }
+            %>
+                <!-- Passing data-color and data-bg to update panel headers dynamically -->
+                <div class="module-item dao-module" data-docno="<%= docNo %>" data-desc="<%= description %>" data-color="<%= appColor %>" data-bg="<%= appBg %>">
+                    <!-- Dropdown Header for Applications -->
+                    <div class="module-header" onclick="triggerDaoModuleSelect(this)">
+                        <div class="module-icon-wrap" style="background:<%= appBg %>; color:<%= appColor %>;">
+                            <%= listIcon %>
+                        </div>
+                        <span class="module-label"><%= description %></span>
+                        <span class="module-arrow">&#8250;</span>
+                    </div>
+                    <!-- Empty Submenu container to be populated by AJAX -->
+                    <div class="submenu"></div>
+                </div>
+            <% } %>
+        </div> 
+        
+    </div>
+
+    <!-- RIGHT CONTENT PANELS -->
+    <div class="right-content">
+        
+        <!-- PRE-RENDERED SQL PANELS -->
         <%
         for (int mi = 0; mi < moduleDefs.length; mi++) {
             String modName   = moduleDefs[mi][0];
             String modDesc   = moduleDefs[mi][6];
-            boolean isActive = (mi == activeIdx);
-            int tileCount    = allTilesList.get(mi).size();
+            List<ClsDashBoardBean> tiles = allTilesList.get(mi);
+            int tileCount    = tiles.size();
             String color     = navColors[mi];
             String bg        = navBgs[mi];
             String navIcon   = navIcons[mi];
-            String safeId    = "panel_" + mi;
+            String safeId    = "sql_panel_" + mi;
         %>
-        <div class="module-panel <%= isActive ? "active" : "" %>" id="<%= safeId %>">
+        <div class="module-panel sql-panel" id="<%= safeId %>">
             <div class="panel-header">
                 <div class="panel-header-left">
                     <div class="panel-module-icon" style="background:<%= bg %>; color:<%= color %>;">
@@ -571,15 +552,13 @@
                     </div>
                     <div>
                         <div class="panel-module-name" style="color:<%= color %>;"><%= modName %></div>
-                        <div class="panel-module-desc"><%= modDesc %></div>
+                        <div style="font-size: 12px; color: #888; margin-top: 2px;"><%= modDesc %></div>
                     </div>
                 </div>
                 <div class="panel-meta">
-                    <span class="badge-count" style="background:<%= bg %>; color:<%= color %>;">
-                        <%= tileCount %> <%= tileCount == 1 ? "Form" : "Forms" %>
-                    </span>
+                    <span class="badge-count" style="background:<%= bg %>; color:<%= color %>;"><%= tileCount %> Forms</span>
                     <div class="panel-search">
-                        <input type="text" placeholder="Search forms..." oninput="filterPanel(this, '<%= safeId %>')">
+                        <input type="text" class="localSearch" placeholder="Search forms..." oninput="filterTiles(this, '<%= safeId %>')">
                     </div>
                 </div>
             </div>
@@ -590,8 +569,8 @@
                         <p>No forms available for this module</p>
                     </div>
                 <% } else { %>
-                    <div class="tiles-grid" id="grid_<%= mi %>">
-                    <% for (ClsDashBoardBean t : allTilesList.get(mi)) { %>
+                    <div class="tiles-grid">
+                    <% for (ClsDashBoardBean t : tiles) { %>
                         <div class="tile-card" onclick="openParentMenu('<%= t.getTxttitle().replace("'", "\\'") %>')" title="<%= t.getTxttitle() %>">
                             <div class="tile-icon" style="color:<%= color %>;"><%= t.getMsg() %></div>
                             <div class="tile-name"><%= t.getTxttitle() %></div>
@@ -601,62 +580,214 @@
                 <% } %>
             </div>
         </div>
-    <% } %>
-    </div>
+        <% } %>
 
+        <!-- DYNAMIC DAO PANEL (Status & Updates) -->
+        <div class="module-panel" id="dao_panel">
+            <div class="panel-header">
+                <div class="panel-header-left">
+                    <div class="panel-module-icon" id="dao_panel_icon">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                    </div>
+                    <div>
+                        <div class="panel-module-name" id="activeDaoName">Application Name</div>
+                        <div style="font-size: 12px; color: #888; margin-top: 2px;">Status & Updates</div>
+                    </div>
+                </div>
+                <div class="panel-meta">
+                    <span class="badge-count" id="daoTileCounter" style="background:#e8f0fe; color:#0056b3;">0 Forms</span>
+                    <div class="panel-search">
+                        <input type="text" class="localSearch" placeholder="Search forms..." oninput="filterTiles(this, 'dao_panel')">
+                    </div>
+                </div>
+            </div>
+            <div class="tiles-area">
+                <div class="tiles-grid" id="daoTilesContainer">
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script>
-    $(function() {
+    $(document).ready(function() {
         var h = new Date().getHours();
         $('#greeting').text(h < 12 ? 'Good Morning' : h < 18 ? 'Good Afternoon' : 'Good Evening');
+
+        var activeIdxToLoad = <%= activeIdx %>;
+        var $targetSqlModule = $('.sql-module[data-idx="' + activeIdxToLoad + '"]');
+        
+        if ($targetSqlModule.length > 0) {
+            selectSqlModule($targetSqlModule.find('.module-header')[0], activeIdxToLoad);
+        } else {
+            var $firstSql = $('.sql-module').first();
+            if ($firstSql.length > 0) selectSqlModule($firstSql.find('.module-header')[0], $firstSql.data('idx'));
+        }
     });
 
-    function selectModule(idx) {
-        var clicked = document.querySelector('.module-item[data-idx="' + idx + '"]');
-        var isAlreadyActive = clicked.classList.contains('active');
+    // Toggle Accordion Function
+    function toggleAccordion(contentId, headerElement) {
+        var $header = $(headerElement);
+        var $content = $('#' + contentId);
+        $header.toggleClass('collapsed');
+        $content.toggleClass('collapsed');
+    }
 
-        document.querySelectorAll('.module-item').forEach(function(el) { el.classList.remove('active'); });
-        document.querySelectorAll('.module-panel').forEach(function(el) { el.classList.remove('active'); });
+    // Handle clicking an Original Core Module
+    function selectSqlModule(headerElement, idx) {
+        var $parentItem = $(headerElement).closest('.module-item');
+        
+        if($parentItem.hasClass('active')) {
+            $parentItem.removeClass('active');
+            return;
+        }
 
-        if (!isAlreadyActive) {
-            clicked.classList.add('active');
-            document.getElementById('panel_' + idx).classList.add('active');
+        $('.module-item').removeClass('active');
+        $parentItem.addClass('active');
+        $('.localSearch').val('');
+        $('.tile-card').show();
 
-            document.querySelectorAll('.panel-search input').forEach(function(el) { el.value = ''; });
-            document.querySelectorAll('.tile-card').forEach(function(el) { el.style.display = ''; });
+        // Switch Panels
+        $('.module-panel').removeClass('active-panel');
+        $('#sql_panel_' + idx).addClass('active-panel');
+
+        // Filter KPIs
+        var category = $parentItem.data('category');
+        filterKpis(category);
+    }
+
+    // Handle clicking a New Application Item
+    function triggerDaoModuleSelect(headerElement) {
+        var $parentItem = $(headerElement).closest('.module-item');
+
+        if($parentItem.hasClass('active')) {
+            $parentItem.removeClass('active');
+            return; 
+        }
+
+        $('.module-item').removeClass('active');
+        $parentItem.addClass('active');
+        $('.localSearch').val('');
+        $('.tile-card').show();
+
+        // Switch Panels
+        $('.module-panel').removeClass('active-panel');
+        $('#dao_panel').addClass('active-panel');
+
+        var docNo = $parentItem.data('docno');
+        var desc = $parentItem.data('desc');
+        var appColor = $parentItem.data('color');
+        var appBg = $parentItem.data('bg');
+
+        $('#activeDaoName').text(desc);
+        $('#activeDaoName').css('color', appColor);
+
+        // Map icons dynamically with specific app colors to panel header
+        var currentIconHtml = $parentItem.find('.module-icon-wrap').html();
+        var $daoPanelIcon = $('#dao_panel_icon');
+        $daoPanelIcon.html(currentIconHtml);
+        $daoPanelIcon.css({'background-color': appBg, 'color': appColor});
+        
+        // Update header badge color dynamically
+        $('#daoTileCounter').css({'background-color': appBg, 'color': appColor});
+
+        // Smart Category mapping to match Application tiles with KPI ribbons (Shows RA Due Date inside Operations)
+        var category = desc.toUpperCase().replace(/\s+/g, '');
+        if(category.indexOf('FLEET') > -1 || category.indexOf('VEHICLE') > -1) category = 'FLEETMANAGEMENT';
+        else if(category.indexOf('FINANCE') > -1 || category.indexOf('INVOICE') > -1 || category.indexOf('ACCOUNT') > -1) category = 'FINANCE';
+        else if(category.indexOf('OPERATIONS') > -1 || category.indexOf('RENTAL') > -1 || category.indexOf('LEASE') > -1 || category.indexOf('CLIENT') > -1 || category.indexOf('MARKETING') > -1 || category.indexOf('TRAFFIC') > -1 || category.indexOf('BOOKING') > -1) category = 'OPERATIONS';
+        else if(category.indexOf('HUMAN') > -1) category = 'HUMANRESOURCE';
+        else if(category.indexOf('ASSET') > -1) category = 'FIXEDASSETS';
+        else if(category.indexOf('CONTROL') > -1 || category.indexOf('SETTING') > -1 || category.indexOf('SECURITY') > -1) category = 'CONTROLCENTRE';
+
+        filterKpis(category);
+
+        // Fetch DAO Tiles
+        $('#daoTilesContainer').html('<div class="empty-state" style="grid-column: 1 / -1;"><p>Loading details...</p></div>');
+        $parentItem.find('.submenu').html('<div class="submenu-empty">Loading...</div>'); 
+
+        $.ajax({
+            url: window.location.href,
+            type: "POST",
+            data: { ajaxId: docNo },
+            dataType: "json",
+            success: function(response) {
+                renderDaoTiles(response, desc, $parentItem, appColor);
+            },
+            error: function() {
+                $('#daoTilesContainer').html('<div class="empty-state" style="grid-column: 1 / -1;"><p>Failed to load data.</p></div>');
+                $parentItem.find('.submenu').html('<div class="submenu-empty">Failed to load data</div>');
+            }
+        });
+    }
+
+    function filterKpis(categoryStr) {
+        $('.kpi-stat-card').hide(); 
+        var $targetKPIs = $('.kpi-cat-' + categoryStr);
+        if($targetKPIs.length > 0) {
+            $targetKPIs.fadeIn(200);
+            $('#kpiContainer').show();
+        } else {
+            $('#kpiContainer').hide();
         }
     }
 
-    function filterPanel(input, panelId) {
-        var val = input.value.toUpperCase().replace(/\s+/g, '');
-        var panel = document.getElementById(panelId);
-        panel.querySelectorAll('.tile-card').forEach(function(card) {
-            var name = card.querySelector('.tile-name').textContent.toUpperCase().replace(/\s+/g, '');
-            card.style.display = (name.indexOf(val) > -1) ? '' : 'none';
+    function renderDaoTiles(data, parentDesc, $parentItem, appColor) {
+        var $cont = $('#daoTilesContainer').empty();
+        var $submenu = $parentItem.find('.submenu').empty(); 
+        
+        if (!data || data.length === 0) {
+            $cont.html('<div class="empty-state" style="grid-column: 1 / -1;"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><p>No forms available for this application</p></div>');
+            $('#daoTileCounter').text("0 Forms");
+            $submenu.html('<div class="submenu-empty">No forms available</div>');
+            return;
+        }
+
+        $('#daoTileCounter').text(data.length + " Forms");
+        var svgIcon = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
+
+        $.each(data, function(i, item) {
+            var cleanDesc = item.description.replace(/'/g, "\\'");
+            var cleanMainDesc = parentDesc.replace(/'/g, "\\'");
+            
+            // Build Main Tile (dynamically passing the appColor to the icon so it matches)
+            var html = '<div class="tile-card" onclick="openDetailLink(\'' + cleanDesc + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + cleanMainDesc + '\', \'' + item.value + '\')">' +
+                       '<div class="tile-icon" style="color:' + appColor + ';">' + svgIcon + '</div>' +
+                       '<div class="tile-name">' + item.description + '</div>' +
+                       '</div>';
+            $cont.append(html);
+
+            // Build Submenu Link
+            var submenuLink = '<button type="button" class="submenu-link" onclick="event.stopPropagation(); openDetailLink(\'' + cleanDesc + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + cleanMainDesc + '\', \'' + item.value + '\')">' + item.description + '</button>';
+            $submenu.append(submenuLink);
         });
+    }
+
+    function filterTiles(input, panelId) {
+        var val = input.value.toUpperCase().replace(/\s+/g, '');
+        $('#' + panelId + ' .tile-card').each(function() {
+            var name = $(this).find('.tile-name').text().toUpperCase().replace(/\s+/g, '');
+            $(this).css('display', name.indexOf(val) > -1 ? '' : 'none');
+        });
+    }
+
+    function openDetailLink(detName, path, docno, mainDesc, val) {
+        var fullUrl = window.location.href.split("com/")[0] + path + "?name=" + encodeURIComponent(detName) + "&main=" + encodeURIComponent(mainDesc) + "&docno=" + docno + "&value=" + val;
+        if (typeof top.addTab === 'function') top.addTab(detName, fullUrl);
+        else if (window.parent && window.parent.geturl) window.parent.geturl(detName); 
+        else window.location.href = fullUrl;
+    }
+
+    function openDueDateDirectly() {
+        var actionUrl = "<%= request.getContextPath() %>/com/dashboard/Rentalagreement/dueDate/duedateMaster.jsp?name=Due%20Date&main=Rental%20Agreement&docno=24&value=1087";
+        if (typeof top.addTab === 'function') { top.addTab("Due Date", actionUrl); return; } 
+        if (typeof window.parent.openTab === 'function') { window.parent.openTab("Due Date", actionUrl); return; }
+        window.location.href = actionUrl;
     }
 
     function openParentMenu(title) {
         if (window.parent && window.parent.geturl) window.parent.geturl(title);
-    }
-    
-    function openDueDateDirectly() {
-        var actionUrl = "<%= request.getContextPath() %>/com/dashboard/Rentalagreement/dueDate/duedateMaster.jsp?name=Due%20Date&main=Rental%20Agreement&docno=24&value=1087";
-        var tabTitle = "Due Date";
-        
-        if (window.parent) {
-            if (typeof window.parent.addTab === 'function') {
-                window.parent.addTab(tabTitle, actionUrl);
-                return;
-            } 
-            if (typeof window.parent.openTab === 'function') {
-                window.parent.openTab(tabTitle, actionUrl);
-                return;
-            }
-        }
-        
-        window.location.href = actionUrl;
     }
 </script>
 </body>
