@@ -299,10 +299,7 @@ input[readonly], input:disabled, select:disabled {
     background: #1d4ed8;
 }
 
-.btn-submit:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-}
+
 
 
 html, body, #mainBG, .hidden-scrollbar {
@@ -316,30 +313,42 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+
+.main-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+    box-sizing: border-box;
+}
 </style>
 <body onload="getBranch();disitems();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-
-<table width="100%">
-<tr>
-
-<td width="20%" valign="top">
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 
     <div class="master-container">
+
         <div class="sidebar-filters">
-
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
-            </div>
-
             <div class="sidebar-scroll-content">
 
                 <div class="filter-card">
                     <table class="filter-table">
-
                         <tr>
                             <td class="label-cell">Fleet</td>
                             <td>
@@ -348,7 +357,6 @@ td[width="80%"] {
                                        value='<s:property value="fleetno"/>'>
                             </td>
                         </tr>
-
                         <tr>
                             <td class="label-cell">RentType</td>
                             <td>
@@ -361,29 +369,18 @@ td[width="80%"] {
                                 </select>
                             </td>
                         </tr>
-
                     </table>
                 </div>
 
-                <button type="button"
-                        class="btn-submit"
-                        id="btnupdate"
-                        onclick="funupdate();">
+                <button type="button" class="btn-submit" id="btnupdate" onclick="funupdate();">
                     Update
                 </button>
 
                 <div class="button-group" style="margin-top: 0px;">
-                    <button type="button"
-                            class="btn-submit"
-                            id="btnvehicle"
-                            onclick="funClientAttach();">
+                    <button type="button" class="btn-submit" id="btnvehicle" onclick="funClientAttach();">
                         Attach
                     </button>
-
-                    <button type="button"
-                            class="btn-submit"
-                            id="btnmove"
-                            onclick="getVehicleMov();">
+                    <button type="button" class="btn-submit" id="btnmove" onclick="getVehicleMov();">
                         Movement
                     </button>
                 </div>
@@ -394,29 +391,27 @@ td[width="80%"] {
 
             </div>
         </div>
+
+        <div class="main-content-area">
+
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
+
+            <div class="grid-content-container">
+                <div id="fleetdiv">
+                    <jsp:include page="vehlistshowgrid.jsp"></jsp:include>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
     <input type="hidden" name="brach" id="brach" value='<s:property value="brach"/>'>
     <input type="hidden" name="grp" id="grp" value='<s:property value="grp"/>'>
     <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
     <input type="hidden" name="typeingrid" id="typeingrid" value='<s:property value="typeingrid"/>'>
-
-</td>
-
-<td width="80%" valign="top">
-    <table width="100%">
-        <tr>
-            <td>
-                <div id="fleetdiv">
-                    <jsp:include page="vehlistshowgrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
-    </table>
-</td>
-
-</tr>
-</table>
 
 </div>
 
@@ -425,7 +420,7 @@ td[width="80%"] {
 
 <div id="movementwindow">
     <div></div>
-</div> 
+</div>
 
 </div>
 </body>

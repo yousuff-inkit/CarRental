@@ -13,38 +13,40 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
 /* ===== MASTER LAYOUT ===== */
-.master-container {
-    display: flex;
-    width: 100%;
+html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    margin: 0;
+    overflow: hidden;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 280px; 
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 15px 25px; 
 }
 
-/* Cards */
+/* Cards Layout Rules */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -53,61 +55,115 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
     padding-right: 10px;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12px;
     color: #4e5e71;
-    width: 90px;
+    font-weight: 600;
+    width: 80px;
 }
 
-/* Inputs */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS & TEXTAREA ===== */
+input[type="text"], select, textarea,
+.filter-table input[type="text"],
+.filter-table select,
+.filter-table textarea {
     width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
-    height: 24px !important;   
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+    font-family: inherit;
 }
 
-/* Buttons */
+/* Textarea specific override for height */
+textarea, .filter-table textarea {
+    height: 180px !important;
+    resize: none;
+    padding: 8px !important;
+}
+
+/* Readonly fields override */
+input[readonly],
+textarea[readonly],
+input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    border-color: #e1e8ed;
+}
+
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="fromdate"],
+.filter-table div[id^="todate"] {
+    width: 100%;
+}
+
+/* ===== MASTER 30px BUTTON SYSTEM ===== */
 .btn-submit {
     width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     cursor: pointer;
-    height: 30px !important;  
+    line-height: 30px !important;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: none !important;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .btn-submit:hover {
-    background: #1d4ed8;
+    background: #1d4ed8 !important;
 }
 
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
+.btn-submit:disabled {
+    background: #9ca3af !important;
+    color: #f3f4f6 !important;
+    cursor: not-allowed;
+}
+
+/* ===== RIGHT CONTENT AREA (Dynamically fills screen) ===== */
+.main-content-area {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 </style>
   
@@ -321,130 +377,82 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class="hidden-scrollbar">
 
-<table width="100%">
-<tr>
+<div class="master-container">
 
-<!-- ================= LEFT SIDEBAR (20%) ================= -->
-<td width="20%">
-    <div class="master-container">
-        <div class="sidebar-filters">
+    <!-- ================= LEFT PANEL (SIDEBAR) ================= -->
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
 
-            <!-- Fixed Heading -->
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
+            <!-- Primary Filters Card -->
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Driver</td>
+                        <td>
+                            <input type="text" id="driver" name="driver" placeholder="Press F3 To Search" readonly value='<s:property value="driver"/>' onkeydown="getDriverData(event);">
+                            <input type="hidden" name="hiddriver" id="hiddriver" value='<s:property value="hiddriver"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td>
+                            <div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td>
+                            <div id="todate" name="todate" value='<s:property value="todate"/>'></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <textarea id="drvinfo" name="drvinfo" readonly><s:property value="drvinfo"/></textarea>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
-            <!-- Scrollable Content -->
-            <div class="sidebar-scroll-content">
-
-                <!-- Filters -->
-                <div class="filter-card">
-                    <table class="filter-table">
-
-                        <tr>
-                            <td class="label-cell">Driver</td>
-                            <td>
-                                <input type="text"
-                                       id="driver"
-                                       name="driver"
-                                       placeholder="Press F3 To Search"
-                                       readonly
-                                       value='<s:property value="driver"/>'
-                                       onkeydown="getDriverData(event);">
-                                <input type="hidden"
-                                       name="hiddriver"
-                                       id="hiddriver"
-                                       value='<s:property value="hiddriver"/>'>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="label-cell">From</td>
-                            <td>
-                                <div id="fromdate"
-                                     name="fromdate"
-                                     value='<s:property value="fromdate"/>'>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="label-cell">To</td>
-                            <td>
-                                <div id="todate"
-                                     name="todate"
-                                     value='<s:property value="todate"/>'>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2">
-                                <textarea id="drvinfo"
-                                          name="drvinfo"
-                                          readonly
-                                          style="width:100%; height:180px; resize:none; font-size:12px;">
-<s:property value="drvinfo"/>
-                                </textarea>
-                            </td>
-                        </tr>
-
-                    </table>
-                </div>
-
-                <!-- Print Button -->
-                <button type="button"
-                        class="btn-submit"
-                        id="btnPrint"
-                        onclick="funPrintMov(event);">
-                    Print
-                </button>
-
-                <!-- Chart -->
-                <div class="filter-card">
-                    <div id="paychaaaaa"
-                         style="width:100%; height:125px;">
-                    </div>
-                </div>
-
+            <!-- Action Button Card -->
+            <div class="filter-card">
+                <button type="button" class="btn-submit" id="btnPrint" onclick="funPrintMov(event);">Print</button>
             </div>
+
+            <!-- Chart Card -->
+            <div class="filter-card">
+                <div id="paychaaaaa" style="width:100%; height:125px;"></div>
+            </div>
+
         </div>
     </div>
-</td>
 
-<!-- ================= RIGHT CONTENT (80%) ================= -->
-<td width="80%">
-    <table width="100%">
+    <!-- ================= RIGHT PANEL (WORKSPACE) ================= -->
+    <div class="main-content-area">
+        
+        <!-- Horizontally Aligned Toolbar -->
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-        <tr>
-            <td>
-                <div id="drvdiv">
-                    <jsp:include page="driverMovementGrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
+        <!-- Scrollable Workspace Grids -->
+        <div class="scrollable-grid-area">
+            <div id="drvdiv">
+                <jsp:include page="driverMovementGrid.jsp"></jsp:include>
+            </div>
+            
+            <div id="drvsummdiv" style="margin-top: 20px;">
+                <jsp:include page="driverSummaryGrid.jsp"></jsp:include>
+            </div>
+        </div>
 
-        <tr>
-            <td>
-                <div id="drvsummdiv">
-                    <jsp:include page="driverSummaryGrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
-
-    </table>
-</td>
-
-</tr>
-</table>
+    </div>
 
 </div>
 
-<!-- Popup -->
+<!-- Popups / Modals -->
 <div id="driverwindow"><div></div></div>
 
+</div>
 </div>
 </body>
 

@@ -17,38 +17,40 @@
 <style>
 
 /* ===== MASTER LAYOUT ===== */
-.master-container {
-    display: flex;
-    width: 100%;
+html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    margin: 0;
+    overflow: hidden;
     background-color: #f4f7f9;
 }
 
-/* Sidebar */
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 280px; 
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 15px 25px; 
 }
 
-/* Cards */
+/* Cards Layout Rules */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -57,83 +59,125 @@
     margin-bottom: 12px;
 }
 
-/* Tables */
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
+    padding-right: 10px;
     font-size: 12px;
-    font-weight: 600;
     color: #4e5e71;
-    width: 90px;
+    font-weight: 600;
+    width: 80px;
 }
 
 /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
-input[type="text"], select {
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    height: 24px;
-    padding: 2px 8px;
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;
-    font-size: 12px;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
+    outline: none;
 }
 
-/* Readonly fields */
-input[readonly] {
-    background-color: #f3f6f9;
+/* Readonly fields override */
+input[readonly],
+input:disabled {
+    background-color: #f3f6f9 !important;
     color: #555;
+    border-color: #e1e8ed;
 }
 
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-    justify-content: center;
-}
-
+/* ===== MASTER 30px BUTTON SYSTEM ===== */
 .btn-submit {
-    flex: 1;                 /* Allows buttons to share width equally */
-    height: 30px;            /* Scaled button height */
-    padding: 0 12px;         /* Center text vertically */
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 4px;      /* Matched border-radius */
-    font-size: 13px;
-    font-weight: 600;
+    flex: 1;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     cursor: pointer;
-    line-height: 30px;       /* Aligns text inside button */
-    white-space: nowrap;     /* Prevents text wrapping */
+    line-height: 30px !important;
+    white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: none !important;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .btn-submit:hover {
-    background: #1d4ed8;
+    background: #1d4ed8 !important;
 }
 
 .btn-submit:disabled {
-    background: #9ca3af;
+    background: #9ca3af !important;
+    color: #f3f4f6 !important;
     cursor: not-allowed;
 }
 
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+/* Icon Buttons Row */
+.icon-action-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.icon-action-row button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s;
+}
+
+.icon-action-row button:hover {
+    transform: scale(1.1);
+}
+
+/* ===== RIGHT CONTENT AREA (Dynamically fills screen) ===== */
+.main-content-area {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 </style>
 
@@ -271,112 +315,91 @@ function disitems()
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class="hidden-scrollbar">
 
-<table width="100%">
-<tr>
+<div class="master-container">
+    
+    <!-- ================= LEFT PANEL (SIDEBAR) ================= -->
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
 
-<td width="20%">
-    <div class="master-container">
-        <div class="sidebar-filters">
-
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
+            <!-- Data Field Card -->
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Fleet No</td>
+                        <td>
+                            <input type="text" name="fleetno" id="fleetno" readonly value='<s:property value="fleetno"/>'>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="sidebar-scroll-content">
-
-                <div class="filter-card">
-                    <table class="filter-table">
-
-                        <tr>
-                            <td class="label-cell">Fleet</td>
-                            <td>
-                                <input type="text" name="fleetno" id="fleetno"
-                                       readonly
-                                       value='<s:property value="fleetno"/>'>
-                            </td>
-                        </tr>
-
-                    </table>
-                </div>
-
+            <!-- Action Buttons Card -->
+            <div class="filter-card">
                 <div class="button-group">
-                    <button type="button" class="btn-submit" onclick="funClientAttach();">
-                        Attach
-                    </button>
-                    <button type="button" class="btn-submit" onclick="getVehicleMov();">
-                        Movement
-                    </button>
+                    <button type="button" class="btn-submit" onclick="funClientAttach();">Attach</button>
+                    <button type="button" class="btn-submit" onclick="getVehicleMov();">Movement</button>
                 </div>
-
-                <div style="text-align:center; margin-top:15px; display: flex; justify-content: center; gap: 15px;">
-                    <button type="button" title="Rental Agreement" class="icons"
-                            id="rabutton" value='<s:property value="rabutton"/>' style="border: none; background: transparent; cursor: pointer;">
-                        <img alt="Rental Agreement" src="<%=contextPath%>/icons/openra.png" width="32" height="32">
-                    </button>
-
-                    <button type="button" title="Booking" class="icons"
-                            id="bookingbtn" value='<s:property value="bookingbtn"/>' style="border: none; background: transparent; cursor: pointer;">
-                        <img alt="Booking" src="<%=contextPath%>/icons/openbk.png" width="32" height="32">
-                    </button>
-
-                    <button type="button" title="Client Review" class="icons"
-                            id="clientreview" value='<s:property value="clientreview"/>' style="border: none; background: transparent; cursor: pointer;">
-                        <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png" width="32" height="32">
-                    </button>
-                </div>
-
-                <div class="filter-card" style="margin-top:20px;">
-                    <div id="mastertariff">
-                        <jsp:include page="masterTariffgrid.jsp"></jsp:include>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Quick Action Icons Card -->
+            <div class="filter-card icon-action-row">
+                <button type="button" title="Rental Agreement" class="icons" id="rabutton" value='<s:property value="rabutton"/>'>
+                    <img alt="Rental Agreement" src="<%=contextPath%>/icons/openra.png" width="32" height="32">
+                </button>
+
+                <button type="button" title="Booking" class="icons" id="bookingbtn" value='<s:property value="bookingbtn"/>'>
+                    <img alt="Booking" src="<%=contextPath%>/icons/openbk.png" width="32" height="32">
+                </button>
+
+                <button type="button" title="Client Review" class="icons" id="clientreview" value='<s:property value="clientreview"/>'>
+                    <img alt="Client Review" src="<%=contextPath%>/icons/openclientreview.png" width="32" height="32">
+                </button>
+            </div>
+
+            <!-- Embedded Tariff Grid -->
+            <div class="filter-card">
+                <div id="mastertariff">
+                    <jsp:include page="masterTariffgrid.jsp"></jsp:include>
+                </div>
+            </div>
+            
         </div>
     </div>
 
-    <input type="hidden" name="brach" id="brach"
-           value='<s:property value="brach"/>'>
-    <input type="hidden" name="grp" id="grp"
-           value='<s:property value="grp"/>'>
-    <input type="hidden" name="docno" id="docno"
-           value='<s:property value="docno"/>'>
+    <!-- Hidden inputs restored exactly where they were -->
+    <input type="hidden" name="brach" id="brach" value='<s:property value="brach"/>'>
+    <input type="hidden" name="grp" id="grp" value='<s:property value="grp"/>'>
+    <input type="hidden" name="docno" id="docno" value='<s:property value="docno"/>'>
 
-</td>
+    <!-- ================= RIGHT PANEL (WORKSPACE GRIDS) ================= -->
+    <div class="main-content-area">
+        
+        <!-- Horizontally Aligned Heading (Properly placed as per Master UI) -->
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-<td width="80%">
-    <table width="100%">
-        <tr>
-            <td>
-                <div id="fleetdiv">
-                    <jsp:include page="readyToRentGrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
+        <div class="grid-content-container">
+            <div id="fleetdiv">
+                <jsp:include page="readyToRentGrid.jsp"></jsp:include>
+            </div>
+            <div id="tariffdiv" style="margin-top: 20px;">
+                <jsp:include page="tariffShowgrid.jsp"></jsp:include>
+            </div>
+        </div>
 
-        <tr>
-            <td>
-                <div id="tariffdiv">
-                    <jsp:include page="tariffShowgrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
-    </table>
-</td>
-
-</tr>
-</table>
+    </div>
 
 </div>
 
+<!-- Labels and Modals restored exactly to the bottom of the document -->
 <label hidden="true" id="trncodeval"></label>
 <label hidden="true" id="statusval"></label>
 
 <div id="movementwindow"><div></div></div>
 <div id="securitypasswindow"><div></div></div>
 
+</div>
 </div>
 </body>
 
