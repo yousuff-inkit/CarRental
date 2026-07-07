@@ -119,6 +119,31 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+
+
+.main-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+    box-sizing: border-box;
+}
 </style> 
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
@@ -248,69 +273,46 @@ function funExportBtn(){
 </head>
 <body onload="hiddenbrh();">
 
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-
-<table width="100%">
-<tr>
-
-<td width="20%" valign="top">
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 
     <div class="master-container">
+
         <div class="sidebar-filters">
-
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
-            </div>
-
             <div class="sidebar-scroll-content">
 
                 <div class="filter-card">
                     <table class="filter-table">
-
                         <tr>
                             <td class="label-cell">Fleet</td>
                             <td>
-                                <input type="text"
-                                       id="fleetno"
-                                       name="fleetno"
-                                       placeholder="Press F3 To Search"
-                                       readonly
+                                <input type="text" id="fleetno" name="fleetno"
+                                       placeholder="Press F3 To Search" readonly
                                        value='<s:property value="fleetno"/>'
                                        onkeydown="getfleetdata(event);">
                             </td>
                         </tr>
-
                         <tr>
                             <td class="label-cell">From</td>
                             <td><div id='fromdate'></div></td>
                         </tr>
-
                         <tr>
                             <td class="label-cell">To</td>
                             <td><div id='todate'></div></td>
                         </tr>
-
                     </table>
                 </div>
 
                 <div class="filter-card">
-                    <p id="vehinfo"
-                       style="background:#fff; height:180px; font:12px 'Segoe UI', Tahoma, sans-serif; overflow:auto; padding:8px; border-radius:4px; border:1px solid #ccd6e0; margin:0;">
+                    <p id="vehinfo" style="background:#fff; height:180px; font:12px 'Segoe UI', Tahoma, sans-serif; overflow:auto; padding:8px; border-radius:4px; border:1px solid #ccd6e0; margin:0;">
                         <s:property value="vehinfo"></s:property>
                     </p>
                 </div>
 
                 <div class="filter-card" style="text-align:center;">
-                    <font size="3" color="#2563eb">
-                        <b><label id="trncodeval"></label></b>
-                    </font>
+                    <font size="3" color="#2563eb"><b><label id="trncodeval"></label></b></font>
                     <br><br>
-                    <font size="3" color="#2563eb">
-                        <b><label id="statusval"></label></b>
-                    </font>
+                    <font size="3" color="#2563eb"><b><label id="statusval"></label></b></font>
                 </div>
 
                 <div class="filter-card">
@@ -319,29 +321,29 @@ function funExportBtn(){
 
             </div>
         </div>
-    </div>
 
-</td>
+        <div class="main-content-area">
 
-<td width="80%" valign="top">
-    <table width="100%">
-        <tr>
-            <td>
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
+
+            <div class="grid-content-container">
                 <div id="vehdiv">
                     <jsp:include page="vehiclemovementGrid.jsp"></jsp:include>
                 </div>
-            </td>
-        </tr>
-    </table>
-</td>
+            </div>
 
-</tr>
-</table>
+        </div>
+
+    </div>
 
 </div>
 
 <div id="fleetwindow">
     <div></div>
+</div>
+
 </div>
 
 </div>
