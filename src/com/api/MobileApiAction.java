@@ -558,12 +558,26 @@ public class MobileApiAction extends ActionSupport {
 
     public String getClientList() { 
         try {
-            dropdownData = new ClsRentalAgreementDAO().getActualclientSearch(null, clname, mob, "", "", "", "", "1", ""); 
-            status="success"; 
-        } catch (Exception e) { e.printStackTrace(); status = "error"; }
+            // 1. Protect against null values if the mobile app doesn't send search parameters
+            String searchName = (clname == null) ? "" : clname;
+            String searchMob = (mob == null) ? "" : mob;
+
+            // 2. Pass the actual Session object instead of 'null'
+            dropdownData = new ClsRentalAgreementDAO().getActualclientSearch(
+                ServletActionContext.getRequest().getSession(), 
+                searchName, 
+                searchMob, 
+                "", "", "", "", "1", ""
+            ); 
+            
+            status = "success"; 
+        } catch (Exception e) { 
+            e.printStackTrace(); 
+            // 3. Send the actual error message back to Postman so you know exactly what failed!
+            status = "error: " + e.getMessage(); 
+        }
         return SUCCESS; 
     }
-
     public String getFleetList() { 
         try {
             dropdownData = new ClsRentalAgreementDAO().vehSearch(ServletActionContext.getRequest().getSession(), "", "", "", "", "", "yes"); 

@@ -12,36 +12,40 @@
 <style type="text/css">
   
 /* ===== MASTER LAYOUT ===== */
-.master-container {
-    display: flex;
-    width: 100%;
+html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
+    margin: 0;
+    overflow: hidden;
     background-color: #f4f7f9;
 }
 
+.master-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 280px; 
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 15px 25px; 
 }
 
+/* Cards Layout Rules */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -50,147 +54,161 @@
     margin-bottom: 12px;
 }
 
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; /* Uniform 12px label */
-    font-weight: 600;
-    color: #4e5e71;
-    width: 90px;
-}
-
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"] {
-    width: 100%;
-    height: 24px;             
-    padding: 2px 8px;         
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;       
-    font-size: 12px;          
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
-}
-
-/* ===== UNIFORM 24px SELECT DROPDOWNS (FIXED) ===== */
-select {
-    width: 100%;
-    height: 24px;
-    padding: 2px 24px 2px 8px; /* Extra right padding so text doesn't hit the arrow */
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;
+    padding-right: 10px;
     font-size: 12px;
+    color: #4e5e71;
+    font-weight: 600;
+    width: 80px;
+}
+
+/* Fieldset Section Header Look */
+legend {
+    font-size: 11px;
+    font-weight: bold;
+    color: #2563eb;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+fieldset {
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 0;
+}
+
+/* ===== UNIFORM 24px INPUTS, SELECTS, & TEXTAREAS ===== */
+input[type="text"], select, textarea,
+.filter-table input[type="text"],
+.filter-table select,
+.filter-table textarea {
+    width: 100%;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
     outline: none;
     font-family: inherit;
+}
+
+/* Textarea specific overrides */
+textarea {
+    height: 50px !important;
+    resize: none;
+}
+
+#agmtdetails {
+    height: 80px !important;
+}
+
+/* Select specific styling */
+select {
+    padding: 2px 24px 2px 8px !important; 
     cursor: pointer;
-    
-    /* Strip default OS styling */
     appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
-    
-    /* Custom clean arrow */
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 6px center;
     background-size: 12px;
 }
 
-/* Textarea styling matching inputs but without fixed height */
-textarea {
-    width: 100%;
-    padding: 4px 8px;
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;
-    font-size: 12px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    font-family: inherit;
-    resize: vertical;
-    outline: none;
-}
-
-input[readonly], input:disabled, select:disabled, textarea[readonly], textarea:disabled {
+/* Readonly fields override */
+input[readonly],
+input:disabled,
+select:disabled,
+textarea[readonly] {
     background-color: #f3f6f9 !important;
-    color: #555;
+    color: #7e8c9a;
     cursor: not-allowed;
 }
 
-/* ===== FIELDSET STYLING ===== */
-fieldset {
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    padding: 10px;
-    margin: 0;
-    background: #fff;
-}
-
-legend {
-    font-size: 12px;
-    font-weight: 600;
-    color: #2563eb;
-    padding: 0 5px;
-    width: auto;
-    border: none;
-    margin-bottom: 0;
-}
-
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.btn-submit {
-    flex: 1;
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="periodupto"],
+.filter-table div[id^="indate"],
+.filter-table div[id^="intime"] {
     width: 100%;
-    height: 30px;            /* Scaled button height */
-    padding: 0 12px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
+}
+
+/* ===== MASTER 30px BUTTON SYSTEM ===== */
+.btn-submit {
+    width: 100%;
+    height: 30px !important;            
+    padding: 0 12px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     cursor: pointer;
-    line-height: 30px;
+    line-height: 30px !important;
     white-space: nowrap;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: none !important;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .btn-submit:hover {
-    background: #1d4ed8;
+    background: #1d4ed8 !important;
 }
 
 .btn-danger {
-    background: #dc2626;
+    background: #dc2626 !important;
 }
 
 .btn-danger:hover {
-    background: #b91c1c;
+    background: #b91c1c !important;
 }
 
-html, body, #mainBG, .hidden-scrollbar {
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.button-group .btn-submit {
+    flex: 1;
+}
+
+/* ===== RIGHT CONTENT AREA ===== */
+.main-content-area {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    padding: 15px 20px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 </style>
 <script type="text/javascript">
@@ -369,173 +387,144 @@ function funreload(event){
 <div id="mainBG" class="homeContent" data-type="background"> 
 <div class='hidden-scrollbar'>
 
-<table width="100%">
-<tr>
+<div class="master-container">
 
-<td width="20%" valign="top">
-    <div class="master-container">
-        <div class="sidebar-filters">
+    <!-- ================= LEFT PANEL (SIDEBAR) ================= -->
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
 
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Upto</td>
+                        <td><div id="periodupto"></div></td>
+                    </tr>
+                </table>
+
+                <button type="button" class="btn-submit" id="btnpickupadd" onclick="funpickupadd();" style="margin-top: 15px;">Add</button>
+                <button type="button" class="btn-submit" id="btnpickupsave" onclick="funpickupsave();" style="margin-top: 15px;">Save</button>
             </div>
 
-            <div class="sidebar-scroll-content">
+            <div class="filter-card">
+                <fieldset id="pickupfield">
+                    <legend>In Details</legend>
 
-                <div class="filter-card">
                     <table class="filter-table">
                         <tr>
-                            <td class="label-cell">Upto</td>
-                            <td><div id="periodupto"></div></td>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select name="cmbtype" id="cmbtype">
+                                    <option value="">--Select--</option>
+                                    <option value="RAG">Rental</option>
+                                    <option value="LAG">Lease</option>
+                                </select>
+                            </td>
                         </tr>
+
+                        <tr>
+                            <td class="label-cell">Agmt</td>
+                            <td>
+                                <input type="text" name="agmtvocno" id="agmtvocno" readonly>
+                                <input type="hidden" name="agmtno" id="agmtno">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Fleet</td>
+                            <td>
+                                <input type="text" name="fleetdetails" id="fleetdetails" readonly>
+                                <input type="hidden" name="fleet_no" id="fleet_no">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td><div id="indate"></div></td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Time</td>
+                            <td><div id="intime"></div></td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Km</td>
+                            <td><input type="text" name="inkm" id="inkm"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Fuel</td>
+                            <td>
+                                <select name="cmbinfuel" id="cmbinfuel">
+                                    <option value="">--Select--</option>
+                                    <option value="0.000">0/8</option>
+                                    <option value="0.125">1/8</option>
+                                    <option value="0.250">2/8</option>
+                                    <option value="0.500">4/8</option>
+                                    <option value="1.000">8/8</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="label-cell">Details</td>
+                            <td>
+                                <textarea name="pickdesc" id="pickdesc"></textarea>
+                            </td>
+                        </tr>
+
                     </table>
-
-                    <button type="button"
-                            class="btn-submit"
-                            id="btnpickupadd"
-                            onclick="funpickupadd();"
-                            style="margin-top: 15px;">
-                        Add
-                    </button>
-
-                    <button type="button"
-                            class="btn-submit"
-                            id="btnpickupsave"
-                            onclick="funpickupsave();"
-                            style="margin-top: 15px;">
-                        Save
-                    </button>
-                </div>
-
-                <div class="filter-card">
-                    <fieldset id="pickupfield">
-                        <legend>In Details</legend>
-
-                        <table class="filter-table">
-
-                            <tr>
-                                <td class="label-cell">Type</td>
-                                <td>
-                                    <select name="cmbtype" id="cmbtype">
-                                        <option value="">--Select--</option>
-                                        <option value="RAG">Rental</option>
-                                        <option value="LAG">Lease</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Agmt</td>
-                                <td>
-                                    <input type="text" name="agmtvocno" id="agmtvocno" readonly>
-                                    <input type="hidden" name="agmtno" id="agmtno">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Fleet</td>
-                                <td>
-                                    <input type="text" name="fleetdetails" id="fleetdetails" readonly>
-                                    <input type="hidden" name="fleet_no" id="fleet_no">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Date</td>
-                                <td><div id="indate"></div></td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Time</td>
-                                <td><div id="intime"></div></td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Km</td>
-                                <td><input type="text" name="inkm" id="inkm"></td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Fuel</td>
-                                <td>
-                                    <select name="cmbinfuel" id="cmbinfuel">
-                                        <option value="">--Select--</option>
-                                        <option value="0.000">0/8</option>
-                                        <option value="0.125">1/8</option>
-                                        <option value="0.250">2/8</option>
-                                        <option value="0.500">4/8</option>
-                                        <option value="1.000">8/8</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="label-cell">Details</td>
-                                <td>
-                                    <textarea name="pickdesc" id="pickdesc" style="height:50px;"></textarea>
-                                </td>
-                            </tr>
-
-                        </table>
-                    </fieldset>
-                </div>
-                
-                <div class="button-group">
-                    <button type="button"
-                            class="btn-submit"
-                            id="btnpickupprint"
-                            onclick="funPickupPrint();">
-                        Print
-                    </button>
-
-                    <button type="button"
-                            class="btn-submit btn-danger"
-                            id="btnpickypdelete"
-                            onclick="funPickupDelete();">
-                        Delete
-                    </button>
-                </div>
-
-                <div class="filter-card" style="margin-top: 15px;">
-                    <textarea id="agmtdetails" name="agmtdetails" style="height:80px;" readonly></textarea>
-                </div>
-
+                </fieldset>
             </div>
+            
+            <div class="filter-card">
+                <div class="button-group">
+                    <button type="button" class="btn-submit" id="btnpickupprint" onclick="funPickupPrint();">Print</button>
+                    <button type="button" class="btn-submit btn-danger" id="btnpickypdelete" onclick="funPickupDelete();">Delete</button>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <textarea id="agmtdetails" name="agmtdetails" readonly></textarea>
+            </div>
+
         </div>
     </div>
-</td>
 
-<td width="80%" valign="top">
-    <table width="100%">
-        <tr>
-            <td>
-                <div id="pickupdiv">
-                    <jsp:include page="pickupGrid.jsp"></jsp:include>
-                </div>
+    <!-- ================= RIGHT PANEL (WORKSPACE GRIDS) ================= -->
+    <div class="main-content-area">
+        
+        <!-- Horizontally Aligned Heading Toolbar -->
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
 
-                <input type="hidden" name="gridlength" id="gridlength">
-                <input type="hidden" name="invgridlength" id="invgridlength">
-                <input type="hidden" name="mode" id="mode">
-                <input type="hidden" name="msg" id="msg">
-                <input type="hidden" name="cldocno" id="cldocno">
-                <input type="hidden" name="docno" id="docno">
-                <input type="hidden" name="hidkm" id="hidkm">
-            </td>
-        </tr>
-    </table>
-</td>
+        <div class="scrollable-grid-area">
+            <div id="pickupdiv">
+                <jsp:include page="pickupGrid.jsp"></jsp:include>
+            </div>
+        </div>
 
-</tr>
-</table>
+    </div>
 
+</div>
+
+<!-- Safely Restored Hidden Inputs and Modals -->
+<div style="display:none;">
+    <input type="hidden" name="gridlength" id="gridlength">
+    <input type="hidden" name="invgridlength" id="invgridlength">
+    <input type="hidden" name="mode" id="mode">
+    <input type="hidden" name="msg" id="msg">
+    <input type="hidden" name="cldocno" id="cldocno">
+    <input type="hidden" name="docno" id="docno">
+    <input type="hidden" name="hidkm" id="hidkm">
 </div>
 
 <div id="agmtnowindow">
    <div></div>
 </div>
 
+</div>
 </div>
 </form>
 </body>

@@ -90,7 +90,7 @@ input[type="text"], select {
     width: 100%;
     height: 30px !important;            
     padding: 0 12px !important;
-    background: #2563eb !important;
+    background: #1d4ed8 !important;
     color: #fff !important;
     border: none !important;
     border-radius: 4px !important;
@@ -152,6 +152,45 @@ input[type="text"], select {
 .magnifier-icon:hover {
     color: #2563eb; 
     transform: translateY(-50%) scale(1.1);
+}
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;      
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;       
+    box-sizing: border-box;
+    padding: 0;         
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
 }
 </style>
 
@@ -594,14 +633,11 @@ function funupdate()
 </script>
 </head>
 <body onload="getBranch();disitems();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 <div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
 
+    <div class="sidebar-filters">
         <div class="sidebar-scroll-content">
             <div class="filter-card">
                 <table class="filter-table">
@@ -615,12 +651,13 @@ function funupdate()
                     <tr>
                         <td class="label-cell">Driver</td>
                         <td>
-                           <div class="input-search-container"> <input type="text" name="del_Driver" id="del_Driver"   onKeyDown="getchauffeur(event);" value='<s:property value="del_Driver"/>' readonly placeholder="Press F3 To Search"/>
-                       <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        </div>
+                           <div class="input-search-container">
+                               <input type="text" name="del_Driver" id="del_Driver" onKeyDown="getchauffeur(event);" value='<s:property value="del_Driver"/>' readonly placeholder="Press F3 To Search"/>
+                               <svg class="magnifier-icon" onclick="triggerToSearch();" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                   <circle cx="11" cy="11" r="8"></circle>
+                                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                               </svg>
+                           </div>
                         </td>
                     </tr>
                     <tr>
@@ -663,25 +700,11 @@ function funupdate()
                 </table>
             </div>
 
-          <div class="filter-card">
+            <div class="filter-card">
+                <input type="button" name="driverUpdate" id="driverUpdate" class="myButton" value="Update" onclick="funupdate()" style="width:100%; margin-bottom:6px;">
+                <input type="button" name="attachbtns" id="attachbtns" class="myButton" value="Attach" onclick="funAttachBtn()" style="width:100%;">
+            </div>
 
-    <input type="button"
-           name="driverUpdate"
-           id="driverUpdate"
-           class="myButton"
-           value="Update"
-           onclick="funupdate()"
-           style="width:100%; margin-bottom:6px;">
-
-    <input type="button"
-           name="attachbtns"
-           id="attachbtns"
-           class="myButton"
-           value="Attach"
-           onclick="funAttachBtn()"
-           style="width:100%;">
-
-</div>
             <div style="display:none;">
                 <input type="hidden" name="rentaldoc" id="rentaldoc" value='<s:property value="rentaldoc"/>' >
                 <input type="hidden" name="chktype" id="chktype" value='<s:property value="chktype"/>' >
@@ -701,21 +724,19 @@ function funupdate()
     </div>
 
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <div id="delupdiv">
                 <jsp:include page="delupdateGrid.jsp"></jsp:include>
             </div>
         </div>
     </div>
-</div>
 
-     
 </div>
-<div id="chauffeurinfowindow">
-   <div ></div>
 </div>
-<div id="Checkoutinfowindow">
-   <div ></div>
-</div>
+<div id="chauffeurinfowindow"><div></div></div>
+<div id="Checkoutinfowindow"><div></div></div>
 </div>
 </body>

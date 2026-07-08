@@ -108,6 +108,30 @@ td[width="80%"] {
     vertical-align: top;
     background: #fff;
 }
+
+.main-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+    box-sizing: border-box;
+}
 </style>  
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
@@ -284,41 +308,28 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
 </head>
 <body onload="getBranch();">
 
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-
-<table width="100%">
-<tr>
-
-<td width="20%" valign="top">
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 
     <div class="master-container">
-        <div class="sidebar-filters">
 
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
-            </div>
+        <div class="sidebar-filters">
             <div class="sidebar-scroll-content">
 
                 <div class="filter-card">
                     <table class="filter-table">
-
                         <tr>
                             <td class="label-cell">From</td>
                             <td>
                                 <div id="fromdate"></div>
                             </td>
                         </tr>
-
                         <tr>
                             <td class="label-cell">To</td>
                             <td>
                                 <div id="regexpdate"></div>
                             </td>
                         </tr>
-
                         <tr>
                             <td class="label-cell">Client</td>
                             <td>
@@ -330,7 +341,6 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
                                 <input type="hidden" name="cldocno" id="cldocno">
                             </td>
                         </tr>
-
                     </table>
                 </div>
 
@@ -340,30 +350,26 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
 
             </div>
         </div>
-    </div>
 
-</td>
+        <div class="main-content-area">
 
-<td width="80%" valign="top">
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
 
-    <table width="100%">
-        <tr>
-            <td>
+            <div class="grid-content-container">
                 <div id="explistdiv">
                     <jsp:include page="registrationExpairyGrid.jsp"></jsp:include>
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
 
-</td>
+        </div>
 
-</tr>
-</table>
+    </div>
 
-<div id="clientwindow">
-    <div></div>
-</div>
+    <div id="clientwindow">
+        <div></div>
+    </div>
 
 </div>
 </div>

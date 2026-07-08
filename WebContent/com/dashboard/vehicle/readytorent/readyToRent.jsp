@@ -18,95 +18,90 @@
 
 <style>
 
+/* ===== MASTER-UI MATCH: Fleet Status Dashboard ===== */
+
 .fleet-status-wrapper {
-    --shadow-light: #ffffff;
-    --shadow-dark: #d0d0d0;
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
-    font-family: 'Poppins', sans-serif;
-    background: #ffffff;
+    --primary-color: #2563eb;
+    --secondary-color: #4e5e71;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif !important;
+    background: #f4f7f9 !important;
     height: 100vh;
     width: 100%;
-    padding: 12px;
+    padding: 0 !important;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar (match master's light thin style) */
 .fleet-status-wrapper::-webkit-scrollbar,
 .fleet-status-wrapper *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
 }
 
 .fleet-status-wrapper::-webkit-scrollbar-track,
 .fleet-status-wrapper *::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+    background: #f4f7f9;
+    border-radius: 4px;
 }
 
 .fleet-status-wrapper::-webkit-scrollbar-thumb,
 .fleet-status-wrapper *::-webkit-scrollbar-thumb {
-    background: #b0b0b0;
-    border-radius: 10px;
+    background: #ccd6e0;
+    border-radius: 4px;
 }
 
 .fleet-status-wrapper::-webkit-scrollbar-thumb:hover,
 .fleet-status-wrapper *::-webkit-scrollbar-thumb:hover {
-    background: #909090;
+    background: #9fb0c3;
 }
-
 
 .fleet-status-wrapper .main-container {
     display: flex;
     flex-direction: row;
-    gap: 12px;
-    height: calc(100vh-16px);
+    gap: 0;
+    height: 100vh;
     width: 100%;
     max-width: 100%;
     margin: 0;
     box-sizing: border-box;
-    
 }
 
+/* ===== LEFT SIDEBAR (matches master exactly) ===== */
 .fleet-status-wrapper .sidebar {
-    flex: 0 0 300px;
-    min-width: 300px;
-    max-width: 300px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    padding: 12px;
-    padding-left:1px;
-    padding-right:12px;
-    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
-                2px 2px 6px rgba(0, 0, 0, 0.08);
+    flex: 0 0 280px;
+    min-width: 280px;
+    max-width: 280px;
+    background: #ffffff;
+    border-radius: 0;
+    border-right: 1px solid #e1e8ed;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    padding: 15px;
     overflow-y: auto;
     overflow-x: hidden;
-    min-height: calc(100vh - 120px);
+    min-height: 100%;
     box-sizing: border-box;
 }
-
 
 .fleet-status-wrapper .main-content {
     flex: 1 1 auto;
     min-width: 0;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    padding: 14px;
-  	overflow-y: auto;
-    overflow-x: visible;   
-    min-height: calc(100vh - 20px);
-  	margin-left:-15px;
-  	margin-right:-15px;
+    background: #ffffff;
+    border-radius: 0;
+    padding: 15px;
+    overflow-y: auto;
+    overflow-x: visible;
+    min-height: 100%;
+    margin: 0;
     box-sizing: border-box;
 }
 
-
+/* ===== FILTER CARD (fieldset -> master's .filter-card look) ===== */
 .fleet-status-wrapper fieldset {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 12px;
+    border: 1px solid #e3e8ee;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 15px;
     margin: 0;
 }
 
@@ -116,8 +111,9 @@
     gap: 8px;
     margin: 10px 0;
     padding: 8px 10px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #e3e8ee;
+    border-radius: 4px;
 }
 
 .fleet-status-wrapper input[type="checkbox"] {
@@ -127,35 +123,32 @@
 }
 
 .fleet-status-wrapper .branch {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 500;
+    color: #4e5e71;
     margin: 0;
 }
 
-
+/* ===== GRID CONTAINERS ===== */
 .fleet-status-wrapper .grid-container {
- background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
     padding: 12px;
     margin: 6px 0;
-  
     max-width: 100%;
     overflow: visible;
 }
 
-
 .fleet-status-wrapper .sidebar .grid-container {
-      padding: 12px;
-    margin: 12px auto; 
-    padding-left: 10px;
-    padding-right: 10px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
- 
+    padding: 10px;
+    margin: 12px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e3e8ee;
 }
 
 .fleet-status-wrapper .sidebar .grid-container table {
@@ -163,14 +156,15 @@
     max-width: 100%;
     table-layout: fixed;
     font-size: 11px;
-    max-height:50px;
-    margin:0 auto;
+    max-height: 50px;
+    margin: 0 auto;
 }
 
 .fleet-status-wrapper .sidebar .grid-container table td {
-
     word-wrap: break-word;
+    color: #333;
 }
+
 .fleet-status-wrapper .sidebar #Readygrid {
     display: flex;
     justify-content: center;
@@ -181,41 +175,44 @@
 .fleet-status-wrapper .sidebar #Readygrid > * {
     margin: 0 auto;
 }
+
 .fleet-status-wrapper .sidebar .jqx-grid {
     margin: 0 auto !important;
 }
+
+/* ===== BUTTONS (exact match to master's .btn-submit) ===== */
 .fleet-status-wrapper .myButton {
     width: 100%;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: linear-gradient(145deg, #ffffff, #f5f5f5);
-    border: 1px solid #e0e0e0;
-    color: var(--primary-color);
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 4px;
+    background: #2563eb;
+    border: none;
+    color: #ffffff;
     font-weight: 600;
-    font-size: 12px;
-    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.9),
-                2px 2px 6px rgba(0, 0, 0, 0.1);
+    line-height: 30px;
+    transition: background 0.2s;
+    box-shadow: none;
 }
 
 .fleet-status-wrapper .myButton:hover {
-    transform: translateY(-1px);
-    background: linear-gradient(145deg, #ffffff, #eeeeee);
-    box-shadow: -3px -3px 8px rgba(255, 255, 255, 1),
-                3px 3px 8px rgba(0, 0, 0, 0.12);
+    background: #1d4ed8;
+    transform: none;
+    box-shadow: none;
 }
 
 .fleet-status-wrapper .submit-container {
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
-
+/* ===== CHARTS ===== */
 .fleet-status-wrapper .chart-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -224,11 +221,11 @@
 }
 
 .fleet-status-wrapper .chart-container {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
     padding: 12px;
-    box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.8),
-                2px 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: none;
     height: 300px;
 }
 
@@ -236,17 +233,19 @@
     height: 100% !important;
 }
 
+/* ===== SEARCH BAR (matches master's 24px input rhythm) ===== */
 .fleet-status-wrapper .compact-search-bar {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+    margin-top: 0;
 }
 
 .fleet-status-wrapper .search-input-wrapper {
     flex: 1;
     position: relative;
-    max-width: 350px;
+    max-width: 220px;
 }
 
 .fleet-status-wrapper .search-icon-inline {
@@ -256,27 +255,29 @@
     transform: translateY(-50%);
     color: #94a3b8;
     pointer-events: none;
+    width: 16px;
+    height: 16px;
 }
 
 .fleet-status-wrapper .universal-search-input {
     width: 100%;
-    padding: 8px 35px 8px 35px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--primary-color);
-    background: white;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-  
+    height: 24px;
+    padding: 2px 30px 2px 30px;
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333;
+    background: #ffffff;
+    transition: border-color 0.2s;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    box-sizing: border-box;
 }
-
 
 .fleet-status-wrapper .universal-search-input:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .fleet-status-wrapper .clear-search-btn {
@@ -292,25 +293,33 @@
     font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-weight: 600;
+    font-weight: 500;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .fleet-status-wrapper .clear-search-btn:hover {
-    background: #fee;
-    color: #e74c3c;
+    background: #fee2e2;
+    color: #dc2626;
 }
 
 .fleet-status-wrapper .search-results-badge {
-    padding: 5px 10px;
-    background: linear-gradient(135deg, #e8f4fd, #d4e9f7);
-    color: #3498db;
-    border-radius: 6px;
+    padding: 4px 5px;
+    background: #eef4ff;
+    color: #2563eb;
+    border-radius: 4px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     white-space: nowrap;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-
+/* ===== MISC ===== */
 .hidden-scrollbar {
     height: 100vh;
     width: 100%;
@@ -318,33 +327,26 @@
     box-sizing: border-box;
 }
 
-/* Make sure charts fit properly */
 #fleetStatus1, #sec1, #thr1, #four1 {
     width: 100% !important;
     height: 100% !important;
 }
 
-
 .jqx-grid-content {
-    overflow-x: scroll !important;
+    overflow-x: auto !important;
     overflow-y: auto !important;
 }
 
-/* Branch-wise div */
+.jqx-grid {
+    overflow: visible !important;
+}
+
 .fleet-status-wrapper #branchwisediv > div:not(.compact-search-bar) {
     max-height: calc(100vh - 300px);
     overflow-y: auto;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1400px) {
-    .fleet-status-wrapper .sidebar {
-        flex: 0 0 280px;
-        min-width: 280px;
-        max-width: 280px;
-    }
-}
-
+/* ===== RESPONSIVE (unchanged breakpoints, resized to master's 280px base) ===== */
 @media (max-width: 1200px) {
     .fleet-status-wrapper .sidebar {
         flex: 0 0 260px;
@@ -365,7 +367,7 @@
     .fleet-status-wrapper .main-container {
         flex-direction: column;
     }
-    
+
     .fleet-status-wrapper .sidebar {
         flex: 0 0 auto;
         min-width: 100%;
@@ -373,112 +375,57 @@
         width: 100%;
         height: auto;
         max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #e1e8ed;
     }
-    
+
     .fleet-status-wrapper .main-content {
         height: auto;
         flex: 1;
     }
 }
-.jqx-grid {
-    overflow: visible !important;
+
+
+.fleet-status-wrapper .main-container {
+    align-items: stretch; 
 }
 
-.jqx-grid-content {
-    overflow-x: auto !important;
-    overflow-y: auto !important;
-}
-
-/* Updated CSS for taller search bar - Replace your existing search bar styles */
-
-.fleet-status-wrapper .compact-search-bar {
+.fleet-status-wrapper .main-content-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-    margin-top:-12px;
-   
+    flex-direction: column;
+    height: 100%;
 }
 
-.fleet-status-wrapper .search-input-wrapper {
-    flex: 1;
-    position: relative;
-    max-width: 150px;
-  
-}
-
-.fleet-status-wrapper .search-icon-inline {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    pointer-events: none;
-    width: 20px;
-    height: 20px;
-}
-
-.fleet-status-wrapper .universal-search-input {
+.fleet-status-wrapper .top-toolbar-container {
     width: 100%;
-    padding: 6px 30px 6px 30px; 
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 14px; 
-    font-weight: 500;
-    color: var(--primary-color);
-    background: white;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-    height: 32px; 
+    padding: 5px 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
-.fleet-status-wrapper .universal-search-input:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.fleet-status-wrapper .clear-search-btn {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 6px 10px; 
-    background: transparent;
-    color: #94a3b8;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px; 
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 600;
-    height: 32px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.fleet-status-wrapper .clear-search-btn:hover {
-    background: #fee;
-    color: #e74c3c;
-}
-
-.fleet-status-wrapper .search-results-badge {
-    padding: 0px 10px; 
-    background: linear-gradient(135deg, #e8f4fd, #d4e9f7);
-    color: #3498db;
-    border-radius: 6px;
-    font-size: 13px; 
-    font-weight: 600;
-    white-space: nowrap;
-    height: 44px; 
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-}
 .fleet-status-wrapper .main-content {
-    padding-top: 5px; 
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: visible;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.dashboard-header-wrapper .header-container {
+    padding: 0;
+    background: transparent; 
+    border: none;
+    box-shadow: none;
+    margin-bottom: 0; 
+    text-align: left;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--text-main);
+    white-space: nowrap;
 }
 </style>
 
@@ -1045,7 +992,7 @@ function funExportBtn()
 <div class="sidebar">
     <fieldset>
         <!-- Include heading -->
-        <jsp:include page="../../heading.jsp"></jsp:include>
+        
         
         <!-- Detail Checkbox -->
         <div class="checkbox-container">
@@ -1071,6 +1018,10 @@ function funExportBtn()
 
 <!-- MAIN CONTENT -->
 <div class="main-content">
+
+    <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
   <div class="grid-container" id="grid1" style="display: none;">
     <div class="compact-search-bar">
         <div class="search-input-wrapper">
