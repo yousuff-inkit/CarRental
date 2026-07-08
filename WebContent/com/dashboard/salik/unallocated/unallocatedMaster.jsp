@@ -11,74 +11,84 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 100%;
+    width: 280px; /* Uniform width */
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; /* Uniform tighter padding */
 }
 
+/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 12px;
+    padding: 15px;
     margin-bottom: 12px;
 }
 
+.card-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e3e8ee;
+    text-transform: uppercase;
+}
+
+/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
-    width: 80px;
+    font-weight: 600;
+    width: 80px; /* Standardized label column width */
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
+    height: 24px;              
+    padding: 2px 8px;          
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;       
+    font-size: 12px;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
@@ -86,21 +96,23 @@ input[type="text"], select {
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
+/* Custom dropdown arrow for native selects */
 select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
-    cursor: pointer;
+    padding: 2px 24px 2px 8px;
     appearance: none;
     -webkit-appearance: none;
+    -moz-appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 6px center;
     background-size: 12px;
 }
 
+/* Readonly / disabled look */
 input[readonly], input:disabled, select:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
+    border-color: #e1e8ed;
     cursor: pointer;
 }
 
@@ -121,15 +133,37 @@ input[type="checkbox"] {
     color: #4e5e71;
 }
 
-.card-title {
-    font-size: 13px;
-    font-weight: bold;
-    color: #2563eb;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #e3e8ee;
-    text-transform: uppercase;
+/* jqx date container */
+.filter-table div[id^="fromdate"], .filter-table div[id^="uptodate"] {
+    width: 100%;
 }
+
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.btn-submit {
+    flex: 1;
+    height: 30px;            
+    padding: 0 5px;         
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;      
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 30px;       
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn-submit:hover { background: #1d4ed8; }
+.btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
 
 /* Animations */
 @keyframes blink {
@@ -146,48 +180,29 @@ input[type="checkbox"] {
     margin-bottom: 10px;
 }
 
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 5px;
-}
-
-.btn-submit {
-    flex: 1;
-    height: 30px !important;            
-    padding: 0 5px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.btn-submit:hover { background: #1d4ed8 !important; }
-.btn-submit:disabled { background: #94a3b8 !important; cursor: not-allowed; }
-
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
+/* ===== RIGHT CONTENT AREA (Dynamically fills screen) ===== */
+.main-content-area {
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
-.scrollable-grid-area {
+.grid-content-container {
     flex: 1;
-    width: 100%;
-    overflow: auto;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 </style>
 
@@ -431,172 +446,155 @@ function funchange(){
 </head>
 
 <body onload="hiddenbrh();getAllocateBranch();dis();">
+
 <div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
-<div class="master-container">
+    <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                
+                <div class="salikallocatecount blink-text" hidden>
+                    <b>Total Saliks Allocated:</b> <span class="currentsalikallocated"></span>
+                </div>
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">From Date</td>
+                            <td>
+                                <div class="checkbox-wrap">
+                                    <input type="checkbox" id="Chkfromdate" name="Chkfromdate" onchange="funchange()">
+                                    <label for="Chkfromdate">Enable</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell"></td>
+                            <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Up To</td>
+                            <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Reg No</td>
+                            <td>
+                                <input type="text" id="regno" name="regno" readonly
+                                       placeholder="Press F3 To Search" value='<s:property value="regno"/>'
+                                       onkeydown="getregno(event);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Tag No</td>
+                            <td>
+                                <input type="text" id="tagno" name="tagno" readonly
+                                       placeholder="Press F3 To Search" value='<s:property value="tagno"/>'
+                                       onkeydown="gettagno(event);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="cmbsaliktype" name="cmbsaliktype">
+                                    <option value="">--Select--</option>
+                                    <option value="SAL">Salik</option>
+                                    <option value="PAR">Parking</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="button-group">
+                        <button type="button" id="driverUpdate" class="btn-submit" onclick="funallocate()">Allocate</button>
+                        <button type="button" id="clear" class="btn-submit" onclick="funcleardata()" style="background:#64748b !important;">Clear</button>
+                    </div>
+                </div>
+
+                <div class="filter-card">
+                    <div class="card-title">Manual Allocate</div>
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">Salik Tag</td>
+                            <td><input type="text" id="saliktag" name="saliktag" readonly value='<s:property value="saliktag"/>'></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Fleet No</td>
+                            <td>
+                                <input type="text" id="fleet_no" name="fleet_no" readonly
+                                       placeholder="Press F3 To Search" value='<s:property value="fleet_no"/>'
+                                       onkeydown="getfleet(event);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Type</td>
+                            <td>
+                                <select id="trftype" onchange="cleardatas()">
+                                    <option value="RAG">Rental</option>
+                                    <option value="LAG">Lease</option>
+                                    <option value="STF">Staff</option>
+                                    <option value="DRV">Driver</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Branch</td>
+                            <td>
+                                <select id="cmballocatebranch" name="cmballocatebranch" value='<s:property value="cmballocatebranch"/>'>
+                                    <option value="">--Select--</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Convict</td>
+                            <td>
+                                <input type="text" id="typesearch" name="typesearch" readonly
+                                       placeholder="Press F3 To Search" value='<s:property value="typesearch"/>'
+                                       onkeydown="gettypessearch(event)">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="button-group">
+                        <button type="button" id="allocates" class="btn-submit" onclick="funoneallocate()">
+                            Manual
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display:none;">
+                    <input type="hidden" id="gridlength" name="gridlength">
+                    <input type="hidden" id="rentaldoc" name="rentaldoc">
+                    <input type="hidden" id="leasedoc" name="leasedoc">
+                    <input type="hidden" id="drdoc" name="drdoc">
+                    <input type="hidden" id="staffdoc" name="staffdoc">
+                    <input type="hidden" id="hidchkdate" name="hidchkdate">
+                </div>
+
+            </div>
         </div>
 
-        <div class="sidebar-scroll-content">
+        <div class="main-content-area">
             
-            <div class="salikallocatecount blink-text" hidden>
-                <b>Total Saliks Allocated:</b> <span class="currentsalikallocated"></span>
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
             </div>
 
-            <!-- Main Filter Card -->
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From Date</td>
-                        <td>
-                            <div class="checkbox-wrap">
-                                <input type="checkbox" id="Chkfromdate" name="Chkfromdate" onchange="funchange()">
-                                <label for="Chkfromdate">Enable</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell"></td>
-                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Up To</td>
-                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Reg No</td>
-                        <td>
-                            <input type="text" id="regno" name="regno" readonly
-                                   placeholder="Press F3 To Search" value='<s:property value="regno"/>'
-                                   onkeydown="getregno(event);">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Tag No</td>
-                        <td>
-                            <input type="text" id="tagno" name="tagno" readonly
-                                   placeholder="Press F3 To Search" value='<s:property value="tagno"/>'
-                                   onkeydown="gettagno(event);">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="cmbsaliktype" name="cmbsaliktype">
-                                <option value="">--Select--</option>
-                                <option value="SAL">Salik</option>
-                                <option value="PAR">Parking</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <div class="button-group">
-                    <button type="button" id="driverUpdate" class="btn-submit" onclick="funallocate()">Allocate</button>
-                    <button type="button" id="clear" class="btn-submit" onclick="funcleardata()" style="background:#64748b !important;">Clear</button>
-                </div>
-            </div>
-
-            <!-- Manual Allocate Card -->
-            <div class="filter-card">
-                <div class="card-title">Manual Allocate</div>
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Salik Tag</td>
-                        <td><input type="text" id="saliktag" name="saliktag" readonly value='<s:property value="saliktag"/>'></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Fleet No</td>
-                        <td>
-                            <input type="text" id="fleet_no" name="fleet_no" readonly
-                                   placeholder="Press F3 To Search" value='<s:property value="fleet_no"/>'
-                                   onkeydown="getfleet(event);">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="trftype" onchange="cleardatas()">
-                                <option value="RAG">Rental</option>
-                                <option value="LAG">Lease</option>
-                                <option value="STF">Staff</option>
-                                <option value="DRV">Driver</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Branch</td>
-                        <td>
-                            <select id="cmballocatebranch" name="cmballocatebranch" value='<s:property value="cmballocatebranch"/>'>
-                                <option value="">--Select--</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Convict</td>
-                        <td>
-                            <input type="text" id="typesearch" name="typesearch" readonly
-                                   placeholder="Press F3 To Search" value='<s:property value="typesearch"/>'
-                                   onkeydown="gettypessearch(event)">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <button type="button" id="allocates" class="btn-submit" onclick="funoneallocate()" style="margin-top: 5px;">
-                                Manual
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Hidden Fields -->
-            <div style="display:none;">
-                <input type="hidden" id="gridlength" name="gridlength">
-                <input type="hidden" id="rentaldoc" name="rentaldoc">
-                <input type="hidden" id="leasedoc" name="leasedoc">
-                <input type="hidden" id="drdoc" name="drdoc">
-                <input type="hidden" id="staffdoc" name="staffdoc">
-                <input type="hidden" id="hidchkdate" name="hidchkdate">
+            <div class="grid-content-container">
+                <form action="">
+                    <div id="allodiv">
+                        <jsp:include page="allocatelistGrid.jsp"></jsp:include>
+                    </div>
+                </form>
             </div>
 
         </div>
+
     </div>
-</td>
-
-<!-- ================= RIGHT SIDE (GRID) ================= -->
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <form action="">
-                <div id="allodiv">
-                    <jsp:include page="allocatelistGrid.jsp"></jsp:include>
-                </div>
-            </form>
-        </div>
-    </div>
-</td>
-
-</tr>
-</table>
-
-</div>
 </div>
 
-<!-- POPUPS -->
 <div id="regwindow"><div></div></div>
 <div id="tagwindow"><div></div></div>
 <div id="fleetwindow"><div></div></div>
 <div id="commonwindow"><div></div></div>
 <div id="commonwindow1"><div></div></div>
 
-</div>
 </body>
 </html>
