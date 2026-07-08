@@ -9,68 +9,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
-<style type="text/css">
-/* ===== MASTER LAYOUT ===== */
+<style type="text/css">/* ===== MASTER LAYOUT ===== */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 100%;
+    width: 330px; 
+    flex: 0 0 330px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; 
 }
 
+/* Cards Layout Rules */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 12px;
+    padding: 15px;
     margin-bottom: 12px;
 }
 
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 90px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
     height: 24px !important;             
     padding: 2px 8px !important;         
@@ -83,6 +83,7 @@ input[type="text"], select {
     outline: none;
 }
 
+/* Select specific styling */
 select {
     padding: 2px 24px 2px 8px !important; 
     font-family: inherit;
@@ -95,23 +96,22 @@ select {
     background-size: 12px;
 }
 
+/* Readonly fields override */
 input[readonly],
-input:disabled,
-select:disabled {
-    background-color: #ffffff !important;
+input:disabled {
+    background-color: #f3f6f9 !important;
     color: #555;
-    cursor: text !important;
+    border-color: #e1e8ed;
 }
 
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="fromdate"],
+.filter-table div[id^="todate"] {
+    width: 100%;
 }
 
+/* ===== MASTER 30px BUTTON SYSTEM ===== */
 .btn-submit {
-    flex: 1;
     width: 100%;
     height: 30px !important;            
     padding: 0 12px !important;
@@ -125,60 +125,46 @@ select:disabled {
     line-height: 30px !important;
     white-space: nowrap;
     text-align: center;
-    margin-top: 8px;
     transition: all 0.2s ease;
+    box-shadow: none !important;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .btn-submit:hover {
     background: #1d4ed8 !important;
 }
 
-/* Layout Utilities */
+.btn-submit:disabled {
+    background: #9ca3af !important;
+    color: #f3f4f6 !important;
+    cursor: not-allowed;
+}
+
+/* ===== RIGHT CONTENT AREA (Horizontally Aligned Heading) ===== */
 .main-content-wrapper {
-    flex: 1;
-    width: 100%;
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
 .scrollable-grid-area {
     flex: 1;
-    width: 100%;
-    overflow: auto;
-}
-
-input[type="radio"], input[type="checkbox"] {
-    margin: 0 4px 0 0;
-    vertical-align: middle;
-}
-
-.radio-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-}
-
-.radio-group label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.sidebar-filters label.branch {
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-    background: transparent !important;
-}
-</style>
+    padding: 15px 20px;
+    overflow: auto; 
+    box-sizing: border-box;
+}</style>
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -365,18 +351,10 @@ function disiem(){
 
 <div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
+
 <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
-
     <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
 
             <div class="filter-card">
@@ -433,34 +411,20 @@ function disiem(){
                     </tr>
                 </table>
 
-                <button type="button" class="btn-submit" onclick="funcleardata();">
+                <button type="button" class="btn-submit" onclick="funcleardata();" style="margin-top: 15px;">
                     Clear
                 </button>
-            </div>
-
-            <div style="display:none;">
-                <input type="hidden" id="hidagmtno" name="hidagmtno">
-                <input type="hidden" id="hidclientcat" name="hidclientcat">
-                <input type="hidden" id="cldocno" name="cldocno">
-                <input type="hidden" id="groupdoc" name="groupdoc">
-                <input type="hidden" id="brandid" name="brandid">
-                <input type="hidden" id="modelid" name="modelid">
-                <input type="hidden" id="docnos" name="docnos">
-                <input type="hidden" id="excessinsur" name="excessinsur">
-                <input type="hidden" id="normalinsu" name="normalinsu">
-                <input type="hidden" id="cdwinsu" name="cdwinsu">
-                <input type="hidden" id="supercdwinsu" name="supercdwinsu">
-                <input type="hidden" id="gridlength" name="gridlength">
-                <input type="hidden" id="branchid" name="branchid">
             </div>
 
         </div>
     </div>
 
-</td>
-
-<td valign="top">
     <div class="main-content-wrapper">
+        
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
         <div class="scrollable-grid-area">
             <div id="detlist">
                 <jsp:include page="detailsGrid.jsp"></jsp:include>
@@ -472,11 +436,26 @@ function disiem(){
                 <jsp:include page="paymentgrid.jsp"></jsp:include>
             </div>
         </div>
-    </div>
-</td>
 
-</tr>
-</table>
+    </div>
+
+</div>
+
+<div style="display:none;">
+    <input type="hidden" id="hidagmtno" name="hidagmtno">
+    <input type="hidden" id="hidclientcat" name="hidclientcat">
+    <input type="hidden" id="cldocno" name="cldocno">
+    <input type="hidden" id="groupdoc" name="groupdoc">
+    <input type="hidden" id="brandid" name="brandid">
+    <input type="hidden" id="modelid" name="modelid">
+    <input type="hidden" id="docnos" name="docnos">
+    <input type="hidden" id="excessinsur" name="excessinsur">
+    <input type="hidden" id="normalinsu" name="normalinsu">
+    <input type="hidden" id="cdwinsu" name="cdwinsu">
+    <input type="hidden" id="supercdwinsu" name="supercdwinsu">
+    <input type="hidden" id="gridlength" name="gridlength">
+    <input type="hidden" id="branchid" name="branchid">
+</div>
 
 <div id="clientwindow"><div></div></div>
 <div id="fleetwindow"><div></div></div>
@@ -486,6 +465,6 @@ function disiem(){
 
 </div>
 </div>
-</div>
+
 </body>
 </html>

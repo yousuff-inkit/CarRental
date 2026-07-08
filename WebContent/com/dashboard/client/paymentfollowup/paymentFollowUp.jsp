@@ -10,45 +10,41 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
-<style type="text/css">
-/* ===== MASTER LAYOUT ===== */
+<style type="text/css">/* ===== MASTER LAYOUT ===== */
 html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 100%;
+    width: 330px; 
+    flex: 0 0 330px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; 
 }
 
+/* Cards Layout Rules */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -57,22 +53,25 @@ html, body, #mainBG, .hidden-scrollbar {
     margin-bottom: 12px;
 }
 
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 90px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
     height: 24px !important;             
     padding: 2px 8px !important;         
@@ -85,6 +84,7 @@ input[type="text"], select {
     outline: none;
 }
 
+/* Select specific styling */
 select {
     padding: 2px 24px 2px 8px !important; 
     font-family: inherit;
@@ -97,21 +97,24 @@ select {
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled {
+/* Readonly fields override */
+input[readonly],
+input:disabled,
+select:disabled {
     background-color: #f3f6f9 !important;
-    color: #555;
+    color: #7e8c9a;
     cursor: not-allowed;
 }
 
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="uptodate"],
+.filter-table div[id^="followupdate"],
+.filter-table div[id^="date"] {
+    width: 100%;
 }
 
+/* ===== MASTER 30px BUTTON SYSTEM ===== */
 .btn-submit, .myButton {
-    flex: 1;
     width: 100%;
     height: 30px !important;            
     padding: 0 12px !important;
@@ -125,39 +128,24 @@ input[readonly], input:disabled, select:disabled {
     line-height: 30px !important;
     white-space: nowrap;
     text-align: center;
-    margin-top: 8px;
     transition: all 0.2s ease;
+    box-shadow: none !important;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-top: 8px;
 }
 
 .btn-submit:hover, .myButton:hover {
     background: #1d4ed8 !important;
 }
 
-input[readonly],
-input:disabled,
-select:disabled {
-    background-color: #ffffff !important;
-    color: #555;
-    cursor: text !important;
-}
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
+.btn-submit:disabled, .myButton:disabled {
+    background: #9ca3af !important;
+    color: #f3f4f6 !important;
+    cursor: not-allowed;
 }
 
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-}
-
+/* Checkbox alignment */
 input[type="checkbox"] {
     margin: 0 4px 0 0;
     vertical-align: middle;
@@ -169,7 +157,31 @@ input[type="checkbox"] {
     color: #4e5e71;
     background: transparent !important;
 }
-</style>
+
+/* ===== RIGHT CONTENT AREA (Horizontally Aligned Heading) ===== */
+.main-content-wrapper {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    padding: 15px 20px;
+    overflow: auto; 
+    box-sizing: border-box;
+}</style>
 
 <script type="text/javascript" src="<%=contextPath%>/js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/js/resample.js"></script> 
@@ -625,148 +637,145 @@ function funSendSms(id) {
 <div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
+<div class="master-container">
 
-<td width="330px" valign="top">
-    <div class="master-container">
-        <div class="sidebar-filters">
+    <div class="sidebar-filters">
 
-            <div class="sidebar-fixed-top">
-                <jsp:include page="../../heading.jsp"></jsp:include>
+        <div class="sidebar-scroll-content">
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Up To</td>
+                        <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td>
+                            <input type="text" id="txtclientaccount" name="txtclientaccount" readonly placeholder="Press F3 to Search" value='<s:property value="txtclientaccount"/>' onkeydown="getClientAccount(event);"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell"></td>
+                        <td>
+                            <input type="text" id="txtclientname" name="txtclientname" readonly value='<s:property value="txtclientname"/>' style="margin-bottom:8px;"/>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <input type="checkbox" id="chckfollowup" name="chckfollowup" onchange="followupcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" />
+                                <label class="branch">FollowUp</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id="followupdate" name="followupdate" value='<s:property value="followupdate"/>'></div></td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="sidebar-scroll-content">
-                <div class="filter-card">
-                    <table class="filter-table">
-                        <tr>
-                            <td class="label-cell">Up To</td>
-                            <td><div id="uptodate" name="uptodate" value='<s:property value="uptodate"/>'></div></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Client</td>
-                            <td>
-                                <input type="text" id="txtclientaccount" name="txtclientaccount" readonly placeholder="Press F3 to Search" value='<s:property value="txtclientaccount"/>' onkeydown="getClientAccount(event);"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="text" id="txtclientname" name="txtclientname" readonly value='<s:property value="txtclientname"/>' style="margin-bottom:8px;"/>
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <input type="checkbox" id="chckfollowup" name="chckfollowup" onchange="followupcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)" />
-                                    <label class="branch">FollowUp</label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Date</td>
-                            <td><div id="followupdate" name="followupdate" value='<s:property value="followupdate"/>'></div></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="filter-card">
-                    <table class="filter-table">
-                        <tr>
-                            <td class="label-cell">Sales Person</td>
-                            <td><select id="cmbsalesperson" name="cmbsalesperson"></select></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Category</td>
-                            <td><select id="cmbcategory" name="cmbcategory"></select></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Amt Range</td>
-                            <td>
-                                <div style="display:flex; align-items:center; gap:5px;">
-                                    <input type="text" id="txtamtrangefrom" style="text-align: right;" onkeypress="return isNumber(event)" value='<s:property value="txtamtrangefrom"/>'/>
-                                    <span>-</span>
-                                    <input type="text" id="txtamtrangeto" style="text-align: right;" onkeypress="return isNumber(event)" value='<s:property value="txtamtrangeto"/>'/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Status</td>
-                            <td>
-                                <select id="cmbclientstatus" name="cmbclientstatus">
-                                    <option value="">--Select--</option>
-                                    <option value="1">On Hire</option>
-                                    <option value="2">Off Hire</option>
-                                    <option value="7">Over Due</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="filter-card">
-                    <table class="filter-table">
-                        <tr>
-                            <td class="label-cell">Process</td>
-                            <td><select name="cmbprocess" id="cmbprocess"></select></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Date</td>
-                            <td><div id="date" name="date" value='<s:property value="date"/>'></div></td>
-                        </tr>
-                        <tr>
-                            <td class="label-cell">Remarks</td>
-                            <td><input type="text" id="txtremarks" name="txtremarks" value='<s:property value="txtremarks"/>'/></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="filter-card">
-                    <button class="myButton" type="button" id="btnupdate" onclick="funUpdate(event);">
-                        Update
-                    </button>
-
-                    <button class="myButton" type="button" id="btnIndividual" onclick="funOutStandingStatement();">
-                        Outstanding Statement
-                    </button>
-
-                    <div id="rawisebtndiv">
-                        <button class="myButton" type="button" id="btnRAWiseBalance" onclick="funRAWiseBalance();">
-                            RA Wise Balance
-                        </button>
-                    </div>
-
-                    <div id="smsdiv">
-                        <button class="myButton" type="button" id="btnsms" onclick="funSendSms(1);">
-                            Send SMS
-                        </button>
-                    </div>
-
-                    <div id="paysmsdiv">
-                        <button class="myButton" type="button" id="btnpaysms" onclick="funSendSms(2);">
-                            Payment Reminder SMS
-                        </button>
-                    </div>
-                </div>
-
-                <div style="display:none;">
-                    <input type="hidden" id="txtclientaccountdocno" value='<s:property value="txtclientaccountdocno"/>'/>
-                    <input type="hidden" id="txtclientaccountemail" value='<s:property value="txtclientaccountemail"/>'/>
-                    <input type="hidden" id="hidchckfollowup" value='<s:property value="hidchckfollowup"/>'/>
-                    <input type="hidden" id="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>'/>
-                    <input type="hidden" id="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/>
-                    <input type="hidden" id="txtacountno" value='<s:property value="txtacountno"/>'/>      
-                    <input type="hidden" id="txtdocno" value='<s:property value="txtdocno"/>'/>
-                    <input type="hidden" id="txtbranch" value='<s:property value="txtbranch"/>'/>
-                    <input type="hidden" id="txtmobno" value='<s:property value="txtmobno"/>'/>
-                    <input type="hidden" id="txtcldocno" value='<s:property value="txtcldocno"/>'/> 
-                    <input type="hidden" id="txtcalculation" value='<s:property value="txtcalculation"/>'/>
-                    <input type="hidden" id="hidmulticurrency" value='0'/>
-                    <input type="hidden" id="hidconfig" />
-                </div>
-
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Sales Person</td>
+                        <td><select id="cmbsalesperson" name="cmbsalesperson"></select></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Category</td>
+                        <td><select id="cmbcategory" name="cmbcategory"></select></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Amt Range</td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <input type="text" id="txtamtrangefrom" style="text-align: right;" onkeypress="return isNumber(event)" value='<s:property value="txtamtrangefrom"/>'/>
+                                <span>-</span>
+                                <input type="text" id="txtamtrangeto" style="text-align: right;" onkeypress="return isNumber(event)" value='<s:property value="txtamtrangeto"/>'/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Status</td>
+                        <td>
+                            <select id="cmbclientstatus" name="cmbclientstatus">
+                                <option value="">--Select--</option>
+                                <option value="1">On Hire</option>
+                                <option value="2">Off Hire</option>
+                                <option value="7">Over Due</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Process</td>
+                        <td><select name="cmbprocess" id="cmbprocess"></select></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id="date" name="date" value='<s:property value="date"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Remarks</td>
+                        <td><input type="text" id="txtremarks" name="txtremarks" value='<s:property value="txtremarks"/>'/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <button class="myButton" type="button" id="btnupdate" onclick="funUpdate(event);">
+                    Update
+                </button>
+
+                <button class="myButton" type="button" id="btnIndividual" onclick="funOutStandingStatement();">
+                    Outstanding Statement
+                </button>
+
+                <div id="rawisebtndiv">
+                    <button class="myButton" type="button" id="btnRAWiseBalance" onclick="funRAWiseBalance();">
+                        RA Wise Balance
+                    </button>
+                </div>
+
+                <div id="smsdiv">
+                    <button class="myButton" type="button" id="btnsms" onclick="funSendSms(1);">
+                        Send SMS
+                    </button>
+                </div>
+
+                <div id="paysmsdiv">
+                    <button class="myButton" type="button" id="btnpaysms" onclick="funSendSms(2);">
+                        Payment Reminder SMS
+                    </button>
+                </div>
+            </div>
+
+            <div style="display:none;">
+                <input type="hidden" id="txtclientaccountdocno" value='<s:property value="txtclientaccountdocno"/>'/>
+                <input type="hidden" id="txtclientaccountemail" value='<s:property value="txtclientaccountemail"/>'/>
+                <input type="hidden" id="hidchckfollowup" value='<s:property value="hidchckfollowup"/>'/>
+                <input type="hidden" id="hidcmbsalesperson" value='<s:property value="hidcmbsalesperson"/>'/>
+                <input type="hidden" id="hidcmbcategory" value='<s:property value="hidcmbcategory"/>'/>
+                <input type="hidden" id="txtacountno" value='<s:property value="txtacountno"/>'/>      
+                <input type="hidden" id="txtdocno" value='<s:property value="txtdocno"/>'/>
+                <input type="hidden" id="txtbranch" value='<s:property value="txtbranch"/>'/>
+                <input type="hidden" id="txtmobno" value='<s:property value="txtmobno"/>'/>
+                <input type="hidden" id="txtcldocno" value='<s:property value="txtcldocno"/>'/> 
+                <input type="hidden" id="txtcalculation" value='<s:property value="txtcalculation"/>'/>
+                <input type="hidden" id="hidmulticurrency" value='0'/>
+                <input type="hidden" id="hidconfig" />
+            </div>
+
         </div>
     </div>
-</td>
 
-<td valign="top">
     <div class="main-content-wrapper">
+        
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+
         <div class="scrollable-grid-area">
             <div id="paymentFollowUpDiv">
                 <jsp:include page="paymentFollowUpGrid.jsp"></jsp:include>
@@ -779,15 +788,13 @@ function funSendSms(id) {
             </div>
         </div>
     </div>
-</td>
 
-</tr>
-</table>
-
-</div>
 </div>
 
 <div id="accountDetailsWindow"><div></div></div>
+
+</div>
+</div>
 
 </body>
 </html>
