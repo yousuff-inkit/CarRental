@@ -540,16 +540,65 @@ select {
     width: 100%;
     overflow: auto;
 }
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;      /* was: 100vh */
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+input[type="text"], select {
+    width: 100%;       /* was: 80% */
+    height: 24px !important;
+    padding: 2px 8px !important;
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;       /* was: 100vh */
+    box-sizing: border-box;
+    padding: 0;         /* was: 15px 20px */
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
 </style>
 <body onload="getBranch();getinfo();disitems();setValues();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 <div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
 
+    <div class="sidebar-filters">
         <div class="sidebar-scroll-content">
             <div class="filter-card">
                 <table class="filter-table">
@@ -583,25 +632,11 @@ select {
                 </table>
             </div>
 
-           <div class="filter-card">
+            <div class="filter-card">
+                <input type="button" name="driverUpdate" id="driverUpdate" class="myButton" value="UPDATE" onclick="funupdate()" style="width:100%; margin-bottom:6px;">
+                <input type="button" name="driversms" id="driversms" class="myButton" value="SEND SMS" onclick="funduedatesms()" style="width:100%;">
+            </div>
 
-    <input type="button"
-           name="driverUpdate"
-           id="driverUpdate"
-           class="myButton"
-           value="UPDATE"
-           onclick="funupdate()"
-           style="width:100%; margin-bottom:6px;">
-
-    <input type="button"
-           name="driversms"
-           id="driversms"
-           class="myButton"
-           value="SEND SMS"
-           onclick="funduedatesms()"
-           style="width:100%;">
-
-</div>
             <div style="display:none;">
                 <input type="hidden" name="branchids" id="branchids" value='<s:property value="branchids"/>' >
                 <input type="hidden" id="msg" name="msg" value='<s:property value="msg"/>'/>
@@ -613,6 +648,9 @@ select {
     </div>
 
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <div id="duedatediv">
                 <jsp:include page="duedateGrid.jsp"></jsp:include>
@@ -622,6 +660,7 @@ select {
             </div>
         </div>
     </div>
+
 </div>
 </div>
 </div>

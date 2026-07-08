@@ -89,7 +89,13 @@ else
 </script>
 </head>
 <style type="text/css">
- 
+
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .master-container {
     display: flex;
     width: 100%;
@@ -105,13 +111,8 @@ else
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
 }
 
 .sidebar-scroll-content {
@@ -136,7 +137,7 @@ else
 .label-cell {
     text-align: right;
     padding-right: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
@@ -144,60 +145,68 @@ else
 
 input[type="text"], select {
     width: 100%;
-    padding: 7px 10px;
+    height: 24px;
+    padding: 2px 8px;
     border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
 }
 
 .btn-submit {
     width: 100%;
-    padding: 11px;
+    height: 30px;
+    padding: 0 12px;
     margin-top: 10px;
     background: #2563eb;
     color: #fff;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    line-height: 30px;
 }
 
 .btn-submit:hover {
     background: #1d4ed8;
 }
 
-html, body, #mainBG, .hidden-scrollbar {
+.main-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
 }
+
+.grid-content-container {
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
 </style>
 <body onload="getBranch();">
 
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-
-<table width="100%">
-<tr>
-
-<td width="20%" valign="top">
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 
     <div class="master-container">
+
         <div class="sidebar-filters">
-
-            <div class="sidebar-fixed-top">
-                <div class="filter-card">
-                    <jsp:include page="../../heading.jsp"></jsp:include>
-                </div>
-            </div>
-
             <div class="sidebar-scroll-content">
 
                 <div class="filter-card">
@@ -229,26 +238,22 @@ td[width="80%"] {
 
             </div>
         </div>
-    </div>
 
-</td>
+        <div class="main-content-area">
 
-<td width="80%" valign="top">
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
 
-    <table width="100%">
-        <tr>
-            <td>
+            <div class="grid-content-container">
                 <div id="booklistdiv">
                     <jsp:include page="bookinglistGrid.jsp"></jsp:include>
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
 
-</td>
+        </div>
 
-</tr>
-</table>
+    </div>
 
 </div>
 </div>

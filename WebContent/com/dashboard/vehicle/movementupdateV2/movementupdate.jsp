@@ -245,15 +245,11 @@ fieldset {
 </head>
 
 <body onload="hiddenbrh();disitems();">
-<div id="mainBG" class="homeContent"> 
-<div class='hidden-scrollbar'>
+<div id="mainBG" class="homeContent">
+<div class="hidden-scrollbar">
 <div class="master-container">
 
     <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
             <div class="filter-card">
                 <table class="filter-table">
@@ -321,6 +317,9 @@ fieldset {
     </div>
 
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <div id="vehdiv">
                 <jsp:include page="movementupdateGrid.jsp"></jsp:include>

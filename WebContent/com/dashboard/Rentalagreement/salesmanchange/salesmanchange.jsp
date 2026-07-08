@@ -121,10 +121,7 @@ select {
     background: #1d4ed8 !important;
 }
 
-.btn-submit:disabled, .myButton:disabled {
-    background: #9ca3af !important;
-    cursor: not-allowed;
-}
+
 
 /* Layout Utilities */
 .main-content-wrapper {
@@ -167,6 +164,44 @@ fieldset {
     font-weight: 600;
     color: #4e5e71;
     background: transparent !important;
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;      /* was: 100vh */
+    box-sizing: border-box;
+    padding: 0;        /* was: 15px 20px */
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;      
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
 </style>
   
@@ -460,17 +495,7 @@ x.send();
 <div class="hidden-scrollbar">
 <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
-
     <div class="sidebar-filters">
-
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
 
             <div class="filter-card">
@@ -537,9 +562,7 @@ x.send();
                     </tr>
                 </table>
 
-                <button type="button"
-                        class="btn-submit"
-                        onclick="funcleardata();">
+                <button type="button" class="btn-submit" onclick="funcleardata();">
                     Clear
                 </button>
             </div>
@@ -559,9 +582,7 @@ x.send();
                         </tr>
                     </table>
 
-                    <button type="button"
-                            class="btn-submit"
-                            onclick="funupdate();">
+                    <button type="button" class="btn-submit" onclick="funupdate();">
                         Update
                     </button>
                 </fieldset>
@@ -578,27 +599,24 @@ x.send();
         </div>
     </div>
 
-</td>
-
-<td valign="top">
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <div id="detlist">
                 <jsp:include page="detailedGrid.jsp"></jsp:include>
             </div>
         </div>
     </div>
-</td>
 
-</tr>
-</table>
+</div>
 
 <div id="catwindow"><div></div></div>
 <div id="clientwindow"><div></div></div>
 <div id="fleetwindow"><div></div></div>
 <div id="salesmanwindow"><div></div></div>
 
-</div>
 </div>
 </div>
 </body>

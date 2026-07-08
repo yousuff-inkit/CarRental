@@ -15,64 +15,63 @@ html, body, #mainBG, .hidden-scrollbar {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
-    background-color: #f4f7f9;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-/* Sidebar */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 330px; 
+    flex: 0 0 330px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; 
 }
 
+/* Cards Layout Rules */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 12px;
+    padding: 15px;
     margin-bottom: 12px;
 }
 
+/* Internal Presentation Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; /* Uniform 12px label */
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
+    font-weight: 600;
     width: 90px;
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
     height: 24px !important;             
     padding: 2px 8px !important;         
@@ -85,19 +84,37 @@ input[type="text"], select {
     outline: none;
 }
 
-
-
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+/* Select specific styling */
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
 }
 
-.btn-submit, .myButton {
-    flex: 1;
+/* Readonly fields override */
+input[readonly],
+input:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    border-color: #e1e8ed;
+}
+
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="fromdate"],
+.filter-table div[id^="todate"] {
     width: 100%;
-    height: 30px !important;            /* Scaled button height */
+}
+
+/* ===== MASTER 30px BUTTON SYSTEM ===== */
+.btn-submit {
+    width: 100%;
+    height: 30px !important;            
     padding: 0 12px !important;
     background: #2563eb !important;
     color: #fff !important;
@@ -109,33 +126,58 @@ input[type="text"], select {
     line-height: 30px !important;
     white-space: nowrap;
     text-align: center;
-    margin-top: 8px;
     transition: all 0.2s ease;
+    box-shadow: none !important;
+    display: inline-block;
+    box-sizing: border-box;
 }
 
-.btn-submit:hover, .myButton:hover {
+.btn-submit:hover {
     background: #1d4ed8 !important;
 }
 
-/* Layout Utilities */
-.main-content-wrapper {
+.btn-submit:disabled {
+    background: #9ca3af !important;
+    color: #f3f4f6 !important;
+    cursor: not-allowed;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.button-group .btn-submit {
     flex: 1;
-    width: 100%;
+}
+
+/* ===== RIGHT CONTENT AREA ===== */
+.main-content-wrapper {
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
 .scrollable-grid-area {
     flex: 1;
-    width: 100%;
-    overflow: auto;
+    padding: 15px 20px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 
-/* Strips inherited green background */
+/* Strips inherited label backgrounds */
 .sidebar-filters label.branch, 
 .sidebar-filters .filter-card label,
 .sidebar-filters .branch {
@@ -148,7 +190,7 @@ input[type="text"], select {
 
 <script type="text/javascript">
 $(document).ready(function () {
-     // UPDATED: Standardized height to 24px and width to 100%
+     // Configured height to 24px and width to 100% per UI spec
      $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
      $("#todate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
      
@@ -265,18 +307,10 @@ function funExportBtn(){
 
 <div id="mainBG" class="homeContent" data-type="background">
 <div class="hidden-scrollbar">
+
 <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
-
     <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
             <div class="filter-card">
                 <table class="filter-table">
@@ -331,35 +365,31 @@ function funExportBtn(){
             </div>
 
             <div class="button-group">
-                <button type="button"
-                        class="btn-submit"
-                        onclick="funClearData();">
-                    Clear
-                </button>
+                <button type="button" class="btn-submit" onclick="funClearData();">Clear</button>
             </div>
         </div>
     </div>
-</td>
 
-<td valign="top">
     <div class="main-content-wrapper">
+        
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+        
         <div class="scrollable-grid-area">
             <div id="masterDiv">
                 <jsp:include page="detailsGrid.jsp"></jsp:include>
             </div>
         </div>
+        
     </div>
-</td>
 
-</tr>
-</table>
-
-</div>
 </div>
 
 <div id="clientDetailsWindow"><div></div><div></div></div>
 <div id="agreementDetailsWindow"><div></div><div></div></div>
 
+</div>
 </div>
 </body>
 </html>
