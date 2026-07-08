@@ -89,5 +89,16 @@
 <action name="getLocationList" class="com.api.MobileApiAction" method="getLocationList">
     <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
 </action>
+
+<action name="debugFleet" class="com.api.MobileApiAction" method="debugFleet">
+    <result type="json">
+        <param name="includeProperties">status, dropdownData.*</param>
+    </result>
+</action>
+<action name="fixFleetData" class="com.api.MobileApiAction" method="fixFleetData">
+    <result type="json">
+        <param name="includeProperties">status</param>
+    </result>
+</action>
     </package>
 </struts>
