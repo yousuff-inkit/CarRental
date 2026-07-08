@@ -24,7 +24,241 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
+<style type="text/css">
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    box-sizing: border-box;
+}
+/* Force layout tables to white */
+.master-layout-table, .master-layout-table > tbody > tr, .master-layout-table > tbody > tr > td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+/* Forcefully kill all hover states on tables applied by external CSS */
+table tr:hover, table td:hover, table th:hover, tbody tr:hover {
+    background-color: transparent !important;
+    background: transparent !important;
+}
 
+/* ===== MASTER LAYOUT ===== */
+.sidebar-filters {
+    width: 330px;
+    background: #ffffff !important;
+    height: 100%; 
+    box-sizing: border-box;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+/* Inline Flow CSS - Buttons naturally follow the inputs */
+.sidebar-scroll-content {
+    height: 100%;
+    overflow-y: auto;
+    padding: 15px 20px !important;
+    box-sizing: border-box;
+}
+
+.sidebar-fixed-bottom {
+    margin-top: 15px;
+    padding: 0;
+    background: transparent;
+}
+
+/* Cards */
+.filter-card {
+    background: #f8fafc !important;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    padding: 15px; 
+    margin-bottom: 12px;
+}
+/* Tables within the card */
+.filter-table {
+    width: 100%;
+    border-spacing: 0 10px; 
+    background: transparent !important;
+}
+.filter-table tr, .filter-table td {
+    background: transparent !important;
+    border: none !important;
+}
+.filter-table .label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 12px;
+    color: #4e5e71;
+    font-weight: 600;
+    width: 90px;
+    white-space: nowrap; 
+}
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, .filter-table input[type="text"], .filter-table select {
+    width: 100%;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff !important;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+}
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+}
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: pointer;
+}
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.btn-submit, .myButton, .myButtons {
+    flex: 1;
+    height: 30px !important;            
+    padding: 0 12px !important;         
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;      
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;       
+    text-align: center;
+    transition: background 0.2s;
+    width: 100%;
+    margin-top: 0;
+}
+.btn-submit:hover, .myButton:hover, .myButtons:hover { background: #1d4ed8 !important; }
+.btn-submit:disabled, .myButton:disabled, .myButtons:disabled { background: #9ca3af !important; cursor: not-allowed; }
+
+<style type="text/css">
+
+/* ===========================================
+   COLLECTION ANALYSIS PAGE - EXTRA CSS
+   (Add below Master CSS)
+=========================================== */
+
+/* Section Heading */
+
+.section-title{
+    text-align:center;
+    font-size:12px;
+    font-weight:600;
+    color:#4e5e71;
+    margin-bottom:10px;
+}
+
+/* Search Buttons */
+
+.myButtons1{
+    width:28px;
+    height:28px;
+    border:none !important;
+    border-radius:4px;
+    background:#2563eb !important;
+    color:#ffffff !important;
+    font-size:18px;
+    font-weight:bold;
+    line-height:28px;
+    text-align:center;
+    cursor:pointer;
+    padding:0;
+    display:inline-block;
+}
+
+.myButtons1:hover{
+    background:#1d4ed8 !important;
+}
+
+/* Search Details */
+
+#searchdetails{
+    width:100%;
+    height:120px;
+    resize:none;
+    border:1px solid #ccd6e0 !important;
+    border-radius:4px;
+    background:#ffffff !important;
+    padding:8px;
+    font-size:12px;
+    color:#333;
+    font-family:inherit;
+    box-sizing:border-box;
+}
+
+/* Totals Area */
+
+.totals-bar{
+    margin-top:10px;
+    padding:10px 15px;
+    background:#f8fafc;
+    border:1px solid #e3e8ee;
+    border-radius:8px;
+    flex-shrink:0;
+}
+
+.totals-bar table{
+    width:100%;
+}
+
+.totals-bar input[type="text"]{
+    width:100%;
+    height:24px !important;
+    text-align:right;
+    font-weight:bold;
+    color:#000;
+}
+
+/* Grid */
+
+#collectionDiv,
+#analysisDiv{
+    height:100%;
+    background:#ffffff;
+}
+
+/* Hidden Grid */
+
+#analysisDiv[hidden]{
+    display:none !important;
+}
+
+/* Search Buttons Alignment */
+
+.search-button-row{
+    text-align:center;
+    padding-top:6px;
+}
+
+/* Hidden Inputs */
+
+input[type="hidden"]{
+    display:none;
+}
+
+</style>
+</style>
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -442,147 +676,314 @@
 </script>
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From</td>
-                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To</td>
-                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-                    </tr>
-                </table>
-            </div>
+<div id="mainBG" class="homeContent" data-type="background"
+     style="height:100%;overflow:hidden;box-sizing:border-box;">
 
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Grouping</td>
-                        <td>
-                            <select name="cmbgroup" id="cmbgroup">
-                                <option value="">--Select--</option>
-                                <option value="clientcat">Client Category</option>
-                                <option value="client">Client</option>
-                                <option value="salesman">Salesman</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Distribution</td>
-                        <td>
-                            <select name="cmbdistribution" id="cmbdistribution">
-                                <option value="">--Select--</option>
-                                <option value="1">Branchwise</option>
-                                <option value="2">Monthwise</option>
-                                <option value="3">Quarterwise</option>
-                                <option value="4">Yearwise</option>
-                                <option value="5">Client Category</option>
-                                <option value="6">Salesman</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+<div class="hidden-scrollbar" style="height:100%;box-sizing:border-box;">
 
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Search by</td>
-                        <td>
-                            <select name="searchby" id="searchby">
-                                <option value="">--Select--</option>
-                                <option value="client">Client</option>
-                                <option value="clientcat">Client Category</option>
-                                <option value="salesman">Salesman</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" align="center" style="padding-top: 6px;">
-    <button type="button" id="additem" class="myButtons1" onclick="setSearch();">+</button>
-    <button type="button" id="btnremoveitem" class="myButtons1" onclick="setRemove();" style="margin-left:6px;">-</button>
+<table class="master-layout-table"
+       width="100%"
+       height="100%"
+       cellpadding="0"
+       cellspacing="0"
+       border="0"
+       style="background:#fff !important;table-layout:fixed;height:100%;">
+
+<tr style="height:100%;">
+
+<!-- ================= LEFT FILTER PANEL ================= -->
+
+<td width="330px"
+    valign="top"
+    style="vertical-align:top;padding:0 !important;margin:0 !important;background:#fff !important;border-right:1px solid #e1e8ed;">
+
+<div class="sidebar-filters">
+
+<div class="sidebar-scroll-content">
+
+<!-- Date -->
+
+<div class="filter-card">
+
+<table class="filter-table">
+
+<tr>
+<td class="label-cell">From</td>
+<td>
+<div id="fromdate"
+     name="fromdate"
+     value='<s:property value="fromdate"/>'></div>
 </td>
-                    </tr>
-                    <tr>
-<td colspan="2" style="padding-top: 10px;">
-    <textarea id="searchdetails"
-              name="searchdetails"
-              readonly="readonly"
-              style="height:120px; width:100%; box-sizing:border-box;">
-        <s:property value="searchdetails"></s:property>
-    </textarea>
+</tr>
+
+<tr>
+<td class="label-cell">To</td>
+<td>
+<div id="todate"
+     name="todate"
+     value='<s:property value="todate"/>'></div>
 </td>
-                    </tr>
-                </table>
-            </div>
+</tr>
 
-            <div style="padding: 0 5px;">
-                <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">
-            </div>
+</table>
 
-            <input type="hidden" name="clientcat" id="clientcat"><input type="hidden" name="hidclientcat" id="hidclientcat">
-            <input type="hidden" name="client" id="client"><input type="hidden" name="hidclient" id="hidclient">
-            <input type="hidden" name="group" id="group"><input type="hidden" name="hidgroup" id="hidgroup">
-            <input type="hidden" name="model" id="model"><input type="hidden" name="hidmodel" id="hidmodel">
-            <input type="hidden" name="salesman" id="salesman"><input type="hidden" name="hidsalesman" id="hidsalesman">
-            <input type="hidden" name="yom" id="yom"><input type="hidden" name="hidyom" id="hidyom">
-            <input type="hidden" name="brand" id="brand"><input type="hidden" name="hidbrand" id="hidbrand">
-        </div>
-    </div>
-
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="collectionDiv"><jsp:include page="collectionGrid.jsp"></jsp:include></div>
-            <div id="analysisDiv" hidden="true"><jsp:include page="collectionAnalysisGrid.jsp"></jsp:include></div>
-        </div>
-
-        <div class="totals-bar">
-            <table width="100%">
-                <tr>
-                    <td align="right" style="font-size: 13px; font-weight: bold; color: black;">Net Amount :&nbsp;</td>
-                    <td width="150px">
-                        <input type="text" id="txtnetamount" name="txtnetamount" readonly 
-                               style="text-align: right; font-weight: bold; color: black; border: 1px solid #ccd6e0; border-radius: 4px; height: 30px;" 
-                               value='<s:property value="txtnetamount"/>'/>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
 </div>
+
+<!-- Group -->
+
+<div class="filter-card">
+
+<table class="filter-table">
+
+<tr>
+<td class="label-cell">Grouping</td>
+
+<td>
+
+<select name="cmbgroup" id="cmbgroup">
+
+<option value="">--Select--</option>
+<option value="clientcat">Client Category</option>
+<option value="client">Client</option>
+<option value="salesman">Salesman</option>
+
+</select>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td class="label-cell">Distribution</td>
+
+<td>
+
+<select name="cmbdistribution" id="cmbdistribution">
+
+<option value="">--Select--</option>
+<option value="1">Branchwise</option>
+<option value="2">Monthwise</option>
+<option value="3">Quarterwise</option>
+<option value="4">Yearwise</option>
+<option value="5">Client Category</option>
+<option value="6">Salesman</option>
+
+</select>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<!-- Search -->
+
+<div class="filter-card">
+
+<table class="filter-table">
+
+<tr>
+
+<td class="label-cell">Search By</td>
+
+<td>
+
+<select name="searchby" id="searchby">
+
+<option value="">--Select--</option>
+<option value="client">Client</option>
+<option value="clientcat">Client Category</option>
+<option value="salesman">Salesman</option>
+
+</select>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td colspan="2" class="search-button-row">
+
+<button type="button"
+        id="additem"
+        class="myButtons1"
+        onclick="setSearch();">+</button>
+
+&nbsp;&nbsp;
+
+<button type="button"
+        id="btnremoveitem"
+        class="myButtons1"
+        onclick="setRemove();">-</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td colspan="2">
+
+<textarea id="searchdetails"
+          name="searchdetails"
+          readonly="readonly"><s:property value="searchdetails"></s:property></textarea>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="sidebar-fixed-bottom">
+
+<div class="button-group">
+
+<input type="button"
+       name="btnclear"
+       id="btnclear"
+       value="Clear"
+       class="myButtons"
+       onclick="funClearData();">
+
+</div>
+
+</div>
+
+<input type="hidden" name="clientcat" id="clientcat">
+<input type="hidden" name="hidclientcat" id="hidclientcat">
+
+<input type="hidden" name="client" id="client">
+<input type="hidden" name="hidclient" id="hidclient">
+
+<input type="hidden" name="group" id="group">
+<input type="hidden" name="hidgroup" id="hidgroup">
+
+<input type="hidden" name="model" id="model">
+<input type="hidden" name="hidmodel" id="hidmodel">
+
+<input type="hidden" name="salesman" id="salesman">
+<input type="hidden" name="hidsalesman" id="hidsalesman">
+
+<input type="hidden" name="yom" id="yom">
+<input type="hidden" name="hidyom" id="hidyom">
+
+<input type="hidden" name="brand" id="brand">
+<input type="hidden" name="hidbrand" id="hidbrand">
+
+</div>
+
+</div>
+
+</td>
+
+<!-- ================= RIGHT PANEL ================= -->
+
+<td valign="top"
+    style="padding:15px;background:#ffffff !important;height:100%;">
+
+<div style="display:flex;flex-direction:column;height:100%;box-sizing:border-box;">
+
+<div style="width:100%;margin-bottom:10px;flex-shrink:0;">
+
+<jsp:include page="../../heading.jsp"></jsp:include>
+
+</div>
+
+<div style="flex:1;overflow:auto;min-height:0;background:#fff;">
+
+<div id="collectionDiv">
+<jsp:include page="collectionGrid.jsp"></jsp:include>
+</div>
+
+<div id="analysisDiv" hidden="true">
+<jsp:include page="collectionAnalysisGrid.jsp"></jsp:include>
+</div>
+
+<div class="totals-bar">
+
+<table width="100%">
+
+<tr>
+
+<td align="right"
+    style="font-size:13px;font-weight:bold;color:#000;">
+
+Net Amount :
+
+</td>
+
+<td width="150">
+
+<input type="text"
+       id="txtnetamount"
+       name="txtnetamount"
+       readonly
+       value='<s:property value="txtnetamount"/>'
+       style="text-align:right;font-weight:bold;">
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
 </div>
 
 <div id="clientSearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <div id="clientCategorySearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <div id="salesmanSearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <div id="brandSearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <div id="modelSearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <div id="groupSearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <div id="yomSearchWindow">
-	<div></div><div></div>
+    <div></div>
+    <div></div>
 </div>
-</div>
+
 </body>
 </html>
