@@ -350,13 +350,7 @@ input[readonly], input:disabled, select:disabled {
     background: #1d4ed8 !important;
 }
 
-input[readonly],
-input:disabled,
-select:disabled {
-    background-color: #ffffff !important;
-    color: #555;
-    cursor: text !important;
-}
+
 
 /* Layout Utilities */
 .main-content-wrapper {
@@ -411,24 +405,56 @@ fieldset {
     padding: 10px;
     margin: 0;
 }
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;   /* was: width: 100% */
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;        /* was: 100vh */
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;         /* was: 100vh */
+    box-sizing: border-box;
+    padding: 0;            /* was: 15px 20px */
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
 </style>
 <body onload="getBranch();hiddenbrh()">
-<div id="mainBG" class="homeContent" data-type="background"> 
+<div id="mainBG" class="homeContent" data-type="background">
 <div class="hidden-scrollbar">
 <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
     <div class="sidebar-filters">
-        
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
-            
+
             <div class="filter-card">
                 <table class="filter-table">
                     <tr>
@@ -442,9 +468,9 @@ fieldset {
                     <tr>
                         <td class="label-cell">Client</td>
                         <td>
-                            <input type="text" name="clientname" id="clientname" 
-                                   placeholder="Press F3 To Search" readonly="readonly" 
-                                   onKeyDown="getclinfo(event);" 
+                            <input type="text" name="clientname" id="clientname"
+                                   placeholder="Press F3 To Search" readonly="readonly"
+                                   onKeyDown="getclinfo(event);"
                                    value='<s:property value="clientname"/>'>
                         </td>
                     </tr>
@@ -461,7 +487,6 @@ fieldset {
                 <button type="button" class="btn-submit" name="clear" id="clear" onclick="funcleardata();" style="margin-bottom: 8px;">
                     Clear
                 </button>
-
                 <button type="button" class="btn-submit" name="btnPrint" id="btnPrint" onclick="funPrint();">
                     Print
                 </button>
@@ -473,10 +498,11 @@ fieldset {
 
         </div>
     </div>
-</td>
 
-<td valign="top">
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <label name="user" id="user" style="font-weight: bold; margin-bottom: 10px; display: block; color: #4e5e71;"></label>
             <div id="fleetdiv">
@@ -484,17 +510,11 @@ fieldset {
             </div>
         </div>
     </div>
-</td>
-
-</tr>
-</table>
 
 </div>
 </div>
 
-<div id="clientwindow">
-    <div></div><div></div>
-</div>
+<div id="clientwindow"><div></div></div>
 
 </div>
 </body>
