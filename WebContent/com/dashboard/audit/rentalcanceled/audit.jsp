@@ -92,222 +92,283 @@ $(document).ready(function () {
 	
 </script>
 <style type="text/css">
-  
-.master-container {
-    display: flex;
-    width: 100%;
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #f4f7f9;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    box-sizing: border-box;
+}
+/* Force layout tables to white */
+.master-layout-table, .master-layout-table > tbody > tr, .master-layout-table > tbody > tr > td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+/* Forcefully kill all hover states on tables applied by external CSS */
+table tr:hover, table td:hover, table th:hover, tbody tr:hover {
+    background-color: transparent !important;
+    background: transparent !important;
 }
 
+/* ===== MASTER LAYOUT ===== */
 .sidebar-filters {
     width: 330px;
-    flex: 0 0 330px;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    background: #ffffff !important;
+    height: 100%; 
+    box-sizing: border-box;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
+/* Inline Flow CSS - Buttons naturally follow the inputs */
 .sidebar-scroll-content {
-    flex: 1;
+    height: 100%;
     overflow-y: auto;
-    padding: 15px 20px 25px;
+    padding: 15px 20px !important;
+    box-sizing: border-box;
 }
 
+.sidebar-fixed-bottom {
+    margin-top: 15px;
+    padding: 0;
+    background: transparent;
+}
+
+/* Cards */
 .filter-card {
-    background: #f8fafc;
+    background: #f8fafc !important;
     border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 15px;
+    border-radius: 8px;
+    padding: 15px; 
     margin-bottom: 12px;
 }
-
+/* Tables within the card */
 .filter-table {
     width: 100%;
-    border-spacing: 0 10px;
+    border-spacing: 0 10px; 
+    background: transparent !important;
 }
-
-.label-cell {
-    text-align: right;
-    padding-right: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #4e5e71;
-    width: 90px;
-}
-
-input[type="text"], select {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
-}
-
-.btn-submit {
-    width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.btn-submit:hover {
-    background: #1d4ed8;
-}
-
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
-}
-.myButtons, .myButton {
-    background-color: #2563eb !important;
-    color: #ffffff !important;
+.filter-table tr, .filter-table td {
+    background: transparent !important;
     border: none !important;
-    border-radius: 6px;
-    padding: 10px 15px;
+}
+.filter-table .label-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-size: 12px;
+    color: #4e5e71;
     font-weight: 600;
+    width: 90px;
+    white-space: nowrap; 
+}
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, .filter-table input[type="text"], .filter-table select {
+    width: 100%;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff !important;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
+}
+select {
+    padding: 2px 24px 2px 8px !important; 
+    font-family: inherit;
     cursor: pointer;
-    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
 }
-
-.myButtons:hover, .myButton:hover {
-    background-color: #1d4ed8 !important;
+input[readonly], input:disabled, select:disabled {
+    background-color: #f3f6f9 !important;
+    color: #555;
+    cursor: pointer;
 }
-.main-content-wrapper{
-    flex:1;
-    width:100%;
+/* ===== BUTTONS ===== */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
-
-.scrollable-grid-area{
-    width:100%;
-}
-
-#delupdiv{
-    width:100%;
-}
-
-/* 🔹 Inputs + Dropdowns */
-input[type="text"],
-select {
-    width: 100%;
-    height: 24px !important;
-    padding: 0 8px !important;
-    border: 1px solid #ccd6e0;
-    border-radius: 4px;
-    font-size: 13px;
-    box-sizing: border-box;
-    line-height: 24px;
-}
-
-/* 🔹 Dropdown text */
-select {
+.btn-submit, .myButton, .myButtons {
+    flex: 1;
+    height: 30px !important;            
+    padding: 0 12px !important;         
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px !important;      
     font-size: 13px !important;
-}
-
-/* 🔹 Buttons */
-.btn-submit,
-.myButtons,
-.myButton,
-input[type="button"],
-button {
+    font-weight: 600 !important;
+    cursor: pointer;
+    line-height: 30px !important;       
+    text-align: center;
+    transition: background 0.2s;
     width: 100%;
-    height: 24px !important;
-    padding: 0 10px !important;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    box-sizing: border-box;
-    line-height: 24px;
+    margin-top: 0;
+}
+.btn-submit:hover, .myButton:hover, .myButtons:hover { background: #1d4ed8 !important; }
+.btn-submit:disabled, .myButton:disabled, .myButtons:disabled { background: #9ca3af !important; cursor: not-allowed; }
+</style>
+<style type="text/css">
+
+/* ===== Readonly Agreement Field ===== */
+
+#txtvocno{
+    background:#f3f6f9 !important;
 }
 
-/* 🔹 Fix for any library overriding (like jqx / external CSS) */
-.jqx-widget input,
-.jqx-widget select {
-    height: 24px !important;
-    line-height: 24px !important;
+/* ===== Action Buttons ===== */
+
+.button-group{
+    display:flex;
+    gap:8px;
 }
+
+.button-group .myButton{
+    flex:1;
+    width:auto !important;
+    margin:0 !important;
+}
+
+/* ===== Grid ===== */
+
+#auditDiv{
+    height:100%;
+    background:#ffffff;
+}
+
 </style>
+
 </head>
 <body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<div class="master-container">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Agreement</td>
-                        <td>
-                            <input type="text" id="txtvocno" name="txtvocno" readonly="readonly" value='<s:property value="txtvocno"/>'/>
-                            <input type="hidden" id="txtdocno" name="txtdocno" value='<s:property value="txtdocno"/>'/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+<div id="mainBG" class="homeContent" data-type="background" style="height:100%;overflow:hidden;box-sizing:border-box;">
 
-            <div class="filter-card">
+<div class="hidden-scrollbar" style="height:100%;box-sizing:border-box;">
 
-    <button class="myButton"
-            type="button"
-            id="btnRAG"
-            name="btnRAG"
-            onclick="getRentalAgreement(event);"
-            style="width:100%; margin-bottom:6px;">
-        Rental Agreement
-    </button>
+<table class="master-layout-table"
+       width="100%"
+       height="100%"
+       cellpadding="0"
+       cellspacing="0"
+       border="0"
+       style="table-layout:fixed;background:#ffffff;height:100%;">
 
-    <button class="myButton"
-            type="button"
-            id="btnaudit"
-            name="btnaudit"
-            onclick="funAudit(event);"
-            style="width:100%;">
-        Audit
-    </button>
+<tr>
+
+<!-- ================= LEFT PANEL ================= -->
+
+<td width="330"
+    valign="top"
+    style="padding:0;background:#ffffff;border-right:1px solid #e1e8ed;">
+
+<div class="sidebar-filters">
+
+<div class="sidebar-scroll-content">
+
+<div class="filter-card">
+
+<table class="filter-table">
+
+<tr>
+
+<td class="label-cell">Agreement</td>
+
+<td>
+
+<input type="text"
+       id="txtvocno"
+       name="txtvocno"
+       readonly="readonly"
+       value='<s:property value="txtvocno"/>'/>
+
+<input type="hidden"
+       id="txtdocno"
+       name="txtdocno"
+       value='<s:property value="txtdocno"/>'/>
+
+</td>
+
+</tr>
+
+</table>
 
 </div>
-        </div>
-    </div>
 
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="auditDiv">
-                <jsp:include page="auditGrid.jsp"></jsp:include>
-            </div>
-        </div>
-    </div>
+<div class="filter-card">
+
+<div class="button-group">
+
+<input type="button"
+       class="myButton"
+       id="btnRAG"
+       name="btnRAG"
+       value="Rental Agreement"
+       onclick="getRentalAgreement(event);"/>
+
+<input type="button"
+       class="myButton"
+       id="btnaudit"
+       name="btnaudit"
+       value="Audit"
+       onclick="funAudit(event);"/>
+
 </div>
+
 </div>
 
-<input type="hidden" name="txtbranchid" id="txtbranchid" style="height:20px;width:70%;" value='<s:property value="txtbranchid"/>'>
+</div>
 
-</div> 
+</div>
+
+</td>
+
+<!-- ================= RIGHT PANEL ================= -->
+
+<td valign="top"
+    style="padding:15px;background:#ffffff;height:100%;">
+
+<div style="display:flex;flex-direction:column;height:100%;box-sizing:border-box;">
+
+<div style="width:100%;margin-bottom:10px;flex-shrink:0;">
+
+<jsp:include page="../../heading.jsp"></jsp:include>
+
+</div>
+
+<div id="auditDiv"
+     style="flex:1;overflow:auto;min-height:0;">
+
+<jsp:include page="auditGrid.jsp"></jsp:include>
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<input type="hidden"
+       name="txtbranchid"
+       id="txtbranchid"
+       value='<s:property value="txtbranchid"/>'>
+
 </body>
 </html>

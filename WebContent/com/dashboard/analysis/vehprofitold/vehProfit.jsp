@@ -1,85 +1,130 @@
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <jsp:include page="../../../../includes.jsp"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html>
+<% String contextPath=request.getContextPath(); %><!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 <style type="text/css">
-.master-container{display:flex;width:100%;height:100%;font-family:'Segoe UI',Tahoma,sans-serif;background-color:#f4f7f9}
-.sidebar-filters{width:330px;flex:0 0 330px;background:#fff;border-right:1px solid #e1e8ed;display:flex;flex-direction:column;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.05)}
-.sidebar-fixed-top{padding:15px 20px;border-bottom:1px solid #f0f4f8}
-.sidebar-scroll-content{flex:1;overflow-y:auto;padding:15px 20px 25px}
-.filter-card{background:#f8fafc;border:1px solid #e3e8ee;border-radius:12px;padding:15px;margin-bottom:12px}
-.filter-table{width:100%;border-spacing:0 10px}
-.label-cell{text-align:right;padding-right:10px;font-size:13px;font-weight:600;color:#4e5e71;width:90px}
-input[type="text"],select{width:100%;padding:7px 10px;border:1px solid #ccd6e0;border-radius:6px;font-size:13px}
-.btn-submit{width:100%;padding:11px;margin-top:10px;background:#2563eb;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer}
-.btn-submit:hover{background:#1d4ed8}
-html,body,#mainBG,.hidden-scrollbar{height:100%;margin:0;overflow:hidden}
-.myButtons,.myButton{background-color:#2563eb!important;color:#fff!important;border:none!important;border-radius:6px;padding:10px 15px;width:100%;font-weight:600;cursor:pointer}
-.myButtons:hover,.myButton:hover{background-color:#1d4ed8!important}
-.main-content-wrapper{flex:1;width:100%;display:flex;flex-direction:column}
-.scrollable-grid-area{width:100%}
-input[type="text"],select{width:100%;height:24px!important;padding:0 8px!important;border:1px solid #ccd6e0;border-radius:4px;font-size:13px;box-sizing:border-box;line-height:24px}
-select{font-size:13px!important}
-.btn-submit,.myButtons,.myButton,input[type="button"],button{width:100%;height:24px!important;padding:0 10px!important;border-radius:4px;font-size:13px;font-weight:600;box-sizing:border-box;line-height:24px}
-.jqx-widget input,.jqx-widget select{height:24px!important;line-height:24px!important}
-/* dashboard */
-.view-btn{padding:7px 16px!important;border:none!important;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;background:#e5e7eb;color:#374151;transition:background .15s;height:auto!important;width:auto!important;line-height:normal!important;box-sizing:content-box!important}
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
+    height: 100%; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background-color: #ffffff !important; background: #ffffff !important; background-image: none !important; box-sizing: border-box;
+}
+.master-layout-table, .master-layout-table > tbody > tr, .master-layout-table > tbody > tr > td { background-color: #ffffff !important; background: #ffffff !important; }
+table tr:hover, table td:hover, table th:hover, tbody tr:hover { background-color: transparent !important; background: transparent !important; }
+
+/* ===== MASTER LAYOUT ===== */
+.sidebar-filters { width: 330px; background: #ffffff !important; height: 100%; box-sizing: border-box; box-shadow: 2px 0 8px rgba(0,0,0,.05); }
+.sidebar-scroll-content { height: 100%; overflow-y: auto; padding: 15px 20px !important; box-sizing: border-box; }
+.sidebar-fixed-bottom { margin-top: 15px; padding: 0; background: transparent; }
+
+/* Cards & Tables */
+.filter-card { background: #f8fafc !important; border: 1px solid #e3e8ee; border-radius: 8px; padding: 15px; margin-bottom: 12px; }
+.filter-table { width: 100%; border-spacing: 0 10px; background: transparent !important; }
+.filter-table tr, .filter-table td { background: transparent !important; border: none !important; }
+.filter-table .label-cell { text-align: right; padding-right: 12px; font-size: 12px; color: #4e5e71; font-weight: 600; width: 90px; white-space: nowrap; }
+
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, .filter-table input[type="text"], .filter-table select { width: 100%; height: 24px !important; padding: 2px 8px !important; border: 1px solid #ccd6e0 !important; border-radius: 4px !important; font-size: 12px !important; background-color: #ffffff !important; box-sizing: border-box; color: #333; outline: none; }
+select { padding: 2px 24px 2px 8px !important; font-family: inherit; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 6px center; background-size: 12px; }
+input[readonly], input:disabled, select:disabled { background-color: #f3f6f9 !important; color: #555; cursor: pointer; }
+
+textarea {
+    width: 100%; padding: 8px !important; border: 1px solid #ccd6e0 !important; border-radius: 4px !important; font-size: 12px !important; background-color: #ffffff !important; color: #333; font-family: inherit; resize: none; box-sizing: border-box; outline: none;
+}
+textarea[readonly] { background-color: #f3f6f9 !important; cursor: pointer; color: #555; }
+
+/* Radio Group */
+.radio-group { display: flex; justify-content: center; gap: 15px; padding: 5px 0 10px; border-bottom: 1px solid #e1e8ed; margin-bottom: 10px; font-size: 12px; font-weight: 600; color: #4e5e71; }
+.radio-group input[type="radio"] { margin: 0 4px 0 0; vertical-align: middle; }
+
+/* ===== BUTTONS ===== */
+.button-group { display: flex; gap: 10px; justify-content: center; }
+.btn-submit, .myButton, .myButtons { flex: 1; height: 30px !important; padding: 0 12px !important; background: #2563eb !important; color: #fff !important; border: none !important; border-radius: 4px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; line-height: 30px !important; text-align: center; transition: background 0.2s; width: 100%; margin-top: 0; }
+.btn-submit:hover, .myButton:hover, .myButtons:hover { background: #1d4ed8 !important; }
+
+/* ---- Analytics Dashboard (Preserved Original CSS) ---- */
+.view-btn{padding:7px 16px!important;border:none!important;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;background:#e5e7eb;color:#374151;transition:background .15s;height:30px!important;line-height:16px!important;}
 .view-btn.active,.view-btn:hover{background:#2563eb!important;color:#fff!important}
 .d-tabs{display:flex;gap:6px;padding:0 0 14px;flex-wrap:wrap}
-.d-tab{padding:6px 14px;border:0.5px solid #d4d4d4;border-radius:6px;font-size:13px;cursor:pointer;background:#fff;color:#5c5c5c}
-.d-tab.active{background:#f7f7f7;color:#1a1a1a;font-weight:500;border-color:#bdbdbd}
+.d-tab{padding:6px 14px;border:1px solid #dcdcdc;border-radius:4px;font-size:12px;cursor:pointer;background:#fff;color:#5c5c5c;font-family:'Segoe UI',sans-serif;}
+.d-tab.active{background:#f7f7f7;color:#1a1a1a;font-weight:600;border-color:#bdbdbd}
 .d-tab:hover{background:#f0f0f0}
 .d-panel{display:none}
 .d-panel.active{display:block}
 .d-metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
-.d-metric{background:#f7f7f7;border-radius:6px;padding:12px 14px}
-.d-metric-label{font-size:11px;color:#5c5c5c;margin-bottom:4px}
-.d-metric-val{font-size:20px;font-weight:500;color:#1a1a1a}
+.d-metric{background:#fff;border:1px solid #e3e8ee;border-radius:6px;padding:12px 14px;box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+.d-metric-label{font-size:11px;color:#5c5c5c;margin-bottom:4px;font-weight:600;}
+.d-metric-val{font-size:20px;font-weight:600;color:#1a1a1a}
 .d-metric-sub{font-size:10px;color:#9a9a9a;margin-top:2px}
 .d-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.d-chart-box{background:#fff;border:0.5px solid #e8e8e8;border-radius:10px;padding:14px}
-.d-chart-title{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:12px}
-.d-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:#5c5c5c}
+.d-chart-box{background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:14px;box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+.d-chart-title{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:12px;font-family:'Segoe UI',sans-serif;}
+.d-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:#5c5c5c;font-weight:500;}
 .d-leg-item{display:flex;align-items:center;gap:4px}
 .d-leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.d-table-box{background:#fff;border:0.5px solid #e8e8e8;border-radius:10px;padding:14px;overflow-x:auto;margin-bottom:18px}
-.d-table-box table{width:100%;font-size:12px;border-collapse:collapse}
-.d-table-box th{font-size:11px;font-weight:500;color:#5c5c5c;text-align:left;padding:6px 8px;border-bottom:0.5px solid #e8e8e8;white-space:nowrap}
-.d-table-box td{padding:6px 8px;border-bottom:0.5px solid #e8e8e8;color:#1a1a1a}
+.d-table-box{background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:14px;overflow-x:auto;margin-bottom:18px;box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+.d-table-box table{width:100%;font-size:12px;border-collapse:collapse;font-family:'Segoe UI',sans-serif;}
+.d-table-box th{font-size:11px;font-weight:600;color:#4e5e71;text-align:left;padding:8px;border-bottom:1px solid #e3e8ee;white-space:nowrap}
+.d-table-box td{padding:8px;border-bottom:1px solid #e3e8ee;color:#333}
 .d-table-box tr:last-child td{border-bottom:none}
-.d-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500}
+.d-badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:600}
 .d-b-green{background:#EAF3DE;color:#27500A}
 .d-b-amber{background:#FAEEDA;color:#633806}
 .d-b-red{background:#FCEBEB;color:#791F1F}
 .d-b-blue{background:#E6F1FB;color:#0C447C}
-.d-loading{text-align:center;padding:50px 20px;color:#9a9a9a;font-size:13px}
+.d-loading{text-align:center;padding:50px 20px;color:#9a9a9a;font-size:13px;font-weight:500;}
 @media(max-width:520px){.d-chart-row{grid-template-columns:1fr}}
+.jqx-widget input, .jqx-widget select { height: 24px !important; line-height: 24px !important; }
 </style>
+
 <script type="text/javascript">
+    // ALWAYS INCLUDE THIS FUNCTION
+    function getBranch() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim().split('####');
+                if (items.length > 1) {
+                    var brchIdItems = items[0].split(",");
+                    var brchItems = items[1].split(",");
+                    var optionsbrch = '<option value="">--Select--</option>';
+                    for (var i = 0; i < brchItems.length; i++) {
+                        optionsbrch += '<option value="' + brchIdItems[i] + '">' + brchItems[i] + '</option>';
+                    }
+                    $("select#cmbbranch").html(optionsbrch);
+                }
+            }
+        }
+        x.open("GET", "getBranch.jsp", true);
+        x.send();
+    }
 
 $(document).ready(function () {
     $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index:1;display:none;"></div>');
     $("body").prepend("<div id='PleaseWait' style='display:none;position:absolute;z-index:1;top:200px;right:750px;'><img src='../../../../icons/31load.gif'/></div>");
     $('#vehdetaildiv').hide();
-    $("#fromdate").jqxDateTimeInput({ width:'125px', height:'15px', formatString:"dd.MM.yyyy" });
-    $("#todate").jqxDateTimeInput({ width:'125px', height:'15px', formatString:"dd.MM.yyyy" });
-    $('#brandwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Brand Search', position:{x:250,y:60}, keyboardCloseKey:27 });
+    
+    // Standardize to 100% width and 24px height
+    $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy" });
+    $("#todate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy" });
+    
+    $('#brandwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Brand Search', position:{x:250,y:60}, theme: 'energyblue', keyboardCloseKey:27 });
     $('#brandwindow').jqxWindow('close');
-    $('#modelwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Model Search', position:{x:250,y:60}, keyboardCloseKey:27 });
+    $('#modelwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Model Search', position:{x:250,y:60}, theme: 'energyblue', keyboardCloseKey:27 });
     $('#modelwindow').jqxWindow('close');
-    $('#groupwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Group Search', position:{x:250,y:60}, keyboardCloseKey:27 });
+    $('#groupwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Group Search', position:{x:250,y:60}, theme: 'energyblue', keyboardCloseKey:27 });
     $('#groupwindow').jqxWindow('close');
-    $('#yomwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'YOM Search', position:{x:250,y:60}, keyboardCloseKey:27 });
+    $('#yomwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'YOM Search', position:{x:250,y:60}, theme: 'energyblue', keyboardCloseKey:27 });
     $('#yomwindow').jqxWindow('close');
-    $('#fleetwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Fleet Search', position:{x:250,y:60}, keyboardCloseKey:27 });
+    $('#fleetwindow').jqxWindow({ width:'50%', height:'60%', maxHeight:'80%', maxWidth:'50%', title:'Fleet Search', position:{x:250,y:60}, theme: 'energyblue', keyboardCloseKey:27 });
     $('#fleetwindow').jqxWindow('close');
+    
     var curfromdate=$('#fromdate').jqxDateTimeInput('getDate');
     var onemonthbackdate=new Date(curfromdate.setMonth(curfromdate.getMonth()-1));
     $('#fromdate').jqxDateTimeInput('setDate', onemonthbackdate);
@@ -502,292 +547,297 @@ function _vpRenderROI(rows){
 
 </script>
 </head>
+
 <body onload="getBranch();setValues();">
 <form id="frmSalesInvoiceList" method="post">
-<div id="mainBG" class="homeContent" data-type="background">
-<div class='hidden-scrollbar'>
-<div class="master-container">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-        <div class="sidebar-scroll-content">
-
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From Date</td>
-                        <td><div id="fromdate"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To Date</td>
-                        <td><div id="todate"></div></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="filter-card">
-                <div style="display:flex;justify-content:center;gap:20px;padding:5px 0;">
-                    <span>
-                        <input type="radio" name="rdosummary" id="rdosummary" value="summary" onchange="setGrid(this.value);">
-                        <label class="branch" for="rdosummary">Summary</label>
-                    </span>
-                    <span>
-                        <input type="radio" name="rdosummary" id="rdodetail" value="detail" onchange="setGrid(this.value);">
-                        <label class="branch" for="rdodetail">Detail</label>
-                    </span>
-                </div>
-            </div>
-
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Grouping 1</td>
-                        <td>
-                            <select name="grpby1" id="grpby1">
-                                <option value="">--Select--</option>
-                                <option value="brand">Brand</option>
-                                <option value="model">Model</option>
-                                <option value="group">Group</option>
-                                <option value="yom">YOM</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Search By</td>
-                        <td>
-                            <select name="searchby" id="searchby">
-                                <option value="">--Select--</option>
-                                <option value="brand">Brand</option>
-                                <option value="model">Model</option>
-                                <option value="group">Group</option>
-                                <option value="yom">YOM</option>
-                                <option value="fleet">Fleet</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="padding-top:10px;">
-                            <div style="display:flex;justify-content:center;gap:6px;">
-                                <button type="button" id="additem" class="myButton" onclick="setSearch();" style="width:40px;height:28px;">+</button>
-                                <button type="button" id="btnremoveitem" class="myButton" onclick="setRemove();" style="width:40px;height:28px;">-</button>
+<div id="mainBG" class="homeContent" data-type="background" style="height: 100%; overflow: hidden; box-sizing: border-box;"> 
+    <div class='hidden-scrollbar' style="height: 100%; box-sizing: border-box;">
+        
+        <table class="master-layout-table" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff !important; table-layout: fixed; height: 100%;">
+            <tr style="height: 100%;">
+                
+                <td width="330px" valign="top" style="vertical-align: top; padding: 0 !important; margin: 0 !important; background: #ffffff !important; border-right: 1px solid #e1e8ed; height: 100%;">
+                    <div class="sidebar-filters">
+                        <div class="sidebar-scroll-content">
+                            
+                            <div class="filter-card">
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">From Date</td>
+                                        <td><div id="fromdate"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">To Date</td>
+                                        <td><div id="todate"></div></td>
+                                    </tr>
+                                </table>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="padding-top:10px;">
-                            <textarea id="searchdetails" name="searchdetails" rows="10" readonly style="resize:none;font-size:11px;width:100%;box-sizing:border-box;"></textarea>
-                        </td>
-                    </tr>
-                </table>
-            </div>
 
-            <div style="padding:5px;">
-                <input type="button" name="btnclear" id="btnclear" value="Clear" class="myButtons" onclick="funClearData();">
-            </div>
-        </div>
+                            <div class="filter-card">
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="rdosummary" id="rdosummary" value="summary" onchange="setGrid(this.value);"> Summary
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rdosummary" id="rdodetail" value="detail" onchange="setGrid(this.value);"> Detail
+                                    </label>
+                                </div>
+                            
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">Grouping 1</td>
+                                        <td>
+                                            <select name="grpby1" id="grpby1">
+                                                <option value="">--Select--</option>
+                                                <option value="brand">Brand</option>
+                                                <option value="model">Model</option>
+                                                <option value="group">Group</option>
+                                                <option value="yom">YOM</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="filter-card">
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">Search By</td>
+                                        <td>
+                                            <select name="searchby" id="searchby">
+                                                <option value="">--Select--</option>
+                                                <option value="brand">Brand</option>
+                                                <option value="model">Model</option>
+                                                <option value="group">Group</option>
+                                                <option value="yom">YOM</option>
+                                                <option value="fleet">Fleet</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <div class="button-group" style="margin-top: 10px;">
+                                    <button type="button" id="additem" class="btn-submit" onclick="setSearch();" style="flex: 0.2;">
+                                        +
+                                    </button>
+                                    <button type="button" id="btnremoveitem" class="btn-submit" onclick="setRemove();" style="flex: 0.2;">
+                                        -
+                                    </button>
+                                </div>
+                                
+                                <div style="margin-top: 10px;">
+                                    <textarea id="searchdetails" name="searchdetails" rows="6" readonly placeholder="Selected Criteria..."></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="sidebar-fixed-bottom">
+                                <div class="button-group" style="margin: 0;">
+                                    <button type="button" name="btnclear" id="btnclear" class="btn-submit" onclick="funClearData();">
+                                        Clear
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style="display:none;">
+                                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+                                <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+                                <input type="hidden" name="hidgroup" id="hidgroup">
+                                <input type="hidden" name="hidmodel" id="hidmodel">
+                                <input type="hidden" name="hidyom" id="hidyom">
+                                <input type="hidden" name="hidbrand" id="hidbrand">
+                                <input type="hidden" name="group" id="group">
+                                <input type="hidden" name="model" id="model">
+                                <input type="hidden" name="yom" id="yom">
+                                <input type="hidden" name="brand" id="brand">
+                                <input type="hidden" name="gridtype" id="gridtype">
+                                <input type="hidden" name="fleet" id="fleet">
+                                <input type="hidden" name="hidfleet" id="hidfleet">
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+
+                <td class="right-panel" valign="top" style="padding: 15px; background: #ffffff !important; height: 100%;">
+                    <div style="display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
+                        
+                        <div style="width: 100%; margin-bottom: 10px; flex-shrink: 0;">
+                            <jsp:include page="../../heading.jsp"></jsp:include>
+                        </div>
+                        
+                        <div id="mainGridDiv" style="flex: 1; overflow: hidden; min-height: 0; background: #fff; display: flex; flex-direction: column; border: 1px solid #e3e8ee; border-radius: 8px;">
+                            
+                            <div style="display:flex; align-items:center; gap:8px; padding:10px 15px; background:#f8fafc; border-bottom:1px solid #e1e8ed; flex-wrap:wrap; flex-shrink: 0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                                <button type="button" id="vpBtnGrid" onclick="showVpView('grid')" class="view-btn active">Grid View</button>
+                                <button type="button" id="vpBtnDash" onclick="showVpView('dash')" class="view-btn">Analytics Dashboard</button>
+                                <div style="margin-left:auto; display:flex; gap:8px;">
+                                    <button type="button" onclick="funExportBtn()" class="view-btn" style="background:#059669; color:#fff;">Export Excel</button>
+                                    <button type="button" onclick="funreload()" class="view-btn" style="background:#2563eb; color:#fff;">Load / Refresh</button>
+                                </div>
+                            </div>
+
+                            <div style="flex: 1; overflow: auto; background: #fff;">
+                                <div id="vehprofitdiv">
+                                    <jsp:include page="vehProfitGrid.jsp"></jsp:include>
+                                </div>
+                                <div id="vehdetaildiv">
+                                    <jsp:include page="vehDetailGrid.jsp"></jsp:include>
+                                </div>
+    
+                                <div id="vpDashboard" style="display:none; min-height:100%; padding:14px 16px; background:#f4f7f9;">
+                                    <div id="vpDashNoData" style="display:none; text-align:center; padding:60px 20px; color:#9a9a9a;">
+                                        <div style="font-size:32px; margin-bottom:10px;">&#128202;</div>
+                                        <div style="font-size:15px; font-weight:600; color:#444;">No Data Loaded</div>
+                                        <div style="font-size:12px; margin-top:6px;">Select filters and click <strong>Load / Refresh</strong>, then open Analytics Dashboard.</div>
+                                    </div>
+                                    
+                                    <div id="vpDashContent">
+                                        <div class="d-tabs">
+                                            <div class="d-tab active" id="vpt_ov"   onclick="switchVpTab('ov')">Overview</div>
+                                            <div class="d-tab" id="vpt_prof"        onclick="switchVpTab('prof')">Profitability</div>
+                                            <div class="d-tab" id="vpt_top"         onclick="switchVpTab('top')">Top Performers</div>
+                                            <div class="d-tab" id="vpt_loss"        onclick="switchVpTab('loss')">Loss Makers</div>
+                                            <div class="d-tab" id="vpt_age"         onclick="switchVpTab('age')">Age Analysis</div>
+                                            <div class="d-tab" id="vpt_roi"         onclick="switchVpTab('roi')">ROI Analysis</div>
+                                        </div>
+    
+                                        <div id="vpp_ov" class="d-panel active">
+                                            <div class="d-metric-grid">
+                                                <div class="d-metric" id="vp_ov_fleet"><div class="d-metric-label">Total Fleet</div><div class="d-metric-val">-</div><div class="d-metric-sub">vehicles tracked</div></div>
+                                                <div class="d-metric" id="vp_ov_income"><div class="d-metric-label">Total Revenue</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_ov_expense"><div class="d-metric-label">Total Expenses</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_ov_net"><div class="d-metric-label">Net Contribution</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_ov_profitable"><div class="d-metric-label">Profitable</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_ov_avg"><div class="d-metric-label">Avg Net / Vehicle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                            </div>
+                                            <div class="d-chart-row">
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Revenue vs Expenses (total)</div>
+                                                    <div class="d-legend">
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Income</span>
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Expenses</span>
+                                                    </div>
+                                                    <div style="position:relative;width:100%;height:220px"><canvas id="vp_ch_ov_donut"></canvas></div>
+                                                </div>
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Top 15 vehicles by net amount</div>
+                                                    <div style="position:relative;width:100%;height:220px"><canvas id="vp_ch_ov_top"></canvas></div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div id="vpp_prof" class="d-panel">
+                                            <div class="d-metric-grid">
+                                                <div class="d-metric" id="vp_prof_profit"><div class="d-metric-label">Profitable</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_prof_loss"><div class="d-metric-label">Loss Making</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_prof_even"><div class="d-metric-label">Break-even</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_prof_best"><div class="d-metric-label">Best Margin</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                            </div>
+                                            <div class="d-chart-box" style="margin-bottom:16px">
+                                                <div class="d-chart-title">Income vs Expenses — top 15 by revenue</div>
+                                                <div class="d-legend">
+                                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Income</span>
+                                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Expenses</span>
+                                                </div>
+                                                <div style="position:relative;width:100%;height:300px"><canvas id="vp_ch_prof_bar"></canvas></div>
+                                            </div>
+                                            <div class="d-chart-box" style="margin-bottom:16px">
+                                                <div class="d-chart-title">Net amount distribution (10-bucket histogram)</div>
+                                                <div style="position:relative;width:100%;height:200px"><canvas id="vp_ch_prof_hist"></canvas></div>
+                                            </div>
+                                        </div>
+    
+                                        <div id="vpp_top" class="d-panel">
+                                            <div class="d-metric-grid">
+                                                <div class="d-metric" id="vp_top_net"><div class="d-metric-label">Top by Net</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_top_inc"><div class="d-metric-label">Top by Income</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_top_cnt"><div class="d-metric-label">Profitable</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_top_avg"><div class="d-metric-label">Avg Net</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                            </div>
+                                            <div class="d-chart-row">
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Top 15 by net amount</div>
+                                                    <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_top_net"></canvas></div>
+                                                </div>
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Top 15 by revenue (income)</div>
+                                                    <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_top_inc"></canvas></div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div id="vpp_loss" class="d-panel">
+                                            <div class="d-metric-grid">
+                                                <div class="d-metric" id="vp_loss_count"><div class="d-metric-label">Loss Vehicles</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_loss_total"><div class="d-metric-label">Total Loss</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_loss_worst"><div class="d-metric-label">Worst Vehicle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_loss_avg"><div class="d-metric-label">Avg Loss</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                            </div>
+                                            <div class="d-chart-box" style="margin-bottom:16px">
+                                                <div class="d-chart-title">Top 20 loss-making vehicles (worst first)</div>
+                                                <div id="vp_loss_chart_wrap"></div>
+                                            </div>
+                                            <div class="d-table-box">
+                                                <div class="d-chart-title" style="margin-bottom:10px">All loss-making vehicles</div>
+                                                <div id="vp_loss_table"></div>
+                                            </div>
+                                        </div>
+    
+                                        <div id="vpp_age" class="d-panel">
+                                            <div class="d-metric-grid">
+                                                <div class="d-metric" id="vp_age_count"><div class="d-metric-label">Total Vehicles</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_age_avg"><div class="d-metric-label">Avg Age</div><div class="d-metric-val">-</div><div class="d-metric-sub">years</div></div>
+                                                <div class="d-metric" id="vp_age_best"><div class="d-metric-label">Best Age Bucket</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_age_young"><div class="d-metric-label">Newest (0-2 yrs)</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                            </div>
+                                            <div class="d-chart-row">
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Fleet distribution by age</div>
+                                                    <div style="position:relative;width:100%;height:240px"><canvas id="vp_ch_age_donut"></canvas></div>
+                                                </div>
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Avg net contribution by age bucket</div>
+                                                    <div style="position:relative;width:100%;height:240px"><canvas id="vp_ch_age_net"></canvas></div>
+                                                </div>
+                                            </div>
+                                            <div class="d-table-box">
+                                                <div class="d-chart-title" style="margin-bottom:10px">Age bucket summary</div>
+                                                <div id="vp_age_table"></div>
+                                            </div>
+                                        </div>
+    
+                                        <div id="vpp_roi" class="d-panel">
+                                            <div class="d-metric-grid">
+                                                <div class="d-metric" id="vp_roi_pur"><div class="d-metric-label">Total Purchase Cost</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_roi_ret"><div class="d-metric-label">Total Return Value</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_roi_avg"><div class="d-metric-label">Avg Portfolio ROI</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                <div class="d-metric" id="vp_roi_best"><div class="d-metric-label">Best ROI Vehicle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                            </div>
+                                            <div class="d-chart-row">
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Return price vs purchase cost — top 15</div>
+                                                    <div class="d-legend">
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Return Price</span>
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#185FA5"></span>Purchase Cost</span>
+                                                    </div>
+                                                    <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_roi_ret"></canvas></div>
+                                                </div>
+                                                <div class="d-chart-box">
+                                                    <div class="d-chart-title">Top 15 vehicles by ROI %</div>
+                                                    <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_roi_bar"></canvas></div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div></div></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
     </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content-wrapper">
-
-        <!-- View Toggle Bar -->
-        <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#fff;border-bottom:1px solid #e1e8ed;flex-wrap:wrap;">
-            <button type="button" id="vpBtnGrid" onclick="showVpView('grid')" class="view-btn active">Grid View</button>
-            <button type="button" id="vpBtnDash" onclick="showVpView('dash')" class="view-btn">Analytics Dashboard</button>
-            <div style="margin-left:auto;display:flex;gap:8px;">
-                <button type="button" onclick="funExportBtn()" class="view-btn" style="background:#059669;color:#fff;">Export Excel</button>
-                <button type="button" onclick="funreload()" class="view-btn" style="background:#2563eb;color:#fff;">Load / Refresh</button>
-            </div>
-        </div>
-
-        <div class="scrollable-grid-area">
-
-            <div id="vehprofitdiv"><jsp:include page="vehProfitGrid.jsp"></jsp:include></div>
-            <div id="vehdetaildiv"><jsp:include page="vehDetailGrid.jsp"></jsp:include></div>
-
-            <!-- Analytics Dashboard -->
-            <div id="vpDashboard" style="display:none;height:calc(100vh - 95px);overflow-y:auto;background:#f4f7f9;padding:14px 16px;">
-
-                <div id="vpDashNoData" style="display:none;text-align:center;padding:60px 20px;color:#9a9a9a;">
-                    <div style="font-size:32px;margin-bottom:10px;">&#128202;</div>
-                    <div style="font-size:15px;font-weight:500;">No Data Loaded</div>
-                    <div style="font-size:12px;margin-top:6px;">Select filters and click <strong>Load / Refresh</strong>, then open Analytics Dashboard.</div>
-                </div>
-
-                <div id="vpDashContent">
-                    <div class="d-tabs">
-                        <div class="d-tab active" id="vpt_ov"   onclick="switchVpTab('ov')">Overview</div>
-                        <div class="d-tab" id="vpt_prof"        onclick="switchVpTab('prof')">Profitability</div>
-                        <div class="d-tab" id="vpt_top"         onclick="switchVpTab('top')">Top Performers</div>
-                        <div class="d-tab" id="vpt_loss"        onclick="switchVpTab('loss')">Loss Makers</div>
-                        <div class="d-tab" id="vpt_age"         onclick="switchVpTab('age')">Age Analysis</div>
-                        <div class="d-tab" id="vpt_roi"         onclick="switchVpTab('roi')">ROI Analysis</div>
-                    </div>
-
-                    <!-- OVERVIEW -->
-                    <div id="vpp_ov" class="d-panel active">
-                        <div class="d-metric-grid">
-                            <div class="d-metric" id="vp_ov_fleet"><div class="d-metric-label">Total Fleet</div><div class="d-metric-val">-</div><div class="d-metric-sub">vehicles tracked</div></div>
-                            <div class="d-metric" id="vp_ov_income"><div class="d-metric-label">Total Revenue</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_ov_expense"><div class="d-metric-label">Total Expenses</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_ov_net"><div class="d-metric-label">Net Contribution</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_ov_profitable"><div class="d-metric-label">Profitable</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_ov_avg"><div class="d-metric-label">Avg Net / Vehicle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                        </div>
-                        <div class="d-chart-row">
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Revenue vs Expenses (total)</div>
-                                <div class="d-legend">
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Income</span>
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Expenses</span>
-                                </div>
-                                <div style="position:relative;width:100%;height:220px"><canvas id="vp_ch_ov_donut"></canvas></div>
-                            </div>
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Top 15 vehicles by net amount</div>
-                                <div style="position:relative;width:100%;height:220px"><canvas id="vp_ch_ov_top"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROFITABILITY -->
-                    <div id="vpp_prof" class="d-panel">
-                        <div class="d-metric-grid">
-                            <div class="d-metric" id="vp_prof_profit"><div class="d-metric-label">Profitable</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_prof_loss"><div class="d-metric-label">Loss Making</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_prof_even"><div class="d-metric-label">Break-even</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_prof_best"><div class="d-metric-label">Best Margin</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                        </div>
-                        <div class="d-chart-box" style="margin-bottom:16px">
-                            <div class="d-chart-title">Income vs Expenses — top 15 by revenue</div>
-                            <div class="d-legend">
-                                <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Income</span>
-                                <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Expenses</span>
-                            </div>
-                            <div style="position:relative;width:100%;height:300px"><canvas id="vp_ch_prof_bar"></canvas></div>
-                        </div>
-                        <div class="d-chart-box" style="margin-bottom:16px">
-                            <div class="d-chart-title">Net amount distribution (10-bucket histogram)</div>
-                            <div style="position:relative;width:100%;height:200px"><canvas id="vp_ch_prof_hist"></canvas></div>
-                        </div>
-                    </div>
-
-                    <!-- TOP PERFORMERS -->
-                    <div id="vpp_top" class="d-panel">
-                        <div class="d-metric-grid">
-                            <div class="d-metric" id="vp_top_net"><div class="d-metric-label">Top by Net</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_top_inc"><div class="d-metric-label">Top by Income</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_top_cnt"><div class="d-metric-label">Profitable</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_top_avg"><div class="d-metric-label">Avg Net</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                        </div>
-                        <div class="d-chart-row">
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Top 15 by net amount</div>
-                                <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_top_net"></canvas></div>
-                            </div>
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Top 15 by revenue (income)</div>
-                                <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_top_inc"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- LOSS MAKERS -->
-                    <div id="vpp_loss" class="d-panel">
-                        <div class="d-metric-grid">
-                            <div class="d-metric" id="vp_loss_count"><div class="d-metric-label">Loss Vehicles</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_loss_total"><div class="d-metric-label">Total Loss</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_loss_worst"><div class="d-metric-label">Worst Vehicle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_loss_avg"><div class="d-metric-label">Avg Loss</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                        </div>
-                        <div class="d-chart-box" style="margin-bottom:16px">
-                            <div class="d-chart-title">Top 20 loss-making vehicles (worst first)</div>
-                            <div id="vp_loss_chart_wrap"></div>
-                        </div>
-                        <div class="d-table-box">
-                            <div class="d-chart-title" style="margin-bottom:10px">All loss-making vehicles</div>
-                            <div id="vp_loss_table"></div>
-                        </div>
-                    </div>
-
-                    <!-- AGE ANALYSIS -->
-                    <div id="vpp_age" class="d-panel">
-                        <div class="d-metric-grid">
-                            <div class="d-metric" id="vp_age_count"><div class="d-metric-label">Total Vehicles</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_age_avg"><div class="d-metric-label">Avg Age</div><div class="d-metric-val">-</div><div class="d-metric-sub">years</div></div>
-                            <div class="d-metric" id="vp_age_best"><div class="d-metric-label">Best Age Bucket</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_age_young"><div class="d-metric-label">Newest (0-2 yrs)</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                        </div>
-                        <div class="d-chart-row">
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Fleet distribution by age</div>
-                                <div style="position:relative;width:100%;height:240px"><canvas id="vp_ch_age_donut"></canvas></div>
-                            </div>
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Avg net contribution by age bucket</div>
-                                <div style="position:relative;width:100%;height:240px"><canvas id="vp_ch_age_net"></canvas></div>
-                            </div>
-                        </div>
-                        <div class="d-table-box">
-                            <div class="d-chart-title" style="margin-bottom:10px">Age bucket summary</div>
-                            <div id="vp_age_table"></div>
-                        </div>
-                    </div>
-
-                    <!-- ROI ANALYSIS -->
-                    <div id="vpp_roi" class="d-panel">
-                        <div class="d-metric-grid">
-                            <div class="d-metric" id="vp_roi_pur"><div class="d-metric-label">Total Purchase Cost</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_roi_ret"><div class="d-metric-label">Total Return Value</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_roi_avg"><div class="d-metric-label">Avg Portfolio ROI</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            <div class="d-metric" id="vp_roi_best"><div class="d-metric-label">Best ROI Vehicle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                        </div>
-                        <div class="d-chart-row">
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Return price vs purchase cost — top 15</div>
-                                <div class="d-legend">
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Return Price</span>
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#185FA5"></span>Purchase Cost</span>
-                                </div>
-                                <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_roi_ret"></canvas></div>
-                            </div>
-                            <div class="d-chart-box">
-                                <div class="d-chart-title">Top 15 vehicles by ROI %</div>
-                                <div style="position:relative;width:100%;height:340px"><canvas id="vp_ch_roi_bar"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div><!-- vpDashContent -->
-            </div><!-- vpDashboard -->
-
-            <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-            <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-            <input type="hidden" name="hidgroup" id="hidgroup">
-            <input type="hidden" name="hidmodel" id="hidmodel">
-            <input type="hidden" name="hidyom" id="hidyom">
-            <input type="hidden" name="hidbrand" id="hidbrand">
-            <input type="hidden" name="group" id="group">
-            <input type="hidden" name="model" id="model">
-            <input type="hidden" name="yom" id="yom">
-            <input type="hidden" name="brand" id="brand">
-            <input type="hidden" name="gridtype" id="gridtype">
-            <input type="hidden" name="fleet" id="fleet">
-            <input type="hidden" name="hidfleet" id="hidfleet">
-
-        </div><!-- scrollable-grid-area -->
-    </div><!-- main-content-wrapper -->
-
-</div><!-- master-container -->
-</div>
 </div>
 
 <div id="brandwindow"><div></div></div>

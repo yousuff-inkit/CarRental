@@ -1,181 +1,54 @@
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="com.dashboard.analysis.utilization.*" %>
 <%ClsVehUtilizationDAO utilizedao=new ClsVehUtilizationDAO(); %>
-<!DOCTYPE html>
+<% String contextPath=request.getContextPath(); %><!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GatewayERP(i)</title>
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <style type="text/css">
+/* ===== AGGRESSIVE OVERRIDES TO DESTROY BLUE BACKGROUNDS & HOVERS ===== */
+html, body, #mainBG, .homeContent, .hidden-scrollbar {
+    height: 100%; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background-color: #ffffff !important; background: #ffffff !important; background-image: none !important; box-sizing: border-box;
+}
+.master-layout-table, .master-layout-table > tbody > tr, .master-layout-table > tbody > tr > td { background-color: #ffffff !important; background: #ffffff !important; }
+table tr:hover, table td:hover, table th:hover, tbody tr:hover { background-color: transparent !important; background: transparent !important; }
+
 /* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
+.sidebar-filters { width: 330px; background: #ffffff !important; height: 100%; box-sizing: border-box; box-shadow: 2px 0 8px rgba(0,0,0,.05); }
+.sidebar-scroll-content { height: 100%; overflow-y: auto; padding: 15px 20px !important; box-sizing: border-box; }
+.sidebar-fixed-bottom { margin-top: 15px; padding: 0; background: transparent; }
 
-.master-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
-}
+/* Cards & Tables */
+.filter-card { background: #f8fafc !important; border: 1px solid #e3e8ee; border-radius: 8px; padding: 15px; margin-bottom: 12px; }
+.filter-table { width: 100%; border-spacing: 0 10px; background: transparent !important; }
+.filter-table tr, .filter-table td { background: transparent !important; border: none !important; }
+.filter-table .label-cell { text-align: right; padding-right: 12px; font-size: 12px; color: #4e5e71; font-weight: 600; width: 90px; white-space: nowrap; }
 
-/* Sidebar */
-.sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-.sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px 20px 15px; 
-}
-
-/* Cards */
-.filter-card {
-    background: #f8fafc;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
-
-.filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
-
-.label-cell {
-    text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
-    color: #4e5e71;
-    width: 80px;
-}
-
-/* Inputs & Selects */
-input[type="text"], select {
-    width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-}
-
-select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 6px center;
-    background-size: 12px;
-}
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select, .filter-table input[type="text"], .filter-table select { width: 100%; height: 24px !important; padding: 2px 8px !important; border: 1px solid #ccd6e0 !important; border-radius: 4px !important; font-size: 12px !important; background-color: #ffffff !important; box-sizing: border-box; color: #333; outline: none; }
+select { padding: 2px 24px 2px 8px !important; font-family: inherit; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 6px center; background-size: 12px; }
+input[readonly], input:disabled, select:disabled { background-color: #f3f6f9 !important; color: #555; cursor: pointer; }
 
 textarea {
-    width: 100%;
-    padding: 8px !important;
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    background-color: #f3f6f9 !important;
-    color: #333;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    resize: none;
-    box-sizing: border-box;
-    outline: none;
+    width: 100%; padding: 8px !important; border: 1px solid #ccd6e0 !important; border-radius: 4px !important; font-size: 12px !important; background-color: #ffffff !important; color: #333; font-family: inherit; resize: none; box-sizing: border-box; outline: none;
 }
-
-textarea[readonly] { cursor: pointer; color: #555; }
+textarea[readonly] { background-color: #f3f6f9 !important; cursor: pointer; color: #555; }
 
 /* Radio Group */
-.radio-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 5px 0 10px;
-    border-bottom: 1px solid #e1e8ed;
-    margin-bottom: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-}
+.radio-group { display: flex; justify-content: center; gap: 15px; padding: 5px 0 10px; border-bottom: 1px solid #e1e8ed; margin-bottom: 10px; font-size: 12px; font-weight: 600; color: #4e5e71; }
+.radio-group input[type="radio"] { margin: 0 4px 0 0; vertical-align: middle; }
 
-.radio-group input[type="radio"] {
-    margin: 0 4px 0 0;
-    vertical-align: middle;
-}
-
-/* Buttons */
-.button-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 5px;
-}
-
-.btn-submit {
-    flex: 1;
-    height: 30px !important;            
-    padding: 0 5px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.btn-submit:hover { background: #1d4ed8 !important; }
-
-/* Main Area */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-sizing: border-box;
-}
-
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-    background: #fff;
-}
+/* ===== BUTTONS ===== */
+.button-group { display: flex; gap: 10px; justify-content: center; }
+.btn-submit, .myButton, .myButtons { flex: 1; height: 30px !important; padding: 0 12px !important; background: #2563eb !important; color: #fff !important; border: none !important; border-radius: 4px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer; line-height: 30px !important; text-align: center; transition: background 0.2s; width: 100%; margin-top: 0; }
+.btn-submit:hover, .myButton:hover, .myButtons:hover { background: #1d4ed8 !important; }
 
 /* ---- Analytics Dashboard (Preserved Original CSS) ---- */
 .view-btn{padding:7px 16px;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;background:#e5e7eb;color:#374151;transition:background .15s}
@@ -214,22 +87,36 @@ textarea[readonly] { cursor: pointer; color: #555; }
 .d-bar-val{width:46px;font-size:11px;color:#5c5c5c;flex-shrink:0;text-align:right;font-weight:500;}
 .d-loading{text-align:center;padding:50px 20px;color:#9a9a9a;font-size:13px;font-weight:500;}
 @media(max-width:520px){.d-chart-row{grid-template-columns:1fr}}
-
-/* Fix for JQX widgets */
-.jqx-widget input,
-.jqx-widget select {
-    height: 24px !important;
-    line-height: 24px !important;
-}
+.jqx-widget input, .jqx-widget select { height: 24px !important; line-height: 24px !important; }
 </style>
 
 <script type="text/javascript">
+    // ALWAYS INCLUDE THIS FUNCTION
+    function getBranch() {
+        var x = new XMLHttpRequest();
+        x.onreadystatechange = function() {
+            if (x.readyState == 4 && x.status == 200) {
+                var items = x.responseText.trim().split('####');
+                if (items.length > 1) {
+                    var brchIdItems = items[0].split(",");
+                    var brchItems = items[1].split(",");
+                    var optionsbrch = '<option value="">--Select--</option>';
+                    for (var i = 0; i < brchItems.length; i++) {
+                        optionsbrch += '<option value="' + brchIdItems[i] + '">' + brchItems[i] + '</option>';
+                    }
+                    $("select#cmbbranch").html(optionsbrch);
+                }
+            }
+        }
+        x.open("GET", "getBranch.jsp", true);
+        x.send();
+    }
+
 $(document).ready(function () {
     $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:200px;right:750px;'><img src='../../../../icons/31load.gif'/></div>");
     $('#vehdetaildiv').hide();
     
-    // Standardize to 100% width and 24px height
     $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
     $("#todate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
     
@@ -370,7 +257,7 @@ function funClearData(){
     $('select').find('option').prop("selected", false);
     $('#fromdate').jqxDateTimeInput('setDate',new Date());
     $('#todate').jqxDateTimeInput('setDate',new Date());
-       
+        
     var curfromdate=$('#fromdate').jqxDateTimeInput('getDate');
     var onemonthbackdate=new Date(curfromdate.setMonth(curfromdate.getMonth()-1));
     $('#fromdate').jqxDateTimeInput('setDate', onemonthbackdate);
@@ -697,294 +584,302 @@ function setDetail(){
 <body onload="getBranch();setValues();">
 <form id="frmSalesInvoiceList" method="post">
 
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-
-<div class="master-container">
-
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
-        <div class="sidebar-scroll-content">
-            
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From Date</td>
-                        <td><div id="fromdate"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To Date</td>
-                        <td><div id="todate"></div></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="filter-card" style="padding-top: 5px;">
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="duration" id="rdohours" value="hours"> Hours
-                    </label>
-                    <label>
-                        <input type="radio" name="duration" id="rdodays" value="days" checked> Days
-                    </label>
-                </div>
-            
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Grouping 1</td>
-                        <td>
-                            <select name="grpby1" id="grpby1">
-                                <option value="">--Select--</option>
-                                <option value="brand">Brand</option>
-                                <option value="model">Model</option>
-                                <option value="group">Group</option>
-                                <option value="yom">YOM</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Search By</td>
-                        <td>
-                            <select name="searchby" id="searchby">
-                                <option value="">--Select--</option>
-                                <option value="brand">Brand</option>
-                                <option value="model">Model</option>
-                                <option value="group">Group</option>
-                                <option value="yom">YOM</option>
-                                <option value="fleet">Fleet</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
+<div id="mainBG" class="homeContent" data-type="background" style="height: 100%; overflow: hidden; box-sizing: border-box;"> 
+    <div class='hidden-scrollbar' style="height: 100%; box-sizing: border-box;">
+        
+        <table class="master-layout-table" width="100%" height="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff !important; table-layout: fixed; height: 100%;">
+            <tr style="height: 100%;">
                 
-                <div class="button-group" style="margin-top: 10px;">
-                    <button type="button" id="additem" class="btn-submit" onclick="setSearch();" style="flex: 0.2;">
-                        +
-                    </button>
-                    <button type="button" id="btnremoveitem" class="btn-submit" onclick="setRemove();" style="flex: 0.2;">
-                        -
-                    </button>
-                </div>
-                
-                <div style="margin-top: 10px;">
-                    <textarea id="searchdetails" name="searchdetails" rows="6" readonly placeholder="Selected Criteria..."></textarea>
-                </div>
-            </div>
-
-            <div class="filter-card">
-                <div class="button-group">
-                    <button type="button" name="btnclear" id="btnclear" class="btn-submit" onclick="funClearData();">
-                        Clear
-                    </button>
-                </div>
-            </div>
-
-            <div style="display:none;">
-                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-                <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-                <input type="hidden" name="hidgroup" id="hidgroup">
-                <input type="hidden" name="hidmodel" id="hidmodel">
-                <input type="hidden" name="hidyom" id="hidyom">
-                <input type="hidden" name="hidbrand" id="hidbrand">
-                <input type="hidden" name="group" id="group">
-                <input type="hidden" name="model" id="model">
-                <input type="hidden" name="yom" id="yom">
-                <input type="hidden" name="brand" id="brand">
-                <input type="hidden" name="hidfleet" id="hidfleet">
-                <input type="hidden" name="fleet" id="fleet">
-            </div>
-            
-        </div>
-    </div>
-
-    <div class="main-content-wrapper">
-
-        <div style="display:flex; align-items:center; gap:8px; padding:10px 15px; background:#fff; border-bottom:1px solid #e1e8ed; flex-wrap:wrap;">
-            <button type="button" id="btnGridView" onclick="showView('grid')" class="view-btn active">Grid View</button>
-            <button type="button" id="btnDashView" onclick="showView('dashboard')" class="view-btn">Analytics Dashboard</button>
-            <div style="margin-left:auto; display:flex; gap:8px;">
-                <button type="button" onclick="funExportBtn()" class="view-btn" style="background:#2563eb; color:#fff;">Export Excel</button>
-                <button type="button" onclick="funreload()" class="view-btn" style="background:#2563eb; color:#fff;">Load / Refresh</button>
-            </div>
-        </div>
-
-        <div class="scrollable-grid-area">
-            
-            <div id="vehutilizediv">
-                <jsp:include page="vehUtilizeGrid.jsp"></jsp:include>
-            </div>
-
-            <div id="analyticsDashboard" style="display:none; padding:14px 16px; background:#f4f7f9;">
-                <div id="dashNoData" style="display:none; text-align:center; padding:60px 20px; color:#9a9a9a;">
-                    <div style="font-size:32px; margin-bottom:10px;">&#128202;</div>
-                    <div style="font-size:15px; font-weight:600; color:#444;">No Data Loaded</div>
-                    <div style="font-size:12px; margin-top:6px;">Select filters and click <strong>Load / Refresh</strong> to populate the dashboard.</div>
-                </div>
-                
-                <div id="dashContent">
-                    <div id="dashLoading" style="display:none;" class="d-loading">Loading analytics&hellip; fetching brand, model, group &amp; YOM data</div>
-                    
-                    <div id="dashTabs">
-                        <div class="d-tabs">
-                            <div class="d-tab active" id="dt_overview" onclick="switchDashTab('overview')">Overview</div>
-                            <div class="d-tab" id="dt_brand"   onclick="switchDashTab('brand')">By Brand</div>
-                            <div class="d-tab" id="dt_model"   onclick="switchDashTab('model')">By Model</div>
-                            <div class="d-tab" id="dt_yom"     onclick="switchDashTab('yom')">By YOM</div>
-                            <div class="d-tab" id="dt_group"   onclick="switchDashTab('group')">By Group</div>
-                            <div class="d-tab" id="dt_lowutil" onclick="switchDashTab('lowutil')">Low Utilisation</div>
-                        </div>
-
-                        <div id="dp_overview" class="d-panel active">
-                            <div class="d-metric-grid">
-                                <div class="d-metric" id="ov_fleet"><div class="d-metric-label">Total fleet</div><div class="d-metric-val">-</div><div class="d-metric-sub">vehicles tracked</div></div>
-                                <div class="d-metric" id="ov_util"><div class="d-metric-label">Avg utilisation</div><div class="d-metric-val">-</div><div class="d-metric-sub">rental vs live-in</div></div>
-                                <div class="d-metric" id="ov_rented"><div class="d-metric-label">Rented days</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="ov_garage"><div class="d-metric-label">In garage</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="ov_staff"><div class="d-metric-label">Staff use</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="ov_idle"><div class="d-metric-label">Idle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                <td width="330px" valign="top" style="vertical-align: top; padding: 0 !important; margin: 0 !important; background: #ffffff !important; border-right: 1px solid #e1e8ed; height: 100%;">
+                    <div class="sidebar-filters">
+                        <div class="sidebar-scroll-content">
+                            
+                            <div class="filter-card">
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">From Date</td>
+                                        <td><div id="fromdate"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">To Date</td>
+                                        <td><div id="todate"></div></td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="d-chart-row">
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Fleet time allocation (days)</div>
-                                    <div class="d-legend">
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Rented</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#378ADD"></span>Staff</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#EF9F27"></span>Transfer</span>
+
+                            <div class="filter-card" style="padding-top: 5px;">
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="duration" id="rdohours" value="hours"> Hours
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="duration" id="rdodays" value="days" checked> Days
+                                    </label>
+                                </div>
+                            
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">Grouping 1</td>
+                                        <td>
+                                            <select name="grpby1" id="grpby1">
+                                                <option value="">--Select--</option>
+                                                <option value="brand">Brand</option>
+                                                <option value="model">Model</option>
+                                                <option value="group">Group</option>
+                                                <option value="yom">YOM</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Search By</td>
+                                        <td>
+                                            <select name="searchby" id="searchby">
+                                                <option value="">--Select--</option>
+                                                <option value="brand">Brand</option>
+                                                <option value="model">Model</option>
+                                                <option value="group">Group</option>
+                                                <option value="yom">YOM</option>
+                                                <option value="fleet">Fleet</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <div class="button-group" style="margin-top: 10px;">
+                                    <button type="button" id="additem" class="btn-submit" onclick="setSearch();" style="flex: 0.2;">
+                                        +
+                                    </button>
+                                    <button type="button" id="btnremoveitem" class="btn-submit" onclick="setRemove();" style="flex: 0.2;">
+                                        -
+                                    </button>
+                                </div>
+                                
+                                <div style="margin-top: 10px;">
+                                    <textarea id="searchdetails" name="searchdetails" rows="6" readonly placeholder="Selected Criteria..."></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="sidebar-fixed-bottom">
+                                <div class="button-group" style="margin: 0;">
+                                    <button type="button" name="btnclear" id="btnclear" class="btn-submit" onclick="funClearData();">
+                                        Clear
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style="display:none;">
+                                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+                                <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+                                <input type="hidden" name="hidgroup" id="hidgroup">
+                                <input type="hidden" name="hidmodel" id="hidmodel">
+                                <input type="hidden" name="hidyom" id="hidyom">
+                                <input type="hidden" name="hidbrand" id="hidbrand">
+                                <input type="hidden" name="group" id="group">
+                                <input type="hidden" name="model" id="model">
+                                <input type="hidden" name="yom" id="yom">
+                                <input type="hidden" name="brand" id="brand">
+                                <input type="hidden" name="hidfleet" id="hidfleet">
+                                <input type="hidden" name="fleet" id="fleet">
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+
+                <td class="right-panel" valign="top" style="padding: 15px; background: #ffffff !important; height: 100%;">
+                    <div style="display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
+                        
+                        <div style="width: 100%; margin-bottom: 10px; flex-shrink: 0;">
+                            <jsp:include page="../../heading.jsp"></jsp:include>
+                        </div>
+                        
+                        <div id="mainGridDiv" style="flex: 1; overflow: hidden; min-height: 0; background: #fff; display: flex; flex-direction: column; border: 1px solid #e3e8ee; border-radius: 8px;">
+                            
+                            <div style="display:flex; align-items:center; gap:8px; padding:10px 15px; background:#f8fafc; border-bottom:1px solid #e1e8ed; flex-wrap:wrap; flex-shrink: 0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                                <button type="button" id="btnGridView" onclick="showView('grid')" class="view-btn active">Grid View</button>
+                                <button type="button" id="btnDashView" onclick="showView('dashboard')" class="view-btn">Analytics Dashboard</button>
+                                <div style="margin-left:auto; display:flex; gap:8px;">
+                                    <button type="button" onclick="funExportBtn()" class="view-btn" style="background:#2563eb; color:#fff;">Export Excel</button>
+                                    <button type="button" onclick="funreload()" class="view-btn" style="background:#2563eb; color:#fff;">Load / Refresh</button>
+                                </div>
+                            </div>
+
+                            <div style="flex: 1; overflow: auto; background: #fff;">
+                                <div id="vehutilizediv" style="height: 100%;">
+                                    <jsp:include page="vehUtilizeGrid.jsp"></jsp:include>
+                                </div>
+    
+                                <div id="analyticsDashboard" style="display:none; padding:14px 16px; background:#f4f7f9; min-height: 100%;">
+                                    <div id="dashNoData" style="display:none; text-align:center; padding:60px 20px; color:#9a9a9a;">
+                                        <div style="font-size:32px; margin-bottom:10px;">&#128202;</div>
+                                        <div style="font-size:15px; font-weight:600; color:#444;">No Data Loaded</div>
+                                        <div style="font-size:12px; margin-top:6px;">Select filters and click <strong>Load / Refresh</strong> to populate the dashboard.</div>
                                     </div>
-                                    <div style="position:relative;width:100%;height:220px"><canvas id="ch_ov_donut"></canvas></div>
-                                </div>
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Utilisation rate by vehicle group</div>
-                                    <div style="position:relative;width:100%;height:220px"><canvas id="ch_ov_grp"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="d-chart-box" style="margin-bottom:18px">
-                                <div class="d-chart-title">Total live-in by brand (days)</div>
-                                <div id="ov_brandBars" style="padding-top:4px"></div>
-                            </div>
-                        </div>
-
-                        <div id="dp_brand" class="d-panel">
-                            <div class="d-metric-grid">
-                                <div class="d-metric" id="br_largest"><div class="d-metric-label">Largest brand</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="br_bestutil"><div class="d-metric-label">Best utilisation</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="br_garage"><div class="d-metric-label">Most garage time</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="br_idle"><div class="d-metric-label">Most idle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            </div>
-                            <div class="d-chart-row">
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Utilisation % by brand</div>
-                                    <div style="position:relative;width:100%;height:320px"><canvas id="ch_br_bar"></canvas></div>
-                                </div>
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Rented vs garage vs idle by brand</div>
-                                    <div class="d-legend">
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Rented</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
+                                    
+                                    <div id="dashContent">
+                                        <div id="dashLoading" style="display:none;" class="d-loading">Loading analytics&hellip; fetching brand, model, group &amp; YOM data</div>
+                                        
+                                        <div id="dashTabs">
+                                            <div class="d-tabs">
+                                                <div class="d-tab active" id="dt_overview" onclick="switchDashTab('overview')">Overview</div>
+                                                <div class="d-tab" id="dt_brand"   onclick="switchDashTab('brand')">By Brand</div>
+                                                <div class="d-tab" id="dt_model"   onclick="switchDashTab('model')">By Model</div>
+                                                <div class="d-tab" id="dt_yom"     onclick="switchDashTab('yom')">By YOM</div>
+                                                <div class="d-tab" id="dt_group"   onclick="switchDashTab('group')">By Group</div>
+                                                <div class="d-tab" id="dt_lowutil" onclick="switchDashTab('lowutil')">Low Utilisation</div>
+                                            </div>
+    
+                                            <div id="dp_overview" class="d-panel active">
+                                                <div class="d-metric-grid">
+                                                    <div class="d-metric" id="ov_fleet"><div class="d-metric-label">Total fleet</div><div class="d-metric-val">-</div><div class="d-metric-sub">vehicles tracked</div></div>
+                                                    <div class="d-metric" id="ov_util"><div class="d-metric-label">Avg utilisation</div><div class="d-metric-val">-</div><div class="d-metric-sub">rental vs live-in</div></div>
+                                                    <div class="d-metric" id="ov_rented"><div class="d-metric-label">Rented days</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="ov_garage"><div class="d-metric-label">In garage</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="ov_staff"><div class="d-metric-label">Staff use</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="ov_idle"><div class="d-metric-label">Idle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                </div>
+                                                <div class="d-chart-row">
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Fleet time allocation (days)</div>
+                                                        <div class="d-legend">
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Rented</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#378ADD"></span>Staff</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#EF9F27"></span>Transfer</span>
+                                                        </div>
+                                                        <div style="position:relative;width:100%;height:220px"><canvas id="ch_ov_donut"></canvas></div>
+                                                    </div>
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Utilisation rate by vehicle group</div>
+                                                        <div style="position:relative;width:100%;height:220px"><canvas id="ch_ov_grp"></canvas></div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-chart-box" style="margin-bottom:18px">
+                                                    <div class="d-chart-title">Total live-in by brand (days)</div>
+                                                    <div id="ov_brandBars" style="padding-top:4px"></div>
+                                                </div>
+                                            </div>
+    
+                                            <div id="dp_brand" class="d-panel">
+                                                <div class="d-metric-grid">
+                                                    <div class="d-metric" id="br_largest"><div class="d-metric-label">Largest brand</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="br_bestutil"><div class="d-metric-label">Best utilisation</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="br_garage"><div class="d-metric-label">Most garage time</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="br_idle"><div class="d-metric-label">Most idle</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                </div>
+                                                <div class="d-chart-row">
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Utilisation % by brand</div>
+                                                        <div style="position:relative;width:100%;height:320px"><canvas id="ch_br_bar"></canvas></div>
+                                                    </div>
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Rented vs garage vs idle by brand</div>
+                                                        <div class="d-legend">
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Rented</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
+                                                        </div>
+                                                        <div style="position:relative;width:100%;height:320px"><canvas id="ch_br_stacked"></canvas></div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-table-box" id="br_table"></div>
+                                            </div>
+    
+                                            <div id="dp_model" class="d-panel">
+                                                <div class="d-metric-grid">
+                                                    <div class="d-metric" id="mo_largest"><div class="d-metric-label">Largest model</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="mo_second"><div class="d-metric-label">2nd largest</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="mo_bestutil"><div class="d-metric-label">Best util</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="mo_count"><div class="d-metric-label">Total models</div><div class="d-metric-val">-</div><div class="d-metric-sub">unique models</div></div>
+                                                </div>
+                                                <div class="d-chart-box" style="margin-bottom:16px">
+                                                    <div class="d-chart-title">Top 15 models &mdash; utilisation rate (%)</div>
+                                                    <div style="position:relative;width:100%;height:380px"><canvas id="ch_mo_bar"></canvas></div>
+                                                </div>
+                                                <div class="d-chart-box" style="margin-bottom:16px">
+                                                    <div class="d-chart-title">Top 12 models &mdash; rented vs garage vs idle</div>
+                                                    <div class="d-legend">
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#185FA5"></span>Rented</span>
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
+                                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
+                                                    </div>
+                                                    <div style="position:relative;width:100%;height:280px"><canvas id="ch_mo_stacked"></canvas></div>
+                                                </div>
+                                            </div>
+    
+                                            <div id="dp_yom" class="d-panel">
+                                                <div class="d-metric-grid">
+                                                    <div class="d-metric" id="yo_newest"><div class="d-metric-label">Newest year</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="yo_second"><div class="d-metric-label">Previous year</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="yo_older"><div class="d-metric-label">Older fleet</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="yo_oldest"><div class="d-metric-label">Oldest year</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                </div>
+                                                <div class="d-chart-row">
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Fleet live-in by year of manufacture</div>
+                                                        <div style="position:relative;width:100%;height:240px"><canvas id="ch_yo_fleetbar"></canvas></div>
+                                                    </div>
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Utilisation rate by YOM (%)</div>
+                                                        <div style="position:relative;width:100%;height:240px"><canvas id="ch_yo_util"></canvas></div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-chart-box" style="margin-bottom:18px">
+                                                    <div class="d-chart-title">Garage days by YOM (maintenance load)</div>
+                                                    <div style="position:relative;width:100%;height:200px"><canvas id="ch_yo_garage"></canvas></div>
+                                                </div>
+                                                <div class="d-table-box" id="yo_table"></div>
+                                            </div>
+    
+                                            <div id="dp_group" class="d-panel">
+                                                <div id="gr_kpis"></div>
+                                                <div class="d-chart-row">
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Fleet composition by group (live days)</div>
+                                                        <div class="d-legend" id="gr_legend"></div>
+                                                        <div style="position:relative;width:100%;height:240px"><canvas id="ch_gr_donut"></canvas></div>
+                                                    </div>
+                                                    <div class="d-chart-box">
+                                                        <div class="d-chart-title">Utilisation vs garage vs idle vs staff by group</div>
+                                                        <div class="d-legend">
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Rented</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
+                                                            <span class="d-leg-item"><span class="d-leg-sq" style="background:#378ADD"></span>Staff</span>
+                                                        </div>
+                                                        <div style="position:relative;width:100%;height:240px"><canvas id="ch_gr_stacked"></canvas></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <div id="dp_lowutil" class="d-panel">
+                                                <div class="d-metric-grid">
+                                                    <div class="d-metric" id="lu_count"><div class="d-metric-label">Low util vehicles</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="lu_zero"><div class="d-metric-label">Zero utilisation</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="lu_idle"><div class="d-metric-label">Idle days (low util)</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                    <div class="d-metric" id="lu_garage"><div class="d-metric-label">Garage (low util)</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
+                                                </div>
+                                                <div class="d-chart-box" style="margin-bottom:16px">
+                                                    <div class="d-chart-title">Utilisation rate &mdash; all vehicles ranked (each bar = 10% bucket)</div>
+                                                    <div style="position:relative;width:100%;height:200px"><canvas id="ch_lu_dist"></canvas></div>
+                                                </div>
+                                                <div class="d-table-box">
+                                                    <div class="d-chart-title" style="margin-bottom:10px">Vehicles requiring attention (util &lt;50%, sorted worst first)</div>
+                                                    <div id="lu_table"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style="position:relative;width:100%;height:320px"><canvas id="ch_br_stacked"></canvas></div>
                                 </div>
-                            </div>
-                            <div class="d-table-box" id="br_table"></div>
-                        </div>
-
-                        <div id="dp_model" class="d-panel">
-                            <div class="d-metric-grid">
-                                <div class="d-metric" id="mo_largest"><div class="d-metric-label">Largest model</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="mo_second"><div class="d-metric-label">2nd largest</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="mo_bestutil"><div class="d-metric-label">Best util</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="mo_count"><div class="d-metric-label">Total models</div><div class="d-metric-val">-</div><div class="d-metric-sub">unique models</div></div>
-                            </div>
-                            <div class="d-chart-box" style="margin-bottom:16px">
-                                <div class="d-chart-title">Top 15 models &mdash; utilisation rate (%)</div>
-                                <div style="position:relative;width:100%;height:380px"><canvas id="ch_mo_bar"></canvas></div>
-                            </div>
-                            <div class="d-chart-box" style="margin-bottom:16px">
-                                <div class="d-chart-title">Top 12 models &mdash; rented vs garage vs idle</div>
-                                <div class="d-legend">
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#185FA5"></span>Rented</span>
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
-                                    <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
-                                </div>
-                                <div style="position:relative;width:100%;height:280px"><canvas id="ch_mo_stacked"></canvas></div>
-                            </div>
-                        </div>
-
-                        <div id="dp_yom" class="d-panel">
-                            <div class="d-metric-grid">
-                                <div class="d-metric" id="yo_newest"><div class="d-metric-label">Newest year</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="yo_second"><div class="d-metric-label">Previous year</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="yo_older"><div class="d-metric-label">Older fleet</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="yo_oldest"><div class="d-metric-label">Oldest year</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            </div>
-                            <div class="d-chart-row">
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Fleet live-in by year of manufacture</div>
-                                    <div style="position:relative;width:100%;height:240px"><canvas id="ch_yo_fleetbar"></canvas></div>
-                                </div>
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Utilisation rate by YOM (%)</div>
-                                    <div style="position:relative;width:100%;height:240px"><canvas id="ch_yo_util"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="d-chart-box" style="margin-bottom:18px">
-                                <div class="d-chart-title">Garage days by YOM (maintenance load)</div>
-                                <div style="position:relative;width:100%;height:200px"><canvas id="ch_yo_garage"></canvas></div>
-                            </div>
-                            <div class="d-table-box" id="yo_table"></div>
-                        </div>
-
-                        <div id="dp_group" class="d-panel">
-                            <div id="gr_kpis"></div>
-                            <div class="d-chart-row">
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Fleet composition by group (live days)</div>
-                                    <div class="d-legend" id="gr_legend"></div>
-                                    <div style="position:relative;width:100%;height:240px"><canvas id="ch_gr_donut"></canvas></div>
-                                </div>
-                                <div class="d-chart-box">
-                                    <div class="d-chart-title">Utilisation vs garage vs idle vs staff by group</div>
-                                    <div class="d-legend">
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#1D9E75"></span>Rented</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#E24B4A"></span>Garage</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#888780"></span>Idle</span>
-                                        <span class="d-leg-item"><span class="d-leg-sq" style="background:#378ADD"></span>Staff</span>
-                                    </div>
-                                    <div style="position:relative;width:100%;height:240px"><canvas id="ch_gr_stacked"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="dp_lowutil" class="d-panel">
-                            <div class="d-metric-grid">
-                                <div class="d-metric" id="lu_count"><div class="d-metric-label">Low util vehicles</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="lu_zero"><div class="d-metric-label">Zero utilisation</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="lu_idle"><div class="d-metric-label">Idle days (low util)</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                                <div class="d-metric" id="lu_garage"><div class="d-metric-label">Garage (low util)</div><div class="d-metric-val">-</div><div class="d-metric-sub">-</div></div>
-                            </div>
-                            <div class="d-chart-box" style="margin-bottom:16px">
-                                <div class="d-chart-title">Utilisation rate &mdash; all vehicles ranked (each bar = 10% bucket)</div>
-                                <div style="position:relative;width:100%;height:200px"><canvas id="ch_lu_dist"></canvas></div>
-                            </div>
-                            <div class="d-table-box">
-                                <div class="d-chart-title" style="margin-bottom:10px">Vehicles requiring attention (util &lt;50%, sorted worst first)</div>
-                                <div id="lu_table"></div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </div>
+                </td>
+            </tr>
+        </table>
+        
     </div>
-</div>
-</div>
 </div>
 
 <div id="fleetwindow">
