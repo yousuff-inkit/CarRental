@@ -11,74 +11,74 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 
 <style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
 }
 
-/* Sidebar dynamically fills the left TD */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 100%;
+    width: 280px; /* Uniform width across pages */
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; 
 }
 
+/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
     border-radius: 12px;
-    padding: 12px;
+    padding: 15px;
     margin-bottom: 12px;
 }
 
+/* Tables */
 .filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
-    width: 80px;
+    font-weight: 600;
+    width: 80px; 
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
+    height: 24px;              
+    padding: 2px 8px;          
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;       
+    font-size: 12px;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
@@ -89,6 +89,7 @@ input[type="text"], select {
 input[readonly], input:disabled, select:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
+    border-color: #e1e8ed;
     cursor: pointer;
 }
 
@@ -113,22 +114,34 @@ input[type="checkbox"] {
     margin-bottom: 5px;
 }
 
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
+/* jqx date container */
+.filter-table div[id^="fromdate"], .filter-table div[id^="todate"] {
     width: 100%;
+}
+
+/* ===== RIGHT CONTENT AREA (Dynamically fills screen) ===== */
+.main-content-area {
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
-.scrollable-grid-area {
+.grid-content-container {
     flex: 1;
-    width: 100%;
-    overflow: auto;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 </style>
 
@@ -226,104 +239,81 @@ function increcvcheck(){
 <body onload="getBranch();hiddenbrh();increcvcheck();">
 
 <div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
-<div class="master-container">
+    <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                
+                <div class="filter-card">
+                    <table class="filter-table">
+                        <tr>
+                            <td class="label-cell">From</td>
+                            <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">To</td>
+                            <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="height: 10px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Fleet</td>
+                            <td>
+                                <input type="text" name="fleetno" id="fleetno" readonly
+                                       placeholder="Press F3 to Search"
+                                       value='<s:property value="fleetno"/>'
+                                       onkeyup="getFleet(event);">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <div class="checkbox-wrap">
+                                    <input type="checkbox" id="chckincrecv" name="chckincrecv" 
+                                           onchange="increcvcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
+                                    <label for="chckincrecv">Including Received</label>
+                                </div>
+                                <input type="hidden" id="hidchckincrecv" name="hidchckincrecv" value='<s:property value="hidchckincrecv"/>'>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+                <div style="margin-top: 15px;">
+                    <div id="Readygrid">
+                        <jsp:include page="subgrid.jsp"></jsp:include>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="sidebar-scroll-content">
+        <div class="main-content-area">
             
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">From</td>
-                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">To</td>
-                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 10px;"></td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Fleet</td>
-                        <td>
-                            <input type="text" name="fleetno" id="fleetno" readonly
-                                   placeholder="Press F3 to Search"
-                                   value='<s:property value="fleetno"/>'
-                                   onkeyup="getFleet(event);">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <div class="checkbox-wrap">
-                                <input type="checkbox" id="chckincrecv" name="chckincrecv" 
-                                       onchange="increcvcheck();" onclick="$(this).attr('value', this.checked ? 1 : 0)">
-                                <label for="chckincrecv">Including Received</label>
-                            </div>
-                            <input type="hidden" id="hidchckincrecv" name="hidchckincrecv" value='<s:property value="hidchckincrecv"/>'>
-                        </td>
-                    </tr>
-                </table>
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
             </div>
 
-            <!-- Sub Grid Details Area -->
-            <div style="margin-top: 15px;">
-                <div id="Readygrid">
-                    <jsp:include page="subgrid.jsp"></jsp:include>
+            <div class="grid-content-container">
+                <div id="fleetdiv">
+                    <jsp:include page="detailsgrid.jsp"></jsp:include>
                 </div>
             </div>
 
         </div>
+
     </div>
-</td>
-
-<!-- ================= RIGHT SIDE (GRID) ================= -->
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            
-            <table width="100%" id="grid1">
-            <tr>
-                <td>
-                    <div id="fleetdiv">
-                        <jsp:include page="detailsgrid.jsp"></jsp:include>
-                    </div>
-                </td>
-            </tr>
-            </table>
-
-        </div>
-    </div>
-</td>
-
-</tr>
-</table>
-
-</div>
 </div>
 
-<!-- HIDDEN FIELDS -->
 <div style="display:none;">
     <input type="hidden" id="chkdatails" name="chkdatails" value='<s:property value="chkdatails"/>'>
     <input type="hidden" id="emptype" value='<s:property value="chkdatails"/>'>
     <input type="hidden" id="empname" value='<s:property value="chkdatails"/>'>
 </div>
 
-<!-- POPUPS -->
 <div id="fleetwindow">
     <div></div><div></div>
 </div>
 
-</div>
 </body>
 </html>

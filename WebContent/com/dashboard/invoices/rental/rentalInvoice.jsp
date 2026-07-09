@@ -10,88 +10,96 @@
         <title>GatewayERP(i)</title>
     
         <style type="text/css">
-        /* ===== MASTER LAYOUT ===== */
-        html, body, #mainBG, .hidden-scrollbar {
+        /* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+        html, body, #mainBG {
             height: 100%;
             margin: 0;
             overflow: hidden;
+            background-color: #f4f7f9;
         }
 
         .master-container {
             display: flex;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            background-color: #f4f7f9;
         }
 
-        /* Sidebar dynamically fills the left TD */
+        /* ===== LEFT SIDEBAR ===== */
         .sidebar-filters {
-            width: 100%;
+            width: 280px;
+            flex: 0 0 280px; 
             background: #fff;
             border-right: 1px solid #e1e8ed;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
             box-shadow: 2px 0 8px rgba(0,0,0,.05);
+            z-index: 10;
         }
 
-        .sidebar-fixed-top {
-            padding: 15px 20px;
-            border-bottom: 1px solid #f0f4f8;
-        }
-
-        /* Flex 1 allows this middle section to scroll while keeping top fixed */
         .sidebar-scroll-content {
             flex: 1;
             overflow-y: auto;
-            padding: 15px 20px 15px; 
+            padding: 15px 15px 25px;
         }
 
+        /* Cards */
         .filter-card {
             background: #f8fafc;
             border: 1px solid #e3e8ee;
             border-radius: 12px;
-            padding: 12px;
+            padding: 15px;
             margin-bottom: 12px;
         }
 
+        /* Tables inside Cards */
         .filter-table {
             width: 100%;
             border-spacing: 0 10px;
         }
 
-        .label-cell {
+        .filter-table .label-cell {
             text-align: right;
-            padding-right: 12px;
-            font-size: 12px; 
-            font-weight: 600;
+            padding-right: 10px;
+            font-size: 12px;
             color: #4e5e71;
+            font-weight: 600;
             width: 80px;
         }
 
-        /* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
-        input[type="text"], select, textarea {
+        /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+        input[type="text"], select,
+        .filter-table input[type="text"],
+        .filter-table select {
             width: 100%;
-            height: 24px !important;             
-            padding: 2px 8px !important;         
-            border: 1px solid #ccd6e0 !important;
-            border-radius: 4px !important;       
-            font-size: 12px !important;          
+            height: 24px;              
+            padding: 2px 8px;          
+            border: 1px solid #ccd6e0;
+            border-radius: 4px;        
+            font-size: 12px;          
             background-color: #ffffff;
             box-sizing: border-box;
             color: #333;
             outline: none;
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
         }
 
-        input[readonly], input:disabled, select:disabled {
+        /* Readonly / disabled look */
+        input[readonly], input:disabled, 
+        .filter-table input[readonly], 
+        .filter-table input:disabled {
             background-color: #f3f6f9 !important;
             color: #555;
-            cursor: pointer;
+            border-color: #e1e8ed;
+            cursor: default;
         }
 
-        /* Fieldsets & Radios */
+        /* jqx date/time containers */
+        #periodupto {
+            width: 100%;
+        }
+
+        /* Fieldsets & Radios (Specific to this page) */
         fieldset {
             border: 1px solid #ccd6e0;
             border-radius: 6px;
@@ -126,52 +134,77 @@
             gap: 5px;
         }
 
-        /* Buttons */
-        .btn-submit, .myButton {
+        /* ===== BUTTONS ===== */
+        .btn-submit {
             flex: 1;
-            height: 30px !important;            
-            padding: 0 5px !important;
-            background: #2563eb !important;
-            color: #fff !important;
-            border: none !important;
-            border-radius: 4px !important;
-            font-size: 12px !important;
-            font-weight: 600 !important;
+            height: 30px;            
+            padding: 0 12px;          
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 4px;      
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
-            line-height: 30px !important;
+            line-height: 30px;        
+            transition: background 0.2s;
             text-align: center;
-            transition: all 0.2s ease;
-            width: 100%;
         }
 
-        .btn-submit:hover, .myButton:hover { background: #1d4ed8 !important; }
+        .btn-submit:hover {
+            background: #1d4ed8;
+        }
 
-        /* Layout Utilities */
-        .main-content-wrapper {
+        .btn-submit:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /* ===== RIGHT CONTENT AREA ===== */
+        .main-content-area {
             flex: 1;
-            width: 100%;
             display: flex;
             flex-direction: column;
-            padding: 15px 20px;
-            background: #fff;
-            height: 100vh;
+            background: #ffffff;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .top-toolbar-container {
+            width: 100%;
+            padding: 10px 15px;
+            background: #ffffff;
+            border-bottom: 1px solid #e1e8ed;
             box-sizing: border-box;
         }
 
-        .scrollable-grid-area {
+        .grid-content-container {
             flex: 1;
-            width: 100%;
+            padding: 15px;
             overflow: auto;
+            box-sizing: border-box;
         }
-
-        #delupdiv { width: 100%; }
+        
+        #Readygrid {
+            margin-top: 10px; 
+            border: 1px solid #e3e8ee; 
+            border-radius: 8px; 
+            overflow: hidden;
+        }
         </style>
         
         <script type="text/javascript">
             $(document).ready(function () {
                 document.getElementById("btninvoicesave").style.display="none";
                 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
-                $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:200px;right:600px;'><img src='../../../../icons/31load.gif'/></div>");    
+                $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:200px;right:600px;'><img src='../../../../icons/31load.gif'/></div>");   
                 
                 // Standardize jqxDateTimeInput
                 $("#periodupto").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
@@ -492,113 +525,102 @@
     <body onload="getBranch();setValues();">
         <form id="frmDashboardRentalInvoice" action="saveDashboardRentalInvoice" method="post">
             <div id="mainBG" class="homeContent"> 
-                <div class='hidden-scrollbar'>
-                    <div class="master-container">
-                    
-                        <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
+                <div class="master-container">
 
-                        <!-- ================= LEFT SIDEBAR ================= -->
-                        <td width="330px" valign="top">
-                            <div class="sidebar-filters">
-                                <div class="sidebar-fixed-top">
-                                    <jsp:include page="../../heading.jsp"></jsp:include>
-                                </div>
+                    <!-- ================= LEFT SIDEBAR ================= -->
+                    <div class="sidebar-filters">
+                        <div class="sidebar-scroll-content">
+                            <div class="filter-card">
+                                <table class="filter-table">
+                                    <tr class="tr-futuredate" hidden="true">
+                                        <td colspan="2" align="right">
+                                            <label class="branch" for="chkfuturedate">
+                                                <input type="checkbox" id="chkfuturedate" name="chkfuturedate" onchange="setFutureDate();"> Future Date Invoicing
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Period Upto</td>
+                                        <td><div id="periodupto"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Client</td>
+                                        <td><input type="text" name="client" id="client" placeholder="Press F3 to Search" onkeydown="getClient(event);" readonly value='<s:property value="client"/>'></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="right">
+                                            <label class="branch" for="chkall">
+                                                <input type="checkbox" name="chkall" id="chkall" onchange="setAll();"> All
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
 
-                                <div class="sidebar-scroll-content">
-                                    <div class="filter-card">
-                                        <table class="filter-table">
-                                            <tr class="tr-futuredate" hidden="true">
-                                                <td colspan="2" align="right">
-                                                    <label class="branch" for="chkfuturedate">
-                                                        <input type="checkbox" id="chkfuturedate" name="chkfuturedate" onchange="setFutureDate();"> Future Date Invoicing
-                                                    </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Period Upto</td>
-                                                <td><div id="periodupto"></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Client</td>
-                                                <td><input type="text" name="client" id="client" placeholder="Press F3 to Search" onkeydown="getClient(event);" readonly value='<s:property value="client"/>'></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" align="right">
-                                                    <label class="branch" for="chkall">
-                                                        <input type="checkbox" name="chkall" id="chkall" onchange="setAll();"> All
-                                                    </label>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <fieldset>
-                                            <legend>Separate Invoice</legend>
-                                            <div style="display: flex; justify-content: space-around; gap: 10px;">
-                                                <label class="branch"><input type="radio" name="chksalik" id="chksalik" onChange="setSalik();"> Salik</label>
-                                                <label class="branch"><input type="radio" name="chktraffic" id="chktraffic" onchange="setTraffic();"> Traffic</label>
-                                            </div>
-                                        </fieldset>
-
-                                        <fieldset>
-                                            <legend>Not To Be Invoiced</legend>
-                                            <div style="display: flex; justify-content: space-around; gap: 10px;">
-                                                <label class="branch"><input type="radio" name="chksalik" id="chkexsalik" onChange="setSalik();"> Salik</label>
-                                                <label class="branch"><input type="radio" name="chktraffic" id="chkextraffic" onchange="setTraffic();"> Traffic</label>
-                                            </div>
-                                        </fieldset>
+                                <fieldset>
+                                    <legend>Separate Invoice</legend>
+                                    <div style="display: flex; justify-content: space-around; gap: 10px;">
+                                        <label class="branch"><input type="radio" name="chksalik" id="chksalik" onChange="setSalik();"> Salik</label>
+                                        <label class="branch"><input type="radio" name="chktraffic" id="chktraffic" onchange="setTraffic();"> Traffic</label>
                                     </div>
+                                </fieldset>
 
-                                    <div id="Readygrid" style="margin-top: 10px; border: 1px solid #e3e8ee; border-radius: 8px; overflow: hidden;">
-                                        <jsp:include page="invnoGrid.jsp"></jsp:include>
+                                <fieldset>
+                                    <legend>Not To Be Invoiced</legend>
+                                    <div style="display: flex; justify-content: space-around; gap: 10px;">
+                                        <label class="branch"><input type="radio" name="chksalik" id="chkexsalik" onChange="setSalik();"> Salik</label>
+                                        <label class="branch"><input type="radio" name="chktraffic" id="chkextraffic" onchange="setTraffic();"> Traffic</label>
                                     </div>
-
-                                    <div style="margin-top: 15px; display: flex; gap: 8px;">
-                                        <input type="button" name="btnclear" id="btnclear" class="myButton" value="Clear" onclick="funClear();" style="background:#64748b !important;">
-                                        <input type="button" name="btninvoicesave" id="btninvoicesave" class="myButton" value="Generate" onclick="funNotify();">
-                                    </div>
-
-                                    <!-- HIDDEN FIELDS -->
-                                    <div style="display:none;">
-                                        <input type="hidden" name="hidchkall" id="hidchkall" value='<s:property value="hidchkall"/>'>
-                                        <input type="hidden" name="hidchksalik" id="hidchksalik" value='<s:property value="hidchksalik"/>'>
-                                        <input type="hidden" name="hidchktraffic" id="hidchktraffic" value='<s:property value="hidchktraffic"/>'>
-                                        <input type="hidden" name="hidchkexsalik" id="hidchkexsalik" value='<s:property value="hidchkexsalik"/>'>
-                                        <input type="hidden" name="hidchkextraffic" id="hidchkextraffic" value='<s:property value="hidchkextraffic"/>'>
-                                        <input type="hidden" name="hidclient" id="hidclient" >
-                                        <input type="hidden" name="hidchkfuturedate" id="hidchkfuturedate" value='<s:property value="hidchkfuturedate"/>'>
-                                        <input type="hidden" name="gridlength" id="gridlength" >
-                                        <input type="hidden" name="invgridlength" id="invgridlength" >
-                                        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-                                        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-                                    </div>
-                                </div>
+                                </fieldset>
                             </div>
-                        </td>
 
-                        <!-- ================= RIGHT SIDE (GRID) ================= -->
-                        <td valign="top">
-                            <div class="main-content-wrapper">
-                                <div class="scrollable-grid-area">
-                                    <div id="imgdiv" style="text-align: center;">
-                                        <img id="imgloading" alt="Loading..." src="../../../../icons/29load.gif"/>
-                                    </div>
-                                    
-                                    <div id="rentalinvoicediv">
-                                        <jsp:include page="rentalInvoiceGrid.jsp"></jsp:include>
-                                    </div>
-                                </div>
+                            <div id="Readygrid">
+                                <jsp:include page="invnoGrid.jsp"></jsp:include>
                             </div>
-                        </td>
 
-                        </tr>
-                        </table>
+                            <div class="action-buttons">
+                                <input type="button" name="btnclear" id="btnclear" class="btn-submit" value="Clear" onclick="funClear();" style="background:#64748b !important;">
+                                <input type="button" name="btninvoicesave" id="btninvoicesave" class="btn-submit" value="Generate" onclick="funNotify();">
+                            </div>
 
+                            <!-- HIDDEN FIELDS -->
+                            <div style="display:none;">
+                                <input type="hidden" name="hidchkall" id="hidchkall" value='<s:property value="hidchkall"/>'>
+                                <input type="hidden" name="hidchksalik" id="hidchksalik" value='<s:property value="hidchksalik"/>'>
+                                <input type="hidden" name="hidchktraffic" id="hidchktraffic" value='<s:property value="hidchktraffic"/>'>
+                                <input type="hidden" name="hidchkexsalik" id="hidchkexsalik" value='<s:property value="hidchkexsalik"/>'>
+                                <input type="hidden" name="hidchkextraffic" id="hidchkextraffic" value='<s:property value="hidchkextraffic"/>'>
+                                <input type="hidden" name="hidclient" id="hidclient" >
+                                <input type="hidden" name="hidchkfuturedate" id="hidchkfuturedate" value='<s:property value="hidchkfuturedate"/>'>
+                                <input type="hidden" name="gridlength" id="gridlength" >
+                                <input type="hidden" name="invgridlength" id="invgridlength" >
+                                <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+                                <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <!-- POPUP -->
-                    <div id="clientwindow"><div></div></div>
+
+                    <!-- ================= RIGHT SIDE (GRID) ================= -->
+                    <div class="main-content-area">
+                        <!-- Toolbar/Heading (Moved from Sidebar) -->
+                        <div class="top-toolbar-container">
+                            <jsp:include page="../../heading.jsp"></jsp:include>
+                        </div>
+                        
+                        <div class="grid-content-container">
+                            <div id="imgdiv" style="text-align: center;">
+                                <img id="imgloading" alt="Loading..." src="../../../../icons/29load.gif"/>
+                            </div>
+                            
+                            <div id="rentalinvoicediv">
+                                <jsp:include page="rentalInvoiceGrid.jsp"></jsp:include>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+                
+                <!-- POPUP -->
+                <div id="clientwindow"><div></div></div>
             </div>
         </form>
     </body>

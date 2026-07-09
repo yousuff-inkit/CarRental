@@ -304,7 +304,7 @@ function funExportBtn(){
     JSONToCSVCon(exceldatas, 'Salik Unallocated', true);
 }
 
-function funreload(event) {     
+function funreload() {     
     var val = "2";
     var uptodate = $("#uptodate").val();
     var fromdate = $("#fromdate").val();
@@ -359,22 +359,22 @@ function ajaxcall(saveval, regno, tagno){
             
             if(parseInt(itemval) == "10") {
                 $.messager.alert('Message', 'Allocation Not Processed');
-                funreload(event);
+                funreload();
                 $("#hidediv").hide();
             } else if(parseInt(itemval) == "11") {
                 $.messager.alert('Message', ' Record Successfully Allocated ');
                 var val = "10";
                 var uptodate = $("#uptodate").val();
-                var regno = $("#regno").val();
-                var tagno = $("#tagno").val();
+                var regno_val = $("#regno").val();
+                var tagno_val = $("#tagno").val();
                 var fromdate = $("#fromdate").val();
                 var hidchkdate = $("#hidchkdate").val();
                 
-                $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate+'&regno='+regno+'&tagno='+tagno+'&fromdate='+fromdate+'&hidchkdate='+hidchkdate);
+                $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate+'&regno='+regno_val+'&tagno='+tagno_val+'&fromdate='+fromdate+'&hidchkdate='+hidchkdate);
                 $("#hidediv").hide();
             } else {
                 $.messager.alert('Message', ' Not Allocated ');
-                funreload(event);
+                funreload();
                 $("#hidediv").hide();
             }
         }
@@ -474,7 +474,7 @@ function doprocess() {
                 $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate);
                 $("#hidediv").hide();
                 dis();
-                funreload(event);
+                funreload();
             } else {
                 $.messager.alert('Message', ' Not Allocated ');
                 $("#hidediv").hide();
@@ -527,7 +527,6 @@ function funchange(){
 <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 
-<!-- ================= LEFT SIDEBAR ================= -->
 <td width="330px" valign="top">
     <div class="sidebar-filters">
         <div class="sidebar-fixed-top">
@@ -540,7 +539,6 @@ function funchange(){
                 Total Saliks Allocated: <span class="currentsalikallocated"></span>
             </div>
 
-            <!-- Card 1: Search Filters -->
             <div class="filter-card">
                 <div class="card-title">Search Filters</div>
                 
@@ -602,7 +600,6 @@ function funchange(){
                 </div>
             </div>
 
-            <!-- Card 2: Manual Allocation -->
             <div class="filter-card">
                 <div class="card-title">Manual Allocation</div>
                 
@@ -659,7 +656,6 @@ function funchange(){
     </div>
 </td>
 
-<!-- ================= RIGHT SIDE (GRID) ================= -->
 <td valign="top">
     <div class="main-content-wrapper">
         <div class="scrollable-grid-area">
@@ -675,7 +671,6 @@ function funchange(){
 </tr>
 </table>
 
-<!-- HIDDEN FIELDS & LOADERS -->
 <div style="display:none;">
     <input type="hidden" id="gridlength" name="gridlength">
     <input type="hidden" id="rentaldoc" name="rentaldoc">
@@ -689,14 +684,28 @@ function funchange(){
     <img src="<%=contextPath%>/icons/31load.gif">
 </div>
 
-<!-- POPUPS -->
-<div id="regwindow"><div></div></div>
-<div id="tagwindow"><div></div></div>
-<div id="fleetwindow"><div></div></div>
-<div id="commonwindow"><div></div></div>
-<div id="commonwindow1"><div></div></div>
+<div id="regwindow">
+    <div>Reg No Search</div>
+    <div></div>
+</div>
+<div id="tagwindow">
+    <div>Tag No Search</div>
+    <div></div>
+</div>
+<div id="fleetwindow">
+    <div>Fleet Search</div>
+    <div></div>
+</div>
+<div id="commonwindow">
+    <div>Search</div>
+    <div></div>
+</div>
+<div id="commonwindow1">
+    <div>Details</div>
+    <div></div>
+</div>
 
 </div>
 </div>
-</body>
+</div> </body>
 </html>
