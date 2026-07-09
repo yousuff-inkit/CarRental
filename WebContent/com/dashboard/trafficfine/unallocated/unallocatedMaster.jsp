@@ -1,711 +1,731 @@
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GatewayERP(i)</title>
 
-<style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-.master-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
-}
-
-/* Sidebar dynamically fills the left TD */
-.sidebar-filters {
-    width: 100%;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top fixed */
-.sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px 20px 15px; 
-}
-
-.filter-card {
-    background: #f8fafc;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
-
-.filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
-
-.label-cell {
-    text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
-    color: #4e5e71;
-    width: 80px;
-}
-
-.card-title {
-    font-size: 13px;
-    font-weight: bold;
-    color: #2563eb;
-    margin-bottom: 12px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #e3e8ee;
-    text-transform: uppercase;
-}
-
-/* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
-input[type="text"], select {
-    width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-}
-
-select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 6px center;
-    background-size: 12px;
-}
-
-input[readonly], input:disabled, select:disabled {
-    background-color: #f3f6f9 !important;
-    color: #555;
-    cursor: pointer;
-}
-
-input[type="checkbox"] {
-    margin: 0;
-    cursor: pointer;
-    width: 14px;
-    height: 14px;
-    vertical-align: middle;
-}
-
-.checkbox-wrap {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-}
-
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 5px;
-}
-
-.btn-submit {
-    flex: 1;
-    height: 30px !important;            
-    padding: 0 5px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.btn-submit:hover { background: #1d4ed8 !important; }
-
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
-}
-
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-}
-
-/* Animations */
-@keyframes blink { 0%{opacity: 0;} 50%{opacity: .5;} 100%{opacity: 1;} }
-.salikallocatecount { 
-    font-size: 12px; 
-    color: #d32f2f; 
-    font-weight: bold; 
-    margin-bottom: 10px; 
-    padding: 0 5px;
-    animation: blink 1s linear infinite; 
-}
-</style>
-  
-<script type="text/javascript">
-$(document).ready(function () {
-    // Standardize jqxDateTimeInputs
-    $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
-    $("#uptodate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
-
-    $("#cmbbranch").attr('hidden',true);
-    funchange();
-    $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
-    $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
-    
-    $("#hidediv").hide();
-      
-    $('#regwindow').jqxWindow({ width: '30%', height: '65%', maxHeight: '85%' ,maxWidth: '80%' ,title: 'Reg No Search' , position: { x: 200, y: 60 }, keyboardCloseKey: 27});
-    $('#regwindow').jqxWindow('close');
-    $('#tagwindow').jqxWindow({ width: '30%', height: '65%', maxHeight: '85%' ,maxWidth: '80%' ,title: 'Tag No Search' , position: { x: 200, y: 60 }, keyboardCloseKey: 27});
-    $('#tagwindow').jqxWindow('close');
-    $('#fleetwindow').jqxWindow({ width: '30%', height: '60%', maxHeight: '62%' ,maxWidth: '60%' , title: 'Fleet Search' ,position: { x: 250, y: 120 }, keyboardCloseKey: 27});
-    $('#fleetwindow').jqxWindow('close');
-    $('#commonwindow1').jqxWindow({width: '71%', height: '70%', maxHeight: '70%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
-    $('#commonwindow1').jqxWindow('close');
-    $('#commonwindow').jqxWindow({ width: '20%', height: '60%', maxHeight: '62%' ,maxWidth: '60%' , title: 'Search' ,position: { x: 250, y: 120 }, keyboardCloseKey: 27});
-    $('#commonwindow').jqxWindow('close');
-   
-    $('#regno').dblclick(function(){
-        $('#regwindow').jqxWindow('open');
-        ragnoContent('regnosearch.jsp?', $('#regwindow')); 
-    });
-        
-    $('#tagno').dblclick(function(){
-        $('#tagwindow').jqxWindow('open');
-        tagnoContent('tagnosearch.jsp?', $('#tagwindow')); 
-    });
-
-    $('#fleet_no').dblclick(function(){
-        $('#fleetwindow').jqxWindow('open');
-        fleetSearchContent('fleetsearch.jsp?id=1', $('#fleetwindow')); 
-    });
-        
-    $('#typesearch').dblclick(function(){
-        if(document.getElementById("trftype").value=="RAG"){
-            $('#commonwindow1').jqxWindow('open');
-            raSearchContent('ramasterSearch.jsp'); 
+        <style type="text/css">
+        /* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+        html, body, #mainBG {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f4f7f9;
         }
-        else if(document.getElementById("trftype").value=="LAG"){
-            $('#commonwindow1').jqxWindow('open');
-            raSearchContent('lamasterSearch.jsp'); 
+
+        .master-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
         }
-        else if(document.getElementById("trftype").value=="DRV" || document.getElementById("trftype").value=="STF"){
-            $('#commonwindow').jqxWindow('open');
-            SearchContent('searchdrvandstaff.jsp?id=1&values='+document.getElementById("trftype").value); 
+
+        /* ===== LEFT SIDEBAR ===== */
+        .sidebar-filters {
+            width: 280px;
+            flex: 0 0 280px; 
+            background: #fff;
+            border-right: 1px solid #e1e8ed;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 2px 0 8px rgba(0,0,0,.05);
+            z-index: 10;
         }
-    });
-});
 
-function SearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#commonwindow').jqxWindow('open');
-        $('#commonwindow').jqxWindow('setContent', data);
-    }); 
-} 
-
-function raSearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#commonwindow1').jqxWindow('open');
-        $('#commonwindow1').jqxWindow('setContent', data);
-    }); 
-} 
-
-function getfleet(event){
-    var x = event.keyCode;
-    if(x == 114){
-        $('#fleetwindow').jqxWindow('open');
-        fleetSearchContent('fleetsearch.jsp?id=1', $('#fleetwindow'));
-    } 
-} 
-
-function fleetSearchContent(url) {
-    $.get(url).done(function (data) {
-        $('#fleetwindow').jqxWindow('open');
-        $('#fleetwindow').jqxWindow('setContent', data);
-    }); 
-}
-
-function ragnoContent(url) {
-    $.get(url).done(function (data) {
-        $('#regwindow').jqxWindow('open');
-        $('#regwindow').jqxWindow('setContent', data);
-    }); 
-} 
-
-function getregno(event){
-    var x = event.keyCode;
-    if(x == 114){
-        $('#regwindow').jqxWindow('open');
-        ragnoContent('regnosearch.jsp?', $('#regwindow'));     
-    }
-}
-
-function tagnoContent(url) {
-    $.get(url).done(function (data) {
-        $('#tagwindow').jqxWindow('open');
-        $('#tagwindow').jqxWindow('setContent', data);
-    }); 
-} 
-
-function gettagno(event){
-    var x = event.keyCode;
-    if(x == 114){
-        $('#tagwindow').jqxWindow('open');
-        tagnoContent('tagnosearch.jsp?', $('#tagwindow'));      
-    }
-}
-
-function funExportBtn(){
-    JSONToCSVCon(exceldatas, 'Salik Unallocated', true);
-}
-
-function funreload() {     
-    var val = "2";
-    var uptodate = $("#uptodate").val();
-    var fromdate = $("#fromdate").val();
-    var hidchkdate = $("#hidchkdate").val();
-    
-    var regno = $("#regno").val();
-    var tagno = $("#tagno").val();
-    var saliktype = $('#cmbsaliktype').val();
-    
-    $("#overlay, #PleaseWait").show();
-    $("#allodiv").load("allocatelistGrid.jsp?saliktype="+saliktype+"&chval="+val+"&uptodate="+uptodate+'&regno='+regno+'&tagno='+tagno+'&fromdate='+fromdate+'&hidchkdate='+hidchkdate);
-}
-    
-function hiddenbrh(){
-    $("#branchlabel").attr('hidden',true);
-    $("#branchdiv").attr('hidden',true);
-    $('#gridlength').val(""); 
-}
-    
-function funallocate() {
-    $.messager.confirm('Message', 'Do you want to Allocate?', function(r){
-        if(r == false) {
-            return false; 
-        } else {
-            $("#hidediv").show();
-            var saveval = "10";
-            var regno = document.getElementById('regno').value;
-            var tagno = document.getElementById('tagno').value;
-            ajaxcall(saveval, regno, tagno);
+        .sidebar-scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 15px 25px;
         }
-    });
-}
-    
-function ajaxcall(saveval, regno, tagno){
-    var saliktype = $('#cmbsaliktype').val();
-    $('.salikallocatecount').show();
-    
-    const interval = setInterval(function() {
-        $.get('getAllocateCount.jsp',function(data){
-            data = JSON.parse(data);
-            $('.currentsalikallocated').text(data.currentcount);
-        });             
-    }, 5000);
-    
-    var x = new XMLHttpRequest();
-    x.onreadystatechange = function(){
-        if (x.readyState == 4 && x.status == 200) {
-            var items = x.responseText;
-            var itemval = items.trim();
-            clearInterval(interval);
-            $('.salikallocatecount').hide();
+
+        /* Cards */
+        .filter-card {
+            background: #f8fafc;
+            border: 1px solid #e3e8ee;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e3e8ee;
+            text-transform: uppercase;
+        }
+
+        /* Tables inside Cards */
+        .filter-table {
+            width: 100%;
+            border-spacing: 0 10px;
+        }
+
+        .filter-table .label-cell {
+            text-align: right;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #4e5e71;
+            font-weight: 600;
+            width: 80px;
+        }
+
+        /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+        input[type="text"], select,
+        .filter-table input[type="text"],
+        .filter-table select {
+            width: 100%;
+            height: 24px !important;              
+            padding: 2px 8px !important;          
+            border: 1px solid #ccd6e0 !important;
+            border-radius: 4px !important;        
+            font-size: 12px !important;          
+            background-color: #ffffff;
+            box-sizing: border-box;
+            color: #333;
+            outline: none;
+        }
+
+        select {
+            padding: 2px 24px 2px 8px !important; 
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            background-size: 12px;
+        }
+
+        /* Readonly / disabled look */
+        input[readonly], input:disabled, 
+        .filter-table input[readonly], 
+        .filter-table input:disabled {
+            background-color: #f3f6f9 !important;
+            color: #555;
+            border-color: #e1e8ed !important;
+            cursor: default;
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            margin: 0;
+            cursor: pointer;
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+        }
+
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4e5e71;
+            cursor: pointer;
+        }
+
+        /* jqx date/time containers */
+        #fromdate, #uptodate {
+            width: 100%;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-submit {
+            flex: 1;
+            height: 30px !important;            
+            padding: 0 5px !important;          
+            background: #2563eb !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 4px !important;      
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            line-height: 30px !important;        
+            transition: background 0.2s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background: #1d4ed8 !important;
+        }
+
+        .btn-submit:disabled {
+            background: #9ca3af !important;
+            cursor: not-allowed;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /* ===== RIGHT CONTENT AREA ===== */
+        .main-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .top-toolbar-container {
+            width: 100%;
+            padding: 10px 15px;
+            background: #ffffff;
+            border-bottom: 1px solid #e1e8ed;
+            box-sizing: border-box;
+        }
+
+        .grid-content-container {
+            flex: 1;
+            padding: 15px;
+            overflow: auto;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Loader Positioning */
+        #PleaseWait, #hidediv {
+            position: absolute !important;
+            z-index: 1002;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animations */
+        @keyframes blink { 0%{opacity: 0;} 50%{opacity: .5;} 100%{opacity: 1;} }
+        .salikallocatecount { 
+            font-size: 12px; 
+            color: #d32f2f; 
+            font-weight: bold; 
+            margin-bottom: 10px; 
+            padding: 0 5px;
+            animation: blink 1s linear infinite; 
+        }
+        </style>
+          
+        <script type="text/javascript">
+        $(document).ready(function () {
+            // Standardize jqxDateTimeInputs
+            $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+            $("#uptodate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+
+            $("#cmbbranch").attr('hidden',true);
+            funchange();
+            $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+            $("body").prepend("<div id='PleaseWait' style='display: none;'><img src='../../../../icons/31load.gif'/></div>");
             
-            if(parseInt(itemval) == "10") {
-                $.messager.alert('Message', 'Allocation Not Processed');
-                funreload();
-                $("#hidediv").hide();
-            } else if(parseInt(itemval) == "11") {
-                $.messager.alert('Message', ' Record Successfully Allocated ');
-                var val = "10";
-                var uptodate = $("#uptodate").val();
-                var regno_val = $("#regno").val();
-                var tagno_val = $("#tagno").val();
-                var fromdate = $("#fromdate").val();
-                var hidchkdate = $("#hidchkdate").val();
-                
-                $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate+'&regno='+regno_val+'&tagno='+tagno_val+'&fromdate='+fromdate+'&hidchkdate='+hidchkdate);
-                $("#hidediv").hide();
-            } else {
-                $.messager.alert('Message', ' Not Allocated ');
-                funreload();
-                $("#hidediv").hide();
-            }
-        }
-    }
-    x.open("GET","savedata.jsp?saliktype="+saliktype+"&saveval="+saveval+"&regno="+regno+"&tagno="+tagno+"&uptodate="+$('#uptodate').jqxDateTimeInput('val')+"&fromdate="+$('#fromdate').jqxDateTimeInput('val')+"&hidchkdate="+$("#hidchkdate").val());
-    x.send();
-}
-
-function funcleardata() {
-    document.getElementById("regno").value = "";
-    document.getElementById("tagno").value = "";
-    if (document.getElementById("regno").value == "") {
-        $('#regno').attr('placeholder', 'Press F3 TO Search'); 
-    }
-    if (document.getElementById("tagno").value == "") {
-        $('#tagno').attr('placeholder', 'Press F3 TO Search'); 
-    }
-}
-        
-function getAllocateBranch() {
-    var x = new XMLHttpRequest();
-    x.onreadystatechange = function() {
-        if (x.readyState == 4 && x.status == 200) {
-            var items = x.responseText.trim().split('####');
-            var optionsbranch = "";
-            var branchid = items[0].split(",");
-            var branchname = items[1].split(",");
-            for (var i = 0; i < branchname.length; i++) {
-                optionsbranch += '<option value="' + branchid[i].trim() + '">' + branchname[i] + '</option>';
-            }
-            $("select#cmballocatebranch").html(optionsbranch);
-        }
-    }
-    x.open("GET","<%=contextPath%>/com/dashboard/getBranch.jsp", true);
-    x.send();
-}
-        
-function gettypessearch(event){
-    var x = event.keyCode;
-    if(x == 114){
-        if(document.getElementById("trftype").value=="RAG"){
-            $('#commonwindow1').jqxWindow('open');
-            raSearchContent('ramasterSearch.jsp'); 
-        }
-        else if(document.getElementById("trftype").value=="LAG"){
-            $('#commonwindow1').jqxWindow('open');
-            raSearchContent('lamasterSearch.jsp'); 
-        }
-        else if(document.getElementById("trftype").value=="DRV" || document.getElementById("trftype").value=="STF"){
-            $('#commonwindow').jqxWindow('open');
-            SearchContent('searchdrvandstaff.jsp?id=1&values='+document.getElementById("trftype").value); 
-        }
-    }
-}
-        
-function cleardatas() {
-    document.getElementById("typesearch").value="";
-    document.getElementById("rentaldoc").value="";
-    document.getElementById("leasedoc").value="";
-    document.getElementById("drdoc").value="";
-    document.getElementById("staffdoc").value="";
-}
-    
-function funoneallocate(){
-    if(document.getElementById("fleet_no").value==""){
-        $.messager.alert('Message',' Search Fleet ','warning');   
-        return false;
-    }
-    if(document.getElementById("typesearch").value==""){
-        $.messager.alert('Message','Convict Search  ','warning');   
-        return false;
-    }
-    $.messager.confirm('Message', 'Do you want to Allocate?', function(r){
-        if(r == false){
-            return false; 
-        } else {
-            doprocess();
-        }
-    });
-}
-        
-function doprocess() {
-    var salikarray = new Array();
-    var selectedrows = $('#salikgrid').jqxGrid('selectedrowindexes');
-    for(var i=0; i<selectedrows.length; i++){
-        salikarray.push($('#salikgrid').jqxGrid('getcellvalue',selectedrows[i],'trans'));
-    }
-    var x = new XMLHttpRequest();
-    x.onreadystatechange = function(){
-        if (x.readyState == 4 && x.status == 200) {
-            var items = x.responseText;
-            var itemval = items.trim();
-            if(parseInt(itemval) == "10") {
-                $.messager.alert('Message', ' Record Successfully Allocated ');
-                var val = "2";
-                var uptodate = $("#uptodate").val();
-                $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate);
-                $("#hidediv").hide();
-                dis();
-                funreload();
-            } else {
-                $.messager.alert('Message', ' Not Allocated ');
-                $("#hidediv").hide();
-            }
-        }
-    }
-    x.open("GET","saveonedata.jsp?salikarray="+salikarray+"&trftype="+document.getElementById("trftype").value
-            +"&cmballocatebranch="+document.getElementById("cmballocatebranch").value+"&rentaldoc="+document.getElementById("rentaldoc").value
-            +"&leasedoc="+document.getElementById("leasedoc").value+"&drdoc="+document.getElementById("drdoc").value
-            +"&staffdoc="+document.getElementById("staffdoc").value+"&fleet_no="+document.getElementById("fleet_no").value);
-
-    x.send();   
-}
-    
-function dis() {
-    document.getElementById("saliktag").value="";
-    document.getElementById("fleet_no").value="";
-    document.getElementById("typesearch").value="";
-    
-    document.getElementById("rentaldoc").value="";
-    document.getElementById("leasedoc").value="";
-    document.getElementById("drdoc").value="";
-    document.getElementById("staffdoc").value="";
-    
-    $('#ticketno').attr("disabled",true);
-    $('#fleet_no').attr("disabled",true);
-    $('#trftype').attr("disabled",true);
-    $('#cmballocatebranch').attr("disabled",true);
-    $('#allocates').attr("disabled",true);
-    $('#typesearch').attr("disabled",true);
-}
-
-function funchange(){
-    if(document.getElementById('Chkfromdate').checked){
-        $("#fromdate").jqxDateTimeInput({disabled: false}); 
-        document.getElementById("hidchkdate").value="1";
-    }else{
-        $("#fromdate").jqxDateTimeInput({disabled: true}); 
-        document.getElementById("hidchkdate").value="0";
-    }
-}
-</script>
-</head>
-
-<body onload="hiddenbrh();getAllocateBranch();dis();">
-<div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
-<div class="master-container">
-
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
-    <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
-        <div class="sidebar-scroll-content">
+            $("#hidediv").hide();
+              
+            $('#regwindow').jqxWindow({ width: '30%', height: '65%', maxHeight: '85%' ,maxWidth: '80%' ,title: 'Reg No Search' , position: { x: 200, y: 60 }, keyboardCloseKey: 27, theme: 'energyblue'});
+            $('#regwindow').jqxWindow('close');
             
-            <div class="salikallocatecount" id="salikStatus" hidden="true">
-                Total Saliks Allocated: <span class="currentsalikallocated"></span>
-            </div>
-
-            <div class="filter-card">
-                <div class="card-title">Search Filters</div>
+            $('#tagwindow').jqxWindow({ width: '30%', height: '65%', maxHeight: '85%' ,maxWidth: '80%' ,title: 'Tag No Search' , position: { x: 200, y: 60 }, keyboardCloseKey: 27, theme: 'energyblue'});
+            $('#tagwindow').jqxWindow('close');
+            
+            $('#fleetwindow').jqxWindow({ width: '30%', height: '60%', maxHeight: '62%' ,maxWidth: '60%' , title: 'Fleet Search' ,position: { x: 250, y: 120 }, keyboardCloseKey: 27, theme: 'energyblue'});
+            $('#fleetwindow').jqxWindow('close');
+            
+            $('#commonwindow1').jqxWindow({width: '71%', height: '70%', maxHeight: '70%' ,maxWidth: '80%' , title: 'Details',position: { x: 180, y: 60 } , theme: 'energyblue', showCloseButton: true,keyboardCloseKey: 27});
+            $('#commonwindow1').jqxWindow('close');
+            
+            $('#commonwindow').jqxWindow({ width: '20%', height: '60%', maxHeight: '62%' ,maxWidth: '60%' , title: 'Search' ,position: { x: 250, y: 120 }, keyboardCloseKey: 27, theme: 'energyblue'});
+            $('#commonwindow').jqxWindow('close');
+           
+            $('#regno').dblclick(function(){
+                $('#regwindow').jqxWindow('open');
+                ragnoContent('regnosearch.jsp?', $('#regwindow')); 
+            });
                 
-                <table class="filter-table">
-                    <tr>
-                        <td colspan="2" align="right">
-                            <div class="checkbox-wrap" style="justify-content: flex-end; padding-bottom: 5px;">
-                                <input type="checkbox" id="Chkfromdate" name="Chkfromdate" onchange="funchange()">
-                                <label for="Chkfromdate">Enable From Date</label>
+            $('#tagno').dblclick(function(){
+                $('#tagwindow').jqxWindow('open');
+                tagnoContent('tagnosearch.jsp?', $('#tagwindow')); 
+            });
+
+            $('#fleet_no').dblclick(function(){
+                $('#fleetwindow').jqxWindow('open');
+                fleetSearchContent('fleetsearch.jsp?id=1', $('#fleetwindow')); 
+            });
+                
+            $('#typesearch').dblclick(function(){
+                if(document.getElementById("trftype").value=="RAG"){
+                    $('#commonwindow1').jqxWindow('open');
+                    raSearchContent('ramasterSearch.jsp'); 
+                }
+                else if(document.getElementById("trftype").value=="LAG"){
+                    $('#commonwindow1').jqxWindow('open');
+                    raSearchContent('lamasterSearch.jsp'); 
+                }
+                else if(document.getElementById("trftype").value=="DRV" || document.getElementById("trftype").value=="STF"){
+                    $('#commonwindow').jqxWindow('open');
+                    SearchContent('searchdrvandstaff.jsp?id=1&values='+document.getElementById("trftype").value); 
+                }
+            });
+        });
+
+        function SearchContent(url) {
+            $.get(url).done(function (data) {
+                $('#commonwindow').jqxWindow('open');
+                $('#commonwindow').jqxWindow('setContent', data);
+            }); 
+        } 
+
+        function raSearchContent(url) {
+            $.get(url).done(function (data) {
+                $('#commonwindow1').jqxWindow('open');
+                $('#commonwindow1').jqxWindow('setContent', data);
+            }); 
+        } 
+
+        function getfleet(event){
+            var x = event.keyCode;
+            if(x == 114){
+                $('#fleetwindow').jqxWindow('open');
+                fleetSearchContent('fleetsearch.jsp?id=1', $('#fleetwindow'));
+            } 
+        } 
+
+        function fleetSearchContent(url) {
+            $.get(url).done(function (data) {
+                $('#fleetwindow').jqxWindow('open');
+                $('#fleetwindow').jqxWindow('setContent', data);
+            }); 
+        }
+
+        function ragnoContent(url) {
+            $.get(url).done(function (data) {
+                $('#regwindow').jqxWindow('open');
+                $('#regwindow').jqxWindow('setContent', data);
+            }); 
+        } 
+
+        function getregno(event){
+            var x = event.keyCode;
+            if(x == 114){
+                $('#regwindow').jqxWindow('open');
+                ragnoContent('regnosearch.jsp?', $('#regwindow'));     
+            }
+        }
+
+        function tagnoContent(url) {
+            $.get(url).done(function (data) {
+                $('#tagwindow').jqxWindow('open');
+                $('#tagwindow').jqxWindow('setContent', data);
+            }); 
+        } 
+
+        function gettagno(event){
+            var x = event.keyCode;
+            if(x == 114){
+                $('#tagwindow').jqxWindow('open');
+                tagnoContent('tagnosearch.jsp?', $('#tagwindow'));      
+            }
+        }
+
+        function funExportBtn(){
+            JSONToCSVCon(exceldatas, 'Salik Unallocated', true);
+        }
+
+        function funreload(event) {     
+            var val = "2";
+            var uptodate = $("#uptodate").val();
+            var fromdate = $("#fromdate").val();
+            var hidchkdate = $("#hidchkdate").val();
+            
+            var regno = $("#regno").val();
+            var tagno = $("#tagno").val();
+            var saliktype = $('#cmbsaliktype').val();
+            
+            $("#overlay, #PleaseWait").show();
+            $("#allodiv").load("allocatelistGrid.jsp?saliktype="+saliktype+"&chval="+val+"&uptodate="+uptodate+'&regno='+regno+'&tagno='+tagno+'&fromdate='+fromdate+'&hidchkdate='+hidchkdate);
+        }
+            
+        function hiddenbrh(){
+            $("#branchlabel").attr('hidden',true);
+            $("#branchdiv").attr('hidden',true);
+            $('#gridlength').val(""); 
+        }
+            
+        function funallocate() {
+            $.messager.confirm('Message', 'Do you want to Allocate?', function(r){
+                if(r == false) {
+                    return false; 
+                } else {
+                    $("#hidediv").show();
+                    var saveval = "10";
+                    var regno = document.getElementById('regno').value;
+                    var tagno = document.getElementById('tagno').value;
+                    ajaxcall(saveval, regno, tagno);
+                }
+            });
+        }
+            
+        function ajaxcall(saveval, regno, tagno){
+            var saliktype = $('#cmbsaliktype').val();
+            $('.salikallocatecount').show();
+            
+            const interval = setInterval(function() {
+                $.get('getAllocateCount.jsp',function(data){
+                    data = JSON.parse(data);
+                    $('.currentsalikallocated').text(data.currentcount);
+                });             
+            }, 5000);
+            
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function(){
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText;
+                    var itemval = items.trim();
+                    clearInterval(interval);
+                    $('.salikallocatecount').hide();
+                    
+                    if(parseInt(itemval) == "10") {
+                        $.messager.alert('Message', 'Allocation Not Processed');
+                        funreload(event);
+                        $("#hidediv").hide();
+                    } else if(parseInt(itemval) == "11") {
+                        $.messager.alert('Message', ' Record Successfully Allocated ');
+                        var val = "10";
+                        var uptodate = $("#uptodate").val();
+                        var regno = $("#regno").val();
+                        var tagno = $("#tagno").val();
+                        var fromdate = $("#fromdate").val();
+                        var hidchkdate = $("#hidchkdate").val();
+                        
+                        $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate+'&regno='+regno+'&tagno='+tagno+'&fromdate='+fromdate+'&hidchkdate='+hidchkdate);
+                        $("#hidediv").hide();
+                    } else {
+                        $.messager.alert('Message', ' Not Allocated ');
+                        funreload(event);
+                        $("#hidediv").hide();
+                    }
+                }
+            }
+            x.open("GET","savedata.jsp?saliktype="+saliktype+"&saveval="+saveval+"&regno="+regno+"&tagno="+tagno+"&uptodate="+$('#uptodate').jqxDateTimeInput('val')+"&fromdate="+$('#fromdate').jqxDateTimeInput('val')+"&hidchkdate="+$("#hidchkdate").val());
+            x.send();
+        }
+
+        function funcleardata() {
+            document.getElementById("regno").value = "";
+            document.getElementById("tagno").value = "";
+            if (document.getElementById("regno").value == "") {
+                $('#regno').attr('placeholder', 'Press F3 TO Search'); 
+            }
+            if (document.getElementById("tagno").value == "") {
+                $('#tagno').attr('placeholder', 'Press F3 TO Search'); 
+            }
+        }
+                
+        function getAllocateBranch() {
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText.trim().split('####');
+                    var optionsbranch = "";
+                    var branchid = items[0].split(",");
+                    var branchname = items[1].split(",");
+                    for (var i = 0; i < branchname.length; i++) {
+                        optionsbranch += '<option value="' + branchid[i].trim() + '">' + branchname[i] + '</option>';
+                    }
+                    $("select#cmballocatebranch").html(optionsbranch);
+                }
+            }
+            x.open("GET","<%=contextPath%>/com/dashboard/getBranch.jsp", true);
+            x.send();
+        }
+                
+        function gettypessearch(event){
+            var x = event.keyCode;
+            if(x == 114){
+                if(document.getElementById("trftype").value=="RAG"){
+                    $('#commonwindow1').jqxWindow('open');
+                    raSearchContent('ramasterSearch.jsp'); 
+                }
+                else if(document.getElementById("trftype").value=="LAG"){
+                    $('#commonwindow1').jqxWindow('open');
+                    raSearchContent('lamasterSearch.jsp'); 
+                }
+                else if(document.getElementById("trftype").value=="DRV" || document.getElementById("trftype").value=="STF"){
+                    $('#commonwindow').jqxWindow('open');
+                    SearchContent('searchdrvandstaff.jsp?id=1&values='+document.getElementById("trftype").value); 
+                }
+            }
+        }
+                
+        function cleardatas() {
+            document.getElementById("typesearch").value="";
+            document.getElementById("rentaldoc").value="";
+            document.getElementById("leasedoc").value="";
+            document.getElementById("drdoc").value="";
+            document.getElementById("staffdoc").value="";
+        }
+            
+        function funoneallocate(){
+            if(document.getElementById("fleet_no").value==""){
+                $.messager.alert('Message',' Search Fleet ','warning');   
+                return false;
+            }
+            if(document.getElementById("typesearch").value==""){
+                $.messager.alert('Message','Convict Search  ','warning');   
+                return false;
+            }
+            $.messager.confirm('Message', 'Do you want to Allocate?', function(r){
+                if(r == false){
+                    return false; 
+                } else {
+                    doprocess();
+                }
+            });
+        }
+                
+        function doprocess() {
+            var salikarray = new Array();
+            var selectedrows = $('#salikgrid').jqxGrid('selectedrowindexes');
+            for(var i=0; i<selectedrows.length; i++){
+                salikarray.push($('#salikgrid').jqxGrid('getcellvalue',selectedrows[i],'trans'));
+            }
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function(){
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText;
+                    var itemval = items.trim();
+                    if(parseInt(itemval) == "10") {
+                        $.messager.alert('Message', ' Record Successfully Allocated ');
+                        var val = "2";
+                        var uptodate = $("#uptodate").val();
+                        $("#allodiv").load("allocatelistGrid.jsp?chval="+val+"&uptodate="+uptodate);
+                        $("#hidediv").hide();
+                        dis();
+                        funreload(event);
+                    } else {
+                        $.messager.alert('Message', ' Not Allocated ');
+                        $("#hidediv").hide();
+                    }
+                }
+            }
+            x.open("GET","saveonedata.jsp?salikarray="+salikarray+"&trftype="+document.getElementById("trftype").value
+                    +"&cmballocatebranch="+document.getElementById("cmballocatebranch").value+"&rentaldoc="+document.getElementById("rentaldoc").value
+                    +"&leasedoc="+document.getElementById("leasedoc").value+"&drdoc="+document.getElementById("drdoc").value
+                    +"&staffdoc="+document.getElementById("staffdoc").value+"&fleet_no="+document.getElementById("fleet_no").value);
+
+            x.send();   
+        }
+            
+        function dis() {
+            document.getElementById("saliktag").value="";
+            document.getElementById("fleet_no").value="";
+            document.getElementById("typesearch").value="";
+            
+            document.getElementById("rentaldoc").value="";
+            document.getElementById("leasedoc").value="";
+            document.getElementById("drdoc").value="";
+            document.getElementById("staffdoc").value="";
+            
+            $('#ticketno').attr("disabled",true);
+            $('#fleet_no').attr("disabled",true);
+            $('#trftype').attr("disabled",true);
+            $('#cmballocatebranch').attr("disabled",true);
+            $('#allocates').attr("disabled",true);
+            $('#typesearch').attr("disabled",true);
+        }
+
+        function funchange(){
+            if(document.getElementById('Chkfromdate').checked){
+                $("#fromdate").jqxDateTimeInput({disabled: false}); 
+                document.getElementById("hidchkdate").value="1";
+            }else{
+                $("#fromdate").jqxDateTimeInput({disabled: true}); 
+                document.getElementById("hidchkdate").value="0";
+            }
+        }
+        </script>
+    </head>
+
+    <body onload="hiddenbrh();getAllocateBranch();dis();">
+        <div id="mainBG" class="homeContent">
+            <div class="master-container">
+
+                <!-- ================= LEFT SIDEBAR ================= -->
+                <div class="sidebar-filters">
+                    <div class="sidebar-scroll-content">
+                        
+                        <div class="salikallocatecount" id="salikStatus" hidden="true">
+                            Total Saliks Allocated: <span class="currentsalikallocated"></span>
+                        </div>
+
+                        <!-- Card 1: Search Filters -->
+                        <div class="filter-card">
+                            <div class="card-title">Search Filters</div>
+                            
+                            <table class="filter-table">
+                                <tr>
+                                    <td colspan="2" align="right">
+                                        <div class="checkbox-wrap" style="justify-content: flex-end; padding-bottom: 5px;">
+                                            <input type="checkbox" id="Chkfromdate" name="Chkfromdate" onchange="funchange()">
+                                            <label for="Chkfromdate">Enable From Date</label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr style="display:none;">
+                                    <td class="label-cell">Reg No</td>
+                                    <td>
+                                        <input type="text" id="regno" name="regno" placeholder="Press F3 To Search" readonly 
+                                               value='<s:property value="regno"/>' onkeydown="getregno(event);">
+                                    </td>
+                                </tr>
+
+                                <tr style="display:none;">
+                                    <td class="label-cell">Tag No</td>
+                                    <td>
+                                        <input type="text" id="tagno" name="tagno" placeholder="Press F3 To Search" readonly 
+                                               value='<s:property value="tagno"/>' onkeydown="gettagno(event);">
+                                    </td>
+                                </tr>
+
+                                <tr style="display:none;">
+                                    <td class="label-cell">Type</td>
+                                    <td>
+                                        <select name="cmbsaliktype" id="cmbsaliktype">
+                                            <option value="">--Select--</option>
+                                            <option value="SAL">Salik</option>
+                                            <option value="PAR">Parking</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="label-cell">From Date</td>
+                                    <td><div id='fromdate' name='fromdate'></div></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="label-cell">Up To</td>
+                                    <td><div id='uptodate' name='uptodate'></div></td>
+                                </tr>
+                            </table>
+
+                            <div class="action-buttons">
+                                <button type="button" id="clear" class="btn-submit" onclick="funcleardata()" style="background:#64748b !important;">
+                                    Clear
+                                </button>
+                                <button type="button" id="driverUpdate" class="btn-submit" onclick="funallocate()">
+                                    Allocate
+                                </button>
                             </div>
-                        </td>
-                    </tr>
+                        </div>
 
-                    <tr style="display:none;">
-                        <td class="label-cell">Reg No</td>
-                        <td>
-                            <input type="text" id="regno" name="regno" placeholder="Press F3 To Search" readonly 
-                                   value='<s:property value="regno"/>' onkeydown="getregno(event);">
-                        </td>
-                    </tr>
+                        <!-- Card 2: Manual Allocation -->
+                        <div class="filter-card">
+                            <div class="card-title">Manual Allocation</div>
+                            
+                            <table class="filter-table">
+                                <tr>
+                                    <td class="label-cell">Salik Tag</td>
+                                    <td>
+                                        <input type="text" id="saliktag" name="saliktag" readonly value='<s:property value="saliktag"/>'>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Fleet No</td>
+                                    <td>
+                                        <input type="text" id="fleet_no" name="fleet_no" placeholder="Press F3 To Search" readonly 
+                                               onkeydown="getfleet(event);" value='<s:property value="fleet_no"/>'>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Type</td>
+                                    <td>
+                                        <select id="trftype" onchange="cleardatas()"> 
+                                            <option value="RAG">Rental</option>
+                                            <option value="LAG">Lease</option>
+                                            <option value="STF">Staff</option>
+                                            <option value="DRV">Driver</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Branch</td>
+                                    <td>
+                                        <select id="cmballocatebranch" name="cmballocatebranch">
+                                            <option value="">--Select--</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Convict</td>
+                                    <td>
+                                        <input type="text" id="typesearch" name="typesearch" placeholder="Press F3 To Search" readonly 
+                                               onkeydown="gettypessearch(event)" value='<s:property value="typesearch"/>'>
+                                    </td>
+                                </tr>
+                            </table>
 
-                    <tr style="display:none;">
-                        <td class="label-cell">Tag No</td>
-                        <td>
-                            <input type="text" id="tagno" name="tagno" placeholder="Press F3 To Search" readonly 
-                                   value='<s:property value="tagno"/>' onkeydown="gettagno(event);">
-                        </td>
-                    </tr>
+                            <div class="action-buttons">
+                                <button type="button" name="allocates" id="allocates" class="btn-submit" onclick="funoneallocate()">
+                                    Manual Process
+                                </button>
+                            </div>
+                        </div>
 
-                    <tr style="display:none;">
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select name="cmbsaliktype" id="cmbsaliktype">
-                                <option value="">--Select--</option>
-                                <option value="SAL">Salik</option>
-                                <option value="PAR">Parking</option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label-cell">From Date</td>
-                        <td><div id='fromdate' name='fromdate'></div></td>
-                    </tr>
-
-                    <tr>
-                        <td class="label-cell">Up To</td>
-                        <td><div id='uptodate' name='uptodate'></div></td>
-                    </tr>
-                </table>
-
-                <div class="button-group">
-                    <button type="button" id="clear" class="btn-submit" onclick="funcleardata()" style="background:#64748b !important;">
-                        Clear
-                    </button>
-                    <button type="button" id="driverUpdate" class="btn-submit" onclick="funallocate()">
-                        Allocate
-                    </button>
+                    </div>
                 </div>
+
+                <!-- ================= RIGHT SIDE (GRID) ================= -->
+                <div class="main-content-area">
+                    <!-- Toolbar/Heading (Moved from Sidebar) -->
+                    <div class="top-toolbar-container">
+                        <jsp:include page="../../heading.jsp"></jsp:include>
+                    </div>
+
+                    <div class="grid-content-container">
+                        <div id="allodiv">
+                            <jsp:include page="allocatelistGrid.jsp"></jsp:include>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="filter-card">
-                <div class="card-title">Manual Allocation</div>
-                
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Salik Tag</td>
-                        <td>
-                            <input type="text" id="saliktag" name="saliktag" readonly value='<s:property value="saliktag"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Fleet No</td>
-                        <td>
-                            <input type="text" id="fleet_no" name="fleet_no" placeholder="Press F3 To Search" readonly 
-                                   onkeydown="getfleet(event);" value='<s:property value="fleet_no"/>'>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Type</td>
-                        <td>
-                            <select id="trftype" onchange="cleardatas()"> 
-                                <option value="RAG">Rental</option>
-                                <option value="LAG">Lease</option>
-                                <option value="STF">Staff</option>
-                                <option value="DRV">Driver</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Branch</td>
-                        <td>
-                            <select id="cmballocatebranch" name="cmballocatebranch">
-                                <option value="">--Select--</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label-cell">Convict</td>
-                        <td>
-                            <input type="text" id="typesearch" name="typesearch" placeholder="Press F3 To Search" readonly 
-                                   onkeydown="gettypessearch(event)" value='<s:property value="typesearch"/>'>
-                        </td>
-                    </tr>
-                </table>
-
-                <div class="button-group" style="margin-top: 15px;">
-                    <button type="button" name="allocates" id="allocates" class="btn-submit" onclick="funoneallocate()">
-                        Manual Process
-                    </button>
-                </div>
+            <!-- HIDDEN FIELDS & LOADERS -->
+            <div style="display:none;">
+                <input type="hidden" id="gridlength" name="gridlength">
+                <input type="hidden" id="rentaldoc" name="rentaldoc">
+                <input type="hidden" id="leasedoc" name="leasedoc">
+                <input type="hidden" id="drdoc" name="drdoc">
+                <input type="hidden" id="staffdoc" name="staffdoc">
+                <input type="hidden" id="hidchkdate" name="hidchkdate">
             </div>
+
+            <div id="hidediv">
+                <img src="<%=contextPath%>/icons/31load.gif">
+            </div>
+
+            <!-- POPUPS -->
+            <div id="regwindow"><div></div></div>
+            <div id="tagwindow"><div></div></div>
+            <div id="fleetwindow"><div></div></div>
+            <div id="commonwindow"><div></div></div>
+            <div id="commonwindow1"><div></div></div>
 
         </div>
-    </div>
-</td>
-
-<td valign="top">
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            
-            <div id="allodiv">
-                <jsp:include page="allocatelistGrid.jsp"></jsp:include>
-            </div>
-
-        </div>
-    </div>
-</td>
-
-</tr>
-</table>
-
-<div style="display:none;">
-    <input type="hidden" id="gridlength" name="gridlength">
-    <input type="hidden" id="rentaldoc" name="rentaldoc">
-    <input type="hidden" id="leasedoc" name="leasedoc">
-    <input type="hidden" id="drdoc" name="drdoc">
-    <input type="hidden" id="staffdoc" name="staffdoc">
-    <input type="hidden" id="hidchkdate" name="hidchkdate">
-</div>
-
-<div id="hidediv" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:9999; display:none;">
-    <img src="<%=contextPath%>/icons/31load.gif">
-</div>
-
-<div id="regwindow">
-    <div>Reg No Search</div>
-    <div></div>
-</div>
-<div id="tagwindow">
-    <div>Tag No Search</div>
-    <div></div>
-</div>
-<div id="fleetwindow">
-    <div>Fleet Search</div>
-    <div></div>
-</div>
-<div id="commonwindow">
-    <div>Search</div>
-    <div></div>
-</div>
-<div id="commonwindow1">
-    <div>Details</div>
-    <div></div>
-</div>
-
-</div>
-</div>
-</div> </body>
+    </body>
 </html>
