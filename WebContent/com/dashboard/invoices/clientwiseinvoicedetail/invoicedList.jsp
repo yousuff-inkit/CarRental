@@ -1,743 +1,427 @@
+<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<% String contextPath=request.getContextPath();%>
+<% String contextPath=request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
-<link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />  
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GatewayERP(i)</title>
 
-<script type="text/javascript">
+        <style type="text/css">
+        /* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+        html, body, #mainBG {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f4f7f9;
+        }
 
-$(document).ready(function () {
-	 $("#fromdate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("#todate").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1; display: none;"></div>');
-     $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:180px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
-	 $('#clientDetailsWindow').jqxWindow({ width: '20%', height: '60%',  maxHeight: '62%' ,maxWidth: '60%' , title: 'Client Search' , theme: 'energyblue', position: { x: 250, y: 120 }, keyboardCloseKey: 27});
-	 $('#clientDetailsWindow').jqxWindow('close');
-	 /* 
-	 $('#agreementDetailsWindow').jqxWindow({width: '51%', height: '58%',  maxHeight: '70%' ,maxWidth: '51%' , title: 'Agreement Search',position: { x: 250, y: 120 } , theme: 'energyblue', showCloseButton: true, keyboardCloseKey: 27});
-	 $('#agreementDetailsWindow').jqxWindow('close'); */
-	 var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
+        .master-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        }
 
-	 var onemounth=new Date(new Date(fromdates).setMonth(fromdates.getMonth()-1)); 
-	    
-     $('#fromdate').jqxDateTimeInput('setDate', new Date(onemounth));
-	 $('#todate').on('change', function (event) {
-			
-		   var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
-		 
-		  // out date
-		 	 var todates=new Date($('#todate').jqxDateTimeInput('getDate')); //del date
-		 	 
-		   if(fromdates>todates){
-			   
-			   $.messager.alert('Message','To Date Less Than From Date  ','warning');   
-			 
-		   return false;
-		  }   
-	 });
-	  $('#txtclientname').dblclick(function(){
-		  clientSearchContent('clientDetailsSearchGrid.jsp');
-		});
-	  
-	  /* $('#vocnos').dblclick(function(){
-		  var branchval = document.getElementById("cmbbranch").value; 
-		  agreementSearchContent('agreementDetailsSearch.jsp?branchval='+branchval); 
-		}); */
-});
+        /* ===== LEFT SIDEBAR ===== */
+        .sidebar-filters {
+            width: 280px;
+            flex: 0 0 280px; 
+            background: #fff;
+            border-right: 1px solid #e1e8ed;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 2px 0 8px rgba(0,0,0,.05);
+            z-index: 10;
+        }
 
-	function clientSearchContent(url) {
-	    $('#clientDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#clientDetailsWindow').jqxWindow('setContent', data);
-		$('#clientDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	}
-	
-	/* function agreementSearchContent(url) {
-	 	$('#agreementDetailsWindow').jqxWindow('open');
-		$.get(url).done(function (data) {
-		$('#agreementDetailsWindow').jqxWindow('setContent', data);
-		$('#agreementDetailsWindow').jqxWindow('bringToFront');
-	}); 
-	} */
-	
-	function getClient(event){
-	    var x= event.keyCode;
-	    if(x==114){
-	    	clientSearchContent('clientDetailsSearchGrid.jsp');
-	    }
-	    else{}
-	    }
-	
-	/* function getAgreement(event){
-	    var x= event.keyCode;
-	    if(x==114){
-	    	var branchval = document.getElementById("cmbbranch").value; 
-  		    agreementSearchContent('agreementDetailsSearch.jsp?branchval='+branchval);
-	    }
-	    else{}
-	    } */
-	
-/* 	function funSearchdblclick(){
-		
-	}
-	 */
-	/*  function funExportBtn(){
-		   $("#rentalInvoiceGrid").jqxGrid('exportdata', 'xls', 'Invoices List');
-		 } */
+        .sidebar-scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 15px 25px;
+        }
 
-	function  funClearData(){
-		 $('#txtclientname').val('');$('#txtcldocno').val('');$('#rentaltype').val('');$('#txtagreementno').val('');$('#vocnos').val('');$('#todate').val(new Date());$('#clstatuss').val('');
-		
-		 var onemounth=new Date(new Date((new Date())).setMonth(new Date().getMonth()-1)); 
-		
-		 $('#fromdate').val(onemounth);
-           $('#todate').val(new Date());
-	     
-		 if (document.getElementById("txtclientname").value == "") {
-		        $('#txtclientname').attr('placeholder', 'Press F3 to Search'); 
-		    }
-		 if (document.getElementById("vocnos").value == "") {
-		        $('#vocnos').attr('placeholder', 'Press F3 to Search'); 
-		    }
-	 }
-	
-	function funreload(event){
-		
+        /* Cards */
+        .filter-card {
+            background: #f8fafc;
+            border: 1px solid #e3e8ee;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
 
-		  var fromdates=new Date($('#fromdate').jqxDateTimeInput('getDate'));
-			 
-		  // out date
-		 	 var todates=new Date($('#todate').jqxDateTimeInput('getDate')); //del date
-		 	 
-		   if(fromdates>todates){
-			   
-			   $.messager.alert('Message','To Date Less Than From Date  ','warning');   
-			 
-		   return false;
-		  } 
-		   else
-			   {
-		
-		 var branchval = document.getElementById("cmbbranch").value;
-		 var fromdate = $('#fromdate').val();
-		 var todate = $('#todate').val();
-		 var cldocno = $('#txtcldocno').val();
-		/*  var rentaltype = $('#rentaltype').val();
-		 var agmtno = $('#txtagreementno').val();
-		 var clstatuss= $('#clstatuss').val();
-		 var cmbtariftype=$('#cmbtariftype').val(); */
-		   $("#overlay, #PleaseWait").show();
-		 $("#notInvoicedDiv").load("detailInvoiceGrid.jsp?branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&cldocno='+cldocno);
-			   
-			   }
-			   }
-	/* function chktype()
-	{
-		
-		
-		 if($('#rentaltype').val()=="")
-		  {
-			  $.messager.alert('Message','Select Type  ','warning');   
-				 document.getElementById("rentaltype").focus(); 
-			   return false;
-	
-		  }
-		
-		
-	} */
-	
-	/* 
-	function clearagno()
-	{
-		$('#txtagreementno').val('');
-		$('#vocnos').val('');
-		
-	}
-	 */
-	
-	
+        /* Tables inside Cards */
+        .filter-table {
+            width: 100%;
+            border-spacing: 0 10px;
+        }
 
+        .filter-table .label-cell {
+            text-align: right;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #4e5e71;
+            font-weight: 600;
+            width: 80px;
+        }
 
-	function funExportBtn(){
-		     //$("#rentalInvoiceGrid").jqxGrid('exportdata', 'xls', 'Invoices List');
-		     
-		    // alert(invoiceexceldata);
-		     
-		   //va    obj = invoiceexceldata;
+        /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+        input[type="text"], select,
+        .filter-table input[type="text"],
+        .filter-table select {
+            width: 100%;
+            height: 24px !important;              
+            padding: 2px 8px !important;          
+            border: 1px solid #ccd6e0 !important;
+            border-radius: 4px !important;        
+            font-size: 12px !important;          
+            background-color: #ffffff;
+            box-sizing: border-box;
+            color: #333;
+            outline: none;
+        }
 
-		   JSONToCSVConvertor(invoiceexceldata, 'Client Wise Invoice Detail', true);
-		   }
-		  
-		  
-		  function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
-	
-		      var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-		      
-		     // alert("arrData");
-		      var CSV = '';    
-		      //Set Report title in first row or line
-		      
-		      CSV += ReportTitle + '\r\n\n';
+        select {
+            padding: 2px 24px 2px 8px !important; 
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            background-size: 12px;
+        }
 
-		      //This condition will generate the Label/Header
-		      if (ShowLabel) {
-		          var row = "";
-		          
-		          //This loop will extract the label from 1st index of on array
-		          for (var index in arrData[0]) {
-		              
-		              //Now convert each value to string and comma-seprated
-		              row += index + ',';
-		          }
+        /* Readonly / disabled look */
+        input[readonly], input:disabled, 
+        .filter-table input[readonly], 
+        .filter-table input:disabled {
+            background-color: #f3f6f9 !important;
+            color: #555;
+            border-color: #e1e8ed !important;
+            cursor: default;
+        }
 
-		          row = row.slice(0, -1);
-		          
-		          //append Label row with line break
-		          CSV += row + '\r\n';
-		      }
-		      
-		      //1st loop is to extract each row
-		      for (var i = 0; i < arrData.length; i++) {
-		          var row = "";
-		          
-		          //2nd loop will extract each column and convert it in string comma-seprated
-		          for (var index in arrData[i]) {
-		              row += '"' + arrData[i][index] + '",';
-		          }
+        /* jqx date/time containers */
+        #fromdate, #todate {
+            width: 100%;
+        }
 
-		          row.slice(0, row.length - 1);
-		          
-		          //add a line break after each row
-		          CSV += row + '\r\n';
-		      }
+        /* ===== BUTTONS ===== */
+        .btn-submit {
+            flex: 1;
+            height: 30px !important;            
+            padding: 0 5px !important;          
+            background: #2563eb !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 4px !important;      
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            line-height: 30px !important;        
+            transition: background 0.2s;
+            text-align: center;
+            width: 100%;
+        }
 
-		      if (CSV == '') {        
-		          alert("Invalid data");
-		          return;
-		      }   
-		      
-		      //Generate a file name
-		      var fileName = "";
-		      //this will remove the blank-spaces from the title and replace it with an underscore
-		      fileName += ReportTitle.replace(/ /g,"_");   
-		      
-		      //Initialize file format you want csv or xls
-		      var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-		      
-		      // Now the little tricky part.
-		      // you can use either>> window.open(uri);
-		      // but this will not work in some browsers
-		      // or you will not get the correct file extension    
-		      
-		      //this trick will generate a temp <a /> tag
-		      var link = document.createElement("a");    
-		      
-		        var blobdata = new Blob([CSV],{type : 'text/csv'});
-		      
-		      link.href = window.URL.createObjectURL(blobdata);
-		      
-		      //set the visibility hidden so it will not effect on your web-layout
-		      link.style = "visibility:hidden";
-		      link.download = fileName + ".csv";
-		      
-		      //this part will append the anchor tag and remove it after automatic click
-		      document.body.appendChild(link);
-		      link.click();
-		      document.body.removeChild(link);
-		  }
-	
-	
-	
-	
-	
-	
-	
+        .btn-submit:hover {
+            background: #1d4ed8 !important;
+        }
 
-</script>
-<style>
-.myButtons {
-	-moz-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	-webkit-box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	box-shadow:inset 0px -1px 3px 0px #91b8b3;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-	background-color:#768d87;
-	border:1px solid #566963;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	
-	font-size:8pt;
-	
-	padding:3px 17px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #2b665e;
-}
-.myButtons:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-	background-color:#6c7c7c;
-}
-.myButtons:active {
-	position:relative;
-	top:1px;
-}
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
 
-     
-      
+        /* ===== RIGHT CONTENT AREA ===== */
+        .main-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            height: 100%;
+            overflow: hidden;
+        }
 
-</style>
-<style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
+        .top-toolbar-container {
+            width: 100%;
+            padding: 10px 15px;
+            background: #ffffff;
+            border-bottom: 1px solid #e1e8ed;
+            box-sizing: border-box;
+        }
 
-.master-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
-}
+        .grid-content-container {
+            flex: 1;
+            padding: 15px;
+            overflow: auto;
+            box-sizing: border-box;
+            position: relative;
+        }
 
-/* Sidebar dynamically fills the left TD */
-.sidebar-filters {
-    width: 100%;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
+        /* Loader Positioning */
+        #PleaseWait {
+            position: absolute !important;
+            z-index: 1002;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+        }
+        </style>
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+            $("body").prepend("<div id='PleaseWait' style='display: none;'><img src='../../../../icons/31load.gif'/></div>");
+            $("#overlay, #PleaseWait").hide();
+            
+            // Standardize jqxDateTimeInputs
+            $("#fromdate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+            $("#todate").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 
-.sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px 20px 15px; 
-}
+            $('#clientDetailsWindow').jqxWindow({ width: '20%', height: '60%', maxHeight: '62%' ,maxWidth: '60%' , title: 'Client Search' , theme: 'energyblue', position: { x: 250, y: 120 }, keyboardCloseKey: 27});
+            $('#clientDetailsWindow').jqxWindow('close');
+            
+            var fromdates = new Date($('#fromdate').jqxDateTimeInput('getDate'));
+            var onemounth = new Date(new Date(fromdates).setMonth(fromdates.getMonth()-1)); 
+            $('#fromdate').jqxDateTimeInput('setDate', new Date(onemounth));
+            
+            $('#todate').on('change', function (event) {  
+                var fromdates = new Date($('#fromdate').jqxDateTimeInput('getDate'));
+                var todates = new Date($('#todate').jqxDateTimeInput('getDate')); 
+                
+                if(fromdates > todates){
+                    $.messager.alert('Message','To Date Less Than From Date  ','warning');   
+                    return false;
+                }   
+            });
+            
+            $('#txtclientname').dblclick(function(){
+                clientSearchContent('clientDetailsSearchGrid.jsp');
+            });
+        });
 
-.filter-card {
-    background: #f8fafc;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
+        function clientSearchContent(url) {
+            $('#clientDetailsWindow').jqxWindow('open');
+            $.get(url).done(function (data) {
+                $('#clientDetailsWindow').jqxWindow('setContent', data);
+                $('#clientDetailsWindow').jqxWindow('bringToFront');
+            }); 
+        }
+            
+        function getClient(event){
+            var x = event.keyCode;
+            if(x == 114){
+                clientSearchContent('clientDetailsSearchGrid.jsp');
+            }
+        }
 
-.filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
+        function funClearData(){
+            $('#txtclientname').val(''); $('#txtcldocno').val(''); $('#rentaltype').val(''); $('#txtagreementno').val(''); $('#vocnos').val(''); $('#todate').val(new Date()); $('#clstatuss').val('');
+            
+            var onemounth = new Date(new Date((new Date())).setMonth(new Date().getMonth()-1)); 
+            $('#fromdate').jqxDateTimeInput('setDate', onemounth);
+            $('#todate').jqxDateTimeInput('setDate', new Date());
+             
+            if (document.getElementById("txtclientname").value == "") {
+                $('#txtclientname').attr('placeholder', 'Press F3 to Search'); 
+            }
+            if (document.getElementById("vocnos").value == "") {
+                $('#vocnos').attr('placeholder', 'Press F3 to Search'); 
+            }
+        }
+            
+        function funreload(event){
+            var fromdates = new Date($('#fromdate').jqxDateTimeInput('getDate'));
+            var todates = new Date($('#todate').jqxDateTimeInput('getDate')); 
+            
+            if(fromdates > todates){
+                $.messager.alert('Message','To Date Less Than From Date  ','warning');   
+                return false;
+            } else {
+                var branchval = document.getElementById("cmbbranch").value;
+                var fromdate = $('#fromdate').val();
+                var todate = $('#todate').val();
+                var cldocno = $('#txtcldocno').val();
+                
+                $("#overlay, #PleaseWait").show();
+                $("#notInvoicedDiv").load("detailInvoiceGrid.jsp?branchval="+branchval+'&fromdate='+fromdate+'&todate='+todate+'&cldocno='+cldocno);
+            }
+        }
 
-.label-cell {
-    text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
-    color: #4e5e71;
-    width: 90px;
-}
+        function funExportBtn(){
+            JSONToCSVConvertor(invoiceexceldata, 'Client Wise Invoice Detail', true);
+        }
+              
+        function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+            var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+            var CSV = '';    
+            CSV += ReportTitle + '\r\n\n';
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
-    width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
-}
+            if (ShowLabel) {
+                var row = "";
+                for (var index in arrData[0]) {
+                    row += index + ',';
+                }
+                row = row.slice(0, -1);
+                CSV += row + '\r\n';
+            }
+              
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+                for (var index in arrData[i]) {
+                    row += '"' + arrData[i][index] + '",';
+                }
+                row.slice(0, row.length - 1);
+                CSV += row + '\r\n';
+            }
 
-select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 6px center;
-    background-size: 12px;
-}
+            if (CSV == '') {        
+                alert("Invalid data");
+                return;
+            }   
+              
+            var fileName = "";
+            fileName += ReportTitle.replace(/ /g,"_");    
+              
+            var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+            var link = document.createElement("a");    
+            var blobdata = new Blob([CSV],{type : 'text/csv'});
+              
+            link.href = window.URL.createObjectURL(blobdata);
+            link.style = "visibility:hidden";
+            link.download = fileName + ".csv";
+              
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        </script>
+    </head>
 
-input[readonly],
-input:disabled,
-select:disabled {
-    background-color: #ffffff !important;
-    color: #555;
-    cursor: text !important;
-}
+    <body onload="getBranch();">
+        <div id="mainBG" class="homeContent">
+            <div class="master-container">
 
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
+                <!-- ================= LEFT SIDEBAR ================= -->
+                <div class="sidebar-filters">
+                    <div class="sidebar-scroll-content">
+                        <div class="filter-card">
+                            <table class="filter-table">
+                                <tr>
+                                    <td class="label-cell">From</td>
+                                    <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">To</td>
+                                    <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="label-cell">Client</td>
+                                    <td>
+                                        <input type="text" id="txtclientname" name="txtclientname" readonly placeholder="Press F3 to Search" onkeydown="getClient(event);" value='<s:property value="txtclientname"/>'>
+                                        <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>'>
+                                    </td>
+                                </tr>
 
-.btn-submit {
-    flex: 1;
-    width: 100%;
-    height: 30px !important;            
-    padding: 0 12px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
-    text-align: center;
-    margin-top: 8px;
-    transition: all 0.2s ease;
-}
+                                <!-- STATUS (Commented out in original, adapted to new structure) -->
+                                <!--
+                                <tr>
+                                    <td class="label-cell">Status</td>
+                                    <td>
+                                        <select id="clstatuss" name="clstatuss" value='<s:property value="clstatuss"/>'>
+                                            <option value="">--Select--</option>
+                                            <option value="0">Open</option>
+                                            <option value="1">Close</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                -->
 
-.btn-submit:hover {
-    background: #1d4ed8 !important;
-}
+                                <!-- RENTAL TYPE (Commented out in original, adapted to new structure) -->
+                                <!--
+                                <tr>
+                                    <td class="label-cell">Type</td>
+                                    <td>
+                                        <select id="rentaltype" name="rentaltype" onchange="clearagno()" value='<s:property value="rentaltype"/>'>
+                                            <option value="">--Select--</option>
+                                            <option value="RAG">Rental</option>
+                                            <option value="LAG">Lease</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                -->
 
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
-}
+                                <!-- TARIF TYPE (Commented out in original, adapted to new structure) -->
+                                <!--
+                                <tr>
+                                    <td class="label-cell">Tariff Type</td>
+                                    <td>
+                                        <select id="cmbtariftype" name="cmbtariftype" value='<s:property value="cmbtariftype"/>'>
+                                            <option value="">--Select--</option>
+                                            <option value="Daily">Daily</option>
+                                            <option value="Weekly">Weekly</option>
+                                            <option value="Monthly">Monthly</option>
+                                            <option value="Lease">Lease</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                -->
 
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-}
+                                <!-- AGREEMENT (Commented out in original, adapted to new structure) -->
+                                <!--
+                                <tr>
+                                    <td class="label-cell">Agreement</td>
+                                    <td>
+                                        <input type="text" id="vocnos" name="vocnos" readonly onfocus="chktype()" placeholder="Press F3 to Search" ondblclick="funSearchdblclick();" onkeydown="getAgreement(event);" value='<s:property value="vocnos"/>'/>
+                                        <input type="hidden" id="txtagreementno" name="txtagreementno" value='<s:property value="txtagreementno"/>'/>
+                                    </td>
+                                </tr>
+                                -->
 
-input[type="radio"], input[type="checkbox"] {
-    margin: 0 4px 0 0;
-    vertical-align: middle;
-}
+                            </table>
 
-.radio-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-}
-
-.radio-group label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.sidebar-filters label.branch {
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-    background: transparent !important;
-}
-</style>
-
-</head>
-<body onload="getBranch();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<table width="100%" >
-<tr>
-<td width="20%" >
-    <fieldset style="background: #ECF8E0;">
-	<div class="sidebar-filters">
-
-    <!-- HEADER -->
-    <div class="sidebar-fixed-top">
-
-        <jsp:include page="../../heading.jsp"></jsp:include>
-
-    </div>
-
-
-    <!-- SCROLL CONTENT -->
-    <div class="sidebar-scroll-content">
-
-        <!-- FILTER CARD -->
-        <div class="filter-card" style="
-            padding:16px;
-            border-radius:16px;
-        ">
-
-            <table class="filter-table">
-
-                <!-- FROM DATE -->
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">From</label>
-                    </td>
-
-                    <td>
-                        <div 
-                            id="fromdate"
-                            name="fromdate"
-                            value='<s:property value="fromdate"/>'>
+                            <!-- ACTION BUTTON (Commented out in original, adapted to new structure) -->
+                            <!--
+                            <div class="action-buttons">
+                                <button type="button" class="btn-submit" name="clear" id="clear" onclick="funClearData();" style="background:#64748b !important;">
+                                    Clear
+                                </button>
+                            </div>
+                            -->
                         </div>
-                    </td>
+                    </div>
+                </div>
 
-                </tr>
-
-
-                <!-- TO DATE -->
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">To</label>
-                    </td>
-
-                    <td>
-                        <div 
-                            id="todate"
-                            name="todate"
-                            value='<s:property value="todate"/>'>
+                <!-- ================= RIGHT SIDE (GRID) ================= -->
+                <div class="main-content-area">
+                    
+                    <!-- Toolbar/Heading (Moved from Sidebar) -->
+                    <div class="top-toolbar-container">
+                        <jsp:include page="../../heading.jsp"></jsp:include>
+                    </div>
+                    
+                    <div class="grid-content-container">
+                        <div id="notInvoicedDiv">
+                            <jsp:include page="detailInvoiceGrid.jsp"></jsp:include>
                         </div>
-                    </td>
-
-                </tr>
-
-
-                <!-- CLIENT -->
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">Client</label>
-                    </td>
-
-                    <td>
-
-                        <input 
-                            type="text"
-                            id="txtclientname"
-                            name="txtclientname"
-                            readonly="readonly"
-                            placeholder="Press F3 to Search"
-                            onkeydown="getClient(event);"
-                            value='<s:property value="txtclientname"/>'>
-
-                        <input 
-                            type="hidden"
-                            id="txtcldocno"
-                            name="txtcldocno"
-                            value='<s:property value="txtcldocno"/>'/>
-
-                    </td>
-
-                </tr>
-
-
-                <!-- STATUS -->
-                <!--
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">Status</label>
-                    </td>
-
-                    <td>
-
-                        <select 
-                            id="clstatuss"
-                            name="clstatuss"
-                            value='<s:property value="clstatuss"/>'>
-
-                            <option value="">--Select--</option>
-                            <option value="0">Open</option>
-                            <option value="1">Close</option>
-
-                        </select>
-
-                    </td>
-
-                </tr>
-                -->
-
-
-                <!-- RENTAL TYPE -->
-                <!--
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">Type</label>
-                    </td>
-
-                    <td>
-
-                        <select 
-                            id="rentaltype"
-                            name="rentaltype"
-                            onchange="clearagno()"
-                            value='<s:property value="rentaltype"/>'>
-
-                            <option value="">--Select--</option>
-                            <option value="RAG">Rental</option>
-                            <option value="LAG">Lease</option>
-
-                        </select>
-
-                    </td>
-
-                </tr>
-                -->
-
-
-                <!-- TARIF TYPE -->
-                <!--
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">Tarif Type</label>
-                    </td>
-
-                    <td>
-
-                        <select 
-                            id="cmbtariftype"
-                            name="cmbtariftype"
-                            value='<s:property value="cmbtariftype"/>'>
-
-                            <option value="">--Select--</option>
-                            <option value="Daily">Daily</option>
-                            <option value="Weekly">Weekly</option>
-                            <option value="Monthly">Monthly</option>
-                            <option value="Lease">Lease</option>
-
-                        </select>
-
-                    </td>
-
-                </tr>
-                -->
-
-
-                <!-- AGREEMENT -->
-                <!--
-                <tr>
-
-                    <td class="label-cell">
-                        <label class="branch">Agreement</label>
-                    </td>
-
-                    <td>
-
-                        <input 
-                            type="text"
-                            id="vocnos"
-                            name="vocnos"
-                            readonly="readonly"
-                            onfocus="chktype()"
-                            placeholder="Press F3 to Search"
-                            ondblclick="funSearchdblclick();"
-                            onkeydown="getAgreement(event);"
-                            value='<s:property value="vocnos"/>'/>
-
-                    </td>
-
-                </tr>
-                -->
-
-
-                <!-- HIDDEN AGREEMENT -->
-                <!--
-                <tr>
-
-                    <td colspan="2">
-
-                        <input 
-                            type="hidden"
-                            id="txtagreementno"
-                            name="txtagreementno"
-                            value='<s:property value="txtagreementno"/>'/>
-
-                    </td>
-
-                </tr>
-                -->
-
-            </table>
-
-
-            <!-- ACTION BUTTON -->
-            <!--
-            <div style="margin-top:16px;">
-
-                <input 
-                    type="button"
-                    class="btn-submit"
-                    name="clear"
-                    id="clear"
-                    value="Clear"
-                    onclick="funClearData();">
+                    </div>
+                </div>
 
             </div>
-            -->
+
+            <!-- POPUPS -->
+            <div id="clientDetailsWindow"><div></div><div></div></div>
+            <div id="agreementDetailsWindow"><div></div><div></div></div>
 
         </div>
-
-    </div>
-
-</div>
-	</fieldset>
-</td>
-<td width="80%">
-	<table width="100%">
-		<tr>
-			 <td><div id="notInvoicedDiv"><jsp:include page="detailInvoiceGrid.jsp"></jsp:include></div></td>
-		</tr>
-	</table>
-</tr>
-</table>
-</div>
-
-<div id="clientDetailsWindow">
-	<div></div><div></div>
-</div>
-<div id="agreementDetailsWindow">
-	<div></div><div></div>
-</div>
-</div> 
-</body>
+    </body>
 </html>

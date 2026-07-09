@@ -3,523 +3,373 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GatewayERP(i)</title>
-<%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
-<script type="text/javascript">
-$(document).ready(function () {
-	$("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
-	$("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1;top:200;right:600;'><img src='../../../../icons/31load.gif'/></div>");    
-	$("#periodupto").jqxDateTimeInput({ width: '125px', height: '15px',formatString:"dd.MM.yyyy"});
-	document.getElementById("imgloading").style.display="none";
-	/*var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.trim();
-			$('#periodupto').jqxDateTimeInput('val',items);
-			
-		} else {
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GatewayERP(i)</title>
 
-		}
-	}
-	x.open("GET","getLastDay.jsp?date="+$('#periodupto').jqxDateTimeInput('val'), true);
-	x.send();*/
-	
-	
-	$('#periodupto').on('change', function (event) 
-			{  
-				var docdateval=funDateInPeriod($('#periodupto').jqxDateTimeInput('getDate'));
-				if(docdateval==0){
-					$('#periodupto').jqxDateTimeInput('focus');
-					return false;
-				}
-/*
-			    var jsDate = event.args.date; 
-			    var type = event.args.type; // keyboard, mouse or null depending on how the date was selected.
-			 	var date=$('#uptodate').jqxDateTimeInput('val');
-				var x = new XMLHttpRequest();
-				x.onreadystatechange = function() {
-					if (x.readyState == 4 && x.status == 200) {
-						var items = x.responseText.trim();
-						if(items=="0"){
-							$.messager.alert('Warning','Date should be month end');
-							return false;
-						}
-						else{
-							return true;
-						}
-					} else {
+        <style type="text/css">
+        /* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+        html, body, #mainBG {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f4f7f9;
+        }
 
-					}
-				}
-				x.open("GET","checkMonthEnd.jsp?date="+date, true);
-				x.send();*/
+        .master-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        }
 
-			});
-});
+        /* ===== LEFT SIDEBAR ===== */
+        .sidebar-filters {
+            width: 280px;
+            flex: 0 0 280px; 
+            background: #fff;
+            border-right: 1px solid #e1e8ed;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 2px 0 8px rgba(0,0,0,.05);
+            z-index: 10;
+        }
 
-function funreload(event)
-{
-	if(document.getElementById("cmbbranch").value=="" || document.getElementById("cmbbranch").value=='a'){
-		$.messager.alert('Warning','Please Select Branch');
-		return false;
-	}
-	var docdateval=funDateInPeriod($('#periodupto').jqxDateTimeInput('getDate'));
-	if(docdateval==0){
-		$('#periodupto').jqxDateTimeInput('focus');
-		return false;
-	}
-$("#overlay, #PleaseWait").show(); 
-					var branch=$('#cmbbranch').val();
-					var uptodate=$('#periodupto').jqxDateTimeInput('val');
-					$('#invoicediv').load('invoiceGrid.jsp?branch='+branch+'&uptodate='+uptodate+'&mode=1');
-	/* $("#Readygrid").load("invnoGrid.jsp?barchval="+barchval+"&date1="+date1+"&client="+client+"&status=1"); 
-	 var date=$('#periodupto').jqxDateTimeInput('val');
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText.trim();
-				if(items=="0"){
-					$.messager.alert('Warning','Date should be month end');
-					return false;
-				}
-				else{
-					
-				}
-			} else {
+        .sidebar-scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 15px 25px;
+        }
 
-			}
-		}
-		x.open("GET","checkMonthEnd.jsp?date="+date, true);
-		x.send();*/
-	}
-function funCalculate(){
-	/* $("#overlay, #PleaseWait").show(); */
-	
-	var selectedrows=$('#invoiceGrid').jqxGrid('selectedrowindexes');
-	if(selectedrows.length==0){
-		$.messager.alert('Warning','Please select agreements');
-		return false;
-	}
-	var agmtarray=new Array();
-	for(var i=0;i<selectedrows.length;i++){
-		agmtarray.push($('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'agmtno'));
-	}
-	var branch=$('#cmbbranch').val();
-	var uptodate=$('#periodupto').jqxDateTimeInput('val');
-	$('#overlay,#PleaseWait').show();
-	var x = new XMLHttpRequest();
-	x.onreadystatechange = function() {
-		if (x.readyState == 4 && x.status == 200) {
-			var items = x.responseText.trim();
-			items=JSON.parse(items);
-			$.each(items.calcdata, function( index, value ) {
-				for(var i=0;i<selectedrows.length;i++){
-					if(value.agmtno==$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'agmtno')){
-						var totalamt=parseFloat(value.rent)+parseFloat(value.insurchg)+parseFloat(value.accchg)+parseFloat(value.salikamt)+parseFloat(value.saliksrvc)+parseFloat(value.trafficamt)+parseFloat(value.trafficsrvc);
-						totalamt=totalamt.toFixed(2);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'totalamt',totalamt);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'rentalamt',value.rent);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'accamt',value.accchg);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'insuramt',value.insurchg);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'salikamt',value.salikamt);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'trafficamt',value.trafficamt);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'saliksrvc',value.saliksrvc);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'trafficsrvc',value.trafficsrvc);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'salikcount',value.salikcount);
-						$('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'trafficcount',value.trafficcount);
-					}
-				}
-			});
-			$('#overlay,#PleaseWait').hide();
-		}
-		else {
-		}
-	}
-	x.open("GET","calculateAmount.jsp?agmtarray="+agmtarray+"&branch="+branch+"&uptodate="+uptodate, true);
-	x.send();
-}
-	
+        /* Cards */
+        .filter-card {
+            background: #f8fafc;
+            border: 1px solid #e3e8ee;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
 
-	function funNotify(){
-		var docdateval=funDateInPeriod($('#periodupto').jqxDateTimeInput('getDate'));
-		if(docdateval==0){
-			$('#periodupto').jqxDateTimeInput('focus');
-			return false;
-		}
-		var selectedrows=$('#invoiceGrid').jqxGrid('selectedrowindexes');
-		if(selectedrows.length==0){
-			$.messager.alert('Warning','Please select agreements');
-			return false;
-		}
-		var testamt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[0],'rentalamt');
-		if(testamt=="" || testamt=="undefined" || testamt==null || typeof(testamt)=="undefined"){
-			$.messager.alert('Warning','Please Calculate');
-			return false;
-		}
-		var agmtarray=new Array();
-		for(var i=0;i<selectedrows.length;i++){
-			var agmtno=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'agmtno');
-			var totalamt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'totalamt');
-			var rentalamt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'rentalamt');
-			var accamt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'accamt');
-			var insuramt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'insuramt');
-			var salikamt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'salikamt');
-			var saliksrvc=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'saliksrvc');
-			var salikcount=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'salikcount');
-			var trafficamt=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'trafficamt');
-			var trafficsrvc=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'trafficsrvc');
-			var trafficcount=$('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'trafficcount');
-			var fromdate=$('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'fromdate');
-			var todate=$('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'todate');
-			var agmtvocno=$('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'agmtvocno');
-			var datediff=$('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'datediff');
-			agmtarray.push(agmtno+"::"+totalamt+"::"+rentalamt+"::"+accamt+"::"+insuramt+"::"+salikamt+"::"+saliksrvc+"::"+salikcount+"::"+trafficamt+"::"+trafficsrvc+"::"+trafficcount+"::"+datediff);
-		}
-		
-		var branch=$('#cmbbranch').val();
-		var uptodate=$('#periodupto').jqxDateTimeInput('val');
-		$('#overlay,#PleaseWait').show();
-		var x = new XMLHttpRequest();
-		x.onreadystatechange = function() {
-			if (x.readyState == 4 && x.status == 200) {
-				var items = x.responseText.trim();
-				items=JSON.parse(items);
-				if(items.errorstatus=="1"){
-					$.messager.alert('Message',items.errormsg);
-					$('#invoiceGrid').jqxGrid('clear');
-				}
-				else{
-					$.messager.alert('Warning',items.errormsg);
-				}
-				$('#overlay,#PleaseWait').hide();
-			}
-			else {
-			}
-		}
-		x.open("GET","createProforma.jsp?agmtarray="+agmtarray+"&branch="+branch+"&uptodate="+uptodate, true);
-		x.send();
-		
-	}
-	function setValues(){
+        /* Tables inside Cards */
+        .filter-table {
+            width: 100%;
+            border-spacing: 0 10px;
+        }
 
-		 if($('#msg').val()!=""){
-   		  $.messager.alert('Message','<center>'+$('#msg').val()+'</center>');
-   		  }
-	}
-	function funExportBtn(){
+        .filter-table .label-cell {
+            text-align: right;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #4e5e71;
+            font-weight: 600;
+            width: 80px;
+        }
 
-/* 			 if(parseInt(window.parent.chkexportdata.value)=="1")
-		  {
-		  	JSONToCSVCon(invoicedata, 'Rental Invoice', true);
-		  }
-		 else
-		  {
-			 $("#rentalInvoiceGrid").jqxGrid('exportdata', 'xls', 'Rental Invoice');
-		  }
+        /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+        input[type="text"], select,
+        .filter-table input[type="text"],
+        .filter-table select {
+            width: 100%;
+            height: 24px !important;              
+            padding: 2px 8px !important;          
+            border: 1px solid #ccd6e0 !important;
+            border-radius: 4px !important;        
+            font-size: 12px !important;          
+            background-color: #ffffff;
+            box-sizing: border-box;
+            color: #333;
+            outline: none;
+        }
 
-		 */
-		
-	}
-	
-		
-	
-</script>
+        /* Readonly / disabled look */
+        input[readonly], input:disabled, 
+        .filter-table input[readonly], 
+        .filter-table input:disabled {
+            background-color: #f3f6f9 !important;
+            color: #555;
+            border-color: #e1e8ed !important;
+            cursor: default;
+        }
 
-<style type="text/css">
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
+        /* jqx date/time containers */
+        #periodupto {
+            width: 100%;
+        }
 
-.master-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
-}
+        /* ===== BUTTONS ===== */
+        .btn-submit {
+            flex: 1;
+            height: 30px !important;            
+            padding: 0 12px !important;          
+            background: #2563eb !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 4px !important;      
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            line-height: 30px !important;        
+            transition: background 0.2s;
+            text-align: center;
+            width: 100%;
+        }
 
-/* Sidebar dynamically fills the left TD */
-.sidebar-filters {
-    width: 100%;
-    background: #fff;
-    border-right: 1px solid #e1e8ed;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
+        .btn-submit:hover {
+            background: #1d4ed8 !important;
+        }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
+        .btn-submit:disabled {
+            background: #9ca3af !important;
+            cursor: not-allowed;
+        }
 
-.sidebar-scroll-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px 20px 15px; 
-}
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
 
-.filter-card {
-    background: #f8fafc;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
+        /* ===== RIGHT CONTENT AREA ===== */
+        .main-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            height: 100%;
+            overflow: hidden;
+        }
 
-.filter-table {
-    width: 100%;
-    border-spacing: 0 10px;
-}
+        .top-toolbar-container {
+            width: 100%;
+            padding: 10px 15px;
+            background: #ffffff;
+            border-bottom: 1px solid #e1e8ed;
+            box-sizing: border-box;
+        }
 
-.label-cell {
-    text-align: right;
-    padding-right: 12px;
-    font-size: 12px; 
-    font-weight: 600;
-    color: #4e5e71;
-    width: 90px;
-}
+        .grid-content-container {
+            flex: 1;
+            padding: 15px;
+            overflow: auto;
+            box-sizing: border-box;
+            position: relative;
+        }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"], select {
-    width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
-}
+        /* Loader Positioning */
+        #PleaseWait {
+            position: absolute !important;
+            z-index: 1002;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+        }
+        </style>
 
-select {
-    padding: 2px 24px 2px 8px !important; 
-    font-family: inherit;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 6px center;
-    background-size: 12px;
-}
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
+            $("body").prepend("<div id='PleaseWait' style='display: none;'><img src='../../../../icons/31load.gif'/></div>");    
+            
+            // Standardize jqxDateTimeInputs
+            $("#periodupto").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
+            
+            $('#periodupto').on('change', function (event) {  
+                var docdateval = funDateInPeriod($('#periodupto').jqxDateTimeInput('getDate'));
+                if(docdateval == 0){
+                    $('#periodupto').jqxDateTimeInput('focus');
+                    return false;
+                }
+            });
+        });
 
-input[readonly],
-input:disabled,
-select:disabled {
-    background-color: #ffffff !important;
-    color: #555;
-    cursor: text !important;
-}
+        function funreload(event) {
+            if(document.getElementById("cmbbranch").value == "" || document.getElementById("cmbbranch").value == 'a'){
+                $.messager.alert('Warning','Please Select Branch');
+                return false;
+            }
+            var docdateval = funDateInPeriod($('#periodupto').jqxDateTimeInput('getDate'));
+            if(docdateval == 0){
+                $('#periodupto').jqxDateTimeInput('focus');
+                return false;
+            }
+            $("#overlay, #PleaseWait").show(); 
+            var branch = $('#cmbbranch').val();
+            var uptodate = $('#periodupto').jqxDateTimeInput('val');
+            $('#invoicediv').load('invoiceGrid.jsp?branch='+branch+'&uptodate='+uptodate+'&mode=1');
+        }
 
-/* ===== BUTTONS ===== */
-.button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
+        function funCalculate(){
+            var selectedrows = $('#invoiceGrid').jqxGrid('selectedrowindexes');
+            if(selectedrows.length == 0){
+                $.messager.alert('Warning','Please select agreements');
+                return false;
+            }
+            var agmtarray = new Array();
+            for(var i = 0; i < selectedrows.length; i++){
+                agmtarray.push($('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'agmtno'));
+            }
+            var branch = $('#cmbbranch').val();
+            var uptodate = $('#periodupto').jqxDateTimeInput('val');
+            
+            $('#overlay,#PleaseWait').show();
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText.trim();
+                    items = JSON.parse(items);
+                    $.each(items.calcdata, function( index, value ) {
+                        for(var i = 0; i < selectedrows.length; i++){
+                            if(value.agmtno == $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'agmtno')){
+                                var totalamt = parseFloat(value.rent)+parseFloat(value.insurchg)+parseFloat(value.accchg)+parseFloat(value.salikamt)+parseFloat(value.saliksrvc)+parseFloat(value.trafficamt)+parseFloat(value.trafficsrvc);
+                                totalamt = totalamt.toFixed(2);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'totalamt',totalamt);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'rentalamt',value.rent);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'accamt',value.accchg);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'insuramt',value.insurchg);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'salikamt',value.salikamt);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'trafficamt',value.trafficamt);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'saliksrvc',value.saliksrvc);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'trafficsrvc',value.trafficsrvc);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'salikcount',value.salikcount);
+                                $('#invoiceGrid').jqxGrid('setcellvalue',selectedrows[i],'trafficcount',value.trafficcount);
+                            }
+                        }
+                    });
+                    $('#overlay,#PleaseWait').hide();
+                }
+            }
+            x.open("GET","calculateAmount.jsp?agmtarray="+agmtarray+"&branch="+branch+"&uptodate="+uptodate, true);
+            x.send();
+        }
 
-.btn-submit {
-    flex: 1;
-    width: 100%;
-    height: 30px !important;            
-    padding: 0 12px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
-    text-align: center;
-    margin-top: 8px;
-    transition: all 0.2s ease;
-}
+        function funNotify(){
+            var docdateval = funDateInPeriod($('#periodupto').jqxDateTimeInput('getDate'));
+            if(docdateval == 0){
+                $('#periodupto').jqxDateTimeInput('focus');
+                return false;
+            }
+            var selectedrows = $('#invoiceGrid').jqxGrid('selectedrowindexes');
+            if(selectedrows.length == 0){
+                $.messager.alert('Warning','Please select agreements');
+                return false;
+            }
+            var testamt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[0],'rentalamt');
+            if(testamt == "" || testamt == "undefined" || testamt == null || typeof(testamt) == "undefined"){
+                $.messager.alert('Warning','Please Calculate');
+                return false;
+            }
+            
+            var agmtarray = new Array();
+            for(var i = 0; i < selectedrows.length; i++){
+                var agmtno = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'agmtno');
+                var totalamt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'totalamt');
+                var rentalamt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'rentalamt');
+                var accamt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'accamt');
+                var insuramt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'insuramt');
+                var salikamt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'salikamt');
+                var saliksrvc = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'saliksrvc');
+                var salikcount = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'salikcount');
+                var trafficamt = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'trafficamt');
+                var trafficsrvc = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'trafficsrvc');
+                var trafficcount = $('#invoiceGrid').jqxGrid('getcellvalue',selectedrows[i],'trafficcount');
+                var fromdate = $('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'fromdate');
+                var todate = $('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'todate');
+                var agmtvocno = $('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'agmtvocno');
+                var datediff = $('#invoiceGrid').jqxGrid('getcelltext',selectedrows[i],'datediff');
+                
+                agmtarray.push(agmtno+"::"+totalamt+"::"+rentalamt+"::"+accamt+"::"+insuramt+"::"+salikamt+"::"+saliksrvc+"::"+salikcount+"::"+trafficamt+"::"+trafficsrvc+"::"+trafficcount+"::"+datediff);
+            }
+            
+            var branch = $('#cmbbranch').val();
+            var uptodate = $('#periodupto').jqxDateTimeInput('val');
+            
+            $('#overlay,#PleaseWait').show();
+            var x = new XMLHttpRequest();
+            x.onreadystatechange = function() {
+                if (x.readyState == 4 && x.status == 200) {
+                    var items = x.responseText.trim();
+                    items = JSON.parse(items);
+                    if(items.errorstatus == "1"){
+                        $.messager.alert('Message',items.errormsg);
+                        $('#invoiceGrid').jqxGrid('clear');
+                    } else {
+                        $.messager.alert('Warning',items.errormsg);
+                    }
+                    $('#overlay,#PleaseWait').hide();
+                }
+            }
+            x.open("GET","createProforma.jsp?agmtarray="+agmtarray+"&branch="+branch+"&uptodate="+uptodate, true);
+            x.send();
+        }
 
-.btn-submit:hover {
-    background: #1d4ed8 !important;
-}
+        function setValues(){
+            if($('#msg').val() != ""){
+                $.messager.alert('Message','<center>'+$('#msg').val()+'</center>');
+            }
+        }
 
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
-    box-sizing: border-box;
-}
+        function funExportBtn(){
+            // Excelexportjs implementation placeholder if needed
+        }
+        </script>
+    </head>
 
-.scrollable-grid-area {
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-}
+    <body onload="getBranch();setValues();">
+        <form id="frmProforma" action="saveProforma" method="post">
+            <div id="mainBG" class="homeContent"> 
+                <div class="master-container">
 
-input[type="radio"], input[type="checkbox"] {
-    margin: 0 4px 0 0;
-    vertical-align: middle;
-}
+                    <!-- ================= LEFT SIDEBAR ================= -->
+                    <div class="sidebar-filters">
+                        <div class="sidebar-scroll-content">
+                            
+                            <div class="filter-card">
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">Period Upto</td>
+                                        <td>
+                                            <div id="periodupto" name="periodupto"></div>
+                                        </td>
+                                    </tr>
+                                </table>
 
-.radio-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-}
-
-.radio-group label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.sidebar-filters label.branch {
-    font-size: 12px;
-    font-weight: 600;
-    color: #4e5e71;
-    background: transparent !important;
-}
-</style>
-
-</head>
-<body onload="getBranch();setValues();">
-<form id="frmProforma" action="saveProforma" method="post">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
-<div class="master-container">
-
-    <!-- LEFT SIDEBAR -->
-    <div class="sidebar-filters" style="
-        width:320px;
-        min-width:320px;
-    ">
-
-        <!-- HEADER -->
-        <div class="sidebar-fixed-top">
-
-            <jsp:include page="../../heading.jsp"></jsp:include>
-
-        </div>
-
-
-        <!-- SIDEBAR CONTENT -->
-        <div class="sidebar-scroll-content">
-
-            <!-- FILTER CARD -->
-            <div class="filter-card" style="
-                padding:16px;
-                border-radius:18px;
-            ">
-
-                <table class="filter-table">
-
-                    <!-- PERIOD -->
-                    <tr>
-
-                        <td class="label-cell">
-                            <label class="branch">Period Upto</label>
-                        </td>
-
-                        <td>
-
-                            <div 
-                                id="periodupto"
-                                name="periodupto">
+                                <div class="action-buttons">
+                                    <input type="button" name="btninvoicesave" id="btninvoicesave" class="btn-submit" value="Generate" onclick="funNotify();">
+                                </div>
                             </div>
+                            
+                        </div>
+                    </div>
 
-                        </td>
+                    <!-- ================= RIGHT SIDE (MAIN CONTENT) ================= -->
+                    <div class="main-content-area">
+                        
+                        <!-- Toolbar/Heading (Moved from Sidebar) -->
+                        <div class="top-toolbar-container">
+                            <jsp:include page="../../heading.jsp"></jsp:include>
+                        </div>
+                        
+                        <div class="grid-content-container">
+                            <div id="invoicediv">
+                                <jsp:include page="invoiceGrid.jsp"></jsp:include>
+                            </div>
+                        </div>
+                    </div>
 
-                    </tr>
-
-                </table>
-
-
-                <!-- BUTTON -->
-                <div style="margin-top:18px;">
-
-                    <input 
-                        type="button"
-                        name="btninvoicesave"
-                        id="btninvoicesave"
-                        class="btn-submit"
-                        value="Generate"
-                        onclick="funNotify();">
-
+                </div>
+                
+                <!-- HIDDEN FIELDS -->
+                <div style="display:none;">
+                    <input type="hidden" name="invgridlength" id="invgridlength">
+                    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+                    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
                 </div>
 
             </div>
-
-
-            <!-- SPACER -->
-            <div style="height:40px;"></div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- RIGHT CONTENT -->
-    <div class="main-content-wrapper">
-
-        <div class="scrollable-grid-area">
-
-            <!-- LOADER -->
-            <div id="imgdiv" style="
-                position:absolute;
-                z-index:1;
-                top:200px;
-                right:600px;
-            ">
-
-                <img 
-                    id="imgloading"
-                    alt=""
-                    src="../../../../icons/29load.gif"/>
-
-            </div>
-
-
-
-            <!-- GRID -->
-            <div id="invoicediv" class="filter-card" style="
-                padding:0;
-                overflow:hidden;
-            ">
-
-                <jsp:include page="invoiceGrid.jsp"></jsp:include>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-</div>
-</div>
-<input type="hidden" name="invgridlength" id="invgridlength" >
-<input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-<input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-</form>
-</body>
+        </form>
+    </body>
 </html>
