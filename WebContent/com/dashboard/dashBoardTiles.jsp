@@ -44,26 +44,12 @@
     String svgBuilding  = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/></svg>";
     String svgSettings  = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'/></svg>";
     
-    // Application Icons
     String svgBullhorn  = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z'/></svg>";
     String svgShield    = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z'/></svg>";
     String svgChart     = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/></svg>";
     String svgClipboard = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/></svg>";
     String svgCart      = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z'/></svg>";
     String svgTraffic   = "<svg viewBox='0 0 24 24'><path fill='currentColor' d='M21.5 5.5l-2-2c-.39-.39-1.02-.39-1.41 0L17 4.59v-1.1C17 2.12 15.88 1 14.5 1h-5C8.12 1 7 2.12 7 3.49v1.1L5.91 3.5c-.39-.39-1.02-.39-1.41 0l-2 2c-.39.39-.39 1.02 0 1.41l2.58 2.58v6.02l-2.58 2.58c-.39.39-.39 1.02 0 1.41l2 2c.39.39 1.02.39 1.41 0L7 20.41v1.1c0 1.37 1.12 2.49 2.5 2.49h5c1.38 0 2.5-1.12 2.5-2.49v-1.1l1.09 1.09c.39.39 1.02.39 1.41 0l2-2c.39-.39.39-1.02 0-1.41l-2.58-2.58v-6.02l2.58-2.58c.39-.39.39-1.02 0-1.41zM9.5 5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S11.83 6.5 11 6.5 9.5 5.83 9.5 5zm0 7c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm0 7c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5z'/></svg>";
-
-    Map<String, String> iconMap = new HashMap<String, String>();
-    iconMap.put("Accounts Master", svgBuilding);
-    iconMap.put("Bank Payments", svgCard);
-    iconMap.put("Bank Receipts", svgBank);
-    iconMap.put("Cash Payments", svgCash);
-    iconMap.put("IB Bank Payment", svgCard);
-    iconMap.put("IB Bank Receipt", svgBank);
-    iconMap.put("Booking", svgCalendar);
-    iconMap.put("Client", svgUser);
-    iconMap.put("Movement", svgCar);
-    iconMap.put("Maintenance Update", svgWrench);
-    iconMap.put("Rental Agreement Create", svgHandshake);
 
     String[][] moduleDefs = {
         {"Finance",          "Fin",     "Finance",   "#0056b3", "#e8f0fe", "bank",      "Manage accounts, payments, receipts and financial transactions"},
@@ -269,10 +255,8 @@
                     fullUrl = (!dbLink.startsWith("/") ? cPath + "/" : cPath) + dbLink;
                     fullUrl += (fullUrl.contains("?") ? "&" : "?") + "menuname=" + title.replace(" ", "%20");
                 }
-                String icon = iconMap.get(title.trim());
-                if (icon == null) icon = svgFile;
                 ClsDashBoardBean bean = new ClsDashBoardBean();
-                bean.setTxttitle(title); bean.setTxtdescription(fullUrl); bean.setMsg(icon);
+                bean.setTxttitle(title); bean.setTxtdescription(fullUrl);
                 allTilesList.get(mi).add(bean);
             }
             rs.close(); stmt.close();
@@ -297,12 +281,11 @@
     .banner-title { font-size: 22px; font-weight: 700; text-shadow: 1px 1px 4px rgba(0,0,0,0.4); }
     .banner-sub   { font-size: 13px; opacity: 0.9; margin-top: 2px; }
 
-    .kpi-master-header { margin: 10px 15px 0; padding: 12px 20px; background: #fff; border: 1px solid #e0e4ea; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; gap: 15px; overflow-x: auto; white-space: nowrap; flex-shrink: 0; }
-    .kpi-stat-card { background: #f8f9fb; border: 1px solid #eaecf0; border-radius: 8px; padding: 10px 15px; min-width: 150px; flex: 0 0 auto; display: inline-flex; flex-direction: column; justify-content: center; border-bottom: 3px solid transparent; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-    .kpi-stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.06); border-color: #c0cfe8;}
+    .kpi-stat-card { background: #f8f9fb; border: 1px solid #eaecf0; border-radius: 8px; padding: 15px 20px; display: flex; flex-direction: column; justify-content: center; border-bottom: 4px solid transparent; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; min-height: 95px; }
+    .kpi-stat-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: #c0cfe8; background: #fff; }
 
     /* App Body layout */
-    .app-body { display: flex; gap: 0; margin: 10px 15px 15px; height: calc(100vh - 235px); background: #fff; border-radius: 8px; border: 1px solid #e0e4ea; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
+    .app-body { display: flex; gap: 0; margin: 15px; height: calc(100vh - 145px); background: #fff; border-radius: 8px; border: 1px solid #e0e4ea; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
 
     /* Left Nav Flex Splitting exactly 50/50 */
     .left-nav { width: 250px; min-width: 250px; border-right: 1px solid #e8eaed; display: flex; flex-direction: column; background: #fafbfc; height: 100%; overflow: hidden; }
@@ -311,7 +294,6 @@
     .acc-arrow { font-size: 12px; transition: transform 0.2s; color: #bbb; }
     .accordion-header.collapsed .acc-arrow { transform: rotate(-90deg); }
     
-    /* When both open, flex: 1 makes them divide exactly half */
     .nav-section-content { flex: 1; overflow-y: auto; display: block; min-height: 0; }
     .nav-section-content.collapsed { display: none; }
     
@@ -348,13 +330,8 @@
     .panel-search input { padding: 6px 14px; border: 1px solid #dde; border-radius: 16px; font-size: 12px; outline: none; width: 150px; background: #f8f9fb; transition: border-color 0.2s, box-shadow 0.2s, width 0.3s; }
     .panel-search input:focus { border-color: #0056b3; box-shadow: 0 0 0 3px rgba(0,86,179,0.1); width: 200px; background: #fff; }
     
-    .tiles-area { flex: 1; overflow-y: auto; padding: 16px 20px; }
-    .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
-    .tile-card { background: #fff; border: 1px solid #eaecf0; border-radius: 9px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 95px; cursor: pointer; text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; text-align: center; }
-    .tile-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: #c0cfe8; background: #f8faff; }
-    .tile-icon { width: 28px; height: 28px; margin-bottom: 8px; color: #0056b3; }
-    .tile-icon svg { width: 100%; height: 100%; }
-    .tile-name { font-size: 11.5px; font-weight: 600; color: #4a4a5a; line-height: 1.3; }
+    .tiles-area { flex: 1; overflow-y: auto; padding: 16px 20px; background: #f8f9fb; }
+    .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
     
     .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; color: #bbb; width: 100%; grid-column: 1 / -1; }
     .empty-state svg { width: 48px; height: 48px; margin-bottom: 10px; opacity: 0.4; }
@@ -372,7 +349,7 @@
     </div>
 </div>
 
-<div class="kpi-master-header" id="kpiContainer">
+<div id="kpiMasterTemplate" style="display: none;">
 <%
     String[][] kpiDefinitions = {
         {"Ready to Rent",              String.valueOf(readyToRent),         "#28a745", "",                       "openParentMenu",        "Available Fleet",          "Fleet Management", "Ops,Super,Driver"},
@@ -420,9 +397,9 @@
                 clickAction = "openDueDateDirectly()";
             }
 %>
-            <div class="kpi-stat-card kpi-cat-<%= kpiCategory %>" style="border-bottom-color: <%= bColor %>; <%= styleAttr %> display: none;" onclick="<%= clickAction %>">
-                <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;"><%= kpiLabel %></div>
-                <div style="font-size: 22px; font-weight: 800; color: <%= bColor %>; line-height: 1.2;"><%= kpiValue %></div>
+            <div class="kpi-stat-card kpi-cat-<%= kpiCategory %>" style="border-bottom-color: <%= bColor %>; <%= styleAttr %>" onclick="<%= clickAction %>">
+                <div class="kpi-title" style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase; margin-bottom: 4px;"><%= kpiLabel %></div>
+                <div style="font-size: 26px; font-weight: 800; color: <%= bColor %>; line-height: 1.1;"><%= kpiValue %></div>
             </div>
 <%
         }
@@ -431,10 +408,8 @@
 </div>
 
 <div class="app-body">
-    <!-- LEFT NAVIGATION -->
     <div class="left-nav">
         
-        <!-- SECTION 1: CORE MODULES ACCORDION -->
         <div class="accordion-header" onclick="toggleAccordion('coreModulesContent', this)">
             <span>Core Modules</span>
             <span class="acc-arrow">&#9660;</span>
@@ -454,7 +429,6 @@
                     String navIcon = navIcons[mi];
             %>
                 <div class="module-item sql-module" data-idx="<%= mi %>" data-category="<%= modName.replaceAll("\\s+", "").toUpperCase() %>">
-                    <!-- Dropdown Header -->
                     <div class="module-header" onclick="selectSqlModule(this, <%= mi %>)">
                         <div class="module-icon-wrap" style="background:<%= bg %>; color:<%= color %>;">
                             <%= navIcon %>
@@ -462,7 +436,6 @@
                         <span class="module-label"><%= modName %></span>
                         <span class="module-arrow">&#8250;</span>
                     </div>
-                    <!-- Dropdown List -->
                     <div class="submenu">
                         <% if (tileCount == 0) { %>
                             <div class="submenu-empty">No forms available</div>
@@ -474,7 +447,6 @@
             <% } %>
         </div> 
         
-        <!-- SECTION 2: APPLICATIONS ACCORDION -->
         <div class="accordion-header" onclick="toggleAccordion('applicationsContent', this)">
             <span>Applications</span>
             <span class="acc-arrow">&#9660;</span>
@@ -490,11 +462,9 @@
                     String docNo = item.optString("doc_no", "");
                     String description = item.optString("description", "Unknown");
                     
-                    // Assign specific colors for App list sequentially
                     String appColor = appColors[i % appColors.length];
                     String appBg = appBgs[i % appBgs.length];
 
-                    // EXPANDED DYNAMIC ICON LOGIC
                     String listIcon = svgFile; 
                     String descLower = description.toLowerCase();
                     if(descLower.contains("vehicle")) { listIcon = svgCar; }
@@ -511,9 +481,7 @@
                     else if(descLower.contains("asset")) { listIcon = svgBuilding; }
                     else if(descLower.contains("purchase")) { listIcon = svgCart; }
             %>
-                <!-- Passing data-color and data-bg to update panel headers dynamically -->
                 <div class="module-item dao-module" data-docno="<%= docNo %>" data-desc="<%= description %>" data-color="<%= appColor %>" data-bg="<%= appBg %>">
-                    <!-- Dropdown Header for Applications -->
                     <div class="module-header" onclick="triggerDaoModuleSelect(this)">
                         <div class="module-icon-wrap" style="background:<%= appBg %>; color:<%= appColor %>;">
                             <%= listIcon %>
@@ -521,7 +489,6 @@
                         <span class="module-label"><%= description %></span>
                         <span class="module-arrow">&#8250;</span>
                     </div>
-                    <!-- Empty Submenu container to be populated by AJAX -->
                     <div class="submenu"></div>
                 </div>
             <% } %>
@@ -529,16 +496,12 @@
         
     </div>
 
-    <!-- RIGHT CONTENT PANELS -->
     <div class="right-content">
         
-        <!-- PRE-RENDERED SQL PANELS -->
         <%
         for (int mi = 0; mi < moduleDefs.length; mi++) {
             String modName   = moduleDefs[mi][0];
             String modDesc   = moduleDefs[mi][6];
-            List<ClsDashBoardBean> tiles = allTilesList.get(mi);
-            int tileCount    = tiles.size();
             String color     = navColors[mi];
             String bg        = navBgs[mi];
             String navIcon   = navIcons[mi];
@@ -551,38 +514,23 @@
                         <%= navIcon %>
                     </div>
                     <div>
-                        <div class="panel-module-name" style="color:<%= color %>;"><%= modName %></div>
+                        <div class="panel-module-name" style="color:<%= color %>;"><%= modName %> Overview</div>
                         <div style="font-size: 12px; color: #888; margin-top: 2px;"><%= modDesc %></div>
                     </div>
                 </div>
                 <div class="panel-meta">
-                    <span class="badge-count" style="background:<%= bg %>; color:<%= color %>;"><%= tileCount %> Forms</span>
+                    <span class="badge-count" style="background:<%= bg %>; color:<%= color %>;">0 KPIs</span>
                     <div class="panel-search">
-                        <input type="text" class="localSearch" placeholder="Search forms..." oninput="filterTiles(this, '<%= safeId %>')">
+                        <input type="text" class="localSearch" placeholder="Search KPIs..." oninput="filterTiles(this, '<%= safeId %>')">
                     </div>
                 </div>
             </div>
             <div class="tiles-area">
-                <% if (tileCount == 0) { %>
-                    <div class="empty-state">
-                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                        <p>No forms available for this module</p>
-                    </div>
-                <% } else { %>
-                    <div class="tiles-grid">
-                    <% for (ClsDashBoardBean t : tiles) { %>
-                        <div class="tile-card" onclick="openParentMenu('<%= t.getTxttitle().replace("'", "\\'") %>')" title="<%= t.getTxttitle() %>">
-                            <div class="tile-icon" style="color:<%= color %>;"><%= t.getMsg() %></div>
-                            <div class="tile-name"><%= t.getTxttitle() %></div>
-                        </div>
-                    <% } %>
-                    </div>
-                <% } %>
+                <div class="tiles-grid"></div>
             </div>
         </div>
         <% } %>
 
-        <!-- DYNAMIC DAO PANEL (Status & Updates) -->
         <div class="module-panel" id="dao_panel">
             <div class="panel-header">
                 <div class="panel-header-left">
@@ -590,20 +538,19 @@
                         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                     </div>
                     <div>
-                        <div class="panel-module-name" id="activeDaoName">Application Name</div>
-                        <div style="font-size: 12px; color: #888; margin-top: 2px;">Status & Updates</div>
+                        <div class="panel-module-name" id="activeDaoName">Application Overview</div>
+                        <div style="font-size: 12px; color: #888; margin-top: 2px;">Key Performance Indicators</div>
                     </div>
                 </div>
                 <div class="panel-meta">
-                    <span class="badge-count" id="daoTileCounter" style="background:#e8f0fe; color:#0056b3;">0 Forms</span>
+                    <span class="badge-count" id="daoTileCounter" style="background:#e8f0fe; color:#0056b3;">0 KPIs</span>
                     <div class="panel-search">
-                        <input type="text" class="localSearch" placeholder="Search forms..." oninput="filterTiles(this, 'dao_panel')">
+                        <input type="text" class="localSearch" placeholder="Search KPIs..." oninput="filterTiles(this, 'dao_panel')">
                     </div>
                 </div>
             </div>
             <div class="tiles-area">
-                <div class="tiles-grid" id="daoTilesContainer">
-                </div>
+                <div class="tiles-grid" id="daoTilesContainer"></div>
             </div>
         </div>
 
@@ -634,6 +581,20 @@
         $content.toggleClass('collapsed');
     }
 
+    // Main KPI injector function: pulls from hidden template and inserts into the right panel grid
+    function injectKpisIntoGrid(categoryStr, $targetGrid) {
+        $targetGrid.empty(); // Clear old KPIs
+        var $matchedKpis = $('#kpiMasterTemplate .kpi-cat-' + categoryStr).clone();
+
+        if ($matchedKpis.length > 0) {
+            $targetGrid.append($matchedKpis);
+            $targetGrid.closest('.module-panel').find('.badge-count').text($matchedKpis.length + " KPIs");
+        } else {
+            $targetGrid.html('<div class="empty-state" style="grid-column: 1 / -1;"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><p>No KPIs available for this category</p></div>');
+            $targetGrid.closest('.module-panel').find('.badge-count').text("0 KPIs");
+        }
+    }
+
     // Handle clicking an Original Core Module
     function selectSqlModule(headerElement, idx) {
         var $parentItem = $(headerElement).closest('.module-item');
@@ -646,15 +607,15 @@
         $('.module-item').removeClass('active');
         $parentItem.addClass('active');
         $('.localSearch').val('');
-        $('.tile-card').show();
 
         // Switch Panels
         $('.module-panel').removeClass('active-panel');
         $('#sql_panel_' + idx).addClass('active-panel');
 
-        // Filter KPIs
+        // Inject KPIs for this SQL panel category
         var category = $parentItem.data('category');
-        filterKpis(category);
+        var $grid = $('#sql_panel_' + idx + ' .tiles-grid');
+        injectKpisIntoGrid(category, $grid);
     }
 
     // Handle clicking a New Application Item
@@ -669,7 +630,6 @@
         $('.module-item').removeClass('active');
         $parentItem.addClass('active');
         $('.localSearch').val('');
-        $('.tile-card').show();
 
         // Switch Panels
         $('.module-panel').removeClass('active-panel');
@@ -680,19 +640,18 @@
         var appColor = $parentItem.data('color');
         var appBg = $parentItem.data('bg');
 
-        $('#activeDaoName').text(desc);
+        $('#activeDaoName').text(desc + " Overview");
         $('#activeDaoName').css('color', appColor);
 
-        // Map icons dynamically with specific app colors to panel header
+        // Map icons dynamically
         var currentIconHtml = $parentItem.find('.module-icon-wrap').html();
         var $daoPanelIcon = $('#dao_panel_icon');
         $daoPanelIcon.html(currentIconHtml);
         $daoPanelIcon.css({'background-color': appBg, 'color': appColor});
         
-        // Update header badge color dynamically
         $('#daoTileCounter').css({'background-color': appBg, 'color': appColor});
 
-        // Smart Category mapping to match Application tiles with KPI ribbons (Shows RA Due Date inside Operations)
+        // Smart Category mapping to match Application titles with KPI ribbon logic
         var category = desc.toUpperCase().replace(/\s+/g, '');
         if(category.indexOf('FLEET') > -1 || category.indexOf('VEHICLE') > -1) category = 'FLEETMANAGEMENT';
         else if(category.indexOf('FINANCE') > -1 || category.indexOf('INVOICE') > -1 || category.indexOf('ACCOUNT') > -1) category = 'FINANCE';
@@ -701,10 +660,11 @@
         else if(category.indexOf('ASSET') > -1) category = 'FIXEDASSETS';
         else if(category.indexOf('CONTROL') > -1 || category.indexOf('SETTING') > -1 || category.indexOf('SECURITY') > -1) category = 'CONTROLCENTRE';
 
-        filterKpis(category);
+        // Inject KPIs into right panel
+        var $grid = $('#daoTilesContainer');
+        injectKpisIntoGrid(category, $grid);
 
-        // Fetch DAO Tiles
-        $('#daoTilesContainer').html('<div class="empty-state" style="grid-column: 1 / -1;"><p>Loading details...</p></div>');
+        // Fetch Submenu Application forms via AJAX
         $parentItem.find('.submenu').html('<div class="submenu-empty">Loading...</div>'); 
 
         $.ajax({
@@ -713,61 +673,36 @@
             data: { ajaxId: docNo },
             dataType: "json",
             success: function(response) {
-                renderDaoTiles(response, desc, $parentItem, appColor);
+                renderDaoSubmenuOnly(response, desc, $parentItem);
             },
             error: function() {
-                $('#daoTilesContainer').html('<div class="empty-state" style="grid-column: 1 / -1;"><p>Failed to load data.</p></div>');
                 $parentItem.find('.submenu').html('<div class="submenu-empty">Failed to load data</div>');
             }
         });
     }
 
-    function filterKpis(categoryStr) {
-        $('.kpi-stat-card').hide(); 
-        var $targetKPIs = $('.kpi-cat-' + categoryStr);
-        if($targetKPIs.length > 0) {
-            $targetKPIs.fadeIn(200);
-            $('#kpiContainer').show();
-        } else {
-            $('#kpiContainer').hide();
-        }
-    }
-
-    function renderDaoTiles(data, parentDesc, $parentItem, appColor) {
-        var $cont = $('#daoTilesContainer').empty();
+    function renderDaoSubmenuOnly(data, parentDesc, $parentItem) {
         var $submenu = $parentItem.find('.submenu').empty(); 
         
         if (!data || data.length === 0) {
-            $cont.html('<div class="empty-state" style="grid-column: 1 / -1;"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><p>No forms available for this application</p></div>');
-            $('#daoTileCounter').text("0 Forms");
             $submenu.html('<div class="submenu-empty">No forms available</div>');
             return;
         }
-
-        $('#daoTileCounter').text(data.length + " Forms");
-        var svgIcon = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
 
         $.each(data, function(i, item) {
             var cleanDesc = item.description.replace(/'/g, "\\'");
             var cleanMainDesc = parentDesc.replace(/'/g, "\\'");
             
-            // Build Main Tile (dynamically passing the appColor to the icon so it matches)
-            var html = '<div class="tile-card" onclick="openDetailLink(\'' + cleanDesc + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + cleanMainDesc + '\', \'' + item.value + '\')">' +
-                       '<div class="tile-icon" style="color:' + appColor + ';">' + svgIcon + '</div>' +
-                       '<div class="tile-name">' + item.description + '</div>' +
-                       '</div>';
-            $cont.append(html);
-
-            // Build Submenu Link
             var submenuLink = '<button type="button" class="submenu-link" onclick="event.stopPropagation(); openDetailLink(\'' + cleanDesc + '\', \'' + item.path + '\', \'' + item.doc_no + '\', \'' + cleanMainDesc + '\', \'' + item.value + '\')">' + item.description + '</button>';
             $submenu.append(submenuLink);
         });
     }
 
+    // Filter now targets .kpi-stat-card and its internal .kpi-title class
     function filterTiles(input, panelId) {
         var val = input.value.toUpperCase().replace(/\s+/g, '');
-        $('#' + panelId + ' .tile-card').each(function() {
-            var name = $(this).find('.tile-name').text().toUpperCase().replace(/\s+/g, '');
+        $('#' + panelId + ' .kpi-stat-card').each(function() {
+            var name = $(this).find('.kpi-title').text().toUpperCase().replace(/\s+/g, '');
             $(this).css('display', name.indexOf(val) > -1 ? '' : 'none');
         });
     }

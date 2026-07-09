@@ -210,6 +210,9 @@ public class MobileApiAction extends ActionSupport {
     // ==========================================
     // ENDPOINT 2: Process Login
     // ==========================================
+ // ==========================================
+    // ENDPOINT 2: Process Login
+    // ==========================================
     public String processLogin() {
         Connection conn = null;
         Statement stmt = null;
@@ -234,6 +237,19 @@ public class MobileApiAction extends ActionSupport {
             if (rs.next()) {
                 status = "success";
                 int loggedInUserId = rs.getInt("doc_no");
+                
+                // ---> THE MISSING PUZZLE PIECE YOU NEED TO ADD <---
+                // We must physically store the user data in the Tomcat Session so the DAOs can read it!
+                HttpSession session = ServletActionContext.getRequest().getSession();
+                session.setAttribute("USERID", String.valueOf(loggedInUserId));
+                
+                // Safely grab the branch and company IDs 
+                try { session.setAttribute("BRANCHID", rs.getString("branchid")); } catch (Exception e) {
+                    try { session.setAttribute("BRANCHID", rs.getString("branch_id")); } catch (Exception ex) {}
+                }
+                try { session.setAttribute("COMPID", rs.getString("comp_id")); } catch (Exception e) {}
+                // --------------------------------------------------
+
                 token = UUID.randomUUID().toString() + "-" + loggedInUserId;
             } else {
                 status = "login_failed";
@@ -580,9 +596,24 @@ public class MobileApiAction extends ActionSupport {
     }
     public String getFleetList() { 
         try {
-            dropdownData = new ClsRentalAgreementDAO().vehSearch(ServletActionContext.getRequest().getSession(), "", "", "", "", "", "yes"); 
-            status="success"; 
-        } catch (Exception e) { e.printStackTrace(); status = "error"; }
+            HttpSession session = ServletActionContext.getRequest().getSession();
+            
+            // 1. Check if the session actually has the user data
+            if (session.getAttribute("USERID") == null || session.getAttribute("BRANCHID") == null) {
+                status = "error: Unauthorized. Missing JSESSIONID cookie or session expired.";
+                dropdownData = new ArrayList<>(); // Return empty array explicitly on error
+                return SUCCESS;
+            }
+            
+          
+            // 2. Pass the validated session to the DAO
+            dropdownData = new ClsRentalAgreementDAO().vehSearch(session, "", "", "", "", "", "yes"); 
+            status = "success"; 
+            
+        } catch (Exception e) { 
+            e.printStackTrace(); 
+            status = "error: " + e.getMessage(); 
+        }
         return SUCCESS; 
     }
 

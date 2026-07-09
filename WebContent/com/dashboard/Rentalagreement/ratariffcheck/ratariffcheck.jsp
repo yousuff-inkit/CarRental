@@ -609,6 +609,45 @@ input[type="radio"], input[type="checkbox"] {
     color: #4e5e71;
     background: transparent !important;
 }
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;   /* was: width: 100%, plus a conflicting inline style */
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;        /* was: 100vh */
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;         /* was: 100vh */
+    box-sizing: border-box;
+    padding: 0;            /* was: 15px 20px */
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
 </style>
 
 </head>
@@ -618,11 +657,9 @@ input[type="radio"], input[type="checkbox"] {
 <div class="master-container">
 
     <!-- LEFT SIDE -->
-    <div class="sidebar-filters" style="width:20%; min-width:300px;">
+    <div class="sidebar-filters" >
 
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
+        
 
         <div class="sidebar-scroll-content">
 
@@ -961,7 +998,10 @@ input[type="radio"], input[type="checkbox"] {
 
     <!-- RIGHT SIDE -->
     <div class="main-content-wrapper">
-
+	  <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
+        
         <div class="scrollable-grid-area">
 
             <div id="detlist">

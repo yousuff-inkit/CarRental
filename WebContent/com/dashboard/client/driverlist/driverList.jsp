@@ -139,7 +139,7 @@ select:disabled {
     cursor: text !important;
 }
 
-/* Layout Utilities */
+
 .main-content-wrapper {
     flex: 1;
     width: 100%;
@@ -192,6 +192,49 @@ fieldset {
     padding: 10px;
     margin: 0;
 }
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;   /
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;       
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+
+
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;         
+    box-sizing: border-box;
+    padding: 0;            
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -525,16 +568,7 @@ function funExportBtn(){
 <div class="hidden-scrollbar">
 <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
     <div class="sidebar-filters">
-        
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
 
             <div class="filter-card">
@@ -548,7 +582,7 @@ function funExportBtn(){
                     </div>
                 </fieldset>
             </div>
-        
+
             <div class="filter-card">
                 <table class="filter-table">
                     <tr>
@@ -579,27 +613,24 @@ function funExportBtn(){
 
         </div>
     </div>
-</td>
 
-
-<td valign="top">
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <div id="driverListDiv">
                 <jsp:include page="driverListGrid.jsp"></jsp:include>
             </div>
         </div>
     </div>
-</td>
-
-</tr>
-</table>
-
-<div id="clientDetailsWindow"><div></div><div></div></div>
-<div id="nationalityWindow"><div></div><div></div></div>
-<div id="stateWindow"><div></div><div></div></div>
 
 </div>
+
+<div id="clientDetailsWindow"><div></div></div>
+<div id="nationalityWindow"><div></div></div>
+<div id="stateWindow"><div></div></div>
+
 </div>
 </div>
 

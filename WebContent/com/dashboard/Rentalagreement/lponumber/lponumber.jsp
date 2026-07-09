@@ -161,6 +161,52 @@ input[readonly], input:disabled, select:disabled {
     width: 100%;
     overflow: auto;
 }
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.card-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: #2563eb;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
 </style>
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
 <script type="text/javascript">
@@ -544,149 +590,128 @@ document.getElementById("ra_no").value="0";
 
 <div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
-
-<table width="100%">
-<tr>
-
-<td width="20%">
 <div class="master-container">
-<div class="sidebar-filters">
 
-    <div class="sidebar-fixed-top">
-        <div class="filter-card">
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id="fromdate"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate"></div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Status</td>
+                        <td>
+                            <select id="status" name="status">
+                                <option value="">All</option>
+                                <option value="0">Open</option>
+                                <option value="1">Close</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Client</td>
+                        <td>
+                            <input type="text" id="clientname" name="clientname"
+                                   placeholder="Press F3 To Search"
+                                   readonly onkeydown="getclinfo(event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Category</td>
+                        <td>
+                            <input type="text" id="catname" name="catname"
+                                   placeholder="Press F3 To Search"
+                                   readonly onkeydown="getclcat(event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fleet</td>
+                        <td>
+                            <input type="text" id="fleet" name="fleet"
+                                   placeholder="Press F3 To Search"
+                                   readonly onkeydown="getfleet(event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Salesman</td>
+                        <td>
+                            <input type="text" id="salesman" name="salesman"
+                                   placeholder="Press F3 To Search"
+                                   readonly onkeydown="getsalesman(event);">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="rentaltype" name="rentaltype"></select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="button-group">
+                    <button type="button" class="btn-submit" onclick="funcleardata();">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <div class="card-title">LPO No Change</div>
+
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">LPO No</td>
+                        <td>
+                            <input type="text" id="lpo" name="lpo"
+                                   placeholder="Enter LPO No">
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="button-group">
+                    <button type="button" class="btn-submit" onclick="funupdate();">
+                        Update
+                    </button>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <div id="paychaaaaa"></div>
+            </div>
+
+            <input type="hidden" id="ra_no" name="ra_no">
+            <input type="hidden" id="oldlpo" name="oldlpo">
+            <input type="hidden" id="cldocno" name="cldocno">
+            <input type="hidden" id="salesmandoc" name="salesmandoc">
+            <input type="hidden" id="catid" name="catid">
+
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
-    </div>
-
-    <div class="sidebar-scroll-content">
-
-        <div class="filter-card">
-            <table class="lpo-filter-table">
-                <tr>
-                    <td class="label-cell">From</td>
-                    <td><div id="fromdate"></div></td>
-                </tr>
-                <tr>
-                    <td class="label-cell">To</td>
-                    <td><div id="todate"></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="filter-card">
-            <table class="lpo-filter-table">
-
-                <tr>
-                    <td class="label-cell">Status</td>
-                    <td>
-                        <select id="status" name="status">
-                            <option value="">All</option>
-                            <option value="0">Open</option>
-                            <option value="1">Close</option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Client</td>
-                    <td>
-                        <input type="text" id="clientname" name="clientname"
-                               placeholder="Press F3 To Search"
-                               readonly onkeydown="getclinfo(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Category</td>
-                    <td>
-                        <input type="text" id="catname" name="catname"
-                               placeholder="Press F3 To Search"
-                               readonly onkeydown="getclcat(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Fleet</td>
-                    <td>
-                        <input type="text" id="fleet" name="fleet"
-                               placeholder="Press F3 To Search"
-                               readonly onkeydown="getfleet(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Salesman</td>
-                    <td>
-                        <input type="text" id="salesman" name="salesman"
-                               placeholder="Press F3 To Search"
-                               readonly onkeydown="getsalesman(event);">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Type</td>
-                    <td>
-                        <select id="rentaltype" name="rentaltype"></select>
-                    </td>
-                </tr>
-
-            </table>
-
-            <div class="lpo-actions">
-                <button type="button"
-                        class="btn-submit"
-                        onclick="funcleardata();">
-                    Clear
-                </button>
+        <div class="scrollable-grid-area">
+            <div id="detlist">
+                <jsp:include page="detailedGrid.jsp"></jsp:include>
             </div>
         </div>
-
-        <div class="filter-card lpo-change-card">
-            <div class="lpo-change-title">LPO No Change</div>
-
-            <table class="lpo-filter-table">
-                <tr>
-                    <td class="label-cell">LPO No</td>
-                    <td>
-                        <input type="text" id="lpo" name="lpo"
-                               placeholder="Enter LPO No">
-                    </td>
-                </tr>
-            </table>
-
-            <div class="lpo-actions">
-                <button type="button"
-                        class="btn-submit"
-                        onclick="funupdate();">
-                    Update
-                </button>
-            </div>
-        </div>
-
-        <div class="filter-card">
-            <div id="paychaaaaa"></div>
-        </div>
-
-        <input type="hidden" id="ra_no" name="ra_no">
-        <input type="hidden" id="oldlpo" name="oldlpo">
-        <input type="hidden" id="cldocno" name="cldocno">
-        <input type="hidden" id="salesmandoc" name="salesmandoc">
-        <input type="hidden" id="catid" name="catid">
-
     </div>
+
 </div>
-</div>
-</td>
-
-<td width="80%">
-    <div id="detlist">
-        <jsp:include page="detailedGrid.jsp"></jsp:include>
-    </div>
-</td>
-
-</tr>
-</table>
-
 </div>
 
 <div id="catwindow"><div></div></div>
@@ -698,4 +723,3 @@ document.getElementById("ra_no").value="0";
 </div>
 </body>
 </html>
-	 

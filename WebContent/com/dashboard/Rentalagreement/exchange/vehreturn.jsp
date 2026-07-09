@@ -154,6 +154,47 @@ select {
     width: 100%;
     overflow: auto;
 }
+
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;   
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;        
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+   
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;         
+    box-sizing: border-box;
+    padding: 0;           
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
 </style>
 
 <%-- <script type="text/javascript" src="../../js/dashboard.js"></script> --%> 
@@ -840,189 +881,149 @@ function change()
 
 <div id="mainBG" class="homeContent" data-type="background">
 <div class="hidden-scrollbar">
-
-<table >
-<tr>
-
-<!-- ================= LEFT PANEL (20%) ================= -->
-<td width="20%">
-
 <div class="master-container">
-<div class="sidebar-filters">
 
-    <!-- ===== FIXED HEADING ===== -->
-    <div class="sidebar-fixed-top">
-        <div class="filter-card">
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
+
+            <div class="filter-card">
+                <div class="card-title">In Details</div>
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Type</td>
+                        <td>
+                            <select id="eorc" name="eorc" onchange="change()">
+                                <option value="" selected>-Select-</option>
+                                <option value="1">Exchange</option>
+                                <option value="2">Cancel</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Driver</td>
+                        <td><input type="text" id="indriver" name="indriver" placeholder="Press F3 Search"
+                                   value='<s:property value="indriver"/>'></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">KM</td>
+                        <td><input type="text" id="inkm" name="inkm"
+                                   value='<s:property value="inkm"/>'
+                                   onblur="funchkkm()"
+                                   onkeypress="return isNumber(event)"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fuel</td>
+                        <td>
+                            <select id="infuel" name="infuel">
+                                <option value="">-Select-</option>
+                                <option value="0.000">Level 0/8</option>
+                                <option value="0.125">Level 1/8</option>
+                                <option value="0.250">Level 2/8</option>
+                                <option value="0.375">Level 3/8</option>
+                                <option value="0.500">Level 4/8</option>
+                                <option value="0.625">Level 5/8</option>
+                                <option value="0.750">Level 6/8</option>
+                                <option value="0.875">Level 7/8</option>
+                                <option value="1.000">Level 8/8</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id="indate" value='<s:property value="indate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Time</td>
+                        <td><div id="intime" value='<s:property value="intime"/>'></div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <div class="card-title">Out Details</div>
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Date</td>
+                        <td><div id="exdate" value='<s:property value="exdate"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Time</td>
+                        <td><div id="extime" value='<s:property value="extime"/>'></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fleet</td>
+                        <td>
+                            <input type="text" id="outfleet" name="outfleet"
+                                    placeholder="Press F3 Search"
+                                   onkeydown="getvehinfo(event)"
+                                   value='<s:property value="outfleet"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Driver</td>
+                        <td>
+                            <input type="text" id="outdriver" name="outdriver"
+                                   readonly placeholder="Press F3 Search"
+                                   onkeydown="getDriver(event)"
+                                   value='<s:property value="outdriver"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">KM</td>
+                        <td>
+                            <input type="text" id="outkm" name="outkm"
+                                   readonly value='<s:property value="outkm"/>'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">Fuel</td>
+                        <td>
+                            <select id="outfuel" name="outfuel">
+                                <option value="">-Select-</option>
+                                <option value="0.000">Level 0/8</option>
+                                <option value="0.125">Level 1/8</option>
+                                <option value="0.250">Level 2/8</option>
+                                <option value="0.375">Level 3/8</option>
+                                <option value="0.500">Level 4/8</option>
+                                <option value="0.625">Level 5/8</option>
+                                <option value="0.750">Level 6/8</option>
+                                <option value="0.875">Level 7/8</option>
+                                <option value="1.000">Level 8/8</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">Remarks</td>
+                        <td><input type="text" id="remarkss" name="remarkss"
+                                   value='<s:property value="remarkss"/>'></td>
+                    </tr>
+                </table>
+            </div>
+
+            <button class="btn-submit" type="button" onclick="funupdate()">Update</button>
+            <button class="btn-submit" type="button" onclick="funAttachBtn()">Attach</button>
+
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
+        <div class="scrollable-grid-area">
+            <div id="delupdiv">
+                <jsp:include page="delupdateGrid.jsp"></jsp:include>
+            </div>
+        </div>
     </div>
 
-    <!-- ===== SCROLLABLE CONTENT ===== -->
-    <div class="sidebar-scroll-content">
-
-        <!-- ===== TYPE ===== -->
-        <div class="filter-card">
-            <table class="filter-table">
-                <tr> <div class="card-title">In Details</div>
-                    <td class="label-cell">Type</td>
-                    <td>
-                        <select id="eorc" name="eorc" onchange="change()">
-                            <option value="" selected>-Select-</option>
-                            <option value="1">Exchange</option>
-                            <option value="2">Cancel</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-      
-           
-            <table class="filter-table">
-                <tr>
-                    <td class="label-cell">Driver</td>
-                    <td><input type="text" id="indriver" name="indriver" placeholder="Press F3 Search"
-                               value='<s:property value="indriver"/>'></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">KM</td>
-                    <td><input type="text" id="inkm" name="inkm"
-                               value='<s:property value="inkm"/>'
-                               onblur="funchkkm()"
-                               onkeypress="return isNumber(event)"></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Fuel</td>
-                    <td>
-                        <select id="infuel" name="infuel">
-                            <option value="">-Select-</option>
-                            <option value="0.000">Level 0/8</option>
-                            <option value="0.125">Level 1/8</option>
-                            <option value="0.250">Level 2/8</option>
-                            <option value="0.375">Level 3/8</option>
-                            <option value="0.500">Level 4/8</option>
-                            <option value="0.625">Level 5/8</option>
-                            <option value="0.750">Level 6/8</option>
-                            <option value="0.875">Level 7/8</option>
-                            <option value="1.000">Level 8/8</option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Date</td>
-                    <td><div id="indate" value='<s:property value="indate"/>'></div></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Time</td>
-                    <td><div id="intime" value='<s:property value="intime"/>'></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- ===== OUT DETAILS ===== -->
-        <div class="filter-card">
-            <div class="card-title">Out Details</div>
-            <table class="filter-table">
-
-                <tr>
-                    <td class="label-cell">Date</td>
-                    <td><div id="exdate" value='<s:property value="exdate"/>'></div></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Time</td>
-                    <td><div id="extime" value='<s:property value="extime"/>'></div></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Fleet</td>
-                    <td>
-                        <input type="text" id="outfleet" name="outfleet"
-                                placeholder="Press F3 Search"
-                               onkeydown="getvehinfo(event)"
-                               value='<s:property value="outfleet"/>'>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Driver</td>
-                    <td>
-                        <input type="text" id="outdriver" name="outdriver"
-                               readonly placeholder="Press F3 Search"
-                               onkeydown="getDriver(event)"
-                               value='<s:property value="outdriver"/>'>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">KM</td>
-                    <td>
-                        <input type="text" id="outkm" name="outkm"
-                               readonly value='<s:property value="outkm"/>'>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">Fuel</td>
-                    <td>
-                        <select id="outfuel" name="outfuel">
-                            <option value="">-Select-</option>
-                            <option value="0.000">Level 0/8</option>
-                            <option value="0.125">Level 1/8</option>
-                            <option value="0.250">Level 2/8</option>
-                            <option value="0.375">Level 3/8</option>
-                            <option value="0.500">Level 4/8</option>
-                            <option value="0.625">Level 5/8</option>
-                            <option value="0.750">Level 6/8</option>
-                            <option value="0.875">Level 7/8</option>
-                            <option value="1.000">Level 8/8</option>
-                        </select>
-                    </td>
-                </tr>
-
-            </table>
-        </div>
-
-        <!-- ===== REMARKS ===== -->
-        <div class="filter-card">
-            <table class="filter-table">
-                <tr>
-                    <td class="label-cell">Remarks</td>
-                    <td><input type="text" id="remarkss" name="remarkss"
-                               value='<s:property value="remarkss"/>'></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- ===== ACTION BUTTONS ===== -->
-        <button class="btn-submit" type="button" onclick="funupdate()">Update</button>
-        <button class="btn-submit" type="button" onclick="funAttachBtn()">Attach</button>
-
-    </div>
-</div>
 </div>
 
-</td>
-
-<!-- ================= RIGHT PANEL (80%) ================= -->
-<td width="80%">
-    <table width="100%">
-        <tr>
-            <td>
-                <div id="delupdiv">
-                    <jsp:include page="delupdateGrid.jsp"></jsp:include>
-                </div>
-            </td>
-        </tr>
-    </table>
-</td>
-
-</tr>
-</table>
-
-<!-- ===== HIDDEN FIELDS (UNCHANGED) ===== -->
 <input type="hidden" id="rentaldoc" name="rentaldoc" value='<s:property value="rentaldoc"/>'>
 <input type="hidden" id="fleetno" name="fleetno" value='<s:property value="fleetno"/>'>
 <input type="hidden" id="out_km" name="out_km" value='<s:property value="out_km"/>'>
@@ -1038,7 +1039,6 @@ function change()
 <input type="hidden" id="outloc" name="outloc" value='<s:property value="outloc"/>'>
 <input type="hidden" id="outfuelval" name="outfuelval" value='<s:property value="outfuelval"/>'>
 
-<!-- ===== WINDOWS ===== -->
 <div id="collectionwindow"><div></div></div>
 <div id="vehinfowindow"><div></div></div>
 

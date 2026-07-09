@@ -89,5 +89,7 @@
 <action name="getLocationList" class="com.api.MobileApiAction" method="getLocationList">
     <result type="json"><param name="includeProperties">status, dropdownData.*</param></result>
 </action>
+
+
     </package>
 </struts>

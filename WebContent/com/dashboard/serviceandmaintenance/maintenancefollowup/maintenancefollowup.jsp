@@ -1,5 +1,7 @@
 <jsp:include page="../../../../includes.jsp"></jsp:include>    
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<% String contextPath=request.getContextPath();%> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,45 +11,41 @@
 <title>GatewayERP(i)</title>
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
-/* ===== MASTER LAYOUT ===== */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+html, body, #mainBG {
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-color: #f4f7f9;
 }
 
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
-    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif; /* UNIFORM FONT */
-    background-color: #f4f7f9;
+    height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
 }
 
-/* Sidebar */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
-    width: 330px;
-    flex: 0 0 330px;
+    width: 280px; /* Uniform width */
+    flex: 0 0 280px; 
     background: #fff;
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
+    z-index: 10;
 }
 
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
-}
-
-/* Flex 1 allows this middle section to scroll while keeping top and bottom fixed */
 .sidebar-scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 15px 20px 15px; 
+    padding: 15px 15px 25px; /* Uniform tighter padding */
 }
 
+/* Cards */
 .filter-card {
     background: #f8fafc;
     border: 1px solid #e3e8ee;
@@ -56,115 +54,123 @@ html, body, #mainBG, .hidden-scrollbar {
     margin-bottom: 12px;
 }
 
-.filter-table {
+/* Tables */
+.release-filter-table {
     width: 100%;
     border-spacing: 0 10px;
 }
 
-.label-cell {
+.release-filter-table .label-cell {
     text-align: right;
-    padding-right: 12px;
-    font-size: 12px; /* Uniform 12px label */
-    font-weight: 600;
+    padding-right: 10px;
+    font-size: 12px;
     color: #4e5e71;
-    width: 90px;
+    font-weight: 600;
+    width: 80px; /* Standardized label column width */
 }
 
-/* ===== UNIFORM 24px TEXT INPUTS ===== */
-input[type="text"] {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.release-filter-table input[type="text"],
+.release-filter-table select {
     width: 100%;
-    height: 24px !important;             
-    padding: 2px 8px !important;         
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;       
-    font-size: 12px !important;          
+    height: 24px;              
+    padding: 2px 8px;          
+    border: 1px solid #ccd6e0;
+    border-radius: 4px;       
+    font-size: 12px;          
     background-color: #ffffff;
     box-sizing: border-box;
     color: #333;
     outline: none;
 }
 
-/* ===== UNIFORM 24px SELECT DROPDOWNS (FIXED) ===== */
+/* Custom dropdown arrow for native selects */
 select {
-    width: 100%;
-    height: 24px !important;
-    padding: 2px 24px 2px 8px !important; 
-    border: 1px solid #ccd6e0 !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    color: #333;
-    outline: none;
-    font-family: inherit;
-    cursor: pointer;
-    
+    padding: 2px 24px 2px 8px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234e5e71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 6px center;
     background-size: 12px;
 }
 
-input[readonly], input:disabled, select:disabled {
+/* Readonly / disabled look */
+input[readonly],
+input:disabled,
+select:disabled,
+.release-filter-table input[readonly],
+.release-filter-table input:disabled,
+.release-filter-table select:disabled {
     background-color: #f3f6f9 !important;
     color: #555;
+    border-color: #e1e8ed;
     cursor: not-allowed;
 }
 
+/* jqx date container */
+.release-filter-table div[id^="date"] {
+    width: 100%;
+}
+
 /* ===== BUTTONS ===== */
-.button-group {
+.btn-submit {
+    width: 100%;
+    height: 30px;            
+    padding: 0 12px;         
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 4px;      
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 30px;       
+    transition: background 0.2s;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.btn-submit:hover {
+    background: #1d4ed8;
+}
+
+/* Action layout modifications */
+.release-actions {
     display: flex;
     gap: 10px;
     justify-content: center;
+    margin-top: 15px;
 }
 
-.btn-submit, .myButton {
-    flex: 1;
-    width: 100%;
-    height: 30px !important;            /* Scaled button height */
-    padding: 0 12px !important;
-    background: #2563eb !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 4px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    cursor: pointer;
-    line-height: 30px !important;
-    white-space: nowrap;
-    text-align: center;
-    margin-top: 8px;
-}
-
-.btn-submit:hover, .myButton:hover {
-    background: #1d4ed8 !important;
-}
-
-/* Layout Utilities */
-.main-content-wrapper {
-    flex: 1;
-    width: 100%;
+/* ===== RIGHT CONTENT AREA (Dynamically fills screen) ===== */
+.main-content-area {
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    background: #fff;
-    height: 100vh;
+    background: #ffffff;
+    height: 100%;
+    overflow: hidden;
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
     box-sizing: border-box;
 }
 
-.scrollable-grid-area {
+.grid-content-container {
     flex: 1;
-    width: 100%;
-    overflow: auto;
+    padding: 15px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 
-/* =========================================================================
-   GLOBAL OVERRIDE: Strips inherited green background from all external css 
-========================================================================= */
+/* Override strip background styles */
 .sidebar-filters label.branch, 
 .sidebar-filters .filter-card label,
 .sidebar-filters .branch {
@@ -173,14 +179,11 @@ input[readonly], input:disabled, select:disabled {
     color: #4e5e71;
     padding-left: 4px;
     background: transparent !important;
-    background-color: transparent !important;
 }
 </style>
  
 <script type="text/javascript">
-
 $(document).ready(function () {
-    // UPDATED: Height to 24px and width to 100%
     $("#dateDue").jqxDateTimeInput({ width: '100%', height: '24px', formatString:"dd.MM.yyyy"});
 });
 
@@ -203,7 +206,6 @@ function getinfo() {
                         + process[i] + '</option>';
             }
             $("select#cmbinfo").html(optionsbranch);
-            
         }
     }
     x.open("GET","getinfo.jsp", true);
@@ -298,79 +300,70 @@ function savegriddata(rentaldocno,branchids,remarks,cmbinfo,exdate,fleetno,grgid
 <body onload="getBranch();getinfo();disitems();">
 
 <div id="mainBG" class="homeContent">
-<div class="hidden-scrollbar">
+    <div class="master-container">
 
-<div class="master-container">
+        <div class="sidebar-filters">
+            <div class="sidebar-scroll-content">
+                <div class="filter-card">
+                    <table class="release-filter-table">
+                        <tr>
+                            <td class="label-cell">Fleet No</td>
+                            <td>
+                                <input type="text" id="fleetno" name="fleetno" readonly value='<s:property value="fleetno"/>'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Process</td>
+                            <td>
+                                <select id="cmbinfo" name="cmbinfo" onchange="funchangeinfo()">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Date</td>
+                            <td>
+                                <div id="dateDue"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Remarks</td>
+                            <td>
+                                <input type="text" id="remarks" name="remarks" value='<s:property value="remarks"/>'>
+                            </td>
+                        </tr>
+                    </table>
 
-    <div class="sidebar-filters">
+                    <div class="release-actions">
+                        <button type="button" class="btn-submit" onclick="funupdate();">Update</button>
+                    </div>
+                </div>
 
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
+                <input type="hidden" id="branchids" name="branchids" value='<s:property value="branchids"/>'>
+                <input type="hidden" id="rentaldoc" name="rentaldoc" value='<s:property value="rentaldoc"/>'>
+                <input type="hidden" id="grgid" name="grgid" value='<s:property value="grgid"/>'>
+            </div>
         </div>
 
-        <div class="sidebar-scroll-content">
-            <div class="filter-card">
-                <table class="filter-table">
-                    <tr>
-                        <td class="label-cell">Fleet No</td>
-                        <td>
-                            <input type="text" id="fleetno" name="fleetno" readonly
-                                   value='<s:property value="fleetno"/>'>
-                        </td>
-                    </tr>
+        <div class="main-content-area">
+            
+            <div class="top-toolbar-container">
+                <jsp:include page="../../heading.jsp"></jsp:include>
+            </div>
 
-                    <tr>
-                        <td class="label-cell">Process</td>
-                        <td>
-                            <select id="cmbinfo" name="cmbinfo" onchange="funchangeinfo()">
-                            </select>
-                        </td>
-                    </tr>
+            <div class="grid-content-container">
+                <div id="duedatediv">
+                    <jsp:include page="mainGrid.jsp"></jsp:include>
+                </div>
 
-                    <tr>
-                        <td class="label-cell">Date</td>
-                        <td>
-                            <div id="dateDue"></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label-cell">Remarks</td>
-                        <td>
-                            <input type="text" id="remarks" name="remarks"
-                                   value='<s:property value="remarks"/>'>
-                        </td>
-                    </tr>
-                </table>
-
-                <div class="button-group" style="margin-top: 15px;">
-                    <button type="button" class="btn-submit" onclick="funupdate();" style="margin-top:0;">
-                        Update
-                    </button>
+                <div id="detaildiv" style="margin-top: 20px;">
+                    <jsp:include page="detailgrid.jsp"></jsp:include>
                 </div>
             </div>
 
-            <input type="hidden" id="branchids" name="branchids" value='<s:property value="branchids"/>'>
-            <input type="hidden" id="rentaldoc" name="rentaldoc" value='<s:property value="rentaldoc"/>'>
-            <input type="hidden" id="grgid" name="grgid" value='<s:property value="grgid"/>'>
         </div>
+
     </div>
-
-    <div class="main-content-wrapper">
-        <div class="scrollable-grid-area">
-            <div id="duedatediv">
-                <jsp:include page="mainGrid.jsp"></jsp:include>
-            </div>
-
-            <div id="detaildiv" style="margin-top: 20px;">
-                <jsp:include page="detailgrid.jsp"></jsp:include>
-            </div>
-        </div>
-    </div>
-
 </div>
 
-</div>
-</div>
 </body>
 </html>

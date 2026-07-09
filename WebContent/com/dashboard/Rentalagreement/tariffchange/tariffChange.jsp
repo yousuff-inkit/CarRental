@@ -120,10 +120,7 @@ select {
     background: #1d4ed8 !important;
 }
 
-.btn-submit:disabled {
-    background: #9ca3af !important;
-    cursor: not-allowed;
-}
+
 
 /* Layout Utilities */
 .main-content-wrapper {
@@ -153,6 +150,45 @@ input[type="checkbox"] {
     font-weight: 600;
     color: #4e5e71;
     background: transparent !important;
+}
+
+.sidebar-filters {
+    width: 330px;
+    flex: 0 0 330px;   
+    background: #fff;
+    border-right: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    height: 100%;      
+    box-shadow: 2px 0 8px rgba(0,0,0,.05);
+}
+
+.main-content-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;        
+    box-sizing: border-box;
+    padding: 0;         
+}
+
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
 }
 </style>
   
@@ -507,19 +543,11 @@ function disiem()
 </head>
 
 <body onload="getBranch();getrentaltype();">
-<div id="mainBG" class="homeContent" data-type="background"> 
-<div class='hidden-scrollbar'>
+<div id="mainBG" class="homeContent" data-type="background">
+<div class="hidden-scrollbar">
 <div class="master-container">
 
-<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-
-<td width="330px" valign="top">
     <div class="sidebar-filters">
-        <div class="sidebar-fixed-top">
-            <jsp:include page="../../heading.jsp"></jsp:include>
-        </div>
-
         <div class="sidebar-scroll-content">
             <div class="filter-card">
                 <table class="filter-table">
@@ -638,7 +666,6 @@ function disiem()
                 <input type="hidden" name="modelid" id="modelid" value='<s:property value="modelid"/>'>
                 <input type="hidden" name="docnos" id="docnos" value='<s:property value="docnos"/>'>
                 <input type="hidden" id="gridlength" name="gridlength">
-                
                 <input type="hidden" id="excessinsur" value="">
                 <input type="hidden" id="normalinsu" value="">
                 <input type="hidden" id="cdwinsu" value="">
@@ -657,24 +684,22 @@ function disiem()
 
         </div>
     </div>
-</td>
 
-<td valign="top">
     <div class="main-content-wrapper">
+        <div class="top-toolbar-container">
+            <jsp:include page="../../heading.jsp"></jsp:include>
+        </div>
         <div class="scrollable-grid-area">
             <div id="detlist">
                 <jsp:include page="detailsGrid.jsp"></jsp:include>
             </div>
-
             <div id="rtariff" style="margin-top: 15px;">
                 <jsp:include page="rtariffdetails.jsp"></jsp:include>
             </div>
         </div>
     </div>
-</td>
 
-</tr>
-</table>
+</div>
 
 <div id="clientwindow"><div></div></div>
 <div id="fleetwindow"><div></div></div>
@@ -683,7 +708,6 @@ function disiem()
 <div id="modelwindow"><div></div></div>
 <div id="usersearchwindow"><div></div></div>
 
-</div>
 </div>
 </div>
 </body>

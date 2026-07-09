@@ -10,16 +10,21 @@
 <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 <style>
 /* ===== MASTER LAYOUT ===== */
+html, body, #mainBG, .hidden-scrollbar {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background-color: #f4f7f9;
+}
+
 .master-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-    background-color: #f4f7f9;
-    margin-top:-70px;
 }
 
-/* Sidebar */
+/* ===== LEFT SIDEBAR ===== */
 .sidebar-filters {
     width: 330px;
     flex: 0 0 330px;
@@ -27,13 +32,9 @@
     border-right: 1px solid #e1e8ed;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-shadow: 2px 0 8px rgba(0,0,0,.05);
-}
-
-.sidebar-fixed-top {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f0f4f8;
+    z-index: 10;
 }
 
 .sidebar-scroll-content {
@@ -60,50 +61,57 @@
 .label-cell {
     text-align: right;
     padding-right: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: #4e5e71;
     width: 90px;
 }
 
-/* Inputs */
-input[type="text"], select {
+/* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+input[type="text"], select,
+.filter-table input[type="text"],
+.filter-table select {
     width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccd6e0;
-    border-radius: 6px;
-    font-size: 13px;
+    height: 24px !important;             
+    padding: 2px 8px !important;         
+    border: 1px solid #ccd6e0 !important;
+    border-radius: 4px !important;       
+    font-size: 12px !important;          
+    background-color: #ffffff;
+    box-sizing: border-box;
+    color: #333;
+    outline: none;
 }
 
-/* Buttons */
-.btn-submit {
+/* jqx Date Container Mapping Rules */
+.filter-table div[id^="fromdate"],
+.filter-table div[id^="todate"] {
     width: 100%;
-    padding: 11px;
-    margin-top: 10px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
 }
 
-.btn-submit:hover {
-    background: #1d4ed8;
-}
-
-/* Page height fix */
-html, body, #mainBG, .hidden-scrollbar {
+/* ===== RIGHT CONTENT AREA (Horizontally Aligned Heading) ===== */
+.main-content-wrapper {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
     height: 100%;
-    margin: 0;
     overflow: hidden;
 }
 
-td[width="80%"] {
-    height: 100vh;
-    vertical-align: top;
-    background: #fff;
+.top-toolbar-container {
+    width: 100%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    box-sizing: border-box;
+}
+
+.scrollable-grid-area {
+    flex: 1;
+    padding: 15px 20px;
+    overflow: auto; 
+    box-sizing: border-box;
 }
 </style>
 
@@ -194,61 +202,49 @@ function funreload(event)
 <div id="mainBG" class="homeContent">
 <div class="hidden-scrollbar">
 
-<table width="100%">
-<tr>
-
-<!-- ================= LEFT SIDEBAR ================= -->
-<td width="20%">
 <div class="master-container">
-<div class="sidebar-filters">
 
-    <!-- Fixed Heading -->
-    <div class="sidebar-fixed-top">
-        <div class="filter-card">
+    <div class="sidebar-filters">
+        <div class="sidebar-scroll-content">
+
+            <div class="filter-card">
+                <table class="filter-table">
+                    <tr>
+                        <td class="label-cell">From</td>
+                        <td><div id="fromdate"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="label-cell">To</td>
+                        <td><div id="todate"></div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="filter-card">
+                <div id="paychaaaaa" style="width:100%; height:125px;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-content-wrapper">
+        
+        <div class="top-toolbar-container">
             <jsp:include page="../../heading.jsp"></jsp:include>
         </div>
-    </div>
 
-    <!-- Scrollable Content -->
-    <div class="sidebar-scroll-content">
-
-        <!-- Date Filters -->
-        <div class="filter-card">
-            <table class="simple-date-filter-table">
-                <tr>
-                    <td class="label-cell">From</td>
-                    <td><div id="fromdate"></div></td>
-                </tr>
-
-                <tr>
-                    <td class="label-cell">To</td>
-                    <td><div id="todate"></div></td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Chart / Placeholder -->
-        <div class="filter-card">
-            <div id="paychaaaaa"></div>
+        <div class="scrollable-grid-area">
+            <div id="detlist">
+                <jsp:include page="detailsGrid.jsp"></jsp:include>
+            </div>
         </div>
 
     </div>
-</div>
-</div>
-</td>
 
-<!-- ================= RIGHT GRID ================= -->
-<td width="80%">
-    <div id="detlist">
-        <jsp:include page="detailsGrid.jsp"></jsp:include>
-    </div>
-</td>
-
-</tr>
-</table>
+</div>
 
 </div>
 </div>
+
 </body>
 </html>
-	 

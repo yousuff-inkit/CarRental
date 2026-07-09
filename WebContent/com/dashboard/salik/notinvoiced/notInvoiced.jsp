@@ -9,82 +9,80 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>GatewayERP(i)</title>
-        <link href="../../../../css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
 
         <style type="text/css">
-        /* ===== MASTER LAYOUT ===== */
-        html, body, #mainBG, .hidden-scrollbar {
+        /* ===== MASTER LAYOUT (Modern Flexbox) ===== */
+        html, body, #mainBG {
             height: 100%;
             margin: 0;
             overflow: hidden;
+            background-color: #f4f7f9;
         }
 
         .master-container {
             display: flex;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            background-color: #f4f7f9;
         }
 
-        /* Sidebar dynamically fills the left TD */
+        /* ===== LEFT SIDEBAR ===== */
         .sidebar-filters {
-            width: 100%;
+            width: 280px;
+            flex: 0 0 280px; 
             background: #fff;
             border-right: 1px solid #e1e8ed;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
             box-shadow: 2px 0 8px rgba(0,0,0,.05);
+            z-index: 10;
         }
 
-        .sidebar-fixed-top {
-            padding: 15px 20px;
-            border-bottom: 1px solid #f0f4f8;
-        }
-
-        /* Flex 1 allows this middle section to scroll while keeping top fixed */
         .sidebar-scroll-content {
             flex: 1;
             overflow-y: auto;
-            padding: 15px 20px 15px; 
+            padding: 15px 15px 25px;
         }
 
+        /* Cards */
         .filter-card {
             background: #f8fafc;
             border: 1px solid #e3e8ee;
             border-radius: 12px;
-            padding: 12px;
+            padding: 15px;
             margin-bottom: 12px;
         }
 
+        /* Tables inside Cards */
         .filter-table {
             width: 100%;
             border-spacing: 0 10px;
         }
 
-        .label-cell {
+        .filter-table .label-cell {
             text-align: right;
-            padding-right: 12px;
-            font-size: 12px; 
-            font-weight: 600;
+            padding-right: 10px;
+            font-size: 12px;
             color: #4e5e71;
+            font-weight: 600;
             width: 80px;
         }
 
-        /* ===== UNIFORM 24px TEXT INPUTS & SELECTS ===== */
-        input[type="text"], select, textarea {
+        /* ===== UNIFORM 24px INPUTS & SELECTS ===== */
+        input[type="text"], select,
+        .filter-table input[type="text"],
+        .filter-table select {
             width: 100%;
-            height: 24px !important;             
-            padding: 2px 8px !important;         
+            height: 24px !important;              
+            padding: 2px 8px !important;          
             border: 1px solid #ccd6e0 !important;
-            border-radius: 4px !important;       
+            border-radius: 4px !important;        
             font-size: 12px !important;          
             background-color: #ffffff;
             box-sizing: border-box;
             color: #333;
             outline: none;
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
         }
 
         select {
@@ -99,60 +97,94 @@
             background-size: 12px;
         }
 
-        input[readonly], input:disabled, select:disabled {
+        /* Readonly / disabled look */
+        input[readonly], input:disabled, 
+        .filter-table input[readonly], 
+        .filter-table input:disabled {
             background-color: #f3f6f9 !important;
             color: #555;
-            cursor: pointer;
+            border-color: #e1e8ed !important;
+            cursor: default;
+        }
+
+        /* jqx date/time containers */
+        #fromdate, #todate {
+            width: 100%;
         }
 
         /* ===== BUTTONS ===== */
-        .button-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 5px;
-        }
-
         .btn-submit {
             flex: 1;
             height: 30px !important;            
-            padding: 0 5px !important;
+            padding: 0 5px !important;          
             background: #2563eb !important;
             color: #fff !important;
             border: none !important;
-            border-radius: 4px !important;
+            border-radius: 4px !important;      
             font-size: 12px !important;
             font-weight: 600 !important;
             cursor: pointer;
-            line-height: 30px !important;
+            line-height: 30px !important;        
+            transition: background 0.2s;
             text-align: center;
-            transition: all 0.2s ease;
         }
 
-        .btn-submit:hover { background: #1d4ed8 !important; }
+        .btn-submit:hover {
+            background: #1d4ed8 !important;
+        }
 
-        /* Layout Utilities */
-        .main-content-wrapper {
+        .btn-submit:disabled {
+            background: #9ca3af !important;
+            cursor: not-allowed;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        /* ===== RIGHT CONTENT AREA ===== */
+        .main-content-area {
             flex: 1;
-            width: 100%;
             display: flex;
             flex-direction: column;
-            padding: 15px 20px;
-            background: #fff;
-            height: 100vh;
+            background: #ffffff;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .top-toolbar-container {
+            width: 100%;
+            padding: 10px 15px;
+            background: #ffffff;
+            border-bottom: 1px solid #e1e8ed;
             box-sizing: border-box;
         }
 
-        .scrollable-grid-area {
+        .grid-content-container {
             flex: 1;
-            width: 100%;
+            padding: 15px;
             overflow: auto;
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        /* Loader Positioning */
+        #PleaseWait {
+            position: absolute !important;
+            z-index: 1002;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
         }
         </style>
 
         <script type="text/javascript">
             $(document).ready(function() {
                 $("body").prepend('<div id="overlay" class="ui-widget-overlay" style="z-index: 1001; display: none;"></div>');
-                $("body").prepend("<div id='PleaseWait' style='display: none;position:absolute; z-index: 1002;top:200px;right:550px;'><img src='../../../../icons/31load.gif'/></div>");
+                $("body").prepend("<div id='PleaseWait' style='display: none;'><img src='../../../../icons/31load.gif'/></div>");
                 $("#overlay, #PleaseWait").hide();
                 
                 $.ajax({url: "getClientCategory.jsp", success: function(result){
@@ -352,131 +384,119 @@
         <form id="frmNotInvoicedSalik" action="saveNotInvoicedSalik" method="post">
             
             <div id="mainBG" class="homeContent">
-                <div class='hidden-scrollbar'>
-                    <div class="master-container">
+                <div class="master-container">
 
-                        <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
+                    <!-- ================= LEFT SIDEBAR ================= -->
+                    <div class="sidebar-filters">
+                        <div class="sidebar-scroll-content">
+                            <div class="filter-card">
+                                <table class="filter-table">
+                                    <tr>
+                                        <td class="label-cell">From</td>
+                                        <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">To</td>
+                                        <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Type</td>
+                                        <td>
+                                            <select name="cmbsaliktype" id="cmbsaliktype">
+                                                <option value="">--Select--</option>
+                                                <option value="SAL">Salik</option>
+                                                <option value="PAR">Parking</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Client</td>
+                                        <td>
+                                            <input type="text" id="txtclientname" name="txtclientname" readonly placeholder="Press F3 to Search" onkeydown="getClient(event);" value='<s:property value="txtclientname"/>' />
+                                            <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>' />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Category</td>
+                                        <td>
+                                            <select name="cmbcategory" id="cmbcategory">
+                                                <option value="">--Select--</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Agmt.Type</td>
+                                        <td>
+                                            <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
+                                                <option value="">--Select--</option>
+                                                <option value="RAG">Rental</option>
+                                                <option value="LAG">Lease</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Agreement</td>
+                                        <td>
+                                            <input type="text" name="agmtvocno" id="agmtvocno" value='<s:property value="agmtvocno"/>' readonly placeholder="Press F3 to Search" onkeydown="getAgreement(event);">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Tariff.Type</td>
+                                        <td>
+                                            <select name="cmbtype" id="cmbtype">
+                                                <option value="">--Select--</option>
+                                                <option value="Daily">Daily</option>
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Monthly">Monthly</option>
+                                                <option value="Lease">Lease</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
 
-                        <!-- ================= LEFT SIDEBAR ================= -->
-                        <td width="330px" valign="top">
-                            <div class="sidebar-filters">
-                                <div class="sidebar-fixed-top">
-                                    <jsp:include page="../../heading.jsp"></jsp:include>
-                                </div>
-
-                                <div class="sidebar-scroll-content">
-                                    <div class="filter-card">
-                                        <table class="filter-table">
-                                            <tr>
-                                                <td class="label-cell">From</td>
-                                                <td><div id="fromdate" name="fromdate" value='<s:property value="fromdate"/>'></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">To</td>
-                                                <td><div id="todate" name="todate" value='<s:property value="todate"/>'></div></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Type</td>
-                                                <td>
-                                                    <select name="cmbsaliktype" id="cmbsaliktype">
-                                                        <option value="">--Select--</option>
-                                                        <option value="SAL">Salik</option>
-                                                        <option value="PAR">Parking</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Client</td>
-                                                <td>
-                                                    <input type="text" id="txtclientname" name="txtclientname" readonly placeholder="Press F3 to Search" onkeydown="getClient(event);" value='<s:property value="txtclientname"/>' />
-                                                    <input type="hidden" id="txtcldocno" name="txtcldocno" value='<s:property value="txtcldocno"/>' />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Category</td>
-                                                <td>
-                                                    <select name="cmbcategory" id="cmbcategory">
-                                                        <option value="">--Select--</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Agmt.Type</td>
-                                                <td>
-                                                    <select id="rentaltype" name="rentaltype" value='<s:property value="rentaltype"/>'>
-                                                        <option value="">--Select--</option>
-                                                        <option value="RAG">Rental</option>
-                                                        <option value="LAG">Lease</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Agreement</td>
-                                                <td>
-                                                    <input type="text" name="agmtvocno" id="agmtvocno" value='<s:property value="agmtvocno"/>' readonly placeholder="Press F3 to Search" onkeydown="getAgreement(event);">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="label-cell">Tariff.Type</td>
-                                                <td>
-                                                    <select name="cmbtype" id="cmbtype">
-                                                        <option value="">--Select--</option>
-                                                        <option value="Daily">Daily</option>
-                                                        <option value="Weekly">Weekly</option>
-                                                        <option value="Monthly">Monthly</option>
-                                                        <option value="Lease">Lease</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <div class="button-group" style="margin-top: 15px;">
-                                            <button type="button" id="clear" class="btn-submit" onclick="funClearData();" style="background:#64748b !important;">
-                                                Clear
-                                            </button>
-                                            <button type="button" id="btngenerate" class="btn-submit" onclick="funGenerate();">
-                                                Generate
-                                            </button>
-                                            <button type="button" id="btnSalikInvoicePrint" class="btn-submit" onclick="funSalikInvoicePrint();" style="background:#10b981 !important;">
-                                                Print
-                                            </button>
-                                        </div>
-                                    </div>
+                                <div class="action-buttons">
+                                    <button type="button" id="clear" class="btn-submit" onclick="funClearData();" style="background:#64748b !important;">
+                                        Clear
+                                    </button>
+                                    <button type="button" id="btngenerate" class="btn-submit" onclick="funGenerate();">
+                                        Generate
+                                    </button>
+                                    <button type="button" id="btnSalikInvoicePrint" class="btn-submit" onclick="funSalikInvoicePrint();" style="background:#10b981 !important;">
+                                        Print
+                                    </button>
                                 </div>
                             </div>
-                        </td>
+                        </div>
+                    </div>
 
-                        <!-- ================= RIGHT SIDE (GRID) ================= -->
-                        <td valign="top">
-                            <div class="main-content-wrapper">
-                                <div class="scrollable-grid-area">
-                                    <div id="notInvoicedDiv">
-                                        <jsp:include page="notInvoicedGrid.jsp"></jsp:include>
-                                    </div>
-                                </div>
+                    <!-- ================= RIGHT SIDE (GRID) ================= -->
+                    <div class="main-content-area">
+                        <!-- Toolbar/Heading (Moved from Sidebar) -->
+                        <div class="top-toolbar-container">
+                            <jsp:include page="../../heading.jsp"></jsp:include>
+                        </div>
+                        
+                        <div class="grid-content-container">
+                            <div id="notInvoicedDiv">
+                                <jsp:include page="notInvoicedGrid.jsp"></jsp:include>
                             </div>
-                        </td>
-
-                        </tr>
-                        </table>
-
+                        </div>
                     </div>
-
-                    <!-- HIDDEN FIELDS -->
-                    <div style="display:none;">
-                        <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
-                        <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
-                        <input type="hidden" id="txtagreementno" name="txtagreementno" readonly value='<s:property value="txtagreementno"/>' />
-                    </div>
-
-                    <!-- POPUPS -->
-                    <div id="clientDetailsWindow"><div></div><div></div></div>
-                    <div id="agreementDetailsWindow"><div></div><div></div></div>
 
                 </div>
-            </div>
 
+                <!-- HIDDEN FIELDS -->
+                <div style="display:none;">
+                    <input type="hidden" name="msg" id="msg" value='<s:property value="msg"/>'>
+                    <input type="hidden" name="mode" id="mode" value='<s:property value="mode"/>'>
+                    <input type="hidden" id="txtagreementno" name="txtagreementno" readonly value='<s:property value="txtagreementno"/>' />
+                </div>
+
+                <!-- POPUPS -->
+                <div id="clientDetailsWindow"><div></div><div></div></div>
+                <div id="agreementDetailsWindow"><div></div><div></div></div>
+
+            </div>
         </form>
     </body>
 </html>
