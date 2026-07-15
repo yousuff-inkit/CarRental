@@ -14,7 +14,6 @@ import com.operations.agreement.rentalclose.ClsRentalCloseDAO;
 import com.operations.agreement.rentalagreement.ClsRentalAgreementDAO;
 import com.operations.agreement.rentalagreement.ClsRentalAgreementAction;
 
-
 public class MobileApiAction extends ActionSupport {
 
     // --- INPUTS FROM MOBILE APP ---
@@ -31,11 +30,15 @@ public class MobileApiAction extends ActionSupport {
     private String token;
     private List<Map<String, String>> companyList;
     private Map<String, Object> dashboardData;
+    private Object dropdownData; 
 
+    // Struts2 needs these EXACT names to output the JSON variables
     public String getStatus() { return status; }
     public String getToken() { return token; }
     public List<Map<String, String>> getCompanyList() { return companyList; }
     public Map<String, Object> getDashboardData() { return dashboardData; }
+    public Object getDropdownData() { return dropdownData; }
+    public void setDropdownData(Object dropdownData) { this.dropdownData = dropdownData; }
     
     // Variables for Collection (Check-In) Form
     private String agreementno, clientid, hidchkcollection, collectkm, cmbcollectfuel;
@@ -52,7 +55,7 @@ public class MobileApiAction extends ActionSupport {
     private String sqloutDate, outTime, sqldueDate, dueTime;
     private String tasystem, tadocno, invoice, exessinsu, paymentMra, paymentPo;
     private String origFleetno, Vehlocationid, fleetgroup, rentalType;
-    private String delcharge, rentaldesc, hidchkorgregcard, hidchkigst, hidrentalproject, infuel; // INFUEL ADDED HERE
+    private String delcharge, rentaldesc, hidchkorgregcard, hidchkigst, hidrentalproject, infuel; 
     private int salesmanid, addrvchk, delchk, chfchk, deldriverid, salesagentid;
     private int rentalagentid, checkoutid, advancechk, weekend;
 
@@ -110,7 +113,7 @@ public class MobileApiAction extends ActionSupport {
     public String getHidrentalproject() { return hidrentalproject; }
     public void setHidrentalproject(String hidrentalproject) { this.hidrentalproject = hidrentalproject; }
     public String getInfuel() { return infuel; } 
-    public void setInfuel(String infuel) { this.infuel = infuel; } // INFUEL GETTER/SETTER ADDED
+    public void setInfuel(String infuel) { this.infuel = infuel; } 
     public int getSalesmanid() { return salesmanid; }
     public void setSalesmanid(int salesmanid) { this.salesmanid = salesmanid; }
     public int getAddrvchk() { return addrvchk; }
@@ -161,11 +164,6 @@ public class MobileApiAction extends ActionSupport {
     private String clname;
     private String mob;
 
-    private Object dropdownData; 
-
-    public Object getDropdownData() { return dropdownData; }
-    public void setDropdownData(Object dropdownData) { this.dropdownData = dropdownData; }
-
     public String getBrandval() { return brandval; }
     public void setBrandval(String brandval) { this.brandval = brandval; }
     public String getClname() { return clname; }
@@ -210,9 +208,6 @@ public class MobileApiAction extends ActionSupport {
     // ==========================================
     // ENDPOINT 2: Process Login
     // ==========================================
- // ==========================================
-    // ENDPOINT 2: Process Login
-    // ==========================================
     public String processLogin() {
         Connection conn = null;
         Statement stmt = null;
@@ -238,17 +233,13 @@ public class MobileApiAction extends ActionSupport {
                 status = "success";
                 int loggedInUserId = rs.getInt("doc_no");
                 
-                // ---> THE MISSING PUZZLE PIECE YOU NEED TO ADD <---
-                // We must physically store the user data in the Tomcat Session so the DAOs can read it!
                 HttpSession session = ServletActionContext.getRequest().getSession();
                 session.setAttribute("USERID", String.valueOf(loggedInUserId));
                 
-                // Safely grab the branch and company IDs 
                 try { session.setAttribute("BRANCHID", rs.getString("branchid")); } catch (Exception e) {
                     try { session.setAttribute("BRANCHID", rs.getString("branch_id")); } catch (Exception ex) {}
                 }
                 try { session.setAttribute("COMPID", rs.getString("comp_id")); } catch (Exception e) {}
-                // --------------------------------------------------
 
                 token = UUID.randomUUID().toString() + "-" + loggedInUserId;
             } else {
@@ -266,8 +257,8 @@ public class MobileApiAction extends ActionSupport {
         return SUCCESS;
     }
     
-    // ==========================================
-    // ENDPOINT 3: Dashboard Data
+ // ==========================================
+    // ENDPOINT 3: Dashboard Data (USER-ONLY ASSIGNMENTS)
     // ==========================================
     public String fetchDashboard() {
         Connection conn = null;
@@ -279,6 +270,19 @@ public class MobileApiAction extends ActionSupport {
         List<Map<String, String>> collectionsList = new ArrayList<>();
 
         try {
+            HttpSession session = ServletActionContext.getRequest().getSession();
+            
+            // --- FIX: Safely pull the USERID whether it is an Integer or a String ---
+            Object userIdObj = session.getAttribute("USERID");
+            
+            if (userIdObj == null) {
+                status = "error: Unauthorized. Please login to get a valid token.";
+                return SUCCESS;
+            }
+            
+            String loggedInUserId = String.valueOf(userIdObj);
+            // ------------------------------------------------------------------------
+
             ClsConnection clsConn = new ClsConnection();
             conn = clsConn.getMyConnection();
             stmt = conn.createStatement();
@@ -286,7 +290,7 @@ public class MobileApiAction extends ActionSupport {
             String deliverySql = "SELECT b.voc_no, a.refname, b.delloc, b.frmDate " +
                                  "FROM gl_bookingm b " +
                                  "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
-                                 "WHERE b.status = 3 AND b.delivery = 1";
+                                 "WHERE b.status = 3 AND b.delivery = 1 AND b.userid = '" + loggedInUserId + "'";
                                  
             rs = stmt.executeQuery(deliverySql);
             
@@ -305,7 +309,7 @@ public class MobileApiAction extends ActionSupport {
             String collectionSql = "SELECT b.voc_no, a.refname, b.todate, b.contactno " +
                                    "FROM gl_bookingm b " +
                                    "LEFT JOIN my_acbook a ON a.cldocno = b.cldocno AND a.dtype = 'CRM' " +
-                                   "WHERE b.status = 3"; 
+                                   "WHERE b.status = 3 AND b.userid = '" + loggedInUserId + "'"; 
             
             rs = stmt.executeQuery(collectionSql);
             
@@ -336,7 +340,6 @@ public class MobileApiAction extends ActionSupport {
         
         return SUCCESS;
     }
-
     // ==========================================
     // ENDPOINT 4: Form Submission (Delivery to Collection)
     // ==========================================
@@ -417,54 +420,6 @@ public class MobileApiAction extends ActionSupport {
             e.printStackTrace();
         }
         
-        return SUCCESS;
-    }
-
-    // ==========================================
-    // ENDPOINT SET 6: Form Dropdown Data (Booking)
-    // ==========================================
-    public String fetchBrands() {
-        try {
-            ClsbookingDAO dao = new ClsbookingDAO();
-            dropdownData = dao.searchBrand(); 
-            status = "success";
-        } catch (Exception e) {
-            status = "error: " + e.getMessage();
-            e.printStackTrace();
-        }
-        return SUCCESS;
-    }
-
-    public String fetchModels() {
-        try {
-            if (brandval == null || brandval.trim().isEmpty()) {
-                status = "error: brandval is required to fetch models.";
-                return SUCCESS;
-            }
-            ClsbookingDAO dao = new ClsbookingDAO();
-            dropdownData = dao.searchModel(brandval); 
-            status = "success";
-        } catch (Exception e) {
-            status = "error: " + e.getMessage();
-            e.printStackTrace();
-        }
-        return SUCCESS;
-    }
-
-    public String fetchClients() {
-        try {
-            HttpServletRequest request = ServletActionContext.getRequest();
-            HttpSession session = request.getSession();
-            String searchName = (clname == null) ? "" : clname;
-            String searchMob = (mob == null) ? "" : mob;
-
-            ClsbookingDAO dao = new ClsbookingDAO();
-            dropdownData = dao.searchClient(session, searchName, searchMob);
-            status = "success";
-        } catch (Exception e) {
-            status = "error: " + e.getMessage();
-            e.printStackTrace();
-        }
         return SUCCESS;
     }
 
@@ -570,15 +525,59 @@ public class MobileApiAction extends ActionSupport {
 
     // ==========================================
     // DROPDOWN LOOKUP APIS (For the Mobile Team)
+    // RENAMED TO fetch... TO PREVENT STRUTS SERIALIZATION BUGS
     // ==========================================
 
-    public String getClientList() { 
+    public String fetchBrands() {
         try {
-            // 1. Protect against null values if the mobile app doesn't send search parameters
+            ClsbookingDAO dao = new ClsbookingDAO();
+            dropdownData = dao.searchBrand(); 
+            status = "success";
+        } catch (Exception e) {
+            status = "error: " + e.getMessage();
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
+    public String fetchModels() {
+        try {
+            if (brandval == null || brandval.trim().isEmpty()) {
+                status = "error: brandval is required to fetch models.";
+                return SUCCESS;
+            }
+            ClsbookingDAO dao = new ClsbookingDAO();
+            dropdownData = dao.searchModel(brandval); 
+            status = "success";
+        } catch (Exception e) {
+            status = "error: " + e.getMessage();
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
+    public String fetchClients() {
+        try {
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
             String searchName = (clname == null) ? "" : clname;
             String searchMob = (mob == null) ? "" : mob;
 
-            // 2. Pass the actual Session object instead of 'null'
+            ClsbookingDAO dao = new ClsbookingDAO();
+            dropdownData = dao.searchClient(session, searchName, searchMob);
+            status = "success";
+        } catch (Exception e) {
+            status = "error: " + e.getMessage();
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
+    public String fetchClientList() { 
+        try {
+            String searchName = (clname == null) ? "" : clname;
+            String searchMob = (mob == null) ? "" : mob;
+
             dropdownData = new ClsRentalAgreementDAO().getActualclientSearch(
                 ServletActionContext.getRequest().getSession(), 
                 searchName, 
@@ -589,24 +588,21 @@ public class MobileApiAction extends ActionSupport {
             status = "success"; 
         } catch (Exception e) { 
             e.printStackTrace(); 
-            // 3. Send the actual error message back to Postman so you know exactly what failed!
             status = "error: " + e.getMessage(); 
         }
         return SUCCESS; 
     }
-    public String getFleetList() { 
+
+    public String fetchFleetList() { 
         try {
             HttpSession session = ServletActionContext.getRequest().getSession();
             
-            // 1. Check if the session actually has the user data
             if (session.getAttribute("USERID") == null || session.getAttribute("BRANCHID") == null) {
                 status = "error: Unauthorized. Missing JSESSIONID cookie or session expired.";
-                dropdownData = new ArrayList<>(); // Return empty array explicitly on error
+                dropdownData = new ArrayList<>(); 
                 return SUCCESS;
             }
             
-          
-            // 2. Pass the validated session to the DAO
             dropdownData = new ClsRentalAgreementDAO().vehSearch(session, "", "", "", "", "", "yes"); 
             status = "success"; 
             
@@ -617,7 +613,7 @@ public class MobileApiAction extends ActionSupport {
         return SUCCESS; 
     }
 
-    public String getSalesAgentList() { 
+    public String fetchSalesAgentList() { 
         try {
             Map<String, Object> agents = new HashMap<>();
             ClsRentalAgreementDAO dao = new ClsRentalAgreementDAO();
@@ -629,7 +625,7 @@ public class MobileApiAction extends ActionSupport {
         return SUCCESS; 
     }
 
-    public String getDriverList() { 
+    public String fetchDriverList() { 
         try {
             dropdownData = new ClsRentalAgreementDAO().chufferinfo(); 
             status="success"; 
@@ -637,7 +633,7 @@ public class MobileApiAction extends ActionSupport {
         return SUCCESS; 
     }
 
-    public String getLocationList() {
+    public String fetchLocationList() {
         try {
             List<Map<String, String>> locs = new ArrayList<>();
             Connection conn = new ClsConnection().getMyConnection();
