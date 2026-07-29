@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.net.URLEncoder; // CRITICAL IMPORT
 
 import javax.servlet.http.HttpSession;
@@ -142,6 +144,112 @@ public class ClsDashBoardDAO {
         }
 
         return list;
+    }
+
+    /* =============================================================
+       2. KPI TILE LIVE COUNTS (keyed by real gl_bibd doc_no)
+       ============================================================= */
+    public Map<String, Integer> getKpiCounts() {
+        Map<String, Integer> counts = new HashMap<String, Integer>();
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ClsConnection.getMyConnection();
+            stmt = conn.createStatement();
+
+            try {
+                rs = stmt.executeQuery("SELECT SUM(CASE WHEN tran_code = 'RR' THEN 1 ELSE 0 END) AS rtr, SUM(CASE WHEN tran_code IN ('GM','GA','GS') THEN 1 ELSE 0 END) AS ig FROM gl_vehmaster");
+                if (rs.next()) {
+                    int rtr = rs.getInt("rtr");
+                    counts.put("91", rtr);  // Ready To Rent
+                    System.out.println("KPI_DEBUG: counts.put key=91 value=" + rtr);
+                    int ig = rs.getInt("ig");
+                    counts.put("30", ig);   // Service Due
+                    System.out.println("KPI_DEBUG: counts.put key=30 value=" + ig);
+                }
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for keys 91/30 threw: " + e); }
+
+            try {
+                // gl_lagmt uses duedate (not ddate); matches ClslaDueDateDAO's open-agreement query
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_lagmt WHERE clstatus=0 AND dispute=0 AND duedate <= (CURDATE() + INTERVAL 2 DAY)");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("24", cnt); System.out.println("KPI_DEBUG: counts.put key=24 value=" + cnt); } // Due Date
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 24 threw: " + e); }
+
+            try {
+                // gl_bookingm.clstatus follows the ENT(0)/FOL(1)/DEC(2) scheme used in ClsMarketingDAO
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_bookingm WHERE clstatus=1");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("89", cnt); System.out.println("KPI_DEBUG: counts.put key=89 value=" + cnt); } // Booking Follow Up
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 89 threw: " + e); }
+
+            try {
+                // Traffic fines live in gl_traffic, not gl_trafficfines; ISALLOCATED marks allocation to a client
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_traffic WHERE ISALLOCATED=0");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("44", cnt); System.out.println("KPI_DEBUG: counts.put key=44 value=" + cnt); } // Unallocated (traffic fines)
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 44 threw: " + e); }
+
+            try {
+                // Matches ClsDocumentExpiryDAO's join: hr_empm (active employees) -> hr_empdoc.expdt
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM hr_empm m INNER JOIN hr_empdoc d ON m.doc_no=d.rdocno WHERE m.status=3 AND m.active=1 AND d.docid IS NOT NULL AND d.expdt <= (CURDATE() + INTERVAL 10 DAY)");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("199", cnt); System.out.println("KPI_DEBUG: counts.put key=199 value=" + cnt); } // Documents Expiry
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 199 threw: " + e); }
+
+            try {
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_vehmaster WHERE nxt_serv_km <= current_km OR nxt_serv_date <= CURDATE()");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("86", cnt); System.out.println("KPI_DEBUG: counts.put key=86 value=" + cnt); } // Maintenance Review
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 86 threw: " + e); }
+
+            try {
+                // gl_vmove.status only ever holds IN/OUT (see ClsMovementDAO); 'READY' never occurs
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_vmove WHERE status='IN' AND date = CURDATE()");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("1", cnt); System.out.println("KPI_DEBUG: counts.put key=1 value=" + cnt); } // Fleet Status
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 1 threw: " + e); }
+
+            try {
+                // gl_bookingm has no del_date; delivery bookings are flagged via the delivery column
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_bookingm WHERE delivery=1 AND status IN (2,3) AND frmdate BETWEEN CURDATE() AND (CURDATE() + INTERVAL 1 DAY)");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("22", cnt); System.out.println("KPI_DEBUG: counts.put key=22 value=" + cnt); } // RA Delivery Update
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 22 threw: " + e); }
+
+            try {
+                // gl_bookingm has no req_type; delivery=0 marks a self/customer pickup booking
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_bookingm WHERE delivery=0 AND status IN (2,3)");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("143", cnt); System.out.println("KPI_DEBUG: counts.put key=143 value=" + cnt); } // Vehicle Pick Up
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 143 threw: " + e); }
+
+            try {
+                // Replacement table is gl_vehreplace, not gl_replacement; closestatus=0 marks it still open (see ClsAndroid)
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_vehreplace WHERE status=3 AND closestatus=0");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("177", cnt); System.out.println("KPI_DEBUG: counts.put key=177 value=" + cnt); } // Replacement List
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 177 threw: " + e); }
+
+            try {
+                // gl_vmove.status only ever holds IN/OUT (see ClsMovementDAO); 'PEND' never occurs.
+                // Best available proxy: vehicles still OUT past their expected turnaround.
+                rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM gl_vmove WHERE status='OUT' AND date <= (CURDATE() - INTERVAL 1 DAY)");
+                if (rs.next()) { int cnt = rs.getInt("cnt"); counts.put("186", cnt); System.out.println("KPI_DEBUG: counts.put key=186 value=" + cnt); } // Inspection List
+                rs.close();
+            } catch (Exception e) { System.out.println("KPI_DEBUG: query for key 186 threw: " + e); }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try { if (stmt != null) stmt.close(); if (conn != null) conn.close(); } catch (Exception ex) {}
+        }
+
+        System.out.println("KPI_DEBUG: final liveCounts map = " + counts);
+        return counts;
     }
 
     // ==========================================================
