@@ -1,3 +1,13 @@
 /classes
 /build
 /out/
+*.class
+
+# Eclipse / IDE
+.settings/
+.metadata/
+*.launch
+
+# OS / editor noise
+Thumbs.db
+.DS_Store
